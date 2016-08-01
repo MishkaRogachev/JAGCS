@@ -1,17 +1,16 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.3
 
-Rectangle {
+ToolBar {
     id: root
 
     property QtObject presenter: factory.createStatusPresenter(root)
 
-    color: "#455A64"
+    RowLayout {
+        anchors.fill: parent
 
-    Row {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        anchors.margins: 5
+        Item { Layout.fillWidth: true }
 
         Button {
             text: qsTr("Quit")

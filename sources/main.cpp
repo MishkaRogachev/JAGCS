@@ -1,7 +1,6 @@
 // Qt
 #include <QApplication>
-#include <QQuickView>
-#include <QQmlEngine>
+#include <QQmlApplicationEngine>
 #include <QQmlContext>
 
 // Internal
@@ -11,14 +10,12 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    QQuickView view;
+    QQmlApplicationEngine engine;
 
     presentation::PresentersFactory factory;
-    view.rootContext()->setContextProperty("factory", &factory);
+    engine.rootContext()->setContextProperty("factory", &factory);
 
-    view.setSource(QUrl(QStringLiteral("qrc:/Views/MainView.qml")));
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    engine.load(QUrl(QStringLiteral("qrc:/Views/MainView.qml")));
 
-    view.showMaximized();
     return app.exec();
 }

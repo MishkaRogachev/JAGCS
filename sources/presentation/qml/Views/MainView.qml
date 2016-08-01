@@ -1,30 +1,25 @@
 import QtQuick 2.6
+import QtQuick.Window 2.0
+import QtQuick.Controls 2.0
 
-Rectangle {
-    id: main
-    color: "#37474F"
+ApplicationWindow {
+    visibility: "Maximized"
+    visible: true
 
-    StatusView {
+    header: StatusView {
         id: status
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
         height: 48
     }
 
     MapView {
         id: map
-        anchors.top: status.bottom
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        anchors.fill: parent
     }
 
     VideoView {
-        id: video
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.margins: 5
+        anchors.margins: 10
         width: parent.width / 3
         height: parent.height / 3
     }

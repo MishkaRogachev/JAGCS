@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import QtMultimedia 5.5
+import QtMultimedia 5.6
 
 Rectangle {
     id: root
