@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Views/MainView.qml</file>
         <file>Views/StatusView.qml</file>
+        <file>Views/MapView.qml</file>
     </qresource>
 </RCC>

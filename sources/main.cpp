@@ -15,6 +15,6 @@ int main(int argc, char* argv[])
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     QObject::connect(view.engine(), &QQmlEngine::quit,
                          qApp, &QApplication::quit);
-    view.show();
+    view.showMaximized();
     return app.exec();
 }
