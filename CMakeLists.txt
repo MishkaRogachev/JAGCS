@@ -62,9 +62,6 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
-# Qt5 wrap node's headers
-qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
-
 # Executable target
 add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML} ${QRC_SOURCES} ${MOC_SOURCES})
 
