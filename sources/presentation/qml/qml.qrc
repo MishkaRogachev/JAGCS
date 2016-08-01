@@ -3,5 +3,6 @@
         <file>Views/MainView.qml</file>
         <file>Views/StatusView.qml</file>
         <file>Views/MapView.qml</file>
+        <file>Views/VideoView.qml</file>
     </qresource>
 </RCC>

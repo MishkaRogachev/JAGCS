@@ -15,8 +15,17 @@ Rectangle {
     MapView {
         id: map
         anchors.top: status.bottom
-        anchors.bottom: parent.bottom
         anchors.left: parent.left
+        anchors.bottom: parent.bottom
         anchors.right: parent.right
+    }
+
+    VideoView {
+        id: video
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.margins: 5
+        width: parent.width / 3
+        height: parent.height / 3
     }
 }
