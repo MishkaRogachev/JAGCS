@@ -1,0 +1,3 @@
+[submodule "3dparty/mavlink"]
+	path = 3dparty/mavlink
+	url = https://github.com/mavlink/c_library_v2.git
