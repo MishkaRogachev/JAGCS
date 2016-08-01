@@ -18,8 +18,6 @@ int main(int argc, char* argv[])
 
     view.setSource(QUrl(QStringLiteral("qrc:/Views/MainView.qml")));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
-    QObject::connect(view.engine(), &QQmlEngine::quit,
-                         qApp, &QApplication::quit);
 
     view.showMaximized();
     return app.exec();

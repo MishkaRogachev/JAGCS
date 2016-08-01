@@ -12,6 +12,7 @@ namespace presentation
     public:
         explicit PresentersFactory(QObject* parent = nullptr);
 
+        Q_INVOKABLE QObject* createStatusPresenter(QObject* parent);
         Q_INVOKABLE QObject* createVideoPresenter(QObject* parent);
 
     private:

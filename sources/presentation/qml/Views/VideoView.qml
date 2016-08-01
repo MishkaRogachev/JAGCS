@@ -10,7 +10,7 @@ Rectangle {
 
     VideoOutput {
         id: videoOutput
-        source: root.presenter
+        source: presenter
         anchors.fill: parent
     }
 }
