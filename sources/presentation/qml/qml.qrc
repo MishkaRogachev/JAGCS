@@ -4,6 +4,7 @@
         <file>Views/StatusView.qml</file>
         <file>Views/MapView.qml</file>
         <file>Views/VideoView.qml</file>
-        <file>Views/SettingsView.qml</file>
+        <file>Views/Settings/SettingsView.qml</file>
+        <file>Views/Settings/NetworkSettingsView.qml</file>
     </qresource>
 </RCC>

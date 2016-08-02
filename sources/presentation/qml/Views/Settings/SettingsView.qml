@@ -3,6 +3,8 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 Pane {
+    id: root
+
     TabBar {
         id: bar
         width: parent.width
@@ -12,6 +14,7 @@ Pane {
     }
 
     StackLayout {
+        anchors.top: bar.bottom
         width: parent.width
         currentIndex: bar.currentIndex
 
@@ -19,7 +22,7 @@ Pane {
             id: uiTab
         }
 
-        Item {
+        NetworkSettingsView {
             id: networkSettings
         }
     }
