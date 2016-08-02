@@ -13,6 +13,13 @@ ToolBar {
         Item { Layout.fillWidth: true }
 
         Button {
+            text: qsTr("Settings")
+            checkable: true
+            anchors.verticalCenter: parent.verticalCenter
+            onCheckedChanged: settings.visible = checked
+        }
+
+        Button {
             text: qsTr("Quit")
             anchors.verticalCenter: parent.verticalCenter
             onClicked: presenter.quit()

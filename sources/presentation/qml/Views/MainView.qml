@@ -17,10 +17,17 @@ ApplicationWindow {
     }
 
     VideoView {
+        id: video
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 10
         width: parent.width / 3
         height: parent.height / 3
+    }
+
+    SettingsView {
+        id: settings
+        anchors.fill: parent
+        visible: false
     }
 }
