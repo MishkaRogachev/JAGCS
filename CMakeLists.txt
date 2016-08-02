@@ -54,7 +54,8 @@ file(GLOB_RECURSE QML "sources/*.qml")
 
 # Includes
 HEADER_DIRECTORIES(INCLUDES "sources")
-include_directories(${INCLUDES})
+HEADER_DIRECTORIES(MAVLINK_INCLUDES "3dparty/mavlink")
+include_directories(${INCLUDES} ${MAVLINK_INCLUDES})
 
 # Resources
 file(GLOB_RECURSE QRC_FILES "*.qrc")
