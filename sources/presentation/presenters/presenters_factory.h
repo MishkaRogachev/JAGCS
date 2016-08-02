@@ -14,6 +14,7 @@ namespace presentation
 
         Q_INVOKABLE QObject* createStatusPresenter(QObject* parent);
         Q_INVOKABLE QObject* createVideoPresenter(QObject* parent);
+        Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* parent);
 
     private:
         Q_DISABLE_COPY(PresentersFactory)

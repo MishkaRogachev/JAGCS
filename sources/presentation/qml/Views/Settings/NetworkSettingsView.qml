@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.3
 Frame {
     id: root
 
+    property QtObject presenter: factory.createNetworkSettingsPresenter(root)
+
     GridLayout {
         columns: 2
         anchors.fill: parent
@@ -62,10 +64,12 @@ Frame {
 
         Button {
             text: qsTr("Restore")
+            onClicked: presenter.restore()
         }
 
         Button {
             text: qsTr("Apply")
+            onClicked: presenter.apply()
         }
     }
 }
