@@ -7,6 +7,13 @@ Frame {
 
     property QtObject presenter: factory.createNetworkSettingsPresenter(root)
 
+    property alias hostname: hostnameItem.text
+    property alias port: portItem.value
+    property alias username: usernameItem.text
+    property alias password: passwordItem.text
+
+    Component.onCompleted: presenter.restore()
+
     GridLayout {
         columns: 2
         anchors.fill: parent
@@ -16,6 +23,7 @@ Frame {
         }
 
         ComboBox {
+            id: typeItem
             textRole: "key"
             model: ListModel {
                 ListElement { key: qsTr("No Proxy"); value: 2 }
@@ -32,6 +40,7 @@ Frame {
         }
 
         TextField {
+            id: hostnameItem
             placeholderText: qsTr("Enter hostname")
         }
 
@@ -40,7 +49,8 @@ Frame {
         }
 
         SpinBox {
-            value: 8080
+            id: portItem
+            editable: true
             from: 0
             to: 9999
         }
@@ -50,6 +60,7 @@ Frame {
         }
 
         TextField {
+            id: usernameItem
             placeholderText: qsTr("Enter user name")
         }
 
@@ -58,6 +69,7 @@ Frame {
         }
 
         TextField {
+            id: passwordItem
             placeholderText: qsTr("Enter password")
             echoMode: TextInput.Password
         }

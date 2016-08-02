@@ -5,6 +5,7 @@
 
 namespace presentation
 {
+
     class NetworkSettingsPresenter: public QObject
     {
         Q_OBJECT
