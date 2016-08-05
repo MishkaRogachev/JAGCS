@@ -7,6 +7,7 @@ Frame {
 
     property QtObject presenter: factory.createNetworkSettingsPresenter(root)
 
+    property alias type: typeItem.currentIndex
     property alias hostname: hostnameItem.text
     property alias port: portItem.value
     property alias username: usernameItem.text
@@ -24,15 +25,7 @@ Frame {
 
         ComboBox {
             id: typeItem
-            textRole: "key"
-            model: ListModel {
-                ListElement { key: qsTr("No Proxy"); value: 2 }
-                ListElement { key: qsTr("Default"); value: 0 }
-                ListElement { key: qsTr("SOCKS5"); value: 1 }
-                ListElement { key: qsTr("HTTP"); value: 3 }
-                ListElement { key: qsTr("Caching HTTP"); value: 4 }
-                ListElement { key: qsTr("Caching FTP"); value: 5 }
-            }
+            model: presenter.typeModel
         }
 
         Label {

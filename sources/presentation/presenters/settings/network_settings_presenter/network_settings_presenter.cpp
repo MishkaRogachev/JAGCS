@@ -14,9 +14,33 @@ namespace
 
 using namespace presentation;
 
+class NetworkSettingsPresenter::Impl
+{
+public:
+    QStringList typeModel;
+};
+
 NetworkSettingsPresenter::NetworkSettingsPresenter(QObject* parent):
-    QObject(parent)
-{}
+    QObject(parent),
+    d(new Impl())
+{
+    d->typeModel.append(tr("No Proxy"));
+    d->typeModel.append(tr("Default"));
+    d->typeModel.append(tr("SOCKS 5"));
+    d->typeModel.append(tr("HTTP"));
+    d->typeModel.append(tr("Caching HTTP"));
+    d->typeModel.append(tr("Caching FTP"));
+}
+
+NetworkSettingsPresenter::~NetworkSettingsPresenter()
+{
+    delete d;
+}
+
+QStringList NetworkSettingsPresenter::typeModel() const
+{
+    return d->typeModel;
+}
 
 void NetworkSettingsPresenter::restore()
 {
