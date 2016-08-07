@@ -2,10 +2,12 @@
 
 // Qt
 #include <QNetworkProxy>
+#include <QMap>
 #include <QDebug>
 
 namespace
 {
+    const char* proxyType = "proxyType";
     const char* hostname = "hostname";
     const char* port = "port";
     const char* username = "username";
@@ -17,19 +19,19 @@ using namespace presentation;
 class NetworkSettingsPresenter::Impl
 {
 public:
-    QStringList typeModel;
+    QMap<QNetworkProxy::ProxyType, QString> typeModelMap;
 };
 
 NetworkSettingsPresenter::NetworkSettingsPresenter(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->typeModel.append(tr("No Proxy"));
-    d->typeModel.append(tr("Default"));
-    d->typeModel.append(tr("SOCKS 5"));
-    d->typeModel.append(tr("HTTP"));
-    d->typeModel.append(tr("Caching HTTP"));
-    d->typeModel.append(tr("Caching FTP"));
+    d->typeModelMap.insert(QNetworkProxy::NoProxy, tr("No Proxy"));
+    d->typeModelMap.insert(QNetworkProxy::DefaultProxy, tr("Default"));
+    d->typeModelMap.insert(QNetworkProxy::Socks5Proxy, tr("SOCKS 5"));
+    d->typeModelMap.insert(QNetworkProxy::HttpProxy, tr("HTTP"));
+    d->typeModelMap.insert(QNetworkProxy::HttpCachingProxy, tr("Caching HTTP"));
+    d->typeModelMap.insert(QNetworkProxy::FtpCachingProxy, tr("Caching FTP"));
 }
 
 NetworkSettingsPresenter::~NetworkSettingsPresenter()
@@ -39,12 +41,15 @@ NetworkSettingsPresenter::~NetworkSettingsPresenter()
 
 QStringList NetworkSettingsPresenter::typeModel() const
 {
-    return d->typeModel;
+    return d->typeModelMap.values();
 }
 
 void NetworkSettingsPresenter::restore()
 {
     QNetworkProxy proxy = QNetworkProxy::applicationProxy();
+
+    QMetaObject::invokeMethod(this->parent(), "setProxyType",
+                              Q_ARG(QVariant, d->typeModelMap.value(proxy.type())));
 
     this->parent()->setProperty(::hostname, proxy.hostName());
     this->parent()->setProperty(::port, proxy.port());
@@ -55,7 +60,9 @@ void NetworkSettingsPresenter::restore()
 void NetworkSettingsPresenter::apply()
 {
     QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::HttpProxy); // TODO: proxy type
+    proxy.setType(d->typeModelMap.key(
+                      this->parent()->property(::proxyType).toString(),
+                      QNetworkProxy::DefaultProxy));
     proxy.setHostName(this->parent()->property(::hostname).toString());
     proxy.setPort(this->parent()->property(::port).toInt());
     proxy.setUser(this->parent()->property(::username).toString());

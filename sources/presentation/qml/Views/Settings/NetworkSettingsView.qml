@@ -7,11 +7,15 @@ Frame {
 
     property QtObject presenter: factory.createNetworkSettingsPresenter(root)
 
-    property alias type: typeItem.currentIndex
+    property alias proxyType: typeItem.currentText
     property alias hostname: hostnameItem.text
     property alias port: portItem.value
     property alias username: usernameItem.text
     property alias password: passwordItem.text
+
+    function setProxyType(proxyType) {
+        typeItem.currentIndex = presenter.typeModel.indexOf(proxyType);
+    }
 
     Component.onCompleted: presenter.restore()
 
