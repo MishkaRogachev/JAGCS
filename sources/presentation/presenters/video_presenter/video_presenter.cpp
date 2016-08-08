@@ -3,6 +3,13 @@
 // Qt
 #include <QCamera>
 #include <QCameraInfo>
+#include <QSettings>
+
+namespace
+{
+    const char* videoGroup = "Video";
+    const char* device = "device";
+}
 
 using namespace presentation;
 
@@ -50,7 +57,10 @@ void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
-    QCameraInfo info("/dev/video1"); // TODO: to settings
+    QSettings settings;
+    settings.beginGroup(::videoGroup);
+
+    QCameraInfo info(settings.value(::device).toByteArray());
     if (info.isNull())
     {
         d->camera = nullptr;
