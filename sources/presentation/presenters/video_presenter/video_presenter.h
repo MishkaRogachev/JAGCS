@@ -1,13 +1,13 @@
 #ifndef VIDEO_PRESENTER_H
 #define VIDEO_PRESENTER_H
 
-#include <QObject>
+#include "base_presenter.h"
 
 class QAbstractVideoSurface;
 
 namespace presentation
 {
-    class VideoPresenter: public QObject
+    class VideoPresenter: public BasePresenter
     {
         Q_OBJECT
 
@@ -15,7 +15,7 @@ namespace presentation
                    WRITE setVideoSurface)
 
     public:
-        explicit VideoPresenter(QObject* parent = nullptr);
+        explicit VideoPresenter(QObject* view);
         ~VideoPresenter() override;
 
         QAbstractVideoSurface* videoSurface() const;

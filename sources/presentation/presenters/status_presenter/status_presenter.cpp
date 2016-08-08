@@ -5,8 +5,8 @@
 
 using namespace presentation;
 
-StatusPresenter::StatusPresenter(QObject* parent):
-    QObject(parent)
+StatusPresenter::StatusPresenter(QObject* view):
+    BasePresenter(view)
 {}
 
 void StatusPresenter::quit()

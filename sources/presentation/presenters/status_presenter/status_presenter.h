@@ -1,16 +1,16 @@
 #ifndef STATUS_PRESENTER_H
 #define STATUS_PRESENTER_H
 
-#include <QObject>
+#include "base_presenter.h"
 
 namespace presentation
 {
-    class StatusPresenter: public QObject
+    class StatusPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit StatusPresenter(QObject* parent = nullptr);
+        explicit StatusPresenter(QObject* view);
 
     public slots:
         void quit();

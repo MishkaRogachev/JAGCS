@@ -21,8 +21,8 @@ public:
     }
 };
 
-VideoPresenter::VideoPresenter(QObject* parent):
-    QObject(parent),
+VideoPresenter::VideoPresenter(QObject* view):
+    BasePresenter(view),
     d(new Impl())
 {
     this->updateSource();
