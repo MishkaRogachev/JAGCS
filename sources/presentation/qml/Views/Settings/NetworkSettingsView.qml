@@ -8,9 +8,9 @@ Frame {
     property QtObject presenter: factory.createNetworkSettingsPresenter(root)
 
     property alias proxyType: typeItem.currentText
-    property alias hostname: hostnameItem.text
+    property alias hostName: hostNameItem.text
     property alias port: portItem.value
-    property alias username: usernameItem.text
+    property alias user: userItem.text
     property alias password: passwordItem.text
 
     function setProxyType(proxyType) {
@@ -37,7 +37,7 @@ Frame {
         }
 
         TextField {
-            id: hostnameItem
+            id: hostNameItem
             placeholderText: qsTr("Enter hostname")
         }
 
@@ -57,7 +57,7 @@ Frame {
         }
 
         TextField {
-            id: usernameItem
+            id: userItem
             placeholderText: qsTr("Enter user name")
         }
 

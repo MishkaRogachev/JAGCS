@@ -14,12 +14,14 @@ namespace presentation
         BasePresenter(QObject* view, QObject* parent);
 
     protected:
+        QVariant viewProperty(const char* name) const;
+
+    protected slots:
         void setViewProperty(const char* name, const QVariant& value);
         void invokeViewMethod(const char* name, const QVariant& value);
 
-        QObject* const m_view;
-
     private:
+        QObject* const m_view;
         Q_DISABLE_COPY(BasePresenter)
     };
 }

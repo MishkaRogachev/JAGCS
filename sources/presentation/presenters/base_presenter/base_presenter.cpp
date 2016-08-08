@@ -1,5 +1,8 @@
 #include "base_presenter.h"
 
+// Qt
+#include <QVariant>
+
 using namespace presentation;
 
 BasePresenter::BasePresenter(QObject* view):
@@ -11,6 +14,11 @@ BasePresenter::BasePresenter(QObject* view, QObject* parent):
     m_view(view)
 {
     Q_ASSERT(view);
+}
+
+QVariant BasePresenter::viewProperty(const char* name) const
+{
+    return m_view->property(name);
 }
 
 void BasePresenter::setViewProperty(const char* name, const QVariant& value)
