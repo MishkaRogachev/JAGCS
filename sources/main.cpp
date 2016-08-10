@@ -4,6 +4,7 @@
 #include <QQmlContext>
 
 // Internal
+#include "settings_provider.h"
 #include "presenters_factory.h"
 
 int main(int argc, char* argv[])
@@ -13,7 +14,10 @@ int main(int argc, char* argv[])
 
     QQmlApplicationEngine engine;
 
-    presentation::PresentersFactory factory;
+    SettingsProvider settings;
+    engine.rootContext()->setContextProperty("settings", &settings);
+
+    presentation::PresentersFactory factory(&settings);
     engine.rootContext()->setContextProperty("factory", &factory);
 
     engine.load(QUrl(QStringLiteral("qrc:/Views/MainView.qml")));

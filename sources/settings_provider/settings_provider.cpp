@@ -2,8 +2,6 @@
 
 #include <QSettings>
 
-using namespace presentation;
-
 class SettingsProvider::Impl
 {
 public:
@@ -19,6 +17,11 @@ SettingsProvider::~SettingsProvider()
 {
     d->settings.sync();
     delete d;
+}
+
+QVariant SettingsProvider::value(const QString& key) const
+{
+    return d->settings.value(key);
 }
 
 void SettingsProvider::setValue(const QString& key, const QVariant& value)

@@ -3,6 +3,8 @@
 
 #include "base_presenter.h"
 
+class SettingsProvider;
+
 namespace presentation
 {
     class NetworkSettingsPresenter: public BasePresenter
@@ -12,7 +14,8 @@ namespace presentation
         Q_PROPERTY(QStringList typeModel READ typeModel NOTIFY typeModelChanged)
 
     public:
-        explicit NetworkSettingsPresenter(QObject* view);
+        explicit NetworkSettingsPresenter(SettingsProvider* settings,
+                                          QObject* view);
         ~NetworkSettingsPresenter() override;
 
         QStringList typeModel() const;

@@ -7,8 +7,9 @@
 
 using namespace presentation;
 
-PresentersFactory::PresentersFactory(QObject* parent):
-    QObject(parent)
+PresentersFactory::PresentersFactory(SettingsProvider* settings, QObject* parent):
+    QObject(parent),
+    m_settings(settings)
 {}
 
 QObject* PresentersFactory::createStatusPresenter(QObject* parent)
@@ -23,5 +24,5 @@ QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 
 QObject* PresentersFactory::createNetworkSettingsPresenter(QObject* parent)
 {
-    return new NetworkSettingsPresenter(parent);
+    return new NetworkSettingsPresenter(m_settings, parent);
 }

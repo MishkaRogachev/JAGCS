@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class SettingsProvider;
+
 namespace presentation
 {
     class PresentersFactory: public QObject
@@ -10,13 +12,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit PresentersFactory(QObject* parent = nullptr);
+        explicit PresentersFactory(SettingsProvider* settings,
+                                   QObject* parent = nullptr);
 
         Q_INVOKABLE QObject* createStatusPresenter(QObject* parent);
         Q_INVOKABLE QObject* createVideoPresenter(QObject* parent);
         Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* parent);
 
     private:
+        SettingsProvider* m_settings;
         Q_DISABLE_COPY(PresentersFactory)
     };
 }
