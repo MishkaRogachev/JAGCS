@@ -6,6 +6,7 @@
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Flight/FlightView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
+        <file>Views/Settings/GuiSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
     </qresource>
 </RCC>

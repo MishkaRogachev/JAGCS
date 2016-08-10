@@ -13,9 +13,9 @@ Item {
         anchors.margins: 5
 
         ColumnLayout {
-            id: toolsColumn
+            id: toolBar
             Layout.fillHeight: true
-            Layout.preferredWidth: settingsProvider.value("Gui/sidebarWidth", 320);
+            Layout.preferredWidth: settingsProvider.value("Gui/toolBarWidth", 320);
 
             // TODO: tools
 

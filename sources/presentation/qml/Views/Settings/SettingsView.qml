@@ -18,12 +18,7 @@ Pane {
         width: parent.width
         currentIndex: bar.currentIndex
 
-        Item {
-            id: uiTab
-        }
-
-        NetworkSettingsView {
-            id: networkSettings
-        }
+        GuiSettingsView { id: uiTab }
+        NetworkSettingsView { id: networkSettings }
     }
 }

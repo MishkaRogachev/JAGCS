@@ -1,6 +1,8 @@
 #include "settings_provider.h"
 
+// Qt
 #include <QSettings>
+#include <QDebug>
 
 class SettingsProvider::Impl
 {

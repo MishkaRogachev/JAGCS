@@ -66,6 +66,8 @@ void NetworkSettingsPresenter::restore()
     this->setViewProperty(::port, d->settings->value(::port));
     this->setViewProperty(::user, d->settings->value(::user));
     this->setViewProperty(::password, d->settings->value(::password));
+
+    d->settings->endGroup();
 }
 
 void NetworkSettingsPresenter::apply()
