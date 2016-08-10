@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine;
 
     SettingsProvider settings;
-    engine.rootContext()->setContextProperty("settings", &settings);
+    engine.rootContext()->setContextProperty("settingsProvider", &settings);
 
     presentation::PresentersFactory factory(&settings);
     engine.rootContext()->setContextProperty("factory", &factory);

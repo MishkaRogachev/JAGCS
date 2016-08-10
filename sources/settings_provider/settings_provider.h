@@ -12,7 +12,8 @@ public:
     explicit SettingsProvider(QObject* parent = nullptr);
     ~SettingsProvider() override;
 
-    Q_INVOKABLE QVariant value(const QString& key) const;
+    Q_INVOKABLE QVariant value(const QString& key,
+                               const QVariant& defaultValue = QVariant()) const;
 
 public slots:
     void setValue(const QString& key, const QVariant& value);

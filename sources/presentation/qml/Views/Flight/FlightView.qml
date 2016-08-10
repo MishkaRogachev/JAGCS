@@ -15,7 +15,7 @@ Item {
         ColumnLayout {
             id: toolsColumn
             Layout.fillHeight: true
-            Layout.preferredWidth: 256
+            Layout.preferredWidth: settingsProvider.value("Gui/sidebarWidth", 320);
 
             // TODO: tools
 
@@ -26,7 +26,7 @@ Item {
 
             Loader {
                 id: auxiliaryWorkspace
-                Layout.preferredWidth: 320
+                Layout.preferredWidth: parent.width
                 Layout.preferredHeight: width * 3 / 4
                 sourceComponent: videoComponent
 

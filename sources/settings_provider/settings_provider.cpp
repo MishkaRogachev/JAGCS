@@ -19,9 +19,10 @@ SettingsProvider::~SettingsProvider()
     delete d;
 }
 
-QVariant SettingsProvider::value(const QString& key) const
+QVariant SettingsProvider::value(const QString& key,
+                                 const QVariant& defaultValue) const
 {
-    return d->settings.value(key);
+    return d->settings.value(key, defaultValue);
 }
 
 void SettingsProvider::setValue(const QString& key, const QVariant& value)
