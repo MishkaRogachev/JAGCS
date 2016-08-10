@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>Views/MainView.qml</file>
-        <file>Views/StatusView.qml</file>
-        <file>Views/Common/MapView.qml</file>
-        <file>Views/Common/VideoView.qml</file>
+        <file>Views/Status/StatusView.qml</file>
+        <file>Views/Map/MapView.qml</file>
+        <file>Views/Video/VideoView.qml</file>
+        <file>Views/Flight/FlightView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
-        <file>Views/Flight/FlightView.qml</file>
     </qresource>
 </RCC>
