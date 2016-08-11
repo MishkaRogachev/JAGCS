@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import "../../Indicators"
 import "../Map"
 import "../Video"
 
@@ -17,6 +18,10 @@ Item {
             Layout.fillHeight: true
             Layout.preferredWidth: settingsProvider.value("Gui/toolBarWidth", 320);
 
+            FlightDirector {
+                id: flightDirector
+                Layout.preferredWidth: parent.width
+            }
             // TODO: tools
 
             Item {

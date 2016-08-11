@@ -51,6 +51,7 @@ set(LIBRARIES
 file(GLOB_RECURSE HEADERS "sources/*.h")
 file(GLOB_RECURSE SOURCES "sources/*.cpp")
 file(GLOB_RECURSE QML "sources/*.qml")
+file(GLOB_RECURSE JS "sources/*.js")
 
 # Includes
 HEADER_DIRECTORIES(INCLUDES "sources")
@@ -64,7 +65,8 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
 # Executable target
-add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML} ${QRC_SOURCES} ${MOC_SOURCES})
+add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
+    ${JS} ${QRC_SOURCES} ${MOC_SOURCES})
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
