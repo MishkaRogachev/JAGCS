@@ -7,7 +7,8 @@
 
 using namespace presentation;
 
-PresentersFactory::PresentersFactory(SettingsProvider* settings, QObject* parent):
+PresentersFactory::PresentersFactory(
+        domain::SettingsProvider* settings, QObject* parent):
     QObject(parent),
     m_settings(settings)
 {}

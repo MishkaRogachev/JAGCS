@@ -24,11 +24,11 @@ class NetworkSettingsPresenter::Impl
 {
 public:
     QMap<QNetworkProxy::ProxyType, QString> typeModelMap;
-    SettingsProvider* settings;
+    domain::SettingsProvider* settings;
 };
 
 NetworkSettingsPresenter::NetworkSettingsPresenter(
-        SettingsProvider* settings, QObject* view):
+        domain::SettingsProvider* settings, QObject* view):
     BasePresenter(view),
     d(new Impl())
 {

@@ -3,7 +3,10 @@
 
 #include <QObject>
 
-class SettingsProvider;
+namespace domain
+{
+    class SettingsProvider;
+}
 
 namespace presentation
 {
@@ -12,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit PresentersFactory(SettingsProvider* settings,
+        explicit PresentersFactory(domain::SettingsProvider* settings,
                                    QObject* parent = nullptr);
 
         Q_INVOKABLE QObject* createStatusPresenter(QObject* parent);
@@ -20,7 +23,7 @@ namespace presentation
         Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* parent);
 
     private:
-        SettingsProvider* m_settings;
+        domain::SettingsProvider* m_settings;
         Q_DISABLE_COPY(PresentersFactory)
     };
 }

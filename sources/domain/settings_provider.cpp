@@ -4,6 +4,8 @@
 #include <QSettings>
 #include <QDebug>
 
+using namespace domain;
+
 class SettingsProvider::Impl
 {
 public:

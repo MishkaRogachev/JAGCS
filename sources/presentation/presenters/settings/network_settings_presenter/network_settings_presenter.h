@@ -3,7 +3,10 @@
 
 #include "base_presenter.h"
 
-class SettingsProvider;
+namespace domain
+{
+    class SettingsProvider;
+}
 
 namespace presentation
 {
@@ -14,7 +17,7 @@ namespace presentation
         Q_PROPERTY(QStringList typeModel READ typeModel NOTIFY typeModelChanged)
 
     public:
-        explicit NetworkSettingsPresenter(SettingsProvider* settings,
+        explicit NetworkSettingsPresenter(domain::SettingsProvider* settings,
                                           QObject* view);
         ~NetworkSettingsPresenter() override;
 
