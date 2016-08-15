@@ -20,6 +20,7 @@ namespace presentation
 
         Q_INVOKABLE QObject* createStatusPresenter(QObject* parent);
         Q_INVOKABLE QObject* createVideoPresenter(QObject* parent);
+        Q_INVOKABLE QObject* createMapPresenter(QObject* parent);
         Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* parent);
 
     private:

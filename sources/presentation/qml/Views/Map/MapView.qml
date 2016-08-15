@@ -4,6 +4,9 @@ import QtPositioning 5.5
 
 Map {
     id: root
+
+    property QtObject presenter: factory.createMapPresenter(root)
+
     plugin: Plugin { name: "osm" }
     gesture.flickDeceleration: 3000
     gesture.enabled: true
