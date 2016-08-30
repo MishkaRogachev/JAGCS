@@ -18,7 +18,12 @@ namespace data_source
         public:
             explicit AbstractLink(QObject* parent);
 
+            virtual bool isUp() const = 0;
+
         public slots:
+            virtual void up() = 0;
+            virtual void down() = 0;
+
             void sendMessage(const mavlink_message_t& message);
 
         signals:

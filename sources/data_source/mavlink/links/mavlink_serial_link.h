@@ -12,7 +12,14 @@ namespace data_source
         class SerialLink: public AbstractLink
         {
         public:
-            SerialLink(const QString& portName, QObject* parent = nullptr);
+            SerialLink(const QString& portName, qint32 baudRate,
+                       QObject* parent = nullptr);
+
+            bool isUp() const override;
+
+        public slots:
+            void up() override;
+            void down() override;
 
         protected:
             void sendData(const QByteArray& data) override;
