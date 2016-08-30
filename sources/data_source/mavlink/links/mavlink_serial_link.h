@@ -1,5 +1,5 @@
-#ifndef SERIAL_LINK_H
-#define SERIAL_LINK_H
+#ifndef MAVLINK_SERIAL_LINK_H
+#define MAVLINK_SERIAL_LINK_H
 
 #include "mavlink_abstract_link.h"
 
@@ -33,4 +33,4 @@ namespace data_source
     }
 }
 
-#endif // SERIAL_LINK_H
+#endif // MAVLINK_SERIAL_LINK_H
