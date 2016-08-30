@@ -4,6 +4,8 @@
 #include <QQmlContext>
 
 // Internal
+#include "mavlink_traits.h"
+
 #include "settings_provider.h"
 #include "presenters_factory.h"
 
@@ -11,6 +13,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("JAGCS");
+
+    data_source::mavlink::init();
 
     QQmlApplicationEngine engine;
 
