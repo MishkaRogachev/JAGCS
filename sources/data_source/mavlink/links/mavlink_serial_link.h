@@ -1,5 +1,5 @@
-#ifndef MAVLINK_UDP_LINK_H
-#define MAVLINK_UDP_LINK_H
+#ifndef SERIAL_LINK_H
+#define SERIAL_LINK_H
 
 #include "mavlink_abstract_link.h"
 
@@ -9,16 +9,16 @@ namespace data_source
 {
     namespace mavlink
     {
-        class UdpLink: public AbstractLink
+        class SerialLink: public AbstractLink
         {
         public:
-            UdpLink(const QString& portName, QObject* parent = nullptr);
+            SerialLink(const QString& portName, QObject* parent = nullptr);
 
         protected:
             void sendData(const QByteArray& data) override;
 
         private slots:
-            void onReadyRead();
+            void readSerialData();
 
         private:
             QSerialPort* m_port;
@@ -26,4 +26,4 @@ namespace data_source
     }
 }
 
-#endif // MAVLINK_UDP_LINK_H
+#endif // SERIAL_LINK_H

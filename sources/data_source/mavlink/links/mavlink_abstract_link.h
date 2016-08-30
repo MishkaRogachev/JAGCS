@@ -26,6 +26,7 @@ namespace data_source
 
         protected:
             virtual void sendData(const QByteArray& data) = 0;
+            void resolveData(const QByteArray& data);
         };
     }
 }
