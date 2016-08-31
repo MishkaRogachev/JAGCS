@@ -107,6 +107,24 @@ void Communicator::removeLink(AbstractLink* link)
                this, &Communicator::handleMessage);
 }
 
+void Communicator::sendSetPositionTargetLocal(
+        const mavlink_set_position_target_local_ned_t& setPoint)
+{
+    mavlink_message_t message;
+    mavlink_msg_set_position_target_local_ned_encode(
+                d->systemId, d->componentId, &message, &setPoint);
+
+    this->sendMessage(message);
+}
+
+void Communicator::sendCommandLong(const mavlink_command_long_t& com)
+{
+    mavlink_message_t message;
+    mavlink_msg_command_long_encode(d->systemId, d->componentId, &message, &com);
+
+    this->sendMessage(message);
+}
+
 void Communicator::sendMessage(const mavlink_message_t& message)
 {
     for (AbstractLink* link: d->links)

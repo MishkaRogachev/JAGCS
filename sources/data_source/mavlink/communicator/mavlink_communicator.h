@@ -6,6 +6,9 @@
 // MAVLink
 #include <mavlink.h>
 
+#include <mavlink_msg_set_position_target_local_ned.h>
+#include <mavlink_msg_command_long.h>
+
 #include <mavlink_msg_sys_status.h>
 #include <mavlink_msg_gps_raw_int.h>
 #include <mavlink_msg_vfr_hud.h>
@@ -26,6 +29,10 @@ namespace data_source
         public slots:
             void addLink(AbstractLink* link);
             void removeLink(AbstractLink* link);
+
+            void sendSetPositionTargetLocal(
+                    const mavlink_set_position_target_local_ned_t& setPoint);
+            void sendCommandLong(const mavlink_command_long_t& com);
 
             void sendMessage(const mavlink_message_t& message);
 
