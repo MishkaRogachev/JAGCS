@@ -3,6 +3,9 @@
 
 #include "mavlink_abstract_link.h"
 
+// MAVLink
+#include <mavlink.h>
+
 namespace data_source
 {
     namespace mavlink
@@ -22,6 +25,8 @@ namespace data_source
             void sendMessage(const mavlink_message_t& message);
 
         signals:
+            void heartBeatReceived(mavlink_heartbeat_t heartbeat);
+
             void messageReceived(mavlink_message_t message);
 
         private slots:

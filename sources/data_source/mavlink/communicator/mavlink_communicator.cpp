@@ -1,17 +1,24 @@
 #include "mavlink_communicator.h"
 
 // MAVLink
-#include <mavlink.h>
 #include <mavlink_msg_ping.h>
+
+// Qt
+#include <QDebug>
 
 using namespace data_source::mavlink;
 
 class Communicator::Impl
 {
 public:
+    Communicator* p;
     QList<AbstractLink*> links;
     int systemId = 0;
     int componentId = 0;
+
+    Impl(Communicator* p):
+        p(p)
+    {}
 
     void processPingRequest(AbstractLink* link,
                             const mavlink_message_t& message)
@@ -28,11 +35,19 @@ public:
              link->sendMessage(msg);
         }
     }
+
+    void processHeartbeat(const mavlink_message_t& message)
+    {
+        mavlink_heartbeat_t heartBeat;
+        mavlink_msg_heartbeat_decode(&message, &heartBeat);
+
+        emit p->heartBeatReceived(heartBeat);
+    }
 };
 
 Communicator::Communicator(QObject* parent):
     QObject(parent),
-    d(new Impl())
+    d(new Impl(this))
 {}
 
 Communicator::~Communicator()
@@ -70,10 +85,15 @@ void Communicator::sendMessage(const mavlink_message_t& message)
 
 void Communicator::handleMessage(const mavlink_message_t& message)
 {
+    qDebug() << message.msgid;
+
     switch (message.msgid) {
     case MAVLINK_MSG_ID_PING:
             d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()),
                                   message);
+        break;
+    case MAVLINK_MSG_ID_HEARTBEAT:
+            d->processHeartbeat(message);
         break;
     default:
         break;
