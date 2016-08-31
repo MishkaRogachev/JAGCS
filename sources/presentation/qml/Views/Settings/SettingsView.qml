@@ -10,6 +10,7 @@ Pane {
         width: parent.width
 
         TabButton { text: qsTr("User interface") }
+        TabButton { text: qsTr("Video") }
         TabButton { text: qsTr("Network settings") }
     }
 
@@ -19,6 +20,7 @@ Pane {
         currentIndex: bar.currentIndex
 
         GuiSettingsView { id: uiTab }
+        VideoSettingsView {id: videoTab }
         NetworkSettingsView { id: networkSettings }
     }
 }

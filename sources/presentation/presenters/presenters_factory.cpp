@@ -4,6 +4,8 @@
 #include "status_presenter.h"
 #include "video_presenter.h"
 #include "map_presenter.h"
+
+#include "video_settings_presenter.h"
 #include "network_settings_presenter.h"
 
 using namespace presentation;
@@ -27,6 +29,11 @@ QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 QObject* PresentersFactory::createMapPresenter(QObject* parent)
 {
     return new MapPresenter(parent);
+}
+
+QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
+{
+    return new VideoSettingsPresenter(m_settings, parent);
 }
 
 QObject* PresentersFactory::createNetworkSettingsPresenter(QObject* parent)
