@@ -32,4 +32,6 @@ void AbstractLink::resolveData(const QByteArray& data)
 
         emit messageReceived(message);
     }
+
+    emit statusUpdated(status);
 }

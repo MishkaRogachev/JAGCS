@@ -1,11 +1,11 @@
 #ifndef MAVLINK_ABSTRACT_LINK_H
 #define MAVLINK_ABSTRACT_LINK_H
 
+// MAVLink
+#include <mavlink_types.h>
+
 // Qt
 #include <QObject>
-
-// Internal
-#include "mavlink_traits.h"
 
 namespace data_source
 {
@@ -28,6 +28,7 @@ namespace data_source
 
         signals:
             void messageReceived(mavlink_message_t message);
+            void statusUpdated(mavlink_status_t status);
 
         protected:
             virtual void sendData(const QByteArray& data) = 0;
