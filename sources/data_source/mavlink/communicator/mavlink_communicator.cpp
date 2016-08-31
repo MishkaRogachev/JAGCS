@@ -43,6 +43,14 @@ public:
 
         emit p->heartBeatReceived(heartBeat);
     }
+
+    void processSystemStatus(const mavlink_message_t& message)
+    {
+        mavlink_sys_status_t status;
+        mavlink_msg_sys_status_decode(&message, &status);
+
+        emit p->systemStatusReceived(status);
+    }
 };
 
 Communicator::Communicator(QObject* parent):
@@ -89,11 +97,13 @@ void Communicator::handleMessage(const mavlink_message_t& message)
 
     switch (message.msgid) {
     case MAVLINK_MSG_ID_PING:
-            d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()),
-                                  message);
+        d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()), message);
         break;
     case MAVLINK_MSG_ID_HEARTBEAT:
-            d->processHeartbeat(message);
+        d->processHeartbeat(message);
+        break;
+    case MAVLINK_MSG_ID_SYS_STATUS:
+        d->processSystemStatus(message);
         break;
     default:
         break;

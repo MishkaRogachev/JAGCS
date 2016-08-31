@@ -5,6 +5,7 @@
 
 // MAVLink
 #include <mavlink.h>
+#include <mavlink_msg_sys_status.h>
 
 namespace data_source
 {
@@ -26,6 +27,7 @@ namespace data_source
 
         signals:
             void heartBeatReceived(mavlink_heartbeat_t heartbeat);
+            void systemStatusReceived(mavlink_sys_status_t status);
 
             void messageReceived(mavlink_message_t message);
 
