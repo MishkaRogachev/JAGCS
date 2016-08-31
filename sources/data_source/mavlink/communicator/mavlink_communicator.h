@@ -28,6 +28,9 @@ namespace data_source
         signals:
             void heartBeatReceived(mavlink_heartbeat_t heartbeat);
             void systemStatusReceived(mavlink_sys_status_t status);
+            void gpsRawReceived(mavlink_gps_raw_int_t gps);
+            void vfrHudReceived(mavlink_vfr_hud_t vfrHud);
+            void attitudeReceived(mavlink_vfr_hud_t attitude);
 
             void messageReceived(mavlink_message_t message);
 
