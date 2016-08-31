@@ -5,7 +5,11 @@
 
 // MAVLink
 #include <mavlink.h>
+
 #include <mavlink_msg_sys_status.h>
+#include <mavlink_msg_gps_raw_int.h>
+#include <mavlink_msg_vfr_hud.h>
+#include <mavlink_msg_attitude.h>
 
 namespace data_source
 {
@@ -30,7 +34,7 @@ namespace data_source
             void systemStatusReceived(mavlink_sys_status_t status);
             void gpsRawReceived(mavlink_gps_raw_int_t gps);
             void vfrHudReceived(mavlink_vfr_hud_t vfrHud);
-            void attitudeReceived(mavlink_vfr_hud_t attitude);
+            void attitudeReceived(mavlink_attitude_t attitude);
 
             void messageReceived(mavlink_message_t message);
 

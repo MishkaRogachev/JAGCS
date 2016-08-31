@@ -70,7 +70,7 @@ public:
 
     void processAttitude(const mavlink_message_t& message)
     {
-        mavlink_vfr_hud_t attitude;
+        mavlink_attitude_t attitude;
         mavlink_msg_attitude_decode(&message, &attitude);
 
         emit p->attitudeReceived(attitude);
