@@ -15,7 +15,7 @@ namespace data_source
         class UdpLink: public AbstractLink
         {
         public:
-            UdpLink(int hostPort, const QHostAddress& adress, int port,
+            UdpLink(int hostPort, const QHostAddress& address, int port,
                     QObject* parent = nullptr);
 
             bool isUp() const override;
@@ -33,7 +33,7 @@ namespace data_source
         private:
             QUdpSocket* m_socket;
             int m_hostPort;
-            QHostAddress m_adress;
+            QHostAddress m_address;
             int m_port;
         };
     }
