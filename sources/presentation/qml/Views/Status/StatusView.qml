@@ -12,6 +12,14 @@ ToolBar {
 
         Item { Layout.fillWidth: true }
 
+
+        Button {
+            id: connectionButton
+            text: qsTr("Connection")
+            checkable: true
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
         Button {
             text: qsTr("Settings")
             checkable: true
@@ -24,5 +32,12 @@ ToolBar {
             anchors.verticalCenter: parent.verticalCenter
             onClicked: presenter.quit()
         }
+    }
+
+    ConnectionView {
+        id: connection
+        visible: connectionButton.checked
+        anchors.top: parent.bottom
+        x: connectionButton.x
     }
 }
