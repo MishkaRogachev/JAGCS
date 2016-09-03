@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QDebug>
 
+// Internal
 #include "settings_provider.h"
 
 namespace

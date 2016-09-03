@@ -35,7 +35,7 @@ QObject* PresentersFactory::createStatusPresenter(QObject* parent)
 
 QObject*PresentersFactory::createConnectionPresenter(QObject* parent)
 {
-     return new ConnectionPresenter(parent);
+     return new ConnectionPresenter(nullptr, m_settings, parent); // TODO: DomainEntry
 }
 
 QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
