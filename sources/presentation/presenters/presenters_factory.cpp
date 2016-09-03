@@ -1,9 +1,11 @@
 #include "presenters_factory.h"
 
 // Internal
-#include "status_presenter.h"
 #include "video_presenter.h"
 #include "map_presenter.h"
+
+#include "status_presenter.h"
+#include "connection_presenter.h"
 
 #include "video_settings_presenter.h"
 #include "network_settings_presenter.h"
@@ -16,11 +18,6 @@ PresentersFactory::PresentersFactory(
     m_settings(settings)
 {}
 
-QObject* PresentersFactory::createStatusPresenter(QObject* parent)
-{
-    return new StatusPresenter(parent);
-}
-
 QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 {
     return new VideoPresenter(parent);
@@ -29,6 +26,16 @@ QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 QObject* PresentersFactory::createMapPresenter(QObject* parent)
 {
     return new MapPresenter(parent);
+}
+
+QObject* PresentersFactory::createStatusPresenter(QObject* parent)
+{
+    return new StatusPresenter(parent);
+}
+
+QObject*PresentersFactory::createConnectionPresenter(QObject* parent)
+{
+     return new ConnectionPresenter(parent);
 }
 
 QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
