@@ -1,6 +1,8 @@
 #include "presenters_factory.h"
 
 // Internal
+#include "domain_entry.h"
+
 #include "video_presenter.h"
 #include "map_presenter.h"
 
@@ -12,15 +14,14 @@
 
 using namespace presentation;
 
-PresentersFactory::PresentersFactory(
-        domain::SettingsProvider* settings, QObject* parent):
+PresentersFactory::PresentersFactory(domain::DomainEntry* entry, QObject* parent):
     QObject(parent),
-    m_settings(settings)
+    m_entry(entry)
 {}
 
 QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 {
-    return new VideoPresenter(m_settings, parent);
+    return new VideoPresenter(m_entry->settings, parent);
 }
 
 QObject* PresentersFactory::createMapPresenter(QObject* parent)
@@ -35,15 +36,15 @@ QObject* PresentersFactory::createStatusPresenter(QObject* parent)
 
 QObject* PresentersFactory::createConnectionPresenter(QObject* parent)
 {
-     return new ConnectionPresenter(nullptr, m_settings, parent); // TODO: DomainEntry
+     return new ConnectionPresenter(m_entry->manager, m_entry->settings, parent);
 }
 
 QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
 {
-    return new VideoSettingsPresenter(m_settings, parent);
+    return new VideoSettingsPresenter(m_entry->settings, parent);
 }
 
 QObject* PresentersFactory::createNetworkSettingsPresenter(QObject* parent)
 {
-    return new NetworkSettingsPresenter(m_settings, parent);
+    return new NetworkSettingsPresenter(m_entry->settings, parent);
 }

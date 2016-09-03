@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class SettingsProvider;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit PresentersFactory(domain::SettingsProvider* settings,
+        explicit PresentersFactory(domain::DomainEntry* entry,
                                    QObject* parent = nullptr);
 
         Q_INVOKABLE QObject* createVideoPresenter(QObject* parent);
@@ -28,7 +28,7 @@ namespace presentation
         Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* parent);
 
     private:
-        domain::SettingsProvider* m_settings;
+        domain::DomainEntry* m_entry;
         Q_DISABLE_COPY(PresentersFactory)
     };
 }
