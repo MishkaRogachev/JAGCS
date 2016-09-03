@@ -20,7 +20,7 @@ PresentersFactory::PresentersFactory(
 
 QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 {
-    return new VideoPresenter(parent);
+    return new VideoPresenter(m_settings, parent);
 }
 
 QObject* PresentersFactory::createMapPresenter(QObject* parent)
@@ -33,7 +33,7 @@ QObject* PresentersFactory::createStatusPresenter(QObject* parent)
     return new StatusPresenter(parent);
 }
 
-QObject*PresentersFactory::createConnectionPresenter(QObject* parent)
+QObject* PresentersFactory::createConnectionPresenter(QObject* parent)
 {
      return new ConnectionPresenter(nullptr, m_settings, parent); // TODO: DomainEntry
 }

@@ -3,7 +3,9 @@
 // Qt
 #include <QCamera>
 #include <QCameraInfo>
-#include <QSettings>
+
+// Internal
+#include "settings_provider.h"
 
 namespace
 {
@@ -16,6 +18,7 @@ using namespace presentation;
 class VideoPresenter::Impl
 {
 public:
+    domain::SettingsProvider* settings;
     QCamera* camera;
     QAbstractVideoSurface* videoSurface;
 
@@ -28,10 +31,13 @@ public:
     }
 };
 
-VideoPresenter::VideoPresenter(QObject* view):
+VideoPresenter::VideoPresenter(
+        domain::SettingsProvider* settings, QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
+    d->settings = settings;
+
     this->updateSource();
 }
 
@@ -57,10 +63,9 @@ void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
-    QSettings settings;
-    settings.beginGroup(::videoGroup);
+    d->settings->beginGroup(::videoGroup);
 
-    QCameraInfo info(settings.value(::device).toByteArray());
+    QCameraInfo info(d->settings->value(::device).toByteArray());
     if (info.isNull())
     {
         d->camera = nullptr;
@@ -70,4 +75,6 @@ void VideoPresenter::updateSource()
         d->camera = new QCamera(info, this);
         d->updateCameraVideoSurface();
     }
+
+    d->settings->endGroup();
 }

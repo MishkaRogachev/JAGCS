@@ -17,8 +17,7 @@ namespace presentation
         Q_PROPERTY(QStringList sources READ sources NOTIFY sourcesChanged)
 
     public:
-        explicit VideoSettingsPresenter(domain::SettingsProvider* settings,
-                                        QObject* view);
+        VideoSettingsPresenter(domain::SettingsProvider* settings, QObject* view);
         ~VideoSettingsPresenter() override;
 
         QStringList sources() const;
