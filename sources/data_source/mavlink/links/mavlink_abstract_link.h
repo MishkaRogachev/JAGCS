@@ -1,29 +1,24 @@
 #ifndef MAVLINK_ABSTRACT_LINK_H
 #define MAVLINK_ABSTRACT_LINK_H
 
+// Internal
+#include "i_link.h"
+
 // MAVLink
 #include <mavlink_types.h>
-
-// Qt
-#include <QObject>
 
 namespace data_source
 {
     namespace mavlink
     {
-        class AbstractLink: public QObject
+        class AbstractLink: public ILink
         {
             Q_OBJECT
 
         public:
             explicit AbstractLink(QObject* parent);
 
-            virtual bool isUp() const = 0;
-
         public slots:
-            virtual void up() = 0;
-            virtual void down() = 0;
-
             void sendMessage(const mavlink_message_t& message);
 
         signals:

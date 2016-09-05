@@ -22,6 +22,8 @@ bool SerialLink::isUp() const
 
 void SerialLink::up()
 {
+    if (this->isUp()) return;
+
     if (!m_port->open(QIODevice::ReadWrite))
     {
         qWarning("Serial port connection error: '%s'!",
@@ -29,11 +31,18 @@ void SerialLink::up()
 
         m_port->close();
     }
+    else
+    {
+        emit upChanged(true);
+    }
 }
 
 void SerialLink::down()
 {
+    if (!this->isUp()) return;
+
     m_port->close();
+    emit upChanged(false);
 }
 
 void SerialLink::sendData(const QByteArray& data)

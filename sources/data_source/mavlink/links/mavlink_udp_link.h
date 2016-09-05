@@ -14,6 +14,8 @@ namespace data_source
     {
         class UdpLink: public AbstractLink
         {
+            Q_OBJECT
+
         public:
             UdpLink(int hostPort, const QHostAddress& address, int port,
                     QObject* parent = nullptr);

@@ -24,6 +24,8 @@ bool UdpLink::isUp() const
 
 void UdpLink::up()
 {
+    if (this->isUp()) return;
+
     if (!m_socket->bind(m_hostPort))
     {
         qWarning("UDP connection error: '%s'!",
@@ -31,11 +33,18 @@ void UdpLink::up()
 
         m_socket->close();
     }
+    else
+    {
+        emit upChanged(true);
+    }
 }
 
 void UdpLink::down()
 {
+    if (!this->isUp()) return;
+
     m_socket->close();
+    emit upChanged(false);
 }
 
 void UdpLink::sendData(const QByteArray& data)

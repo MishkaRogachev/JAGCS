@@ -11,6 +11,8 @@ namespace data_source
     {
         class SerialLink: public AbstractLink
         {
+            Q_OBJECT
+
         public:
             SerialLink(const QString& portName, qint32 baudRate,
                        QObject* parent = nullptr);

@@ -6,7 +6,7 @@
 using namespace data_source::mavlink;
 
 AbstractLink::AbstractLink(QObject* parent):
-    QObject(parent)
+    ILink(parent)
 {}
 
 void AbstractLink::sendMessage(const mavlink_message_t& message)
