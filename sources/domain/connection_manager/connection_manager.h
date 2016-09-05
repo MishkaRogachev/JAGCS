@@ -5,6 +5,9 @@
 #include <QObject>
 #include <QHostAddress>
 
+// Internal
+#include <i_link.h>
+
 namespace domain
 {
     class ConnectionManager : public QObject
@@ -14,6 +17,8 @@ namespace domain
     public:
         explicit ConnectionManager(QObject* parent = nullptr);
         ~ConnectionManager() override;
+
+        QList<data_source::ILink*> links() const;
 
     public slots:
         void addNewSerialLink(const QString& portName, qint32 baudRate);

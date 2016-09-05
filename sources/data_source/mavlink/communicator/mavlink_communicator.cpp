@@ -87,6 +87,11 @@ Communicator::~Communicator()
     delete d;
 }
 
+QList<AbstractLink*> Communicator::links() const
+{
+    return d->links;
+}
+
 void Communicator::addLink(AbstractLink* link)
 {
     link->setParent(this);

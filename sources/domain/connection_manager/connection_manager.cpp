@@ -25,6 +25,16 @@ ConnectionManager::~ConnectionManager()
     delete d;
 }
 
+QList<data_source::ILink*> ConnectionManager::links() const
+{
+    QList<data_source::ILink*> links;
+
+    for (const auto& link: d->communicator->links())
+        links.append(link);
+
+    return links;
+}
+
 void ConnectionManager::addNewSerialLink(const QString& portName, qint32 baudRate)
 {
     d->communicator->addLink(

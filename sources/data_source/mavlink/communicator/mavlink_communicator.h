@@ -26,6 +26,8 @@ namespace data_source
             explicit Communicator(QObject* parent = nullptr);
             ~Communicator() override;
 
+            QList<AbstractLink*> links() const;
+
         public slots:
             void addLink(AbstractLink* link);
             void removeLink(AbstractLink* link);

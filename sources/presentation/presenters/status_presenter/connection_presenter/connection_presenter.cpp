@@ -29,6 +29,16 @@ ConnectionPresenter::~ConnectionPresenter()
     delete d;
 }
 
+QList<QObject*> ConnectionPresenter::links() const
+{
+    QList<QObject*> list;
+
+    for (data_source::ILink* link: d->manager->links())
+        list.append(link);
+
+    return list;
+}
+
 void ConnectionPresenter::addSerialLink()
 {
     d->settings->beginGroup(domain::connection_settings::group);
@@ -38,6 +48,8 @@ void ConnectionPresenter::addSerialLink()
                 d->settings->value(domain::connection_settings::baudRate).toInt());
 
     d->settings->endGroup();
+
+    emit linksChanged(this->links());
 }
 
 void ConnectionPresenter::addUdpLink()
@@ -50,4 +62,6 @@ void ConnectionPresenter::addUdpLink()
                 d->settings->value(domain::connection_settings::port).toInt());
 
     d->settings->endGroup();
+
+    emit linksChanged(this->links());
 }

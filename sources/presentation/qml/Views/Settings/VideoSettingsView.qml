@@ -7,7 +7,6 @@ Frame {
 
     property QtObject presenter: factory.createVideoSettingsPresenter(root)
 
-
     GridLayout {
         columns: 2
         anchors.fill: parent

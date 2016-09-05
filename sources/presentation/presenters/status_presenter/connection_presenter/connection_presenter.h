@@ -15,15 +15,22 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(QList<QObject*> links READ links NOTIFY linksChanged)
+
     public:
         explicit ConnectionPresenter(domain::ConnectionManager* manager,
                                      domain::SettingsProvider* settings,
                                      QObject* view);
         ~ConnectionPresenter() override;
 
+        QList<QObject*> links() const;
+
     public slots:
         void addSerialLink();
         void addUdpLink();
+
+    signals:
+        void linksChanged(QList<QObject*> links);
 
     private:
         class Impl;

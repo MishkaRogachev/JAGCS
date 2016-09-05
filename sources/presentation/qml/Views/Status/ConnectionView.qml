@@ -8,11 +8,28 @@ Pane {
     property QtObject presenter: factory.createConnectionPresenter(root)
 
     ColumnLayout {
+        id: column
         anchors.fill: parent
+
+        Repeater {
+            model: presenter.links
+
+            Frame {
+                Layout.preferredWidth: column.width
+
+                RowLayout {
+                    anchors.fill: parent
+
+                    Label {
+                        text: qsTr("Link") + " " + (index + 1).toString()
+                    }
+                }
+            }
+        }
 
         Button {
             text: qsTr("Add Link")
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
             onClicked: addMenu.open()
 
             Menu {
