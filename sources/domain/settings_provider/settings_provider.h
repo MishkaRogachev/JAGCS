@@ -1,6 +1,7 @@
 #ifndef SETTINGS_PROVIDER_H
-#define SETTINGS__PROVIDER_H
+#define SETTINGS_PROVIDER_H
 
+// Qt
 #include <QObject>
 #include <QVariant>
 
@@ -22,6 +23,8 @@ namespace domain
 
         void beginGroup(const QString& prefix);
         void endGroup();
+
+        void makeDefaults();
 
     signals:
         void valueChanged(QString key, QVariant value);

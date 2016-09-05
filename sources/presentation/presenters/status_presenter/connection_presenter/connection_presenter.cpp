@@ -3,16 +3,7 @@
 // Internal
 #include "connection_manager.h"
 #include "settings_provider.h"
-
-namespace
-{
-    const char* connectionGroup = "Connection";
-    const char* serialDevice = "serialDevice";
-    const char* baudRate = "baudRate";
-    const char* hostPort = "hostPort";
-    const char* address = "address";
-    const char* port = "port";
-}
+#include "settings.h"
 
 using namespace presentation;
 
@@ -40,21 +31,23 @@ ConnectionPresenter::~ConnectionPresenter()
 
 void ConnectionPresenter::addSerialLink()
 {
-    d->settings->beginGroup(::connectionGroup);
+    d->settings->beginGroup(domain::connection_settings::group);
 
-    d->manager->addNewSerialLink(d->settings->value(::serialDevice).toString(),
-                                 d->settings->value(::baudRate).toInt());
+    d->manager->addNewSerialLink(
+                d->settings->value(domain::connection_settings::serialDevice).toString(),
+                d->settings->value(domain::connection_settings::baudRate).toInt());
 
     d->settings->endGroup();
 }
 
 void ConnectionPresenter::addUdpLink()
 {
-    d->settings->beginGroup(::connectionGroup);
+    d->settings->beginGroup(domain::connection_settings::group);
 
-    d->manager->addNewUdpLink(d->settings->value(::hostPort).toInt(),
-                              QHostAddress(d->settings->value(::address).toString()),
-                              d->settings->value(::port).toInt());
+    d->manager->addNewUdpLink(
+                d->settings->value(domain::connection_settings::hostPort).toInt(),
+                QHostAddress(d->settings->value(domain::connection_settings::address).toString()),
+                d->settings->value(domain::connection_settings::port).toInt());
 
     d->settings->endGroup();
 }

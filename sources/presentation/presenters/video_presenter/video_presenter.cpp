@@ -6,12 +6,7 @@
 
 // Internal
 #include "settings_provider.h"
-
-namespace
-{
-    const char* videoGroup = "Video";
-    const char* device = "device";
-}
+#include "settings.h"
 
 using namespace presentation;
 
@@ -63,9 +58,9 @@ void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
-    d->settings->beginGroup(::videoGroup);
+    d->settings->beginGroup(domain::video_settings::group);
 
-    QCameraInfo info(d->settings->value(::device).toByteArray());
+    QCameraInfo info(d->settings->value(domain::video_settings::device).toByteArray());
     if (info.isNull())
     {
         d->camera = nullptr;

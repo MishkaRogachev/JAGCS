@@ -16,7 +16,7 @@ Item {
         ColumnLayout {
             id: toolBar
             Layout.fillHeight: true
-            Layout.preferredWidth: settingsProvider.value("Gui/toolBarWidth", 320);
+            Layout.preferredWidth: settingsProvider.value("Gui/toolbarWidth");
 
             FlightDirector {
                 id: flightDirector
