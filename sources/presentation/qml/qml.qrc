@@ -9,7 +9,6 @@
         <file>Indicators/FlightDirector.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
-        <file>Views/Status/ConnectionView.qml</file>
         <file>Views/Map/MapView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Flight/FlightView.qml</file>
@@ -17,5 +16,6 @@
         <file>Views/Settings/GuiSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
+        <file>Views/Connection/ConnectionView.qml</file>
     </qresource>
 </RCC>
