@@ -14,9 +14,9 @@ Frame {
         Repeater {
             model: presenter.links
 
-            Label { // TODO: ConnectionItem
-                anchors.left: column.left
-                text: qsTr("Link") + " " + (index + 1).toString()
+            ConnectionItemView {
+                presenter: modelData
+                onRemoveMe: root.presenter.removeLink(index)
             }
         }
 

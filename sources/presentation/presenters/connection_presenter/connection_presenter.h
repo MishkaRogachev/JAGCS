@@ -29,6 +29,8 @@ namespace presentation
         void addSerialLink();
         void addUdpLink();
 
+        void removeLink(int index);
+
     signals:
         void linksChanged(QList<QObject*> links);
 

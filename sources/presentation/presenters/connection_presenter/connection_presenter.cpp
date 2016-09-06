@@ -65,3 +65,10 @@ void ConnectionPresenter::addUdpLink()
 
     emit linksChanged(this->links());
 }
+
+void ConnectionPresenter::removeLink(int index)
+{
+    d->manager->removeLink(index);
+
+    emit linksChanged(this->links());
+}

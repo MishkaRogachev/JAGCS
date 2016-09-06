@@ -9,7 +9,7 @@ namespace data_source
     {
         Q_OBJECT
 
-        Q_PROPERTY(bool up READ isUp NOTIFY upChanged)
+        Q_PROPERTY(bool isUp READ isUp NOTIFY upChanged)
 
     public:
         explicit ILink(QObject* parent = nullptr);

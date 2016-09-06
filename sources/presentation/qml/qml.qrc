@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>JS/helper.js</file>
+        <file>Controls/ButtonBar.qml</file>
         <file>Indicators/Horizont.qml</file>
         <file>Indicators/PlaneMark.qml</file>
         <file>Indicators/LinearScale.qml</file>
@@ -17,6 +18,6 @@
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Connection/ConnectionView.qml</file>
-        <file>Controls/ButtonBar.qml</file>
+        <file>Views/Connection/ConnectionItemView.qml</file>
     </qresource>
 </RCC>

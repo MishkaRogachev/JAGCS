@@ -37,13 +37,22 @@ QList<data_source::ILink*> ConnectionManager::links() const
 
 void ConnectionManager::addNewSerialLink(const QString& portName, qint32 baudRate)
 {
-    d->communicator->addLink(
-                new data_source::mavlink::SerialLink(portName, baudRate));
+    auto link = new data_source::mavlink::SerialLink(portName, baudRate);
+    link->setObjectName(tr("Serial"));
+    d->communicator->addLink(link);
 }
 
 void ConnectionManager::addNewUdpLink(int hostPort, const QHostAddress& address,
                                       int port)
 {
-    d->communicator->addLink(
-                new data_source::mavlink::UdpLink(hostPort, address, port));
+    auto link = new data_source::mavlink::UdpLink(hostPort, address, port);
+    link->setObjectName(tr("UDP"));
+    d->communicator->addLink(link);
+}
+
+void ConnectionManager::removeLink(int index)
+{
+    if (index < 0 || index >= d->communicator->links().count()) return;
+
+    d->communicator->removeLink(d->communicator->links().at(index));
 }

@@ -24,6 +24,8 @@ namespace domain
         void addNewSerialLink(const QString& portName, qint32 baudRate);
         void addNewUdpLink(int hostPort, const QHostAddress& address, int port);
 
+        void removeLink(int index);
+
     private:
         class Impl;
         Impl* const d;
