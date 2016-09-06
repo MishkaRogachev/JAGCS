@@ -17,5 +17,6 @@
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Connection/ConnectionView.qml</file>
+        <file>Controls/ButtonBar.qml</file>
     </qresource>
 </RCC>

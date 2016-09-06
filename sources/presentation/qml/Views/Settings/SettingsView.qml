@@ -2,25 +2,30 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import "../../Controls"
+import "../Connection"
+
 Pane {
     id: root
 
-    TabBar {
-        id: bar
-        width: parent.width
+    RowLayout {
+        anchors.fill: parent
 
-        TabButton { text: qsTr("User interface") }
-        TabButton { text: qsTr("Video") }
-        TabButton { text: qsTr("Network settings") }
-    }
+        ButtonBar {
+            id: bar
+            anchors.top: parent.top
+            model: [ qsTr("User interface"), qsTr("Connection"),
+                     qsTr("Video"), qsTr("Network settings") ]
+        }
 
-    StackLayout {
-        anchors.top: bar.bottom
-        width: parent.width
-        currentIndex: bar.currentIndex
+        StackLayout {
+            height: parent.height
+            currentIndex: bar.currentIndex
 
-        GuiSettingsView { id: uiTab }
-        VideoSettingsView {id: videoTab }
-        NetworkSettingsView { id: networkSettings }
+            GuiSettingsView { id: uiTab }
+            ConnectionView { id: connection }
+            VideoSettingsView {id: videoTab }
+            NetworkSettingsView { id: networkSettings }
+        }
     }
 }

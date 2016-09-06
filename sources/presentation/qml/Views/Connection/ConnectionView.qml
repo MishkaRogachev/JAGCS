@@ -29,7 +29,7 @@ Pane {
 
         Button {
             text: qsTr("Add Link")
-            anchors.left: parent.left
+            anchors.right: parent.right
             onClicked: addMenu.open()
 
             Menu {
