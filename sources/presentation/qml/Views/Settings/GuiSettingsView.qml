@@ -7,18 +7,20 @@ Frame {
 
 //    property QtObject presenter: factory.createGuiSettingsPresenter(root)
 
-    GridLayout {
-        columns: 2
+    ColumnLayout{
         anchors.fill: parent
 
-        Label {
-            text: qsTr("Toolbar width")
-        }
-
         RowLayout {
+            Layout.fillWidth: true
+
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Toolbar width")
+            }
 
             Slider {
                 id: sidebarWidthSlider
+                Layout.fillWidth: true
                 value: settingsProvider.value("Gui/toolbarWidth");
                 from: 80
                 to: 640
@@ -28,8 +30,14 @@ Frame {
             }
 
             Label {
+                Layout.preferredWidth: 86
+                horizontalAlignment: Text.AlignHCenter
                 text: sidebarWidthSlider.value.toFixed(0)
             }
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
 }

@@ -24,61 +24,77 @@ Frame {
         anchors.fill: parent
 
         Label {
+            Layout.fillWidth: true
             text: qsTr("Proxy type")
         }
 
         ComboBox {
             id: typeItem
+            Layout.fillWidth: true
             model: presenter.typeModel
         }
 
         Label {
+            Layout.fillWidth: true
             text: qsTr("Host name")
         }
 
         TextField {
             id: hostNameItem
+            Layout.fillWidth: true
             placeholderText: qsTr("Enter hostname")
         }
 
         Label {
+            Layout.fillWidth: true
             text: qsTr("Port")
         }
 
         SpinBox {
             id: portItem
+            Layout.fillWidth: true
             editable: true
             from: 0
             to: 9999
         }
 
         Label {
+            Layout.fillWidth: true
             text: qsTr("User name")
         }
 
         TextField {
             id: userItem
+            Layout.fillWidth: true
             placeholderText: qsTr("Enter user name")
         }
 
         Label {
+            Layout.fillWidth: true
             text: qsTr("User password")
         }
 
         TextField {
             id: passwordItem
+            Layout.fillWidth: true
             placeholderText: qsTr("Enter password")
             echoMode: TextInput.Password
         }
 
         Button {
+            Layout.fillWidth: true
             text: qsTr("Restore")
             onClicked: presenter.restore()
         }
 
         Button {
+            Layout.fillWidth: true
             text: qsTr("Apply")
             onClicked: presenter.apply()
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
 }

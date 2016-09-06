@@ -7,17 +7,26 @@ Frame {
 
     property QtObject presenter: factory.createVideoSettingsPresenter(root)
 
-    GridLayout {
-        columns: 2
+    ColumnLayout{
         anchors.fill: parent
 
-        Label {
-            text: qsTr("Video source")
+        RowLayout {
+            Layout.fillWidth: true
+
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Video source")
+            }
+
+            ComboBox {
+                id: typeItem
+                Layout.fillWidth: true
+                model: presenter.sources
+            }
         }
 
-        ComboBox {
-            id: typeItem
-            model: presenter.sources
+        Item {
+            Layout.fillHeight: true
         }
     }
 }

@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-Pane {
+Frame {
     id: root
 
     property QtObject presenter: factory.createConnectionPresenter(root)
@@ -14,16 +14,9 @@ Pane {
         Repeater {
             model: presenter.links
 
-            Frame {
-                Layout.preferredWidth: column.width
-
-                RowLayout {
-                    anchors.fill: parent
-
-                    Label {
-                        text: qsTr("Link") + " " + (index + 1).toString()
-                    }
-                }
+            Label { // TODO: ConnectionItem
+                anchors.left: column.left
+                text: qsTr("Link") + " " + (index + 1).toString()
             }
         }
 
@@ -50,6 +43,10 @@ Pane {
                     onTriggered: addMenu.close()
                 }
             }
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
 }
