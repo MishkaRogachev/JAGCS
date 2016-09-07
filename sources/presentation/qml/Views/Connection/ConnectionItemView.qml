@@ -19,26 +19,63 @@ RowLayout {
         columns: 2
         visible: linkItem ? 'portName' in linkItem : false
 
-        Label {
-            text: qsTr("Serial device")
-        }
+        Label { text: qsTr("Serial device") }
 
         ComboBox {
             Layout.fillWidth: true
             model: presenter.serialDevices
-            currentIndex: model.indexOf(linkItem.portName)
-            onCurrentIndexChanged: linkItem.setPortName(model[currentIndex])
+            currentIndex: linkItem && 'portName' in linkItem ?
+                              model.indexOf(linkItem.portName) : 0
+            onCurrentIndexChanged: if (linkItem && 'portName' in linkItem)
+                                       linkItem.setPortName(model[currentIndex])
         }
 
-        Label {
-            text: qsTr("Baud rate")
-        }
+        Label { text: qsTr("Baud rate") }
 
         ComboBox {
             Layout.fillWidth: true
             model: presenter.serialBaudRates
-            currentIndex: model.indexOf(linkItem.baudRate)
-            onCurrentIndexChanged: linkItem.setBaudRate(model[currentIndex])
+            currentIndex: linkItem && 'baudRate' in linkItem ?
+                              model.indexOf(linkItem.baudRate) : 0
+            onCurrentIndexChanged: if (linkItem && 'baudRate' in linkItem)
+                                       linkItem.setBaudRate(model[currentIndex])
+        }
+    }
+
+    GridLayout {
+        id: udpSettings
+        columns: 2
+        visible: linkItem ? 'rxPort' in linkItem : false
+
+        Label { text: qsTr("Recieve port") }
+
+        SpinBox {
+            Layout.fillWidth: true
+            editable: true
+            from: 0
+            to: 99999
+            value: linkItem && 'rxPort' in linkItem ? linkItem.rxPort : 0
+            onValueChanged: if (linkItem) linkItem.setRxPort(value)
+        }
+
+        Label { text: qsTr("Transmit address") }
+
+        TextField {
+            Layout.fillWidth: true
+            placeholderText: qsTr("Enter address")
+            text: linkItem && 'address' in linkItem? linkItem.address : ""
+            onTextChanged: if (linkItem) linkItem.setAddress(text)
+        }
+
+        Label { text: qsTr("Transmit port") }
+
+        SpinBox {
+            Layout.fillWidth: true
+            editable: true
+            from: 0
+            to: 99999
+            value: linkItem && 'txPort' in linkItem ? linkItem.txPort : 0
+            onValueChanged: if (linkItem) linkItem.setTxPort(value)
         }
     }
 

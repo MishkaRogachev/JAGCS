@@ -10,6 +10,7 @@ Frame {
     ColumnLayout {
         id: column
         anchors.fill: parent
+        spacing: 16
 
         Repeater {
             model: presenter.links

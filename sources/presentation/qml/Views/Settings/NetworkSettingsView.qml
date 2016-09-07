@@ -7,7 +7,7 @@ Frame {
 
     property QtObject presenter: factory.createNetworkSettingsPresenter(root)
 
-    property alias proxyType: typeItem.currentText
+    property alias type: typeItem.currentText
     property alias hostName: hostNameItem.text
     property alias port: portItem.value
     property alias user: userItem.text
@@ -55,7 +55,7 @@ Frame {
             Layout.fillWidth: true
             editable: true
             from: 0
-            to: 9999
+            to: 99999
         }
 
         Label {

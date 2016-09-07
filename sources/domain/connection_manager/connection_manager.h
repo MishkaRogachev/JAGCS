@@ -22,7 +22,7 @@ namespace domain
 
     public slots:
         void addNewSerialLink(const QString& portName, qint32 baudRate);
-        void addNewUdpLink(int hostPort, const QHostAddress& address, int port);
+        void addNewUdpLink(int hostPort, const QString& address, int port);
 
         void removeLink(data_source::ILink* link);
 

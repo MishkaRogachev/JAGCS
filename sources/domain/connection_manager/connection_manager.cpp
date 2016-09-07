@@ -44,7 +44,7 @@ void ConnectionManager::addNewSerialLink(const QString& portName, qint32 baudRat
     emit linksChanged(this->links());
 }
 
-void ConnectionManager::addNewUdpLink(int hostPort, const QHostAddress& address,
+void ConnectionManager::addNewUdpLink(int hostPort, const QString& address,
                                       int port)
 {
     auto link = new data_source::mavlink::UdpLink(hostPort, address, port);

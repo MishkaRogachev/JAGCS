@@ -81,7 +81,7 @@ void ConnectionPresenter::addUdpLink()
 
     d->manager->addNewUdpLink(
                 d->settings->value(domain::connection_settings::hostPort).toInt(),
-                QHostAddress(d->settings->value(domain::connection_settings::address).toString()),
+                d->settings->value(domain::connection_settings::address).toString(),
                 d->settings->value(domain::connection_settings::port).toInt());
 
     d->settings->endGroup();
