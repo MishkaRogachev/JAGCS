@@ -5,6 +5,10 @@
 #include "settings_provider.h"
 #include "settings.h"
 
+// Qt
+#include <QSerialPortInfo>
+#include <QDebug>
+
 using namespace presentation;
 
 class ConnectionPresenter::Impl
@@ -39,6 +43,25 @@ QList<QObject*> ConnectionPresenter::links() const
     return list;
 }
 
+QStringList ConnectionPresenter::serialDevices() const
+{
+    QStringList devices;
+
+    for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
+        devices.append(info.portName());
+
+    return devices;
+}
+
+QVariantList ConnectionPresenter::serialBaudRates() const
+{
+    QVariantList rates;
+    for (qint32 rate: QSerialPortInfo::standardBaudRates())
+        rates.append(rate);
+
+    return rates;
+}
+
 void ConnectionPresenter::addSerialLink()
 {
     d->settings->beginGroup(domain::connection_settings::group);
@@ -66,9 +89,9 @@ void ConnectionPresenter::addUdpLink()
     emit linksChanged(this->links());
 }
 
-void ConnectionPresenter::removeLink(int index)
+void ConnectionPresenter::removeLink(QObject* link)
 {
-    d->manager->removeLink(index);
+    d->manager->removeLink(qobject_cast<data_source::ILink*>(link));
 
     emit linksChanged(this->links());
 }

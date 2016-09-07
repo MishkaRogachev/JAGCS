@@ -24,7 +24,10 @@ namespace domain
         void addNewSerialLink(const QString& portName, qint32 baudRate);
         void addNewUdpLink(int hostPort, const QHostAddress& address, int port);
 
-        void removeLink(int index);
+        void removeLink(data_source::ILink* link);
+
+    signals:
+        void linksChanged(QList<data_source::ILink*>);
 
     private:
         class Impl;

@@ -15,8 +15,8 @@ Frame {
             model: presenter.links
 
             ConnectionItemView {
-                presenter: modelData
-                onRemoveMe: root.presenter.removeLink(index)
+                presenter: root.presenter
+                linkItem: modelData
             }
         }
 
@@ -36,11 +36,6 @@ Frame {
                 MenuItem {
                     text: qsTr("Udp")
                     onTriggered: presenter.addUdpLink()
-                }
-
-                MenuItem {
-                    text: qsTr("Close")
-                    onTriggered: addMenu.close()
                 }
             }
         }

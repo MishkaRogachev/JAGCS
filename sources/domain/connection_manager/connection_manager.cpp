@@ -39,7 +39,9 @@ void ConnectionManager::addNewSerialLink(const QString& portName, qint32 baudRat
 {
     auto link = new data_source::mavlink::SerialLink(portName, baudRate);
     link->setObjectName(tr("Serial"));
+
     d->communicator->addLink(link);
+    emit linksChanged(this->links());
 }
 
 void ConnectionManager::addNewUdpLink(int hostPort, const QHostAddress& address,
@@ -47,12 +49,14 @@ void ConnectionManager::addNewUdpLink(int hostPort, const QHostAddress& address,
 {
     auto link = new data_source::mavlink::UdpLink(hostPort, address, port);
     link->setObjectName(tr("UDP"));
+
     d->communicator->addLink(link);
+    emit linksChanged(this->links());
 }
 
-void ConnectionManager::removeLink(int index)
+void ConnectionManager::removeLink(data_source::ILink* link)
 {
-    if (index < 0 || index >= d->communicator->links().count()) return;
-
-    d->communicator->removeLink(d->communicator->links().at(index));
+    d->communicator->removeLink(
+                qobject_cast<data_source::mavlink::AbstractLink*>(link));
+    emit linksChanged(this->links());
 }

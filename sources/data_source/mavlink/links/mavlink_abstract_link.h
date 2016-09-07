@@ -15,6 +15,8 @@ namespace data_source
         {
             Q_OBJECT
 
+            // TODO: MAVLink status
+
         public:
             explicit AbstractLink(QObject* parent);
 

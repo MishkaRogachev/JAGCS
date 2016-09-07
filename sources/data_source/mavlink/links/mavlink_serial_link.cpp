@@ -20,6 +20,16 @@ bool SerialLink::isUp() const
     return m_port->isOpen();
 }
 
+QString SerialLink::portName() const
+{
+    return m_port->portName();
+}
+
+qint32 SerialLink::baudRate() const
+{
+    return m_port->baudRate();
+}
+
 void SerialLink::up()
 {
     if (this->isUp()) return;
@@ -43,6 +53,22 @@ void SerialLink::down()
 
     m_port->close();
     emit upChanged(false);
+}
+
+void SerialLink::setPortName(QString portName)
+{
+    if (m_port->portName() == portName) return;
+
+    m_port->setPortName(portName);
+    emit portNameChanged(m_port->portName());
+}
+
+void SerialLink::setBaudRate(qint32 baudRate)
+{
+    if (m_port->baudRate() == baudRate) return;
+
+    m_port->setBaudRate(baudRate);
+    emit baudRateChanged(m_port->baudRate());
 }
 
 void SerialLink::sendData(const QByteArray& data)

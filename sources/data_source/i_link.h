@@ -1,5 +1,5 @@
-#ifndef ILINK_H
-#define ILINK_H
+#ifndef I_LINK_H
+#define I_LINK_H
 
 #include <QtCore/QObject>
 
@@ -25,4 +25,4 @@ namespace data_source
     };
 }
 
-#endif // ILINK_H
+#endif // I_LINK_H

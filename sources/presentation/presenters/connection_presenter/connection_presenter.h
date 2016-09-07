@@ -16,6 +16,8 @@ namespace presentation
         Q_OBJECT
 
         Q_PROPERTY(QList<QObject*> links READ links NOTIFY linksChanged)
+        Q_PROPERTY(QStringList serialDevices READ serialDevices CONSTANT)
+        Q_PROPERTY(QVariantList serialBaudRates READ serialBaudRates CONSTANT)
 
     public:
         explicit ConnectionPresenter(domain::ConnectionManager* manager,
@@ -25,11 +27,14 @@ namespace presentation
 
         QList<QObject*> links() const;
 
+        QStringList serialDevices() const; // TODO: service for serial devices
+        QVariantList serialBaudRates() const;
+
     public slots:
         void addSerialLink();
         void addUdpLink();
 
-        void removeLink(int index);
+        void removeLink(QObject* link);
 
     signals:
         void linksChanged(QList<QObject*> links);
