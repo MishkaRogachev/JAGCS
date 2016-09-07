@@ -1,13 +1,13 @@
-#include "mavlink_udp_link.h"
+#include "udp_link.h"
 
 // Qt
 #include <QUdpSocket>
 
-using namespace data_source::mavlink;
+using namespace data_source;
 
 UdpLink::UdpLink(int rxPort, const QString& address, int txPort,
                  QObject* parent):
-    AbstractLink(parent),
+    ILink(parent),
     m_socket(new QUdpSocket(this)),
     m_rxPort(rxPort),
     m_address(address),
@@ -62,6 +62,11 @@ void UdpLink::down()
     emit upChanged(false);
 }
 
+void UdpLink::sendData(const QByteArray& data)
+{
+    m_socket->writeDatagram(data, QHostAddress(m_address), m_txPort);
+}
+
 void UdpLink::setRxPort(int port)
 {
     if (m_rxPort == port) return;
@@ -93,11 +98,6 @@ void UdpLink::setTxPort(int port)
     emit txPortChanged(port);
 }
 
-void UdpLink::sendData(const QByteArray& data)
-{
-    m_socket->writeDatagram(data, QHostAddress(m_address), m_txPort);
-}
-
 void UdpLink::readPendingDatagrams()
 {
     while (m_socket->hasPendingDatagrams())
@@ -106,6 +106,6 @@ void UdpLink::readPendingDatagrams()
         datagram.resize(m_socket->pendingDatagramSize());
         m_socket->readDatagram(datagram.data(), datagram.size());
 
-        this->resolveData(datagram);
+        emit dataReceived(datagram);
     }
 }

@@ -20,8 +20,12 @@ namespace data_source
         virtual void up() = 0;
         virtual void down() = 0;
 
+        virtual void sendData(const QByteArray& data) = 0;
+
     signals:
         void upChanged(bool isUp);
+
+        void dataReceived(const QByteArray& data);
     };
 }
 

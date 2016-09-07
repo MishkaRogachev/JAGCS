@@ -6,13 +6,14 @@
 // Qt
 #include <QDebug>
 
+using namespace data_source;
 using namespace data_source::mavlink;
 
 class Communicator::Impl
 {
 public:
     Communicator* p;
-    QList<AbstractLink*> links;
+    QList<ILink*> links;
     int systemId = 0;
     int componentId = 0;
 
@@ -20,8 +21,7 @@ public:
         p(p)
     {}
 
-    void processPingRequest(AbstractLink* link,
-                            const mavlink_message_t& message)
+    void processPingRequest(ILink* link, const mavlink_message_t& message)
     {
         mavlink_ping_t ping;
         mavlink_msg_ping_decode(&message, &ping);
@@ -32,7 +32,11 @@ public:
              mavlink_msg_ping_pack(systemId, componentId, &msg,
                                    ping.time_usec, ping.seq,
                                    message.sysid, message.compid);
-             link->sendMessage(msg);
+             static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+             int lenght = mavlink_msg_to_send_buffer(buffer, &msg);
+             QByteArray data((const char*)buffer, lenght);
+
+             link->sendData(data);
         }
     }
 
@@ -87,29 +91,27 @@ Communicator::~Communicator()
     delete d;
 }
 
-QList<AbstractLink*> Communicator::links() const
+QList<ILink*> Communicator::links() const
 {
     return d->links;
 }
 
-void Communicator::addLink(AbstractLink* link)
+void Communicator::addLink(ILink* link)
 {
     link->setParent(this);
 
     d->links.append(link);
 
-    connect(link, &AbstractLink::messageReceived,
-            this, &Communicator::handleMessage);
+    connect(link, &ILink::dataReceived, this, &Communicator::handleData);
 }
 
-void Communicator::removeLink(AbstractLink* link)
+void Communicator::removeLink(ILink* link)
 {
     if (link->parent() == this) link->setParent(nullptr);
 
     d->links.removeOne(link);
 
-    disconnect(link, &AbstractLink::messageReceived,
-               this, &Communicator::handleMessage);
+    disconnect(link, &ILink::dataReceived, this, &Communicator::handleData);
 }
 
 void Communicator::sendSetPositionTargetLocal(
@@ -132,19 +134,40 @@ void Communicator::sendCommandLong(const mavlink_command_long_t& com)
 
 void Communicator::sendMessage(const mavlink_message_t& message)
 {
-    for (AbstractLink* link: d->links)
+    static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    int lenght = mavlink_msg_to_send_buffer(buffer, &message);
+    QByteArray data((const char*)buffer, lenght);
+
+    for (ILink* link: d->links)
     {
-        if (link->isUp()) link->sendMessage(message);
+        if (link->isUp()) link->sendData(data);
     }
+}
+
+void Communicator::handleData(const QByteArray& data)
+{
+    mavlink_message_t message;
+    mavlink_status_t status;
+
+    for (int pos = 0; pos < data.length(); ++pos)
+    {
+        if (!mavlink_parse_char(MAVLINK_COMM_0,  // TODO: MAVLINK channel
+                                (uint8_t)data[pos],
+                                &message,
+                                &status))
+            continue;
+
+        this->handleMessage(message);
+    }
+
+    // TODO: status statusUpdated(status);
 }
 
 void Communicator::handleMessage(const mavlink_message_t& message)
 {
-    qDebug() << message.msgid;
-
     switch (message.msgid) {
     case MAVLINK_MSG_ID_PING:
-        d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()), message);
+        d->processPingRequest(qobject_cast<ILink*>(this->sender()), message);
         break;
     case MAVLINK_MSG_ID_HEARTBEAT: // custom_mode, base_mode
         d->processHeartbeat(message);

@@ -1,13 +1,13 @@
-#include "mavlink_serial_link.h"
+#include "serial_link.h"
 
 // Qt
 #include <QSerialPort>
 
-using namespace data_source::mavlink;
+using namespace data_source;
 
 SerialLink::SerialLink(const QString& portName, qint32 baudRate,
                        QObject* parent):
-    AbstractLink(parent),
+    ILink(parent),
     m_port(new QSerialPort(portName, this))
 {
     m_port->setBaudRate(baudRate);
@@ -55,6 +55,11 @@ void SerialLink::down()
     emit upChanged(false);
 }
 
+void SerialLink::sendData(const QByteArray& data)
+{
+    m_port->write(data.data(), data.size());
+}
+
 void SerialLink::setPortName(QString portName)
 {
     if (m_port->portName() == portName) return;
@@ -71,12 +76,7 @@ void SerialLink::setBaudRate(qint32 baudRate)
     emit baudRateChanged(m_port->baudRate());
 }
 
-void SerialLink::sendData(const QByteArray& data)
-{
-    m_port->write(data.data(), data.size());
-}
-
 void SerialLink::readSerialData()
 {
-    this->resolveData(m_port->readAll());
+    emit dataReceived(m_port->readAll());
 }

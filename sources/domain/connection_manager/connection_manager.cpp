@@ -2,8 +2,8 @@
 
 // Internal
 #include "mavlink_communicator.h"
-#include "mavlink_serial_link.h"
-#include "mavlink_udp_link.h"
+#include "serial_link.h"
+#include "udp_link.h"
 
 using namespace domain;
 
@@ -37,7 +37,7 @@ QList<data_source::ILink*> ConnectionManager::links() const
 
 void ConnectionManager::addNewSerialLink(const QString& portName, qint32 baudRate)
 {
-    auto link = new data_source::mavlink::SerialLink(portName, baudRate);
+    auto link = new data_source::SerialLink(portName, baudRate);
     link->setObjectName(tr("Serial"));
 
     d->communicator->addLink(link);
@@ -47,7 +47,7 @@ void ConnectionManager::addNewSerialLink(const QString& portName, qint32 baudRat
 void ConnectionManager::addNewUdpLink(int hostPort, const QString& address,
                                       int port)
 {
-    auto link = new data_source::mavlink::UdpLink(hostPort, address, port);
+    auto link = new data_source::UdpLink(hostPort, address, port);
     link->setObjectName(tr("UDP"));
 
     d->communicator->addLink(link);
@@ -56,7 +56,6 @@ void ConnectionManager::addNewUdpLink(int hostPort, const QString& address,
 
 void ConnectionManager::removeLink(data_source::ILink* link)
 {
-    d->communicator->removeLink(
-                qobject_cast<data_source::mavlink::AbstractLink*>(link));
+    d->communicator->removeLink(link);
     emit linksChanged(this->links());
 }
