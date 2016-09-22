@@ -12,6 +12,10 @@ ToolBar {
 
         Item { Layout.fillWidth: true }
 
+        ConnectionStatusView {
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
         Button {
             text: qsTr("Settings")
             checkable: true
