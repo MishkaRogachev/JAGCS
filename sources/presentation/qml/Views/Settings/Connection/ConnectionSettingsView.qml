@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 Frame {
     id: root
 
-    property QtObject presenter: factory.createConnectionPresenter(root)
+    property QtObject presenter: factory.createConnectionSettingsPresenter(root)
 
     ColumnLayout {
         id: column

@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "../../Controls"
-import "../Connection"
+import "Connection"
 
 Pane {
     id: root
@@ -23,7 +23,7 @@ Pane {
             currentIndex: bar.currentIndex
 
             GuiSettingsView { id: uiTab }
-            ConnectionView { id: connection }
+            ConnectionSettingsView { id: connection }
             VideoSettingsView {id: videoTab }
             NetworkSettingsView { id: networkSettings }
         }

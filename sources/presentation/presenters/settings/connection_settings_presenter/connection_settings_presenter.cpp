@@ -1,4 +1,4 @@
-#include "connection_presenter.h"
+#include "connection_settings_presenter.h"
 
 // Internal
 #include "connection_manager.h"
@@ -11,16 +11,17 @@
 
 using namespace presentation;
 
-class ConnectionPresenter::Impl
+class ConnectionSettingsPresenter::Impl
 {
 public:
     domain::ConnectionManager* manager;
     domain::SettingsProvider* settings;
 };
 
-ConnectionPresenter::ConnectionPresenter(domain::ConnectionManager* manager,
-                                         domain::SettingsProvider* settings,
-                                         QObject* view):
+ConnectionSettingsPresenter::ConnectionSettingsPresenter(
+        domain::ConnectionManager* manager,
+        domain::SettingsProvider* settings,
+        QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
@@ -28,12 +29,12 @@ ConnectionPresenter::ConnectionPresenter(domain::ConnectionManager* manager,
     d->settings = settings;
 }
 
-ConnectionPresenter::~ConnectionPresenter()
+ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
 {
     delete d;
 }
 
-QList<QObject*> ConnectionPresenter::links() const
+QList<QObject*> ConnectionSettingsPresenter::links() const
 {
     QList<QObject*> list;
 
@@ -43,7 +44,7 @@ QList<QObject*> ConnectionPresenter::links() const
     return list;
 }
 
-QStringList ConnectionPresenter::serialDevices() const
+QStringList ConnectionSettingsPresenter::serialDevices() const
 {
     QStringList devices;
 
@@ -53,7 +54,7 @@ QStringList ConnectionPresenter::serialDevices() const
     return devices;
 }
 
-QVariantList ConnectionPresenter::serialBaudRates() const
+QVariantList ConnectionSettingsPresenter::serialBaudRates() const
 {
     QVariantList rates;
     for (qint32 rate: QSerialPortInfo::standardBaudRates())
@@ -62,7 +63,7 @@ QVariantList ConnectionPresenter::serialBaudRates() const
     return rates;
 }
 
-void ConnectionPresenter::addSerialLink()
+void ConnectionSettingsPresenter::addSerialLink()
 {
     d->settings->beginGroup(domain::connection_settings::group);
 
@@ -75,7 +76,7 @@ void ConnectionPresenter::addSerialLink()
     emit linksChanged(this->links());
 }
 
-void ConnectionPresenter::addUdpLink()
+void ConnectionSettingsPresenter::addUdpLink()
 {
     d->settings->beginGroup(domain::connection_settings::group);
 
@@ -89,7 +90,7 @@ void ConnectionPresenter::addUdpLink()
     emit linksChanged(this->links());
 }
 
-void ConnectionPresenter::removeLink(QObject* link)
+void ConnectionSettingsPresenter::removeLink(QObject* link)
 {
     d->manager->removeLink(qobject_cast<data_source::ILink*>(link));
 

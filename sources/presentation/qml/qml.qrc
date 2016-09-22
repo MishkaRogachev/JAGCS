@@ -17,7 +17,7 @@
         <file>Views/Settings/GuiSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
-        <file>Views/Connection/ConnectionView.qml</file>
-        <file>Views/Connection/ConnectionItemView.qml</file>
+        <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
+        <file>Views/Settings/Connection/ConnectionItemView.qml</file>
     </qresource>
 </RCC>

@@ -6,10 +6,11 @@
 #include "video_presenter.h"
 #include "map_presenter.h"
 
+// Internal
 #include "status_presenter.h"
-#include "connection_presenter.h"
 
 #include "video_settings_presenter.h"
+#include "connection_settings_presenter.h"
 #include "network_settings_presenter.h"
 
 using namespace presentation;
@@ -34,9 +35,9 @@ QObject* PresentersFactory::createStatusPresenter(QObject* parent)
     return new StatusPresenter(parent);
 }
 
-QObject* PresentersFactory::createConnectionPresenter(QObject* parent)
+QObject* PresentersFactory::createConnectionSettingsPresenter(QObject* parent)
 {
-     return new ConnectionPresenter(m_entry->manager, m_entry->settings, parent);
+     return new ConnectionSettingsPresenter(m_entry->manager, m_entry->settings, parent);
 }
 
 QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)

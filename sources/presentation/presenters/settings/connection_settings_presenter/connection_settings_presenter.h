@@ -1,5 +1,5 @@
-#ifndef CONNECTION_PRESENTER_H
-#define CONNECTION_PRESENTER_H
+#ifndef CONNECTION_SETTINGS_PRESENTER_H
+#define CONNECTION_SETTINGS_PRESENTER_H
 
 #include "base_presenter.h"
 
@@ -11,7 +11,7 @@ namespace domain
 
 namespace presentation
 {
-    class ConnectionPresenter: public BasePresenter
+    class ConnectionSettingsPresenter: public BasePresenter
     {
         Q_OBJECT
 
@@ -20,10 +20,10 @@ namespace presentation
         Q_PROPERTY(QVariantList serialBaudRates READ serialBaudRates CONSTANT)
 
     public:
-        explicit ConnectionPresenter(domain::ConnectionManager* manager,
-                                     domain::SettingsProvider* settings,
-                                     QObject* view);
-        ~ConnectionPresenter() override;
+        explicit ConnectionSettingsPresenter(domain::ConnectionManager* manager,
+                                             domain::SettingsProvider* settings,
+                                             QObject* view);
+        ~ConnectionSettingsPresenter() override;
 
         QList<QObject*> links() const;
 
@@ -45,4 +45,4 @@ namespace presentation
     };
 }
 
-#endif // CONNECTION_PRESENTER_H
+#endif // CONNECTION_SETTINGS_PRESENTER_H
