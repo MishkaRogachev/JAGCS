@@ -7,7 +7,7 @@ using namespace data_source;
 
 UdpLink::UdpLink(int rxPort, const QString& address, int txPort,
                  QObject* parent):
-    ILink(parent),
+    AbstractLink(parent),
     m_socket(new QUdpSocket(this)),
     m_rxPort(rxPort),
     m_address(address),

@@ -6,7 +6,7 @@
 #include <QHostAddress>
 
 // Internal
-#include <i_link.h>
+#include "abstract_link.h"
 
 namespace domain
 {
@@ -18,16 +18,16 @@ namespace domain
         explicit ConnectionManager(QObject* parent = nullptr);
         ~ConnectionManager() override;
 
-        QList<data_source::ILink*> links() const;
+        QList<data_source::AbstractLink*> links() const;
 
     public slots:
         void addNewSerialLink(const QString& portName, qint32 baudRate);
         void addNewUdpLink(int hostPort, const QString& address, int port);
 
-        void removeLink(data_source::ILink* link);
+        void removeLink(data_source::AbstractLink* link);
 
     signals:
-        void linksChanged(QList<data_source::ILink*>);
+        void linksChanged(QList<data_source::AbstractLink*>);
 
     private:
         class Impl;

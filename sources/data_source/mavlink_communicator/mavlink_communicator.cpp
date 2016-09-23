@@ -13,7 +13,7 @@ class Communicator::Impl
 {
 public:
     Communicator* p;
-    QList<ILink*> links;
+    QList<AbstractLink*> links;
     int systemId = 0;
     int componentId = 0;
 
@@ -21,7 +21,7 @@ public:
         p(p)
     {}
 
-    void processPingRequest(ILink* link, const mavlink_message_t& message)
+    void processPingRequest(AbstractLink* link, const mavlink_message_t& message)
     {
         mavlink_ping_t ping;
         mavlink_msg_ping_decode(&message, &ping);
@@ -91,27 +91,27 @@ Communicator::~Communicator()
     delete d;
 }
 
-QList<ILink*> Communicator::links() const
+QList<AbstractLink*> Communicator::links() const
 {
     return d->links;
 }
 
-void Communicator::addLink(ILink* link)
+void Communicator::addLink(AbstractLink* link)
 {
     link->setParent(this);
 
     d->links.append(link);
 
-    connect(link, &ILink::dataReceived, this, &Communicator::handleData);
+    connect(link, &AbstractLink::dataReceived, this, &Communicator::handleData);
 }
 
-void Communicator::removeLink(ILink* link)
+void Communicator::removeLink(AbstractLink* link)
 {
     if (link->parent() == this) link->setParent(nullptr);
 
     d->links.removeOne(link);
 
-    disconnect(link, &ILink::dataReceived, this, &Communicator::handleData);
+    disconnect(link, &AbstractLink::dataReceived, this, &Communicator::handleData);
 }
 
 void Communicator::sendSetPositionTargetLocal(
@@ -138,7 +138,7 @@ void Communicator::sendMessage(const mavlink_message_t& message)
     int lenght = mavlink_msg_to_send_buffer(buffer, &message);
     QByteArray data((const char*)buffer, lenght);
 
-    for (ILink* link: d->links)
+    for (AbstractLink* link: d->links)
     {
         if (link->isUp()) link->sendData(data);
     }
@@ -167,7 +167,7 @@ void Communicator::handleMessage(const mavlink_message_t& message)
 {
     switch (message.msgid) {
     case MAVLINK_MSG_ID_PING:
-        d->processPingRequest(qobject_cast<ILink*>(this->sender()), message);
+        d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()), message);
         break;
     case MAVLINK_MSG_ID_HEARTBEAT: // custom_mode, base_mode
         d->processHeartbeat(message);

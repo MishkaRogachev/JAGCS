@@ -7,7 +7,7 @@ using namespace data_source;
 
 SerialLink::SerialLink(const QString& portName, qint32 baudRate,
                        QObject* parent):
-    ILink(parent),
+    AbstractLink(parent),
     m_port(new QSerialPort(portName, this))
 {
     m_port->setBaudRate(baudRate);

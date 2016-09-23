@@ -1,13 +1,13 @@
 #ifndef SERIAL_LINK_H
 #define SERIAL_LINK_H
 
-#include "i_link.h"
+#include "abstract_link.h"
 
 class QSerialPort;
 
 namespace data_source
 {
-    class SerialLink: public ILink
+    class SerialLink: public AbstractLink
     {
         Q_OBJECT
 

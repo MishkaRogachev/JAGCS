@@ -1,13 +1,13 @@
 #ifndef UDP_LINK_H
 #define UDP_LINK_H
 
-#include "i_link.h"
+#include "abstract_link.h"
 
 class QUdpSocket;
 
 namespace data_source
 {
-    class UdpLink: public ILink
+    class UdpLink: public AbstractLink
     {
         Q_OBJECT
 

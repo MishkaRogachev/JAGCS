@@ -25,7 +25,7 @@ ConnectionManager::~ConnectionManager()
     delete d;
 }
 
-QList<data_source::ILink*> ConnectionManager::links() const
+QList<data_source::AbstractLink*> ConnectionManager::links() const
 {
     return d->communicator->links();
 }
@@ -49,7 +49,7 @@ void ConnectionManager::addNewUdpLink(int hostPort, const QString& address,
     emit linksChanged(this->links());
 }
 
-void ConnectionManager::removeLink(data_source::ILink* link)
+void ConnectionManager::removeLink(data_source::AbstractLink* link)
 {
     d->communicator->removeLink(link);
     emit linksChanged(this->links());

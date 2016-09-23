@@ -1,18 +1,18 @@
-#ifndef I_LINK_H
-#define I_LINK_H
+#ifndef ABSTRACT_LINK_H
+#define ABSTRACT_LINK_H
 
 #include <QtCore/QObject>
 
 namespace data_source
 {
-    class ILink: public QObject
+    class AbstractLink: public QObject
     {
         Q_OBJECT
 
         Q_PROPERTY(bool isUp READ isUp NOTIFY upChanged)
 
     public:
-        explicit ILink(QObject* parent = nullptr);
+        explicit AbstractLink(QObject* parent = nullptr);
 
         virtual bool isUp() const = 0;
 
@@ -29,4 +29,4 @@ namespace data_source
     };
 }
 
-#endif // I_LINK_H
+#endif // ABSTRACT_LINK_H

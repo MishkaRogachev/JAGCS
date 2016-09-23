@@ -1,7 +1,7 @@
 #ifndef MAVLINK_COMMUNICATOR_H
 #define MAVLINK_COMMUNICATOR_H
 
-#include "i_link.h"
+#include "abstract_link.h"
 
 // MAVLink
 #include <mavlink.h>
@@ -26,11 +26,11 @@ namespace data_source
             explicit Communicator(QObject* parent = nullptr);
             ~Communicator() override;
 
-            QList<ILink*> links() const;
+            QList<AbstractLink*> links() const;
 
         public slots:
-            void addLink(ILink* link);
-            void removeLink(ILink* link);
+            void addLink(AbstractLink* link);
+            void removeLink(AbstractLink* link);
 
             void sendSetPositionTargetLocal(
                     const mavlink_set_position_target_local_ned_t& setPoint);
