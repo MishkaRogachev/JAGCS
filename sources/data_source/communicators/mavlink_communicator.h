@@ -1,6 +1,23 @@
 #ifndef MAVLINK_COMMUNICATOR_H
 #define MAVLINK_COMMUNICATOR_H
 
+#include "abstract_communicator.h"
+
+namespace data_source
+{
+    class MavLinkCommunicator: public AbstractCommunicator
+    {
+        Q_OBJECT
+
+    public:
+        explicit MavLinkCommunicator(QObject* parent = nullptr);
+
+    public slots:
+        void receiveData(const QByteArray& data) override;
+    };
+}
+
+/*
 #include "abstract_link.h"
 
 // MAVLink
@@ -56,6 +73,6 @@ namespace data_source
             Impl* const d;
         };
     }
-}
+}*/
 
 #endif // MAVLINK_COMMUNICATOR_H

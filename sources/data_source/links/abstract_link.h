@@ -1,7 +1,8 @@
 #ifndef ABSTRACT_LINK_H
 #define ABSTRACT_LINK_H
 
-#include <QtCore/QObject>
+// Internal
+#include "abstract_communicator.h"
 
 namespace data_source
 {
@@ -14,18 +15,27 @@ namespace data_source
     public:
         explicit AbstractLink(QObject* parent = nullptr);
 
+        AbstractCommunicator* communicator() const;
+
         virtual bool isUp() const = 0;
 
     public slots:
+        void setCommunicator(AbstractCommunicator* communicator);
+
         virtual void up() = 0;
         virtual void down() = 0;
-
-        virtual void sendData(const QByteArray& data) = 0;
 
     signals:
         void upChanged(bool isUp);
 
-        void dataReceived(const QByteArray& data);
+    protected slots:
+        void onDataReceived(const QByteArray& data);
+
+    private slots:
+        virtual void sendData(const QByteArray& data) = 0;
+
+    private:
+        AbstractCommunicator* m_communicator;
     };
 }
 

@@ -29,8 +29,6 @@ namespace data_source
         void up() override;
         void down() override;
 
-        void sendData(const QByteArray& data) override;
-
         void setRxPort(int port);
         void setAddress(const QString& address);
         void setTxPort(int port);
@@ -41,6 +39,8 @@ namespace data_source
         void txPortChanged(int port);
 
     private slots:
+        void sendData(const QByteArray& data) override;
+
         void readPendingDatagrams();
 
     private:

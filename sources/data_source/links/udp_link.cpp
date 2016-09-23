@@ -106,6 +106,6 @@ void UdpLink::readPendingDatagrams()
         datagram.resize(m_socket->pendingDatagramSize());
         m_socket->readDatagram(datagram.data(), datagram.size());
 
-        emit dataReceived(datagram);
+        this->onDataReceived(datagram);
     }
 }

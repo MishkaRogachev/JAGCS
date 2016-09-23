@@ -1,6 +1,36 @@
 #include "mavlink_communicator.h"
 
 // MAVLink
+#include <mavlink.h>
+
+using namespace data_source;
+
+MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
+    AbstractCommunicator(parent)
+{}
+
+void MavLinkCommunicator::receiveData(const QByteArray& data)
+{
+    mavlink_message_t message;
+    mavlink_status_t status;
+
+    for (int pos = 0; pos < data.length(); ++pos)
+    {
+        if (!mavlink_parse_char(MAVLINK_COMM_0,  // TODO: MAVLINK channel
+                                (uint8_t)data[pos],
+                                &message,
+                                &status))
+            continue;
+
+        //d->handleMessage(message);
+    }
+
+    // TODO: Link status
+}
+
+
+/*
+// MAVLink
 #include <mavlink_msg_ping.h>
 
 // Qt
@@ -195,3 +225,4 @@ void Communicator::handleMessage(const mavlink_message_t& message)
 
     emit messageReceived(message);
 }
+*/

@@ -78,5 +78,5 @@ void SerialLink::setBaudRate(qint32 baudRate)
 
 void SerialLink::readSerialData()
 {
-    emit dataReceived(m_port->readAll());
+    this->onDataReceived(m_port->readAll());
 }
