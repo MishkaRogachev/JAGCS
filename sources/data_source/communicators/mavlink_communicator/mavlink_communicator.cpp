@@ -4,7 +4,7 @@
 #include <mavlink.h>
 
 // Internal
-#include "abstract_mavlink_handler.h"
+#include "heartbeat_handler.h"
 
 using namespace data_source;
 
@@ -17,7 +17,9 @@ public:
 MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
     AbstractCommunicator(parent),
     d(new Impl())
-{}
+{
+    d->handlers.append(new HeartbeatHandler());
+}
 
 MavLinkCommunicator::~MavLinkCommunicator()
 {
@@ -74,64 +76,7 @@ public:
         p(p)
     {}
 
-    void processPingRequest(AbstractLink* link, const mavlink_message_t& message)
-    {
-        mavlink_ping_t ping;
-        mavlink_msg_ping_decode(&message, &ping);
 
-        if (!ping.target_system && !ping.target_component)
-        {
-             mavlink_message_t msg;
-             mavlink_msg_ping_pack(systemId, componentId, &msg,
-                                   ping.time_usec, ping.seq,
-                                   message.sysid, message.compid);
-             static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-             int lenght = mavlink_msg_to_send_buffer(buffer, &msg);
-             QByteArray data((const char*)buffer, lenght);
-
-             link->sendData(data);
-        }
-    }
-
-    void processHeartbeat(const mavlink_message_t& message)
-    {
-        mavlink_heartbeat_t heartBeat;
-        mavlink_msg_heartbeat_decode(&message, &heartBeat);
-
-        emit p->heartBeatReceived(heartBeat);
-    }
-
-    void processSystemStatus(const mavlink_message_t& message)
-    {
-        mavlink_sys_status_t status;
-        mavlink_msg_sys_status_decode(&message, &status);
-
-        emit p->systemStatusReceived(status);
-    }
-
-    void processGpsRaw(const mavlink_message_t& message)
-    {
-        mavlink_gps_raw_int_t gps;
-        mavlink_msg_gps_raw_int_decode(&message, &gps);
-
-        emit p->gpsRawReceived(gps);
-    }
-
-    void processVfrHud(const mavlink_message_t& message)
-    {
-        mavlink_vfr_hud_t vfrHud;
-        mavlink_msg_vfr_hud_decode(&message, &vfrHud);
-
-        emit p->vfrHudReceived(vfrHud);
-    }
-
-    void processAttitude(const mavlink_message_t& message)
-    {
-        mavlink_attitude_t attitude;
-        mavlink_msg_attitude_decode(&message, &attitude);
-
-        emit p->attitudeReceived(attitude);
-    }
 };
 
 Communicator::Communicator(QObject* parent):
@@ -195,57 +140,5 @@ void Communicator::sendMessage(const mavlink_message_t& message)
     {
         if (link->isUp()) link->sendData(data);
     }
-}
-
-void Communicator::handleData(const QByteArray& data)
-{
-    mavlink_message_t message;
-    mavlink_status_t status;
-
-    for (int pos = 0; pos < data.length(); ++pos)
-    {
-        if (!mavlink_parse_char(MAVLINK_COMM_0,  // TODO: MAVLINK channel
-                                (uint8_t)data[pos],
-                                &message,
-                                &status))
-            continue;
-
-        this->handleMessage(message);
-    }
-
-    // TODO: status statusUpdated(status);
-}
-
-void Communicator::handleMessage(const mavlink_message_t& message)
-{
-    switch (message.msgid) {
-    case MAVLINK_MSG_ID_PING:
-        d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()), message);
-        break;
-    case MAVLINK_MSG_ID_HEARTBEAT: // custom_mode, base_mode
-        d->processHeartbeat(message);
-        break;
-    case MAVLINK_MSG_ID_SYS_STATUS: // voltage, current, remaining
-        d->processSystemStatus(message);
-        break;
-    case MAVLINK_MSG_ID_GPS_RAW_INT: // lat, lon, fix, satellites, cog, eph
-        d->processGpsRaw(message);
-        break;
-    case MAVLINK_MSG_ID_VFR_HUD: // airspeed, groundspeed, heading, throttle, alt, climb
-        d->processVfrHud(message);
-        break;
-    case MAVLINK_MSG_ID_ATTITUDE: // pitch, roll, yaw
-        d->processAttitude(message);
-        break;
-    // TODO: MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, MAVLINK_MSG_ID_MISSION_CURRENT, MAVLINK_MSG_ID_RC_CHANNELS_RAW
-    //       MAVLINK_MSG_ID_WIND, MAVLINK_MSG_ID_SCALED_PRESSURE, MAVLINK_MSG_ID_GLOBAL_POSITION_INT
-    //       MAVLINK_MSG_ID_BATTERY_STATUS, MAVLINK_MSG_ID_RADIO_STATUS, MAVLINK_MSG_ID_LOCAL_POSITION_NED,
-    //       MAVLINK_MSG_ID_GLOBAL_POSITION_INT, MAVLINK_MSG_ID_POSITION_TARGET_LOCAL_NED,
-    //       MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT, MAVLINK_MSG_ID_HIGHRES_IMU
-    default:
-        break;
-    }
-
-    emit messageReceived(message);
 }
 */
