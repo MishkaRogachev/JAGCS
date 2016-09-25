@@ -19,25 +19,6 @@ bool AbstractMavLinkHandler::handleMessage(const mavlink_message_t& message)
 }
 
 /*
-    void processPingRequest(AbstractLink* link, const mavlink_message_t& message)
-    {
-        mavlink_ping_t ping;
-        mavlink_msg_ping_decode(&message, &ping);
-
-        if (!ping.target_system && !ping.target_component)
-        {
-             mavlink_message_t msg;
-             mavlink_msg_ping_pack(systemId, componentId, &msg,
-                                   ping.time_usec, ping.seq,
-                                   message.sysid, message.compid);
-             static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-             int lenght = mavlink_msg_to_send_buffer(buffer, &msg);
-             QByteArray data((const char*)buffer, lenght);
-
-             link->sendData(data);
-        }
-    }
-
     void processSystemStatus(const mavlink_message_t& message)
     {
         mavlink_sys_status_t status;
@@ -73,12 +54,6 @@ bool AbstractMavLinkHandler::handleMessage(const mavlink_message_t& message)
 void Communicator::handleMessage(const mavlink_message_t& message)
 {
     switch (message.msgid) {
-    case MAVLINK_MSG_ID_PING:
-        d->processPingRequest(qobject_cast<AbstractLink*>(this->sender()), message);
-        break;
-    case MAVLINK_MSG_ID_HEARTBEAT: // custom_mode, base_mode
-        d->processHeartbeat(message);
-        break;
     case MAVLINK_MSG_ID_SYS_STATUS: // voltage, current, remaining
         d->processSystemStatus(message);
         break;
