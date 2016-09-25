@@ -3,11 +3,31 @@
 // MAVLink
 #include <mavlink.h>
 
+// Internal
+#include "abstract_mavlink_handler.h"
+
 using namespace data_source;
 
+class MavLinkCommunicator::Impl
+{
+public:
+    QList<AbstractMavLinkHandler*> handlers;
+};
+
 MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
-    AbstractCommunicator(parent)
+    AbstractCommunicator(parent),
+    d(new Impl())
 {}
+
+MavLinkCommunicator::~MavLinkCommunicator()
+{
+    while (!d->handlers.isEmpty())
+    {
+        delete d->handlers.takeLast();
+    }
+
+    delete d;
+}
 
 void MavLinkCommunicator::receiveData(const QByteArray& data, AbstractLink* link)
 {
@@ -22,7 +42,10 @@ void MavLinkCommunicator::receiveData(const QByteArray& data, AbstractLink* link
                                 &status))
             continue;
 
-        //d->handleMessage(message);
+        for (AbstractMavLinkHandler* handler: d->handlers)
+        {
+            if (handler->handleMessage(message)) break;
+        }
     }
 
     // TODO: Link status

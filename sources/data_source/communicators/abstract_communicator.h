@@ -6,6 +6,7 @@
 namespace data_source
 {
     class AbstractLink;
+
     class AbstractCommunicator: public QObject
     {
         Q_OBJECT
