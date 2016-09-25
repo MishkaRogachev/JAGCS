@@ -12,8 +12,7 @@ namespace data_source
     public:
         explicit MavLinkCommunicator(QObject* parent = nullptr);
 
-    public slots:
-        void receiveData(const QByteArray& data) override;
+        void receiveData(const QByteArray& data, AbstractLink* link) override;
     };
 }
 

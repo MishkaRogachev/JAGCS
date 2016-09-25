@@ -1,11 +1,12 @@
 #ifndef ABSTRACT_LINK_H
 #define ABSTRACT_LINK_H
 
-// Internal
-#include "abstract_communicator.h"
+#include <QObject>
 
 namespace data_source
 {
+    class AbstractCommunicator;
+
     class AbstractLink: public QObject
     {
         Q_OBJECT

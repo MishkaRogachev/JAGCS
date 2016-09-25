@@ -1,10 +1,11 @@
-#ifndef ABSTRACTCOMMUNICATOR_H
-#define ABSTRACTCOMMUNICATOR_H
+#ifndef ABSTRACT_COMMUNICATOR_H
+#define ABSTRACT_COMMUNICATOR_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 namespace data_source
 {
+    class AbstractLink;
     class AbstractCommunicator: public QObject
     {
         Q_OBJECT
@@ -12,12 +13,11 @@ namespace data_source
     public:
         explicit AbstractCommunicator(QObject* parent = nullptr);
 
-    public slots:
-        virtual void receiveData(const QByteArray& data) = 0;
+        virtual void receiveData(const QByteArray& data, AbstractLink* link) = 0;
 
     signals:
         void sendData(const QByteArray& data);
     };
 }
 
-#endif // ABSTRACTCOMMUNICATOR_H
+#endif // ABSTRACT_COMMUNICATOR_H

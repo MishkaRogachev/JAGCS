@@ -1,5 +1,8 @@
 #include "abstract_link.h"
 
+// Internal
+#include "abstract_communicator.h"
+
 using namespace data_source;
 
 AbstractLink::AbstractLink(QObject* parent): QObject(parent)
@@ -31,5 +34,5 @@ void AbstractLink::setCommunicator(AbstractCommunicator* communicator)
 
 void AbstractLink::onDataReceived(const QByteArray& data)
 {
-    if (m_communicator) m_communicator->receiveData(data);
+    if (m_communicator) m_communicator->receiveData(data, this);
 }

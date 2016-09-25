@@ -9,7 +9,7 @@ MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
     AbstractCommunicator(parent)
 {}
 
-void MavLinkCommunicator::receiveData(const QByteArray& data)
+void MavLinkCommunicator::receiveData(const QByteArray& data, AbstractLink* link)
 {
     mavlink_message_t message;
     mavlink_status_t status;
