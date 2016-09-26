@@ -22,8 +22,29 @@ namespace
             return Vehicle::UnknownType;
         }
     }
-}
 
+    Vehicle::State vehicleStateFromMavState(uint8_t state)
+    {
+        switch (state)
+        {
+        case MAV_STATE_BOOT:
+            return Vehicle::Boot;
+        case MAV_STATE_CALIBRATING:
+            return Vehicle::Calibrating;
+        case MAV_STATE_STANDBY:
+            return Vehicle::Standby;
+        case MAV_STATE_ACTIVE:
+            return Vehicle::Active;
+        case MAV_STATE_CRITICAL:
+            return Vehicle::Critical;
+        case MAV_STATE_EMERGENCY:
+            return Vehicle::Emergency;
+        case MAV_STATE_UNINIT:
+        default:
+            return Vehicle::UnknownState;
+        }
+    }
+}
 
 HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService):
     AbstractMavLinkHandler(),
@@ -45,6 +66,6 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
     vehicle->setType(::vehicleTypeFromMavType(heartbeat.type));
+    vehicle->setState(::vehicleStateFromMavState(heartbeat.system_status));
     //TODO: handle MAV_MODE_FLAG
-    //TODO: handle MAV_STATE
 }
