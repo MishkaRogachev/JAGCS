@@ -10,7 +10,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit MavLinkCommunicator(QObject* parent = nullptr);
+        explicit MavLinkCommunicator(VehicleService* vehicleService,
+                                     QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         void receiveData(const QByteArray& data, AbstractLink* link) override;

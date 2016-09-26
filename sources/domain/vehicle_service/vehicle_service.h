@@ -17,9 +17,12 @@ namespace domain
 
         Vehicle* vehicle(uint8_t id) const;
         uint8_t vehileId(Vehicle* vehicle) const;
+        QList<Vehicle*> vehicles() const;
+
+        Vehicle* requestVehicle(uint8_t id);
 
     public slots:
-        void removeVehicle(uint8_t id);
+        void forgetVehicle(uint8_t id);
 
     private:
         class Impl;

@@ -3,6 +3,9 @@
 // Qt
 #include <QMap>
 
+// Internal
+#include "vehicle.h"
+
 using namespace domain;
 
 class VehicleService::Impl
@@ -23,7 +26,7 @@ VehicleService::~VehicleService()
 
 Vehicle* VehicleService::vehicle(uint8_t id) const
 {
-    return d->vehicles.value(id);
+    return d->vehicles.value(id, nullptr);
 }
 
 uint8_t VehicleService::vehileId(Vehicle* vehicle) const
@@ -31,7 +34,17 @@ uint8_t VehicleService::vehileId(Vehicle* vehicle) const
     return d->vehicles.key(vehicle);
 }
 
-void VehicleService::removeVehicle(uint8_t id)
+QList<Vehicle*> VehicleService::vehicles() const
+{
+    return d->vehicles.values();
+}
+
+Vehicle*VehicleService::requestVehicle(uint8_t id)
+{
+    return d->vehicles[id];
+}
+
+void VehicleService::forgetVehicle(uint8_t id)
 {
     d->vehicles.remove(id);
 }

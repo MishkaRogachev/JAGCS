@@ -16,11 +16,12 @@ public:
     QList<AbstractMavLinkHandler*> handlers;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
-    AbstractCommunicator(parent),
+MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
+                                         QObject* parent):
+    AbstractCommunicator(vehicleService, parent),
     d(new Impl())
 {
-    d->handlers.append(new HeartbeatHandler());
+    d->handlers.append(new HeartbeatHandler(m_vehicleService));
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()

@@ -3,6 +3,7 @@
 // Internal
 #include "settings_provider.h"
 
+#include "vehicle_service.h"
 #include "mavlink_communicator.h"
 #include "link_manager.h"
 
@@ -12,10 +13,12 @@ class DomainEntry::Impl
 {
 public:
     SettingsProvider settings;
+    VehicleService vehicleService;
     MavLinkCommunicator communicator;
     LinkManager manager;
 
     Impl():
+        communicator(&vehicleService),
         manager(&communicator)
     {}
 };

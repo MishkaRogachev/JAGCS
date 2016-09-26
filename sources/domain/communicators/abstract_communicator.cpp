@@ -2,6 +2,8 @@
 
 using namespace domain;
 
-AbstractCommunicator::AbstractCommunicator(QObject* parent):
-    QObject(parent)
+AbstractCommunicator::AbstractCommunicator(VehicleService* vehicleService,
+                                           QObject* parent):
+    QObject(parent),
+    m_vehicleService(vehicleService)
 {}

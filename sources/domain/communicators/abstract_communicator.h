@@ -6,18 +6,22 @@
 namespace domain
 {
     class AbstractLink;
+    class VehicleService;
 
     class AbstractCommunicator: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit AbstractCommunicator(QObject* parent = nullptr);
+        AbstractCommunicator(VehicleService* vehicleService, QObject* parent);
 
         virtual void receiveData(const QByteArray& data, AbstractLink* link) = 0;
 
     signals:
         void sendData(const QByteArray& data);
+
+    protected:
+        VehicleService* const m_vehicleService;
     };
 }
 
