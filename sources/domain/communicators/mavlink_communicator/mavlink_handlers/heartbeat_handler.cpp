@@ -13,7 +13,7 @@ namespace
 {
     Vehicle::Type vehicleTypeFromMavType(uint8_t type)
     {
-        switch (type)
+        switch (type) //TODO: other vehicles
         {
         case MAV_TYPE_FIXED_WING:
             return Vehicle::FixedWingAircraft;
@@ -44,6 +44,11 @@ namespace
             return Vehicle::UnknownState;
         }
     }
+
+    bool hasMavModeFlag(uint8_t mode, MAV_MODE_FLAG flag)
+    {
+        return (mode & flag);
+    }
 }
 
 HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService):
@@ -67,5 +72,6 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setType(::vehicleTypeFromMavType(heartbeat.type));
     vehicle->setState(::vehicleStateFromMavState(heartbeat.system_status));
-    //TODO: handle MAV_MODE_FLAG
+    vehicle->setAutonomous(::hasMavModeFlag(heartbeat.base_mode, MAV_MODE_FLAG_AUTO_ENABLED));
+    //TODO: handle another MAV_MODE_FLAG flags
 }

@@ -21,6 +21,11 @@ Vehicle::State Vehicle::state() const
     return m_state;
 }
 
+bool Vehicle::autonomous() const
+{
+    return m_autonomous;
+}
+
 void Vehicle::setType(Vehicle::Type type)
 {
     if (m_type == type) return;
@@ -35,4 +40,12 @@ void Vehicle::setState(Vehicle::State state)
 
     m_state = state;
     emit stateChanged(state);
+}
+
+void Vehicle::setAutonomous(bool autonomous)
+{
+    if (m_autonomous == autonomous) return;
+
+    m_autonomous = autonomous;
+    emit autonomousChanged(autonomous);
 }
