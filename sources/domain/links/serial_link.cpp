@@ -3,7 +3,7 @@
 // Qt
 #include <QSerialPort>
 
-using namespace data_source;
+using namespace domain;
 
 SerialLink::SerialLink(const QString& portName, qint32 baudRate,
                        QObject* parent):

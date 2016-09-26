@@ -1,6 +1,6 @@
 #include "abstract_mavlink_handler.h"
 
-using namespace data_source;
+using namespace domain;
 
 AbstractMavLinkHandler::AbstractMavLinkHandler()
 {}

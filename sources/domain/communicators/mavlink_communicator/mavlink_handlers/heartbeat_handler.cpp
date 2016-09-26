@@ -3,7 +3,7 @@
 // MAVLink
 #include <mavlink.h>
 
-using namespace data_source;
+using namespace domain;
 
 HeartbeatHandler::HeartbeatHandler():
     AbstractMavLinkHandler()

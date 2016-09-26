@@ -3,7 +3,7 @@
 
 #include "abstract_communicator.h"
 
-namespace data_source
+namespace domain
 {
     class MavLinkCommunicator: public AbstractCommunicator
     {

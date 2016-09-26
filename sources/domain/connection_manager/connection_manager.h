@@ -10,7 +10,7 @@
 
 namespace domain
 {
-    class ConnectionManager : public QObject
+    class ConnectionManager: public QObject
     {
         Q_OBJECT
 
@@ -18,16 +18,16 @@ namespace domain
         explicit ConnectionManager(QObject* parent = nullptr);
         ~ConnectionManager() override;
 
-        QList<data_source::AbstractLink*> links() const;
+        QList<AbstractLink*> links() const;
 
     public slots:
         void addNewSerialLink(const QString& portName, qint32 baudRate);
         void addNewUdpLink(int hostPort, const QString& address, int port);
 
-        void removeLink(data_source::AbstractLink* link);
+        void removeLink(AbstractLink* link);
 
     signals:
-        void linksChanged(QList<data_source::AbstractLink*>);
+        void linksChanged(QList<AbstractLink*>);
 
     private:
         class Impl;

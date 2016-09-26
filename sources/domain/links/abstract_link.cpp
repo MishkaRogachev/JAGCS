@@ -3,7 +3,7 @@
 // Internal
 #include "abstract_communicator.h"
 
-using namespace data_source;
+using namespace domain;
 
 AbstractLink::AbstractLink(QObject* parent): QObject(parent)
 {}

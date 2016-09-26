@@ -38,7 +38,7 @@ QList<QObject*> ConnectionSettingsPresenter::links() const
 {
     QList<QObject*> list;
 
-    for (data_source::AbstractLink* link: d->manager->links())
+    for (domain::AbstractLink* link: d->manager->links())
         list.append(link);
 
     return list;
@@ -92,7 +92,7 @@ void ConnectionSettingsPresenter::addUdpLink()
 
 void ConnectionSettingsPresenter::removeLink(QObject* link)
 {
-    d->manager->removeLink(qobject_cast<data_source::AbstractLink*>(link));
+    d->manager->removeLink(qobject_cast<domain::AbstractLink*>(link));
 
     emit linksChanged(this->links());
 }

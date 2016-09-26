@@ -4,7 +4,7 @@
 // MAVLink
 #include <mavlink_types.h>
 
-namespace data_source
+namespace domain
 {
     class AbstractMavLinkHandler
     {

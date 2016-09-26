@@ -8,7 +8,7 @@
 
 // TODO: ssend, emit heartbeat, systemId=255, multiplexing
 
-using namespace data_source;
+using namespace domain;
 
 class MavLinkCommunicator::Impl
 {
@@ -63,8 +63,8 @@ void MavLinkCommunicator::receiveData(const QByteArray& data, AbstractLink* link
 // Qt
 #include <QDebug>
 
-using namespace data_source;
-using namespace data_source::mavlink;
+using namespace domain;
+using namespace domain::mavlink;
 
 class Communicator::Impl
 {

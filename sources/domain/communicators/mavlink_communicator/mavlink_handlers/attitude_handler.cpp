@@ -4,7 +4,7 @@
 #include <mavlink.h>
 #include <mavlink_msg_attitude.h>
 
-using namespace data_source;
+using namespace domain;
 
 AttitudeHandler::AttitudeHandler():
     AbstractMavLinkHandler()

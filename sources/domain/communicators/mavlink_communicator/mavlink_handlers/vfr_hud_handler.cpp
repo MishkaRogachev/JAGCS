@@ -4,7 +4,7 @@
 #include <mavlink.h>
 #include <mavlink_msg_vfr_hud.h>
 
-using namespace data_source;
+using namespace domain;
 
 VfrHudHandler::VfrHudHandler():
     AbstractMavLinkHandler()

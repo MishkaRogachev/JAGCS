@@ -4,7 +4,7 @@
 #include <mavlink.h>
 #include <mavlink_msg_ping.h>
 
-using namespace data_source;
+using namespace domain;
 
 PingHandler::PingHandler(int systemId, int componentId):
     AbstractMavLinkHandler(),

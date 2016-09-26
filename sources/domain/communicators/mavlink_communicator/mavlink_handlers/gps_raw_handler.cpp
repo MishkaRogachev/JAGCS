@@ -4,7 +4,7 @@
 #include <mavlink.h>
 #include <mavlink_msg_gps_raw_int.h>
 
-using namespace data_source;
+using namespace domain;
 
 GpsRawHandler::GpsRawHandler():
     AbstractMavLinkHandler()

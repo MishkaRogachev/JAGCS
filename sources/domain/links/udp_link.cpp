@@ -3,7 +3,7 @@
 // Qt
 #include <QUdpSocket>
 
-using namespace data_source;
+using namespace domain;
 
 UdpLink::UdpLink(int rxPort, const QString& address, int txPort,
                  QObject* parent):

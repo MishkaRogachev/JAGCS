@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-namespace data_source
+namespace domain
 {
     class AbstractCommunicator;
 

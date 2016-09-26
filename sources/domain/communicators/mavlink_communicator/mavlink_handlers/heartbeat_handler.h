@@ -3,7 +3,7 @@
 
 #include "abstract_mavlink_handler.h"
 
-namespace data_source
+namespace domain
 {
     class HeartbeatHandler: public AbstractMavLinkHandler
     {

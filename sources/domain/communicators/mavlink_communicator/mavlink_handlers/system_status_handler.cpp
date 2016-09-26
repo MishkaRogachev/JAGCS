@@ -4,7 +4,7 @@
 #include <mavlink.h>
 #include <mavlink_msg_sys_status.h>
 
-using namespace data_source;
+using namespace domain;
 
 SystemStatusHandler::SystemStatusHandler():
     AbstractMavLinkHandler()

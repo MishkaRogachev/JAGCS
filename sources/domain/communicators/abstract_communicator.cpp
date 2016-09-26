@@ -1,6 +1,6 @@
 #include "abstract_communicator.h"
 
-using namespace data_source;
+using namespace domain;
 
 AbstractCommunicator::AbstractCommunicator(QObject* parent):
     QObject(parent)
