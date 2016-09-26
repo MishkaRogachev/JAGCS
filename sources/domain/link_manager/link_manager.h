@@ -1,5 +1,5 @@
-#ifndef CONNECTION_MANAGER_H
-#define CONNECTION_MANAGER_H
+#ifndef LINK_MANAGER_H
+#define LINK_MANAGER_H
 
 // Qt
 #include <QObject>
@@ -10,13 +10,13 @@
 
 namespace domain
 {
-    class ConnectionManager: public QObject
+    class LinkManager: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit ConnectionManager(QObject* parent = nullptr);
-        ~ConnectionManager() override;
+        explicit LinkManager(QObject* parent = nullptr);
+        ~LinkManager() override;
 
         QList<AbstractLink*> links() const;
 
@@ -35,4 +35,4 @@ namespace domain
     };
 }
 
-#endif // CONNECTION_MANAGER_H
+#endif // LINK_MANAGER_H

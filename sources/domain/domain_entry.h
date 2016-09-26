@@ -6,7 +6,7 @@
 namespace domain
 {
     class SettingsProvider;
-    class ConnectionManager;
+    class LinkManager;
 
     class DomainEntry
     {
@@ -15,7 +15,7 @@ namespace domain
         ~DomainEntry();
 
         SettingsProvider* const settings;
-        ConnectionManager* const manager;
+        LinkManager* const manager;
 
     private:
         Q_DISABLE_COPY(DomainEntry)

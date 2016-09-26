@@ -2,13 +2,13 @@
 
 // Internal
 #include "settings_provider.h"
-#include "connection_manager.h"
+#include "link_manager.h"
 
 using namespace domain;
 
 DomainEntry::DomainEntry():
     settings(new SettingsProvider()),
-    manager(new ConnectionManager())
+    manager(new LinkManager())
 {}
 
 DomainEntry::~DomainEntry()

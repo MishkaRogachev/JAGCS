@@ -1,7 +1,7 @@
 #include "connection_settings_presenter.h"
 
 // Internal
-#include "connection_manager.h"
+#include "link_manager.h"
 #include "settings_provider.h"
 #include "settings.h"
 
@@ -14,12 +14,12 @@ using namespace presentation;
 class ConnectionSettingsPresenter::Impl
 {
 public:
-    domain::ConnectionManager* manager;
+    domain::LinkManager* manager;
     domain::SettingsProvider* settings;
 };
 
 ConnectionSettingsPresenter::ConnectionSettingsPresenter(
-        domain::ConnectionManager* manager,
+        domain::LinkManager* manager,
         domain::SettingsProvider* settings,
         QObject* view):
     BasePresenter(view),
