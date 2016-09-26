@@ -6,6 +6,8 @@
 // Internal
 #include "heartbeat_handler.h"
 
+// TODO: ssend, emit heartbeat, systemId=255, multiplexing
+
 using namespace data_source;
 
 class MavLinkCommunicator::Impl
