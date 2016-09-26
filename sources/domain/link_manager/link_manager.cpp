@@ -11,12 +11,16 @@ class LinkManager::Impl
 {
 public:
     QList<AbstractLink*> links;
+    AbstractCommunicator* communicator;
 };
 
-LinkManager::LinkManager(QObject* parent):
+LinkManager::LinkManager(AbstractCommunicator* communicator,
+                         QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    d->communicator = communicator;
+}
 
 LinkManager::~LinkManager()
 {
@@ -32,6 +36,7 @@ void LinkManager::addNewSerialLink(const QString& portName, qint32 baudRate)
 {
     auto link = new SerialLink(portName, baudRate);
     link->setObjectName(tr("Serial"));
+    link->setCommunicator(d->communicator);
 
     d->links.append(link);
     emit linksChanged(this->links());
@@ -42,6 +47,7 @@ void LinkManager::addNewUdpLink(int hostPort, const QString& address,
 {
     auto link = new UdpLink(hostPort, address, port);
     link->setObjectName(tr("UDP"));
+    link->setCommunicator(d->communicator);
 
     d->links.append(link);
     emit linksChanged(this->links());

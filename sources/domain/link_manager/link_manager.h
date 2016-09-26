@@ -15,7 +15,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit LinkManager(QObject* parent = nullptr);
+        explicit LinkManager(AbstractCommunicator* communicator,
+                             QObject* parent = nullptr);
         ~LinkManager() override;
 
         QList<AbstractLink*> links() const;
@@ -27,7 +28,7 @@ namespace domain
         void removeLink(AbstractLink* link);
 
     signals:
-        void linksChanged(QList<AbstractLink*>);
+        void linksChanged(QList<AbstractLink*> links);
 
     private:
         class Impl;

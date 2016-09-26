@@ -14,10 +14,12 @@ namespace domain
         DomainEntry();
         ~DomainEntry();
 
-        SettingsProvider* const settings;
-        LinkManager* const manager;
+        SettingsProvider* settings() const;
+        LinkManager* manager() const;
 
     private:
+        class Impl;
+        Impl* const d;
         Q_DISABLE_COPY(DomainEntry)
     };
 }
