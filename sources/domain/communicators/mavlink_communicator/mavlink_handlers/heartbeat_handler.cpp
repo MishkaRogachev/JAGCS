@@ -9,6 +9,22 @@
 
 using namespace domain;
 
+namespace
+{
+    Vehicle::Type vehicleTypeFromMavType(uint8_t type)
+    {
+        switch (type)
+        {
+        case MAV_TYPE_FIXED_WING:
+            return Vehicle::FixedWingAircraft;
+        case MAV_TYPE_GENERIC:
+        default:
+            return Vehicle::UnknownType;
+        }
+    }
+}
+
+
 HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService):
     AbstractMavLinkHandler(),
     m_vehicleService(vehicleService)
@@ -28,5 +44,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    // TODO: handle heartbeat
+    vehicle->setType(::vehicleTypeFromMavType(heartbeat.type));
+    //TODO: handle MAV_MODE_FLAG
+    //TODO: handle MAV_STATE
 }
