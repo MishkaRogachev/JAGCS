@@ -4,10 +4,15 @@
 #include <mavlink.h>
 #include <mavlink_msg_vfr_hud.h>
 
+// Internal
+#include "vehicle_service.h"
+#include "vehicle.h"
+
 using namespace domain;
 
-VfrHudHandler::VfrHudHandler():
-    AbstractMavLinkHandler()
+VfrHudHandler::VfrHudHandler(VehicleService* vehicleService):
+    AbstractMavLinkHandler(),
+    m_vehicleService(vehicleService)
 {}
 
 int VfrHudHandler::messageId() const
@@ -17,8 +22,15 @@ int VfrHudHandler::messageId() const
 
 void VfrHudHandler::processMessage(const mavlink_message_t& message)
 {
+    if (message.sysid == 0) return;
+    Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+
     mavlink_vfr_hud_t vfrHud;
     mavlink_msg_vfr_hud_decode(&message, &vfrHud);
 
-    // TODO: handle HUD
+    vehicle->setTrueAirSpeed(vfrHud.airspeed);
+    vehicle->setGroundSpeed(vfrHud.groundspeed);
+    vehicle->setBarometricAltitude(vfrHud.alt);
+    vehicle->setBarometricClimb(vfrHud.climb);
+    vehicle->setHeading(vfrHud.heading);
 }

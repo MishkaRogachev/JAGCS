@@ -5,14 +5,19 @@
 
 namespace domain
 {
+    class VehicleService;
+
     class VfrHudHandler: public AbstractMavLinkHandler
     {
     public:
-        VfrHudHandler();
+        VfrHudHandler(VehicleService* vehicleService);
 
     protected:
         int messageId() const override;
         void processMessage(const mavlink_message_t& message) override;
+
+    private:
+        VehicleService* m_vehicleService;
     };
 }
 
