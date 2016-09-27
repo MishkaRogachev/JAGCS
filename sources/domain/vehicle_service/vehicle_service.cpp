@@ -39,12 +39,26 @@ QList<Vehicle*> VehicleService::vehicles() const
     return d->vehicles.values();
 }
 
-Vehicle*VehicleService::requestVehicle(uint8_t id)
+QList<uint8_t> VehicleService::vehileIds() const
 {
+    return d->vehicles.keys();
+}
+
+Vehicle* VehicleService::requestVehicle(uint8_t id)
+{
+    if (!d->vehicles.contains(id))
+    {
+        d->vehicles[id];
+        emit vehicleAdded(id);
+    }
+
     return d->vehicles[id];
 }
 
-void VehicleService::forgetVehicle(uint8_t id)
+void VehicleService::removeVehicle(uint8_t id)
 {
+    if (!d->vehicles.contains(id)) return;
+
     d->vehicles.remove(id);
+    emit vehicleRemoved(id);
 }
