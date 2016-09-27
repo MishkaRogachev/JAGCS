@@ -5,8 +5,9 @@
 
 // Internal
 #include "heartbeat_handler.h"
+#include "attitude_handler.h"
 
-// TODO: ssend, emit heartbeat, systemId=255, multiplexing
+// TODO: send packets, emit heartbeat, systemId=255, multiplexing
 
 using namespace domain;
 
@@ -22,6 +23,7 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d(new Impl())
 {
     d->handlers.append(new HeartbeatHandler(m_vehicleService));
+    d->handlers.append(new AttitudeHandler(m_vehicleService));
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()

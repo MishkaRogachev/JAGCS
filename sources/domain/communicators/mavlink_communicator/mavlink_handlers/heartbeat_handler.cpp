@@ -64,7 +64,6 @@ int HeartbeatHandler::messageId() const
 void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.sysid == 0) return;
-
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
     mavlink_heartbeat_t heartbeat;

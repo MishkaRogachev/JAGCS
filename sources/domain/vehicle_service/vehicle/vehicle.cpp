@@ -26,6 +26,11 @@ bool Vehicle::autonomous() const
     return m_autonomous;
 }
 
+Attitude Vehicle::attitude() const
+{
+    return m_attitude;
+}
+
 void Vehicle::setType(Vehicle::Type type)
 {
     if (m_type == type) return;
@@ -48,4 +53,12 @@ void Vehicle::setAutonomous(bool autonomous)
 
     m_autonomous = autonomous;
     emit autonomousChanged(autonomous);
+}
+
+void Vehicle::setAttitude(Attitude attitude)
+{
+    if (m_attitude == attitude) return;
+
+    m_attitude = attitude;
+    emit attitudeChanged(attitude);
 }
