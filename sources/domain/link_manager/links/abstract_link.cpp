@@ -5,7 +5,9 @@
 
 using namespace domain;
 
-AbstractLink::AbstractLink(QObject* parent): QObject(parent)
+AbstractLink::AbstractLink(QObject* parent):
+    QObject(parent),
+    m_communicator(nullptr)
 {}
 
 AbstractCommunicator* AbstractLink::communicator() const
