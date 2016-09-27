@@ -31,6 +31,7 @@ find_package(Qt5 COMPONENTS
     Positioning
     Location
     Charts
+    QuickControls2
 REQUIRED)
 
 # Global libraries
@@ -45,6 +46,7 @@ set(LIBRARIES
     Qt5::Positioning
     Qt5::Location
     Qt5::Charts
+    Qt5::QuickControls2
 )
 
 # Sources and headrers

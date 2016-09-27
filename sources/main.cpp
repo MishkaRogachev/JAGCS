@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickStyle>
 
 // Internal
 #include "domain_entry.h"
@@ -13,6 +14,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("JAGCS");
+
+    QQuickStyle::setStyle("Material");
 
     QQmlApplicationEngine engine;
 
