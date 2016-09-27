@@ -1,5 +1,8 @@
 #include "abstract_link.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "abstract_communicator.h"
 
@@ -27,7 +30,7 @@ void AbstractLink::setCommunicator(AbstractCommunicator* communicator)
 
     if (communicator)
     {
-        connect(m_communicator, &AbstractCommunicator::sendData,
+        connect(communicator, &AbstractCommunicator::sendData,
                 this, &AbstractLink::sendData);
     }
 
