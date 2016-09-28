@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class LinkManager;
+    class AbstractCommunicator;
     class SettingsProvider;
 }
 
@@ -20,9 +20,10 @@ namespace presentation
         Q_PROPERTY(QVariantList serialBaudRates READ serialBaudRates CONSTANT)
 
     public:
-        explicit ConnectionSettingsPresenter(domain::LinkManager* manager,
-                                             domain::SettingsProvider* settings,
-                                             QObject* view);
+        explicit ConnectionSettingsPresenter(
+                domain::SettingsProvider* settings,
+                domain::AbstractCommunicator* communicator,
+                QObject* view);
         ~ConnectionSettingsPresenter() override;
 
         QList<QObject*> links() const;
@@ -38,6 +39,9 @@ namespace presentation
 
     signals:
         void linksChanged(QList<QObject*> links);
+
+    private slots:
+        void onCommunicatorLinksChanged();
 
     private:
         class Impl;

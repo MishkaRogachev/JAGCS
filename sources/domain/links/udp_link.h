@@ -29,6 +29,8 @@ namespace domain
         void up() override;
         void down() override;
 
+        void sendData(const QByteArray& data) override;
+
         void setRxPort(int port);
         void setAddress(const QString& address);
         void setTxPort(int port);
@@ -39,8 +41,6 @@ namespace domain
         void txPortChanged(int port);
 
     private slots:
-        void sendData(const QByteArray& data) override;
-
         void readPendingDatagrams();
 
     private:

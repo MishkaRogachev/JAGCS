@@ -27,6 +27,8 @@ namespace domain
         void up() override;
         void down() override;
 
+        void sendData(const QByteArray& data) override;
+
         void setPortName(QString portName);
         void setBaudRate(qint32 baudRate);
 
@@ -35,8 +37,6 @@ namespace domain
         void baudRateChanged(qint32 baudRate);
 
     private slots:
-        void sendData(const QByteArray& data) override;
-
         void readSerialData();
 
     private:

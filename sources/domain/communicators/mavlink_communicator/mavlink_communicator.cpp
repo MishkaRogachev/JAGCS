@@ -3,7 +3,13 @@
 // MAVLink
 #include <mavlink.h>
 
+// Qt
+#include <QMap>
+#include <QDebug>
+
 // Internal
+#include "abstract_link.h"
+
 #include "heartbeat_handler.h"
 #include "attitude_handler.h"
 
@@ -15,6 +21,8 @@ class MavLinkCommunicator::Impl
 {
 public:
     QList<AbstractMavLinkHandler*> handlers;
+    QMap<AbstractLink*, uint8_t> linkChannels;
+    QList<uint8_t> avalibleChannels;
 };
 
 MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
@@ -24,6 +32,11 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
 {
     d->handlers.append(new HeartbeatHandler(m_vehicleService));
     d->handlers.append(new AttitudeHandler(m_vehicleService));
+
+    d->avalibleChannels.append(MAVLINK_COMM_0);
+    d->avalibleChannels.append(MAVLINK_COMM_1);
+    d->avalibleChannels.append(MAVLINK_COMM_2);
+    d->avalibleChannels.append(MAVLINK_COMM_3);
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
@@ -36,19 +49,62 @@ MavLinkCommunicator::~MavLinkCommunicator()
     delete d;
 }
 
-void MavLinkCommunicator::receiveData(const QByteArray& data, AbstractLink* link)
+QList<AbstractLink*> MavLinkCommunicator::links() const
+{
+    return d->linkChannels.keys();
+}
+
+void MavLinkCommunicator::addLink(AbstractLink* link)
+{
+    if (d->linkChannels.contains(link) || d->avalibleChannels.isEmpty())
+        return;
+
+    d->linkChannels[link] = d->avalibleChannels.takeFirst();
+
+    link->setParent(this);
+
+    connect(link, &AbstractLink::dataReceived,
+            this, &MavLinkCommunicator::onDataReceived);
+
+    emit linksChanged(this->links());
+}
+
+void MavLinkCommunicator::removeLink(AbstractLink* link)
+{
+    if (!d->linkChannels.contains(link)) return;
+
+    uint8_t channel = d->linkChannels.value(link);
+    d->linkChannels.remove(link);
+    d->avalibleChannels.prepend(channel);
+
+    if (link->parent() == this) link->setParent(nullptr);
+
+    disconnect(link, &AbstractLink::dataReceived,
+            this, &MavLinkCommunicator::onDataReceived);
+
+    emit linksChanged(this->links());
+}
+
+void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 {
     mavlink_message_t message;
     mavlink_status_t status;
 
+    qDebug() << data.toHex();
+
+    AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
+
     for (int pos = 0; pos < data.length(); ++pos)
     {
-        if (!mavlink_parse_char(MAVLINK_COMM_0,  // TODO: MAVLINK channel
-                                (uint8_t)data[pos],
+        if (!mavlink_parse_char(d->linkChannels.value(link),
+                                data[pos],
                                 &message,
                                 &status))
             continue;
 
+        qDebug() << "Received packet: SYS: " << message.sysid <<
+                    ", COMP: " << message.compid << "MSG ID: " <<
+                    message.msgid;
         for (AbstractMavLinkHandler* handler: d->handlers)
         {
             if (handler->handleMessage(message)) break;

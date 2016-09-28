@@ -6,7 +6,7 @@
 namespace domain
 {
     class SettingsProvider;
-    class LinkManager;
+    class AbstractCommunicator;
 
     class DomainEntry
     {
@@ -15,7 +15,7 @@ namespace domain
         ~DomainEntry();
 
         SettingsProvider* settings() const;
-        LinkManager* manager() const;
+        AbstractCommunicator* communicator() const;
 
     private:
         class Impl;

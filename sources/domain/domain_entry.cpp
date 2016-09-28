@@ -5,7 +5,6 @@
 
 #include "vehicle_service.h"
 #include "mavlink_communicator.h"
-#include "link_manager.h"
 
 using namespace domain;
 
@@ -15,11 +14,9 @@ public:
     SettingsProvider settings;
     VehicleService vehicleService;
     MavLinkCommunicator communicator;
-    LinkManager manager;
 
     Impl():
-        communicator(&vehicleService),
-        manager(&communicator)
+        communicator(&vehicleService)
     {}
 };
 
@@ -37,7 +34,7 @@ SettingsProvider* DomainEntry::settings() const
     return &d->settings;
 }
 
-LinkManager* DomainEntry::manager() const
+AbstractCommunicator* DomainEntry::communicator() const
 {
-    return &d->manager;
+    return &d->communicator;
 }

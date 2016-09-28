@@ -1,9 +1,12 @@
 #include "connection_settings_presenter.h"
 
 // Internal
-#include "link_manager.h"
 #include "settings_provider.h"
 #include "settings.h"
+
+#include "abstract_communicator.h"
+#include "serial_link.h"
+#include "udp_link.h"
 
 // Qt
 #include <QSerialPortInfo>
@@ -14,19 +17,22 @@ using namespace presentation;
 class ConnectionSettingsPresenter::Impl
 {
 public:
-    domain::LinkManager* manager;
     domain::SettingsProvider* settings;
+    domain::AbstractCommunicator* communicator;
 };
 
 ConnectionSettingsPresenter::ConnectionSettingsPresenter(
-        domain::LinkManager* manager,
         domain::SettingsProvider* settings,
+        domain::AbstractCommunicator* communicator,
         QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
-    d->manager = manager;
     d->settings = settings;
+    d->communicator = communicator;
+
+    connect(d->communicator, &domain::AbstractCommunicator::linksChanged,
+            this, &ConnectionSettingsPresenter::onCommunicatorLinksChanged);
 }
 
 ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
@@ -38,7 +44,7 @@ QList<QObject*> ConnectionSettingsPresenter::links() const
 {
     QList<QObject*> list;
 
-    for (domain::AbstractLink* link: d->manager->links())
+    for (domain::AbstractLink* link: d->communicator->links())
         list.append(link);
 
     return list;
@@ -67,32 +73,38 @@ void ConnectionSettingsPresenter::addSerialLink()
 {
     d->settings->beginGroup(domain::connection_settings::group);
 
-    d->manager->addNewSerialLink(
-                d->settings->value(domain::connection_settings::serialDevice).toString(),
-                d->settings->value(domain::connection_settings::baudRate).toInt());
+    auto link = new domain::SerialLink(
+                    d->settings->value(domain::connection_settings::serialDevice).toString(),
+                    d->settings->value(domain::connection_settings::baudRate).toInt());
+    link->setObjectName(tr("Serial"));
 
     d->settings->endGroup();
 
-    emit linksChanged(this->links());
+    d->communicator->addLink(link);
 }
 
 void ConnectionSettingsPresenter::addUdpLink()
 {
     d->settings->beginGroup(domain::connection_settings::group);
 
-    d->manager->addNewUdpLink(
-                d->settings->value(domain::connection_settings::hostPort).toInt(),
-                d->settings->value(domain::connection_settings::address).toString(),
-                d->settings->value(domain::connection_settings::port).toInt());
+    auto link = new domain::UdpLink(
+                    d->settings->value(domain::connection_settings::hostPort).toInt(),
+                    d->settings->value(domain::connection_settings::address).toString(),
+                    d->settings->value(domain::connection_settings::port).toInt());
+    link->setObjectName(tr("UDP"));
 
     d->settings->endGroup();
 
-    emit linksChanged(this->links());
+    d->communicator->addLink(link);
 }
 
 void ConnectionSettingsPresenter::removeLink(QObject* link)
 {
-    d->manager->removeLink(qobject_cast<domain::AbstractLink*>(link));
+    d->communicator->removeLink(qobject_cast<domain::AbstractLink*>(link));
+    delete link;
+}
 
+void ConnectionSettingsPresenter::onCommunicatorLinksChanged()
+{
     emit linksChanged(this->links());
 }

@@ -15,10 +15,14 @@ namespace domain
     public:
         AbstractCommunicator(VehicleService* vehicleService, QObject* parent);
 
-        virtual void receiveData(const QByteArray& data, AbstractLink* link) = 0;
+        virtual QList<AbstractLink*> links() const = 0;
+
+    public slots:
+        virtual void addLink(AbstractLink* link) = 0;
+        virtual void removeLink(AbstractLink* link) = 0;
 
     signals:
-        void sendData(const QByteArray& data);
+        void linksChanged(QList<AbstractLink*> links);
 
     protected:
         VehicleService* const m_vehicleService;

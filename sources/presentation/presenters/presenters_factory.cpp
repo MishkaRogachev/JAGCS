@@ -37,7 +37,9 @@ QObject* PresentersFactory::createStatusPresenter(QObject* parent)
 
 QObject* PresentersFactory::createConnectionSettingsPresenter(QObject* parent)
 {
-     return new ConnectionSettingsPresenter(m_entry->manager(), m_entry->settings(), parent);
+     return new ConnectionSettingsPresenter(m_entry->settings(),
+                                            m_entry->communicator(),
+                                            parent);
 }
 
 QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
