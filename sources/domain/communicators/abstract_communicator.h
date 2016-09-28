@@ -18,6 +18,8 @@ namespace domain
         QList<AbstractLink*> links() const;
 
     public slots:
+        void sendData(const QByteArray& data);
+
         virtual void addLink(AbstractLink* link);
         virtual void removeLink(AbstractLink* link);
 

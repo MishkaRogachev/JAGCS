@@ -16,6 +16,14 @@ QList<AbstractLink*> AbstractCommunicator::links() const
     return m_links;
 }
 
+void AbstractCommunicator::sendData(const QByteArray& data)
+{
+    for (AbstractLink* link: m_links)
+    {
+        if (link->isUp()) link->sendData(data);
+    }
+}
+
 void AbstractCommunicator::addLink(AbstractLink* link)
 {
     m_links.append(link);
