@@ -15,17 +15,21 @@ namespace domain
     public:
         AbstractCommunicator(VehicleService* vehicleService, QObject* parent);
 
-        virtual QList<AbstractLink*> links() const = 0;
+        QList<AbstractLink*> links() const;
 
     public slots:
-        virtual void addLink(AbstractLink* link) = 0;
-        virtual void removeLink(AbstractLink* link) = 0;
+        virtual void addLink(AbstractLink* link);
+        virtual void removeLink(AbstractLink* link);
 
     signals:
         void linksChanged(QList<AbstractLink*> links);
 
+    protected slots:
+        virtual void onDataReceived(const QByteArray& data) = 0;
+
     protected:
         VehicleService* const m_vehicleService;
+        QList<AbstractLink*> m_links;
     };
 }
 

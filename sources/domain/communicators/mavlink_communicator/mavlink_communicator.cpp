@@ -49,11 +49,6 @@ MavLinkCommunicator::~MavLinkCommunicator()
     delete d;
 }
 
-QList<AbstractLink*> MavLinkCommunicator::links() const
-{
-    return d->linkChannels.keys();
-}
-
 void MavLinkCommunicator::addLink(AbstractLink* link)
 {
     if (d->linkChannels.contains(link) || d->avalibleChannels.isEmpty())
@@ -61,12 +56,7 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
 
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
 
-    link->setParent(this);
-
-    connect(link, &AbstractLink::dataReceived,
-            this, &MavLinkCommunicator::onDataReceived);
-
-    emit linksChanged(this->links());
+    AbstractCommunicator::addLink(link);
 }
 
 void MavLinkCommunicator::removeLink(AbstractLink* link)
@@ -77,12 +67,7 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     d->linkChannels.remove(link);
     d->avalibleChannels.prepend(channel);
 
-    if (link->parent() == this) link->setParent(nullptr);
-
-    disconnect(link, &AbstractLink::dataReceived,
-            this, &MavLinkCommunicator::onDataReceived);
-
-    emit linksChanged(this->links());
+    AbstractCommunicator::removeLink(link);
 }
 
 void MavLinkCommunicator::onDataReceived(const QByteArray& data)
