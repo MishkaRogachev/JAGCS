@@ -23,6 +23,7 @@ RowLayout {
 
         ComboBox {
             Layout.fillWidth: true
+            enabled: count > 0
             model: presenter.serialDevices
             currentIndex: linkItem && 'portName' in linkItem ?
                               model.indexOf(linkItem.portName) : 0
@@ -79,18 +80,11 @@ RowLayout {
         }
     }
 
-    ColumnLayout {
-        Button {
-            text: qsTr("Up")
-            enabled: linkItem ? !linkItem.isUp : false
-            onClicked: linkItem.up()
-        }
-
-        Button {
-            text: qsTr("Down")
-            enabled: linkItem ? linkItem.isUp : false
-            onClicked: linkItem.down()
-        }
+    Button {
+        text: linkItem && linkItem.isUp ? qsTr("Down") : qsTr("Up")
+        onClicked: linkItem && linkItem.isUp ? linkItem.down() : linkItem.up()
+        checkable: true
+        checked: linkItem && linkItem.isUp
     }
 
     Button {
