@@ -94,7 +94,7 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     for (int pos = 0; pos < data.length(); ++pos)
     {
         if (!mavlink_parse_char(d->linkChannels.value(this->sender()),
-                                data[pos],
+                                (uint8_t)data[pos],
                                 &message,
                                 &status))
             continue;
