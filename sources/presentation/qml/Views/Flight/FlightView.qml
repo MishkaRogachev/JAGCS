@@ -9,6 +9,8 @@ import "../Video"
 Item {
     id: root
 
+    property QtObject presenter: factory.createFlightPresenter(root)
+
     RowLayout {
         anchors.fill: parent
         anchors.margins: 5
@@ -17,6 +19,18 @@ Item {
             id: toolBar
             Layout.fillHeight: true
             Layout.preferredWidth: settingsProvider.value("Gui/toolbarWidth");
+
+            RowLayout {
+
+                Label {
+                    text: qsTr("Vehicle: ")
+                }
+
+                ComboBox {
+                    enabled: count > 0
+                    model: presenter.vehicles
+                }
+            }
 
             FlightDirector {
                 id: flightDirector
@@ -56,7 +70,6 @@ Item {
             sourceComponent: mapComponent
         }
     }
-
 
     Component {
         id: mapComponent

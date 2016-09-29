@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 ColumnLayout {
     id: root
 
-    property QtObject presenter: factory.createConnectionStatusPresenter(root)
+    //property QtObject presenter: factory.createConnectionStatusPresenter(root)
 
     Label {
         text: "Rx:"

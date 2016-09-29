@@ -22,8 +22,10 @@ namespace presentation
         Q_INVOKABLE QObject* createMapPresenter(QObject* parent);
 
         Q_INVOKABLE QObject* createStatusPresenter(QObject* parent);
-        Q_INVOKABLE QObject* createConnectionSettingsPresenter(QObject* parent);
 
+        Q_INVOKABLE QObject* createFlightPresenter(QObject* parent);
+
+        Q_INVOKABLE QObject* createConnectionSettingsPresenter(QObject* parent);
         Q_INVOKABLE QObject* createVideoSettingsPresenter(QObject* parent);
         Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* parent);
 

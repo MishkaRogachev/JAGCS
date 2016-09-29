@@ -34,7 +34,7 @@ ConnectionSettingsPresenter::ConnectionSettingsPresenter(
     connect(d->communicator, &domain::AbstractCommunicator::addEnabledChanged,
             this, &ConnectionSettingsPresenter::addEnabledChanged);
     connect(d->communicator, &domain::AbstractCommunicator::linksChanged,
-            this, &ConnectionSettingsPresenter::onCommunicatorLinksChanged);
+            this, &ConnectionSettingsPresenter::linksChanged);
 }
 
 ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
@@ -109,9 +109,4 @@ void ConnectionSettingsPresenter::removeLink(QObject* link)
 {
     d->communicator->removeLink(qobject_cast<domain::AbstractLink*>(link));
     delete link;
-}
-
-void ConnectionSettingsPresenter::onCommunicatorLinksChanged()
-{
-    emit linksChanged(this->links());
 }

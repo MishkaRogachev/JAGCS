@@ -42,10 +42,7 @@ namespace presentation
 
     signals:
         void addEnabledChanged(bool addEnabled);
-        void linksChanged(QList<QObject*> links);
-
-    private slots:
-        void onCommunicatorLinksChanged();
+        void linksChanged();
 
     private:
         class Impl;

@@ -46,7 +46,7 @@ void AbstractCommunicator::addLink(AbstractLink* link)
     connect(link, &AbstractLink::dataReceived,
             this, &AbstractCommunicator::onDataReceived);
 
-    emit linksChanged(this->links());
+    emit linksChanged();
 }
 
 void AbstractCommunicator::removeLink(AbstractLink* link)
@@ -57,5 +57,5 @@ void AbstractCommunicator::removeLink(AbstractLink* link)
     disconnect(link, &AbstractLink::dataReceived,
                this, &AbstractCommunicator::onDataReceived);
 
-    emit linksChanged(this->links());
+    emit linksChanged();
 }

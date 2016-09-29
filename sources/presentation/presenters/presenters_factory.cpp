@@ -6,7 +6,8 @@
 #include "video_presenter.h"
 #include "map_presenter.h"
 
-// Internal
+#include "flight_presenter.h"
+
 #include "status_presenter.h"
 
 #include "video_settings_presenter.h"
@@ -33,6 +34,11 @@ QObject* PresentersFactory::createMapPresenter(QObject* parent)
 QObject* PresentersFactory::createStatusPresenter(QObject* parent)
 {
     return new StatusPresenter(parent);
+}
+
+QObject* PresentersFactory::createFlightPresenter(QObject* parent)
+{
+    return new FlightPresenter(m_entry->vehicleService(), parent);
 }
 
 QObject* PresentersFactory::createConnectionSettingsPresenter(QObject* parent)

@@ -7,6 +7,7 @@ namespace domain
 {
     class SettingsProvider;
     class AbstractCommunicator;
+    class VehicleService;
 
     class DomainEntry
     {
@@ -16,6 +17,7 @@ namespace domain
 
         SettingsProvider* settings() const;
         AbstractCommunicator* communicator() const;
+        VehicleService* vehicleService() const;
 
     private:
         class Impl;

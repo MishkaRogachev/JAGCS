@@ -27,7 +27,7 @@ namespace domain
 
     signals:
         void addEnabledChanged(bool addEnabled);
-        void linksChanged(QList<AbstractLink*> links);
+        void linksChanged();
 
     protected slots:
         virtual void onDataReceived(const QByteArray& data) = 0;

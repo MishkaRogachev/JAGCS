@@ -38,3 +38,8 @@ AbstractCommunicator* DomainEntry::communicator() const
 {
     return &d->communicator;
 }
+
+VehicleService* DomainEntry::vehicleService() const
+{
+    return &d->vehicleService;
+}
