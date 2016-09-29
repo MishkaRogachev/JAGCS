@@ -57,7 +57,7 @@ file(GLOB_RECURSE JS "sources/*.js")
 
 # Includes
 HEADER_DIRECTORIES(INCLUDES "sources")
-HEADER_DIRECTORIES(MAVLINK_INCLUDES "3dparty/mavlink")
+HEADER_DIRECTORIES(MAVLINK_INCLUDES "3dparty/mavlink_v1")
 include_directories(${INCLUDES} ${MAVLINK_INCLUDES})
 
 # Resources
