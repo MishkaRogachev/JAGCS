@@ -65,6 +65,7 @@ void SettingsProvider::makeDefaults()
     this->beginGroup(connection_settings::group);
     this->setValue(connection_settings::baudRate, 57600);
     this->setValue(connection_settings::hostPort, 14550);
+    this->setValue(connection_settings::address, "127.0.0.1");
     this->setValue(connection_settings::port, 14551);
     this->endGroup();
 }
