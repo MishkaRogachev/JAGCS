@@ -7,6 +7,7 @@ namespace domain
 {
     class Vehicle;
 
+    // TODO: service layer
     class VehicleService: public QObject
     {
         Q_OBJECT
