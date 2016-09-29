@@ -15,6 +15,7 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(bool addEnabled READ isAddEnabled NOTIFY addEnabledChanged)
         Q_PROPERTY(QList<QObject*> links READ links NOTIFY linksChanged)
         Q_PROPERTY(QStringList serialDevices READ serialDevices CONSTANT)
         Q_PROPERTY(QVariantList serialBaudRates READ serialBaudRates CONSTANT)
@@ -25,6 +26,8 @@ namespace presentation
                 domain::AbstractCommunicator* communicator,
                 QObject* view);
         ~ConnectionSettingsPresenter() override;
+
+        bool isAddEnabled() const;
 
         QList<QObject*> links() const;
 
@@ -38,6 +41,7 @@ namespace presentation
         void removeLink(QObject* link);
 
     signals:
+        void addEnabledChanged(bool addEnabled);
         void linksChanged(QList<QObject*> links);
 
     private slots:

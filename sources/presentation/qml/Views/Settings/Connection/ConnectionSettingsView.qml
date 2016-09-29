@@ -25,6 +25,7 @@ Frame {
             text: qsTr("Add Link")
             anchors.right: parent.right
             onClicked: addMenu.open()
+            enabled: presenter.addEnabled
 
             Menu {
                 id: addMenu

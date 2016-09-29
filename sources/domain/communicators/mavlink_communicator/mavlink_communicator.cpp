@@ -69,6 +69,7 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
         return;
 
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
+    this->setAddEnabled(!d->avalibleChannels.isEmpty());
 
     AbstractCommunicator::addLink(link);
 }
@@ -80,8 +81,27 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     uint8_t channel = d->linkChannels.value(link);
     d->linkChannels.remove(link);
     d->avalibleChannels.prepend(channel);
+    this->setAddEnabled(!d->avalibleChannels.isEmpty());
 
     AbstractCommunicator::removeLink(link);
+}
+
+void MavLinkCommunicator::setComponentId(int componentId)
+{
+    d->componentId = componentId;
+}
+
+void MavLinkCommunicator::setSystemId(int systemId)
+{
+    d->systemId = systemId;
+}
+
+void MavLinkCommunicator::sendMessage(const mavlink_message_t& message)
+{
+    static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    int lenght = mavlink_msg_to_send_buffer(buffer, &message);
+
+    this->sendData(QByteArray((const char*)buffer, lenght));
 }
 
 void MavLinkCommunicator::onDataReceived(const QByteArray& data)
@@ -109,22 +129,4 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     }
 
     // TODO: Link status
-}
-
-void MavLinkCommunicator::setComponentId(int componentId)
-{
-    d->componentId = componentId;
-}
-
-void MavLinkCommunicator::sendMessage(const mavlink_message_t& message)
-{
-    static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-    int lenght = mavlink_msg_to_send_buffer(buffer, &message);
-
-    this->sendData(QByteArray((const char*)buffer, lenght));
-}
-
-void MavLinkCommunicator::setSystemId(int systemId)
-{
-    d->systemId = systemId;
 }
