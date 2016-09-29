@@ -59,7 +59,6 @@ Column {
             Item {
                 id: pitchRollContents
                 anchors.fill: parent
-                visible: false
 
                 Horizont {
                     id: horizont
@@ -88,20 +87,6 @@ Column {
                     pitch: pitchInverted ? 0 : -flightDirector.pitch
                     roll: rollInverted ? 0 : flightDirector.roll
                 }
-            }
-
-            OpacityMask {
-                anchors.fill: parent
-                source: pitchRollContents
-                maskSource: mask
-            }
-
-            Rectangle {
-                id: mask
-                width: parent.width
-                height: parent.height
-                radius: width / 2
-                visible: false
             }
 
             RollScale {

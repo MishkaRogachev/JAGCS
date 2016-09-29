@@ -17,7 +17,7 @@ Frame {
 
             ConnectionItemView {
                 presenter: root.presenter
-                linkItem: modelData
+                link: modelData
             }
         }
 

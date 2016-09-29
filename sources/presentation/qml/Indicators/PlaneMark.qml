@@ -21,8 +21,8 @@ Item {
             var offset = Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
             ctx.lineWidth = 4;
-            ctx.strokeStyle = Qt.gray // TODO: palette
-            ctx.fillStyle = Qt.gray // TODO: palette
+            ctx.strokeStyle = '#2c3e50' // TODO: palette
+            ctx.fillStyle = '#2c3e50' // TODO: palette
 
             ctx.save();
             ctx.beginPath();

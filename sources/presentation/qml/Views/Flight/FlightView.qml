@@ -2,13 +2,14 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "../../Indicators"
 import "../Map"
 import "../Video"
 
-Item {
+Rectangle {
     id: root
+    color: "#2c3e50"
 
+    // TODO: think about removing presenters, amde usa bare Model-View architecture
     property QtObject presenter: factory.createFlightPresenter(root)
 
     RowLayout {
@@ -20,23 +21,19 @@ Item {
             Layout.fillHeight: true
             Layout.preferredWidth: settingsProvider.value("Gui/toolbarWidth");
 
-            RowLayout {
-
-                Label {
-                    text: qsTr("Vehicle: ")
-                }
-
-                ComboBox {
-                    enabled: count > 0
-                    model: presenter.vehicles
+            ComboBox {
+                enabled: count > 0
+                model: presenter.vehicles
+                Layout.preferredWidth: parent.width
+                onCurrentIndexChanged: {
+                    vehicleView.vehicle = presenter.vehicleObject(currentIndex);
                 }
             }
 
-            FlightDirector {
-                id: flightDirector
+            VehicleView {
+                id: vehicleView
                 Layout.preferredWidth: parent.width
             }
-            // TODO: tools
 
             Item {
                 width: 1

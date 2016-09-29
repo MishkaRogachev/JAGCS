@@ -5,19 +5,19 @@ import QtQuick.Layouts 1.3
 RowLayout {
     id: root
 
-    property QtObject linkItem
+    property QtObject link
     property QtObject presenter
 
     TextField {
         Layout.fillWidth: true
-        text: linkItem ? linkItem.objectName : qsTr("None")
-        onEditingFinished: linkItem.objectName = text
+        text: link ? link.objectName : qsTr("None")
+        onEditingFinished: link.objectName = text
     }
 
     GridLayout {
         id: serialSettings
         columns: 2
-        visible: linkItem ? 'portName' in linkItem : false
+        visible: link ? 'portName' in link : false
 
         Label { text: qsTr("Serial device") }
 
@@ -25,10 +25,10 @@ RowLayout {
             Layout.fillWidth: true
             enabled: count > 0
             model: presenter.serialDevices
-            currentIndex: linkItem && 'portName' in linkItem ?
-                              model.indexOf(linkItem.portName) : 0
-            onCurrentIndexChanged: if (linkItem && 'portName' in linkItem)
-                                       linkItem.setPortName(model[currentIndex])
+            currentIndex: link && 'portName' in link ?
+                              model.indexOf(link.portName) : 0
+            onCurrentIndexChanged: if (link && 'portName' in link)
+                                       link.setPortName(model[currentIndex])
         }
 
         Label { text: qsTr("Baud rate") }
@@ -36,17 +36,17 @@ RowLayout {
         ComboBox {
             Layout.fillWidth: true
             model: presenter.serialBaudRates
-            currentIndex: linkItem && 'baudRate' in linkItem ?
-                              model.indexOf(linkItem.baudRate) : 0
-            onCurrentIndexChanged: if (linkItem && 'baudRate' in linkItem)
-                                       linkItem.setBaudRate(model[currentIndex])
+            currentIndex: link && 'baudRate' in link ?
+                              model.indexOf(link.baudRate) : 0
+            onCurrentIndexChanged: if (link && 'baudRate' in link)
+                                       link.setBaudRate(model[currentIndex])
         }
     }
 
     GridLayout {
         id: udpSettings
         columns: 2
-        visible: linkItem ? 'rxPort' in linkItem : false
+        visible: link ? 'rxPort' in link : false
 
         Label { text: qsTr("Recieve port") }
 
@@ -55,8 +55,8 @@ RowLayout {
             editable: true
             from: 0
             to: 99999
-            value: linkItem && 'rxPort' in linkItem ? linkItem.rxPort : 0
-            onValueChanged: if (linkItem) linkItem.setRxPort(value)
+            value: link && 'rxPort' in link ? link.rxPort : 0
+            onValueChanged: if (link) link.setRxPort(value)
         }
 
         Label { text: qsTr("Transmit address") }
@@ -64,8 +64,8 @@ RowLayout {
         TextField {
             Layout.fillWidth: true
             placeholderText: qsTr("Enter address")
-            text: linkItem && 'address' in linkItem? linkItem.address : ""
-            onTextChanged: if (linkItem) linkItem.setAddress(text)
+            text: link && 'address' in link? link.address : ""
+            onTextChanged: if (link) link.setAddress(text)
         }
 
         Label { text: qsTr("Transmit port") }
@@ -75,21 +75,19 @@ RowLayout {
             editable: true
             from: 0
             to: 99999
-            value: linkItem && 'txPort' in linkItem ? linkItem.txPort : 0
-            onValueChanged: if (linkItem) linkItem.setTxPort(value)
+            value: link && 'txPort' in link ? link.txPort : 0
+            onValueChanged: if (link) link.setTxPort(value)
         }
     }
 
     Button {
-        text: linkItem && linkItem.isUp ? qsTr("Down") : qsTr("Up")
-        onClicked: linkItem && linkItem.isUp ? linkItem.down() : linkItem.up()
-        checkable: true
-        checked: linkItem && linkItem.isUp
+        text: link && link.isUp ? qsTr("Down") : qsTr("Up")
+        onClicked: link && link.isUp ? link.down() : link.up()
     }
 
     Button {
         text: qsTr("Remove")
-        enabled: linkItem
-        onClicked: presenter.removeLink(linkItem)
+        enabled: link
+        onClicked: presenter.removeLink(link)
     }
 }

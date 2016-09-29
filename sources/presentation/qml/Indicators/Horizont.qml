@@ -29,11 +29,17 @@ Item {
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
 
-            ctx.fillStyle = Qt.blue // TODO: palette
+            ctx.fillStyle = '#3498db' // TODO: palette
             ctx.fillRect(-size / 2, -size / 2, size, size / 2);
 
-            ctx.fillStyle = Qt.darkYellow // TODO: palette
+            ctx.fillStyle = '#e67e22' // TODO: palette
             ctx.fillRect(-size / 2, 0, size, size / 2);
+
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#ecf0f1' // TODO: palette
+            ctx.moveTo(-size / 2, 0);
+            ctx.lineTo(size / 2, 0);
+            ctx.stroke();
 
             ctx.restore();
         }

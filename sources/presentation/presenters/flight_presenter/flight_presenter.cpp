@@ -5,6 +5,7 @@
 
 // Internal
 #include "vehicle_service.h"
+#include "vehicle.h"
 
 using namespace presentation;
 
@@ -40,6 +41,12 @@ FlightPresenter::~FlightPresenter()
 QStringList FlightPresenter::vehicles() const
 {
     return d->vehiclesAlias.values();
+}
+
+QObject* FlightPresenter::vehicleObject(int index) const
+{
+    return d->vehicleService->vehicle(
+                d->vehiclesAlias.key(d->vehiclesAlias.values().at(index)));
 }
 
 void FlightPresenter::onVehicleAdded(uint8_t id)

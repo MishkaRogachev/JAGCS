@@ -22,6 +22,8 @@ namespace presentation
 
         QStringList vehicles() const;
 
+        Q_INVOKABLE QObject* vehicleObject(int index) const;
+
     signals:
         void vehiclesChanged();
 

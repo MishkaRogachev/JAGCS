@@ -23,8 +23,8 @@ Item {
             ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 2;
-            ctx.strokeStyle = Qt.white // TODO: palette
-            ctx.fillStyle = Qt.white // TODO: palette
+            ctx.strokeStyle = '#ecf0f1' // TODO: palette
+            ctx.fillStyle = '#ecf0f1' // TODO: palette
             ctx.font = '11pt Open Sans';
             ctx.textBaseline = 'middle';
 
