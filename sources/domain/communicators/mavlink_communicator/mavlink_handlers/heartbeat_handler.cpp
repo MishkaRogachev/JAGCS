@@ -3,7 +3,11 @@
 // MAVLink
 #include <mavlink.h>
 
+// Qt
+#include <QTimer>
+
 // Internal
+#include "mavlink_communicator.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
 
@@ -51,10 +55,33 @@ namespace
     }
 }
 
-HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService):
+HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
+                                   MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(),
-    m_vehicleService(vehicleService)
-{}
+    m_vehicleService(vehicleService),
+    m_communicator(communicator),
+    m_timer(new QTimer())
+{
+    QObject::connect(m_timer, &QTimer::timeout, m_timer,
+                     [this]() { this->sendHeartbeat(); });
+    m_timer->start(1000); //TODO: heartbeat emit disabling and freqency selecting
+}
+
+HeartbeatHandler::~HeartbeatHandler()
+{
+    delete m_timer;
+}
+
+void HeartbeatHandler::sendHeartbeat()
+{
+    mavlink_message_t message;
+    mavlink_heartbeat_t heartbeat;
+    heartbeat.type = MAV_TYPE_GCS;
+    mavlink_msg_heartbeat_encode(m_communicator->systemId(),
+                                 m_communicator->componentId(),
+                                 &message, &heartbeat);
+    m_communicator->sendMessage(message);
+}
 
 int HeartbeatHandler::messageId() const
 {

@@ -12,8 +12,11 @@
 
 #include "heartbeat_handler.h"
 #include "attitude_handler.h"
+#include "gps_raw_handler.h"
+#include "system_status_handler.h"
+#include "vfr_hud_handler.h"
 
-// TODO: emit heartbeat, multiplexing, pings
+// TODO: multiplexing, pings, requests
 
 using namespace domain;
 
@@ -34,8 +37,11 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     AbstractCommunicator(vehicleService, parent),
     d(new Impl())
 {
-    d->handlers.append(new HeartbeatHandler(m_vehicleService));
+    d->handlers.append(new HeartbeatHandler(m_vehicleService, this));
     d->handlers.append(new AttitudeHandler(m_vehicleService));
+    d->handlers.append(new GpsRawHandler());
+    d->handlers.append(new SystemStatusHandler());
+    d->handlers.append(new VfrHudHandler(m_vehicleService));
 
     d->avalibleChannels.append(MAVLINK_COMM_0);
     d->avalibleChannels.append(MAVLINK_COMM_1);
@@ -98,18 +104,21 @@ void MavLinkCommunicator::setSystemId(int systemId)
 
 void MavLinkCommunicator::sendMessage(const mavlink_message_t& message)
 {
-    static uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
     int lenght = mavlink_msg_to_send_buffer(buffer, &message);
 
+    if (!lenght) return;
     this->sendData(QByteArray((const char*)buffer, lenght));
+
+    qDebug() << "Sent packet: SYS: " << message.sysid <<
+                ", COMP: " << message.compid << "MSG ID: " <<
+                message.msgid;
 }
 
 void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 {
     mavlink_message_t message;
     mavlink_status_t status;
-
-    qDebug() << data.toHex();
 
     for (int pos = 0; pos < data.length(); ++pos)
     {

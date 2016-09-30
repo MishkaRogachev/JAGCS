@@ -3,14 +3,21 @@
 
 #include "abstract_mavlink_handler.h"
 
+class QTimer;
+
 namespace domain
 {
     class VehicleService;
+    class MavLinkCommunicator;
 
     class HeartbeatHandler: public AbstractMavLinkHandler
     {
     public:
-        HeartbeatHandler(VehicleService* vehicleService);
+        HeartbeatHandler(VehicleService* vehicleService,
+                         MavLinkCommunicator* communicator);
+        ~HeartbeatHandler() override;
+
+        void sendHeartbeat();
 
     protected:
         int messageId() const override;
@@ -18,6 +25,8 @@ namespace domain
 
     private:
         VehicleService* m_vehicleService;
+        MavLinkCommunicator* m_communicator;
+        QTimer* m_timer;
     };
 }
 
