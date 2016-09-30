@@ -5,24 +5,19 @@
 
 namespace domain
 {
+    class MavLinkCommunicator;
+
     class PingHandler: public AbstractMavLinkHandler
     {
     public:
-        PingHandler(int systemId, int componentId);
-
-        int systemId() const;
-        void setSystemId(int systemId);
-
-        int componentId() const;
-        void setComponentId(int componentId);
+        PingHandler(MavLinkCommunicator* communicator);
 
     protected:
         int messageId() const override;
         void processMessage(const mavlink_message_t& message) override;
 
     private:
-        int m_systemId;
-        int m_componentId;
+        MavLinkCommunicator* m_communicator;
     };
 }
 

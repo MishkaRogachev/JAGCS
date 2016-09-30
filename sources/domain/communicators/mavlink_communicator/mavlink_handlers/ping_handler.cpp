@@ -4,12 +4,14 @@
 #include <mavlink.h>
 #include <mavlink_msg_ping.h>
 
+// Internal
+#include "mavlink_communicator.h"
+
 using namespace domain;
 
-PingHandler::PingHandler(int systemId, int componentId):
+PingHandler::PingHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(),
-    m_systemId(systemId),
-    m_componentId(componentId)
+    m_communicator(communicator)
 {}
 
 int PingHandler::messageId() const
@@ -24,31 +26,12 @@ void PingHandler::processMessage(const mavlink_message_t& message)
 
     if (!ping.target_system && !ping.target_component)
     {
-         mavlink_message_t msg;
-         mavlink_msg_ping_pack(m_systemId, m_componentId, &msg,
-                               ping.time_usec, ping.seq,
+         mavlink_message_t response;
+         mavlink_msg_ping_pack(m_communicator->systemId(),
+                               m_communicator->componentId(),
+                               &response, ping.time_usec, ping.seq,
                                message.sysid, message.compid);
 
-         // TODO: send ping response
+         m_communicator->sendMessage(response);
     }
-}
-
-int PingHandler::componentId() const
-{
-    return m_componentId;
-}
-
-void PingHandler::setComponentId(int componentId)
-{
-    m_componentId = componentId;
-}
-
-int PingHandler::systemId() const
-{
-    return m_systemId;
-}
-
-void PingHandler::setSystemId(int systemId)
-{
-    m_systemId = systemId;
 }

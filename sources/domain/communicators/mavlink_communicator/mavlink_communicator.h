@@ -32,6 +32,10 @@ namespace domain
     protected slots:
         void onDataReceived(const QByteArray& data) override;
 
+    signals:
+        void systemIdChanged(int systemId);
+        void componentIdChanged(int componentId);
+
     private:
         class Impl;
         Impl* const d;

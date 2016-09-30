@@ -11,6 +11,7 @@
 #include "abstract_link.h"
 
 #include "heartbeat_handler.h"
+#include "ping_handler.h"
 #include "attitude_handler.h"
 #include "gps_raw_handler.h"
 #include "system_status_handler.h"
@@ -38,6 +39,7 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d(new Impl())
 {
     d->handlers.append(new HeartbeatHandler(m_vehicleService, this));
+    d->handlers.append(new PingHandler(this));
     d->handlers.append(new AttitudeHandler(m_vehicleService));
     d->handlers.append(new GpsRawHandler());
     d->handlers.append(new SystemStatusHandler());
@@ -92,14 +94,20 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     AbstractCommunicator::removeLink(link);
 }
 
-void MavLinkCommunicator::setComponentId(int componentId)
-{
-    d->componentId = componentId;
-}
-
 void MavLinkCommunicator::setSystemId(int systemId)
 {
+    if (d->systemId == systemId) return;
+
     d->systemId = systemId;
+    emit systemIdChanged(systemId);
+}
+
+void MavLinkCommunicator::setComponentId(int componentId)
+{
+    if (d->componentId == componentId) return;
+
+    d->componentId = componentId;
+    emit componentIdChanged(componentId);
 }
 
 void MavLinkCommunicator::sendMessage(const mavlink_message_t& message)
