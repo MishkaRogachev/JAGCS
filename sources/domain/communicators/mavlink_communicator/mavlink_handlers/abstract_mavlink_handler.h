@@ -4,18 +4,25 @@
 // MAVLink
 #include <mavlink_types.h>
 
+// Qt
+#include <QObject>
+
 namespace domain
 {
-    class AbstractMavLinkHandler
+    class AbstractMavLinkHandler: public QObject
     {
+        Q_OBJECT
+
     public:
-        AbstractMavLinkHandler();
-        virtual ~AbstractMavLinkHandler();
+        AbstractMavLinkHandler(QObject* parent);
+        ~AbstractMavLinkHandler() override;
 
         bool handleMessage(const mavlink_message_t& message);
 
     protected:
         virtual int messageId() const = 0;
+
+    protected slots:
         virtual void processMessage(const mavlink_message_t& message) = 0;
     };
 }

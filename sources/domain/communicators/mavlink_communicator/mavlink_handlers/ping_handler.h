@@ -9,11 +9,15 @@ namespace domain
 
     class PingHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
         PingHandler(MavLinkCommunicator* communicator);
 
     protected:
         int messageId() const override;
+
+    protected slots:
         void processMessage(const mavlink_message_t& message) override;
 
     private:

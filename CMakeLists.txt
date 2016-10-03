@@ -18,7 +18,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Add compiler flags
-add_compile_options(-std=c++11 -Wall -fPIC)
+set (CMAKE_CXX_STANDARD 14)
+
+add_compile_options(-Wall -fPIC)
 
 # Enable globaly some Qt modules
 find_package(Qt5 COMPONENTS

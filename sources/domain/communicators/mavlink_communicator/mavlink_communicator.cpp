@@ -5,6 +5,7 @@
 #include <mavlink_types.h>
 
 // Qt
+#include <QtGlobal>
 #include <QMap>
 #include <QDebug>
 
@@ -29,13 +30,11 @@ class MavLinkCommunicator::Impl
 {
 public:
     QList<AbstractMavLinkHandler*> handlers;
-    RequestHandler* requestHandler;
-
     QMap<QObject*, uint8_t> linkChannels;
     QList<uint8_t> avalibleChannels;
 
-    int systemId = 255;
-    int componentId = 0;
+    uint8_t systemId = 255;
+    uint8_t componentId = 0;
 };
 
 MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
@@ -45,40 +44,35 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
 {
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
-    d->handlers.append(new AttitudeHandler(vehicleService));
-    d->handlers.append(new GpsRawHandler());
-    d->handlers.append(new SystemStatusHandler());
-    d->handlers.append(new VfrHudHandler(vehicleService));
+    d->handlers.append(new AttitudeHandler(vehicleService, this));
+    d->handlers.append(new GpsRawHandler(this));
+    d->handlers.append(new SystemStatusHandler(this));
+    d->handlers.append(new VfrHudHandler(vehicleService, this));
 
-    d->requestHandler = new RequestHandler(this);
+    auto requestHandler = new RequestHandler(this);
+     d->handlers.append(requestHandler);
+    connect(vehicleService, &VehicleService::vehicleAdded,
+            requestHandler, qOverload<uint8_t>(&RequestHandler::sendRequest));
 
     d->avalibleChannels.append(MAVLINK_COMM_0);
     d->avalibleChannels.append(MAVLINK_COMM_1);
     d->avalibleChannels.append(MAVLINK_COMM_2);
     d->avalibleChannels.append(MAVLINK_COMM_3);
 
-    connect(vehicleService, &VehicleService::vehicleAdded,
-            this, &MavLinkCommunicator::onVehicleAdded);
+
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
 {
-    while (!d->handlers.isEmpty())
-    {
-        delete d->handlers.takeLast();
-    }
-
-    delete d->requestHandler;
-
     delete d;
 }
 
-int MavLinkCommunicator::componentId() const
+uint8_t MavLinkCommunicator::componentId() const
 {
     return d->componentId;
 }
 
-int MavLinkCommunicator::systemId() const
+uint8_t MavLinkCommunicator::systemId() const
 {
     return d->systemId;
 }
@@ -106,7 +100,7 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     AbstractCommunicator::removeLink(link);
 }
 
-void MavLinkCommunicator::setSystemId(int systemId)
+void MavLinkCommunicator::setSystemId(uint8_t systemId)
 {
     if (d->systemId == systemId) return;
 
@@ -114,7 +108,7 @@ void MavLinkCommunicator::setSystemId(int systemId)
     emit systemIdChanged(systemId);
 }
 
-void MavLinkCommunicator::setComponentId(int componentId)
+void MavLinkCommunicator::setComponentId(uint8_t componentId)
 {
     if (d->componentId == componentId) return;
 
@@ -158,9 +152,4 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     }
 
     // TODO: Link status
-}
-
-void MavLinkCommunicator::onVehicleAdded(int vehicleId)
-{
-    d->requestHandler->sendRequest(vehicleId);
 }

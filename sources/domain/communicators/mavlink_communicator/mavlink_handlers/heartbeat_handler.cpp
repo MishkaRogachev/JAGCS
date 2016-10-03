@@ -57,7 +57,7 @@ namespace
 
 HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
                                    MavLinkCommunicator* communicator):
-    AbstractMavLinkHandler(),
+    AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService),
     m_communicator(communicator),
     m_timer(new QTimer())

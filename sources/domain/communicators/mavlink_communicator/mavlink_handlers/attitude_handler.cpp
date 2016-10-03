@@ -13,8 +13,9 @@
 
 using namespace domain;
 
-AttitudeHandler::AttitudeHandler(VehicleService* vehicleService):
-    AbstractMavLinkHandler(),
+AttitudeHandler::AttitudeHandler(VehicleService* vehicleService,
+                                 QObject* parent):
+    AbstractMavLinkHandler(parent),
     m_vehicleService(vehicleService)
 {}
 

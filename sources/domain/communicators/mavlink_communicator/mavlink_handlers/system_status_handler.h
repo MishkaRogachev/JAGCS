@@ -7,11 +7,15 @@ namespace domain
 {
     class SystemStatusHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
-        SystemStatusHandler();
+        SystemStatusHandler(QObject* parent = nullptr);
 
     protected:
         int messageId() const override;
+
+    protected slots:
         void processMessage(const mavlink_message_t& message) override;
     };
 }

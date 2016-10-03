@@ -9,11 +9,15 @@ namespace domain
 
     class VfrHudHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
-        VfrHudHandler(VehicleService* vehicleService);
+        VfrHudHandler(VehicleService* vehicleService, QObject* parent = nullptr);
 
     protected:
         int messageId() const override;
+
+    protected slots:
         void processMessage(const mavlink_message_t& message) override;
 
     private:

@@ -10,8 +10,8 @@
 
 using namespace domain;
 
-VfrHudHandler::VfrHudHandler(VehicleService* vehicleService):
-    AbstractMavLinkHandler(),
+VfrHudHandler::VfrHudHandler(VehicleService* vehicleService, QObject* parent):
+    AbstractMavLinkHandler(parent),
     m_vehicleService(vehicleService)
 {}
 

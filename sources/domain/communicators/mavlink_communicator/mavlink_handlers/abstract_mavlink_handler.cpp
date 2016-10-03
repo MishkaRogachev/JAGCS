@@ -2,7 +2,8 @@
 
 using namespace domain;
 
-AbstractMavLinkHandler::AbstractMavLinkHandler()
+AbstractMavLinkHandler::AbstractMavLinkHandler(QObject* parent):
+    QObject(parent)
 {}
 
 AbstractMavLinkHandler::~AbstractMavLinkHandler()

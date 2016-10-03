@@ -7,11 +7,15 @@ namespace domain
 {
     class GpsRawHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
-        GpsRawHandler();
+        GpsRawHandler(QObject* parent = nullptr);
 
     protected:
         int messageId() const override;
+
+    protected slots:
         void processMessage(const mavlink_message_t& message) override;
     };
 }

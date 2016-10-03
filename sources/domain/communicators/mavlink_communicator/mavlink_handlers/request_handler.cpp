@@ -24,6 +24,7 @@ typedef enum MAV_DATA_STREAM // FIXME: temporary
 using namespace domain;
 
 RequestHandler::RequestHandler(MavLinkCommunicator* communicator):
+    AbstractMavLinkHandler(communicator),
     m_communicator(communicator)
 {}
 
@@ -51,6 +52,11 @@ void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent)
 
         m_communicator->sendMessage(message);
     }
+}
+
+void RequestHandler::sendRequest(uint8_t targetSystem)
+{
+    this->sendRequest(targetSystem, 0);
 }
 
 int RequestHandler::messageId() const

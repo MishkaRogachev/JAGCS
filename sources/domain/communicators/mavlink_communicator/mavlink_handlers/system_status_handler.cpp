@@ -6,8 +6,8 @@
 
 using namespace domain;
 
-SystemStatusHandler::SystemStatusHandler():
-    AbstractMavLinkHandler()
+SystemStatusHandler::SystemStatusHandler(QObject* parent):
+    AbstractMavLinkHandler(parent)
 {}
 
 int SystemStatusHandler::messageId() const

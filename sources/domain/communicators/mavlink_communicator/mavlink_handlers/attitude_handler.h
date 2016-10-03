@@ -9,11 +9,16 @@ namespace domain
 
     class AttitudeHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
-        AttitudeHandler(VehicleService* vehicleService);
+        AttitudeHandler(VehicleService* vehicleService,
+                        QObject* parent = nullptr);
 
     protected:
         int messageId() const override;
+
+    protected slots:
         void processMessage(const mavlink_message_t& message) override;
 
     private:

@@ -6,8 +6,8 @@
 
 using namespace domain;
 
-GpsRawHandler::GpsRawHandler():
-    AbstractMavLinkHandler()
+GpsRawHandler::GpsRawHandler(QObject* parent):
+    AbstractMavLinkHandler(parent)
 {}
 
 int GpsRawHandler::messageId() const

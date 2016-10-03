@@ -17,27 +17,24 @@ namespace domain
                                      QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
-        int systemId() const;
-        int componentId() const;
+        uint8_t systemId() const;
+        uint8_t componentId() const;
 
     public slots:
         void addLink(AbstractLink* link) override;
         void removeLink(AbstractLink* link) override;
 
-        void setSystemId(int systemId);
-        void setComponentId(int componentId);
+        void setSystemId(uint8_t systemId);
+        void setComponentId(uint8_t componentId);
 
         void sendMessage(const mavlink_message_t& message);
 
     signals:
-        void systemIdChanged(int systemId);
-        void componentIdChanged(int componentId);
+        void systemIdChanged(uint8_t systemId);
+        void componentIdChanged(uint8_t componentId);
 
     protected slots:
         void onDataReceived(const QByteArray& data) override;
-
-    private slots:
-        void onVehicleAdded(int vehicleId);
 
     private:
         class Impl;
