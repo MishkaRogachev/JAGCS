@@ -9,7 +9,9 @@ Vehicle::Vehicle(QObject* parent):
     QObject(parent),
     m_type(Vehicle::UnknownType),
     m_state(Vehicle::UnknownState)
-{}
+{
+    qRegisterMetaType<Attitude>("Attitude");
+}
 
 Vehicle::Type Vehicle::type() const
 {
