@@ -162,5 +162,5 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 
 void MavLinkCommunicator::onVehicleAdded(int vehicleId)
 {
-    d->requestHandler->sendRequest(vehicleId, 0);
+    d->requestHandler->sendRequest(vehicleId);
 }

@@ -12,7 +12,7 @@ namespace domain
     public:
         RequestHandler(MavLinkCommunicator* communicator);
 
-        void sendRequest(uint8_t targetSystem, uint8_t targetComponent);
+        void sendRequest(uint8_t targetSystem, uint8_t targetComponent = 0);
 
     protected:
         int messageId() const override;
