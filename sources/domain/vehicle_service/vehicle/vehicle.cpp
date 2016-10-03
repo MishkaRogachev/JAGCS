@@ -31,6 +31,11 @@ Attitude Vehicle::attitude() const
     return m_attitude;
 }
 
+Navigation Vehicle::navigation() const
+{
+    return m_navigation;
+}
+
 float Vehicle::trueAirSpeed() const
 {
     return m_trueAirSpeed;
@@ -86,6 +91,14 @@ void Vehicle::setAttitude(Attitude attitude)
 
     m_attitude = attitude;
     emit attitudeChanged(attitude);
+}
+
+void Vehicle::setNavigation(Navigation navigation)
+{
+//    if (m_navigation == navigation) return;
+
+    m_navigation = navigation;
+    emit navigationChanged(navigation);
 }
 
 void Vehicle::setTrueAirSpeed(float trueAirSpeed)

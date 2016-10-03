@@ -15,6 +15,7 @@
 #include "heartbeat_handler.h"
 #include "ping_handler.h"
 #include "attitude_handler.h"
+#include "global_position_handler.h"
 #include "gps_raw_handler.h"
 #include "system_status_handler.h"
 #include "vfr_hud_handler.h"
@@ -47,7 +48,8 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
     d->handlers.append(new AttitudeHandler(vehicleService, this));
-    d->handlers.append(new GpsRawHandler(this));
+    d->handlers.append(new GlobalPositionHandler(vehicleService, this));
+    d->handlers.append(new GpsRawHandler(vehicleService, this));
     d->handlers.append(new SystemStatusHandler(this));
     d->handlers.append(new VfrHudHandler(vehicleService, this));
 

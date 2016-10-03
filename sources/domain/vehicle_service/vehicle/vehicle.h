@@ -3,6 +3,7 @@
 
 // Internal
 #include "attitude.h"
+#include "navigation.h"
 
 namespace domain
 {
@@ -17,6 +18,8 @@ namespace domain
 
         Q_PROPERTY(Attitude attitude READ attitude WRITE setAttitude
                    NOTIFY attitudeChanged)
+        Q_PROPERTY(Navigation navigation READ navigation WRITE setNavigation
+                   NOTIFY navigationChanged)
 
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
@@ -55,6 +58,7 @@ namespace domain
         bool autonomous() const;
 
         Attitude attitude() const;
+        Navigation navigation() const;
 
         float trueAirSpeed() const;
         float groundSpeed() const;
@@ -68,6 +72,7 @@ namespace domain
         void setAutonomous(bool autonomous);
 
         void setAttitude(Attitude attitude);
+        void setNavigation(Navigation navigation);
 
         void setTrueAirSpeed(float trueAirSpeed);
         void setGroundSpeed(float groundSpeed);
@@ -81,6 +86,7 @@ namespace domain
         void autonomousChanged(bool autonomous);
 
         void attitudeChanged(Attitude attitude);
+        void navigationChanged(Navigation navigation);
 
         void trueAirSpeedChanged(float trueAirSpeed);
         void groundSpeedChanged(float groundSpeed);
@@ -88,12 +94,14 @@ namespace domain
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
 
+
     private:
         Type m_type;
         State m_state;
         bool m_autonomous;
 
         Attitude m_attitude;
+        Navigation m_navigation;
 
         float m_trueAirSpeed;
         float m_groundSpeed;

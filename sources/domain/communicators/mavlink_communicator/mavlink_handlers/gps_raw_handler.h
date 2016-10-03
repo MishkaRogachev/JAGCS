@@ -5,15 +5,20 @@
 
 namespace domain
 {
+    class VehicleService;
+
     class GpsRawHandler: public AbstractMavLinkHandler
     {
         Q_OBJECT
 
     public:
-        GpsRawHandler(QObject* parent = nullptr);
+        GpsRawHandler(VehicleService* vehicleService, QObject* parent = nullptr);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
+
+    private:
+        VehicleService* m_vehicleService;
     };
 }
 
