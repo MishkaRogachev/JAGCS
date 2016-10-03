@@ -1,7 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 
-Button {
+Button { // TODO: controls to my style
     id: button
 
     property alias iconSource: image.source
