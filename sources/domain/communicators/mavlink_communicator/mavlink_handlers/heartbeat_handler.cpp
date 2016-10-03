@@ -80,7 +80,7 @@ void HeartbeatHandler::sendHeartbeat()
     mavlink_msg_heartbeat_encode(m_communicator->systemId(),
                                  m_communicator->componentId(),
                                  &message, &heartbeat);
-    m_communicator->sendMessage(message);
+    emit sendMessage(message);
 }
 
 int HeartbeatHandler::messageId() const

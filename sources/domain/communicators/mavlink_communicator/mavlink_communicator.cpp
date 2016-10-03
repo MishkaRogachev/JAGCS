@@ -42,6 +42,8 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     AbstractCommunicator(vehicleService, parent),
     d(new Impl())
 {
+    qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
+
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
     d->handlers.append(new AttitudeHandler(vehicleService, this));
@@ -54,12 +56,16 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     connect(vehicleService, &VehicleService::vehicleAdded,
             requestHandler, qOverload<uint8_t>(&RequestHandler::sendRequest));
 
+    for (AbstractMavLinkHandler* handler: d->handlers)
+    {
+        connect(handler, &AbstractMavLinkHandler::sendMessage,
+                this, &MavLinkCommunicator::sendMessage);
+    }
+
     d->avalibleChannels.append(MAVLINK_COMM_0);
     d->avalibleChannels.append(MAVLINK_COMM_1);
     d->avalibleChannels.append(MAVLINK_COMM_2);
     d->avalibleChannels.append(MAVLINK_COMM_3);
-
-
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()

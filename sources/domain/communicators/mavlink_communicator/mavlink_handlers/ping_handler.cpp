@@ -32,6 +32,6 @@ void PingHandler::processMessage(const mavlink_message_t& message)
                                &response, ping.time_usec, ping.seq,
                                message.sysid, message.compid);
 
-         m_communicator->sendMessage(response);
+         emit sendMessage(response);
     }
 }

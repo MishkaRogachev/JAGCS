@@ -50,7 +50,7 @@ void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent)
                                              targetComponent,
                                              MAVStreams[i], MAVRates[i], 1);
 
-        m_communicator->sendMessage(message);
+        emit sendMessage(message);
     }
 }
 

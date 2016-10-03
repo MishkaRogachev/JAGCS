@@ -19,6 +19,9 @@ namespace domain
 
         bool handleMessage(const mavlink_message_t& message);
 
+    signals:
+        void sendMessage(const mavlink_message_t& message);
+
     protected:
         virtual int messageId() const = 0;
 
