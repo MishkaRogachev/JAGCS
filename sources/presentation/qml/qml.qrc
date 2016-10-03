@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>JS/helper.js</file>
+        <file>Controls/Button.qml</file>
         <file>Controls/ButtonBar.qml</file>
         <file>Indicators/Horizont.qml</file>
         <file>Indicators/PlaneMark.qml</file>
