@@ -19,14 +19,11 @@ AttitudeHandler::AttitudeHandler(VehicleService* vehicleService,
     m_vehicleService(vehicleService)
 {}
 
-int AttitudeHandler::messageId() const
-{
-    return MAVLINK_MSG_ID_ATTITUDE;
-}
-
 void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_ATTITUDE ||
+        message.sysid == 0) return;
+
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
     mavlink_attitude_t attitude;

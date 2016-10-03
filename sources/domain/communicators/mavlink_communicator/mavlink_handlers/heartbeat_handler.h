@@ -19,13 +19,10 @@ namespace domain
                          MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
-        void sendHeartbeat();
-
-    protected:
-        int messageId() const override;
-
-    protected slots:
+    public slots:
         void processMessage(const mavlink_message_t& message) override;
+
+        void sendHeartbeat();
 
     private:
         VehicleService* m_vehicleService;

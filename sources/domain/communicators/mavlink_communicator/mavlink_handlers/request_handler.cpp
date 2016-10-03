@@ -28,6 +28,11 @@ RequestHandler::RequestHandler(MavLinkCommunicator* communicator):
     m_communicator(communicator)
 {}
 
+void RequestHandler::processMessage(const mavlink_message_t& message)
+{
+    Q_UNUSED(message);
+}
+
 void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent)
 {
     mavlink_message_t message;
@@ -57,14 +62,4 @@ void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent)
 void RequestHandler::sendRequest(uint8_t targetSystem)
 {
     this->sendRequest(targetSystem, 0);
-}
-
-int RequestHandler::messageId() const
-{
-    return -1; // No request handle
-}
-
-void RequestHandler::processMessage(const mavlink_message_t& message)
-{
-    Q_UNUSED(message);
 }

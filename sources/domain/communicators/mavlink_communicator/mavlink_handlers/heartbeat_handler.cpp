@@ -72,25 +72,11 @@ HeartbeatHandler::~HeartbeatHandler()
     delete m_timer;
 }
 
-void HeartbeatHandler::sendHeartbeat()
-{
-    mavlink_message_t message;
-    mavlink_heartbeat_t heartbeat;
-    heartbeat.type = MAV_TYPE_GCS;
-    mavlink_msg_heartbeat_encode(m_communicator->systemId(),
-                                 m_communicator->componentId(),
-                                 &message, &heartbeat);
-    emit sendMessage(message);
-}
-
-int HeartbeatHandler::messageId() const
-{
-    return MAVLINK_MSG_ID_HEARTBEAT;
-}
-
 void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT ||
+        message.sysid == 0) return;
+
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
     mavlink_heartbeat_t heartbeat;
@@ -100,4 +86,15 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     vehicle->setState(::vehicleStateFromMavState(heartbeat.system_status));
     vehicle->setAutonomous(::hasMavModeFlag(heartbeat.base_mode, MAV_MODE_FLAG_AUTO_ENABLED));
     //TODO: handle another MAV_MODE_FLAG flags
+}
+
+void HeartbeatHandler::sendHeartbeat()
+{
+    mavlink_message_t message;
+    mavlink_heartbeat_t heartbeat;
+    heartbeat.type = MAV_TYPE_GCS;
+    mavlink_msg_heartbeat_encode(m_communicator->systemId(),
+                                 m_communicator->componentId(),
+                                 &message, &heartbeat);
+    emit sendMessage(message);
 }

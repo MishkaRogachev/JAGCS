@@ -58,6 +58,8 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
 
     for (AbstractMavLinkHandler* handler: d->handlers)
     {
+        connect(this, &MavLinkCommunicator::messageReceived,
+                handler, &AbstractMavLinkHandler::processMessage);
         connect(handler, &AbstractMavLinkHandler::sendMessage,
                 this, &MavLinkCommunicator::sendMessage);
     }
@@ -151,10 +153,8 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         qDebug() << "Received packet: SYS: " << message.sysid <<
                     ", COMP: " << message.compid << "MSG ID: " <<
                     message.msgid;
-        for (AbstractMavLinkHandler* handler: d->handlers)
-        {
-            if (handler->handleMessage(message)) break;
-        }
+
+        emit messageReceived(message);
     }
 
     // TODO: Link status

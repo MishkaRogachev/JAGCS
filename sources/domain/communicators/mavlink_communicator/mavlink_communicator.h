@@ -30,6 +30,7 @@ namespace domain
         void sendMessage(const mavlink_message_t& message);
 
     signals:
+        void messageReceived(const mavlink_message_t& message);
         void systemIdChanged(uint8_t systemId);
         void componentIdChanged(uint8_t componentId);
 

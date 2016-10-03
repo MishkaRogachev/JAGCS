@@ -17,16 +17,11 @@ namespace domain
         AbstractMavLinkHandler(QObject* parent);
         ~AbstractMavLinkHandler() override;
 
-        bool handleMessage(const mavlink_message_t& message);
+    public slots:
+        virtual void processMessage(const mavlink_message_t& message) = 0;
 
     signals:
         void sendMessage(const mavlink_message_t& message);
-
-    protected:
-        virtual int messageId() const = 0;
-
-    protected slots:
-        virtual void processMessage(const mavlink_message_t& message) = 0;
     };
 }
 

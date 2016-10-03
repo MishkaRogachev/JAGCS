@@ -12,10 +12,7 @@ namespace domain
     public:
         SystemStatusHandler(QObject* parent = nullptr);
 
-    protected:
-        int messageId() const override;
-
-    protected slots:
+    public slots:
         void processMessage(const mavlink_message_t& message) override;
     };
 }

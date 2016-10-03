@@ -14,13 +14,10 @@ PingHandler::PingHandler(MavLinkCommunicator* communicator):
     m_communicator(communicator)
 {}
 
-int PingHandler::messageId() const
-{
-    return MAVLINK_MSG_ID_PING;
-}
-
 void PingHandler::processMessage(const mavlink_message_t& message)
 {
+    if (message.msgid != MAVLINK_MSG_ID_PING) return;
+
     mavlink_ping_t ping;
     mavlink_msg_ping_decode(&message, &ping);
 
