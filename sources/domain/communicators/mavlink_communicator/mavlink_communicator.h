@@ -29,12 +29,15 @@ namespace domain
 
         void sendMessage(const mavlink_message_t& message);
 
-    protected slots:
-        void onDataReceived(const QByteArray& data) override;
-
     signals:
         void systemIdChanged(int systemId);
         void componentIdChanged(int componentId);
+
+    protected slots:
+        void onDataReceived(const QByteArray& data) override;
+
+    private slots:
+        void onVehicleAdded(int vehicleId);
 
     private:
         class Impl;

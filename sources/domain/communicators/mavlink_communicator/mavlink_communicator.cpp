@@ -2,6 +2,7 @@
 
 // MAVLink
 #include <mavlink.h>
+#include <mavlink_types.h>
 
 // Qt
 #include <QMap>
@@ -16,8 +17,11 @@
 #include "gps_raw_handler.h"
 #include "system_status_handler.h"
 #include "vfr_hud_handler.h"
+#include "request_handler.h"
 
-// TODO: multiplexing, pings, requests
+#include "vehicle_service.h"
+
+// TODO: multiplexing
 
 using namespace domain;
 
@@ -25,6 +29,7 @@ class MavLinkCommunicator::Impl
 {
 public:
     QList<AbstractMavLinkHandler*> handlers;
+    RequestHandler* requestHandler;
 
     QMap<QObject*, uint8_t> linkChannels;
     QList<uint8_t> avalibleChannels;
@@ -38,17 +43,22 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     AbstractCommunicator(vehicleService, parent),
     d(new Impl())
 {
-    d->handlers.append(new HeartbeatHandler(m_vehicleService, this));
+    d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
-    d->handlers.append(new AttitudeHandler(m_vehicleService));
+    d->handlers.append(new AttitudeHandler(vehicleService));
     d->handlers.append(new GpsRawHandler());
     d->handlers.append(new SystemStatusHandler());
-    d->handlers.append(new VfrHudHandler(m_vehicleService));
+    d->handlers.append(new VfrHudHandler(vehicleService));
+
+    d->requestHandler = new RequestHandler(this);
 
     d->avalibleChannels.append(MAVLINK_COMM_0);
     d->avalibleChannels.append(MAVLINK_COMM_1);
     d->avalibleChannels.append(MAVLINK_COMM_2);
     d->avalibleChannels.append(MAVLINK_COMM_3);
+
+    connect(vehicleService, &VehicleService::vehicleAdded,
+            this, &MavLinkCommunicator::onVehicleAdded);
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
@@ -57,6 +67,8 @@ MavLinkCommunicator::~MavLinkCommunicator()
     {
         delete d->handlers.takeLast();
     }
+
+    delete d->requestHandler;
 
     delete d;
 }
@@ -146,4 +158,9 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     }
 
     // TODO: Link status
+}
+
+void MavLinkCommunicator::onVehicleAdded(int vehicleId)
+{
+    d->requestHandler->sendRequest(vehicleId, 0);
 }
