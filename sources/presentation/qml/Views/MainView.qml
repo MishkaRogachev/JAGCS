@@ -6,10 +6,14 @@ import "Status"
 import "Flight"
 import "Settings"
 
+import "qrc:/Martial"
+
 ApplicationWindow {
     id: main
     visibility: "Maximized"
     visible: true
+
+    property Palette palette: Palette {}
 
     header: StatusView {
         id: status
