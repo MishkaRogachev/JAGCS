@@ -2,11 +2,11 @@ import QtQuick 2.6
 import QtQuick.Window 2.0
 import QtQuick.Controls 2.0
 
+import "qrc:/Martial"
+
 import "Status"
 import "Flight"
 import "Settings"
-
-import "qrc:/Martial"
 
 ApplicationWindow {
     id: main
@@ -17,7 +17,6 @@ ApplicationWindow {
 
     header: StatusView {
         id: status
-        height: 48
     }
 
     FlightView {

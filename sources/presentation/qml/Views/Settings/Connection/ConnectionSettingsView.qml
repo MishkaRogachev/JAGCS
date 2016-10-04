@@ -2,28 +2,36 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Martial";
+import "qrc:/Martial"
 
-Frame {
+ColumnLayout {
     id: root
 
     property QtObject presenter: factory.createConnectionSettingsPresenter(root)
 
-    ColumnLayout {
-        id: column
-        anchors.fill: parent
-        spacing: 16
+    Frame {
+        Layout.fillWidth: true
+        height: column.height + 32
 
-        Repeater {
-            model: presenter.links
+        ColumnLayout {
+            id: column
+            anchors.centerIn: parent
+            spacing: 16
 
-            ConnectionItemView {
-                presenter: root.presenter
-                link: modelData
+            Repeater {
+                model: presenter.links
+
+                ConnectionItemView {
+                    presenter: root.presenter
+                    link: modelData
+                }
             }
         }
+    }
 
+    RowLayout {
         Button {
+            Layout.fillWidth: true
             text: qsTr("Add Link")
             anchors.right: parent.right
             onClicked: addMenu.open()

@@ -2,9 +2,9 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Martial";
+import "qrc:/Martial"
 
-Frame {
+ColumnLayout {
     id: root
 
     property QtObject presenter: factory.createNetworkSettingsPresenter(root)
@@ -21,67 +21,75 @@ Frame {
 
     Component.onCompleted: presenter.restore()
 
-    GridLayout {
-        columns: 2
-        anchors.fill: parent
+    Frame {
+        Layout.fillWidth: true
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Proxy type")
-        }
+        GridLayout {
+            columns: 2
+            anchors.fill: parent
 
-        ComboBox {
-            id: typeItem
-            Layout.fillWidth: true
-            model: presenter.typeModel
-        }
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Proxy type")
+            }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Host name")
-        }
+            ComboBox {
+                id: typeItem
+                Layout.fillWidth: true
+                model: presenter.typeModel
+            }
 
-        TextField {
-            id: hostNameItem
-            Layout.fillWidth: true
-            placeholderText: qsTr("Enter hostname")
-        }
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Host name")
+            }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Port")
-        }
+            TextField {
+                id: hostNameItem
+                Layout.fillWidth: true
+                placeholderText: qsTr("Enter hostname")
+            }
 
-        SpinBox {
-            id: portItem
-            Layout.fillWidth: true
-            editable: true
-            from: 0
-            to: 99999
-        }
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Port")
+            }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("User name")
-        }
+            SpinBox {
+                id: portItem
+                Layout.fillWidth: true
+                editable: true
+                from: 0
+                to: 99999
+            }
 
-        TextField {
-            id: userItem
-            Layout.fillWidth: true
-            placeholderText: qsTr("Enter user name")
-        }
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("User name")
+            }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("User password")
-        }
+            TextField {
+                id: userItem
+                Layout.fillWidth: true
+                placeholderText: qsTr("Enter user name")
+            }
 
-        TextField {
-            id: passwordItem
-            Layout.fillWidth: true
-            placeholderText: qsTr("Enter password")
-            echoMode: TextInput.Password
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("User password")
+            }
+
+            TextField {
+                id: passwordItem
+                Layout.fillWidth: true
+                placeholderText: qsTr("Enter password")
+                echoMode: TextInput.Password
+            }
         }
+    }
+
+    RowLayout {
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Button {
             Layout.fillWidth: true
@@ -94,9 +102,9 @@ Frame {
             text: qsTr("Apply")
             onClicked: presenter.apply()
         }
+    }
 
-        Item {
-            Layout.fillHeight: true
-        }
+    Item {
+        Layout.fillHeight: true
     }
 }
