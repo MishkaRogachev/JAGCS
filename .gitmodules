@@ -1,3 +1,6 @@
 [submodule "3dparty/mavlink_v1"]
 	path = 3dparty/mavlink_v1
 	url = https://github.com/mavlink/c_library_v1.git
+[submodule "3dparty/Martial_Style"]
+	path = 3dparty/Martial_Style
+	url = https://github.com/MishkaRogachev/Martial_Style
