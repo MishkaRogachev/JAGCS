@@ -52,14 +52,16 @@ set(LIBRARIES
 )
 
 # Sources and headrers
+file(GLOB_RECURSE MARTIAL_QML "3dparty/Martial_Style/*.qml")
 file(GLOB_RECURSE HEADERS "sources/*.h")
 file(GLOB_RECURSE SOURCES "sources/*.cpp")
 file(GLOB_RECURSE QML "sources/*.qml")
 file(GLOB_RECURSE JS "sources/*.js")
 
 # Includes
-HEADER_DIRECTORIES(INCLUDES "sources")
 HEADER_DIRECTORIES(MAVLINK_INCLUDES "3dparty/mavlink_v1")
+HEADER_DIRECTORIES(INCLUDES "sources")
+
 include_directories(${INCLUDES} ${MAVLINK_INCLUDES})
 
 # Resources
@@ -69,7 +71,7 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
 # Executable target
-add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
+add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${MARTIAL_QML} ${QML}
     ${JS} ${QRC_SOURCES} ${MOC_SOURCES})
 
 # Link Libraries
