@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/Martial">
-        <file>Button.qml</file>
-        <file>ButtonBar.qml</file>
-    </qresource>
-</RCC>

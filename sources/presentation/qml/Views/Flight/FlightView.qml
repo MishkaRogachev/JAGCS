@@ -5,11 +5,10 @@ import QtQuick.Layouts 1.3
 import "../Map"
 import "../Video"
 
-Rectangle {
+Pane {
     id: root
-    color: "#2c3e50"
 
-    // TODO: think about removing presenters, amde usa bare Model-View architecture
+    // TODO: think about removing presenters and usage bare Model-View architecture
     property QtObject presenter: factory.createFlightPresenter(root)
 
     RowLayout {
