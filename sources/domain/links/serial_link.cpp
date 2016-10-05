@@ -2,6 +2,7 @@
 
 // Qt
 #include <QSerialPort>
+#include <QDebug>
 
 using namespace domain;
 

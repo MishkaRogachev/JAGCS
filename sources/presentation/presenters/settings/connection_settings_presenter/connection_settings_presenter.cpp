@@ -31,7 +31,7 @@ ConnectionSettingsPresenter::ConnectionSettingsPresenter(
     d->settings = settings;
     d->communicator = communicator;
 
-    connect(d->communicator, &domain::AbstractCommunicator::addEnabledChanged,
+    connect(d->communicator, &domain::AbstractCommunicator::addLinkEnabledChanged,
             this, &ConnectionSettingsPresenter::addEnabledChanged);
     connect(d->communicator, &domain::AbstractCommunicator::linksChanged,
             this, &ConnectionSettingsPresenter::linksChanged);
@@ -44,7 +44,7 @@ ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
 
 bool ConnectionSettingsPresenter::isAddEnabled() const
 {
-    return d->communicator->isAddEnabled();
+    return d->communicator->isAddLinkEnabled();
 }
 
 QList<QObject*> ConnectionSettingsPresenter::links() const

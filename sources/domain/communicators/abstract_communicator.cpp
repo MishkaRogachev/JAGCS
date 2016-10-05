@@ -9,12 +9,12 @@ AbstractCommunicator::AbstractCommunicator(VehicleService* vehicleService,
                                            QObject* parent):
     QObject(parent),
     m_vehicleService(vehicleService),
-    m_addEnabled(true)
+    m_addLinkEnabled(true)
 {}
 
-bool AbstractCommunicator::isAddEnabled() const
+bool AbstractCommunicator::isAddLinkEnabled() const
 {
-    return m_addEnabled;
+    return m_addLinkEnabled;
 }
 
 QList<AbstractLink*> AbstractCommunicator::links() const
@@ -22,15 +22,15 @@ QList<AbstractLink*> AbstractCommunicator::links() const
     return m_links;
 }
 
-void AbstractCommunicator::setAddEnabled(bool addEnabled)
+void AbstractCommunicator::setAddLinkEnabled(bool addLinkEnabled)
 {
-    if (m_addEnabled == addEnabled) return;
+    if (m_addLinkEnabled == addLinkEnabled) return;
 
-    m_addEnabled = addEnabled;
-    emit addEnabledChanged(addEnabled);
+    m_addLinkEnabled = addLinkEnabled;
+    emit addLinkEnabledChanged(addLinkEnabled);
 }
 
-void AbstractCommunicator::sendData(const QByteArray& data)
+void AbstractCommunicator::sendDataAllLinks(const QByteArray& data)
 {
     for (AbstractLink* link: m_links)
     {

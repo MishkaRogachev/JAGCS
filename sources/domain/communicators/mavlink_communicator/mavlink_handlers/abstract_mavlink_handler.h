@@ -21,7 +21,7 @@ namespace domain
         virtual void processMessage(const mavlink_message_t& message) = 0;
 
     signals:
-        void sendMessage(const mavlink_message_t& message);
+        void sendMessage(mavlink_message_t& message);
     };
 }
 

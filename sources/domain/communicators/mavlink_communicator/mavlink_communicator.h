@@ -20,6 +20,8 @@ namespace domain
         uint8_t systemId() const;
         uint8_t componentId() const;
 
+        AbstractLink* lastReceivedLink() const;
+
     public slots:
         void addLink(AbstractLink* link) override;
         void removeLink(AbstractLink* link) override;
@@ -27,7 +29,9 @@ namespace domain
         void setSystemId(uint8_t systemId);
         void setComponentId(uint8_t componentId);
 
-        void sendMessage(const mavlink_message_t& message);
+        void sendMessage(mavlink_message_t& message, AbstractLink* link);
+        void sendMessageLastReceivedLink(mavlink_message_t& message);
+        void sendMessageAllLinks(mavlink_message_t& message);
 
     signals:
         void messageReceived(const mavlink_message_t& message);

@@ -17,7 +17,8 @@ namespace domain
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void sendRequest(uint8_t targetSystem, uint8_t targetComponent);
+        void sendRequest(uint8_t targetSystem, uint8_t targetComponent,
+                         uint8_t stream, uint16_t rate);
         void sendRequest(uint8_t targetSystem);
 
     private:
