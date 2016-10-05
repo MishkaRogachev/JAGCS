@@ -6,5 +6,7 @@
         <file>icons/minus.svg</file>
         <file>icons/map-marker.svg</file>
         <file>icons/fit.svg</file>
+        <file>icons/remove.svg</file>
+        <file>icons/add.svg</file>
     </qresource>
 </RCC>

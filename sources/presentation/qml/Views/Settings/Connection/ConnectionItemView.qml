@@ -88,7 +88,7 @@ RowLayout {
     }
 
     Button {
-        text: qsTr("Remove")
+        iconSource: "qrc:/icons/remove.svg"
         enabled: link
         onClicked: presenter.removeLink(link)
     }

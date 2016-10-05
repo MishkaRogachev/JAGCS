@@ -33,12 +33,14 @@ ColumnLayout {
         Button {
             Layout.fillWidth: true
             text: qsTr("Add Link")
+            iconSource: "qrc:/icons/add.svg"
             anchors.right: parent.right
             onClicked: addMenu.open()
             enabled: presenter.addEnabled
 
             Menu {
                 id: addMenu
+                width: parent.width
 
                 MenuItem {
                     text: qsTr("Serial")
