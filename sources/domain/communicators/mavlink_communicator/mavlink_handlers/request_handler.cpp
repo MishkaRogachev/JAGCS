@@ -40,12 +40,21 @@ void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent,
 }
 
 void RequestHandler::sendRequest(uint8_t targetSystem)
-{
-    this->sendRequest(targetSystem, 0, 1, 2); // TODO: new style request
-    this->sendRequest(targetSystem, 0, 2, 2);
-    this->sendRequest(targetSystem, 0, 3, 2);
-    this->sendRequest(targetSystem, 0, 6, 3);
-    this->sendRequest(targetSystem, 0, 10, 10);
-    this->sendRequest(targetSystem, 0, 11, 10);
-    this->sendRequest(targetSystem, 0, 12, 3);
+{/*
+    this->sendRequest(targetSystem, 1, 1, 2); // TODO: new style request
+    this->sendRequest(targetSystem, 1, 2, 2);
+    this->sendRequest(targetSystem, 1, 3, 2);
+    this->sendRequest(targetSystem, 1, 6, 3);
+    this->sendRequest(targetSystem, 1, 10, 10);
+    this->sendRequest(targetSystem, 1, 11, 10);
+    this->sendRequest(targetSystem, 1, 12, 3);*/
+
+    mavlink_message_t message;
+    mavlink_msg_param_request_read_pack(m_communicator->systemId(),
+                                        m_communicator->componentId(),
+                                        &message,
+                                        targetSystem,
+                                        1,
+                                        "SYSID_SW_TYPE",
+                                        -1);
 }
