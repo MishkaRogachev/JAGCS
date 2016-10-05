@@ -2,7 +2,8 @@
 
 // MAVLink
 #include <mavlink.h>
-#include <mavlink_msg_request_data_stream.h>
+// #include <mavlink_msg_request_data_stream.h>
+#include <mavlink_msg_param_request_read.h>
 
 // Internal
 #include "mavlink_communicator.h"
@@ -21,7 +22,7 @@ void RequestHandler::processMessage(const mavlink_message_t& message)
 
 void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent,
                                  uint8_t stream, uint16_t rate)
-{
+{/*
     mavlink_message_t message;
     mavlink_request_data_stream_t dataStream;
 
@@ -36,7 +37,7 @@ void RequestHandler::sendRequest(uint8_t targetSystem, uint8_t targetComponent,
                                            &message,
                                            &dataStream);
 
-    emit sendMessage(message);
+    emit sendMessage(message);*/
 }
 
 void RequestHandler::sendRequest(uint8_t targetSystem)
