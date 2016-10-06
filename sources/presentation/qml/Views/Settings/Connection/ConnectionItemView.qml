@@ -10,20 +10,29 @@ RowLayout {
     property QtObject link
     property QtObject presenter
 
-    TextField {
-        Layout.fillWidth: true
-        text: link ? link.objectName : qsTr("None")
-        onEditingFinished: link.objectName = text
-    }
-
     GridLayout {
-        id: serialSettings
         columns: 2
-        visible: link ? 'portName' in link : false
 
-        Label { text: qsTr("Serial device") }
+        Label {
+            text: qsTr("Name")
+            Layout.fillWidth: true
+        }
+
+        TextField {
+            text: link ? link.objectName : qsTr("None")
+            onEditingFinished: link.objectName = text
+            Layout.fillWidth: true
+        }
+
+        Label {
+            text: qsTr("Serial device")
+            Layout.fillWidth: true
+            visible: serialDevice.visible
+        }
 
         ComboBox {
+            id: serialDevice
+            visible: link ? 'portName' in link : false
             Layout.fillWidth: true
             enabled: count > 0
             model: presenter.serialDevices
@@ -33,9 +42,15 @@ RowLayout {
                                        link.setPortName(model[currentIndex])
         }
 
-        Label { text: qsTr("Baud rate") }
+        Label {
+            text: qsTr("Baud rate")
+            Layout.fillWidth: true
+            visible: baudRates.visible
+        }
 
         ComboBox {
+            id: baudRates
+            visible: link ? 'baudRate' in link : false
             Layout.fillWidth: true
             model: presenter.serialBaudRates
             currentIndex: link && 'baudRate' in link ?
@@ -43,16 +58,16 @@ RowLayout {
             onCurrentIndexChanged: if (link && 'baudRate' in link)
                                        link.setBaudRate(model[currentIndex])
         }
-    }
 
-    GridLayout {
-        id: udpSettings
-        columns: 2
-        visible: link ? 'rxPort' in link : false
-
-        Label { text: qsTr("Recieve port") }
+        Label {
+            text: qsTr("Recieve port")
+            Layout.fillWidth: true
+            visible: rxPort.visible
+        }
 
         SpinBox {
+            id: rxPort
+            visible: link ? 'rxPort' in link : false
             Layout.fillWidth: true
             editable: true
             from: 0
@@ -61,18 +76,30 @@ RowLayout {
             onValueChanged: if (link) link.setRxPort(value)
         }
 
-        Label { text: qsTr("Transmit address") }
+        Label {
+            text: qsTr("Transmit address")
+            Layout.fillWidth: true
+            visible: address.visible
+        }
 
         TextField {
+            id: address
+            visible: link ? 'address' in link : false
             Layout.fillWidth: true
             placeholderText: qsTr("Enter address")
-            text: link && 'address' in link? link.address : ""
+            text: link && 'address' in link ? link.address : ""
             onTextChanged: if (link) link.setAddress(text)
         }
 
-        Label { text: qsTr("Transmit port") }
+        Label {
+            text: qsTr("Transmit port")
+            Layout.fillWidth: true
+            visible: txPort.visible
+        }
 
         SpinBox {
+            id: txPort
+            visible: link ? 'txPort' in link : false
             Layout.fillWidth: true
             editable: true
             from: 0

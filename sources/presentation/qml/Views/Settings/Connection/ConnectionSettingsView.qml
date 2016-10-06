@@ -11,14 +11,58 @@ ColumnLayout {
 
     Frame {
         Layout.fillWidth: true
-        height: column.height + 32
+
+        // TODO: flickable with scrollbar
+
+        GridLayout {
+            anchors.fill: parent
+            columns: 2
+
+            Label {
+                text: qsTr("System ID")
+                Layout.fillWidth: true
+            }
+
+            SpinBox {
+                value: presenter.systemId
+                Layout.fillWidth: true
+                from: 0
+                to: 255
+                onValueChanged: presenter.setSystemId(value)
+            }
+
+            Label {
+                text: qsTr("Component ID")
+                Layout.fillWidth: true
+            }
+
+            SpinBox {
+                value: presenter.componentId
+                Layout.fillWidth: true
+                from: 0
+                to: 255
+                onValueChanged: presenter.setComponentId(value)
+            }
+        }
+    }
+
+    Frame {
+        Layout.fillWidth: true
 
         ColumnLayout {
             id: column
-            anchors.centerIn: parent
+            anchors.fill: parent
             spacing: 16
 
+            Label {
+                text: qsTr("No links present")
+                visible: repeater.count == 0
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignHCenter
+            }
+
             Repeater {
+                id: repeater
                 model: presenter.links
 
                 ConnectionItemView {
@@ -29,33 +73,30 @@ ColumnLayout {
         }
     }
 
-    RowLayout {
-        Button {
-            Layout.fillWidth: true
-            text: qsTr("Add Link")
-            iconSource: "qrc:/icons/add.svg"
-            anchors.right: parent.right
-            onClicked: addMenu.open()
-            enabled: presenter.addEnabled
+    Button {
+        Layout.fillWidth: true
+        text: qsTr("Add Link")
+        iconSource: "qrc:/icons/add.svg"
+        anchors.right: parent.right
+        onClicked: if (!addMenu.visible) addMenu.open()
+        enabled: presenter.addEnabled
 
-            Menu {
-                id: addMenu
-                width: parent.width
+        Menu {
+            id: addMenu
+            implicitWidth: parent.width
+            y: parent.height
 
-                MenuItem {
-                    text: qsTr("Serial")
-                    onTriggered: presenter.addSerialLink()
-                }
-
-                MenuItem {
-                    text: qsTr("Udp")
-                    onTriggered: presenter.addUdpLink()
-                }
+            MenuItem {
+                text: qsTr("Serial")
+                implicitWidth: parent.width
+                onTriggered: presenter.addSerialLink()
             }
-        }
 
-        Item {
-            Layout.fillHeight: true
+            MenuItem {
+                text: qsTr("Udp")
+                implicitWidth: parent.width
+                onTriggered: presenter.addUdpLink()
+            }
         }
     }
 }
