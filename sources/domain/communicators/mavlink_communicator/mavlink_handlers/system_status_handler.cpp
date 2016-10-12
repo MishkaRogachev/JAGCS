@@ -2,7 +2,6 @@
 
 // MAVLink
 #include <mavlink.h>
-#include <mavlink_msg_sys_status.h>
 
 using namespace domain;
 

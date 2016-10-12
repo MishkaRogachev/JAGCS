@@ -2,7 +2,6 @@
 
 // MAVLink
 #include <mavlink.h>
-#include <mavlink_msg_vfr_hud.h>
 
 // Internal
 #include "vehicle_service.h"

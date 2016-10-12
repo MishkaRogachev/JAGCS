@@ -2,7 +2,6 @@
 
 // MAVLink
 #include <mavlink.h>
-#include <mavlink_msg_ping.h>
 
 // Internal
 #include "mavlink_communicator.h"

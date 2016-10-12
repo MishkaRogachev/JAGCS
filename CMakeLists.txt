@@ -59,10 +59,11 @@ file(GLOB_RECURSE QML "sources/*.qml")
 file(GLOB_RECURSE JS "sources/*.js")
 
 # Includes
-HEADER_DIRECTORIES(MAVLINK_INCLUDES "3dparty/mavlink_v1")
-HEADER_DIRECTORIES(INCLUDES "sources")
+include_directories("3dparty/mavlink_v1")
+include_directories("3dparty/mavlink_v1/ardupilotmega")
 
-include_directories(${INCLUDES} ${MAVLINK_INCLUDES})
+HEADER_DIRECTORIES(INCLUDES "sources")
+include_directories(${INCLUDES})
 
 # Resources
 file(GLOB_RECURSE QRC_FILES "*.qrc")

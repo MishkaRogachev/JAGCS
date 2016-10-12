@@ -2,7 +2,6 @@
 
 // MAVLink
 #include <mavlink.h>
-#include <mavlink_msg_global_position_int_cov.h>
 
 // Internal
 #include "vehicle_service.h"

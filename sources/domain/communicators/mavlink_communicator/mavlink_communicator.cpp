@@ -69,6 +69,7 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
                 this, &MavLinkCommunicator::sendMessageLastReceivedLink);
     }
 
+    // TODO: replace channels with COMM_NB_HIGH
     d->avalibleChannels.append(MAVLINK_COMM_0);
     d->avalibleChannels.append(MAVLINK_COMM_1);
     d->avalibleChannels.append(MAVLINK_COMM_2);
@@ -85,7 +86,7 @@ uint8_t MavLinkCommunicator::componentId() const
     return d->componentId;
 }
 
-AbstractLink*MavLinkCommunicator::lastReceivedLink() const
+AbstractLink* MavLinkCommunicator::lastReceivedLink() const
 {
     return d->lastReceivedLink;
 }
@@ -189,7 +190,7 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 
         qDebug() << "Received packet from(" << message.sysid << ":" <<
                  message.compid << ") with id: " << message.msgid <<
-                    "Ch:";
+                    "Ch:" << channel;
 
         emit messageReceived(message);
     }
