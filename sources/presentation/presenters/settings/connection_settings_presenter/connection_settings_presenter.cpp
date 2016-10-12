@@ -82,7 +82,8 @@ void ConnectionSettingsPresenter::addSerialLink()
 
     auto link = new domain::SerialLink(
                     d->settings->value(domain::connection_settings::serialDevice).toString(),
-                    d->settings->value(domain::connection_settings::baudRate).toInt());
+                    d->settings->value(domain::connection_settings::baudRate).toInt(),
+                    d->communicator);
     link->setObjectName(tr("Serial"));
 
     d->settings->endGroup();
@@ -97,7 +98,8 @@ void ConnectionSettingsPresenter::addUdpLink()
     auto link = new domain::UdpLink(
                     d->settings->value(domain::connection_settings::hostPort).toInt(),
                     d->settings->value(domain::connection_settings::address).toString(),
-                    d->settings->value(domain::connection_settings::port).toInt());
+                    d->settings->value(domain::connection_settings::port).toInt(),
+                    d->communicator);
     link->setObjectName(tr("UDP"));
 
     d->settings->endGroup();
