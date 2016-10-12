@@ -20,11 +20,16 @@ Item {
         height: horizont.height
         onPaint: {
             var ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, width, height);
+
             var size = 10000;
             var offset = Helper.mapToRange(pitch, minPitch, maxPitch,
                                            effectiveHeight);
 
             ctx.save();
+            ctx.beginPath();
+
             ctx.translate(width / 2, height / 2);
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
@@ -39,8 +44,8 @@ Item {
             ctx.strokeStyle = '#ecf0f1' // TODO: palette
             ctx.moveTo(-size / 2, 0);
             ctx.lineTo(size / 2, 0);
-            ctx.stroke();
 
+            ctx.stroke();
             ctx.restore();
         }
     }
