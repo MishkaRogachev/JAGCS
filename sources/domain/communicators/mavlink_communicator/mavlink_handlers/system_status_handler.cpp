@@ -5,8 +5,8 @@
 
 using namespace domain;
 
-SystemStatusHandler::SystemStatusHandler(QObject* parent):
-    AbstractMavLinkHandler(parent)
+SystemStatusHandler::SystemStatusHandler(MavLinkCommunicator* communicator):
+    AbstractMavLinkHandler(communicator)
 {}
 
 void SystemStatusHandler::processMessage(const mavlink_message_t& message)

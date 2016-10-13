@@ -59,7 +59,6 @@ HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
                                    MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService),
-    m_communicator(communicator),
     m_timer(new QTimer())
 {
     QObject::connect(m_timer, &QTimer::timeout, m_timer,
@@ -96,5 +95,6 @@ void HeartbeatHandler::sendHeartbeat()
     mavlink_msg_heartbeat_encode(m_communicator->systemId(),
                                  m_communicator->componentId(),
                                  &message, &heartbeat);
-    emit sendMessage(message);
+
+    m_communicator->sendMessageAllLinks(message);
 }

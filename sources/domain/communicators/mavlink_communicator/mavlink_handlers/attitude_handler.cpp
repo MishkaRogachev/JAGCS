@@ -13,15 +13,14 @@
 using namespace domain;
 
 AttitudeHandler::AttitudeHandler(VehicleService* vehicleService,
-                                 QObject* parent):
-    AbstractMavLinkHandler(parent),
+                                 MavLinkCommunicator* communicator):
+    AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
 
 void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_ATTITUDE ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_ATTITUDE) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 

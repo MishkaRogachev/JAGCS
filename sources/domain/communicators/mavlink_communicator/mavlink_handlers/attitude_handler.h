@@ -13,7 +13,7 @@ namespace domain
 
     public:
         AttitudeHandler(VehicleService* vehicleService,
-                        QObject* parent = nullptr);
+                        MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

@@ -12,7 +12,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        VfrHudHandler(VehicleService* vehicleService, QObject* parent = nullptr);
+        VfrHudHandler(VehicleService* vehicleService,
+                      MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

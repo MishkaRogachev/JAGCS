@@ -26,7 +26,6 @@ namespace domain
 
     private:
         VehicleService* m_vehicleService;
-        MavLinkCommunicator* m_communicator;
         QTimer* m_timer;
     };
 }

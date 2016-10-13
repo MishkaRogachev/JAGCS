@@ -9,19 +9,21 @@
 
 namespace domain
 {
+    class MavLinkCommunicator;
+
     class AbstractMavLinkHandler: public QObject
     {
         Q_OBJECT
 
     public:
-        AbstractMavLinkHandler(QObject* parent);
+        AbstractMavLinkHandler(MavLinkCommunicator* communicator);
         ~AbstractMavLinkHandler() override;
 
     public slots:
         virtual void processMessage(const mavlink_message_t& message) = 0;
 
-    signals:
-        void sendMessage(mavlink_message_t& message);
+    protected:
+        MavLinkCommunicator* const m_communicator;
     };
 }
 

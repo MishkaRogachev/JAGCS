@@ -9,15 +9,15 @@
 
 using namespace domain;
 
-GpsRawHandler::GpsRawHandler(VehicleService* vehicleService, QObject* parent):
-    AbstractMavLinkHandler(parent),
+GpsRawHandler::GpsRawHandler(VehicleService* vehicleService,
+                             MavLinkCommunicator* communicator):
+    AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
 
 void GpsRawHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 

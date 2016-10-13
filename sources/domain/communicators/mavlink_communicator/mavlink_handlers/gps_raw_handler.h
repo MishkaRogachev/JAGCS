@@ -12,7 +12,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        GpsRawHandler(VehicleService* vehicleService, QObject* parent = nullptr);
+        GpsRawHandler(VehicleService* vehicleService,
+                      MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

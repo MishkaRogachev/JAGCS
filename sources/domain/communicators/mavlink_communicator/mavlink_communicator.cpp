@@ -19,7 +19,6 @@
 #include "gps_raw_handler.h"
 #include "system_status_handler.h"
 #include "vfr_hud_handler.h"
-#include "request_handler.h"
 
 #include "vehicle_service.h"
 
@@ -55,19 +54,6 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d->handlers.append(new GpsRawHandler(vehicleService, this));
     d->handlers.append(new SystemStatusHandler(this));
     d->handlers.append(new VfrHudHandler(vehicleService, this));
-
-    auto requestHandler = new RequestHandler(this);
-     d->handlers.append(requestHandler);
-    connect(vehicleService, &VehicleService::vehicleAdded,
-            requestHandler, qOverload<uint8_t>(&RequestHandler::sendRequest));
-
-    for (AbstractMavLinkHandler* handler: d->handlers)
-    {
-        connect(this, &MavLinkCommunicator::messageReceived,
-                handler, &AbstractMavLinkHandler::processMessage);
-        connect(handler, &AbstractMavLinkHandler::sendMessage,
-                this, &MavLinkCommunicator::sendMessageLastReceivedLink);
-    }
 
     // TODO: replace channels with COMM_NB_HIGH
     d->avalibleChannels.append(MAVLINK_COMM_0);

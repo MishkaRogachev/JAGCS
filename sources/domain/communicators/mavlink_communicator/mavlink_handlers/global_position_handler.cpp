@@ -10,15 +10,14 @@
 using namespace domain;
 
 GlobalPositionHandler::GlobalPositionHandler(VehicleService* vehicleService,
-                                             QObject* parent):
-    AbstractMavLinkHandler(parent),
+                                             MavLinkCommunicator* communicator):
+    AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
 
 void GlobalPositionHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT_COV ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT_COV) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
