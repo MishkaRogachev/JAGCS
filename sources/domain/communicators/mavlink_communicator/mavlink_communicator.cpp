@@ -31,8 +31,6 @@ using namespace domain;
 class MavLinkCommunicator::Impl
 {
 public:
-    SettingsProvider* settings;
-
     uint8_t systemId;
     uint8_t componentId;
 
@@ -46,15 +44,15 @@ public:
 MavLinkCommunicator::MavLinkCommunicator(SettingsProvider* settings,
                                          VehicleService* vehicleService,
                                          QObject* parent):
-    AbstractCommunicator(vehicleService, parent),
+    AbstractCommunicator(settings, vehicleService, parent),
     d(new Impl())
 {
     qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
 
-    d->settings = settings;
-
-    d->systemId = settings->value(domain::connection_settings::systemId).toUInt();
-    d->componentId = settings->value(domain::connection_settings::componentId).toUInt();
+    d->systemId = m_settings->value(
+                      domain::connection_settings::systemId).toUInt();
+    d->componentId = m_settings->value(
+                         domain::connection_settings::componentId).toUInt();
 
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
@@ -122,7 +120,7 @@ void MavLinkCommunicator::setSystemId(uint8_t systemId)
     if (d->systemId == systemId) return;
 
     d->systemId = systemId;
-    d->settings->setValue(domain::connection_settings::systemId, systemId);
+    m_settings->setValue(domain::connection_settings::systemId, systemId);
     emit systemIdChanged(systemId);
 }
 
@@ -131,11 +129,12 @@ void MavLinkCommunicator::setComponentId(uint8_t componentId)
     if (d->componentId == componentId) return;
 
     d->componentId = componentId;
-    d->settings->setValue(domain::connection_settings::componentId, componentId);
+    m_settings->setValue(domain::connection_settings::componentId, componentId);
     emit componentIdChanged(componentId);
 }
 
-void MavLinkCommunicator::sendMessage(mavlink_message_t& message, AbstractLink* link)
+void MavLinkCommunicator::sendMessage(mavlink_message_t& message,
+                                      AbstractLink* link)
 {
     if (!link || !link->isUp()) return;
 

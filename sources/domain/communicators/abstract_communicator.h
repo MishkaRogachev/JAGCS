@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    class SettingsProvider;
     class AbstractLink;
     class VehicleService;
 
@@ -13,7 +14,9 @@ namespace domain
         Q_OBJECT
 
     public:
-        AbstractCommunicator(VehicleService* vehicleService, QObject* parent);
+        AbstractCommunicator(SettingsProvider* settings,
+                             VehicleService* vehicleService,
+                             QObject* parent);
 
         bool isAddLinkEnabled() const;
         QList<AbstractLink*> links() const;
@@ -33,6 +36,7 @@ namespace domain
         virtual void onDataReceived(const QByteArray& data) = 0;
 
     protected:
+        SettingsProvider* const m_settings;
         VehicleService* const m_vehicleService;
         bool m_addLinkEnabled;
         QList<AbstractLink*> m_links;

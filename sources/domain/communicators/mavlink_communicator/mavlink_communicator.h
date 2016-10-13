@@ -8,8 +8,6 @@
 
 namespace domain
 {
-    class SettingsProvider;
-
     class MavLinkCommunicator: public AbstractCommunicator
     {
         Q_OBJECT

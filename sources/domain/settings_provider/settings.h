@@ -24,6 +24,7 @@ namespace domain
         const char* const group = "Connection";
         const char* const systemId = "systemId";
         const char* const componentId = "componentId";
+        const char* const linksCount = "linksCount";
         const char* const serialDevice = "serialDevice";
         const char* const baudRate = "baudRate";
         const char* const hostPort = "hostPort";
