@@ -63,6 +63,8 @@ void SettingsProvider::makeDefaults()
     this->endGroup();
 
     this->beginGroup(connection_settings::group);
+    this->setValue(connection_settings::systemId, 255);
+    this->setValue(connection_settings::componentId, 255);
     this->setValue(connection_settings::baudRate, 57600);
     this->setValue(connection_settings::hostPort, 14550);
     this->setValue(connection_settings::address, "127.0.0.1");

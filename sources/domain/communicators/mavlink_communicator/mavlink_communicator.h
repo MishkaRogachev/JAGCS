@@ -8,13 +8,16 @@
 
 namespace domain
 {
+    class SettingsProvider;
+
     class MavLinkCommunicator: public AbstractCommunicator
     {
         Q_OBJECT
 
     public:
-        explicit MavLinkCommunicator(VehicleService* vehicleService,
-                                     QObject* parent = nullptr);
+        MavLinkCommunicator(SettingsProvider* settings,
+                            VehicleService* vehicleService,
+                            QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         uint8_t systemId() const;

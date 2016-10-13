@@ -5,11 +5,13 @@
 #include <mavlink_types.h>
 
 // Qt
-#include <QtGlobal>
 #include <QMap>
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+#include "settings.h"
+
 #include "abstract_link.h"
 
 #include "heartbeat_handler.h"
@@ -29,23 +31,30 @@ using namespace domain;
 class MavLinkCommunicator::Impl
 {
 public:
+    SettingsProvider* settings;
+
+    uint8_t systemId;
+    uint8_t componentId;
+
     QList<AbstractMavLinkHandler*> handlers;
 
     QMap<AbstractLink*, uint8_t> linkChannels;
     QList<uint8_t> avalibleChannels;
-
     AbstractLink* lastReceivedLink = nullptr;
-
-    uint8_t systemId = 255;
-    uint8_t componentId = 0;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
+MavLinkCommunicator::MavLinkCommunicator(SettingsProvider* settings,
+                                         VehicleService* vehicleService,
                                          QObject* parent):
     AbstractCommunicator(vehicleService, parent),
     d(new Impl())
 {
     qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
+
+    d->settings = settings;
+
+    d->systemId = settings->value(domain::connection_settings::systemId).toUInt();
+    d->componentId = settings->value(domain::connection_settings::componentId).toUInt();
 
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
@@ -113,6 +122,7 @@ void MavLinkCommunicator::setSystemId(uint8_t systemId)
     if (d->systemId == systemId) return;
 
     d->systemId = systemId;
+    d->settings->setValue(domain::connection_settings::systemId, systemId);
     emit systemIdChanged(systemId);
 }
 
@@ -121,6 +131,7 @@ void MavLinkCommunicator::setComponentId(uint8_t componentId)
     if (d->componentId == componentId) return;
 
     d->componentId = componentId;
+    d->settings->setValue(domain::connection_settings::componentId, componentId);
     emit componentIdChanged(componentId);
 }
 

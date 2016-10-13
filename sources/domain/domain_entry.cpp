@@ -16,7 +16,7 @@ public:
     MavLinkCommunicator communicator;
 
     Impl():
-        communicator(&vehicleService)
+        communicator(&settings, &vehicleService)
     {}
 };
 
