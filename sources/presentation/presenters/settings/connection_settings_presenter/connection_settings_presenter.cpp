@@ -4,7 +4,7 @@
 #include "settings_provider.h"
 #include "settings.h"
 
-#include "abstract_communicator.h"
+#include "mavlink_communicator.h"
 #include "serial_link.h"
 #include "udp_link.h"
 
@@ -18,7 +18,7 @@ class ConnectionSettingsPresenter::Impl
 {
 public:
     domain::SettingsProvider* settings;
-    domain::AbstractCommunicator* communicator;
+    domain::MavLinkCommunicator* communicator;
 };
 
 ConnectionSettingsPresenter::ConnectionSettingsPresenter(
@@ -29,11 +29,19 @@ ConnectionSettingsPresenter::ConnectionSettingsPresenter(
     d(new Impl())
 {
     d->settings = settings;
-    d->communicator = communicator;
 
-    connect(d->communicator, &domain::AbstractCommunicator::addLinkEnabledChanged,
+    // FIXME: typecasting
+    d->communicator = qobject_cast<domain::MavLinkCommunicator*>(communicator);
+    Q_ASSERT(d->communicator);
+
+    connect(d->communicator, &domain::MavLinkCommunicator::systemIdChanged,
+            this, &ConnectionSettingsPresenter::systemIdChanged);
+    connect(d->communicator, &domain::MavLinkCommunicator::componentIdChanged,
+            this, &ConnectionSettingsPresenter::componentIdChanged);
+
+    connect(communicator, &domain::AbstractCommunicator::addLinkEnabledChanged,
             this, &ConnectionSettingsPresenter::addEnabledChanged);
-    connect(d->communicator, &domain::AbstractCommunicator::linksChanged,
+    connect(communicator, &domain::AbstractCommunicator::linksChanged,
             this, &ConnectionSettingsPresenter::linksChanged);
 }
 
@@ -41,6 +49,17 @@ ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
 {
     delete d;
 }
+
+int ConnectionSettingsPresenter::systemId() const
+{
+    return d->communicator->systemId();
+}
+
+int ConnectionSettingsPresenter::componentId() const
+{
+    return d->communicator->componentId();
+}
+
 
 bool ConnectionSettingsPresenter::isAddEnabled() const
 {
@@ -74,6 +93,16 @@ QVariantList ConnectionSettingsPresenter::serialBaudRates() const
         rates.append(rate);
 
     return rates;
+}
+
+void ConnectionSettingsPresenter::setSystemId(int systemId)
+{
+    d->communicator->setSystemId(systemId);
+}
+
+void ConnectionSettingsPresenter::setComponentId(int componentId)
+{
+    d->communicator->setComponentId(componentId);
 }
 
 void ConnectionSettingsPresenter::addSerialLink()
@@ -112,3 +141,4 @@ void ConnectionSettingsPresenter::removeLink(QObject* link)
     d->communicator->removeLink(qobject_cast<domain::AbstractLink*>(link));
     delete link;
 }
+
