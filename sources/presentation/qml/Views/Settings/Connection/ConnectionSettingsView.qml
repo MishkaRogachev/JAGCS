@@ -12,8 +12,6 @@ ColumnLayout {
     Frame {
         Layout.fillWidth: true
 
-        // TODO: flickable with scrollbar
-
         GridLayout {
             anchors.fill: parent
             columns: 2
@@ -46,28 +44,40 @@ ColumnLayout {
         }
     }
 
-    Frame {
+    Flickable {
         Layout.fillWidth: true
+        Layout.fillHeight: true
+        contentHeight: frame.height
+        clip: true
 
-        ColumnLayout {
-            id: column
-            anchors.fill: parent
-            spacing: 16
+        ScrollBar.vertical: ScrollBar { }
 
-            Label {
-                text: qsTr("No links present")
-                visible: repeater.count == 0
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignHCenter
-            }
+        Frame {
+            id: frame
+            width: parent.width
+            height: column.height + 16
 
-            Repeater {
-                id: repeater
-                model: presenter.links
+            ColumnLayout {
+                id: column
+                width: parent.width
+                anchors.centerIn: parent
+                spacing: 16
 
-                ConnectionItemView {
-                    presenter: root.presenter
-                    link: modelData
+                Label {
+                    text: qsTr("No links present")
+                    visible: repeater.count == 0
+                    Layout.fillWidth: true
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                Repeater {
+                    id: repeater
+                    model: presenter.links
+
+                    ConnectionItemView {
+                        presenter: root.presenter
+                        link: modelData
+                    }
                 }
             }
         }
