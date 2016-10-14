@@ -16,11 +16,11 @@ namespace domain
         AbstractCommunicator(VehicleService* vehicleService,
                              QObject* parent);
 
-        bool isAddLinkEnabled() const;
         QList<AbstractLink*> links() const;
 
+        virtual bool isAddLinkEnabled() = 0;
+
     public slots:
-        void setAddLinkEnabled(bool addLinkEnabled);
         void sendDataAllLinks(const QByteArray& data);
 
         virtual void addLink(AbstractLink* link);
@@ -35,7 +35,6 @@ namespace domain
 
     protected:
         VehicleService* const m_vehicleService;
-        bool m_addLinkEnabled;
         QList<AbstractLink*> m_links;
     };
 }

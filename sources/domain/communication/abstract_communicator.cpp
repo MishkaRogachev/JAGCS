@@ -8,26 +8,12 @@ using namespace domain;
 AbstractCommunicator::AbstractCommunicator(VehicleService* vehicleService,
                                            QObject* parent):
     QObject(parent),
-    m_vehicleService(vehicleService),
-    m_addLinkEnabled(true)
+    m_vehicleService(vehicleService)
 {}
-
-bool AbstractCommunicator::isAddLinkEnabled() const
-{
-    return m_addLinkEnabled;
-}
 
 QList<AbstractLink*> AbstractCommunicator::links() const
 {
     return m_links;
-}
-
-void AbstractCommunicator::setAddLinkEnabled(bool addLinkEnabled)
-{
-    if (m_addLinkEnabled == addLinkEnabled) return;
-
-    m_addLinkEnabled = addLinkEnabled;
-    emit addLinkEnabledChanged(addLinkEnabled);
 }
 
 void AbstractCommunicator::sendDataAllLinks(const QByteArray& data)

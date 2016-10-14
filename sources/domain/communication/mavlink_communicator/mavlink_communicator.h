@@ -17,6 +17,8 @@ namespace domain
                                      QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
+        bool isAddLinkEnabled() override;
+
         uint8_t systemId() const;
         uint8_t componentId() const;
 

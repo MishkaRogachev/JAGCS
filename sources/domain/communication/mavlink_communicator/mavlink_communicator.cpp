@@ -3,6 +3,7 @@
 // MAVLink
 #include <mavlink.h>
 #include <mavlink_types.h>
+#include <mavlink_helpers.h>
 
 // Qt
 #include <QMap>
@@ -61,16 +62,18 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d->handlers.append(new SystemStatusHandler(this));
     d->handlers.append(new VfrHudHandler(vehicleService, this));
 
-    // TODO: replace channels with COMM_NB_HIGH
-    d->avalibleChannels.append(MAVLINK_COMM_0);
-    d->avalibleChannels.append(MAVLINK_COMM_1);
-    d->avalibleChannels.append(MAVLINK_COMM_2);
-    d->avalibleChannels.append(MAVLINK_COMM_3);
+    for (uint8_t channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
+        d->avalibleChannels.append(channel);
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
 {
     delete d;
+}
+
+bool MavLinkCommunicator::isAddLinkEnabled()
+{
+    return !d->avalibleChannels.isEmpty();
 }
 
 uint8_t MavLinkCommunicator::componentId() const
@@ -94,7 +97,7 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
         return;
 
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
-    this->setAddLinkEnabled(!d->avalibleChannels.isEmpty());
+    if (d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(false);
 
     AbstractCommunicator::addLink(link);
 }
@@ -106,10 +109,11 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     uint8_t channel = d->linkChannels.value(link);
     d->linkChannels.remove(link);
     d->avalibleChannels.prepend(channel);
+    mavlink_reset_channel_status(channel);
 
     if (link == d->lastReceivedLink) d->lastReceivedLink = nullptr;
 
-    this->setAddLinkEnabled(!d->avalibleChannels.isEmpty());
+    if (!d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(true);
 
     AbstractCommunicator::removeLink(link);
 }
