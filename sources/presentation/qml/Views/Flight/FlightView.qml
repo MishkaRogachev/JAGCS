@@ -10,7 +10,6 @@ import "../Video"
 Pane {
     id: root
 
-    // TODO: think about removing presenters and usage bare Model-View architecture
     property QtObject presenter: factory.createFlightPresenter(root)
 
     RowLayout {
@@ -20,7 +19,7 @@ Pane {
         ColumnLayout {
             id: toolBar
             Layout.fillHeight: true
-            Layout.preferredWidth: settingsProvider.value("Gui/toolbarWidth");
+            Layout.preferredWidth: 420
 
             ComboBox {
                 enabled: count > 0

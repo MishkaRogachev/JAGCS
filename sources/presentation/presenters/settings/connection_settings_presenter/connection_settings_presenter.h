@@ -6,7 +6,6 @@
 namespace domain
 {
     class AbstractCommunicator;
-    class SettingsProvider;
 }
 
 namespace presentation
@@ -27,10 +26,8 @@ namespace presentation
         Q_PROPERTY(QVariantList serialBaudRates READ serialBaudRates CONSTANT)
 
     public:
-        explicit ConnectionSettingsPresenter(
-                domain::SettingsProvider* settings,
-                domain::AbstractCommunicator* communicator,
-                QObject* view);
+        ConnectionSettingsPresenter(
+                domain::AbstractCommunicator* communicator, QObject* view);
         ~ConnectionSettingsPresenter() override;
 
         int systemId() const;

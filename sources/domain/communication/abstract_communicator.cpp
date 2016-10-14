@@ -1,17 +1,13 @@
 #include "abstract_communicator.h"
 
 // Internal
-#include "settings_provider.h"
-#include "settings.h"
 #include "abstract_link.h"
 
 using namespace domain;
 
-AbstractCommunicator::AbstractCommunicator(SettingsProvider* settings,
-                                           VehicleService* vehicleService,
+AbstractCommunicator::AbstractCommunicator(VehicleService* vehicleService,
                                            QObject* parent):
     QObject(parent),
-    m_settings(settings),
     m_vehicleService(vehicleService),
     m_addLinkEnabled(true)
 {}
@@ -50,8 +46,6 @@ void AbstractCommunicator::addLink(AbstractLink* link)
     connect(link, &AbstractLink::dataReceived,
             this, &AbstractCommunicator::onDataReceived);
 
-    m_settings->setValue(connection_settings::linksCount, m_links.count());
-
     emit linksChanged();
 }
 
@@ -62,8 +56,6 @@ void AbstractCommunicator::removeLink(AbstractLink* link)
 
     disconnect(link, &AbstractLink::dataReceived,
                this, &AbstractCommunicator::onDataReceived);
-
-    m_settings->setValue(connection_settings::linksCount, m_links.count());
 
     emit linksChanged();
 }

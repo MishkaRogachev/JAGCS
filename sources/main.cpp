@@ -5,7 +5,6 @@
 
 // Internal
 #include "domain_entry.h"
-#include "settings_provider.h"
 
 #include "presenters_factory.h"
 
@@ -17,8 +16,6 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine;
 
     domain::DomainEntry entry;
-    engine.rootContext()->setContextProperty("settingsProvider", entry.settings());
-
     presentation::PresentersFactory factory(&entry);
     engine.rootContext()->setContextProperty("factory", &factory);
 

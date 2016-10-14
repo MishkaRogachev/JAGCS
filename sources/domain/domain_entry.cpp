@@ -11,12 +11,11 @@ using namespace domain;
 class DomainEntry::Impl
 {
 public:
-    SettingsProvider settings;
     VehicleService vehicleService;
     MavLinkCommunicator communicator;
 
     Impl():
-        communicator(&settings, &vehicleService)
+        communicator(&vehicleService)
     {}
 };
 
@@ -27,11 +26,6 @@ DomainEntry::DomainEntry():
 DomainEntry::~DomainEntry()
 {
     delete d;
-}
-
-SettingsProvider* DomainEntry::settings() const
-{
-    return &d->settings;
 }
 
 AbstractCommunicator* DomainEntry::communicator() const

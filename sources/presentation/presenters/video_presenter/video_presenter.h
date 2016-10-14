@@ -5,11 +5,6 @@
 
 class QAbstractVideoSurface;
 
-namespace domain
-{
-    class SettingsProvider;
-}
-
 namespace presentation
 {
     class VideoPresenter: public BasePresenter
@@ -20,7 +15,7 @@ namespace presentation
                    WRITE setVideoSurface)
 
     public:
-        VideoPresenter(domain::SettingsProvider* settings, QObject* view);
+        explicit VideoPresenter(QObject* view);
         ~VideoPresenter() override;
 
         QAbstractVideoSurface* videoSurface() const;

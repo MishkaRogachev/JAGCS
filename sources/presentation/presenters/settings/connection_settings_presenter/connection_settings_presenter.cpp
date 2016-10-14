@@ -17,19 +17,14 @@ using namespace presentation;
 class ConnectionSettingsPresenter::Impl
 {
 public:
-    domain::SettingsProvider* settings;
     domain::MavLinkCommunicator* communicator;
 };
 
 ConnectionSettingsPresenter::ConnectionSettingsPresenter(
-        domain::SettingsProvider* settings,
-        domain::AbstractCommunicator* communicator,
-        QObject* view):
+        domain::AbstractCommunicator* communicator, QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
-    d->settings = settings;
-
     // FIXME: typecasting
     d->communicator = qobject_cast<domain::MavLinkCommunicator*>(communicator);
     Q_ASSERT(d->communicator);
@@ -107,31 +102,36 @@ void ConnectionSettingsPresenter::setComponentId(int componentId)
 
 void ConnectionSettingsPresenter::addSerialLink()
 {
-    d->settings->beginGroup(domain::connection_settings::group);
+    domain::SettingsProvider::beginGroup(domain::connection_settings::group);
 
     auto link = new domain::SerialLink(
-                    d->settings->value(domain::connection_settings::serialDevice).toString(),
-                    d->settings->value(domain::connection_settings::baudRate).toInt(),
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::serialDevice).toString(),
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::baudRate).toInt(),
                     d->communicator);
     link->setObjectName(tr("Serial"));
 
-    d->settings->endGroup();
+    domain::SettingsProvider::endGroup();
 
     d->communicator->addLink(link);
 }
 
 void ConnectionSettingsPresenter::addUdpLink()
 {
-    d->settings->beginGroup(domain::connection_settings::group);
+    domain::SettingsProvider::beginGroup(domain::connection_settings::group);
 
     auto link = new domain::UdpLink(
-                    d->settings->value(domain::connection_settings::hostPort).toInt(),
-                    d->settings->value(domain::connection_settings::address).toString(),
-                    d->settings->value(domain::connection_settings::port).toInt(),
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::hostPort).toInt(),
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::address).toString(),
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::port).toInt(),
                     d->communicator);
     link->setObjectName(tr("UDP"));
 
-    d->settings->endGroup();
+    domain::SettingsProvider::endGroup();
 
     d->communicator->addLink(link);
 }

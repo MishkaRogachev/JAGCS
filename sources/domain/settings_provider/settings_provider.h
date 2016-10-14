@@ -2,7 +2,6 @@
 #define SETTINGS_PROVIDER_H
 
 // Qt
-#include <QObject>
 #include <QVariant>
 
 namespace domain
@@ -12,24 +11,22 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit SettingsProvider(QObject* parent = nullptr);
         ~SettingsProvider() override;
+        static SettingsProvider* instance();
 
-        Q_INVOKABLE QVariant value(const QString& key,
-                                   const QVariant& defaultValue = QVariant()) const;
+        static QVariant value(const QString& key,
+                              const QVariant& defaultValue = QVariant());
 
-    public slots:
-        void setValue(const QString& key, const QVariant& value);
+        static void setValue(const QString& key, const QVariant& value);
 
-        void beginGroup(const QString& prefix);
-        void endGroup();
+        static void beginGroup(const QString& prefix);
+        static void endGroup();
 
-        void makeDefaults();
-
-    signals:
-        void valueChanged(QString key, QVariant value);
+        static void makeDefaults();
 
     private:
+        SettingsProvider();
+
         class Impl;
         Impl* const d;
         Q_DISABLE_COPY(SettingsProvider)

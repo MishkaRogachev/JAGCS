@@ -23,7 +23,7 @@ PresentersFactory::PresentersFactory(domain::DomainEntry* entry, QObject* parent
 
 QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 {
-    return new VideoPresenter(m_entry->settings(), parent);
+    return new VideoPresenter(parent);
 }
 
 QObject* PresentersFactory::createMapPresenter(QObject* parent)
@@ -43,17 +43,16 @@ QObject* PresentersFactory::createFlightPresenter(QObject* parent)
 
 QObject* PresentersFactory::createConnectionSettingsPresenter(QObject* parent)
 {
-     return new ConnectionSettingsPresenter(m_entry->settings(),
-                                            m_entry->communicator(),
+     return new ConnectionSettingsPresenter(m_entry->communicator(),
                                             parent);
 }
 
 QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
 {
-    return new VideoSettingsPresenter(m_entry->settings(), parent);
+    return new VideoSettingsPresenter(parent);
 }
 
 QObject* PresentersFactory::createNetworkSettingsPresenter(QObject* parent)
 {
-    return new NetworkSettingsPresenter(m_entry->settings(), parent);
+    return new NetworkSettingsPresenter(parent);
 }

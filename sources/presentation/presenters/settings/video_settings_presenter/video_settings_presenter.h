@@ -3,11 +3,6 @@
 
 #include "base_presenter.h"
 
-namespace domain
-{
-    class SettingsProvider;
-}
-
 namespace presentation
 {
     class VideoSettingsPresenter: public BasePresenter
@@ -17,7 +12,7 @@ namespace presentation
         Q_PROPERTY(QStringList sources READ sources NOTIFY sourcesChanged)
 
     public:
-        VideoSettingsPresenter(domain::SettingsProvider* settings, QObject* view);
+        explicit VideoSettingsPresenter(QObject* view);
         ~VideoSettingsPresenter() override;
 
         QStringList sources() const;

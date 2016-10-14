@@ -5,7 +5,6 @@
 
 namespace domain
 {
-    class SettingsProvider;
     class AbstractCommunicator;
     class VehicleService;
 
@@ -15,7 +14,6 @@ namespace domain
         DomainEntry();
         ~DomainEntry();
 
-        SettingsProvider* settings() const;
         AbstractCommunicator* communicator() const;
         VehicleService* vehicleService() const;
 

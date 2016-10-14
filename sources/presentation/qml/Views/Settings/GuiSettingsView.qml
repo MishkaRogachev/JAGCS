@@ -23,11 +23,11 @@ Frame {
             Slider {
                 id: sidebarWidthSlider
                 Layout.fillWidth: true
-                value: settingsProvider.value("Gui/toolbarWidth");
+                value: 120//settingsProvider.value("Gui/toolbarWidth");
                 from: 80
                 to: 640
                 onPressedChanged: {
-                    if (!pressed) settingsProvider.setValue("Gui/toolbarWidth", value);
+                    //if (!pressed) settingsProvider.setValue("Gui/toolbarWidth", value);
                 }
             }
 

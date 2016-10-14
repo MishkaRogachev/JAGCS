@@ -9,18 +9,13 @@ using namespace presentation;
 class VideoSettingsPresenter::Impl
 {
 public:
-    domain::SettingsProvider* settings;
-
     QList<QCameraInfo> cameras;
 };
 
-VideoSettingsPresenter::VideoSettingsPresenter(
-        domain::SettingsProvider* settings, QObject* view):
+VideoSettingsPresenter::VideoSettingsPresenter(QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
-    d->settings = settings;
-
     this->updateSources();
 }
 

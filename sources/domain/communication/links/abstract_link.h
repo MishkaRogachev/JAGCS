@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    // TODO: add persistable base class to store objects in SQLite DB
     class AbstractLink: public QObject
     {
         Q_OBJECT

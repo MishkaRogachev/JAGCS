@@ -13,7 +13,6 @@ using namespace presentation;
 class VideoPresenter::Impl
 {
 public:
-    domain::SettingsProvider* settings;
     QCamera* camera;
     QAbstractVideoSurface* videoSurface;
 
@@ -26,13 +25,10 @@ public:
     }
 };
 
-VideoPresenter::VideoPresenter(
-        domain::SettingsProvider* settings, QObject* view):
+VideoPresenter::VideoPresenter(QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
-    d->settings = settings;
-
     this->updateSource();
 }
 
@@ -58,9 +54,10 @@ void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
-    d->settings->beginGroup(domain::video_settings::group);
+    domain::SettingsProvider::beginGroup(domain::video_settings::group);
 
-    QCameraInfo info(d->settings->value(domain::video_settings::device).toByteArray());
+    QCameraInfo info(domain::SettingsProvider::value(
+                         domain::video_settings::device).toByteArray());
     if (info.isNull())
     {
         d->camera = nullptr;
@@ -71,5 +68,5 @@ void VideoPresenter::updateSource()
         d->updateCameraVideoSurface();
     }
 
-    d->settings->endGroup();
+    domain::SettingsProvider::endGroup();
 }

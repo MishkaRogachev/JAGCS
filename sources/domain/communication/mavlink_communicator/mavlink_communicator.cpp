@@ -41,18 +41,17 @@ public:
     AbstractLink* lastReceivedLink = nullptr;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(SettingsProvider* settings,
-                                         VehicleService* vehicleService,
+MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
                                          QObject* parent):
-    AbstractCommunicator(settings, vehicleService, parent),
+    AbstractCommunicator(vehicleService, parent),
     d(new Impl())
 {
     qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
 
-    d->systemId = m_settings->value(
-                      domain::connection_settings::systemId).toUInt();
-    d->componentId = m_settings->value(
-                         domain::connection_settings::componentId).toUInt();
+    d->systemId = SettingsProvider::value(
+                      connection_settings::systemId).toUInt();
+    d->componentId = SettingsProvider::value(
+                         connection_settings::componentId).toUInt();
 
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
@@ -120,7 +119,7 @@ void MavLinkCommunicator::setSystemId(uint8_t systemId)
     if (d->systemId == systemId) return;
 
     d->systemId = systemId;
-    m_settings->setValue(domain::connection_settings::systemId, systemId);
+    SettingsProvider::setValue(connection_settings::systemId, systemId);
     emit systemIdChanged(systemId);
 }
 
@@ -129,7 +128,7 @@ void MavLinkCommunicator::setComponentId(uint8_t componentId)
     if (d->componentId == componentId) return;
 
     d->componentId = componentId;
-    m_settings->setValue(domain::connection_settings::componentId, componentId);
+    SettingsProvider::setValue(connection_settings::componentId, componentId);
     emit componentIdChanged(componentId);
 }
 
