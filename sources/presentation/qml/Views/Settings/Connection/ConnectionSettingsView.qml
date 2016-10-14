@@ -47,37 +47,39 @@ ColumnLayout {
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        contentHeight: frame.height
+        contentHeight: column.height
         clip: true
 
         ScrollBar.vertical: ScrollBar { }
 
         Frame {
-            id: frame
+            visible: repeater.count == 0
             width: parent.width
-            height: column.height + 16
+            height: label.height + 32
 
-            ColumnLayout {
-                id: column
+            Label {
+                id: label
+                text: qsTr("No links present")
                 width: parent.width
                 anchors.centerIn: parent
-                spacing: 16
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
 
-                Label {
-                    text: qsTr("No links present")
-                    visible: repeater.count == 0
+        ColumnLayout {
+            id: column
+            width: parent.width
+            anchors.centerIn: parent
+            spacing: 8
+
+            Repeater {
+                id: repeater
+                model: presenter.links
+
+                ConnectionItemView {
+                    presenter: root.presenter
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                Repeater {
-                    id: repeater
-                    model: presenter.links
-
-                    ConnectionItemView {
-                        presenter: root.presenter
-                        link: modelData
-                    }
+                    link: modelData
                 }
             }
         }
