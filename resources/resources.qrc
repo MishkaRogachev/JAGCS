@@ -8,5 +8,7 @@
         <file>icons/fit.svg</file>
         <file>icons/remove.svg</file>
         <file>icons/add.svg</file>
+        <file>icons/connect.svg</file>
+        <file>icons/disconnect.svg</file>
     </qresource>
 </RCC>

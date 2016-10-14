@@ -109,14 +109,20 @@ RowLayout {
         }
     }
 
-    Button {
-        text: link && link.isUp ? qsTr("Down") : qsTr("Up")
-        onClicked: link && link.isUp ? link.down() : link.up()
-    }
+    ColumnLayout {
+        anchors.verticalCenter: parent.verticalCenter
 
-    Button {
-        iconSource: "qrc:/icons/remove.svg"
-        enabled: link
-        onClicked: presenter.removeLink(link)
+        Button {
+            iconSource: link && link.isUp ?
+                            "qrc:/icons/connect.svg" :
+                            "qrc:/icons/disconnect.svg"
+            onClicked: link && link.isUp ? link.down() : link.up()
+        }
+
+        Button {
+            iconSource: "qrc:/icons/remove.svg"
+            enabled: link
+            onClicked: presenter.removeLink(link)
+        }
     }
 }
