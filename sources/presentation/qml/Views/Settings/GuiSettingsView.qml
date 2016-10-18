@@ -7,7 +7,7 @@ import "qrc:/Martial"
 Frame {
     id: root
 
-//    property QtObject presenter: factory.createGuiSettingsPresenter(root)
+    property QtObject presenter
 
     ColumnLayout{
         anchors.fill: parent

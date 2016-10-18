@@ -8,6 +8,8 @@ import "Connection"
 Pane {
     id: root
 
+    property QtObject presenter: factory.createSettingsPresenter(root)
+
     RowLayout {
         anchors.fill: parent
 
@@ -22,10 +24,22 @@ Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
-            GuiSettingsView { id: uiTab }
-            ConnectionSettingsView { id: connection }
-            VideoSettingsView {id: videoTab }
-            NetworkSettingsView { id: networkSettings }
+            GuiSettingsView { id: ui}
+
+            ConnectionSettingsView {
+                id: connection
+                presenter: root.presenter.createConnectionSettings(connection)
+            }
+
+            VideoSettingsView {
+                id: video
+                presenter: root.presenter.createVideoSettings(video)
+            }
+
+            NetworkSettingsView {
+                id: network
+                presenter: root.presenter.createNetworkSettings(network)
+            }
         }
     }
 }

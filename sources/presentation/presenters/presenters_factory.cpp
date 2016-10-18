@@ -5,14 +5,9 @@
 
 #include "video_presenter.h"
 #include "map_presenter.h"
-
 #include "flight_presenter.h"
-
 #include "status_presenter.h"
-
-#include "video_settings_presenter.h"
-#include "connection_settings_presenter.h"
-#include "network_settings_presenter.h"
+#include "settings_presenter.h"
 
 using namespace presentation;
 
@@ -41,18 +36,7 @@ QObject* PresentersFactory::createFlightPresenter(QObject* parent)
     return new FlightPresenter(m_entry->vehicleService(), parent);
 }
 
-QObject* PresentersFactory::createConnectionSettingsPresenter(QObject* parent)
+QObject* PresentersFactory::createSettingsPresenter(QObject* parent)
 {
-     return new ConnectionSettingsPresenter(m_entry->communicator(),
-                                            parent);
-}
-
-QObject* PresentersFactory::createVideoSettingsPresenter(QObject* parent)
-{
-    return new VideoSettingsPresenter(parent);
-}
-
-QObject* PresentersFactory::createNetworkSettingsPresenter(QObject* parent)
-{
-    return new NetworkSettingsPresenter(parent);
+     return new SettingsPresenter(m_entry, parent);
 }

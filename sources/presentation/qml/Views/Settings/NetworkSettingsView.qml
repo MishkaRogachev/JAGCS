@@ -7,7 +7,7 @@ import "qrc:/Martial"
 ColumnLayout {
     id: root
 
-    property QtObject presenter: factory.createNetworkSettingsPresenter(root)
+    property QtObject presenter
 
     property alias type: typeItem.currentText
     property alias hostName: hostNameItem.text

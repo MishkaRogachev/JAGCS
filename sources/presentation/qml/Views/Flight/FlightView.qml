@@ -22,12 +22,12 @@ Pane {
             Layout.preferredWidth: 420
 
             ComboBox {
-                enabled: count > 0
                 model: presenter.vehicles
                 Layout.preferredWidth: parent.width
                 onCurrentIndexChanged: {
                     vehicleView.vehicle = presenter.vehicleObject(currentIndex);
                 }
+                onCountChanged: console.log(count)
             }
 
             VehicleView {
