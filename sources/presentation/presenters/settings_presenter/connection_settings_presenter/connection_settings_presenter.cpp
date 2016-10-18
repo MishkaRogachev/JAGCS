@@ -55,7 +55,6 @@ int ConnectionSettingsPresenter::componentId() const
     return d->communicator->componentId();
 }
 
-
 bool ConnectionSettingsPresenter::isAddEnabled() const
 {
     return d->communicator->isAddLinkEnabled();
