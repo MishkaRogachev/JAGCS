@@ -29,7 +29,10 @@ SettingsPresenter::~SettingsPresenter()
 
 QObject* SettingsPresenter::createConnectionSettings(QObject* view)
 {
-    return new ConnectionSettingsPresenter(d->entry->communicator(), view);
+    auto presenter = new ConnectionSettingsPresenter(d->entry->communicator(),
+                                                     this);
+    presenter->setView(view);
+    return presenter;
 }
 
 QObject* SettingsPresenter::createVideoSettings(QObject* view)

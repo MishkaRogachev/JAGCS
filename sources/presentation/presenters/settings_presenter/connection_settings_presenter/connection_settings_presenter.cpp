@@ -30,14 +30,16 @@ ConnectionSettingsPresenter::ConnectionSettingsPresenter(
     Q_ASSERT(d->communicator);
 
     connect(d->communicator, &domain::MavLinkCommunicator::systemIdChanged,
-            this, &ConnectionSettingsPresenter::systemIdChanged);
+            this, &ConnectionSettingsPresenter::updateSystemId);
     connect(d->communicator, &domain::MavLinkCommunicator::componentIdChanged,
-            this, &ConnectionSettingsPresenter::componentIdChanged);
+            this, &ConnectionSettingsPresenter::updateComponentId);
+    connect(d->communicator, &domain::MavLinkCommunicator::linksChanged,
+            this, &ConnectionSettingsPresenter::updateLinks);
 
-    connect(communicator, &domain::AbstractCommunicator::addLinkEnabledChanged,
-            this, &ConnectionSettingsPresenter::addEnabledChanged);
-    connect(communicator, &domain::AbstractCommunicator::linksChanged,
-            this, &ConnectionSettingsPresenter::linksChanged);
+    connect(d->communicator, &domain::MavLinkCommunicator::addLinkEnabledChanged,
+            view, [this] (bool addEnabled) {
+        this->setViewProperty(PROPERTY(isAddEnabled), addEnabled);
+    });
 }
 
 ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
@@ -45,78 +47,79 @@ ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
     delete d;
 }
 
-int ConnectionSettingsPresenter::systemId() const
+void ConnectionSettingsPresenter::connectView(QObject* view)
 {
-    return d->communicator->systemId();
+    connect(view, SIGNAL(requestSystemId(int)),
+            this, SLOT(onSystemIdRequested(int)));
+    connect(view, SIGNAL(requestComponentId(int)),
+            this, SLOT(onComponentIdRequested(int)));
+    connect(view, SIGNAL(requestNewUdp()), this, SLOT(onRequestNewUdp()));
+    connect(view, SIGNAL(requestNewSerial()), this, SLOT(onRequestNewSerial()));
+    connect(view, SIGNAL(requestRemoveLink(QObject*)),
+            this, SLOT(onRequestRemoveLink(QObject*)));
+
+    this->updateSystemId(d->communicator->systemId());
+    this->updateComponentId(d->communicator->componentId());
+    this->setViewProperty(PROPERTY(isAddEnabled),
+                          d->communicator->isAddLinkEnabled());
+    this->updateLinks();
+    this->updateSerialDevices();
+    this->updateSerialBaudRates();
+
+    BasePresenter::connectView(view);
 }
 
-int ConnectionSettingsPresenter::componentId() const
+void ConnectionSettingsPresenter::updateSystemId(uint8_t systemId)
 {
-    return d->communicator->componentId();
+    this->setViewProperty(PROPERTY(systemId), systemId);
 }
 
-bool ConnectionSettingsPresenter::isAddEnabled() const
+void ConnectionSettingsPresenter::updateComponentId(uint8_t componentId)
 {
-    return d->communicator->isAddLinkEnabled();
+    this->setViewProperty(PROPERTY(componentId), componentId);
 }
 
-QList<QObject*> ConnectionSettingsPresenter::links() const
+void ConnectionSettingsPresenter::updateLinks()
 {
-    QList<QObject*> list;
+    QList<QObject*> links;
 
     for (domain::AbstractLink* link: d->communicator->links())
-        list.append(link);
+        links.append(link);
 
-    return list;
+    this->setViewProperty(PROPERTY(links), QVariant::fromValue(links));
 }
 
-QStringList ConnectionSettingsPresenter::serialDevices() const
+void ConnectionSettingsPresenter::updateSerialDevices()
 {
-    QStringList devices;
+    QStringList serialDevices;
 
     for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
-        devices.append(info.portName());
+        serialDevices.append(info.portName());
 
-    return devices;
+    this->setViewProperty(PROPERTY(serialDevices), serialDevices);
 }
 
-QVariantList ConnectionSettingsPresenter::serialBaudRates() const
+void ConnectionSettingsPresenter::updateSerialBaudRates()
 {
-    QVariantList rates;
+    QVariantList serialBaudRates;
     for (qint32 rate: QSerialPortInfo::standardBaudRates())
-        rates.append(rate);
+        serialBaudRates.append(rate);
 
-    return rates;
+    this->setViewProperty(PROPERTY(serialBaudRates), serialBaudRates);
 }
 
-void ConnectionSettingsPresenter::setSystemId(int systemId)
+void ConnectionSettingsPresenter::onSystemIdRequested(int systemId)
 {
-    d->communicator->setSystemId(systemId);
+    if (systemId > 0 && systemId < 256) d->communicator->setSystemId(systemId);
 }
 
-void ConnectionSettingsPresenter::setComponentId(int componentId)
+void ConnectionSettingsPresenter::onComponentIdRequested(int componentId)
 {
-    d->communicator->setComponentId(componentId);
+    if (componentId >= 0 && componentId < 256)
+        d->communicator->setComponentId(componentId);
 }
 
-void ConnectionSettingsPresenter::addSerialLink()
-{
-    domain::SettingsProvider::beginGroup(domain::connection_settings::group);
-
-    auto link = new domain::SerialLink(
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::serialDevice).toString(),
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::baudRate).toInt(),
-                    d->communicator);
-    link->setObjectName(tr("Serial"));
-
-    domain::SettingsProvider::endGroup();
-
-    d->communicator->addLink(link);
-}
-
-void ConnectionSettingsPresenter::addUdpLink()
+void ConnectionSettingsPresenter::onRequestNewUdp()
 {
     domain::SettingsProvider::beginGroup(domain::connection_settings::group);
 
@@ -135,9 +138,25 @@ void ConnectionSettingsPresenter::addUdpLink()
     d->communicator->addLink(link);
 }
 
-void ConnectionSettingsPresenter::removeLink(QObject* link)
+void ConnectionSettingsPresenter::onRequestNewSerial()
+{
+    domain::SettingsProvider::beginGroup(domain::connection_settings::group);
+
+    auto link = new domain::SerialLink(
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::serialDevice).toString(),
+                    domain::SettingsProvider::value(
+                        domain::connection_settings::baudRate).toInt(),
+                    d->communicator);
+    link->setObjectName(tr("Serial"));
+
+    domain::SettingsProvider::endGroup();
+
+    d->communicator->addLink(link);
+}
+
+void ConnectionSettingsPresenter::onRequestRemoveLink(QObject* link)
 {
     d->communicator->removeLink(qobject_cast<domain::AbstractLink*>(link));
     delete link;
 }
-

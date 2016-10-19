@@ -28,7 +28,9 @@ Pane {
 
             ConnectionSettingsView {
                 id: connection
-                presenter: root.presenter.createConnectionSettings(connection)
+                Component.onCompleted: {
+                    presenter.createConnectionSettings(connection);
+                }
             }
 
             VideoSettingsView {

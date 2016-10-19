@@ -7,7 +7,19 @@ import "qrc:/Martial"
 ColumnLayout {
     id: root
 
-    property QtObject presenter: factory.createConnectionSettingsPresenter(root)
+    property alias systemId: systemIdBox.value
+    property alias componentId: componentIdBox.value
+    property var links
+    property alias isAddEnabled: addButton.enabled
+
+    property var serialDevices
+    property var serialBaudRates
+
+    signal requestSystemId(int systemId)
+    signal requestComponentId(int componentId)
+    signal requestNewUdp()
+    signal requestNewSerial()
+    signal requestRemoveLink(QtObject link)
 
     Frame {
         Layout.fillWidth: true
@@ -22,11 +34,11 @@ ColumnLayout {
             }
 
             SpinBox {
-                value: presenter.systemId
+                id: systemIdBox
                 Layout.fillWidth: true
                 from: 0
                 to: 255
-                onValueChanged: presenter.setSystemId(value)
+                onValueChanged: requestSystemId(value)
             }
 
             Label {
@@ -35,11 +47,11 @@ ColumnLayout {
             }
 
             SpinBox {
-                value: presenter.componentId
+                id: componentIdBox
                 Layout.fillWidth: true
                 from: 0
                 to: 255
-                onValueChanged: presenter.setComponentId(value)
+                onValueChanged: requestComponentId(value)
             }
         }
     }
@@ -74,10 +86,9 @@ ColumnLayout {
 
             Repeater {
                 id: repeater
-                model: presenter.links
+                model: links
 
                 ConnectionItemView {
-                    presenter: root.presenter
                     Layout.fillWidth: true
                     link: modelData
                 }
@@ -86,12 +97,12 @@ ColumnLayout {
     }
 
     Button {
+        id: addButton
         Layout.fillWidth: true
         text: qsTr("Add Link")
         iconSource: "qrc:/icons/add.svg"
         anchors.right: parent.right
         onClicked: if (!addMenu.visible) addMenu.open()
-        enabled: presenter.addEnabled
 
         Menu {
             id: addMenu
@@ -101,13 +112,13 @@ ColumnLayout {
             MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
-                onTriggered: presenter.addSerialLink()
+                onTriggered: requestNewSerial()
             }
 
             MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
-                onTriggered: presenter.addUdpLink()
+                onTriggered: requestNewUdp()
             }
         }
     }

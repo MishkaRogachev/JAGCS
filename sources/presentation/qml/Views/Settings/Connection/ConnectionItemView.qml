@@ -8,7 +8,6 @@ Frame {
     id: root
 
     property QtObject link
-    property QtObject presenter
 
     RowLayout {
         width: parent.width
@@ -37,8 +36,7 @@ Frame {
                 id: serialDevice
                 visible: link ? 'portName' in link : false
                 Layout.fillWidth: true
-                enabled: count > 0
-                model: presenter.serialDevices
+                model: serialDevices
                 currentIndex: link && 'portName' in link ?
                                   model.indexOf(link.portName) : 0
                 onCurrentIndexChanged: if (link && 'portName' in link)
@@ -55,7 +53,7 @@ Frame {
                 id: baudRates
                 visible: link ? 'baudRate' in link : false
                 Layout.fillWidth: true
-                model: presenter.serialBaudRates
+                model: serialBaudRates
                 currentIndex: link && 'baudRate' in link ?
                                   model.indexOf(link.baudRate) : 0
                 onCurrentIndexChanged: if (link && 'baudRate' in link)
@@ -126,7 +124,7 @@ Frame {
             Button {
                 iconSource: "qrc:/icons/remove.svg"
                 enabled: link
-                onClicked: presenter.removeLink(link)
+                onClicked: requestRemoveLink(link)
             }
         }
     }
