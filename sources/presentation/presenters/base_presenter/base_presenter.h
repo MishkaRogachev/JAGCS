@@ -1,6 +1,8 @@
 #ifndef BASE_PRESENTER_H
 #define BASE_PRESENTER_H
 
+#define PROPERTY(x) # x
+
 #include <QObject>
 
 namespace presentation
@@ -10,18 +12,28 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit BasePresenter(QObject* view);
+        explicit BasePresenter(QObject* view = nullptr);
         BasePresenter(QObject* view, QObject* parent);
+
+        QObject* view() const;
+
+    public slots:
+        void setView(QObject* view);
 
     protected:
         QVariant viewProperty(const char* name) const;
+
+        virtual void connectView(QObject* view);
+        virtual void disconnectView(QObject* view);
 
     protected slots:
         void setViewProperty(const char* name, const QVariant& value);
         void invokeViewMethod(const char* name, const QVariant& value);
 
+    protected:
+        QObject* m_view;
+
     private:
-        QObject* const m_view;
         Q_DISABLE_COPY(BasePresenter)
     };
 }

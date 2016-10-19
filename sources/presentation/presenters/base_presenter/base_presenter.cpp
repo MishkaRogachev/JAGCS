@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 using namespace presentation;
 
@@ -12,13 +13,36 @@ BasePresenter::BasePresenter(QObject* view):
 BasePresenter::BasePresenter(QObject* view, QObject* parent):
     QObject(parent),
     m_view(view)
+{}
+
+QObject* BasePresenter::view() const
 {
-    Q_ASSERT(view);
+    return m_view;
+}
+
+void BasePresenter::setView(QObject* view)
+{
+    if (m_view) this->disconnectView(m_view);
+
+    m_view = view;
+
+    if (view) this->connectView(view);
 }
 
 QVariant BasePresenter::viewProperty(const char* name) const
 {
     return m_view->property(name);
+}
+
+void BasePresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+}
+
+void BasePresenter::disconnectView(QObject* view)
+{
+    disconnect(view, 0, this, 0);
+    disconnect(this, 0, view, 0);
 }
 
 void BasePresenter::setViewProperty(const char* name, const QVariant& value)
