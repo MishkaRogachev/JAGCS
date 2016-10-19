@@ -10,6 +10,7 @@
 #include "settings.h"
 
 using namespace presentation;
+using namespace domain;
 
 class NetworkSettingsPresenter::Impl
 {
@@ -36,63 +37,69 @@ NetworkSettingsPresenter::~NetworkSettingsPresenter()
     delete d;
 }
 
-QStringList NetworkSettingsPresenter::typeModel() const
+void NetworkSettingsPresenter::connectView(QObject* view)
 {
-    return d->typeModelMap.values();
+    connect(view, SIGNAL(apply()), this, SLOT(onApply()));
+    connect(view, SIGNAL(restore()), this, SLOT(onRestore()));
+
+    this->setViewProperty(PROPERTY(typeModel),
+                          QVariant::fromValue(d->typeModelMap.values()));
+
+    this->onRestore();
 }
 
-void NetworkSettingsPresenter::restore()
+void NetworkSettingsPresenter::onApply()
 {
-    domain::SettingsProvider::beginGroup(domain::proxy_settings::group);
+    SettingsProvider::beginGroup(proxy_settings::group);
 
-    QString type = d->typeModelMap.value(static_cast<QNetworkProxy::ProxyType>(
-                     domain::SettingsProvider::value(domain::proxy_settings::type).toInt()));
-    this->invokeViewMethod("setProxyType", type);
-    this->setViewProperty(domain::proxy_settings::hostName,
-                          domain::SettingsProvider::value(domain::proxy_settings::hostName));
-    this->setViewProperty(domain::proxy_settings::port,
-                          domain::SettingsProvider::value(domain::proxy_settings::port));
-    this->setViewProperty(domain::proxy_settings::user,
-                          domain::SettingsProvider::value(domain::proxy_settings::user));
-    this->setViewProperty(domain::proxy_settings::password,
-                          domain::SettingsProvider::value(domain::proxy_settings::password));
+    SettingsProvider::setValue(proxy_settings::type, d->typeModelMap.key(
+                               this->viewProperty(proxy_settings::type).toString()));
+    SettingsProvider::setValue(proxy_settings::hostName,
+                               this->viewProperty(proxy_settings::hostName));
+    SettingsProvider::setValue(proxy_settings::port,
+                               this->viewProperty(proxy_settings::port));
+    SettingsProvider::setValue(proxy_settings::user,
+                               this->viewProperty(proxy_settings::user));
+    SettingsProvider::setValue(proxy_settings::password,
+                               this->viewProperty(proxy_settings::password));
 
-    domain::SettingsProvider::endGroup();
-}
-
-void NetworkSettingsPresenter::apply()
-{
-    domain::SettingsProvider::beginGroup(domain::proxy_settings::group);
-
-    domain::SettingsProvider::setValue(domain::proxy_settings::type, d->typeModelMap.key(
-                  this->viewProperty(domain::proxy_settings::type).toString()));
-    domain::SettingsProvider::setValue(domain::proxy_settings::hostName,
-                          this->viewProperty(domain::proxy_settings::hostName));
-    domain::SettingsProvider::setValue(domain::proxy_settings::port,
-                          this->viewProperty(domain::proxy_settings::port));
-    domain::SettingsProvider::setValue(domain::proxy_settings::user,
-                          this->viewProperty(domain::proxy_settings::user));
-    domain::SettingsProvider::setValue(domain::proxy_settings::password,
-                          this->viewProperty(domain::proxy_settings::password));
-
-    domain::SettingsProvider::endGroup();
+    SettingsProvider::endGroup();
 
     this->updateProxy();
 }
 
+void NetworkSettingsPresenter::onRestore()
+{
+    SettingsProvider::beginGroup(proxy_settings::group);
+
+    QString type = d->typeModelMap.value(static_cast<QNetworkProxy::ProxyType>(
+                        SettingsProvider::value(proxy_settings::type).toInt()));
+    this->invokeViewMethod("setProxyType", type);
+    this->setViewProperty(proxy_settings::hostName,
+                          SettingsProvider::value(proxy_settings::hostName));
+    this->setViewProperty(proxy_settings::port,
+                          SettingsProvider::value(proxy_settings::port));
+    this->setViewProperty(proxy_settings::user,
+                          SettingsProvider::value(proxy_settings::user));
+    this->setViewProperty(proxy_settings::password,
+                          SettingsProvider::value(proxy_settings::password));
+
+    SettingsProvider::endGroup();
+}
+
 void NetworkSettingsPresenter::updateProxy()
 {
-    domain::SettingsProvider::beginGroup(domain::proxy_settings::group);
+    SettingsProvider::beginGroup(proxy_settings::group);
 
     QNetworkProxy proxy;
     proxy.setType(static_cast<QNetworkProxy::ProxyType>(
-                      domain::SettingsProvider::value(domain::proxy_settings::type).toInt()));
-    proxy.setHostName(domain::SettingsProvider::value(domain::proxy_settings::hostName).toString());
-    proxy.setPort(domain::SettingsProvider::value(domain::proxy_settings::port).toInt());
-    proxy.setUser(domain::SettingsProvider::value(domain::proxy_settings::user).toString());
-    proxy.setPassword(domain::SettingsProvider::value(domain::proxy_settings::password).toString());
+                      SettingsProvider::value(proxy_settings::type).toInt()));
+    proxy.setHostName(SettingsProvider::value(proxy_settings::hostName).toString());
+    proxy.setPort(SettingsProvider::value(proxy_settings::port).toInt());
+    proxy.setUser(SettingsProvider::value(proxy_settings::user).toString());
+    proxy.setPassword(SettingsProvider::value(proxy_settings::password).toString());
 
-    domain::SettingsProvider::endGroup();
+    SettingsProvider::endGroup();
 
     QNetworkProxy::setApplicationProxy(proxy);
 }

@@ -9,22 +9,18 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(QStringList typeModel READ typeModel NOTIFY typeModelChanged)
-
     public:
         explicit NetworkSettingsPresenter(QObject* view);
         ~NetworkSettingsPresenter() override;
 
-        QStringList typeModel() const;
+    protected:
+        void connectView(QObject* view) override;
 
-    public slots:
-        void restore();
-        void apply();
-
+    private slots:
         void updateProxy();
 
-    signals:
-        void typeModelChanged(QStringList typeModel);
+        void onApply();
+        void onRestore();
 
     private:
         class Impl;

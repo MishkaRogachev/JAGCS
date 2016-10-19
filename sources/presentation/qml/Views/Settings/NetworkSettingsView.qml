@@ -7,19 +7,20 @@ import "qrc:/Martial"
 ColumnLayout {
     id: root
 
-    property QtObject presenter
-
     property alias type: typeItem.currentText
     property alias hostName: hostNameItem.text
     property alias port: portItem.value
     property alias user: userItem.text
     property alias password: passwordItem.text
 
-    function setProxyType(proxyType) {
-        typeItem.currentIndex = presenter.typeModel.indexOf(proxyType);
-    }
+    property var typeModel
 
-    Component.onCompleted: presenter.restore()
+    signal apply()
+    signal restore()
+
+    function setProxyType(proxyType) {
+        typeItem.currentIndex = typeModel.indexOf(proxyType);
+    }
 
     Frame {
         Layout.fillWidth: true
@@ -36,7 +37,7 @@ ColumnLayout {
             ComboBox {
                 id: typeItem
                 Layout.fillWidth: true
-                model: presenter.typeModel
+                model: typeModel
             }
 
             Label {
@@ -58,7 +59,6 @@ ColumnLayout {
             SpinBox {
                 id: portItem
                 Layout.fillWidth: true
-                editable: true
                 from: 0
                 to: 99999
             }
@@ -94,13 +94,13 @@ ColumnLayout {
         Button {
             Layout.fillWidth: true
             text: qsTr("Restore")
-            onClicked: presenter.restore()
+            onClicked: restore()
         }
 
         Button {
             Layout.fillWidth: true
             text: qsTr("Apply")
-            onClicked: presenter.apply()
+            onClicked: apply()
         }
     }
 

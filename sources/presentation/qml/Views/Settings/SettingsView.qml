@@ -40,7 +40,9 @@ Pane {
 
             NetworkSettingsView {
                 id: network
-                presenter: root.presenter.createNetworkSettings(network)
+                Component.onCompleted: {
+                    presenter.createNetworkSettings(network);
+                }
             }
         }
     }

@@ -13,30 +13,31 @@
 #include <QDebug>
 
 using namespace presentation;
+using namespace domain;
 
 class ConnectionSettingsPresenter::Impl
 {
 public:
-    domain::MavLinkCommunicator* communicator;
+    MavLinkCommunicator* communicator;
 };
 
 ConnectionSettingsPresenter::ConnectionSettingsPresenter(
-        domain::AbstractCommunicator* communicator, QObject* view):
+        AbstractCommunicator* communicator, QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
     // FIXME: typecasting
-    d->communicator = qobject_cast<domain::MavLinkCommunicator*>(communicator);
+    d->communicator = qobject_cast<MavLinkCommunicator*>(communicator);
     Q_ASSERT(d->communicator);
 
-    connect(d->communicator, &domain::MavLinkCommunicator::systemIdChanged,
+    connect(d->communicator, &MavLinkCommunicator::systemIdChanged,
             this, &ConnectionSettingsPresenter::updateSystemId);
-    connect(d->communicator, &domain::MavLinkCommunicator::componentIdChanged,
+    connect(d->communicator, &MavLinkCommunicator::componentIdChanged,
             this, &ConnectionSettingsPresenter::updateComponentId);
-    connect(d->communicator, &domain::MavLinkCommunicator::linksChanged,
+    connect(d->communicator, &MavLinkCommunicator::linksChanged,
             this, &ConnectionSettingsPresenter::updateLinks);
 
-    connect(d->communicator, &domain::MavLinkCommunicator::addLinkEnabledChanged,
+    connect(d->communicator, &MavLinkCommunicator::addLinkEnabledChanged,
             view, [this] (bool addEnabled) {
         this->setViewProperty(PROPERTY(isAddEnabled), addEnabled);
     });
@@ -65,8 +66,6 @@ void ConnectionSettingsPresenter::connectView(QObject* view)
     this->updateLinks();
     this->updateSerialDevices();
     this->updateSerialBaudRates();
-
-    BasePresenter::connectView(view);
 }
 
 void ConnectionSettingsPresenter::updateSystemId(uint8_t systemId)
@@ -83,7 +82,7 @@ void ConnectionSettingsPresenter::updateLinks()
 {
     QList<QObject*> links;
 
-    for (domain::AbstractLink* link: d->communicator->links())
+    for (AbstractLink* link: d->communicator->links())
         links.append(link);
 
     this->setViewProperty(PROPERTY(links), QVariant::fromValue(links));
@@ -121,42 +120,40 @@ void ConnectionSettingsPresenter::onComponentIdRequested(int componentId)
 
 void ConnectionSettingsPresenter::onRequestNewUdp()
 {
-    domain::SettingsProvider::beginGroup(domain::connection_settings::group);
+    SettingsProvider::beginGroup(connection_settings::group);
 
-    auto link = new domain::UdpLink(
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::hostPort).toInt(),
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::address).toString(),
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::port).toInt(),
-                    d->communicator);
+    auto link = new UdpLink(SettingsProvider::value(
+                                connection_settings::hostPort).toInt(),
+                            SettingsProvider::value(
+                                connection_settings::address).toString(),
+                            SettingsProvider::value(
+                                connection_settings::port).toInt(),
+                            d->communicator);
     link->setObjectName(tr("UDP"));
 
-    domain::SettingsProvider::endGroup();
+    SettingsProvider::endGroup();
 
     d->communicator->addLink(link);
 }
 
 void ConnectionSettingsPresenter::onRequestNewSerial()
 {
-    domain::SettingsProvider::beginGroup(domain::connection_settings::group);
+    SettingsProvider::beginGroup(connection_settings::group);
 
-    auto link = new domain::SerialLink(
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::serialDevice).toString(),
-                    domain::SettingsProvider::value(
-                        domain::connection_settings::baudRate).toInt(),
-                    d->communicator);
+    auto link = new SerialLink(SettingsProvider::value(
+                                   connection_settings::serialDevice).toString(),
+                               SettingsProvider::value(
+                                   connection_settings::baudRate).toInt(),
+                               d->communicator);
     link->setObjectName(tr("Serial"));
 
-    domain::SettingsProvider::endGroup();
+    SettingsProvider::endGroup();
 
     d->communicator->addLink(link);
 }
 
 void ConnectionSettingsPresenter::onRequestRemoveLink(QObject* link)
 {
-    d->communicator->removeLink(qobject_cast<domain::AbstractLink*>(link));
+    d->communicator->removeLink(qobject_cast<AbstractLink*>(link));
     delete link;
 }
