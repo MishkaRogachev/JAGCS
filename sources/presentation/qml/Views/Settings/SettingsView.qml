@@ -10,14 +10,29 @@ Pane {
 
     property QtObject presenter: factory.createSettingsPresenter(root)
 
+    signal makeDefaults()
+
     RowLayout {
         anchors.fill: parent
 
-        ButtonBar {
-            id: bar
-            anchors.top: parent.top
-            model: [ qsTr("User interface"), qsTr("Connection"),
-                     qsTr("Video"), qsTr("Network settings") ]
+        ColumnLayout {
+
+            ButtonBar {
+                id: bar
+                anchors.top: parent.top
+                model: [ qsTr("User interface"), qsTr("Connection"),
+                    qsTr("Video"), qsTr("Network settings") ]
+            }
+
+            Item {
+                Layout.fillHeight: true
+            }
+
+            Button {
+                text: qsTr("Make defaults")
+                Layout.fillWidth: true
+                onClicked: makeDefaults()
+            }
         }
 
         StackLayout {

@@ -21,6 +21,9 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onMakeDefaults();
+
     private:
         class Impl;
         Impl* const d;

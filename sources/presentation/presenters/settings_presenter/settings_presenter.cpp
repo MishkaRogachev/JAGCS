@@ -3,6 +3,8 @@
 // Internal
 #include "domain_entry.h"
 
+#include "settings_provider.h"
+
 #include "connection_settings_presenter.h"
 #include "video_settings_presenter.h"
 #include "network_settings_presenter.h"
@@ -37,4 +39,13 @@ void SettingsPresenter::connectView(QObject* view)
     d->connections->setView(view->findChild<QObject*>(NAME(connections)));
     d->video->setView(view->findChild<QObject*>(NAME(video)));
     d->network->setView(view->findChild<QObject*>(NAME(network)));
+
+    connect(view, SIGNAL(makeDefaults()), this, SLOT(onMakeDefaults()));
+}
+
+void SettingsPresenter::onMakeDefaults()
+{
+    domain::SettingsProvider::makeDefaults();
+
+    d->network->updateProxy();
 }

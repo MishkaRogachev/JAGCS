@@ -13,12 +13,13 @@ namespace presentation
         explicit NetworkSettingsPresenter(QObject* view);
         ~NetworkSettingsPresenter() override;
 
+    public slots:
+        void updateProxy();
+
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void updateProxy();
-
         void onApply();
         void onRestore();
 

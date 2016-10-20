@@ -102,5 +102,7 @@ void NetworkSettingsPresenter::updateProxy()
     SettingsProvider::endGroup();
 
     QNetworkProxy::setApplicationProxy(proxy);
+
+    this->onRestore();
 }
 
