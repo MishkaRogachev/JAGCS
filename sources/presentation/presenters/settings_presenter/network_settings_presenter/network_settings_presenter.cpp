@@ -42,8 +42,8 @@ void NetworkSettingsPresenter::connectView(QObject* view)
     connect(view, SIGNAL(apply()), this, SLOT(onApply()));
     connect(view, SIGNAL(restore()), this, SLOT(onRestore()));
 
-    this->setViewProperty(PROPERTY(typeModel),
-                          QVariant::fromValue(d->typeModelMap.values()));
+    QStringList typeModel = d->typeModelMap.values();
+    this->setViewProperty(PROPERTY(typeModel), typeModel);
 
     this->onRestore();
 }

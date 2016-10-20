@@ -13,7 +13,7 @@ ColumnLayout {
     property alias user: userItem.text
     property alias password: passwordItem.text
 
-    property var typeModel
+    property alias typeModel: typeItem.model
 
     signal apply()
     signal restore()
