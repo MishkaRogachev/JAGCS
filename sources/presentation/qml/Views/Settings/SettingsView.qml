@@ -24,7 +24,7 @@ Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
-            GuiSettingsView { id: ui}
+            GuiSettingsView { id: ui }
 
             ConnectionSettingsView {
                 id: connection
@@ -35,7 +35,9 @@ Pane {
 
             VideoSettingsView {
                 id: video
-                presenter: root.presenter.createVideoSettings(video)
+                Component.onCompleted: {
+                    presenter.createVideoSettings(video);
+                }
             }
 
             NetworkSettingsView {

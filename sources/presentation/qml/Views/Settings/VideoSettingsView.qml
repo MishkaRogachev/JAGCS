@@ -7,7 +7,7 @@ import "qrc:/Martial"
 Frame {
     id: root
 
-    property QtObject presenter
+    property var sourcesModel
 
     ColumnLayout{
         anchors.fill: parent
@@ -21,9 +21,8 @@ Frame {
             }
 
             ComboBox {
-                id: typeItem
                 Layout.fillWidth: true
-                model: presenter.sources
+                model: sourcesModel
             }
         }
 

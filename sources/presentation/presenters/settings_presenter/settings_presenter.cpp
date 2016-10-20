@@ -37,12 +37,14 @@ QObject* SettingsPresenter::createConnectionSettings(QObject* view)
 
 QObject* SettingsPresenter::createVideoSettings(QObject* view)
 {
-    return new VideoSettingsPresenter(view);
+    auto presenter = new VideoSettingsPresenter(this);
+    presenter->setView(view);
+    return presenter;
 }
 
 QObject* SettingsPresenter::createNetworkSettings(QObject* view)
 {
-    auto presenter = new NetworkSettingsPresenter(view);
+    auto presenter = new NetworkSettingsPresenter(this);
     presenter->setView(view);
     return presenter;
 }

@@ -15,17 +15,24 @@ public:
 VideoSettingsPresenter::VideoSettingsPresenter(QObject* view):
     BasePresenter(view),
     d(new Impl())
-{
-    this->updateSources();
-}
+{}
 
 VideoSettingsPresenter::~VideoSettingsPresenter()
 {
     delete d;
 }
 
-QStringList VideoSettingsPresenter::sources() const
+void VideoSettingsPresenter::connectView(QObject* view)
 {
+    Q_UNUSED(view)
+
+    this->updateSources();
+}
+
+void VideoSettingsPresenter::updateSources()
+{
+    d->cameras = QCameraInfo::availableCameras();
+
     QStringList sourcesList;
 
     sourcesList.append(tr("none"));
@@ -33,13 +40,5 @@ QStringList VideoSettingsPresenter::sources() const
     for (const QCameraInfo& info: d->cameras)
         sourcesList.append(info.deviceName());
 
-    return sourcesList;
-}
-
-void VideoSettingsPresenter::updateSources()
-{
-    if (d->cameras == QCameraInfo::availableCameras()) return;
-    d->cameras = QCameraInfo::availableCameras();
-
-    emit sourcesChanged(this->sources());
+    this->setViewProperty(PROPERTY(sourcesModel), sourcesList);
 }

@@ -25,7 +25,6 @@ namespace presentation
     private:
         class Impl;
         Impl* const d;
-        Q_DISABLE_COPY(NetworkSettingsPresenter)
     };
 }
 

@@ -9,11 +9,12 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(QStringList sources READ sources NOTIFY sourcesChanged)
-
     public:
         explicit VideoSettingsPresenter(QObject* view);
         ~VideoSettingsPresenter() override;
+
+    protected:
+        void connectView(QObject* view) override;
 
         QStringList sources() const;
 
@@ -26,7 +27,6 @@ namespace presentation
     private:
         class Impl;
         Impl* const d;
-        Q_DISABLE_COPY(VideoSettingsPresenter)
     };
 }
 
