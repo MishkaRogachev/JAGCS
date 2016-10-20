@@ -38,5 +38,7 @@ QObject* PresentersFactory::createFlightPresenter(QObject* parent)
 
 QObject* PresentersFactory::createSettingsPresenter(QObject* parent)
 {
-     return new SettingsPresenter(m_entry, parent);
+     SettingsPresenter* presenter = new SettingsPresenter(m_entry, parent);
+     presenter->setView(parent);
+     return presenter;
 }

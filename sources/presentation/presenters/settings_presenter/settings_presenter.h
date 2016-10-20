@@ -18,14 +18,12 @@ namespace presentation
         SettingsPresenter(domain::DomainEntry* entry, QObject* view);
         ~SettingsPresenter() override;
 
-        Q_INVOKABLE QObject* createConnectionSettings(QObject* view);
-        Q_INVOKABLE QObject* createVideoSettings(QObject* view);
-        Q_INVOKABLE QObject* createNetworkSettings(QObject* view);
+    protected:
+        void connectView(QObject* view) override;
 
     private:
         class Impl;
         Impl* const d;
-        Q_DISABLE_COPY(SettingsPresenter)
     };
 }
 

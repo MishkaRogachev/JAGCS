@@ -2,6 +2,7 @@
 #define BASE_PRESENTER_H
 
 #define PROPERTY(x) # x
+#define NAME(x) QString(PROPERTY(x))
 
 #include <QObject>
 

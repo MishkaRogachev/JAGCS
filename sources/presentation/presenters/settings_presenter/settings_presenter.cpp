@@ -12,14 +12,19 @@ using namespace presentation;
 class SettingsPresenter::Impl
 {
 public:
-    domain::DomainEntry* entry;
+    ConnectionSettingsPresenter* connections;
+    VideoSettingsPresenter* video;
+    NetworkSettingsPresenter* network;
 };
 
 SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* view):
     BasePresenter(view),
     d(new Impl())
 {
-    d->entry = entry;
+    d->connections = new ConnectionSettingsPresenter(entry->communicator(),
+                                                     this);
+    d->video = new VideoSettingsPresenter(this);
+    d->network = new NetworkSettingsPresenter(this);
 }
 
 SettingsPresenter::~SettingsPresenter()
@@ -27,24 +32,9 @@ SettingsPresenter::~SettingsPresenter()
     delete d;
 }
 
-QObject* SettingsPresenter::createConnectionSettings(QObject* view)
+void SettingsPresenter::connectView(QObject* view)
 {
-    auto presenter = new ConnectionSettingsPresenter(d->entry->communicator(),
-                                                     this);
-    presenter->setView(view);
-    return presenter;
-}
-
-QObject* SettingsPresenter::createVideoSettings(QObject* view)
-{
-    auto presenter = new VideoSettingsPresenter(this);
-    presenter->setView(view);
-    return presenter;
-}
-
-QObject* SettingsPresenter::createNetworkSettings(QObject* view)
-{
-    auto presenter = new NetworkSettingsPresenter(this);
-    presenter->setView(view);
-    return presenter;
+    d->connections->setView(view->findChild<QObject*>(NAME(connections)));
+    d->video->setView(view->findChild<QObject*>(NAME(video)));
+    d->network->setView(view->findChild<QObject*>(NAME(network)));
 }

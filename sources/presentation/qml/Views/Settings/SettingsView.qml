@@ -24,28 +24,10 @@ Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
-            GuiSettingsView { id: ui }
-
-            ConnectionSettingsView {
-                id: connection
-                Component.onCompleted: {
-                    presenter.createConnectionSettings(connection);
-                }
-            }
-
-            VideoSettingsView {
-                id: video
-                Component.onCompleted: {
-                    presenter.createVideoSettings(video);
-                }
-            }
-
-            NetworkSettingsView {
-                id: network
-                Component.onCompleted: {
-                    presenter.createNetworkSettings(network);
-                }
-            }
+            GuiSettingsView { objectName: "ui" }
+            ConnectionSettingsView { objectName: "connections" }
+            VideoSettingsView { objectName: "video" }
+            NetworkSettingsView { objectName: "network" }
         }
     }
 }

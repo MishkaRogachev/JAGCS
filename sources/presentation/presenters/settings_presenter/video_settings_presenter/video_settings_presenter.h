@@ -16,13 +16,8 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
-        QStringList sources() const;
-
     public slots:
         void updateSources();
-
-    signals:
-        void sourcesChanged(QStringList sources);
 
     private:
         class Impl;
