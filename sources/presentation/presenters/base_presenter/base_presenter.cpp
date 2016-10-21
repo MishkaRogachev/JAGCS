@@ -8,7 +8,7 @@ using namespace presentation;
 
 BasePresenter::BasePresenter(QObject* parent):
     QObject(parent),
-    m_view(parent)
+    m_view(nullptr)
 {}
 
 QObject* BasePresenter::view() const

@@ -7,8 +7,8 @@ import "qrc:/Martial"
 ToolBar {
     id: root
 
-    property QtObject presenter: factory.createStatusPresenter(root)
-
+    signal showSettings()
+    signal hideSettings()
     signal quit()
 
     RowLayout {
@@ -25,7 +25,7 @@ ToolBar {
             iconSource: "qrc:/icons/settings.svg"
             checkable: true
             anchors.verticalCenter: parent.verticalCenter
-            onCheckedChanged: settings.visible = checked
+            onCheckedChanged: checked ? showSettings() : hideSettings()
         }
 
         Button {

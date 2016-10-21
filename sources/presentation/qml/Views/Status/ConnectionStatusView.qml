@@ -7,8 +7,6 @@ import "qrc:/Martial"
 ColumnLayout {
     id: root
 
-    //property QtObject presenter: factory.createConnectionStatusPresenter(root)
-
     Label {
         text: "Rx:"
     }

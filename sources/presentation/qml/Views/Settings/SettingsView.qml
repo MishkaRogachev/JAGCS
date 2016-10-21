@@ -8,8 +8,6 @@ import "Connection"
 Pane {
     id: root
 
-    property QtObject presenter: factory.createSettingsPresenter(root)
-
     signal makeDefaults()
 
     RowLayout {

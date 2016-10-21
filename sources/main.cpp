@@ -6,7 +6,7 @@
 // Internal
 #include "domain_entry.h"
 
-#include "presenters_factory.h"
+#include "main_presenter.h"
 
 int main(int argc, char* argv[])
 {
@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine;
 
     domain::DomainEntry entry;
-    presentation::PresentersFactory factory(&entry);
-    engine.rootContext()->setContextProperty("factory", &factory);
+    presentation::MainPresenter presenter(&entry);
 
     engine.load(QUrl(QStringLiteral("qrc:/Views/MainView.qml")));
+    presenter.setView(engine.rootObjects().first());
 
     return app.exec();
 }

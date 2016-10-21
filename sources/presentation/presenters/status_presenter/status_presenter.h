@@ -10,7 +10,11 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit StatusPresenter(QObject* view);
+        explicit StatusPresenter(QObject* parent);
+
+    signals:
+        void showSettings();
+        void hideSettings();
 
     protected:
         void connectView(QObject* view) override;

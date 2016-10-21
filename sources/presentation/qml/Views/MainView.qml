@@ -16,16 +16,16 @@ ApplicationWindow {
     property Palette palette: Palette {}
 
     header: StatusView {
-        id: status
+        objectName: "status"
     }
 
     FlightView {
-        id: flight
+        objectName: "flight"
         anchors.fill: parent
     }
 
     SettingsView {
-        id: settings
+        objectName: "settings"
         anchors.fill: parent
         visible: false
     }

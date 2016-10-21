@@ -10,8 +10,6 @@ import "../Video"
 Pane {
     id: root
 
-    property QtObject presenter: factory.createFlightPresenter(root)
-
     property var vehicleNames
     property alias selectedVehicle: vehicleView.vehicle
 

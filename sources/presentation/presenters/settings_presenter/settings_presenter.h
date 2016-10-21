@@ -18,6 +18,10 @@ namespace presentation
         SettingsPresenter(domain::DomainEntry* entry, QObject* parent);
         ~SettingsPresenter() override;
 
+    public slots:
+        void show();
+        void hide();
+
     protected:
         void connectView(QObject* view) override;
 

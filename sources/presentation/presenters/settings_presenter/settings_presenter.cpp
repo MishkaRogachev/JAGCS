@@ -34,6 +34,17 @@ SettingsPresenter::~SettingsPresenter()
     delete d;
 }
 
+void SettingsPresenter::show()
+{
+    this->setViewProperty(PROPERTY(visible), true);
+}
+
+void SettingsPresenter::hide()
+{
+    // TODO: check unsaved changes
+    this->setViewProperty(PROPERTY(visible), false);
+}
+
 void SettingsPresenter::connectView(QObject* view)
 {
     d->connections->setView(view->findChild<QObject*>(NAME(connections)));
