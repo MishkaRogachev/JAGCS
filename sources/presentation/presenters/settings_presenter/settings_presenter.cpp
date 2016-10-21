@@ -19,8 +19,8 @@ public:
     NetworkSettingsPresenter* network;
 };
 
-SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* view):
-    BasePresenter(view),
+SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {
     d->connections = new ConnectionSettingsPresenter(entry->communicator(),

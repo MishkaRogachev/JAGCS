@@ -2,6 +2,7 @@
 
 // Qt
 #include <QMap>
+#include <QVariant>
 
 // Internal
 #include "vehicle_service.h"
@@ -38,25 +39,34 @@ FlightPresenter::~FlightPresenter()
     delete d;
 }
 
-QStringList FlightPresenter::vehicles() const
+void FlightPresenter::updateVehicles()
 {
-    return d->vehiclesAlias.values();
+    QStringList vehicleNames = d->vehiclesAlias.values();
+    this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
 }
 
-QObject* FlightPresenter::vehicleObject(int index) const
+void FlightPresenter::connectView(QObject* view)
 {
-    return d->vehicleService->vehicle(
-                d->vehiclesAlias.key(d->vehiclesAlias.values().at(index)));
+    connect(view, SIGNAL(vehicleSelected(QString)),
+            this, SLOT(onVehicleSelected(QString)));
 }
 
 void FlightPresenter::onVehicleAdded(uint8_t id)
 {
     d->vehiclesAlias[id] = tr("MAV %1").arg(id);
-    emit vehiclesChanged();
+    if (m_view) this->updateVehicles();
 }
 
 void FlightPresenter::onVehicleRemoved(uint8_t id)
 {
     d->vehiclesAlias.remove(id);
-    emit vehiclesChanged();
+    if (m_view) this->updateVehicles();
+}
+
+void FlightPresenter::onVehicleSelected(const QString& vehicleName)
+{
+    QObject* vehicle = d->vehicleService->vehicle(
+                           d->vehiclesAlias.key(vehicleName));
+    this->setViewProperty(PROPERTY(selectedVehicle),
+                          QVariant::fromValue(vehicle));
 }

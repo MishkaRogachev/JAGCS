@@ -22,8 +22,8 @@ public:
 };
 
 ConnectionSettingsPresenter::ConnectionSettingsPresenter(
-        AbstractCommunicator* communicator, QObject* view):
-    BasePresenter(view),
+        AbstractCommunicator* communicator, QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {
     // FIXME: typecasting
@@ -36,11 +36,6 @@ ConnectionSettingsPresenter::ConnectionSettingsPresenter(
             this, &ConnectionSettingsPresenter::updateComponentId);
     connect(d->communicator, &MavLinkCommunicator::linksChanged,
             this, &ConnectionSettingsPresenter::updateLinks);
-
-    connect(d->communicator, &MavLinkCommunicator::addLinkEnabledChanged,
-            view, [this] (bool addEnabled) {
-        this->setViewProperty(PROPERTY(isAddEnabled), addEnabled);
-    });
 }
 
 ConnectionSettingsPresenter::~ConnectionSettingsPresenter()
@@ -58,6 +53,10 @@ void ConnectionSettingsPresenter::connectView(QObject* view)
     connect(view, SIGNAL(requestNewSerial()), this, SLOT(onRequestNewSerial()));
     connect(view, SIGNAL(requestRemoveLink(QObject*)),
             this, SLOT(onRequestRemoveLink(QObject*)));
+    connect(d->communicator, &MavLinkCommunicator::addLinkEnabledChanged,
+            view, [this] (bool addEnabled) {
+        this->setViewProperty(PROPERTY(isAddEnabled), addEnabled);
+    });
 
     this->updateSystemId(d->communicator->systemId());
     this->updateComponentId(d->communicator->componentId());

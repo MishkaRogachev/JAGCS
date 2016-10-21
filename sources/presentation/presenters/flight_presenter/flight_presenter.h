@@ -14,22 +14,21 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(QStringList vehicles READ vehicles NOTIFY vehiclesChanged)
-
     public:
         FlightPresenter(domain::VehicleService* vehicleService, QObject* view);
         ~FlightPresenter() override;
 
-        QStringList vehicles() const;
+    public slots:
+        void updateVehicles();
 
-        Q_INVOKABLE QObject* vehicleObject(int index) const;
-
-    signals:
-        void vehiclesChanged();
+    protected:
+        void connectView(QObject* view) override;
 
     private slots:
         void onVehicleAdded(uint8_t id);
         void onVehicleRemoved(uint8_t id);
+
+        void onVehicleSelected(const QString& vehicleName);
 
     private:
         class Impl;

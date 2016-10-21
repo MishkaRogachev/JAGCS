@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        SettingsPresenter(domain::DomainEntry* entry, QObject* view);
+        SettingsPresenter(domain::DomainEntry* entry, QObject* parent);
         ~SettingsPresenter() override;
 
     protected:

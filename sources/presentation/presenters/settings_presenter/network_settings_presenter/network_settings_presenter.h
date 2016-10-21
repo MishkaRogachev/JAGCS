@@ -10,7 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit NetworkSettingsPresenter(QObject* view);
+        explicit NetworkSettingsPresenter(QObject* parent);
         ~NetworkSettingsPresenter() override;
 
     public slots:

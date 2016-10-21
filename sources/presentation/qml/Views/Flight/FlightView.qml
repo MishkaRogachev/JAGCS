@@ -12,6 +12,11 @@ Pane {
 
     property QtObject presenter: factory.createFlightPresenter(root)
 
+    property var vehicleNames
+    property alias selectedVehicle: vehicleView.vehicle
+
+    signal vehicleSelected(string name)
+
     RowLayout {
         anchors.fill: parent
         anchors.margins: 5
@@ -22,11 +27,9 @@ Pane {
             Layout.preferredWidth: 420
 
             ComboBox {
-                model: presenter.vehicles
+                model: vehicleNames
                 Layout.preferredWidth: parent.width
-                onCurrentIndexChanged: {
-                    vehicleView.vehicle = presenter.vehicleObject(currentIndex);
-                }
+                onCurrentTextChanged: vehicleSelected(currentText)
                 onCountChanged: console.log(count)
             }
 

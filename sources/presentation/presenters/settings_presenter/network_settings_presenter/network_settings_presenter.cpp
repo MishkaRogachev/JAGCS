@@ -18,8 +18,8 @@ public:
     QMap<QNetworkProxy::ProxyType, QString> typeModelMap;
 };
 
-NetworkSettingsPresenter::NetworkSettingsPresenter(QObject* view):
-    BasePresenter(view),
+NetworkSettingsPresenter::NetworkSettingsPresenter(QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {
     d->typeModelMap.insert(QNetworkProxy::NoProxy, tr("No Proxy"));
@@ -103,6 +103,6 @@ void NetworkSettingsPresenter::updateProxy()
 
     QNetworkProxy::setApplicationProxy(proxy);
 
-    this->onRestore();
+    if (m_view) this->onRestore();
 }
 

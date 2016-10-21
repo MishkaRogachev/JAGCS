@@ -16,7 +16,7 @@ namespace presentation
 
     public:
         ConnectionSettingsPresenter(domain::AbstractCommunicator* communicator,
-                                    QObject* view);
+                                    QObject* parent);
         ~ConnectionSettingsPresenter() override;
 
     protected:

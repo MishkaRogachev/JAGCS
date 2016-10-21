@@ -6,13 +6,9 @@
 
 using namespace presentation;
 
-BasePresenter::BasePresenter(QObject* view):
-    BasePresenter(view, view)
-{}
-
-BasePresenter::BasePresenter(QObject* view, QObject* parent):
+BasePresenter::BasePresenter(QObject* parent):
     QObject(parent),
-    m_view(view)
+    m_view(parent)
 {}
 
 QObject* BasePresenter::view() const

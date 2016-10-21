@@ -10,14 +10,14 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoSettingsPresenter(QObject* view);
+        explicit VideoSettingsPresenter(QObject* parent);
         ~VideoSettingsPresenter() override;
-
-    protected:
-        void connectView(QObject* view) override;
 
     public slots:
         void updateSources();
+
+    protected:
+        void connectView(QObject* view) override;
 
     private:
         class Impl;

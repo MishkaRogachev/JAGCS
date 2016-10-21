@@ -12,8 +12,8 @@ public:
     QList<QCameraInfo> cameras;
 };
 
-VideoSettingsPresenter::VideoSettingsPresenter(QObject* view):
-    BasePresenter(view),
+VideoSettingsPresenter::VideoSettingsPresenter(QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {}
 

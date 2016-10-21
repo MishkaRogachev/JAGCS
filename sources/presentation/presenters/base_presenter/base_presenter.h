@@ -13,8 +13,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit BasePresenter(QObject* view = nullptr);
-        BasePresenter(QObject* view, QObject* parent);
+        explicit BasePresenter(QObject* parent = nullptr);
 
         QObject* view() const;
 
