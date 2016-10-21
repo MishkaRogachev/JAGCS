@@ -30,7 +30,9 @@ QObject* PresentersFactory::createMapPresenter(QObject* parent)
 
 QObject* PresentersFactory::createStatusPresenter(QObject* parent)
 {
-    return new StatusPresenter(parent);
+    auto presenter = new StatusPresenter(parent);
+    presenter->setView(parent);
+    return presenter;
 }
 
 QObject* PresentersFactory::createFlightPresenter(QObject* parent)

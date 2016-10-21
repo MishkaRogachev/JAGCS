@@ -9,6 +9,8 @@ ToolBar {
 
     property QtObject presenter: factory.createStatusPresenter(root)
 
+    signal quit()
+
     RowLayout {
         anchors.fill: parent
 
@@ -30,7 +32,7 @@ ToolBar {
             // text: qsTr("Quit")
             iconSource: "qrc:/icons/quit.svg"
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: presenter.quit()
+            onClicked: quit()
         }
     }
 }

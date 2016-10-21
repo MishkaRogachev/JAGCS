@@ -9,7 +9,7 @@ StatusPresenter::StatusPresenter(QObject* view):
     BasePresenter(view)
 {}
 
-void StatusPresenter::quit()
+void StatusPresenter::connectView(QObject* view)
 {
-    qApp->exit();
+    connect(view, SIGNAL(quit()), qApp, SLOT(quit()));
 }

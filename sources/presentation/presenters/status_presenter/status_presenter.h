@@ -12,8 +12,8 @@ namespace presentation
     public:
         explicit StatusPresenter(QObject* view);
 
-    public slots:
-        void quit();
+    protected:
+        void connectView(QObject* view) override;
     };
 }
 
