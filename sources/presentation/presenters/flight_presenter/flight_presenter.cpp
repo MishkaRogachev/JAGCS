@@ -3,10 +3,13 @@
 // Qt
 #include <QMap>
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "vehicle_service.h"
 #include "vehicle.h"
+
+#include "video_presenter.h"
 
 using namespace presentation;
 
@@ -16,6 +19,8 @@ public:
     domain::VehicleService* vehicleService;
 
     QMap<uint8_t, QString> vehiclesAlias;
+
+    VideoPresenter* video;
 };
 
 FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
@@ -24,6 +29,8 @@ FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
     d(new Impl())
 {
     d->vehicleService = vehicleService;
+
+    d->video = new VideoPresenter(this);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &FlightPresenter::onVehicleAdded);
@@ -47,6 +54,8 @@ void FlightPresenter::updateVehicles()
 
 void FlightPresenter::connectView(QObject* view)
 {
+    d->video->setView(view->findChild<QObject*>(NAME(video)));
+
     connect(view, SIGNAL(vehicleSelected(QString)),
             this, SLOT(onVehicleSelected(QString)));
 }

@@ -7,7 +7,14 @@ import "qrc:/Martial"
 Frame {
     id: root
 
-    property var sourcesModel
+    property alias sourcesModel: sources.model
+
+    signal sourceSelected(string source)
+
+    function setSource(source) {
+        sources.currentIndex = sourcesModel.indexOf(source);
+    }
+
 
     ColumnLayout{
         anchors.fill: parent
@@ -21,8 +28,9 @@ Frame {
             }
 
             ComboBox {
+                id: sources
                 Layout.fillWidth: true
-                model: sourcesModel
+                onCurrentTextChanged: sourceSelected(currentText)
             }
         }
 

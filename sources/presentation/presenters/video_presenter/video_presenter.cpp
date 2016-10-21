@@ -3,6 +3,7 @@
 // Qt
 #include <QCamera>
 #include <QCameraInfo>
+#include <QDebug>
 
 // Internal
 #include "settings_provider.h"
@@ -28,8 +29,8 @@ public:
     }
 };
 
-VideoPresenter::VideoPresenter(QObject* view):
-    BasePresenter(view),
+VideoPresenter::VideoPresenter(QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {
     this->updateSource();
@@ -63,6 +64,6 @@ void VideoPresenter::updateSource()
 
 void VideoPresenter::connectView(QObject* view)
 {
-    view->setProperty(PROPERTY(videoSource), QVariant::fromValue(this));
-    this->updateSource();
+    view->setProperty(PROPERTY(videoSource), QVariant::fromValue(&d->provider));
+    d->updateCameraVideoSurface();
 }

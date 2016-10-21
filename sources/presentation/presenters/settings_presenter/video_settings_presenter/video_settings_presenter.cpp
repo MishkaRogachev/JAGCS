@@ -3,6 +3,11 @@
 // Qt
 #include <QCameraInfo>
 #include <QDebug>
+#include <QDebug>
+
+// Internal
+#include "settings_provider.h"
+#include "settings.h"
 
 using namespace presentation;
 
@@ -24,9 +29,17 @@ VideoSettingsPresenter::~VideoSettingsPresenter()
 
 void VideoSettingsPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
-
     this->updateSources();
+
+    connect(view, SIGNAL(sourceSelected(QString)),
+            this, SLOT(onSourceSelected(QString)));
+}
+
+void VideoSettingsPresenter::onSourceSelected(const QString& source)
+{
+    domain::SettingsProvider::beginGroup(domain::video_settings::group);
+    domain::SettingsProvider::setValue(domain::video_settings::device, source);
+    domain::SettingsProvider::endGroup();
 }
 
 void VideoSettingsPresenter::updateSources()
@@ -41,4 +54,17 @@ void VideoSettingsPresenter::updateSources()
         sourcesList.append(info.deviceName());
 
     this->setViewProperty(PROPERTY(sourcesModel), sourcesList);
+
+    this->updateCurrentSource();
+}
+
+void VideoSettingsPresenter::updateCurrentSource()
+{
+    domain::SettingsProvider::beginGroup(domain::video_settings::group);
+
+    this->invokeViewMethod(PROPERTY(setSource),
+                           domain::SettingsProvider::value(
+                               domain::video_settings::device));
+
+    domain::SettingsProvider::endGroup();
 }

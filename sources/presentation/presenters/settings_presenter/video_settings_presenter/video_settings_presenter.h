@@ -15,9 +15,13 @@ namespace presentation
 
     public slots:
         void updateSources();
+        void updateCurrentSource();
 
     protected:
         void connectView(QObject* view) override;
+
+    private slots:
+        void onSourceSelected(const QString& source);
 
     private:
         class Impl;

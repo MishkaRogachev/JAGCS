@@ -23,6 +23,7 @@ namespace domain
         static void endGroup();
 
         static void makeDefaults();
+        static void sync();
 
     private:
         SettingsProvider();

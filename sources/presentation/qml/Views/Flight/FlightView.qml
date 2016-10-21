@@ -73,7 +73,7 @@ Pane {
         id: mapComponent
 
         MapView {
-            id: map
+            objectName: "map"
         }
     }
 
@@ -81,7 +81,7 @@ Pane {
         id: videoComponent
 
         VideoView {
-            id: video
+            objectName: "video"
         }
     }
 }

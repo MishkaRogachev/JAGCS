@@ -75,3 +75,8 @@ void SettingsProvider::makeDefaults()
     setValue(connection_settings::port, 14551);
     endGroup();
 }
+
+void SettingsProvider::sync()
+{
+    instance()->d->settings.sync();
+}

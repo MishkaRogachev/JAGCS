@@ -74,7 +74,7 @@ void NetworkSettingsPresenter::onRestore()
 
     QString type = d->typeModelMap.value(static_cast<QNetworkProxy::ProxyType>(
                         SettingsProvider::value(proxy_settings::type).toInt()));
-    this->invokeViewMethod("setProxyType", type);
+    this->invokeViewMethod(PROPERTY(setProxyType), type);
     this->setViewProperty(proxy_settings::hostName,
                           SettingsProvider::value(proxy_settings::hostName));
     this->setViewProperty(proxy_settings::port,

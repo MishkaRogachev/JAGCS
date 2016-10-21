@@ -10,7 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoPresenter(QObject* view);
+        explicit VideoPresenter(QObject* parent);
         ~VideoPresenter() override;
 
     public slots:
