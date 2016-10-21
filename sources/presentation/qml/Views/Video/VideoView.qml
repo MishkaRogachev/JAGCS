@@ -6,11 +6,12 @@ Rectangle {
 
     property QtObject presenter: factory.createVideoPresenter(root)
 
+    property alias videoSource: videoOutput.source
+
     color: "black"
 
     VideoOutput {
         id: videoOutput
-        source: presenter
         anchors.fill: parent
     }
 }

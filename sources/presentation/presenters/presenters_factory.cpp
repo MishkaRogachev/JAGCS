@@ -18,7 +18,9 @@ PresentersFactory::PresentersFactory(domain::DomainEntry* entry, QObject* parent
 
 QObject* PresentersFactory::createVideoPresenter(QObject* parent)
 {
-    return new VideoPresenter(parent);
+    auto presenter = new VideoPresenter(parent);
+    presenter->setView(parent);
+    return presenter;
 }
 
 QObject* PresentersFactory::createMapPresenter(QObject* parent)
@@ -33,12 +35,14 @@ QObject* PresentersFactory::createStatusPresenter(QObject* parent)
 
 QObject* PresentersFactory::createFlightPresenter(QObject* parent)
 {
-    return new FlightPresenter(m_entry->vehicleService(), parent);
+    auto presenter = new FlightPresenter(m_entry->vehicleService(), parent);
+    presenter->setView(parent);
+    return presenter;
 }
 
 QObject* PresentersFactory::createSettingsPresenter(QObject* parent)
 {
-     SettingsPresenter* presenter = new SettingsPresenter(m_entry, parent);
+     auto presenter = new SettingsPresenter(m_entry, parent);
      presenter->setView(parent);
      return presenter;
 }

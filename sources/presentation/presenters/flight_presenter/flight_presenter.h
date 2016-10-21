@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        FlightPresenter(domain::VehicleService* vehicleService, QObject* view);
+        FlightPresenter(domain::VehicleService* vehicleService, QObject* object);
         ~FlightPresenter() override;
 
     public slots:

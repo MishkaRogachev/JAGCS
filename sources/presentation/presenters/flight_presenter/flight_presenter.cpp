@@ -19,8 +19,8 @@ public:
 };
 
 FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
-                                 QObject* view):
-    BasePresenter(view),
+                                 QObject* object):
+    BasePresenter(object),
     d(new Impl())
 {
     d->vehicleService = vehicleService;

@@ -8,19 +8,22 @@
 #include "settings_provider.h"
 #include "settings.h"
 
+#include "video_provider.h"
+
 using namespace presentation;
 
 class VideoPresenter::Impl
 {
 public:
     QCamera* camera;
-    QAbstractVideoSurface* videoSurface;
+
+    VideoProvider provider;
 
     void updateCameraVideoSurface()
     {
-        if (!camera || !videoSurface) return;
+        if (!camera || !provider.videoSurface()) return;
 
-        camera->setViewfinder(videoSurface);
+        camera->setViewfinder(provider.videoSurface());
         camera->start();
     }
 };
@@ -35,19 +38,6 @@ VideoPresenter::VideoPresenter(QObject* view):
 VideoPresenter::~VideoPresenter()
 {
     delete d;
-}
-
-QAbstractVideoSurface* VideoPresenter::videoSurface() const
-{
-    return d->videoSurface;
-}
-
-void VideoPresenter::setVideoSurface(QAbstractVideoSurface* videoSurface)
-{
-    if (d->videoSurface == videoSurface) return;
-    d->videoSurface = videoSurface;
-
-    d->updateCameraVideoSurface();
 }
 
 void VideoPresenter::updateSource()
@@ -69,4 +59,10 @@ void VideoPresenter::updateSource()
     }
 
     domain::SettingsProvider::endGroup();
+}
+
+void VideoPresenter::connectView(QObject* view)
+{
+    view->setProperty(PROPERTY(videoSource), QVariant::fromValue(this));
+    this->updateSource();
 }
