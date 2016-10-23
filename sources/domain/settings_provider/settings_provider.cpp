@@ -13,12 +13,34 @@ class SettingsProvider::Impl
 {
 public:
     QSettings settings;
+
+    void makeDefaults()
+    {
+        settings.clear();
+
+        settings.beginGroup(gui_settings::group);
+        settings.setValue(gui_settings::toolbarWidth, 320);
+        settings.endGroup();
+
+        settings.beginGroup(proxy_settings::group);
+        settings.setValue(proxy_settings::type, 0);
+        settings.endGroup();
+
+        settings.beginGroup(connection_settings::group);
+        settings.setValue(connection_settings::systemId, 255);
+        settings.setValue(connection_settings::componentId, 255);
+        settings.setValue(connection_settings::baudRate, 57600);
+        settings.setValue(connection_settings::hostPort, 14550);
+        settings.setValue(connection_settings::address, "127.0.0.1");
+        settings.setValue(connection_settings::port, 14551);
+        settings.endGroup();
+    }
 };
 
 SettingsProvider::SettingsProvider():
     d(new Impl())
 {
-    if (d->settings.allKeys().isEmpty()) this->makeDefaults();
+    if (d->settings.allKeys().isEmpty()) d->makeDefaults();
 }
 
 SettingsProvider::~SettingsProvider()
@@ -56,24 +78,7 @@ void SettingsProvider::endGroup()
 
 void SettingsProvider::makeDefaults()
 {
-    instance()->d->settings.clear();
-
-    beginGroup(gui_settings::group);
-    setValue(gui_settings::toolbarWidth, 320);
-    endGroup();
-
-    beginGroup(proxy_settings::group);
-    setValue(proxy_settings::type, 0);
-    endGroup();
-
-    beginGroup(connection_settings::group);
-    setValue(connection_settings::systemId, 255);
-    setValue(connection_settings::componentId, 255);
-    setValue(connection_settings::baudRate, 57600);
-    setValue(connection_settings::hostPort, 14550);
-    setValue(connection_settings::address, "127.0.0.1");
-    setValue(connection_settings::port, 14551);
-    endGroup();
+    instance()->d->makeDefaults();
 }
 
 void SettingsProvider::sync()
