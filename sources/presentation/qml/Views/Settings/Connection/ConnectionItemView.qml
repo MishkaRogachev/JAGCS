@@ -9,25 +9,21 @@ Frame {
 
     property QtObject link
 
-    RowLayout {
+    ColumnLayout {
         width: parent.width
+        spacing: 16
 
-        GridLayout {
-            columns: 2
+        Label {
+            text: link ? link.objectName : qsTr("None")
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+        }
 
-            Label {
-                text: qsTr("Name")
-                Layout.fillWidth: true
-            }
-
-            TextField {
-                text: link ? link.objectName : qsTr("None")
-                onEditingFinished: link.objectName = text
-                Layout.fillWidth: true
-            }
+        RowLayout {
 
             Label {
                 text: qsTr("Serial device")
+                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
                 visible: serialDevice.visible
             }
@@ -45,6 +41,7 @@ Frame {
 
             Label {
                 text: qsTr("Baud rate")
+                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
                 visible: baudRates.visible
             }
@@ -62,6 +59,7 @@ Frame {
 
             Label {
                 text: qsTr("Recieve port")
+                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
                 visible: rxPort.visible
             }
@@ -79,6 +77,7 @@ Frame {
 
             Label {
                 text: qsTr("Transmit address")
+                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
                 visible: address.visible
             }
@@ -94,6 +93,7 @@ Frame {
 
             Label {
                 text: qsTr("Transmit port")
+                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
                 visible: txPort.visible
             }
@@ -110,8 +110,23 @@ Frame {
             }
         }
 
-        ColumnLayout {
-            anchors.verticalCenter: parent.verticalCenter
+        RowLayout {
+
+            Label {
+                text: qsTr("Rx: ") + (link ? link.bytesReceivedSec : "")
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+            }
+
+            Label {
+                text: qsTr("Tx: ") + (link ? link.bytesSentSec : "")
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+            }
+        }
+
+        RowLayout {
+            anchors.right: parent.right
 
             Button {
                 iconSource: link && link.isUp ?
