@@ -56,7 +56,7 @@ void SerialLink::down()
     emit upChanged(false);
 }
 
-void SerialLink::sendData(const QByteArray& data)
+void SerialLink::sendDataImpl(const QByteArray& data)
 {
     m_port->write(data.data(), data.size());
 }
@@ -79,5 +79,5 @@ void SerialLink::setBaudRate(qint32 baudRate)
 
 void SerialLink::readSerialData()
 {
-    emit dataReceived(m_port->readAll());
+    this->receiveData(m_port->readAll());
 }

@@ -27,7 +27,7 @@ namespace domain
         void up() override;
         void down() override;
 
-        void sendData(const QByteArray& data) override;
+        void sendDataImpl(const QByteArray& data) override;
 
         void setPortName(QString portName);
         void setBaudRate(qint32 baudRate);

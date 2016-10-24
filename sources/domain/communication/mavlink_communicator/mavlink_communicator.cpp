@@ -39,7 +39,7 @@ public:
 
     QMap<AbstractLink*, uint8_t> linkChannels;
     QList<uint8_t> avalibleChannels;
-    AbstractLink* lastReceivedLink = nullptr;
+    AbstractLink* receivedLink = nullptr;
 };
 
 MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
@@ -81,9 +81,9 @@ uint8_t MavLinkCommunicator::componentId() const
     return d->componentId;
 }
 
-AbstractLink* MavLinkCommunicator::lastReceivedLink() const
+AbstractLink* MavLinkCommunicator::receivedLink() const
 {
-    return d->lastReceivedLink;
+    return d->receivedLink;
 }
 
 uint8_t MavLinkCommunicator::systemId() const
@@ -111,7 +111,7 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     d->avalibleChannels.prepend(channel);
     mavlink_reset_channel_status(channel);
 
-    if (link == d->lastReceivedLink) d->lastReceivedLink = nullptr;
+    if (link == d->receivedLink) d->receivedLink = nullptr;
 
     if (!d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(true);
 
@@ -163,7 +163,7 @@ void MavLinkCommunicator::sendMessage(mavlink_message_t& message,
 
 void MavLinkCommunicator::sendMessageLastReceivedLink(mavlink_message_t& message)
 {
-    this->sendMessage(message, d->lastReceivedLink);
+    this->sendMessage(message, d->receivedLink);
 }
 
 void MavLinkCommunicator::sendMessageAllLinks(mavlink_message_t& message)
@@ -177,10 +177,10 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     mavlink_message_t message;
     mavlink_status_t status;
 
-    d->lastReceivedLink = qobject_cast<AbstractLink*>(this->sender());
-    if (!d->lastReceivedLink) return;
+    d->receivedLink = qobject_cast<AbstractLink*>(this->sender());
+    if (!d->receivedLink) return;
 
-    uint8_t channel = d->linkChannels.value(d->lastReceivedLink);
+    uint8_t channel = d->linkChannels.value(d->receivedLink);
     for (int pos = 0; pos < data.length(); ++pos)
     {
         if (!mavlink_parse_char(channel, (uint8_t)data[pos],
@@ -194,5 +194,7 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         emit messageReceived(message);
     }
 
-    // TODO: Link status
+    qDebug() << status.msg_received << status.packet_rx_success_count << status.packet_rx_drop_count;
+    //d->receivedLink->setRxPacketsCount(status.packet_rx_success_count);
+    //d->receivedLink->setRxPacketDropsCount(status.packet_rx_drop_count);
 }

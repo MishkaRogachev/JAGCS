@@ -22,7 +22,7 @@ namespace domain
         uint8_t systemId() const;
         uint8_t componentId() const;
 
-        AbstractLink* lastReceivedLink() const;
+        AbstractLink* receivedLink() const;
 
     public slots:
         void addLink(AbstractLink* link) override;

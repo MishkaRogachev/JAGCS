@@ -29,7 +29,7 @@ namespace domain
         void up() override;
         void down() override;
 
-        void sendData(const QByteArray& data) override;
+        void sendDataImpl(const QByteArray& data) override;
 
         void setRxPort(int port);
         void setAddress(const QString& address);

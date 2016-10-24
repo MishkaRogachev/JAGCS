@@ -62,7 +62,7 @@ void UdpLink::down()
     emit upChanged(false);
 }
 
-void UdpLink::sendData(const QByteArray& data)
+void UdpLink::sendDataImpl(const QByteArray& data)
 {
     m_socket->writeDatagram(data, QHostAddress(m_address), m_txPort);
 }
@@ -106,6 +106,6 @@ void UdpLink::readPendingDatagrams()
         datagram.resize(m_socket->pendingDatagramSize());
         m_socket->readDatagram(datagram.data(), datagram.size());
 
-        emit dataReceived(datagram);
+        this->receiveData(datagram);
     }
 }
