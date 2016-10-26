@@ -23,7 +23,7 @@ Frame {
 
             Label {
                 text: qsTr("Serial device")
-                horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 visible: serialDevice.visible
             }
@@ -31,7 +31,6 @@ Frame {
             ComboBox {
                 id: serialDevice
                 visible: link ? 'portName' in link : false
-                Layout.fillWidth: true
                 model: serialDevices
                 currentIndex: link && 'portName' in link ?
                                   model.indexOf(link.portName) : 0
@@ -41,7 +40,7 @@ Frame {
 
             Label {
                 text: qsTr("Baud rate")
-                horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 visible: baudRates.visible
             }
@@ -49,7 +48,6 @@ Frame {
             ComboBox {
                 id: baudRates
                 visible: link ? 'baudRate' in link : false
-                Layout.fillWidth: true
                 model: serialBaudRates
                 currentIndex: link && 'baudRate' in link ?
                                   model.indexOf(link.baudRate) : 0
@@ -59,7 +57,7 @@ Frame {
 
             Label {
                 text: qsTr("Recieve port")
-                horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 visible: rxPort.visible
             }
@@ -67,7 +65,6 @@ Frame {
             SpinBox {
                 id: rxPort
                 visible: link ? 'rxPort' in link : false
-                Layout.fillWidth: true
                 editable: true
                 from: 0
                 to: 99999
@@ -77,7 +74,7 @@ Frame {
 
             Label {
                 text: qsTr("Transmit address")
-                horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 visible: address.visible
             }
@@ -85,7 +82,6 @@ Frame {
             TextField {
                 id: address
                 visible: link ? 'address' in link : false
-                Layout.fillWidth: true
                 placeholderText: qsTr("Enter address")
                 text: link && 'address' in link ? link.address : ""
                 onTextChanged: if (link) link.setAddress(text)
@@ -93,7 +89,7 @@ Frame {
 
             Label {
                 text: qsTr("Transmit port")
-                horizontalAlignment: Text.AlignRight
+                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 visible: txPort.visible
             }
@@ -101,7 +97,6 @@ Frame {
             SpinBox {
                 id: txPort
                 visible: link ? 'txPort' in link : false
-                Layout.fillWidth: true
                 editable: true
                 from: 0
                 to: 99999
@@ -115,28 +110,32 @@ Frame {
             Label {
                 text: qsTr("Rx: ") + (link ? link.bytesReceivedSec : "")
                 horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
+                Layout.preferredWidth: 86
             }
 
             Label {
                 text: qsTr("Tx: ") + (link ? link.bytesSentSec : "")
                 horizontalAlignment: Text.AlignHCenter
+                Layout.preferredWidth: 86
+            }
+
+            Item {
                 Layout.fillWidth: true
             }
-        }
-
-        RowLayout {
-            anchors.right: parent.right
 
             Button {
+                text: link && link.isUp ?
+                          qsTr("Disconnect"):
+                          qsTr("Connect")
                 iconSource: link && link.isUp ?
-                                "qrc:/icons/connect.svg" :
-                                "qrc:/icons/disconnect.svg"
+                                "qrc:/icons/disconnect.svg" :
+                                "qrc:/icons/connect.svg"
                 onClicked: link && link.isUp ? link.down() : link.up()
                 checked: link && link.isUp
             }
 
             Button {
+                text: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
                 enabled: link
                 onClicked: requestRemoveLink(link)
