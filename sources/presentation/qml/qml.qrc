@@ -11,6 +11,7 @@
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/ConnectionStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
+        <file>Views/Map/FlightMapView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Flight/FlightView.qml</file>
         <file>Views/Flight/VehicleView.qml</file>

@@ -1,6 +1,6 @@
 import QtQuick 2.6
-import QtLocation 5.7
-import QtPositioning 5.5
+import QtLocation 5.6
+import QtPositioning 5.6
 
 Map {
     id: root

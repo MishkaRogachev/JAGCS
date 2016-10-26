@@ -72,7 +72,7 @@ Pane {
     Component {
         id: mapComponent
 
-        MapView {
+        FlightMapView {
             objectName: "map"
         }
     }

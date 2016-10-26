@@ -10,6 +10,7 @@
 #include "vehicle.h"
 
 #include "video_presenter.h"
+#include "flight_map_presenter.h"
 
 using namespace presentation;
 
@@ -21,6 +22,7 @@ public:
     QMap<uint8_t, QString> vehiclesAlias;
 
     VideoPresenter* video;
+    FlightMapPresenter* map;
 };
 
 FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
@@ -31,6 +33,7 @@ FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
     d->vehicleService = vehicleService;
 
     d->video = new VideoPresenter(this);
+    d->map = new FlightMapPresenter(this);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &FlightPresenter::onVehicleAdded);
@@ -55,6 +58,7 @@ void FlightPresenter::updateVehicles()
 void FlightPresenter::connectView(QObject* view)
 {
     d->video->setView(view->findChild<QObject*>(NAME(video)));
+    d->map->setView(view->findChild<QObject*>(NAME(map)));
 
     connect(view, SIGNAL(vehicleSelected(QString)),
             this, SLOT(onVehicleSelected(QString)));
@@ -63,12 +67,16 @@ void FlightPresenter::connectView(QObject* view)
 void FlightPresenter::onVehicleAdded(uint8_t id)
 {
     d->vehiclesAlias[id] = tr("MAV %1").arg(id);
+
+    d->map->addVehicle(d->vehicleService->vehicle(id));
     if (m_view) this->updateVehicles();
 }
 
 void FlightPresenter::onVehicleRemoved(uint8_t id)
 {
     d->vehiclesAlias.remove(id);
+
+    d->map->removeVehicle(d->vehicleService->vehicle(id));
     if (m_view) this->updateVehicles();
 }
 

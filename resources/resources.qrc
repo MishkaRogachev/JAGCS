@@ -12,5 +12,6 @@
         <file>icons/disconnect.svg</file>
         <file>icons/rx.svg</file>
         <file>icons/tx.svg</file>
+        <file>indicators/plane_map_mark.svg</file>
     </qresource>
 </RCC>
