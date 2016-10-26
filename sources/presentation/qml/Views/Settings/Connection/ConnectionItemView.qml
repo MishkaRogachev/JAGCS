@@ -108,15 +108,17 @@ Frame {
         RowLayout {
 
             Label {
-                text: qsTr("Rx: ") + (link ? link.bytesReceivedSec : "")
+                iconSource: "qrc:/icons/rx.svg"
+                text: (link ? link.bytesReceivedSec : "") + qsTr(" b/s")
                 horizontalAlignment: Text.AlignHCenter
-                Layout.preferredWidth: 86
+                Layout.preferredWidth: 102
             }
 
             Label {
-                text: qsTr("Tx: ") + (link ? link.bytesSentSec : "")
+                iconSource: "qrc:/icons/tx.svg"
+                text: (link ? link.bytesSentSec : "") + qsTr(" b/s")
                 horizontalAlignment: Text.AlignHCenter
-                Layout.preferredWidth: 86
+                Layout.preferredWidth: 102
             }
 
             Item {

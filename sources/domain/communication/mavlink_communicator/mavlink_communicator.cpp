@@ -194,7 +194,6 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         emit messageReceived(message);
     }
 
-    qDebug() << status.msg_received << status.packet_rx_success_count << status.packet_rx_drop_count;
     //d->receivedLink->setRxPacketsCount(status.packet_rx_success_count);
     //d->receivedLink->setRxPacketDropsCount(status.packet_rx_drop_count);
 }

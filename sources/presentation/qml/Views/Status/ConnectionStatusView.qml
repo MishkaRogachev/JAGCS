@@ -7,11 +7,4 @@ import "qrc:/Martial"
 ColumnLayout {
     id: root
 
-    Label {
-        text: "Rx:"
-    }
-
-    Label {
-        text: "Tx:"
-    }
 }
