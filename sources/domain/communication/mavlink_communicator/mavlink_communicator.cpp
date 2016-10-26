@@ -155,10 +155,6 @@ void MavLinkCommunicator::sendMessage(mavlink_message_t& message,
 
     if (!lenght) return;
     link->sendData(QByteArray((const char*)buffer, lenght));
-
-    qDebug() << "Sent packet from(" << message.sysid << ":" <<
-                message.compid << ") with id: " << message.msgid << "Ch:" <<
-                d->linkChannels.value(link, 0);
 }
 
 void MavLinkCommunicator::sendMessageLastReceivedLink(mavlink_message_t& message)
@@ -186,10 +182,6 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         if (!mavlink_parse_char(channel, (uint8_t)data[pos],
                                 &message, &status))
             continue;
-
-        qDebug() << "Received packet from(" << message.sysid << ":" <<
-                 message.compid << ") with id: " << message.msgid <<
-                    "Ch:" << channel;
 
         emit messageReceived(message);
     }

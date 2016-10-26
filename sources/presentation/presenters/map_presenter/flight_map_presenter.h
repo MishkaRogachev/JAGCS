@@ -10,8 +10,11 @@ namespace domain
 
 namespace presentation
 {
+    // TODO: routes
     class FlightMapPresenter: public MapPresenter
     {
+        Q_OBJECT
+
     public:
         FlightMapPresenter(QObject* parent = nullptr);
         ~FlightMapPresenter() override;

@@ -3,17 +3,18 @@ import QtLocation 5.6
 import QtPositioning 5.6
 
 MapView {
+    id: root
+    property var vehicles // TODO: QAbstractItemModel
 
-    property alias vehicles: vehicleRepeater.model
-
-    Repeater {
-        id: vehicleRepeater
+    MapItemView {
+        model: vehicles
+        delegate: vehicleDelegate
 
         MapQuickItem {
-            id: boardMarker
             anchorPoint.x: mark.width / 2
             anchorPoint.y: mark.height / 2
             coordinate: modelData.navigation.position
+
             sourceItem: Item {
                 id: mark
                 width: 64

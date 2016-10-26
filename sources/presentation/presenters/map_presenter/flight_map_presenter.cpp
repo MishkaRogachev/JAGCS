@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "vehicle.h"
@@ -38,7 +39,12 @@ void FlightMapPresenter::removeVehicle(domain::Vehicle* vehicle)
 
 void FlightMapPresenter::updateVehicles()
 {
-    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(d->vehicles));
+    QList<QObject*> vehicles;
+
+    for (domain::Vehicle* vehicle: d->vehicles)
+        vehicles.append(vehicle);
+
+    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(vehicles));
 }
 
 void FlightMapPresenter::connectView(QObject* view)
