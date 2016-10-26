@@ -19,6 +19,7 @@ VehicleService::VehicleService(QObject* parent):
     d(new Impl())
 {
     qRegisterMetaType<Attitude>("Attitude");
+    qRegisterMetaType<Navigation>("Navigation");
 }
 
 VehicleService::~VehicleService()
