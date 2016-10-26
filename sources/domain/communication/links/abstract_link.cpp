@@ -16,7 +16,9 @@ AbstractLink::AbstractLink(QObject* parent):
     m_bytesReceivedSec(0),
     m_bytesReceived(0),
     m_bytesSentSec(0),
-    m_bytesSent(0)
+    m_bytesSent(0),
+    m_packetsReceived(0),
+    m_packetsDrops(0)
 {
     m_statisticsTimer = this->startTimer(::second);
 }
@@ -31,10 +33,36 @@ int AbstractLink::bytesSentSec() const
     return m_bytesSentSec;
 }
 
+int AbstractLink::packetsReceived() const
+{
+    return m_packetsReceived;
+}
+
+int AbstractLink::packetsDrops() const
+{
+    return m_packetsDrops;
+}
+
 void AbstractLink::sendData(const QByteArray& data)
 {
     m_bytesSent += data.size();
     this->sendDataImpl(data);
+}
+
+void AbstractLink::setPacketsReceived(int packetsReceived)
+{
+    if (m_packetsReceived == packetsReceived) return;
+
+    m_packetsReceived = packetsReceived;
+    emit packetsReceivedChanged(packetsReceived);
+}
+
+void AbstractLink::setPacketsDrops(int packetsDrops)
+{
+    if (m_packetsDrops == packetsDrops) return;
+
+    m_packetsDrops = packetsDrops;
+    emit packetsDropsChanged(packetsDrops);
 }
 
 void AbstractLink::timerEvent(QTimerEvent* event)

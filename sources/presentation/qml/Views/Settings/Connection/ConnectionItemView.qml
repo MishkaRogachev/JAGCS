@@ -121,6 +121,13 @@ Frame {
                 Layout.preferredWidth: 102
             }
 
+            Label {
+                visible: link
+                text: qsTr("Drops: ") + link.packetsDrops + "/" + link.packetsReceived
+                horizontalAlignment: Text.AlignHCenter
+                Layout.preferredWidth: 102
+            }
+
             Item {
                 Layout.fillWidth: true
             }
