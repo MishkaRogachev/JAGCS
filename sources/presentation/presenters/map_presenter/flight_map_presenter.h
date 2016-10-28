@@ -23,8 +23,6 @@ namespace presentation
         void addVehicle(domain::Vehicle* vehicle);
         void removeVehicle(domain::Vehicle* vehicle);
 
-        void updateVehicles();
-
     protected:
         void connectView(QObject* view) override;
 

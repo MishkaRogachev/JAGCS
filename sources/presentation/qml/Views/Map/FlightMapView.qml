@@ -4,26 +4,25 @@ import QtPositioning 5.6
 
 MapView {
     id: root
+
     property var vehicles // TODO: QAbstractItemModel
 
     MapItemView {
         model: vehicles
-        delegate: vehicleDelegate
-
-        MapQuickItem {
-            anchorPoint.x: mark.width / 2
-            anchorPoint.y: mark.height / 2
-            coordinate: modelData.navigation.position
+        delegate: MapQuickItem {
+            anchorPoint.x: markItem.width / 2
+            anchorPoint.y: markItem.height / 2
+            coordinate: position
 
             sourceItem: Item {
-                id: mark
+                id: markItem
                 width: 64
                 height: 64
 
                 Image {
                     anchors.centerIn: parent
-                    rotation: modelData.attitude.yaw
-                    source: "qrc:/indicators/plane_map_mark.svg"
+                    rotation: direction
+                    source: mark
                 }
             }
         }
