@@ -18,7 +18,8 @@ namespace presentation
         {
             PositionRole = Qt::UserRole + 1,
             DirectionRole,
-            MarkRole
+            MarkRole,
+            TrackRole
         };
 
         VehicleMapItemModel(QObject* parent = nullptr);

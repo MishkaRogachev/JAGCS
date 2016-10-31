@@ -22,7 +22,6 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 
     domain::Vehicle* vehicle = m_vehicles.at(index.row());
 
-    // TODO: other roles
     switch (role)
     {
     case PositionRole:
@@ -32,6 +31,13 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     case MarkRole:
         return QUrl("qrc:/indicators/plane_map_mark.svg");
         // TODO: vehicle mark
+    case TrackRole:
+    { // TODO: workaround, track optimization
+        QVariantList trackList;
+        for (QGeoCoordinate coordinate: vehicle->track())
+            trackList.append(QVariant::fromValue(coordinate));
+        return trackList;
+    }
     default:
         return QVariant();
     }
@@ -66,9 +72,10 @@ void VehicleMapItemModel::removeVehicle(domain::Vehicle* vehicle)
 
 void VehicleMapItemModel::onVehicleNavigationChanged()
 {
-    QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
-                                               this->sender()));
-    if (index.isValid()) emit dataChanged(index, index, { PositionRole });
+    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
+    QModelIndex index = this->vehicleIndex(vehicle);
+    if (index.isValid()) emit dataChanged(index, index, {
+                                              PositionRole, TrackRole });
 }
 
 void VehicleMapItemModel::onVehicleAttitudeChanged()
@@ -85,6 +92,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[PositionRole] = "position";
     roles[DirectionRole] = "direction";
     roles[MarkRole] = "mark";
+    roles[TrackRole] = "track";
 
     return roles;
 }

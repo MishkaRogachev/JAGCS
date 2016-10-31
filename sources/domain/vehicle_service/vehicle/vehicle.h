@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class Vehicle: public QObject // TODO: system hierarchy
+    class Vehicle: public QObject // TODO: system hierarchy & properly vehicle domain-model
     {
         Q_OBJECT
 
@@ -20,6 +20,8 @@ namespace domain
                    NOTIFY attitudeChanged)
         Q_PROPERTY(Navigation navigation READ navigation WRITE setNavigation
                    NOTIFY navigationChanged)
+
+        Q_PROPERTY(QList<QGeoCoordinate> track READ track NOTIFY navigationChanged)
 
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
@@ -60,6 +62,8 @@ namespace domain
         Attitude attitude() const;
         Navigation navigation() const;
 
+        QList<QGeoCoordinate> track() const;
+
         float trueAirSpeed() const;
         float groundSpeed() const;
         float barometricAltitude() const;
@@ -94,7 +98,6 @@ namespace domain
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
 
-
     private:
         Type m_type;
         State m_state;
@@ -102,6 +105,8 @@ namespace domain
 
         Attitude m_attitude;
         Navigation m_navigation;
+
+        QList<QGeoCoordinate> m_track;
 
         float m_trueAirSpeed;
         float m_groundSpeed;

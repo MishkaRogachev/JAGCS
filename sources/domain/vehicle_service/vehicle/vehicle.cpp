@@ -36,6 +36,11 @@ Navigation Vehicle::navigation() const
     return m_navigation;
 }
 
+QList<QGeoCoordinate> Vehicle::track() const
+{
+    return m_track;
+}
+
 float Vehicle::trueAirSpeed() const
 {
     return m_trueAirSpeed;
@@ -95,9 +100,8 @@ void Vehicle::setAttitude(Attitude attitude)
 
 void Vehicle::setNavigation(Navigation navigation)
 {
-//    if (m_navigation == navigation) return;
-
     m_navigation = navigation;
+    m_track.append(m_navigation.position());
     emit navigationChanged(navigation);
 }
 

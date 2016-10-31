@@ -5,10 +5,21 @@ import QtPositioning 5.6
 MapView {
     id: root
 
-    property alias vehicleModel: vehicles.model
+    property var vehicleModel
+
+    MapItemView {
+        id: tracks
+        model: vehicleModel
+        delegate: MapPolyline {
+            line.width: 3
+            line.color: palette.selectionColor
+            path: track
+        }
+    }
 
     MapItemView {
         id: vehicles
+        model: vehicleModel
         delegate: MapQuickItem {
             anchorPoint.x: markItem.width / 2
             anchorPoint.y: markItem.height / 2

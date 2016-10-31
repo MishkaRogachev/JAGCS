@@ -1,6 +1,7 @@
 #ifndef NAVIGATION_H
 #define NAVIGATION_H
 
+// Qt
 #include <QGeoCoordinate>
 #include <QVector3D>
 
