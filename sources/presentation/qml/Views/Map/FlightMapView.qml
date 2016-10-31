@@ -5,10 +5,10 @@ import QtPositioning 5.6
 MapView {
     id: root
 
-    property var vehicles // TODO: QAbstractItemModel
+    property alias vehicleModel: vehicles.model
 
     MapItemView {
-        model: vehicles
+        id: vehicles
         delegate: MapQuickItem {
             anchorPoint.x: markItem.width / 2
             anchorPoint.y: markItem.height / 2
@@ -16,10 +16,11 @@ MapView {
 
             sourceItem: Item {
                 id: markItem
-                width: 64
-                height: 64
+                width: markImage.sourceSize.width
+                height: markImage.sourceSize.height
 
                 Image {
+                    id: markImage
                     anchors.centerIn: parent
                     rotation: direction
                     source: mark
