@@ -32,7 +32,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         return QUrl("qrc:/indicators/plane_map_mark.svg");
         // TODO: vehicle mark
     case TrackRole:
-    { // TODO: workaround, track optimization
+    { // TODO: workaround, track optimization with Ramer–Douglas–Peucker algorithm
         QVariantList trackList;
         for (QGeoCoordinate coordinate: vehicle->track())
             trackList.append(QVariant::fromValue(coordinate));

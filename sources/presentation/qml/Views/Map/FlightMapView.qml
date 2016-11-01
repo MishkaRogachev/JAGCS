@@ -8,18 +8,33 @@ MapView {
     property var vehicleModel
 
     MapItemView {
+        id: backgroundTracks
+        model: vehicleModel
+        delegate: MapPolyline {
+            line.width: 6
+            line.color: palette.backgroundColor
+            path: track
+            smooth: true
+            opacity: 0.8
+        }
+    }
+
+    MapItemView {
         id: tracks
         model: vehicleModel
         delegate: MapPolyline {
-            line.width: 3
+            line.width: 2
             line.color: palette.selectionColor
             path: track
+            smooth: true
+            opacity: 0.8
         }
     }
 
     MapItemView {
         id: vehicles
         model: vehicleModel
+        autoFitViewport: true
         delegate: MapQuickItem {
             anchorPoint.x: markItem.width / 2
             anchorPoint.y: markItem.height / 2
