@@ -41,47 +41,17 @@ Pane {
                 Layout.fillHeight: true
             }
 
-            Loader {
-                id: auxiliaryWorkspace
+            VideoView {
+                objectName: "video"
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: width * 3 / 4
-                sourceComponent: videoComponent
-
-                Button {
-                    anchors.top: parent.top
-                    anchors.right: parent.right
-                    text: qsTr("Switch")
-                    z: 1
-                    onClicked: {
-                        var component = auxiliaryWorkspace.sourceComponent;
-                        auxiliaryWorkspace.sourceComponent = mainWorkspace.sourceComponent;
-                        mainWorkspace.sourceComponent = component;
-                    }
-                }
             }
         }
 
-        Loader {
-            id: mainWorkspace
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            sourceComponent: mapComponent
-        }
-    }
-
-    Component {
-        id: mapComponent
-
         FlightMapView {
             objectName: "map"
-        }
-    }
-
-    Component {
-        id: videoComponent
-
-        VideoView {
-            objectName: "video"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
     }
 }
