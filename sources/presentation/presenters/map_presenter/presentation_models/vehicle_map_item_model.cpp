@@ -1,26 +1,40 @@
 #include "vehicle_map_item_model.h"
 
 // Qt
+#include <QMap>
 #include <QUrl>
 #include <QDebug>
 
 using namespace presentation;
 
+class VehicleMapItemModel::Impl
+{
+public:
+    QList<domain::Vehicle*> vehicles;
+    QMap<domain::Vehicle*, QVariantList> tracks;
+};
+
 VehicleMapItemModel::VehicleMapItemModel(QObject* parent):
-    QAbstractListModel(parent)
+    QAbstractListModel(parent),
+    d(new Impl())
 {}
+
+VehicleMapItemModel::~VehicleMapItemModel()
+{
+    delete d;
+}
 
 int VehicleMapItemModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
-    return m_vehicles.count();
+    return d->vehicles.count();
 }
 
 QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 {
-    if (index.row() < 0 || index.row() >= m_vehicles.count()) return QVariant();
+    if (index.row() < 0 || index.row() >= d->vehicles.count()) return QVariant();
 
-    domain::Vehicle* vehicle = m_vehicles.at(index.row());
+    domain::Vehicle* vehicle = d->vehicles.at(index.row());
 
     switch (role)
     {
@@ -32,12 +46,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         return QUrl("qrc:/indicators/plane_map_mark.svg");
         // TODO: vehicle mark
     case TrackRole:
-    { // TODO: workaround, track optimization with Ramer–Douglas–Peucker algorithm
-        QVariantList trackList;
-        for (QGeoCoordinate coordinate: vehicle->track())
-            trackList.append(QVariant::fromValue(coordinate));
-        return trackList;
-    }
+        return d->tracks[vehicle];
     default:
         return QVariant();
     }
@@ -45,13 +54,13 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 
 QModelIndex VehicleMapItemModel::vehicleIndex(domain::Vehicle* vehicle) const
 {
-    return this->index(m_vehicles.indexOf(vehicle));
+    return this->index(d->vehicles.indexOf(vehicle));
 }
 
 void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
-    m_vehicles.append(vehicle);
+    d->vehicles.append(vehicle);
     connect(vehicle, &domain::Vehicle::navigationChanged,
             this, &VehicleMapItemModel::onVehicleNavigationChanged);
     connect(vehicle, &domain::Vehicle::attitudeChanged,
@@ -61,11 +70,12 @@ void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
 
 void VehicleMapItemModel::removeVehicle(domain::Vehicle* vehicle)
 {
-    int row = m_vehicles.indexOf(vehicle);
+    int row = d->vehicles.indexOf(vehicle);
     if (row == -1) return;
 
     this->beginRemoveRows(QModelIndex(), row, row);
-    m_vehicles.removeOne(vehicle);
+    d->vehicles.removeOne(vehicle);
+    d->tracks.remove(vehicle);
     disconnect(vehicle, 0, this, 0);
     this->endRemoveRows();
 }
@@ -74,6 +84,8 @@ void VehicleMapItemModel::onVehicleNavigationChanged()
 {
     domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
     QModelIndex index = this->vehicleIndex(vehicle);
+    d->tracks[vehicle].append(QVariant::fromValue(
+                                  vehicle->navigation().position()));
     if (index.isValid()) emit dataChanged(index, index, {
                                               PositionRole, TrackRole });
 }

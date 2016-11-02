@@ -21,8 +21,6 @@ namespace domain
         Q_PROPERTY(Navigation navigation READ navigation WRITE setNavigation
                    NOTIFY navigationChanged)
 
-        Q_PROPERTY(QList<QGeoCoordinate> track READ track NOTIFY navigationChanged)
-
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
         Q_PROPERTY(float groundSpeed READ groundSpeed WRITE setGroundSpeed
@@ -61,8 +59,6 @@ namespace domain
 
         Attitude attitude() const;
         Navigation navigation() const;
-
-        QList<QGeoCoordinate> track() const;
 
         float trueAirSpeed() const;
         float groundSpeed() const;
@@ -105,8 +101,6 @@ namespace domain
 
         Attitude m_attitude;
         Navigation m_navigation;
-
-        QList<QGeoCoordinate> m_track;
 
         float m_trueAirSpeed;
         float m_groundSpeed;

@@ -23,6 +23,7 @@ namespace presentation
         };
 
         VehicleMapItemModel(QObject* parent = nullptr);
+        ~VehicleMapItemModel() override;
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
@@ -41,7 +42,8 @@ namespace presentation
         QHash<int, QByteArray> roleNames() const override;
 
     private:
-        QList<domain::Vehicle*> m_vehicles;
+        class Impl;
+        Impl* const d;
     };
 }
 
