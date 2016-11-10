@@ -30,7 +30,7 @@ Item {
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#ecf0f1' // TODO: palette
             ctx.fillStyle = '#ecf0f1' // TODO: palette
-            ctx.font = '11pt Open Sans';
+            ctx.font = '11pt sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
@@ -67,12 +67,12 @@ Item {
             ctx.lineTo(width / 2 + 16, 16);
             ctx.stroke();
 
-            ctx.font = '14pt Open Sans';
+            ctx.font = 'bold 12pt sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation < 0 ? 'left' :'right') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
             ctx.save();
-            ctx.translate(width / 2, 16);
+            ctx.translate(width / 2, 14);
             ctx.rotate(-canvasRotation * Math.PI / 180);
             ctx.fillText(value, 0, 2);
             ctx.restore();

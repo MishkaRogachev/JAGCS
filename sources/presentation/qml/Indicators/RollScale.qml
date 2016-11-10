@@ -26,7 +26,7 @@ Item {
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#ecf0f1' // TODO: palette
             ctx.fillStyle = '#ecf0f1' // TODO: palette
-            ctx.font = '11pt Open Sans';
+            ctx.font = '11pt sans-serif';
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
 
@@ -50,7 +50,7 @@ Item {
             ctx.lineTo(-16, offset + 16 - height / 2);
             ctx.lineTo(0, offset - height / 2);
 
-            ctx.font = '14pt Open Sans';
+            ctx.font = '14pt sans-serif';
             ctx.fillText(roll, 0, offset + 32 - height / 2);
 
             ctx.restore();
