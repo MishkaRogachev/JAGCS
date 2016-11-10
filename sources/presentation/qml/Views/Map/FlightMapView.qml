@@ -10,12 +10,12 @@ MapView {
     MapItemView {
         id: backgroundTracks
         model: vehicleModel
+        autoFitViewport: true
         delegate: MapPolyline {
             line.width: 6
             line.color: palette.backgroundColor
             path: track
             smooth: true
-            opacity: 0.8
         }
     }
 
@@ -23,18 +23,16 @@ MapView {
         id: tracks
         model: vehicleModel
         delegate: MapPolyline {
-            line.width: 2
+            line.width: 4
             line.color: palette.selectionColor
             path: track
             smooth: true
-            opacity: 0.8
         }
     }
 
     MapItemView {
         id: vehicles
         model: vehicleModel
-        autoFitViewport: true
         delegate: MapQuickItem {
             anchorPoint.x: markItem.width / 2
             anchorPoint.y: markItem.height / 2
