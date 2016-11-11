@@ -13,7 +13,9 @@ ApplicationWindow {
     visibility: "Maximized"
     visible: true
 
-    property Palette palette: Palette {}
+    property Palette palette: Palette {
+        property color trackColor: "#E74C3C"
+    }
 
     header: StatusView {
         objectName: "status"
