@@ -3,6 +3,8 @@
 
 #include "abstract_mavlink_handler.h"
 
+class QGeoCoordinate;
+
 namespace domain
 {
     class VehicleService;
@@ -15,6 +17,10 @@ namespace domain
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
+
+        void sendHomePositionRequest();
+        void sendHomePositionSetting(const QGeoCoordinate& position,
+                                     const QVector3D& approach);
 
     private:
         VehicleService* m_vehicleService;

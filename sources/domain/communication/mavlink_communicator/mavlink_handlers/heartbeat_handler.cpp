@@ -91,7 +91,9 @@ void HeartbeatHandler::sendHeartbeat()
 {
     mavlink_message_t message;
     mavlink_heartbeat_t heartbeat;
+
     heartbeat.type = MAV_TYPE_GCS;
+
     mavlink_msg_heartbeat_encode(m_communicator->systemId(),
                                  m_communicator->componentId(),
                                  &message, &heartbeat);
