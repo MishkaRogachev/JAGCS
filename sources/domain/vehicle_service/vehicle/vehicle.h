@@ -3,7 +3,7 @@
 
 // Internal
 #include "attitude.h"
-#include "navigation.h"
+#include "position.h"
 
 namespace domain
 {
@@ -18,8 +18,10 @@ namespace domain
 
         Q_PROPERTY(Attitude attitude READ attitude WRITE setAttitude
                    NOTIFY attitudeChanged)
-        Q_PROPERTY(Navigation navigation READ navigation WRITE setNavigation
-                   NOTIFY navigationChanged)
+        Q_PROPERTY(Position position READ position WRITE setPosition
+                   NOTIFY positionChanged)
+        Q_PROPERTY(Position homePosition READ homePosition
+                   WRITE setHomePosition NOTIFY homePositionChanged)
 
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
@@ -31,9 +33,6 @@ namespace domain
                    WRITE setBarometricClimb NOTIFY barometricClimbChanged)
         Q_PROPERTY(int heading READ heading WRITE setHeading
                    NOTIFY headingChanged)
-
-        Q_PROPERTY(QGeoCoordinate homePosition READ homePosition
-                   WRITE setHomePosition NOTIFY homePositionChanged)
 
     public:
         enum Type
@@ -61,7 +60,8 @@ namespace domain
         bool autonomous() const;
 
         Attitude attitude() const;
-        Navigation navigation() const;
+        Position position() const;
+        Position homePosition() const;
 
         float trueAirSpeed() const;
         float groundSpeed() const;
@@ -69,15 +69,14 @@ namespace domain
         float barometricClimb() const;
         int heading() const;
 
-        QGeoCoordinate homePosition() const;
-
     public slots:
         void setType(Type type);
         void setState(State state);
         void setAutonomous(bool autonomous);
 
-        void setAttitude(Attitude attitude);
-        void setNavigation(Navigation navigation);
+        void setAttitude(const Attitude& attitude);
+        void setPosition(const Position& position);
+        void setHomePosition(const Position& homePosition);
 
         void setTrueAirSpeed(float trueAirSpeed);
         void setGroundSpeed(float groundSpeed);
@@ -85,15 +84,14 @@ namespace domain
         void setBarometricClimb(float barometricClimb);
         void setHeading(int heading);
 
-        void setHomePosition(const QGeoCoordinate& homePosition);
-
     signals:
         void typeChanged(Type type);
         void stateChanged(State state);
         void autonomousChanged(bool autonomous);
 
         void attitudeChanged(Attitude attitude);
-        void navigationChanged(Navigation navigation);
+        void positionChanged(Position position);
+        void homePositionChanged(Position homePosition);
 
         void trueAirSpeedChanged(float trueAirSpeed);
         void groundSpeedChanged(float groundSpeed);
@@ -101,23 +99,20 @@ namespace domain
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
 
-        void homePositionChanged(QGeoCoordinate homePosition);
-
     private:
         Type m_type;
         State m_state;
         bool m_autonomous;
 
         Attitude m_attitude;
-        Navigation m_navigation;
+        Position m_position;
+        Position m_homePosition;
 
         float m_trueAirSpeed;
         float m_groundSpeed;
         float m_barometricAltitude;
         float m_barometricClimb;
         int m_heading;
-
-        QGeoCoordinate m_homePosition;
 
         Q_ENUM(Type)
         Q_ENUM(State)

@@ -26,7 +26,7 @@ void GlobalPositionHandler::processMessage(const mavlink_message_t& message)
     mavlink_global_position_int_cov_t position;
     mavlink_msg_global_position_int_cov_decode(&message, &position);
 
-    vehicle->setNavigation(Navigation(
+    vehicle->setPosition(Position(
                                QGeoCoordinate(
                                    decodeLatLon(position.lat),
                                    decodeLatLon(position.lon),

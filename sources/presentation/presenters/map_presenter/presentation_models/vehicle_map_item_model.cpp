@@ -39,7 +39,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case PositionRole:
-        return QVariant::fromValue(vehicle->navigation().position());
+        return QVariant::fromValue(vehicle->position().coordinate());
     case DirectionRole:
         return vehicle->attitude().yaw();
     case MarkRole:
@@ -48,7 +48,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     case TrackRole:
         return d->tracks[vehicle];
     case HomePositionRole:
-        return QVariant::fromValue(vehicle->homePosition());
+        return QVariant::fromValue(vehicle->homePosition().coordinate());
     default:
         return QVariant();
     }
@@ -63,12 +63,14 @@ void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     d->vehicles.append(vehicle);
-    connect(vehicle, &domain::Vehicle::navigationChanged,
-            this, &VehicleMapItemModel::onVehicleNavigationChanged);
+
     connect(vehicle, &domain::Vehicle::attitudeChanged,
             this, &VehicleMapItemModel::onVehicleAttitudeChanged);
+    connect(vehicle, &domain::Vehicle::positionChanged,
+            this, &VehicleMapItemModel::onVehiclePositionChanged);
     connect(vehicle, &domain::Vehicle::homePositionChanged,
             this, &VehicleMapItemModel::onVehicleHomePositionChanged);
+
     this->endInsertRows();
 }
 
@@ -80,16 +82,18 @@ void VehicleMapItemModel::removeVehicle(domain::Vehicle* vehicle)
     this->beginRemoveRows(QModelIndex(), row, row);
     d->vehicles.removeOne(vehicle);
     d->tracks.remove(vehicle);
+
     disconnect(vehicle, 0, this, 0);
+
     this->endRemoveRows();
 }
 
-void VehicleMapItemModel::onVehicleNavigationChanged()
+void VehicleMapItemModel::onVehiclePositionChanged()
 {
     domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
     QModelIndex index = this->vehicleIndex(vehicle);
     d->tracks[vehicle].append(QVariant::fromValue(
-                                  vehicle->navigation().position()));
+                                  vehicle->position().coordinate()));
     if (index.isValid()) emit dataChanged(index, index, {
                                               PositionRole, TrackRole });
 }

@@ -36,8 +36,8 @@ namespace presentation
         void removeVehicle(domain::Vehicle* vehicle);
 
     private slots:
-        void onVehicleNavigationChanged();
         void onVehicleAttitudeChanged();
+        void onVehiclePositionChanged();
         void onVehicleHomePositionChanged();
 
     protected:

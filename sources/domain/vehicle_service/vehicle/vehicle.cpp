@@ -31,9 +31,14 @@ Attitude Vehicle::attitude() const
     return m_attitude;
 }
 
-Navigation Vehicle::navigation() const
+Position Vehicle::position() const
 {
-    return m_navigation;
+    return m_position;
+}
+
+Position Vehicle::homePosition() const
+{
+    return m_homePosition;
 }
 
 float Vehicle::trueAirSpeed() const
@@ -61,11 +66,6 @@ int Vehicle::heading() const
     return m_heading;
 }
 
-QGeoCoordinate Vehicle::homePosition() const
-{
-    return m_homePosition;
-}
-
 void Vehicle::setType(Vehicle::Type type)
 {
     if (m_type == type) return;
@@ -90,7 +90,7 @@ void Vehicle::setAutonomous(bool autonomous)
     emit autonomousChanged(autonomous);
 }
 
-void Vehicle::setAttitude(Attitude attitude)
+void Vehicle::setAttitude(const Attitude& attitude)
 {
     if (m_attitude == attitude) return;
 
@@ -98,10 +98,20 @@ void Vehicle::setAttitude(Attitude attitude)
     emit attitudeChanged(attitude);
 }
 
-void Vehicle::setNavigation(Navigation navigation)
+void Vehicle::setPosition(const Position& position)
 {
-    m_navigation = navigation;
-    emit navigationChanged(navigation);
+    if (m_position == position) return;
+
+    m_position = position;
+    emit positionChanged(position);
+}
+
+void Vehicle::setHomePosition(const Position& homePosition)
+{
+    if (m_homePosition == homePosition) return;
+
+    m_homePosition = homePosition;
+    emit homePositionChanged(homePosition);
 }
 
 void Vehicle::setTrueAirSpeed(float trueAirSpeed)
@@ -142,12 +152,4 @@ void Vehicle::setHeading(int heading)
 
     m_heading = heading;
     emit headingChanged(heading);
-}
-
-void Vehicle::setHomePosition(const QGeoCoordinate& homePosition)
-{
-    if (m_homePosition == homePosition) return;
-
-    m_homePosition = homePosition;
-    emit homePositionChanged(homePosition);
 }

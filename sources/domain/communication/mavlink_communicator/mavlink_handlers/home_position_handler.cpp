@@ -29,10 +29,13 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);
 
-    vehicle->setHomePosition(QGeoCoordinate(decodeLatLon(home.latitude),
-                                            decodeLatLon(home.longitude),
-                                            decodeAltitude(home.altitude)));
-    // TODO: approach
+    vehicle->setHomePosition(Position(
+                                 QGeoCoordinate(decodeLatLon(home.latitude),
+                                                decodeLatLon(home.longitude),
+                                                decodeAltitude(home.altitude)),
+                                 QVector3D(home.approach_x,
+                                           home.approach_y,
+                                           home.approach_z)));
 }
 
 void HomePositionHandler::sendHomePositionRequest(Vehicle* vehicle)
@@ -53,8 +56,7 @@ void HomePositionHandler::sendHomePositionRequest(Vehicle* vehicle)
 }
 
 void HomePositionHandler::sendHomePositionSetting(Vehicle* vehicle,
-                                                  const QGeoCoordinate& position,
-                                                  const QVector3D& approach)
+                                                  const Position& position)
 {
     mavlink_message_t message;
     mavlink_set_home_position_t home;
@@ -62,13 +64,13 @@ void HomePositionHandler::sendHomePositionSetting(Vehicle* vehicle,
     // TODO: mavlink helper
     home.target_system = m_vehicleService->vehileId(vehicle);
 
-    home.latitude = encodeLatLon(position.latitude());
-    home.longitude = encodeLatLon(position.latitude());
-    home.altitude = encodeAltitude(position.altitude());
+    home.latitude = encodeLatLon(position.coordinate().latitude());
+    home.longitude = encodeLatLon(position.coordinate().latitude());
+    home.altitude = encodeAltitude(position.coordinate().altitude());
 
-    home.approach_x = approach.x();
-    home.approach_y = approach.y();
-    home.approach_z = approach.z();
+    home.approach_x = position.vector().x();
+    home.approach_y = position.vector().y();
+    home.approach_z = position.vector().z();
 
     mavlink_msg_set_home_position_encode(m_communicator->systemId(),
                                          m_communicator->componentId(),

@@ -3,12 +3,11 @@
 
 #include "abstract_mavlink_handler.h"
 
-class QGeoCoordinate;
-
 namespace domain
 {
     class VehicleService;
     class Vehicle;
+    class Position;
 
     class HomePositionHandler: public AbstractMavLinkHandler
     {
@@ -20,9 +19,7 @@ namespace domain
         void processMessage(const mavlink_message_t& message) override;
 
         void sendHomePositionRequest(Vehicle* vehicle);
-        void sendHomePositionSetting(Vehicle* vehicle,
-                                     const QGeoCoordinate& position,
-                                     const QVector3D& approach);
+        void sendHomePositionSetting(Vehicle* vehicle, const Position& position);
 
     private:
         VehicleService* m_vehicleService;
