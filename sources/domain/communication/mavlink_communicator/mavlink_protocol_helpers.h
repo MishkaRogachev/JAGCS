@@ -5,22 +5,22 @@
 
 namespace domain
 {
-    int32_t encodeLatLon(double value)
+    inline int32_t encodeLatLon(double value)
     {
         return value * 1e7;
     }
 
-    int32_t encodeAltitude(double value)
+    inline int32_t encodeAltitude(double value)
     {
         return value * 1000;
     }
 
-    double decodeLatLon(int32_t value)
+    inline double decodeLatLon(int32_t value)
     {
         return value / 1e7;
     }
 
-    float decodeAltitude(double value)
+    inline float decodeAltitude(double value)
     {
         return value / 1000;
     }

@@ -31,7 +31,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setHomePosition(QGeoCoordinate(decodeLatLon(home.latitude),
                                             decodeLatLon(home.longitude),
-                                            decodeAltitude(home.altitude));
+                                            decodeAltitude(home.altitude)));
     // TODO: approach
 }
 
