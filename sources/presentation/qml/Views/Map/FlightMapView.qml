@@ -28,9 +28,7 @@ MapView {
 
             sourceItem: Image {
                 id: homeImage
-                anchors.centerIn: parent
-                rotation: direction
-                source: "qrc:/indicators/plane_map_mark.svg"
+                source: "qrc:/indicators/home_mark.svg"
             }
         }
     }

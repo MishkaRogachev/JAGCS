@@ -22,6 +22,7 @@
 #include "gps_raw_handler.h"
 #include "system_status_handler.h"
 #include "vfr_hud_handler.h"
+#include "home_position_handler.h"
 
 #include "vehicle_service.h"
 
@@ -54,6 +55,7 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d->componentId = SettingsProvider::value(
                          connection_settings::componentId).toUInt();
 
+    // TODO: MavLinkCommunicatorFactory
     d->handlers.append(new HeartbeatHandler(vehicleService, this));
     d->handlers.append(new PingHandler(this));
     d->handlers.append(new AttitudeHandler(vehicleService, this));
@@ -61,6 +63,7 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
     d->handlers.append(new GpsRawHandler(vehicleService, this));
     d->handlers.append(new SystemStatusHandler(this));
     d->handlers.append(new VfrHudHandler(vehicleService, this));
+    d->handlers.append(new HomePositionHandler(vehicleService, this));
 
     for (uint8_t channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
         d->avalibleChannels.append(channel);
