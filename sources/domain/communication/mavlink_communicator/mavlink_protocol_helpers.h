@@ -1,5 +1,5 @@
-#ifndef MAVLINK_HELPERS_H
-#define MAVLINK_HELPERS_H
+#ifndef MAVLINK_PROTOCOL_HELPERS_H
+#define MAVLINK_PROTOCOL_HELPERS_H
 
 #include <cstdint>
 
@@ -26,4 +26,4 @@ namespace domain
     }
 }
 
-#endif // MAVLINK_HELPERS_H
+#endif // MAVLINK_PROTOCOL_HELPERS_H
