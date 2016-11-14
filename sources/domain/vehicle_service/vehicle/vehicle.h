@@ -32,6 +32,9 @@ namespace domain
         Q_PROPERTY(int heading READ heading WRITE setHeading
                    NOTIFY headingChanged)
 
+        Q_PROPERTY(QGeoCoordinate homePosition READ homePosition
+                   WRITE setHomePosition NOTIFY homePositionChanged)
+
     public:
         enum Type
         {
@@ -66,6 +69,8 @@ namespace domain
         float barometricClimb() const;
         int heading() const;
 
+        QGeoCoordinate homePosition() const;
+
     public slots:
         void setType(Type type);
         void setState(State state);
@@ -79,6 +84,8 @@ namespace domain
         void setBarometricAltitude(float barometricAltitude);
         void setBarometricClimb(float barometricClimb);
         void setHeading(int heading);
+
+        void setHomePosition(const QGeoCoordinate& homePosition);
 
     signals:
         void typeChanged(Type type);
@@ -94,6 +101,8 @@ namespace domain
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
 
+        void homePositionChanged(QGeoCoordinate homePosition);
+
     private:
         Type m_type;
         State m_state;
@@ -107,6 +116,8 @@ namespace domain
         float m_barometricAltitude;
         float m_barometricClimb;
         int m_heading;
+
+        QGeoCoordinate m_homePosition;
 
         Q_ENUM(Type)
         Q_ENUM(State)

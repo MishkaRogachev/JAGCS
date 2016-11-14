@@ -26,7 +26,7 @@ void GlobalPositionHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setNavigation(Navigation(
                                QGeoCoordinate(
-                                   double(position.lat / 1e7),
+                                   double(position.lat / 1e7), // TODO: mavlink helper
                                    double(position.lon / 1e7),
                                    double(position.alt / 1000)),
                                QVector3D(

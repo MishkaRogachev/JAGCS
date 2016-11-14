@@ -61,6 +61,11 @@ int Vehicle::heading() const
     return m_heading;
 }
 
+QGeoCoordinate Vehicle::homePosition() const
+{
+    return m_homePosition;
+}
+
 void Vehicle::setType(Vehicle::Type type)
 {
     if (m_type == type) return;
@@ -137,4 +142,12 @@ void Vehicle::setHeading(int heading)
 
     m_heading = heading;
     emit headingChanged(heading);
+}
+
+void Vehicle::setHomePosition(const QGeoCoordinate& homePosition)
+{
+    if (m_homePosition == homePosition) return;
+
+    m_homePosition = homePosition;
+    emit homePositionChanged(homePosition);
 }
