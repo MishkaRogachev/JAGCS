@@ -11,7 +11,7 @@ class VehicleMapItemModel::Impl
 {
 public:
     QList<domain::Vehicle*> vehicles;
-    QMap<domain::Vehicle*, QVariantList> tracks;
+    QMap<domain::Vehicle*, QVariantList> tracks; // TODO: Rammer-Duglas-Pecker polyline simplification
 };
 
 VehicleMapItemModel::VehicleMapItemModel(QObject* parent):
@@ -47,6 +47,8 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         // TODO: vehicle mark
     case TrackRole:
         return d->tracks[vehicle];
+    case HomePositionRole:
+        return QVariant::fromValue(vehicle->homePosition());
     default:
         return QVariant();
     }
@@ -65,6 +67,8 @@ void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
             this, &VehicleMapItemModel::onVehicleNavigationChanged);
     connect(vehicle, &domain::Vehicle::attitudeChanged,
             this, &VehicleMapItemModel::onVehicleAttitudeChanged);
+    connect(vehicle, &domain::Vehicle::homePositionChanged,
+            this, &VehicleMapItemModel::onVehicleHomePositionChanged);
     this->endInsertRows();
 }
 
@@ -97,6 +101,13 @@ void VehicleMapItemModel::onVehicleAttitudeChanged()
     if (index.isValid()) emit dataChanged(index, index, { DirectionRole });
 }
 
+void VehicleMapItemModel::onVehicleHomePositionChanged()
+{
+    QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
+                                               this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { HomePositionRole });
+}
+
 QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -105,6 +116,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[DirectionRole] = "direction";
     roles[MarkRole] = "mark";
     roles[TrackRole] = "track";
+    roles[HomePositionRole] = "homePosition";
 
     return roles;
 }

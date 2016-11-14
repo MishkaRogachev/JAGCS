@@ -19,6 +19,23 @@ MapView {
     }
 
     MapItemView {
+        id: homePositions
+        model: vehicleModel
+        delegate: MapQuickItem {
+            anchorPoint.x: homeImage.width / 2
+            anchorPoint.y: homeImage.height / 2
+            coordinate: homePosition
+
+            sourceItem: Image {
+                id: homeImage
+                anchors.centerIn: parent
+                rotation: direction
+                source: "qrc:/indicators/plane_map_mark.svg"
+            }
+        }
+    }
+
+    MapItemView {
         id: vehicles
         model: vehicleModel
         delegate: MapQuickItem {

@@ -19,7 +19,8 @@ namespace presentation
             PositionRole = Qt::UserRole + 1,
             DirectionRole,
             MarkRole,
-            TrackRole
+            TrackRole,
+            HomePositionRole
         };
 
         VehicleMapItemModel(QObject* parent = nullptr);
@@ -37,6 +38,7 @@ namespace presentation
     private slots:
         void onVehicleNavigationChanged();
         void onVehicleAttitudeChanged();
+        void onVehicleHomePositionChanged();
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
