@@ -7,6 +7,8 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "mavlink_protocol_helpers.h"
+
 using namespace domain;
 
 GlobalPositionHandler::GlobalPositionHandler(VehicleService* vehicleService,
@@ -26,9 +28,9 @@ void GlobalPositionHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setNavigation(Navigation(
                                QGeoCoordinate(
-                                   double(position.lat / 1e7), // TODO: mavlink helper
-                                   double(position.lon / 1e7),
-                                   double(position.alt / 1000)),
+                                   decodeLatLon(position.lat),
+                                   decodeLatLon(position.lon),
+                                   decodeAltitude(position.alt)),
                                QVector3D(
                                    position.vx, position.vy, position.vz)));
 }

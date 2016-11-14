@@ -9,6 +9,8 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "mavlink_protocol_helpers.h"
+
 using namespace domain;
 
 HomePositionHandler::HomePositionHandler(VehicleService* vehicleService,
@@ -27,9 +29,9 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);
 
-    vehicle->setHomePosition(QGeoCoordinate(home.latitude / 1e7,
-                                            home.longitude / 1e7,
-                                            home.altitude / 1000));
+    vehicle->setHomePosition(QGeoCoordinate(decodeLatLon(home.latitude),
+                                            decodeLatLon(home.longitude),
+                                            decodeAltitude(home.altitude));
     // TODO: approach
 }
 
@@ -45,9 +47,9 @@ void HomePositionHandler::sendHomePositionSetting(
     mavlink_set_home_position_t home;
 
     // TODO: mavlink helper
-    home.latitude = position.latitude() * 1e7;
-    home.longitude = position.latitude() * 1e7;
-    home.altitude = position.altitude() * 1000;
+    home.latitude = encodeLatLon(position.latitude());
+    home.longitude = encodeLatLon(position.latitude());
+    home.altitude = encodeAltitude(position.altitude());
 
     home.approach_x = approach.x();
     home.approach_y = approach.y();
