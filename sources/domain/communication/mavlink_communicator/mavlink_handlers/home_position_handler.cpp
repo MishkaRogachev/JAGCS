@@ -35,18 +35,33 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
     // TODO: approach
 }
 
-void HomePositionHandler::sendHomePositionRequest()
+void HomePositionHandler::sendHomePositionRequest(Vehicle* vehicle)
 {
-    //TODO: MAV_CMD_GET_HOME_POSITION
+     mavlink_message_t message;
+     mavlink_command_long_t command;
+
+     command.target_system = m_vehicleService->vehileId(vehicle);
+     command.target_component = 0;
+     command.confirmation = 0;
+
+     command.command = MAV_CMD_GET_HOME_POSITION;
+
+     mavlink_msg_command_long_encode(m_communicator->systemId(),
+                                     m_communicator->componentId(),
+                                     &message, &command);
+     m_communicator->sendMessageAllLinks(message);
 }
 
-void HomePositionHandler::sendHomePositionSetting(
-        const QGeoCoordinate& position, const QVector3D& approach)
+void HomePositionHandler::sendHomePositionSetting(Vehicle* vehicle,
+                                                  const QGeoCoordinate& position,
+                                                  const QVector3D& approach)
 {
     mavlink_message_t message;
     mavlink_set_home_position_t home;
 
     // TODO: mavlink helper
+    home.target_system = m_vehicleService->vehileId(vehicle);
+
     home.latitude = encodeLatLon(position.latitude());
     home.longitude = encodeLatLon(position.latitude());
     home.altitude = encodeAltitude(position.altitude());
