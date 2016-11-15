@@ -3,6 +3,9 @@
 // MAVLink
 #include <mavlink.h>
 
+// Qt
+#include <QTimerEvent>
+
 // Internal
 #include "mavlink_communicator.h"
 
@@ -11,13 +14,23 @@
 
 #include "mavlink_protocol_helpers.h"
 
+namespace
+{
+    const int reqestInterval = 1000; // 1 Hz
+}
+
 using namespace domain;
 
 HomePositionHandler::HomePositionHandler(VehicleService* vehicleService,
                                          MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
-{}
+{
+    connect(vehicleService, &VehicleService::vehicleAdded,
+            this, &HomePositionHandler::onVehicleAdded);
+    connect(vehicleService, &VehicleService::vehicleRemoved,
+            this, &HomePositionHandler::onVehicleRemoved);
+}
 
 void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
@@ -36,14 +49,16 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                                  QVector3D(home.approach_x,
                                            home.approach_y,
                                            home.approach_z)));
+
+    m_reqestTimers[message.sysid].stop();
 }
 
-void HomePositionHandler::sendHomePositionRequest(Vehicle* vehicle)
+void HomePositionHandler::sendHomePositionRequest(uint8_t id)
 {
      mavlink_message_t message;
      mavlink_command_long_t command;
 
-     command.target_system = m_vehicleService->vehileId(vehicle);
+     command.target_system = id;
      command.target_component = 0;
      command.confirmation = 0;
 
@@ -55,14 +70,13 @@ void HomePositionHandler::sendHomePositionRequest(Vehicle* vehicle)
      m_communicator->sendMessageAllLinks(message);
 }
 
-void HomePositionHandler::sendHomePositionSetting(Vehicle* vehicle,
+void HomePositionHandler::sendHomePositionSetting(uint8_t id,
                                                   const Position& position)
 {
     mavlink_message_t message;
     mavlink_set_home_position_t home;
 
-    // TODO: mavlink helper
-    home.target_system = m_vehicleService->vehileId(vehicle);
+    home.target_system = id;
 
     home.latitude = encodeLatLon(position.coordinate().latitude());
     home.longitude = encodeLatLon(position.coordinate().latitude());
@@ -77,4 +91,27 @@ void HomePositionHandler::sendHomePositionSetting(Vehicle* vehicle,
                                          &message, &home);
 
     m_communicator->sendMessageAllLinks(message);
+}
+
+void HomePositionHandler::timerEvent(QTimerEvent* event)
+{
+    for (auto it = m_reqestTimers.begin(); it != m_reqestTimers.end(); ++it)
+    {
+        if (it.value().timerId() != event->timerId()) continue;
+
+        this->sendHomePositionRequest(it.key());
+        return;
+    }
+}
+
+void HomePositionHandler::onVehicleAdded(uint8_t id)
+{
+    this->sendHomePositionRequest(id);
+
+    m_reqestTimers[id].start(::reqestInterval, this);
+}
+
+void HomePositionHandler::onVehicleRemoved(uint8_t id)
+{
+    m_reqestTimers.remove(id);
 }

@@ -1,12 +1,16 @@
 #ifndef HOME_POSITION_HANDLER_H
 #define HOME_POSITION_HANDLER_H
 
+// Qt
+#include <QMap>
+#include <QBasicTimer>
+
+// Internal
 #include "abstract_mavlink_handler.h"
 
 namespace domain
 {
     class VehicleService;
-    class Vehicle;
     class Position;
 
     class HomePositionHandler: public AbstractMavLinkHandler
@@ -18,11 +22,19 @@ namespace domain
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void sendHomePositionRequest(Vehicle* vehicle);
-        void sendHomePositionSetting(Vehicle* vehicle, const Position& position);
+        void sendHomePositionRequest(uint8_t id);
+        void sendHomePositionSetting(uint8_t id, const Position& position);
+
+    protected:
+        void timerEvent(QTimerEvent* event);
+
+    private slots:
+        void onVehicleAdded(uint8_t id);
+        void onVehicleRemoved(uint8_t id);
 
     private:
-        VehicleService* m_vehicleService;
+        VehicleService* const m_vehicleService;
+        QMap<uint8_t, QBasicTimer> m_reqestTimers;
     };
 }
 
