@@ -19,12 +19,12 @@ GlobalPositionHandler::GlobalPositionHandler(VehicleService* vehicleService,
 
 void GlobalPositionHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT_COV) return;
+    if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
-    mavlink_global_position_int_cov_t position;
-    mavlink_msg_global_position_int_cov_decode(&message, &position);
+    mavlink_global_position_int_t position;
+    mavlink_msg_global_position_int_decode(&message, &position);
 
     vehicle->setPosition(Position(
                                QGeoCoordinate(
