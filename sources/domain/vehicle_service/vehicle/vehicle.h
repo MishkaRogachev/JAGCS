@@ -99,6 +99,8 @@ namespace domain
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
 
+        void setHome(const Position& homePosition);
+
     private:
         Type m_type;
         State m_state;

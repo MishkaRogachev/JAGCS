@@ -5,6 +5,7 @@
 
 // Qt
 #include <QTimerEvent>
+#include <QDebug>
 
 // Internal
 #include "mavlink_communicator.h"
@@ -70,16 +71,18 @@ void HomePositionHandler::sendHomePositionRequest(uint8_t id)
      m_communicator->sendMessageAllLinks(message);
 }
 
-void HomePositionHandler::sendHomePositionSetting(uint8_t id,
-                                                  const Position& position)
+void HomePositionHandler::sendHomePositionSetting(const Position& position)
 {
+    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
+    if (!vehicle) return;
+
     mavlink_message_t message;
     mavlink_set_home_position_t home;
 
-    home.target_system = id;
+    home.target_system = m_vehicleService->vehileId(vehicle);
 
     home.latitude = encodeLatLon(position.coordinate().latitude());
-    home.longitude = encodeLatLon(position.coordinate().latitude());
+    home.longitude = encodeLatLon(position.coordinate().longitude());
     home.altitude = encodeAltitude(position.coordinate().altitude());
 
     home.approach_x = position.vector().x();
@@ -107,6 +110,11 @@ void HomePositionHandler::timerEvent(QTimerEvent* event)
 void HomePositionHandler::onVehicleAdded(uint8_t id)
 {
     this->sendHomePositionRequest(id);
+
+    Vehicle* vehicle = m_vehicleService->vehicle(id);
+
+    connect(vehicle, &Vehicle::setHome,
+            this, &HomePositionHandler::sendHomePositionSetting);
 
     m_reqestTimers[id].start(::reqestInterval, this);
 }

@@ -16,7 +16,7 @@ namespace domain
 
     public:
         Position(const QGeoCoordinate& coordinate = QGeoCoordinate(),
-                 const QVector3D& vector = QVector3D(0.0, 0.0, 0.0));
+                 const QVector3D& vector = QVector3D());
 
         const QGeoCoordinate& coordinate() const;
         const QVector3D& vector() const;

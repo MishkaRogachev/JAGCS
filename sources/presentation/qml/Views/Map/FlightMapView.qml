@@ -7,6 +7,10 @@ MapView {
 
     property var vehicleModel
 
+    signal setHome(var coordinate)
+
+    property bool settingHome: false
+
     MapItemView {
         id: tracks
         model: vehicleModel
@@ -36,6 +40,7 @@ MapView {
     MapItemView {
         id: vehicles
         model: vehicleModel
+        autoFitViewport: true
         delegate: MapQuickItem {
             anchorPoint.x: markItem.width / 2
             anchorPoint.y: markItem.height / 2
@@ -54,5 +59,21 @@ MapView {
                 }
             }
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onPressed: {
+            if (settingHome) {
+                setHome(root.toCoordinate(Qt.point(mouseX, mouseY), true));
+                settingHome = false;
+            }
+        }
+    }
+
+    MapActions {
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 7
     }
 }

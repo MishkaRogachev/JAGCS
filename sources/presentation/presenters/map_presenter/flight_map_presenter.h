@@ -5,26 +5,28 @@
 
 namespace domain
 {
-    class Vehicle;
+    class VehicleService;
 }
 
 namespace presentation
 {
-    // TODO: routes
     class FlightMapPresenter: public MapPresenter
     {
         Q_OBJECT
 
     public:
-        FlightMapPresenter(QObject* parent = nullptr);
+        explicit FlightMapPresenter(domain::VehicleService* vehicleService,
+                                    QObject* parent = nullptr);
         ~FlightMapPresenter() override;
-
-    public slots:
-        void addVehicle(domain::Vehicle* vehicle);
-        void removeVehicle(domain::Vehicle* vehicle);
 
     protected:
         void connectView(QObject* view) override;
+
+    private slots:
+        void onVehicleAdded(uint8_t id);
+        void onVehicleRemoved(uint8_t id);
+
+        void onSetHome(const QVariant& position);
 
     private:
         class Impl;

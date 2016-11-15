@@ -23,7 +23,7 @@ namespace domain
         void processMessage(const mavlink_message_t& message) override;
 
         void sendHomePositionRequest(uint8_t id);
-        void sendHomePositionSetting(uint8_t id, const Position& position);
+        void sendHomePositionSetting(const Position& position);
 
     protected:
         void timerEvent(QTimerEvent* event);

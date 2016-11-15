@@ -33,7 +33,7 @@ FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
     d->vehicleService = vehicleService;
 
     d->video = new VideoPresenter(this);
-    d->map = new FlightMapPresenter(this);
+    d->map = new FlightMapPresenter(vehicleService, this);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &FlightPresenter::onVehicleAdded);
@@ -68,7 +68,6 @@ void FlightPresenter::onVehicleAdded(uint8_t id)
 {
     d->vehiclesAlias[id] = tr("MAV %1").arg(id);
 
-    d->map->addVehicle(d->vehicleService->vehicle(id));
     if (m_view) this->updateVehicles();
 }
 
@@ -76,7 +75,6 @@ void FlightPresenter::onVehicleRemoved(uint8_t id)
 {
     d->vehiclesAlias.remove(id);
 
-    d->map->removeVehicle(d->vehicleService->vehicle(id));
     if (m_view) this->updateVehicles();
 }
 
