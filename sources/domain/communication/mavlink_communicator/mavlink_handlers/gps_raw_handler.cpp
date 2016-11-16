@@ -44,9 +44,11 @@ void GpsRawHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_gps_raw_int_decode(&message, &gps);
 
     vehicle->setGps(Gps(::gpdFixFromFixType(gps.fix_type),
+                        gps.satellites_visible < 255 ?
+                            gps.satellites_visible : -1,
                         QGeoCoordinate(decodeLatLon(gps.lat),
                                        decodeLatLon(gps.lon),
-                                       decodeAltitude(gps.alt))));
-
-    //TODO: HDOP, VDOP,
+                                       decodeAltitude(gps.alt)),
+                        gps.eph,
+                        gps.epv));
 }
