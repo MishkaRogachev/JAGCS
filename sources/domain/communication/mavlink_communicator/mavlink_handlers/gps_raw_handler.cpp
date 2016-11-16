@@ -7,7 +7,26 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "mavlink_protocol_helpers.h"
+
 using namespace domain;
+
+namespace
+{
+    Gps::Fix gpdFixFromFixType(uint8_t fixType)
+    {
+        switch (fixType) {
+        case GPS_FIX_TYPE_NO_GPS:
+        default: return Gps::NoGps;
+        case GPS_FIX_TYPE_NO_FIX: return Gps::NoFix;
+        case GPS_FIX_TYPE_2D_FIX: return Gps::Fix2D;
+        case GPS_FIX_TYPE_3D_FIX:
+        case GPS_FIX_TYPE_DGPS:
+        case GPS_FIX_TYPE_RTK_FLOAT:
+        case GPS_FIX_TYPE_RTK_FIXED: return Gps::Fix3D;
+        }
+    }
+}
 
 GpsRawHandler::GpsRawHandler(VehicleService* vehicleService,
                              MavLinkCommunicator* communicator):
@@ -24,5 +43,10 @@ void GpsRawHandler::processMessage(const mavlink_message_t& message)
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);
 
-    //TODO: raw navigation vehicle->
+    vehicle->setGps(Gps(::gpdFixFromFixType(gps.fix_type),
+                        QGeoCoordinate(decodeLatLon(gps.lat),
+                                       decodeLatLon(gps.lon),
+                                       decodeAltitude(gps.alt))));
+
+    //TODO: HDOP, VDOP,
 }

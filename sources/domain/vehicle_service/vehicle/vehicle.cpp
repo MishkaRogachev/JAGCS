@@ -41,6 +41,11 @@ Position Vehicle::homePosition() const
     return m_homePosition;
 }
 
+Gps Vehicle::gps() const
+{
+    return m_gps;
+}
+
 float Vehicle::trueAirSpeed() const
 {
     return m_trueAirSpeed;
@@ -112,6 +117,14 @@ void Vehicle::setHomePosition(const Position& homePosition)
 
     m_homePosition = homePosition;
     emit homePositionChanged(homePosition);
+}
+
+void Vehicle::setGps(const Gps& gps)
+{
+    if (m_gps == gps) return;
+
+    m_gps = gps;
+    emit gpsChanged(gps);
 }
 
 void Vehicle::setTrueAirSpeed(float trueAirSpeed)
