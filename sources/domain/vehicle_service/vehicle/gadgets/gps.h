@@ -10,6 +10,12 @@ namespace domain
     {
         Q_GADGET
 
+        Q_PROPERTY(Fix fix READ fix CONSTANT)
+        Q_PROPERTY(int satellitesVisible READ satellitesVisible CONSTANT)
+        Q_PROPERTY(QGeoCoordinate coordinate READ coordinate CONSTANT)
+        Q_PROPERTY(int eph READ eph CONSTANT)
+        Q_PROPERTY(int epv READ epv CONSTANT)
+
     public:
         enum Fix
         {

@@ -13,6 +13,7 @@ ApplicationWindow {
     visibility: "Maximized"
     visible: true
 
+    // TODO: modes(e.g Flight, Misson, Settings)
     property Palette palette: Palette {
         property color trackColor: "#E74C3C"
     }

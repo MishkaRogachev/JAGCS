@@ -7,6 +7,7 @@
         <file>Indicators/PitchScale.qml</file>
         <file>Indicators/RollScale.qml</file>
         <file>Indicators/FlightDirector.qml</file>
+        <file>Indicators/ColoredIcon.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/ConnectionStatusView.qml</file>

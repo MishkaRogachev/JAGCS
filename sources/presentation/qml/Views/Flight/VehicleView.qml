@@ -9,6 +9,7 @@ ColumnLayout {
 
     property QtObject vehicle
 
+    // TODO: MVP
     FlightDirector {
         id: flightDirector
         Layout.preferredWidth: parent.width
@@ -19,6 +20,34 @@ ColumnLayout {
         velocity: vehicle ? vehicle.trueAirSpeed : 0.0
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
     }
+
+    RowLayout {
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        ColoredIcon {
+            source: "qrc:/icons/gps.svg"
+            color: {
+                if (!vehicle) return palette.disabledColor;
+
+                switch (vehicle.gps.fix) {
+                case 0: return palette.disabledColor;
+                case 1: return palette.negativeColor;
+                case 2: return palette.neutralColor;
+                default: return palette.positiveColor;
+                }
+            }
+
+            Text {
+                text: vehicle && vehicle.gps.satellitesVisible > 0 ?
+                          vehicle.gps.satellitesVisible : "-"
+                font.pixelSize: parent.height / 4
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                color: parent.color
+            }
+        }
+    }
+
     // TODO: tools
 
 }
