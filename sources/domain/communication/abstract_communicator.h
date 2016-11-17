@@ -13,8 +13,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        AbstractCommunicator(VehicleService* vehicleService,
-                             QObject* parent);
+        AbstractCommunicator(QObject* parent);
 
         QList<AbstractLink*> links() const;
 
@@ -34,7 +33,6 @@ namespace domain
         virtual void onDataReceived(const QByteArray& data) = 0;
 
     protected:
-        VehicleService* const m_vehicleService;
         QList<AbstractLink*> m_links;
     };
 }

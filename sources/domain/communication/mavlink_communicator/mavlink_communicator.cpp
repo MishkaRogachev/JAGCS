@@ -15,15 +15,6 @@
 
 #include "abstract_link.h"
 
-#include "heartbeat_handler.h"
-#include "ping_handler.h"
-#include "attitude_handler.h"
-#include "global_position_handler.h"
-#include "gps_raw_handler.h"
-#include "system_status_handler.h"
-#include "vfr_hud_handler.h"
-#include "home_position_handler.h"
-
 #include "vehicle_service.h"
 
 // TODO: multiplexing
@@ -36,16 +27,13 @@ public:
     uint8_t systemId;
     uint8_t componentId;
 
-    QList<AbstractMavLinkHandler*> handlers;
-
     QMap<AbstractLink*, uint8_t> linkChannels;
     QList<uint8_t> avalibleChannels;
     AbstractLink* receivedLink = nullptr;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
-                                         QObject* parent):
-    AbstractCommunicator(vehicleService, parent),
+MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
+    AbstractCommunicator(parent),
     d(new Impl())
 {
     qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
@@ -54,16 +42,6 @@ MavLinkCommunicator::MavLinkCommunicator(VehicleService* vehicleService,
                       connection_settings::systemId).toUInt();
     d->componentId = SettingsProvider::value(
                          connection_settings::componentId).toUInt();
-
-    // TODO: MavLinkCommunicatorFactory
-    d->handlers.append(new HeartbeatHandler(vehicleService, this));
-    d->handlers.append(new PingHandler(this));
-    d->handlers.append(new AttitudeHandler(vehicleService, this));
-    d->handlers.append(new GlobalPositionHandler(vehicleService, this));
-    d->handlers.append(new GpsRawHandler(vehicleService, this));
-    d->handlers.append(new SystemStatusHandler(this));
-    d->handlers.append(new VfrHudHandler(vehicleService, this));
-    d->handlers.append(new HomePositionHandler(vehicleService, this));
 
     for (uint8_t channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
         d->avalibleChannels.append(channel);

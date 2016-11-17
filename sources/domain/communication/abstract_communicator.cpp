@@ -5,10 +5,8 @@
 
 using namespace domain;
 
-AbstractCommunicator::AbstractCommunicator(VehicleService* vehicleService,
-                                           QObject* parent):
-    QObject(parent),
-    m_vehicleService(vehicleService)
+AbstractCommunicator::AbstractCommunicator(QObject* parent):
+    QObject(parent)
 {}
 
 QList<AbstractLink*> AbstractCommunicator::links() const

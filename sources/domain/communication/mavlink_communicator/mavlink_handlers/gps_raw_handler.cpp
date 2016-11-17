@@ -32,7 +32,7 @@ GpsRawHandler::GpsRawHandler(VehicleService* vehicleService,
                              MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
-{}
+{} // TODO: rename to gps handler, handle GPS_STATUS
 
 void GpsRawHandler::processMessage(const mavlink_message_t& message)
 {
