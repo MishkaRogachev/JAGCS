@@ -146,6 +146,7 @@ Frame {
             Button {
                 text: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
+                iconColor: palette.negativeColor
                 enabled: link
                 onClicked: requestRemoveLink(link)
             }

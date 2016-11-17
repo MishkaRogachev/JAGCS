@@ -31,6 +31,7 @@ ToolBar {
         Button {
             // text: qsTr("Quit")
             iconSource: "qrc:/icons/quit.svg"
+            iconColor: palette.negativeColor
             anchors.verticalCenter: parent.verticalCenter
             onClicked: quit()
         }
