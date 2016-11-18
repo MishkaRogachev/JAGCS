@@ -5,35 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64"
-   height="64"
-   viewBox="0 0 64 64"
-   id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="unknown_mark.svg">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     id="namedview9"
-     showgrid="false"
-     inkscape:zoom="5.2149125"
-     inkscape:cx="24.75175"
-     inkscape:cy="17.08458"
-     inkscape:window-x="0"
-     inkscape:window-y="34"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="flowRoot3335" />
+   id="svg2"
+   viewBox="0 0 48 48"
+   height="48"
+   width="48">
   <defs
      id="defs4" />
   <metadata
@@ -49,12 +25,25 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-0.82324219,-1.5425362)"
+     id="flowRoot3335"
      style="font-style:normal;font-weight:normal;font-size:50px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#34495e;fill-opacity:1;stroke:#ecf0f1;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     id="flowRoot3335">
-    <path
-       d="m 33.848633,42.307185 -4.638672,0 0,-3.759766 q 0,-2.392578 0.732422,-4.052734 0.756836,-1.684571 2.807617,-3.686524 l 2.197266,-2.172851 q 1.513671,-1.44043 2.075195,-2.514649 0.585937,-1.074219 0.585937,-2.270508 0,-2.172851 -1.611328,-3.515625 -1.586914,-1.342773 -4.248047,-1.342773 -1.904296,0 -4.077148,0.854492 -2.172852,0.830078 -4.56543,2.490234 l 0,-4.589843 q 2.294922,-1.391602 4.614258,-2.075196 2.34375,-0.683593 4.882813,-0.683593 4.541015,0 7.226562,2.34375 2.709961,2.34375 2.709961,6.274414 0,1.855468 -0.830078,3.466797 -0.805664,1.586914 -3.100586,3.833007 l -2.148438,2.09961 q -1.68457,1.611328 -2.148437,2.636719 -0.463867,1.02539 -0.463867,2.514648 l 0,1.147461 0,3.00293 z m -4.809571,3.588867 4.956055,0 0,6.201172 -4.956055,0 0,-6.201172 z"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;font-family:'DejaVu Sans Mono';-inkscape-font-specification:'DejaVu Sans Mono';text-align:center;text-anchor:middle;fill:#34495e;stroke:#ecf0f1"
-       id="path3338" />
+     transform="translate(-0.82324219,-17.542536)">
+    <circle
+       r="22.258064"
+       cy="41.542538"
+       cx="24.823242"
+       id="path3334"
+       style="fill:#455a64;stroke:#fafafa;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:41.4352951px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="12.923051"
+       y="55.418617"
+       id="text3336"
+       transform="scale(0.99041036,1.0096825)"><tspan
+         id="tspan3338"
+         x="12.923051"
+         y="55.418617"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#fafafa">?</tspan></text>
   </g>
 </svg>
