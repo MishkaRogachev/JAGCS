@@ -52,7 +52,6 @@ set(LIBRARIES
 )
 
 # Sources and headrers
-file(GLOB_RECURSE MARTIAL_QML "3dparty/Martial_Style/*.qml")
 file(GLOB_RECURSE HEADERS "sources/*.h")
 file(GLOB_RECURSE SOURCES "sources/*.cpp")
 file(GLOB_RECURSE QML "sources/*.qml")

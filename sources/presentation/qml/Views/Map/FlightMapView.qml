@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
 
-import "qrc:/Martial"
+import "qrc:/Controls"
 
 MapView {
     id: root

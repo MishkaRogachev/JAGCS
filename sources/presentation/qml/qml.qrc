@@ -1,6 +1,23 @@
 <RCC>
     <qresource prefix="/">
         <file>JS/helper.js</file>
+        <file>Controls/Button.qml</file>
+        <file>Controls/ButtonBar.qml</file>
+        <file>Controls/Pane.qml</file>
+        <file>Controls/Palette.qml</file>
+        <file>Controls/ToolBar.qml</file>
+        <file>Controls/Label.qml</file>
+        <file>Controls/Menu.qml</file>
+        <file>Controls/Frame.qml</file>
+        <file>Controls/Slider.qml</file>
+        <file>Controls/ComboBox.qml</file>
+        <file>Controls/TextField.qml</file>
+        <file>Controls/ItemDelegate.qml</file>
+        <file>Controls/Popup.qml</file>
+        <file>Controls/SpinBox.qml</file>
+        <file>Controls/MenuItem.qml</file>
+        <file>Controls/ScrollBar.qml</file>
+        <file>Controls/ColoredIcon.qml</file>
         <file>Indicators/Horizont.qml</file>
         <file>Indicators/PlaneMark.qml</file>
         <file>Indicators/LinearScale.qml</file>
