@@ -11,7 +11,28 @@ class VehicleMapItemModel::Impl
 {
 public:
     QList<domain::Vehicle*> vehicles;
-    QMap<domain::Vehicle*, QVariantList> tracks; // TODO: Rammer-Duglas-Pecker polyline simplification
+    QMap<domain::Vehicle*, QVariantList> tracks;
+    // TODO: Rammer-Duglas-Pecker polyline simplification
+
+    QUrl vehicleTypeToMark(domain::Vehicle::Type type)
+    {
+        switch (type) {
+        case domain::Vehicle::FixedWingAircraft:
+            return QUrl("qrc:/indicators/plane_map_mark.svg");
+        case domain::Vehicle::UnknownType:
+        default:
+            return QUrl("qrc:/indicators/unknown_mark.svg");
+        }
+    }
+
+    // TODO: vehicle State To Color
+    /*Boot,
+    Calibrating,
+    Standby,
+    Active,
+    Critical,
+    Emergency,
+    PowerOff*/
 };
 
 VehicleMapItemModel::VehicleMapItemModel(QObject* parent):
@@ -43,8 +64,9 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     case DirectionRole:
         return vehicle->attitude().yaw();
     case MarkRole:
-        return QUrl("qrc:/indicators/plane_map_mark.svg");
-        // TODO: vehicle mark
+        return d->vehicleTypeToMark(vehicle->type());
+    case VehicleIdRole:
+        return d->vehicles.indexOf(vehicle); // TODO: vehicle id
     case TrackRole:
         return d->tracks[vehicle];
     case HomePositionRole:
@@ -64,6 +86,10 @@ void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     d->vehicles.append(vehicle);
 
+    connect(vehicle, &domain::Vehicle::typeChanged,
+            this, &VehicleMapItemModel::onVehicleTypeChanged);
+    connect(vehicle, &domain::Vehicle::stateChanged,
+            this, &VehicleMapItemModel::onVehicleStateChanged);
     connect(vehicle, &domain::Vehicle::attitudeChanged,
             this, &VehicleMapItemModel::onVehicleAttitudeChanged);
     connect(vehicle, &domain::Vehicle::positionChanged,
@@ -86,6 +112,18 @@ void VehicleMapItemModel::removeVehicle(domain::Vehicle* vehicle)
     disconnect(vehicle, 0, this, 0);
 
     this->endRemoveRows();
+}
+
+void VehicleMapItemModel::onVehicleTypeChanged()
+{
+    QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
+                                               this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { MarkRole });
+}
+
+void VehicleMapItemModel::onVehicleStateChanged()
+{
+    // TODO: handle state
 }
 
 void VehicleMapItemModel::onVehiclePositionChanged()
@@ -119,6 +157,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[PositionRole] = "position";
     roles[DirectionRole] = "direction";
     roles[MarkRole] = "mark";
+    roles[VehicleIdRole] = "vehicleId";
     roles[TrackRole] = "track";
     roles[HomePositionRole] = "homePosition";
 

@@ -19,6 +19,7 @@ namespace presentation
             PositionRole = Qt::UserRole + 1,
             DirectionRole,
             MarkRole,
+            VehicleIdRole,
             TrackRole,
             HomePositionRole
         };
@@ -36,6 +37,8 @@ namespace presentation
         void removeVehicle(domain::Vehicle* vehicle);
 
     private slots:
+        void onVehicleTypeChanged();
+        void onVehicleStateChanged();
         void onVehicleAttitudeChanged();
         void onVehiclePositionChanged();
         void onVehicleHomePositionChanged();

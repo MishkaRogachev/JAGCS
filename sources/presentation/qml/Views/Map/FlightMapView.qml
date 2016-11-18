@@ -2,6 +2,8 @@ import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
 
+import "qrc:/Martial"
+
 MapView {
     id: root
 
@@ -42,20 +44,24 @@ MapView {
         model: vehicleModel
         autoFitViewport: true
         delegate: MapQuickItem {
-            anchorPoint.x: markItem.width / 2
-            anchorPoint.y: markItem.height / 2
             coordinate: position
 
             sourceItem: Item {
                 id: markItem
-                width: markImage.sourceSize.width
-                height: markImage.sourceSize.height
 
-                Image {
+                ColoredIcon {
                     id: markImage
                     anchors.centerIn: parent
                     rotation: direction
                     source: mark
+                }
+
+                Label {
+                    text: vehicleId
+                    anchors.centerIn: parent
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlighVCenter
                 }
             }
         }

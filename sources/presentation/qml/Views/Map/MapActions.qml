@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Martial"
 
 ColumnLayout {
+    id: root
 
     Button {
         iconSource: "qrc:/icons/home.svg"
