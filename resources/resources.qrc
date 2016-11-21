@@ -17,5 +17,6 @@
         <file>indicators/plane_map_mark.svg</file>
         <file>indicators/unknown_mark.svg</file>
         <file>indicators/home_mark.svg</file>
+        <file>icons/battery.svg</file>
     </qresource>
 </RCC>

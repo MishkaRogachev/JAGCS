@@ -47,8 +47,36 @@ ColumnLayout {
                 color: parent.color
             }
         }
-    }
 
+        ColoredIcon {
+            source: "qrc:/icons/battery.svg"
+            color: {
+                if (!vehicle) return palette.disabledColor;
+
+                if (vehicle.powerSystem.charge > 50)
+                    return palette.positiveColor;
+                if (vehicle.powerSystem.charge > 15)
+                    return palette.neutralColor;
+                return palette.negativeColor;
+            }
+
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                height: parent.height / 3
+                width: parent.width /2
+                color: parent.color
+            }
+
+            Text {
+                text: vehicle ? vehicle.powerSystem.charge : "-"
+                font.pixelSize: parent.height / 4
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: parent.color
+            }
+        }
+    }
     // TODO: tools
 
 }

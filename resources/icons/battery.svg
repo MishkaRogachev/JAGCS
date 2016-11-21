@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="36"
+   height="36"
+   id="svg4359"
+   version="1.1">
+  <defs
+     id="defs4361">
+    <clipPath
+       id="clipPath6">
+      <rect
+         id="rect8"
+         x="26.85"
+         y="220.75"
+         width="3.825"
+         height="6.375"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath10">
+      <rect
+         id="rect12"
+         x="26.966"
+         y="221.33"
+         width="2.898"
+         height="5.2160001"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath14">
+      <rect
+         id="rect16"
+         x="26.999001"
+         y="221.5"
+         width="1.876"
+         height="4.8740001"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath3025">
+      <rect
+         height="4.8740001"
+         width="1.876"
+         y="221.5"
+         x="26.999001"
+         id="rect3027"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath3021">
+      <rect
+         height="5.2160001"
+         width="2.898"
+         y="221.33"
+         x="26.966"
+         id="rect3023"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+    <clipPath
+       id="clipPath3017">
+      <rect
+         height="6.375"
+         width="3.825"
+         y="220.75"
+         x="26.85"
+         id="rect3019"
+         style="color:#bebebe;fill:#bebebe" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata4364">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="fill:#ffffff"
+     id="layer1"
+     transform="matrix(0.56551319,0,0,0.56706484,0.95258333,8.2906378)">
+    <path
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.8030534,3.4198473 0,8.2213737 -6.08549615,0 0,11.235878 6.08549615,0 0,7.947329 54.7694656,0 0,-27.4045807 z m 6.0854956,5.4809163 42.598473,0 0,16.4427484 -42.598473,0 z"
+       id="rect4152" />
+  </g>
+</svg>
