@@ -25,31 +25,13 @@ ColumnLayout {
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
 
-        ColoredIcon {
+        GpsIndicator {
             anchors.verticalCenter: parent.verticalCenter
-            source: "qrc:/icons/gps.svg"
-            color: {
-                if (!vehicle) return palette.disabledColor;
-
-                switch (vehicle.gps.fix) {
-                case 0: return palette.disabledColor;
-                case 1: return palette.negativeColor;
-                case 2: return palette.neutralColor;
-                default: return palette.positiveColor;
-                }
-            }
-
-            Text {
-                text: vehicle && vehicle.gps.satellitesVisible > 0 ?
-                          vehicle.gps.satellitesVisible : "-"
-                font.pixelSize: parent.height / 4
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                color: parent.color
-            }
+            fix: vehicle ? vehicle.gps.fix : -1
+            satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
         }
 
-        Battery {
+        BatteryIndicator {
             anchors.verticalCenter: parent.verticalCenter
             charge: vehicle ? vehicle.powerSystem.charge : -1
         }
