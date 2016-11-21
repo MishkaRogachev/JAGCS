@@ -39,5 +39,6 @@
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
         <file>Views/Settings/Connection/ConnectionItemView.qml</file>
+        <file>Indicators/Battery.qml</file>
     </qresource>
 </RCC>

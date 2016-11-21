@@ -26,6 +26,7 @@ ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
 
         ColoredIcon {
+            anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/gps.svg"
             color: {
                 if (!vehicle) return palette.disabledColor;
@@ -48,34 +49,22 @@ ColumnLayout {
             }
         }
 
-        ColoredIcon {
-            source: "qrc:/icons/battery.svg"
-            color: {
-                if (!vehicle) return palette.disabledColor;
+        Battery {
+            anchors.verticalCenter: parent.verticalCenter
+            charge: vehicle ? vehicle.powerSystem.charge : -1
+        }
 
-                if (vehicle.powerSystem.charge > 50)
-                    return palette.positiveColor;
-                if (vehicle.powerSystem.charge > 15)
-                    return palette.neutralColor;
-                return palette.negativeColor;
+        ColumnLayout {
+            anchors.verticalCenter: parent.verticalCenter
+
+            Label {
+                font.pointSize: 9
+                text: "V: " + vehicle ? vehicle.powerSystem.voltage : "-"
             }
 
-            Rectangle {
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 3
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width - 6
-                height: vehicle ? (parent.height - 16) *
-                                 vehicle.powerSystem.charge / 100 : 0
-                color: parent.color
-            }
-
-            Text {
-                text: vehicle ? vehicle.powerSystem.charge : "-"
-                font.pixelSize: parent.height / 4
-                anchors.centerIn: parent
-                anchors.verticalCenterOffset: height / 3
-                color: palette.textColor
+            Label {
+                font.pointSize: 9
+                text: "C: " + vehicle ? vehicle.powerSystem.current : "-"
             }
         }
     }
