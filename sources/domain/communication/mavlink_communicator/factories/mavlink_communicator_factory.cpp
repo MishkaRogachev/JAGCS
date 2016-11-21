@@ -28,7 +28,7 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new AttitudeHandler(m_vehicleService, communicator);
     new GlobalPositionHandler(m_vehicleService, communicator);
     new GpsRawHandler(m_vehicleService, communicator);
-    new SystemStatusHandler(communicator);
+    new SystemStatusHandler(m_vehicleService, communicator);
     new VfrHudHandler(m_vehicleService, communicator);
     new HomePositionHandler(m_vehicleService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT

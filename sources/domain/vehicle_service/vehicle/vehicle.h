@@ -5,6 +5,7 @@
 #include "attitude.h"
 #include "position.h"
 #include "gps.h"
+#include "power_system.h"
 
 namespace domain
 {
@@ -24,6 +25,8 @@ namespace domain
         Q_PROPERTY(Position homePosition READ homePosition
                    WRITE setHomePosition NOTIFY homePositionChanged)
         Q_PROPERTY(Gps gps READ gps WRITE setGps NOTIFY gpsChanged)
+        Q_PROPERTY(PowerSystem powerSystem READ powerSystem
+                   WRITE setPowerSystem NOTIFY powerSystemChanged)
 
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
@@ -65,6 +68,7 @@ namespace domain
         Position position() const;
         Position homePosition() const;
         Gps gps() const;
+        PowerSystem powerSystem() const;
 
         float trueAirSpeed() const;
         float groundSpeed() const;
@@ -81,6 +85,7 @@ namespace domain
         void setPosition(const Position& position);
         void setHomePosition(const Position& homePosition);
         void setGps(const Gps& gps);
+        void setPowerSystem(const PowerSystem& powerSystem);
 
         void setTrueAirSpeed(float trueAirSpeed);
         void setGroundSpeed(float groundSpeed);
@@ -97,6 +102,7 @@ namespace domain
         void positionChanged(Position position);
         void homePositionChanged(Position homePosition);
         void gpsChanged(Gps gps);
+        void powerSystemChanged(PowerSystem powerSystem);
 
         void trueAirSpeedChanged(float trueAirSpeed);
         void groundSpeedChanged(float groundSpeed);
@@ -115,6 +121,7 @@ namespace domain
         Position m_position;
         Position m_homePosition;
         Gps m_gps;
+        PowerSystem m_powerSystem;
 
         float m_trueAirSpeed;
         float m_groundSpeed;

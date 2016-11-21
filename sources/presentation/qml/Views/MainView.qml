@@ -14,7 +14,8 @@ ApplicationWindow {
     visible: true
 
     // TODO: modes(e.g Flight, Misson, Settings)
-    property Palette palette: Palette {
+    Palette {
+        id: palette
         property color trackColor: "#E74C3C"
     }
 

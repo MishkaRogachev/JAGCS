@@ -46,6 +46,11 @@ Gps Vehicle::gps() const
     return m_gps;
 }
 
+PowerSystem Vehicle::powerSystem() const
+{
+    return m_powerSystem;
+}
+
 float Vehicle::trueAirSpeed() const
 {
     return m_trueAirSpeed;
@@ -125,6 +130,14 @@ void Vehicle::setGps(const Gps& gps)
 
     m_gps = gps;
     emit gpsChanged(gps);
+}
+
+void Vehicle::setPowerSystem(const PowerSystem& powerSystem)
+{
+    if (m_powerSystem == powerSystem) return;
+
+    m_powerSystem = powerSystem;
+    emit powerSystemChanged(powerSystem);
 }
 
 void Vehicle::setTrueAirSpeed(float trueAirSpeed)

@@ -5,15 +5,21 @@
 
 namespace domain
 {
+    class VehicleService;
+
     class SystemStatusHandler: public AbstractMavLinkHandler
     {
         Q_OBJECT
 
     public:
-        SystemStatusHandler(MavLinkCommunicator* communicator);
+        SystemStatusHandler(VehicleService* vehicleService,
+                            MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
+
+    private:
+        VehicleService* m_vehicleService;
     };
 }
 

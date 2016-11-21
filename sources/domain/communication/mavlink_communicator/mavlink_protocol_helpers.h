@@ -24,6 +24,16 @@ namespace domain
     {
         return value / 1000;
     }
+
+    inline float decodeVoltage(uint16_t value)
+    {
+        return value / 1000;
+    }
+
+    inline float decodeCurrent(int16_t value)
+    {
+        return value / 10000;
+    }
 }
 
 #endif // MAVLINK_PROTOCOL_HELPERS_H
