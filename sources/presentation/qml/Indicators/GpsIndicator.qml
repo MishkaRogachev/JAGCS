@@ -23,6 +23,7 @@ ColoredIcon {
     Text {
         text: satellitesVisible > -1 ? satellitesVisible : "-"
         font.pixelSize: parent.height / 4
+        font.bold: true
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         color: parent.color

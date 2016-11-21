@@ -24,6 +24,7 @@ ColoredIcon {
         id: textItem
         text: charge > -1 ? charge : "-"
         font.pixelSize: parent.height / 3
+        font.bold: true
         anchors.centerIn: parent
         anchors.verticalCenterOffset: height / 4
         color: parent.color
@@ -41,6 +42,7 @@ ColoredIcon {
         Text {
             text: textItem.text
             font.pixelSize: textItem.font.pixelSize
+            font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: parent.anchors.bottomMargin
