@@ -85,12 +85,37 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="fill:#ffffff"
-     id="layer1"
-     transform="matrix(0.56551319,0,0,0.56706484,0.95258333,8.2906378)">
+     style="stroke:#ffffff"
+     transform="translate(0,4.2711864)"
+     id="g4189">
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4147"
+       width="30.355934"
+       height="21.050848"
+       x="2.8220329"
+       y="7.474576"
+       ry="2.7457631" />
     <path
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 5.8030534,3.4198473 0,8.2213737 -6.08549615,0 0,11.235878 6.08549615,0 0,7.947329 54.7694656,0 0,-27.4045807 z m 6.0854956,5.4809163 42.598473,0 0,16.4427484 -42.598473,0 z"
-       id="rect4152" />
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 8.8719444,3.5092691 c -0.591558,0 -1.1257104,0.2370399 -1.5117187,0.6230469 -0.386008,0.3860085 -0.6230469,0.9201602 -0.6230469,1.5117187 l 0,1.7998213 c 0.029548,9.32e-4 0.04639,0.03125 0.076172,0.03125 l 7.2460942,0 0,-1.8310713 c 0,-0.5915585 -0.238992,-1.1257102 -0.625,-1.5117187 -0.386008,-0.386007 -0.92016,-0.6230469 -1.511719,-0.6230469 z"
+       id="rect4147-3" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 24.443989,3.5080112 c -0.591558,0 -1.125711,0.2370398 -1.511719,0.6230468 -0.386008,0.3860085 -0.623047,0.9201603 -0.623047,1.5117188 l 0,1.8007812 c 0.02955,9.32e-4 0.04639,0.03125 0.07617,0.03125 l 7.246094,0 0,-1.8320312 c 0,-0.5915585 -0.238992,-1.1257103 -0.625,-1.5117188 C 28.62048,3.745051 28.086329,3.5080112 27.49477,3.5080112 l -3.050781,0 z"
+       id="rect4147-3-6" />
+  </g>
+  <g
+     transform="translate(-0.57730355,-0.43145499)"
+     id="text4194"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <path
+       id="path4201"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;stroke:none"
+       d="m 6.8906631,3.0440174 0,1.08 5.2499999,0 0,-1.08 -5.2499999,0 z" />
+    <path
+       id="path4203"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;stroke:none"
+       d="m 28.073944,3.0890174 0,-2.23499995 -1.17,0 0,2.23499995 -2.16,0 0,1.05 2.16,0 0,2.22 1.17,0 0,-2.22 2.19,0 0,-1.05 -2.19,0 z" />
   </g>
 </svg>

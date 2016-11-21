@@ -61,19 +61,21 @@ ColumnLayout {
             }
 
             Rectangle {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                height: parent.height / 3
-                width: parent.width /2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 3
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width - 6
+                height: vehicle ? (parent.height - 16) *
+                                 vehicle.powerSystem.charge / 100 : 0
                 color: parent.color
             }
 
             Text {
                 text: vehicle ? vehicle.powerSystem.charge : "-"
                 font.pixelSize: parent.height / 4
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: parent.color
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: height / 3
+                color: palette.textColor
             }
         }
     }
