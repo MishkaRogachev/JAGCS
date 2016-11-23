@@ -73,8 +73,7 @@ HeartbeatHandler::~HeartbeatHandler()
 
 void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 

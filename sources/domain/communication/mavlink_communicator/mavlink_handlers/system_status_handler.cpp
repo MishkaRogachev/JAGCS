@@ -19,8 +19,7 @@ SystemStatusHandler::SystemStatusHandler(VehicleService* vehicleService,
 
 void SystemStatusHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_SYS_STATUS ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_SYS_STATUS) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
@@ -30,4 +29,6 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
     vehicle->setPowerSystem(PowerSystem(decodeVoltage(status.voltage_battery),
                                         decodeCurrent(status.current_battery),
                                         status.battery_remaining));
+
+    //TODO: handle MAV_SYS_STATUS_SENSOR
 }

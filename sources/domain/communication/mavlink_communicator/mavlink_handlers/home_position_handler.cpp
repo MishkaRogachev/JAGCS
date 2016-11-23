@@ -35,8 +35,7 @@ HomePositionHandler::HomePositionHandler(VehicleService* vehicleService,
 
 void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 

@@ -17,8 +17,7 @@ VfrHudHandler::VfrHudHandler(VehicleService* vehicleService,
 
 void VfrHudHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_VFR_HUD ||
-        message.sysid == 0) return;
+    if (message.msgid != MAVLINK_MSG_ID_VFR_HUD) return;
 
     Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
 
