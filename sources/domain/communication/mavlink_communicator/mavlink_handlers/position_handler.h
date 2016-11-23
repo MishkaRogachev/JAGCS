@@ -1,5 +1,5 @@
-#ifndef GPS_RAW_HANDLER_H
-#define GPS_RAW_HANDLER_H
+#ifndef POSITION_HANDLER_H
+#define POSITION_HANDLER_H
 
 #include "abstract_mavlink_handler.h"
 
@@ -7,13 +7,13 @@ namespace domain
 {
     class VehicleService;
 
-    class GpsRawHandler: public AbstractMavLinkHandler
+    class PositionHandler: public AbstractMavLinkHandler
     {
         Q_OBJECT
 
     public:
-        GpsRawHandler(VehicleService* vehicleService,
-                      MavLinkCommunicator* communicator);
+        PositionHandler(VehicleService* vehicleService,
+                              MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
@@ -22,5 +22,4 @@ namespace domain
         VehicleService* m_vehicleService;
     };
 }
-
-#endif // GPS_RAW_HANDLER_H
+#endif // POSITION_HANDLER_H

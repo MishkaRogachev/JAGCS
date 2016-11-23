@@ -3,6 +3,9 @@
 // MAVLink
 #include <mavlink.h>
 
+// Internal
+#include "mavlink_communicator.h"
+
 using namespace domain;
 
 RcChannelsHandler::RcChannelsHandler(VehicleService* vehicleService,

@@ -1,4 +1,4 @@
-#include "gps_raw_handler.h"
+#include "gps_handler.h"
 
 // MAVLink
 #include <mavlink.h>
@@ -28,13 +28,13 @@ namespace
     }
 }
 
-GpsRawHandler::GpsRawHandler(VehicleService* vehicleService,
+GpsHandler::GpsHandler(VehicleService* vehicleService,
                              MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {} // TODO: rename to gps handler, handle GPS_STATUS
 
-void GpsRawHandler::processMessage(const mavlink_message_t& message)
+void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 

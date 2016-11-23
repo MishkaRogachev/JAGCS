@@ -1,4 +1,4 @@
-#include "global_position_handler.h"
+#include "position_handler.h"
 
 // MAVLink
 #include <mavlink.h>
@@ -11,13 +11,13 @@
 
 using namespace domain;
 
-GlobalPositionHandler::GlobalPositionHandler(VehicleService* vehicleService,
+PositionHandler::PositionHandler(VehicleService* vehicleService,
                                              MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
 
-void GlobalPositionHandler::processMessage(const mavlink_message_t& message)
+void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
