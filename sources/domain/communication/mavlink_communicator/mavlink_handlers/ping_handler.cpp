@@ -9,8 +9,7 @@
 using namespace domain;
 
 PingHandler::PingHandler(MavLinkCommunicator* communicator):
-    AbstractMavLinkHandler(communicator),
-    m_communicator(communicator)
+    AbstractMavLinkHandler(communicator)
 {}
 
 void PingHandler::processMessage(const mavlink_message_t& message)

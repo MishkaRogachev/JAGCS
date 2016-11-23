@@ -5,8 +5,6 @@
 
 namespace domain
 {
-    class MavLinkCommunicator;
-
     class PingHandler: public AbstractMavLinkHandler
     {
         Q_OBJECT
@@ -16,9 +14,6 @@ namespace domain
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
-
-    private:
-        MavLinkCommunicator* m_communicator;
     };
 }
 
