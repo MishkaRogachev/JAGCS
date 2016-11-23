@@ -5,6 +5,11 @@
 
 namespace domain
 {
+    int32_t inline hzToUs(float frequency)
+    {
+        return 1000000 / frequency;
+    }
+
     inline int32_t encodeLatLon(double value)
     {
         return value * 1e7;
