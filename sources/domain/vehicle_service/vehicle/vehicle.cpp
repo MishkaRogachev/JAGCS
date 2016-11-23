@@ -3,13 +3,22 @@
 // Qt
 #include <QDebug>
 
+// Internal
+#include "vehicle_service.h"
+
 using namespace domain;
 
-Vehicle::Vehicle(QObject* parent):
+Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     QObject(parent),
+    m_vehicleId(vehicleId),
     m_type(Vehicle::UnknownType),
     m_state(Vehicle::UnknownState)
 {}
+
+uint8_t Vehicle::vehicleId() const
+{
+    return m_vehicleId;
+}
 
 Vehicle::Type Vehicle::type() const
 {

@@ -58,7 +58,9 @@ namespace domain
             PowerOff
         };
 
-        explicit Vehicle(QObject* parent = nullptr);
+        Vehicle(uint8_t vehicleId, QObject* parent);
+
+        uint8_t vehicleId() const;
 
         Type type() const;
         State state() const;
@@ -113,6 +115,8 @@ namespace domain
         void setHome(const Position& homePosition);
 
     private:
+        uint8_t m_vehicleId;
+
         Type m_type;
         State m_state;
         bool m_autonomous;

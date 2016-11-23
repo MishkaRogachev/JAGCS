@@ -53,7 +53,7 @@ Vehicle* VehicleService::requestVehicle(uint8_t id)
 {
     if (!d->vehicles.contains(id))
     {
-        d->vehicles[id] = new Vehicle(this);
+        d->vehicles[id] = new Vehicle(id, this);
         emit vehicleAdded(id);
     }
 

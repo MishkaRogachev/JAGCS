@@ -66,7 +66,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     case MarkRole:
         return d->vehicleTypeToMark(vehicle->type());
     case VehicleIdRole:
-        return d->vehicles.indexOf(vehicle); // TODO: vehicle id
+        return vehicle->vehicleId();
     case TrackRole:
         return d->tracks[vehicle];
     case HomePositionRole:
