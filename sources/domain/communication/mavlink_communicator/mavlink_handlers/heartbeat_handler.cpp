@@ -5,6 +5,7 @@
 
 // Qt
 #include <QTimer>
+#include <QDebug>
 
 // Internal
 #include "mavlink_communicator.h"
@@ -48,11 +49,6 @@ namespace
             return Vehicle::UnknownState;
         }
     }
-
-    bool hasMavModeFlag(uint8_t mode, MAV_MODE_FLAG flag)
-    {
-        return (mode & flag);
-    }
 }
 
 HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
@@ -82,7 +78,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setType(::vehicleTypeFromMavType(heartbeat.type));
     vehicle->setState(::vehicleStateFromMavState(heartbeat.system_status));
-    vehicle->setAutonomous(::hasMavModeFlag(heartbeat.base_mode, MAV_MODE_FLAG_AUTO_ENABLED));
+    vehicle->setArmed(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
     //TODO: handle another MAV_MODE_FLAG flags
 }
 

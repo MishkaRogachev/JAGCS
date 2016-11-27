@@ -37,5 +37,7 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new RcChannelsHandler(m_vehicleService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
 
+    //TODO: autolink UDP
+
     return communicator;
 }

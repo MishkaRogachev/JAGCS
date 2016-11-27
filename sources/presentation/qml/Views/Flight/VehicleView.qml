@@ -54,19 +54,11 @@ ColumnLayout {
             }
         }
 
-        // TODO: switch
+        // TODO: delay button
         Button {
-            text: qsTr("ARM")
+            text: vehicle && vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: if (vehicle) vehicle.commandArm(true)
-        }
-
-        Button {
-            text: qsTr("DISARM")
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: if (vehicle) vehicle.commandArm(false)
+            onClicked: if (vehicle) vehicle.commandArm(!vehicle.armed)
         }
     }
-    // TODO: tools
-
 }

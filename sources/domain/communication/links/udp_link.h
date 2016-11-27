@@ -14,6 +14,7 @@ namespace domain
         Q_PROPERTY(int rxPort READ rxPort WRITE setRxPort NOTIFY rxPortChanged)
         Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
         Q_PROPERTY(int txPort READ txPort WRITE setTxPort NOTIFY txPortChanged)
+        // TODO: several addresses and txPorts
 
     public:
         UdpLink(int rxPort, const QString& address, int txPort,

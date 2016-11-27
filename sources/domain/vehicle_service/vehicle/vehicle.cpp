@@ -12,7 +12,13 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     QObject(parent),
     m_vehicleId(vehicleId),
     m_type(Vehicle::UnknownType),
-    m_state(Vehicle::UnknownState)
+    m_state(Vehicle::UnknownState),
+    m_armed(false),
+    m_trueAirSpeed(0),
+    m_groundSpeed(0),
+    m_barometricAltitude(0),
+    m_barometricClimb(0),
+    m_heading()
 {}
 
 uint8_t Vehicle::vehicleId() const
@@ -30,9 +36,9 @@ Vehicle::State Vehicle::state() const
     return m_state;
 }
 
-bool Vehicle::autonomous() const
+bool Vehicle::isArmed() const
 {
-    return m_autonomous;
+    return m_armed;
 }
 
 Attitude Vehicle::attitude() const
@@ -101,12 +107,13 @@ void Vehicle::setState(Vehicle::State state)
     emit stateChanged(state);
 }
 
-void Vehicle::setAutonomous(bool autonomous)
+void Vehicle::setArmed(bool armed)
 {
-    if (m_autonomous == autonomous) return;
+    qDebug() << armed;
+    if (m_armed == armed) return;
 
-    m_autonomous = autonomous;
-    emit autonomousChanged(autonomous);
+    m_armed = armed;
+    emit armedChanged(armed);
 }
 
 void Vehicle::setAttitude(const Attitude& attitude)

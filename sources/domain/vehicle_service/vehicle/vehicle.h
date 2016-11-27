@@ -15,8 +15,7 @@ namespace domain
 
         Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
         Q_PROPERTY(State state READ state WRITE setState NOTIFY stateChanged)
-        Q_PROPERTY(bool autonomous READ autonomous WRITE setAutonomous
-                   NOTIFY autonomousChanged)
+        Q_PROPERTY(bool armed READ isArmed WRITE setArmed NOTIFY armedChanged)
 
         Q_PROPERTY(Attitude attitude READ attitude WRITE setAttitude
                    NOTIFY attitudeChanged)
@@ -64,7 +63,7 @@ namespace domain
 
         Type type() const;
         State state() const;
-        bool autonomous() const;
+        bool isArmed() const;
 
         Attitude attitude() const;
         Position position() const;
@@ -81,7 +80,7 @@ namespace domain
     public slots:
         void setType(Type type);
         void setState(State state);
-        void setAutonomous(bool autonomous);
+        void setArmed(bool armed);
 
         void setAttitude(const Attitude& attitude);
         void setPosition(const Position& position);
@@ -98,7 +97,7 @@ namespace domain
     signals:
         void typeChanged(Type type);
         void stateChanged(State state);
-        void autonomousChanged(bool autonomous);
+        void armedChanged(bool armed);
 
         void attitudeChanged(Attitude attitude);
         void positionChanged(Position position);
@@ -120,7 +119,7 @@ namespace domain
 
         Type m_type;
         State m_state;
-        bool m_autonomous;
+        bool m_armed;
 
         Attitude m_attitude;
         Position m_position;
