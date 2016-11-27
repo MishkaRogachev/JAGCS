@@ -1,7 +1,8 @@
 #ifndef MAVLINK_PROTOCOL_HELPERS_H
 #define MAVLINK_PROTOCOL_HELPERS_H
 
-#include <cstdint>
+// Qt
+#include <QGeoCoordinate>
 
 namespace domain
 {
@@ -39,6 +40,16 @@ namespace domain
     {
         return value / 10000;
     }
+
+    inline QGeoCoordinate decodeCoordinate(int32_t lat, int32_t lon, int32_t alt)
+    {
+        if (lat == 0 && lon == 0) return QGeoCoordinate();
+
+        return QGeoCoordinate(decodeLatLon(lat), decodeLatLon(lon),
+                              decodeAltitude(alt));
+    }
+
+
 }
 
 #endif // MAVLINK_PROTOCOL_HELPERS_H

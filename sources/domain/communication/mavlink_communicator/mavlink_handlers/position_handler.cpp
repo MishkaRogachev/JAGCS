@@ -3,6 +3,9 @@
 // MAVLink
 #include <mavlink.h>
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "vehicle_service.h"
 #include "vehicle.h"
@@ -26,11 +29,8 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
 
-    vehicle->setPosition(Position(
-                               QGeoCoordinate(
-                                   decodeLatLon(position.lat),
-                                   decodeLatLon(position.lon),
-                                   decodeAltitude(position.alt)),
-                               QVector3D(
-                                   position.vx, position.vy, position.vz)));
+    vehicle->setPosition(Position(decodeCoordinate(
+                                      position.lat, position.lon, position.alt),
+                                  QVector3D(
+                                      position.vx, position.vy, position.vz)));
 }
