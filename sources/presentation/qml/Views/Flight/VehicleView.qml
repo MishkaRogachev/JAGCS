@@ -53,6 +53,19 @@ ColumnLayout {
                       " " + qsTr("A")
             }
         }
+
+        // TODO: switch
+        Button {
+            text: qsTr("ARM")
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: if (vehicle) vehicle.commandArm(true)
+        }
+
+        Button {
+            text: qsTr("DISARM")
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: if (vehicle) vehicle.commandArm(false)
+        }
     }
     // TODO: tools
 

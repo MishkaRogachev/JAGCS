@@ -112,6 +112,7 @@ namespace domain
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
 
+        void commandArm(bool arm);
         void setHome(const Position& homePosition);
 
     private:

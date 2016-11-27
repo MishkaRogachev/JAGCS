@@ -111,7 +111,6 @@ void HomePositionHandler::onVehicleAdded(uint8_t id)
     this->sendHomePositionRequest(id);
 
     Vehicle* vehicle = m_vehicleService->vehicle(id);
-
     connect(vehicle, &Vehicle::setHome,
             this, &HomePositionHandler::sendHomePositionSetting);
 

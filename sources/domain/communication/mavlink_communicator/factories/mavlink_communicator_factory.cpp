@@ -10,6 +10,7 @@
 #include "gps_handler.h"
 #include "system_status_handler.h"
 #include "vfr_hud_handler.h"
+#include "command_handler.h"
 #include "home_position_handler.h"
 #include "rc_channels_handler.h"
 
@@ -31,6 +32,7 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new GpsHandler(m_vehicleService, communicator);
     new SystemStatusHandler(m_vehicleService, communicator);
     new VfrHudHandler(m_vehicleService, communicator);
+    new CommandHandler(m_vehicleService, communicator);
     new HomePositionHandler(m_vehicleService, communicator);
     new RcChannelsHandler(m_vehicleService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
