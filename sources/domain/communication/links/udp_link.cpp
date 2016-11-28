@@ -25,7 +25,7 @@ int UdpLink::port() const
     return m_port;
 }
 
-QList<Endpoint> UdpLink::endpoints() const
+EndpointList UdpLink::endpoints() const
 {
     return m_endpoints;
 }
@@ -33,6 +33,16 @@ QList<Endpoint> UdpLink::endpoints() const
 bool UdpLink::autoResponse() const
 {
     return m_autoResponse;
+}
+
+int UdpLink::count() const
+{
+    return m_endpoints.count();
+}
+
+Endpoint UdpLink::endpoint(int index) const
+{
+    return m_endpoints.at(index);
 }
 
 void UdpLink::up()

@@ -89,7 +89,7 @@ ColumnLayout {
                 id: repeater
                 model: links
 
-                ConnectionItemView {
+                LinkView {
                     Layout.fillWidth: true
                     link: modelData
                 }

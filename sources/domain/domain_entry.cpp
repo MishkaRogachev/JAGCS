@@ -11,6 +11,8 @@
 #include "mavlink_communicator.h"
 #include "mavlink_communicator_factory.h"
 
+#include "endpoint.h"
+
 using namespace domain;
 
 class DomainEntry::Impl
@@ -23,6 +25,9 @@ public:
 DomainEntry::DomainEntry():
     d(new Impl())
 {
+    qRegisterMetaType<Endpoint>("Endpoint");
+    qRegisterMetaType<EndpointList> ("EndpointList");
+
     MavLinkCommunicatorFactory factory(&d->vehicleService);
     d->communicator.reset(factory.create());
 }

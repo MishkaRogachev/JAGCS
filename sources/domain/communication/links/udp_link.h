@@ -14,7 +14,7 @@ namespace domain
         Q_OBJECT
 
         Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
-        Q_PROPERTY(QList<Endpoint> endpoints READ endpoints NOTIFY endpointsChanged)
+        Q_PROPERTY(EndpointList endpoints READ endpoints NOTIFY endpointsChanged)
         Q_PROPERTY(bool autoResponse READ autoResponse WRITE setAutoResponse NOTIFY autoResponseChanged)
 
     public:
@@ -23,8 +23,11 @@ namespace domain
         bool isUp() const override;
 
         int port() const;
-        QList<Endpoint> endpoints() const;
+        EndpointList endpoints() const;
         bool autoResponse() const;
+
+        Q_INVOKABLE int count() const;
+        Q_INVOKABLE Endpoint endpoint(int index) const; // TODO: link and endpoint presenters
 
     public slots:
         void up() override;
@@ -39,7 +42,7 @@ namespace domain
 
     signals:
         void portChanged(int port);
-        void endpointsChanged(const QList<Endpoint>& endpoints);
+        void endpointsChanged(const EndpointList& endpoints);
         void autoResponseChanged(bool autoResponse);
 
     private slots:
@@ -48,7 +51,7 @@ namespace domain
     private:
         QUdpSocket* m_socket;
         int m_port;
-        QList<Endpoint> m_endpoints;
+        EndpointList m_endpoints;
         bool m_autoResponse;
     };
 }

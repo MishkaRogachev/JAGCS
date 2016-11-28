@@ -31,5 +31,7 @@ namespace domain
         QHostAddress m_address;
         quint16 m_port;
     };
+
+    using EndpointList = QList<Endpoint>;
 }
 #endif // ENDPOINT_H
