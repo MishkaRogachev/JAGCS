@@ -22,31 +22,32 @@ Frame {
         RowLayout {
 
             Label {
-                text: qsTr("Serial device")
-                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                text: qsTr("Serial device")
                 visible: serialDevice.visible
             }
 
             ComboBox {
                 id: serialDevice
+                Layout.fillWidth: true
                 visible: link ? 'portName' in link : false
                 model: serialDevices
-                currentIndex: link && 'portName' in link ?
-                                  model.indexOf(link.portName) : 0
+                currentIndex: visible ? model.indexOf(link.portName) : 0
                 onCurrentIndexChanged: if (link && 'portName' in link)
                                            link.setPortName(model[currentIndex])
             }
 
             Label {
-                text: qsTr("Baud rate")
-                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                text: qsTr("Baud rate")
                 visible: baudRates.visible
             }
 
             ComboBox {
                 id: baudRates
+                Layout.fillWidth: true
                 visible: link ? 'baudRate' in link : false
                 model: serialBaudRates
                 currentIndex: link && 'baudRate' in link ?
@@ -56,20 +57,28 @@ Frame {
             }
 
             Label {
-                text: qsTr("Port")
-                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                text: qsTr("Port")
                 visible: port.visible
             }
 
             SpinBox {
                 id: port
+                Layout.fillWidth: true
                 visible: link ? 'port' in link : false
                 editable: true
                 from: 0
                 to: 99999
-                value: link && 'port' in link ? link.port : 0
-                onValueChanged: if (link) link.setPort(value)
+                value: visible ? link.port : 0
+                onValueChanged: link.setPort(value)
+            }
+
+            CheckBox {
+                visible: link ? 'autoResponse' in link : false
+                text: qsTr("Auto response")
+                checked: visible ? link.autoResponse : false
+                onCheckedChanged: link.setAutoResponse(checked)
             }
         }
 

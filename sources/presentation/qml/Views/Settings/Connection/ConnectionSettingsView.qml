@@ -24,13 +24,13 @@ ColumnLayout {
     Frame {
         Layout.fillWidth: true
 
-        GridLayout {
+        RowLayout {
             anchors.fill: parent
-            columns: 2
 
             Label {
                 text: qsTr("System ID")
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
             }
 
             SpinBox {
@@ -44,6 +44,7 @@ ColumnLayout {
             Label {
                 text: qsTr("Component ID")
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
             }
 
             SpinBox {
