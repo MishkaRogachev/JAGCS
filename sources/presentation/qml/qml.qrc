@@ -3,6 +3,7 @@
         <file>JS/helper.js</file>
         <file>Controls/Button.qml</file>
         <file>Controls/ButtonBar.qml</file>
+        <file>Controls/CheckBox.qml</file>
         <file>Controls/Pane.qml</file>
         <file>Controls/Palette.qml</file>
         <file>Controls/ToolBar.qml</file>

@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/">
+        <file>ui/menu_arrow.svg</file>
+        <file>ui/ok.svg</file>
+        <file>ui/plus.svg</file>
+        <file>ui/minus.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/quit.svg</file>
-        <file>icons/plus.svg</file>
-        <file>icons/minus.svg</file>
         <file>icons/map-marker.svg</file>
         <file>icons/fit.svg</file>
         <file>icons/remove.svg</file>
@@ -14,9 +16,9 @@
         <file>icons/tx.svg</file>
         <file>icons/home.svg</file>
         <file>icons/gps.svg</file>
+        <file>icons/battery.svg</file>
         <file>indicators/plane_map_mark.svg</file>
         <file>indicators/unknown_mark.svg</file>
         <file>indicators/home_mark.svg</file>
-        <file>icons/battery.svg</file>
     </qresource>
 </RCC>

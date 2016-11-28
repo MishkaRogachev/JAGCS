@@ -41,7 +41,7 @@ SpinBox {
         Image {
             anchors.centerIn: parent
             opacity: enabled ? 1 : 0.5
-            source: "qrc:/icons/minus.svg"
+            source: "qrc:/ui/minus.svg"
         }
     }
 
@@ -55,7 +55,7 @@ SpinBox {
         Image {
             anchors.centerIn: parent
             opacity: enabled ? 1 : 0.5
-            source: "qrc:/icons/plus.svg"
+            source: "qrc:/ui/plus.svg"
         }
     }
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   height="38.4pt"
+   width="38.4pt">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3775">
+      <stop
+         id="stop3795"
+         offset="0"
+         style="stop-color:#f2f3f4;stop-opacity:1;" />
+      <stop
+         id="stop3781"
+         offset="1"
+         style="stop-color:#b6bcc1;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3767">
+      <stop
+         id="stop3769"
+         offset="0"
+         style="stop-color:#bdc3c7;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#bdc3c7;stop-opacity:0.24705882;"
+         offset="0.5"
+         id="stop3771" />
+      <stop
+         style="stop-color:#bdc3c7;stop-opacity:0;"
+         offset="1"
+         id="stop3773" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3755">
+      <stop
+         style="stop-color:#bdc3c7;stop-opacity:0.49803922;"
+         offset="0"
+         id="stop3763" />
+      <stop
+         id="stop3765"
+         offset="0.5"
+         style="stop-color:#bdc3c7;stop-opacity:0.24705882;" />
+      <stop
+         id="stop3759"
+         offset="1"
+         style="stop-color:#bdc3c7;stop-opacity:0;" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1">
+    <path
+       transform="translate(8.42209,8.24325)"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0"
+       d="M 39.4012,39.5212 0,39.5212 39.5212,0 Z"
+       id="shape0" />
+  </g>
+</svg>
