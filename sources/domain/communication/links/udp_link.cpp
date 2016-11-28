@@ -5,13 +5,11 @@
 
 using namespace domain;
 
-UdpLink::UdpLink(int rxPort, const QString& address, int txPort,
-                 QObject* parent):
+UdpLink::UdpLink(int port, QObject* parent):
     AbstractLink(parent),
     m_socket(new QUdpSocket(this)),
-    m_rxPort(rxPort),
-    m_address(address),
-    m_txPort(txPort)
+    m_port(port),
+    m_autoResponse(true)
 {
     QObject::connect(m_socket, &QUdpSocket::readyRead,
                      this, &UdpLink::readPendingDatagrams);
@@ -22,26 +20,26 @@ bool UdpLink::isUp() const
     return m_socket->state() == QAbstractSocket::BoundState;
 }
 
-int UdpLink::rxPort() const
+int UdpLink::port() const
 {
-    return m_rxPort;
+    return m_port;
 }
 
-QString UdpLink::address() const
+QList<Endpoint> UdpLink::endpoints() const
 {
-    return m_address;
+    return m_endpoints;
 }
 
-int UdpLink::txPort() const
+bool UdpLink::autoResponse() const
 {
-    return m_txPort;
+    return m_autoResponse;
 }
 
 void UdpLink::up()
 {
     if (this->isUp()) return;
 
-    if (!m_socket->bind(m_rxPort))
+    if (!m_socket->bind(m_port))
     {
         qWarning("UDP connection error: '%s'!",
                  qPrintable(m_socket->errorString()));
@@ -64,14 +62,15 @@ void UdpLink::down()
 
 void UdpLink::sendDataImpl(const QByteArray& data)
 {
-    m_socket->writeDatagram(data, QHostAddress(m_address), m_txPort);
+    for (const Endpoint& endpoint: m_endpoints)
+        m_socket->writeDatagram(data, endpoint.first, endpoint.second);
 }
 
-void UdpLink::setRxPort(int port)
+void UdpLink::setPort(int port)
 {
-    if (m_rxPort == port) return;
+    if (m_port == port) return;
 
-    m_rxPort = port;
+    m_port = port;
 
     if (this->isUp())
     {
@@ -79,23 +78,27 @@ void UdpLink::setRxPort(int port)
         this->up();
     }
 
-    emit rxPortChanged(port);
+    emit portChanged(port);
 }
 
-void UdpLink::setAddress(const QString& address)
+void UdpLink::addEndpoint(const Endpoint& endpoint)
 {
-    if (m_address == address) return;
-
-    m_address = address;
-    emit addressChanged(address);
+    m_endpoints.append(endpoint);
+    emit endpointsChanged(m_endpoints);
 }
 
-void UdpLink::setTxPort(int port)
+void UdpLink::removeEndpoint(const Endpoint& endpoint)
 {
-    if (m_txPort == port) return;
+    m_endpoints.removeOne(endpoint);
+    emit endpointsChanged(m_endpoints);
+}
 
-    m_txPort = port;
-    emit txPortChanged(port);
+void UdpLink::setAutoResponse(bool autoResponse)
+{
+    if (m_autoResponse == autoResponse) return;
+
+    m_autoResponse = autoResponse;
+    emit autoResponseChanged(autoResponse);
 }
 
 void UdpLink::readPendingDatagrams()
@@ -103,8 +106,13 @@ void UdpLink::readPendingDatagrams()
     while (m_socket->hasPendingDatagrams())
     {
         QByteArray datagram;
+        Endpoint endpoint;
         datagram.resize(m_socket->pendingDatagramSize());
-        m_socket->readDatagram(datagram.data(), datagram.size());
+        m_socket->readDatagram(datagram.data(), datagram.size(),
+                               &endpoint.first, &endpoint.second);
+
+        if (m_autoResponse && !m_endpoints.contains(endpoint))
+            this->addEndpoint(endpoint);
 
         this->receiveData(datagram);
     }

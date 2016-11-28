@@ -109,7 +109,6 @@ void Vehicle::setState(Vehicle::State state)
 
 void Vehicle::setArmed(bool armed)
 {
-    qDebug() << armed;
     if (m_armed == armed) return;
 
     m_armed = armed;

@@ -122,10 +122,6 @@ void ConnectionSettingsPresenter::onRequestNewUdp()
     SettingsProvider::beginGroup(connection_settings::group);
 
     auto link = new UdpLink(SettingsProvider::value(
-                                connection_settings::hostPort).toInt(),
-                            SettingsProvider::value(
-                                connection_settings::address).toString(),
-                            SettingsProvider::value(
                                 connection_settings::port).toInt(),
                             d->communicator);
     link->setObjectName(tr("UDP"));

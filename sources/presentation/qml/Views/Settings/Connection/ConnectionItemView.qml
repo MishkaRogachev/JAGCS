@@ -56,52 +56,20 @@ Frame {
             }
 
             Label {
-                text: qsTr("Recieve port")
+                text: qsTr("Port")
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
-                visible: rxPort.visible
+                visible: port.visible
             }
 
             SpinBox {
-                id: rxPort
-                visible: link ? 'rxPort' in link : false
+                id: port
+                visible: link ? 'port' in link : false
                 editable: true
                 from: 0
                 to: 99999
-                value: link && 'rxPort' in link ? link.rxPort : 0
-                onValueChanged: if (link) link.setRxPort(value)
-            }
-
-            Label {
-                text: qsTr("Transmit address")
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-                visible: address.visible
-            }
-
-            TextField {
-                id: address
-                visible: link ? 'address' in link : false
-                placeholderText: qsTr("Enter address")
-                text: link && 'address' in link ? link.address : ""
-                onTextChanged: if (link) link.setAddress(text)
-            }
-
-            Label {
-                text: qsTr("Transmit port")
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-                visible: txPort.visible
-            }
-
-            SpinBox {
-                id: txPort
-                visible: link ? 'txPort' in link : false
-                editable: true
-                from: 0
-                to: 99999
-                value: link && 'txPort' in link ? link.txPort : 0
-                onValueChanged: if (link) link.setTxPort(value)
+                value: link && 'port' in link ? link.port : 0
+                onValueChanged: if (link) link.setPort(value)
             }
         }
 

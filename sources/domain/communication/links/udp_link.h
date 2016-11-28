@@ -11,20 +11,18 @@ namespace domain
     {
         Q_OBJECT
 
-        Q_PROPERTY(int rxPort READ rxPort WRITE setRxPort NOTIFY rxPortChanged)
-        Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
-        Q_PROPERTY(int txPort READ txPort WRITE setTxPort NOTIFY txPortChanged)
-        // TODO: several addresses and txPorts
+        Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
+        Q_PROPERTY(QList<Endpoint> endpoints READ endpoints NOTIFY endpointsChanged)
+        Q_PROPERTY(bool autoResponse READ autoResponse WRITE setAutoResponse NOTIFY autoResponseChanged)
 
     public:
-        UdpLink(int rxPort, const QString& address, int txPort,
-                QObject* parent = nullptr);
+        UdpLink(int port, QObject* parent = nullptr);
 
         bool isUp() const override;
 
-        int rxPort() const;
-        QString address() const;
-        int txPort() const;
+        int port() const;
+        QList<Endpoint> endpoints() const;
+        bool autoResponse() const;
 
     public slots:
         void up() override;
@@ -32,23 +30,24 @@ namespace domain
 
         void sendDataImpl(const QByteArray& data) override;
 
-        void setRxPort(int port);
-        void setAddress(const QString& address);
-        void setTxPort(int port);
+        void setPort(int port);
+        void addEndpoint(const Endpoint& endpoint);
+        void removeEndpoint(const Endpoint& endpoint);
+        void setAutoResponse(bool autoResponse);
 
     signals:
-        void rxPortChanged(int port);
-        void addressChanged(QString address);
-        void txPortChanged(int port);
+        void portChanged(int port);
+        void endpointsChanged(const QList<Endpoint>& endpoints);
+        void autoResponseChanged(bool autoResponse);
 
     private slots:
         void readPendingDatagrams();
 
     private:
         QUdpSocket* m_socket;
-        int m_rxPort;
-        QString m_address;
-        int m_txPort;
+        int m_port;
+        QList<Endpoint> m_endpoints;
+        bool m_autoResponse;
     };
 }
 

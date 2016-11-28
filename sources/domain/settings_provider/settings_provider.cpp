@@ -28,11 +28,9 @@ public:
 
         settings.beginGroup(connection_settings::group);
         settings.setValue(connection_settings::systemId, 255);
-        settings.setValue(connection_settings::componentId, 255);
+        settings.setValue(connection_settings::componentId, 0);
         settings.setValue(connection_settings::baudRate, 57600);
-        settings.setValue(connection_settings::hostPort, 14550);
-        settings.setValue(connection_settings::address, "127.0.0.1");
-        settings.setValue(connection_settings::port, 14551);
+        settings.setValue(connection_settings::port, 14550);
         settings.endGroup();
     }
 };

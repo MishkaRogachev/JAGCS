@@ -1,7 +1,11 @@
 #ifndef ABSTRACT_LINK_H
 #define ABSTRACT_LINK_H
 
+// Qt
 #include <QObject>
+
+// Internal
+#include "link_traits.h"
 
 namespace domain
 {
