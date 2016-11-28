@@ -4,9 +4,6 @@
 // Qt
 #include <QObject>
 
-// Internal
-#include "link_traits.h"
-
 namespace domain
 {
     // TODO: add persistable base class to store objects in SQLite DB

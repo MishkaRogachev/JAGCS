@@ -1,7 +1,9 @@
 #ifndef UDP_LINK_H
 #define UDP_LINK_H
 
+// Internal
 #include "abstract_link.h"
+#include "endpoint.h"
 
 class QUdpSocket;
 

@@ -63,7 +63,7 @@ void UdpLink::down()
 void UdpLink::sendDataImpl(const QByteArray& data)
 {
     for (const Endpoint& endpoint: m_endpoints)
-        m_socket->writeDatagram(data, endpoint.first, endpoint.second);
+        m_socket->writeDatagram(data, endpoint.address(), endpoint.port());
 }
 
 void UdpLink::setPort(int port)
@@ -109,7 +109,7 @@ void UdpLink::readPendingDatagrams()
         Endpoint endpoint;
         datagram.resize(m_socket->pendingDatagramSize());
         m_socket->readDatagram(datagram.data(), datagram.size(),
-                               &endpoint.first, &endpoint.second);
+                               &endpoint.rAddress(), &endpoint.rPort());
 
         if (m_autoResponse && !m_endpoints.contains(endpoint))
             this->addEndpoint(endpoint);

@@ -34,8 +34,7 @@ Frame {
                 visible: link ? 'portName' in link : false
                 model: serialDevices
                 currentIndex: visible ? model.indexOf(link.portName) : 0
-                onCurrentIndexChanged: if (link && 'portName' in link)
-                                           link.setPortName(model[currentIndex])
+                onCurrentIndexChanged: if (visible) link.setPortName(model[currentIndex])
             }
 
             Label {
@@ -52,8 +51,7 @@ Frame {
                 model: serialBaudRates
                 currentIndex: link && 'baudRate' in link ?
                                   model.indexOf(link.baudRate) : 0
-                onCurrentIndexChanged: if (link && 'baudRate' in link)
-                                           link.setBaudRate(model[currentIndex])
+                onCurrentIndexChanged: if (visible) link.setBaudRate(model[currentIndex])
             }
 
             Label {
@@ -71,14 +69,14 @@ Frame {
                 from: 0
                 to: 99999
                 value: visible ? link.port : 0
-                onValueChanged: link.setPort(value)
+                onValueChanged: if (visible) link.setPort(value)
             }
 
             CheckBox {
                 visible: link ? 'autoResponse' in link : false
                 text: qsTr("Auto response")
                 checked: visible ? link.autoResponse : false
-                onCheckedChanged: link.setAutoResponse(checked)
+                onCheckedChanged: if (visible) link.setAutoResponse(checked)
             }
         }
 
