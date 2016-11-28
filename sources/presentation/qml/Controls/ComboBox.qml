@@ -22,23 +22,14 @@ ComboBox {
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
     }
 
-    indicator: Canvas {
+    indicator: ColoredIcon {
         visible: control.focus
         x: control.width - width
         y: control.height - height
         width: palette.controlBaseSize / 2
         height: width
-        contextType: "2d"
-
-        onPaint: {
-            context.reset();
-            context.moveTo(width, 0);
-            context.lineTo(width, height);
-            context.lineTo(0, height);
-            context.closePath();
-            context.fillStyle = palette.highlightColor;
-            context.fill();
-        }
+        source: "qrc:/ui/menu_arrow.svg"
+        color: control.down ? palette.highlightColor : palette.selectionColor
     }
 
     contentItem: Text {
