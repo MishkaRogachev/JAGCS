@@ -13,8 +13,7 @@ namespace presentation
         explicit StatusPresenter(QObject* parent);
 
     signals:
-        void showSettings();
-        void hideSettings();
+        void setMode(const QString& mode);
 
     protected:
         void connectView(QObject* view) override;

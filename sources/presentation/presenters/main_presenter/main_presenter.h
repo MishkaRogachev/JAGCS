@@ -20,6 +20,9 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onSetMode(const QString& mode);
+
     private:
         class Impl;
         Impl* const d;

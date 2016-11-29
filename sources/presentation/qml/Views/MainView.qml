@@ -13,7 +13,8 @@ ApplicationWindow {
     visibility: "Maximized"
     visible: true
 
-    // TODO: modes(e.g Flight, Misson, Settings)
+    property string mode
+
     Palette {
         id: palette
         property color trackColor: "#E74C3C"
@@ -23,14 +24,33 @@ ApplicationWindow {
         objectName: "status"
     }
 
-    FlightView {
-        objectName: "flight"
+    Loader {
         anchors.fill: parent
+        sourceComponent: {
+            switch (mode) {
+            case "flight": return flight;
+            case "settings": return settings;
+            }
+        }
     }
 
-    SettingsView {
-        objectName: "settings"
-        anchors.fill: parent
-        visible: false
+    // TODO: Dynamic object creation
+    // http://doc.qt.io/qt-5/qtqml-javascript-dynamicobjectcreation.html
+    Component {
+        id: flight
+
+        FlightView {
+            objectName: "flight"
+            anchors.fill: parent
+        }
+    }
+
+    Component {
+        id: settings
+
+        SettingsView {
+            objectName: "settings"
+            anchors.fill: parent
+        }
     }
 }

@@ -11,8 +11,7 @@ StatusPresenter::StatusPresenter(QObject* parent):
 
 void StatusPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(showSettings()), this, SIGNAL(showSettings()));
-    connect(view, SIGNAL(hideSettings()), this, SIGNAL(hideSettings()));
+    connect(view, SIGNAL(setMode(QString)), this, SIGNAL(setMode(QString)));
 
     connect(view, SIGNAL(quit()), qApp, SLOT(quit()));
 }

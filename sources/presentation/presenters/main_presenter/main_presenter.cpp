@@ -1,5 +1,9 @@
 #include "main_presenter.h"
 
+// Qt
+#include <QMap>
+#include <QVariant>
+
 // Internal
 #include "domain_entry.h"
 
@@ -12,23 +16,21 @@ using namespace presentation;
 class MainPresenter::Impl
 {
 public:
+    domain::DomainEntry* entry;
+
     StatusPresenter* status;
-    FlightPresenter* flight;
-    SettingsPresenter* settings;
+    BasePresenter* modePresenter = nullptr;
 };
 
 MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->status = new StatusPresenter(this);
-    d->flight = new FlightPresenter(entry->vehicleService(), this);
-    d->settings = new SettingsPresenter(entry, this);
+    d->entry = entry;
 
-    connect(d->status, &StatusPresenter::showSettings,
-            d->settings, &SettingsPresenter::show);
-    connect(d->status, &StatusPresenter::hideSettings,
-            d->settings, &SettingsPresenter::hide);
+    d->status = new StatusPresenter(this);
+    connect(d->status, &StatusPresenter::setMode,
+            this, &MainPresenter::onSetMode);
 }
 
 MainPresenter::~MainPresenter()
@@ -39,6 +41,25 @@ MainPresenter::~MainPresenter()
 void MainPresenter::connectView(QObject* view)
 {
     d->status->setView(view->findChild<QObject*>(NAME(status)));
-    d->flight->setView(view->findChild<QObject*>(NAME(flight)));
-    d->settings->setView(view->findChild<QObject*>(NAME(settings)));
+    this->onSetMode("settings");
+}
+
+void MainPresenter::onSetMode(const QString& mode)
+{
+    if (mode == this->viewProperty(PROPERTY(mode))) return;
+
+    if (d->modePresenter) delete d->modePresenter;
+
+    this->setViewProperty(PROPERTY(mode), mode);
+
+    if (mode == "flight")
+    {
+        d->modePresenter = new FlightPresenter(d->entry->vehicleService(), this);
+        d->modePresenter->setView(m_view->findChild<QObject*>(NAME(flight)));
+    }
+    else if(mode == "settings")
+    {
+        d->modePresenter = new SettingsPresenter(d->entry, this);
+        d->modePresenter->setView(m_view->findChild<QObject*>(NAME(settings)));
+    }
 }
