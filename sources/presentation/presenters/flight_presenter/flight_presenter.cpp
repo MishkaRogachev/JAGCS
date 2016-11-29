@@ -62,6 +62,8 @@ void FlightPresenter::connectView(QObject* view)
 
     connect(view, SIGNAL(vehicleSelected(QString)),
             this, SLOT(onVehicleSelected(QString)));
+
+    this->updateVehicles();
 }
 
 void FlightPresenter::onVehicleAdded(uint8_t id)

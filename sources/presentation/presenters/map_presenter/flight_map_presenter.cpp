@@ -26,10 +26,14 @@ FlightMapPresenter::FlightMapPresenter(domain::VehicleService* vehicleService,
 {
     d->vehicleService = vehicleService;
 
+    for (uint8_t id: vehicleService->vehileIds())
+        this->onVehicleAdded(id);
+
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &FlightMapPresenter::onVehicleAdded);
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &FlightMapPresenter::onVehicleRemoved);
+
 }
 
 FlightMapPresenter::~FlightMapPresenter()
