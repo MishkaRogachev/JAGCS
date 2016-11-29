@@ -17,11 +17,11 @@ namespace presentation
                                QObject* object = nullptr);
         ~MainPresenter() override;
 
+    public slots:
+        void setMode(const QString& mode);
+
     protected:
         void connectView(QObject* view) override;
-
-    private slots:
-        void onSetMode(const QString& mode);
 
     private:
         class Impl;

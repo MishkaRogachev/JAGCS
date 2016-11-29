@@ -30,7 +30,7 @@ MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
 
     d->status = new StatusPresenter(this);
     connect(d->status, &StatusPresenter::setMode,
-            this, &MainPresenter::onSetMode);
+            this, &MainPresenter::setMode);
 }
 
 MainPresenter::~MainPresenter()
@@ -38,28 +38,36 @@ MainPresenter::~MainPresenter()
     delete d;
 }
 
-void MainPresenter::connectView(QObject* view)
-{
-    d->status->setView(view->findChild<QObject*>(NAME(status)));
-    this->onSetMode("settings");
-}
-
-void MainPresenter::onSetMode(const QString& mode)
+void MainPresenter::setMode(const QString& mode)
 {
     if (mode == this->viewProperty(PROPERTY(mode))) return;
 
-    if (d->modePresenter) delete d->modePresenter;
+    if (d->modePresenter)
+    {
+        delete d->modePresenter;
+        d->modePresenter = nullptr;
+    }
 
     this->setViewProperty(PROPERTY(mode), mode);
 
-    if (mode == "flight")
+    if (mode == "flight") // TODO: MainPresenter mode enum
     {
         d->modePresenter = new FlightPresenter(d->entry->vehicleService(), this);
         d->modePresenter->setView(m_view->findChild<QObject*>(NAME(flight)));
     }
-    else if(mode == "settings")
+    if (mode == "mission") // TODO: Mission mode
+    {
+        //d->modePresenter = new MissionPresenter(d->entry->vehicleService(), this);
+        //d->modePresenter->setView(m_view->findChild<QObject*>(NAME(mission)));
+    }
+    else if (mode == "settings")
     {
         d->modePresenter = new SettingsPresenter(d->entry, this);
         d->modePresenter->setView(m_view->findChild<QObject*>(NAME(settings)));
     }
+}
+
+void MainPresenter::connectView(QObject* view)
+{
+    d->status->setView(view->findChild<QObject*>(NAME(status)));
 }

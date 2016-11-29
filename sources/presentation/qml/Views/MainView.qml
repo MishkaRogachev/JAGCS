@@ -5,8 +5,6 @@ import QtQuick.Controls 2.0
 import "../Controls"
 
 import "Status"
-import "Flight"
-import "Settings"
 
 ApplicationWindow {
     id: main
@@ -26,31 +24,14 @@ ApplicationWindow {
 
     Loader {
         anchors.fill: parent
-        sourceComponent: {
-            switch (mode) {
-            case "flight": return flight;
-            case "settings": return settings;
-            }
-        }
+        sourceComponent: creteModeView(mode)
+        onItemChanged: if (item) item.objectName = mode
     }
 
-    // TODO: Dynamic object creation
-    // http://doc.qt.io/qt-5/qtqml-javascript-dynamicobjectcreation.html
-    Component {
-        id: flight
-
-        FlightView {
-            objectName: "flight"
-            anchors.fill: parent
-        }
-    }
-
-    Component {
-        id: settings
-
-        SettingsView {
-            objectName: "settings"
-            anchors.fill: parent
+    function creteModeView(mode) {
+        switch (mode) {
+        case "flight": return Qt.createComponent("Flight/FlightView.qml");
+        case "settings": return Qt.createComponent("Settings/SettingsView.qml");
         }
     }
 }

@@ -16,9 +16,9 @@ Button {
         implicitHeight: implicitWidth
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         color: {
+            if (control.checked) return palette.selectionColor;
             if (!enabled) return palette.disabledColor;
             if (control.pressed) return palette.highlightColor;
-            if (control.checked) return palette.selectionColor;
             return palette.buttonColor;
         }
     }

@@ -12,6 +12,7 @@ ToolBar {
 
     RowLayout {
         anchors.fill: parent
+        spacing: 1
 
         Item { Layout.fillWidth: true }
 
@@ -19,18 +20,22 @@ ToolBar {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Button {
+        StatusModeButton {
+            mode: "flight"
             iconSource: "qrc:/icons/flight.svg"
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: setMode("flight")
-            checked: main.mode == "flight" // TODO: mode button
         }
 
-        Button {
+        StatusModeButton {
+            mode: "mission"
+            iconSource: "qrc:/icons/map-marker.svg"
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        StatusModeButton {
+            mode: "settings"
             iconSource: "qrc:/icons/settings.svg"
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: setMode("settings")
-            checked: main.mode == "settings" // TODO: mode button
         }
 
         Button {

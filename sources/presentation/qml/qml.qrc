@@ -29,6 +29,7 @@
         <file>Indicators/FlightDirector.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
+        <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/ConnectionStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
         <file>Views/Map/FlightMapView.qml</file>

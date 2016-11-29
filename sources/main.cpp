@@ -19,5 +19,7 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));
     presenter.setView(engine.rootObjects().first());
 
+    presenter.setMode("flight");
+
     return app.exec();
 }
