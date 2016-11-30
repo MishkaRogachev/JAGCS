@@ -13,6 +13,7 @@
 #include "command_handler.h"
 #include "home_position_handler.h"
 #include "rc_channels_handler.h"
+#include "waypoint_handler.h"
 
 using namespace domain;
 
@@ -35,6 +36,7 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new CommandHandler(m_vehicleService, communicator);
     new HomePositionHandler(m_vehicleService, communicator);
     new RcChannelsHandler(m_vehicleService, communicator);
+    new WaypointHandler(m_vehicleService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
 
     //TODO: autolink UDP
