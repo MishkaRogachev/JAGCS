@@ -31,6 +31,7 @@ ApplicationWindow {
     function creteModeView(mode) {
         switch (mode) {
         case "flight": return Qt.createComponent("Flight/FlightView.qml");
+        case "mission": return Qt.createComponent("Mission/MissionView.qml");
         case "settings": return Qt.createComponent("Settings/SettingsView.qml");
         }
     }

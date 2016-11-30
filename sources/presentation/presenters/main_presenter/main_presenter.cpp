@@ -9,6 +9,7 @@
 
 #include "status_presenter.h"
 #include "flight_presenter.h"
+#include "mission_presenter.h"
 #include "settings_presenter.h"
 
 using namespace presentation;
@@ -53,17 +54,19 @@ void MainPresenter::setMode(const QString& mode)
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
         d->modePresenter = new FlightPresenter(d->entry->vehicleService(), this);
-        d->modePresenter->setView(m_view->findChild<QObject*>(NAME(flight)));
     }
-    if (mode == "mission") // TODO: Mission mode
+    if (mode == "mission")
     {
-        //d->modePresenter = new MissionPresenter(d->entry->vehicleService(), this);
-        //d->modePresenter->setView(m_view->findChild<QObject*>(NAME(mission)));
+        d->modePresenter = new MissionPresenter(this);
     }
     else if (mode == "settings")
     {
         d->modePresenter = new SettingsPresenter(d->entry, this);
-        d->modePresenter->setView(m_view->findChild<QObject*>(NAME(settings)));
+    }
+
+    if (d->modePresenter)
+    {
+        d->modePresenter->setView(m_view->findChild<QObject*>(mode));
     }
 }
 

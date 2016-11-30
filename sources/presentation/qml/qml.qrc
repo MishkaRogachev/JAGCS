@@ -43,5 +43,6 @@
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
         <file>Views/Settings/Connection/LinkView.qml</file>
+        <file>Views/Mission/MissionView.qml</file>
     </qresource>
 </RCC>
