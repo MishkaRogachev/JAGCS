@@ -48,7 +48,7 @@ Pane {
             }
         }
 
-        FlightMapView {
+        VehicleMapView {
             objectName: "map"
             Layout.fillWidth: true
             Layout.fillHeight: true

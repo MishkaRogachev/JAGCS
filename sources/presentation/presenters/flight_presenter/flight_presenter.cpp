@@ -10,7 +10,7 @@
 #include "vehicle.h"
 
 #include "video_presenter.h"
-#include "flight_map_presenter.h"
+#include "vehicle_map_presenter.h"
 
 using namespace presentation;
 
@@ -22,7 +22,7 @@ public:
     QMap<uint8_t, QString> vehiclesAlias;
 
     VideoPresenter* video;
-    FlightMapPresenter* map;
+    VehicleMapPresenter* map;
 };
 
 FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
@@ -33,7 +33,7 @@ FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
     d->vehicleService = vehicleService;
 
     d->video = new VideoPresenter(this);
-    d->map = new FlightMapPresenter(vehicleService, this);
+    d->map = new VehicleMapPresenter(vehicleService, this);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &FlightPresenter::onVehicleAdded);

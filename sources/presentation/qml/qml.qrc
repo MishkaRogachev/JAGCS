@@ -32,17 +32,17 @@
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/ConnectionStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
-        <file>Views/Map/FlightMapView.qml</file>
+        <file>Views/Map/VehicleMapView.qml</file>
         <file>Views/Map/MapActions.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Flight/FlightView.qml</file>
         <file>Views/Flight/VehicleView.qml</file>
+        <file>Views/Mission/MissionView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/GuiSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
         <file>Views/Settings/Connection/LinkView.qml</file>
-        <file>Views/Mission/MissionView.qml</file>
     </qresource>
 </RCC>

@@ -61,7 +61,7 @@ MapView {
                     anchors.centerIn: parent
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlighVCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
         }

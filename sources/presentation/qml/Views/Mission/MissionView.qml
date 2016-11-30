@@ -10,8 +10,8 @@ import "../Video"
 Pane {
     id: root
 
-    MapView {
-        id: map
+    VehicleMapView {
+        objectName: "map"
         anchors.fill: parent
     }
 }
