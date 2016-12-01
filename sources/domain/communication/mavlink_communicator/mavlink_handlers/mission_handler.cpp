@@ -1,4 +1,4 @@
-#include "waypoint_handler.h"
+#include "mission_handler.h"
 
 // MAVLink
 #include <mavlink.h>
@@ -9,46 +9,46 @@
 // Internal
 #include "mavlink_communicator.h"
 
-#include "vehicle_service.h"
-#include "vehicle.h"
+#include "mission_service.h"
+#include "mission.h"
 
 using namespace domain;
 
-WaypointHandler::WaypointHandler(VehicleService* vehicleService,
-                                 MavLinkCommunicator* communicator):
+MissionHandler::MissionHandler(MissionService* missionService,
+                               MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService)
+    m_missionService(missionService)
 {}
 
-void WaypointHandler::processMessage(const mavlink_message_t& message)
+void MissionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid == MAVLINK_MSG_ID_MISSION_COUNT)
     {
-        Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+        Mission* mission = m_missionService->requestMission(message.sysid);
 
         mavlink_mission_count_t missionCount;
         mavlink_msg_mission_count_decode(&message, &missionCount);
 
         qDebug() << message.sysid << missionCount.target_system;
 
-        // TODO: vehicle->mission.setCount(missionCount.count);
+        // TODO: Mission->mission.setCount(missionCount.count);
         return;
     }
 
     if (message.msgid == MAVLINK_MSG_ID_MISSION_ITEM)
     {
-        Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+        Mission* mission = m_missionService->requestMission(message.sysid);
 
         mavlink_mission_item_t missionItem;
         mavlink_msg_mission_item_decode(&message, &missionItem);
 
-        // TODO: vehicle->mission.setMissionItem(missionItem.seq, missionItem);
+        // TODO: Mission->mission.setMissionItem(missionItem.seq, missionItem);
         return;
     }
 
     if (message.msgid == MAVLINK_MSG_ID_MISSION_ACK)
     {
-        Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+        Mission* mission = m_missionService->requestMission(message.sysid);
 
         mavlink_mission_ack_t missionAck;
         mavlink_msg_mission_ack_decode(&message, &missionAck);
@@ -57,7 +57,7 @@ void WaypointHandler::processMessage(const mavlink_message_t& message)
     }
 }
 
-void WaypointHandler::requestMission(uint8_t id)
+void MissionHandler::requestMission(uint8_t id)
 {
     mavlink_message_t message;
     mavlink_mission_request_list_t request;
@@ -73,7 +73,7 @@ void WaypointHandler::requestMission(uint8_t id)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void WaypointHandler::requestMissionItem(uint8_t id, uint16_t item)
+void MissionHandler::requestMissionItem(uint8_t id, uint16_t item)
 {
     mavlink_message_t message;
     mavlink_mission_request_t missionRequest;

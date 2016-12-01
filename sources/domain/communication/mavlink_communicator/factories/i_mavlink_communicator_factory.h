@@ -4,13 +4,17 @@
 namespace domain
 {
     class VehicleService;
+    class MissionService;
+
     class MavLinkCommunicator;
 
     class IMavLinkCommunicatorFactory
     {
     public:
-        IMavLinkCommunicatorFactory(VehicleService* vehicleService):
-            m_vehicleService(vehicleService)
+        IMavLinkCommunicatorFactory(VehicleService* vehicleService,
+                                    MissionService* missionService):
+            m_vehicleService(vehicleService),
+            m_missionService(missionService)
         {}
 
         virtual ~IMavLinkCommunicatorFactory() {}
@@ -18,7 +22,8 @@ namespace domain
         virtual MavLinkCommunicator* create() = 0;
 
     protected:
-        VehicleService* m_vehicleService;
+        VehicleService* const m_vehicleService;
+        MissionService* const m_missionService;
     };
 }
 

@@ -8,7 +8,8 @@ namespace domain
     class MavLinkCommunicatorFactory: public IMavLinkCommunicatorFactory
     {
     public:
-        MavLinkCommunicatorFactory(VehicleService* vehicleService);
+        MavLinkCommunicatorFactory(VehicleService* vehicleService,
+                                   MissionService* missionService);
 
         MavLinkCommunicator* create() override;
     };

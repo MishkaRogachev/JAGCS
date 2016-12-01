@@ -7,6 +7,7 @@
 #include "settings_provider.h"
 
 #include "vehicle_service.h"
+#include "mission_service.h"
 
 #include "mavlink_communicator.h"
 #include "mavlink_communicator_factory.h"
@@ -19,6 +20,8 @@ class DomainEntry::Impl
 {
 public:
     VehicleService vehicleService;
+    MissionService missionService;
+
     QScopedPointer<MavLinkCommunicator> communicator;
 };
 
@@ -26,9 +29,9 @@ DomainEntry::DomainEntry():
     d(new Impl())
 {
     qRegisterMetaType<Endpoint>("Endpoint");
-    qRegisterMetaType<EndpointList> ("EndpointList");
+    qRegisterMetaType<EndpointList>("EndpointList");
 
-    MavLinkCommunicatorFactory factory(&d->vehicleService);
+    MavLinkCommunicatorFactory factory(&d->vehicleService, &d->missionService);
     d->communicator.reset(factory.create());
 }
 
@@ -45,4 +48,9 @@ AbstractCommunicator* DomainEntry::communicator() const
 VehicleService* DomainEntry::vehicleService() const
 {
     return &d->vehicleService;
+}
+
+MissionService*DomainEntry::missionService() const
+{
+    return &d->missionService;
 }
