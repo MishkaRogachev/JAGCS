@@ -16,8 +16,8 @@ namespace domain
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void requestList(uint8_t id);
-        void requestWaypoint(uint8_t id, uint8_t waypoint);
+        void requestMission(uint8_t id);
+        void requestMissionItem(uint8_t id, uint16_t item);
 
     private:
         VehicleService* m_vehicleService;
