@@ -17,7 +17,7 @@ namespace domain
         void processMessage(const mavlink_message_t& message) override;
 
         void requestMission(uint8_t id);
-        void requestMissionItem(uint8_t id, uint16_t item);
+        void requestMissionItem(uint8_t id, uint16_t seq);
 
     private:
         MissionService* m_missionService;

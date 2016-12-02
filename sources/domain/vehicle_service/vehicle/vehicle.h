@@ -112,7 +112,7 @@ namespace domain
         void headingChanged(int heading);
 
         void commandArm(bool arm);
-        void setHome(const Position& homePosition);
+        void commandSetHome(const Position& homePosition);
 
     private:
         uint8_t m_vehicleId;

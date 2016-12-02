@@ -31,6 +31,9 @@ DomainEntry::DomainEntry():
     qRegisterMetaType<Endpoint>("Endpoint");
     qRegisterMetaType<EndpointList>("EndpointList");
 
+    QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
+                     &d->missionService, &MissionService::commandRequestMission);
+
     MavLinkCommunicatorFactory factory(&d->vehicleService, &d->missionService);
     d->communicator.reset(factory.create());
 }

@@ -7,6 +7,7 @@ namespace domain
 {
     class Mission;
 
+    // TODO: Mission uuid separated from vehicle Id
     class MissionService: public QObject
     {
         Q_OBJECT
@@ -28,6 +29,8 @@ namespace domain
     signals:
         void missionAdded(uint8_t id);
         void missionRemoved(uint8_t id);
+
+        void commandRequestMission(uint8_t id);
 
     private:
         class Impl;

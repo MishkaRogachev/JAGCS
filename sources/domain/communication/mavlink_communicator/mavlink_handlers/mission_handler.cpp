@@ -18,7 +18,10 @@ MissionHandler::MissionHandler(MissionService* missionService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_missionService(missionService)
-{}
+{
+    connect(missionService, &MissionService::commandRequestMission,
+            this, &MissionHandler::requestMission);
+}
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
 {
@@ -32,6 +35,11 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
         qDebug() << message.sysid << missionCount.target_system;
 
         mission->setCount(missionCount.count);
+        // TODO: request by timer
+        for (uint16_t seq = 0; seq < missionCount.count; ++seq)
+        {
+            this->requestMissionItem(message.sysid, seq);
+        }
         return;
     }
 
@@ -78,14 +86,14 @@ void MissionHandler::requestMission(uint8_t id)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::requestMissionItem(uint8_t id, uint16_t item)
+void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
 {
     mavlink_message_t message;
     mavlink_mission_request_t missionRequest;
 
     missionRequest.target_system = id;
     missionRequest.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    missionRequest.seq = item;
+    missionRequest.seq = seq;
 
     mavlink_msg_mission_request_encode(m_communicator->systemId(),
                                        m_communicator->componentId(),

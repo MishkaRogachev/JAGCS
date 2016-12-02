@@ -69,6 +69,6 @@ void VehicleMapPresenter::onSetHome(const QVariant& position)
 
     for (domain::Vehicle* vehicle: d->vehicleService->vehicles())
     {
-        emit vehicle->setHome(domain::Position(coordinate));
+        emit vehicle->commandSetHome(domain::Position(coordinate));
     }
 }
