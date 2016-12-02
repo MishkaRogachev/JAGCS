@@ -9,6 +9,7 @@
 
 namespace domain
 {
+    // TODO: Mission uuid separated from vehicle Id
     class Mission: public QObject
     {
         Q_OBJECT
@@ -18,10 +19,15 @@ namespace domain
 
         int count() const;
 
+        MissionItem* item(unsigned seq) const;
+        unsigned sequence(MissionItem* item) const;
+
+        MissionItem* requestItem(unsigned seq);
+
     public slots:
         void setCount(unsigned count);
 
-        void setMissionItem(unsigned seq, MissionItem* item);
+        void addMissionItem(unsigned seq, MissionItem* item);
         void removeMissionItem(unsigned seq);
 
     signals:

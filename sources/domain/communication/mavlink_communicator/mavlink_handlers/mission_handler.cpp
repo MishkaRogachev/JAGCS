@@ -39,12 +39,15 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     {
         Mission* mission = m_missionService->requestMission(message.sysid);
 
-        mavlink_mission_item_t missionItem;
-        mavlink_msg_mission_item_decode(&message, &missionItem);
+        mavlink_mission_item_t itemMsg;
+        mavlink_msg_mission_item_decode(&message, &itemMsg);
 
-        auto item = new MissionItem();
+        MissionItem* item = mission->requestItem(itemMsg.seq);
+        // TODO: coordinate system depends MAV_FRAME
+        item->setCoordinate(QGeoCoordinate(itemMsg.x, itemMsg.y, itemMsg.z));
+        item->setCurrent(itemMsg.current);
+        // TODO: MAV_CMD
 
-        mission->setMissionItem(missionItem.seq, item);
         return;
     }
 
