@@ -31,7 +31,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
         qDebug() << message.sysid << missionCount.target_system;
 
-        // TODO: Mission->mission.setCount(missionCount.count);
+        mission->setCount(missionCount.count);
         return;
     }
 
@@ -42,7 +42,9 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
         mavlink_mission_item_t missionItem;
         mavlink_msg_mission_item_decode(&message, &missionItem);
 
-        // TODO: Mission->mission.setMissionItem(missionItem.seq, missionItem);
+        auto item = new MissionItem();
+
+        mission->setMissionItem(missionItem.seq, item);
         return;
     }
 
