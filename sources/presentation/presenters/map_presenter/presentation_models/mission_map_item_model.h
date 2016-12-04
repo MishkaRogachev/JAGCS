@@ -18,7 +18,7 @@ namespace presentation
     public:
         enum VehicleMapItemRoles
         {
-            MissionLineRole
+            MissionLineRole = Qt::UserRole + 1
         };
 
         MissionMapItemModel(domain::MissionService* service,

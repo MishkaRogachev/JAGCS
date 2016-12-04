@@ -1,5 +1,8 @@
 #include "mission_map_item_model.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "mission_service.h"
 #include "mission.h"
@@ -53,14 +56,11 @@ QVariant MissionMapItemModel::data(const QModelIndex& index, int role) const
         QVariantList line;
         for (domain::MissionItem* item: mission->items())
             line.append(QVariant::fromValue(item->coordinate()));
-        break;
+        return line;
     }
     default:
-        break;
+        return QVariant();
     }
-    //if (role != MissionItemRole) return;
-
-    //mission->item()
 }
 
 void MissionMapItemModel::onMissionAdded(uint8_t id)
