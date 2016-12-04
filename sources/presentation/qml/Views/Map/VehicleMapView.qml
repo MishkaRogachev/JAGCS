@@ -42,6 +42,7 @@ MapView {
         autoFitViewport: true
         delegate: MapQuickItem {
             coordinate: position
+            Behavior on coordinate { CoordinateAnimation { duration: 200 } }
 
             sourceItem: Item {
                 id: markItem
