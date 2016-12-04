@@ -76,11 +76,6 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     }
 }
 
-QModelIndex VehicleMapItemModel::vehicleIndex(domain::Vehicle* vehicle) const
-{
-    return this->index(d->vehicles.indexOf(vehicle));
-}
-
 void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
@@ -162,4 +157,9 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[HomePositionRole] = "homePosition";
 
     return roles;
+}
+
+QModelIndex VehicleMapItemModel::vehicleIndex(domain::Vehicle* vehicle) const
+{
+    return this->index(d->vehicles.indexOf(vehicle));
 }

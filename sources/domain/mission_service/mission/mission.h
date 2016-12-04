@@ -19,6 +19,7 @@ namespace domain
         int count() const;
 
         MissionItem* item(unsigned seq) const;
+        QList<MissionItem*> items() const;
         unsigned sequence(MissionItem* item) const;
 
         MissionItem* requestItem(unsigned seq);

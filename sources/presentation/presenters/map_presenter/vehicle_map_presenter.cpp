@@ -26,14 +26,13 @@ VehicleMapPresenter::VehicleMapPresenter(domain::VehicleService* vehicleService,
 {
     d->vehicleService = vehicleService;
 
-    for (uint8_t id: vehicleService->vehileIds())
-        this->onVehicleAdded(id);
-
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &VehicleMapPresenter::onVehicleAdded);
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &VehicleMapPresenter::onVehicleRemoved);
 
+    for (uint8_t id: vehicleService->vehileIds())
+        this->onVehicleAdded(id);
 }
 
 VehicleMapPresenter::~VehicleMapPresenter()

@@ -57,7 +57,9 @@ void MainPresenter::setMode(const QString& mode)
     }
     if (mode == "mission")
     {
-        d->modePresenter = new MissionPresenter(d->entry->vehicleService(), this);
+        d->modePresenter = new MissionPresenter(d->entry->vehicleService(),
+                                                d->entry->missionService(),
+                                                this);
     }
     else if (mode == "settings")
     {

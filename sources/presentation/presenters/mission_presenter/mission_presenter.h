@@ -6,6 +6,7 @@
 namespace domain
 {
     class VehicleService;
+    class MissionService;
 }
 
 namespace presentation
@@ -13,7 +14,9 @@ namespace presentation
     class MissionPresenter: public BasePresenter
     {
     public:
-        MissionPresenter(domain::VehicleService* vehicleService, QObject* object);
+        MissionPresenter(domain::VehicleService* vehicleService,
+                         domain::MissionService* missionService,
+                         QObject* object);
         ~MissionPresenter() override;
 
     protected:

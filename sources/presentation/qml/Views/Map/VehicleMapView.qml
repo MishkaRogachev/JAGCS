@@ -14,7 +14,6 @@ MapView {
     property bool settingHome: false
 
     MapItemView {
-        id: tracks
         model: vehicleModel
         delegate: MapPolyline {
             line.width: 4
@@ -25,7 +24,6 @@ MapView {
     }
 
     MapItemView {
-        id: homePositions
         model: vehicleModel
         delegate: MapQuickItem {
             anchorPoint.x: homeImage.width / 2
@@ -40,7 +38,6 @@ MapView {
     }
 
     MapItemView {
-        id: vehicles
         model: vehicleModel
         autoFitViewport: true
         delegate: MapQuickItem {

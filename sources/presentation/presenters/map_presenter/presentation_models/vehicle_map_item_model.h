@@ -30,8 +30,6 @@ namespace presentation
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
 
-        QModelIndex vehicleIndex(domain::Vehicle* vehicle) const;
-
     public slots:
         void addVehicle(domain::Vehicle* vehicle);
         void removeVehicle(domain::Vehicle* vehicle);
@@ -45,6 +43,8 @@ namespace presentation
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
+
+        QModelIndex vehicleIndex(domain::Vehicle* vehicle) const;
 
     private:
         class Impl;

@@ -16,6 +16,11 @@ MissionItem* Mission::item(unsigned seq) const
     return m_missionItems.value(seq, nullptr);
 }
 
+QList<MissionItem*> Mission::items() const
+{
+    return m_missionItems.values();
+}
+
 unsigned Mission::sequence(MissionItem* item) const
 {
     return m_missionItems.key(item);
