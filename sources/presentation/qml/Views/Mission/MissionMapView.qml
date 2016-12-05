@@ -8,7 +8,7 @@ MapView {
 
     property var missionModel
 
-    MissionMapOverlayView {
+    MissionLineMapOverlayView {
         model: missionModel
     }
 }

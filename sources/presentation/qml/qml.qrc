@@ -33,7 +33,8 @@
         <file>Views/Status/ConnectionStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
         <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/MissionMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/MissionLineMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/MissionPointMapOverlayView.qml</file>
         <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
         <file>Views/Map/Overlays/HomePositionMapOverlayView.qml</file>
         <file>Views/Video/VideoView.qml</file>
