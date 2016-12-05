@@ -46,8 +46,6 @@ void FlightMapPresenter::connectView(QObject* view)
 
     this->setViewProperty(PROPERTY(vehicleModel),
                           QVariant::fromValue(&d->vehicleModel));
-
-    connect(view, SIGNAL(setHome(QVariant)), this, SLOT(onSetHome(QVariant)));
 }
 
 void FlightMapPresenter::onVehicleAdded(uint8_t id)
@@ -59,15 +57,4 @@ void FlightMapPresenter::onVehicleRemoved(uint8_t id)
 {
     // TODO: correct Vehicle removing
     d->vehicleModel.removeVehicle(d->vehicleService->vehicle(id));
-}
-
-void FlightMapPresenter::onSetHome(const QVariant& position)
-{
-    QGeoCoordinate coordinate = position.value<QGeoCoordinate>();
-    if (!coordinate.isValid()) return;
-
-    for (domain::Vehicle* vehicle: d->vehicleService->vehicles())
-    {
-        emit vehicle->commandSetHome(domain::Position(coordinate));
-    }
 }
