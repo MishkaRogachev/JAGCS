@@ -1,5 +1,5 @@
-#ifndef VEHICLE_MAP_PRESENTER_H
-#define VEHICLE_MAP_PRESENTER_H
+#ifndef FLIGHT_MAP_PRESENTER_H
+#define FLIGHT_MAP_PRESENTER_H
 
 #include "map_presenter.h"
 
@@ -10,14 +10,14 @@ namespace domain
 
 namespace presentation
 {
-    class VehicleMapPresenter: public MapPresenter
+    class FlightMapPresenter: public MapPresenter
     {
         Q_OBJECT
 
     public:
-        explicit VehicleMapPresenter(domain::VehicleService* vehicleService,
-                                     QObject* parent = nullptr);
-        ~VehicleMapPresenter() override;
+        explicit FlightMapPresenter(domain::VehicleService* vehicleService,
+                                    QObject* parent = nullptr);
+        ~FlightMapPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
@@ -34,4 +34,4 @@ namespace presentation
     };
 }
 
-#endif // VEHICLE_MAP_PRESENTER_H
+#endif // FLIGHT_MAP_PRESENTER_H

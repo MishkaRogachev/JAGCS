@@ -6,7 +6,7 @@
 #include "vehicle.h"
 #include "mission.h"
 
-#include "vehicle_map_presenter.h"
+#include "map_presenter.h"
 #include "mission_map_item_model.h"
 
 using namespace presentation;
@@ -17,7 +17,7 @@ public:
     domain::VehicleService* vehicleService;
     domain::MissionService* missionService;
 
-    VehicleMapPresenter* map;
+    MapPresenter* map;
     MissionMapItemModel missionModel;
 
     Impl(domain::VehicleService* vehicleService,
@@ -34,7 +34,7 @@ MissionPresenter::MissionPresenter(domain::VehicleService* vehicleService,
     BasePresenter(object),
     d(new Impl(vehicleService, missionService))
 {
-    d->map = new VehicleMapPresenter(vehicleService, this);
+    d->map = new MapPresenter(this);
 }
 
 MissionPresenter::~MissionPresenter()

@@ -1,4 +1,4 @@
-#include "vehicle_map_presenter.h"
+#include "flight_map_presenter.h"
 
 // Qt
 #include <QDebug>
@@ -11,7 +11,7 @@
 
 using namespace presentation;
 
-class VehicleMapPresenter::Impl
+class FlightMapPresenter::Impl
 {
 public:
     domain::VehicleService* vehicleService;
@@ -19,28 +19,28 @@ public:
     VehicleMapItemModel vehicleModel;
 };
 
-VehicleMapPresenter::VehicleMapPresenter(domain::VehicleService* vehicleService,
-                                         QObject* parent):
+FlightMapPresenter::FlightMapPresenter(domain::VehicleService* vehicleService,
+                                       QObject* parent):
     MapPresenter(parent),
     d(new Impl())
 {
     d->vehicleService = vehicleService;
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
-            this, &VehicleMapPresenter::onVehicleAdded);
+            this, &FlightMapPresenter::onVehicleAdded);
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
-            this, &VehicleMapPresenter::onVehicleRemoved);
+            this, &FlightMapPresenter::onVehicleRemoved);
 
     for (uint8_t id: vehicleService->vehileIds())
         this->onVehicleAdded(id);
 }
 
-VehicleMapPresenter::~VehicleMapPresenter()
+FlightMapPresenter::~FlightMapPresenter()
 {
     delete d;
 }
 
-void VehicleMapPresenter::connectView(QObject* view)
+void FlightMapPresenter::connectView(QObject* view)
 {
     MapPresenter::connectView(view);
 
@@ -50,18 +50,18 @@ void VehicleMapPresenter::connectView(QObject* view)
     connect(view, SIGNAL(setHome(QVariant)), this, SLOT(onSetHome(QVariant)));
 }
 
-void VehicleMapPresenter::onVehicleAdded(uint8_t id)
+void FlightMapPresenter::onVehicleAdded(uint8_t id)
 {
     d->vehicleModel.addVehicle(d->vehicleService->vehicle(id));
 }
 
-void VehicleMapPresenter::onVehicleRemoved(uint8_t id)
+void FlightMapPresenter::onVehicleRemoved(uint8_t id)
 {
     // TODO: correct Vehicle removing
     d->vehicleModel.removeVehicle(d->vehicleService->vehicle(id));
 }
 
-void VehicleMapPresenter::onSetHome(const QVariant& position)
+void FlightMapPresenter::onSetHome(const QVariant& position)
 {
     QGeoCoordinate coordinate = position.value<QGeoCoordinate>();
     if (!coordinate.isValid()) return;
