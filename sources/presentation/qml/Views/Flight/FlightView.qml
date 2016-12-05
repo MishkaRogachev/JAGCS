@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
 
-import "../Map"
 import "../Video"
 
 Pane {
@@ -48,7 +47,7 @@ Pane {
             }
         }
 
-        VehicleMapView {
+        FlightMapView {
             objectName: "map"
             Layout.fillWidth: true
             Layout.fillHeight: true

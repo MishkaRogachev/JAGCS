@@ -16,7 +16,7 @@ ApplicationWindow {
     Palette {
         id: palette
         property color trackColor: "#E74C3C"
-        property color missionColor: "#2196F3"
+        property color missionColor: "#00897B"
     }
 
     header: StatusView {

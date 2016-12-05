@@ -10,4 +10,9 @@ Map {
     gesture.enabled: true
     activeMapType: supportedMapTypes[5] // TerrainMapType
     copyrightsVisible: false
+
+    MouseArea {
+        anchors.fill: parent
+        // TODO: map actions
+    }
 }

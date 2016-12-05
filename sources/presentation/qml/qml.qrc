@@ -32,10 +32,13 @@
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/ConnectionStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
-        <file>Views/Map/VehicleMapView.qml</file>
-        <file>Views/Map/MapActions.qml</file>
+        <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/MissionMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/HomePositionMapOverlayView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Flight/FlightView.qml</file>
+        <file>Views/Flight/FlightMapView.qml</file>
         <file>Views/Flight/VehicleView.qml</file>
         <file>Views/Mission/MissionView.qml</file>
         <file>Views/Mission/MissionItemView.qml</file>
