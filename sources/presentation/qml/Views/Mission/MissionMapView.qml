@@ -6,9 +6,14 @@ import "../Map/Overlays"
 MapView {
     id: root
 
-    property var missionModel
+    property var lineModel
+    property var pointModel
 
     MissionLineMapOverlayView {
-        model: missionModel
+        model: lineModel
+    }
+
+    MissionPointMapOverlayView {
+        model: pointModel
     }
 }

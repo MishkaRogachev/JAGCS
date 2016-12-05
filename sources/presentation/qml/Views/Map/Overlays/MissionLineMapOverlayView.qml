@@ -6,7 +6,7 @@ MapItemView {
     delegate: MapPolyline {
         line.width: 6
         line.color: palette.missionColor
-        path: missionLine
+        path: missionPath
         smooth: true
     }
 }

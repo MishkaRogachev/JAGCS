@@ -22,6 +22,10 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onMissionAdded(uint8_t id);
+        void onMissionRemoved(uint8_t id);
+
     private:
         class Impl;
         Impl* const d;
