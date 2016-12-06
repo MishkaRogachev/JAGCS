@@ -40,7 +40,5 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new MissionHandler(m_missionService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
 
-    //TODO: autolink UDP
-
     return communicator;
 }

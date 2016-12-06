@@ -57,8 +57,15 @@ Mission* MissionService::requestMission(uint8_t id)
 
 void MissionService::removeMission(uint8_t id)
 {
-    if (!d->missions.contains(id)) return;
-
     d->missions.remove(id);
     emit missionRemoved(id);
+}
+
+void MissionService::deleteMission(uint8_t id)
+{
+    Mission* mission = d->missions.value(id, nullptr);
+    if (!mission) return;
+
+    this->removeMission(id);
+    mission->deleteLater();
 }

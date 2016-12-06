@@ -26,6 +26,7 @@ namespace domain
 
     public slots:
         void removeVehicle(uint8_t id);
+        void deleteVehicle(uint8_t id);
 
     signals:
         void vehicleAdded(uint8_t id);

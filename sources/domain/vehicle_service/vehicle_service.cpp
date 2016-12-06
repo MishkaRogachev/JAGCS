@@ -62,8 +62,15 @@ Vehicle* VehicleService::requestVehicle(uint8_t id)
 
 void VehicleService::removeVehicle(uint8_t id)
 {
-    if (!d->vehicles.contains(id)) return;
-
     d->vehicles.remove(id);
     emit vehicleRemoved(id);
+}
+
+void VehicleService::deleteVehicle(uint8_t id)
+{
+    Vehicle* vehicle = d->vehicles.value(id, nullptr);
+    if (!vehicle) return;
+
+    this->removeVehicle(id);
+    vehicle->deleteLater();
 }

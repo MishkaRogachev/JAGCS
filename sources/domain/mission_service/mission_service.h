@@ -25,6 +25,7 @@ namespace domain
 
     public slots:
         void removeMission(uint8_t id);
+        void deleteMission(uint8_t id);
 
     signals:
         void missionAdded(uint8_t id);

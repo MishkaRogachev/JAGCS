@@ -27,7 +27,6 @@ Pane {
                 model: vehicleNames
                 Layout.preferredWidth: parent.width
                 onCurrentTextChanged: vehicleSelected(currentText)
-                onCountChanged: console.log(count)
             }
 
             VehicleView {

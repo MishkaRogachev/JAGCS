@@ -7,7 +7,7 @@ ComboBox {
     id: control
 
     font.pointSize: palette.fontSize
-    //enabled: count > 0 TODO: comboBox dous not update
+    //enabled: count > 0 TODO: comboBox does not update
 
     delegate: ItemDelegate {
         width: control.width
