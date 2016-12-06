@@ -4,7 +4,6 @@
 #include <QDebug>
 
 // Internal
-#include "mission_service.h"
 #include "mission.h"
 
 using namespace presentation;
@@ -25,7 +24,8 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
 
     domain::Mission* mission = m_missions.at(index.row());
 
-    switch (role) {
+    switch (role)
+    {
     case MissionPathRole:
     {
         QVariantList line;

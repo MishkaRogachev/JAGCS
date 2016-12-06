@@ -1,7 +1,6 @@
 #ifndef MISSION_LINE_MAP_ITEM_MODEL_H
 #define MISSION_LINE_MAP_ITEM_MODEL_H
 
-// Qt
 #include <QAbstractListModel>
 
 namespace domain
@@ -16,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        enum VehicleMapItemRoles
+        enum MissionLineMapItemRoles
         {
             MissionPathRole = Qt::UserRole + 1
         };

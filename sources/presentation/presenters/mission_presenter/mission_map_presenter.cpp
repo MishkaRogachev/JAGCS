@@ -8,6 +8,7 @@
 #include "mission.h"
 
 #include "mission_line_map_item_model.h"
+#include "mission_point_map_item_model.h"
 
 using namespace presentation;
 
@@ -17,6 +18,7 @@ public:
     domain::MissionService* missionService;
 
     MissionLineMapItemModel lineModel;
+    MissionPointMapItemModel pointModel;
 
     Impl(domain::MissionService* missionService):
         missionService(missionService),
@@ -47,17 +49,36 @@ void MissionMapPresenter::connectView(QObject* view)
 {
     MapPresenter::connectView(view);
 
-    this->setViewProperty(PROPERTY(lineModel),
-                          QVariant::fromValue(&d->lineModel));
+    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
+    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
 }
 
 void MissionMapPresenter::onMissionAdded(uint8_t id)
 {
-    d->lineModel.addMission(d->missionService->mission(id));
+    domain::Mission* mission = d->missionService->mission(id);
+    d->lineModel.addMission(mission);
+
+    connect(mission, &domain::Mission::missionItemAdded, this,
+            [this, mission](unsigned seq) {
+        d->pointModel.addMissionItem(mission->item(seq));
+    });
+
+    connect(mission, &domain::Mission::missionItemRemoved, this,
+            [this, mission](unsigned seq) {
+        d->pointModel.removeMissionItem(mission->item(seq));
+    });
+
+    for (domain::MissionItem* item: mission->items())
+        d->pointModel.addMissionItem(item);
 }
 
 void MissionMapPresenter::onMissionRemoved(uint8_t id)
 {
-    // TODO: correct Mission removing
-    d->lineModel.removeMission(d->missionService->mission(id));
+    domain::Mission* mission = d->missionService->mission(id);
+    d->lineModel.removeMission(mission);
+
+    disconnect(mission, 0, this, 0);
+
+    for (domain::MissionItem* item: mission->items())
+        d->pointModel.removeMissionItem(item);
 }

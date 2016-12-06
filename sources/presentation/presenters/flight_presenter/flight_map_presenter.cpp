@@ -55,6 +55,5 @@ void FlightMapPresenter::onVehicleAdded(uint8_t id)
 
 void FlightMapPresenter::onVehicleRemoved(uint8_t id)
 {
-    // TODO: correct Vehicle removing
     d->vehicleModel.removeVehicle(d->vehicleService->vehicle(id));
 }

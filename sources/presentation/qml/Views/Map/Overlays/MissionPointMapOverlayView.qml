@@ -6,7 +6,9 @@ import "qrc:/Controls"
 
 MapItemView {
     delegate: MapQuickItem {
-        coordinate: position
+        coordinate: itemCoordinate
+        anchorPoint.x: sourceItem.width / 2
+        anchorPoint.y: sourceItem.height / 2
 
         Behavior on coordinate {
             CoordinateAnimation { duration: 200 }
