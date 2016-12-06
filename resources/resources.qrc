@@ -21,5 +21,7 @@
         <file>indicators/unknown_mark.svg</file>
         <file>indicators/home_mark.svg</file>
         <file>icons/flight.svg</file>
+        <file>icons/download.svg</file>
+        <file>icons/upload.svg</file>
     </qresource>
 </RCC>
