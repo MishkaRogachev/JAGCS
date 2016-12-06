@@ -6,15 +6,18 @@
 
 namespace domain
 {
+    class Mission;
+
     class MissionItem: public QObject
     {
         Q_OBJECT
 
     public:
-        MissionItem(QObject* parent = nullptr);
+        MissionItem(Mission* parent);
 
         QGeoCoordinate coordinate() const;
         bool isCurrent() const;
+        unsigned sequence() const;
 
     public slots:
         void setCoordinate(const QGeoCoordinate& coordinate);
@@ -25,6 +28,7 @@ namespace domain
         void currentChanged(bool current);
 
     private:
+        Mission* m_mission;
         QGeoCoordinate m_coordinate;
         bool m_current;
     };

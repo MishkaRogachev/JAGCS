@@ -1,9 +1,13 @@
-#include "mission_item.h"
+#include "mission_item.h"\
+
+// Internal
+#include "mission.h"
 
 using namespace domain;
 
-MissionItem::MissionItem(QObject* parent):
+MissionItem::MissionItem(Mission* parent):
     QObject(parent),
+    m_mission(parent),
     m_current(false)
 {}
 
@@ -15,6 +19,11 @@ QGeoCoordinate MissionItem::coordinate() const
 bool MissionItem::isCurrent() const
 {
     return m_current;
+}
+
+unsigned MissionItem::sequence() const
+{
+    return m_mission->sequence((MissionItem*)this);
 }
 
 void MissionItem::setCoordinate(const QGeoCoordinate& coordinate)

@@ -28,6 +28,8 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
     case ItemCoordinateRole:
         return QVariant::fromValue(item->coordinate());
+    case ItemSequenceRole:
+        return QVariant::fromValue(item->sequence());
     default:
         return QVariant();
     }
@@ -55,6 +57,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     QHash<int, QByteArray> roles;
 
     roles[ItemCoordinateRole] = "itemCoordinate";
+    roles[ItemSequenceRole] = "itemSeq";
 
     return roles;
 }

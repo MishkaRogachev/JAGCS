@@ -9,6 +9,7 @@ MapItemView {
         coordinate: itemCoordinate
         anchorPoint.x: sourceItem.width / 2
         anchorPoint.y: sourceItem.height / 2
+        z: 1
 
         Behavior on coordinate {
             CoordinateAnimation { duration: 200 }
@@ -19,14 +20,14 @@ MapItemView {
             height: width
             radius: width / 2
             color: palette.missionColor
-        }
 
-        Label {
-            text: seq
-            anchors.centerIn: parent
-            font.bold: true
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            Label {
+                text: itemSeq
+                anchors.centerIn: parent
+                font.bold: true
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
         }
     }
 }
