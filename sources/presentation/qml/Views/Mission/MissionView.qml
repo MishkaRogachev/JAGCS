@@ -37,17 +37,27 @@ Pane {
             }
         }
 
-        ListView {
-            Layout.fillHeight: true
+        ColumnLayout {
+            id: column
+            width: parent.width
+            anchors.centerIn: parent
+            spacing: 8
 
             Repeater {
+                id: repeater
                 model: missionItems
-                onModelChanged: console.log(model)
 
                 MissionItemView {
-                    height: 128
+                    Layout.fillWidth: true
+                    coordinate: modelData.coordinate
                 }
             }
+        }
+
+        Button {
+            Layout.fillWidth: true
+            text: qsTr("Add Item")
+            iconSource: "qrc:/icons/add.svg"
         }
     }
 }
