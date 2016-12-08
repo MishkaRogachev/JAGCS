@@ -20,12 +20,16 @@ Pane {
 
     ColumnLayout {
         anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 360
         anchors.left: parent.left
         anchors.margins: 7
 
         RowLayout {
+
             ComboBox {
                 id: missionBox
+                Layout.fillWidth: true
                 onCurrentTextChanged: missionSelected(currentText)
             }
 
@@ -38,23 +42,32 @@ Pane {
             }
         }
 
-        ColumnLayout {
-            id: column
+        Flickable {
             width: parent.width
-            anchors.centerIn: parent
-            spacing: 8
+            Layout.fillHeight: true
+            clip: true
+            contentWidth: column.width
+            contentHeight: column.height
 
-            Repeater {
-                model: missionItems
+            ColumnLayout {
+                id: column
+                width: parent.width
+                anchors.centerIn: parent
+                spacing: 8
 
-                MissionItemView {
-                    Layout.fillWidth: true
-                    coordinate: modelData.coordinate
+                Repeater {
+                    model: missionItems
+
+                    MissionItemView {
+                        Layout.fillWidth: true
+                        coordinate: modelData.coordinate
+                    }
                 }
             }
         }
 
         Button {
+            id: addButton
             Layout.fillWidth: true
             text: qsTr("Add Item")
             iconSource: "qrc:/icons/add.svg"
