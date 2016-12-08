@@ -30,7 +30,7 @@ SpinBox {
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
     }
 
-    down.indicator: Rectangle {
+    down.indicator: Rectangle { // TODO: button
         x: control.mirrored ? up.indicator.width :
                               control.width - width - up.indicator.width
         height: control.height

@@ -8,10 +8,12 @@ Button {
 
     property alias iconSource: icon.source
     property color iconColor: label.color
+    property alias backgroundColor: backgroundItem.color
 
     font.pointSize: 11
 
     background: Rectangle {
+        id: backgroundItem
         implicitWidth: palette.controlBaseSize
         implicitHeight: implicitWidth
         border.color: control.activeFocus ? palette.highlightColor : "transparent"

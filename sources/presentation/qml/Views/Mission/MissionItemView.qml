@@ -25,10 +25,8 @@ Frame {
                     text: qsTr("Lat.:")
                 }
 
-                SpinBox {
+                CoordSpinBox {
                     Layout.fillWidth: true
-                    from: -180
-                    to: 180
                     value: latitude
                 }
 
@@ -37,11 +35,10 @@ Frame {
                     text: qsTr("Lon.:")
                 }
 
-                SpinBox {
+                CoordSpinBox {
                     Layout.fillWidth: true
-                    from: -180
-                    to: 180
                     value: longitude
+                    longitude: true
                 }
             }
 
