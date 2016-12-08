@@ -60,7 +60,8 @@ Pane {
 
                     MissionItemView {
                         Layout.fillWidth: true
-                        coordinate: modelData.coordinate
+                        latitude: modelData.coordinate.latitude
+                        longitude: modelData.coordinate.longitude
                     }
                 }
             }

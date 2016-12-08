@@ -8,34 +8,62 @@ import "qrc:/Controls"
 Frame {
     id: root
 
-    property var coordinate
+    property real latitude: 0.0
+    property real longitude: 0.0
+    property real altitude: 0
 
-    GridLayout {
-        columns: 2
+    ColumnLayout {
         anchors.fill: parent
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Lat.:")
+        // TODO: mission item types
+        RowLayout {
+            GridLayout {
+                columns: 2
+
+                Label {
+                    Layout.fillWidth: true
+                    text: qsTr("Lat.:")
+                }
+
+                SpinBox {
+                    Layout.fillWidth: true
+                    from: -180
+                    to: 180
+                    value: latitude
+                }
+
+                Label {
+                    Layout.fillWidth: true
+                    text: qsTr("Lon.:")
+                }
+
+                SpinBox {
+                    Layout.fillWidth: true
+                    from: -180
+                    to: 180
+                    value: longitude
+                }
+            }
+
+            Button {
+                anchors.verticalCenter: parent.verticalCenter
+                iconSource: "qrc:/icons/map-marker.svg"
+                // TODO: pick
+            }
         }
 
-        SpinBox {
-            Layout.fillWidth: true
-            from: -180
-            to: 180
-            value: coordinate.latitude
-        }
+        RowLayout {
+            Label {
+                Layout.fillWidth: true
+                text: qsTr("Alt.:")
+            }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Lon.:")
-        }
-
-        SpinBox {
-            Layout.fillWidth: true
-            from: -180
-            to: 180
-            value: coordinate.longitude
+            SpinBox {
+                Layout.fillWidth: true
+                from: -1000
+                to: 20000
+                value: altitude
+            }
         }
     }
 }
