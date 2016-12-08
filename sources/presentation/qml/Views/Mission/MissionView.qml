@@ -7,10 +7,11 @@ import "qrc:/Controls"
 Pane {
     id: root
 
-    property var missionNames
+    property alias missionNames: missionBox.model
     property var missionItems
 
     signal missionSelected(string name)
+    signal addMissionItem()
 
     MissionMapView {
         objectName: "map"
@@ -24,7 +25,7 @@ Pane {
 
         RowLayout {
             ComboBox {
-                model: missionNames
+                id: missionBox
                 onCurrentTextChanged: missionSelected(currentText)
             }
 
@@ -44,7 +45,6 @@ Pane {
             spacing: 8
 
             Repeater {
-                id: repeater
                 model: missionItems
 
                 MissionItemView {
@@ -58,6 +58,8 @@ Pane {
             Layout.fillWidth: true
             text: qsTr("Add Item")
             iconSource: "qrc:/icons/add.svg"
+            enabled: missionBox.currentIndex > -1
+            onClicked: addMissionItem()
         }
     }
 }

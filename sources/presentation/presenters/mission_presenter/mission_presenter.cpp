@@ -17,6 +17,7 @@ class MissionPresenter::Impl
 {
 public:
     domain::MissionService* missionService;
+    domain::Mission* selectedMission = nullptr;
 
     QMap<uint8_t, QString> missionAliases;
 
@@ -54,26 +55,52 @@ void MissionPresenter::updateMissions()
     this->setViewProperty(PROPERTY(missionNames), missionNames);
 }
 
+void MissionPresenter::updateMissionItems()
+{
+    QObjectList list;
+
+    if (d->selectedMission)
+    {
+        for (domain::MissionItem* item: d->selectedMission->items())
+            list.append(item);
+    }
+
+    this->setViewProperty(PROPERTY(missionItems), QVariant::fromValue(list));
+}
+
 void MissionPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 
     connect(view, SIGNAL(missionSelected(QString)),
             this, SLOT(onMissionSelected(QString)));
+    connect(view, SIGNAL(addMissionItem()),
+            this, SLOT(onAddMissionItem()));
 
     this->updateMissions();
 }
 
 void MissionPresenter::onMissionSelected(const QString& missionName)
 {
-    domain::Mission* mission = d->missionService->mission(
-                                   d->missionAliases.key(missionName));
-    if (!mission) return;
+    if (d->selectedMission)
+    {
+        disconnect(d->selectedMission, 0, this, 0);
+    }
 
-    QObjectList list;
+    d->selectedMission =
+            d->missionService->mission(d->missionAliases.key(missionName));
 
-    for (domain::MissionItem* item: mission->items())
-        list.append(item);
+    if (d->selectedMission)
+    {
+        connect(d->selectedMission, &domain::Mission::missionItemAdded,
+                this, &MissionPresenter::updateMissionItems);
+        connect(d->selectedMission, &domain::Mission::missionItemRemoved,
+                this, &MissionPresenter::updateMissionItems);
+    }
+    this->updateMissionItems();
+}
 
-    this->setViewProperty(PROPERTY(missionItems), QVariant::fromValue(list));
+void MissionPresenter::onAddMissionItem()
+{
+    if (d->selectedMission) d->selectedMission->addNewMissionItem();
 }

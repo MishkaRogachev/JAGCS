@@ -21,12 +21,14 @@ namespace presentation
 
     public slots:
         void updateMissions();
+        void updateMissionItems();
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
         void onMissionSelected(const QString& missionName);
+        void onAddMissionItem();
 
     private:
         class Impl;

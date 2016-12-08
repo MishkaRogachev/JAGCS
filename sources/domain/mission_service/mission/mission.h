@@ -28,6 +28,7 @@ namespace domain
         void setCount(unsigned count);
 
         void addMissionItem(unsigned seq, MissionItem* item);
+        void addNewMissionItem();
         void removeMissionItem(unsigned seq);
 
     signals:

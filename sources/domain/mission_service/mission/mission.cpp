@@ -1,5 +1,8 @@
 #include "mission.h"
 
+// Qt
+#include <QDebug>
+
 using namespace domain;
 
 Mission::Mission(QObject* parent):
@@ -50,6 +53,11 @@ void Mission::addMissionItem(unsigned seq, MissionItem* item)
 
     m_missionItems[seq] = item;
     emit missionItemAdded(seq);
+}
+
+void Mission::addNewMissionItem()
+{
+    this->addMissionItem(this->count(), new domain::MissionItem(this));
 }
 
 void Mission::removeMissionItem(unsigned seq)
