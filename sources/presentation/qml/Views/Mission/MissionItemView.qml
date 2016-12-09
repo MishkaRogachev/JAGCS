@@ -28,6 +28,7 @@ Frame {
                 CoordSpinBox {
                     Layout.fillWidth: true
                     value: latitude
+                    width: 240
                 }
 
                 Label {
@@ -38,7 +39,8 @@ Frame {
                 CoordSpinBox {
                     Layout.fillWidth: true
                     value: longitude
-                    longitude: true
+                    isLongitude: true
+                    width: 240
                 }
             }
 

@@ -21,7 +21,7 @@ Button {
             if (control.checked) return palette.selectionColor;
             if (!enabled) return palette.disabledColor;
             if (control.pressed) return palette.highlightColor;
-            return palette.buttonColor;
+            return control.flat ? "transparent" : palette.buttonColor;
         }
     }
 

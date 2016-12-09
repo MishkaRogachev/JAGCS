@@ -4,12 +4,12 @@ import QtQuick.Controls 2.0
 import "qrc:/JS/helper.js" as Helper
 import "./"
 
-Control {
+Control { // TODO: RealSpinBox
     id: control
 
     property real value: 0
     property real stepSize: 0.001
-    property bool longitude: false
+    property bool isLongitude: false
 
     implicitWidth: Math.max(background.implicitWidth,
                             contentItem.implicitWidth +
@@ -17,21 +17,26 @@ Control {
                             up.implicitWidth +
                             down.implicitWidth)
     implicitHeight: palette.controlBaseSize
-    font.pointSize: palette.fontSize
     leftPadding: -(up.width + down.width) / 2
     rightPadding: 6 + control.mirrored ? down.width : up.width
+    font.pointSize: palette.fontSize
 
     background: Rectangle {
+        implicitWidth: palette.controlBaseWidth
+        implicitHeight: palette.controlBaseSize
         color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        border.color: input.activeFocus ? palette.highlightColor : "transparent"
     }
 
     contentItem: TextInput {
-        text: Helper.degreesToDmsString(value, longitude)
-        onEditingFinished: value =  Helper.dmsStringToDegree(text, longitude)
+        id: input
+        focus: true
+        text: Helper.degreesToDmsString(value, isLongitude)
+        onEditingFinished: value =  Helper.dmsStringToDegree(text, isLongitude)
         font: control.font
         color: palette.textColor
-        selectionColor: palette.highlightColor
-        selectedTextColor: color
+        selectionColor: palette.selectionColor
+        selectedTextColor: palette.selectedTextColor
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
         validator: RegExpValidator {
@@ -42,9 +47,7 @@ Control {
     Button {
         id: down
         x: control.mirrored ? up.width : control.width - width - up.width
-        height: control.height
-        width: height
-        backgroundColor: pressed ? palette.highlightColor : "transparent"
+        flat: true
         iconSource: "qrc:/ui/minus.svg"
         onClicked: value -= stepSize
         autoRepeat: true
@@ -53,9 +56,7 @@ Control {
     Button {
         id: up
         x: control.mirrored ? 0 : control.width - width
-        height: control.height
-        width: height
-        backgroundColor: pressed ? palette.highlightColor : "transparent"
+        flat: true
         iconSource: "qrc:/ui/plus.svg"
         onClicked: value += stepSize
         autoRepeat: true
