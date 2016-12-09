@@ -32,8 +32,6 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
         mavlink_mission_count_t missionCount;
         mavlink_msg_mission_count_decode(&message, &missionCount);
 
-        qDebug() << message.sysid << missionCount.target_system;
-
         mission->setCount(missionCount.count);
         // TODO: request by timer
         for (uint16_t seq = 0; seq < missionCount.count; ++seq)

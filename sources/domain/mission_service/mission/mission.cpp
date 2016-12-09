@@ -31,7 +31,7 @@ unsigned Mission::sequence(MissionItem* item) const
 
 MissionItem* Mission::requestItem(unsigned seq)
 {
-    if (!m_missionItems.contains(seq))
+    if (!m_missionItems.value(seq, nullptr))
         this->addMissionItem(seq, new MissionItem(this));
 
     return m_missionItems.value(seq);
