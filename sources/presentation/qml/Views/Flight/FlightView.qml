@@ -47,6 +47,7 @@ Pane {
         }
 
         FlightMapView {
+            id: map
             objectName: "map"
             Layout.fillWidth: true
             Layout.fillHeight: true

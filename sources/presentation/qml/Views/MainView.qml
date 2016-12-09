@@ -9,6 +9,8 @@ import "Status"
 ApplicationWindow {
     id: main
     visibility: "Maximized"
+    minimumWidth: 1024
+    minimumHeight: 768
     visible: true
 
     property string mode

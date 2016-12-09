@@ -14,6 +14,7 @@ Pane {
     signal addMissionItem()
 
     MissionMapView {
+        id: map
         objectName: "map"
         anchors.fill: parent
     }

@@ -8,47 +8,17 @@ import "qrc:/Controls"
 Frame {
     id: root
 
-    property real latitude: 0.0
-    property real longitude: 0.0
+    property real latitude: position.latitude
+    property real longitude: position.longitude
     property real altitude: 0
 
     ColumnLayout {
         anchors.fill: parent
 
         // TODO: mission item types
-        RowLayout {
-            GridLayout {
-                columns: 2
 
-                Label {
-                    Layout.fillWidth: true
-                    text: qsTr("Lat.:")
-                }
-
-                CoordSpinBox {
-                    Layout.fillWidth: true
-                    value: latitude
-                    width: 240
-                }
-
-                Label {
-                    Layout.fillWidth: true
-                    text: qsTr("Lon.:")
-                }
-
-                CoordSpinBox {
-                    Layout.fillWidth: true
-                    value: longitude
-                    isLongitude: true
-                    width: 240
-                }
-            }
-
-            Button {
-                anchors.verticalCenter: parent.verticalCenter
-                iconSource: "qrc:/icons/map-marker.svg"
-                // TODO: pick
-            }
+        PositionEdit {
+            id: position
         }
 
         RowLayout {
