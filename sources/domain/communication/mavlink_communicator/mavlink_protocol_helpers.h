@@ -23,22 +23,22 @@ namespace domain
 
     inline double decodeLatLon(int32_t value)
     {
-        return value / 1e7;
+        return double(value) / 1e7;
     }
 
-    inline float decodeAltitude(double value)
+    inline float decodeAltitude(int32_t value)
     {
-        return value / 1000;
+        return float(value) / 1000;
     }
 
     inline float decodeVoltage(uint16_t value)
     {
-        return value / 1000;
+        return float(value) / 1000;
     }
 
     inline float decodeCurrent(int16_t value)
     {
-        return value / 10000;
+        return float(value) / 10000;
     }
 
     inline QGeoCoordinate decodeCoordinate(int32_t lat, int32_t lon, int32_t alt)
