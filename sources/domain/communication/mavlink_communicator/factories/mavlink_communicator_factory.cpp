@@ -15,6 +15,10 @@
 #include "rc_channels_handler.h"
 #include "mission_handler.h"
 
+#include "settings.h"
+#include "settings_provider.h"
+#include "udp_link.h"
+
 using namespace domain;
 
 MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
@@ -39,6 +43,15 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new RcChannelsHandler(m_vehicleService, communicator);
     new MissionHandler(m_missionService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
+
+    SettingsProvider::beginGroup(connection_settings::group);
+    UdpLink* defaultUdpLink = new UdpLink(SettingsProvider::value(
+                                              connection_settings::port).toInt(),
+                                          communicator);
+    communicator->addLink(defaultUdpLink);
+    defaultUdpLink->up();
+
+    SettingsProvider::endGroup();
 
     return communicator;
 }
