@@ -31,7 +31,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         QVariantList line;
         for (domain::MissionItem* item: mission->items())
         {
-            if (item->coordinate().isValid())
+            if (item && item->coordinate().isValid())
                 line.append(QVariant::fromValue(item->coordinate()));
         }
         return line;
