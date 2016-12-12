@@ -17,7 +17,9 @@ public:
 MissionService::MissionService(QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    this->requestMission(0);
+}
 
 MissionService::~MissionService()
 {

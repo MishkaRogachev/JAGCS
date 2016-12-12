@@ -48,9 +48,9 @@ void MissionLineMapItemModel::addMission(domain::Mission* mission)
     m_missions.append(mission);
 
     connect(mission, &domain::Mission::missionItemAdded,
-            this, &MissionLineMapItemModel::onMissionItemsCountChanged);
+            this, &MissionLineMapItemModel::onMissionItemAdded);
     connect(mission, &domain::Mission::missionItemRemoved,
-            this, &MissionLineMapItemModel::onMissionItemsCountChanged);
+            this, &MissionLineMapItemModel::onMissionItemRemoved);
 
     this->endInsertRows();
 }
@@ -80,9 +80,27 @@ QModelIndex MissionLineMapItemModel::missionIndex(domain::Mission* mission) cons
     return this->index(m_missions.indexOf(mission));
 }
 
-void MissionLineMapItemModel::onMissionItemsCountChanged()
+void MissionLineMapItemModel::onMissionItemAdded(domain::MissionItem* item)
 {
-    QModelIndex index = this->missionIndex(qobject_cast<domain::Mission*>(
-                                               this->sender()));
+    domain::Mission* mission = qobject_cast<domain::Mission*>(this->sender());
+
+    connect(item, &domain::MissionItem::coordinateChanged,
+            this, [this, mission] {
+        this->updateMissionPath(mission);
+    });
+
+    this->updateMissionPath(mission);
+}
+
+void MissionLineMapItemModel::onMissionItemRemoved(domain::MissionItem* item)
+{
+    disconnect(item, nullptr, this, nullptr);
+
+    this->updateMissionPath(qobject_cast<domain::Mission*>(this->sender()));
+}
+
+void MissionLineMapItemModel::updateMissionPath(domain::Mission* mission)
+{
+    QModelIndex index = this->missionIndex(mission);
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }

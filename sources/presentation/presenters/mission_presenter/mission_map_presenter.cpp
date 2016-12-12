@@ -58,15 +58,11 @@ void MissionMapPresenter::onMissionAdded(uint8_t id)
     domain::Mission* mission = d->missionService->mission(id);
     d->lineModel.addMission(mission);
 
-    connect(mission, &domain::Mission::missionItemAdded, this,
-            [this, mission](unsigned seq) {
-        d->pointModel.addMissionItem(mission->item(seq));
-    });
+    connect(mission, &domain::Mission::missionItemAdded,
+            &d->pointModel, &MissionPointMapItemModel::addMissionItem);
 
-    connect(mission, &domain::Mission::missionItemRemoved, this,
-            [this, mission](unsigned seq) {
-        d->pointModel.removeMissionItem(mission->item(seq));
-    });
+    connect(mission, &domain::Mission::missionItemRemoved,
+            &d->pointModel, &MissionPointMapItemModel::removeMissionItem);
 
     for (domain::MissionItem* item: mission->items())
         d->pointModel.addMissionItem(item);

@@ -52,7 +52,7 @@ void Mission::addMissionItem(unsigned seq, MissionItem* item)
         this->removeMissionItem(seq);
 
     m_missionItems[seq] = item;
-    emit missionItemAdded(seq);
+    emit missionItemAdded(item);
 }
 
 void Mission::addNewMissionItem()
@@ -63,7 +63,6 @@ void Mission::addNewMissionItem()
 void Mission::removeMissionItem(unsigned seq)
 {
     MissionItem* item = m_missionItems.take(seq);
-    if (item) delete item;
-
-    emit missionItemRemoved(seq);
+    emit missionItemRemoved(item);
+    delete item;
 }

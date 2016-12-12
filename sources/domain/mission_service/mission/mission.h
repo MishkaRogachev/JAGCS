@@ -32,8 +32,8 @@ namespace domain
         void removeMissionItem(unsigned seq);
 
     signals:
-        void missionItemRemoved(unsigned seq);
-        void missionItemAdded(unsigned seq);
+        void missionItemRemoved(MissionItem* item);
+        void missionItemAdded(MissionItem* item);
 
     private:
         QMap<unsigned, MissionItem*> m_missionItems; // TODO: replace QMap with QList

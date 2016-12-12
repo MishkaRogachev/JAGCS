@@ -6,6 +6,7 @@
 namespace domain
 {
     class Mission;
+    class MissionItem;
 }
 
 namespace presentation
@@ -35,7 +36,10 @@ namespace presentation
         QModelIndex missionIndex(domain::Mission* mission) const;
 
     private slots:
-        void onMissionItemsCountChanged();
+        void onMissionItemAdded(domain::MissionItem* item);
+        void onMissionItemRemoved(domain::MissionItem* item);
+
+        void updateMissionPath(domain::Mission* mission);
 
     private:
         QList<domain::Mission*> m_missions;
