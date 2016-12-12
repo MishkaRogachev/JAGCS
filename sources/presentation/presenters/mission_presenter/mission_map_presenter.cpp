@@ -60,7 +60,6 @@ void MissionMapPresenter::onMissionAdded(uint8_t id)
 
     connect(mission, &domain::Mission::missionItemAdded,
             &d->pointModel, &MissionPointMapItemModel::addMissionItem);
-
     connect(mission, &domain::Mission::missionItemRemoved,
             &d->pointModel, &MissionPointMapItemModel::removeMissionItem);
 

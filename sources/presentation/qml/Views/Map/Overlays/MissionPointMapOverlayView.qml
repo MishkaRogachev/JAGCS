@@ -11,10 +11,6 @@ MapItemView {
         anchorPoint.y: sourceItem.height / 2
         z: 1
 
-        Behavior on coordinate {
-            CoordinateAnimation { duration: 200 }
-        }
-
         sourceItem: Rectangle {
             width: 32 // TODO: map point size
             height: width
