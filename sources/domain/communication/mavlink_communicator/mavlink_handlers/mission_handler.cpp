@@ -32,7 +32,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
         mavlink_mission_count_t missionCount;
         mavlink_msg_mission_count_decode(&message, &missionCount);
 
-        mission->setCount(missionCount.count);
+        mission->reserve(missionCount.count);
         // TODO: request by timer
         for (uint16_t seq = 0; seq < missionCount.count; ++seq)
         {

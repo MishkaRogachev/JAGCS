@@ -19,47 +19,46 @@ MissionItem* Mission::item(unsigned seq) const
     return m_missionItems.value(seq, nullptr);
 }
 
-QList<MissionItem*> Mission::items() const
+const QList<MissionItem*>& Mission::items() const
 {
-    return m_missionItems.values();
+    return m_missionItems;
 }
 
-unsigned Mission::sequence(MissionItem* item) const
+int Mission::sequence(MissionItem* item) const
 {
-    return m_missionItems.key(item);
+    return m_missionItems.indexOf(item);
 }
 
-MissionItem* Mission::requestItem(unsigned seq)
+MissionItem* Mission::requestItem(int seq)
 {
-    if (!m_missionItems.value(seq, nullptr))
-        this->addMissionItem(seq, new MissionItem(this));
-
-    return m_missionItems.value(seq);
-}
-
-void Mission::setCount(unsigned count)
-{
-    for (unsigned i = 0; i < count; ++i)
+    while (m_missionItems.count() > seq)
     {
-        if (m_missionItems.contains(i)) continue;
-        m_missionItems[i] = nullptr;
+        m_missionItems.append(nullptr);
     }
+
+    if (!m_missionItems.at(seq))
+    {
+        m_missionItems[seq] = new MissionItem(this);
+        emit missionItemAdded(m_missionItems[seq]);
+    }
+
+    return m_missionItems.at(seq);
 }
 
-void Mission::addMissionItem(unsigned seq, MissionItem* item)
+void Mission::reserve(unsigned count)
 {
-    m_missionItems[seq] = item;
-    emit missionItemAdded(item);
+    m_missionItems.reserve(count);
 }
 
 void Mission::addNewMissionItem()
 {
-    this->addMissionItem(this->count(), new domain::MissionItem(this));
+    m_missionItems.append(new domain::MissionItem(this));
+    emit missionItemAdded(m_missionItems.last());
 }
 
 void Mission::removeMissionItem(MissionItem* item)
 {
-    m_missionItems.remove(m_missionItems.key(item));
+    m_missionItems.removeOne(item);
     emit missionItemRemoved(item);
     delete item;
 }
