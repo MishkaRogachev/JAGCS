@@ -49,7 +49,13 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
 
 void MissionPointMapItemModel::removeMissionItem(domain::MissionItem* item)
 {
+    int row = m_items.indexOf(item);
+    if (row == -1) return;
 
+    this->beginRemoveRows(QModelIndex(), row, row);
+    m_items.removeOne(item);
+
+    this->endRemoveRows();
 }
 
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
