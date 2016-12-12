@@ -1,4 +1,7 @@
-#include "mission_item.h"\
+#include "mission_item.h"
+
+// QT
+#include <QDebug>
 
 // Internal
 #include "mission.h"

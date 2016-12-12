@@ -12,6 +12,11 @@ namespace domain
     {
         Q_OBJECT
 
+        Q_PROPERTY(QGeoCoordinate coordinate READ coordinate
+                   WRITE setCoordinate NOTIFY coordinateChanged)
+        Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
+                   NOTIFY currentChanged)
+
     public:
         MissionItem(Mission* parent);
 

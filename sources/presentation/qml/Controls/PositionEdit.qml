@@ -21,6 +21,7 @@ RowLayout {
         CoordSpinBox {
             Layout.fillWidth: true
             value: latitude
+            onValueChanged: latitude = value;
             width: 240
         }
 
@@ -32,6 +33,7 @@ RowLayout {
         CoordSpinBox {
             Layout.fillWidth: true
             value: longitude
+            onValueChanged: longitude = value;
             isLongitude: true
             width: 240
         }

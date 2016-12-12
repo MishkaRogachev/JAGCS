@@ -36,7 +36,7 @@ namespace domain
         void missionItemAdded(unsigned seq);
 
     private:
-        QMap<unsigned, MissionItem*> m_missionItems;
+        QMap<unsigned, MissionItem*> m_missionItems; // TODO: replace QMap with QList
     };
 }
 

@@ -8,17 +8,21 @@ import "qrc:/Controls"
 Frame {
     id: root
 
-    property real latitude: position.latitude
-    property real longitude: position.longitude
-    property real altitude: 0
+    property var coordinate: QtPositioning.coordinate()
+    signal setCoordinate(var coordinate)
 
     ColumnLayout {
         anchors.fill: parent
 
-        // TODO: mission item types
+        // TODO: mission item type: takeoff, waypoint, etc
 
         PositionEdit {
             id: position
+
+            latitude: coordinate.latitude
+            longitude: coordinate.longitude
+            onLatitudeChanged: updateCoordinate()
+            onLongitudeChanged: updateCoordinate()
         }
 
         RowLayout {
@@ -28,11 +32,19 @@ Frame {
             }
 
             SpinBox {
+                id: altitude
                 Layout.fillWidth: true
                 from: -1000
                 to: 20000
-                value: altitude
+                value: coordinate.altitude
+                onValueChanged: updateCoordinate()
             }
         }
+    }
+
+    function updateCoordinate() {
+        root.setCoordinate(QtPositioning.coordinate(position.latitude,
+                                                    position.longitude,
+                                                    altitude.value));
     }
 }
