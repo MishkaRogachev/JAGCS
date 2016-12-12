@@ -74,8 +74,9 @@ void MissionPresenter::connectView(QObject* view)
 
     connect(view, SIGNAL(missionSelected(QString)),
             this, SLOT(onMissionSelected(QString)));
-    connect(view, SIGNAL(addMissionItem()),
-            this, SLOT(onAddMissionItem()));
+    connect(view, SIGNAL(addMissionItem()), this, SLOT(onAddMissionItem()));
+    connect(view, SIGNAL(removeMissionItem(QObject*)),
+            this, SLOT(onRemoveMissionItem(QObject*)));
 
     this->updateMissions();
 }
@@ -103,4 +104,10 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
 void MissionPresenter::onAddMissionItem()
 {
     if (d->selectedMission) d->selectedMission->addNewMissionItem();
+}
+
+void MissionPresenter::onRemoveMissionItem(QObject* item)
+{
+    if (d->selectedMission) d->selectedMission->removeMissionItem(
+                qobject_cast<domain::MissionItem*>(item));
 }

@@ -10,6 +10,7 @@ Frame {
 
     property var coordinate: QtPositioning.coordinate()
     signal setCoordinate(var coordinate)
+    signal remove()
 
     ColumnLayout {
         anchors.fill: parent
@@ -39,6 +40,12 @@ Frame {
                 value: coordinate.altitude
                 onValueChanged: updateCoordinate()
             }
+        }
+
+        Button {
+            Layout.fillWidth: true
+            text: qsTr("Remove")
+            onClicked: root.remove()
         }
     }
 

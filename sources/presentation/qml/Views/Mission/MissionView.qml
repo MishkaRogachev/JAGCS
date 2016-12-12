@@ -12,6 +12,7 @@ Pane {
 
     signal missionSelected(string name)
     signal addMissionItem()
+    signal removeMissionItem(QtObject item)
 
     MissionMapView {
         id: map
@@ -63,6 +64,7 @@ Pane {
                         Layout.fillWidth: true
                         coordinate: modelData.coordinate
                         onSetCoordinate: modelData.setCoordinate(coordinate)
+                        onRemove: removeMissionItem(modelData)
                     }
                 }
             }

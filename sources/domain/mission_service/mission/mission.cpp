@@ -48,9 +48,6 @@ void Mission::setCount(unsigned count)
 
 void Mission::addMissionItem(unsigned seq, MissionItem* item)
 {
-    if (m_missionItems.value(seq, nullptr))
-        this->removeMissionItem(seq);
-
     m_missionItems[seq] = item;
     emit missionItemAdded(item);
 }
@@ -60,9 +57,9 @@ void Mission::addNewMissionItem()
     this->addMissionItem(this->count(), new domain::MissionItem(this));
 }
 
-void Mission::removeMissionItem(unsigned seq)
+void Mission::removeMissionItem(MissionItem* item)
 {
-    MissionItem* item = m_missionItems.take(seq);
+    m_missionItems.remove(m_missionItems.key(item));
     emit missionItemRemoved(item);
     delete item;
 }

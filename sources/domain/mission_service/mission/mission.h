@@ -29,7 +29,7 @@ namespace domain
 
         void addMissionItem(unsigned seq, MissionItem* item);
         void addNewMissionItem();
-        void removeMissionItem(unsigned seq);
+        void removeMissionItem(MissionItem* item);
 
     signals:
         void missionItemRemoved(MissionItem* item);
