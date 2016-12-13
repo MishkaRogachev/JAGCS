@@ -16,13 +16,13 @@ RowLayout {
     function pick() { pickButton.checked = true; }
 
     Label {
-        Layout.preferredWidth: 40
+        Layout.preferredWidth: 24
         font.bold: true
         text: seq + ")"
     }
 
     ComboBox {
-        Layout.preferredWidth: 120
+        Layout.preferredWidth: 110
         model: [ "WAYPOINT", "TAKEOFF" ] // TODO: mission types
     }
 
@@ -59,7 +59,7 @@ RowLayout {
 
     SpinBox {
         id: altitude
-        Layout.preferredWidth: 170
+        Layout.preferredWidth: 160
         from: -1000
         to: 20000
         value: coordinate.altitude
