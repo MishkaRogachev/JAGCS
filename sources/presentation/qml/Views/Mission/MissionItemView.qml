@@ -22,36 +22,42 @@ RowLayout {
     }
 
     ComboBox {
-        Layout.preferredWidth: 110
+        Layout.minimumWidth: 110
+        Layout.fillWidth: true
         model: [ "WAYPOINT", "TAKEOFF" ] // TODO: mission types
     }
 
     Label {
+        Layout.minimumWidth: 40
         horizontalAlignment: Text.AlignRight
         Layout.fillWidth: true
         text: qsTr("Lat.:")
     }
 
     CoordSpinBox {
-        Layout.preferredWidth: 230
+        Layout.minimumWidth: 230
+        Layout.fillWidth: true
         value: coordinate.latitude
         onValueChanged: coordinate.latitude = value;
     }
 
     Label {
+        Layout.minimumWidth: 40
         horizontalAlignment: Text.AlignRight
         Layout.fillWidth: true
         text: qsTr("Lon.:")
     }
 
     CoordSpinBox {
-        Layout.preferredWidth: 230
+        Layout.minimumWidth: 230
+        Layout.fillWidth: true
         isLongitude: true
         value: coordinate.longitude
         onValueChanged: coordinate.longitude = value;
     }
 
     Label {
+        Layout.minimumWidth: 40
         horizontalAlignment: Text.AlignRight
         Layout.fillWidth: true
         text: qsTr("Alt.:")
@@ -59,29 +65,18 @@ RowLayout {
 
     SpinBox {
         id: altitude
-        Layout.preferredWidth: 160
+        Layout.minimumWidth: 160
+        Layout.fillWidth: true
         from: -1000
         to: 20000
         value: coordinate.altitude
         onValueChanged: coordinate.altitude = value;
     }
 
-    Button {
-        id: pickButton // TODO: mapButton control
+    MapPickButton {
+        id: pickButton
         anchors.verticalCenter: parent.verticalCenter
-        iconSource: "qrc:/icons/map-marker.svg"
-        checkable: true
-        // TODO: ask map stop/start picking
-
-        Connections {
-            target: map
-            onPicked: {
-                if (!pickButton.checked) return;
-                coordinate.latitude = latitude;
-                coordinate.longitude = longitude;
-                pickButton.checked = false;
-            }
-        }
+        //onPicked:
     }
 
     Button {
