@@ -5,7 +5,8 @@ import QtPositioning 5.6
 Map {
     id: root
 
-    signal picked(real latitude, real longitude)
+    signal picked(var coordinate)
+    signal canceled()
 
     plugin: Plugin { name: "osm" }
     gesture.flickDeceleration: 3000
@@ -15,10 +16,6 @@ Map {
 
     MouseArea {
         anchors.fill: parent
-
-        onClicked: {
-            var point = map.toCoordinate(Qt.point(mouseX, mouseY));
-            map.picked(point.latitude, point.longitude);
-        }
+        onClicked: map.picked(map.toCoordinate(Qt.point(mouseX, mouseY)));
     }
 }

@@ -13,7 +13,7 @@ RowLayout {
 
     signal remove()
 
-    function pick() { pickButton.checked = true; }
+    function pick() { pickButton.pick(); }
 
     Label {
         Layout.preferredWidth: 24
@@ -76,7 +76,7 @@ RowLayout {
     MapPickButton {
         id: pickButton
         anchors.verticalCenter: parent.verticalCenter
-        //onPicked:
+        onPicked: root.coordinate = coordinate;
     }
 
     Button {
