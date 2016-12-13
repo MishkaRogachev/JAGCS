@@ -20,17 +20,35 @@ Pane {
         anchors.fill: parent
     }
 
+    Pane {
+        anchors.fill: missionsColumn
+    }
+
     ColumnLayout {
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        width: 360
+        id: missionsColumn
         anchors.left: parent.left
-        anchors.margins: 7
+        anchors.right: parent.right
+        anchors.top: separator.bottom
+        anchors.bottom: parent.bottom
 
         RowLayout {
-
             ComboBox {
                 id: missionBox
+                Layout.fillWidth: true
+                onCurrentTextChanged: missionSelected(currentText)
+            }
+
+            Button {
+                iconSource: "qrc:/icons/add.svg"
+            }
+
+            Button {
+                iconSource: "qrc:/icons/remove.svg"
+                iconColor: palette.negativeColor
+            }
+
+            ComboBox {
+                id: vehiclesBox
                 Layout.fillWidth: true
                 onCurrentTextChanged: missionSelected(currentText)
             }
@@ -45,7 +63,8 @@ Pane {
         }
 
         Flickable {
-            width: parent.width
+            id: flickable
+            Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
             contentWidth: column.width
@@ -53,15 +72,15 @@ Pane {
 
             ColumnLayout {
                 id: column
-                width: parent.width
-                anchors.centerIn: parent
+                width: flickable.width
                 spacing: 8
 
                 Repeater {
                     model: missionItems
 
                     MissionItemView {
-                        Layout.fillWidth: true
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         coordinate: modelData.coordinate
                         onCoordinateChanged: modelData.setCoordinate(coordinate)
                         onRemove: removeMissionItem(modelData)
@@ -78,5 +97,21 @@ Pane {
             enabled: missionBox.currentIndex > -1
             onClicked: addMissionItem()
         }
+    }
+
+    Frame {
+        id: separator
+        anchors.left: parent.left
+        anchors.right: parent.right
+        y: parent.height * 2 / 3
+        height: 7
+    }
+
+    MouseArea {
+        anchors.fill: separator
+        drag.target: separator
+        drag.axis: Drag.YAxis
+        drag.minimumY: 0
+        drag.maximumY: parent.height
     }
 }

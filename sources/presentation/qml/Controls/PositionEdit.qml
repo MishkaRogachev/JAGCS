@@ -10,31 +10,27 @@ RowLayout {
     property alias latitude: latitudeEdit.value
     property alias longitude: longitudeEdit.value
 
-    GridLayout {
-        columns: 2
+    Label {
+        Layout.fillWidth: true
+        text: qsTr("Lat.:")
+    }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Lat.:")
-        }
+    CoordSpinBox {
+        id: latitudeEdit
+        Layout.fillWidth: true
+        width: 240
+    }
 
-        CoordSpinBox {
-            id: latitudeEdit
-            Layout.fillWidth: true
-            width: 240
-        }
+    Label {
+        Layout.fillWidth: true
+        text: qsTr("Lon.:")
+    }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Lon.:")
-        }
-
-        CoordSpinBox {
-            id: longitudeEdit
-            Layout.fillWidth: true
-            isLongitude: true
-            width: 240
-        }
+    CoordSpinBox {
+        id: longitudeEdit
+        Layout.fillWidth: true
+        isLongitude: true
+        width: 240
     }
 
     Button {
@@ -46,12 +42,12 @@ RowLayout {
     }
 
     Connections {
-            target: map
-            onPicked: {
-                if (!pickButton.checked) return;
-                root.latitude = latitude;
-                root.longitude = longitude;
-                pickButton.checked = false;
-            }
+        target: map
+        onPicked: {
+            if (!pickButton.checked) return;
+            root.latitude = latitude;
+            root.longitude = longitude;
+            pickButton.checked = false;
         }
+    }
 }

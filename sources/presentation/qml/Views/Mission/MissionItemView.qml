@@ -11,7 +11,7 @@ Frame {
     property var coordinate: QtPositioning.coordinate()
     signal remove()
 
-    ColumnLayout {
+    RowLayout {
         anchors.fill: parent
 
         // TODO: mission item type: takeoff, waypoint, etc
@@ -24,20 +24,18 @@ Frame {
             onLongitudeChanged: coordinate.longitude = longitude;
         }
 
-        RowLayout {
-            Label {
-                Layout.fillWidth: true
-                text: qsTr("Alt.:")
-            }
+        Label {
+            Layout.fillWidth: true
+            text: qsTr("Alt.:")
+        }
 
-            SpinBox {
-                id: altitude
-                Layout.fillWidth: true
-                from: -1000
-                to: 20000
-                value: coordinate.altitude
-                onValueChanged: coordinate.altitude = value;
-            }
+        SpinBox {
+            id: altitude
+            Layout.fillWidth: true
+            from: -1000
+            to: 20000
+            value: coordinate.altitude
+            onValueChanged: coordinate.altitude = value;
         }
 
         Button {
@@ -46,24 +44,4 @@ Frame {
             onClicked: root.remove()
         }
     }
-/*
-    onCoordinateChanged: {
-        updating = true;
-        console.log( "<", coordinate);
-        position.latitude = coordinate.latitude;
-        position.longitude = coordinate.longitude;
-        altitude.value = coordinate.altitude;
-        updating = false;
-    }
-
-    function updateCoordinate() {
-        if (updating) return;
-
-        console.log( ">", position.latitude,
-                    position.longitude,
-                    altitude.value);
-        root.setCoordinate(QtPositioning.coordinate(position.latitude,
-                                                    position.longitude,
-                                                    altitude.value));
-    }*/
 }
