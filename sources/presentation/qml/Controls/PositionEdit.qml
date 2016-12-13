@@ -7,8 +7,8 @@ import "./"
 RowLayout {
     id: root
 
-    property real latitude: 0.0
-    property real longitude: 0.0
+    property alias latitude: latitudeEdit.value
+    property alias longitude: longitudeEdit.value
 
     GridLayout {
         columns: 2
@@ -19,9 +19,8 @@ RowLayout {
         }
 
         CoordSpinBox {
+            id: latitudeEdit
             Layout.fillWidth: true
-            value: latitude
-            onValueChanged: latitude = value;
             width: 240
         }
 
@@ -31,9 +30,8 @@ RowLayout {
         }
 
         CoordSpinBox {
+            id: longitudeEdit
             Layout.fillWidth: true
-            value: longitude
-            onValueChanged: longitude = value;
             isLongitude: true
             width: 240
         }

@@ -1,5 +1,10 @@
 .pragma library
 
+function isNaN(x)
+{
+    return x !== x;
+}
+
 function mapToRange(value, minValue, maxValue, length) {
     return (value - minValue) / (maxValue - minValue) * length;
 }
@@ -29,7 +34,7 @@ function dmsToDegree(deg, min, sec) {
 }
 
 function degreesToDmsString(degrees, lng) {
-    var dms = degreesToDms(degrees);
+    var dms = isNaN(degrees) ? degreesToDms(0) : degreesToDms(degrees);
     return pad(dms.deg, 3) + "\u00B0" +
            pad(dms.min, 2) + "\'" +
            pad(dms.sec.toFixed(2), 5) + "\"" +

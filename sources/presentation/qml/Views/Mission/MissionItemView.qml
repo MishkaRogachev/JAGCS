@@ -9,6 +9,7 @@ Frame {
     id: root
 
     property var coordinate: QtPositioning.coordinate()
+    property bool updating: false
     signal setCoordinate(var coordinate)
     signal remove()
 
@@ -19,9 +20,6 @@ Frame {
 
         PositionEdit {
             id: position
-
-            latitude: coordinate.latitude
-            longitude: coordinate.longitude
             onLatitudeChanged: updateCoordinate()
             onLongitudeChanged: updateCoordinate()
         }
@@ -37,7 +35,6 @@ Frame {
                 Layout.fillWidth: true
                 from: -1000
                 to: 20000
-                value: coordinate.altitude
                 onValueChanged: updateCoordinate()
             }
         }
@@ -49,7 +46,16 @@ Frame {
         }
     }
 
+    onCoordinateChanged: {
+        updating = true;
+        position.latitude = coordinate.latitude;
+        position.longitude = coordinate.longitude;
+        altitude.value = coordinate.altitude;
+        updating = false;
+    }
+
     function updateCoordinate() {
+        if (updating) return;
         root.setCoordinate(QtPositioning.coordinate(position.latitude,
                                                     position.longitude,
                                                     altitude.value));
