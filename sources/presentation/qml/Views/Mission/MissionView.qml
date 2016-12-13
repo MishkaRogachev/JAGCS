@@ -78,6 +78,10 @@ Pane {
                 Repeater {
                     id: repeater
                     model: missionItems
+                    onModelChanged: {
+                        if (column.height > flickable.height)
+                            flickable.contentY = column.height - flickable.height;
+                    }
 
                     MissionItemView {
                         anchors.left: parent.left
