@@ -56,6 +56,9 @@ void MissionPointMapItemModel::removeMissionItem(domain::MissionItem* item)
     m_items.removeOne(item);
 
     this->endRemoveRows();
+
+    emit dataChanged(this->index(row), this->index(m_items.count() - 1),
+    { ItemSequenceRole });
 }
 
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
