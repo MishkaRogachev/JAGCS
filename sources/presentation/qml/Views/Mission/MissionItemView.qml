@@ -5,43 +5,88 @@ import QtPositioning 5.6
 
 import "qrc:/Controls"
 
-Frame {
+RowLayout {
     id: root
 
+    property int seq: -1
     property var coordinate: QtPositioning.coordinate()
+
     signal remove()
 
-    RowLayout {
-        anchors.fill: parent
+    function pick() { pickButton.checked = true; }
 
-        // TODO: mission item type: takeoff, waypoint, etc
+    Label {
+        Layout.preferredWidth: 40
+        font.bold: true
+        text: seq + ")"
+    }
 
-        PositionEdit {
-            id: position
-            latitude: coordinate.latitude
-            longitude: coordinate.longitude
-            onLatitudeChanged: coordinate.latitude = latitude;
-            onLongitudeChanged: coordinate.longitude = longitude;
+    ComboBox {
+        Layout.preferredWidth: 120
+        model: [ "WAYPOINT", "TAKEOFF" ] // TODO: mission types
+    }
+
+    Label {
+        horizontalAlignment: Text.AlignRight
+        Layout.fillWidth: true
+        text: qsTr("Lat.:")
+    }
+
+    CoordSpinBox {
+        Layout.preferredWidth: 230
+        value: coordinate.latitude
+        onValueChanged: coordinate.latitude = value;
+    }
+
+    Label {
+        horizontalAlignment: Text.AlignRight
+        Layout.fillWidth: true
+        text: qsTr("Lon.:")
+    }
+
+    CoordSpinBox {
+        Layout.preferredWidth: 230
+        isLongitude: true
+        value: coordinate.longitude
+        onValueChanged: coordinate.longitude = value;
+    }
+
+    Label {
+        horizontalAlignment: Text.AlignRight
+        Layout.fillWidth: true
+        text: qsTr("Alt.:")
+    }
+
+    SpinBox {
+        id: altitude
+        Layout.preferredWidth: 170
+        from: -1000
+        to: 20000
+        value: coordinate.altitude
+        onValueChanged: coordinate.altitude = value;
+    }
+
+    Button {
+        id: pickButton // TODO: mapButton control
+        anchors.verticalCenter: parent.verticalCenter
+        iconSource: "qrc:/icons/map-marker.svg"
+        checkable: true
+        // TODO: ask map stop/start picking
+
+        Connections {
+            target: map
+            onPicked: {
+                if (!pickButton.checked) return;
+                coordinate.latitude = latitude;
+                coordinate.longitude = longitude;
+                pickButton.checked = false;
+            }
         }
+    }
 
-        Label {
-            Layout.fillWidth: true
-            text: qsTr("Alt.:")
-        }
-
-        SpinBox {
-            id: altitude
-            Layout.fillWidth: true
-            from: -1000
-            to: 20000
-            value: coordinate.altitude
-            onValueChanged: coordinate.altitude = value;
-        }
-
-        Button {
-            Layout.fillWidth: true
-            text: qsTr("Remove")
-            onClicked: root.remove()
-        }
+    Button {
+        iconSource: "qrc:/icons/remove.svg"
+        iconColor: palette.negativeColor
+        onClicked: root.remove()
     }
 }

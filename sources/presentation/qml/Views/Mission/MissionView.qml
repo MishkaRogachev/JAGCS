@@ -76,11 +76,13 @@ Pane {
                 spacing: 8
 
                 Repeater {
+                    id: repeater
                     model: missionItems
 
                     MissionItemView {
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        seq: modelData.sequence
                         coordinate: modelData.coordinate
                         onCoordinateChanged: modelData.setCoordinate(coordinate)
                         onRemove: removeMissionItem(modelData)
@@ -95,11 +97,14 @@ Pane {
             text: qsTr("Add Item")
             iconSource: "qrc:/icons/add.svg"
             enabled: missionBox.currentIndex > -1
-            onClicked: addMissionItem()
+            onClicked: {
+                addMissionItem();
+                repeater.itemAt(repeater.count - 1).pick();
+            }
         }
     }
 
-    Frame {
+    Frame { // TODO: separator control
         id: separator
         anchors.left: parent.left
         anchors.right: parent.right
@@ -113,5 +118,6 @@ Pane {
         drag.axis: Drag.YAxis
         drag.minimumY: 0
         drag.maximumY: parent.height
+        cursorShape: Qt.SizeVerCursor
     }
 }

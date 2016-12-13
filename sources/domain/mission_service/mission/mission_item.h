@@ -12,6 +12,7 @@ namespace domain
     {
         Q_OBJECT
 
+        Q_PROPERTY(unsigned sequence READ sequence CONSTANT)
         Q_PROPERTY(QGeoCoordinate coordinate READ coordinate
                    WRITE setCoordinate NOTIFY coordinateChanged)
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
@@ -20,9 +21,9 @@ namespace domain
     public:
         MissionItem(Mission* parent);
 
+        unsigned sequence() const;
         QGeoCoordinate coordinate() const;
         bool isCurrent() const;
-        unsigned sequence() const;
 
     public slots:
         void setCoordinate(const QGeoCoordinate& coordinate);

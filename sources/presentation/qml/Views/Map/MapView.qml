@@ -17,7 +17,7 @@ Map {
         anchors.fill: parent
 
         onClicked: {
-            var point = map.toCoordinate(Qt.point(mouseX, mouseY), true);
+            var point = map.toCoordinate(Qt.point(mouseX, mouseY));
             map.picked(point.latitude, point.longitude);
         }
     }

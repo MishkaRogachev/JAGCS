@@ -20,7 +20,6 @@
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
-        <file>Controls/PositionEdit.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/GpsIndicator.qml</file>
         <file>Indicators/Horizont.qml</file>

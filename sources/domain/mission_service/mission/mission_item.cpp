@@ -21,14 +21,14 @@ QGeoCoordinate MissionItem::coordinate() const
     return m_coordinate;
 }
 
-bool MissionItem::isCurrent() const
-{
-    return m_current;
-}
-
 unsigned MissionItem::sequence() const
 {
     return m_mission->sequence((MissionItem*)this);
+}
+
+bool MissionItem::isCurrent() const
+{
+    return m_current;
 }
 
 void MissionItem::setCoordinate(const QGeoCoordinate& coordinate)
