@@ -63,7 +63,7 @@ Pane {
                     MissionItemView {
                         Layout.fillWidth: true
                         coordinate: modelData.coordinate
-                        onSetCoordinate: modelData.setCoordinate(coordinate)
+                        onCoordinateChanged: modelData.setCoordinate(coordinate)
                         onRemove: removeMissionItem(modelData)
                     }
                 }

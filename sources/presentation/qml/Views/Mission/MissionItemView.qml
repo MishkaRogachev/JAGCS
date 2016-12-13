@@ -9,8 +9,6 @@ Frame {
     id: root
 
     property var coordinate: QtPositioning.coordinate()
-    property bool updating: false
-    signal setCoordinate(var coordinate)
     signal remove()
 
     ColumnLayout {
@@ -20,8 +18,10 @@ Frame {
 
         PositionEdit {
             id: position
-            onLatitudeChanged: updateCoordinate()
-            onLongitudeChanged: updateCoordinate()
+            latitude: coordinate.latitude
+            longitude: coordinate.longitude
+            onLatitudeChanged: coordinate.latitude = latitude;
+            onLongitudeChanged: coordinate.longitude = longitude;
         }
 
         RowLayout {
@@ -35,7 +35,8 @@ Frame {
                 Layout.fillWidth: true
                 from: -1000
                 to: 20000
-                onValueChanged: updateCoordinate()
+                value: coordinate.altitude
+                onValueChanged: coordinate.altitude = value;
             }
         }
 
@@ -45,9 +46,10 @@ Frame {
             onClicked: root.remove()
         }
     }
-
+/*
     onCoordinateChanged: {
         updating = true;
+        console.log( "<", coordinate);
         position.latitude = coordinate.latitude;
         position.longitude = coordinate.longitude;
         altitude.value = coordinate.altitude;
@@ -56,8 +58,12 @@ Frame {
 
     function updateCoordinate() {
         if (updating) return;
+
+        console.log( ">", position.latitude,
+                    position.longitude,
+                    altitude.value);
         root.setCoordinate(QtPositioning.coordinate(position.latitude,
                                                     position.longitude,
                                                     altitude.value));
-    }
+    }*/
 }

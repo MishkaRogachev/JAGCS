@@ -12,7 +12,9 @@ MissionItem::MissionItem(Mission* parent):
     QObject(parent),
     m_mission(parent),
     m_current(false)
-{}
+{
+    m_coordinate.setAltitude(0);
+}
 
 QGeoCoordinate MissionItem::coordinate() const
 {
