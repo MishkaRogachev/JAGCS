@@ -118,6 +118,7 @@ Pane {
 
     MouseArea {
         anchors.fill: separator
+        anchors.margins: -8
         drag.target: separator
         drag.axis: Drag.YAxis
         drag.minimumY: 0
