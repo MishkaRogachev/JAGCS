@@ -35,6 +35,7 @@ RowLayout {
     }
 
     CoordSpinBox {
+        id: latitudeSpinBox
         Layout.minimumWidth: 230
         Layout.fillWidth: true
         value: coordinate.latitude
@@ -49,6 +50,7 @@ RowLayout {
     }
 
     CoordSpinBox {
+        id: longitudeSpinBox
         Layout.minimumWidth: 230
         Layout.fillWidth: true
         isLongitude: true
@@ -76,7 +78,10 @@ RowLayout {
     MapPickButton {
         id: pickButton
         anchors.verticalCenter: parent.verticalCenter
-        onPicked: root.coordinate = coordinate;
+        onPicked: {
+            latitudeSpinBox.value = coordinate.latitude;
+            longitudeSpinBox.value = coordinate.longitude;
+        }
     }
 
     Button {
