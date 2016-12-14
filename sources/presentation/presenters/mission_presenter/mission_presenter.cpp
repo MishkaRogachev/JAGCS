@@ -19,7 +19,7 @@ public:
     domain::MissionService* missionService;
     domain::Mission* selectedMission = nullptr;
 
-    QMap<uint8_t, QString> missionAliases;
+    QMap<domain::Mission*, QString> missionAliases;
 
     MissionMapPresenter* map;
 };
@@ -48,8 +48,11 @@ void MissionPresenter::updateMissions()
 {
     d->missionAliases.clear();
 
-    for (uint8_t id: d->missionService->missionIds())
-        d->missionAliases[id] = tr("Mission") + " " + QString::number(id);
+    int id = 0;
+    for (domain::Mission* mission: d->missionService->missions())
+    {
+        d->missionAliases[mission] = tr("Mission") + " " + QString::number(id++);
+    }
 
     QStringList missionNames = d->missionAliases.values();
     this->setViewProperty(PROPERTY(missionNames), missionNames);
@@ -74,6 +77,8 @@ void MissionPresenter::connectView(QObject* view)
 
     connect(view, SIGNAL(missionSelected(QString)),
             this, SLOT(onMissionSelected(QString)));
+    connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
+    connect(view, SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
     connect(view, SIGNAL(addMissionItem()), this, SLOT(onAddMissionItem()));
     connect(view, SIGNAL(removeMissionItem(QObject*)),
             this, SLOT(onRemoveMissionItem(QObject*)));
@@ -88,8 +93,7 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
         disconnect(d->selectedMission, 0, this, 0);
     }
 
-    d->selectedMission =
-            d->missionService->mission(d->missionAliases.key(missionName));
+    d->selectedMission = d->missionAliases.key(missionName);
 
     if (d->selectedMission)
     {
@@ -99,6 +103,19 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
                 this, &MissionPresenter::updateMissionItems);
     }
     this->updateMissionItems();
+}
+
+void MissionPresenter::onAddMission()
+{
+    d->missionService->addNewMission();
+}
+
+void MissionPresenter::onRemoveMission()
+{
+    if (!d->selectedMission) return;
+
+    d->missionService->deleteMission(d->selectedMission);
+    d->selectedMission = nullptr;
 }
 
 void MissionPresenter::onAddMissionItem()

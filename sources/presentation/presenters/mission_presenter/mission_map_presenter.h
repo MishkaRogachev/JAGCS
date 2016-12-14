@@ -6,6 +6,7 @@
 namespace domain
 {
     class MissionService;
+    class Mission;
 }
 
 namespace presentation
@@ -23,8 +24,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onMissionAdded(uint8_t id);
-        void onMissionRemoved(uint8_t id);
+        void onMissionAdded(domain::Mission* mission);
+        void onMissionRemoved(domain::Mission* mission);
 
     private:
         class Impl;

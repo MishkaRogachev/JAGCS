@@ -11,6 +11,8 @@ Pane {
     property var missionItems
 
     signal missionSelected(string name)
+    signal addMission()
+    signal removeMission()
     signal addMissionItem()
     signal removeMissionItem(QtObject item)
 
@@ -35,16 +37,19 @@ Pane {
             ComboBox {
                 id: missionBox
                 Layout.fillWidth: true
+                onModelChanged: currentIndex = count - 1;
                 onCurrentTextChanged: missionSelected(currentText)
             }
 
             Button {
                 iconSource: "qrc:/icons/add.svg"
+                onClicked: addMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
+                onClicked: removeMission()
             }
 
             ComboBox {

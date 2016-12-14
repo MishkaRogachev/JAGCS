@@ -36,8 +36,8 @@ MissionMapPresenter::MissionMapPresenter(domain::MissionService* missionService,
     connect(missionService, &domain::MissionService::missionRemoved,
             this, &MissionMapPresenter::onMissionRemoved);
 
-    for (uint8_t id: missionService->missionIds())
-        this->onMissionAdded(id);
+    for (domain::Mission* mission: missionService->missions())
+        this->onMissionAdded(mission);
 }
 
 MissionMapPresenter::~MissionMapPresenter()
@@ -53,9 +53,8 @@ void MissionMapPresenter::connectView(QObject* view)
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
 }
 
-void MissionMapPresenter::onMissionAdded(uint8_t id)
+void MissionMapPresenter::onMissionAdded(domain::Mission* mission)
 {
-    domain::Mission* mission = d->missionService->mission(id);
     d->lineModel.addMission(mission);
 
     connect(mission, &domain::Mission::missionItemAdded,
@@ -67,9 +66,8 @@ void MissionMapPresenter::onMissionAdded(uint8_t id)
         d->pointModel.addMissionItem(item);
 }
 
-void MissionMapPresenter::onMissionRemoved(uint8_t id)
+void MissionMapPresenter::onMissionRemoved(domain::Mission* mission)
 {
-    domain::Mission* mission = d->missionService->mission(id);
     d->lineModel.removeMission(mission);
 
     disconnect(mission, 0, this, 0);

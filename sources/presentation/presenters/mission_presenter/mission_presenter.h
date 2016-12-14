@@ -28,6 +28,8 @@ namespace presentation
 
     private slots:
         void onMissionSelected(const QString& missionName);
+        void onAddMission();
+        void onRemoveMission();
         void onAddMissionItem();
         void onRemoveMissionItem(QObject* item);
 
