@@ -39,7 +39,10 @@ Pane {
             ComboBox {
                 id: missionBox
                 Layout.fillWidth: true
-                onModelChanged: currentIndex = count - 1;
+                onModelChanged: {
+                    currentIndex = -1;
+                    currentIndex = count - 1;
+                }
                 onCurrentTextChanged: missionSelected(currentText)
             }
 
@@ -62,10 +65,12 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
+                enabled: vehiclesBox.currentText.length
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
+                enabled: vehiclesBox.currentText.length
             }
         }
 

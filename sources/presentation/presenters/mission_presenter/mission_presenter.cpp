@@ -75,7 +75,7 @@ void MissionPresenter::updateMissions()
 void MissionPresenter::updateVehicles()
 {
     QStringList vehicleNames = d->vehicleAliases.values();
-    vehicleNames.prepend(tr("None"));
+    vehicleNames.prepend(QString());
     this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
 }
 
