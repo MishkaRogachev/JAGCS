@@ -115,7 +115,6 @@ void MissionPresenter::onRemoveMission()
     if (!d->selectedMission) return;
 
     d->missionService->deleteMission(d->selectedMission);
-    d->selectedMission = nullptr;
 }
 
 void MissionPresenter::onAddMissionItem()

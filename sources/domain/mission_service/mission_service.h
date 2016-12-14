@@ -17,7 +17,7 @@ namespace domain
         ~MissionService() override;
 
         Mission* missionForVehicle(uint8_t id) const;
-        uint8_t vehicleForMission(Mission* missionForVehicle) const;
+        uint8_t vehicleForMission(Mission* mission) const;
 
         const QList<Mission*>& missions() const;
 
@@ -25,12 +25,12 @@ namespace domain
 
     public slots:
         void addNewMission();
-        void removeMission(Mission* missionForVehicle);
-        void deleteMission(Mission* missionForVehicle);
+        void removeMission(Mission* mission);
+        void deleteMission(Mission* mission);
 
     signals:
-        void missionAdded(Mission* missionForVehicle);
-        void missionRemoved(Mission* missionForVehicle);
+        void missionAdded(Mission* mission);
+        void missionRemoved(Mission* mission);
 
         void commandRequestMission(uint8_t id);
 
