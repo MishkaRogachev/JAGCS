@@ -27,7 +27,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid == MAVLINK_MSG_ID_MISSION_COUNT)
     {
-        Mission* mission = m_missionService->missionForVehicle(message.sysid);
+        Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
 
         mavlink_mission_count_t missionCount;
         mavlink_msg_mission_count_decode(&message, &missionCount);
@@ -43,7 +43,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
     if (message.msgid == MAVLINK_MSG_ID_MISSION_ITEM)
     {
-        Mission* mission = m_missionService->missionForVehicle(message.sysid);
+        Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
 
         mavlink_mission_item_t itemMsg;
         mavlink_msg_mission_item_decode(&message, &itemMsg);
@@ -59,7 +59,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
     if (message.msgid == MAVLINK_MSG_ID_MISSION_ACK)
     {
-        Mission* mission = m_missionService->missionForVehicle(message.sysid);
+        Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
 
         mavlink_mission_ack_t missionAck;
         mavlink_msg_mission_ack_decode(&message, &missionAck);
