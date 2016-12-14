@@ -15,14 +15,14 @@ namespace domain
 
         int count() const;
 
-        MissionItem* item(unsigned seq) const;
+        MissionItem* item(int seq) const;
         const QList<MissionItem*>& items() const;
         int sequence(MissionItem* item) const;
 
         MissionItem* requestItem(int seq);
 
     public slots:
-        void reserve(unsigned count);
+        void setCount(int count);
 
         void addNewMissionItem();
         void removeMissionItem(MissionItem* item);

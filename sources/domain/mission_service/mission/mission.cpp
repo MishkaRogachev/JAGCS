@@ -14,7 +14,7 @@ int Mission::count() const
     return m_missionItems.count();
 }
 
-MissionItem* Mission::item(unsigned seq) const
+MissionItem* Mission::item(int seq) const
 {
     return m_missionItems.value(seq, nullptr);
 }
@@ -31,23 +31,25 @@ int Mission::sequence(MissionItem* item) const
 
 MissionItem* Mission::requestItem(int seq)
 {
-    while (m_missionItems.count() > seq)
+    if (seq >= m_missionItems.count())
     {
-        m_missionItems.append(nullptr);
-    }
-
-    if (!m_missionItems.at(seq))
-    {
-        m_missionItems[seq] = new MissionItem(this);
-        emit missionItemAdded(m_missionItems[seq]);
+        this->setCount(seq + 1);
     }
 
     return m_missionItems.at(seq);
 }
 
-void Mission::reserve(unsigned count)
+void Mission::setCount(int count)
 {
-    m_missionItems.reserve(count);
+    while (count > m_missionItems.count())
+    {
+        this->addNewMissionItem();
+    }
+
+    while (count < m_missionItems.count())
+    {
+        this->removeMissionItem(m_missionItems.last());
+    }
 }
 
 void Mission::addNewMissionItem()
