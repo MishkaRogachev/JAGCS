@@ -6,6 +6,7 @@
 namespace domain
 {
     class MissionService;
+    class VehicleService;
 }
 
 namespace presentation
@@ -16,17 +17,22 @@ namespace presentation
 
     public:
         MissionPresenter(domain::MissionService* missionService,
+                         domain::VehicleService* vehicleService,
                          QObject* object);
         ~MissionPresenter() override;
 
     public slots:
         void updateMissions();
+        void updateVehicles();
         void updateMissionItems();
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
+        void onVehicleAdded(uint8_t id);
+        void onVehicleRemoved(uint8_t id);
+
         void onMissionSelected(const QString& missionName);
         void onAddMission();
         void onRemoveMission();

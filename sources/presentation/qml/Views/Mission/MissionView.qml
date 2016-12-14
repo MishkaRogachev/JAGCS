@@ -8,9 +8,11 @@ Pane {
     id: root
 
     property alias missionNames: missionBox.model
+    property alias vehicleNames: vehiclesBox.model
     property var missionItems
 
     signal missionSelected(string name)
+    signal vehicleSelected(string name)
     signal addMission()
     signal removeMission()
     signal addMissionItem()
@@ -55,7 +57,7 @@ Pane {
             ComboBox {
                 id: vehiclesBox
                 Layout.fillWidth: true
-                onCurrentTextChanged: missionSelected(currentText)
+                onCurrentTextChanged: vehicleSelected(currentText)
             }
 
             Button {

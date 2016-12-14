@@ -8,6 +8,8 @@
 // Internal
 #include "mission_service.h"
 #include "mission.h"
+#include "vehicle_service.h"
+#include "vehicle.h"
 
 #include "mission_map_presenter.h"
 
@@ -17,26 +19,38 @@ class MissionPresenter::Impl
 {
 public:
     domain::MissionService* missionService;
+    domain::VehicleService* vehicleService;
+
     domain::Mission* selectedMission = nullptr;
 
     QMap<domain::Mission*, QString> missionAliases;
+    QMap<uint8_t, QString> vehicleAliases;
 
     MissionMapPresenter* map;
 };
 
 MissionPresenter::MissionPresenter(domain::MissionService* missionService,
+                                   domain::VehicleService* vehicleService,
                                    QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
     d->missionService = missionService;
+    d->vehicleService = vehicleService;
 
-    d->map = new MissionMapPresenter(missionService, this);
-
+    // TODO: mission table presenter
     connect(missionService, &domain::MissionService::missionAdded,
             this, &MissionPresenter::updateMissions);
     connect(missionService, &domain::MissionService::missionRemoved,
             this, &MissionPresenter::updateMissions);
+
+    connect(vehicleService, &domain::VehicleService::vehicleAdded,
+            this, &MissionPresenter::onVehicleAdded);
+    connect(vehicleService, &domain::VehicleService::vehicleRemoved,
+            this, &MissionPresenter::onVehicleRemoved);
+
+    d->map = new MissionMapPresenter(missionService, this);
+
 }
 
 MissionPresenter::~MissionPresenter()
@@ -56,6 +70,13 @@ void MissionPresenter::updateMissions()
 
     QStringList missionNames = d->missionAliases.values();
     this->setViewProperty(PROPERTY(missionNames), missionNames);
+}
+
+void MissionPresenter::updateVehicles()
+{
+    QStringList vehicleNames = d->vehicleAliases.values();
+    vehicleNames.prepend(tr("None"));
+    this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
 }
 
 void MissionPresenter::updateMissionItems()
@@ -84,6 +105,20 @@ void MissionPresenter::connectView(QObject* view)
             this, SLOT(onRemoveMissionItem(QObject*)));
 
     this->updateMissions();
+}
+
+void MissionPresenter::onVehicleAdded(uint8_t id)
+{
+    d->vehicleAliases[id] = tr("MAV %1").arg(id);
+
+    if (m_view) this->updateVehicles();
+}
+
+void MissionPresenter::onVehicleRemoved(uint8_t id)
+{
+    d->vehicleAliases.remove(id);
+
+    if (m_view) this->updateVehicles();
 }
 
 void MissionPresenter::onMissionSelected(const QString& missionName)
