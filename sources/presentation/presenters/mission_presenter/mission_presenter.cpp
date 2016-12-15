@@ -49,8 +49,10 @@ MissionPresenter::MissionPresenter(domain::MissionService* missionService,
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::onVehicleRemoved);
 
-    d->map = new MissionMapPresenter(missionService, this);
+    for (uint8_t id: vehicleService->vehileIds())
+        this->onVehicleAdded(id);
 
+    d->map = new MissionMapPresenter(missionService, this);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -105,6 +107,7 @@ void MissionPresenter::connectView(QObject* view)
             this, SLOT(onRemoveMissionItem(QObject*)));
 
     this->updateMissions();
+    this->updateVehicles();
 }
 
 void MissionPresenter::onVehicleAdded(uint8_t id)
