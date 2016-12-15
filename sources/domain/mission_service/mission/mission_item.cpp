@@ -8,9 +8,10 @@
 
 using namespace domain;
 
-MissionItem::MissionItem(Mission* parent):
+MissionItem::MissionItem(Command command, Mission* parent):
     QObject(parent),
     m_mission(parent),
+    m_command(command),
     m_current(false)
 {
     m_coordinate.setAltitude(0);
@@ -19,6 +20,11 @@ MissionItem::MissionItem(Mission* parent):
 QGeoCoordinate MissionItem::coordinate() const
 {
     return m_coordinate;
+}
+
+MissionItem::Command MissionItem::command() const
+{
+    return m_command;
 }
 
 unsigned MissionItem::sequence() const
@@ -37,6 +43,14 @@ void MissionItem::setCoordinate(const QGeoCoordinate& coordinate)
 
     m_coordinate = coordinate;
     emit coordinateChanged(coordinate);
+}
+
+void MissionItem::setCommand(MissionItem::Command command)
+{
+    if (m_command == command) return;
+
+    m_command = command;
+    emit commandChanged(command);
 }
 
 void MissionItem::setCurrent(bool current)

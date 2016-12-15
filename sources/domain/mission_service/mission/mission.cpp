@@ -54,7 +54,8 @@ void Mission::setCount(int count)
 
 void Mission::addNewMissionItem()
 {
-    m_missionItems.append(new domain::MissionItem(this));
+    m_missionItems.append(new MissionItem(m_missionItems.empty() ?
+                          MissionItem::Takeoff : MissionItem::Waypoint, this));
     emit missionItemAdded(m_missionItems.last());
 }
 

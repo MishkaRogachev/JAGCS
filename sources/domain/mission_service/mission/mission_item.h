@@ -15,28 +15,47 @@ namespace domain
         Q_PROPERTY(unsigned sequence READ sequence CONSTANT)
         Q_PROPERTY(QGeoCoordinate coordinate READ coordinate
                    WRITE setCoordinate NOTIFY coordinateChanged)
+        Q_PROPERTY(Command command READ command WRITE setCommand
+                   NOTIFY commandChanged)
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
                    NOTIFY currentChanged)
 
     public:
-        MissionItem(Mission* parent);
+        enum Command // TODO: other commands
+        {
+            UnknownCommand = 0,
+            Takeoff,
+            Waypoint,
+            Loiter,
+            Landing,
+            Return
+        };
+
+        MissionItem(Command command, Mission* parent);
 
         unsigned sequence() const;
         QGeoCoordinate coordinate() const;
+        Command command() const;
         bool isCurrent() const;
+
 
     public slots:
         void setCoordinate(const QGeoCoordinate& coordinate);
+        void setCommand(Command command);
         void setCurrent(bool current);
 
     signals:
         void coordinateChanged(const QGeoCoordinate& coordinate);
+        void commandChanged(Command command);
         void currentChanged(bool current);
 
     private:
         Mission* m_mission;
         QGeoCoordinate m_coordinate;
-        bool m_current;
+        Command m_command;
+        bool m_current; // TODO: current for Vehicle
+
+        Q_ENUM(Command)
     };
 }
 
