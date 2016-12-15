@@ -27,8 +27,8 @@ namespace domain
             Takeoff,
             Waypoint,
             Loiter,
-            Landing,
-            Return
+            Return,
+            Landing
         };
 
         MissionItem(Command command, Mission* parent);
@@ -37,7 +37,6 @@ namespace domain
         QGeoCoordinate coordinate() const;
         Command command() const;
         bool isCurrent() const;
-
 
     public slots:
         void setCoordinate(const QGeoCoordinate& coordinate);

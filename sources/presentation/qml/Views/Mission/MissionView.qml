@@ -9,7 +9,7 @@ Pane {
 
     property alias missionNames: missionBox.model
     property alias vehicleNames: vehiclesBox.model
-    property var missionItems
+    property var missionItems: []
 
     signal missionSelected(string name)
     signal vehicleSelected(string name)
@@ -101,6 +101,8 @@ Pane {
                         seq: modelData.sequence
                         coordinate: modelData.coordinate
                         onCoordinateChanged: modelData.setCoordinate(coordinate)
+                        command: modelData.command
+                        onCommandChanged: modelData.setCommand(command)
                         onRemove: removeMissionItem(modelData)
                     }
                 }

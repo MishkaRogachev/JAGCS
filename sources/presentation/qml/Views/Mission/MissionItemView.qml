@@ -10,6 +10,10 @@ RowLayout {
 
     property int seq: -1
     property var coordinate: QtPositioning.coordinate()
+    property alias command: commandBox.currentIndex
+    property var avalibleCommands: [ qsTr("UNKNOWN"), qsTr("TAKEOFF"),
+        qsTr("WAYPOINT"), qsTr("LOITER"), qsTr("RETURN"), qsTr("LANDING") ]
+    // TODO: avalibleCommands enum handling
 
     signal remove()
 
@@ -22,9 +26,10 @@ RowLayout {
     }
 
     ComboBox {
+        id: commandBox
         Layout.minimumWidth: 110
         Layout.fillWidth: true
-        model: [ "WAYPOINT", "TAKEOFF" ] // TODO: mission types
+        model: avalibleCommands
     }
 
     Label {
