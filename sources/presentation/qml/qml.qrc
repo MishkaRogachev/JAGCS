@@ -9,6 +9,8 @@
         <file>Controls/ToolBar.qml</file>
         <file>Controls/Label.qml</file>
         <file>Controls/Menu.qml</file>
+        <file>Controls/MenuItem.qml</file>
+        <file>Controls/MenuButton.qml</file>
         <file>Controls/Frame.qml</file>
         <file>Controls/Slider.qml</file>
         <file>Controls/ComboBox.qml</file>
@@ -16,7 +18,6 @@
         <file>Controls/ItemDelegate.qml</file>
         <file>Controls/Popup.qml</file>
         <file>Controls/SpinBox.qml</file>
-        <file>Controls/MenuItem.qml</file>
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
