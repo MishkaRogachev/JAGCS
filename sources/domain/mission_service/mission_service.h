@@ -16,23 +16,25 @@ namespace domain
         explicit MissionService(QObject* parent = nullptr);
         ~MissionService() override;
 
-        Mission* missionForVehicle(uint8_t id) const;
+        Mission* missionForVehicle(uint8_t vehicleId) const;
         uint8_t vehicleForMission(Mission* mission) const;
 
         const QList<Mission*>& missions() const;
 
-        Mission* requestMissionForVehicle(uint8_t id);
+        Mission* requestMissionForVehicle(uint8_t vehicleId);
 
     public slots:
         void addNewMission();
         void removeMission(Mission* mission);
         void deleteMission(Mission* mission);
 
+        void setVehicleForMission(uint8_t vehicleId, Mission* mission) const;
+
     signals:
         void missionAdded(Mission* mission);
         void missionRemoved(Mission* mission);
 
-        void commandRequestMission(uint8_t id);
+        void commandRequestMission(uint8_t vehicleId);
 
     private:
         class Impl;

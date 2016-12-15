@@ -36,8 +36,12 @@ namespace presentation
         void onMissionSelected(const QString& missionName);
         void onAddMission();
         void onRemoveMission();
+
         void onAddMissionItem();
         void onRemoveMissionItem(QObject* item);
+
+        void onDownloadMission(const QString& vehicleName);
+        void onUploadMission(const QString& vehicleName);
 
     private:
         class Impl;

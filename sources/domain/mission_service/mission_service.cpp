@@ -25,9 +25,9 @@ MissionService::~MissionService()
     delete d;
 }
 
-Mission* MissionService::missionForVehicle(uint8_t id) const
+Mission* MissionService::missionForVehicle(uint8_t vehicleId) const
 {
-    return d->vehicleMissions.value(id, nullptr);
+    return d->vehicleMissions.value(vehicleId, nullptr);
 }
 
 uint8_t MissionService::vehicleForMission(Mission* mission) const
@@ -40,18 +40,18 @@ const QList<Mission*>& MissionService::missions() const
     return d->missions;
 }
 
-Mission* MissionService::requestMissionForVehicle(uint8_t id)
+Mission* MissionService::requestMissionForVehicle(uint8_t vehicleId)
 {
-    if (!d->vehicleMissions.contains(id))
+    if (!d->vehicleMissions.contains(vehicleId))
     {
         Mission* mission = new Mission(this);
-        d->vehicleMissions[id] = mission;
+        d->vehicleMissions[vehicleId] = mission;
         d->missions.append(mission);
 
         emit missionAdded(mission);
     }
 
-    return d->vehicleMissions[id];
+    return d->vehicleMissions[vehicleId];
 }
 
 void MissionService::addNewMission()
@@ -76,4 +76,17 @@ void MissionService::deleteMission(Mission* mission)
 {
     this->removeMission(mission);
     delete mission;
+}
+
+void MissionService::setVehicleForMission(uint8_t vehicleId,
+                                          Mission* mission) const
+{
+    if (mission)
+    {
+        d->vehicleMissions[vehicleId] = mission;
+    }
+    else
+    {
+        d->vehicleMissions.remove(vehicleId);
+    }
 }

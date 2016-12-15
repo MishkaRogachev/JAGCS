@@ -23,7 +23,10 @@ Button {
             MenuItem {
                 text: modelData
                 width: menu.width
-                onTriggered: root.triggered(modelData)
+                onTriggered: {
+                    root.triggered(modelData);
+                    menu.close();
+                }
             }
         }
     }

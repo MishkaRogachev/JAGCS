@@ -8,15 +8,18 @@ Pane {
     id: root
 
     property alias missionNames: missionBox.model
-    property alias vehicleNames: vehiclesBox.model
+    property var vehicleNames: []
     property var missionItems: []
 
     signal missionSelected(string name)
-    signal vehicleSelected(string name)
     signal addMission()
     signal removeMission()
+
     signal addMissionItem()
     signal removeMissionItem(QtObject item)
+
+    signal downloadMission(string name)
+    signal uploadMission(string name)
 
     MissionMapView {
         id: map
@@ -57,20 +60,21 @@ Pane {
                 onClicked: removeMission()
             }
 
-            ComboBox {
-                id: vehiclesBox
+            ProgressBar {
                 Layout.fillWidth: true
-                onCurrentTextChanged: vehicleSelected(currentText)
+                anchors.verticalCenter: parent.verticalCenter
             }
 
-            Button {
+            MenuButton {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: vehiclesBox.currentText.length
+                model: vehicleNames
+                onTriggered: downloadMission(data)
             }
 
-            Button {
+            MenuButton {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: vehiclesBox.currentText.length
+                model: vehicleNames
+                onTriggered: uploadMission(data)
             }
         }
 

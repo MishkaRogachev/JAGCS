@@ -77,7 +77,6 @@ void MissionPresenter::updateMissions()
 void MissionPresenter::updateVehicles()
 {
     QStringList vehicleNames = d->vehicleAliases.values();
-    vehicleNames.prepend(QString());
     this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
 }
 
@@ -98,13 +97,13 @@ void MissionPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 
-    connect(view, SIGNAL(missionSelected(QString)),
-            this, SLOT(onMissionSelected(QString)));
+    connect(view, SIGNAL(missionSelected(QString)), this, SLOT(onMissionSelected(QString)));
     connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
     connect(view, SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
     connect(view, SIGNAL(addMissionItem()), this, SLOT(onAddMissionItem()));
-    connect(view, SIGNAL(removeMissionItem(QObject*)),
-            this, SLOT(onRemoveMissionItem(QObject*)));
+    connect(view, SIGNAL(removeMissionItem(QObject*)), this, SLOT(onRemoveMissionItem(QObject*)));
+    connect(view, SIGNAL(downloadMission(QString)), this, SLOT(onDownloadMission(QString)));
+    connect(view, SIGNAL(uploadMission(QString)), this, SLOT(onUploadMission(QString)));
 
     this->updateMissions();
     this->updateVehicles();
@@ -164,4 +163,21 @@ void MissionPresenter::onRemoveMissionItem(QObject* item)
 {
     if (d->selectedMission) d->selectedMission->removeMissionItem(
                 qobject_cast<domain::MissionItem*>(item));
+}
+
+void MissionPresenter::onDownloadMission(const QString& vehicleName)
+{
+    uint8_t vehicleId = d->vehicleAliases.key(vehicleName);
+
+    if (d->selectedMission)
+    {
+        d->missionService->setVehicleForMission(vehicleId, d->selectedMission);
+    }
+
+    d->missionService->commandRequestMission(vehicleId);
+}
+
+void MissionPresenter::onUploadMission(const QString& vehicleName)
+{
+    // TODO: upload mission on vehicle
 }
