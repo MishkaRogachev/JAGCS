@@ -48,8 +48,6 @@ namespace domain
         return QGeoCoordinate(decodeLatLon(lat), decodeLatLon(lon),
                               decodeAltitude(alt));
     }
-
-
 }
 
 #endif // MAVLINK_PROTOCOL_HELPERS_H

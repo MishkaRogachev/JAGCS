@@ -14,6 +14,23 @@
 
 using namespace domain;
 
+namespace
+{
+    MissionItem::Command decodeCommand(uint16_t command)
+    {
+        switch (command) {
+        case MAV_CMD_NAV_TAKEOFF: return MissionItem::Takeoff;
+        case MAV_CMD_NAV_WAYPOINT: return MissionItem::Waypoint;
+        case MAV_CMD_NAV_LOITER_UNLIM:
+        case MAV_CMD_NAV_LOITER_TURNS:
+            return MissionItem::Loiter;
+        case MAV_CMD_NAV_RETURN_TO_LAUNCH: return MissionItem::Return;
+        case MAV_CMD_NAV_LAND: return MissionItem::Landing;
+        default: return MissionItem::UnknownCommand;
+        }
+    }
+}
+
 MissionHandler::MissionHandler(MissionService* missionService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
@@ -45,14 +62,18 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     {
         Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
 
-        mavlink_mission_item_t itemMsg;
-        mavlink_msg_mission_item_decode(&message, &itemMsg);
+        mavlink_mission_item_t msgItem;
+        mavlink_msg_mission_item_decode(&message, &msgItem);
 
-        MissionItem* item = mission->requestItem(itemMsg.seq);
+        MissionItem* item = mission->requestItem(msgItem.seq);
         // TODO: coordinate system depends MAV_FRAME
-        item->setCoordinate(QGeoCoordinate(itemMsg.x, itemMsg.y, itemMsg.z));
-        item->setCurrent(itemMsg.current);
-        // TODO: MAV_CMD
+        if (!qFuzzyIsNull(msgItem.x) || !qFuzzyIsNull(msgItem.y) ||
+            !qFuzzyIsNull(msgItem.z))
+        {
+            item->setCoordinate(QGeoCoordinate(msgItem.x, msgItem.y, msgItem.z));
+        }
+        item->setCommand(::decodeCommand(msgItem.command));
+        item->setCurrent(msgItem.current);
 
         return;
     }

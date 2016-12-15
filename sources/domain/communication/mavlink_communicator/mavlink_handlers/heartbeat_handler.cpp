@@ -16,7 +16,7 @@ using namespace domain;
 
 namespace
 {
-    Vehicle::Type vehicleTypeFromMavType(uint8_t type)
+    Vehicle::Type decodeType(uint8_t type)
     {
         switch (type) //TODO: other vehicles
         {
@@ -28,7 +28,7 @@ namespace
         }
     }
 
-    Vehicle::State vehicleStateFromMavState(uint8_t state)
+    Vehicle::State decodeState(uint8_t state)
     {
         switch (state)
         {
@@ -76,8 +76,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    vehicle->setType(::vehicleTypeFromMavType(heartbeat.type));
-    vehicle->setState(::vehicleStateFromMavState(heartbeat.system_status));
+    vehicle->setType(::decodeType(heartbeat.type));
+    vehicle->setState(::decodeState(heartbeat.system_status));
     vehicle->setArmed(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
     //TODO: handle another MAV_MODE_FLAG flags
 }
