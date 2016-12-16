@@ -76,7 +76,7 @@ RowLayout {
         Layout.fillWidth: true
         from: -1000
         to: 20000
-        value: coordinate.altitude
+        value: coordinate.isValid ? coordinate.altitude : 0
         onValueChanged: coordinate.altitude = value;
     }
 
