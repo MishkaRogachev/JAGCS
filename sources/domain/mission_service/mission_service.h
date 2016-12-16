@@ -34,7 +34,8 @@ namespace domain
         void missionAdded(Mission* mission);
         void missionRemoved(Mission* mission);
 
-        void commandRequestMission(uint8_t vehicleId);
+        void commandDownloadMission(uint8_t vehicleId);
+        void commandUploadMission(uint8_t vehicleId);
 
     private:
         class Impl;

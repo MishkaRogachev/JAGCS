@@ -174,10 +174,15 @@ void MissionPresenter::onDownloadMission(const QString& vehicleName)
         d->missionService->setVehicleForMission(vehicleId, d->selectedMission);
     }
 
-    d->missionService->commandRequestMission(vehicleId);
+    d->missionService->commandDownloadMission(vehicleId);
 }
 
 void MissionPresenter::onUploadMission(const QString& vehicleName)
 {
-    // TODO: upload mission on vehicle
+    if (!d->selectedMission) return;
+
+    uint8_t vehicleId = d->vehicleAliases.key(vehicleName);
+
+    d->missionService->setVehicleForMission(vehicleId, d->selectedMission);
+    d->missionService->commandUploadMission(vehicleId);
 }

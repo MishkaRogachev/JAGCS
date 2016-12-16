@@ -6,6 +6,7 @@
 namespace domain
 {
     class MissionService;
+    class Mission;
 
     class MissionHandler: public AbstractMavLinkHandler
     {
@@ -18,6 +19,8 @@ namespace domain
 
         void requestMission(uint8_t id);
         void requestMissionItem(uint8_t id, uint16_t seq);
+
+        void uploadMission(uint8_t id);
 
     private:
         MissionService* m_missionService;

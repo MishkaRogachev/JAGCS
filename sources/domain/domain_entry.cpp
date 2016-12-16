@@ -36,7 +36,7 @@ DomainEntry::DomainEntry():
                      [this](uint8_t id) { d->missionService.missionForVehicle(id); });
 
     QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
-                     &d->missionService, &MissionService::commandRequestMission);
+                     &d->missionService, &MissionService::commandDownloadMission);
 
     MavLinkCommunicatorFactory factory(&d->vehicleService, &d->missionService);
     d->communicator.reset(factory.create());
