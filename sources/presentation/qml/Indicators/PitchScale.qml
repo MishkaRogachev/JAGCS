@@ -35,6 +35,8 @@ Item {
             for (var i = minPitch - (minPitch % valueStep); i <= maxPitch;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
+                if (i == 0) continue;
+
                 var yPos = height - Helper.mapToRange(i, minPitch, maxPitch, height);
 
                 ctx.moveTo(major ? 28 : 40, yPos);
