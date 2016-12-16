@@ -40,6 +40,14 @@ namespace domain
 
     public slots:
         void setCoordinate(const QGeoCoordinate& coordinate);
+        void setGlobalCoordinate(double latitude,
+                                 double longitude,
+                                 float altitude);
+        // TODO: store relative altitude flag
+        void setCoordinateRelativeAltitude(double latitude,
+                                           double longitude,
+                                           float altitude);
+
         void setCommand(Command command);
         void setCurrent(bool current);
 

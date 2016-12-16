@@ -43,6 +43,34 @@ void MissionItem::setCoordinate(const QGeoCoordinate& coordinate)
     emit coordinateChanged(coordinate);
 }
 
+void MissionItem::setGlobalCoordinate(double latitude, double longitude,
+                                      float altitude)
+{
+    if (qFuzzyIsNull(latitude) && qFuzzyIsNull(longitude) &&
+        qFuzzyIsNull(altitude))
+    {
+        this->setCoordinate(QGeoCoordinate());
+    }
+    else
+    {
+        this->setCoordinate(QGeoCoordinate(latitude, longitude, altitude));
+    }
+}
+
+void MissionItem::setCoordinateRelativeAltitude(double latitude,
+                                                double longitude,
+                                                float altitude)
+{
+    QGeoCoordinate coordinate;
+
+    if (!qFuzzyIsNull(latitude)) coordinate.setLatitude(latitude);
+    if (!qFuzzyIsNull(longitude)) coordinate.setLatitude(longitude);
+
+    uint8_t seq = this->sequence();
+    if (seq > 0) coordinate.setAltitude(
+                m_mission->item(seq - 1)->coordinate().altitude());
+}
+
 void MissionItem::setCommand(MissionItem::Command command)
 {
     if (m_command == command) return;

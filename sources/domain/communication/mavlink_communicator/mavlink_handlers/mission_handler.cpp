@@ -110,7 +110,22 @@ void MissionHandler::sendMissionCount(uint8_t id)
 
 void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 {
-    // TODO: send mission item
+    Mission* mission = m_missionService->requestMissionForVehicle(id);
+    if (mission->count() <= seq) return;
+
+    MissionItem* item = mission->item(seq);
+
+    mavlink_message_t message;
+    mavlink_mission_item_t msgItem;
+
+    msgItem.target_system = id;
+    msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    // TODO: encode Mission Item
+
+    mavlink_msg_mission_item_encode(m_communicator->systemId(),
+                                    m_communicator->componentId(),
+                                    &message, &msgItem);
+    m_communicator->sendMessageAllLinks(message);
 }
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
@@ -137,21 +152,18 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     MissionItem* item = mission->requestItem(msgItem.seq);
 
-    // TODO: other MAV_FRAME
-    if (msgItem.frame == MAV_FRAME_GLOBAL ||
-        msgItem.frame == MAV_FRAME_GLOBAL_RELATIVE_ALT) // TODO: setRelativeAltitude
+    switch (msgItem.frame)
     {
-        if (qFuzzyIsNull(msgItem.x) &&
-            qFuzzyIsNull(msgItem.y) &&
-            qFuzzyIsNull(msgItem.z))
-        {
-            item->setCoordinate(QGeoCoordinate());
-        }
-        else
-        {
-            item->setCoordinate(QGeoCoordinate(msgItem.x, msgItem.y, msgItem.z));
-        }
+    case MAV_FRAME_GLOBAL:
+        item->setGlobalCoordinate(msgItem.x, msgItem.y, msgItem.z);
+        break;
+    case MAV_FRAME_GLOBAL_RELATIVE_ALT:
+        item->setCoordinateRelativeAltitude(msgItem.x, msgItem.y, msgItem.z);
+        break;
+    default:
+        break;
     }
+
     item->setCommand(::decodeCommand(msgItem.command));
     item->setCurrent(msgItem.current);
 }
