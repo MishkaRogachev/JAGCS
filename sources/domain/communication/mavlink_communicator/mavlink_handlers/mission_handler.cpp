@@ -44,68 +44,21 @@ MissionHandler::MissionHandler(MissionService* missionService,
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid == MAVLINK_MSG_ID_MISSION_COUNT)
-    {
-        Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
-
-        mavlink_mission_count_t missionCount;
-        mavlink_msg_mission_count_decode(&message, &missionCount);
-
-        mission->setCount(missionCount.count);
-        for (uint16_t seq = 0; seq < missionCount.count; ++seq)
-        {
-            this->requestMissionItem(message.sysid, seq);
-        }
-        return;
-    }
-
-    if (message.msgid == MAVLINK_MSG_ID_MISSION_ITEM)
-    {
-        Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
-
-        mavlink_mission_item_t msgItem;
-        mavlink_msg_mission_item_decode(&message, &msgItem);
-
-        MissionItem* item = mission->requestItem(msgItem.seq);
-
-        // TODO: other MAV_FRAME
-        if (msgItem.frame == MAV_FRAME_GLOBAL ||
-            msgItem.frame == MAV_FRAME_GLOBAL_RELATIVE_ALT) // TODO: setRelativeAltitude
-        {
-            if (qFuzzyIsNull(msgItem.x) &&
-                qFuzzyIsNull(msgItem.y) &&
-                qFuzzyIsNull(msgItem.z))
-            {
-                item->setCoordinate(QGeoCoordinate());
-            }
-            else
-            {
-                item->setCoordinate(QGeoCoordinate(msgItem.x, msgItem.y, msgItem.z));
-            }
-        }
-        item->setCommand(::decodeCommand(msgItem.command));
-        item->setCurrent(msgItem.current);
-
-        return;
-    }
-
-    if (message.msgid == MAVLINK_MSG_ID_MISSION_REQUEST)
-    {
-        mavlink_mission_request_t request;
-        mavlink_msg_mission_request_decode(&message, &request);
-
-        this->sendMissionItem(message.sysid, request.seq);
-        item.seq
-    }
-
-    if (message.msgid == MAVLINK_MSG_ID_MISSION_ACK)
-    {
-        Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
-
-        mavlink_mission_ack_t missionAck;
-        mavlink_msg_mission_ack_decode(&message, &missionAck);
-
-        // TODO: handle missionAck
+    switch (message.msgid) {
+    case MAVLINK_MSG_ID_MISSION_COUNT:
+        this->processMissionCount(message);
+        break;
+    case MAVLINK_MSG_ID_MISSION_ITEM:
+        this->processMissionItem(message);
+        break;
+    case MAVLINK_MSG_ID_MISSION_REQUEST:
+        this->processMissionRequest(message);
+        break;
+    case MAVLINK_MSG_ID_MISSION_ACK:
+        this->processMissionAct(message);
+        break;
+    default:
+        break;
     }
 }
 
@@ -157,5 +110,66 @@ void MissionHandler::sendMissionCount(uint8_t id)
 
 void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 {
-    // TODO: send mission Item
+    // TODO: send mission item
+}
+
+void MissionHandler::processMissionCount(const mavlink_message_t& message)
+{
+    Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
+
+    mavlink_mission_count_t missionCount;
+    mavlink_msg_mission_count_decode(&message, &missionCount);
+
+    mission->setCount(missionCount.count);
+
+    for (uint16_t seq = 0; seq < missionCount.count; ++seq)
+    {
+        this->requestMissionItem(message.sysid, seq);
+    }
+}
+
+void MissionHandler::processMissionItem(const mavlink_message_t& message)
+{
+    Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
+
+    mavlink_mission_item_t msgItem;
+    mavlink_msg_mission_item_decode(&message, &msgItem);
+
+    MissionItem* item = mission->requestItem(msgItem.seq);
+
+    // TODO: other MAV_FRAME
+    if (msgItem.frame == MAV_FRAME_GLOBAL ||
+        msgItem.frame == MAV_FRAME_GLOBAL_RELATIVE_ALT) // TODO: setRelativeAltitude
+    {
+        if (qFuzzyIsNull(msgItem.x) &&
+            qFuzzyIsNull(msgItem.y) &&
+            qFuzzyIsNull(msgItem.z))
+        {
+            item->setCoordinate(QGeoCoordinate());
+        }
+        else
+        {
+            item->setCoordinate(QGeoCoordinate(msgItem.x, msgItem.y, msgItem.z));
+        }
+    }
+    item->setCommand(::decodeCommand(msgItem.command));
+    item->setCurrent(msgItem.current);
+}
+
+void MissionHandler::processMissionRequest(const mavlink_message_t& message)
+{
+    mavlink_mission_request_t request;
+    mavlink_msg_mission_request_decode(&message, &request);
+
+    this->sendMissionItem(message.sysid, request.seq);
+}
+
+void MissionHandler::processMissionAct(const mavlink_message_t& message)
+{
+    Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
+
+    mavlink_mission_ack_t missionAck;
+    mavlink_msg_mission_ack_decode(&message, &missionAck);
+
+    // TODO: handle missionAck
 }

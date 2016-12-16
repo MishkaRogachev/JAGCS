@@ -20,7 +20,14 @@ namespace domain
         void requestMission(uint8_t id);
         void requestMissionItem(uint8_t id, uint16_t seq);
 
-        void uploadMission(uint8_t id);
+        void sendMissionCount(uint8_t id);
+        void sendMissionItem(uint8_t id, uint16_t seq);
+
+    protected:
+        void processMissionCount(const mavlink_message_t& message);
+        void processMissionItem(const mavlink_message_t& message);
+        void processMissionRequest(const mavlink_message_t& message);
+        void processMissionAct(const mavlink_message_t& message);
 
     private:
         MissionService* m_missionService;
