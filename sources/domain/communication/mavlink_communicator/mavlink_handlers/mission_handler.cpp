@@ -19,14 +19,21 @@ namespace
     MissionItem::Command decodeCommand(uint16_t command)
     {
         switch (command) {
-        case MAV_CMD_NAV_TAKEOFF: return MissionItem::Takeoff;
-        case MAV_CMD_NAV_WAYPOINT: return MissionItem::Waypoint;
+        case MAV_CMD_NAV_TAKEOFF:
+            return MissionItem::Takeoff;
+        case MAV_CMD_NAV_WAYPOINT:
+            return MissionItem::Waypoint;
         case MAV_CMD_NAV_LOITER_UNLIM:
         case MAV_CMD_NAV_LOITER_TURNS:
             return MissionItem::Loiter;
-        case MAV_CMD_NAV_RETURN_TO_LAUNCH: return MissionItem::Return;
-        case MAV_CMD_NAV_LAND: return MissionItem::Landing;
-        default: return MissionItem::UnknownCommand;
+        case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+            return MissionItem::Continue;
+        case MAV_CMD_NAV_RETURN_TO_LAUNCH:
+            return MissionItem::Return;
+        case MAV_CMD_NAV_LAND:
+            return MissionItem::Landing;
+        default:
+            return MissionItem::UnknownCommand;
         }
     }
 }

@@ -12,8 +12,10 @@ RowLayout {
     property alias longitude: longitudeSpinBox.value
     property alias altitude: altitudeSpinBox.value
     property alias command: commandBox.currentIndex
-    property var avalibleCommands: [ qsTr("UNKNOWN"), qsTr("TAKEOFF"),
-        qsTr("WAYPOINT"), qsTr("LOITER"), qsTr("RETURN"), qsTr("LANDING") ]
+    property var avalibleCommands: [
+        qsTr("UNKNOWN"), qsTr("TAKEOFF"), qsTr("WAYPOINT"),
+        qsTr("LOITER"), qsTr("RETURN"), qsTr("CONTINUE"),
+        qsTr("LANDING") ]
     // TODO: avalibleCommands enum handling
 
     signal remove()

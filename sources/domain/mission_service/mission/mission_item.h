@@ -35,6 +35,7 @@ namespace domain
             Takeoff,
             Waypoint,
             Loiter,
+            Continue,
             Return,
             Landing
         };
