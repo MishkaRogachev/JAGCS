@@ -1,7 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
-import QtPositioning 5.6
 
 import "qrc:/Controls"
 
@@ -9,7 +8,9 @@ RowLayout {
     id: root
 
     property int seq: -1
-    property var coordinate: QtPositioning.coordinate()
+    property alias latitude: latitudeSpinBox.value
+    property alias longitude: longitudeSpinBox.value
+    property alias altitude: altitudeSpinBox.value
     property alias command: commandBox.currentIndex
     property var avalibleCommands: [ qsTr("UNKNOWN"), qsTr("TAKEOFF"),
         qsTr("WAYPOINT"), qsTr("LOITER"), qsTr("RETURN"), qsTr("LANDING") ]
@@ -43,8 +44,6 @@ RowLayout {
         id: latitudeSpinBox
         Layout.minimumWidth: 230
         Layout.fillWidth: true
-        value: coordinate.latitude
-        onValueChanged: coordinate.latitude = value;
     }
 
     Label {
@@ -59,8 +58,6 @@ RowLayout {
         Layout.minimumWidth: 230
         Layout.fillWidth: true
         isLongitude: true
-        value: coordinate.longitude
-        onValueChanged: coordinate.longitude = value;
     }
 
     Label {
@@ -71,13 +68,12 @@ RowLayout {
     }
 
     SpinBox {
-        id: altitude
+        id: altitudeSpinBox
         Layout.minimumWidth: 160
         Layout.fillWidth: true
+        warning: isNaN(altitude)
         from: -1000
         to: 20000
-        value: coordinate.isValid ? coordinate.altitude : 0
-        onValueChanged: coordinate.altitude = value;
     }
 
     MapPickButton {

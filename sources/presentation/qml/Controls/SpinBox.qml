@@ -6,6 +6,8 @@ import "./"
 SpinBox {
     id: control
 
+    property bool warning: false
+
     font.pointSize: palette.fontSize
 
     leftPadding: padding * 2
@@ -26,7 +28,11 @@ SpinBox {
     background: Rectangle {
         implicitWidth: palette.controlBaseWidth
         implicitHeight: palette.controlBaseSize
-        color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        color: {
+            if (!control.enabled) return palette.disabledColor;
+            if (control.warning) return palette.negativeColor
+            return palette.sunkenColor
+        }
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
     }
 

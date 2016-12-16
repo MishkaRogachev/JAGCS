@@ -1,6 +1,7 @@
 #include "mission_point_map_item_model.h"
 
 // Qt
+#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -27,7 +28,10 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     switch (role)
     {
     case ItemCoordinateRole:
-        return QVariant::fromValue(item->coordinate());
+    {
+        QGeoCoordinate coordinate(item->latitude(), item->longitude());
+        return QVariant::fromValue(coordinate);
+    }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
     default:
@@ -41,8 +45,10 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
 
     m_items.append(item);
 
-    connect(item, &domain::MissionItem::coordinateChanged,
-            this, &MissionPointMapItemModel::onMissionItemCoordinateChanged);
+    connect(item, &domain::MissionItem::latitudeChanged,
+            this, &MissionPointMapItemModel::onCoordinateChanged);
+    connect(item, &domain::MissionItem::longitudeChanged,
+            this, &MissionPointMapItemModel::onCoordinateChanged);
 
     this->endInsertRows();
 }
@@ -77,7 +83,7 @@ QModelIndex MissionPointMapItemModel::missionItemIndex(
     return this->index(m_items.indexOf(item));
 }
 
-void MissionPointMapItemModel::onMissionItemCoordinateChanged()
+void MissionPointMapItemModel::onCoordinateChanged()
 {
     QModelIndex index = this->missionItemIndex(
                             qobject_cast<domain::MissionItem*>(this->sender()));

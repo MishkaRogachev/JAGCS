@@ -8,21 +8,19 @@
 
 using namespace domain;
 
-MissionItem::MissionItem(Command command, Mission* parent):
-    QObject(parent),
-    m_mission(parent),
+MissionItem::MissionItem(Command command, Mission* mission):
+    QObject(mission),
+    m_mission(mission),
+    m_latitude(qQNaN()),
+    m_longitude(qQNaN()),
+    m_altitude(qQNaN()),
     m_command(command),
     m_current(false)
 {}
 
-QGeoCoordinate MissionItem::coordinate() const
+Mission* MissionItem::mission() const
 {
-    return m_coordinate;
-}
-
-MissionItem::Command MissionItem::command() const
-{
-    return m_command;
+    return m_mission;
 }
 
 unsigned MissionItem::sequence() const
@@ -30,45 +28,72 @@ unsigned MissionItem::sequence() const
     return m_mission->sequence((MissionItem*)this);
 }
 
+double MissionItem::latitude() const
+{
+    return m_latitude;
+}
+
+double MissionItem::longitude() const
+{
+    return m_longitude;
+}
+
+float MissionItem::altitude() const
+{
+    return m_altitude;
+}
+
+bool MissionItem::isRelativeAltitude() const
+{
+    return m_relativeAltitude;
+}
+
+MissionItem::Command MissionItem::command() const
+{
+    return m_command;
+}
+
 bool MissionItem::isCurrent() const
 {
     return m_current;
 }
 
-void MissionItem::setCoordinate(const QGeoCoordinate& coordinate)
+void MissionItem::setLatitude(double latitude)
 {
-    if (m_coordinate == coordinate) return;
+    if (qFuzzyCompare(m_latitude, latitude)) return;
 
-    m_coordinate = coordinate;
-    emit coordinateChanged(coordinate);
+    m_latitude = latitude;
+    emit latitudeChanged(latitude);
 }
 
-void MissionItem::setGlobalCoordinate(double latitude, double longitude,
-                                      float altitude)
+void MissionItem::setLongitude(double longitude)
 {
-    if (qFuzzyIsNull(latitude) && qFuzzyIsNull(longitude) &&
-        qFuzzyIsNull(altitude))
-    {
-        this->setCoordinate(QGeoCoordinate());
-    }
-    else
-    {
-        this->setCoordinate(QGeoCoordinate(latitude, longitude, altitude));
-    }
+    if (qFuzzyCompare(m_longitude, longitude)) return;
+
+    m_longitude = longitude;
+    emit longitudeChanged(longitude);
 }
 
-void MissionItem::setCoordinateRelativeAltitude(double latitude,
-                                                double longitude,
-                                                float altitude)
+void MissionItem::setAltitude(float altitude)
 {
-    QGeoCoordinate coordinate;
+    if (qFuzzyCompare(m_altitude, altitude)) return;
 
-    if (!qFuzzyIsNull(latitude)) coordinate.setLatitude(latitude);
-    if (!qFuzzyIsNull(longitude)) coordinate.setLatitude(longitude);
+    m_altitude = altitude;
+    emit altitudeChanged(altitude);
+}
 
-    uint8_t seq = this->sequence();
-    if (seq > 0) coordinate.setAltitude(
-                m_mission->item(seq - 1)->coordinate().altitude());
+void MissionItem::setRelativeAltitude(bool relativeAltitude)
+{
+    if (m_relativeAltitude == relativeAltitude) return;
+
+    m_relativeAltitude = relativeAltitude;
+    emit relativeAltitudeChanged(relativeAltitude);
+}
+
+void MissionItem::invalidatePosition()
+{
+    this->setLatitude(qQNaN());
+    this->setLongitude(qQNaN());
 }
 
 void MissionItem::setCommand(MissionItem::Command command)

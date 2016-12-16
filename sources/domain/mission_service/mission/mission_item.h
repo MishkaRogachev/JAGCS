@@ -2,7 +2,6 @@
 #define MISSION_ITEM_H
 
 #include <QObject>
-#include <QGeoCoordinate>
 
 namespace domain
 {
@@ -13,8 +12,17 @@ namespace domain
         Q_OBJECT
 
         Q_PROPERTY(unsigned sequence READ sequence CONSTANT)
-        Q_PROPERTY(QGeoCoordinate coordinate READ coordinate
-                   WRITE setCoordinate NOTIFY coordinateChanged)
+        Q_PROPERTY(Mission* mission READ mission CONSTANT)
+
+        Q_PROPERTY(double latitude READ latitude
+                   WRITE setLatitude NOTIFY latitudeChanged)
+        Q_PROPERTY(double longitude READ longitude
+                   WRITE setLongitude NOTIFY longitudeChanged)
+        Q_PROPERTY(float altitude READ altitude
+                   WRITE setAltitude NOTIFY altitudeChanged)
+        Q_PROPERTY(bool relativeAltitude READ isRelativeAltitude
+                   WRITE setRelativeAltitude NOTIFY relativeAltitudeChanged)
+
         Q_PROPERTY(Command command READ command WRITE setCommand
                    NOTIFY commandChanged)
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
@@ -31,34 +39,44 @@ namespace domain
             Landing
         };
 
-        MissionItem(Command command, Mission* parent);
+        MissionItem(Command command, Mission* mission);
 
+        Mission* mission() const;
         unsigned sequence() const;
-        QGeoCoordinate coordinate() const;
+
+        double latitude() const;
+        double longitude() const;
+        float altitude() const;
+        bool isRelativeAltitude() const;
+
         Command command() const;
         bool isCurrent() const;
 
     public slots:
-        void setCoordinate(const QGeoCoordinate& coordinate);
-        void setGlobalCoordinate(double latitude,
-                                 double longitude,
-                                 float altitude);
-        // TODO: store relative altitude flag
-        void setCoordinateRelativeAltitude(double latitude,
-                                           double longitude,
-                                           float altitude);
+        void setLatitude(double latitude);
+        void setLongitude(double longitude);
+        void setAltitude(float altitude);
+        void setRelativeAltitude(bool relativeAltitude);
+
+        void invalidatePosition();
 
         void setCommand(Command command);
         void setCurrent(bool current);
 
     signals:
-        void coordinateChanged(const QGeoCoordinate& coordinate);
+        void latitudeChanged(double latitude);
+        void longitudeChanged(double longitude);
+        void altitudeChanged(float altitude);
+        void relativeAltitudeChanged(bool relativeAltitude);
         void commandChanged(Command command);
         void currentChanged(bool current);
 
     private:
-        Mission* m_mission;
-        QGeoCoordinate m_coordinate;
+        Mission* const m_mission;
+        double m_latitude;
+        double m_longitude;
+        float m_altitude;
+        bool m_relativeAltitude;
         Command m_command;
         bool m_current; // TODO: current for Vehicle
 

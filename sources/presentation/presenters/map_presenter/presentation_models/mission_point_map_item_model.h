@@ -36,7 +36,7 @@ namespace presentation
         QModelIndex missionItemIndex(domain::MissionItem* item) const;
 
     private slots:
-        void onMissionItemCoordinateChanged();
+        void onCoordinateChanged();
 
     private:
         QList<domain::MissionItem*> m_items;

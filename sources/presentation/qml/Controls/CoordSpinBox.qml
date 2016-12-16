@@ -53,7 +53,7 @@ Control { // TODO: RealSpinBox
         x: control.mirrored ? up.width : control.width - width - up.width
         flat: true
         iconSource: "qrc:/ui/minus.svg"
-        onClicked: Helper.isNaN(value) ? value = -stepSize : value -= stepSize
+        onClicked: isNaN(value) ? value = -stepSize : value -= stepSize
         autoRepeat: true
     }
 

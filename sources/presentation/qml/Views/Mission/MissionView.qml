@@ -100,11 +100,17 @@ Pane {
                     }
 
                     MissionItemView {
+                        id: itemView
                         anchors.left: parent.left
                         anchors.right: parent.right
                         seq: modelData.sequence
-                        coordinate: modelData.coordinate
-                        onCoordinateChanged: modelData.setCoordinate(coordinate)
+                        latitude: modelData.latitude
+                        onLatitudeChanged: modelData.setLatitude(latitude)
+                        longitude: modelData.longitude
+                        onLongitudeChanged: modelData.setLongitude(longitude)
+                        altitude: modelData.altitude
+                        onAltitudeChanged: modelData.setAltitude(altitude)
+
                         command: modelData.command
                         onCommandChanged: modelData.setCommand(command)
                         onRemove: removeMissionItem(modelData)

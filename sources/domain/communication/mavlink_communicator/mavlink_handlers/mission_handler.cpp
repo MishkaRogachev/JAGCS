@@ -154,11 +154,19 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     switch (msgItem.frame)
     {
-    case MAV_FRAME_GLOBAL:
-        item->setGlobalCoordinate(msgItem.x, msgItem.y, msgItem.z);
-        break;
     case MAV_FRAME_GLOBAL_RELATIVE_ALT:
-        item->setCoordinateRelativeAltitude(msgItem.x, msgItem.y, msgItem.z);
+        item->setRelativeAltitude(true);
+    case MAV_FRAME_GLOBAL:
+        if (qFuzzyIsNull(msgItem.x) && qFuzzyIsNull(msgItem.y))
+        {
+            item->invalidatePosition();
+        }
+        else
+        {
+            item->setLatitude(msgItem.x);
+            item->setLongitude(msgItem.y);
+        }
+        item->setAltitude(msgItem.z);
         break;
     default:
         break;

@@ -1,6 +1,7 @@
 #include "mission_line_map_item_model.h"
 
 // Qt
+#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -31,8 +32,8 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         QVariantList line;
         for (domain::MissionItem* item: mission->items())
         {
-            if (item && item->coordinate().isValid())
-                line.append(QVariant::fromValue(item->coordinate()));
+            QGeoCoordinate coordinate(item->latitude(), item->longitude());
+            if (coordinate.isValid()) line.append(QVariant::fromValue(coordinate));
         }
         return line;
     }
@@ -51,6 +52,9 @@ void MissionLineMapItemModel::addMission(domain::Mission* mission)
             this, &MissionLineMapItemModel::onMissionItemAdded);
     connect(mission, &domain::Mission::missionItemRemoved,
             this, &MissionLineMapItemModel::onMissionItemRemoved);
+
+    for (domain::MissionItem* item: mission->items())
+        this->onMissionItemAdded(item);
 
     this->endInsertRows();
 }
@@ -82,12 +86,12 @@ QModelIndex MissionLineMapItemModel::missionIndex(domain::Mission* mission) cons
 
 void MissionLineMapItemModel::onMissionItemAdded(domain::MissionItem* item)
 {
-    domain::Mission* mission = qobject_cast<domain::Mission*>(this->sender());
+    domain::Mission* mission = item->mission();
 
-    connect(item, &domain::MissionItem::coordinateChanged,
-            this, [this, mission] {
-        this->updateMissionPath(mission);
-    });
+    connect(item, &domain::MissionItem::latitudeChanged,
+            this, [this, mission] { this->updateMissionPath(mission); });
+    connect(item, &domain::MissionItem::longitudeChanged,
+            this, [this, mission] { this->updateMissionPath(mission); });
 
     this->updateMissionPath(mission);
 }
