@@ -8,7 +8,10 @@ SpinBox {
     id: control
 
     property bool isLongitude: false
+
     stepSize: 0.000277777777778
+    from: isLongitude ? -180 : -90
+    to: isLongitude ? 180 : 90
 
     contentItem: TextInput {
         id: input

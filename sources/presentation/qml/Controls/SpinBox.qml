@@ -8,8 +8,14 @@ Control {
 
     property real value: minValue
     property real from: 0
-    property real to: 99
+    property real to: 0
     property real stepSize: 1
+
+    onValueChanged: {
+        if (from >= to) return;
+        if (value > to) value = to;
+        if (value < from) value = from;
+    }
 
     implicitWidth: Math.max(background.implicitWidth,
                             contentItem.implicitWidth +
