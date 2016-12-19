@@ -17,6 +17,8 @@ Control {
         if (value < from) value = from;
     }
 
+    clip: true
+
     implicitWidth: Math.max(background.implicitWidth,
                             contentItem.implicitWidth +
                             2 * padding +
@@ -35,11 +37,10 @@ Control {
             if (isNaN(value)) return palette.negativeColor
             return palette.sunkenColor
         }
-        border.color: input.activeFocus ? palette.highlightColor : "transparent"
+        border.color: contentItem.activeFocus ? palette.highlightColor : "transparent"
     }
 
     contentItem: TextInput {
-        id: input
         text: isNaN(value) ? 0 : value
         onEditingFinished: value = text
         font: control.font

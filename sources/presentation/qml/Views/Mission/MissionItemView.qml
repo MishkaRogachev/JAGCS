@@ -8,10 +8,12 @@ RowLayout {
     id: root
 
     property int seq: -1
+    property alias command: commandBox.currentIndex
     property alias latitude: latitudeSpinBox.value
     property alias longitude: longitudeSpinBox.value
     property alias altitude: altitudeSpinBox.value
-    property alias command: commandBox.currentIndex
+    property alias relativeAltitude: relativeAltitudeBox.checked
+
     property var avalibleCommands: [
         qsTr("UNKNOWN"), qsTr("TAKEOFF"), qsTr("WAYPOINT"),
         qsTr("LOITER"), qsTr("RETURN"), qsTr("CONTINUE"),
@@ -75,6 +77,11 @@ RowLayout {
         Layout.fillWidth: true
         from: -1000
         to: 20000
+    }
+
+    CheckBox {
+        id: relativeAltitudeBox
+        text: qsTr("Relative")
     }
 
     MapPickButton {
