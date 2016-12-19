@@ -1,67 +1,65 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 
+import "qrc:/JS/helper.js" as Helper
 import "./"
 
-SpinBox {
+Control {
     id: control
 
-    property bool warning: false
+    property real value: minValue
+    property real from: 0
+    property real to: 99
+    property real stepSize: 1
 
+    implicitWidth: Math.max(background.implicitWidth,
+                            contentItem.implicitWidth +
+                            2 * padding +
+                            up.implicitWidth +
+                            down.implicitWidth)
+    implicitHeight: palette.controlBaseSize
+    leftPadding: -(up.width + down.width) / 2
+    rightPadding: 6 + control.mirrored ? down.width : up.width
     font.pointSize: palette.fontSize
-
-    leftPadding: padding * 2
-    rightPadding: padding + down.indicator.width + up.indicator.width
-
-    contentItem: TextInput {
-        text: textFromValue(control.value, control.locale)
-        onEditingFinished:control.value = valueFromText(text, control.locale)
-        font: control.font
-        color: palette.textColor
-        selectionColor: palette.selectionColor
-        selectedTextColor: palette.selectedTextColor
-        verticalAlignment: Qt.AlignVCenter
-        validator: control.validator
-        inputMethodHints: Qt.ImhFormattedNumbersOnly
-    }
 
     background: Rectangle {
         implicitWidth: palette.controlBaseWidth
         implicitHeight: palette.controlBaseSize
         color: {
             if (!control.enabled) return palette.disabledColor;
-            if (control.warning) return palette.negativeColor
+            if (isNaN(value)) return palette.negativeColor
             return palette.sunkenColor
         }
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        border.color: input.activeFocus ? palette.highlightColor : "transparent"
     }
 
-    down.indicator: Rectangle { // TODO: button
-        x: control.mirrored ? up.indicator.width :
-                              control.width - width - up.indicator.width
-        height: control.height
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: implicitWidth
-        color: down.pressed ? palette.highlightColor : "transparent"
-
-        Image {
-            anchors.centerIn: parent
-            opacity: enabled ? 1 : 0.5
-            source: "qrc:/ui/minus.svg"
-        }
+    contentItem: TextInput {
+        id: input
+        text: isNaN(value) ? 0 : value
+        onEditingFinished: value = text
+        font: control.font
+        color: palette.textColor
+        selectionColor: palette.selectionColor
+        selectedTextColor: palette.selectedTextColor
+        horizontalAlignment: Qt.AlignHCenter
+        verticalAlignment: Qt.AlignVCenter
     }
 
-    up.indicator: Rectangle {
+    Button {
+        id: down
+        x: control.mirrored ? up.width : control.width - width - up.width
+        flat: true
+        iconSource: "qrc:/ui/minus.svg"
+        onClicked: isNaN(value) ? value = -stepSize : value -= stepSize
+        autoRepeat: true
+    }
+
+    Button {
+        id: up
         x: control.mirrored ? 0 : control.width - width
-        height: control.height
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: implicitWidth
-        color: up.pressed ? palette.highlightColor : "transparent"
-
-        Image {
-            anchors.centerIn: parent
-            opacity: enabled ? 1 : 0.5
-            source: "qrc:/ui/plus.svg"
-        }
+        flat: true
+        iconSource: "qrc:/ui/plus.svg"
+        onClicked: Helper.isNaN(value) ? value = stepSize : value += stepSize
+        autoRepeat: true
     }
 }

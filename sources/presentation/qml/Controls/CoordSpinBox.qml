@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import "qrc:/JS/helper.js" as Helper
 import "./"
 
-Control { // TODO: RealSpinBox
+Control {
     id: control
 
     property real value: 0

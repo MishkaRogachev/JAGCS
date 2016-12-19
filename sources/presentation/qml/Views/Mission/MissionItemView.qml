@@ -73,7 +73,6 @@ RowLayout {
         id: altitudeSpinBox
         Layout.minimumWidth: 160
         Layout.fillWidth: true
-        warning: isNaN(altitude)
         from: -1000
         to: 20000
     }
