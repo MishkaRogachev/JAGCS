@@ -1,7 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 
-import "qrc:/JS/helper.js" as Helper
 import "./"
 
 Control {
@@ -52,6 +51,7 @@ Control {
         iconSource: "qrc:/ui/minus.svg"
         onClicked: isNaN(value) ? value = -stepSize : value -= stepSize
         autoRepeat: true
+        z: 1
     }
 
     Button {
@@ -59,7 +59,8 @@ Control {
         x: control.mirrored ? 0 : control.width - width
         flat: true
         iconSource: "qrc:/ui/plus.svg"
-        onClicked: Helper.isNaN(value) ? value = stepSize : value += stepSize
+        onClicked: isNaN(value) ? value = stepSize : value += stepSize
         autoRepeat: true
+        z: 1
     }
 }
