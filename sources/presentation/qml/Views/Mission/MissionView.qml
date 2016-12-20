@@ -89,7 +89,7 @@ Pane {
             ColumnLayout {
                 id: column
                 width: flickable.width
-                spacing: 8
+                spacing: 0
 
                 Repeater {
                     id: repeater

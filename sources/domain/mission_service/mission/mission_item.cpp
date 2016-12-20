@@ -13,7 +13,8 @@ MissionItem::MissionItem(Command command, Mission* mission):
     m_mission(mission),
     m_latitude(qQNaN()),
     m_longitude(qQNaN()),
-    m_altitude(qQNaN()),
+    m_altitude(command == Takeoff ? qQNaN() : 0),
+    m_relativeAltitude(command != Takeoff && command != Landing),
     m_command(command),
     m_current(false)
 {}
