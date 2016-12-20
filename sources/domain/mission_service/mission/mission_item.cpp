@@ -14,8 +14,9 @@ MissionItem::MissionItem(Command command, Mission* mission):
     m_command(command),
     m_latitude(qQNaN()),
     m_longitude(qQNaN()),
-    m_altitude(command == Takeoff ? qQNaN() : 0),
+    m_altitude(command == Takeoff ? qQNaN() : 0), // TODO: MissionItemFactory
     m_relativeAltitude(command != Takeoff && command != Landing),
+    m_pitch(command == Takeoff ? 15 : 0),
     m_yaw(0),
     m_radius(0),
     m_current(false)
@@ -59,6 +60,11 @@ bool MissionItem::isRelativeAltitude() const
 float MissionItem::yaw() const
 {
     return m_yaw;
+}
+
+float MissionItem::pitch() const
+{
+    return m_pitch;
 }
 
 float MissionItem::radius() const
@@ -117,6 +123,14 @@ void MissionItem::setYaw(float yaw)
 
     m_yaw = yaw;
     emit yawChanged(yaw);
+}
+
+void MissionItem::setPitch(float pitch)
+{
+    if (m_pitch == pitch) return;
+
+    m_pitch = pitch;
+    emit pitchChanged(pitch);
 }
 
 void MissionItem::setRadius(float radius)

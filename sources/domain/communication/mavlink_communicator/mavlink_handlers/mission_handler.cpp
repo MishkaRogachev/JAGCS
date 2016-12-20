@@ -149,7 +149,7 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
     msgItem.seq = item->sequence();
-    msgItem.autocontinue = item->sequence() < mission->count() - 1;
+    msgItem.autocontinue = item->sequence() < unsigned(mission->count() - 1);
 
     msgItem.command = ::encodeCommand(item->command());
 
@@ -159,6 +159,17 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     msgItem.x = item->latitude();
     msgItem.y = item->longitude();
     msgItem.z = item->altitude();
+
+    if (item->command() == MissionItem::Takeoff)
+    {
+        msgItem.param1 = item->pitch();
+    }
+
+    if (item->command() == MissionItem::Continue)
+    {
+        // TODO: relative altitude only
+        msgItem.param1 = item->altitude() > 0 ? 1 : item->altitude() < 0 ? -1 : 0;
+    }
 
     if (item->command() == MissionItem::Waypoint)
     {
@@ -225,6 +236,11 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         break;
     default:
         break;
+    }
+
+    if (item->command() == MissionItem::Takeoff)
+    {
+        item->setPitch(msgItem.param1);
     }
 
     if (item->command() == MissionItem::Waypoint)
