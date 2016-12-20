@@ -65,7 +65,6 @@ Frame {
                 id: port
                 Layout.fillWidth: true
                 visible: link ? 'port' in link : false
-                editable: true
                 from: 0
                 to: 99999
                 value: visible ? link.port : 0
