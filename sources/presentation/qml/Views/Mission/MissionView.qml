@@ -100,20 +100,9 @@ Pane {
                     }
 
                     MissionItemView {
-                        // FIXME: annoying binding loops warnings
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        seq: modelData.sequence
-                        command: modelData.command
-                        onCommandChanged: modelData.setCommand(command)
-                        latitude: modelData.latitude
-                        onLatitudeChanged: modelData.setLatitude(latitude)
-                        longitude: modelData.longitude
-                        onLongitudeChanged: modelData.setLongitude(longitude)
-                        altitude: modelData.altitude
-                        onAltitudeChanged: modelData.setAltitude(altitude)
-                        relativeAltitude: modelData.relativeAltitude
-                        onRelativeAltitudeChanged: modelData.setRelativeAltitude(relativeAltitude)
+                        item: modelData
                         onRemove: removeMissionItem(modelData)
                     }
                 }

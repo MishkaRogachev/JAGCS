@@ -7,12 +7,7 @@ import "qrc:/Controls"
 RowLayout {
     id: root
 
-    property int seq: -1
-    property alias command: commandBox.currentIndex
-    property alias latitude: latitudeSpinBox.value
-    property alias longitude: longitudeSpinBox.value
-    property alias altitude: altitudeSpinBox.value
-    property alias relativeAltitude: relativeAltitudeBox.checked
+    property QtObject item
 
     property var avalibleCommands: [
         qsTr("UNKNOWN"), qsTr("TAKEOFF"), qsTr("WAYPOINT"),
@@ -27,14 +22,15 @@ RowLayout {
     Label {
         Layout.preferredWidth: 24
         font.bold: true
-        text: seq + ")"
+        text: item.sequence + ")"
     }
 
     ComboBox {
-        id: commandBox
         Layout.minimumWidth: 110
         Layout.fillWidth: true
         model: avalibleCommands
+        currentIndex: item.command
+        onCurrentIndexChanged: item.setCommand(currentIndex)
     }
 
     Label {
@@ -48,6 +44,8 @@ RowLayout {
         id: latitudeSpinBox
         Layout.minimumWidth: 230
         Layout.fillWidth: true
+        value: item.latitude
+        onValueChanged: if (!isNaN(value)) item.setLatitude(value)
     }
 
     Label {
@@ -62,6 +60,8 @@ RowLayout {
         Layout.minimumWidth: 230
         Layout.fillWidth: true
         isLongitude: true
+        value: item.longitude
+        onValueChanged: if (!isNaN(value)) item.setLongitude(value)
     }
 
     Label {
@@ -72,16 +72,18 @@ RowLayout {
     }
 
     SpinBox {
-        id: altitudeSpinBox
         Layout.minimumWidth: 160
         Layout.fillWidth: true
         from: -1000
         to: 20000
+        value: item.altitude
+        onValueChanged: if (!isNaN(value)) item.setAltitude(value)
     }
 
     CheckBox {
-        id: relativeAltitudeBox
         text: qsTr("Relative")
+        checked: item.relativeAltitude
+        onCheckedChanged: item.setRelativeAltitude(checked)
     }
 
     MapPickButton {
