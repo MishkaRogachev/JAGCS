@@ -36,6 +36,26 @@ namespace
             return MissionItem::UnknownCommand;
         }
     }
+
+    uint16_t encodeCommand(MissionItem::Command command)
+    {
+        switch (command) {
+        case MissionItem::Takeoff:
+            return MAV_CMD_NAV_TAKEOFF;
+        case MissionItem::Waypoint:
+            return MAV_CMD_NAV_WAYPOINT;
+        case MissionItem::Loiter:
+            return MAV_CMD_NAV_LOITER_TO_ALT; // TODO: other loiters by params
+        case MissionItem::Continue:
+            return MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
+        case MissionItem::Return:
+            return MAV_CMD_NAV_RETURN_TO_LAUNCH;
+        case MissionItem::Landing:
+            return MAV_CMD_NAV_LAND;
+        default:
+            return 0;
+        }
+    }
 }
 
 MissionHandler::MissionHandler(MissionService* missionService,
@@ -127,7 +147,33 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 
     msgItem.target_system = id;
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    // TODO: encode Mission Item
+
+    msgItem.seq = item->sequence();
+    msgItem.autocontinue = item->sequence() < mission->count() - 1;
+
+    msgItem.command = ::encodeCommand(item->command());
+
+    msgItem.frame = item->isRelativeAltitude() ?
+                        MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
+
+    msgItem.x = item->latitude();
+    msgItem.y = item->longitude();
+    msgItem.z = item->altitude();
+
+    if (item->command() == MissionItem::Waypoint)
+    {
+        msgItem.param2 = item->radius();
+    }
+    else if (item->command() == MissionItem::Loiter)
+    {
+        msgItem.param3 = item->radius();
+    }
+
+    if (item->command() == MissionItem::Takeoff ||
+        item->command() == MissionItem::Landing)
+    {
+        msgItem.param4 = item->yaw();
+    }
 
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
@@ -181,12 +227,6 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         break;
     }
 
-    if (item->command() == MissionItem::Takeoff ||
-        item->command() == MissionItem::Landing)
-    {
-        item->setYaw(msgItem.param4);
-    }
-
     if (item->command() == MissionItem::Waypoint)
     {
         item->setRadius(msgItem.param2);
@@ -194,6 +234,12 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     else if (item->command() == MissionItem::Loiter)
     {
         item->setRadius(msgItem.param3);
+    }
+
+    if (item->command() == MissionItem::Takeoff ||
+        item->command() == MissionItem::Landing)
+    {
+        item->setYaw(msgItem.param4);
     }
 
     item->setCurrent(msgItem.current);
