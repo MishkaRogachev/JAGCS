@@ -26,6 +26,7 @@ namespace domain
         Q_PROPERTY(bool relativeAltitude READ isRelativeAltitude
                    WRITE setRelativeAltitude NOTIFY relativeAltitudeChanged)
         Q_PROPERTY(float yaw READ yaw WRITE setYaw NOTIFY yawChanged)
+        Q_PROPERTY(float radius READ radius WRITE setRadius NOTIFY radiusChanged)
 
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
                    NOTIFY currentChanged)
@@ -54,6 +55,7 @@ namespace domain
         float altitude() const;
         bool isRelativeAltitude() const;
         float yaw() const;
+        float radius() const;
 
         bool isCurrent() const;
 
@@ -65,6 +67,7 @@ namespace domain
         void setAltitude(float altitude);
         void setRelativeAltitude(bool relativeAltitude);
         void setYaw(float yaw);
+        void setRadius(float radius);
 
         void invalidatePosition();
 
@@ -72,13 +75,15 @@ namespace domain
 
     signals:
         void commandChanged(Command command);
+
         void latitudeChanged(double latitude);
         void longitudeChanged(double longitude);
         void altitudeChanged(float altitude);
         void relativeAltitudeChanged(bool relativeAltitude);
-        void currentChanged(bool current);
-
         void yawChanged(float yaw);
+        void radiusChanged(float radius);
+
+        void currentChanged(bool current);
 
     private:
         Mission* const m_mission;
@@ -86,8 +91,9 @@ namespace domain
         double m_latitude;
         double m_longitude;
         float m_altitude;
-        float m_yaw;
         bool m_relativeAltitude;
+        float m_yaw;
+        float m_radius;
         bool m_current; // TODO: current for Vehicle
 
         Q_ENUM(Command)

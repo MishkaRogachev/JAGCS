@@ -16,6 +16,8 @@ MissionItem::MissionItem(Command command, Mission* mission):
     m_longitude(qQNaN()),
     m_altitude(command == Takeoff ? qQNaN() : 0),
     m_relativeAltitude(command != Takeoff && command != Landing),
+    m_yaw(0),
+    m_radius(0),
     m_current(false)
 {}
 
@@ -57,6 +59,11 @@ bool MissionItem::isRelativeAltitude() const
 float MissionItem::yaw() const
 {
     return m_yaw;
+}
+
+float MissionItem::radius() const
+{
+    return m_radius;
 }
 
 bool MissionItem::isCurrent() const
@@ -110,6 +117,14 @@ void MissionItem::setYaw(float yaw)
 
     m_yaw = yaw;
     emit yawChanged(yaw);
+}
+
+void MissionItem::setRadius(float radius)
+{
+    if (m_radius == radius) return;
+
+    m_radius = radius;
+    emit radiusChanged(radius);
 }
 
 void MissionItem::invalidatePosition()

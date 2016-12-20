@@ -187,6 +187,15 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setYaw(msgItem.param4);
     }
 
+    if (item->command() == MissionItem::Waypoint)
+    {
+        item->setRadius(msgItem.param2);
+    }
+    else if (item->command() == MissionItem::Loiter)
+    {
+        item->setRadius(msgItem.param3);
+    }
+
     item->setCurrent(msgItem.current);
 }
 
