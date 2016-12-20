@@ -159,6 +159,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     MissionItem* item = mission->requestItem(msgItem.seq);
 
+    item->setCommand(::decodeCommand(msgItem.command));
+
     switch (msgItem.frame)
     {
     case MAV_FRAME_GLOBAL_RELATIVE_ALT:
@@ -179,7 +181,12 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         break;
     }
 
-    item->setCommand(::decodeCommand(msgItem.command));
+    if (item->command() == MissionItem::Takeoff ||
+        item->command() == MissionItem::Landing)
+    {
+        item->setYaw(msgItem.param4);
+    }
+
     item->setCurrent(msgItem.current);
 }
 

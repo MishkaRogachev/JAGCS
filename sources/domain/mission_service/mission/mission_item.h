@@ -14,6 +14,9 @@ namespace domain
         Q_PROPERTY(unsigned sequence READ sequence CONSTANT)
         Q_PROPERTY(Mission* mission READ mission CONSTANT)
 
+        Q_PROPERTY(Command command READ command WRITE setCommand
+                   NOTIFY commandChanged)
+
         Q_PROPERTY(double latitude READ latitude
                    WRITE setLatitude NOTIFY latitudeChanged)
         Q_PROPERTY(double longitude READ longitude
@@ -22,9 +25,8 @@ namespace domain
                    WRITE setAltitude NOTIFY altitudeChanged)
         Q_PROPERTY(bool relativeAltitude READ isRelativeAltitude
                    WRITE setRelativeAltitude NOTIFY relativeAltitudeChanged)
+        Q_PROPERTY(float yaw READ yaw WRITE setYaw NOTIFY yawChanged)
 
-        Q_PROPERTY(Command command READ command WRITE setCommand
-                   NOTIFY commandChanged)
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
                    NOTIFY currentChanged)
 
@@ -45,40 +47,47 @@ namespace domain
         Mission* mission() const;
         unsigned sequence() const;
 
+        Command command() const;
+
         double latitude() const;
         double longitude() const;
         float altitude() const;
         bool isRelativeAltitude() const;
+        float yaw() const;
 
-        Command command() const;
         bool isCurrent() const;
 
     public slots:
+        void setCommand(Command command);
+
         void setLatitude(double latitude);
         void setLongitude(double longitude);
         void setAltitude(float altitude);
         void setRelativeAltitude(bool relativeAltitude);
+        void setYaw(float yaw);
 
         void invalidatePosition();
 
-        void setCommand(Command command);
         void setCurrent(bool current);
 
     signals:
+        void commandChanged(Command command);
         void latitudeChanged(double latitude);
         void longitudeChanged(double longitude);
         void altitudeChanged(float altitude);
         void relativeAltitudeChanged(bool relativeAltitude);
-        void commandChanged(Command command);
         void currentChanged(bool current);
+
+        void yawChanged(float yaw);
 
     private:
         Mission* const m_mission;
+        Command m_command;
         double m_latitude;
         double m_longitude;
         float m_altitude;
+        float m_yaw;
         bool m_relativeAltitude;
-        Command m_command;
         bool m_current; // TODO: current for Vehicle
 
         Q_ENUM(Command)

@@ -11,11 +11,11 @@ using namespace domain;
 MissionItem::MissionItem(Command command, Mission* mission):
     QObject(mission),
     m_mission(mission),
+    m_command(command),
     m_latitude(qQNaN()),
     m_longitude(qQNaN()),
     m_altitude(command == Takeoff ? qQNaN() : 0),
     m_relativeAltitude(command != Takeoff && command != Landing),
-    m_command(command),
     m_current(false)
 {}
 
@@ -27,6 +27,11 @@ Mission* MissionItem::mission() const
 unsigned MissionItem::sequence() const
 {
     return m_mission->sequence((MissionItem*)this);
+}
+
+MissionItem::Command MissionItem::command() const
+{
+    return m_command;
 }
 
 double MissionItem::latitude() const
@@ -49,14 +54,22 @@ bool MissionItem::isRelativeAltitude() const
     return m_relativeAltitude;
 }
 
-MissionItem::Command MissionItem::command() const
+float MissionItem::yaw() const
 {
-    return m_command;
+    return m_yaw;
 }
 
 bool MissionItem::isCurrent() const
 {
     return m_current;
+}
+
+void MissionItem::setCommand(MissionItem::Command command)
+{
+    if (m_command == command) return;
+
+    m_command = command;
+    emit commandChanged(command);
 }
 
 void MissionItem::setLatitude(double latitude)
@@ -91,18 +104,18 @@ void MissionItem::setRelativeAltitude(bool relativeAltitude)
     emit relativeAltitudeChanged(relativeAltitude);
 }
 
+void MissionItem::setYaw(float yaw)
+{
+    if (m_yaw == yaw) return;
+
+    m_yaw = yaw;
+    emit yawChanged(yaw);
+}
+
 void MissionItem::invalidatePosition()
 {
     this->setLatitude(qQNaN());
     this->setLongitude(qQNaN());
-}
-
-void MissionItem::setCommand(MissionItem::Command command)
-{
-    if (m_command == command) return;
-
-    m_command = command;
-    emit commandChanged(command);
 }
 
 void MissionItem::setCurrent(bool current)
