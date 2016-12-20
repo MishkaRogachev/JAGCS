@@ -89,7 +89,6 @@ Pane {
             ColumnLayout {
                 id: column
                 width: flickable.width
-                spacing: 0
 
                 Repeater {
                     id: repeater
@@ -126,7 +125,7 @@ Pane {
         id: separator
         anchors.left: parent.left
         anchors.right: parent.right
-        y: parent.height * 2 / 3
+        y: parent.height / 2
         height: 7
     }
 
