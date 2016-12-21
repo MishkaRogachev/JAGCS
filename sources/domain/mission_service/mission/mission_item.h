@@ -34,9 +34,10 @@ namespace domain
                    NOTIFY currentChanged)
 
     public:
-        enum Command // TODO: other commands
+        enum Command
         {
             UnknownCommand = 0,
+            Home,
             Takeoff,
             Waypoint,
             Loiter,

@@ -10,9 +10,9 @@ RowLayout {
     property QtObject item
 
     property var avalibleCommands: [
-        qsTr("UNKNOWN"), qsTr("TAKEOFF"), qsTr("WAYPOINT"),
-        qsTr("LOITER"), qsTr("CONTINUE"), qsTr("RETURN"),
-        qsTr("LANDING") ]
+        qsTr("UNKNOWN"), qsTr("HOME"), qsTr("TAKEOFF"),
+        qsTr("WAYPOINT"), qsTr("LOITER"), qsTr("CONTINUE"),
+        qsTr("RETURN"), qsTr("LANDING") ]
     // TODO: avalibleCommands enum handling
 
     signal remove()

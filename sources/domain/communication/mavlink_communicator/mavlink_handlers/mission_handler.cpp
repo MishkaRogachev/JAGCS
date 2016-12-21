@@ -16,13 +16,13 @@ using namespace domain;
 
 namespace
 {
-    MissionItem::Command decodeCommand(uint16_t command)
+    MissionItem::Command decodeCommand(uint16_t command, uint8_t seq)
     {
         switch (command) {
         case MAV_CMD_NAV_TAKEOFF:
             return MissionItem::Takeoff;
         case MAV_CMD_NAV_WAYPOINT:
-            return MissionItem::Waypoint;
+            return seq > 0 ? MissionItem::Waypoint : MissionItem::Home;
         case MAV_CMD_NAV_LOITER_UNLIM:
         case MAV_CMD_NAV_LOITER_TURNS:
             return MissionItem::Loiter;
@@ -42,6 +42,7 @@ namespace
         switch (command) {
         case MissionItem::Takeoff:
             return MAV_CMD_NAV_TAKEOFF;
+        case MissionItem::Home:
         case MissionItem::Waypoint:
             return MAV_CMD_NAV_WAYPOINT;
         case MissionItem::Loiter:
@@ -216,7 +217,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     MissionItem* item = mission->requestItem(msgItem.seq);
 
-    item->setCommand(::decodeCommand(msgItem.command));
+    item->setCommand(::decodeCommand(msgItem.command, msgItem.seq));
 
     switch (msgItem.frame)
     {
