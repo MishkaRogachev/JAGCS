@@ -38,7 +38,49 @@ Pane {
         anchors.top: separator.bottom
         anchors.bottom: parent.bottom
 
+        Flickable {
+            id: flickable
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            clip: true
+            contentWidth: column.width
+            contentHeight: column.height
+
+            ColumnLayout {
+                id: column
+                width: flickable.width
+
+                Repeater {
+                    id: repeater
+                    model: missionItems
+                    onModelChanged: {
+                        if (column.height > flickable.height)
+                            flickable.contentY = column.height - flickable.height;
+                    }
+
+                    MissionItemView {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        item: modelData
+                        onRemove: removeMissionItem(modelData)
+                    }
+                }
+            }
+        }
+
         RowLayout {
+            Button {
+                id: addButton
+                Layout.fillWidth: true
+                text: qsTr("Add Item")
+                iconSource: "qrc:/icons/add.svg"
+                enabled: missionBox.currentIndex > -1
+                onClicked: {
+                    addMissionItem();
+                    repeater.itemAt(repeater.count - 1).pick();
+                }
+            }
+
             ComboBox {
                 id: missionBox
                 Layout.fillWidth: true
@@ -78,48 +120,6 @@ Pane {
                 model: vehicleNames
                 enabled: missionBox.currentIndex != -1
                 onTriggered: uploadMission(data)
-            }
-        }
-
-        Flickable {
-            id: flickable
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            clip: true
-            contentWidth: column.width
-            contentHeight: column.height
-
-            ColumnLayout {
-                id: column
-                width: flickable.width
-
-                Repeater {
-                    id: repeater
-                    model: missionItems
-                    onModelChanged: {
-                        if (column.height > flickable.height)
-                            flickable.contentY = column.height - flickable.height;
-                    }
-
-                    MissionItemView {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        item: modelData
-                        onRemove: removeMissionItem(modelData)
-                    }
-                }
-            }
-        }
-
-        Button {
-            id: addButton
-            Layout.fillWidth: true
-            text: qsTr("Add Item")
-            iconSource: "qrc:/icons/add.svg"
-            enabled: missionBox.currentIndex > -1
-            onClicked: {
-                addMissionItem();
-                repeater.itemAt(repeater.count - 1).pick();
             }
         }
     }
