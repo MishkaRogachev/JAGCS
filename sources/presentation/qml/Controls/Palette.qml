@@ -5,8 +5,8 @@ QtObject {
 
     property int controlBaseSize: 42
 
-    property int fontSize: 11
-    property int controlBaseWidth: 200
+    property int fontSize: 10
+    property int controlBaseWidth: controlBaseSize * 4
 
     property color backgroundColor: "#37474F"
     property color sunkenColor: "#263238"
