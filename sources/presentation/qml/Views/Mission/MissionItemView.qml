@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
 
-RowLayout {
+Frame {
     id: root
 
     property QtObject item
@@ -21,74 +21,78 @@ RowLayout {
         if (pickButton.visible) pickButton.pick();
     }
 
-    ColumnLayout {
+    RowLayout {
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-        Label {
-            Layout.preferredWidth: 24
-            font.bold: true
-            text: qsTr("Item #") + item.sequence
+        ColumnLayout {
+
+            Label {
+                Layout.preferredWidth: 24
+                font.bold: true
+                text: qsTr("Item #") + item.sequence
+            }
+
+            ComboBox {
+                Layout.minimumWidth: 110
+                Layout.preferredWidth: 160
+                model: avalibleCommands
+                currentIndex: item.command
+                onCurrentIndexChanged: item.setCommand(currentIndex)
+            }
         }
 
-        ComboBox {
-            Layout.minimumWidth: 110
-            Layout.preferredWidth: 160
-            model: avalibleCommands
-            currentIndex: item.command
-            onCurrentIndexChanged: item.setCommand(currentIndex)
+        GridLayout {
+            id: coordinateColumn
+            visible: item.hasPosition
+            columns: 2
+
+            Label {
+                Layout.minimumWidth: 40
+                horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
+                text: qsTr("Lat.:")
+            }
+
+            CoordSpinBox {
+                id: latitudeSpinBox
+                Layout.minimumWidth: 230
+                Layout.fillWidth: true
+                value: item.latitude
+                onValueChanged: if (!isNaN(value)) item.setLatitude(value)
+            }
+
+            Label {
+                Layout.minimumWidth: 40
+                horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
+                text: qsTr("Lon.:")
+            }
+
+            CoordSpinBox {
+                id: longitudeSpinBox
+                Layout.minimumWidth: 230
+                Layout.fillWidth: true
+                isLongitude: true
+                value: item.longitude
+                onValueChanged: if (!isNaN(value)) item.setLongitude(value)
+            }
         }
-    }
 
-    GridLayout {
-        id: coordinateColumn
-        visible: item.hasPosition
-        columns: 2
-
-        Label {
-            Layout.minimumWidth: 40
-            horizontalAlignment: Text.AlignRight
-            Layout.fillWidth: true
-            text: qsTr("Lat.:")
+        MapPickButton {
+            id: pickButton
+            visible: coordinateColumn.visible
+            anchors.verticalCenter: parent.verticalCenter
+            onPicked: {
+                latitudeSpinBox.value = coordinate.latitude;
+                longitudeSpinBox.value = coordinate.longitude;
+            }
         }
 
-        CoordSpinBox {
-            id: latitudeSpinBox
-            Layout.minimumWidth: 230
-            Layout.fillWidth: true
-            value: item.latitude
-            onValueChanged: if (!isNaN(value)) item.setLatitude(value)
-        }
+        GridLayout {
+            visible: item.command !== 6 // TODO: command enum
+            columns: 2
 
-        Label {
-            Layout.minimumWidth: 40
-            horizontalAlignment: Text.AlignRight
-            Layout.fillWidth: true
-            text: qsTr("Lon.:")
-        }
-
-        CoordSpinBox {
-            id: longitudeSpinBox
-            Layout.minimumWidth: 230
-            Layout.fillWidth: true
-            isLongitude: true
-            value: item.longitude
-            onValueChanged: if (!isNaN(value)) item.setLongitude(value)
-        }
-    }
-
-    MapPickButton {
-        id: pickButton
-        visible: coordinateColumn.visible
-        anchors.verticalCenter: parent.verticalCenter
-        onPicked: {
-            latitudeSpinBox.value = coordinate.latitude;
-            longitudeSpinBox.value = coordinate.longitude;
-        }
-    }
-
-    ColumnLayout {
-        visible: item.command !== 6 // TODO: command enum
-
-        RowLayout {
             Label {
                 Layout.minimumWidth: 40
                 horizontalAlignment: Text.AlignRight
@@ -104,61 +108,62 @@ RowLayout {
                 value: item.altitude
                 onValueChanged: if (!isNaN(value)) item.setAltitude(value)
             }
+
+            Item { width: 1; height: 1 }
+
+            CheckBox {
+                text: qsTr("Relative alt.")
+                checked: item.relativeAltitude
+                onCheckedChanged: item.setRelativeAltitude(checked)
+            }
         }
 
-        CheckBox {
-            text: qsTr("Relative alt.")
-            Layout.alignment: Qt.AlignHCenter
-            checked: item.relativeAltitude
-            onCheckedChanged: item.setRelativeAltitude(checked)
+        GridLayout {
+            columns: 2
+
+            Label {
+                visible: pitch.visible
+                Layout.minimumWidth: 40
+                horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
+                text: qsTr("Pitch:")
+            }
+
+            SpinBox {
+                id: pitch
+                visible: item.command === 2 // TODO: command enum
+                Layout.minimumWidth: 140
+                Layout.fillWidth: true
+                from: 0
+                to: 360
+                value: item.pitch
+                onValueChanged: if (!isNaN(value)) item.setPitch(value)
+            }
+
+            Label {
+                visible: yaw.visible
+                Layout.minimumWidth: 40
+                horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
+                text: qsTr("Yaw:")
+            }
+
+            SpinBox {
+                id: yaw
+                visible: item.command === 2 || item.command === 7 // TODO: command enum
+                Layout.minimumWidth: 140
+                Layout.fillWidth: true
+                from: 0
+                to: 360
+                value: item.yaw
+                onValueChanged: if (!isNaN(value)) item.setYaw(value)
+            }
         }
-    }
 
-    GridLayout {
-        columns: 2
-
-        Label {
-            visible: pitch.visible
-            Layout.minimumWidth: 40
-            horizontalAlignment: Text.AlignRight
-            Layout.fillWidth: true
-            text: qsTr("Pitch:")
+        Button {
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: palette.negativeColor
+            onClicked: root.remove()
         }
-
-        SpinBox {
-            id: pitch
-            visible: item.command === 2 // TODO: command enum
-            Layout.minimumWidth: 140
-            Layout.fillWidth: true
-            from: 0
-            to: 360
-            value: item.pitch
-            onValueChanged: if (!isNaN(value)) item.setPitch(value)
-        }
-
-        Label {
-            visible: yaw.visible
-            Layout.minimumWidth: 40
-            horizontalAlignment: Text.AlignRight
-            Layout.fillWidth: true
-            text: qsTr("Yaw:")
-        }
-
-        SpinBox {
-            id: yaw
-            visible: item.command === 2 || item.command === 7 // TODO: command enum
-            Layout.minimumWidth: 140
-            Layout.fillWidth: true
-            from: 0
-            to: 360
-            value: item.yaw
-            onValueChanged: if (!isNaN(value)) item.setYaw(value)
-        }
-    }
-
-    Button {
-        iconSource: "qrc:/icons/remove.svg"
-        iconColor: palette.negativeColor
-        onClicked: root.remove()
     }
 }
