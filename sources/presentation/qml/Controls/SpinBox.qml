@@ -6,7 +6,7 @@ import "./"
 Control {
     id: control
 
-    property real value: minValue
+    property real value: from
     property real from: 0
     property real to: 0
     property real stepSize: 1

@@ -57,6 +57,7 @@ Pane {
             Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
+                enabled: missionBox.currentIndex != -1
                 onClicked: removeMission()
             }
 
@@ -68,12 +69,14 @@ Pane {
             MenuButton {
                 iconSource: "qrc:/icons/download.svg"
                 model: vehicleNames
+                enabled: missionBox.currentIndex != -1
                 onTriggered: downloadMission(data)
             }
 
             MenuButton {
                 iconSource: "qrc:/icons/upload.svg"
                 model: vehicleNames
+                enabled: missionBox.currentIndex != -1
                 onTriggered: uploadMission(data)
             }
         }

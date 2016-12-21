@@ -9,8 +9,6 @@ Button {
     property alias model: repeater.model
 
     signal triggered(var data)
-
-    enabled: repeater.count > 0
     onClicked: menu.open()
 
     Menu {
