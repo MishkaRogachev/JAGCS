@@ -2,7 +2,7 @@
 #define MISSION_H
 
 // Internal
-#include "mission_item.h"
+#include "mission_item_factory.h"
 
 namespace domain
 {
@@ -32,7 +32,8 @@ namespace domain
         void missionItemAdded(MissionItem* item);
 
     private:
-        QList<MissionItem*> m_missionItems;
+        MissionItemFactory m_itemFactory;
+        QList<MissionItem*> m_items;
     };
 }
 

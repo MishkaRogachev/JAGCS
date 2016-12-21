@@ -40,7 +40,7 @@ RowLayout {
 
     GridLayout {
         id: coordinateColumn
-        visible: item.command !== 4 && item.command !== 5 // TODO: command enum
+        visible: item.hasPosition
         columns: 2
 
         Label {
@@ -86,7 +86,7 @@ RowLayout {
     }
 
     ColumnLayout {
-        visible: item.command !== 5 // TODO: command enum
+        visible: item.command !== 6 // TODO: command enum
 
         RowLayout {
             Label {
@@ -127,7 +127,7 @@ RowLayout {
 
         SpinBox {
             id: pitch
-            visible: item.command === 1 // TODO: command enum
+            visible: item.command === 2 // TODO: command enum
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             from: 0
@@ -146,7 +146,7 @@ RowLayout {
 
         SpinBox {
             id: yaw
-            visible: item.command === 1 || item.command === 6 // TODO: command enum
+            visible: item.command === 2 || item.command === 7 // TODO: command enum
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             from: 0

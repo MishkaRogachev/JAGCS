@@ -8,17 +8,20 @@
 
 using namespace domain;
 
-MissionItem::MissionItem(Command command, Mission* mission):
+MissionItem::MissionItem(Mission* mission, Command command,
+                         double latitude, double longitude,
+                         float altitude, bool relativeAltitude,
+                         float pitch, float yaw, float radius):
     QObject(mission),
     m_mission(mission),
     m_command(command),
-    m_latitude(qQNaN()),
-    m_longitude(qQNaN()),
-    m_altitude(command == Takeoff ? qQNaN() : 0), // TODO: MissionItemFactory
-    m_relativeAltitude(command != Takeoff && command != Landing),
-    m_pitch(command == Takeoff ? 15 : 0),
-    m_yaw(0),
-    m_radius(0),
+    m_latitude(latitude),
+    m_longitude(longitude),
+    m_altitude(altitude),
+    m_relativeAltitude(relativeAltitude),
+    m_pitch(pitch),
+    m_yaw(yaw),
+    m_radius(radius),
     m_current(false)
 {}
 

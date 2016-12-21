@@ -7,7 +7,7 @@ namespace domain
 {
     class Mission;
 
-    class MissionItem: public QObject
+    class MissionItem: public QObject // TODO: separate with inheritance
     {
         Q_OBJECT
 
@@ -46,7 +46,10 @@ namespace domain
             Landing
         };
 
-        MissionItem(Command command, Mission* mission);
+        MissionItem(Mission* mission, Command command,
+                    double latitude, double longitude,
+                    float altitude, bool relativeAltitude,
+                    float pitch, float yaw, float radius);
 
         Mission* mission() const;
         unsigned sequence() const;
@@ -103,7 +106,7 @@ namespace domain
         float m_pitch;
         float m_yaw;
         float m_radius;
-        bool m_current; // TODO: current for Vehicle
+        bool m_current;
 
         Q_ENUM(Command)
     };
