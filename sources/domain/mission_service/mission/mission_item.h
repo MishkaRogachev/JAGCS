@@ -29,6 +29,7 @@ namespace domain
         Q_PROPERTY(float yaw READ yaw WRITE setYaw NOTIFY yawChanged)
         Q_PROPERTY(float radius READ radius WRITE setRadius NOTIFY radiusChanged)
 
+        Q_PROPERTY(bool hasPosition READ hasPosition NOTIFY commandChanged)
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
                    NOTIFY currentChanged)
 
@@ -58,6 +59,8 @@ namespace domain
         float yaw() const;
         float pitch() const;
         float radius() const;
+
+        bool hasPosition() const;
 
         bool isCurrent() const;
 

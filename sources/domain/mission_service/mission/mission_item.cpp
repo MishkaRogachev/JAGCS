@@ -72,6 +72,11 @@ float MissionItem::radius() const
     return m_radius;
 }
 
+bool MissionItem::hasPosition() const
+{
+    return m_command != Continue && m_command != Return;
+}
+
 bool MissionItem::isCurrent() const
 {
     return m_current;

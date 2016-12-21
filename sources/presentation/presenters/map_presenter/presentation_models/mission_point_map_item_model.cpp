@@ -29,8 +29,8 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
     case ItemCoordinateRole:
     {
-        QGeoCoordinate coordinate(item->latitude(), item->longitude());
-        return QVariant::fromValue(coordinate);
+        if (!item->hasPosition()) return QVariant::fromValue(QGeoCoordinate());
+        return QVariant::fromValue(QGeoCoordinate(item->latitude(), item->longitude()));
     }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
@@ -45,6 +45,8 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
 
     m_items.append(item);
 
+    connect(item, &domain::MissionItem::commandChanged,
+            this, &MissionPointMapItemModel::onCommandChanged);
     connect(item, &domain::MissionItem::latitudeChanged,
             this, &MissionPointMapItemModel::onCoordinateChanged);
     connect(item, &domain::MissionItem::longitudeChanged,
@@ -81,6 +83,13 @@ QModelIndex MissionPointMapItemModel::missionItemIndex(
         domain::MissionItem* item) const
 {
     return this->index(m_items.indexOf(item));
+}
+
+void MissionPointMapItemModel::onCommandChanged()
+{
+    QModelIndex index = this->missionItemIndex(
+                            qobject_cast<domain::MissionItem*>(this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { ItemCoordinateRole });
 }
 
 void MissionPointMapItemModel::onCoordinateChanged()
