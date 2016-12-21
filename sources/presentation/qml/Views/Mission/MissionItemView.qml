@@ -25,21 +25,15 @@ Frame {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        ColumnLayout {
+        Label {
+            font.bold: true
+            text: qsTr("#") + item.sequence
+        }
 
-            Label {
-                Layout.preferredWidth: 24
-                font.bold: true
-                text: qsTr("Item #") + item.sequence
-            }
-
-            ComboBox {
-                Layout.minimumWidth: 110
-                Layout.preferredWidth: 160
-                model: avalibleCommands
-                currentIndex: item.command
-                onCurrentIndexChanged: item.setCommand(currentIndex)
-            }
+        ComboBox {
+            model: avalibleCommands
+            currentIndex: item.command
+            onCurrentIndexChanged: item.setCommand(currentIndex)
         }
 
         GridLayout {
@@ -48,31 +42,27 @@ Frame {
             columns: 2
 
             Label {
-                Layout.minimumWidth: 40
-                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
                 text: qsTr("Lat.:")
             }
 
             CoordSpinBox {
-                id: latitudeSpinBox
-                Layout.minimumWidth: 230
                 Layout.fillWidth: true
+                id: latitudeSpinBox
                 value: item.latitude
                 onValueChanged: if (!isNaN(value)) item.setLatitude(value)
             }
 
             Label {
-                Layout.minimumWidth: 40
-                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
                 text: qsTr("Lon.:")
             }
 
             CoordSpinBox {
-                id: longitudeSpinBox
-                Layout.minimumWidth: 230
                 Layout.fillWidth: true
+                id: longitudeSpinBox
                 isLongitude: true
                 value: item.longitude
                 onValueChanged: if (!isNaN(value)) item.setLongitude(value)
@@ -94,14 +84,12 @@ Frame {
             columns: 2
 
             Label {
-                Layout.minimumWidth: 40
-                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
                 text: qsTr("Alt.:")
             }
 
             SpinBox {
-                Layout.minimumWidth: 160
                 Layout.fillWidth: true
                 from: -1000
                 to: 20000
@@ -112,6 +100,7 @@ Frame {
             Item { width: 1; height: 1 }
 
             CheckBox {
+                Layout.fillWidth: true
                 text: qsTr("Relative alt.")
                 checked: item.relativeAltitude
                 onCheckedChanged: item.setRelativeAltitude(checked)
@@ -122,18 +111,16 @@ Frame {
             columns: 2
 
             Label {
-                visible: pitch.visible
-                Layout.minimumWidth: 40
-                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
+                visible: pitch.visible
+                horizontalAlignment: Text.AlignRight
                 text: qsTr("Pitch:")
             }
 
             SpinBox {
                 id: pitch
-                visible: item.command === 2 // TODO: command enum
-                Layout.minimumWidth: 140
                 Layout.fillWidth: true
+                visible: item.command === 2 // TODO: command enum
                 from: 0
                 to: 360
                 value: item.pitch
@@ -141,18 +128,16 @@ Frame {
             }
 
             Label {
-                visible: yaw.visible
-                Layout.minimumWidth: 40
-                horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
+                visible: yaw.visible
+                horizontalAlignment: Text.AlignRight
                 text: qsTr("Yaw:")
             }
 
             SpinBox {
                 id: yaw
-                visible: item.command === 2 || item.command === 7 // TODO: command enum
-                Layout.minimumWidth: 140
                 Layout.fillWidth: true
+                visible: item.command === 2 || item.command === 7 // TODO: command enum
                 from: 0
                 to: 360
                 value: item.yaw
