@@ -30,17 +30,25 @@ int Mission::sequence(MissionItem* item) const
     return m_items.indexOf(item);
 }
 
-MissionItem* Mission::requestItem(int seq)
+MissionItem* Mission::requestItem(int seq, MissionItem::Command command)
 {
     if (seq >= m_items.count())
     {
         this->setCount(seq + 1);
     }
 
+    if (m_items.at(seq)->command() != command)
+    {
+        emit missionItemRemoved(m_items[seq]);
+        delete m_items[seq];
+        m_items[seq] = new MissionItem(this, command);
+        emit missionItemAdded(m_items.last());
+    }
+
     return m_items.at(seq);
 }
 
-void Mission::setCount(int count)
+void Mission::setCount(int count) // TODO: setCount with nullptr mission items
 {
     while (count > m_items.count())
     {
@@ -55,7 +63,11 @@ void Mission::setCount(int count)
 
 void Mission::addNewMissionItem()
 {
-    m_items.append(m_itemFactory.create());
+    uint8_t count = m_items.count();
+    m_items.append(m_itemFactory.create(
+                       count == 0 ? MissionItem::Home : count == 1 ?
+                                                         MissionItem::Takeoff :
+                                                         MissionItem::Waypoint));
     emit missionItemAdded(m_items.last());
 }
 

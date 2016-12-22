@@ -19,7 +19,7 @@ namespace domain
         const QList<MissionItem*>& items() const;
         int sequence(MissionItem* item) const;
 
-        MissionItem* requestItem(int seq);
+        MissionItem* requestItem(int seq, MissionItem::Command command);
 
     public slots:
         void setCount(int count);

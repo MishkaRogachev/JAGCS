@@ -235,6 +235,9 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
+    MissionItem::Command command = ::decodeCommand(msgItem.command, msgItem.seq);
+    MissionItem* item = mission->requestItem(msgItem.seq, command);
+    /*
     MissionItem* item = mission->requestItem(msgItem.seq);
 
     item->replaceWithCommand(::decodeCommand(msgItem.command, msgItem.seq));
@@ -279,7 +282,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setYaw(msgItem.param4);
     }
 
-    item->setCurrent(msgItem.current);
+    item->setCurrent(msgItem.current);*/
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
