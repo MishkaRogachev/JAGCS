@@ -14,7 +14,6 @@ MissionItem::MissionItem(Mission* mission, Command command):
     m_command(command),
     m_pitch(pitch),
     m_yaw(yaw),
-    m_radius(radius),
     m_current(false)
 {}
 
@@ -43,27 +42,16 @@ float MissionItem::pitch() const
     return m_pitch;
 }
 
-float MissionItem::radius() const
-{
-    return m_radius;
-}
-
-bool MissionItem::hasPosition() const
-{
-    return m_command != Continue && m_command != Return;
-}
-
 bool MissionItem::isCurrent() const
 {
     return m_current;
 }
 
-void MissionItem::setCommand(MissionItem::Command command)
+void MissionItem::replaceWithCommand(MissionItem::Command command)
 {
     if (m_command == command) return;
 
-    m_command = command;
-    emit commandChanged(command);
+    // TODO: relace witch command
 }
 
 void MissionItem::setYaw(float yaw)
@@ -80,14 +68,6 @@ void MissionItem::setPitch(float pitch)
 
     m_pitch = pitch;
     emit pitchChanged(pitch);
-}
-
-void MissionItem::setRadius(float radius)
-{
-    if (m_radius == radius) return;
-
-    m_radius = radius;
-    emit radiusChanged(radius);
 }
 
 void MissionItem::setCurrent(bool current)

@@ -222,7 +222,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     MissionItem* item = mission->requestItem(msgItem.seq);
 
-    item->setCommand(::decodeCommand(msgItem.command, msgItem.seq));
+    item->replaceWithCommand(::decodeCommand(msgItem.command, msgItem.seq));
 
     switch (msgItem.frame)
     {

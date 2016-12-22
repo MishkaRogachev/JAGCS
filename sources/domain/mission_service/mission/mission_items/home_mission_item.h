@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        HomeMissionitem(Mission* mission);
+        explicit HomeMissionitem(Mission* mission);
     };
 }
 

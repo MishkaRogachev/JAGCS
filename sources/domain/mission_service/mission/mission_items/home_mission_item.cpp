@@ -3,5 +3,5 @@
 using namespace domain;
 
 HomeMissionitem::HomeMissionitem(Mission* mission):
-    PositionMissionItem(mission, Home)
+    PositionMissionItem(mission, Home, false)
 {}

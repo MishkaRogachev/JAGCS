@@ -3,7 +3,7 @@
 using namespace domain;
 
 WaypointMissionItem::WaypointMissionItem(Mission* mission):
-    PositionMissionItem(mission, Waypoint),
+    PositionMissionItem(mission, Waypoint, true),
     m_acceptanceRadius(0)
 {}
 
