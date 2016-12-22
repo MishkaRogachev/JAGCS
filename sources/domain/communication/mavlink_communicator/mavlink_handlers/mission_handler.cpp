@@ -11,6 +11,7 @@
 
 #include "mission_service.h"
 #include "mission.h"
+#include "position_mission_item.h"
 
 using namespace domain;
 
@@ -154,12 +155,16 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 
     msgItem.command = ::encodeCommand(item->command());
 
-    msgItem.frame = item->isRelativeAltitude() ?
-                        MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
+    PositionMissionItem* positionItem = qobject_cast<PositionMissionItem*>(item);
+    if (positionItem)
+    {
+        msgItem.frame = positionItem->isRelativeAltitude() ?
+                            MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
 
-    msgItem.x = item->latitude();
-    msgItem.y = item->longitude();
-    msgItem.z = item->altitude();
+        msgItem.x = positionItem->latitude();
+        msgItem.y = positionItem->longitude();
+        msgItem.z = positionItem->altitude();
+    }
 
     if (item->command() == MissionItem::Takeoff)
     {
