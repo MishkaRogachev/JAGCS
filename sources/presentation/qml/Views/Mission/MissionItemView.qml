@@ -33,12 +33,12 @@ Frame {
         ComboBox {
             model: avalibleCommands
             currentIndex: item.command
-            onCurrentIndexChanged: item.setCommand(currentIndex)
+            onCurrentIndexChanged: item.replaceWithCommand(currentIndex)
         }
 
         GridLayout {
             id: coordinateColumn
-            visible: item.hasPosition
+            visible: 'latitude' in item
             columns: 2
 
             Label {
@@ -80,7 +80,7 @@ Frame {
         }
 
         GridLayout {
-            visible: item.command !== 6 // TODO: command enum
+            visible: 'altitude' in item
             columns: 2
 
             Label {
@@ -120,7 +120,7 @@ Frame {
             SpinBox {
                 id: pitch
                 Layout.fillWidth: true
-                visible: item.command === 2 // TODO: command enum
+                visible: 'pitch' in item
                 from: 0
                 to: 360
                 value: item.pitch
@@ -137,7 +137,7 @@ Frame {
             SpinBox {
                 id: yaw
                 Layout.fillWidth: true
-                visible: item.command === 2 || item.command === 7 // TODO: command enum
+                visible: 'yaw' in item
                 from: 0
                 to: 360
                 value: item.yaw
