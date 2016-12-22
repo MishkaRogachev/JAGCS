@@ -5,15 +5,15 @@
 
 namespace domain
 {
-    class DirectionMissonItem: public PositionMissionItem
+    class DirectionMissionItem: public PositionMissionItem
     {
         Q_OBJECT
 
         Q_PROPERTY(float yaw READ yaw WRITE setYaw NOTIFY yawChanged)
 
     public:
-        DirectionMissonItem(Mission* mission, Command command,
-                            bool relativeAltitude);
+        DirectionMissionItem(Mission* mission, Command command,
+                             bool relativeAltitude);
 
         float yaw() const;
 

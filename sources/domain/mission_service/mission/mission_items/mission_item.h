@@ -49,7 +49,7 @@ namespace domain
 
     private:
         Mission* const m_mission;
-        Command m_command;
+        const Command m_command;
         bool m_current;
 
         Q_ENUM(Command)

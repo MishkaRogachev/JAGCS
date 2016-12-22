@@ -1,18 +1,18 @@
 #ifndef TAKEOFF_MISSON_ITEM_H
 #define TAKEOFF_MISSON_ITEM_H
 
-#include "direction_misson_item.h"
+#include "direction_mission_item.h"
 
 namespace domain
 {
-    class TakeoffMissonItem: public DirectionMissonItem
+    class TakeoffMissionItem: public DirectionMissionItem
     {
         Q_OBJECT
 
         Q_PROPERTY(float pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
 
     public:
-        TakeoffMissonItem(Mission* mission);
+        explicit TakeoffMissionItem(Mission* mission);
 
         float pitch() const;
 
