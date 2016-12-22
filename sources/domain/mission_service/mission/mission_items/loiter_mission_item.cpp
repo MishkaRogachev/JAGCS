@@ -3,7 +3,8 @@
 using namespace domain;
 
 LoiterMissionItem::LoiterMissionItem(Mission* mission):
-    PositionMissionItem(mission, Loiter, true)
+    PositionMissionItem(mission, Loiter, true),
+    m_radius(0)
 {}
 
 float LoiterMissionItem::radius() const
@@ -13,7 +14,7 @@ float LoiterMissionItem::radius() const
 
 void LoiterMissionItem::setRadius(float radius)
 {
-    if (m_radius == radius) return;
+    if (qFuzzyCompare(m_radius, radius)) return;
 
     m_radius = radius;
     emit radiusChanged(radius);

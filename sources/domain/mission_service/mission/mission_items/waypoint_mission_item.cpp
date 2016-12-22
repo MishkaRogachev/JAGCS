@@ -14,7 +14,7 @@ float WaypointMissionItem::acceptanceRadius() const
 
 void WaypointMissionItem::setAcceptanceRadius(float acceptanceRadius)
 {
-    if (m_acceptanceRadius == acceptanceRadius) return;
+    if (qFuzzyCompare(m_acceptanceRadius, acceptanceRadius)) return;
 
     m_acceptanceRadius = acceptanceRadius;
     emit acceptanceRadiusChanged(acceptanceRadius);

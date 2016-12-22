@@ -15,7 +15,6 @@ namespace domain
         Q_PROPERTY(Mission* mission READ mission CONSTANT)
         Q_PROPERTY(Command command READ command CONSTANT)
 
-        Q_PROPERTY(float pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
         Q_PROPERTY(float yaw READ yaw WRITE setYaw NOTIFY yawChanged)
 
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent

@@ -56,7 +56,7 @@ void MissionItem::replaceWithCommand(MissionItem::Command command)
 
 void MissionItem::setYaw(float yaw)
 {
-    if (m_yaw == yaw) return;
+    if (qFuzzyCompare(m_yaw, yaw)) return;
 
     m_yaw = yaw;
     emit yawChanged(yaw);
@@ -64,7 +64,7 @@ void MissionItem::setYaw(float yaw)
 
 void MissionItem::setPitch(float pitch)
 {
-    if (m_pitch == pitch) return;
+    if (qFuzzyCompare(m_pitch, pitch)) return;
 
     m_pitch = pitch;
     emit pitchChanged(pitch);
