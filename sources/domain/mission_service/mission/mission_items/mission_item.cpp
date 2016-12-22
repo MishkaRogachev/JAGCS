@@ -39,7 +39,7 @@ void MissionItem::replaceWithCommand(MissionItem::Command command)
 {
     if (m_command == command) return;
 
-    // TODO: relace witch command
+    // TODO: replace witch command
 }
 
 void MissionItem::setCurrent(bool current)
