@@ -3,7 +3,7 @@
 using namespace domain;
 
 TakeoffMissonItem::TakeoffMissonItem(Mission* mission):
-    PositionMissionItem(mission, Takeoff, true),
+    DirectionMissonItem(mission, Takeoff, true),
     m_pitch(15)
 {}
 
