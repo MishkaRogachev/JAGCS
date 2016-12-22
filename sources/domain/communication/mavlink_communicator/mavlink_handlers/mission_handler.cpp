@@ -235,54 +235,64 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
+    // TODO: add mission item AFTER filling
     MissionItem::Command command = ::decodeCommand(msgItem.command, msgItem.seq);
     MissionItem* item = mission->requestItem(msgItem.seq, command);
-    /*
-    MissionItem* item = mission->requestItem(msgItem.seq);
 
-    item->replaceWithCommand(::decodeCommand(msgItem.command, msgItem.seq));
-
-    switch (msgItem.frame)
+    PositionMissionItem* positionItem = qobject_cast<PositionMissionItem*>(item);
+    if (positionItem)
     {
-    case MAV_FRAME_GLOBAL_RELATIVE_ALT:
-        item->setRelativeAltitude(true);
-    case MAV_FRAME_GLOBAL:
-        if (qFuzzyIsNull(msgItem.x) && qFuzzyIsNull(msgItem.y))
+        switch (msgItem.frame)
         {
-            item->invalidatePosition();
+        case MAV_FRAME_GLOBAL_RELATIVE_ALT:
+            positionItem->setRelativeAltitude(true);
+        case MAV_FRAME_GLOBAL:
+            if (qFuzzyIsNull(msgItem.x) && qFuzzyIsNull(msgItem.y))
+            {
+                positionItem->setLatitude(qQNaN());
+                positionItem->setLongitude(qQNaN());
+            }
+            else
+            {
+                positionItem->setLatitude(msgItem.x);
+                positionItem->setLongitude(msgItem.y);
+            }
+            positionItem->setAltitude(msgItem.z);
+            break;
+        default:
+            break;
         }
-        else
+
+        DirectionMissionItem* directionItem =
+                qobject_cast<DirectionMissionItem*>(positionItem);
+        if (directionItem)
         {
-            item->setLatitude(msgItem.x);
-            item->setLongitude(msgItem.y);
+            directionItem->setYaw(msgItem.param4);
+
+            TakeoffMissionItem* takeoffItem =
+                    qobject_cast<TakeoffMissionItem*>(directionItem);
+            if (directionItem)
+            {
+                takeoffItem->setPitch(msgItem.param1);
+            }
         }
-        item->setAltitude(msgItem.z);
-        break;
-    default:
-        break;
+
+        WaypointMissionItem* waypointItem =
+                qobject_cast<WaypointMissionItem*>(positionItem);
+        if (waypointItem)
+        {
+            waypointItem->setAcceptanceRadius(msgItem.param2);
+        }
+
+        LoiterMissionItem* loiterItem =
+                qobject_cast<LoiterMissionItem*>(positionItem);
+        if (loiterItem)
+        {
+            loiterItem->setRadius(msgItem.param3);
+        }
     }
 
-    if (item->command() == MissionItem::Takeoff)
-    {
-        item->setPitch(msgItem.param1);
-    }
-
-    if (item->command() == MissionItem::Waypoint)
-    {
-        item->setRadius(msgItem.param2);
-    }
-    else if (item->command() == MissionItem::Loiter)
-    {
-        item->setRadius(msgItem.param3);
-    }
-
-    if (item->command() == MissionItem::Takeoff ||
-        item->command() == MissionItem::Landing)
-    {
-        item->setYaw(msgItem.param4);
-    }
-
-    item->setCurrent(msgItem.current);*/
+    item->setCurrent(msgItem.current);
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
