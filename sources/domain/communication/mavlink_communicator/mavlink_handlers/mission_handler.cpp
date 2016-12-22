@@ -11,7 +11,12 @@
 
 #include "mission_service.h"
 #include "mission.h"
-#include "position_mission_item.h"
+
+#include "takeoff_mission_item.h"
+#include "waypoint_mission_item.h"
+#include "loiter_mission_item.h"
+#include "continue_mission_item.h"
+#include "landing_mission_item.h"
 
 using namespace domain;
 
@@ -164,32 +169,42 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
         msgItem.x = positionItem->latitude();
         msgItem.y = positionItem->longitude();
         msgItem.z = positionItem->altitude();
+
+        DirectionMissionItem* directionItem =
+                qobject_cast<DirectionMissionItem*>(positionItem);
+        if (directionItem)
+        {
+            msgItem.param4 = directionItem->yaw();
+
+            TakeoffMissionItem* takeoffItem =
+                    qobject_cast<TakeoffMissionItem*>(directionItem);
+            if (directionItem)
+            {
+                msgItem.param1 = takeoffItem->pitch();
+            }
+        }
+
+        WaypointMissionItem* waypointItem =
+                qobject_cast<WaypointMissionItem*>(positionItem);
+        if (waypointItem)
+        {
+            msgItem.param2 = waypointItem->acceptanceRadius();
+        }
+
+        LoiterMissionItem* loiterItem =
+                qobject_cast<LoiterMissionItem*>(positionItem);
+        if (loiterItem)
+        {
+            msgItem.param3 = loiterItem->radius();
+        }
     }
 
-    if (item->command() == MissionItem::Takeoff)
+    ContinueMissionItem* continueItem = qobject_cast<ContinueMissionItem*>(item);
+    if (continueItem)
     {
-        msgItem.param1 = item->pitch();
-    }
-
-    if (item->command() == MissionItem::Continue)
-    {
-        // TODO: relative altitude only
-        msgItem.param1 = item->altitude() > 0 ? 1 : item->altitude() < 0 ? -1 : 0;
-    }
-
-    if (item->command() == MissionItem::Waypoint)
-    {
-        msgItem.param2 = item->radius();
-    }
-    else if (item->command() == MissionItem::Loiter)
-    {
-        msgItem.param3 = item->radius();
-    }
-
-    if (item->command() == MissionItem::Takeoff ||
-        item->command() == MissionItem::Landing)
-    {
-        msgItem.param4 = item->yaw();
+        msgItem.param1 = continueItem->altitude() > 0 ?
+                             1 : continueItem->altitude() < 0 ? -1 : 0;
+        msgItem.z = positionItem->altitude();
     }
 
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
