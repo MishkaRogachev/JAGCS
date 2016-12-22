@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "mission_item.h"
+#include "position_mission_item.h"
 
 using namespace presentation;
 
@@ -29,8 +29,13 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
     case ItemCoordinateRole:
     {
-        if (!item->hasPosition()) return QVariant::fromValue(QGeoCoordinate());
-        return QVariant::fromValue(QGeoCoordinate(item->latitude(), item->longitude()));
+        domain::PositionMissionItem* positionItem =
+                qobject_cast<domain::PositionMissionItem*>(item);
+        if (positionItem)
+            return QVariant::fromValue(QGeoCoordinate(positionItem->latitude(),
+                                                      positionItem->longitude()));
+        else
+            return QVariant::fromValue(QGeoCoordinate());
     }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
@@ -45,12 +50,15 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
 
     m_items.append(item);
 
-    connect(item, &domain::MissionItem::commandChanged,
-            this, &MissionPointMapItemModel::onCommandChanged);
-    connect(item, &domain::MissionItem::latitudeChanged,
-            this, &MissionPointMapItemModel::onCoordinateChanged);
-    connect(item, &domain::MissionItem::longitudeChanged,
-            this, &MissionPointMapItemModel::onCoordinateChanged);
+    domain::PositionMissionItem* positionItem =
+            qobject_cast<domain::PositionMissionItem*>(item);
+    if (positionItem)
+    {
+        connect(positionItem, &domain::PositionMissionItem::latitudeChanged,
+                this, &MissionPointMapItemModel::onCoordinateChanged);
+        connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
+                this, &MissionPointMapItemModel::onCoordinateChanged);
+    }
 
     this->endInsertRows();
 }

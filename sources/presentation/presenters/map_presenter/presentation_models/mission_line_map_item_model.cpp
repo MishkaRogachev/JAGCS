@@ -6,6 +6,7 @@
 
 // Internal
 #include "mission.h"
+#include "position_mission_item.h"
 
 using namespace presentation;
 
@@ -32,10 +33,15 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         QVariantList line;
         for (domain::MissionItem* item: mission->items())
         {
-            if (!item->hasPosition()) continue;
-
-            QGeoCoordinate coordinate(item->latitude(), item->longitude());
-            if (coordinate.isValid()) line.append(QVariant::fromValue(coordinate));
+            domain::PositionMissionItem* positionItem =
+                    qobject_cast<domain::PositionMissionItem*>(item);
+            if (positionItem)
+            {
+                QGeoCoordinate coordinate(positionItem->latitude(),
+                                          positionItem->longitude());
+                if (coordinate.isValid()) line.append(
+                            QVariant::fromValue(coordinate));
+            }
         }
         return line;
     }
@@ -90,12 +96,15 @@ void MissionLineMapItemModel::onMissionItemAdded(domain::MissionItem* item)
 {
     domain::Mission* mission = item->mission();
 
-    connect(item, &domain::MissionItem::commandChanged,
-            this, [this, mission] { this->updateMissionPath(mission); });
-    connect(item, &domain::MissionItem::latitudeChanged,
-            this, [this, mission] { this->updateMissionPath(mission); });
-    connect(item, &domain::MissionItem::longitudeChanged,
-            this, [this, mission] { this->updateMissionPath(mission); });
+    domain::PositionMissionItem* positionItem =
+            qobject_cast<domain::PositionMissionItem*>(item);
+    if (positionItem)
+    {
+        connect(positionItem, &domain::PositionMissionItem::latitudeChanged,
+                this, [this, mission] { this->updateMissionPath(mission); });
+        connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
+                this, [this, mission] { this->updateMissionPath(mission); });
+    }
 
     this->updateMissionPath(mission);
 }
