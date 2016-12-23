@@ -11,6 +11,7 @@
 
 #include "mission_service.h"
 #include "mission.h"
+#include "mission_item_factory.h"
 
 #include "takeoff_mission_item.h"
 #include "waypoint_mission_item.h"
@@ -235,9 +236,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
-    // TODO: add mission item AFTER filling
-    MissionItem::Command command = ::decodeCommand(msgItem.command, msgItem.seq);
-    MissionItem* item = mission->requestItem(msgItem.seq, command);
+    MissionItemFactory factory(mission);
+    MissionItem* item = factory.create(::decodeCommand(msgItem.command, msgItem.seq));
 
     PositionMissionItem* positionItem = qobject_cast<PositionMissionItem*>(item);
     if (positionItem)
@@ -293,6 +293,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     }
 
     item->setCurrent(msgItem.current);
+    mission->setMissionItem(msgItem.seq, item);
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)

@@ -5,6 +5,7 @@
 
 // Internal
 #include "mission.h"
+#include "mission_item_factory.h"
 
 using namespace domain;
 
@@ -39,7 +40,9 @@ void MissionItem::replaceWithCommand(MissionItem::Command command)
 {
     if (m_command == command) return;
 
-    m_mission->requestItem(this->sequence(), command);
+    MissionItemFactory factory(m_mission);
+    // TODO: copy avalible data
+    m_mission->setMissionItem(this->sequence(), factory.create(command));
 }
 
 void MissionItem::setCurrent(bool current)

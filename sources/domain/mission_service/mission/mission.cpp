@@ -3,11 +3,13 @@
 // Qt
 #include <QDebug>
 
+// Internal
+#include "mission_item_factory.h"
+
 using namespace domain;
 
 Mission::Mission(QObject* parent):
-    QObject(parent),
-    m_itemFactory(this)
+    QObject(parent)
 {}
 
 int Mission::count() const
@@ -20,60 +22,58 @@ MissionItem* Mission::item(int seq) const
     return m_items.value(seq, nullptr);
 }
 
-const QList<MissionItem*>& Mission::items() const
+QList<MissionItem*> Mission::items() const
 {
-    return m_items;
+    return m_items.values();
 }
 
 int Mission::sequence(MissionItem* item) const
 {
-    return m_items.indexOf(item);
+    return m_items.key(item);
 }
 
-MissionItem* Mission::requestItem(int seq, MissionItem::Command command)
+void Mission::setMissionItem(int seq, MissionItem* item)
 {
-    if (seq >= m_items.count())
+    if (m_items.contains(seq))
     {
-        this->setCount(seq + 1);
+        this->removeMissionItem(m_items[seq]);
     }
 
-    if (m_items.at(seq)->command() != command)
-    {
-        emit missionItemRemoved(m_items[seq]);
-        delete m_items[seq];
-        m_items[seq] = new MissionItem(this, command);
-        emit missionItemAdded(m_items.last());
-    }
-
-    return m_items.at(seq);
+    m_items[seq] = item;
+    emit missionItemAdded(item);
 }
 
-void Mission::setCount(int count) // TODO: setCount with nullptr mission items
+void Mission::setCount(int count)
 {
-    while (count > m_items.count())
+    MissionItemFactory factory(this);
+
+    for (int seq = 0; seq < count; ++seq)
     {
-        this->addNewMissionItem();
+        if (m_items.contains(seq)) continue;
+
+        m_items[seq] = factory.create(MissionItem::Waypoint);
+        emit missionItemAdded(m_items[seq]);
     }
 
-    while (count < m_items.count())
+    for (int seq: m_items.keys())
     {
-        this->removeMissionItem(m_items.last());
+        if (seq >= count) this->removeMissionItem(m_items[seq]);
     }
 }
 
 void Mission::addNewMissionItem()
 {
-    uint8_t count = m_items.count();
-    m_items.append(m_itemFactory.create(
-                       count == 0 ? MissionItem::Home : count == 1 ?
-                                                         MissionItem::Takeoff :
-                                                         MissionItem::Waypoint));
-    emit missionItemAdded(m_items.last());
+    MissionItemFactory factory(this);
+    uint8_t seq = m_items.empty() ? 0 : m_items.keys().last() + 1;
+    m_items[seq] = factory.create(seq == 0 ? MissionItem::Home : seq == 1 ?
+                                                 MissionItem::Takeoff :
+                                                 MissionItem::Waypoint);
+    emit missionItemAdded(m_items[seq]);
 }
 
 void Mission::removeMissionItem(MissionItem* item)
 {
-    m_items.removeOne(item);
+    m_items.take(m_items.key(item));
     emit missionItemRemoved(item);
     delete item;
 }
