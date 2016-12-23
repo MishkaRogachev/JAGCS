@@ -12,6 +12,12 @@ Mission::Mission(QObject* parent):
     QObject(parent)
 {}
 
+Mission::~Mission()
+{
+    while (!m_items.isEmpty())
+        this->removeMissionItem(m_items.first());
+}
+
 int Mission::count() const
 {
     return m_items.count();

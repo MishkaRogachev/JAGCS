@@ -22,6 +22,9 @@ MissionService::MissionService(QObject* parent):
 
 MissionService::~MissionService()
 {
+    while (!d->missions.isEmpty())
+        this->removeMission(d->missions.first());
+
     delete d;
 }
 

@@ -26,6 +26,9 @@ VehicleService::VehicleService(QObject* parent):
 
 VehicleService::~VehicleService()
 {
+    while (!d->vehicles.isEmpty())
+        this->removeVehicle(d->vehicles.keys().first());
+
     delete d;
 }
 

@@ -15,6 +15,7 @@ namespace domain
 
     public:
         explicit Mission(QObject* parent = nullptr);
+        ~Mission() override;
 
         int count() const;
 
