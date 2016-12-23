@@ -7,7 +7,7 @@ PositionMissionItem::PositionMissionItem(Mission* mission, Command command,
     MissionItem(mission, command),
     m_latitude(qQNaN()),
     m_longitude(qQNaN()),
-    m_altitude(qQNaN()),
+    m_altitude(0),
     m_relativeAltitude(relativeAltitude)
 {}
 

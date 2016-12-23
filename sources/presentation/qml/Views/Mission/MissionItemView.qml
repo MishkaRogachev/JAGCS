@@ -21,134 +21,167 @@ Frame {
         if (pickButton.visible) pickButton.pick();
     }
 
-    RowLayout {
-        anchors.left: parent.left
-        anchors.right: parent.right
+    ColumnLayout {
 
-        Label {
-            font.bold: true
-            text: qsTr("#") + item.sequence
-        }
+        RowLayout {
+            Label {
+                font.bold: true
+                text: qsTr("#") + item.sequence
+            }
 
-        ComboBox {
-            model: avalibleCommands
-            currentIndex: item.command
-            onCurrentIndexChanged: item.replaceWithCommand(currentIndex)
+            ComboBox {
+                model: avalibleCommands
+                currentIndex: item.command
+                onCurrentIndexChanged: item.replaceWithCommand(currentIndex)
+            }
+
+            MapPickButton {
+                id: pickButton
+                enabled: 'latitude' in item || 'longitude' in item
+                onPicked: {
+                    latitudeSpinBox.value = coordinate.latitude;
+                    longitudeSpinBox.value = coordinate.longitude;
+                }
+            }
+
+            Button {
+                iconSource: "qrc:/icons/up.svg"
+            }
+
+            Button {
+                iconSource: "qrc:/icons/down.svg"
+            }
+
+            Button {
+                iconSource: "qrc:/icons/remove.svg"
+                iconColor: palette.negativeColor
+                onClicked: root.remove()
+            }
         }
 
         GridLayout {
-            id: coordinateColumn
-            visible: 'latitude' in item
             columns: 2
 
             Label {
+                visible: 'latitude' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Lat.:")
             }
 
             CoordSpinBox {
+                visible: 'latitude' in item
                 Layout.fillWidth: true
                 id: latitudeSpinBox
-                value: item.latitude
+                value: visible ? item.latitude : 0
                 onValueChanged: if (!isNaN(value)) item.setLatitude(value)
             }
 
             Label {
+                visible: 'longitude' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Lon.:")
             }
 
             CoordSpinBox {
+                visible: 'longitude' in item
                 Layout.fillWidth: true
                 id: longitudeSpinBox
                 isLongitude: true
-                value: item.longitude
+                value: visible ? item.longitude : 0
                 onValueChanged: if (!isNaN(value)) item.setLongitude(value)
             }
-        }
-
-        MapPickButton {
-            id: pickButton
-            visible: coordinateColumn.visible
-            anchors.verticalCenter: parent.verticalCenter
-            onPicked: {
-                latitudeSpinBox.value = coordinate.latitude;
-                longitudeSpinBox.value = coordinate.longitude;
-            }
-        }
-
-        GridLayout {
-            visible: 'altitude' in item
-            columns: 2
 
             Label {
+                visible: 'altitude' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Alt.:")
             }
 
-            SpinBox {
-                Layout.fillWidth: true
-                from: -1000
-                to: 20000
-                value: item.altitude
-                onValueChanged: if (!isNaN(value)) item.setAltitude(value)
+            RowLayout {
+                SpinBox {
+                    visible: 'altitude' in item
+                    Layout.fillWidth: true
+                    from: -1000
+                    to: 20000
+                    value: visible ? item.altitude : 0
+                    onValueChanged: if (!isNaN(value)) item.setAltitude(value)
+                }
+
+                CheckBox {
+                    visible: 'relativeAltitude' in item
+                    Layout.fillWidth: true
+                    text: qsTr("Relative alt.")
+                    checked: 'relativeAltitude' in item ? item.relativeAltitude : false
+                    onCheckedChanged: item.setRelativeAltitude(checked)
+                }
             }
-
-            Item { width: 1; height: 1 }
-
-            CheckBox {
-                Layout.fillWidth: true
-                text: qsTr("Relative alt.")
-                checked: item.relativeAltitude
-                onCheckedChanged: item.setRelativeAltitude(checked)
-            }
-        }
-
-        GridLayout {
-            columns: 2
 
             Label {
+                visible: 'pitch' in item
                 Layout.fillWidth: true
-                visible: pitch.visible
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Pitch:")
             }
 
             SpinBox {
-                id: pitch
-                Layout.fillWidth: true
                 visible: 'pitch' in item
+                Layout.fillWidth: true
                 from: 0
                 to: 360
-                value: item.pitch
+                value: visible ? item.pitch : 0
                 onValueChanged: if (!isNaN(value)) item.setPitch(value)
             }
 
             Label {
+                visible: 'acceptanceRadius' in item
                 Layout.fillWidth: true
-                visible: yaw.visible
+                horizontalAlignment: Text.AlignRight
+                text: qsTr("Radius:")
+            }
+
+            SpinBox {
+                visible: 'acceptanceRadius' in item
+                Layout.fillWidth: true
+                from: 0
+                to: 360
+                value: visible ? item.acceptanceRadius : 0
+                onValueChanged: if (!isNaN(value)) item.setAcceptanceRadius(value)
+            }
+
+            Label {
+                visible: 'radius' in item
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                text: qsTr("Radius:")
+            }
+
+            SpinBox {
+                visible: 'radius' in item
+                Layout.fillWidth: true
+                from: 0
+                to: 360
+                value: visible ? item.radius : 0
+                onValueChanged: if (!isNaN(value)) item.setRadius(value)
+            }
+
+            Label {
+                visible: 'yaw' in item
+                Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Yaw:")
             }
 
             SpinBox {
-                id: yaw
-                Layout.fillWidth: true
                 visible: 'yaw' in item
+                Layout.fillWidth: true
                 from: 0
                 to: 360
-                value: item.yaw
+                value: visible ? item.yaw : 0
                 onValueChanged: if (!isNaN(value)) item.setYaw(value)
             }
-        }
-
-        Button {
-            iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.negativeColor
-            onClicked: root.remove()
         }
     }
 }

@@ -21,7 +21,7 @@ Pane {
         ColumnLayout {
             id: toolBar
             Layout.fillHeight: true
-            Layout.preferredWidth: 420
+            Layout.preferredWidth: 420 // TODO: dynamic width
 
             ComboBox {
                 model: vehicleNames

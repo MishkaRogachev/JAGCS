@@ -23,5 +23,7 @@
         <file>icons/flight.svg</file>
         <file>icons/download.svg</file>
         <file>icons/upload.svg</file>
+        <file>icons/up.svg</file>
+        <file>icons/down.svg</file>
     </qresource>
 </RCC>
