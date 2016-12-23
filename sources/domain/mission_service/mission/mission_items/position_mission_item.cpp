@@ -31,6 +31,20 @@ bool PositionMissionItem::isRelativeAltitude() const
     return m_relativeAltitude;
 }
 
+void PositionMissionItem::clone(MissionItem* mission)
+{
+    auto positionItem = qobject_cast<PositionMissionItem*>(mission);
+
+    if (positionItem)
+    {
+        this->setLatitude(positionItem->latitude());
+        this->setLongitude(positionItem->longitude());
+        this->setAltitude(positionItem->altitude());
+    }
+
+    MissionItem::clone(mission);
+}
+
 void PositionMissionItem::setLatitude(double latitude)
 {
     if (qFuzzyCompare(m_latitude, latitude)) return;

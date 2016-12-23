@@ -17,6 +17,8 @@ namespace domain
 
         float yaw() const;
 
+        virtual void clone(MissionItem* mission);
+
     public slots:
         void setYaw(float yaw);
 

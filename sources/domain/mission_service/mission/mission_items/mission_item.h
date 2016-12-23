@@ -39,6 +39,8 @@ namespace domain
 
         bool isCurrent() const;
 
+        virtual void clone(MissionItem* mission);
+
     public slots:
         void replaceWithCommand(Command command);
 

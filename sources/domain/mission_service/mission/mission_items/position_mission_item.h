@@ -27,6 +27,8 @@ namespace domain
         float altitude() const;
         bool isRelativeAltitude() const;
 
+        virtual void clone(MissionItem* mission);
+
     public slots:
         void setLatitude(double latitude);
         void setLongitude(double longitude);

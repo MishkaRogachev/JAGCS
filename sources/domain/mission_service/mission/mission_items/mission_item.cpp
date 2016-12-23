@@ -36,13 +36,19 @@ bool MissionItem::isCurrent() const
     return m_current;
 }
 
+void MissionItem::clone(MissionItem* mission)
+{
+    this->setCurrent(mission->isCurrent());
+}
+
 void MissionItem::replaceWithCommand(MissionItem::Command command)
 {
     if (m_command == command) return;
 
     MissionItemFactory factory(m_mission);
-    // TODO: copy avalible data
-    m_mission->setMissionItem(this->sequence(), factory.create(command));
+    MissionItem* newItem = factory.create(command);
+    newItem->clone(this);
+    m_mission->setMissionItem(this->sequence(), newItem);
 }
 
 void MissionItem::setCurrent(bool current)
