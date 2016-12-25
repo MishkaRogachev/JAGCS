@@ -271,7 +271,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
             TakeoffMissionItem* takeoffItem =
                     qobject_cast<TakeoffMissionItem*>(directionItem);
-            if (directionItem)
+            if (takeoffItem)
             {
                 takeoffItem->setPitch(msgItem.param1);
             }
