@@ -3,7 +3,7 @@ import QtQuick 2.6
 QtObject {
     id: palette
 
-    property int controlBaseSize: 42
+    property int controlBaseSize: 36
 
     property int fontSize: 10
     property int controlBaseWidth: controlBaseSize * 4
