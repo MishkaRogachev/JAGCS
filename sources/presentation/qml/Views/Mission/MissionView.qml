@@ -81,6 +81,8 @@ Pane {
                 contentWidth: column.width
                 contentHeight: column.height
 
+                ScrollBar.vertical: ScrollBar {}
+
                 ColumnLayout {
                     id: column
                     //width: flickable.width

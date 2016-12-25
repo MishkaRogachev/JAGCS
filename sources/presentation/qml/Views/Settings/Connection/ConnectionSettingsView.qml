@@ -63,7 +63,7 @@ ColumnLayout {
         contentHeight: column.height
         clip: true
 
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar {}
 
         Frame {
             visible: repeater.count == 0
