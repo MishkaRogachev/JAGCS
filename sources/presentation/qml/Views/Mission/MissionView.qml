@@ -85,7 +85,6 @@ Pane {
 
                 ColumnLayout {
                     id: column
-                    //width: flickable.width
 
                     Repeater {
                         id: repeater
@@ -96,8 +95,6 @@ Pane {
                         }
 
                         MissionItemView {
-                            //anchors.left: parent.left
-                            //anchors.right: parent.right
                             item: modelData
                             onRemove: removeMissionItem(modelData)
                         }

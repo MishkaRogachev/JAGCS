@@ -179,7 +179,7 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 
             TakeoffMissionItem* takeoffItem =
                     qobject_cast<TakeoffMissionItem*>(directionItem);
-            if (directionItem)
+            if (takeoffItem)
             {
                 msgItem.param1 = takeoffItem->pitch();
             }
