@@ -13,6 +13,9 @@ class MissionService::Impl
 public:
     QList<Mission*> missions;
     QMap<uint8_t, Mission*> vehicleMissions;
+
+    int currentCount = 0;
+    int totalCount = 0;
 };
 
 MissionService::MissionService(QObject* parent):
@@ -57,6 +60,16 @@ Mission* MissionService::requestMissionForVehicle(uint8_t vehicleId)
     return d->vehicleMissions[vehicleId];
 }
 
+int MissionService::currentCount() const
+{
+    return d->currentCount;
+}
+
+int MissionService::totalCount() const
+{
+    return d->totalCount;
+}
+
 void MissionService::addNewMission()
 {
     d->missions.append(new Mission(this));
@@ -92,4 +105,20 @@ void MissionService::setVehicleForMission(uint8_t vehicleId,
     {
         d->vehicleMissions.remove(vehicleId);
     }
+}
+
+void MissionService::setCurrentCount(int currentCount)
+{
+    if (d->currentCount == currentCount) return;
+
+    d->currentCount = currentCount;
+    emit currentCountChanged(currentCount);
+}
+
+void MissionService::setTotalCount(int totalCount)
+{
+    if (d->totalCount == totalCount) return;
+
+    d->totalCount = totalCount;
+    emit totalCountChanged(totalCount);
 }

@@ -23,6 +23,9 @@ namespace domain
 
         Mission* requestMissionForVehicle(uint8_t vehicleId);
 
+        int currentCount() const; // TODO: VehicleMission
+        int totalCount() const;
+
     public slots:
         void addNewMission();
         void removeMission(Mission* mission);
@@ -30,9 +33,15 @@ namespace domain
 
         void setVehicleForMission(uint8_t vehicleId, Mission* mission) const;
 
+        void setCurrentCount(int currentCount);
+        void setTotalCount(int totalCount);
+
     signals:
         void missionAdded(Mission* mission);
         void missionRemoved(Mission* mission);
+
+        void currentCountChanged(int currentCount);
+        void totalCountChanged(int totalCount);
 
         void commandDownloadMission(uint8_t vehicleId);
         void commandUploadMission(uint8_t vehicleId);

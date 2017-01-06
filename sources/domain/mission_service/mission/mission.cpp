@@ -9,8 +9,7 @@
 using namespace domain;
 
 Mission::Mission(QObject* parent):
-    QObject(parent),
-    m_totalCount(-1)
+    QObject(parent)
 {}
 
 Mission::~Mission()
@@ -22,11 +21,6 @@ Mission::~Mission()
 int Mission::count() const
 {
     return m_items.count();
-}
-
-int Mission::totalCount() const
-{
-    return m_totalCount;
 }
 
 MissionItem* Mission::item(int seq) const
@@ -53,14 +47,6 @@ void Mission::setMissionItem(int seq, MissionItem* item)
 
     m_items[seq] = item;
     emit missionItemAdded(item);
-}
-
-void Mission::setTotalCount(int totalCount)
-{
-    if (m_totalCount == totalCount) return;
-
-    m_totalCount = totalCount;
-    emit totalCountChanged(totalCount);
 }
 
 void Mission::addNewMissionItem()

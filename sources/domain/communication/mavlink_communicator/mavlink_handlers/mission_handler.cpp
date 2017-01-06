@@ -137,6 +137,10 @@ void MissionHandler::sendMissionCount(uint8_t id)
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
     count.count = m_missionService->requestMissionForVehicle(id)->count();
 
+    // TODO: VehicleMission
+    m_missionService->setCurrentCount(0);
+    m_missionService->setTotalCount(count.count);
+
     mavlink_msg_mission_count_encode(m_communicator->systemId(),
                                      m_communicator->componentId(),
                                      &message, &count);
@@ -208,6 +212,8 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
         msgItem.z = positionItem->altitude();
     }
 
+    m_missionService->setCurrentCount(m_missionService->currentCount() + 1);
+
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
                                     &message, &msgItem);
@@ -236,7 +242,8 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
 
-    mission->setTotalCount(missionCount.count);
+    m_missionService->setCurrentCount(0);
+    m_missionService->setTotalCount(missionCount.count);
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {
@@ -310,7 +317,9 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     item->setCurrent(msgItem.current);
     mission->setMissionItem(msgItem.seq, item);
 
-    if (mission->count() == mission->totalCount())
+    m_missionService->setCurrentCount(mission->count());
+
+    if (m_missionService->currentCount() == m_missionService->totalCount())
     {
         this->sendMissionAck(message.sysid);
     }
