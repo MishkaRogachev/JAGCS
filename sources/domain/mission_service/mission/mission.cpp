@@ -15,7 +15,7 @@ Mission::Mission(QObject* parent):
 Mission::~Mission()
 {
     while (!m_items.isEmpty())
-        this->removeMissionItem(m_items.first());
+        this->deleteMissionItem(m_items.first());
 }
 
 int Mission::count() const
@@ -38,11 +38,18 @@ int Mission::sequence(MissionItem* item) const
     return m_items.key(item);
 }
 
+MissionItem* Mission::take(int seq)
+{
+    MissionItem* item = m_items.take(seq);
+    emit missionItemRemoved(item);
+    return item;
+}
+
 void Mission::setMissionItem(int seq, MissionItem* item)
 {
     if (m_items.contains(seq))
     {
-        this->removeMissionItem(m_items[seq]);
+        this->deleteMissionItem(m_items[seq]);
     }
 
     m_items[seq] = item;
@@ -59,9 +66,18 @@ void Mission::addNewMissionItem()
     emit missionItemAdded(m_items[seq]);
 }
 
-void Mission::removeMissionItem(MissionItem* item)
+void Mission::deleteMissionItem(MissionItem* item) // FIXME: update sequence after remove
 {
-    m_items.take(m_items.key(item));
-    emit missionItemRemoved(item);
+    this->take(m_items.key(item));
     delete item;
+}
+
+void Mission::exchange(int first, int last)
+{
+    if (!m_items.contains(first) || !m_items.contains(last)) return;
+
+    MissionItem* firstItem = this->take(first);
+    MissionItem* lastItem = this->take(last);
+    this->setMissionItem(first, lastItem);
+    this->setMissionItem(last, firstItem);
 }

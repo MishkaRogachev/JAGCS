@@ -26,6 +26,16 @@ unsigned MissionItem::sequence() const
     return m_mission->sequence((MissionItem*)this);
 }
 
+bool MissionItem::isFirst() const
+{
+    return this->sequence() == 0;
+}
+
+bool MissionItem::isLast() const
+{
+    return int(this->sequence()) == m_mission->count() - 1;
+}
+
 MissionItem::Command MissionItem::command() const
 {
     return m_command;
@@ -49,6 +59,18 @@ void MissionItem::replaceWithCommand(MissionItem::Command command)
     MissionItem* newItem = factory.create(command);
     newItem->clone(this);
     m_mission->setMissionItem(this->sequence(), newItem);
+}
+
+void MissionItem::moveUp()
+{
+    unsigned index = this->sequence();
+    m_mission->exchange(index, index - 1);
+}
+
+void MissionItem::moveDown()
+{
+    unsigned index = this->sequence();
+    m_mission->exchange(index, index + 1);
 }
 
 void MissionItem::setCurrent(bool current)

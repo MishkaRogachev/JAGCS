@@ -46,10 +46,14 @@ Frame {
 
             Button {
                 iconSource: "qrc:/icons/up.svg"
+                enabled: !item.isFirst()
+                onClicked: item.moveUp()
             }
 
             Button {
                 iconSource: "qrc:/icons/down.svg"
+                enabled: !item.isLast()
+                onClicked: item.moveDown()
             }
 
             Button {

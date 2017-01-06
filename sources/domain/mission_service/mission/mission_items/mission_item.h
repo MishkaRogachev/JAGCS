@@ -33,8 +33,12 @@ namespace domain
 
         MissionItem(Mission* mission, Command command);
 
-        Mission* mission() const;
         unsigned sequence() const;
+        Q_INVOKABLE bool isFirst() const;
+        Q_INVOKABLE bool isLast() const;
+
+        Mission* mission() const;
+
         Command command() const;
 
         bool isCurrent() const;
@@ -43,6 +47,9 @@ namespace domain
 
     public slots:
         void replaceWithCommand(Command command);
+
+        void moveUp();
+        void moveDown();
 
         void setCurrent(bool current);
 

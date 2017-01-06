@@ -23,11 +23,15 @@ namespace domain
         QList<MissionItem*> items() const;
         int sequence(MissionItem* item) const;
 
+        MissionItem* take(int seq);
+
     public slots:
         void setMissionItem(int seq, MissionItem* item);
 
         void addNewMissionItem();
-        void removeMissionItem(MissionItem* item);
+        void deleteMissionItem(MissionItem* item);
+
+        void exchange(int first, int last);
 
     signals:
         void missionItemRemoved(MissionItem* item);
