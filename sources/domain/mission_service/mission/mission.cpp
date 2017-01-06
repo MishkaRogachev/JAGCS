@@ -9,7 +9,8 @@
 using namespace domain;
 
 Mission::Mission(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    m_totalCount(-1)
 {}
 
 Mission::~Mission()
@@ -21,6 +22,11 @@ Mission::~Mission()
 int Mission::count() const
 {
     return m_items.count();
+}
+
+int Mission::totalCount() const
+{
+    return m_totalCount;
 }
 
 MissionItem* Mission::item(int seq) const
@@ -49,22 +55,12 @@ void Mission::setMissionItem(int seq, MissionItem* item)
     emit missionItemAdded(item);
 }
 
-void Mission::setCount(int count)
+void Mission::setTotalCount(int totalCount)
 {
-    MissionItemFactory factory(this);
+    if (m_totalCount == totalCount) return;
 
-    for (int seq = 0; seq < count; ++seq)
-    {
-        if (m_items.contains(seq)) continue;
-
-        m_items[seq] = factory.create(MissionItem::Waypoint); // TODO: zero items form mission status
-        emit missionItemAdded(m_items[seq]);
-    }
-
-    for (int seq: m_items.keys())
-    {
-        if (seq >= count) this->removeMissionItem(m_items[seq]);
-    }
+    m_totalCount = totalCount;
+    emit totalCountChanged(totalCount);
 }
 
 void Mission::addNewMissionItem()

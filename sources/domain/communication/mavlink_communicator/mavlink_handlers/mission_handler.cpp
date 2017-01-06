@@ -236,7 +236,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
 
-    mission->setCount(missionCount.count);
+    mission->setTotalCount(missionCount.count);
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {
@@ -309,6 +309,11 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     item->setCurrent(msgItem.current);
     mission->setMissionItem(msgItem.seq, item);
+
+    if (mission->count() == mission->totalCount())
+    {
+        this->sendMissionAck(message.sysid);
+    }
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
@@ -326,6 +331,5 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     mavlink_mission_ack_t missionAck;
     mavlink_msg_mission_ack_decode(&message, &missionAck);
 
-    qDebug() << missionAck.type;
-    // TODO: handle missionAck
+    // TODO: handle missionAck.type
 }
