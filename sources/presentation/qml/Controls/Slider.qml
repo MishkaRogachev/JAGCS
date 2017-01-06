@@ -10,7 +10,7 @@ Slider {
 
     background: Rectangle {
         anchors.verticalCenter: parent.verticalCenter
-        color: palette.sunkenColor
+        color: control.enabled ? palette.sunkenColor : palette.disabledColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         width: control.availableWidth
         implicitWidth: palette.controlBaseWidth
