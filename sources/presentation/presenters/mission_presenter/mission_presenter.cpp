@@ -38,11 +38,15 @@ MissionPresenter::MissionPresenter(domain::MissionService* missionService,
     d->missionService = missionService;
     d->vehicleService = vehicleService;
 
-    // TODO: mission table presenter
     connect(missionService, &domain::MissionService::missionAdded,
             this, &MissionPresenter::updateMissions);
     connect(missionService, &domain::MissionService::missionRemoved,
             this, &MissionPresenter::updateMissions);
+
+    connect(missionService, &domain::MissionService::currentCountChanged,
+            this, &MissionPresenter::updateCurrentCount);
+    connect(missionService, &domain::MissionService::totalCountChanged,
+            this, &MissionPresenter::updateTotalCount);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);
@@ -93,6 +97,16 @@ void MissionPresenter::updateMissionItems()
     this->setViewProperty(PROPERTY(missionItems), QVariant::fromValue(list));
 }
 
+void MissionPresenter::updateCurrentCount(int currentCount)
+{
+    this->setViewProperty(PROPERTY(currentCount), currentCount);
+}
+
+void MissionPresenter::updateTotalCount(int totalCount)
+{
+    this->setViewProperty(PROPERTY(totalCount), totalCount);
+}
+
 void MissionPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
@@ -107,6 +121,9 @@ void MissionPresenter::connectView(QObject* view)
 
     this->updateMissions();
     this->updateVehicles();
+
+    this->updateCurrentCount(d->missionService->currentCount());
+    this->updateTotalCount(d->missionService->totalCount());
 }
 
 void MissionPresenter::onVehicleAdded(uint8_t id)

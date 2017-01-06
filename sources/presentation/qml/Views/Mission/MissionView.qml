@@ -9,6 +9,10 @@ Pane {
 
     property alias missionNames: missionBox.model
     property var vehicleNames: []
+
+    property int currentCount: 0
+    property int totalCount: 0
+
     property var missionItems: []
 
     signal missionSelected(string name)
@@ -24,10 +28,14 @@ Pane {
     MissionMapView {
         id: map
         objectName: "map"
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: pane.right
+        anchors.right: parent.right
     }
 
     Pane {
+        id: pane
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -71,6 +79,13 @@ Pane {
                     enabled: missionBox.currentIndex != -1
                     onTriggered: uploadMission(data)
                 }
+            }
+
+            ProgressBar {
+                Layout.fillWidth: true
+                from: 0
+                to: totalCount
+                value: currentCount
             }
 
             Flickable {
