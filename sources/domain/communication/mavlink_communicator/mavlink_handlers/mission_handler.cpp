@@ -90,7 +90,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
         this->processMissionRequest(message);
         break;
     case MAVLINK_MSG_ID_MISSION_ACK:
-        this->processMissionAct(message);
+        this->processMissionAck(message);
         break;
     default:
         break;
@@ -214,6 +214,21 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     m_communicator->sendMessageAllLinks(message);
 }
 
+void MissionHandler::sendMissionAck(uint8_t id)
+{
+    mavlink_message_t message;
+    mavlink_mission_ack_t ackItem;
+
+    ackItem.target_system = id;
+    ackItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    ackItem.type = MAV_MISSION_ACCEPTED;
+
+    mavlink_msg_mission_ack_encode(m_communicator->systemId(),
+                                   m_communicator->componentId(),
+                                   &message, &ackItem);
+    m_communicator->sendMessageAllLinks(message);
+}
+
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
     Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
@@ -304,12 +319,13 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
     this->sendMissionItem(message.sysid, request.seq);
 }
 
-void MissionHandler::processMissionAct(const mavlink_message_t& message)
+void MissionHandler::processMissionAck(const mavlink_message_t& message)
 {
     Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
 
     mavlink_mission_ack_t missionAck;
     mavlink_msg_mission_ack_decode(&message, &missionAck);
 
+    qDebug() << missionAck.type;
     // TODO: handle missionAck
 }

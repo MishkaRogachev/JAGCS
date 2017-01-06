@@ -57,7 +57,7 @@ void Mission::setCount(int count)
     {
         if (m_items.contains(seq)) continue;
 
-        m_items[seq] = factory.create(MissionItem::Waypoint);
+        m_items[seq] = factory.create(MissionItem::Waypoint); // TODO: zero items form mission status
         emit missionItemAdded(m_items[seq]);
     }
 
