@@ -22,7 +22,7 @@ void DirectionMissionItem::clone(MissionItem* mission)
         this->setYaw(directionItem->yaw());
     }
 
-    MissionItem::clone(mission);
+    PositionMissionItem::clone(mission);
 }
 
 void DirectionMissionItem::setYaw(float yaw)
