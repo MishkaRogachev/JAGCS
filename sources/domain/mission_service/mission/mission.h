@@ -32,8 +32,7 @@ namespace domain
         void exchange(int first, int last);
 
     signals:
-        void missionItemRemoved(MissionItem* item);
-        void missionItemAdded(MissionItem* item);
+        void missionItemsChanged(const QList<MissionItem*>& items);
 
     private:
         QList<MissionItem*> m_items;

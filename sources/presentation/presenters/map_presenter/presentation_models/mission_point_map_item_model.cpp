@@ -77,6 +77,27 @@ void MissionPointMapItemModel::removeMissionItem(domain::MissionItem* item)
     { ItemSequenceRole });
 }
 
+void MissionPointMapItemModel::setMissionItems(const QList<domain::MissionItem*>& items)
+{
+    if (!m_items.empty())
+    {
+        this->clearMissionItems();
+    }
+
+    for (domain::MissionItem* item: items)
+    {
+        this->addMissionItem(item);
+    }
+}
+
+void MissionPointMapItemModel::clearMissionItems()
+{
+    this->beginRemoveRows(QModelIndex(), 0, this->rowCount() - 1);
+    m_items.clear();
+
+    this->endRemoveRows();
+}
+
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;

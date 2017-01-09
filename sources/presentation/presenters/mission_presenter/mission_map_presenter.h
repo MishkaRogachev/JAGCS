@@ -27,6 +27,8 @@ namespace presentation
         void onMissionAdded(domain::Mission* mission);
         void onMissionRemoved(domain::Mission* mission);
 
+        void onMissionItemsChanged();
+
     private:
         class Impl;
         Impl* const d;

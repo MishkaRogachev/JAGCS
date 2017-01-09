@@ -56,13 +56,10 @@ void MissionLineMapItemModel::addMission(domain::Mission* mission)
 
     m_missions.append(mission);
 
-    connect(mission, &domain::Mission::missionItemAdded,
-            this, &MissionLineMapItemModel::onMissionItemAdded);
-    connect(mission, &domain::Mission::missionItemRemoved,
-            this, &MissionLineMapItemModel::onMissionItemRemoved);
+    connect(mission, &domain::Mission::missionItemsChanged,
+            this, &MissionLineMapItemModel::onMissionItemsChanged);
 
-    for (domain::MissionItem* item: mission->items())
-        this->onMissionItemAdded(item);
+    this->onMissionItemsChanged(mission->items());
 
     this->endInsertRows();
 }
@@ -92,28 +89,26 @@ QModelIndex MissionLineMapItemModel::missionIndex(domain::Mission* mission) cons
     return this->index(m_missions.indexOf(mission));
 }
 
-void MissionLineMapItemModel::onMissionItemAdded(domain::MissionItem* item)
+void MissionLineMapItemModel::onMissionItemsChanged(const QList<domain::MissionItem*>& items)
 {
-    domain::Mission* mission = item->mission();
+    domain::Mission* mission = qobject_cast<domain::Mission*>(this->sender());
+    if (!mission) return;
 
-    domain::PositionMissionItem* positionItem =
-            qobject_cast<domain::PositionMissionItem*>(item);
-    if (positionItem)
+    for (domain::MissionItem* item: items)
     {
-        connect(positionItem, &domain::PositionMissionItem::latitudeChanged,
-                this, [this, mission] { this->updateMissionPath(mission); });
-        connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
-                this, [this, mission] { this->updateMissionPath(mission); });
+        domain::PositionMissionItem* positionItem =
+                qobject_cast<domain::PositionMissionItem*>(item);
+        if (positionItem)
+        {
+            connect(positionItem, &domain::PositionMissionItem::latitudeChanged,
+                    positionItem, [this, mission]
+            { this->updateMissionPath(mission); }, Qt::UniqueConnection);
+            connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
+                    positionItem,  [this, mission]
+            { this->updateMissionPath(mission); }, Qt::UniqueConnection);
+        }
     }
-
     this->updateMissionPath(mission);
-}
-
-void MissionLineMapItemModel::onMissionItemRemoved(domain::MissionItem* item)
-{
-    disconnect(item, nullptr, this, nullptr);
-
-    this->updateMissionPath(qobject_cast<domain::Mission*>(this->sender()));
 }
 
 void MissionLineMapItemModel::updateMissionPath(domain::Mission* mission)

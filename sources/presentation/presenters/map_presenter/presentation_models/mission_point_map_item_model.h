@@ -29,6 +29,8 @@ namespace presentation
     public slots:
         void addMissionItem(domain::MissionItem* item);
         void removeMissionItem(domain::MissionItem* item);
+        void setMissionItems(const QList<domain::MissionItem*>& items);
+        void clearMissionItems();
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

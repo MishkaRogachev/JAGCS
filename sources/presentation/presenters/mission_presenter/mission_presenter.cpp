@@ -151,9 +151,7 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
 
     if (d->selectedMission)
     {
-        connect(d->selectedMission, &domain::Mission::missionItemAdded,
-                this, &MissionPresenter::updateMissionItems);
-        connect(d->selectedMission, &domain::Mission::missionItemRemoved,
+        connect(d->selectedMission, &domain::Mission::missionItemsChanged,
                 this, &MissionPresenter::updateMissionItems);
     }
     this->updateMissionItems();

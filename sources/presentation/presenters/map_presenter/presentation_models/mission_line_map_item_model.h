@@ -11,7 +11,7 @@ namespace domain
 
 namespace presentation
 {
-    class MissionLineMapItemModel: public QAbstractListModel
+    class MissionLineMapItemModel: public QAbstractListModel // TODO: refactor models
     {
         Q_OBJECT
 
@@ -36,8 +36,7 @@ namespace presentation
         QModelIndex missionIndex(domain::Mission* mission) const;
 
     private slots:
-        void onMissionItemAdded(domain::MissionItem* item);
-        void onMissionItemRemoved(domain::MissionItem* item);
+        void onMissionItemsChanged(const QList<domain::MissionItem*>& items);
 
         void updateMissionPath(domain::Mission* mission);
 

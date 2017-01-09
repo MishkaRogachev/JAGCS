@@ -15,7 +15,10 @@ Mission::Mission(QObject* parent):
 Mission::~Mission()
 {
     while (!m_items.isEmpty())
-        this->deleteMissionItem(m_items.first());
+    {
+        delete m_items.takeLast();
+    }
+    emit missionItemsChanged(m_items);
 }
 
 int Mission::count() const
@@ -41,7 +44,7 @@ int Mission::sequence(MissionItem* item) const
 MissionItem* Mission::take(int seq)
 {
     MissionItem* item = m_items.takeAt(seq);
-    emit missionItemRemoved(item);
+    emit missionItemsChanged(m_items);
     return item;
 }
 
@@ -50,15 +53,14 @@ void Mission::setCount(int count)
     while (m_items.count() < count)
     {
         m_items.append(nullptr);
-        emit missionItemAdded(nullptr);
     }
 
     while (m_items.count() > count)
     {
-        MissionItem* item = m_items.takeLast();
-        emit missionItemRemoved(item);
-        delete item;
+        delete m_items.takeLast();
     }
+
+    emit missionItemsChanged(m_items);
 }
 
 void Mission::setMissionItem(int seq, MissionItem* item)
@@ -68,11 +70,10 @@ void Mission::setMissionItem(int seq, MissionItem* item)
         this->setCount(seq + 1);
     }
 
-    emit missionItemRemoved(m_items[seq]);
     if (m_items[seq]) delete m_items[seq];
 
     m_items[seq] = item;
-    emit missionItemAdded(item);
+    emit missionItemsChanged(m_items);
 }
 
 void Mission::addNewMissionItem()
@@ -82,7 +83,7 @@ void Mission::addNewMissionItem()
     m_items.append(factory.create(seq == 0 ? MissionItem::Home : seq == 1 ?
                                                  MissionItem::Takeoff :
                                                  MissionItem::Waypoint));
-    emit missionItemAdded(m_items[seq]);
+    emit missionItemsChanged(m_items);
 }
 
 void Mission::deleteMissionItem(MissionItem* item) // FIXME: update sequence after remove
@@ -93,17 +94,9 @@ void Mission::deleteMissionItem(MissionItem* item) // FIXME: update sequence aft
 
 void Mission::exchange(int first, int last)
 {
-    MissionItem* firstItem = m_items[first];
-    m_items[first] = nullptr;
-    emit missionItemRemoved(firstItem);
+    MissionItem* item = m_items[first];
+    m_items[first] = m_items[last];
+    m_items[last] = item;
 
-    MissionItem* lastItem = m_items[last];
-    m_items[last] = nullptr;
-    emit missionItemRemoved(lastItem);
-
-    m_items[first] = lastItem;
-    emit missionItemAdded(lastItem);
-
-    m_items[last] = firstItem;
-    emit missionItemAdded(firstItem);
+    emit missionItemsChanged(m_items);
 }

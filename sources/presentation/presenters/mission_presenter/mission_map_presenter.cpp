@@ -57,13 +57,10 @@ void MissionMapPresenter::onMissionAdded(domain::Mission* mission)
 {
     d->lineModel.addMission(mission);
 
-    connect(mission, &domain::Mission::missionItemAdded,
-            &d->pointModel, &MissionPointMapItemModel::addMissionItem);
-    connect(mission, &domain::Mission::missionItemRemoved,
-            &d->pointModel, &MissionPointMapItemModel::removeMissionItem);
+    connect(mission, &domain::Mission::missionItemsChanged,
+            this, &MissionMapPresenter::onMissionItemsChanged);
 
-    for (domain::MissionItem* item: mission->items())
-        d->pointModel.addMissionItem(item);
+    this->onMissionItemsChanged();
 }
 
 void MissionMapPresenter::onMissionRemoved(domain::Mission* mission)
@@ -72,6 +69,17 @@ void MissionMapPresenter::onMissionRemoved(domain::Mission* mission)
 
     disconnect(mission, 0, this, 0);
 
-    for (domain::MissionItem* item: mission->items())
-        d->pointModel.removeMissionItem(item);
+    this->onMissionItemsChanged();
+}
+
+void MissionMapPresenter::onMissionItemsChanged()
+{
+    QList<domain::MissionItem*> items;
+
+    for (domain::Mission* mission: d->missionService->missions())
+    {
+        items.append(mission->items());
+    }
+
+    d->pointModel.setMissionItems(items);
 }
