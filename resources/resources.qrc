@@ -25,5 +25,7 @@
         <file>icons/upload.svg</file>
         <file>icons/up.svg</file>
         <file>icons/down.svg</file>
+        <file>icons/landing.svg</file>
+        <file>icons/takeoff.svg</file>
     </qresource>
 </RCC>
