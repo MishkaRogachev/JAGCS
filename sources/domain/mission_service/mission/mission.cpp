@@ -70,10 +70,12 @@ void Mission::setMissionItem(int seq, MissionItem* item)
         this->setCount(seq + 1);
     }
 
-    if (m_items[seq]) delete m_items[seq];
+    MissionItem* oldItem = m_items[seq];
 
     m_items[seq] = item;
     emit missionItemsChanged(m_items);
+
+    if (oldItem) delete oldItem;
 }
 
 void Mission::addNewMissionItem()
