@@ -7,7 +7,6 @@ namespace domain
 {
     class Mission;
 
-    // TODO: Mission uuid separated from vehicle Id
     class MissionService: public QObject
     {
         Q_OBJECT

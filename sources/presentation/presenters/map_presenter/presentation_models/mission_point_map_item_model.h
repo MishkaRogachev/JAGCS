@@ -18,7 +18,8 @@ namespace presentation
         enum MissionPointMapItemRoles
         {
             ItemCoordinateRole = Qt::UserRole + 1,
-            ItemSequenceRole
+            ItemSequenceRole,
+            ItemIconRole
         };
 
         MissionPointMapItemModel(QObject* parent = nullptr);

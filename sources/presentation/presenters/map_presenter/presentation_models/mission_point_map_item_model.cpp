@@ -39,6 +39,14 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
+    case ItemIconRole:
+        if (item->command() == domain::MissionItem::Home)
+            return "qrc:/icons/home.svg";
+        if (item->command() == domain::MissionItem::Takeoff)
+            return "qrc:/icons/takeoff.svg";
+        if (item->command() == domain::MissionItem::Landing)
+            return "qrc:/icons/landing.svg";
+        return QString("");
     default:
         return QVariant();
     }
@@ -104,6 +112,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
 
     roles[ItemCoordinateRole] = "itemCoordinate";
     roles[ItemSequenceRole] = "itemSeq";
+    roles[ItemIconRole] = "itemIcon";
 
     return roles;
 }
@@ -118,7 +127,9 @@ void MissionPointMapItemModel::onCommandChanged()
 {
     QModelIndex index = this->missionItemIndex(
                             qobject_cast<domain::MissionItem*>(this->sender()));
-    if (index.isValid()) emit dataChanged(index, index, { ItemCoordinateRole });
+    if (index.isValid()) emit dataChanged(index, index,
+    { ItemCoordinateRole, // some commands not display on map
+      ItemSequenceRole });
 }
 
 void MissionPointMapItemModel::onCoordinateChanged()

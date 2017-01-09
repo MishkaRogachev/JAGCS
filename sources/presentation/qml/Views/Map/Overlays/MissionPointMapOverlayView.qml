@@ -17,7 +17,15 @@ MapItemView {
             radius: width / 2
             color: palette.missionColor
 
+            ColoredIcon {
+                id: icon
+                anchors.centerIn: parent
+                source: itemIcon
+                visible: itemIcon.length > 0
+            }
+
             Label {
+                visible: !icon.visible
                 text: itemSeq
                 anchors.centerIn: parent
                 font.bold: true
