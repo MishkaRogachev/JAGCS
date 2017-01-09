@@ -244,6 +244,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
     m_missionService->setCurrentCount(0);
     m_missionService->setTotalCount(missionCount.count);
+    mission->setCount(missionCount.count);
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {

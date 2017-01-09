@@ -28,29 +28,48 @@ MissionItem* Mission::item(int seq) const
     return m_items.value(seq, nullptr);
 }
 
-QList<MissionItem*> Mission::items() const
+const QList<MissionItem*>& Mission::items() const
 {
-    return m_items.values();
+    return m_items;
 }
 
 int Mission::sequence(MissionItem* item) const
 {
-    return m_items.key(item);
+    return m_items.indexOf(item);
 }
 
 MissionItem* Mission::take(int seq)
 {
-    MissionItem* item = m_items.take(seq);
+    MissionItem* item = m_items.takeAt(seq);
     emit missionItemRemoved(item);
     return item;
 }
 
+void Mission::setCount(int count)
+{
+    while (m_items.count() < count)
+    {
+        m_items.append(nullptr);
+        emit missionItemAdded(nullptr);
+    }
+
+    while (m_items.count() > count)
+    {
+        MissionItem* item = m_items.takeLast();
+        emit missionItemRemoved(item);
+        delete item;
+    }
+}
+
 void Mission::setMissionItem(int seq, MissionItem* item)
 {
-    if (m_items.contains(seq))
+    if (seq >= m_items.count())
     {
-        this->deleteMissionItem(m_items[seq]);
+        this->setCount(seq + 1);
     }
+
+    emit missionItemRemoved(m_items[seq]);
+    if (m_items[seq]) delete m_items[seq];
 
     m_items[seq] = item;
     emit missionItemAdded(item);
@@ -59,25 +78,32 @@ void Mission::setMissionItem(int seq, MissionItem* item)
 void Mission::addNewMissionItem()
 {
     MissionItemFactory factory(this);
-    uint8_t seq = m_items.empty() ? 0 : m_items.keys().last() + 1;
-    m_items[seq] = factory.create(seq == 0 ? MissionItem::Home : seq == 1 ?
+    uint8_t seq = m_items.count();
+    m_items.append(factory.create(seq == 0 ? MissionItem::Home : seq == 1 ?
                                                  MissionItem::Takeoff :
-                                                 MissionItem::Waypoint);
+                                                 MissionItem::Waypoint));
     emit missionItemAdded(m_items[seq]);
 }
 
 void Mission::deleteMissionItem(MissionItem* item) // FIXME: update sequence after remove
 {
-    this->take(m_items.key(item));
+    this->take(m_items.indexOf(item));
     delete item;
 }
 
 void Mission::exchange(int first, int last)
 {
-    if (!m_items.contains(first) || !m_items.contains(last)) return;
+    MissionItem* firstItem = m_items[first];
+    m_items[first] = nullptr;
+    emit missionItemRemoved(firstItem);
 
-    MissionItem* firstItem = this->take(first);
-    MissionItem* lastItem = this->take(last);
-    this->setMissionItem(first, lastItem);
-    this->setMissionItem(last, firstItem);
+    MissionItem* lastItem = m_items[last];
+    m_items[last] = nullptr;
+    emit missionItemRemoved(lastItem);
+
+    m_items[first] = lastItem;
+    emit missionItemAdded(lastItem);
+
+    m_items[last] = firstItem;
+    emit missionItemAdded(firstItem);
 }

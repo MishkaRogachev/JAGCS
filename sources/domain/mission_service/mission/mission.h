@@ -1,9 +1,6 @@
 #ifndef MISSION_H
 #define MISSION_H
 
-// Qt
-#include <QMap>
-
 // Internal
 #include "mission_item.h"
 
@@ -20,12 +17,13 @@ namespace domain
         int count() const;
 
         MissionItem* item(int seq) const;
-        QList<MissionItem*> items() const;
+        const QList<MissionItem*>& items() const;
         int sequence(MissionItem* item) const;
 
         MissionItem* take(int seq);
 
     public slots:
+        void setCount(int count);
         void setMissionItem(int seq, MissionItem* item);
 
         void addNewMissionItem();
@@ -38,7 +36,7 @@ namespace domain
         void missionItemAdded(MissionItem* item);
 
     private:
-        QMap<int, MissionItem*> m_items;
+        QList<MissionItem*> m_items;
     };
 }
 
