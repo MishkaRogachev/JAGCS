@@ -31,7 +31,7 @@ DomainEntry::DomainEntry():
     qRegisterMetaType<Endpoint>("Endpoint");
     qRegisterMetaType<EndpointList>("EndpointList");
 
-    // FIXME: temporary mission creation by vehicle id
+    // TODO: temporary mission creation by vehicle id
     QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
                      [this](uint8_t id) { d->missionService.missionForVehicle(id); });
 

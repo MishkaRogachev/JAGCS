@@ -26,7 +26,7 @@ ConnectionSettingsPresenter::ConnectionSettingsPresenter(
     BasePresenter(parent),
     d(new Impl())
 {
-    // FIXME: typecasting
+    // TODO: typecasting, untill another Communicator apears
     d->communicator = qobject_cast<MavLinkCommunicator*>(communicator);
     Q_ASSERT(d->communicator);
 

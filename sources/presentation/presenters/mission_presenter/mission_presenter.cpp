@@ -176,7 +176,7 @@ void MissionPresenter::onAddMissionItem()
 
 void MissionPresenter::onRemoveMissionItem(QObject* item)
 {
-    if (d->selectedMission) d->selectedMission->deleteMissionItem(
+    if (d->selectedMission) d->selectedMission->removeMissionItem(
                 qobject_cast<domain::MissionItem*>(item));
 }
 

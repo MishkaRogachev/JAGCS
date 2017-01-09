@@ -86,7 +86,7 @@ void Mission::addNewMissionItem()
     emit missionItemsChanged(m_items);
 }
 
-void Mission::deleteMissionItem(MissionItem* item) // FIXME: update sequence after remove
+void Mission::removeMissionItem(MissionItem* item)
 {
     this->take(m_items.indexOf(item));
     delete item;

@@ -27,7 +27,7 @@ namespace domain
         void setMissionItem(int seq, MissionItem* item);
 
         void addNewMissionItem();
-        void deleteMissionItem(MissionItem* item);
+        void removeMissionItem(MissionItem* item);
 
         void exchange(int first, int last);
 
