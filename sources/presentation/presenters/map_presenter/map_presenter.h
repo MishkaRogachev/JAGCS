@@ -11,6 +11,10 @@ namespace presentation
 
     public:
         explicit MapPresenter(QObject* parent = nullptr);
+        ~MapPresenter() override;
+
+    public slots:
+        void updateMapViewport();
 
     protected:
         void connectView(QObject* view) override;

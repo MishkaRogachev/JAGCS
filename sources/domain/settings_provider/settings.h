@@ -29,6 +29,14 @@ namespace domain
         const char* const port = "port";
     }
 
+    namespace map_settings
+    {
+        const char* const group = "Map";
+        const char* const zoomLevel = "zoomLevel";
+        const char* const centerLatitude = "centerLatitude";
+        const char* const centerLongitude = "centerLongitude";
+    }
+
     namespace video_settings
     {
         const char* const group = "Video";

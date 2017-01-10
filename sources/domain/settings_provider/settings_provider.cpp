@@ -2,6 +2,7 @@
 
 // Qt
 #include <QSettings>
+#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -31,6 +32,12 @@ public:
         settings.setValue(connection_settings::componentId, 0);
         settings.setValue(connection_settings::baudRate, 57600);
         settings.setValue(connection_settings::port, 14550);
+        settings.endGroup();
+
+        settings.beginGroup(map_settings::group);
+        settings.setValue(map_settings::zoomLevel, 16.0);
+        settings.setValue(map_settings::centerLatitude, 55.969410);
+        settings.setValue(map_settings::centerLongitude, 37.110747);
         settings.endGroup();
     }
 };
