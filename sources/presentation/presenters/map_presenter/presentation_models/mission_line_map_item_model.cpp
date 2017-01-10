@@ -96,15 +96,17 @@ void MissionLineMapItemModel::onMissionItemsChanged(const QList<domain::MissionI
 
     for (domain::MissionItem* item: items)
     {
+        if (!item) continue;
+
         domain::PositionMissionItem* positionItem =
                 qobject_cast<domain::PositionMissionItem*>(item);
         if (positionItem)
         {
             connect(positionItem, &domain::PositionMissionItem::latitudeChanged,
-                    positionItem, [this, mission]
+                    this, [this, mission]
             { this->updateMissionPath(mission); }, Qt::UniqueConnection);
             connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
-                    positionItem,  [this, mission]
+                    this,  [this, mission]
             { this->updateMissionPath(mission); }, Qt::UniqueConnection);
         }
     }

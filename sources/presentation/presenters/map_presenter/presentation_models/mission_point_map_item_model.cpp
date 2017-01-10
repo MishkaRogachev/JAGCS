@@ -94,7 +94,7 @@ void MissionPointMapItemModel::setMissionItems(const QList<domain::MissionItem*>
 
     for (domain::MissionItem* item: items)
     {
-        this->addMissionItem(item);
+        if (item) this->addMissionItem(item);
     }
 }
 
