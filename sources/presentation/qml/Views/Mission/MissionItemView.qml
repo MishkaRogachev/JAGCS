@@ -78,7 +78,7 @@ Frame {
                 Layout.fillWidth: true
                 id: latitudeSpinBox
                 value: visible ? item.latitude : 0
-                onValueChanged: if (!isNaN(value)) item.setLatitude(value)
+                onValueChanged: if (!isNaN(value) && visible) item.setLatitude(value)
             }
 
             Label {
@@ -94,7 +94,7 @@ Frame {
                 id: longitudeSpinBox
                 isLongitude: true
                 value: visible ? item.longitude : 0
-                onValueChanged: if (!isNaN(value)) item.setLongitude(value)
+                onValueChanged: if (!isNaN(value) && visible) item.setLongitude(value)
             }
 
             Label {
@@ -111,7 +111,7 @@ Frame {
                     from: -1000
                     to: 20000
                     value: visible ? item.altitude : 0
-                    onValueChanged: if (!isNaN(value)) item.setAltitude(value)
+                    onValueChanged: if (!isNaN(value) && visible) item.setAltitude(value)
                 }
 
                 CheckBox {
@@ -119,7 +119,7 @@ Frame {
                     Layout.fillWidth: true
                     text: qsTr("Relative alt.")
                     checked: 'relativeAltitude' in item ? item.relativeAltitude : false
-                    onCheckedChanged: item.setRelativeAltitude(checked)
+                    onCheckedChanged: if (visible) item.setRelativeAltitude(checked)
                 }
             }
 
@@ -136,7 +136,7 @@ Frame {
                 from: 0
                 to: 360
                 value: visible ? item.pitch : 0
-                onValueChanged: if (!isNaN(value)) item.setPitch(value)
+                onValueChanged: if (!isNaN(value) && visible) item.setPitch(value)
             }
 
             Label {
@@ -152,7 +152,7 @@ Frame {
                 from: 0
                 to: 360
                 value: visible ? item.acceptanceRadius : 0
-                onValueChanged: if (!isNaN(value)) item.setAcceptanceRadius(value)
+                onValueChanged: if (!isNaN(value) && visible) item.setAcceptanceRadius(value)
             }
 
             Label {
@@ -168,7 +168,7 @@ Frame {
                 from: 0
                 to: 360
                 value: visible ? item.radius : 0
-                onValueChanged: if (!isNaN(value)) item.setRadius(value)
+                onValueChanged: if (!isNaN(value) && visible) item.setRadius(value)
             }
 
             Label {
@@ -184,7 +184,7 @@ Frame {
                 from: 0
                 to: 360
                 value: visible ? item.yaw : 0
-                onValueChanged: if (!isNaN(value)) item.setYaw(value)
+                onValueChanged: if (!isNaN(value) && visible) item.setYaw(value)
             }
         }
     }
