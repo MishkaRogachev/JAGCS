@@ -53,7 +53,7 @@ void MissionItem::clone(MissionItem* mission)
 
 void MissionItem::replaceWithCommand(MissionItem::Command command)
 {
-    if (m_command == command) return;
+    if (m_command == command || command == UnknownCommand) return;
 
     MissionItemFactory factory(m_mission);
     MissionItem* newItem = factory.create(command);
