@@ -36,8 +36,8 @@ public:
 
         settings.beginGroup(map_settings::group);
         settings.setValue(map_settings::zoomLevel, 16.0);
-        settings.setValue(map_settings::centerLatitude, 55.969410);
-        settings.setValue(map_settings::centerLongitude, 37.110747);
+        settings.setValue(map_settings::centerLatitude, 55.968954);
+        settings.setValue(map_settings::centerLongitude, 37.110155);
         settings.endGroup();
     }
 };
