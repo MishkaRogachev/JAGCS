@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("JAGCS");
+    app.setOrganizationName("JAGCS");
 
     domain::DomainEntry entry;
     presentation::MainPresenter presenter(&entry);
