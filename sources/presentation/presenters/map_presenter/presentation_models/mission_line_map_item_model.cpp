@@ -57,11 +57,11 @@ void MissionLineMapItemModel::addMission(domain::Mission* mission)
     m_missions.append(mission);
 
     connect(mission, &domain::Mission::missionItemsChanged,
-            this, &MissionLineMapItemModel::onMissionItemsChanged);
-
-    this->onMissionItemsChanged(mission->items());
+            this, [this, mission]() { this->updateMissionItems(mission); });
 
     this->endInsertRows();
+
+    this->updateMissionItems(mission);
 }
 
 void MissionLineMapItemModel::removeMission(domain::Mission* mission)
@@ -89,12 +89,9 @@ QModelIndex MissionLineMapItemModel::missionIndex(domain::Mission* mission) cons
     return this->index(m_missions.indexOf(mission));
 }
 
-void MissionLineMapItemModel::onMissionItemsChanged(const QList<domain::MissionItem*>& items)
+void MissionLineMapItemModel::updateMissionItems(domain::Mission* mission)
 {
-    domain::Mission* mission = qobject_cast<domain::Mission*>(this->sender());
-    if (!mission) return;
-
-    for (domain::MissionItem* item: items)
+    for (domain::MissionItem* item: mission->items())
     {
         if (!item) continue;
 
