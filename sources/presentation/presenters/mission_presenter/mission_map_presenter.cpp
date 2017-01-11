@@ -27,8 +27,9 @@ public:
 };
 
 MissionMapPresenter::MissionMapPresenter(domain::MissionService* missionService,
+                                         domain::VehicleService* vehicleService,
                                          QObject* parent):
-    MapPresenter(parent),
+    FlightMapPresenter(vehicleService, parent),
     d(new Impl(missionService))
 {
     connect(missionService, &domain::MissionService::missionAdded,
@@ -47,7 +48,7 @@ MissionMapPresenter::~MissionMapPresenter()
 
 void MissionMapPresenter::connectView(QObject* view)
 {
-    MapPresenter::connectView(view);
+    FlightMapPresenter::connectView(view);
 
     this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));

@@ -56,7 +56,7 @@ MissionPresenter::MissionPresenter(domain::MissionService* missionService,
     for (uint8_t id: vehicleService->vehileIds())
         this->onVehicleAdded(id);
 
-    d->map = new MissionMapPresenter(missionService, this);
+    d->map = new MissionMapPresenter(missionService, vehicleService, this);
 }
 
 MissionPresenter::~MissionPresenter()

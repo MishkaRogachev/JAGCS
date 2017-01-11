@@ -8,6 +8,7 @@ MapView {
 
     property var lineModel
     property var pointModel
+    property var vehicleModel
 
     MissionLineMapOverlayView {
         model: lineModel
@@ -15,5 +16,9 @@ MapView {
 
     MissionPointMapOverlayView {
         model: pointModel
+    }
+
+    VehicleMapOverlayView {
+        model: vehicleModel
     }
 }
