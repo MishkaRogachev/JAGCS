@@ -4,11 +4,11 @@
 #define PROPERTY(x) # x
 #define NAME(x) QString(PROPERTY(x))
 
-#include <QObject>
+#include <QPointer>
 
 namespace presentation
 {
-    class BasePresenter : public QObject
+    class BasePresenter: public QObject
     {
         Q_OBJECT
 
@@ -31,7 +31,7 @@ namespace presentation
         void invokeViewMethod(const char* name, const QVariant& value);
 
     protected:
-        QObject* m_view;
+        QPointer<QObject> m_view;
 
     private:
         Q_DISABLE_COPY(BasePresenter)
