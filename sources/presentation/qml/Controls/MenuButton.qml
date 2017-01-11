@@ -6,7 +6,7 @@ import "./"
 Button {
     id: root
 
-    property alias model: repeater.model
+    property var model
 
     signal triggered(var data)
     onClicked: menu.open()
@@ -15,8 +15,8 @@ Button {
         id: menu
         y: root.height
 
-        Repeater {
-            id: repeater
+        Instantiator {
+            model: root.model
 
             MenuItem {
                 text: modelData
@@ -26,6 +26,8 @@ Button {
                     menu.close();
                 }
             }
+            onObjectAdded: menu.insertItem(index, object)
+            onObjectRemoved: menu.removeItem(object)
         }
     }
 }
