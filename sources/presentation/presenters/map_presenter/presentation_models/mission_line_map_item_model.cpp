@@ -100,11 +100,11 @@ void MissionLineMapItemModel::updateMissionItems(domain::Mission* mission)
         if (positionItem)
         {
             connect(positionItem, &domain::PositionMissionItem::latitudeChanged,
-                    this, [this, mission]
-            { this->updateMissionPath(mission); }, Qt::UniqueConnection);
+                    this, &MissionLineMapItemModel::onMissionItemPositionChanged,
+                    Qt::UniqueConnection);
             connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
-                    this,  [this, mission]
-            { this->updateMissionPath(mission); }, Qt::UniqueConnection);
+                    this, &MissionLineMapItemModel::onMissionItemPositionChanged,
+                    Qt::UniqueConnection);
         }
     }
     this->updateMissionPath(mission);
@@ -114,4 +114,10 @@ void MissionLineMapItemModel::updateMissionPath(domain::Mission* mission)
 {
     QModelIndex index = this->missionIndex(mission);
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
+}
+
+void MissionLineMapItemModel::onMissionItemPositionChanged()
+{
+    this->updateMissionPath(
+                qobject_cast<domain::MissionItem*>(this->sender())->mission());
 }

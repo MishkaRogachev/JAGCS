@@ -37,6 +37,7 @@ namespace presentation
     private slots:
         void updateMissionItems(domain::Mission* mission);
         void updateMissionPath(domain::Mission* mission);
+        void onMissionItemPositionChanged();
 
     private:
         QList<domain::Mission*> m_missions;
