@@ -15,18 +15,24 @@ MapItemView {
             width: 32 // TODO: map point size
             height: width
             radius: width / 2
-            color: palette.missionColor
+            color: palette.textColor
+            border.color: palette.missionColor
+            border.width: 4
 
             ColoredIcon {
                 id: icon
                 anchors.centerIn: parent
                 source: itemIcon
+                color: palette.backgroundColor
                 visible: itemIcon.length > 0
+                sourceSize.width: 20
+                sourceSize.height: 20
             }
 
             Label {
                 visible: !icon.visible
                 text: itemSeq
+                color: palette.backgroundColor
                 anchors.centerIn: parent
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
