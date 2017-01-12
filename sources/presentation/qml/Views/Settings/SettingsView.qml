@@ -18,8 +18,8 @@ Pane {
             ButtonBar {
                 id: bar
                 anchors.top: parent.top
-                model: [ qsTr("User interface"), qsTr("Connection"),
-                    qsTr("Video"), qsTr("Network settings") ]
+                model: [ qsTr("GUI"), qsTr("Connection"),
+                    qsTr("Video"), qsTr("Networking") ]
             }
 
             Item {
@@ -37,7 +37,7 @@ Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
-            GuiSettingsView { objectName: "ui" }
+            GuiSettingsView { objectName: "gui" }
             ConnectionSettingsView { objectName: "connections" }
             VideoSettingsView { objectName: "video" }
             NetworkSettingsView { objectName: "network" }

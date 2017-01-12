@@ -5,6 +5,7 @@
 
 #include "settings_provider.h"
 
+#include "gui_settings_presenter.h"
 #include "connection_settings_presenter.h"
 #include "video_settings_presenter.h"
 #include "network_settings_presenter.h"
@@ -14,6 +15,7 @@ using namespace presentation;
 class SettingsPresenter::Impl
 {
 public:
+    GuiSettingsPresenter* gui;
     ConnectionSettingsPresenter* connections;
     VideoSettingsPresenter* video;
     NetworkSettingsPresenter* network;
@@ -23,6 +25,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* parent
     BasePresenter(parent),
     d(new Impl())
 {
+    d->gui = new GuiSettingsPresenter(this);
     d->connections = new ConnectionSettingsPresenter(entry->communicator(),
                                                      this);
     d->video = new VideoSettingsPresenter(this);
@@ -47,6 +50,7 @@ void SettingsPresenter::hide()
 
 void SettingsPresenter::connectView(QObject* view)
 {
+    d->gui->setView(view->findChild<QObject*>(NAME(gui)));
     d->connections->setView(view->findChild<QObject*>(NAME(connections)));
     d->video->setView(view->findChild<QObject*>(NAME(video)));
     d->network->setView(view->findChild<QObject*>(NAME(network)));

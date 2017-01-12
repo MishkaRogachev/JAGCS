@@ -7,6 +7,10 @@ import "qrc:/Controls"
 Frame {
     id: root
 
+    property alias uiSize: uiSlider.value
+
+    signal setUiSize(int uiSize)
+
     ColumnLayout{
         anchors.fill: parent
 
@@ -15,24 +19,21 @@ Frame {
 
             Label {
                 Layout.fillWidth: true
-                text: qsTr("Toolbar width")
+                text: qsTr("UI size")
             }
 
             Slider {
-                id: sidebarWidthSlider
+                id: uiSlider
                 Layout.fillWidth: true
-                value: 120//settingsProvider.value("Gui/toolbarWidth");
-                from: 80
-                to: 640
-                onPressedChanged: {
-                    //if (!pressed) settingsProvider.setValue("Gui/toolbarWidth", value);
-                }
+                from: 24
+                to: 64
+                onPressedChanged: if (!pressed) setUiSize(value);
             }
 
             Label {
                 Layout.preferredWidth: 86
                 horizontalAlignment: Text.AlignHCenter
-                text: sidebarWidthSlider.value.toFixed(0)
+                text: uiSlider.value.toFixed(0)
             }
         }
 
