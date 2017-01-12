@@ -12,7 +12,7 @@ MapItemView {
         z: 1
 
         sourceItem: Rectangle {
-            width: 32 // TODO: map point size
+            width: palette.controlBaseSize
             height: width
             radius: width / 2
             color: palette.textColor
@@ -25,8 +25,8 @@ MapItemView {
                 source: itemIcon
                 color: palette.backgroundColor
                 visible: itemIcon.length > 0
-                sourceSize.width: 20
-                sourceSize.height: 20
+                sourceSize.width: parent.width * 0.6
+                sourceSize.height: parent.height * 0.6
             }
 
             Label {
