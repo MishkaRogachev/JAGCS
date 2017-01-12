@@ -6,6 +6,8 @@
 
 // Internal
 #include "domain_entry.h"
+#include "settings_provider.h"
+#include "settings.h"
 
 #include "status_presenter.h"
 #include "flight_presenter.h"
@@ -72,7 +74,19 @@ void MainPresenter::setMode(const QString& mode)
     }
 }
 
+void MainPresenter::updateUiSettings()
+{
+    domain::SettingsProvider::beginGroup(domain::gui_settings::group);
+
+    this->setViewProperty(PROPERTY(uiSize), domain::SettingsProvider::value(
+                              domain::gui_settings::uiSize));
+
+    domain::SettingsProvider::endGroup();
+}
+
 void MainPresenter::connectView(QObject* view)
 {
     d->status->setView(view->findChild<QObject*>(NAME(status)));
+
+    this->updateUiSettings();
 }

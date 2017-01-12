@@ -14,6 +14,7 @@ ApplicationWindow {
     visible: true
 
     property string mode
+    property alias uiSize: palette.controlBaseSize
 
     Palette {
         id: palette

@@ -20,6 +20,8 @@ namespace presentation
     public slots:
         void setMode(const QString& mode);
 
+        void updateUiSettings();
+
     protected:
         void connectView(QObject* view) override;
 
