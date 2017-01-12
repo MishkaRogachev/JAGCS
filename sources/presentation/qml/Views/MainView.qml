@@ -16,6 +16,8 @@ ApplicationWindow {
     property string mode
     property alias uiSize: palette.controlBaseSize
 
+    signal updateUiSize();
+
     Palette {
         id: palette
         property color trackColor: "#E74C3C"

@@ -88,5 +88,7 @@ void MainPresenter::connectView(QObject* view)
 {
     d->status->setView(view->findChild<QObject*>(NAME(status)));
 
+    connect(view, SIGNAL(updateUiSize()), this, SLOT(updateUiSettings()));
+
     this->updateUiSettings();
 }

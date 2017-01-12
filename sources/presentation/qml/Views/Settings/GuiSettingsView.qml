@@ -27,7 +27,11 @@ Frame {
                 Layout.fillWidth: true
                 from: 24
                 to: 64
-                onPressedChanged: if (!pressed) setUiSize(value);
+                onPressedChanged: {
+                    if (pressed) return;
+                    root.setUiSize(value);
+                    main.updateUiSize()
+                }
             }
 
             Label {
