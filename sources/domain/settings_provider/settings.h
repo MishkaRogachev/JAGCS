@@ -6,7 +6,7 @@ namespace domain
     namespace gui_settings
     {
         const char* const group = "Gui";
-        const char* const toolbarWidth = "toolbarWidth";
+        const char* const uiSize = "uiSize";
     }
 
     namespace proxy_settings

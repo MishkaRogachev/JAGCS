@@ -20,7 +20,7 @@ public:
         settings.clear();
 
         settings.beginGroup(gui_settings::group);
-        settings.setValue(gui_settings::toolbarWidth, 320);
+        settings.setValue(gui_settings::uiSize, 36);
         settings.endGroup();
 
         settings.beginGroup(proxy_settings::group);
