@@ -3,6 +3,9 @@
         <file>JS/helper.js</file>
         <file>Controls/Button.qml</file>
         <file>Controls/ButtonBar.qml</file>
+        <file>Controls/TabButton.qml</file>
+        <file>Controls/TabBar.qml</file>
+        <file>Controls/MapPickButton.qml</file>
         <file>Controls/CheckBox.qml</file>
         <file>Controls/Pane.qml</file>
         <file>Controls/Palette.qml</file>
@@ -22,7 +25,6 @@
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
-        <file>Controls/MapPickButton.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/GpsIndicator.qml</file>
         <file>Indicators/Horizont.qml</file>
