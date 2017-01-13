@@ -54,6 +54,7 @@ Control {
     Button {
         id: down
         x: control.mirrored ? up.width : control.width - width - up.width
+        height: control.height
         flat: true
         iconSource: "qrc:/ui/minus.svg"
         onClicked: isNaN(value) ? value = -stepSize : value -= stepSize
@@ -64,6 +65,7 @@ Control {
     Button {
         id: up
         x: control.mirrored ? 0 : control.width - width
+        height: control.height
         flat: true
         iconSource: "qrc:/ui/plus.svg"
         onClicked: isNaN(value) ? value = stepSize : value += stepSize
