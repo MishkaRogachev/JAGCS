@@ -7,7 +7,7 @@ import "./"
 CheckBox {
     id: control
 
-    font.pointSize: palette.fontSize
+    font.pixelSize: palette.fontPixelSize
 
     indicator: Rectangle {
         implicitWidth: palette.controlBaseSize

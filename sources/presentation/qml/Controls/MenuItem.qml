@@ -9,7 +9,7 @@ MenuItem {
     property alias iconSource: icon.source
     property color iconColor: label.color
 
-    font.pointSize: 11
+    font.pixelSize: palette.fontPixelSize
 
     background: Rectangle {
         implicitWidth: palette.controlBaseSize

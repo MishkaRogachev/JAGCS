@@ -10,7 +10,7 @@ Button {
     property color iconColor: label.color
     property alias backgroundColor: backgroundItem.color
 
-    font.pointSize: 11
+    font.pixelSize: palette.fontPixelSize
 
     background: Rectangle {
         id: backgroundItem

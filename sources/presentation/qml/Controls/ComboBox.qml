@@ -6,7 +6,7 @@ import "./"
 ComboBox {
     id: control
 
-    font.pointSize: palette.fontSize
+    font.pixelSize: palette.fontPixelSize
     //enabled: count > 0 TODO: comboBox does not update
 
     delegate: ItemDelegate {

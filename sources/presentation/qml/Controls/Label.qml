@@ -8,11 +8,11 @@ Label {
 
     property alias iconSource: icon.source
 
+    font.pixelSize: palette.fontPixelSize
+    color: palette.textColor
+
     Image {
         id: icon
         anchors.verticalCenter: parent.verticalCenter
     }
-
-    font.pointSize: palette.fontSize
-    color: palette.textColor
 }

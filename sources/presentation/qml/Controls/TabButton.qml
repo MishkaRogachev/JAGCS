@@ -8,12 +8,12 @@ TabButton {
 
     property alias backgroundColor: backgroundItem.color
 
-    font.pointSize: 11
+    font.pixelSize: palette.fontPixelSize
 
     background: Rectangle {
         id: backgroundItem
         implicitWidth: palette.controlBaseSize
-        implicitHeight: implicitWidth
+        implicitHeight: palette.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         color: {
             if (!enabled) return palette.disabledColor;

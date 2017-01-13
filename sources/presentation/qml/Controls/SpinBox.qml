@@ -27,7 +27,7 @@ Control {
     implicitHeight: palette.controlBaseSize
     leftPadding: -(up.width + down.width) / 2
     rightPadding: 6 + control.mirrored ? down.width : up.width
-    font.pointSize: palette.fontSize
+    font.pixelSize: palette.fontPixelSize
 
     background: Rectangle {
         implicitWidth: palette.controlBaseWidth

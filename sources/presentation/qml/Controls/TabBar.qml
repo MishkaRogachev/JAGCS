@@ -7,6 +7,7 @@ TabBar {
     id: control
 
     background: Rectangle {
+        implicitHeight: palette.controlBaseSize
         color: palette.backgroundColor
     }
 }

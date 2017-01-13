@@ -6,7 +6,7 @@ import "./"
 TextField {
     id: control
 
-    font.pointSize: palette.fontSize
+    font.pixelSize: palette.fontPixelSize
     color: palette.textColor
 
     background: Rectangle {

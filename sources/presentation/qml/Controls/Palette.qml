@@ -5,7 +5,7 @@ QtObject {
 
     property int controlBaseSize: 36
 
-    property int fontSize: 10
+    property int fontPixelSize: controlBaseSize / 2
     property int controlBaseWidth: controlBaseSize * 4
 
     property color backgroundColor: "#37474F"

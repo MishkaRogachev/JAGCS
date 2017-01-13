@@ -6,7 +6,7 @@ import "./"
 ItemDelegate {
     id: control
 
-    font.pointSize: palette.fontSize
+    font.pixelSize: palette.fontPixelSize
 
     contentItem: Text {
         text: control.text
