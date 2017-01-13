@@ -39,8 +39,8 @@ Button {
                 id: icon
                 color: iconColor
                 anchors.verticalCenter: parent.verticalCenter
-                sourceSize.height: control.height * 0.6
-                sourceSize.width: sourceSize.height
+                height: control.height * 0.6
+                width: height
                 visible: source != ""
             }
 

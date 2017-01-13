@@ -20,8 +20,8 @@ CheckBox {
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/ok.svg"
-            sourceSize.height: control.height * 0.6
-            sourceSize.width: sourceSize.height
+            height: control.height * 0.6
+            width: height
             color: control.down ? palette.highlightColor : palette.selectionColor
             visible: control.checked
         }

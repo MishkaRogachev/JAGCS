@@ -5,15 +5,16 @@ Item {
     id: root
 
     property alias source: image.source
-    property alias sourceSize: image.sourceSize
     property alias color: overlay.color
 
-    width: image.sourceSize.width
-    height: image.sourceSize.height
+    width: image.width
+    height: image.height
 
     Image {
         id: image
-        anchors.fill: parent
+        anchors.centerIn: parent
+        sourceSize.width: parent.width
+        sourceSize.height: parent.height
         visible: false
     }
 
@@ -21,7 +22,6 @@ Item {
         id: overlay
         anchors.fill: parent
         source: image
-        cached: true
     }
 }
 

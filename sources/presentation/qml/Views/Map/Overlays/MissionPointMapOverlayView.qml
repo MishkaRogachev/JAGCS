@@ -25,8 +25,8 @@ MapItemView {
                 source: itemIcon
                 color: palette.backgroundColor
                 visible: itemIcon.length > 0
-                sourceSize.width: parent.width * 0.6
-                sourceSize.height: parent.height * 0.6
+                width: parent.width * 0.6
+                height: parent.height * 0.6
             }
 
             Label {
@@ -35,8 +35,6 @@ MapItemView {
                 color: palette.backgroundColor
                 anchors.centerIn: parent
                 font.bold: true
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
             }
         }
     }
