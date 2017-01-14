@@ -40,14 +40,12 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
 
             Label {
-                font.pointSize: 8
                 text: qsTr("V:") + " " +
                       (vehicle ? vehicle.powerSystem.voltage.toFixed(2) : "-") +
                       " " + qsTr("v")
             }
 
             Label {
-                font.pointSize: 8
                 text: qsTr("C:") + " " +
                       (vehicle ? vehicle.powerSystem.current.toFixed(2) : "-") +
                       " " + qsTr("A")
