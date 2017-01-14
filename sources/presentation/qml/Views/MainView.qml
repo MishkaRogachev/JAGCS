@@ -22,8 +22,8 @@ ApplicationWindow {
     Palette {
         id: palette
 
-        property color trackColor: "#E74C3C"
-        property color missionColor: "#00897B"
+        property color trackColor: "#F44336"
+        property color missionColor: paletteStyle ? "#1DE9B6" : "#00897B"
 
         backgroundColor: paletteStyle ? "#37474F" : "#CFD8DC"
         sunkenColor: paletteStyle ? "#263238" : "#B0BEC5"

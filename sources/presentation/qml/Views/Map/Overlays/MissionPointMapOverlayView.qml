@@ -15,7 +15,7 @@ MapItemView {
             width: palette.controlBaseSize
             height: width
             radius: width / 2
-            color: palette.textColor
+            color: palette.backgroundColor
             border.color: palette.missionColor
             border.width: 4
 
@@ -23,7 +23,7 @@ MapItemView {
                 id: icon
                 anchors.centerIn: parent
                 source: itemIcon
-                color: palette.backgroundColor
+                color: palette.textColor
                 visible: itemIcon.length > 0
                 width: parent.width * 0.6
                 height: parent.height * 0.6
@@ -32,7 +32,7 @@ MapItemView {
             Label {
                 visible: !icon.visible
                 text: itemSeq
-                color: palette.backgroundColor
+                color: palette.textColor
                 anchors.centerIn: parent
                 font.bold: true
             }
