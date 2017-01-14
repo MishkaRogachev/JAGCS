@@ -6,6 +6,8 @@ import "./"
 Slider {
     id: control
 
+    height: palette.controlBaseSize
+
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + control.availableHeight / 2 - height / 2
@@ -44,35 +46,3 @@ Slider {
         }
     }
 }
-/*
-Slider {
-    id: control
-
-    background: Rectangle {
-        anchors.verticalCenter: parent.verticalCenter
-        color: control.enabled ? palette.sunkenColor : palette.disabledColor
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
-        implicitWidth: control.availableWidth
-        implicitHeight: palette.controlBaseSize / 4
-        height: implicitHeight
-        radius: height / 2
-
-        Rectangle {
-            width: control.visualPosition * control.availableWidth
-            height: parent.height
-            color: palette.selectionColor
-            radius: height / 2
-        }
-    }
-
-    handle: Rectangle {
-        x: control.visualPosition * control.availableWidth - width / 2
-        anchors.verticalCenter: parent.verticalCenter
-        implicitWidth: control.pressed ? palette.controlBaseSize :
-                                         palette.controlBaseSize / 1.5
-        implicitHeight: implicitWidth
-        radius: width / 2
-        color: palette.highlightColor
-    }
-}
-*/
