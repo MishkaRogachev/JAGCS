@@ -6,6 +6,8 @@ import "./"
 TabButton {
     id: control
 
+    property alias iconSource: icon.source
+    property color iconColor: label.color
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
@@ -13,13 +15,43 @@ TabButton {
     background: Rectangle {
         id: backgroundItem
         implicitWidth: palette.controlBaseSize
-        implicitHeight: palette.controlBaseSize
+        implicitHeight: implicitWidth
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         color: {
+            if (control.checked) return palette.selectionColor;
             if (!enabled) return palette.disabledColor;
             if (control.pressed) return palette.highlightColor;
-            if (control.checked) return palette.selectionColor;
             return control.flat ? "transparent" : palette.buttonColor;
+        }
+    }
+
+    contentItem: Item { // TODO: common content item
+        implicitWidth: row.width
+        implicitHeight: row.height
+
+        Row {
+            id: row
+            anchors.centerIn: parent
+            height: parent.availableHeight
+            spacing: 5
+
+            ColoredIcon {
+                id: icon
+                color: iconColor
+                anchors.verticalCenter: parent.verticalCenter
+                height: control.height * 0.6
+                width: height
+                visible: source != ""
+            }
+
+            Label {
+                id: label
+                font: control.font
+                text: control.text
+                color: control.pressed || control.checked ?
+                           palette.selectedTextColor: palette.textColor
+                anchors.verticalCenter: parent.verticalCenter
+            }
         }
     }
 }

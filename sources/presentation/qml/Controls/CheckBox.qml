@@ -22,8 +22,8 @@ CheckBox {
             source: "qrc:/ui/ok.svg"
             height: control.height * 0.6
             width: height
-            color: control.down ? palette.highlightColor : palette.selectionColor
-            visible: control.checked
+            color: control.down ? palette.highlightColor : palette.textColor
+            visible: control.checked || control.down
         }
     }
 
