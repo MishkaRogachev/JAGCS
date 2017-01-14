@@ -6,15 +6,55 @@ import "./"
 Slider {
     id: control
 
-    implicitHeight: palette.controlBaseSize
+    background: Rectangle {
+        x: control.leftPadding
+        y: control.topPadding + control.availableHeight / 2 - height / 2
+        implicitWidth: palette.controlBaseWidth
+        implicitHeight: palette.controlBaseSize / 4
+        width: control.availableWidth
+        height: implicitHeight
+        radius: height / 2
+        color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+
+        Rectangle {
+            width: control.visualPosition * parent.width
+            height: parent.height
+            color: palette.selectionColor
+            radius: height / 2
+        }
+    }
+
+    handle: Rectangle {
+        x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
+        y: control.topPadding + control.availableHeight / 2 - height / 2
+        implicitWidth: palette.controlBaseSize / 1.5
+        implicitHeight: implicitWidth
+        radius: width / 2
+        color: palette.highlightColor
+
+        Rectangle {
+            anchors.centerIn: parent
+            width: parent.width * 2
+            height: width
+            radius: width / 2
+            color: palette.highlightColor
+            opacity: 0.5
+            visible: control.pressed
+        }
+    }
+}
+/*
+Slider {
+    id: control
 
     background: Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         color: control.enabled ? palette.sunkenColor : palette.disabledColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
-        width: control.availableWidth
-        implicitWidth: palette.controlBaseWidth
-        height: control.height / 4
+        implicitWidth: control.availableWidth
+        implicitHeight: palette.controlBaseSize / 4
+        height: implicitHeight
         radius: height / 2
 
         Rectangle {
@@ -28,10 +68,11 @@ Slider {
     handle: Rectangle {
         x: control.visualPosition * control.availableWidth - width / 2
         anchors.verticalCenter: parent.verticalCenter
-        implicitWidth: control.pressed ? control.height :
-                                         control.height / 1.5
+        implicitWidth: control.pressed ? palette.controlBaseSize :
+                                         palette.controlBaseSize / 1.5
         implicitHeight: implicitWidth
         radius: width / 2
         color: palette.highlightColor
     }
 }
+*/
