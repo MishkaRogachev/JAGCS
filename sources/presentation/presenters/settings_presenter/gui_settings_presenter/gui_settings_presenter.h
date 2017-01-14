@@ -20,6 +20,7 @@ namespace presentation
 
     private slots:
         void onSetUiSize(int size);
+        void onSetPaletteStyle(int paletteStyle);
     };
 }
 
