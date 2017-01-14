@@ -7,6 +7,7 @@ namespace domain
     {
         const char* const group = "Gui";
         const char* const uiSize = "uiSize";
+        const char* const paletteStyle = "paletteStyle";
     }
 
     namespace proxy_settings

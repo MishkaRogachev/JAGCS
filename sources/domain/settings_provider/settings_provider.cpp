@@ -21,6 +21,7 @@ public:
 
         settings.beginGroup(gui_settings::group);
         settings.setValue(gui_settings::uiSize, 36);
+        settings.setValue(gui_settings::paletteStyle, 0);
         settings.endGroup();
 
         settings.beginGroup(proxy_settings::group);
