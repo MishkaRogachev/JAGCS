@@ -1,5 +1,6 @@
 // Qt
 #include <QApplication>
+#include <QTranslator>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
@@ -13,6 +14,10 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
     app.setApplicationName("JAGCS");
     app.setOrganizationName("JAGCS");
+
+    QTranslator translator;
+    translator.load("jagcs_ru", ":/"); // TODO: translation service
+    app.installTranslator(&translator);
 
     domain::DomainEntry entry;
     presentation::MainPresenter presenter(&entry);
