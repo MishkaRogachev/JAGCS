@@ -29,6 +29,7 @@ find_package(Qt5 COMPONENTS
     SerialPort
     Gui
     Quick
+    LinguistTools
     Multimedia
     Positioning
     Location
@@ -64,6 +65,22 @@ include_directories("3dparty/mavlink_v1/ardupilotmega")
 HEADER_DIRECTORIES(INCLUDES "sources")
 include_directories(${INCLUDES})
 
+# Translations
+file(GLOB TS_FILES "translations/*.ts")
+
+# Qt5 add translation sourses from translation files
+qt5_add_translation(QM_FILES ${TS_FILES})
+
+# Create translations QRC file
+set(TRANSLATIONS_QRC "${CMAKE_CURRENT_BINARY_DIR}/jagcs_ts.qrc")
+file(WRITE ${TRANSLATIONS_QRC} "<RCC>\n\t<qresource prefix=\"/\">")
+foreach(QM_FILE ${QM_FILES})
+    get_filename_component(QM_FILE_NAME ${QM_FILE} NAME)
+    file(APPEND ${TRANSLATIONS_QRC} "\n\t\t<file alias=\"${QM_FILE_NAME}\">${QM_FILE_NAME}</file>")
+endforeach()
+file(APPEND ${TRANSLATIONS_QRC} "\n\t</qresource>\n</RCC>")
+list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
+
 # Resources
 file(GLOB_RECURSE QRC_FILES "*.qrc")
 
@@ -71,7 +88,7 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
 # Executable target
-add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${MARTIAL_QML} ${QML}
+add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
     ${JS} ${QRC_SOURCES} ${MOC_SOURCES})
 
 # Link Libraries
