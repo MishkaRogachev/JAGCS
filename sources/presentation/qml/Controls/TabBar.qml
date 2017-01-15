@@ -6,8 +6,9 @@ import "./"
 TabBar {
     id: control
 
+    implicitHeight: palette.controlBaseSize
+
     background: Rectangle {
-        implicitHeight: palette.controlBaseSize
         color: palette.backgroundColor
     }
 }

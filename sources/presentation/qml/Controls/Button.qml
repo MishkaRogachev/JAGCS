@@ -11,11 +11,12 @@ Button {
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
+    implicitWidth: Math.max(palette.controlBaseSize, row.width)
+    implicitHeight: palette.controlBaseSize
 
     background: Rectangle {
         id: backgroundItem
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: implicitWidth
+        anchors.fill: parent
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         color: {
             if (control.checked) return palette.selectionColor;
