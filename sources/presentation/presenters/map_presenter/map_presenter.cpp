@@ -16,8 +16,6 @@ MapPresenter::MapPresenter(QObject* parent):
 
 MapPresenter::~MapPresenter()
 {
-    domain::SettingsProvider::beginGroup(domain::map_settings::group);
-
     if (m_view)
     {
         domain::SettingsProvider::setValue(
@@ -30,14 +28,10 @@ MapPresenter::~MapPresenter()
         domain::SettingsProvider::setValue(domain::map_settings::centerLongitude,
                                            center.longitude());
     }
-
-    domain::SettingsProvider::endGroup();
 }
 
 void MapPresenter::updateMapViewport()
 {
-    domain::SettingsProvider::beginGroup(domain::map_settings::group);
-
     this->setViewProperty(PROPERTY(zoomLevel), domain::SettingsProvider::value(
                               domain::map_settings::zoomLevel));
     QGeoCoordinate center(domain::SettingsProvider::value(
@@ -45,8 +39,6 @@ void MapPresenter::updateMapViewport()
                           domain::SettingsProvider::value(
                               domain::map_settings::centerLongitude).toDouble());
     this->setViewProperty(PROPERTY(center), QVariant::fromValue(center));
-
-    domain::SettingsProvider::endGroup();
 }
 
 void MapPresenter::connectView(QObject* view)

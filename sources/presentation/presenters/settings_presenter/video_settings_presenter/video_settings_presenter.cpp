@@ -36,9 +36,7 @@ void VideoSettingsPresenter::connectView(QObject* view)
 
 void VideoSettingsPresenter::onSourceSelected(const QString& source)
 {
-    domain::SettingsProvider::beginGroup(domain::video_settings::group);
     domain::SettingsProvider::setValue(domain::video_settings::device, source);
-    domain::SettingsProvider::endGroup();
 }
 
 void VideoSettingsPresenter::updateSources()
@@ -59,11 +57,6 @@ void VideoSettingsPresenter::updateSources()
 
 void VideoSettingsPresenter::updateCurrentSource()
 {
-    domain::SettingsProvider::beginGroup(domain::video_settings::group);
-
-    this->invokeViewMethod(PROPERTY(setSource),
-                           domain::SettingsProvider::value(
+    this->invokeViewMethod(PROPERTY(setSource), domain::SettingsProvider::value(
                                domain::video_settings::device));
-
-    domain::SettingsProvider::endGroup();
 }

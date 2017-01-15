@@ -50,8 +50,6 @@ void NetworkSettingsPresenter::connectView(QObject* view)
 
 void NetworkSettingsPresenter::onApply()
 {
-    SettingsProvider::beginGroup(proxy_settings::group);
-
     SettingsProvider::setValue(proxy_settings::type, d->typeModelMap.key(
                                this->viewProperty(proxy_settings::type).toString()));
     SettingsProvider::setValue(proxy_settings::hostName,
@@ -63,15 +61,11 @@ void NetworkSettingsPresenter::onApply()
     SettingsProvider::setValue(proxy_settings::password,
                                this->viewProperty(proxy_settings::password));
 
-    SettingsProvider::endGroup();
-
     this->updateProxy();
 }
 
 void NetworkSettingsPresenter::onRestore()
 {
-    SettingsProvider::beginGroup(proxy_settings::group);
-
     QString type = d->typeModelMap.value(static_cast<QNetworkProxy::ProxyType>(
                         SettingsProvider::value(proxy_settings::type).toInt()));
     this->invokeViewMethod(PROPERTY(setProxyType), type);
@@ -83,14 +77,10 @@ void NetworkSettingsPresenter::onRestore()
                           SettingsProvider::value(proxy_settings::user));
     this->setViewProperty(proxy_settings::password,
                           SettingsProvider::value(proxy_settings::password));
-
-    SettingsProvider::endGroup();
 }
 
 void NetworkSettingsPresenter::updateProxy()
 {
-    SettingsProvider::beginGroup(proxy_settings::group);
-
     QNetworkProxy proxy;
     proxy.setType(static_cast<QNetworkProxy::ProxyType>(
                       SettingsProvider::value(proxy_settings::type).toInt()));
@@ -98,8 +88,6 @@ void NetworkSettingsPresenter::updateProxy()
     proxy.setPort(SettingsProvider::value(proxy_settings::port).toInt());
     proxy.setUser(SettingsProvider::value(proxy_settings::user).toString());
     proxy.setPassword(SettingsProvider::value(proxy_settings::password).toString());
-
-    SettingsProvider::endGroup();
 
     QNetworkProxy::setApplicationProxy(proxy);
 

@@ -5,43 +5,38 @@ namespace domain
 {
     namespace gui_settings
     {
-        const char* const group = "Gui";
-        const char* const uiSize = "uiSize";
-        const char* const paletteStyle = "paletteStyle";
+        const char* const uiSize = "Gui/uiSize";
+        const char* const paletteStyle = "Gui/paletteStyle";
     }
 
     namespace proxy_settings
     {
-        const char* const group = "NetworkProxy";
-        const char* const type = "type";
-        const char* const hostName = "hostName";
-        const char* const port = "port";
-        const char* const user = "user";
-        const char* const password = "password";
+        const char* const type = "NetworkProxy/type";
+        const char* const hostName = "NetworkProxy/hostName";
+        const char* const port = "NetworkProxy/port";
+        const char* const user = "NetworkProxy/user";
+        const char* const password = "NetworkProxy/password";
     }
 
     namespace connection_settings
     {
-        const char* const group = "Connection";
-        const char* const systemId = "systemId";
-        const char* const componentId = "componentId";
-        const char* const serialDevice = "serialDevice";
-        const char* const baudRate = "baudRate";
-        const char* const port = "port";
+        const char* const systemId = "Connection/systemId";
+        const char* const componentId = "Connection/componentId";
+        const char* const serialDevice = "Connection/serialDevice";
+        const char* const baudRate = "Connection/baudRate";
+        const char* const port = "Connection/port";
     }
 
     namespace map_settings
     {
-        const char* const group = "Map";
-        const char* const zoomLevel = "zoomLevel";
-        const char* const centerLatitude = "centerLatitude";
-        const char* const centerLongitude = "centerLongitude";
+        const char* const zoomLevel = "Map/zoomLevel";
+        const char* const centerLatitude = "Map/centerLatitude";
+        const char* const centerLongitude = "Map/centerLongitude";
     }
 
     namespace video_settings
     {
-        const char* const group = "Video";
-        const char* const device = "device";
+        const char* const device = "Video/device";
     }
 }
 

@@ -119,30 +119,22 @@ void ConnectionSettingsPresenter::onComponentIdRequested(int componentId)
 
 void ConnectionSettingsPresenter::onRequestNewUdp()
 {
-    SettingsProvider::beginGroup(connection_settings::group);
-
     auto link = new UdpLink(SettingsProvider::value(
                                 connection_settings::port).toInt(),
                             d->communicator);
     link->setObjectName(tr("UDP"));
-
-    SettingsProvider::endGroup();
 
     d->communicator->addLink(link);
 }
 
 void ConnectionSettingsPresenter::onRequestNewSerial()
 {
-    SettingsProvider::beginGroup(connection_settings::group);
-
     auto link = new SerialLink(SettingsProvider::value(
                                    connection_settings::serialDevice).toString(),
                                SettingsProvider::value(
                                    connection_settings::baudRate).toInt(),
                                d->communicator);
     link->setObjectName(tr("Serial"));
-
-    SettingsProvider::endGroup();
 
     d->communicator->addLink(link);
 }

@@ -76,14 +76,10 @@ void MainPresenter::setMode(const QString& mode)
 
 void MainPresenter::updateUiSettings()
 {
-    domain::SettingsProvider::beginGroup(domain::gui_settings::group);
-
     this->setViewProperty(PROPERTY(uiSize), domain::SettingsProvider::value(
                               domain::gui_settings::uiSize));
     this->setViewProperty(PROPERTY(paletteStyle), domain::SettingsProvider::value(
                               domain::gui_settings::paletteStyle));
-
-    domain::SettingsProvider::endGroup();
 }
 
 void MainPresenter::connectView(QObject* view)

@@ -45,8 +45,6 @@ void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
-    domain::SettingsProvider::beginGroup(domain::video_settings::group);
-
     QCameraInfo info(domain::SettingsProvider::value(
                          domain::video_settings::device).toByteArray());
     if (info.isNull())
@@ -58,8 +56,6 @@ void VideoPresenter::updateSource()
         d->camera = new QCamera(info, this);
         d->updateCameraVideoSurface();
     }
-
-    domain::SettingsProvider::endGroup();
 }
 
 void VideoPresenter::connectView(QObject* view)

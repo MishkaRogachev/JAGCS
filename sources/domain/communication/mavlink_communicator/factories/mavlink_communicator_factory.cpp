@@ -44,14 +44,11 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new MissionHandler(m_missionService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
 
-    SettingsProvider::beginGroup(connection_settings::group);
     UdpLink* defaultUdpLink = new UdpLink(SettingsProvider::value(
                                               connection_settings::port).toInt(),
                                           communicator);
     communicator->addLink(defaultUdpLink);
     defaultUdpLink->up();
-
-    SettingsProvider::endGroup();
 
     return communicator;
 }

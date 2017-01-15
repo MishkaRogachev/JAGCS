@@ -19,9 +19,6 @@ namespace domain
 
         static void setValue(const QString& key, const QVariant& value);
 
-        static void beginGroup(const QString& prefix);
-        static void endGroup();
-
         static void makeDefaults();
         static void sync();
 
