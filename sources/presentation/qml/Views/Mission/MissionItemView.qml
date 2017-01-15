@@ -117,7 +117,7 @@ Frame {
                 CheckBox {
                     visible: 'relativeAltitude' in item
                     Layout.fillWidth: true
-                    text: qsTr("Relative alt.")
+                    text: qsTr("Rel.")
                     checked: 'relativeAltitude' in item ? item.relativeAltitude : false
                     onCheckedChanged: if (visible) item.setRelativeAltitude(checked)
                 }

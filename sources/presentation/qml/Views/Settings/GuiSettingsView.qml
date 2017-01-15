@@ -12,20 +12,22 @@ Frame {
 
     signal updateSettings()
 
-    GridLayout{
+    GridLayout {
         anchors.fill: parent
+        anchors.margins: palette.controlBaseSize / 2
+        rowSpacing: palette.controlBaseSize / 2
         columns: 3
 
         Label {
-            Layout.fillWidth: true
             text: qsTr("UI size")
+            Layout.fillWidth: true
         }
 
         Slider {
             id: uiSlider
-            Layout.fillWidth: true
             from: 24
             to: 64
+            Layout.fillWidth: true
             onPressedChanged: {
                 if (pressed) return;
                 root.updateSettings();
@@ -41,27 +43,43 @@ Frame {
         }
 
         Label {
-            Layout.fillWidth: true
             text: qsTr("Palette")
-        }
-
-        TabBar {
-            id: paletteBar
             Layout.fillWidth: true
-            onCurrentIndexChanged: {
-                root.updateSettings();
-                main.updateUiSettings();
-            }
+        }
 
-            TabButton {
-                text: qsTr("Indoor")
-            }
-            TabButton {
-                text: qsTr("Outdoor")
+        Item {
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+            height: paletteBar.height
+
+            TabBar {
+                id: paletteBar
+                anchors.centerIn: parent
+                width: parent.width
+                onCurrentIndexChanged: {
+                    root.updateSettings();
+                    main.updateUiSettings();
+                }
+
+                TabButton {
+                    text: qsTr("Indoor")
+                }
+                TabButton {
+                    text: qsTr("Outdoor")
+                }
             }
         }
 
-        Item { width: 1; height: 1 } // TODO: placeholder item
+        Label {
+            text: qsTr("Language")
+            Layout.fillWidth: true
+        }
+
+        ComboBox {
+            id: languageBox
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
 
         Item {
             Layout.fillHeight: true
