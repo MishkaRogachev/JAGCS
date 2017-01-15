@@ -31,7 +31,7 @@ void GuiSettingsPresenter::connectView(QObject* view)
 void GuiSettingsPresenter::onUpdateSettings()
 {
     domain::SettingsProvider::setValue(domain::gui_settings::uiSize,
-                                       this->viewProperty(PROPERTY(uiSize)));
+                                       this->viewProperty(PROPERTY(uiSize)).toInt());
     domain::SettingsProvider::setValue(domain::gui_settings::paletteStyle,
                                        this->viewProperty(PROPERTY(paletteStyle)));
 }
