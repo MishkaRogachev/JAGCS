@@ -10,8 +10,7 @@ Frame {
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
 
-    signal setUiSize(int uiSize)
-    signal setPaletteStyle(int paletteStyle)
+    signal updateSettings()
 
     GridLayout{
         anchors.fill: parent
@@ -29,7 +28,7 @@ Frame {
             to: 64
             onPressedChanged: {
                 if (pressed) return;
-                root.setUiSize(value);
+                root.updateSettings();
                 main.updateUiSettings();
             }
         }
@@ -50,7 +49,7 @@ Frame {
             id: paletteBar
             Layout.fillWidth: true
             onCurrentIndexChanged: {
-                root.setPaletteStyle(currentIndex);
+                root.updateSettings();
                 main.updateUiSettings();
             }
 

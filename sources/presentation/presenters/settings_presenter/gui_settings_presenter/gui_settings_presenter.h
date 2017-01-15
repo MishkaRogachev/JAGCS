@@ -19,8 +19,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onSetUiSize(int size);
-        void onSetPaletteStyle(int paletteStyle);
+        void onUpdateSettings();
     };
 }
 

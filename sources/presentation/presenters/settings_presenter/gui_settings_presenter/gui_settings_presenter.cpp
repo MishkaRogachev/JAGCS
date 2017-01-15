@@ -27,26 +27,19 @@ void GuiSettingsPresenter::updateView()
 
 void GuiSettingsPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(setUiSize(int)), this, SLOT(onSetUiSize(int)));
-    connect(view, SIGNAL(setPaletteStyle(int)), this, SLOT(onSetPaletteStyle(int)));
+    connect(view, SIGNAL(updateSettings()), this, SLOT(onUpdateSettings()));
 
     this->updateView();
 }
 
-void GuiSettingsPresenter::onSetUiSize(int size)
+void GuiSettingsPresenter::onUpdateSettings()
 {
     domain::SettingsProvider::beginGroup(domain::gui_settings::group);
 
-    domain::SettingsProvider::setValue(domain::gui_settings::uiSize, size);
-
-    domain::SettingsProvider::endGroup();
-}
-
-void GuiSettingsPresenter::onSetPaletteStyle(int paletteStyle)
-{
-    domain::SettingsProvider::beginGroup(domain::gui_settings::group);
-
-    domain::SettingsProvider::setValue(domain::gui_settings::paletteStyle, paletteStyle);
+    domain::SettingsProvider::setValue(domain::gui_settings::uiSize,
+                                       this->viewProperty(PROPERTY(uiSize)));
+    domain::SettingsProvider::setValue(domain::gui_settings::paletteStyle,
+                                       this->viewProperty(PROPERTY(paletteStyle)));
 
     domain::SettingsProvider::endGroup();
 }
