@@ -7,6 +7,7 @@ Map {
 
     signal picked(var coordinate)
     signal canceled()
+    signal saveMapViewport()
 
     plugin: Plugin { name: "osm" }
     gesture.flickDeceleration: 3000
@@ -18,4 +19,6 @@ Map {
         anchors.fill: parent
         onClicked: map.picked(map.toCoordinate(Qt.point(mouseX, mouseY)));
     }
+
+    Component.onDestruction: saveMapViewport()
 }

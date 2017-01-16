@@ -15,6 +15,7 @@ namespace presentation
 
     public slots:
         void updateMapViewport();
+        void saveMapViewport();
 
     protected:
         void connectView(QObject* view) override;
