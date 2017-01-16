@@ -6,12 +6,12 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="31"/>
         <source>System ID</source>
-        <translation>Id системы</translation>
+        <translation>ID системы</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="45"/>
         <source>Component ID</source>
-        <translation>Id компонента</translation>
+        <translation>ID компонента</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="75"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="27"/>
         <source>Serial device</source>
-        <translation>Последовательный порт</translation>
+        <translation>Устройство</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="43"/>
@@ -166,7 +166,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="73"/>
         <source>Lat.:</source>
-        <translation type="unfinished">Шир.:</translation>
+        <translation>Шир.:</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="88"/>
@@ -186,18 +186,18 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="130"/>
         <source>Pitch:</source>
-        <translation>Тангаж.:</translation>
+        <translation>Тангаж:</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="146"/>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="162"/>
         <source>Radius:</source>
-        <translation>Радиус.:</translation>
+        <translation>Радиус:</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="178"/>
         <source>Yaw:</source>
-        <translation>Курс.:</translation>
+        <translation>Курс:</translation>
     </message>
 </context>
 <context>
