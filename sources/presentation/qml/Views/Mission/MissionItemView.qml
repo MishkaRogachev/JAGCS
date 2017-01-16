@@ -150,7 +150,7 @@ Frame {
                 visible: 'acceptanceRadius' in item
                 Layout.fillWidth: true
                 from: 0
-                to: 360
+                to: 5000
                 value: visible ? item.acceptanceRadius : 0
                 onValueChanged: if (!isNaN(value) && visible) item.setAcceptanceRadius(value)
             }
