@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "position_mission_item.h"
+#include "waypoint_mission_item.h"
 
 using namespace presentation;
 
@@ -47,6 +47,13 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
         if (item->command() == domain::MissionItem::Landing)
             return "qrc:/icons/landing.svg";
         return QString("");
+    case ItemAcceptanceRadius:
+    {
+        domain::WaypointMissionItem* waypointItem =
+                qobject_cast<domain::WaypointMissionItem*>(item);
+        if (waypointItem) return waypointItem->acceptanceRadius();
+        else return 0;
+    }
     default:
         return QVariant();
     }
@@ -66,6 +73,15 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
                 this, &MissionPointMapItemModel::onCoordinateChanged);
         connect(positionItem, &domain::PositionMissionItem::longitudeChanged,
                 this, &MissionPointMapItemModel::onCoordinateChanged);
+
+        domain::WaypointMissionItem* waypointItem =
+                qobject_cast<domain::WaypointMissionItem*>(positionItem);
+        if (waypointItem)
+        {
+            connect(waypointItem,
+                    &domain::WaypointMissionItem::acceptanceRadiusChanged,
+                    this, &MissionPointMapItemModel::onAcceptanceRadiusChanged);
+        }
     }
 
     this->endInsertRows();
@@ -78,11 +94,12 @@ void MissionPointMapItemModel::removeMissionItem(domain::MissionItem* item)
 
     this->beginRemoveRows(QModelIndex(), row, row);
     m_items.removeOne(item);
+    disconnect(item, nullptr, this, nullptr);
 
     this->endRemoveRows();
 
-    emit dataChanged(this->index(row), this->index(m_items.count() - 1),
-    { ItemSequenceRole });
+    emit dataChanged(this->index(row),
+                     this->index(m_items.count() - 1), { ItemSequenceRole });
 }
 
 void MissionPointMapItemModel::setMissionItems(const QList<domain::MissionItem*>& items)
@@ -113,6 +130,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemCoordinateRole] = "itemCoordinate";
     roles[ItemSequenceRole] = "itemSeq";
     roles[ItemIconRole] = "itemIcon";
+    roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
 
     return roles;
 }
@@ -137,4 +155,11 @@ void MissionPointMapItemModel::onCoordinateChanged()
     QModelIndex index = this->missionItemIndex(
                             qobject_cast<domain::MissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemCoordinateRole });
+}
+
+void MissionPointMapItemModel::onAcceptanceRadiusChanged()
+{
+    QModelIndex index = this->missionItemIndex(
+                            qobject_cast<domain::MissionItem*>(this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { ItemAcceptanceRadius });
 }

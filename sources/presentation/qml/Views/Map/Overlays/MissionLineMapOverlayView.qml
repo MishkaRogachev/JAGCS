@@ -7,6 +7,5 @@ MapItemView {
         line.width: 6
         line.color: palette.missionColor
         path: missionPath
-        smooth: true
     }
 }

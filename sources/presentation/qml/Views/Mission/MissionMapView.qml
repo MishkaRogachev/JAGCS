@@ -10,6 +10,10 @@ MapView {
     property var pointModel
     property var vehicleModel
 
+    MissionCircleMapOverlayView {
+        model: pointModel
+    }
+
     MissionLineMapOverlayView {
         model: lineModel
     }
