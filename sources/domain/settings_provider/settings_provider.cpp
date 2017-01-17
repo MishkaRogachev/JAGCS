@@ -21,7 +21,7 @@ public:
 
         settings.setValue(gui_settings::uiSize, 36);
         settings.setValue(gui_settings::paletteStyle, 0);
-        settings.setValue(gui_settings::language, "jagcs_en");
+        settings.setValue(gui_settings::locale, "en");
 
         settings.setValue(proxy_settings::type, 0);
 

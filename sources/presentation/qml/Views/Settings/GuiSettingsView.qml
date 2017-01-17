@@ -9,6 +9,8 @@ Frame {
 
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
+    property alias locales: languageBox.model
+    property alias localeIndex: languageBox.currentIndex
 
     signal updateSettings()
 
@@ -79,6 +81,7 @@ Frame {
             id: languageBox
             Layout.columnSpan: 2
             Layout.fillWidth: true
+            onCurrentIndexChanged: root.updateSettings();
         }
 
         Item {
