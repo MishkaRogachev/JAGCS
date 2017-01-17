@@ -6,6 +6,8 @@
 
 // Internal
 #include "domain_entry.h"
+#include "settings.h"
+#include "settings_provider.h"
 
 #include "main_presenter.h"
 
@@ -16,7 +18,8 @@ int main(int argc, char* argv[])
     app.setOrganizationName("JAGCS");
 
     QTranslator translator;
-    translator.load("jagcs_ru", ":/"); // TODO: translation service
+    translator.load(domain::SettingsProvider::value(
+                        domain::gui_settings::language).toString(), ":/");
     app.installTranslator(&translator);
 
     domain::DomainEntry entry;
