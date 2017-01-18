@@ -1,5 +1,8 @@
 #include "altitude_mission_item.h"
 
+// Internal
+#include "mission.h"
+
 using namespace domain;
 
 AltitudeMissionItem::AltitudeMissionItem(Mission* mission, Command command,
@@ -17,6 +20,27 @@ float AltitudeMissionItem::altitude() const
 bool AltitudeMissionItem::isRelativeAltitude() const
 {
     return m_relativeAltitude;
+}
+
+float AltitudeMissionItem::altitudeChange() const
+{
+    const uint8_t seq = this->sequence();
+    if (seq < 1) return 0;
+
+    AltitudeMissionItem* previous = nullptr;
+    for (uint8_t prevSeq = seq - 1; prevSeq > 0 ; prevSeq--)
+    {
+        previous = qobject_cast<AltitudeMissionItem*>(
+                       this->mission()->item(prevSeq));
+        if (!previous) continue;
+
+        if (this->isRelativeAltitude() == previous->isRelativeAltitude())
+        {
+            return this->altitude() - previous->altitude();
+        }
+        else return 0; // FIXME: relative altitude
+    }
+    return 0;
 }
 
 void AltitudeMissionItem::clone(MissionItem* mission)

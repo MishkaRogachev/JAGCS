@@ -178,8 +178,8 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
                 qobject_cast<ContinueMissionItem*>(altitudeItem);
         if (continueItem)
         {
-            msgItem.param1 = altitudeItem->altitude() > 0 ?
-                                 1 : altitudeItem->altitude() < 0 ? -1 : 0;
+            msgItem.param1 = altitudeItem->altitudeChange() ?
+                                 1 : altitudeItem->altitudeChange() < 0 ? -1 : 0;
         }
 
         PositionMissionItem* positionItem =

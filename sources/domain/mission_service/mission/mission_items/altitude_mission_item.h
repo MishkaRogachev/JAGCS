@@ -21,6 +21,8 @@ namespace domain
         float altitude() const;
         bool isRelativeAltitude() const;
 
+        Q_INVOKABLE float altitudeChange() const;
+
         void clone(MissionItem* mission) override;
 
     public slots:
