@@ -10,7 +10,9 @@ AltitudeMissionItem::AltitudeMissionItem(Mission* mission, Command command,
     MissionItem(mission, command),
     m_altitude(0),
     m_relativeAltitude(relativeAltitude)
-{}
+{
+    this->setAltitude(-1 * this->altitudeChange());
+}
 
 float AltitudeMissionItem::altitude() const
 {
