@@ -12,8 +12,8 @@
 #include "home_mission_item.h"
 #include "takeoff_mission_item.h"
 #include "waypoint_mission_item.h"
-#include "loiter_mission_item.h"
 #include "continue_mission_item.h"
+#include "loiter_mission_item.h"
 #include "return_mission_item.h"
 #include "landing_mission_item.h"
 

@@ -4,11 +4,9 @@ using namespace domain;
 
 PositionMissionItem::PositionMissionItem(Mission* mission, Command command,
                                          bool relativeAltitude):
-    MissionItem(mission, command),
+    AltitudeMissionItem(mission, command, relativeAltitude),
     m_latitude(qQNaN()),
-    m_longitude(qQNaN()),
-    m_altitude(0),
-    m_relativeAltitude(relativeAltitude)
+    m_longitude(qQNaN())
 {}
 
 double PositionMissionItem::latitude() const
@@ -21,16 +19,6 @@ double PositionMissionItem::longitude() const
     return m_longitude;
 }
 
-float PositionMissionItem::altitude() const
-{
-    return m_altitude;
-}
-
-bool PositionMissionItem::isRelativeAltitude() const
-{
-    return m_relativeAltitude;
-}
-
 void PositionMissionItem::clone(MissionItem* mission)
 {
     auto positionItem = qobject_cast<PositionMissionItem*>(mission);
@@ -39,10 +27,9 @@ void PositionMissionItem::clone(MissionItem* mission)
     {
         this->setLatitude(positionItem->latitude());
         this->setLongitude(positionItem->longitude());
-        this->setAltitude(positionItem->altitude());
     }
 
-    MissionItem::clone(mission);
+    AltitudeMissionItem::clone(mission);
 }
 
 void PositionMissionItem::setLatitude(double latitude)
@@ -59,20 +46,4 @@ void PositionMissionItem::setLongitude(double longitude)
 
     m_longitude = longitude;
     emit longitudeChanged(longitude);
-}
-
-void PositionMissionItem::setAltitude(float altitude)
-{
-    if (qFuzzyCompare(m_altitude, altitude)) return;
-
-    m_altitude = altitude;
-    emit altitudeChanged(altitude);
-}
-
-void PositionMissionItem::setRelativeAltitude(bool relativeAltitude)
-{
-    if (m_relativeAltitude == relativeAltitude) return;
-
-    m_relativeAltitude = relativeAltitude;
-    emit relativeAltitudeChanged(relativeAltitude);
 }

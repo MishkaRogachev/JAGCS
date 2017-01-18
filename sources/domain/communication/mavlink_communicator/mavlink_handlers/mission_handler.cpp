@@ -13,10 +13,12 @@
 #include "mission.h"
 #include "mission_item_factory.h"
 
+#include "home_mission_item.h"
 #include "takeoff_mission_item.h"
 #include "waypoint_mission_item.h"
-#include "loiter_mission_item.h"
 #include "continue_mission_item.h"
+#include "loiter_mission_item.h"
+#include "return_mission_item.h"
 #include "landing_mission_item.h"
 
 using namespace domain;
@@ -165,51 +167,56 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 
     msgItem.command = ::encodeCommand(item->command());
 
-    PositionMissionItem* positionItem = qobject_cast<PositionMissionItem*>(item);
-    if (positionItem)
+    AltitudeMissionItem* altitudeItem = qobject_cast<AltitudeMissionItem*>(item);
+    if (altitudeItem)
     {
-        msgItem.frame = positionItem->isRelativeAltitude() ?
+        msgItem.frame = altitudeItem->isRelativeAltitude() ?
                             MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
+        msgItem.z = altitudeItem->altitude();
 
-        msgItem.x = positionItem->latitude();
-        msgItem.y = positionItem->longitude();
-        msgItem.z = positionItem->altitude();
-
-        DirectionMissionItem* directionItem =
-                qobject_cast<DirectionMissionItem*>(positionItem);
-        if (directionItem)
+        AltitudeMissionItem* continueItem =
+                qobject_cast<ContinueMissionItem*>(altitudeItem);
+        if (continueItem)
         {
-            msgItem.param4 = directionItem->yaw();
+            msgItem.param1 = altitudeItem->altitude() > 0 ?
+                                 1 : altitudeItem->altitude() < 0 ? -1 : 0;
+        }
 
-            TakeoffMissionItem* takeoffItem =
-                    qobject_cast<TakeoffMissionItem*>(directionItem);
-            if (takeoffItem)
+        PositionMissionItem* positionItem =
+                qobject_cast<PositionMissionItem*>(altitudeItem);
+        if (positionItem)
+        {
+            msgItem.x = positionItem->latitude();
+            msgItem.y = positionItem->longitude();
+
+            DirectionMissionItem* directionItem =
+                    qobject_cast<DirectionMissionItem*>(positionItem);
+            if (directionItem)
             {
-                msgItem.param1 = takeoffItem->pitch();
+                msgItem.param4 = directionItem->yaw();
+
+                TakeoffMissionItem* takeoffItem =
+                        qobject_cast<TakeoffMissionItem*>(directionItem);
+                if (takeoffItem)
+                {
+                    msgItem.param1 = takeoffItem->pitch();
+                }
+            }
+
+            WaypointMissionItem* waypointItem =
+                    qobject_cast<WaypointMissionItem*>(positionItem);
+            if (waypointItem)
+            {
+                msgItem.param2 = waypointItem->acceptanceRadius();
+            }
+
+            LoiterMissionItem* loiterItem =
+                    qobject_cast<LoiterMissionItem*>(positionItem);
+            if (loiterItem)
+            {
+                msgItem.param3 = loiterItem->radius();
             }
         }
-
-        WaypointMissionItem* waypointItem =
-                qobject_cast<WaypointMissionItem*>(positionItem);
-        if (waypointItem)
-        {
-            msgItem.param2 = waypointItem->acceptanceRadius();
-        }
-
-        LoiterMissionItem* loiterItem =
-                qobject_cast<LoiterMissionItem*>(positionItem);
-        if (loiterItem)
-        {
-            msgItem.param3 = loiterItem->radius();
-        }
-    }
-
-    ContinueMissionItem* continueItem = qobject_cast<ContinueMissionItem*>(item);
-    if (continueItem)
-    {
-        msgItem.param1 = continueItem->altitude() > 0 ?
-                             1 : continueItem->altitude() < 0 ? -1 : 0;
-        msgItem.z = positionItem->altitude();
     }
 
     m_missionService->setCurrentCount(m_missionService->currentCount() + 1);
@@ -262,14 +269,27 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     MissionItemFactory factory(mission);
     MissionItem* item = factory.create(::decodeCommand(msgItem.command, msgItem.seq));
 
-    PositionMissionItem* positionItem = qobject_cast<PositionMissionItem*>(item);
-    if (positionItem)
+    AltitudeMissionItem* altitudeItem = qobject_cast<AltitudeMissionItem*>(item);
+    if (altitudeItem)
     {
         switch (msgItem.frame)
         {
         case MAV_FRAME_GLOBAL_RELATIVE_ALT:
-            positionItem->setRelativeAltitude(true);
+            altitudeItem->setRelativeAltitude(true);
+            break;
         case MAV_FRAME_GLOBAL:
+            altitudeItem->setRelativeAltitude(false);
+            break;
+        default:
+            // TODO: Warning unhandled frame
+            break;
+        }
+        altitudeItem->setAltitude(msgItem.z);
+
+        PositionMissionItem* positionItem =
+                qobject_cast<PositionMissionItem*>(altitudeItem);
+        if (positionItem)
+        {
             if (qFuzzyIsNull(msgItem.x) && qFuzzyIsNull(msgItem.y))
             {
                 positionItem->setLatitude(qQNaN());
@@ -280,38 +300,34 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
                 positionItem->setLatitude(msgItem.x);
                 positionItem->setLongitude(msgItem.y);
             }
-            positionItem->setAltitude(msgItem.z);
-            break;
-        default:
-            break;
-        }
 
-        DirectionMissionItem* directionItem =
-                qobject_cast<DirectionMissionItem*>(positionItem);
-        if (directionItem)
-        {
-            directionItem->setYaw(msgItem.param4);
-
-            TakeoffMissionItem* takeoffItem =
-                    qobject_cast<TakeoffMissionItem*>(directionItem);
-            if (takeoffItem)
+            DirectionMissionItem* directionItem =
+                    qobject_cast<DirectionMissionItem*>(positionItem);
+            if (directionItem)
             {
-                takeoffItem->setPitch(msgItem.param1);
+                directionItem->setYaw(msgItem.param4);
+
+                TakeoffMissionItem* takeoffItem =
+                        qobject_cast<TakeoffMissionItem*>(directionItem);
+                if (takeoffItem)
+                {
+                    takeoffItem->setPitch(msgItem.param1);
+                }
             }
-        }
 
-        WaypointMissionItem* waypointItem =
-                qobject_cast<WaypointMissionItem*>(positionItem);
-        if (waypointItem)
-        {
-            waypointItem->setAcceptanceRadius(msgItem.param2);
-        }
+            WaypointMissionItem* waypointItem =
+                    qobject_cast<WaypointMissionItem*>(positionItem);
+            if (waypointItem)
+            {
+                waypointItem->setAcceptanceRadius(msgItem.param2);
+            }
 
-        LoiterMissionItem* loiterItem =
-                qobject_cast<LoiterMissionItem*>(positionItem);
-        if (loiterItem)
-        {
-            loiterItem->setRadius(msgItem.param3);
+            LoiterMissionItem* loiterItem =
+                    qobject_cast<LoiterMissionItem*>(positionItem);
+            if (loiterItem)
+            {
+                loiterItem->setRadius(msgItem.param3);
+            }
         }
     }
 
