@@ -2,9 +2,9 @@
 
 using namespace domain;
 
-WaypointMissionItem::WaypointMissionItem(Mission* mission):
+WaypointMissionItem::WaypointMissionItem(Mission* mission, float acceptanceRadius):
     PositionMissionItem(mission, Waypoint, true),
-    m_acceptanceRadius(0)
+    m_acceptanceRadius(acceptanceRadius)
 {}
 
 float WaypointMissionItem::acceptanceRadius() const

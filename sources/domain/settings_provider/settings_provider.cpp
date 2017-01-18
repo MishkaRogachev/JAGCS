@@ -23,6 +23,10 @@ public:
         settings.setValue(gui_settings::paletteStyle, 0);
         settings.setValue(gui_settings::locale, "en");
 
+        settings.setValue(map_settings::zoomLevel, 16.0);
+        settings.setValue(map_settings::centerLatitude, 55.968954);
+        settings.setValue(map_settings::centerLongitude, 37.110155);
+
         settings.setValue(proxy_settings::type, 0);
 
         settings.setValue(connection_settings::systemId, 255);
@@ -30,9 +34,7 @@ public:
         settings.setValue(connection_settings::baudRate, 57600);
         settings.setValue(connection_settings::port, 14550);
 
-        settings.setValue(map_settings::zoomLevel, 16.0);
-        settings.setValue(map_settings::centerLatitude, 55.968954);
-        settings.setValue(map_settings::centerLongitude, 37.110155);
+        settings.setValue(mission_settings::defaultAcceptanceRadius, 3);
     }
 };
 

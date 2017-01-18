@@ -13,7 +13,7 @@ namespace domain
                    WRITE setAcceptanceRadius NOTIFY acceptanceRadiusChanged)
 
     public:
-        explicit WaypointMissionItem(Mission* mission);
+        WaypointMissionItem(Mission* mission, float acceptanceRadius = 0);
 
         float acceptanceRadius() const;
 

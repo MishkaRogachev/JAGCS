@@ -10,6 +10,18 @@ namespace domain
         const char* const locale = "Gui/locale";
     }
 
+    namespace map_settings
+    {
+        const char* const zoomLevel = "Map/zoomLevel";
+        const char* const centerLatitude = "Map/centerLatitude";
+        const char* const centerLongitude = "Map/centerLongitude";
+    }
+
+    namespace video_settings
+    {
+        const char* const device = "Video/device";
+    }
+
     namespace proxy_settings
     {
         const char* const type = "NetworkProxy/type";
@@ -28,16 +40,9 @@ namespace domain
         const char* const port = "Connection/port";
     }
 
-    namespace map_settings
+    namespace mission_settings
     {
-        const char* const zoomLevel = "Map/zoomLevel";
-        const char* const centerLatitude = "Map/centerLatitude";
-        const char* const centerLongitude = "Map/centerLongitude";
-    }
-
-    namespace video_settings
-    {
-        const char* const device = "Video/device";
+        const char* const defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
     }
 }
 

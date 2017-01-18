@@ -4,6 +4,9 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+#include "settings.h"
+
 #include "mission.h"
 
 #include "home_mission_item.h"
@@ -28,7 +31,8 @@ MissionItem* MissionItemFactory::create(MissionItem::Command command)
     case MissionItem::Takeoff:
         return new TakeoffMissionItem(m_mision);
     case MissionItem::Waypoint:
-        return new WaypointMissionItem(m_mision);
+        return new WaypointMissionItem(m_mision, SettingsProvider::value(
+                      mission_settings::defaultAcceptanceRadius).toFloat());
     case MissionItem::Loiter:
         return new LoiterMissionItem(m_mision);
     case MissionItem::Continue:
