@@ -12,7 +12,7 @@ namespace domain
         Q_PROPERTY(float pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
 
     public:
-        explicit TakeoffMissionItem(Mission* mission);
+        explicit TakeoffMissionItem(Mission* mission, float pitch = 0);
 
         float pitch() const;
 

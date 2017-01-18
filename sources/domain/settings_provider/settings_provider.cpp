@@ -35,6 +35,7 @@ public:
         settings.setValue(connection_settings::port, 14550);
 
         settings.setValue(mission_settings::defaultAcceptanceRadius, 3);
+        settings.setValue(mission_settings::defaultTakeoffPitch, 15);
     }
 };
 

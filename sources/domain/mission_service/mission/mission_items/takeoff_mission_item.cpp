@@ -2,9 +2,9 @@
 
 using namespace domain;
 
-TakeoffMissionItem::TakeoffMissionItem(Mission* mission):
+TakeoffMissionItem::TakeoffMissionItem(Mission* mission, float pitch):
     DirectionMissionItem(mission, Takeoff, true),
-    m_pitch(15)
+    m_pitch(pitch)
 {}
 
 float TakeoffMissionItem::pitch() const

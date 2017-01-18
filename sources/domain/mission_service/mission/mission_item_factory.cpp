@@ -29,7 +29,8 @@ MissionItem* MissionItemFactory::create(MissionItem::Command command)
     case MissionItem::Home:
         return new HomeMissionitem(m_mision);
     case MissionItem::Takeoff:
-        return new TakeoffMissionItem(m_mision);
+        return new TakeoffMissionItem(m_mision, SettingsProvider::value(
+                          mission_settings::defaultTakeoffPitch).toFloat());
     case MissionItem::Waypoint:
         return new WaypointMissionItem(m_mision, SettingsProvider::value(
                       mission_settings::defaultAcceptanceRadius).toFloat());

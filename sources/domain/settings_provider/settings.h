@@ -43,6 +43,7 @@ namespace domain
     namespace mission_settings
     {
         const char* const defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
+        const char* const defaultTakeoffPitch = "Mission/defaultTakeoffPitch";
     }
 }
 
