@@ -21,6 +21,8 @@ namespace domain
         double latitude() const;
         double longitude() const;
 
+        Q_INVOKABLE float azimuth() const;
+
         void clone(MissionItem* mission) override;
 
     public slots:

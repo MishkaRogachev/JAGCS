@@ -1,5 +1,12 @@
 #include "position_mission_item.h"
 
+// Qt
+#include <QGeoCoordinate>
+#include <QDebug>
+
+// Internal
+#include "mission.h"
+
 using namespace domain;
 
 PositionMissionItem::PositionMissionItem(Mission* mission, Command command,
@@ -17,6 +24,26 @@ double PositionMissionItem::latitude() const
 double PositionMissionItem::longitude() const
 {
     return m_longitude;
+}
+
+float PositionMissionItem::azimuth() const
+{
+    QGeoCoordinate endPoint(m_latitude, m_longitude);
+    if (this->sequence() < 1 || !endPoint.isValid()) return 0.0;
+
+    PositionMissionItem* previous = nullptr;
+    for (uint8_t seq = this->sequence() - 1; seq >= 0 ; seq--)
+    {
+        previous = qobject_cast<PositionMissionItem*>(
+                       this->mission()->item(seq));
+        if (!previous) continue;
+
+        QGeoCoordinate startPoint(previous->latitude(), previous->longitude());
+        if (!startPoint.isValid()) return 0.0;
+
+        return startPoint.azimuthTo(endPoint);
+    }
+    return 0.0;
 }
 
 void PositionMissionItem::clone(MissionItem* mission)
