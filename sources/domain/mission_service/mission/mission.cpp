@@ -5,6 +5,7 @@
 
 // Internal
 #include "mission_item_factory.h"
+#include "altitude_mission_item.h"
 
 using namespace domain;
 
@@ -85,6 +86,12 @@ void Mission::addNewMissionItem()
     m_items.append(factory.create(seq == 0 ? MissionItem::Home : seq == 1 ?
                                                  MissionItem::Takeoff :
                                                  MissionItem::Waypoint));
+    AltitudeMissionItem* item = qobject_cast<AltitudeMissionItem*>(m_items.last());
+    if (item)
+    {
+        item->setAltitude(-1 * item->climb());
+    }
+
     emit missionItemsChanged(m_items);
 }
 

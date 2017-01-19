@@ -163,7 +163,7 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
     msgItem.seq = item->sequence();
-    msgItem.autocontinue = item->sequence() < unsigned(mission->count() - 1);
+    msgItem.autocontinue = item->sequence() < mission->count() - 1;
 
     msgItem.command = ::encodeCommand(item->command());
 
@@ -178,8 +178,8 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
                 qobject_cast<ContinueMissionItem*>(altitudeItem);
         if (continueItem)
         {
-            msgItem.param1 = altitudeItem->altitudeChange() ?
-                                 1 : altitudeItem->altitudeChange() < 0 ? -1 : 0;
+            msgItem.param1 = altitudeItem->climb() ?
+                                 1 : altitudeItem->climb() < 0 ? -1 : 0;
         }
 
         PositionMissionItem* positionItem =

@@ -1,5 +1,8 @@
 #include "altitude_mission_item.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "mission.h"
 
@@ -10,13 +13,23 @@ AltitudeMissionItem::AltitudeMissionItem(Mission* mission, Command command,
     MissionItem(mission, command),
     m_altitude(0),
     m_relativeAltitude(relativeAltitude)
-{
-    this->setAltitude(-1 * this->altitudeChange());
-}
+{}
 
 float AltitudeMissionItem::altitude() const
 {
     return m_altitude;
+}
+
+float AltitudeMissionItem::absoluteAltitude() const
+{
+    if (!this->isRelativeAltitude() || this->sequence() == 0)
+        return this->altitude();
+
+    AltitudeMissionItem* home = qobject_cast<AltitudeMissionItem*>(
+                   this->mission()->item(0));
+    if (!home) return 0;
+
+    return home->altitude() + this->altitude();
 }
 
 bool AltitudeMissionItem::isRelativeAltitude() const
@@ -24,23 +37,18 @@ bool AltitudeMissionItem::isRelativeAltitude() const
     return m_relativeAltitude;
 }
 
-float AltitudeMissionItem::altitudeChange() const
+float AltitudeMissionItem::climb() const
 {
-    const uint8_t seq = this->sequence();
-    if (seq < 1) return 0;
+    if (this->sequence() < 1) return 0;
 
     AltitudeMissionItem* previous = nullptr;
-    for (uint8_t prevSeq = seq - 1; prevSeq > 0 ; prevSeq--)
+    for (uint8_t seq = this->sequence() - 1; seq >= 0 ; seq--)
     {
         previous = qobject_cast<AltitudeMissionItem*>(
-                       this->mission()->item(prevSeq));
+                       this->mission()->item(seq));
         if (!previous) continue;
 
-        if (this->isRelativeAltitude() == previous->isRelativeAltitude())
-        {
-            return this->altitude() - previous->altitude();
-        }
-        else return 0; // FIXME: relative altitude
+        return this->absoluteAltitude() - previous->absoluteAltitude();
     }
     return 0;
 }
