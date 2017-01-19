@@ -189,18 +189,19 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
             msgItem.x = positionItem->latitude();
             msgItem.y = positionItem->longitude();
 
-            DirectionMissionItem* directionItem =
-                    qobject_cast<DirectionMissionItem*>(positionItem);
-            if (directionItem)
+            TakeoffMissionItem* takeoffItem =
+                    qobject_cast<TakeoffMissionItem*>(positionItem);
+            if (takeoffItem)
             {
-                msgItem.param4 = directionItem->yaw();
+                msgItem.param1 = takeoffItem->pitch();
+                msgItem.param4 = takeoffItem->azimuth();
+            }
 
-                TakeoffMissionItem* takeoffItem =
-                        qobject_cast<TakeoffMissionItem*>(directionItem);
-                if (takeoffItem)
-                {
-                    msgItem.param1 = takeoffItem->pitch();
-                }
+            LandingMissionItem* landingItem =
+                    qobject_cast<LandingMissionItem*>(positionItem);
+            if (landingItem)
+            {
+                msgItem.param4 = landingItem->azimuth();
             }
 
             WaypointMissionItem* waypointItem =
@@ -301,19 +302,14 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
                 positionItem->setLongitude(msgItem.y);
             }
 
-            DirectionMissionItem* directionItem =
-                    qobject_cast<DirectionMissionItem*>(positionItem);
-            if (directionItem)
+            TakeoffMissionItem* takeoffItem =
+                    qobject_cast<TakeoffMissionItem*>(positionItem);
+            if (takeoffItem)
             {
-                directionItem->setYaw(msgItem.param4);
-
-                TakeoffMissionItem* takeoffItem =
-                        qobject_cast<TakeoffMissionItem*>(directionItem);
-                if (takeoffItem)
-                {
-                    takeoffItem->setPitch(msgItem.param1);
-                }
+                takeoffItem->setPitch(msgItem.param1);
             }
+
+            // Ignore azimuth(yaw) in msgItem.param4
 
             WaypointMissionItem* waypointItem =
                     qobject_cast<WaypointMissionItem*>(positionItem);

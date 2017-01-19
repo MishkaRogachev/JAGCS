@@ -170,22 +170,6 @@ Frame {
                 value: visible ? item.radius : 0
                 onValueChanged: if (!isNaN(value) && visible) item.setRadius(value)
             }
-
-            Label {
-                visible: 'yaw' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Yaw:")
-            }
-
-            SpinBox {
-                visible: 'yaw' in item
-                Layout.fillWidth: true
-                from: 0
-                to: 360
-                value: visible ? item.yaw : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setYaw(value)
-            }
         }
     }
 }

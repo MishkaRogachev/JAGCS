@@ -1,11 +1,11 @@
 #ifndef LANDING_MISSION_ITEM_H
 #define LANDING_MISSION_ITEM_H
 
-#include "direction_mission_item.h"
+#include "position_mission_item.h"
 
 namespace domain
 {
-    class LandingMissionItem: public DirectionMissionItem
+    class LandingMissionItem: public PositionMissionItem
     {
         Q_OBJECT
 
