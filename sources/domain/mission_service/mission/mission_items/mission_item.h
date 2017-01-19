@@ -11,7 +11,7 @@ namespace domain
     {
         Q_OBJECT
 
-        Q_PROPERTY(unsigned sequence READ sequence CONSTANT)
+        Q_PROPERTY(int sequence READ sequence CONSTANT)
         Q_PROPERTY(Mission* mission READ mission CONSTANT)
         Q_PROPERTY(Command command READ command CONSTANT)
 
@@ -33,7 +33,7 @@ namespace domain
 
         MissionItem(Mission* mission, Command command);
 
-        unsigned sequence() const;
+        int sequence() const;
         Q_INVOKABLE bool isFirst() const;
         Q_INVOKABLE bool isLast() const;
 

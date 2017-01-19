@@ -21,7 +21,7 @@ Mission* MissionItem::mission() const
     return m_mission;
 }
 
-unsigned MissionItem::sequence() const
+int MissionItem::sequence() const
 {
     return m_mission->sequence((MissionItem*)this);
 }
