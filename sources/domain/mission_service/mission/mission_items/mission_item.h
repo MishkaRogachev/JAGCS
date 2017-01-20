@@ -7,7 +7,7 @@ namespace domain
 {
     class Mission;
 
-    class MissionItem: public QObject // TODO: separate with inheritance
+    class MissionItem: public QObject // TODO: avalible modes
     {
         Q_OBJECT
 

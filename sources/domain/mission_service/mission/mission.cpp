@@ -107,5 +107,12 @@ void Mission::exchange(int first, int last)
     m_items[first] = m_items[last];
     m_items[last] = item;
 
+    if (first == 0 || last == 0)
+    {
+        MissionItem::Command command = m_items[first]->command();
+        m_items[first]->replaceWithCommand(m_items[last]->command());
+        m_items[last]->replaceWithCommand(command);
+    }
+
     emit missionItemsChanged(m_items);
 }
