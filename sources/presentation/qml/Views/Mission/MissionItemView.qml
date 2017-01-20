@@ -106,6 +106,7 @@ Frame {
 
             RowLayout {
                 SpinBox {
+                    id: altitudeBox
                     visible: 'altitude' in item
                     Layout.fillWidth: true
                     from: -1000
@@ -119,7 +120,13 @@ Frame {
                     Layout.fillWidth: true
                     text: qsTr("Rel.")
                     checked: 'relativeAltitude' in item ? item.relativeAltitude : false
-                    onCheckedChanged: if (visible) item.setRelativeAltitude(checked)
+                    onCheckedChanged: {
+                        if (!visible || checked === item.relativeAltitude) return;
+
+                        altitudeBox.value = item.altitude + (checked ?
+                                    -item.homeAltitude() : item.homeAltitude());
+                        item.setRelativeAltitude(checked)
+                    }
                 }
             }
 
