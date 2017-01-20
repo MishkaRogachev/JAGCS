@@ -20,21 +20,26 @@ float AltitudeMissionItem::altitude() const
     return m_altitude;
 }
 
-float AltitudeMissionItem::absoluteAltitude() const
+bool AltitudeMissionItem::isRelativeAltitude() const
 {
-    if (!this->isRelativeAltitude() || this->sequence() == 0)
-        return this->altitude();
+    return m_relativeAltitude;
+}
 
+float AltitudeMissionItem::homeAltitude() const
+{
     AltitudeMissionItem* home = qobject_cast<AltitudeMissionItem*>(
                    this->mission()->item(0));
     if (!home) return 0;
 
-    return home->altitude() + this->altitude();
+    return home->altitude();
 }
 
-bool AltitudeMissionItem::isRelativeAltitude() const
+float AltitudeMissionItem::absoluteAltitude() const
 {
-    return m_relativeAltitude;
+    if (m_relativeAltitude)
+        return this->homeAltitude() + this->altitude();
+
+    return this->altitude();
 }
 
 float AltitudeMissionItem::climb() const

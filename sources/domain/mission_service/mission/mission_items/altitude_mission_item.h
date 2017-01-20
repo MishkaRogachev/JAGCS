@@ -19,8 +19,10 @@ namespace domain
                                      bool relativeAltitude);
 
         float altitude() const;
-        float absoluteAltitude() const;
         bool isRelativeAltitude() const;
+
+        Q_INVOKABLE float homeAltitude() const;
+        Q_INVOKABLE float absoluteAltitude() const;
 
         Q_INVOKABLE float climb() const;
 
