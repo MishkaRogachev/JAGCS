@@ -21,7 +21,10 @@ public:
 MissionService::MissionService(QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    qRegisterMetaType<Mission>("Mission");
+    qRegisterMetaType<MissionItem>("MissionItem");
+}
 
 MissionService::~MissionService()
 {
