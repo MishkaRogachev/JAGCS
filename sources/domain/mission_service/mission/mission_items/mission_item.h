@@ -40,6 +40,7 @@ namespace domain
         Mission* mission() const;
 
         Command command() const;
+        Q_INVOKABLE QList<domain::MissionItem::Command> avalibleCommands() const;
 
         bool isCurrent() const;
 

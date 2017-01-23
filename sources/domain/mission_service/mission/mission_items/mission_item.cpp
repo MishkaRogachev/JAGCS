@@ -41,6 +41,22 @@ MissionItem::Command MissionItem::command() const
     return m_command;
 }
 
+QList<MissionItem::Command> MissionItem::avalibleCommands() const
+{
+    QList<MissionItem::Command> list;
+
+    if (this->isFirst())
+    {
+        list << Home;
+    }
+    else
+    {
+        list << Takeoff << Waypoint << Loiter << Continue << Return << Landing;
+    }
+
+    return list;
+}
+
 bool MissionItem::isCurrent() const
 {
     return m_current;
