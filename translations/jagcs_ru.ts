@@ -37,27 +37,27 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="22"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="24"/>
         <source>UI size</source>
         <translation>Размер интерфейса</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="46"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="48"/>
         <source>Palette</source>
         <translation>Палитра</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="67"/>
         <source>Indoor</source>
         <translation>Дневная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="70"/>
         <source>Outdoor</source>
         <translation>Ночная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="74"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="76"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -119,91 +119,82 @@
 <context>
     <name>MissionItemView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="13"/>
         <source>UNKNOWN</source>
-        <translation>НЕИЗВЕСТНО</translation>
+        <translation type="vanished">НЕИЗВЕСТНО</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="13"/>
         <source>HOME</source>
-        <translation>ДОМ</translation>
+        <translation type="vanished">ДОМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="13"/>
         <source>TAKEOFF</source>
-        <translation>ВЗЛЁТ</translation>
+        <translation type="vanished">ВЗЛЁТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="14"/>
         <source>WAYPOINT</source>
-        <translation>ПУТЕВАЯ ТОЧКА</translation>
+        <translation type="vanished">ПУТЕВАЯ ТОЧКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="14"/>
         <source>LOITER</source>
-        <translation>КРУГ</translation>
+        <translation type="vanished">КРУГ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="14"/>
         <source>CONTINUE</source>
-        <translation>ПРОДЛЕНИЕ</translation>
+        <translation type="vanished">ПРОДЛЕНИЕ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="15"/>
         <source>RETURN</source>
-        <translation>ВОЗВРАТ</translation>
+        <translation type="vanished">ВОЗВРАТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="15"/>
         <source>LANDING</source>
-        <translation>ПОСАДКА</translation>
+        <translation type="vanished">ПОСАДКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="29"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="27"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="71"/>
         <source>Lat.:</source>
         <translation>Шир.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="88"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="86"/>
         <source>Lon.:</source>
         <translation>Дол.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="102"/>
         <source>Alt.:</source>
         <translation>Выс.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="120"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="119"/>
         <source>Rel.</source>
         <translation>Относ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="130"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="135"/>
         <source>Pitch:</source>
         <translation>Тангаж:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="146"/>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="162"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="151"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="167"/>
         <source>Radius:</source>
         <translation>Радиус:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="178"/>
         <source>Yaw:</source>
-        <translation>Курс:</translation>
+        <translation type="vanished">Курс:</translation>
     </message>
 </context>
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="128"/>
         <source>Add Item</source>
         <translation>Добавить элемент</translation>
     </message>
@@ -354,14 +345,63 @@
 <context>
     <name>presentation::MissionPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="74"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="76"/>
         <source>Mission</source>
         <translation>Задание</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="131"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="135"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
+    </message>
+</context>
+<context>
+    <name>presentation::MissionViewHelper</name>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="14"/>
+        <source>UNKNOWN</source>
+        <translation>НЕИЗВЕСТНО</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="15"/>
+        <source>HOME</source>
+        <translation>ДОМ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="16"/>
+        <source>TAKEOFF</source>
+        <translation>ВЗЛЁТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="17"/>
+        <source>WAYPOINT</source>
+        <translation>ПУТЕВАЯ ТОЧКА</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="18"/>
+        <source>LOITER</source>
+        <translation>КРУГ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="19"/>
+        <source>CONTINUE</source>
+        <translation>ПРОДЛЕНИЕ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="20"/>
+        <source>RETURN</source>
+        <translation>ВОЗВРАТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="21"/>
+        <source>LANDING</source>
+        <translation>ПОСАДКА</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="36"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="44"/>
+        <source>ERROR</source>
+        <translation>ОШИБКА</translation>
     </message>
 </context>
 <context>
