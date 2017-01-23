@@ -151,38 +151,38 @@
         <translation type="vanished">ПОСАДКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="27"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="28"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="73"/>
         <source>Lat.:</source>
         <translation>Шир.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="86"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="88"/>
         <source>Lon.:</source>
         <translation>Дол.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="102"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="104"/>
         <source>Alt.:</source>
         <translation>Выс.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="121"/>
         <source>Rel.</source>
         <translation>Относ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="137"/>
         <source>Pitch:</source>
         <translation>Тангаж:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="151"/>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="167"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="153"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="169"/>
         <source>Radius:</source>
         <translation>Радиус:</translation>
     </message>
@@ -194,7 +194,7 @@
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="128"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="138"/>
         <source>Add Item</source>
         <translation>Добавить элемент</translation>
     </message>
@@ -398,8 +398,14 @@
         <translation>ПОСАДКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="36"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="44"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="31"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="45"/>
+        <source>EMPTY</source>
+        <translation>ПУСТОЙ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="37"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
         <source>ERROR</source>
         <translation>ОШИБКА</translation>
     </message>
