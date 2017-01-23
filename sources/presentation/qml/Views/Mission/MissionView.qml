@@ -7,6 +7,8 @@ import "qrc:/Controls"
 Pane {
     id: root
 
+    property QtObject helper
+
     property alias missionNames: missionBox.model
     property var vehicleNames: []
 
@@ -111,6 +113,9 @@ Pane {
 
                         MissionItemView {
                             item: modelData
+                            avalibleCommands: helper.avalibleCommands(modelData)
+                            command: helper.command(modelData)
+                            onSetCommand: helper.setCommand(modelData, command)
                             onRemove: removeMissionItem(modelData)
                         }
                     }

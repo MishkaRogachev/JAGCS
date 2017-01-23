@@ -9,13 +9,11 @@ Frame {
 
     property QtObject item
 
-    property var avalibleCommands: [
-        qsTr("UNKNOWN"), qsTr("HOME"), qsTr("TAKEOFF"),
-        qsTr("WAYPOINT"), qsTr("LOITER"), qsTr("CONTINUE"),
-        qsTr("RETURN"), qsTr("LANDING") ]
-    // TODO: avalibleCommands enum handling
+    property var avalibleCommands
+    property string command
 
     signal remove()
+    signal setCommand(string command)
 
     function pick() {
         if (pickButton.visible) pickButton.pick();
@@ -31,8 +29,8 @@ Frame {
 
             ComboBox {
                 model: avalibleCommands
-                currentIndex: item.command
-                onCurrentIndexChanged: item.replaceWithCommand(currentIndex)
+                currentIndex: avalibleCommands.indexOf(command)
+                onCurrentTextChanged: root.setCommand(currentText)
             }
 
             MapPickButton {

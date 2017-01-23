@@ -12,6 +12,7 @@
 #include "vehicle.h"
 
 #include "mission_map_presenter.h"
+#include "mission_view_helper.h"
 
 using namespace presentation;
 
@@ -27,6 +28,7 @@ public:
     QMap<uint8_t, QString> vehicleAliases;
 
     MissionMapPresenter* map;
+    MissionViewHelper helper;
 };
 
 MissionPresenter::MissionPresenter(domain::MissionService* missionService,
@@ -110,6 +112,8 @@ void MissionPresenter::updateTotalCount(int totalCount)
 void MissionPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
+
+    this->setViewProperty(PROPERTY(helper), QVariant::fromValue(&d->helper));
 
     connect(view, SIGNAL(missionSelected(QString)), this, SLOT(onMissionSelected(QString)));
     connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
