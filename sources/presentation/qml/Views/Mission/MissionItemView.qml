@@ -111,7 +111,7 @@ Frame {
                     Layout.fillWidth: true
                     from: -1000
                     to: 20000
-                    value: visible ? item.altitude : 0
+                    value: visible ? item.altitude.toFixed(2) : 0
                     onValueChanged: if (!isNaN(value) && visible) item.setAltitude(value)
                 }
 
@@ -142,7 +142,7 @@ Frame {
                 Layout.fillWidth: true
                 from: 0
                 to: 360
-                value: visible ? item.pitch : 0
+                value: visible ? item.pitch.toFixed(2) : 0
                 onValueChanged: if (!isNaN(value) && visible) item.setPitch(value)
             }
 
@@ -158,7 +158,7 @@ Frame {
                 Layout.fillWidth: true
                 from: 0
                 to: 5000
-                value: visible ? item.acceptanceRadius : 0
+                value: visible ? item.acceptanceRadius.toFixed(2) : 0
                 onValueChanged: if (!isNaN(value) && visible) item.setAcceptanceRadius(value)
             }
 
@@ -173,8 +173,8 @@ Frame {
                 visible: 'radius' in item
                 Layout.fillWidth: true
                 from: 0
-                to: 360
-                value: visible ? item.radius : 0
+                to: 5000
+                value: visible ? item.radius.toFixed(2) : 0
                 onValueChanged: if (!isNaN(value) && visible) item.setRadius(value)
             }
         }
