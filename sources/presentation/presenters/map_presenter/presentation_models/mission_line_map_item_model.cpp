@@ -7,6 +7,7 @@
 // Internal
 #include "mission.h"
 #include "position_mission_item.h"
+#include "return_mission_item.h"
 
 using namespace presentation;
 
@@ -41,6 +42,13 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
                                           positionItem->longitude());
                 if (coordinate.isValid()) line.append(
                             QVariant::fromValue(coordinate));
+            }
+
+            domain::ReturnMissionItem* returnItem =
+                    qobject_cast<domain::ReturnMissionItem*>(item);
+            if (returnItem && !line.isEmpty())
+            {
+                line.append(line[0]); // Return to home line
             }
         }
         return line;
