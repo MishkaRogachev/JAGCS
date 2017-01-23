@@ -27,60 +27,61 @@ Pane {
     signal downloadMission(string name)
     signal uploadMission(string name)
 
+    padding: 0
+
     MissionMapView {
         id: map
         objectName: "map"
-        anchors.top: parent.top
+        anchors.top: topbar.bottom
         anchors.bottom: parent.bottom
-        anchors.left: pane.right
+        anchors.left: sidebar.right
         anchors.right: parent.right
     }
 
-    Pane {
-        id: pane
+    Item {
+        id: topbar
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
         anchors.left: parent.left
+        anchors.right: parent.right
+        height: palette.controlBaseSize * 1.5
 
-        ColumnLayout {
-            height: parent.height
+        RowLayout {
+            anchors.fill: parent
 
-            RowLayout {
-                ComboBox {
-                    id: missionBox
-                    Layout.fillWidth: true
-                    onModelChanged: {
-                        currentIndex = -1;
-                        currentIndex = count - 1;
-                    }
-                    onCurrentTextChanged: missionSelected(currentText)
+            ComboBox {
+                id: missionBox
+                Layout.fillWidth: true
+                onModelChanged: {
+                    currentIndex = -1;
+                    currentIndex = count - 1;
                 }
+                onCurrentTextChanged: missionSelected(currentText)
+            }
 
-                Button {
-                    iconSource: "qrc:/icons/add.svg"
-                    onClicked: addMission()
-                }
+            Button {
+                iconSource: "qrc:/icons/add.svg"
+                onClicked: addMission()
+            }
 
-                Button {
-                    iconSource: "qrc:/icons/remove.svg"
-                    iconColor: palette.negativeColor
-                    enabled: missionBox.currentIndex != -1
-                    onClicked: removeMission()
-                }
+            Button {
+                iconSource: "qrc:/icons/remove.svg"
+                iconColor: palette.negativeColor
+                enabled: missionBox.currentIndex != -1
+                onClicked: removeMission()
+            }
 
-                MenuButton {
-                    iconSource: "qrc:/icons/download.svg"
-                    model: vehicleNames
-                    enabled: missionBox.currentIndex != -1
-                    onTriggered: downloadMission(data)
-                }
+            MenuButton {
+                iconSource: "qrc:/icons/download.svg"
+                model: vehicleNames
+                enabled: missionBox.currentIndex != -1
+                onTriggered: downloadMission(data)
+            }
 
-                MenuButton {
-                    iconSource: "qrc:/icons/upload.svg"
-                    model: vehicleNames
-                    enabled: missionBox.currentIndex != -1
-                    onTriggered: uploadMission(data)
-                }
+            MenuButton {
+                iconSource: "qrc:/icons/upload.svg"
+                model: vehicleNames
+                enabled: missionBox.currentIndex != -1
+                onTriggered: uploadMission(data)
             }
 
             ProgressBar {
@@ -89,41 +90,45 @@ Pane {
                 to: totalCount
                 value: currentCount
             }
+        }
+    }
 
-            Flickable {
-                id: flickable
-                Layout.preferredWidth: contentWidth
-                Layout.fillHeight: true
-                clip: true
-                contentWidth: column.width
-                contentHeight: column.height
+    Flickable {
+        id: sidebar
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: contentWidth
+        clip: true
+        contentWidth: column.width
+        contentHeight: column.height
 
-                ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: ScrollBar {}
 
-                ColumnLayout {
-                    id: column
+        ColumnLayout {
+            id: column
 
-                    Repeater {
-                        id: repeater
-                        model: missionItems
-                        onModelChanged: {
-                            if (column.height > flickable.height)
-                                flickable.contentY = column.height - flickable.height;
-                        }
+            Repeater {
+                id: repeater
+                model: missionItems
+                onModelChanged: {
+                    if (column.height > sidebar.height)
+                        sidebar.contentY = column.height - sidebar.height;
+                }
 
-                        MissionItemView {
-                            item: modelData
-                            avalibleCommands: helper.avalibleCommands(modelData)
-                            command: helper.command(modelData)
-                            onSetCommand: helper.setCommand(modelData, command)
-                            onRemove: removeMissionItem(modelData)
-                        }
-                    }
+                MissionItemView {
+                    item: modelData
+                    Layout.preferredWidth: column.width
+                    avalibleCommands: helper ? helper.avalibleCommands(modelData) : 0
+                    command: helper ? helper.command(modelData) : 0
+                    onSetCommand: if (helper) helper.setCommand(modelData, command)
+                    onRemove: if (helper) removeMissionItem(modelData)
                 }
             }
 
             Button {
                 id: addButton
+                Layout.preferredWidth: palette.controlBaseSize * 11
                 Layout.fillWidth: true
                 text: qsTr("Add Item")
                 iconSource: "qrc:/icons/add.svg"

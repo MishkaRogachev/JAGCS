@@ -20,6 +20,7 @@ Frame {
     }
 
     ColumnLayout {
+        width: parent.width
 
         RowLayout {
             Label {
@@ -29,6 +30,7 @@ Frame {
 
             ComboBox {
                 model: avalibleCommands
+                Layout.fillWidth: true
                 currentIndex: avalibleCommands.indexOf(command)
                 onCurrentTextChanged: root.setCommand(currentText)
             }
