@@ -10,7 +10,7 @@ Pane {
     property QtObject helper
 
     property alias missionNames: missionBox.model
-    property var vehicleNames: []
+    property alias vehicleNames: vehicleBox.model
 
     property int currentCount: 0
     property int totalCount: 0
@@ -21,11 +21,12 @@ Pane {
     signal addMission()
     signal removeMission()
 
+    signal vehicleSelected(string name)
+    signal downloadMission()
+    signal uploadMission()
+
     signal addMissionItem()
     signal removeMissionItem(QtObject item)
-
-    signal downloadMission(string name)
-    signal uploadMission(string name)
 
     padding: 0
 
@@ -43,7 +44,9 @@ Pane {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: palette.controlBaseSize * 1.5
+        anchors.leftMargin: 6
+        anchors.rightMargin: 6
+        height: palette.controlBaseSize + 12
 
         RowLayout {
             anchors.fill: parent
@@ -70,18 +73,26 @@ Pane {
                 onClicked: removeMission()
             }
 
-            MenuButton {
-                iconSource: "qrc:/icons/download.svg"
-                model: vehicleNames
-                enabled: missionBox.currentIndex != -1
-                onTriggered: downloadMission(data)
+            ComboBox {
+                id: vehicleBox
+                Layout.fillWidth: true
+                onModelChanged: {
+                    currentIndex = -1;
+                    currentIndex = count - 1;
+                }
+                onCurrentTextChanged: vehicleSelected(currentText)
             }
 
-            MenuButton {
+            Button {
+                iconSource: "qrc:/icons/download.svg"
+                enabled: missionBox.currentIndex != -1 && vehicleBox.currentIndex != -1
+                onClicked: downloadMission()
+            }
+
+            Button {
                 iconSource: "qrc:/icons/upload.svg"
-                model: vehicleNames
-                enabled: missionBox.currentIndex != -1
-                onTriggered: uploadMission(data)
+                enabled: missionBox.currentIndex != -1 && vehicleBox.currentIndex != -1
+                onClicked: uploadMission()
             }
 
             ProgressBar {

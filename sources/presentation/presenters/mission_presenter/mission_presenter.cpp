@@ -83,6 +83,7 @@ void MissionPresenter::updateMissions()
 void MissionPresenter::updateVehicles()
 {
     QStringList vehicleNames = d->vehicleAliases.values();
+    vehicleNames.append(tr("Unassigned"));
     this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
 }
 
@@ -118,10 +119,13 @@ void MissionPresenter::connectView(QObject* view)
     connect(view, SIGNAL(missionSelected(QString)), this, SLOT(onMissionSelected(QString)));
     connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
     connect(view, SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
+
+    connect(view, SIGNAL(vehicleSelected(QString)), this, SLOT(onVehicleSelected(QString)));
+    connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
+    connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
+
     connect(view, SIGNAL(addMissionItem()), this, SLOT(onAddMissionItem()));
     connect(view, SIGNAL(removeMissionItem(QObject*)), this, SLOT(onRemoveMissionItem(QObject*)));
-    connect(view, SIGNAL(downloadMission(QString)), this, SLOT(onDownloadMission(QString)));
-    connect(view, SIGNAL(uploadMission(QString)), this, SLOT(onUploadMission(QString)));
 
     this->updateMissions();
     this->updateVehicles();
@@ -184,7 +188,7 @@ void MissionPresenter::onRemoveMissionItem(QObject* item)
                 qobject_cast<domain::MissionItem*>(item));
 }
 
-void MissionPresenter::onDownloadMission(const QString& vehicleName)
+void MissionPresenter::onVehicleSelected(const QString& vehicleName)
 {
     uint8_t vehicleId = d->vehicleAliases.key(vehicleName);
 
@@ -192,16 +196,16 @@ void MissionPresenter::onDownloadMission(const QString& vehicleName)
     {
         d->missionService->setVehicleForMission(vehicleId, d->selectedMission);
     }
-
-    d->missionService->commandDownloadMission(vehicleId);
 }
 
-void MissionPresenter::onUploadMission(const QString& vehicleName)
+void MissionPresenter::onDownloadMission()
 {
     if (!d->selectedMission) return;
+    d->missionService->downloadMission(d->selectedMission);
+}
 
-    uint8_t vehicleId = d->vehicleAliases.key(vehicleName);
-
-    d->missionService->setVehicleForMission(vehicleId, d->selectedMission);
-    d->missionService->commandUploadMission(vehicleId);
+void MissionPresenter::onUploadMission()
+{
+    if (!d->selectedMission) return;
+    d->missionService->uploadMission(d->selectedMission);
 }
