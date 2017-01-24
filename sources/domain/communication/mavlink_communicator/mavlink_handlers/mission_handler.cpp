@@ -73,9 +73,9 @@ MissionHandler::MissionHandler(MissionService* missionService,
     AbstractMavLinkHandler(communicator),
     m_missionService(missionService)
 {
-    connect(missionService, &MissionService::commandDownloadMission,
+    connect(missionService, &MissionService::requestMission,
             this, &MissionHandler::requestMission);
-    connect(missionService, &MissionService::commandUploadMission,
+    connect(missionService, &MissionService::sendMission,
             this, &MissionHandler::sendMissionCount);
 }
 

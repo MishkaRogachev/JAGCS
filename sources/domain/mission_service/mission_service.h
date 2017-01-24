@@ -30,7 +30,11 @@ namespace domain
         void removeMission(Mission* mission);
         void deleteMission(Mission* mission);
 
-        void setVehicleForMission(uint8_t vehicleId, Mission* mission) const;
+        void setVehicleForMission(uint8_t vehicleId, Mission* mission);
+        void onVehicleAdded(uint8_t vehicleId);
+
+        void downloadMission(Mission* mission);
+        void uploadMission(Mission* mission);
 
         void setCurrentCount(int currentCount);
         void setTotalCount(int totalCount);
@@ -42,8 +46,9 @@ namespace domain
         void currentCountChanged(int currentCount);
         void totalCountChanged(int totalCount);
 
-        void commandDownloadMission(uint8_t vehicleId);
-        void commandUploadMission(uint8_t vehicleId);
+        // TODO: remove from interface
+        void requestMission(uint8_t id);
+        void sendMission(uint8_t id);
 
     private:
         class Impl;

@@ -94,8 +94,7 @@ void MissionService::deleteMission(Mission* mission)
     delete mission;
 }
 
-void MissionService::setVehicleForMission(uint8_t vehicleId,
-                                          Mission* mission) const
+void MissionService::setVehicleForMission(uint8_t vehicleId, Mission* mission)
 {
     if (mission)
     {
@@ -105,6 +104,21 @@ void MissionService::setVehicleForMission(uint8_t vehicleId,
     {
         d->vehicleMissions.remove(vehicleId);
     }
+}
+
+void MissionService::onVehicleAdded(uint8_t vehicleId)
+{
+    this->downloadMission(this->requestMissionForVehicle(vehicleId));
+}
+
+void MissionService::downloadMission(Mission* mission)
+{
+    emit requestMission(d->vehicleMissions.key(mission, 0));
+}
+
+void MissionService::uploadMission(Mission* mission)
+{
+    emit sendMission(d->vehicleMissions.key(mission, 0));
 }
 
 void MissionService::setCurrentCount(int currentCount)
