@@ -6,6 +6,7 @@
 
 // Internal
 #include "waypoint_mission_item.h"
+#include "loiter_mission_item.h"
 
 using namespace presentation;
 
@@ -54,6 +55,13 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
         if (waypointItem) return waypointItem->acceptanceRadius();
         else return 0;
     }
+    case ItemRadius:
+    {
+        domain::LoiterMissionItem* loiterItem =
+                qobject_cast<domain::LoiterMissionItem*>(item);
+        if (loiterItem) return loiterItem->radius();
+        else return 0;
+    }
     default:
         return QVariant();
     }
@@ -81,6 +89,14 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
             connect(waypointItem,
                     &domain::WaypointMissionItem::acceptanceRadiusChanged,
                     this, &MissionPointMapItemModel::onAcceptanceRadiusChanged);
+        }
+
+        domain::LoiterMissionItem* loiterItem =
+                qobject_cast<domain::LoiterMissionItem*>(positionItem);
+        if (loiterItem)
+        {
+            connect(loiterItem, &domain::LoiterMissionItem::radiusChanged,
+                    this, &MissionPointMapItemModel::onRadiusChanged);
         }
     }
 
@@ -131,6 +147,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemSequenceRole] = "itemSeq";
     roles[ItemIconRole] = "itemIcon";
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
+    roles[ItemRadius] = "itemRadius";
 
     return roles;
 }
@@ -162,4 +179,11 @@ void MissionPointMapItemModel::onAcceptanceRadiusChanged()
     QModelIndex index = this->missionItemIndex(
                             qobject_cast<domain::MissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemAcceptanceRadius });
+}
+
+void MissionPointMapItemModel::onRadiusChanged()
+{
+    QModelIndex index = this->missionItemIndex(
+                            qobject_cast<domain::MissionItem*>(this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { ItemRadius });
 }

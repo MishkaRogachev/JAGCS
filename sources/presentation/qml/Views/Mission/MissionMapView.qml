@@ -10,12 +10,16 @@ MapView {
     property var pointModel
     property var vehicleModel
 
-    MissionCircleMapOverlayView {
+    MissionLineMapOverlayView {
+        model: lineModel
+    }
+
+    RadiusMapOverlayView {
         model: pointModel
     }
 
-    MissionLineMapOverlayView {
-        model: lineModel
+    AcceptanceRadiusMapOverlayView {
+        model: pointModel
     }
 
     MissionPointMapOverlayView {
