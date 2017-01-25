@@ -12,6 +12,8 @@ Pane {
     property alias missionNames: missionBox.model
     property alias vehicleNames: vehicleBox.model
 
+    property alias selectedVehicle: vehicleBox.currentIndex
+
     property int currentCount: 0
     property int totalCount: 0
 

@@ -82,9 +82,17 @@ void MissionPresenter::updateMissions()
 
 void MissionPresenter::updateVehicles()
 {
+    disconnect(m_view, SIGNAL(vehicleSelected(QString)),
+               this, SLOT(onVehicleSelected(QString)));
+
     QStringList vehicleNames = d->vehicleAliases.values();
-    vehicleNames.append(tr("Unassigned"));
+    vehicleNames.prepend(tr("Unassigned"));
     this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
+
+    connect(m_view, SIGNAL(vehicleSelected(QString)),
+            this, SLOT(onVehicleSelected(QString)));
+
+    if (d->selectedMission) this->updateSelectedVehicle();
 }
 
 void MissionPresenter::updateMissionItems()
@@ -98,6 +106,21 @@ void MissionPresenter::updateMissionItems()
     }
 
     this->setViewProperty(PROPERTY(missionItems), QVariant::fromValue(list));
+}
+
+void MissionPresenter::updateSelectedVehicle()
+{
+    uint8_t id = d->missionService->vehicleForMission(d->selectedMission);
+    if (id)
+    {
+        int index = d->vehicleAliases.values().indexOf(
+                        d->vehicleAliases[id]) + 1;
+        this->setViewProperty(PROPERTY(selectedVehicle), index);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(selectedVehicle), 0);
+    }
 }
 
 void MissionPresenter::updateCurrentCount(int currentCount)
@@ -161,6 +184,7 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
     {
         connect(d->selectedMission, &domain::Mission::missionItemsChanged,
                 this, &MissionPresenter::updateMissionItems);
+        this->updateSelectedVehicle();
     }
     this->updateMissionItems();
 }
@@ -190,11 +214,16 @@ void MissionPresenter::onRemoveMissionItem(QObject* item)
 
 void MissionPresenter::onVehicleSelected(const QString& vehicleName)
 {
-    uint8_t vehicleId = d->vehicleAliases.key(vehicleName);
+    if (!d->selectedMission) return;
 
-    if (d->selectedMission)
+    if (d->vehicleAliases.values().contains(vehicleName))
     {
-        d->missionService->setVehicleForMission(vehicleId, d->selectedMission);
+        d->missionService->assignMission(d->selectedMission,
+                                         d->vehicleAliases.key(vehicleName));
+    }
+    else
+    {
+        d->missionService->unassignMission(d->selectedMission);
     }
 }
 

@@ -30,7 +30,9 @@ namespace domain
         void removeMission(Mission* mission);
         void deleteMission(Mission* mission);
 
-        void setVehicleForMission(uint8_t vehicleId, Mission* mission);
+        void assignMission(Mission* mission, uint8_t vehicleId);
+        void unassignMission(Mission* mission);
+
         void onVehicleAdded(uint8_t vehicleId);
 
         void downloadMission(Mission* mission);

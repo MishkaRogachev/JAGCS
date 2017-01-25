@@ -25,6 +25,7 @@ namespace presentation
         void updateMissions();
         void updateVehicles();
         void updateMissionItems();
+        void updateSelectedVehicle();
 
         void updateCurrentCount(int currentCount);
         void updateTotalCount(int totalCount);

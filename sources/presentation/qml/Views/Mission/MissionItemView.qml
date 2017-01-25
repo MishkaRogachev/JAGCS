@@ -31,7 +31,8 @@ Frame {
             ComboBox {
                 model: avalibleCommands
                 Layout.fillWidth: true
-                currentIndex: avalibleCommands.indexOf(command)
+                currentIndex: avalibleCommands ?
+                                  avalibleCommands.indexOf(command) : -1
                 onCurrentTextChanged: root.setCommand(currentText)
             }
 

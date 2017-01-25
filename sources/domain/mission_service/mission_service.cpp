@@ -38,7 +38,7 @@ Mission* MissionService::missionForVehicle(uint8_t vehicleId) const
 
 uint8_t MissionService::vehicleForMission(Mission* mission) const
 {
-    return d->vehicleMissions.key(mission);
+    return d->vehicleMissions.key(mission, 0);
 }
 
 const QList<Mission*>& MissionService::missions() const
@@ -94,7 +94,7 @@ void MissionService::deleteMission(Mission* mission)
     delete mission;
 }
 
-void MissionService::setVehicleForMission(uint8_t vehicleId, Mission* mission)
+void MissionService::assignMission(Mission* mission, uint8_t vehicleId)
 {
     if (mission)
     {
@@ -104,6 +104,11 @@ void MissionService::setVehicleForMission(uint8_t vehicleId, Mission* mission)
     {
         d->vehicleMissions.remove(vehicleId);
     }
+}
+
+void MissionService::unassignMission(Mission* mission)
+{
+    d->vehicleMissions.remove(d->vehicleMissions.key(mission));
 }
 
 void MissionService::onVehicleAdded(uint8_t vehicleId)
