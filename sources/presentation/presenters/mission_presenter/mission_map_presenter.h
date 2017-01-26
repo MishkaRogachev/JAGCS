@@ -1,24 +1,25 @@
 #ifndef MISSION_MAP_PRESENTER_H
 #define MISSION_MAP_PRESENTER_H
 
-#include "flight_map_presenter.h"
+#include "map_presenter.h"
 
 namespace domain
 {
     class MissionService;
     class Mission;
+    class VehicleService;
 }
 
 namespace presentation
 {
-    class MissionMapPresenter: public FlightMapPresenter
+    class MissionMapPresenter: public MapPresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionMapPresenter(domain::MissionService* missionService,
-                                     domain::VehicleService* vehicleService,
-                                     QObject* parent = nullptr);
+        MissionMapPresenter(domain::MissionService* missionService,
+                            domain::VehicleService* vehicleService,
+                            QObject* parent = nullptr);
         ~MissionMapPresenter() override;
 
     protected:

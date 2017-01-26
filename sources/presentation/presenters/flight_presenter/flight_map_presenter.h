@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    class MissionService;
     class VehicleService;
 }
 
@@ -15,7 +16,8 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit FlightMapPresenter(domain::VehicleService* vehicleService,
+        explicit FlightMapPresenter(domain::MissionService* missionService,
+                                    domain::VehicleService* vehicleService,
                                     QObject* parent = nullptr);
         ~FlightMapPresenter() override;
 
@@ -23,6 +25,9 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
+        void onMissionsChanged();
+        void onMissionItemsChanged();
+
         void onVehicleAdded(uint8_t id);
         void onVehicleRemoved(uint8_t id);
 

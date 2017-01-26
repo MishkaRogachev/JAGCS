@@ -19,19 +19,16 @@ public:
 
     MissionLineMapItemModel lineModel;
     MissionPointMapItemModel pointModel;
-
-    Impl(domain::MissionService* missionService):
-        missionService(missionService),
-        lineModel(missionService)
-    {}
 };
 
 MissionMapPresenter::MissionMapPresenter(domain::MissionService* missionService,
                                          domain::VehicleService* vehicleService,
                                          QObject* parent):
-    FlightMapPresenter(vehicleService, parent),
-    d(new Impl(missionService))
+    MapPresenter(parent),
+    d(new Impl())
 {
+    d->missionService = missionService;
+
     connect(missionService, &domain::MissionService::missionAdded,
             this, &MissionMapPresenter::onMissionAdded);
     connect(missionService, &domain::MissionService::missionRemoved,
@@ -48,7 +45,7 @@ MissionMapPresenter::~MissionMapPresenter()
 
 void MissionMapPresenter::connectView(QObject* view)
 {
-    FlightMapPresenter::connectView(view);
+    MapPresenter::connectView(view);
 
     this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));

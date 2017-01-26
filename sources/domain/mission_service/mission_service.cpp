@@ -30,6 +30,19 @@ const QList<Mission*>& MissionService::missions() const
     return d->missions;
 }
 
+QList<Mission*> MissionService::assignedMissions() const
+{
+    QList<Mission*> assigned;
+
+    for (Mission* mission: d->missions)
+    {
+        if (mission->assignment()->vehicle())
+            assigned.append(mission);
+    }
+
+    return assigned;
+}
+
 Mission* MissionService::missionForVehicleId(uint8_t id)
 {
     for (Mission* mission: d->missions)

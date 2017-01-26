@@ -16,6 +16,7 @@ namespace domain
         ~MissionService() override;
 
         const QList<Mission*>& missions() const;
+        QList<Mission*> assignedMissions() const;
 
         Mission* missionForVehicleId(uint8_t id);
 

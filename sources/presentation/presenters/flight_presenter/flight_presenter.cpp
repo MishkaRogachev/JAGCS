@@ -25,7 +25,8 @@ public:
     FlightMapPresenter* map;
 };
 
-FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
+FlightPresenter::FlightPresenter(domain::MissionService* missionService,
+                                 domain::VehicleService* vehicleService,
                                  QObject* object):
     BasePresenter(object),
     d(new Impl())
@@ -33,7 +34,7 @@ FlightPresenter::FlightPresenter(domain::VehicleService* vehicleService,
     d->vehicleService = vehicleService;
 
     d->video = new VideoPresenter(this);
-    d->map = new FlightMapPresenter(vehicleService, this);
+    d->map = new FlightMapPresenter(missionService, vehicleService, this);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &FlightPresenter::onVehicleAdded);

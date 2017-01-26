@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    class MissionService;
     class VehicleService;
 }
 
@@ -15,7 +16,9 @@ namespace presentation
         Q_OBJECT
 
     public:
-        FlightPresenter(domain::VehicleService* vehicleService, QObject* object);
+        FlightPresenter(domain::MissionService* missionService,
+                        domain::VehicleService* vehicleService,
+                        QObject* object);
         ~FlightPresenter() override;
 
     public slots:
