@@ -21,7 +21,7 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SYS_STATUS) return;
 
-    Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
 
     mavlink_sys_status_t status;
     mavlink_msg_sys_status_decode(&message, &status);

@@ -19,7 +19,7 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_VFR_HUD) return;
 
-    Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
 
     mavlink_vfr_hud_t vfrHud;
     mavlink_msg_vfr_hud_decode(&message, &vfrHud);

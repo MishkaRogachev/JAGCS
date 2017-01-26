@@ -52,7 +52,7 @@ QList<uint8_t> VehicleService::vehileIds() const
     return d->vehicles.keys();
 }
 
-Vehicle* VehicleService::requestVehicle(uint8_t id)
+Vehicle* VehicleService::forceVehicle(uint8_t id)
 {
     if (!d->vehicles.contains(id))
     {

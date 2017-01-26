@@ -71,7 +71,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
-    Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
 
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);

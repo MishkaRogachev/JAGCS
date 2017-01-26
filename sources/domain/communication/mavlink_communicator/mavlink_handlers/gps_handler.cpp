@@ -38,7 +38,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
 
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);

@@ -24,7 +24,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    Vehicle* vehicle = m_vehicleService->requestVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
 
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
