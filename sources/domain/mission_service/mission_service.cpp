@@ -64,6 +64,7 @@ void MissionService::downloadMission(Mission* mission)
 {
     if (!mission->assignment()->vehicle()) return;
 
+    mission->assignment()->setStatus(MissionVehicle::Downloading);
     emit requestMission(mission->assignment()->vehicleId());
 }
 
@@ -71,5 +72,6 @@ void MissionService::uploadMission(Mission* mission)
 {
     if (!mission->assignment()->vehicle()) return;
 
+    mission->assignment()->setStatus(MissionVehicle::Uploading);
     emit sendMission(mission->assignment()->vehicleId());
 }

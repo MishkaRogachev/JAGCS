@@ -224,12 +224,18 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
         }
     }
 
-    mission->assignment()->setCurrentProgress(item->sequence());
-
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
                                     &message, &msgItem);
     m_communicator->sendMessageAllLinks(message);
+
+    mission->assignment()->setCurrentProgress(item->sequence());
+
+    if (mission->assignment()->currentProgress() ==
+        mission->assignment()->totalProgress())
+    {
+        mission->assignment()->setStatus(MissionVehicle::Ready);
+    }
 }
 
 void MissionHandler::sendMissionAck(uint8_t id)
@@ -342,6 +348,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         mission->assignment()->totalProgress())
     {
         this->sendMissionAck(message.sysid);
+        mission->assignment()->setStatus(MissionVehicle::Ready);
     }
 }
 

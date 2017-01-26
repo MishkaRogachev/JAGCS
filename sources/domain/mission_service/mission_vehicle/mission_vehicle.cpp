@@ -15,7 +15,8 @@ MissionVehicle::MissionVehicle(Mission* mission, Vehicle* vehicle):
     m_mission(mission),
     m_vehicle(vehicle),
     m_currentProgress(0),
-    m_totalProgress(0)
+    m_totalProgress(0),
+    m_status(Idle)
 {
     Q_ASSERT(mission);
 }
@@ -50,6 +51,11 @@ int MissionVehicle::currentProgress() const
 int MissionVehicle::totalProgress() const
 {
     return m_totalProgress;
+}
+
+MissionVehicle::Status MissionVehicle::status() const
+{
+    return m_status;
 }
 
 void MissionVehicle::setVehicle(Vehicle* vehicle)
@@ -93,6 +99,14 @@ void MissionVehicle::onHomePositionChanged(const Position& homePosition)
     }
 }
 
+void MissionVehicle::setCurrentProgress(int currentProgress)
+{
+    if (m_currentProgress == currentProgress) return;
+
+    m_currentProgress = currentProgress;
+    emit currentProgressChanged(currentProgress);
+}
+
 void MissionVehicle::setTotalProgress(int totalProgress)
 {
     if (m_totalProgress == totalProgress) return;
@@ -101,10 +115,10 @@ void MissionVehicle::setTotalProgress(int totalProgress)
     emit totalProgressChanged(totalProgress);
 }
 
-void MissionVehicle::setCurrentProgress(int currentProgress)
+void MissionVehicle::setStatus(MissionVehicle::Status status)
 {
-    if (m_currentProgress == currentProgress) return;
+    if (m_status == status) return;
 
-    m_currentProgress = currentProgress;
-    emit currentProgressChanged(currentProgress);
+    m_status = status;
+    emit statusChanged(status);
 }
