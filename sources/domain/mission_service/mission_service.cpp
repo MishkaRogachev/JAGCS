@@ -1,10 +1,8 @@
 #include "mission_service.h"
 
-// Qt
-#include <QMap>
-
 // Internal
 #include "mission.h"
+#include "mission_vehicle.h"
 
 using namespace domain;
 
@@ -12,7 +10,6 @@ class MissionService::Impl
 {
 public:
     QList<Mission*> missions;
-    QMap<uint8_t, Mission*> vehicleMissions;
 
     int currentCount = 0;
     int totalCount = 0;
@@ -31,33 +28,21 @@ MissionService::~MissionService()
     delete d;
 }
 
-Mission* MissionService::missionForVehicle(uint8_t vehicleId) const
-{
-    return d->vehicleMissions.value(vehicleId, nullptr);
-}
-
-uint8_t MissionService::vehicleForMission(Mission* mission) const
-{
-    return d->vehicleMissions.key(mission, 0);
-}
-
 const QList<Mission*>& MissionService::missions() const
 {
     return d->missions;
 }
 
-Mission* MissionService::requestMissionForVehicle(uint8_t vehicleId)
+Mission* MissionService::missionForVehicleId(uint8_t id)
 {
-    if (!d->vehicleMissions.contains(vehicleId))
+    for (Mission* mission: d->missions)
     {
-        Mission* mission = new Mission(this);
-        d->vehicleMissions[vehicleId] = mission;
-        d->missions.append(mission);
+        if (mission->assignment()->vehicleId() != id) continue;
 
-        emit missionAdded(mission);
+        return mission;
     }
 
-    return d->vehicleMissions[vehicleId];
+    return nullptr;
 }
 
 int MissionService::currentCount() const
@@ -79,12 +64,6 @@ void MissionService::addNewMission()
 void MissionService::removeMission(Mission* mission)
 {
     d->missions.removeOne(mission);
-
-    if (d->vehicleMissions.values().contains(mission))
-    {
-        d->vehicleMissions.remove(d->vehicleMissions.key(mission));
-    }
-
     emit missionRemoved(mission);
 }
 
@@ -94,36 +73,18 @@ void MissionService::deleteMission(Mission* mission)
     delete mission;
 }
 
-void MissionService::assignMission(Mission* mission, uint8_t vehicleId)
-{
-    if (mission)
-    {
-        d->vehicleMissions[vehicleId] = mission;
-    }
-    else
-    {
-        d->vehicleMissions.remove(vehicleId);
-    }
-}
-
-void MissionService::unassignMission(Mission* mission)
-{
-    d->vehicleMissions.remove(d->vehicleMissions.key(mission));
-}
-
-void MissionService::onVehicleAdded(uint8_t vehicleId)
-{
-    this->downloadMission(this->requestMissionForVehicle(vehicleId));
-}
-
 void MissionService::downloadMission(Mission* mission)
 {
-    emit requestMission(d->vehicleMissions.key(mission, 0));
+    if (!mission->assignment()->vehicle()) return;
+
+    emit requestMission(mission->assignment()->vehicleId());
 }
 
 void MissionService::uploadMission(Mission* mission)
 {
-    emit sendMission(d->vehicleMissions.key(mission, 0));
+    if (!mission->assignment()->vehicle()) return;
+
+    emit sendMission(mission->assignment()->vehicleId());
 }
 
 void MissionService::setCurrentCount(int currentCount)

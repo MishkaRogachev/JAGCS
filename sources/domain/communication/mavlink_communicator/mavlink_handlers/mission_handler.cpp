@@ -137,7 +137,7 @@ void MissionHandler::sendMissionCount(uint8_t id)
 
     count.target_system = id;
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = m_missionService->requestMissionForVehicle(id)->count();
+    count.count = m_missionService->missionForVehicleId(id)->count();
 
     // TODO: VehicleMission
     m_missionService->setCurrentCount(0);
@@ -151,8 +151,8 @@ void MissionHandler::sendMissionCount(uint8_t id)
 
 void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 {
-    Mission* mission = m_missionService->requestMissionForVehicle(id);
-    if (mission->count() <= seq) return;
+    Mission* mission = m_missionService->missionForVehicleId(id);
+    if (!mission || mission->count() <= seq) return;
 
     MissionItem* item = mission->item(seq);
 
@@ -245,7 +245,8 @@ void MissionHandler::sendMissionAck(uint8_t id)
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
-    Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
+    Mission* mission = m_missionService->missionForVehicleId(message.sysid);
+    if (!mission) return;
 
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
@@ -262,7 +263,8 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
 void MissionHandler::processMissionItem(const mavlink_message_t& message)
 {
-    Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
+    Mission* mission = m_missionService->missionForVehicleId(message.sysid);
+    if (!mission) return;
 
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
@@ -348,7 +350,8 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
 
 void MissionHandler::processMissionAck(const mavlink_message_t& message)
 {
-    Mission* mission = m_missionService->requestMissionForVehicle(message.sysid);
+    Mission* mission = m_missionService->missionForVehicleId(message.sysid);
+    if (!mission) return;
 
     mavlink_mission_ack_t missionAck;
     mavlink_msg_mission_ack_decode(&message, &missionAck);

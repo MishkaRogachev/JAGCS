@@ -22,7 +22,7 @@ namespace domain
         QList<Vehicle*> vehicles() const;
         QList<uint8_t> vehileIds() const;
 
-        Vehicle* requestVehicle(uint8_t id);
+        Vehicle* requestVehicle(uint8_t id); // force
 
     public slots:
         void removeVehicle(uint8_t id);

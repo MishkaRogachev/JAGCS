@@ -4,13 +4,15 @@
 #include <QDebug>
 
 // Internal
+#include "mission_vehicle.h"
 #include "mission_item_factory.h"
 #include "altitude_mission_item.h"
 
 using namespace domain;
 
 Mission::Mission(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    m_assignment(new MissionVehicle(this))
 {}
 
 Mission::~Mission()
@@ -47,6 +49,16 @@ MissionItem* Mission::take(int seq)
     MissionItem* item = m_items.takeAt(seq);
     emit missionItemsChanged(m_items);
     return item;
+}
+
+MissionVehicle* Mission::assignment() const
+{
+    return m_assignment;
+}
+
+Vehicle* Mission::assignedVehicle() const
+{
+    return m_assignment->vehicle();
 }
 
 void Mission::setCount(int count)
@@ -115,4 +127,14 @@ void Mission::exchange(int first, int last)
     }
 
     emit missionItemsChanged(m_items);
+}
+
+void Mission::unassignVehicle()
+{
+    this->assignVehicle(nullptr);
+}
+
+void Mission::assignVehicle(Vehicle* vehicle)
+{
+    m_assignment->setVehicle(vehicle);
 }

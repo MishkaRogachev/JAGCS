@@ -18,8 +18,14 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     m_groundSpeed(0),
     m_barometricAltitude(0),
     m_barometricClimb(0),
-    m_heading()
+    m_heading(0),
+    m_assignedMission(nullptr)
 {}
+
+Vehicle::~Vehicle()
+{
+    if (m_assignedMission) this->unassignMission();
+}
 
 uint8_t Vehicle::vehicleId() const
 {
@@ -89,6 +95,11 @@ float Vehicle::barometricClimb() const
 int Vehicle::heading() const
 {
     return m_heading;
+}
+
+Mission* Vehicle::assignedMission() const
+{
+    return m_assignedMission;
 }
 
 void Vehicle::setType(Vehicle::Type type)
@@ -193,4 +204,28 @@ void Vehicle::setHeading(int heading)
 
     m_heading = heading;
     emit headingChanged(heading);
+}
+
+void Vehicle::unassignMission()
+{
+    this->assignMission(nullptr);
+}
+
+void Vehicle::assignMission(Mission* mission)
+{
+    if (m_assignedMission == mission) return;
+
+    if (m_assignedMission)
+    {
+        m_assignedMission->unassignVehicle();
+    }
+
+    m_assignedMission = mission;
+
+    if (m_assignedMission)
+    {
+        m_assignedMission->assignVehicle(this);
+    }
+
+    emit assignedMissionChanged(mission);
 }

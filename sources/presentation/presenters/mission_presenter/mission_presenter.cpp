@@ -25,7 +25,7 @@ public:
     domain::Mission* selectedMission = nullptr;
 
     QMap<domain::Mission*, QString> missionAliases;
-    QMap<uint8_t, QString> vehicleAliases;
+    QMap<domain::Vehicle*, QString> vehicleAliases;
 
     MissionMapPresenter* map;
     MissionViewHelper helper;
@@ -110,11 +110,11 @@ void MissionPresenter::updateMissionItems()
 
 void MissionPresenter::updateSelectedVehicle()
 {
-    uint8_t id = d->missionService->vehicleForMission(d->selectedMission);
-    if (id)
+    domain::Vehicle* vehicle = d->selectedMission->assignedVehicle();
+    if (vehicle)
     {
         int index = d->vehicleAliases.values().indexOf(
-                        d->vehicleAliases[id]) + 1;
+                        d->vehicleAliases[vehicle]) + 1;
         this->setViewProperty(PROPERTY(selectedVehicle), index);
     }
     else
@@ -159,14 +159,14 @@ void MissionPresenter::connectView(QObject* view)
 
 void MissionPresenter::onVehicleAdded(uint8_t id)
 {
-    d->vehicleAliases[id] = tr("MAV %1").arg(id);
+    d->vehicleAliases[d->vehicleService->vehicle(id)] = tr("MAV %1").arg(id);
 
     if (m_view) this->updateVehicles();
 }
 
 void MissionPresenter::onVehicleRemoved(uint8_t id)
 {
-    d->vehicleAliases.remove(id);
+    d->vehicleAliases.remove(d->vehicleService->vehicle(id));
 
     if (m_view) this->updateVehicles();
 }
@@ -218,12 +218,11 @@ void MissionPresenter::onVehicleSelected(const QString& vehicleName)
 
     if (d->vehicleAliases.values().contains(vehicleName))
     {
-        d->missionService->assignMission(d->selectedMission,
-                                         d->vehicleAliases.key(vehicleName));
+        d->selectedMission->assignVehicle(d->vehicleAliases.key(vehicleName));
     }
     else
     {
-        d->missionService->unassignMission(d->selectedMission);
+        d->selectedMission->unassignVehicle();
     }
 }
 

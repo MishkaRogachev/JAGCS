@@ -17,10 +17,12 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit MissionVehicle(Mission* mission, Vehicle* vehicle);
+        explicit MissionVehicle(Mission* mission, Vehicle* vehicle = nullptr);
+        ~MissionVehicle() override;
 
         Mission* mission() const;
         Vehicle* vehicle() const;
+        uint8_t vehicleId() const;
 
     public slots:
         void setVehicle(Vehicle* vehicle);

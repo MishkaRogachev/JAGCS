@@ -6,6 +6,7 @@
 #include "position.h"
 #include "gps.h"
 #include "power_system.h"
+#include "mission.h"
 
 namespace domain
 {
@@ -58,6 +59,7 @@ namespace domain
         };
 
         Vehicle(uint8_t vehicleId, QObject* parent);
+        ~Vehicle() override;
 
         uint8_t vehicleId() const;
 
@@ -77,6 +79,8 @@ namespace domain
         float barometricClimb() const;
         int heading() const;
 
+        Mission* assignedMission() const;
+
     public slots:
         void setType(Type type);
         void setState(State state);
@@ -94,6 +98,9 @@ namespace domain
         void setBarometricClimb(float barometricClimb);
         void setHeading(int heading);
 
+        void assignMission(Mission* mission);
+        void unassignMission();
+
     signals:
         void typeChanged(Type type);
         void stateChanged(State state);
@@ -110,6 +117,8 @@ namespace domain
         void barometricAltitudeChanged(float barometricAltitude);
         void barometricClimbChanged(float barometricClimb);
         void headingChanged(int heading);
+
+        void assignedMissionChanged(Mission* mission);
 
         void commandArm(bool arm);
         void commandSetHome(const Position& homePosition);
@@ -132,6 +141,8 @@ namespace domain
         float m_barometricAltitude;
         float m_barometricClimb;
         int m_heading;
+
+        Mission* m_assignedMission;
 
         Q_ENUM(Type)
         Q_ENUM(State)

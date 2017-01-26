@@ -31,10 +31,6 @@ DomainEntry::DomainEntry():
     qRegisterMetaType<Endpoint>("Endpoint");
     qRegisterMetaType<EndpointList>("EndpointList");
 
-    // TODO: temporary mission creation by vehicle id
-    QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
-                     &d->missionService, &MissionService::onVehicleAdded);
-
     MavLinkCommunicatorFactory factory(&d->vehicleService, &d->missionService);
     d->communicator.reset(factory.create());
 }
