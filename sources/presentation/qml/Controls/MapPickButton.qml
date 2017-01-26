@@ -20,6 +20,5 @@ Button {
             root.checked = false;
             picked(coordinate)
         }
-        onCanceled: if (!pickButton.checked) root.checked = false;
     }
 }

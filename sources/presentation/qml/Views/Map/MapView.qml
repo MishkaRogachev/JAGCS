@@ -2,11 +2,15 @@ import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
 
+import "Overlays"
+
 Map {
     id: root
 
-    signal picked(var coordinate)
-    signal canceled()
+    property var lineModel
+    property var pointModel
+    property var vehicleModel
+
     signal saveMapViewport()
 
     plugin: Plugin { name: "osm" }
@@ -15,9 +19,24 @@ Map {
     activeMapType: supportedMapTypes[5] // TerrainMapType
     copyrightsVisible: false
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: map.picked(map.toCoordinate(Qt.point(mouseX, mouseY)));
+    MissionLineMapOverlayView {
+        model: lineModel
+    }
+
+    RadiusMapOverlayView {
+        model: pointModel
+    }
+
+    AcceptanceRadiusMapOverlayView {
+        model: pointModel
+    }
+
+    MissionPointMapOverlayView {
+        model: pointModel
+    }
+
+    VehicleMapOverlayView {
+        model: vehicleModel
     }
 
     Component.onDestruction: saveMapViewport()

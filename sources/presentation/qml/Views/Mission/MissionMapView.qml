@@ -6,27 +6,10 @@ import "../Map/Overlays"
 MapView {
     id: root
 
-    property var lineModel
-    property var pointModel
-    property var vehicleModel
+    signal picked(var coordinate)
 
-    MissionLineMapOverlayView {
-        model: lineModel
-    }
-
-    RadiusMapOverlayView {
-        model: pointModel
-    }
-
-    AcceptanceRadiusMapOverlayView {
-        model: pointModel
-    }
-
-    MissionPointMapOverlayView {
-        model: pointModel
-    }
-
-    VehicleMapOverlayView {
-        model: vehicleModel
+    MouseArea {
+        anchors.fill: parent
+        onClicked: map.picked(map.toCoordinate(Qt.point(mouseX, mouseY)));
     }
 }
