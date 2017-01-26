@@ -13,7 +13,9 @@ using namespace domain;
 MissionVehicle::MissionVehicle(Mission* mission, Vehicle* vehicle):
     QObject(mission),
     m_mission(mission),
-    m_vehicle(vehicle)
+    m_vehicle(vehicle),
+    m_currentProgress(0),
+    m_totalProgress(0)
 {
     Q_ASSERT(mission);
 }
@@ -38,6 +40,16 @@ uint8_t MissionVehicle::vehicleId() const
     if (!m_vehicle) return 0;
 
     return m_vehicle->vehicleId();
+}
+
+int MissionVehicle::currentProgress() const
+{
+    return m_currentProgress;
+}
+
+int MissionVehicle::totalProgress() const
+{
+    return m_totalProgress;
 }
 
 void MissionVehicle::setVehicle(Vehicle* vehicle)
@@ -79,4 +91,20 @@ void MissionVehicle::onHomePositionChanged(const Position& homePosition)
         home->setLatitude(homePosition.coordinate().latitude());
         home->setLongitude(homePosition.coordinate().longitude());
     }
+}
+
+void MissionVehicle::setTotalProgress(int totalProgress)
+{
+    if (m_totalProgress == totalProgress) return;
+
+    m_totalProgress = totalProgress;
+    emit totalProgressChanged(totalProgress);
+}
+
+void MissionVehicle::setCurrentProgress(int currentProgress)
+{
+    if (m_currentProgress == currentProgress) return;
+
+    m_currentProgress = currentProgress;
+    emit currentProgressChanged(currentProgress);
 }

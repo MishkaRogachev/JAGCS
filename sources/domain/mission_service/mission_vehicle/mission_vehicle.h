@@ -24,11 +24,20 @@ namespace domain
         Vehicle* vehicle() const;
         uint8_t vehicleId() const;
 
+        int currentProgress() const;
+        int totalProgress() const;
+
     public slots:
         void setVehicle(Vehicle* vehicle);
 
+        void setCurrentProgress(int currentProgress);
+        void setTotalProgress(int totalProgress);
+
     signals:
         void vehicleChanged(Vehicle* vehicle);
+
+        void currentProgressChanged(int currentProgress);
+        void totalProgressChanged(int totalProgress);
 
     private slots:
         void onHomePositionChanged(const Position& homePosition);
@@ -36,6 +45,9 @@ namespace domain
     private:
         Mission* const m_mission;
         Vehicle* m_vehicle;
+
+        int m_currentProgress;
+        int m_totalProgress;
     };
 }
 

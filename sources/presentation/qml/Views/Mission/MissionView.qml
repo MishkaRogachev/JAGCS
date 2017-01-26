@@ -14,8 +14,8 @@ Pane {
 
     property alias selectedVehicle: vehicleBox.currentIndex
 
-    property int currentCount: 0
-    property int totalCount: 0
+    property int currentProgress: 0
+    property int totalProgress: 0
 
     property var missionItems: []
 
@@ -100,8 +100,8 @@ Pane {
             ProgressBar {
                 Layout.fillWidth: true
                 from: 0
-                to: totalCount
-                value: currentCount
+                to: totalProgress
+                value: currentProgress
             }
         }
     }

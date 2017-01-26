@@ -27,8 +27,8 @@ namespace presentation
         void updateMissionItems();
         void updateSelectedVehicle();
 
-        void updateCurrentCount(int currentCount);
-        void updateTotalCount(int totalCount);
+        void updateCurrentProgress(int currentProgress);
+        void updateTotalProgress(int totalProgress);
 
     protected:
         void connectView(QObject* view) override;

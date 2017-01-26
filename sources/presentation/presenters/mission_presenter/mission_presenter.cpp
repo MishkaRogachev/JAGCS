@@ -8,6 +8,7 @@
 // Internal
 #include "mission_service.h"
 #include "mission.h"
+#include "mission_vehicle.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
 
@@ -44,11 +45,6 @@ MissionPresenter::MissionPresenter(domain::MissionService* missionService,
             this, &MissionPresenter::updateMissions);
     connect(missionService, &domain::MissionService::missionRemoved,
             this, &MissionPresenter::updateMissions);
-
-    connect(missionService, &domain::MissionService::currentCountChanged,
-            this, &MissionPresenter::updateCurrentCount);
-    connect(missionService, &domain::MissionService::totalCountChanged,
-            this, &MissionPresenter::updateTotalCount);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);
@@ -123,14 +119,14 @@ void MissionPresenter::updateSelectedVehicle()
     }
 }
 
-void MissionPresenter::updateCurrentCount(int currentCount)
+void MissionPresenter::updateCurrentProgress(int currentProgress)
 {
-    this->setViewProperty(PROPERTY(currentCount), currentCount);
+    this->setViewProperty(PROPERTY(currentProgress), currentProgress);
 }
 
-void MissionPresenter::updateTotalCount(int totalCount)
+void MissionPresenter::updateTotalProgress(int totalProgress)
 {
-    this->setViewProperty(PROPERTY(totalCount), totalCount);
+    this->setViewProperty(PROPERTY(totalProgress), totalProgress);
 }
 
 void MissionPresenter::connectView(QObject* view)
@@ -152,9 +148,6 @@ void MissionPresenter::connectView(QObject* view)
 
     this->updateMissions();
     this->updateVehicles();
-
-    this->updateCurrentCount(d->missionService->currentCount());
-    this->updateTotalCount(d->missionService->totalCount());
 }
 
 void MissionPresenter::onVehicleAdded(uint8_t id)
@@ -176,6 +169,7 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
     if (d->selectedMission)
     {
         disconnect(d->selectedMission, 0, this, 0);
+        disconnect(d->selectedMission->assignment(), 0, this, 0);
     }
 
     d->selectedMission = d->missionAliases.key(missionName);
@@ -184,6 +178,15 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
     {
         connect(d->selectedMission, &domain::Mission::missionItemsChanged,
                 this, &MissionPresenter::updateMissionItems);
+        connect(d->selectedMission->assignment(),
+                &domain::MissionVehicle::currentProgressChanged,
+                this, &MissionPresenter::updateCurrentProgress);
+        connect(d->selectedMission->assignment(),
+                &domain::MissionVehicle::totalProgressChanged,
+                this, &MissionPresenter::updateTotalProgress);
+
+        this->updateCurrentProgress(d->selectedMission->assignment()->currentProgress());
+        this->updateTotalProgress(d->selectedMission->assignment()->totalProgress());
         this->updateSelectedVehicle();
     }
     this->updateMissionItems();

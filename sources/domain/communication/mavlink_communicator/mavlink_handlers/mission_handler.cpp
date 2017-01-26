@@ -12,6 +12,7 @@
 #include "mission_service.h"
 #include "mission.h"
 #include "mission_item_factory.h"
+#include "mission_vehicle.h"
 
 #include "home_mission_item.h"
 #include "takeoff_mission_item.h"
@@ -132,16 +133,19 @@ void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
 
 void MissionHandler::sendMissionCount(uint8_t id)
 {
+    Mission* mission = m_missionService->missionForVehicleId(id);
+    if (!mission) return;
+
     mavlink_message_t message;
     mavlink_mission_count_t count;
 
     count.target_system = id;
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = m_missionService->missionForVehicleId(id)->count();
+    count.count = mission->count();
 
     // TODO: VehicleMission
-    m_missionService->setCurrentCount(0);
-    m_missionService->setTotalCount(count.count);
+    mission->assignment()->setCurrentProgress(0);
+    mission->assignment()->setTotalProgress(count.count);
 
     mavlink_msg_mission_count_encode(m_communicator->systemId(),
                                      m_communicator->componentId(),
@@ -220,7 +224,7 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
         }
     }
 
-    m_missionService->setCurrentCount(m_missionService->currentCount() + 1);
+    mission->assignment()->setCurrentProgress(item->sequence());
 
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
@@ -251,8 +255,8 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
 
-    m_missionService->setCurrentCount(0);
-    m_missionService->setTotalCount(missionCount.count);
+    mission->assignment()->setCurrentProgress(0);
+    mission->assignment()->setTotalProgress(missionCount.count);
     mission->setCount(missionCount.count);
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
@@ -332,9 +336,10 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     item->setCurrent(msgItem.current);
     mission->setMissionItem(msgItem.seq, item);
 
-    m_missionService->setCurrentCount(mission->count());
+    mission->assignment()->setCurrentProgress(mission->count());
 
-    if (m_missionService->currentCount() == m_missionService->totalCount())
+    if (mission->assignment()->currentProgress() ==
+        mission->assignment()->totalProgress())
     {
         this->sendMissionAck(message.sysid);
     }
