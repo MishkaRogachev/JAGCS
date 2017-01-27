@@ -23,14 +23,15 @@ namespace presentation
         void updateMapViewport();
         void saveMapViewport();
 
-        void connectView(QObject* view) override;
-
         void addMission(domain::Mission* mission);
         void removeMission(domain::Mission* mission);
         void updateMissionItems();
 
         void addVehicle(domain::Vehicle* vehicle);
         void removeVehicle(domain::Vehicle* vehicle);
+
+    protected:
+        void connectView(QObject* view) override;
 
     private:
         class Impl;

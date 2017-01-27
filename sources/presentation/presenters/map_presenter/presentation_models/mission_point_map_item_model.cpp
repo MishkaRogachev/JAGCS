@@ -33,10 +33,15 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
         domain::PositionMissionItem* positionItem =
                 qobject_cast<domain::PositionMissionItem*>(item);
         if (positionItem)
-            return QVariant::fromValue(QGeoCoordinate(positionItem->latitude(),
-                                                      positionItem->longitude()));
-        else
-            return QVariant::fromValue(QGeoCoordinate());
+        {
+            QGeoCoordinate coordinate(positionItem->latitude(),
+                                      positionItem->longitude());
+            if (coordinate.isValid())
+            {
+                return QVariant::fromValue(coordinate);
+            }
+        }
+        return QVariant::fromValue(QGeoCoordinate());
     }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());

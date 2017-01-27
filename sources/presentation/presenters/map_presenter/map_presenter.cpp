@@ -60,17 +60,6 @@ void MapPresenter::saveMapViewport()
                                        center.longitude());
 }
 
-void MapPresenter::connectView(QObject* view)
-{
-    this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
-    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
-    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
-
-    connect(view, SIGNAL(saveMapViewport()), this, SLOT(saveMapViewport()));
-
-    this->updateMapViewport();
-}
-
 void MapPresenter::addMission(domain::Mission* mission)
 {
     d->lineModel.addMission(mission);
@@ -110,4 +99,15 @@ void MapPresenter::addVehicle(domain::Vehicle* vehicle)
 void MapPresenter::removeVehicle(domain::Vehicle* vehicle)
 {
     d->vehicleModel.removeVehicle(vehicle);
+}
+
+void MapPresenter::connectView(QObject* view)
+{
+    this->updateMapViewport();
+
+    this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
+    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
+    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
+
+    connect(view, SIGNAL(saveMapViewport()), this, SLOT(saveMapViewport()));
 }
