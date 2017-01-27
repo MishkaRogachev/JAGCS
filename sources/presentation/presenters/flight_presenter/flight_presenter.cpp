@@ -19,7 +19,7 @@ class FlightPresenter::Impl
 public:
     domain::VehicleService* vehicleService;
 
-    QMap<uint8_t, QString> vehicleAliases;
+    QMap<domain::Vehicle*, QString> vehicleAliases;
 
     VideoPresenter* video;
     FlightMapPresenter* map;
@@ -41,8 +41,8 @@ FlightPresenter::FlightPresenter(domain::MissionService* missionService,
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &FlightPresenter::onVehicleRemoved);
 
-    for (uint8_t id: vehicleService->vehileIds())
-        this->onVehicleAdded(id);
+    for (domain::Vehicle* vehicle: vehicleService->vehicles())
+        this->onVehicleAdded(vehicle);
 }
 
 FlightPresenter::~FlightPresenter()
@@ -67,24 +67,23 @@ void FlightPresenter::connectView(QObject* view)
     this->updateVehicles();
 }
 
-void FlightPresenter::onVehicleAdded(uint8_t id)
+void FlightPresenter::onVehicleAdded(domain::Vehicle* vehicle)
 {
-    d->vehicleAliases[id] = tr("MAV %1").arg(id);
+    d->vehicleAliases[vehicle] = tr("MAV %1").arg(vehicle->vehicleId());
 
     if (m_view) this->updateVehicles();
 }
 
-void FlightPresenter::onVehicleRemoved(uint8_t id)
+void FlightPresenter::onVehicleRemoved(domain::Vehicle* vehicle)
 {
-    d->vehicleAliases.remove(id);
+    d->vehicleAliases.remove(vehicle);
 
     if (m_view) this->updateVehicles();
 }
 
 void FlightPresenter::onVehicleSelected(const QString& vehicleName)
 {
-    QObject* vehicle = d->vehicleService->vehicle(
-                           d->vehicleAliases.key(vehicleName));
+    QObject* vehicle = d->vehicleAliases.key(vehicleName);
     this->setViewProperty(PROPERTY(selectedVehicle),
                           QVariant::fromValue(vehicle));
 }

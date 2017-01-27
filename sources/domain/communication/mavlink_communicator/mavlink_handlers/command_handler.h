@@ -6,6 +6,7 @@
 namespace domain
 {
     class VehicleService;
+    class Vehicle;
 
     class CommandHandler: public AbstractMavLinkHandler
     {
@@ -19,7 +20,7 @@ namespace domain
        void sendArmCommand(bool arm);
 
     private slots:
-        void onVehicleAdded(uint8_t id);
+        void onVehicleAdded(domain::Vehicle* vehicle);
 
    private:
        VehicleService* m_vehicleService;

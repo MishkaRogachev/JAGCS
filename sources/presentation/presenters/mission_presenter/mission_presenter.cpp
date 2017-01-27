@@ -41,6 +41,8 @@ MissionPresenter::MissionPresenter(domain::MissionService* missionService,
     d->missionService = missionService;
     d->vehicleService = vehicleService;
 
+    d->map = new MissionMapPresenter(missionService, vehicleService, this);
+
     connect(missionService, &domain::MissionService::missionAdded,
             this, &MissionPresenter::updateMissions);
     connect(missionService, &domain::MissionService::missionRemoved,
@@ -51,10 +53,8 @@ MissionPresenter::MissionPresenter(domain::MissionService* missionService,
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::onVehicleRemoved);
 
-    for (uint8_t id: vehicleService->vehileIds())
-        this->onVehicleAdded(id);
-
-    d->map = new MissionMapPresenter(missionService, vehicleService, this);
+    for (domain::Vehicle* vehicle: vehicleService->vehicles())
+        this->onVehicleAdded(vehicle);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -150,16 +150,16 @@ void MissionPresenter::connectView(QObject* view)
     this->updateVehicles();
 }
 
-void MissionPresenter::onVehicleAdded(uint8_t id)
+void MissionPresenter::onVehicleAdded(domain::Vehicle* vehicle)
 {
-    d->vehicleAliases[d->vehicleService->vehicle(id)] = tr("MAV %1").arg(id);
+    d->vehicleAliases[vehicle] = tr("MAV %1").arg(vehicle->vehicleId());
 
     if (m_view) this->updateVehicles();
 }
 
-void MissionPresenter::onVehicleRemoved(uint8_t id)
+void MissionPresenter::onVehicleRemoved(domain::Vehicle* vehicle)
 {
-    d->vehicleAliases.remove(d->vehicleService->vehicle(id));
+    d->vehicleAliases.remove(vehicle);
 
     if (m_view) this->updateVehicles();
 }

@@ -37,7 +37,7 @@ Vehicle* VehicleService::vehicle(uint8_t id) const
     return d->vehicles.value(id, nullptr);
 }
 
-uint8_t VehicleService::vehileId(Vehicle* vehicle) const
+uint8_t VehicleService::vehicleId(Vehicle* vehicle) const
 {
     return d->vehicles.key(vehicle);
 }
@@ -47,7 +47,7 @@ QList<Vehicle*> VehicleService::vehicles() const
     return d->vehicles.values();
 }
 
-QList<uint8_t> VehicleService::vehileIds() const
+QList<uint8_t> VehicleService::vehicleIds() const
 {
     return d->vehicles.keys();
 }
@@ -57,7 +57,7 @@ Vehicle* VehicleService::forceVehicle(uint8_t id)
     if (!d->vehicles.contains(id))
     {
         d->vehicles[id] = new Vehicle(id, this);
-        emit vehicleAdded(id);
+        emit vehicleAdded(d->vehicles[id]);
     }
 
     return d->vehicles[id];
@@ -65,8 +65,8 @@ Vehicle* VehicleService::forceVehicle(uint8_t id)
 
 void VehicleService::removeVehicle(uint8_t id)
 {
-    d->vehicles.remove(id);
-    emit vehicleRemoved(id);
+    Vehicle* vehicle = d->vehicles.take(id);
+    emit vehicleRemoved(vehicle);
 }
 
 void VehicleService::deleteVehicle(uint8_t id)

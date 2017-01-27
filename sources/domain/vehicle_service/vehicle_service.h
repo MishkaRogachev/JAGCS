@@ -18,9 +18,9 @@ namespace domain
         ~VehicleService() override;
 
         Vehicle* vehicle(uint8_t id) const;
-        uint8_t vehileId(Vehicle* vehicle) const;
+        uint8_t vehicleId(Vehicle* vehicle) const;
         QList<Vehicle*> vehicles() const;
-        QList<uint8_t> vehileIds() const;
+        QList<uint8_t> vehicleIds() const;
 
         Vehicle* forceVehicle(uint8_t id); // force
 
@@ -29,8 +29,8 @@ namespace domain
         void deleteVehicle(uint8_t id);
 
     signals:
-        void vehicleAdded(uint8_t id);
-        void vehicleRemoved(uint8_t id);
+        void vehicleAdded(Vehicle* vehicle);
+        void vehicleRemoved(Vehicle* vehicle);
 
     private:
         class Impl;

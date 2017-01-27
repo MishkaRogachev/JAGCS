@@ -36,7 +36,7 @@ void CommandHandler::sendArmCommand(bool arm)
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = m_vehicleService->vehileId(vehicle);
+    command.target_system = m_vehicleService->vehicleId(vehicle);
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -50,9 +50,8 @@ void CommandHandler::sendArmCommand(bool arm)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void CommandHandler::onVehicleAdded(uint8_t id)
+void CommandHandler::onVehicleAdded(Vehicle* vehicle)
 {
-    Vehicle* vehicle = m_vehicleService->vehicle(id);
     connect(vehicle, &Vehicle::commandArm,
             this, &CommandHandler::sendArmCommand);
 }

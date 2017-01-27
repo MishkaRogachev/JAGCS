@@ -11,6 +11,7 @@
 namespace domain
 {
     class VehicleService;
+    class Vehicle;
     class Position;
 
     class HomePositionHandler: public AbstractMavLinkHandler
@@ -29,8 +30,8 @@ namespace domain
         void timerEvent(QTimerEvent* event);
 
     private slots:
-        void onVehicleAdded(uint8_t id);
-        void onVehicleRemoved(uint8_t id);
+        void onVehicleAdded(Vehicle* vehicle);
+        void onVehicleRemoved(Vehicle* vehicle);
 
     private:
         VehicleService* const m_vehicleService;
