@@ -25,6 +25,8 @@ namespace presentation
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
 
+        const QList<domain::Mission*>& missions() const;
+
     public slots:
         void addMission(domain::Mission* mission);
         void removeMission(domain::Mission* mission);

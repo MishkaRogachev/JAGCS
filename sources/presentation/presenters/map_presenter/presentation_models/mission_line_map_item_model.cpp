@@ -58,6 +58,11 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     }
 }
 
+const QList<domain::Mission*>& MissionLineMapItemModel::missions() const
+{
+    return m_missions;
+}
+
 void MissionLineMapItemModel::addMission(domain::Mission* mission)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());

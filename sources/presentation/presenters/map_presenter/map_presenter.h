@@ -3,6 +3,12 @@
 
 #include "base_presenter.h"
 
+namespace domain
+{
+    class Mission;
+    class Vehicle;
+}
+
 namespace presentation
 {
     class MapPresenter: public BasePresenter
@@ -17,8 +23,18 @@ namespace presentation
         void updateMapViewport();
         void saveMapViewport();
 
-    protected:
         void connectView(QObject* view) override;
+
+        void addMission(domain::Mission* mission);
+        void removeMission(domain::Mission* mission);
+        void updateMissionItems();
+
+        void addVehicle(domain::Vehicle* vehicle);
+        void removeVehicle(domain::Vehicle* vehicle);
+
+    private:
+        class Impl;
+        Impl* const d;
     };
 }
 

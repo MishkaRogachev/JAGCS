@@ -5,10 +5,8 @@
 
 // Internal
 #include "mission_service.h"
-#include "mission.h"
-
-#include "mission_line_map_item_model.h"
-#include "mission_point_map_item_model.h"
+#include "vehicle_service.h"
+#include "vehicle.h"
 
 using namespace presentation;
 
@@ -16,9 +14,7 @@ class MissionMapPresenter::Impl
 {
 public:
     domain::MissionService* missionService;
-
-    MissionLineMapItemModel lineModel;
-    MissionPointMapItemModel pointModel;
+    domain::VehicleService* vehicleService;
 };
 
 MissionMapPresenter::MissionMapPresenter(domain::MissionService* missionService,
@@ -28,56 +24,26 @@ MissionMapPresenter::MissionMapPresenter(domain::MissionService* missionService,
     d(new Impl())
 {
     d->missionService = missionService;
+    d->vehicleService = vehicleService;
+
+    connect(vehicleService, &domain::VehicleService::vehicleAdded,
+            this, &MapPresenter::addVehicle);
+    connect(vehicleService, &domain::VehicleService::vehicleRemoved,
+            this, &MapPresenter::removeVehicle);
 
     connect(missionService, &domain::MissionService::missionAdded,
-            this, &MissionMapPresenter::onMissionAdded);
+            this, &MapPresenter::addMission);
     connect(missionService, &domain::MissionService::missionRemoved,
-            this, &MissionMapPresenter::onMissionRemoved);
+            this, &MapPresenter::removeMission);
 
     for (domain::Mission* mission: missionService->missions())
-        this->onMissionAdded(mission);
+        this->addMission(mission);
+
+    for (domain::Vehicle* vehicle: vehicleService->vehicles())
+        this->addVehicle(vehicle);
 }
 
 MissionMapPresenter::~MissionMapPresenter()
 {
     delete d;
-}
-
-void MissionMapPresenter::connectView(QObject* view)
-{
-    MapPresenter::connectView(view);
-
-    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
-    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
-}
-
-void MissionMapPresenter::onMissionAdded(domain::Mission* mission)
-{
-    d->lineModel.addMission(mission);
-
-    connect(mission, &domain::Mission::missionItemsChanged,
-            this, &MissionMapPresenter::onMissionItemsChanged);
-
-    this->onMissionItemsChanged();
-}
-
-void MissionMapPresenter::onMissionRemoved(domain::Mission* mission)
-{
-    d->lineModel.removeMission(mission);
-
-    disconnect(mission, 0, this, 0);
-
-    this->onMissionItemsChanged();
-}
-
-void MissionMapPresenter::onMissionItemsChanged()
-{
-    QList<domain::MissionItem*> items;
-
-    for (domain::Mission* mission: d->missionService->missions())
-    {
-        items.append(mission->items());
-    }
-
-    d->pointModel.setMissionItems(items);
 }

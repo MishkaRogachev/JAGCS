@@ -22,15 +22,6 @@ namespace presentation
                             QObject* parent = nullptr);
         ~MissionMapPresenter() override;
 
-    protected:
-        void connectView(QObject* view) override;
-
-    private slots:
-        void onMissionAdded(domain::Mission* mission);
-        void onMissionRemoved(domain::Mission* mission);
-
-        void onMissionItemsChanged();
-
     private:
         class Impl;
         Impl* const d;

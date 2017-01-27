@@ -21,16 +21,6 @@ namespace presentation
                                     QObject* parent = nullptr);
         ~FlightMapPresenter() override;
 
-    protected:
-        void connectView(QObject* view) override;
-
-    private slots:
-        void onMissionsChanged();
-        void onMissionItemsChanged();
-
-        void onVehicleAdded(uint8_t id);
-        void onVehicleRemoved(uint8_t id);
-
     private:
         class Impl;
         Impl* const d;
