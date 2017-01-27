@@ -12,6 +12,7 @@ Pane {
     property alias missionNames: missionBox.model
     property alias vehicleNames: vehicleBox.model
 
+    property alias selectedMission: missionBox.currentIndex
     property alias selectedVehicle: vehicleBox.currentIndex
 
     property int currentProgress: 0
@@ -78,6 +79,7 @@ Pane {
             ComboBox {
                 id: vehicleBox
                 Layout.fillWidth: true
+                enabled: selectedMission != -1
                 onModelChanged: {
                     currentIndex = -1;
                     currentIndex = count - 1;
@@ -87,13 +89,13 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: missionBox.currentIndex != -1 && vehicleBox.currentIndex != -1
+                enabled: selectedMission != -1 && selectedVehicle != -1
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: missionBox.currentIndex != -1 && vehicleBox.currentIndex != -1
+                enabled: selectedMission != -1 && selectedVehicle != -1
                 onClicked: uploadMission()
             }
 
