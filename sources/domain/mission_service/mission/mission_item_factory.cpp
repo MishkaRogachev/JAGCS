@@ -13,7 +13,7 @@
 #include "takeoff_mission_item.h"
 #include "waypoint_mission_item.h"
 #include "continue_mission_item.h"
-#include "loiter_mission_item.h"
+#include "loiter_turns_mission_item.h"
 #include "return_mission_item.h"
 #include "landing_mission_item.h"
 
@@ -34,8 +34,10 @@ MissionItem* MissionItemFactory::create(MissionItem::Command command)
     case MissionItem::Waypoint:
         return new WaypointMissionItem(m_mision, SettingsProvider::value(
                       mission_settings::defaultAcceptanceRadius).toFloat());
-    case MissionItem::Loiter:
+    case MissionItem::LoiterAltitude:
         return new LoiterMissionItem(m_mision);
+    case MissionItem::LoiterTurns:
+        return new LoiterTurnsMissionItem(m_mision);
     case MissionItem::Continue:
         return new ContinueMissionItem(m_mision);
     case MissionItem::Return:

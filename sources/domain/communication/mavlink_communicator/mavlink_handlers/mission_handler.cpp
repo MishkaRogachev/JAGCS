@@ -18,7 +18,7 @@
 #include "takeoff_mission_item.h"
 #include "waypoint_mission_item.h"
 #include "continue_mission_item.h"
-#include "loiter_mission_item.h"
+#include "loiter_turns_mission_item.h"
 #include "return_mission_item.h"
 #include "landing_mission_item.h"
 
@@ -33,9 +33,10 @@ namespace
             return MissionItem::Takeoff;
         case MAV_CMD_NAV_WAYPOINT:
             return seq > 0 ? MissionItem::Waypoint : MissionItem::Home;
-        case MAV_CMD_NAV_LOITER_UNLIM:
+        case MAV_CMD_NAV_LOITER_TO_ALT:
+            return MissionItem::LoiterAltitude;
         case MAV_CMD_NAV_LOITER_TURNS:
-            return MissionItem::Loiter;
+            return MissionItem::LoiterTurns;
         case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
             return MissionItem::Continue;
         case MAV_CMD_NAV_RETURN_TO_LAUNCH:
@@ -55,8 +56,10 @@ namespace
         case MissionItem::Home:
         case MissionItem::Waypoint:
             return MAV_CMD_NAV_WAYPOINT;
-        case MissionItem::Loiter:
-            return MAV_CMD_NAV_LOITER_TO_ALT; // TODO: other loiters by params
+        case MissionItem::LoiterAltitude:
+            return MAV_CMD_NAV_LOITER_TO_ALT;
+        case MissionItem::LoiterTurns:
+            return MAV_CMD_NAV_LOITER_TURNS;
         case MissionItem::Continue:
             return MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
         case MissionItem::Return:
@@ -143,7 +146,6 @@ void MissionHandler::sendMissionCount(uint8_t id)
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
     count.count = mission->count();
 
-    // TODO: VehicleMission
     mission->assignment()->setCurrentProgress(0);
     mission->assignment()->setTotalProgress(count.count);
 
@@ -220,6 +222,13 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
             if (loiterItem)
             {
                 msgItem.param3 = loiterItem->radius();
+
+                LoiterTurnsMissionItem* turnsItem =
+                        qobject_cast<LoiterTurnsMissionItem*>(loiterItem);
+                if (turnsItem)
+                {
+                    msgItem.param1 = turnsItem->turns();
+                }
             }
         }
     }
@@ -335,6 +344,13 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
             if (loiterItem)
             {
                 loiterItem->setRadius(msgItem.param3);
+
+                LoiterTurnsMissionItem* turnsItem =
+                        qobject_cast<LoiterTurnsMissionItem*>(loiterItem);
+                if (turnsItem)
+                {
+                    turnsItem->setRadius(msgItem.param1);
+                }
             }
         }
     }

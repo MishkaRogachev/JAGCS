@@ -14,6 +14,8 @@ Pane {
 
     signal vehicleSelected(string name)
 
+    padding: 0
+
     RowLayout {
         anchors.fill: parent
         anchors.margins: 5

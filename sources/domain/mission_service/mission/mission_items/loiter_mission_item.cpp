@@ -2,8 +2,8 @@
 
 using namespace domain;
 
-LoiterMissionItem::LoiterMissionItem(Mission* mission):
-    PositionMissionItem(mission, Loiter, true),
+LoiterMissionItem::LoiterMissionItem(Mission* mission, Command command):
+    PositionMissionItem(mission, command, true),
     m_radius(0)
 {}
 

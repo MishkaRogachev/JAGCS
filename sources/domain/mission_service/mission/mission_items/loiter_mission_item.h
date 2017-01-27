@@ -13,7 +13,8 @@ namespace domain
                    NOTIFY radiusChanged)
 
     public:
-        explicit LoiterMissionItem(Mission* mission);
+        explicit LoiterMissionItem(Mission* mission,
+                                   MissionItem::Command command = LoiterAltitude);
 
         float radius() const;
 

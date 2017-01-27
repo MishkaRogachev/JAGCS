@@ -15,7 +15,8 @@ MissionViewHelper::MissionViewHelper(QObject* parent):
     m_commandNames[domain::MissionItem::Home] = tr("HOME");
     m_commandNames[domain::MissionItem::Takeoff] = tr("TAKEOFF");
     m_commandNames[domain::MissionItem::Waypoint] = tr("WAYPOINT");
-    m_commandNames[domain::MissionItem::Loiter] = tr("LOITER");
+    m_commandNames[domain::MissionItem::LoiterAltitude] = tr("LOITER ALT");
+    m_commandNames[domain::MissionItem::LoiterTurns] = tr("LOITER TURNS");
     m_commandNames[domain::MissionItem::Continue] = tr("CONTINUE");
     m_commandNames[domain::MissionItem::Return] = tr("RETURN");
     m_commandNames[domain::MissionItem::Landing] = tr("LANDING");

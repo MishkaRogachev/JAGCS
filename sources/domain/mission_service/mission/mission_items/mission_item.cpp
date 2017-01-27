@@ -51,7 +51,8 @@ QList<MissionItem::Command> MissionItem::avalibleCommands() const
     }
     else
     {
-        list << Takeoff << Waypoint << Loiter << Continue << Return << Landing;
+        list << Takeoff << Waypoint << LoiterAltitude <<
+                LoiterTurns << Continue << Return << Landing;
     }
 
     return list;

@@ -25,7 +25,8 @@ namespace domain
             Home,
             Takeoff,
             Waypoint,
-            Loiter,
+            LoiterAltitude,
+            LoiterTurns,
             Continue,
             Return,
             Landing

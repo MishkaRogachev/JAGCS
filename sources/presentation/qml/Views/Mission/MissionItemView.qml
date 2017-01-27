@@ -178,6 +178,22 @@ Frame {
                 value: visible ? item.radius.toFixed(2) : 0
                 onValueChanged: if (!isNaN(value) && visible) item.setRadius(value)
             }
+
+            Label {
+                visible: 'turns' in item
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                text: qsTr("Turns:")
+            }
+
+            SpinBox {
+                visible: 'turns' in item
+                Layout.fillWidth: true
+                from: 0
+                to: 99
+                value: visible ? item.turns : 0
+                onValueChanged: if (!isNaN(value) && visible) item.setTurns(value)
+            }
         }
     }
 }
