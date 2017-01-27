@@ -36,7 +36,7 @@ void CommandHandler::sendArmCommand(bool arm)
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = m_vehicleService->vehicleId(vehicle);
+    command.target_system = vehicle->vehicleId();
     command.target_component = 0;
     command.confirmation = 0;
 

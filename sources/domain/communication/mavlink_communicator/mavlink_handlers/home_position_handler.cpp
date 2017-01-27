@@ -78,7 +78,7 @@ void HomePositionHandler::sendHomePositionSetting(const Position& position)
     mavlink_message_t message;
     mavlink_set_home_position_t home;
 
-    home.target_system = m_vehicleService->vehicleId(vehicle);
+    home.target_system = vehicle->vehicleId();
 
     home.latitude = encodeLatLon(position.coordinate().latitude());
     home.longitude = encodeLatLon(position.coordinate().longitude());

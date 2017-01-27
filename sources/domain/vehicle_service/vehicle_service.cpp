@@ -1,22 +1,15 @@
 #include "vehicle_service.h"
 
 // Qt
-#include <QMap>
+#include <QDebug>
 
 // Internal
 #include "vehicle.h"
 
 using namespace domain;
 
-class VehicleService::Impl
-{
-public:
-    QMap<uint8_t, Vehicle*> vehicles;
-};
-
 VehicleService::VehicleService(QObject* parent):
-    QObject(parent),
-    d(new Impl())
+    QObject(parent)
 {
     qRegisterMetaType<Attitude>("Attitude");
     qRegisterMetaType<Position>("Navigation");
@@ -24,56 +17,41 @@ VehicleService::VehicleService(QObject* parent):
     qRegisterMetaType<PowerSystem>("PowerSystem");
 }
 
-VehicleService::~VehicleService()
+Vehicle* VehicleService::vehicle(int index) const
 {
-    while (!d->vehicles.isEmpty())
-        this->removeVehicle(d->vehicles.keys().first());
-
-    delete d;
+    return m_vehicles.at(index);
 }
 
-Vehicle* VehicleService::vehicle(uint8_t id) const
+const QList<Vehicle*>& VehicleService::vehicles() const
 {
-    return d->vehicles.value(id, nullptr);
-}
-
-uint8_t VehicleService::vehicleId(Vehicle* vehicle) const
-{
-    return d->vehicles.key(vehicle);
-}
-
-QList<Vehicle*> VehicleService::vehicles() const
-{
-    return d->vehicles.values();
-}
-
-QList<uint8_t> VehicleService::vehicleIds() const
-{
-    return d->vehicles.keys();
+    return m_vehicles;
 }
 
 Vehicle* VehicleService::forceVehicle(uint8_t id)
 {
-    if (!d->vehicles.contains(id))
+    for (domain::Vehicle* vehicle: m_vehicles)
     {
-        d->vehicles[id] = new Vehicle(id, this);
-        emit vehicleAdded(d->vehicles[id]);
+        if (vehicle->vehicleId() == id) return vehicle;
     }
 
-    return d->vehicles[id];
+    this->addVehicle(new Vehicle(id, this));
+    return m_vehicles.last();
 }
 
-void VehicleService::removeVehicle(uint8_t id)
+void VehicleService::addVehicle(Vehicle* vehicle)
 {
-    Vehicle* vehicle = d->vehicles.take(id);
+    m_vehicles.append(vehicle);
+    emit vehicleAdded(vehicle);
+}
+
+void VehicleService::removeVehicle(Vehicle* vehicle)
+{
+    m_vehicles.removeOne(vehicle);
     emit vehicleRemoved(vehicle);
 }
 
-void VehicleService::deleteVehicle(uint8_t id)
+void VehicleService::deleteVehicle(Vehicle* vehicle)
 {
-    Vehicle* vehicle = d->vehicles.value(id, nullptr);
-    if (!vehicle) return;
-
-    this->removeVehicle(id);
+    this->removeVehicle(vehicle);
     vehicle->deleteLater();
 }

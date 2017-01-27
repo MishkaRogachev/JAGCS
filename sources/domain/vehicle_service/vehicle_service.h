@@ -8,33 +8,30 @@ namespace domain
 {
     class Vehicle;
 
-    // TODO: service layer
     class VehicleService: public QObject
     {
         Q_OBJECT
 
     public:
         explicit VehicleService(QObject* parent = nullptr);
-        ~VehicleService() override;
 
-        Vehicle* vehicle(uint8_t id) const;
-        uint8_t vehicleId(Vehicle* vehicle) const;
-        QList<Vehicle*> vehicles() const;
-        QList<uint8_t> vehicleIds() const;
+        Vehicle* vehicle(int index) const;
 
-        Vehicle* forceVehicle(uint8_t id); // force
+        const QList<Vehicle*>& vehicles() const;
+
+        Vehicle* forceVehicle(uint8_t id);
 
     public slots:
-        void removeVehicle(uint8_t id);
-        void deleteVehicle(uint8_t id);
+        void addVehicle(Vehicle* vehicle);
+        void removeVehicle(Vehicle* vehicle);
+        void deleteVehicle(Vehicle* vehicle);
 
     signals:
         void vehicleAdded(Vehicle* vehicle);
         void vehicleRemoved(Vehicle* vehicle);
 
     private:
-        class Impl;
-        Impl* const d;
+        QList<Vehicle*> m_vehicles;
     };
 }
 
