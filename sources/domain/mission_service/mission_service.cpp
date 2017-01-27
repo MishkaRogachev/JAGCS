@@ -1,5 +1,9 @@
 #include "mission_service.h"
 
+// Qt
+#include <QApplication>
+#include <QDebug>
+
 // Internal
 #include "mission.h"
 #include "mission_vehicle.h"
@@ -69,9 +73,10 @@ void MissionService::addNewMission()
 void MissionService::addVehiclesMision(Vehicle* vehicle)
 {
     Mission* mission = new Mission(this);
-    mission->assignVehicle(vehicle);
     this->addMission(mission);
+    mission->assignVehicle(vehicle);
     this->downloadMission(mission);
+    qApp->processEvents();
 }
 
 void MissionService::removeMission(Mission* mission)
