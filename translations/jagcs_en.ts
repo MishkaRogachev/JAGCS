@@ -124,41 +124,46 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="74"/>
         <source>Lat.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="88"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="89"/>
         <source>Lon.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="105"/>
         <source>Alt.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="121"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="122"/>
         <source>Rel.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="138"/>
         <source>Pitch:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="153"/>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="169"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="154"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="170"/>
         <source>Radius:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="186"/>
+        <source>Turns:</source>
         <translation></translation>
     </message>
 </context>
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="138"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="148"/>
         <source>Add Item</source>
         <translation></translation>
     </message>
@@ -301,7 +306,7 @@
 <context>
     <name>presentation::FlightPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="71"/>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="72"/>
         <source>MAV %1</source>
         <translation></translation>
     </message>
@@ -309,12 +314,17 @@
 <context>
     <name>presentation::MissionPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="76"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="72"/>
         <source>Mission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="135"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="85"/>
+        <source>Unassigned</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="155"/>
         <source>MAV %1</source>
         <translation></translation>
     </message>
@@ -343,33 +353,38 @@
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="18"/>
-        <source>LOITER</source>
+        <source>LOITER ALT</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="19"/>
-        <source>CONTINUE</source>
+        <source>LOITER TURNS</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="20"/>
-        <source>RETURN</source>
+        <source>CONTINUE</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="21"/>
+        <source>RETURN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="22"/>
         <source>LANDING</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="31"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="45"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="32"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
         <source>EMPTY</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="37"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="38"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="47"/>
         <source>ERROR</source>
         <translation></translation>
     </message>

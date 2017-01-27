@@ -156,35 +156,40 @@
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="74"/>
         <source>Lat.:</source>
         <translation>Шир.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="88"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="89"/>
         <source>Lon.:</source>
         <translation>Дол.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="105"/>
         <source>Alt.:</source>
         <translation>Выс.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="121"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="122"/>
         <source>Rel.</source>
         <translation>Относ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="138"/>
         <source>Pitch:</source>
         <translation>Тангаж:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="153"/>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="169"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="154"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="170"/>
         <source>Radius:</source>
         <translation>Радиус:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="186"/>
+        <source>Turns:</source>
+        <translation>Обор.:</translation>
     </message>
     <message>
         <source>Yaw:</source>
@@ -194,7 +199,7 @@
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="138"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="148"/>
         <source>Add Item</source>
         <translation>Добавить элемент</translation>
     </message>
@@ -337,7 +342,7 @@
 <context>
     <name>presentation::FlightPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="71"/>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="72"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
     </message>
@@ -345,12 +350,17 @@
 <context>
     <name>presentation::MissionPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="76"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="72"/>
         <source>Mission</source>
         <translation>Задание</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="135"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="85"/>
+        <source>Unassigned</source>
+        <translation>Не назначено</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="155"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
     </message>
@@ -378,34 +388,43 @@
         <translation>ПУТЕВАЯ ТОЧКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="18"/>
         <source>LOITER</source>
-        <translation>КРУГ</translation>
+        <translation type="vanished">КРУГ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="18"/>
+        <source>LOITER ALT</source>
+        <translation>КРУГ ДО ВЫСОТЫ</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="19"/>
+        <source>LOITER TURNS</source>
+        <translation>КУРГ ОБОРОТОВ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="20"/>
         <source>CONTINUE</source>
         <translation>ПРОДЛЕНИЕ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="20"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="21"/>
         <source>RETURN</source>
         <translation>ВОЗВРАТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="21"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="22"/>
         <source>LANDING</source>
         <translation>ПОСАДКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="31"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="45"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="32"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
         <source>EMPTY</source>
         <translation>ПУСТОЙ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="37"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="38"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="47"/>
         <source>ERROR</source>
         <translation>ОШИБКА</translation>
     </message>
