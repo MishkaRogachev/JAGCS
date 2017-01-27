@@ -55,10 +55,23 @@ Mission* MissionService::missionForVehicleId(uint8_t id)
     return nullptr;
 }
 
+void MissionService::addMission(Mission* mission)
+{
+    d->missions.append(mission);
+    emit missionAdded(mission);
+}
+
 void MissionService::addNewMission()
 {
-    d->missions.append(new Mission(this));
-    emit missionAdded(d->missions.last());
+    this->addMission(new Mission(this));
+}
+
+void MissionService::addVehiclesMision(Vehicle* vehicle)
+{
+    Mission* mission = new Mission(this);
+    mission->assignVehicle(vehicle);
+    this->addMission(mission);
+    this->downloadMission(mission);
 }
 
 void MissionService::removeMission(Mission* mission)

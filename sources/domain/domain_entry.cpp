@@ -6,8 +6,9 @@
 // Internal
 #include "settings_provider.h"
 
-#include "vehicle_service.h"
 #include "mission_service.h"
+#include "vehicle_service.h"
+#include "vehicle.h"
 
 #include "mavlink_communicator.h"
 #include "mavlink_communicator_factory.h"
@@ -30,6 +31,9 @@ DomainEntry::DomainEntry():
 {
     qRegisterMetaType<Endpoint>("Endpoint");
     qRegisterMetaType<EndpointList>("EndpointList");
+
+    QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
+                     &d->missionService, &MissionService::addVehiclesMision);
 
     MavLinkCommunicatorFactory factory(&d->vehicleService, &d->missionService);
     d->communicator.reset(factory.create());
