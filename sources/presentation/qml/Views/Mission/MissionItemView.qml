@@ -7,7 +7,7 @@ import "qrc:/Controls"
 Frame {
     id: root
 
-    property QtObject item
+    property QtObject item: null
 
     property var avalibleCommands
     property string command
@@ -25,7 +25,7 @@ Frame {
         RowLayout {
             Label {
                 font.bold: true
-                text: qsTr("#") + item.sequence
+                text: item ? "#" + item.sequence : ""
             }
 
             ComboBox {
@@ -38,7 +38,7 @@ Frame {
 
             MapPickButton {
                 id: pickButton
-                enabled: 'latitude' in item || 'longitude' in item
+                enabled: item && 'latitude' in item && 'longitude' in item
                 onPicked: {
                     latitudeSpinBox.value = coordinate.latitude;
                     longitudeSpinBox.value = coordinate.longitude;
@@ -47,13 +47,13 @@ Frame {
 
             Button {
                 iconSource: "qrc:/icons/up.svg"
-                enabled: !item.isFirst()
+                enabled: item && !item.isFirst()
                 onClicked: item.moveUp()
             }
 
             Button {
                 iconSource: "qrc:/icons/down.svg"
-                enabled: !item.isLast()
+                enabled: item && !item.isLast()
                 onClicked: item.moveDown()
             }
 
@@ -68,14 +68,14 @@ Frame {
             columns: 2
 
             Label {
-                visible: 'latitude' in item
+                visible: item && 'latitude' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Lat.:")
             }
 
             CoordSpinBox {
-                visible: 'latitude' in item
+                visible: item && 'latitude' in item
                 Layout.fillWidth: true
                 id: latitudeSpinBox
                 value: visible ? item.latitude : 0
@@ -83,14 +83,14 @@ Frame {
             }
 
             Label {
-                visible: 'longitude' in item
+                visible: item && 'longitude' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Lon.:")
             }
 
             CoordSpinBox {
-                visible: 'longitude' in item
+                visible: item && 'longitude' in item
                 Layout.fillWidth: true
                 id: longitudeSpinBox
                 isLongitude: true
@@ -99,7 +99,7 @@ Frame {
             }
 
             Label {
-                visible: 'altitude' in item
+                visible: item && 'altitude' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Alt.:")
@@ -108,7 +108,7 @@ Frame {
             RowLayout {
                 SpinBox {
                     id: altitudeBox
-                    visible: 'altitude' in item
+                    visible: item && 'altitude' in item
                     Layout.fillWidth: true
                     from: -1000
                     to: 20000
@@ -117,10 +117,11 @@ Frame {
                 }
 
                 CheckBox {
-                    visible: 'relativeAltitude' in item
+                    visible: item && 'relativeAltitude' in item
                     Layout.fillWidth: true
                     text: qsTr("Rel.")
-                    checked: 'relativeAltitude' in item ? item.relativeAltitude : false
+                    checked: item && 'relativeAltitude' in item ?
+                                 item.relativeAltitude : false
                     onCheckedChanged: {
                         if (!visible || checked === item.relativeAltitude) return;
 
@@ -132,14 +133,14 @@ Frame {
             }
 
             Label {
-                visible: 'pitch' in item
+                visible: item && 'pitch' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Pitch:")
             }
 
             SpinBox {
-                visible: 'pitch' in item
+                visible: item && 'pitch' in item
                 Layout.fillWidth: true
                 from: 0
                 to: 360
@@ -148,14 +149,14 @@ Frame {
             }
 
             Label {
-                visible: 'acceptanceRadius' in item
+                visible: item && 'acceptanceRadius' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Radius:")
             }
 
             SpinBox {
-                visible: 'acceptanceRadius' in item
+                visible: item && 'acceptanceRadius' in item
                 Layout.fillWidth: true
                 from: 0
                 to: 5000
@@ -164,14 +165,14 @@ Frame {
             }
 
             Label {
-                visible: 'radius' in item
+                visible: item && 'radius' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Radius:")
             }
 
             SpinBox {
-                visible: 'radius' in item
+                visible: item && 'radius' in item
                 Layout.fillWidth: true
                 from: 0
                 to: 5000
@@ -180,14 +181,14 @@ Frame {
             }
 
             Label {
-                visible: 'turns' in item
+                visible: item && 'turns' in item
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
                 text: qsTr("Turns:")
             }
 
             SpinBox {
-                visible: 'turns' in item
+                visible: item && 'turns' in item
                 Layout.fillWidth: true
                 from: 0
                 to: 99
