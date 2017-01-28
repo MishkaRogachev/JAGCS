@@ -221,14 +221,16 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
                     qobject_cast<LoiterMissionItem*>(positionItem);
             if (loiterItem)
             {
-                msgItem.param3 = loiterItem->radius();
+                // TODO: headingRequired
+                msgItem.param2 = loiterItem->radius();
+            }
 
-                LoiterTurnsMissionItem* turnsItem =
-                        qobject_cast<LoiterTurnsMissionItem*>(loiterItem);
-                if (turnsItem)
-                {
-                    msgItem.param1 = turnsItem->turns();
-                }
+            LoiterTurnsMissionItem* turnsItem =
+                    qobject_cast<LoiterTurnsMissionItem*>(positionItem);
+            if (turnsItem)
+            {
+                msgItem.param1 = turnsItem->turns();
+                msgItem.param3 = turnsItem->radius();
             }
         }
     }
@@ -343,14 +345,16 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
                     qobject_cast<LoiterMissionItem*>(positionItem);
             if (loiterItem)
             {
-                loiterItem->setRadius(msgItem.param3);
+                // TODO: headingRequired
+                loiterItem->setRadius(msgItem.param2);
+            }
 
-                LoiterTurnsMissionItem* turnsItem =
-                        qobject_cast<LoiterTurnsMissionItem*>(loiterItem);
-                if (turnsItem)
-                {
-                    turnsItem->setRadius(msgItem.param1);
-                }
+            LoiterTurnsMissionItem* turnsItem =
+                    qobject_cast<LoiterTurnsMissionItem*>(positionItem);
+            if (turnsItem)
+            {
+                turnsItem->setTurns(msgItem.param1);
+                turnsItem->setRadius(msgItem.param3);
             }
         }
     }
