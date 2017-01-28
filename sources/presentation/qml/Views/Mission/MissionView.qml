@@ -89,13 +89,13 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: selectedMission != -1 && selectedVehicle != -1
+                enabled: selectedMission != -1 && selectedVehicle > 0
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: selectedMission != -1 && selectedVehicle != -1
+                enabled: selectedMission != -1 && selectedVehicle > 0
                 onClicked: uploadMission()
             }
 
