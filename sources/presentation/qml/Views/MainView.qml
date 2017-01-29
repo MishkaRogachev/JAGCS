@@ -23,16 +23,16 @@ ApplicationWindow {
         id: palette
 
         property color trackColor: "#F44336"
-        property color missionColor: paletteStyle ? "#1DE9B6" : "#00897B"
+        property color missionColor: paletteStyle ? "#00897B" : "#1DE9B6"
 
-        backgroundColor: paletteStyle ? "#37474F" : "#CFD8DC"
-        sunkenColor: paletteStyle ? "#263238" : "#B0BEC5"
-        raisedColor: paletteStyle ? "#455A64" : "#ECEFF1"
-        buttonColor: paletteStyle ? "#546E7A" : "#F5F5F5"
+        backgroundColor: paletteStyle ? "#CFD8DC" : "#37474F"
+        sunkenColor: paletteStyle ? "#B0BEC5" : "#263238"
+        raisedColor: paletteStyle ? "#ECEFF1" : "#455A64"
+        buttonColor: paletteStyle ? "#F5F5F5" : "#546E7A"
 
-        disabledColor: paletteStyle ? "#212121" : "#BDBDBD"
+        disabledColor: paletteStyle ? "#BDBDBD" : "#212121"
 
-        textColor: paletteStyle ? "#FAFAFA" : "#37474F"
+        textColor: paletteStyle ? "#37474F" : "#FAFAFA"
         selectedTextColor: "#424242"
 
         highlightColor: "#00E676"

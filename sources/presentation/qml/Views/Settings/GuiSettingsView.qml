@@ -21,6 +21,18 @@ Frame {
         columns: 3
 
         Label {
+            text: qsTr("Language")
+            Layout.fillWidth: true
+        }
+
+        ComboBox {
+            id: languageBox
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            onCurrentIndexChanged: root.updateSettings();
+        }
+
+        Label {
             text: qsTr("UI size")
             Layout.fillWidth: true
         }
@@ -64,24 +76,36 @@ Frame {
                 }
 
                 TabButton {
-                    text: qsTr("Indoor")
+                    text: qsTr("Outdoor")
                 }
                 TabButton {
-                    text: qsTr("Outdoor")
+                    text: qsTr("Indoor")
                 }
             }
         }
 
         Label {
-            text: qsTr("Language")
+            text: qsTr("Flight director view")
             Layout.fillWidth: true
         }
 
-        ComboBox {
-            id: languageBox
-            Layout.columnSpan: 2
+        Item {
             Layout.fillWidth: true
-            onCurrentIndexChanged: root.updateSettings();
+            Layout.columnSpan: 2
+            height: fdBar.height
+
+            TabBar {
+                id: fdBar
+                anchors.centerIn: parent
+                width: parent.width
+
+                TabButton {
+                    text: qsTr("From Plane")
+                }
+                TabButton {
+                    text: qsTr("From ground")
+                }
+            }
         }
 
         Item {
