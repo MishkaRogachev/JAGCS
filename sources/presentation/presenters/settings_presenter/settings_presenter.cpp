@@ -26,10 +26,9 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* parent
     d(new Impl())
 {
     d->gui = new GuiSettingsPresenter(this);
-    d->connections = new ConnectionSettingsPresenter(entry->communicator(),
-                                                     this);
+    d->connections = new ConnectionSettingsPresenter(entry->communicator(), this);
     d->video = new VideoSettingsPresenter(this);
-    d->network = new NetworkSettingsPresenter(this);
+    d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
 }
 
 SettingsPresenter::~SettingsPresenter()
@@ -61,6 +60,4 @@ void SettingsPresenter::connectView(QObject* view)
 void SettingsPresenter::onMakeDefaults()
 {
     domain::SettingsProvider::makeDefaults();
-
-    d->network->updateProxy();
 }

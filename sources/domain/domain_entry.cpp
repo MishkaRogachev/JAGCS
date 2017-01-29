@@ -13,6 +13,8 @@
 #include "mavlink_communicator.h"
 #include "mavlink_communicator_factory.h"
 
+#include "proxy_manager.h"
+
 #include "endpoint.h"
 
 using namespace domain;
@@ -22,6 +24,7 @@ class DomainEntry::Impl
 public:
     VehicleService vehicleService;
     MissionService missionService;
+    ProxyManager proxyManager;
 
     QScopedPointer<MavLinkCommunicator> communicator;
 };
@@ -54,7 +57,12 @@ VehicleService* DomainEntry::vehicleService() const
     return &d->vehicleService;
 }
 
-MissionService*DomainEntry::missionService() const
+MissionService* DomainEntry::missionService() const
 {
     return &d->missionService;
+}
+
+ProxyManager* DomainEntry::proxyManager() const
+{
+    return &d->proxyManager;
 }

@@ -8,6 +8,7 @@ namespace domain
     class AbstractCommunicator;
     class VehicleService;
     class MissionService;
+    class ProxyManager;
 
     class DomainEntry
     {
@@ -18,6 +19,7 @@ namespace domain
         AbstractCommunicator* communicator() const;
         VehicleService* vehicleService() const;
         MissionService* missionService() const;
+        ProxyManager* proxyManager() const;
 
     private:
         class Impl;

@@ -3,6 +3,11 @@
 
 #include "base_presenter.h"
 
+namespace domain
+{
+    class ProxyManager;
+}
+
 namespace presentation
 {
     class NetworkSettingsPresenter: public BasePresenter
@@ -10,11 +15,9 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit NetworkSettingsPresenter(QObject* parent);
+        explicit NetworkSettingsPresenter(domain::ProxyManager* manager,
+                                          QObject* parent);
         ~NetworkSettingsPresenter() override;
-
-    public slots:
-        void updateProxy();
 
     protected:
         void connectView(QObject* view) override;
