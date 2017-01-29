@@ -17,14 +17,20 @@ GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
 
 void GuiSettingsPresenter::updateView()
 {
+    const QStringList& locales = domain::TranslationManager::avalibleLocales();
+    int index = locales.indexOf(domain::TranslationManager::currentLocale());
+    this->setViewProperty(PROPERTY(localeIndex), index);
+
     this->setViewProperty(PROPERTY(uiSize), domain::SettingsProvider::value(
                               domain::gui_settings::uiSize));
     this->setViewProperty(PROPERTY(paletteStyle), domain::SettingsProvider::value(
                               domain::gui_settings::paletteStyle));
 
-    const QStringList& locales = domain::TranslationManager::avalibleLocales();
-    int index = locales.indexOf(domain::TranslationManager::currentLocale());
-    this->setViewProperty(PROPERTY(localeIndex), index);
+    this->setViewProperty(PROPERTY(fdPitchInverted), domain::SettingsProvider::value(
+                              domain::gui_settings::fdPitchInverted));
+    this->setViewProperty(PROPERTY(fdRollInverted), domain::SettingsProvider::value(
+                              domain::gui_settings::fdRollInverted));
+
 }
 
 void GuiSettingsPresenter::connectView(QObject* view)
@@ -38,12 +44,17 @@ void GuiSettingsPresenter::connectView(QObject* view)
 
 void GuiSettingsPresenter::onUpdateSettings()
 {
+    const QStringList& locales = domain::TranslationManager::avalibleLocales();
+    QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
+    domain::TranslationManager::setCurrentLocale(locale);
+
     domain::SettingsProvider::setValue(domain::gui_settings::uiSize,
                                        this->viewProperty(PROPERTY(uiSize)).toInt());
     domain::SettingsProvider::setValue(domain::gui_settings::paletteStyle,
                                        this->viewProperty(PROPERTY(paletteStyle)));
 
-    const QStringList& locales = domain::TranslationManager::avalibleLocales();
-    QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
-    domain::TranslationManager::setCurrentLocale(locale);
+    domain::SettingsProvider::setValue(domain::gui_settings::fdPitchInverted,
+                                       this->viewProperty(PROPERTY(fdPitchInverted)));
+    domain::SettingsProvider::setValue(domain::gui_settings::fdRollInverted,
+                                       this->viewProperty(PROPERTY(fdRollInverted)));
 }

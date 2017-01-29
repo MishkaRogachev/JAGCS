@@ -5,9 +5,11 @@ namespace domain
 {
     namespace gui_settings
     {
+        const char* const locale = "Gui/locale";
         const char* const uiSize = "Gui/uiSize";
         const char* const paletteStyle = "Gui/paletteStyle";
-        const char* const locale = "Gui/locale";
+        const char* const fdPitchInverted = "Gui/fdPitchInverted";
+        const char* const fdRollInverted = "Gui/fdRollInverted";
     }
 
     namespace map_settings

@@ -7,10 +7,12 @@ import "qrc:/Controls"
 Frame {
     id: root
 
-    property alias uiSize: uiSlider.value
-    property alias paletteStyle: paletteBar.currentIndex
     property alias locales: languageBox.model
     property alias localeIndex: languageBox.currentIndex
+    property alias uiSize: uiSlider.value
+    property alias paletteStyle: paletteBar.currentIndex
+    property alias fdPitchInverted: fdPitchBar.currentIndex
+    property alias fdRollInverted: fdRollBar.currentIndex
 
     signal updateSettings()
 
@@ -85,19 +87,45 @@ Frame {
         }
 
         Label {
-            text: qsTr("Flight director view")
+            text: qsTr("Flight director pitch view")
             Layout.fillWidth: true
         }
 
         Item {
             Layout.fillWidth: true
             Layout.columnSpan: 2
-            height: fdBar.height
+            height: fdPitchBar.height
 
             TabBar {
-                id: fdBar
+                id: fdPitchBar
                 anchors.centerIn: parent
                 width: parent.width
+                onCurrentIndexChanged: root.updateSettings();
+
+                TabButton {
+                    text: qsTr("From Plane")
+                }
+                TabButton {
+                    text: qsTr("From ground")
+                }
+            }
+        }
+
+        Label {
+            text: qsTr("Flight director roll view")
+            Layout.fillWidth: true
+        }
+
+        Item {
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+            height: fdRollBar.height
+
+            TabBar {
+                id: fdRollBar
+                anchors.centerIn: parent
+                width: parent.width
+                onCurrentIndexChanged: root.updateSettings();
 
                 TabButton {
                     text: qsTr("From Plane")

@@ -19,9 +19,11 @@ public:
     {
         settings.clear();
 
+        settings.setValue(gui_settings::locale, "en");
         settings.setValue(gui_settings::uiSize, 36);
         settings.setValue(gui_settings::paletteStyle, 0);
-        settings.setValue(gui_settings::locale, "en");
+        settings.setValue(gui_settings::fdPitchInverted, 0);
+        settings.setValue(gui_settings::fdRollInverted, 0);
 
         settings.setValue(map_settings::zoomLevel, 16.0);
         settings.setValue(map_settings::centerLatitude, 55.968954);
