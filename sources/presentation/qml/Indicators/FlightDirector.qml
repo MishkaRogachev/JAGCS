@@ -66,7 +66,7 @@ Column {
                     anchors.fill: parent
                     effectiveHeight: pitchScale.height
                     pitch: pitchInverted ? flightDirector.pitch : 0
-                    roll: rollInverted ? flightDirector.roll : 0
+                    roll: rollInverted ? 0 : flightDirector.roll
                     minPitch: flightDirector.minPitch
                     maxPitch: flightDirector.maxPitch
                 }
@@ -76,7 +76,7 @@ Column {
                     anchors.centerIn: parent
                     height: parent.height - rollOffset - 48 // roll mark
                     pitch: pitchInverted ? flightDirector.pitch : 0
-                    roll: rollInverted ? flightDirector.roll : 0
+                    roll: rollInverted ? 0 : flightDirector.roll
                     minPitch: flightDirector.pitch + flightDirector.minPitch
                     maxPitch: flightDirector.pitch + flightDirector.maxPitch
                 }
@@ -86,7 +86,7 @@ Column {
                     width: parent.width
                     height: pitchScale.height
                     pitch: pitchInverted ? 0 : -flightDirector.pitch
-                    roll: rollInverted ? 0 : flightDirector.roll
+                    roll: rollInverted ? -flightDirector.roll : 0
                 }
             }
 
@@ -109,7 +109,8 @@ Column {
                 anchors.centerIn: parent
                 height: parent.height + rollOffset
                 offset: rollOffset / 2
-                roll: flightDirector.roll
+                roll: rollInverted ? 0 : flightDirector.roll
+                rollValue: flightDirector.roll
                 minRoll: flightDirector.minRoll
                 maxRoll: flightDirector.maxRoll
             }

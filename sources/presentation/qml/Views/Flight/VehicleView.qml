@@ -22,7 +22,6 @@ ColumnLayout {
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
 
         rollInverted: settings.value("Gui/fdRollInverted")
-        Component.onCompleted: console.log(settings.value("Gui/fdRollInverted"))
     }
 
     RowLayout {

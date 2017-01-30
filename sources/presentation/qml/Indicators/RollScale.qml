@@ -5,6 +5,8 @@ Item {
     id: rollScale
 
     property int roll: 0
+    property int rollValue: roll
+
     property int minRoll
     property int maxRoll
     property int valueStep: 5
@@ -14,6 +16,7 @@ Item {
     width: height
 
     onRollChanged: canvas.requestPaint()
+    onRollValueChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
@@ -51,7 +54,7 @@ Item {
             ctx.lineTo(0, offset - height / 2);
 
             ctx.font = '14pt sans-serif';
-            ctx.fillText(roll, 0, offset + 32 - height / 2);
+            ctx.fillText(rollValue, 0, offset + 32 - height / 2);
 
             ctx.restore();
 
