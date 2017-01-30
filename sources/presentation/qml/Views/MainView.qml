@@ -17,8 +17,6 @@ ApplicationWindow {
     property alias uiSize: palette.controlBaseSize
     property int paletteStyle: 0
 
-    signal updateUiSettings();
-
     Palette {
         id: palette
 
@@ -59,5 +57,10 @@ ApplicationWindow {
         case "mission": return Qt.createComponent("Mission/MissionView.qml");
         case "settings": return Qt.createComponent("Settings/SettingsView.qml");
         }
+    }
+
+    function updateUiSettings() {
+        uiSize = settings.value("Gui/uiSize");
+        paletteStyle = settings.value("Gui/paletteStyle");
     }
 }

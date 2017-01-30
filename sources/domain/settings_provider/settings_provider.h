@@ -14,10 +14,11 @@ namespace domain
         ~SettingsProvider() override;
         static SettingsProvider* instance();
 
-        static QVariant value(const QString& key,
+        Q_INVOKABLE static QVariant value(const QString& key,
                               const QVariant& defaultValue = QVariant());
 
-        static void setValue(const QString& key, const QVariant& value);
+        Q_INVOKABLE static void setValue(const QString& key,
+                                         const QVariant& value);
 
         static void makeDefaults();
         static void sync();

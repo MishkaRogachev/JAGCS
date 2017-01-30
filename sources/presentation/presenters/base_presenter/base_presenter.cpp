@@ -46,6 +46,11 @@ void BasePresenter::setViewProperty(const char* name, const QVariant& value)
     m_view->setProperty(name, value);
 }
 
+void BasePresenter::invokeViewMethod(const char* name)
+{
+    QMetaObject::invokeMethod(m_view, name);
+}
+
 void BasePresenter::invokeViewMethod(const char* name, const QVariant& value)
 {
     QMetaObject::invokeMethod(m_view, name, Q_ARG(QVariant, value));

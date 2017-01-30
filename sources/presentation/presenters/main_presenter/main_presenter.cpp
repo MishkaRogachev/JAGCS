@@ -32,8 +32,7 @@ MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
     d->entry = entry;
 
     d->status = new StatusPresenter(this);
-    connect(d->status, &StatusPresenter::setMode,
-            this, &MainPresenter::setMode);
+    connect(d->status, &StatusPresenter::setMode, this, &MainPresenter::setMode);
 }
 
 MainPresenter::~MainPresenter()
@@ -76,19 +75,9 @@ void MainPresenter::setMode(const QString& mode)
     }
 }
 
-void MainPresenter::updateUiSettings()
-{
-    this->setViewProperty(PROPERTY(uiSize), domain::SettingsProvider::value(
-                              domain::gui_settings::uiSize));
-    this->setViewProperty(PROPERTY(paletteStyle), domain::SettingsProvider::value(
-                              domain::gui_settings::paletteStyle));
-}
-
 void MainPresenter::connectView(QObject* view)
 {
     d->status->setView(view->findChild<QObject*>(NAME(status)));
 
-    connect(view, SIGNAL(updateUiSettings()), this, SLOT(updateUiSettings()));
-
-    this->updateUiSettings();
+    this->invokeViewMethod(PROPERTY(updateUiSettings));
 }
