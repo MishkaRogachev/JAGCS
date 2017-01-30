@@ -29,6 +29,8 @@ Item {
     Behavior on velocity { PropertyAnimation { duration: 100 } }
     Behavior on altitude { PropertyAnimation { duration: 100 } }
 
+    height: width
+
     Item {
         id: pitchRollContents
         anchors.fill: parent

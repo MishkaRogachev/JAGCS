@@ -16,24 +16,35 @@ Pane {
 
     padding: 0
 
-    RowLayout {
-        anchors.fill: parent
-        anchors.margins: 5
+    FlightMapView {
+        id: map
+        objectName: "map"
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: sidebar.right
+        anchors.right: parent.right
+    }
+
+    Item {
+        id: sidebar
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: column.width
 
         ColumnLayout {
-            id: toolBar
-            Layout.fillHeight: true
-            Layout.preferredWidth: 420 // TODO: dynamic width
+            id: column
+            height: parent.height
 
             ComboBox {
                 model: vehicleNames
-                Layout.preferredWidth: parent.width
+                Layout.fillWidth: true
                 onCurrentTextChanged: vehicleSelected(currentText)
             }
 
             VehicleView {
                 id: vehicleView
-                Layout.preferredWidth: parent.width
+                Layout.fillWidth: true
             }
 
             Item {
@@ -43,16 +54,9 @@ Pane {
 
             VideoView {
                 objectName: "video"
-                Layout.preferredWidth: parent.width
+                Layout.fillWidth: true
                 Layout.preferredHeight: width * 3 / 4
             }
-        }
-
-        FlightMapView {
-            id: map
-            objectName: "map"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
         }
     }
 }

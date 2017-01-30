@@ -2,7 +2,7 @@
 import QtGraphicalEffects 1.0
 
 Column {
-    id: flightDirector
+    id: root
 
     property int pitch: 0.0
     property int roll: 0.0
@@ -36,11 +36,11 @@ Column {
     Row {
         id: row
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: flightDirector.spacing
+        spacing: root.spacing
 
         LinearScale {
             id: velocityScale
-            value: flightDirector.velocity
+            value: root.velocity
             minValue: velocity + minVelocity
             maxValue: velocity + maxVelocity
             valueStep: velocityStep
@@ -52,7 +52,7 @@ Column {
         Item {
             id: picthRoll
             anchors.verticalCenter: parent.verticalCenter
-            width: flightDirector.width - velocityScale.width -
+            width: root.width - velocityScale.width -
                    altitudeScale.width - row.spacing * 2
             height: width
 
@@ -65,28 +65,28 @@ Column {
                     id: horizont
                     anchors.fill: parent
                     effectiveHeight: pitchScale.height
-                    pitch: pitchInverted ? flightDirector.pitch : 0
-                    roll: rollInverted ? 0 : flightDirector.roll
-                    minPitch: flightDirector.minPitch
-                    maxPitch: flightDirector.maxPitch
+                    pitch: pitchInverted ? root.pitch : 0
+                    roll: rollInverted ? 0 : root.roll
+                    minPitch: root.minPitch
+                    maxPitch: root.maxPitch
                 }
 
                 PitchScale {
                     id: pitchScale
                     anchors.centerIn: parent
                     height: parent.height - rollOffset - 48 // roll mark
-                    pitch: pitchInverted ? flightDirector.pitch : 0
-                    roll: rollInverted ? 0 : flightDirector.roll
-                    minPitch: flightDirector.pitch + flightDirector.minPitch
-                    maxPitch: flightDirector.pitch + flightDirector.maxPitch
+                    pitch: pitchInverted ? root.pitch : 0
+                    roll: rollInverted ? 0 : root.roll
+                    minPitch: root.pitch + root.minPitch
+                    maxPitch: root.pitch + root.maxPitch
                 }
 
                 PlaneMark {
                     anchors.centerIn: parent
                     width: parent.width
                     height: pitchScale.height
-                    pitch: pitchInverted ? 0 : -flightDirector.pitch
-                    roll: rollInverted ? -flightDirector.roll : 0
+                    pitch: pitchInverted ? 0 : -root.pitch
+                    roll: rollInverted ? -root.roll : 0
                 }
             }
 
@@ -109,16 +109,16 @@ Column {
                 anchors.centerIn: parent
                 height: parent.height + rollOffset
                 offset: rollOffset / 2
-                roll: rollInverted ? 0 : flightDirector.roll
-                rollValue: flightDirector.roll
-                minRoll: flightDirector.minRoll
-                maxRoll: flightDirector.maxRoll
+                roll: rollInverted ? 0 : root.roll
+                rollValue: root.roll
+                minRoll: root.minRoll
+                maxRoll: root.maxRoll
             }
         }
 
         LinearScale {
             id: altitudeScale
-            value: flightDirector.altitude
+            value: root.altitude
             minValue: altitude + minAltitude
             maxValue: altitude + maxAltitude
             valueStep: altitudeStep
@@ -135,6 +135,6 @@ Column {
         maxValue: yaw + maxYaw
         valueStep: 5
         anchors.horizontalCenter: parent.horizontalCenter
-        width: flightDirector.width - 16
+        width: root.width - 16
     }
 }

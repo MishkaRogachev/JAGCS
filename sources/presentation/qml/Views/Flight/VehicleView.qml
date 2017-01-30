@@ -1,58 +1,42 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
 import "../../Indicators"
 
-ColumnLayout {
+Column {
     id: root
 
     property QtObject vehicle
 
-    // TODO: MVP
-    FlightDirector {
-        id: flightDirector
-        Layout.preferredWidth: parent.width
+    ArtificialHorizont {
+        width: palette.controlBaseSize * 9
 
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
         roll: vehicle ? vehicle.attitude.roll : 0.0
-        yaw: vehicle ? vehicle.attitude.yaw : 0.0
         velocity: vehicle ? vehicle.trueAirSpeed : 0.0
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
-    }
-
-    RowLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
 
         GpsIndicator {
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.margins: 7
             fix: vehicle ? vehicle.gps.fix : -1
             satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
         }
 
         BatteryIndicator {
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.margins: 7
             charge: vehicle ? vehicle.powerSystem.charge : -1
         }
+    }
 
-        ColumnLayout {
-            anchors.verticalCenter: parent.verticalCenter
-
-            Label {
-                text: qsTr("V:") + " " +
-                      (vehicle ? vehicle.powerSystem.voltage.toFixed(2) : "-") +
-                      " " + qsTr("v")
-            }
-
-            Label {
-                text: qsTr("C:") + " " +
-                      (vehicle ? vehicle.powerSystem.current.toFixed(2) : "-") +
-                      " " + qsTr("A")
-            }
-        }
+    Row {
+        anchors.horizontalCenter: parent.horizontalCenter
 
         // TODO: delay button
         Button {
