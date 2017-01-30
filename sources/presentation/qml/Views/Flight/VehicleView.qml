@@ -21,7 +21,7 @@ ColumnLayout {
         velocity: vehicle ? vehicle.trueAirSpeed : 0.0
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
 
-        rollInverted: settings.value("Gui/fdRollInverted")
+        rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
 
     RowLayout {
