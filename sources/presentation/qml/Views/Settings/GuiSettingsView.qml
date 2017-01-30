@@ -11,7 +11,6 @@ Frame {
     property alias localeIndex: languageBox.currentIndex
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
-    property alias fdPitchInverted: fdPitchBar.currentIndex
     property alias fdRollInverted: fdRollBar.currentIndex
 
     signal updateSettings()
@@ -87,32 +86,7 @@ Frame {
         }
 
         Label {
-            text: qsTr("Flight director pitch view")
-            Layout.fillWidth: true
-        }
-
-        Item {
-            Layout.fillWidth: true
-            Layout.columnSpan: 2
-            height: fdPitchBar.height
-
-            TabBar {
-                id: fdPitchBar
-                anchors.centerIn: parent
-                width: parent.width
-                onCurrentIndexChanged: root.updateSettings();
-
-                TabButton {
-                    text: qsTr("From Plane")
-                }
-                TabButton {
-                    text: qsTr("From ground")
-                }
-            }
-        }
-
-        Label {
-            text: qsTr("Flight director roll view")
+            text: qsTr("Artificial horizon")
             Layout.fillWidth: true
         }
 
@@ -125,13 +99,13 @@ Frame {
                 id: fdRollBar
                 anchors.centerIn: parent
                 width: parent.width
-                onCurrentIndexChanged: root.updateSettings();
+                onCurrentIndexChanged: root.updateSettings()
 
                 TabButton {
-                    text: qsTr("From Plane")
+                    text: qsTr("Western")
                 }
                 TabButton {
-                    text: qsTr("From ground")
+                    text: qsTr("Russian")
                 }
             }
         }

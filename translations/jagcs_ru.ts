@@ -37,27 +37,42 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="24"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="37"/>
         <source>UI size</source>
         <translation>Размер интерфейса</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="48"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="61"/>
         <source>Palette</source>
         <translation>Палитра</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="83"/>
         <source>Indoor</source>
         <translation>Дневная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="89"/>
+        <source>Artificial horizon</source>
+        <translation>Авиагоризонт</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="105"/>
+        <source>Western</source>
+        <translation>Западный</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="108"/>
+        <source>Russian</source>
+        <translation>Отечественный</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="80"/>
         <source>Outdoor</source>
         <translation>Ночная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="76"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="25"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -151,9 +166,8 @@
         <translation type="vanished">ПОСАДКА</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="28"/>
         <source>#</source>
-        <translation>#</translation>
+        <translation type="vanished">#</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="74"/>
@@ -176,18 +190,18 @@
         <translation>Относ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="138"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="139"/>
         <source>Pitch:</source>
         <translation>Тангаж:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="154"/>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="155"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="171"/>
         <source>Radius:</source>
         <translation>Радиус:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="186"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="187"/>
         <source>Turns:</source>
         <translation>Обор.:</translation>
     </message>
@@ -288,32 +302,32 @@
 <context>
     <name>VehicleView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="43"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="46"/>
         <source>V:</source>
         <translation>V:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="45"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="48"/>
         <source>v</source>
         <translation>в</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="49"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="52"/>
         <source>C:</source>
         <translation>C:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="51"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="54"/>
         <source>A</source>
         <translation>А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="57"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="60"/>
         <source>DISARM</source>
         <translation>РАЗРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="57"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="60"/>
         <source>ARM</source>
         <translation>ЗАРЯД</translation>
     </message>
@@ -432,32 +446,32 @@
 <context>
     <name>presentation::NetworkSettingsPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="25"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="28"/>
         <source>No Proxy</source>
         <translation>Нет прокси</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="26"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="29"/>
         <source>Default</source>
         <translation>По-умолчанию</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="27"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="30"/>
         <source>SOCKS 5</source>
         <translation>SOCKS 5</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="28"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="31"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="29"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="32"/>
         <source>Caching HTTP</source>
         <translation>HTTP-кеширование</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="30"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="33"/>
         <source>Caching FTP</source>
         <translation>FTP-кеширование</translation>
     </message>

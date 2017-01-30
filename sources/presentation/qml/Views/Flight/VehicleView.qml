@@ -20,6 +20,9 @@ ColumnLayout {
         yaw: vehicle ? vehicle.attitude.yaw : 0.0
         velocity: vehicle ? vehicle.trueAirSpeed : 0.0
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
+
+        rollInverted: settings.value("Gui/fdRollInverted")
+        Component.onCompleted: console.log(settings.value("Gui/fdRollInverted"))
     }
 
     RowLayout {

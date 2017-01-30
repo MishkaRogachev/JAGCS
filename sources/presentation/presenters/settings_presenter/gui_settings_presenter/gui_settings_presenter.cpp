@@ -26,8 +26,6 @@ void GuiSettingsPresenter::updateView()
     this->setViewProperty(PROPERTY(paletteStyle), domain::SettingsProvider::value(
                               domain::gui_settings::paletteStyle));
 
-    this->setViewProperty(PROPERTY(fdPitchInverted), domain::SettingsProvider::value(
-                              domain::gui_settings::fdPitchInverted));
     this->setViewProperty(PROPERTY(fdRollInverted), domain::SettingsProvider::value(
                               domain::gui_settings::fdRollInverted));
 
@@ -53,8 +51,6 @@ void GuiSettingsPresenter::onUpdateSettings()
     domain::SettingsProvider::setValue(domain::gui_settings::paletteStyle,
                                        this->viewProperty(PROPERTY(paletteStyle)));
 
-    domain::SettingsProvider::setValue(domain::gui_settings::fdPitchInverted,
-                                       this->viewProperty(PROPERTY(fdPitchInverted)));
     domain::SettingsProvider::setValue(domain::gui_settings::fdRollInverted,
                                        this->viewProperty(PROPERTY(fdRollInverted)));
 }
