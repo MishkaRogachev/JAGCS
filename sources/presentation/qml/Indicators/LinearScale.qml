@@ -33,7 +33,8 @@ Rectangle {
             ctx.lineWidth = 2;
             ctx.strokeStyle = palette.textColor;
             ctx.fillStyle = palette.textColor;
-            ctx.font = '11pt sans-serif';
+            ctx.font = palette.fontPixelSize + 'px sans-serif';
+            ctx.fontsize = 18;
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
@@ -45,13 +46,13 @@ Rectangle {
                 var xPos = canvasRotation > 0 ?
                             width - Helper.mapToRange(i, minValue, maxValue, width) :
                             Helper.mapToRange(i, minValue, maxValue, width);
-                ctx.moveTo(xPos, 2);
+                ctx.moveTo(xPos, 0);
                 ctx.lineTo(xPos, major ? 10 : 8);
                 if (major) {
                     ctx.save();
                     ctx.translate(xPos, 12);
                     ctx.rotate(-canvasRotation * Math.PI / 180);
-                    ctx.fillText(i, 0, 2);
+                    ctx.fillText(i, 0, 0);
                     ctx.restore();
                 }
             }
@@ -62,7 +63,7 @@ Rectangle {
             var rectHeight = palette.fontPixelSize * 1.5;
             ctx.fillRect(width / 2 - rectHeight / 2, 0, rectHeight, canvas.width);
 
-            ctx.font = 'bold 12pt sans-serif';
+            ctx.font = 'bold ' + palette.fontPixelSize + 'px sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation < 0 ? 'left' :'right') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
