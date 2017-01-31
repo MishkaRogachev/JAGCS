@@ -15,9 +15,8 @@ Column {
     property int snsAltitude: 0
     property int climb: 0
 
-    property int minClimb: -3
-    property int maxClimb: 3
-    property int climbStep: 1
+    property int minClimb: -12
+    property int maxClimb: 12
 
     Behavior on climb { PropertyAnimation { duration: 100 } }
 
@@ -27,7 +26,7 @@ Column {
         ArtificialHorizont {
             id: horizont
             anchors.verticalCenter: parent.verticalCenter
-            width: root.width * 0.9
+            width: root.width * 0.97
             height: width
 
             Label {
@@ -47,17 +46,14 @@ Column {
             }
         }
 
-        LinearScale {
+        BarIndicator {
             id: groundSpeedScale
             anchors.verticalCenter: parent.verticalCenter
-            width: root.width * 0.1 - 1
-            height: root.height * 0.6
-            fontPixelSize: palette.fontPixelSize * 0.6
+            width: root.width - horizont.width - 1
+            height: root.height * 0.8
             value: climb
-            minValue: climb + minClimb
-            maxValue: climb + maxClimb
-            valueStep: climbStep
-            canvasRotation: 90
+            minValue: minClimb
+            maxValue: maxClimb
         }
     }
 }

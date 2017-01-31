@@ -18,8 +18,6 @@ Rectangle {
     clip: true
     onValueChanged: canvas.requestPaint()
 
-    Component.onCompleted: console.log(fontPixelSize)
-
     Canvas {
         id: canvas
         anchors.centerIn: parent
