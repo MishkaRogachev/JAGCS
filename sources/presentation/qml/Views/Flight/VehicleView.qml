@@ -2,6 +2,8 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import "qrc:/JS/helper.js" as Helper
+
 import "qrc:/Controls"
 import "../../Indicators"
 
@@ -12,10 +14,49 @@ ColumnLayout {
 
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
+        Layout.preferredWidth: parent.width
+
+        ColumnLayout {
+            anchors.verticalCenter: parent.verticalCenter
+
+            Label {
+                color: gpsIndicator.color
+                font.pixelSize: palette.fontPixelSize * 0.6
+                text: qsTr("Lat.:") +
+                      (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.latitude,
+                                                           false) : qsTr("None"))
+            }
+
+            Label {
+                color: gpsIndicator.color
+                font.pixelSize: palette.fontPixelSize * 0.6
+                text: qsTr("Lon.:") +
+                      (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.longitude,
+                                                           true) : qsTr("None"))
+            }
+        }
 
         GpsIndicator {
+            id: gpsIndicator
             fix: vehicle ? vehicle.gps.fix : -1
             satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        ColumnLayout {
+            anchors.verticalCenter: parent.verticalCenter
+
+            Label {
+                color: gpsIndicator.color
+                font.pixelSize: palette.fontPixelSize * 0.6
+                text: qsTr("HDOP:") + (vehicle ? vehicle.gps.eph : qsTr("None"))
+            }
+
+            Label {
+                color: gpsIndicator.color
+                font.pixelSize: palette.fontPixelSize * 0.6
+                text: qsTr("VDOP:") + (vehicle ? vehicle.gps.epv : qsTr("None"))
+            }
         }
     }
 
