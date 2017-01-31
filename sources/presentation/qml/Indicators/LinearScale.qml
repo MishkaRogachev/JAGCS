@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import "qrc:/JS/helper.js" as Helper
 
-Item {
-    id: scale
+Rectangle {
+    id: root
 
     property int value: 0
     property int minValue: 0
@@ -13,8 +13,8 @@ Item {
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
                             (canvasRotation <= -90 && canvasRotation > -180)
 
-    width: 64
-    height: 64
+    color: palette.sunkenColor
+    clip: true
     onValueChanged: canvas.requestPaint()
 
     Canvas {
@@ -27,18 +27,16 @@ Item {
 
             ctx.clearRect(0, 0, width, height);
 
+            ctx.save();
+            ctx.beginPath();
+
             ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ecf0f1' // TODO: palette
-            ctx.fillStyle = '#ecf0f1' // TODO: palette
+            ctx.strokeStyle = palette.textColor;
+            ctx.fillStyle = palette.textColor;
             ctx.font = '11pt sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(0, 2);
-            ctx.lineTo(width, 2);
 
             var counter = 0;
             for (var i = minValue - (minValue % valueStep); i <= maxValue;
@@ -59,13 +57,10 @@ Item {
             }
 
             ctx.stroke();
-            ctx.clearRect(width / 2 - 16, 3, 32, 64);
 
-            ctx.beginPath();
-            ctx.moveTo(width / 2 - 16, 16);
-            ctx.lineTo(width / 2, 4);
-            ctx.lineTo(width / 2 + 16, 16);
-            ctx.stroke();
+            ctx.fillStyle = palette.raisedColor;
+            var rectHeight = palette.fontPixelSize * 1.5;
+            ctx.fillRect(width / 2 - rectHeight / 2, 0, rectHeight, canvas.width);
 
             ctx.font = 'bold 12pt sans-serif';
             ctx.textAlign = vertical ?
@@ -74,6 +69,7 @@ Item {
             ctx.save();
             ctx.translate(width / 2, 14);
             ctx.rotate(-canvasRotation * Math.PI / 180);
+            ctx.fillStyle = palette.textColor;
             ctx.fillText(value, 0, 2);
             ctx.restore();
             ctx.restore();
