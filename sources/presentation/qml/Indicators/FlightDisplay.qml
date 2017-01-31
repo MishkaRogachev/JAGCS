@@ -13,8 +13,18 @@ Column {
 
     property int groundSpeed: 0
     property int snsAltitude: 0
-    property int climb: 0
+    property int snsFix: -1
+    property color snsColor: {
+        switch (snsFix) {
+        case 0: return palette.disabledColor;
+        case 1: return palette.negativeColor;
+        case 2: return palette.neutralColor;
+        case 3: return palette.positiveColor;
+        default: return palette.disabledColor;
+        }
+    }
 
+    property int climb: 0
     property int minClimb: -12
     property int maxClimb: 12
 
@@ -32,9 +42,10 @@ Column {
             Label {
                 anchors.top: parent.top
                 anchors.left: parent.left
-                text: qsTr("GS") + groundSpeed
+                text: groundSpeed
                 width: parent.width * 0.2
                 horizontalAlignment: Text.AlignHCenter
+                color: snsColor
             }
 
             Label {
@@ -43,6 +54,7 @@ Column {
                 text: snsAltitude
                 width: parent.width * 0.2
                 horizontalAlignment: Text.AlignHCenter
+                color: snsColor
             }
         }
 

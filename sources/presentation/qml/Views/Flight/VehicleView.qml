@@ -11,19 +11,9 @@ ColumnLayout {
     property QtObject vehicle
 
     RowLayout {
-
-        BatteryIndicator {
-            Layout.alignment: Qt.AlignLeft
-            charge: vehicle ? vehicle.powerSystem.charge : -1
-        }
-
-        Item {
-            height: 1
-            Layout.fillWidth: true
-        }
+        anchors.horizontalCenter: parent.horizontalCenter
 
         GpsIndicator {
-            Layout.alignment: Qt.AlignRight
             fix: vehicle ? vehicle.gps.fix : -1
             satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
         }
@@ -39,12 +29,18 @@ ColumnLayout {
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
+        snsFix: vehicle ? vehicle.gps.fix : -1
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
 
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
+
+        BatteryIndicator {
+            Layout.alignment: Qt.AlignLeft
+            charge: vehicle ? vehicle.powerSystem.charge : -1
+        }
 
         // TODO: delay button
         Button {
