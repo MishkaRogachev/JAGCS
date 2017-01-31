@@ -89,6 +89,7 @@ Item {
         maxValue: velocity + maxVelocity
         valueStep: velocityStep
         canvasRotation: 90
+        fontPixelSize: palette.fontPixelSize * 0.8
     }
 
     LinearScale {
@@ -102,5 +103,6 @@ Item {
         maxValue: altitude + maxAltitude
         valueStep: altitudeStep
         canvasRotation: -90
+        fontPixelSize: palette.fontPixelSize * 0.8
     }
 }

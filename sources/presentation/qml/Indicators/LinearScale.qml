@@ -8,6 +8,7 @@ Rectangle {
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
+    property int fontPixelSize: palette.fontPixelSize
     property alias canvasRotation: canvas.rotation
 
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
@@ -16,6 +17,8 @@ Rectangle {
     color: palette.sunkenColor
     clip: true
     onValueChanged: canvas.requestPaint()
+
+    Component.onCompleted: console.log(fontPixelSize)
 
     Canvas {
         id: canvas
@@ -33,8 +36,7 @@ Rectangle {
             ctx.lineWidth = 2;
             ctx.strokeStyle = palette.textColor;
             ctx.fillStyle = palette.textColor;
-            ctx.font = palette.fontPixelSize + 'px sans-serif';
-            ctx.fontsize = 18;
+            ctx.font = fontPixelSize + 'px sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
@@ -47,10 +49,10 @@ Rectangle {
                             width - Helper.mapToRange(i, minValue, maxValue, width) :
                             Helper.mapToRange(i, minValue, maxValue, width);
                 ctx.moveTo(xPos, 0);
-                ctx.lineTo(xPos, major ? 10 : 8);
+                ctx.lineTo(xPos, major ? fontPixelSize * 0.5 : fontPixelSize * 0.25);
                 if (major) {
                     ctx.save();
-                    ctx.translate(xPos, 12);
+                    ctx.translate(xPos, fontPixelSize * 0.65);
                     ctx.rotate(-canvasRotation * Math.PI / 180);
                     ctx.fillText(i, 0, 0);
                     ctx.restore();
@@ -63,12 +65,12 @@ Rectangle {
             var rectHeight = palette.fontPixelSize * 1.5;
             ctx.fillRect(width / 2 - rectHeight / 2, 0, rectHeight, canvas.width);
 
-            ctx.font = 'bold ' + palette.fontPixelSize + 'px sans-serif';
+            ctx.font = 'bold ' + fontPixelSize + 'px sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation < 0 ? 'left' :'right') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
             ctx.save();
-            ctx.translate(width / 2, 14);
+            ctx.translate(width / 2, fontPixelSize * 0.65);
             ctx.rotate(-canvasRotation * Math.PI / 180);
             ctx.fillStyle = palette.textColor;
             ctx.fillText(value, 0, 2);
