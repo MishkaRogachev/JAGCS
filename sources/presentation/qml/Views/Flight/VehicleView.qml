@@ -1,16 +1,36 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
 import "../../Indicators"
 
-Column {
+ColumnLayout {
     id: root
 
     property QtObject vehicle
 
+    RowLayout {
+
+        BatteryIndicator {
+            Layout.alignment: Qt.AlignLeft
+            charge: vehicle ? vehicle.powerSystem.charge : -1
+        }
+
+        Item {
+            height: 1
+            Layout.fillWidth: true
+        }
+
+        GpsIndicator {
+            Layout.alignment: Qt.AlignRight
+            fix: vehicle ? vehicle.gps.fix : -1
+            satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
+        }
+    }
+
     ArtificialHorizont {
-        width: palette.controlBaseSize * 9
+        width: palette.controlBaseSize * 8
 
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
         roll: vehicle ? vehicle.attitude.roll : 0.0
@@ -19,19 +39,16 @@ Column {
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
 
-        GpsIndicator {
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.margins: 7
-            fix: vehicle ? vehicle.gps.fix : -1
-            satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
-        }
-
-        BatteryIndicator {
+        Label {
             anchors.top: parent.top
             anchors.left: parent.left
-            anchors.margins: 7
-            charge: vehicle ? vehicle.powerSystem.charge : -1
+            text: qsTr("GS") + (vehicle ? Math.round(vehicle.groundSpeed) : 0.0)
+        }
+
+        Label {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            text: vehicle ? Math.round(vehicle.gps.coordinate.altitude) : 0.0
         }
     }
 
