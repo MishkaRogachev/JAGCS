@@ -56,13 +56,13 @@ ColumnLayout {
                 anchors.verticalCenter: parent.verticalCenter
 
                 Label {
-                    color: gpsIndicator.color
+                    color: fd.snsColor
                     font.pixelSize: palette.fontPixelSize * 0.6
                     text: qsTr("HDOP:") + (vehicle ? vehicle.gps.eph : qsTr("None"))
                 }
 
                 Label {
-                    color: gpsIndicator.color
+                    color: fd.snsColor
                     font.pixelSize: palette.fontPixelSize * 0.6
                     text: qsTr("VDOP:") + (vehicle ? vehicle.gps.epv : qsTr("None"))
                 }

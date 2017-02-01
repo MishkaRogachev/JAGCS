@@ -9,4 +9,8 @@ MapView {
     TrackMapOverlayView {
         model: vehicleModel
     }
+
+    HdopRadiusMapOverlayView {
+        model: vehicleModel
+    }
 }

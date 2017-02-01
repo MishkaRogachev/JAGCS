@@ -46,7 +46,7 @@
         <file>Views/Map/Overlays/RadiusMapOverlayView.qml</file>
         <file>Views/Map/Overlays/AcceptanceRadiusMapOverlayView.qml</file>
         <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/HomePositionMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Flight/FlightView.qml</file>
         <file>Views/Flight/FlightMapView.qml</file>

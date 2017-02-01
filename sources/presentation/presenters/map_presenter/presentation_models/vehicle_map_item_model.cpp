@@ -69,8 +69,8 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         return vehicle->vehicleId();
     case TrackRole:
         return d->tracks[vehicle];
-    case HomePositionRole:
-        return QVariant::fromValue(vehicle->homePosition().coordinate());
+    case HdopRadius:
+        return vehicle->gps().eph();
     default:
         return QVariant();
     }
@@ -89,8 +89,8 @@ void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
             this, &VehicleMapItemModel::onVehicleAttitudeChanged);
     connect(vehicle, &domain::Vehicle::positionChanged,
             this, &VehicleMapItemModel::onVehiclePositionChanged);
-    connect(vehicle, &domain::Vehicle::homePositionChanged,
-            this, &VehicleMapItemModel::onVehicleHomePositionChanged);
+    connect(vehicle, &domain::Vehicle::gpsChanged,
+            this, &VehicleMapItemModel::onVehicleGpsChanged);
 
     this->endInsertRows();
 }
@@ -138,11 +138,11 @@ void VehicleMapItemModel::onVehicleAttitudeChanged()
     if (index.isValid()) emit dataChanged(index, index, { DirectionRole });
 }
 
-void VehicleMapItemModel::onVehicleHomePositionChanged()
+void VehicleMapItemModel::onVehicleGpsChanged()
 {
     QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
                                                this->sender()));
-    if (index.isValid()) emit dataChanged(index, index, { HomePositionRole });
+    if (index.isValid()) emit dataChanged(index, index, { HdopRadius });
 }
 
 QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
@@ -154,7 +154,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[MarkRole] = "mark";
     roles[VehicleIdRole] = "vehicleId";
     roles[TrackRole] = "track";
-    roles[HomePositionRole] = "homePosition";
+    roles[HdopRadius] = "hdopRadius";
 
     return roles;
 }

@@ -21,7 +21,7 @@ namespace presentation
             MarkRole,
             VehicleIdRole,
             TrackRole,
-            HomePositionRole
+            HdopRadius
         };
 
         VehicleMapItemModel(QObject* parent = nullptr);
@@ -39,7 +39,7 @@ namespace presentation
         void onVehicleStateChanged();
         void onVehicleAttitudeChanged();
         void onVehiclePositionChanged();
-        void onVehicleHomePositionChanged();
+        void onVehicleGpsChanged();
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
