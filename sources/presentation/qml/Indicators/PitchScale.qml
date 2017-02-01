@@ -9,8 +9,9 @@ Item {
     property int minPitch: -25
     property int maxPitch: 25
     property int valueStep: 10
+    property int fontPixelSize: palette.fontPixelSize
 
-    width: 96
+    width: palette.controlBaseSize * 3
     onPitchChanged: canvas.requestPaint()
 
     Canvas {
@@ -23,9 +24,9 @@ Item {
             ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ecf0f1' // TODO: palette
-            ctx.fillStyle = '#ecf0f1' // TODO: palette
-            ctx.font = '11pt sans-serif';
+            ctx.strokeStyle = palette.textColor;
+            ctx.fillStyle = palette.textColor;
+            ctx.font = fontPixelSize + 'px sans-serif';
             ctx.textBaseline = 'middle';
 
             ctx.save();
@@ -39,15 +40,20 @@ Item {
 
                 var yPos = height - Helper.mapToRange(i, minPitch, maxPitch, height);
 
-                ctx.moveTo(major ? 28 : 40, yPos);
-                ctx.lineTo(major ? width - 28 : width - 40, yPos);
+                ctx.save();
+
+                ctx.translate(width / 2, yPos);
+                ctx.moveTo(major ? -width / 4 : -width / 6, 0);
+                ctx.lineTo(major ? width / 4 : width / 6, 0);
 
                 if (major) {
                     ctx.textAlign = 'right';
-                    ctx.fillText(i, 26, yPos + 2);
+                    ctx.fillText(i, width / 2, 2);
                     ctx.textAlign = 'left';
-                    ctx.fillText(i, width - 26, yPos + 2);
+                    ctx.fillText(i, -width / 2, 2);
                 }
+
+                ctx.restore();
             }
             ctx.stroke();
             ctx.restore();

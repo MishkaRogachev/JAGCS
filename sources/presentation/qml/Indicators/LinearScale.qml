@@ -52,7 +52,7 @@ Rectangle {
                     ctx.save();
                     ctx.translate(xPos, fontPixelSize * 0.65);
                     ctx.rotate(-canvasRotation * Math.PI / 180);
-                    ctx.fillText(i, 0, 0);
+                    ctx.fillText(i, 0, 2);
                     ctx.restore();
                 }
             }

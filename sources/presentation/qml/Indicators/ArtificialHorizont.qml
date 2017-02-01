@@ -49,6 +49,7 @@ Item {
         PitchScale {
             id: pitchScale
             anchors.centerIn: parent
+            fontPixelSize: palette.fontPixelSize * 0.8
             height: parent.height - rollOffset - 48 // roll mark
             pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll
