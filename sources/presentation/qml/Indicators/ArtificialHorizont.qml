@@ -11,15 +11,16 @@ Item {
 
     property bool pitchInverted: true
     property bool rollInverted: true
-    property int rollOffset: 28
 
     property int minVelocity: -13
     property int maxVelocity: 13
     property int velocityStep: 5
     property int minPitch: -23
     property int maxPitch: 23
-    property int minRoll: -45
-    property int maxRoll: 45
+    property int pitchStep: 10
+    property int minRoll: -35
+    property int maxRoll: 35
+    property int rollStep: 10
     property int minAltitude: -27
     property int maxAltitude: 27
     property int altitudeStep: 10
@@ -50,11 +51,12 @@ Item {
             id: pitchScale
             anchors.centerIn: parent
             fontPixelSize: palette.fontPixelSize * 0.8
-            height: parent.height - rollOffset - 48 // roll mark
+            height: parent.height - palette.controlBaseSize * 2
             pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll
             minPitch: root.pitch + root.minPitch
             maxPitch: root.pitch + root.maxPitch
+            pitchStep: root.pitchStep
         }
 
         PlaneMark {
@@ -66,17 +68,29 @@ Item {
         }
     }
 
+    Rectangle {
+        id: mask
+        anchors.fill: parent
+        anchors.margins: -4
+        radius: width / 2
+        border.color: palette.sunkenColor
+        border.width: 8
+    }
+
     OpacityMask {
         anchors.fill: parent
         source: pitchRollContents
         maskSource: mask
     }
 
-    Rectangle {
-        id: mask
+    RollScale {
+        id: rollScale
         anchors.fill: parent
-        radius: width / 2
-        visible: false
+        fontPixelSize: palette.fontPixelSize
+        roll: root.roll
+        minRoll: root.minRoll
+        maxRoll: root.maxRoll
+        rollStep: root.rollStep
     }
 
     LinearScale {

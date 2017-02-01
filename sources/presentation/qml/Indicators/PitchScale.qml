@@ -8,7 +8,7 @@ Item {
     property int roll: 0
     property int minPitch: -25
     property int maxPitch: 25
-    property int valueStep: 10
+    property int pitchStep: 10
     property int fontPixelSize: palette.fontPixelSize
 
     width: palette.controlBaseSize * 3
@@ -33,8 +33,8 @@ Item {
             ctx.beginPath();
 
             var counter = 0;
-            for (var i = minPitch - (minPitch % valueStep); i <= maxPitch;
-                 i += (valueStep / 2)) {
+            for (var i = minPitch - (minPitch % pitchStep); i <= maxPitch;
+                 i += (pitchStep / 2)) {
                 var major = (counter++ % 2) == 0;
                 if (i == 0) continue;
 

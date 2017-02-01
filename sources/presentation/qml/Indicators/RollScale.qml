@@ -5,18 +5,12 @@ Item {
     id: rollScale
 
     property int roll: 0
-    property int rollValue: roll
-
-    property int minRoll
-    property int maxRoll
-    property int valueStep: 5
-
-    property int offset
-
-    width: height
+    property int minRoll: -25
+    property int maxRoll: 25
+    property int rollStep: 5
+    property int fontPixelSize: palette.fontPixelSize
 
     onRollChanged: canvas.requestPaint()
-    onRollValueChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
@@ -27,9 +21,8 @@ Item {
             ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ecf0f1' // TODO: palette
-            ctx.fillStyle = '#ecf0f1' // TODO: palette
-            ctx.font = '11pt sans-serif';
+            ctx.strokeStyle = palette.textColor;
+            ctx.fillStyle = palette.textColor;
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
 
@@ -37,24 +30,30 @@ Item {
             ctx.beginPath();
 
             ctx.translate(width / 2, height / 2);
-            for (var i = minRoll - (minRoll % valueStep); i <= maxRoll;
-                 i += valueStep) {
+            for (var i = minRoll - (minRoll % rollStep); i <= maxRoll;
+                 i += rollStep) {
                 ctx.save();
                 ctx.rotate(i * Math.PI / 180);
-                ctx.moveTo(0, (i % 15 ? offset / 2 : 0) - height / 2);
-                ctx.lineTo(0, offset - height / 2);
+                ctx.moveTo(0, -height / 2);
+                ctx.lineTo(0, -height / 2 + palette.controlBaseSize / 6);
                 ctx.restore();
             }
 
-            ctx.save();
-            ctx.rotate(-roll * Math.PI / 180);
-            ctx.moveTo(0, offset - height / 2);
-            ctx.lineTo(16, offset + 16 - height / 2);
-            ctx.lineTo(-16, offset + 16 - height / 2);
-            ctx.lineTo(0, offset - height / 2);
+            ctx.stroke();
+            ctx.beginPath();
 
-            ctx.font = '14pt sans-serif';
-            ctx.fillText(rollValue, 0, offset + 32 - height / 2);
+            ctx.save();
+            var rotation = Math.max(Math.min(-roll, maxRoll), minRoll);
+            ctx.rotate(rotation * Math.PI / 180);
+
+            ctx.moveTo(-palette.controlBaseSize / 4,
+                       -height / 2 + palette.controlBaseSize / 4);
+            ctx.lineTo(0, -height / 2);
+            ctx.lineTo(palette.controlBaseSize / 4,
+                       -height / 2 + palette.controlBaseSize / 4);
+
+            ctx.font = 'bold ' + fontPixelSize + 'px sans-serif';
+            ctx.fillText(roll, 0, -height / 2 + palette.controlBaseSize / 2);
 
             ctx.restore();
 
