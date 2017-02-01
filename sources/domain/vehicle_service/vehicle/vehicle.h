@@ -28,6 +28,8 @@ namespace domain
         Q_PROPERTY(PowerSystem powerSystem READ powerSystem
                    WRITE setPowerSystem NOTIFY powerSystemChanged)
 
+        Q_PROPERTY(float indicatedAirSpeed READ indicatedAirSpeed
+                   WRITE setIndicatedAirSpeed NOTIFY indicatedAirSpeedChanged)
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
         Q_PROPERTY(float groundSpeed READ groundSpeed WRITE setGroundSpeed
@@ -73,6 +75,7 @@ namespace domain
         Gps gps() const;
         PowerSystem powerSystem() const;
 
+        float indicatedAirSpeed() const;
         float trueAirSpeed() const;
         float groundSpeed() const;
         float barometricAltitude() const;
@@ -92,6 +95,7 @@ namespace domain
         void setGps(const Gps& gps);
         void setPowerSystem(const PowerSystem& powerSystem);
 
+        void setIndicatedAirSpeed(float indicatedAirSpeed);
         void setTrueAirSpeed(float trueAirSpeed);
         void setGroundSpeed(float groundSpeed);
         void setBarometricAltitude(float barometricAltitude);
@@ -112,6 +116,7 @@ namespace domain
         void gpsChanged(Gps gps);
         void powerSystemChanged(PowerSystem powerSystem);
 
+        void indicatedAirSpeedChanged(float indicatedAirSpeed);
         void trueAirSpeedChanged(float trueAirSpeed);
         void groundSpeedChanged(float groundSpeed);
         void barometricAltitudeChanged(float barometricAltitude);
@@ -136,6 +141,7 @@ namespace domain
         Gps m_gps;
         PowerSystem m_powerSystem;
 
+        float m_indicatedAirSpeed;
         float m_trueAirSpeed;
         float m_groundSpeed;
         float m_barometricAltitude;

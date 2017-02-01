@@ -76,7 +76,8 @@ ColumnLayout {
 
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
         roll: vehicle ? vehicle.attitude.roll : 0.0
-        airSpeed: vehicle ? vehicle.trueAirSpeed : 0.0
+        indicatedAirSpeed: vehicle ? vehicle.indicatedAirSpeed : 0.0
+        trueAirSpeed: vehicle ? vehicle.trueAirSpeed : 0.0
         groundSpeed: vehicle ? vehicle.groundSpeed : 0.0
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0

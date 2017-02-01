@@ -14,6 +14,7 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     m_type(Vehicle::UnknownType),
     m_state(Vehicle::UnknownState),
     m_armed(false),
+    m_indicatedAirSpeed(0),
     m_trueAirSpeed(0),
     m_groundSpeed(0),
     m_barometricAltitude(0),
@@ -70,6 +71,11 @@ Gps Vehicle::gps() const
 PowerSystem Vehicle::powerSystem() const
 {
     return m_powerSystem;
+}
+
+float Vehicle::indicatedAirSpeed() const
+{
+    return m_indicatedAirSpeed;
 }
 
 float Vehicle::trueAirSpeed() const
@@ -164,6 +170,14 @@ void Vehicle::setPowerSystem(const PowerSystem& powerSystem)
 
     m_powerSystem = powerSystem;
     emit powerSystemChanged(powerSystem);
+}
+
+void Vehicle::setIndicatedAirSpeed(float indicatedAirSpeed)
+{
+    if (m_indicatedAirSpeed == indicatedAirSpeed) return;
+
+    m_indicatedAirSpeed = indicatedAirSpeed;
+    emit indicatedAirSpeedChanged(indicatedAirSpeed);
 }
 
 void Vehicle::setTrueAirSpeed(float trueAirSpeed)

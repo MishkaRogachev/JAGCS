@@ -24,7 +24,7 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
     mavlink_vfr_hud_t vfrHud;
     mavlink_msg_vfr_hud_decode(&message, &vfrHud);
 
-    vehicle->setTrueAirSpeed(vfrHud.airspeed);
+    vehicle->setIndicatedAirSpeed(vfrHud.airspeed);
     vehicle->setGroundSpeed(vfrHud.groundspeed);
     vehicle->setBarometricAltitude(vfrHud.alt);
     vehicle->setBarometricClimb(vfrHud.climb);

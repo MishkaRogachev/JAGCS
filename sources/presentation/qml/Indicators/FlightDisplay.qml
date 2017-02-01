@@ -7,11 +7,12 @@ Column {
 
     property alias pitch: horizont.pitch
     property alias roll: horizont.roll
-    property alias airSpeed: horizont.velocity
+    property alias indicatedAirSpeed: horizont.velocity
     property alias altitude: horizont.altitude
     property alias rollInverted: horizont.rollInverted
 
     property int groundSpeed: 0
+    property int trueAirSpeed: 0
     property int snsAltitude: 0
     property int snsFix: -1
     property color snsColor: {
@@ -46,6 +47,14 @@ Column {
                 width: parent.width * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 color: snsColor
+            }
+
+            Label {
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                text: trueAirSpeed
+                width: parent.width * 0.2
+                horizontalAlignment: Text.AlignHCenter
             }
 
             Label {
