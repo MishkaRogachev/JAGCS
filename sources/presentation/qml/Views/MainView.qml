@@ -23,6 +23,9 @@ ApplicationWindow {
         property color trackColor: "#F44336"
         property color missionColor: paletteStyle ? "#00897B" : "#1DE9B6"
 
+        property color skyColor: paletteStyle ? "#80D8FF" : "#0091EA"
+        property color groundColor: paletteStyle ? "#AED581" : "#7CB342"
+
         backgroundColor: paletteStyle ? "#CFD8DC" : "#37474F"
         sunkenColor: paletteStyle ? "#B0BEC5" : "#263238"
         raisedColor: paletteStyle ? "#ECEFF1" : "#455A64"

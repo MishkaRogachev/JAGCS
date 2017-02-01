@@ -34,14 +34,14 @@ Item {
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
 
-            ctx.fillStyle = '#3498db' // TODO: palette
+            ctx.fillStyle = palette.skyColor;
             ctx.fillRect(-size / 2, -size / 2, size, size / 2);
 
-            ctx.fillStyle = '#e67e22' // TODO: palette
+            ctx.fillStyle = palette.groundColor;
             ctx.fillRect(-size / 2, 0, size, size / 2);
 
             ctx.lineWidth = 1;
-            ctx.strokeStyle = '#ecf0f1' // TODO: palette
+            ctx.strokeStyle = palette.textColor;
             ctx.moveTo(-size / 2, 0);
             ctx.lineTo(size / 2, 0);
 

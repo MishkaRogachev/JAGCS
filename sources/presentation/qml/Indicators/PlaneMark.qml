@@ -21,8 +21,8 @@ Item {
             var offset = Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
             ctx.lineWidth = 4;
-            ctx.strokeStyle = '#2c3e50' // TODO: palette
-            ctx.fillStyle = '#2c3e50' // TODO: palette
+            ctx.strokeStyle = palette.selectedTextColor;
+            ctx.fillStyle = palette.selectedTextColor;
 
             ctx.save();
             ctx.beginPath();
