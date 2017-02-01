@@ -87,7 +87,7 @@ Item {
         id: rollScale
         anchors.fill: parent
         fontPixelSize: palette.fontPixelSize
-        roll: root.roll
+        roll: rollInverted ? -root.roll : root.roll
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep

@@ -22,7 +22,7 @@ Canvas {
         ctx.fillStyle = palette.sunkenColor;
         ctx.fillRect(0, 0, width, height);
 
-        ctx.fillStyle = (value < maxValue && value > minValue) ?
+        ctx.fillStyle = value > minValue ?
                     palette.highlightColor : palette.negativeColor;
         ctx.fillRect(1, zero, width - 2, zero - offset);
 

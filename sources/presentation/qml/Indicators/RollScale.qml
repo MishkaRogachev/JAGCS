@@ -53,7 +53,7 @@ Item {
                        -height / 2 + palette.controlBaseSize / 4);
 
             ctx.font = 'bold ' + fontPixelSize + 'px sans-serif';
-            ctx.fillText(roll, 0, -height / 2 + palette.controlBaseSize / 2);
+            ctx.fillText(Math.abs(roll), 0, -height / 2 + palette.controlBaseSize / 2);
 
             ctx.restore();
 
