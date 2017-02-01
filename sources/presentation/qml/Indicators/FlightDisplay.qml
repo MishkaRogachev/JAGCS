@@ -19,7 +19,7 @@ Column {
         case 0: return palette.disabledColor;
         case 1: return palette.negativeColor;
         case 2: return palette.neutralColor;
-        case 3: return palette.positiveColor;
+        case 3: return palette.textColor;
         default: return palette.disabledColor;
         }
     }

@@ -12,15 +12,18 @@ ColumnLayout {
 
     property QtObject vehicle
 
-    RowLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
-        Layout.preferredWidth: parent.width
+    Item {
+        id: sns
+        Layout.preferredWidth: root.width
+        Layout.preferredHeight: gpsIndicator.height
 
-        ColumnLayout {
+        Column {
             anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: palette.controlBaseSize / 2
 
             Label {
-                color: gpsIndicator.color
+                color: fd.snsColor
                 font.pixelSize: palette.fontPixelSize * 0.6
                 text: qsTr("Lat.:") +
                       (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.latitude,
@@ -28,7 +31,7 @@ ColumnLayout {
             }
 
             Label {
-                color: gpsIndicator.color
+                color: fd.snsColor
                 font.pixelSize: palette.fontPixelSize * 0.6
                 text: qsTr("Lon.:") +
                       (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.longitude,
@@ -36,31 +39,39 @@ ColumnLayout {
             }
         }
 
-        GpsIndicator {
-            id: gpsIndicator
-            fix: vehicle ? vehicle.gps.fix : -1
-            satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
+        Row {
             anchors.verticalCenter: parent.verticalCenter
-        }
+            anchors.right: parent.right
+            anchors.rightMargin: palette.controlBaseSize / 2
+            spacing: 5
 
-        ColumnLayout {
-            anchors.verticalCenter: parent.verticalCenter
-
-            Label {
-                color: gpsIndicator.color
-                font.pixelSize: palette.fontPixelSize * 0.6
-                text: qsTr("HDOP:") + (vehicle ? vehicle.gps.eph : qsTr("None"))
+            GpsIndicator {
+                id: gpsIndicator
+                fix: vehicle ? vehicle.gps.fix : -1
+                satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
+                anchors.verticalCenter: parent.verticalCenter
             }
 
-            Label {
-                color: gpsIndicator.color
-                font.pixelSize: palette.fontPixelSize * 0.6
-                text: qsTr("VDOP:") + (vehicle ? vehicle.gps.epv : qsTr("None"))
+            Column {
+                anchors.verticalCenter: parent.verticalCenter
+
+                Label {
+                    color: gpsIndicator.color
+                    font.pixelSize: palette.fontPixelSize * 0.6
+                    text: qsTr("HDOP:") + (vehicle ? vehicle.gps.eph : qsTr("None"))
+                }
+
+                Label {
+                    color: gpsIndicator.color
+                    font.pixelSize: palette.fontPixelSize * 0.6
+                    text: qsTr("VDOP:") + (vehicle ? vehicle.gps.epv : qsTr("None"))
+                }
             }
         }
     }
 
     FlightDisplay {
+        id: fd
         width: palette.controlBaseSize * 8
 
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
