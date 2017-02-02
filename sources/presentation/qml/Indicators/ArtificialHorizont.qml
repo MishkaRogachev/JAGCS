@@ -11,6 +11,8 @@ Item {
 
     property bool pitchInverted: true
     property bool rollInverted: true
+    property bool altitudeAvalible: true
+    property bool velocityAvalible: true
 
     property int minVelocity: -13
     property int maxVelocity: 13
@@ -103,6 +105,7 @@ Item {
         minValue: velocity + minVelocity
         maxValue: velocity + maxVelocity
         valueStep: velocityStep
+        scaleColor: velocityAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: 90
         fontPixelSize: palette.fontPixelSize * 0.8
     }
@@ -117,6 +120,7 @@ Item {
         minValue: altitude + minAltitude
         maxValue: altitude + maxAltitude
         valueStep: altitudeStep
+        scaleColor: altitudeAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: -90
         fontPixelSize: palette.fontPixelSize * 0.8
     }

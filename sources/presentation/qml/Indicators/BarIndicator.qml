@@ -7,10 +7,12 @@ Canvas {
     property real value: minValue
     property real minValue: 0
     property real maxValue: 1
+    property color fillColor: value
 
     onValueChanged: requestPaint()
     onMinValueChanged: requestPaint()
     onMaxValueChanged: requestPaint()
+    onFillColorChanged: requestPaint()
 
     onPaint: {
         var ctx = root.getContext('2d');
@@ -22,8 +24,7 @@ Canvas {
         ctx.fillStyle = palette.sunkenColor;
         ctx.fillRect(0, 0, width, height);
 
-        ctx.fillStyle = value > minValue ?
-                    palette.highlightColor : palette.negativeColor;
+        ctx.fillStyle = fillColor;
         ctx.fillRect(1, zero, width - 2, zero - offset);
 
         ctx.strokeStyle = palette.textColor;

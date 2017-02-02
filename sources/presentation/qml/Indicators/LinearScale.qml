@@ -10,13 +10,14 @@ Rectangle {
     property int valueStep: 20
     property int fontPixelSize: palette.fontPixelSize
     property alias canvasRotation: canvas.rotation
-
+    property color scaleColor: palette.textColor
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
                             (canvasRotation <= -90 && canvasRotation > -180)
 
     color: palette.sunkenColor
     clip: true
     onValueChanged: canvas.requestPaint()
+    onScaleColorChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
@@ -32,8 +33,8 @@ Rectangle {
             ctx.beginPath();
 
             ctx.lineWidth = 2;
-            ctx.strokeStyle = palette.textColor;
-            ctx.fillStyle = palette.textColor;
+            ctx.strokeStyle = scaleColor;
+            ctx.fillStyle = scaleColor;
             ctx.font = fontPixelSize + 'px sans-serif';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
@@ -70,7 +71,7 @@ Rectangle {
             ctx.save();
             ctx.translate(width / 2, fontPixelSize * 0.65);
             ctx.rotate(-canvasRotation * Math.PI / 180);
-            ctx.fillStyle = palette.textColor;
+            ctx.fillStyle = scaleColor;
             ctx.fillText(value, 0, 2);
             ctx.restore();
             ctx.restore();

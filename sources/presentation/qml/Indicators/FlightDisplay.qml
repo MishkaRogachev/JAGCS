@@ -10,6 +10,8 @@ Column {
     property alias indicatedAirSpeed: horizont.velocity
     property alias altitude: horizont.altitude
     property alias rollInverted: horizont.rollInverted
+    property alias barometerAvalible: horizont.altitudeAvalible
+    property alias airSpeedAvalible: horizont.velocityAvalible
 
     property int groundSpeed: 0
     property int trueAirSpeed: 0
@@ -53,6 +55,7 @@ Column {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
                 text: trueAirSpeed
+                color: airSpeedAvalible ? palette.textColor : palette.disabledColor
                 width: parent.width * 0.2
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -73,6 +76,9 @@ Column {
             width: root.width - horizont.width - 1
             height: root.height * 0.8
             value: climb
+            fillColor: barometerAvalible ? (value > minValue ?
+                                palette.highlightColor : palette.negativeColor) :
+                           palette.disabledColor
             minValue: minClimb
             maxValue: maxClimb
         }

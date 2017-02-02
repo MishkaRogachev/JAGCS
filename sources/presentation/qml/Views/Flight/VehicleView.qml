@@ -47,7 +47,7 @@ ColumnLayout {
 
             GpsIndicator {
                 id: gpsIndicator
-                fix: vehicle ? vehicle.gps.fix : -1
+                fix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
                 satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -76,13 +76,16 @@ ColumnLayout {
 
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
         roll: vehicle ? vehicle.attitude.roll : 0.0
+        airSpeedAvalible: vehicle && vehicle.airSpeedAvalible
         indicatedAirSpeed: vehicle ? vehicle.indicatedAirSpeed : 0.0
         trueAirSpeed: vehicle ? vehicle.trueAirSpeed : 0.0
         groundSpeed: vehicle ? vehicle.groundSpeed : 0.0
+        barometerAvalible: vehicle && vehicle.barometerAvalible
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0
+
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
-        snsFix: vehicle ? vehicle.gps.fix : -1
+        snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }

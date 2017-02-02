@@ -63,4 +63,6 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
                               MAV_SYS_STATUS_AHRS) &&
                              (status.onboard_control_sensors_enabled &
                               MAV_SYS_STATUS_AHRS));
+
+    // TODO: handle sensors health
 }
