@@ -85,12 +85,14 @@ ColumnLayout {
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0
 
+        heading: vehicle ? vehicle.heading : 0.0
+
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
-
+/*
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -105,5 +107,5 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
             onClicked: if (vehicle) vehicle.commandArm(!vehicle.armed)
         }
-    }
+    }*/
 }

@@ -18,9 +18,11 @@ Canvas {
         var ctx = root.getContext('2d');
 
         ctx.clearRect(0, 0, width, height);
+
         var offset = Helper.mapToRange(value, minValue, maxValue, height);
         var zero = Helper.mapToRange(0, minValue, maxValue, height);
 
+        ctx.beginPath();
         ctx.fillStyle = palette.sunkenColor;
         ctx.fillRect(0, 0, width, height);
 

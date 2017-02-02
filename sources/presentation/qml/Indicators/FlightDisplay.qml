@@ -14,6 +14,8 @@ Column {
     property alias barometerAvalible: horizont.altitudeAvalible
     property alias airSpeedAvalible: horizont.velocityAvalible
 
+    property alias heading: compass.heading
+
     property int groundSpeed: 0
     property int trueAirSpeed: 0
     property int snsAltitude: 0
@@ -32,10 +34,13 @@ Column {
     property int minClimb: -12
     property int maxClimb: 12
 
+    spacing: 10
+
     Behavior on climb { PropertyAnimation { duration: 100 } }
 
     Row {
         spacing: 1
+        anchors.horizontalCenter: parent.horizontalCenter
 
         ArtificialHorizont {
             id: horizont
@@ -75,7 +80,7 @@ Column {
             id: groundSpeedScale
             anchors.verticalCenter: parent.verticalCenter
             width: root.width - horizont.width - 1
-            height: root.height * 0.8
+            height: horizont.height * 0.8
             value: climb
             fillColor: barometerAvalible ? (value > minValue ?
                                 palette.highlightColor : palette.negativeColor) :
@@ -83,5 +88,11 @@ Column {
             minValue: minClimb
             maxValue: maxClimb
         }
+    }
+
+    Compass {
+        id: compass
+        width: root.width * 0.8
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }
