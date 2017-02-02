@@ -33,7 +33,7 @@ ApplicationWindow {
         raisedColor: paletteStyle ? "#ECEFF1" : "#455A64"
         buttonColor: paletteStyle ? "#F5F5F5" : "#546E7A"
 
-        disabledColor: paletteStyle ? "#BDBDBD" : "#212121"
+        disabledColor: paletteStyle ? "#9E9E9E" : "#212121"
 
         textColor: paletteStyle ? "#37474F" : "#FAFAFA"
         selectedTextColor: "#424242"
