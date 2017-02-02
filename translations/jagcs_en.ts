@@ -262,32 +262,40 @@
 <context>
     <name>VehicleView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="46"/>
-        <source>V:</source>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="28"/>
+        <source>Lat.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="48"/>
-        <source>v</source>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <source>None</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="52"/>
-        <source>C:</source>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="36"/>
+        <source>Lon.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="54"/>
-        <source>A</source>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
+        <source>HDOP:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <source>VDOP:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
         <source>DISARM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
         <source>ARM</source>
         <translation></translation>
     </message>

@@ -302,32 +302,56 @@
 <context>
     <name>VehicleView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="46"/>
         <source>V:</source>
-        <translation>V:</translation>
+        <translation type="vanished">V:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="48"/>
         <source>v</source>
-        <translation>в</translation>
+        <translation type="vanished">в</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="52"/>
         <source>C:</source>
-        <translation>C:</translation>
+        <translation type="vanished">C:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="54"/>
         <source>A</source>
-        <translation>А</translation>
+        <translation type="vanished">А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="28"/>
+        <source>Lat.:</source>
+        <translation>Шир.:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="36"/>
+        <source>Lon.:</source>
+        <translation>Дол.:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
+        <source>HDOP:</source>
+        <translation>HDOP:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <source>VDOP:</source>
+        <translation>VDOP:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
         <source>DISARM</source>
         <translation>РАЗРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
         <source>ARM</source>
         <translation>ЗАРЯД</translation>
     </message>
