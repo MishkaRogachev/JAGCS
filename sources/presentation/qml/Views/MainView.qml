@@ -8,7 +8,9 @@ import "Status"
 
 ApplicationWindow {
     id: main
+
     visibility: "Maximized"
+    flags: Qt.FramelessWindowHint
     minimumWidth: 1024
     minimumHeight: 768
     visible: true
@@ -23,8 +25,8 @@ ApplicationWindow {
         property color trackColor: "#F44336"
         property color missionColor: paletteStyle ? "#00897B" : "#1DE9B6"
 
-        property color skyColor: paletteStyle ? "#80D8FF" : "#0091EA"
-        property color groundColor: paletteStyle ? "#AED581" : "#7CB342"
+        property color skyColor: paletteStyle ? "#80D8FF" : "#2979FF"
+        property color groundColor: paletteStyle ? "#FF8A65" : "#FF5722"
 
         backgroundColor: paletteStyle ? "#CFD8DC" : "#37474F"
         sunkenColor: paletteStyle ? "#B0BEC5" : "#263238"
