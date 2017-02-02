@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
                 PROPERTY(settings), domain::SettingsProvider::instance());
     presenter.setView(engine.rootObjects().first());
 
-    presenter.setMode("mission");
+    presenter.setMode("flight");
 
     return app.exec();
 }
