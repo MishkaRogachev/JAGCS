@@ -5,6 +5,7 @@ import "../Controls"
 Column {
     id: root
 
+    property alias insAvalible: horizont.insAvalible
     property alias pitch: horizont.pitch
     property alias roll: horizont.roll
     property alias indicatedAirSpeed: horizont.velocity

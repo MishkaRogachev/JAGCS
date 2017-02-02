@@ -74,6 +74,7 @@ ColumnLayout {
         id: fd
         width: palette.controlBaseSize * 8
 
+        insAvalible: vehicle && vehicle.insAvalible
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
         roll: vehicle ? vehicle.attitude.roll : 0.0
         airSpeedAvalible: vehicle && vehicle.airSpeedAvalible

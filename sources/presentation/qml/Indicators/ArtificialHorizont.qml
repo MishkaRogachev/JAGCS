@@ -11,6 +11,7 @@ Item {
 
     property bool pitchInverted: true
     property bool rollInverted: true
+    property bool insAvalible: true
     property bool altitudeAvalible: true
     property bool velocityAvalible: true
 
@@ -59,6 +60,7 @@ Item {
             minPitch: root.pitch + root.minPitch
             maxPitch: root.pitch + root.maxPitch
             pitchStep: root.pitchStep
+            scaleColor: insAvalible ? palette.textColor : palette.disabledColor
         }
 
         PlaneMark {
@@ -93,6 +95,7 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
+        scaleColor: insAvalible ? palette.textColor : palette.disabledColor
     }
 
     LinearScale {
