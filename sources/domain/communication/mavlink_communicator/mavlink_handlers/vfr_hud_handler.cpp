@@ -26,7 +26,8 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setIndicatedAirSpeed(vfrHud.airspeed);
     // TODO: TAS from MAVLink TAS = IAS + [(IAS X 2/100) X (DA/1000)]
-    vehicle->setTrueAirSpeed(vfrHud.airspeed + (vfrHud.airspeed * 0.02 * vfrHud.alt / 1000));
+    vehicle->setTrueAirSpeed(vfrHud.airspeed + (vfrHud.airspeed * 0.02 *
+                                                vfrHud.alt / 1000));
     vehicle->setGroundSpeed(vfrHud.groundspeed);
     vehicle->setBarometricAltitude(vfrHud.alt);
     vehicle->setBarometricClimb(vfrHud.climb);

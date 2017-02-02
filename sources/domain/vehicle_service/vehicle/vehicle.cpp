@@ -14,12 +14,18 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     m_type(Vehicle::UnknownType),
     m_state(Vehicle::UnknownState),
     m_armed(false),
+    m_insAvalible(false),
+    m_gpsAvalible(false),
+    m_groundSpeed(0),
+    m_airSpeedAvalible(false),
     m_indicatedAirSpeed(0),
     m_trueAirSpeed(0),
-    m_groundSpeed(0),
+    m_barometerAvalible(false),
     m_barometricAltitude(0),
     m_barometricClimb(0),
+    m_compasAvalible(false),
     m_heading(0),
+    m_ahrsAvalible(false),
     m_assignedMission(nullptr)
 {}
 
@@ -48,6 +54,11 @@ bool Vehicle::isArmed() const
     return m_armed;
 }
 
+bool Vehicle::insAvalible() const
+{
+    return m_insAvalible;
+}
+
 Attitude Vehicle::attitude() const
 {
     return m_attitude;
@@ -63,14 +74,29 @@ Position Vehicle::homePosition() const
     return m_homePosition;
 }
 
+bool Vehicle::gpsAvalible() const
+{
+    return m_gpsAvalible;
+}
+
 Gps Vehicle::gps() const
 {
     return m_gps;
 }
 
+float Vehicle::groundSpeed() const
+{
+    return m_groundSpeed;
+}
+
 PowerSystem Vehicle::powerSystem() const
 {
     return m_powerSystem;
+}
+
+bool Vehicle::airSpeedAvalible() const
+{
+    return m_airSpeedAvalible;
 }
 
 float Vehicle::indicatedAirSpeed() const
@@ -83,9 +109,9 @@ float Vehicle::trueAirSpeed() const
     return m_trueAirSpeed;
 }
 
-float Vehicle::groundSpeed() const
+bool Vehicle::barometerAvalible() const
 {
-    return m_groundSpeed;
+    return m_barometerAvalible;
 }
 
 float Vehicle::barometricAltitude() const
@@ -98,9 +124,19 @@ float Vehicle::barometricClimb() const
     return m_barometricClimb;
 }
 
+bool Vehicle::compasAvalible() const
+{
+    return m_compasAvalible;
+}
+
 int Vehicle::heading() const
 {
     return m_heading;
+}
+
+bool Vehicle::ahrsAvalible() const
+{
+    return m_ahrsAvalible;
 }
 
 Mission* Vehicle::assignedMission() const
@@ -132,6 +168,14 @@ void Vehicle::setArmed(bool armed)
     emit armedChanged(armed);
 }
 
+void Vehicle::setInsAvalible(bool insAvalible)
+{
+    if (m_insAvalible == insAvalible) return;
+
+    m_insAvalible = insAvalible;
+    emit insAvalibleChanged(insAvalible);
+}
+
 void Vehicle::setAttitude(const Attitude& attitude)
 {
     if (m_attitude == attitude) return;
@@ -156,12 +200,28 @@ void Vehicle::setHomePosition(const Position& homePosition)
     emit homePositionChanged(homePosition);
 }
 
+void Vehicle::setGpsAvalible(bool gpsAvalible)
+{
+    if (m_gpsAvalible == gpsAvalible) return;
+
+    m_gpsAvalible = gpsAvalible;
+    emit gpsAvalibleChanged(gpsAvalible);
+}
+
 void Vehicle::setGps(const Gps& gps)
 {
     if (m_gps == gps) return;
 
     m_gps = gps;
     emit gpsChanged(gps);
+}
+
+void Vehicle::setGroundSpeed(float groundSpeed)
+{
+    if (qFuzzyCompare(m_groundSpeed, groundSpeed)) return;
+
+    m_groundSpeed = groundSpeed;
+    emit groundSpeedChanged(groundSpeed);
 }
 
 void Vehicle::setPowerSystem(const PowerSystem& powerSystem)
@@ -172,9 +232,17 @@ void Vehicle::setPowerSystem(const PowerSystem& powerSystem)
     emit powerSystemChanged(powerSystem);
 }
 
+void Vehicle::setAirSpeedAvalible(bool airSpeedAvalible)
+{
+    if (m_airSpeedAvalible == airSpeedAvalible) return;
+
+    m_airSpeedAvalible = airSpeedAvalible;
+    emit airSpeedAvalibleChanged(airSpeedAvalible);
+}
+
 void Vehicle::setIndicatedAirSpeed(float indicatedAirSpeed)
 {
-    if (m_indicatedAirSpeed == indicatedAirSpeed) return;
+    if (qFuzzyCompare(m_indicatedAirSpeed, indicatedAirSpeed)) return;
 
     m_indicatedAirSpeed = indicatedAirSpeed;
     emit indicatedAirSpeedChanged(indicatedAirSpeed);
@@ -182,23 +250,23 @@ void Vehicle::setIndicatedAirSpeed(float indicatedAirSpeed)
 
 void Vehicle::setTrueAirSpeed(float trueAirSpeed)
 {
-    if (m_trueAirSpeed == trueAirSpeed) return;
+    if (qFuzzyCompare(m_trueAirSpeed, trueAirSpeed)) return;
 
     m_trueAirSpeed = trueAirSpeed;
     emit trueAirSpeedChanged(trueAirSpeed);
 }
 
-void Vehicle::setGroundSpeed(float groundSpeed)
+void Vehicle::setBarometerAvalible(bool barometerAvalible)
 {
-    if (m_groundSpeed == groundSpeed) return;
+    if (m_barometerAvalible == barometerAvalible) return;
 
-    m_groundSpeed = groundSpeed;
-    emit groundSpeedChanged(groundSpeed);
+    m_barometerAvalible = barometerAvalible;
+    emit barometerAvalibleChanged(barometerAvalible);
 }
 
 void Vehicle::setBarometricAltitude(float barometricAltitude)
 {
-    if (m_barometricAltitude == barometricAltitude) return;
+    if (qFuzzyCompare(m_barometricAltitude, barometricAltitude)) return;
 
     m_barometricAltitude = barometricAltitude;
     emit barometricAltitudeChanged(barometricAltitude);
@@ -206,10 +274,18 @@ void Vehicle::setBarometricAltitude(float barometricAltitude)
 
 void Vehicle::setBarometricClimb(float barometricClimb)
 {
-    if (m_barometricClimb == barometricClimb) return;
+    if (qFuzzyCompare(m_barometricClimb, barometricClimb)) return;
 
     m_barometricClimb = barometricClimb;
     emit barometricClimbChanged(barometricClimb);
+}
+
+void Vehicle::setCompasAvalible(bool compasAvalible)
+{
+    if (m_compasAvalible == compasAvalible) return;
+
+    m_compasAvalible = compasAvalible;
+    emit compasAvalibleChanged(compasAvalible);
 }
 
 void Vehicle::setHeading(int heading)
@@ -218,6 +294,14 @@ void Vehicle::setHeading(int heading)
 
     m_heading = heading;
     emit headingChanged(heading);
+}
+
+void Vehicle::setAhrsAvalible(bool ahrsAvalible)
+{
+    if (m_ahrsAvalible == ahrsAvalible) return;
+
+    m_ahrsAvalible = ahrsAvalible;
+    emit ahrsAvalibleChanged(ahrsAvalible);
 }
 
 void Vehicle::unassignMission()

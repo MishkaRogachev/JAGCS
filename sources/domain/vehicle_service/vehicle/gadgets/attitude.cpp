@@ -25,7 +25,7 @@ float domain::Attitude::yaw() const
 
 bool Attitude::operator ==(const Attitude& other)
 {
-    return m_pitch == other.pitch() &&
-            m_roll == other.roll() &&
-            m_yaw == other.yaw();
+    return qFuzzyCompare(m_pitch, other.pitch()) &&
+            qFuzzyCompare(m_roll, other.roll()) &&
+            qFuzzyCompare(m_yaw, other.yaw());
 }
