@@ -35,9 +35,16 @@ namespace domain
         void missionAdded(Mission* mission);
         void missionRemoved(Mission* mission);
 
+        void missionAssigned(Mission* mission);
+        void missionUnassigned(Mission* mission);
+
         // TODO: remove from interface
         void requestMission(uint8_t id);
         void sendMission(uint8_t id);
+
+    private slots:
+        void onMissionAssigned();
+        void onMissionUnassigned();
 
     private:
         class Impl;

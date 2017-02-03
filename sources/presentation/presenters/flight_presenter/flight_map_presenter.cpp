@@ -26,16 +26,21 @@ FlightMapPresenter::FlightMapPresenter(domain::MissionService* missionService,
     d->missionService = missionService;
     d->vehicleService = vehicleService;
 
-    connect(vehicleService, &domain::VehicleService::vehicleAdded,
-            this, &MapPresenter::addVehicle);
-    connect(vehicleService, &domain::VehicleService::vehicleRemoved,
-            this, &MapPresenter::removeVehicle);
-
     for (domain::Mission* mission: missionService->assignedMissions())
         this->addMission(mission);
 
     for (domain::Vehicle* vehicle: vehicleService->vehicles())
         this->addVehicle(vehicle);
+
+    connect(vehicleService, &domain::VehicleService::vehicleAdded,
+            this, &MapPresenter::addVehicle);
+    connect(vehicleService, &domain::VehicleService::vehicleRemoved,
+            this, &MapPresenter::removeVehicle);
+
+    connect(missionService, &domain::MissionService::missionAssigned,
+            this, &MapPresenter::addMission);
+    connect(missionService, &domain::MissionService::missionUnassigned,
+            this, &MapPresenter::removeMission);
 }
 
 FlightMapPresenter::~FlightMapPresenter()

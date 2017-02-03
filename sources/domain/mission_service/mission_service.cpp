@@ -7,6 +7,7 @@
 // Internal
 #include "mission.h"
 #include "mission_vehicle.h"
+#include "vehicle.h"
 
 using namespace domain;
 
@@ -62,7 +63,12 @@ Mission* MissionService::missionForVehicleId(uint8_t id)
 void MissionService::addMission(Mission* mission)
 {
     d->missions.append(mission);
+
+    connect(mission, &Mission::assigned, this, &MissionService::onMissionAssigned);
+    connect(mission, &Mission::unassigned, this, &MissionService::onMissionUnassigned);
+
     emit missionAdded(mission);
+    if (mission->assignedVehicle()) emit missionAssigned(mission);
 }
 
 void MissionService::addNewMission()
@@ -76,12 +82,16 @@ void MissionService::addVehiclesMision(Vehicle* vehicle)
     this->addMission(mission);
     mission->assignVehicle(vehicle);
     this->downloadMission(mission);
-    qApp->processEvents();
+    qApp->processEvents(); //force QtLocation to redraw
 }
 
 void MissionService::removeMission(Mission* mission)
 {
     d->missions.removeOne(mission);
+
+    disconnect(mission, 0, this, 0);
+
+    if (mission->assignedVehicle()) emit missionUnassigned(mission);
     emit missionRemoved(mission);
 }
 
@@ -105,4 +115,14 @@ void MissionService::uploadMission(Mission* mission)
 
     mission->assignment()->setStatus(MissionVehicle::Uploading);
     emit sendMission(mission->assignment()->vehicleId());
+}
+
+void MissionService::onMissionAssigned()
+{
+    emit missionAssigned(qobject_cast<Mission*>(this->sender()));
+}
+
+void MissionService::onMissionUnassigned()
+{
+    emit missionUnassigned(qobject_cast<Mission*>(this->sender()));
 }

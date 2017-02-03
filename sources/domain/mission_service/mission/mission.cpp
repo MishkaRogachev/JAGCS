@@ -136,5 +136,10 @@ void Mission::unassignVehicle()
 
 void Mission::assignVehicle(Vehicle* vehicle)
 {
+    if (m_assignment->vehicle() == vehicle) return;
+
     m_assignment->setVehicle(vehicle);
+
+    if (vehicle) emit assigned(vehicle);
+    else emit unassigned();
 }

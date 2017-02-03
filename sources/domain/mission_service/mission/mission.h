@@ -43,6 +43,9 @@ namespace domain
     signals:
         void missionItemsChanged(const QList<MissionItem*>& items);
 
+        void assigned(Vehicle* vehicle);
+        void unassigned();
+
     private:
         QList<MissionItem*> m_items;
         MissionVehicle* const m_assignment;
