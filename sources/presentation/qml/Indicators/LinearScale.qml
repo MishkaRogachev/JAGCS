@@ -68,12 +68,14 @@ Rectangle {
             ctx.textAlign = vertical ?
                         (canvasRotation < 0 ? 'left' :'right') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
+
             ctx.save();
             ctx.translate(width / 2, fontPixelSize * 0.65);
             ctx.rotate(-canvasRotation * Math.PI / 180);
             ctx.fillStyle = scaleColor;
             ctx.fillText(value, 0, 2);
             ctx.restore();
+
             ctx.restore();
         }
     }

@@ -85,6 +85,7 @@ ColumnLayout {
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0
 
+        compassAvalible: vehicle && vehicle.compasAvalible
         heading: vehicle ? vehicle.heading : 0.0
 
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0

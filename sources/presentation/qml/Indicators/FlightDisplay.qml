@@ -14,6 +14,7 @@ Column {
     property alias barometerAvalible: horizont.altitudeAvalible
     property alias airSpeedAvalible: horizont.velocityAvalible
 
+    property bool compassAvalible: true
     property alias heading: compass.heading
 
     property real trueAirSpeed: 0
@@ -41,6 +42,7 @@ Column {
     spacing: 10
 
     Behavior on climb { PropertyAnimation { duration: 100 } }
+    Behavior on heading { PropertyAnimation { duration: 100 } }
 
     Row {
         spacing: 1
@@ -116,6 +118,6 @@ Column {
         id: compass
         width: root.width * 0.8
         anchors.horizontalCenter: parent.horizontalCenter
-
+        scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
     }
 }
