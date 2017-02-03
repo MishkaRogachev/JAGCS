@@ -24,5 +24,5 @@ void WindHandler::processMessage(const mavlink_message_t& message)
     mavlink_wind_t wind;
     mavlink_msg_wind_decode(&message, &wind);
 
-    // TODO: wind to vehicle
+    vehicle->setWind(Wind(wind.direction, wind.speed, wind.speed_z));
 }

@@ -1,5 +1,5 @@
-#ifndef POWERSYSTEM_H
-#define POWERSYSTEM_H
+#ifndef POWER_SYSTEM_H
+#define POWER_SYSTEM_H
 
 // Qt
 #include <QObject>
@@ -31,4 +31,4 @@ namespace domain
     };
 }
 
-#endif // POWERSYSTEM_H
+#endif // POWER_SYSTEM_H

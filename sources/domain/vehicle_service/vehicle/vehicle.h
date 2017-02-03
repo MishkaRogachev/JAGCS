@@ -6,6 +6,7 @@
 #include "position.h"
 #include "gps.h"
 #include "power_system.h"
+#include "wind.h"
 
 namespace domain
 {
@@ -44,6 +45,7 @@ namespace domain
                    WRITE setIndicatedAirSpeed NOTIFY indicatedAirSpeedChanged)
         Q_PROPERTY(float trueAirSpeed READ trueAirSpeed WRITE setTrueAirSpeed
                    NOTIFY trueAirSpeedChanged)
+        Q_PROPERTY(Wind wind READ wind WRITE setWind NOTIFY windChanged)
 
         Q_PROPERTY(bool barometerAvalible READ barometerAvalible
                    WRITE setBarometerAvalible NOTIFY barometerAvalibleChanged)
@@ -103,6 +105,7 @@ namespace domain
         bool airSpeedAvalible() const;
         float indicatedAirSpeed() const;
         float trueAirSpeed() const;
+        Wind wind() const;
 
         bool barometerAvalible() const;
         float barometricAltitude() const;
@@ -135,6 +138,7 @@ namespace domain
         void setAirSpeedAvalible(bool airSpeedAvalible);
         void setIndicatedAirSpeed(float indicatedAirSpeed);
         void setTrueAirSpeed(float trueAirSpeed);
+        void setWind(Wind wind);
 
         void setBarometerAvalible(bool barometerAvalible);
         void setBarometricAltitude(float barometricAltitude);
@@ -168,6 +172,7 @@ namespace domain
         void airSpeedAvalibleChanged(bool airSpeedAvalible);
         void indicatedAirSpeedChanged(float indicatedAirSpeed);
         void trueAirSpeedChanged(float trueAirSpeed);
+        void windChanged(Wind wind);
 
         void barometerAvalibleChanged(bool barometerAvalible);
         void barometricAltitudeChanged(float barometricAltitude);
@@ -205,6 +210,7 @@ namespace domain
         bool m_airSpeedAvalible;
         float m_indicatedAirSpeed;
         float m_trueAirSpeed;
+        Wind m_wind;
 
         bool m_barometerAvalible;
         float m_barometricAltitude;

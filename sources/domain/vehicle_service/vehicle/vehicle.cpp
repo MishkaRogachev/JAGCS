@@ -110,6 +110,11 @@ float Vehicle::trueAirSpeed() const
     return m_trueAirSpeed;
 }
 
+Wind Vehicle::wind() const
+{
+    return m_wind;
+}
+
 bool Vehicle::barometerAvalible() const
 {
     return m_barometerAvalible;
@@ -255,6 +260,14 @@ void Vehicle::setTrueAirSpeed(float trueAirSpeed)
 
     m_trueAirSpeed = trueAirSpeed;
     emit trueAirSpeedChanged(trueAirSpeed);
+}
+
+void Vehicle::setWind(Wind wind)
+{
+    if (m_wind == wind) return;
+
+    m_wind = wind;
+    emit windChanged(wind);
 }
 
 void Vehicle::setBarometerAvalible(bool barometerAvalible)
