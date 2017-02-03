@@ -116,7 +116,7 @@ Column {
 
     Compass {
         id: compass
-        width: root.width * 0.8
+        width: root.width * 0.6
         anchors.horizontalCenter: parent.horizontalCenter
         scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
     }

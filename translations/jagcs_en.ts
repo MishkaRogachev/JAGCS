@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
+    <name>CompassScales</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="48"/>
+        <source>N</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="51"/>
+        <source>E</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="54"/>
+        <source>S</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="57"/>
+        <source>W</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>ConnectionSettingsView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="31"/>
@@ -31,6 +54,14 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="120"/>
         <source>Udp</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>FlightDisplay</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="78"/>
+        <source>W</source>
         <translation></translation>
     </message>
 </context>
@@ -287,16 +318,6 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
         <source>VDOP:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
-        <source>DISARM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
-        <source>ARM</source>
         <translation></translation>
     </message>
 </context>

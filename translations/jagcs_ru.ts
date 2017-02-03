@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>CompassScales</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="48"/>
+        <source>N</source>
+        <translation>С</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="51"/>
+        <source>E</source>
+        <translation>В</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="54"/>
+        <source>S</source>
+        <translation>Ю</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="57"/>
+        <source>W</source>
+        <translation>З</translation>
+    </message>
+</context>
+<context>
     <name>ConnectionSettingsView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="31"/>
@@ -32,6 +55,14 @@
         <location filename="../sources/presentation/qml/Views/Settings/Connection/ConnectionSettingsView.qml" line="120"/>
         <source>Udp</source>
         <translation>Udp</translation>
+    </message>
+</context>
+<context>
+    <name>FlightDisplay</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="78"/>
+        <source>W</source>
+        <translation>В</translation>
     </message>
 </context>
 <context>
@@ -346,14 +377,12 @@
         <translation>VDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
         <source>DISARM</source>
-        <translation>РАЗРЯД</translation>
+        <translation type="vanished">РАЗРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="103"/>
         <source>ARM</source>
-        <translation>ЗАРЯД</translation>
+        <translation type="vanished">ЗАРЯД</translation>
     </message>
 </context>
 <context>

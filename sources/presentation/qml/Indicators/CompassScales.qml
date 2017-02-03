@@ -35,7 +35,7 @@ Canvas {
 
             ctx.moveTo(0, fontPixelSize * 2);
 
-            if (i % 45) {
+            if (i % 30) {
                 ctx.lineTo(0, fontPixelSize * 2.2);
             }
             else {
@@ -46,13 +46,17 @@ Canvas {
                 ctx.rotate((-i + heading) * Math.PI / 180);
 
                 if (i == 0) ctx.fillText(qsTr("N"), 0, 2);
-                if (i == 45) ctx.fillText(qsTr("NE"), 0, 2);
+                if (i == 30) ctx.fillText("3", 0, 2);
+                if (i == 60) ctx.fillText("6", 0, 2);
                 if (i == 90) ctx.fillText(qsTr("E"), 0, 2);
-                if (i == 135) ctx.fillText(qsTr("SE"), 0, 2);
+                if (i == 120) ctx.fillText("12", 0, 2);
+                if (i == 150) ctx.fillText("15", 0, 2);
                 if (i == 180) ctx.fillText(qsTr("S"), 0, 2);
-                if (i == 225) ctx.fillText(qsTr("SW"), 0, 2);
+                if (i == 210) ctx.fillText("21", 0, 2);
+                if (i == 240) ctx.fillText("24", 0, 2);
                 if (i == 270) ctx.fillText(qsTr("W"), 0, 2);
-                if (i == 315) ctx.fillText(qsTr("NW"), 0, 2);
+                if (i == 300) ctx.fillText("30", 0, 2);
+                if (i == 330) ctx.fillText("33", 0, 2);
 
                 ctx.restore();
             }
