@@ -90,7 +90,7 @@ Item {
     RollScale {
         id: rollScale
         anchors.fill: parent
-        fontPixelSize: palette.fontPixelSize
+        fontPixelSize: palette.fontPixelSize * 1.2
         roll: rollInverted ? -root.roll : root.roll
         minRoll: root.minRoll
         maxRoll: root.maxRoll
