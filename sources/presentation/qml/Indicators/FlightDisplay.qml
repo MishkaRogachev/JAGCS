@@ -16,8 +16,9 @@ Column {
 
     property alias heading: compass.heading
 
+    property real trueAirSpeed: 0
+    property real windSpeed: 0
     property int groundSpeed: 0
-    property int trueAirSpeed: 0
     property int snsAltitude: 0
     property int snsFix: -1
     property color snsColor: {
@@ -33,6 +34,9 @@ Column {
     property int climb: 0
     property int minClimb: -12
     property int maxClimb: 12
+
+    property bool rangeFinderAvalible: false
+    property int geometricAltitude: 0
 
     spacing: 10
 
@@ -60,9 +64,18 @@ Column {
             Label {
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
-                text: trueAirSpeed
+                text: trueAirSpeed.toFixed(1)
                 color: airSpeedAvalible ? palette.textColor : palette.disabledColor
                 width: parent.width * 0.2
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            Label {
+                anchors.top: parent.bottom
+                anchors.left: parent.left
+                text: qsTr("W") + " " + windSpeed.toFixed(1)
+                color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+                width: horizont.width * 0.2
                 horizontalAlignment: Text.AlignHCenter
             }
 
@@ -73,6 +86,15 @@ Column {
                 width: parent.width * 0.2
                 horizontalAlignment: Text.AlignHCenter
                 color: snsColor
+            }
+
+            Label {
+                anchors.verticalCenter: parent.bottom
+                anchors.right: parent.right
+                text: geometricAltitude
+                width: parent.width * 0.2
+                horizontalAlignment: Text.AlignHCenter
+                color: rangeFinderAvalible ? palette.textColor : palette.disabledColor
             }
         }
 
@@ -94,5 +116,6 @@ Column {
         id: compass
         width: root.width * 0.8
         anchors.horizontalCenter: parent.horizontalCenter
+
     }
 }
