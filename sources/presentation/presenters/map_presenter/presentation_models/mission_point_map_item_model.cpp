@@ -2,6 +2,7 @@
 
 // Qt
 #include <QGeoCoordinate>
+#include <QApplication>
 #include <QDebug>
 
 // Internal
@@ -134,6 +135,8 @@ void MissionPointMapItemModel::setMissionItems(const QList<domain::MissionItem*>
     {
         if (item) this->addMissionItem(item);
     }
+    emit dataChanged(this->index(0), this->index(items.count() -1));
+    qApp->processEvents(); //force QtLocation to redraw
 }
 
 void MissionPointMapItemModel::clearMissionItems()
