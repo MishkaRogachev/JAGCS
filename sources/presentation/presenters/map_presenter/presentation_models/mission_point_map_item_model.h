@@ -10,6 +10,7 @@ namespace domain
 
 namespace presentation
 {
+    // TODO: Replace with MissionMapModel with dynamic MapItemViews
     class MissionPointMapItemModel: public QAbstractListModel
     {
         Q_OBJECT

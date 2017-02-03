@@ -5,6 +5,7 @@
 
 // Internal
 #include "vehicle_service.h"
+#include "mission.h"
 
 using namespace domain;
 

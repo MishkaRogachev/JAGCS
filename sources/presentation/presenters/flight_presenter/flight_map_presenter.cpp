@@ -5,6 +5,7 @@
 
 // Internal
 #include "mission_service.h"
+#include "mission.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
 

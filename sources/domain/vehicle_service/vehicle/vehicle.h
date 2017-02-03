@@ -6,10 +6,11 @@
 #include "position.h"
 #include "gps.h"
 #include "power_system.h"
-#include "mission.h"
 
 namespace domain
 {
+    class Mission;
+
     class Vehicle: public QObject // TODO: system hierarchy & properly vehicle domain-model
     {
         Q_OBJECT
