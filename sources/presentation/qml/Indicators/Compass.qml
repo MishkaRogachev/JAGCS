@@ -19,5 +19,7 @@ Rectangle {
         anchors.centerIn: parent
         rotation: heading
         source: "qrc:/indicators/plane_map_mark.svg"
+        width: root.width / 2
+        height: width
     }
 }
