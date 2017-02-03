@@ -59,6 +59,9 @@ namespace domain
         Q_PROPERTY(int heading READ heading WRITE setHeading
                    NOTIFY headingChanged)
 
+        Q_PROPERTY(bool rangeFinderAvalible READ rangeFinderAvalible
+                   WRITE setRangeFinderAvalible NOTIFY rangeFinderAvalibleChanged)
+
         Q_PROPERTY(bool ahrsAvalible READ ahrsAvalible
                    WRITE setAhrsAvalible NOTIFY ahrsAvalibleChanged)
 
@@ -114,6 +117,8 @@ namespace domain
         bool compasAvalible() const;
         int heading() const;
 
+        bool rangeFinderAvalible() const;
+
         bool ahrsAvalible() const;
 
         Mission* assignedMission() const;
@@ -146,6 +151,8 @@ namespace domain
 
         void setCompasAvalible(bool compasAvalible);
         void setHeading(int heading);
+
+        void setRangeFinderAvalible(bool rangeFinderAvalible);
 
         void setAhrsAvalible(bool ahrsAvalible);
 
@@ -180,6 +187,8 @@ namespace domain
 
         void compasAvalibleChanged(bool compasAvalible);
         void headingChanged(int heading);
+
+        void rangeFinderAvalibleChanged(bool rangeFinderAvalible);
 
         void ahrsAvalibleChanged(bool ahrsAvalible);
 
@@ -218,6 +227,8 @@ namespace domain
 
         bool m_compasAvalible;
         int m_heading;
+
+        bool m_rangeFinderAvalible;
 
         bool m_ahrsAvalible;
 

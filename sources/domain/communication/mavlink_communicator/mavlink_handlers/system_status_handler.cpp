@@ -64,5 +64,10 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
                              (status.onboard_control_sensors_enabled &
                               MAV_SYS_STATUS_AHRS));
 
+    vehicle->setRangeFinderAvalible((status.onboard_control_sensors_present &
+                                     MAV_SYS_STATUS_SENSOR_LASER_POSITION) &&
+                                    (status.onboard_control_sensors_enabled &
+                                     MAV_SYS_STATUS_SENSOR_LASER_POSITION));
+
     // TODO: handle sensors health
 }

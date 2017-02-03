@@ -26,6 +26,7 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     m_barometricClimb(0),
     m_compasAvalible(false),
     m_heading(0),
+    m_rangeFinderAvalible(false),
     m_ahrsAvalible(false),
     m_assignedMission(nullptr)
 {}
@@ -138,6 +139,11 @@ bool Vehicle::compasAvalible() const
 int Vehicle::heading() const
 {
     return m_heading;
+}
+
+bool Vehicle::rangeFinderAvalible() const
+{
+    return m_rangeFinderAvalible;
 }
 
 bool Vehicle::ahrsAvalible() const
@@ -308,6 +314,14 @@ void Vehicle::setHeading(int heading)
 
     m_heading = heading;
     emit headingChanged(heading);
+}
+
+void Vehicle::setRangeFinderAvalible(bool rangeFinderAvalible)
+{
+    if (m_rangeFinderAvalible == rangeFinderAvalible) return;
+
+    m_rangeFinderAvalible = rangeFinderAvalible;
+    emit rangeFinderAvalibleChanged(rangeFinderAvalible);
 }
 
 void Vehicle::setAhrsAvalible(bool ahrsAvalible)
