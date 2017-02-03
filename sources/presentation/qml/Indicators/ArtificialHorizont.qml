@@ -60,7 +60,7 @@ Item {
             minPitch: root.pitch + root.minPitch
             maxPitch: root.pitch + root.maxPitch
             pitchStep: root.pitchStep
-            scaleColor: insAvalible ? palette.textColor : palette.disabledColor
+            opacity: insAvalible ? 1 : 0.33
         }
 
         PlaneMark {
@@ -95,7 +95,7 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
-        scaleColor: insAvalible ? palette.textColor : palette.disabledColor
+        opacity: insAvalible ? 1 : 0.33
     }
 
     LinearScale {
