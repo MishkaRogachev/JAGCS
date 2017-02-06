@@ -9,6 +9,9 @@ Item {
     property int velocity: 0.0
     property int altitude: 0.0
 
+    property alias velocityPrefix: velocityLadder.prefix
+    property alias altitudePrefix: altitudeLadder.prefix
+
     property bool pitchInverted: true
     property bool rollInverted: true
     property bool insAvalible: true
@@ -98,8 +101,8 @@ Item {
         opacity: insAvalible ? 1 : 0.33
     }
 
-    LinearScale {
-        id: velocityScale
+    Ladder {
+        id: velocityLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         width: parent.width * 0.2
@@ -110,11 +113,10 @@ Item {
         valueStep: velocityStep
         scaleColor: velocityAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: 90
-        fontPixelSize: palette.fontPixelSize * 0.8
     }
 
-    LinearScale {
-        id: altitudeScale
+    Ladder {
+        id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         width: parent.width * 0.2
@@ -125,6 +127,5 @@ Item {
         valueStep: altitudeStep
         scaleColor: altitudeAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: -90
-        fontPixelSize: palette.fontPixelSize * 0.8
     }
 }

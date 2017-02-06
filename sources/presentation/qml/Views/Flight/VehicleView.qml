@@ -12,12 +12,15 @@ ColumnLayout {
 
     property QtObject vehicle
 
+    spacing: palette.controlBaseSize / 4 // TODO: palette spacing
+
     Item {
         id: sns
         Layout.preferredWidth: root.width
-        Layout.preferredHeight: gpsIndicator.height
+        Layout.preferredHeight: gpsColumn.height
 
         Column {
+            id: gpsColumn
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: palette.controlBaseSize / 2
@@ -46,7 +49,6 @@ ColumnLayout {
             spacing: 5
 
             GpsIndicator {
-                id: gpsIndicator
                 fix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
                 satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
                 anchors.verticalCenter: parent.verticalCenter

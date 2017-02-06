@@ -46,6 +46,7 @@ Column {
     property int geometricAltitude: 0
 
     property int labelFontSize: palette.fontPixelSize * 0.8
+
     spacing: 10
 
     Behavior on climb { PropertyAnimation { duration: 100 } }
@@ -60,59 +61,60 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             width: root.width * 0.97
             height: width
+            velocityPrefix: qsTr("IAS, m/s")
+            altitudePrefix: qsTr("Hbar, m")
 
-            Label {
+            FdLabel {
                 anchors.top: parent.top
+                anchors.topMargin: -height / 4
                 anchors.left: parent.left
-                text: groundSpeed
-                font.pixelSize: labelFontSize
-                font.bold: true
+                prefix: qsTr("GS, m/s")
+                value: groundSpeed
                 width: parent.width * 0.2
-                horizontalAlignment: Text.AlignHCenter
                 color: snsColor
             }
 
-            Label {
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                text: trueAirSpeed.toFixed(1)
-                font.pixelSize: labelFontSize
-                font.bold: true
-                color: airSpeedAvalible ? palette.textColor : palette.disabledColor
-                width: parent.width * 0.2
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
+            Column {
                 anchors.top: parent.bottom
+                anchors.topMargin: -height / 4
                 anchors.left: parent.left
-                text: qsTr("W") + " " + windSpeed.toFixed(1)
-                font.pixelSize: labelFontSize
-                font.bold: true
-                color: airSpeedAvalible ? palette.textColor : palette.disabledColor
-                width: horizont.width * 0.2
-                horizontalAlignment: Text.AlignHCenter
+                width: parent.width * 0.2
+                spacing: palette.controlBaseSize / 4
+
+                FdLabel {
+                    prefix: qsTr("TAS, m/s")
+                    value: trueAirSpeed
+                    digits: 1
+                    color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+                    width: parent.width
+                }
+
+                FdLabel {
+                    prefix: qsTr("WS, m/s")
+                    value: windSpeed
+                    digits: 1
+                    color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+                    width: parent.width
+                }
             }
 
-            Label {
+            FdLabel {
                 anchors.top: parent.top
+                anchors.topMargin: -height / 4
                 anchors.right: parent.right
-                text: snsAltitude
-                font.pixelSize: labelFontSize
-                font.bold: true
+                prefix: qsTr("Hsns, m")
+                value: snsAltitude
                 width: parent.width * 0.2
-                horizontalAlignment: Text.AlignHCenter
                 color: snsColor
             }
 
-            Label {
-                anchors.verticalCenter: parent.bottom
+            FdLabel {
+                anchors.top: parent.bottom
+                anchors.topMargin: -height / 4
                 anchors.right: parent.right
-                text: geometricAltitude
-                font.pixelSize: labelFontSize
-                font.bold: true
+                prefix: qsTr("Hgeo, m")
+                value: geometricAltitude
                 width: parent.width * 0.2
-                horizontalAlignment: Text.AlignHCenter
                 color: rangeFinderAvalible ? palette.textColor : palette.disabledColor
             }
         }
@@ -151,24 +153,26 @@ Column {
         Column {
             width: root.width * 0.2
             anchors.bottom: parent.bottom
+            spacing: palette.controlBaseSize / 4
 
             BatteryIndicator {
                 id: battery
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: voltage.toFixed(2) + " " + qsTr("v")
-                font.pixelSize: labelFontSize
-                font.bold: true
+            FdLabel {
+                width: parent.width
+                prefix: qsTr("Vol, v")
+                value: voltage.toFixed(2)
+                digits: 2
+
             }
 
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: current.toFixed(2) + " " + qsTr("A")
-                font.pixelSize: labelFontSize
-                font.bold: true
+            FdLabel {
+                width: parent.width
+                prefix: qsTr("Cur., A")
+                value: current
+                digits: 2
             }
         }
     }

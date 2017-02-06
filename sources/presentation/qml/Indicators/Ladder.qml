@@ -4,13 +4,16 @@ import "qrc:/JS/helper.js" as Helper
 Rectangle { // TODO: rename to ladded
     id: root
 
-    property int value: 0
+    property alias value: label.value
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
-    property int fontPixelSize: palette.fontPixelSize
+    property int fontPixelSize: palette.fontPixelSize * 0.7
     property alias canvasRotation: canvas.rotation
+
+    property alias prefix: label.prefix
     property color scaleColor: palette.textColor
+
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
                             (canvasRotation <= -90 && canvasRotation > -180)
 
@@ -59,24 +62,21 @@ Rectangle { // TODO: rename to ladded
             }
 
             ctx.stroke();
-
-            ctx.fillStyle = palette.raisedColor;
-            var rectHeight = palette.fontPixelSize * 1.5;
-            ctx.fillRect(width / 2 - rectHeight / 2, 0, rectHeight, canvas.width);
-
-            ctx.font = 'bold ' + fontPixelSize + 'px sans-serif';
-            ctx.textAlign = vertical ?
-                        (canvasRotation < 0 ? 'left' :'right') : 'center';
-            ctx.textBaseline = vertical ? 'middle' : 'top';
-
-            ctx.save();
-            ctx.translate(width / 2, fontPixelSize * 0.65);
-            ctx.rotate(-canvasRotation * Math.PI / 180);
-            ctx.fillStyle = scaleColor;
-            ctx.fillText(value, 0, 2);
             ctx.restore();
+        }
+    }
 
-            ctx.restore();
+    Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width
+        height: label.height
+        color: palette.raisedColor
+
+        FdLabel {
+            id: label
+            anchors.centerIn: parent
+            width: parent.width
+            color: scaleColor
         }
     }
 }
