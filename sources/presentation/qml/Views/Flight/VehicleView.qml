@@ -95,17 +95,15 @@ ColumnLayout {
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
 
+        charge: vehicle ? vehicle.powerSystem.charge : -1
+        voltage: vehicle ? vehicle.powerSystem.voltage : 0.0
+        current: vehicle ? vehicle.powerSystem.current : 0.0
+
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
 /*
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
-
-        BatteryIndicator {
-            Layout.alignment: Qt.AlignLeft
-            charge: vehicle ? vehicle.powerSystem.charge : -1
-        }
-
         // TODO: delay button
         Button {
             text: vehicle && vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
