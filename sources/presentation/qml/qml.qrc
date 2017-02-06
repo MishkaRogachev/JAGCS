@@ -35,7 +35,6 @@
         <file>Indicators/RollScale.qml</file>
         <file>Indicators/ArtificialHorizont.qml</file>
         <file>Indicators/Compass.qml</file>
-        <file>Indicators/CompassScales.qml</file>
         <file>Indicators/FlightDisplay.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>

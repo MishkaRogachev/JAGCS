@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import "qrc:/JS/helper.js" as Helper
 
-Rectangle {
+Rectangle { // TODO: rename to ladded
     id: root
 
     property int value: 0

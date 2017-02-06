@@ -16,6 +16,7 @@ Column {
 
     property bool compassAvalible: true
     property alias heading: compass.heading
+    property alias course: compass.course
 
     property real trueAirSpeed: 0
     property real windSpeed: 0
@@ -119,5 +120,6 @@ Column {
         width: root.width * 0.6
         anchors.horizontalCenter: parent.horizontalCenter
         scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
+        courseColor: snsColor
     }
 }

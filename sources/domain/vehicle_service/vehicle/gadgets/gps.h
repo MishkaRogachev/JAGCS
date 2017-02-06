@@ -6,7 +6,7 @@
 
 namespace domain
 {
-    class Gps
+    class Gps // TODO: rename to SNS
     {
         Q_GADGET
 

@@ -88,6 +88,7 @@ ColumnLayout {
 
         compassAvalible: vehicle && vehicle.compasAvalible
         heading: vehicle ? vehicle.heading : 0.0
+        course: vehicle && vehicle.gpsAvalible ? vehicle.gps.course : -1
 
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
