@@ -21,6 +21,11 @@ namespace domain
         return value * 1000;
     }
 
+    inline uint16_t encodeCourse(float value)
+    {
+        return value * 100;
+    }
+
     inline double decodeLatLon(int32_t value)
     {
         return double(value) / 1e7;
@@ -29,6 +34,11 @@ namespace domain
     inline float decodeAltitude(int32_t value)
     {
         return float(value) / 1000;
+    }
+
+    inline float decodeCourse(uint16_t value)
+    {
+        return float(value) / 100;
     }
 
     inline float decodeVoltage(uint16_t value)

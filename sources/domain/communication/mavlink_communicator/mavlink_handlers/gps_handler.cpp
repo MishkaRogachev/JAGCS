@@ -49,6 +49,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
                         QGeoCoordinate(decodeLatLon(gps.lat),
                                        decodeLatLon(gps.lon),
                                        decodeAltitude(gps.alt)),
+                        decodeCourse(gps.cog),
                         gps.eph,
                         gps.epv));
 }
