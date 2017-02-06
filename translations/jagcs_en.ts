@@ -2,24 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
-    <name>CompassScales</name>
+    <name>Compass</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="48"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="68"/>
         <source>N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="51"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="69"/>
         <source>E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="54"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="70"/>
         <source>S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="57"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="71"/>
         <source>W</source>
         <translation></translation>
     </message>
@@ -60,8 +60,48 @@
 <context>
     <name>FlightDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="78"/>
-        <source>W</source>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="64"/>
+        <source>IAS, m/s</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="65"/>
+        <source>Hbar, m</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="71"/>
+        <source>GS, m/s</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="85"/>
+        <source>TAS, m/s</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="93"/>
+        <source>WS, m/s</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="105"/>
+        <source>Hsns, m</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="115"/>
+        <source>Hgeo, m</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="165"/>
+        <source>Vol, v</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="173"/>
+        <source>Cur., A</source>
         <translation></translation>
     </message>
 </context>
@@ -293,30 +333,30 @@
 <context>
     <name>VehicleView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="31"/>
         <source>Lat.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="30"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="38"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="41"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="69"/>
         <source>None</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="39"/>
         <source>Lon.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="63"/>
         <source>HDOP:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="69"/>
         <source>VDOP:</source>
         <translation></translation>
     </message>

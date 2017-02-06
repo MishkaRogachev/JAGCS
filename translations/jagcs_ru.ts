@@ -2,26 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
-    <name>CompassScales</name>
+    <name>Compass</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="48"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="68"/>
         <source>N</source>
         <translation>С</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="51"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="69"/>
         <source>E</source>
         <translation>В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="54"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="70"/>
         <source>S</source>
         <translation>Ю</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/CompassScales.qml" line="57"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="71"/>
         <source>W</source>
         <translation>З</translation>
+    </message>
+</context>
+<context>
+    <name>CompassScales</name>
+    <message>
+        <source>N</source>
+        <translation type="vanished">С</translation>
+    </message>
+    <message>
+        <source>E</source>
+        <translation type="vanished">В</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <translation type="vanished">Ю</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <translation type="vanished">З</translation>
     </message>
 </context>
 <context>
@@ -60,9 +79,53 @@
 <context>
     <name>FlightDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="78"/>
         <source>W</source>
-        <translation>В</translation>
+        <translation type="vanished">В</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="64"/>
+        <source>IAS, m/s</source>
+        <translation>IAS, м/с</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="65"/>
+        <source>Hbar, m</source>
+        <translation>Hбар, м</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="71"/>
+        <source>GS, m/s</source>
+        <translation>GS, м/с</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="85"/>
+        <source>TAS, m/s</source>
+        <translation>TAS, м/с</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="93"/>
+        <source>WS, m/s</source>
+        <translation>WS, м/с</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="105"/>
+        <source>Hsns, m</source>
+        <translation>Hснс, м</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="115"/>
+        <source>Hgeo, m</source>
+        <translation>Hгео, м</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="165"/>
+        <source>Vol, v</source>
+        <translation>Напр., в</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="173"/>
+        <source>Cur., A</source>
+        <translation>Ток, А</translation>
     </message>
 </context>
 <context>
@@ -349,30 +412,30 @@
         <translation type="vanished">А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="31"/>
         <source>Lat.:</source>
         <translation>Шир.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="30"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="38"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="41"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="69"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="39"/>
         <source>Lon.:</source>
         <translation>Дол.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="61"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="63"/>
         <source>HDOP:</source>
         <translation>HDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="69"/>
         <source>VDOP:</source>
         <translation>VDOP:</translation>
     </message>
