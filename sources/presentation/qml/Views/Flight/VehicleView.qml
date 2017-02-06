@@ -80,6 +80,7 @@ ColumnLayout {
         airSpeedAvalible: vehicle && vehicle.airSpeedAvalible
         indicatedAirSpeed: vehicle ? vehicle.indicatedAirSpeed : 0.0
         trueAirSpeed: vehicle ? vehicle.trueAirSpeed : 0.0
+        windSpeed: vehicle ? vehicle.wind.speed: 0.0
         groundSpeed: vehicle ? vehicle.groundSpeed : 0.0
         barometerAvalible: vehicle && vehicle.barometerAvalible
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
@@ -89,6 +90,7 @@ ColumnLayout {
         compassAvalible: vehicle && vehicle.compasAvalible
         heading: vehicle ? vehicle.heading : 0.0
         course: vehicle && vehicle.gpsAvalible ? vehicle.gps.course : -1
+        windDirection: vehicle ? vehicle.wind.direction : -1
 
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1

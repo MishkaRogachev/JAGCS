@@ -17,6 +17,7 @@ Column {
     property bool compassAvalible: true
     property alias heading: compass.heading
     property alias course: compass.course
+    property alias windDirection: compass.windDirection
 
     property real trueAirSpeed: 0
     property real windSpeed: 0
