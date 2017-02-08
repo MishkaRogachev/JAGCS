@@ -23,7 +23,7 @@ ColumnLayout {
             id: gpsColumn
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: palette.controlBaseSize / 2
+            anchors.leftMargin: palette.controlBaseSize / 8
 
             Label {
                 color: fd.snsColor
@@ -45,13 +45,15 @@ ColumnLayout {
         Row {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: palette.controlBaseSize / 2
+            anchors.rightMargin: palette.controlBaseSize / 8
             spacing: 5
 
             GpsIndicator {
                 fix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
                 satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
                 anchors.verticalCenter: parent.verticalCenter
+                width: palette.controlBaseSize
+                height: width
             }
 
             Column {

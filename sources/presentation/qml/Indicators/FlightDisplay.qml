@@ -134,7 +134,7 @@ Column {
     }
 
     Row {
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
 
         Column {
             width: root.width * 0.2
@@ -144,7 +144,7 @@ Column {
 
         Compass {
             id: compass
-            width: root.width * 0.6
+            width: horizont.width * 0.6
             anchors.verticalCenter: parent.verticalCenter
             scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
             courseColor: snsColor
