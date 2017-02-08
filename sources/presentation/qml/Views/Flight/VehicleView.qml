@@ -102,8 +102,8 @@ ColumnLayout {
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
 
         charge: vehicle ? vehicle.powerSystem.charge : -1
-        voltage: vehicle ? vehicle.powerSystem.voltage : 0.0
-        current: vehicle ? vehicle.powerSystem.current : 0.0
+        voltage: vehicle ? vehicle.powerSystem.voltage : -1
+        current: vehicle ? vehicle.powerSystem.current : -1
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }

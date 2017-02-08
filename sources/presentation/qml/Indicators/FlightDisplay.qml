@@ -110,7 +110,8 @@ Column {
 
                 FdLabel {
                     id: homeLabel
-                    text: homeDistance.toFixed(0) + " " + qsTr("m")
+                    text: homeDistance > -1 ?
+                              homeDistance.toFixed(0) + " " + qsTr("m") : "-"
                     color: homeDistance > -1 ? palette.textColor : palette.disabledColor
                     width: parent.width
                 }
@@ -126,14 +127,40 @@ Column {
                 color: snsColor
             }
 
-            FdLabel {
+            Column {
                 anchors.top: parent.bottom
-                anchors.topMargin: -height / 4
+                anchors.topMargin: -2 * palette.controlBaseSize / 3
                 anchors.right: parent.right
-                prefix: qsTr("Hgeo, m")
-                value: geometricAltitude
                 width: parent.width * 0.2
-                color: rangeFinderAvalible ? palette.textColor : palette.disabledColor
+                spacing: palette.controlBaseSize / 4
+
+                FdLabel {
+                    prefix: qsTr("Hgeo, m")
+                    value: geometricAltitude
+                    width: parent.width
+                    color: rangeFinderAvalible ? palette.textColor : palette.disabledColor
+                }
+
+                BatteryIndicator {
+                    id: battery
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                FdLabel {
+                    width: parent.width
+                    prefix: qsTr("Vol, v")
+                    value: voltage.toFixed(2)
+                    digits: 2
+                    color: voltage > -1 ? palette.textColor : palette.disabledColor
+                }
+
+                FdLabel {
+                    width: parent.width
+                    prefix: qsTr("Cur., A")
+                    value: current
+                    digits: 2
+                    color: current > -1 ? palette.textColor : palette.disabledColor
+                }
             }
         }
 
@@ -151,47 +178,12 @@ Column {
         }
     }
 
-    Row {
-        anchors.left: parent.left
-
-        Column {
-            width: root.width * 0.2
-            height: 1
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Compass {
-            id: compass
-            width: horizont.width * 0.6
-            anchors.verticalCenter: parent.verticalCenter
-            scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
-            courseColor: snsColor
-        }
-
-        Column {
-            width: root.width * 0.2
-            anchors.bottom: parent.bottom
-            spacing: palette.controlBaseSize / 4
-
-            BatteryIndicator {
-                id: battery
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            FdLabel {
-                width: parent.width
-                prefix: qsTr("Vol, v")
-                value: voltage.toFixed(2)
-                digits: 2
-
-            }
-
-            FdLabel {
-                width: parent.width
-                prefix: qsTr("Cur., A")
-                value: current
-                digits: 2
-            }
-        }
+    Compass {
+        id: compass
+        width: horizont.width * 0.6
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: -(root.width - horizont.width) / 2
+        scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
+        courseColor: snsColor
     }
 }
