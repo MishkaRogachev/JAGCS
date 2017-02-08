@@ -20,6 +20,8 @@ Column {
     property alias windDirection: compass.windDirection
     property alias homeDirection: compass.homeDirection
 
+    property real homeDistance: 0.0
+
     property alias charge: battery.charge
     property real voltage: 0.0
     property real current: 0.0
@@ -77,7 +79,7 @@ Column {
 
             Column {
                 anchors.top: parent.bottom
-                anchors.topMargin: -height / 4
+                anchors.topMargin: -2 * palette.controlBaseSize / 3
                 anchors.left: parent.left
                 width: parent.width * 0.2
                 spacing: palette.controlBaseSize / 4
@@ -95,6 +97,21 @@ Column {
                     value: windSpeed
                     digits: 1
                     color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+                    width: parent.width
+                }
+
+                ColoredIcon {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: palette.fontPixelSize
+                    height: width
+                    source: "qrc:/icons/home.svg"
+                    color: homeLabel.color
+                }
+
+                FdLabel {
+                    id: homeLabel
+                    text: homeDistance.toFixed(0) + " " + qsTr("m")
+                    color: homeDistance > -1 ? palette.textColor : palette.disabledColor
                     width: parent.width
                 }
             }

@@ -31,6 +31,8 @@ namespace domain
                    WRITE setHomePosition NOTIFY homePositionChanged)
         Q_PROPERTY(float homeDirection READ homeDirection
                    NOTIFY homeDirectionChanged)
+        Q_PROPERTY(float homeDistance READ homeDistance
+                   NOTIFY homeDistanceChanged)
 
         Q_PROPERTY(bool gpsAvalible READ gpsAvalible
                    WRITE setGpsAvalible NOTIFY gpsAvalibleChanged)
@@ -101,6 +103,7 @@ namespace domain
         Position position() const;
         Position homePosition() const;
         float homeDirection() const;
+        float homeDistance() const;
 
         bool gpsAvalible() const;
         Gps gps() const;
@@ -173,6 +176,7 @@ namespace domain
         void positionChanged(Position position);
         void homePositionChanged(Position homePosition);
         void homeDirectionChanged(float homeDirection);
+        void homeDistanceChanged(float homeDistance);
 
         void gpsAvalibleChanged(bool gpsAvalible);
         void gpsChanged(Gps gps);
