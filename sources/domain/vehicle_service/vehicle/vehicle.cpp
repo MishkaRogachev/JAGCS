@@ -76,6 +76,16 @@ Position Vehicle::homePosition() const
     return m_homePosition;
 }
 
+float Vehicle::homeDirection() const
+{
+    if (m_position.coordinate().isValid() &&
+        m_homePosition.coordinate().isValid())
+    {
+        return m_position.coordinate().azimuthTo(m_homePosition.coordinate());
+    }
+    return -1;
+}
+
 bool Vehicle::gpsAvalible() const
 {
     return m_gpsAvalible;
@@ -202,6 +212,7 @@ void Vehicle::setPosition(const Position& position)
 
     m_position = position;
     emit positionChanged(position);
+    emit homeDirectionChanged(this->homeDirection());
 }
 
 void Vehicle::setHomePosition(const Position& homePosition)
@@ -210,6 +221,7 @@ void Vehicle::setHomePosition(const Position& homePosition)
 
     m_homePosition = homePosition;
     emit homePositionChanged(homePosition);
+    emit homeDirectionChanged(this->homeDirection());
 }
 
 void Vehicle::setGpsAvalible(bool gpsAvalible)
