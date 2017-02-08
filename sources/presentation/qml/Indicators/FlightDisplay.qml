@@ -170,9 +170,12 @@ Column {
             width: root.width - horizont.width - 1
             height: horizont.height * 0.8
             value: climb
-            fillColor: barometerAvalible ? (value > minValue ?
-                                palette.highlightColor : palette.negativeColor) :
-                           palette.disabledColor
+            fillColor: {
+                if (!barometerAvalible) return palette.disabledColor;
+                if (value > 0) return palette.skyColor;
+                if (value > minValue) return palette.groundColor;
+                return palette.negativeColor;
+            }
             minValue: minClimb
             maxValue: maxClimb
         }
