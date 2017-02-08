@@ -1,6 +1,8 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
 
+import "../Controls"
+
 Rectangle {
     id: root
 
@@ -112,7 +114,6 @@ Rectangle {
 
                 ctx.save();
                 ctx.rotate(windDirection * Math.PI / 180);
-                //ctx.translate(0, -height / 2);
 
                 for (var i = -height / 4; i < height / 4;
                      i+= fontPixelSize / 1.5) {
@@ -125,9 +126,36 @@ Rectangle {
                 ctx.stroke();
             }
 
+            ctx.restore();
+            ctx.restore();
+        }
+    }
 
-            ctx.restore();
-            ctx.restore();
+    Item {
+        anchors.centerIn: parent
+        width: root.width
+        height: root.height
+        rotation: homeDirection - heading
+        visible: homeDirection > -1
+
+        Rectangle {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: root.width / 6
+            height: width
+            color: palette.backgroundColor
+            border.color: palette.missionColor
+            border.width: 2
+            radius: width / 2
+            rotation: -parent.rotation
+
+            ColoredIcon {
+                anchors.centerIn: parent
+                width: parent.width * 0.8
+                height: parent.height * 0.8
+                source: "qrc:/icons/home.svg"
+                color: palette.textColor
+            }
         }
     }
 

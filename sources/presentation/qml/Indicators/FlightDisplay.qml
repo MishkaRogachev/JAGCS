@@ -18,6 +18,7 @@ Column {
     property alias heading: compass.heading
     property alias course: compass.course
     property alias windDirection: compass.windDirection
+    property alias homeDirection: compass.homeDirection
 
     property alias charge: battery.charge
     property real voltage: 0.0

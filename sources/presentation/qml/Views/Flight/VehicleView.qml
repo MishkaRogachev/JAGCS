@@ -95,6 +95,7 @@ ColumnLayout {
         heading: vehicle ? vehicle.heading : 0.0
         course: vehicle && vehicle.gpsAvalible ? vehicle.gps.course : -1
         windDirection: vehicle ? vehicle.wind.direction : -1
+        homeDirection: vehicle ? vehicle.homeDirection : -1
 
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
