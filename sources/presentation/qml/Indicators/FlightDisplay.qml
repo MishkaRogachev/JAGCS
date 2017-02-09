@@ -88,15 +88,23 @@ Column {
                     prefix: qsTr("TAS, m/s")
                     value: trueAirSpeed
                     digits: 1
-                    color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+                    available: airSpeedAvalible
                     width: parent.width
                 }
 
+                ColoredIcon {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: palette.fontPixelSize
+                    height: width
+                    source: "qrc:/icons/wind.svg"
+                    color: homeLabel.color
+                }
+
                 FdLabel {
-                    prefix: qsTr("WS, m/s")
                     value: windSpeed
                     digits: 1
-                    color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+                    suffix: qsTr("m/s")
+                    available: airSpeedAvalible
                     width: parent.width
                 }
 
@@ -110,9 +118,10 @@ Column {
 
                 FdLabel {
                     id: homeLabel
-                    text: homeDistance > -1 ?
-                              homeDistance.toFixed(0) + " " + qsTr("m") : "-"
-                    color: homeDistance > -1 ? palette.textColor : palette.disabledColor
+                    value: homeDistance
+                    digits: 0
+                    suffix: qsTr("m")
+                    available: homeDistance > -1
                     width: parent.width
                 }
             }
@@ -138,7 +147,7 @@ Column {
                     prefix: qsTr("Hgeo, m")
                     value: geometricAltitude
                     width: parent.width
-                    color: rangeFinderAvalible ? palette.textColor : palette.disabledColor
+                    available: rangeFinderAvalible
                 }
 
                 BatteryIndicator {
@@ -148,18 +157,19 @@ Column {
 
                 FdLabel {
                     width: parent.width
-                    prefix: qsTr("Vol, v")
+                    prefix: qsTr("Voltage")
+                    suffix: qsTr("V")
                     value: voltage.toFixed(2)
                     digits: 2
-                    color: voltage > -1 ? palette.textColor : palette.disabledColor
+                    enabled: voltage > -1
                 }
 
                 FdLabel {
                     width: parent.width
-                    prefix: qsTr("Cur., A")
-                    value: current
+                    prefix: qsTr("Current")
+                    suffix: qsTr("A")
                     digits: 2
-                    color: current > -1 ? palette.textColor : palette.disabledColor
+                    enabled: current > -1
                 }
             }
         }
