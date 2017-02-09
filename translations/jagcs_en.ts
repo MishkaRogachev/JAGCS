@@ -80,33 +80,43 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="96"/>
-        <source>WS, m/s</source>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="106"/>
+        <source>m/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="113"/>
-        <source>m</source>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="160"/>
+        <source>Voltage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
+        <source>V</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="169"/>
+        <source>Current</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="170"/>
+        <source>A</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
-        <source>Hsns, m</source>
+        <source>m</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="133"/>
+        <source>Hsns, m</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="147"/>
         <source>Hgeo, m</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="183"/>
-        <source>Vol, v</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="191"/>
-        <source>Cur., A</source>
         <translation></translation>
     </message>
 </context>

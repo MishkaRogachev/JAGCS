@@ -103,34 +103,56 @@
         <translation>TAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="96"/>
-        <source>WS, m/s</source>
-        <translation>WS, м/с</translation>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="106"/>
+        <source>m/s</source>
+        <translation>м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="113"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="160"/>
+        <source>Voltage</source>
+        <translation>Напряж.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
+        <source>V</source>
+        <translation>В</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="169"/>
+        <source>Current</source>
+        <translation>Ток   </translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="170"/>
+        <source>A</source>
+        <translation>А</translation>
+    </message>
+    <message>
+        <source>WS, m/s</source>
+        <translation type="vanished">WS, м/с</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
         <source>m</source>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="133"/>
         <source>Hsns, m</source>
         <translation>Hснс, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="133"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="147"/>
         <source>Hgeo, m</source>
         <translation>Hгео, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="183"/>
         <source>Vol, v</source>
-        <translation>Напр., в</translation>
+        <translation type="vanished">Напр., в</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="191"/>
         <source>Cur., A</source>
-        <translation>Ток, А</translation>
+        <translation type="vanished">Ток, А</translation>
     </message>
 </context>
 <context>
