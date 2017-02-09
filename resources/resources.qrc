@@ -18,6 +18,7 @@
         <file>icons/wind.svg</file>
         <file>icons/gps.svg</file>
         <file>icons/battery.svg</file>
+        <file>icons/current.svg</file>
         <file>indicators/plane_map_mark.svg</file>
         <file>indicators/unknown_mark.svg</file>
         <file>icons/flight.svg</file>

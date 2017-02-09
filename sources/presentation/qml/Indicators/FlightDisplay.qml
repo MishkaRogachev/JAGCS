@@ -124,6 +124,24 @@ Column {
                     available: homeDistance > -1
                     width: parent.width
                 }
+
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: palette.fontPixelSize
+                    height: width
+                    radius: width / 2
+                    color: palette.raisedColor
+                    border.color: palette.selectionColor
+                    border.width: 2
+                }
+
+                FdLabel {
+                    // TODO: value: missionDistance
+                    digits: 0
+                    suffix: qsTr("m")
+                    //available: missionDistance > -1
+                    width: parent.width
+                }
             }
 
             FdLabel {
@@ -153,20 +171,28 @@ Column {
                 BatteryIndicator {
                     id: battery
                     anchors.horizontalCenter: parent.horizontalCenter
+                    width: palette.controlBaseSize * 0.75
+                    height: width
                 }
 
                 FdLabel {
                     width: parent.width
-                    prefix: qsTr("Voltage")
                     suffix: qsTr("V")
                     value: voltage.toFixed(2)
                     digits: 2
                     enabled: voltage > -1
                 }
 
+                ColoredIcon {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: palette.controlBaseSize * 0.75
+                    height: width
+                    source: "qrc:/icons/current.svg"
+                    color: homeLabel.color
+                }
+
                 FdLabel {
                     width: parent.width
-                    prefix: qsTr("Current")
                     suffix: qsTr("A")
                     digits: 2
                     enabled: current > -1

@@ -5,10 +5,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   height="24"
-   version="1.1"
+   id="svg2"
    width="24"
-   id="svg2">
+   version="1.1"
+   height="24">
   <metadata
      id="metadata18">
     <rdf:RDF>
@@ -24,19 +24,19 @@
   <defs
      id="defs16" />
   <path
-     id="rect4134"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 6.2944448,0.48137882 a 1.5,1.5 0 0 0 -1.5,1.49999998 1.5,1.5 0 0 0 0.5,1.1152344 l 0,19.9003898 2,0 0,-19.9003898 a 1.5,1.5 0 0 0 0.5,-1.1152344 1.5,1.5 0 0 0 -1.5,-1.49999998 z"
-     style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none" />
+     id="rect4134" />
   <path
-     id="rect4139"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 10.108787,2.9265205 2.5,0.5934712 0,8.6469103 -2.5,1.401282 z"
-     style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none" />
+     id="rect4139" />
   <path
-     id="rect4139-3"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 17.456533,4.6705113 -2.5,-0.722113 0,7.8672327 2.5,-0.646103 z"
-     style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none" />
+     id="rect4139-3" />
   <path
-     id="rect4139-3-6"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 22.004052,5.8899608 -2.439835,-0.5762144 -0.0209,5.3269596 2.5,-1.1401798 z"
-     style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1.68200004;stroke-miterlimit:4;stroke-dasharray:none" />
+     id="rect4139-3-6" />
 </svg>
