@@ -486,6 +486,11 @@
         <translation>ГОТОВ</translation>
     </message>
     <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="157"/>
+        <source>Send</source>
+        <translation>Ввод</translation>
+    </message>
+    <message>
         <source>DISARM</source>
         <translation type="vanished">РАЗРЯД</translation>
     </message>
@@ -518,9 +523,27 @@
 <context>
     <name>presentation::FlightPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="72"/>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="76"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
+    </message>
+</context>
+<context>
+    <name>presentation::FlightViewHelper</name>
+    <message>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="14"/>
+        <source>RETURN</source>
+        <translation>ВОЗВРАТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="15"/>
+        <source>ARM</source>
+        <translation>ЗАРЯД</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="16"/>
+        <source>DISARM</source>
+        <translation>РАЗРЯД</translation>
     </message>
 </context>
 <context>
@@ -594,13 +617,13 @@
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="32"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="45"/>
         <source>EMPTY</source>
         <translation>ПУСТОЙ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="38"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="47"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="37"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
         <source>ERROR</source>
         <translation>ОШИБКА</translation>
     </message>

@@ -369,22 +369,27 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="116"/>
         <source>AUTO</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="123"/>
         <source>GUIDED</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="130"/>
         <source>STAB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
         <source>ARMED</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="157"/>
+        <source>Send</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -411,8 +416,26 @@
 <context>
     <name>presentation::FlightPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="72"/>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="76"/>
         <source>MAV %1</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>presentation::FlightViewHelper</name>
+    <message>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="14"/>
+        <source>RETURN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="15"/>
+        <source>ARM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="16"/>
+        <source>DISARM</source>
         <translation></translation>
     </message>
 </context>
@@ -483,13 +506,13 @@
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="32"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="45"/>
         <source>EMPTY</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="38"/>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="47"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="37"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="46"/>
         <source>ERROR</source>
         <translation></translation>
     </message>
