@@ -141,14 +141,23 @@ ColumnLayout {
         }
     }
 
-/*
-    Row {
+    RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
-        // TODO: delay button
+
+        Label {
+            text: qsTr("Command")
+            Layout.fillWidth: true
+            Layout.margins: palette.controlBaseSize / 2
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        // TODO: command button
         Button {
             text: vehicle && vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
+            Layout.fillWidth: true
+            Layout.margins: palette.controlBaseSize / 2
             anchors.verticalCenter: parent.verticalCenter
             onClicked: if (vehicle) vehicle.commandArm(!vehicle.armed)
         }
-    }*/
+    }
 }
