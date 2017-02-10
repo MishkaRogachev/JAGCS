@@ -15,6 +15,9 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     m_type(Vehicle::UnknownType),
     m_state(Vehicle::UnknownState),
     m_armed(false),
+    m_autonomous(false),
+    m_guided(false),
+    m_stabilized(false),
     m_insAvalible(false),
     m_gpsAvalible(false),
     m_groundSpeed(0),
@@ -54,6 +57,21 @@ Vehicle::State Vehicle::state() const
 bool Vehicle::isArmed() const
 {
     return m_armed;
+}
+
+bool Vehicle::autonomous() const
+{
+    return m_autonomous;
+}
+
+bool Vehicle::guided() const
+{
+    return m_guided;
+}
+
+bool Vehicle::stabilized() const
+{
+    return m_stabilized;
 }
 
 bool Vehicle::insAvalible() const
@@ -198,6 +216,30 @@ void Vehicle::setArmed(bool armed)
 
     m_armed = armed;
     emit armedChanged(armed);
+}
+
+void Vehicle::setAutonomous(bool autonomous)
+{
+    if (m_autonomous == autonomous) return;
+
+    m_autonomous = autonomous;
+    emit autonomousChanged(autonomous);
+}
+
+void Vehicle::setGuided(bool guided)
+{
+    if (m_guided == guided) return;
+
+    m_guided = guided;
+    emit guidedChanged(guided);
+}
+
+void Vehicle::setStabilized(bool stabilized)
+{
+    if (m_stabilized == stabilized) return;
+
+    m_stabilized = stabilized;
+    emit stabilizedChanged(stabilized);
 }
 
 void Vehicle::setInsAvalible(bool insAvalible)

@@ -78,8 +78,11 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     vehicle->setType(::decodeType(heartbeat.type));
     vehicle->setState(::decodeState(heartbeat.system_status));
+
+    vehicle->setAutonomous(heartbeat.base_mode & MAV_MODE_FLAG_AUTO_ENABLED);
+    vehicle->setGuided(heartbeat.base_mode & MAV_MODE_FLAG_GUIDED_ENABLED);
+    vehicle->setStabilized(heartbeat.base_mode & MAV_MODE_FLAG_STABILIZE_ENABLED);
     vehicle->setArmed(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-    //TODO: handle another MAV_MODE_FLAG flags
 }
 
 void HeartbeatHandler::sendHeartbeat()

@@ -18,7 +18,13 @@ namespace domain
 
         Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
         Q_PROPERTY(State state READ state WRITE setState NOTIFY stateChanged)
+
         Q_PROPERTY(bool armed READ isArmed WRITE setArmed NOTIFY armedChanged)
+        Q_PROPERTY(bool autonomous READ autonomous WRITE setAutonomous
+                   NOTIFY autonomousChanged)
+        Q_PROPERTY(bool guided READ guided WRITE setGuided NOTIFY guidedChanged)
+        Q_PROPERTY(bool stabilized READ stabilized WRITE setStabilized
+                   NOTIFY stabilizedChanged)
 
         Q_PROPERTY(bool insAvalible READ insAvalible
                    WRITE setInsAvalible NOTIFY insAvalibleChanged)
@@ -95,7 +101,11 @@ namespace domain
 
         Type type() const;
         State state() const;
+
         bool isArmed() const;
+        bool autonomous() const;
+        bool guided() const;
+        bool stabilized() const;
 
         bool insAvalible() const;
         Attitude attitude() const;
@@ -132,7 +142,11 @@ namespace domain
     public slots:
         void setType(Type type);
         void setState(State state);
+
         void setArmed(bool armed);
+        void setAutonomous(bool autonomous);
+        void setGuided(bool guided);
+        void setStabilized(bool stabilized);
 
         void setInsAvalible(bool insAvalible);
         void setAttitude(const Attitude& attitude);
@@ -168,7 +182,11 @@ namespace domain
     signals:
         void typeChanged(Type type);
         void stateChanged(State state);
+
         void armedChanged(bool armed);
+        void autonomousChanged(bool autonomous);
+        void guidedChanged(bool guided);
+        void stabilizedChanged(bool stabilized);
 
         void insAvalibleChanged(bool insAvalible);
         void attitudeChanged(Attitude attitude);
@@ -210,7 +228,11 @@ namespace domain
 
         Type m_type;
         State m_state;
+
         bool m_armed;
+        bool m_autonomous;
+        bool m_guided;
+        bool m_stabilized;
 
         bool m_insAvalible;
         Attitude m_attitude;
