@@ -47,11 +47,11 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
     case ItemIconRole:
-        if (item->command() == domain::MissionItem::Home)
+        if (item->command() == domain::Command::Home)
             return "qrc:/icons/home.svg";
-        if (item->command() == domain::MissionItem::Takeoff)
+        if (item->command() == domain::Command::Takeoff)
             return "qrc:/icons/takeoff.svg";
-        if (item->command() == domain::MissionItem::Landing)
+        if (item->command() == domain::Command::Landing)
             return "qrc:/icons/landing.svg";
         return QString("");
     case ItemAcceptanceRadius:

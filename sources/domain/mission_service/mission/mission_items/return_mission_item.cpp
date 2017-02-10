@@ -3,5 +3,5 @@
 using namespace domain;
 
 ReturnMissionItem::ReturnMissionItem(Mission* mission):
-    MissionItem(mission, Return)
+    MissionItem(mission, Command::Return)
 {}

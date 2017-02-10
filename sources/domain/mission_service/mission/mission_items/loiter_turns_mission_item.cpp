@@ -3,7 +3,7 @@
 using namespace domain;
 
 LoiterTurnsMissionItem::LoiterTurnsMissionItem(Mission* mission):
-    LoiterMissionItem(mission, LoiterTurns),
+    LoiterMissionItem(mission, Command::LoiterTurns),
     m_turns(0)
 {}
 

@@ -23,26 +23,26 @@ MissionItemFactory::MissionItemFactory(Mission* mision):
     m_mision(mision)
 {}
 
-MissionItem* MissionItemFactory::create(MissionItem::Command command)
+MissionItem* MissionItemFactory::create(Command command)
 {
     switch (command) {
-    case MissionItem::Home:
+    case Command::Home:
         return new HomeMissionitem(m_mision);
-    case MissionItem::Takeoff:
+    case Command::Takeoff:
         return new TakeoffMissionItem(m_mision, SettingsProvider::value(
                           mission_settings::defaultTakeoffPitch).toFloat());
-    case MissionItem::Waypoint:
+    case Command::Waypoint:
         return new WaypointMissionItem(m_mision, SettingsProvider::value(
                       mission_settings::defaultAcceptanceRadius).toFloat());
-    case MissionItem::LoiterAltitude:
+    case Command::LoiterAltitude:
         return new LoiterMissionItem(m_mision);
-    case MissionItem::LoiterTurns:
+    case Command::LoiterTurns:
         return new LoiterTurnsMissionItem(m_mision);
-    case MissionItem::Continue:
+    case Command::Continue:
         return new ContinueMissionItem(m_mision);
-    case MissionItem::Return:
+    case Command::Return:
         return new ReturnMissionItem(m_mision);
-    case MissionItem::Landing:
+    case Command::Landing:
         return new LandingMissionItem(m_mision);
     default:
         return nullptr;

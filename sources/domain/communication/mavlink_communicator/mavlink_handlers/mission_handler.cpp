@@ -26,45 +26,45 @@ using namespace domain;
 
 namespace
 {
-    MissionItem::Command decodeCommand(uint16_t command, uint8_t seq)
+    Command decodeCommand(uint16_t command, uint8_t seq)
     {
         switch (command) {
         case MAV_CMD_NAV_TAKEOFF:
-            return MissionItem::Takeoff;
+            return Command::Takeoff;
         case MAV_CMD_NAV_WAYPOINT:
-            return seq > 0 ? MissionItem::Waypoint : MissionItem::Home;
+            return seq > 0 ? Command::Waypoint : Command::Home;
         case MAV_CMD_NAV_LOITER_TO_ALT:
-            return MissionItem::LoiterAltitude;
+            return Command::LoiterAltitude;
         case MAV_CMD_NAV_LOITER_TURNS:
-            return MissionItem::LoiterTurns;
+            return Command::LoiterTurns;
         case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            return MissionItem::Continue;
+            return Command::Continue;
         case MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            return MissionItem::Return;
+            return Command::Return;
         case MAV_CMD_NAV_LAND:
-            return MissionItem::Landing;
+            return Command::Landing;
         default:
-            return MissionItem::UnknownCommand;
+            return Command::UnknownCommand;
         }
     }
 
-    uint16_t encodeCommand(MissionItem::Command command)
+    uint16_t encodeCommand(Command command)
     {
         switch (command) {
-        case MissionItem::Takeoff:
+        case Command::Takeoff:
             return MAV_CMD_NAV_TAKEOFF;
-        case MissionItem::Home:
-        case MissionItem::Waypoint:
+        case Command::Home:
+        case Command::Waypoint:
             return MAV_CMD_NAV_WAYPOINT;
-        case MissionItem::LoiterAltitude:
+        case Command::LoiterAltitude:
             return MAV_CMD_NAV_LOITER_TO_ALT;
-        case MissionItem::LoiterTurns:
+        case Command::LoiterTurns:
             return MAV_CMD_NAV_LOITER_TURNS;
-        case MissionItem::Continue:
+        case Command::Continue:
             return MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-        case MissionItem::Return:
+        case Command::Return:
             return MAV_CMD_NAV_RETURN_TO_LAUNCH;
-        case MissionItem::Landing:
+        case Command::Landing:
             return MAV_CMD_NAV_LAND;
         default:
             return 0;

@@ -14,7 +14,7 @@ namespace domain
 
     public:
         explicit LoiterMissionItem(Mission* mission,
-                                   MissionItem::Command command = LoiterAltitude);
+                                   Command command = Command::LoiterAltitude);
 
         float radius() const;
 

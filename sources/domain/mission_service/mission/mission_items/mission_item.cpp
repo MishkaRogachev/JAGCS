@@ -36,23 +36,24 @@ bool MissionItem::isLast() const
     return int(this->sequence()) == m_mission->count() - 1;
 }
 
-MissionItem::Command MissionItem::command() const
+Command MissionItem::command() const
 {
     return m_command;
 }
 
-QList<MissionItem::Command> MissionItem::avalibleCommands() const
+QList<Command> MissionItem::avalibleCommands() const
 {
-    QList<MissionItem::Command> list;
+    QList<Command> list;
 
     if (this->isFirst())
     {
-        list << Home;
+        list << Command::Home;
     }
     else
     {
-        list << Takeoff << Waypoint << LoiterAltitude <<
-                LoiterTurns << Continue << Return << Landing;
+        list << Command::Takeoff << Command::Waypoint <<
+                Command::LoiterAltitude << Command::LoiterTurns <<
+                Command::Continue << Command::Return << Command::Landing;
     }
 
     return list;
@@ -68,9 +69,9 @@ void MissionItem::clone(MissionItem* mission)
     this->setCurrent(mission->isCurrent());
 }
 
-void MissionItem::replaceWithCommand(MissionItem::Command command)
+void MissionItem::replaceWithCommand(Command command)
 {
-    if (m_command == command || command == UnknownCommand) return;
+    if (m_command == command || command == Command::UnknownCommand) return;
 
     MissionItemFactory factory(m_mission);
     MissionItem* newItem = factory.create(command);

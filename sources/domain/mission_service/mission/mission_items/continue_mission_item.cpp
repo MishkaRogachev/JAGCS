@@ -3,5 +3,5 @@
 using namespace domain;
 
 ContinueMissionItem::ContinueMissionItem(Mission* mission):
-    AltitudeMissionItem(mission, Continue, true)
+    AltitudeMissionItem(mission, Command::Continue, true)
 {}

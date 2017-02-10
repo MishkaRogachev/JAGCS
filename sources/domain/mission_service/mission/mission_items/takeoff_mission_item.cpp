@@ -3,7 +3,7 @@
 using namespace domain;
 
 TakeoffMissionItem::TakeoffMissionItem(Mission* mission, float pitch):
-    PositionMissionItem(mission, Takeoff, true),
+    PositionMissionItem(mission, Command::Takeoff, true),
     m_pitch(pitch)
 {}
 

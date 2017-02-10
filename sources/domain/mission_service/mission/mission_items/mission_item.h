@@ -1,7 +1,11 @@
 #ifndef MISSION_ITEM_H
 #define MISSION_ITEM_H
 
+// Qt
 #include <QObject>
+
+// Internal
+#include "command.h"
 
 namespace domain
 {
@@ -19,19 +23,6 @@ namespace domain
                    NOTIFY currentChanged)
 
     public:
-        enum Command
-        {
-            UnknownCommand = 0,
-            Home,
-            Takeoff,
-            Waypoint,
-            LoiterAltitude,
-            LoiterTurns,
-            Continue,
-            Return,
-            Landing
-        };
-
         MissionItem(Mission* mission, Command command);
 
         int sequence() const;
@@ -41,7 +32,7 @@ namespace domain
         Mission* mission() const;
 
         Command command() const;
-        Q_INVOKABLE QList<domain::MissionItem::Command> avalibleCommands() const;
+        Q_INVOKABLE QList<Command> avalibleCommands() const;
 
         bool isCurrent() const;
 
@@ -62,8 +53,6 @@ namespace domain
         Mission* const m_mission;
         const Command m_command;
         bool m_current;
-
-        Q_ENUM(Command)
     };
 }
 

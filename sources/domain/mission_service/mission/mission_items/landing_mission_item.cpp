@@ -3,5 +3,5 @@
 using namespace domain;
 
 LandingMissionItem::LandingMissionItem(Mission* mission):
-    PositionMissionItem(mission, Landing, true)
+    PositionMissionItem(mission, Command::Landing, true)
 {}

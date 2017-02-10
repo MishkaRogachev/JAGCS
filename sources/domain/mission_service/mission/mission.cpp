@@ -95,9 +95,9 @@ void Mission::addNewMissionItem()
 {
     MissionItemFactory factory(this);
     uint8_t seq = m_items.count();
-    m_items.append(factory.create(seq == 0 ? MissionItem::Home : seq == 1 ?
-                                                 MissionItem::Takeoff :
-                                                 MissionItem::Waypoint));
+    m_items.append(factory.create(seq == 0 ? Command::Home : seq == 1 ?
+                                                 Command::Takeoff :
+                                                 Command::Waypoint));
     AltitudeMissionItem* item = qobject_cast<AltitudeMissionItem*>(m_items.last());
     if (item)
     {
@@ -121,7 +121,7 @@ void Mission::exchange(int first, int last)
 
     if (first == 0 || last == 0)
     {
-        MissionItem::Command command = m_items[first]->command();
+        Command command = m_items[first]->command();
         m_items[first]->replaceWithCommand(m_items[last]->command());
         m_items[last]->replaceWithCommand(command);
     }

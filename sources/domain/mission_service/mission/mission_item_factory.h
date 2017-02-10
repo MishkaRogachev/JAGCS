@@ -10,7 +10,7 @@ namespace domain
     public:
         MissionItemFactory(Mission* mision);
 
-        MissionItem* create(MissionItem::Command command);
+        MissionItem* create(Command command);
 
     private:
         Mission* m_mision;

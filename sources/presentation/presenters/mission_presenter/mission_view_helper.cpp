@@ -11,15 +11,15 @@ using namespace presentation;
 MissionViewHelper::MissionViewHelper(QObject* parent):
     QObject(parent)
 {
-    m_commandNames[domain::MissionItem::UnknownCommand] = tr("UNKNOWN");
-    m_commandNames[domain::MissionItem::Home] = tr("HOME");
-    m_commandNames[domain::MissionItem::Takeoff] = tr("TAKEOFF");
-    m_commandNames[domain::MissionItem::Waypoint] = tr("WAYPOINT");
-    m_commandNames[domain::MissionItem::LoiterAltitude] = tr("LOITER ALT");
-    m_commandNames[domain::MissionItem::LoiterTurns] = tr("LOITER TURNS");
-    m_commandNames[domain::MissionItem::Continue] = tr("CONTINUE");
-    m_commandNames[domain::MissionItem::Return] = tr("RETURN");
-    m_commandNames[domain::MissionItem::Landing] = tr("LANDING");
+    m_commandNames[domain::Command::UnknownCommand] = tr("UNKNOWN");
+    m_commandNames[domain::Command::Home] = tr("HOME");
+    m_commandNames[domain::Command::Takeoff] = tr("TAKEOFF");
+    m_commandNames[domain::Command::Waypoint] = tr("WAYPOINT");
+    m_commandNames[domain::Command::LoiterAltitude] = tr("LOITER ALT");
+    m_commandNames[domain::Command::LoiterTurns] = tr("LOITER TURNS");
+    m_commandNames[domain::Command::Continue] = tr("CONTINUE");
+    m_commandNames[domain::Command::Return] = tr("RETURN");
+    m_commandNames[domain::Command::Landing] = tr("LANDING");
 }
 
 domain::MissionItem* MissionViewHelper::cast(QObject* item) const
@@ -32,8 +32,7 @@ QStringList MissionViewHelper::avalibleCommands(QObject* item) const
     if (!item) return { tr("EMPTY") };
     QStringList commands;
 
-    for (domain::MissionItem::Command command:
-         this->cast(item)->avalibleCommands())
+    for (domain::Command command: this->cast(item)->avalibleCommands())
     {
         commands << m_commandNames.value(command, tr("ERROR"));
     }
