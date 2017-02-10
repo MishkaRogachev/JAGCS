@@ -143,27 +143,20 @@ ColumnLayout {
 
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
-
-        Label {
-            text: qsTr("Command")
-            Layout.fillWidth: true
-            Layout.margins: palette.controlBaseSize / 2
-            anchors.verticalCenter: parent.verticalCenter
-        }
+        Layout.margins: palette.controlBaseSize / 2
 
         ComboBox {
             id: commandBox
             model: commandHelper ? commandHelper.avaliableCommands() : 0
-            Layout.fillWidth: true
-            Layout.margins: palette.controlBaseSize / 2
             anchors.verticalCenter: parent.verticalCenter
         }
-    }
 
-    Button {// TODO: tool button
-        Layout.fillWidth: true
-        text: qsTr("Send Command")
-        onClicked: commandHelper.executeCommand(commandBox.currentText, vehicle)
-        // TODO: args
+        Button {
+            Layout.fillWidth: true
+            anchors.verticalCenter: parent.verticalCenter
+            text: qsTr("Send")
+            onClicked: commandHelper.executeCommand(commandBox.currentText, vehicle)
+            // TODO: args
+        }
     }
 }

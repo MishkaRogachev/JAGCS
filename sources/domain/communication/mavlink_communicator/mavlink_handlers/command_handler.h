@@ -22,6 +22,7 @@ namespace domain
        void sendCommand(Command command, const QVariantList& args);
 
        void sendArmDisarm(uint8_t id, bool arm);
+       void sendReturn(uint8_t id);
 
     private slots:
         void onVehicleAdded(domain::Vehicle* vehicle);

@@ -41,6 +41,9 @@ void CommandHandler::sendCommand(Command command, const QVariantList& args)
     case Command::Disarm:
         this->sendArmDisarm(vehicle->vehicleId(), false);
         break;
+    case Command::Return:
+        this->sendReturn(vehicle->vehicleId());
+        break;
         // TODO: other commands
     default:
         qDebug() << "Not handled command" << int(command);
@@ -60,6 +63,23 @@ void CommandHandler::sendArmDisarm(uint8_t id, bool arm)
     command.command = MAV_CMD_COMPONENT_ARM_DISARM;
 
     command.param1 = arm;
+
+    mavlink_msg_command_long_encode(m_communicator->systemId(),
+                                    m_communicator->componentId(),
+                                    &message, &command);
+    m_communicator->sendMessageAllLinks(message);
+}
+
+void CommandHandler::sendReturn(uint8_t id)
+{
+    mavlink_message_t message;
+    mavlink_command_long_t command;
+
+    command.target_system = id;
+    command.target_component = 0;
+    command.confirmation = 0;
+
+    command.command = MAV_CMD_NAV_RETURN_TO_LAUNCH;
 
     mavlink_msg_command_long_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
