@@ -28,15 +28,28 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
     Q_UNUSED(message) // TODO: handle command quitantion
 }
 
-void CommandHandler::sendArmCommand(bool arm)
+void CommandHandler::sendCommand(Command command, const QVariantList& args)
 {
-    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
-    if (!vehicle) return;
+    switch (command)
+    {
+    case Command::Arm:
+        if (args.count() > 0) this->sendArmDisarm(args.at(0).toUInt(), true);
+        break;
+    case Command::Disarm:
+        if (args.count() > 0) this->sendArmDisarm(args.at(0).toUInt(), false);
+        break;
+        // TODO: other commands
+    default:
+        break;
+    }
+}
 
+void CommandHandler::sendArmDisarm(uint8_t id, bool arm)
+{
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = vehicle->vehicleId();
+    command.target_system = id;
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -52,6 +65,5 @@ void CommandHandler::sendArmCommand(bool arm)
 
 void CommandHandler::onVehicleAdded(Vehicle* vehicle)
 {
-    connect(vehicle, &Vehicle::commandArm,
-            this, &CommandHandler::sendArmCommand);
+    connect(vehicle, &Vehicle::sendCommand, this, &CommandHandler::sendCommand);
 }

@@ -2,6 +2,8 @@
 #define VEHICLE_H
 
 // Internal
+#include "command.h"
+
 #include "attitude.h"
 #include "position.h"
 #include "gps.h"
@@ -12,7 +14,7 @@ namespace domain
 {
     class Mission;
 
-    class Vehicle: public QObject // TODO: system hierarchy & properly vehicle domain-model
+    class Vehicle: public QObject // TODO: vehicle hierarchy: Abstract, Land, Aeral, Navy etc
     {
         Q_OBJECT
 
@@ -179,6 +181,9 @@ namespace domain
         void assignMission(Mission* mission);
         void unassignMission();
 
+        void commandArm();
+        void commandDisarm();
+
     signals:
         void typeChanged(Type type);
         void stateChanged(State state);
@@ -220,8 +225,8 @@ namespace domain
 
         void assignedMissionChanged(Mission* mission);
 
-        void commandArm(bool arm);
-        void commandSetHome(const Position& homePosition);
+        void sendCommand(Command command, const QVariantList& args);
+        void sendHomePositionSetting(const Position& homePosition);
 
     private:
         uint8_t m_vehicleId;

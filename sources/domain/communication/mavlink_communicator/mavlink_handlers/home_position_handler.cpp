@@ -110,7 +110,7 @@ void HomePositionHandler::onVehicleAdded(Vehicle* vehicle)
 {
     this->sendHomePositionRequest(vehicle->vehicleId());
 
-    connect(vehicle, &Vehicle::commandSetHome,
+    connect(vehicle, &Vehicle::sendHomePositionSetting,
             this, &HomePositionHandler::sendHomePositionSetting);
 
     m_reqestTimers[vehicle->vehicleId()].start(::reqestInterval, this);

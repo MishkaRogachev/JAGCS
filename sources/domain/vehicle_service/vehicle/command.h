@@ -6,6 +6,7 @@ namespace domain
     enum class Command
     {
         UnknownCommand = 0,
+// Mission commands
         Home,
         Takeoff,
         Waypoint,
@@ -13,7 +14,10 @@ namespace domain
         LoiterTurns,
         Continue,
         Return,
-        Landing
+        Landing,
+// Control commands
+        Arm,
+        Disarm
     };
 }
 
