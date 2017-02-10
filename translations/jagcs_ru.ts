@@ -108,22 +108,20 @@
         <translation>м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="160"/>
         <source>Voltage</source>
-        <translation>Напряж.</translation>
+        <translation type="vanished">Напряж.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="180"/>
         <source>V</source>
         <translation>В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="169"/>
         <source>Current</source>
-        <translation>Ток   </translation>
+        <translation type="vanished">Ток   </translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="196"/>
         <source>A</source>
         <translation>А</translation>
     </message>
@@ -133,16 +131,17 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="141"/>
         <source>m</source>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="133"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="151"/>
         <source>Hsns, m</source>
         <translation>Hснс, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="147"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="165"/>
         <source>Hgeo, m</source>
         <translation>Hгео, м</translation>
     </message>
@@ -465,6 +464,26 @@
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="71"/>
         <source>VDOP:</source>
         <translation>VDOP:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="116"/>
+        <source>AUTO</source>
+        <translation>АВТО</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="123"/>
+        <source>GUIDED</source>
+        <translation>ВЕДОМ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="130"/>
+        <source>STAB</source>
+        <translation>СТАБ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
+        <source>ARMED</source>
+        <translation>ГОТОВ</translation>
     </message>
     <message>
         <source>DISARM</source>

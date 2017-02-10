@@ -107,6 +107,40 @@ ColumnLayout {
 
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
+
+    Row {
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: height / 2
+
+        Label {
+            text: qsTr("AUTO")
+            color: vehicle && vehicle.autonomous ?
+                       palette.textColor : palette.disabledColor
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            text: qsTr("GUIDED")
+            color: vehicle && vehicle.guided ?
+                       palette.textColor : palette.disabledColor
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            text: qsTr("STAB")
+            color: vehicle && vehicle.stabilized ?
+                       palette.textColor : palette.disabledColor
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Label {
+            text: qsTr("ARMED")
+            color: vehicle && vehicle.armed ?
+                       palette.textColor : palette.disabledColor
+            anchors.verticalCenter: parent.verticalCenter
+        }
+    }
+
 /*
     Row {
         anchors.horizontalCenter: parent.horizontalCenter

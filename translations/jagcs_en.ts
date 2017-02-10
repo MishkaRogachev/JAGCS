@@ -85,37 +85,28 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="160"/>
-        <source>Voltage</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="180"/>
         <source>V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="169"/>
-        <source>Current</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="196"/>
         <source>A</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="141"/>
         <source>m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="133"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="151"/>
         <source>Hsns, m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="147"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="165"/>
         <source>Hgeo, m</source>
         <translation></translation>
     </message>
@@ -374,6 +365,26 @@
         <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="71"/>
         <source>VDOP:</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="116"/>
+        <source>AUTO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="123"/>
+        <source>GUIDED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="130"/>
+        <source>STAB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
+        <source>ARMED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
