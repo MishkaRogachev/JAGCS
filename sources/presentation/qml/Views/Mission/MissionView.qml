@@ -134,10 +134,10 @@ Pane {
                 MissionItemView {
                     item: modelData
                     Layout.preferredWidth: column.width
-                    avalibleCommands: helper ? helper.avalibleCommands(modelData) : 0
-                    command: helper ? helper.command(modelData) : 0
-                    onSetCommand: if (helper) helper.setCommand(modelData, command)
-                    onRemove: if (helper) removeMissionItem(modelData)
+                    avalibleCommands: helper.avaliableCommands(modelData)
+                    command: helper.command(modelData)
+                    onSetCommand: helper.setCommand(modelData, command)
+                    onRemove: removeMissionItem(modelData)
                 }
             }
 

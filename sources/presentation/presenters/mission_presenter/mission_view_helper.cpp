@@ -27,7 +27,7 @@ domain::MissionItem* MissionViewHelper::cast(QObject* item) const
     return qobject_cast<domain::MissionItem*>(item);
 }
 
-QStringList MissionViewHelper::avalibleCommands(QObject* item) const
+QStringList MissionViewHelper::avaliableCommands(QObject* item) const
 {
     if (!item) return { tr("EMPTY") };
     QStringList commands;
@@ -49,7 +49,7 @@ QString MissionViewHelper::command(QObject* item) const
 void MissionViewHelper::setCommand(QObject* item, const QString& command)
 {
     if (!item) return;
-    QStringList avalibleCommands = this->avalibleCommands(item);
+    QStringList avalibleCommands = this->avaliableCommands(item);
     int index = avalibleCommands.indexOf(command);
 
     if (index > -1)

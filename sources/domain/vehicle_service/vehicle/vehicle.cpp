@@ -403,16 +403,6 @@ void Vehicle::unassignMission()
     this->assignMission(nullptr);
 }
 
-void Vehicle::commandArm()
-{
-    emit sendCommand(Command::Arm, { this->vehicleId() });
-}
-
-void Vehicle::commandDisarm()
-{
-    emit sendCommand(Command::Disarm, { this->vehicleId() });
-}
-
 void Vehicle::assignMission(Mission* mission)
 {
     if (m_assignedMission == mission) return;

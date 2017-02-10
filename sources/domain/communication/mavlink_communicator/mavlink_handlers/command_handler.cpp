@@ -30,16 +30,20 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
 
 void CommandHandler::sendCommand(Command command, const QVariantList& args)
 {
+    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
+    if (!vehicle) return;
+
     switch (command)
     {
     case Command::Arm:
-        if (args.count() > 0) this->sendArmDisarm(args.at(0).toUInt(), true);
+        this->sendArmDisarm(vehicle->vehicleId(), true);
         break;
     case Command::Disarm:
-        if (args.count() > 0) this->sendArmDisarm(args.at(0).toUInt(), false);
+        this->sendArmDisarm(vehicle->vehicleId(), false);
         break;
         // TODO: other commands
     default:
+        qDebug() << "Not handled command" << int(command);
         break;
     }
 }
@@ -65,5 +69,5 @@ void CommandHandler::sendArmDisarm(uint8_t id, bool arm)
 
 void CommandHandler::onVehicleAdded(Vehicle* vehicle)
 {
-    connect(vehicle, &Vehicle::sendCommand, this, &CommandHandler::sendCommand);
+    connect(vehicle, &Vehicle::executeCommand, this, &CommandHandler::sendCommand);
 }

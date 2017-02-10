@@ -9,6 +9,7 @@ import "../Video"
 Pane {
     id: root
 
+    property QtObject commandHelper
     property var vehicleNames
     property alias selectedVehicle: vehicleView.vehicle
 

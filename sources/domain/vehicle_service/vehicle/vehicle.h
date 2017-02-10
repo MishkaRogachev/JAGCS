@@ -181,9 +181,6 @@ namespace domain
         void assignMission(Mission* mission);
         void unassignMission();
 
-        void commandArm();
-        void commandDisarm();
-
     signals:
         void typeChanged(Type type);
         void stateChanged(State state);
@@ -225,7 +222,7 @@ namespace domain
 
         void assignedMissionChanged(Mission* mission);
 
-        void sendCommand(Command command, const QVariantList& args);
+        void executeCommand(Command command, const QVariantList& args);
         void sendHomePositionSetting(const Position& homePosition);
 
     private:

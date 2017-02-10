@@ -2,7 +2,6 @@
 #define MISSION_VIEW_HELPER_H
 
 // Qt
-#include <QObject>
 #include <QMap>
 
 // Internal
@@ -17,7 +16,7 @@ namespace presentation
     public:
         explicit MissionViewHelper(QObject* parent = nullptr);
 
-        Q_INVOKABLE QStringList avalibleCommands(QObject* item) const;
+        Q_INVOKABLE QStringList avaliableCommands(QObject* item) const;
         Q_INVOKABLE QString command(QObject* item) const;
 
     public slots:
