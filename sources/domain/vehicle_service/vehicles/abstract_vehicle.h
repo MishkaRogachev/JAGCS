@@ -45,6 +45,8 @@ namespace domain
         const int m_type;
 
         Mission* m_assignedMission;
+
+        Q_ENUM(Type)
     };
 }
 
