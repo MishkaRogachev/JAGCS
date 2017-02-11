@@ -10,7 +10,7 @@
 #include "mission.h"
 #include "mission_vehicle.h"
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 #include "mission_map_presenter.h"
 #include "mission_view_helper.h"

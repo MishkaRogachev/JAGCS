@@ -5,19 +5,23 @@
 #include <QUrl>
 #include <QDebug>
 
+// Internal
+#include "aerial_vehicle.h"
+
 using namespace presentation;
 
 class VehicleMapItemModel::Impl
 {
 public:
-    QList<domain::Vehicle*> vehicles;
-    QMap<domain::Vehicle*, QVariantList> tracks;
+    QList<domain::BaseVehicle*> vehicles;
+    QMap<domain::BaseVehicle*, QVariantList> tracks;
     // TODO: Rammer-Duglas-Pecker polyline simplification
 
     QUrl vehicleTypeToMark(int type)
     {
-        switch (type) {
-        case domain::Vehicle::FixedWingAircraft:
+        switch (type)
+        { // TODO: vehicle marks
+        case domain::AerialVehicle::FixedWingAircraft:
             return QUrl("qrc:/indicators/plane_map_mark.svg");
         case domain::AbstractVehicle::UnknownType:
         default:
@@ -55,7 +59,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 {
     if (index.row() < 0 || index.row() >= d->vehicles.count()) return QVariant();
 
-    domain::Vehicle* vehicle = d->vehicles.at(index.row());
+    auto vehicle = d->vehicles.at(index.row());
 
     switch (role)
     {
@@ -76,24 +80,24 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
+void VehicleMapItemModel::addVehicle(domain::BaseVehicle* vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     d->vehicles.append(vehicle);
 
-    connect(vehicle, &domain::Vehicle::stateChanged,
+    connect(vehicle, &domain::BaseVehicle::stateChanged,
             this, &VehicleMapItemModel::onVehicleStateChanged);
-    connect(vehicle, &domain::Vehicle::attitudeChanged,
+    connect(vehicle, &domain::BaseVehicle::attitudeChanged,
             this, &VehicleMapItemModel::onVehicleAttitudeChanged);
-    connect(vehicle, &domain::Vehicle::positionChanged,
+    connect(vehicle, &domain::BaseVehicle::positionChanged,
             this, &VehicleMapItemModel::onVehiclePositionChanged);
-    connect(vehicle, &domain::Vehicle::gpsChanged,
+    connect(vehicle, &domain::BaseVehicle::gpsChanged,
             this, &VehicleMapItemModel::onVehicleGpsChanged);
 
     this->endInsertRows();
 }
 
-void VehicleMapItemModel::removeVehicle(domain::Vehicle* vehicle)
+void VehicleMapItemModel::removeVehicle(domain::BaseVehicle* vehicle)
 {
     int row = d->vehicles.indexOf(vehicle);
     if (row == -1) return;
@@ -114,7 +118,7 @@ void VehicleMapItemModel::onVehicleStateChanged()
 
 void VehicleMapItemModel::onVehiclePositionChanged()
 {
-    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
     QModelIndex index = this->vehicleIndex(vehicle);
     d->tracks[vehicle].append(QVariant::fromValue(
                                   vehicle->position().coordinate()));
@@ -124,14 +128,14 @@ void VehicleMapItemModel::onVehiclePositionChanged()
 
 void VehicleMapItemModel::onVehicleAttitudeChanged()
 {
-    QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
+    QModelIndex index = this->vehicleIndex(qobject_cast<domain::BaseVehicle*>(
                                                this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { DirectionRole });
 }
 
 void VehicleMapItemModel::onVehicleGpsChanged()
 {
-    QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
+    QModelIndex index = this->vehicleIndex(qobject_cast<domain::BaseVehicle*>(
                                                this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { HdopRadius });
 }
@@ -150,7 +154,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     return roles;
 }
 
-QModelIndex VehicleMapItemModel::vehicleIndex(domain::Vehicle* vehicle) const
+QModelIndex VehicleMapItemModel::vehicleIndex(domain::BaseVehicle* vehicle) const
 {
     return this->index(d->vehicles.indexOf(vehicle));
 }

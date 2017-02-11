@@ -8,7 +8,7 @@
 
 #include "mission_service.h"
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 #include "mavlink_communicator.h"
 #include "mavlink_communicator_factory.h"

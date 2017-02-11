@@ -5,7 +5,7 @@
 
 // Internal
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "base_vehicle.h"
 
 #include "mavlink_protocol_helpers.h"
 
@@ -38,7 +38,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
     if (!vehicle) return;
 
     mavlink_gps_raw_int_t gps;

@@ -7,7 +7,7 @@
 
 // Internal
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 #include "flight_view_helper.h"
 #include "video_presenter.h"

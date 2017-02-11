@@ -8,7 +8,7 @@
 
 // Internal
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "base_vehicle.h"
 
 #include "mavlink_protocol_helpers.h"
 
@@ -24,7 +24,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
     if (!vehicle) return;
 
     mavlink_global_position_int_t position;

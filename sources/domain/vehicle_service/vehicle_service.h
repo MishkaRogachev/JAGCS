@@ -7,7 +7,8 @@
 namespace domain
 {
     class AbstractVehicle;
-    class Vehicle;
+    class BaseVehicle;
+    class AerialVehicle;
 
     class VehicleService: public QObject
     {
@@ -17,10 +18,11 @@ namespace domain
         explicit VehicleService(QObject* parent = nullptr);
 
         AbstractVehicle* vehicle(int index) const;
-
         const QList<AbstractVehicle*>& vehicles() const;
 
-        Vehicle* vehicleForId(uint8_t id);
+        AbstractVehicle* vehicleForId(uint8_t id) const;
+        BaseVehicle* baseVehicle(uint8_t id) const;
+        AerialVehicle* aerialVehicle(uint8_t id) const;
 
     public slots:
         void addVehicle(AbstractVehicle* vehicle);

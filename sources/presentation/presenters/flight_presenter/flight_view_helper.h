@@ -2,9 +2,10 @@
 #define FLIGHT_VIEW_HELPER_H
 
 // Internal
-#include "vehicle.h"
+#include "command.h"
 
 // Qt
+#include <QObject>
 #include <QMap>
 
 namespace presentation

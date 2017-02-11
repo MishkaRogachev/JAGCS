@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "vehicle.h"
+#include "base_vehicle.h"
 
 namespace presentation
 {
@@ -31,8 +31,8 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void addVehicle(domain::Vehicle* vehicle);
-        void removeVehicle(domain::Vehicle* vehicle);
+        void addVehicle(domain::BaseVehicle* vehicle);
+        void removeVehicle(domain::BaseVehicle* vehicle);
 
     private slots:
         void onVehicleStateChanged();
@@ -43,7 +43,7 @@ namespace presentation
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
-        QModelIndex vehicleIndex(domain::Vehicle* vehicle) const;
+        QModelIndex vehicleIndex(domain::BaseVehicle* vehicle) const;
 
     private:
         class Impl;

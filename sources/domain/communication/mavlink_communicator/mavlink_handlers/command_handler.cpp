@@ -10,7 +10,7 @@
 #include "mavlink_communicator.h"
 
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 using namespace domain;
 
@@ -30,7 +30,7 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
 
 void CommandHandler::sendCommand(Command command, const QVariantList& args)
 {
-    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
+    auto vehicle = qobject_cast<domain::AbstractVehicle*>(this->sender());
     if (!vehicle) return;
 
     switch (command)
@@ -89,10 +89,12 @@ void CommandHandler::sendReturn(uint8_t id)
 
 void CommandHandler::onVehicleAdded(AbstractVehicle* vehicle)
 {
-    connect(vehicle, &Vehicle::executeCommand, this, &CommandHandler::sendCommand);
+    connect(vehicle, &AbstractVehicle::executeCommand,
+            this, &CommandHandler::sendCommand);
 }
 
 void CommandHandler::onVehicleRemoved(AbstractVehicle* vehicle)
 {
-    disconnect(vehicle, &Vehicle::executeCommand, this, &CommandHandler::sendCommand);
+    disconnect(vehicle, &AbstractVehicle::executeCommand,
+               this, &CommandHandler::sendCommand);
 }

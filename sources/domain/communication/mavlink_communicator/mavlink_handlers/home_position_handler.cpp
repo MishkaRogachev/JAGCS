@@ -11,7 +11,7 @@
 #include "mavlink_communicator.h"
 
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "base_vehicle.h"
 
 #include "mavlink_protocol_helpers.h"
 
@@ -37,7 +37,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
     if (!vehicle) return;
 
     mavlink_home_position_t home;
@@ -73,7 +73,7 @@ void HomePositionHandler::sendHomePositionRequest(uint8_t id)
 
 void HomePositionHandler::sendHomePositionSetting(const Position& position)
 {
-    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(this->sender());
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
     if (!vehicle) return;
 
     mavlink_message_t message;

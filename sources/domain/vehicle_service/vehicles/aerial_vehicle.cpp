@@ -1,15 +1,11 @@
-#include "vehicle.h"
+#include "aerial_vehicle.h"
 
 // Qt
 #include <QDebug>
 
-// Internal
-#include "vehicle_service.h"
-#include "mission.h"
-
 using namespace domain;
 
-Vehicle::Vehicle(uint8_t vehicleId, Type type, QObject* parent):
+AerialVehicle::AerialVehicle(uint8_t vehicleId, Type type, QObject* parent):
     BaseVehicle(vehicleId, type, parent),
     m_airSpeedAvalible(false),
     m_indicatedAirSpeed(0),
@@ -21,55 +17,55 @@ Vehicle::Vehicle(uint8_t vehicleId, Type type, QObject* parent):
     m_ahrsAvalible(false)
 {}
 
-Vehicle::~Vehicle()
+AerialVehicle::~AerialVehicle()
 {}
 
-bool Vehicle::airSpeedAvalible() const
+bool AerialVehicle::airSpeedAvalible() const
 {
     return m_airSpeedAvalible;
 }
 
-float Vehicle::indicatedAirSpeed() const
+float AerialVehicle::indicatedAirSpeed() const
 {
     return m_indicatedAirSpeed;
 }
 
-float Vehicle::trueAirSpeed() const
+float AerialVehicle::trueAirSpeed() const
 {
     return m_trueAirSpeed;
 }
 
-Wind Vehicle::wind() const
+Wind AerialVehicle::wind() const
 {
     return m_wind;
 }
 
-bool Vehicle::barometerAvalible() const
+bool AerialVehicle::barometerAvalible() const
 {
     return m_barometerAvalible;
 }
 
-float Vehicle::barometricAltitude() const
+float AerialVehicle::barometricAltitude() const
 {
     return m_barometricAltitude;
 }
 
-float Vehicle::barometricClimb() const
+float AerialVehicle::barometricClimb() const
 {
     return m_barometricClimb;
 }
 
-bool Vehicle::rangeFinderAvalible() const
+bool AerialVehicle::rangeFinderAvalible() const
 {
     return m_rangeFinderAvalible;
 }
 
-bool Vehicle::ahrsAvalible() const
+bool AerialVehicle::ahrsAvalible() const
 {
     return m_ahrsAvalible;
 }
 
-void Vehicle::setAirSpeedAvalible(bool airSpeedAvalible)
+void AerialVehicle::setAirSpeedAvalible(bool airSpeedAvalible)
 {
     if (m_airSpeedAvalible == airSpeedAvalible) return;
 
@@ -77,7 +73,7 @@ void Vehicle::setAirSpeedAvalible(bool airSpeedAvalible)
     emit airSpeedAvalibleChanged(airSpeedAvalible);
 }
 
-void Vehicle::setIndicatedAirSpeed(float indicatedAirSpeed)
+void AerialVehicle::setIndicatedAirSpeed(float indicatedAirSpeed)
 {
     if (qFuzzyCompare(m_indicatedAirSpeed, indicatedAirSpeed)) return;
 
@@ -85,7 +81,7 @@ void Vehicle::setIndicatedAirSpeed(float indicatedAirSpeed)
     emit indicatedAirSpeedChanged(indicatedAirSpeed);
 }
 
-void Vehicle::setTrueAirSpeed(float trueAirSpeed)
+void AerialVehicle::setTrueAirSpeed(float trueAirSpeed)
 {
     if (qFuzzyCompare(m_trueAirSpeed, trueAirSpeed)) return;
 
@@ -93,7 +89,7 @@ void Vehicle::setTrueAirSpeed(float trueAirSpeed)
     emit trueAirSpeedChanged(trueAirSpeed);
 }
 
-void Vehicle::setWind(Wind wind)
+void AerialVehicle::setWind(Wind wind)
 {
     if (m_wind == wind) return;
 
@@ -101,7 +97,7 @@ void Vehicle::setWind(Wind wind)
     emit windChanged(wind);
 }
 
-void Vehicle::setBarometerAvalible(bool barometerAvalible)
+void AerialVehicle::setBarometerAvalible(bool barometerAvalible)
 {
     if (m_barometerAvalible == barometerAvalible) return;
 
@@ -109,7 +105,7 @@ void Vehicle::setBarometerAvalible(bool barometerAvalible)
     emit barometerAvalibleChanged(barometerAvalible);
 }
 
-void Vehicle::setBarometricAltitude(float barometricAltitude)
+void AerialVehicle::setBarometricAltitude(float barometricAltitude)
 {
     if (qFuzzyCompare(m_barometricAltitude, barometricAltitude)) return;
 
@@ -117,7 +113,7 @@ void Vehicle::setBarometricAltitude(float barometricAltitude)
     emit barometricAltitudeChanged(barometricAltitude);
 }
 
-void Vehicle::setBarometricClimb(float barometricClimb)
+void AerialVehicle::setBarometricClimb(float barometricClimb)
 {
     if (qFuzzyCompare(m_barometricClimb, barometricClimb)) return;
 
@@ -125,7 +121,7 @@ void Vehicle::setBarometricClimb(float barometricClimb)
     emit barometricClimbChanged(barometricClimb);
 }
 
-void Vehicle::setRangeFinderAvalible(bool rangeFinderAvalible)
+void AerialVehicle::setRangeFinderAvalible(bool rangeFinderAvalible)
 {
     if (m_rangeFinderAvalible == rangeFinderAvalible) return;
 
@@ -133,7 +129,7 @@ void Vehicle::setRangeFinderAvalible(bool rangeFinderAvalible)
     emit rangeFinderAvalibleChanged(rangeFinderAvalible);
 }
 
-void Vehicle::setAhrsAvalible(bool ahrsAvalible)
+void AerialVehicle::setAhrsAvalible(bool ahrsAvalible)
 {
     if (m_ahrsAvalible == ahrsAvalible) return;
 

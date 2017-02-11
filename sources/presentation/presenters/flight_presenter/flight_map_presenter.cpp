@@ -7,7 +7,7 @@
 #include "mission_service.h"
 #include "mission.h"
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 using namespace presentation;
 

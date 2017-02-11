@@ -4,7 +4,7 @@
 #include <QVariant>
 
 // Internal
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 using namespace presentation;
 
@@ -23,7 +23,7 @@ QStringList FlightViewHelper::avaliableCommands() const
 
 void FlightViewHelper::executeCommand(const QString& command, QObject* object)
 {
-    domain::Vehicle* vehicle = qobject_cast<domain::Vehicle*>(object);
+    auto  vehicle = qobject_cast<domain::AbstractVehicle*>(object);
     if (!vehicle) return;
 
     domain::Command cmd = m_commandNames.key(

@@ -1,5 +1,5 @@
-#ifndef VEHICLE_H
-#define VEHICLE_H
+#ifndef AERIAL_VEHICLE_H
+#define AERIAL_VEHICLE_H
 
 // Internal
 #include "base_vehicle.h"
@@ -8,9 +8,7 @@
 
 namespace domain
 {
-    class Mission;
-
-    class Vehicle: public BaseVehicle // TODO: vehicle hierarchy: Land, Aerial, Navy etc
+    class AerialVehicle: public BaseVehicle
     {
         Q_OBJECT
 
@@ -38,11 +36,14 @@ namespace domain
     public:
         enum Type
         {
-            FixedWingAircraft = UnknownType + 1
+            FixedWingAircraft = UnknownType + 1,
+            Multirotor,
+            Helicopter,
+            Vtol
         };
 
-        Vehicle(uint8_t vehicleId, Type type, QObject* parent);
-        ~Vehicle() override;
+        AerialVehicle(uint8_t vehicleId, Type type, QObject* parent);
+        ~AerialVehicle() override;
 
         bool airSpeedAvalible() const;
         float indicatedAirSpeed() const;
@@ -103,4 +104,4 @@ namespace domain
     };
 }
 
-#endif // VEHICLE_H
+#endif // AERIAL_VEHICLE_H

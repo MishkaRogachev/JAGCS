@@ -5,7 +5,7 @@
 
 // Internal
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "aerial_vehicle.h"
 
 using namespace domain;
 
@@ -19,7 +19,7 @@ void WindHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_WIND) return;
 
-    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    AerialVehicle* vehicle = m_vehicleService->aerialVehicle(message.sysid);
     if (!vehicle) return;
 
     mavlink_wind_t wind;

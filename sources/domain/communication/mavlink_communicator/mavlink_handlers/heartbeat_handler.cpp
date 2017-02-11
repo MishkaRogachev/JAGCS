@@ -10,7 +10,7 @@
 // Internal
 #include "mavlink_communicator.h"
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "aerial_vehicle.h"
 
 using namespace domain;
 
@@ -21,32 +21,48 @@ namespace
         switch (type) //TODO: other vehicles
         {
         case MAV_TYPE_FIXED_WING:
-            return Vehicle::FixedWingAircraft;
+            return AerialVehicle::FixedWingAircraft;
+        case MAV_TYPE_TRICOPTER:
+        case MAV_TYPE_QUADROTOR:
+        case MAV_TYPE_HEXAROTOR:
+        case MAV_TYPE_OCTOROTOR:
+            return AerialVehicle::Multirotor;
+        case MAV_TYPE_COAXIAL:
+        case MAV_TYPE_HELICOPTER:
+            return AerialVehicle::Helicopter;
+        case MAV_TYPE_VTOL_DUOROTOR:
+        case MAV_TYPE_VTOL_QUADROTOR:
+        case MAV_TYPE_VTOL_TILTROTOR:
+        case MAV_TYPE_VTOL_RESERVED2:
+        case MAV_TYPE_VTOL_RESERVED3:
+        case MAV_TYPE_VTOL_RESERVED4:
+        case MAV_TYPE_VTOL_RESERVED5:
+            return AerialVehicle::Vtol;
         case MAV_TYPE_GENERIC:
         default:
-            return Vehicle::UnknownType;
+            return AbstractVehicle::UnknownType;
         }
     }
 
-    Vehicle::State decodeState(uint8_t state)
+    BaseVehicle::State decodeState(uint8_t state)
     {
         switch (state)
         {
         case MAV_STATE_BOOT:
-            return Vehicle::Boot;
+            return BaseVehicle::Boot;
         case MAV_STATE_CALIBRATING:
-            return Vehicle::Calibrating;
+            return BaseVehicle::Calibrating;
         case MAV_STATE_STANDBY:
-            return Vehicle::Standby;
+            return BaseVehicle::Standby;
         case MAV_STATE_ACTIVE:
-            return Vehicle::Active;
+            return BaseVehicle::Active;
         case MAV_STATE_CRITICAL:
-            return Vehicle::Critical;
+            return BaseVehicle::Critical;
         case MAV_STATE_EMERGENCY:
-            return Vehicle::Emergency;
+            return BaseVehicle::Emergency;
         case MAV_STATE_UNINIT:
         default:
-            return Vehicle::UnknownState;
+            return BaseVehicle::UnknownState;
         }
     }
 }
@@ -75,7 +91,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
     int type = ::decodeType(heartbeat.type);
-    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
 
     if (vehicle && vehicle->type() != type)
     {
@@ -85,7 +101,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     if (!vehicle)
     {
         m_vehicleService->createVehicle(message.sysid, type);
-        vehicle = m_vehicleService->vehicleForId(message.sysid);
+        vehicle = m_vehicleService->baseVehicle(message.sysid);
     }
 
     vehicle->setState(::decodeState(heartbeat.system_status));

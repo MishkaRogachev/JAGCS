@@ -8,7 +8,7 @@
 
 // Internal
 #include "vehicle_service.h"
-#include "vehicle.h"
+#include "base_vehicle.h"
 
 using namespace domain;
 
@@ -22,7 +22,7 @@ void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_ATTITUDE) return;
 
-    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
     if (!vehicle) return;
 
     mavlink_attitude_t attitude;

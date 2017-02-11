@@ -4,7 +4,7 @@
 #include <QDebug>
 
 // Internal
-#include "vehicle.h"
+#include "aerial_vehicle.h"
 
 using namespace domain;
 
@@ -28,13 +28,23 @@ const QList<AbstractVehicle*>& VehicleService::vehicles() const
     return m_vehicles;
 }
 
-Vehicle* VehicleService::vehicleForId(uint8_t id)
+AbstractVehicle* VehicleService::vehicleForId(uint8_t id) const
 {
     for (domain::AbstractVehicle* vehicle: m_vehicles)
     {
-        if (vehicle->vehicleId() == id) return qobject_cast<Vehicle*>(vehicle);
+        if (vehicle->vehicleId() == id) return vehicle;
     }
     return nullptr;
+}
+
+BaseVehicle* VehicleService::baseVehicle(uint8_t id) const
+{
+    return qobject_cast<BaseVehicle*>(this->vehicleForId(id));
+}
+
+AerialVehicle* VehicleService::aerialVehicle(uint8_t id) const
+{
+    return qobject_cast<AerialVehicle*>(this->vehicleForId(id));
 }
 
 void VehicleService::addVehicle(AbstractVehicle* vehicle)
@@ -47,10 +57,16 @@ void VehicleService::createVehicle(uint8_t vehicleId, int type)
 {
     switch (type)
     {
-    case Vehicle::FixedWingAircraft:
-        this->addVehicle(new Vehicle(vehicleId, Vehicle::FixedWingAircraft, this));
+    case AerialVehicle::FixedWingAircraft:
+    case AerialVehicle::Multirotor:
+    case AerialVehicle::Helicopter:
+    case AerialVehicle::Vtol:
+        this->addVehicle(new AerialVehicle(vehicleId,
+                                           AerialVehicle::Type(type),
+                                           this));
         break;
     default:
+        this->addVehicle(new BaseVehicle(vehicleId, type, this));
         break;
     }
 }

@@ -5,7 +5,7 @@
 #include "settings.h"
 
 #include "mission.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 #include "mission_line_map_item_model.h"
 #include "mission_point_map_item_model.h"
@@ -93,14 +93,14 @@ void MapPresenter::updateMissionItems()
 
 void MapPresenter::addVehicle(domain::AbstractVehicle* vehicle)
 {
-    domain::Vehicle* veh = qobject_cast<domain::Vehicle*>(vehicle);
-    if (veh) d->vehicleModel.addVehicle(veh);
+    auto baseVehicle = qobject_cast<domain::BaseVehicle*>(vehicle);
+    if (baseVehicle) d->vehicleModel.addVehicle(baseVehicle);
 }
 
 void MapPresenter::removeVehicle(domain::AbstractVehicle* vehicle)
 {
-    domain::Vehicle* veh = qobject_cast<domain::Vehicle*>(vehicle);
-    if (veh) d->vehicleModel.removeVehicle(veh);
+    auto baseVehicle = qobject_cast<domain::BaseVehicle*>(vehicle);
+    if (baseVehicle) d->vehicleModel.removeVehicle(baseVehicle);
 }
 
 void MapPresenter::connectView(QObject* view)

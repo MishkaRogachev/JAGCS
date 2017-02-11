@@ -7,7 +7,7 @@
 // Internal
 #include "mission.h"
 #include "mission_vehicle.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 
 using namespace domain;
 
