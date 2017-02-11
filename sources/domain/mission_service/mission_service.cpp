@@ -76,7 +76,7 @@ void MissionService::addNewMission()
     this->addMission(new Mission(this));
 }
 
-void MissionService::addVehiclesMision(Vehicle* vehicle)
+void MissionService::addVehiclesMision(AbstractVehicle* vehicle)
 {
     Mission* mission = new Mission(this);
     this->addMission(mission);

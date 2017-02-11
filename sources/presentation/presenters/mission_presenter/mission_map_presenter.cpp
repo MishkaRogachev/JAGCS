@@ -30,7 +30,7 @@ MissionMapPresenter::MissionMapPresenter(domain::MissionService* missionService,
     for (domain::Mission* mission: missionService->missions())
         this->addMission(mission);
 
-    for (domain::Vehicle* vehicle: vehicleService->vehicles())
+    for (domain::AbstractVehicle* vehicle: vehicleService->vehicles())
         this->addVehicle(vehicle);
 
     connect(vehicleService, &domain::VehicleService::vehicleAdded,

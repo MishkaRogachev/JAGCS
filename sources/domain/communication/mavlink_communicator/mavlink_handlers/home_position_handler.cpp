@@ -37,7 +37,8 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    if (!vehicle) return;
 
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);
@@ -106,17 +107,18 @@ void HomePositionHandler::timerEvent(QTimerEvent* event)
     }
 }
 
-void HomePositionHandler::onVehicleAdded(Vehicle* vehicle)
+void HomePositionHandler::onVehicleAdded(AbstractVehicle* vehicle)
 {
     this->sendHomePositionRequest(vehicle->vehicleId());
 
-    connect(vehicle, &Vehicle::sendHomePositionSetting,
-            this, &HomePositionHandler::sendHomePositionSetting);
+    // TODO: home position request
+    //connect(vehicle, &Vehicle::sendHomePositionSetting,
+    //        this, &HomePositionHandler::sendHomePositionSetting);
 
     m_reqestTimers[vehicle->vehicleId()].start(::reqestInterval, this);
 }
 
-void HomePositionHandler::onVehicleRemoved(Vehicle* vehicle)
+void HomePositionHandler::onVehicleRemoved(AbstractVehicle* vehicle)
 {
     m_reqestTimers.remove(vehicle->vehicleId());
 }

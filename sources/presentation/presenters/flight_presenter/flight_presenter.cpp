@@ -20,7 +20,7 @@ class FlightPresenter::Impl
 public:
     domain::VehicleService* vehicleService;
 
-    QMap<domain::Vehicle*, QString> vehicleAliases;
+    QMap<domain::AbstractVehicle*, QString> vehicleAliases;
 
     FlightViewHelper helper;
     VideoPresenter* video;
@@ -43,7 +43,7 @@ FlightPresenter::FlightPresenter(domain::MissionService* missionService,
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &FlightPresenter::onVehicleRemoved);
 
-    for (domain::Vehicle* vehicle: vehicleService->vehicles())
+    for (domain::AbstractVehicle* vehicle: vehicleService->vehicles())
         this->onVehicleAdded(vehicle);
 }
 
@@ -71,14 +71,14 @@ void FlightPresenter::connectView(QObject* view)
     this->updateVehicles();
 }
 
-void FlightPresenter::onVehicleAdded(domain::Vehicle* vehicle)
+void FlightPresenter::onVehicleAdded(domain::AbstractVehicle* vehicle)
 {
     d->vehicleAliases[vehicle] = tr("MAV %1").arg(vehicle->vehicleId());
 
     if (m_view) this->updateVehicles();
 }
 
-void FlightPresenter::onVehicleRemoved(domain::Vehicle* vehicle)
+void FlightPresenter::onVehicleRemoved(domain::AbstractVehicle* vehicle)
 {
     d->vehicleAliases.remove(vehicle);
 

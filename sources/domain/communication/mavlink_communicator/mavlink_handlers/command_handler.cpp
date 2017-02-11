@@ -87,7 +87,12 @@ void CommandHandler::sendReturn(uint8_t id)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void CommandHandler::onVehicleAdded(Vehicle* vehicle)
+void CommandHandler::onVehicleAdded(AbstractVehicle* vehicle)
 {
     connect(vehicle, &Vehicle::executeCommand, this, &CommandHandler::sendCommand);
+}
+
+void CommandHandler::onVehicleRemoved(AbstractVehicle* vehicle)
+{
+    disconnect(vehicle, &Vehicle::executeCommand, this, &CommandHandler::sendCommand);
 }

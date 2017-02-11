@@ -6,7 +6,7 @@
 namespace domain
 {
     class Mission;
-    class Vehicle;
+    class AbstractVehicle;
 
     class MissionService: public QObject
     {
@@ -24,7 +24,7 @@ namespace domain
     public slots:
         void addMission(Mission* mission);
         void addNewMission();
-        void addVehiclesMision(Vehicle* vehicle);
+        void addVehiclesMision(domain::AbstractVehicle* vehicle);
         void removeMission(Mission* mission);
         void deleteMission(Mission* mission);
 

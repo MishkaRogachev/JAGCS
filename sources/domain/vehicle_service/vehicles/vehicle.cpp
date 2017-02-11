@@ -9,8 +9,8 @@
 
 using namespace domain;
 
-Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
-    AbstractVehicle(vehicleId, Vehicle::UnknownType, parent),
+Vehicle::Vehicle(uint8_t vehicleId, Type type, QObject* parent):
+    AbstractVehicle(vehicleId, type, parent),
     m_state(Vehicle::UnknownState),
     m_armed(false),
     m_autonomous(false),

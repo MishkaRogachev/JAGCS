@@ -6,6 +6,7 @@
 
 namespace domain
 {
+    class AbstractVehicle;
     class Vehicle;
 
     class VehicleService: public QObject
@@ -15,23 +16,24 @@ namespace domain
     public:
         explicit VehicleService(QObject* parent = nullptr);
 
-        Vehicle* vehicle(int index) const;
+        AbstractVehicle* vehicle(int index) const;
 
-        const QList<Vehicle*>& vehicles() const;
+        const QList<AbstractVehicle*>& vehicles() const;
 
-        Vehicle* forceVehicle(uint8_t id);
+        Vehicle* vehicleForId(uint8_t id);
 
     public slots:
-        void addVehicle(Vehicle* vehicle);
-        void removeVehicle(Vehicle* vehicle);
-        void deleteVehicle(Vehicle* vehicle);
+        void addVehicle(AbstractVehicle* vehicle);
+        void createVehicle(uint8_t vehicleId, int type);
+        void removeVehicle(AbstractVehicle* vehicle);
+        void deleteVehicle(AbstractVehicle* vehicle);
 
     signals:
-        void vehicleAdded(Vehicle* vehicle);
-        void vehicleRemoved(Vehicle* vehicle);
+        void vehicleAdded(AbstractVehicle* vehicle);
+        void vehicleRemoved(AbstractVehicle* vehicle);
 
     private:
-        QList<Vehicle*> m_vehicles;
+        QList<AbstractVehicle*> m_vehicles;
     };
 }
 

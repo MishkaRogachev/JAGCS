@@ -3,7 +3,6 @@
 
 // Internal
 #include "abstract_vehicle.h"
-#include "command.h"
 
 #include "attitude.h"
 #include "position.h"
@@ -95,7 +94,7 @@ namespace domain
             PowerOff
         };
 
-        Vehicle(uint8_t vehicleId, QObject* parent);
+        Vehicle(uint8_t vehicleId, Type type, QObject* parent);
         ~Vehicle() override;
 
         State state() const;
@@ -209,7 +208,6 @@ namespace domain
 
         void ahrsAvalibleChanged(bool ahrsAvalible);
 
-        void executeCommand(Command command, const QVariantList& args);
         void sendHomePositionSetting(const Position& homePosition);
 
     private:

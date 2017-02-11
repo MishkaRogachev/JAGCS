@@ -19,7 +19,8 @@ void WindHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_WIND) return;
 
-    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
+    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
+    if (!vehicle) return;
 
     mavlink_wind_t wind;
     mavlink_msg_wind_decode(&message, &wind);

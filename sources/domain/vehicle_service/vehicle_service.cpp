@@ -18,40 +18,50 @@ VehicleService::VehicleService(QObject* parent):
     qRegisterMetaType<PowerSystem>("PowerSystem");
 }
 
-Vehicle* VehicleService::vehicle(int index) const
+AbstractVehicle* VehicleService::vehicle(int index) const
 {
     return m_vehicles.at(index);
 }
 
-const QList<Vehicle*>& VehicleService::vehicles() const
+const QList<AbstractVehicle*>& VehicleService::vehicles() const
 {
     return m_vehicles;
 }
 
-Vehicle* VehicleService::forceVehicle(uint8_t id)
+Vehicle* VehicleService::vehicleForId(uint8_t id)
 {
-    for (domain::Vehicle* vehicle: m_vehicles)
+    for (domain::AbstractVehicle* vehicle: m_vehicles)
     {
-        if (vehicle->vehicleId() == id) return vehicle;
+        if (vehicle->vehicleId() == id) return qobject_cast<Vehicle*>(vehicle);
     }
-
-    this->addVehicle(new Vehicle(id, this));
-    return m_vehicles.last();
+    return nullptr;
 }
 
-void VehicleService::addVehicle(Vehicle* vehicle)
+void VehicleService::addVehicle(AbstractVehicle* vehicle)
 {
     m_vehicles.append(vehicle);
     emit vehicleAdded(vehicle);
 }
 
-void VehicleService::removeVehicle(Vehicle* vehicle)
+void VehicleService::createVehicle(uint8_t vehicleId, int type)
+{
+    switch (type)
+    {
+    case Vehicle::FixedWingAircraft:
+        this->addVehicle(new Vehicle(vehicleId, Vehicle::FixedWingAircraft, this));
+        break;
+    default:
+        break;
+    }
+}
+
+void VehicleService::removeVehicle(AbstractVehicle* vehicle)
 {
     m_vehicles.removeOne(vehicle);
     emit vehicleRemoved(vehicle);
 }
 
-void VehicleService::deleteVehicle(Vehicle* vehicle)
+void VehicleService::deleteVehicle(AbstractVehicle* vehicle)
 {
     this->removeVehicle(vehicle);
     vehicle->deleteLater();

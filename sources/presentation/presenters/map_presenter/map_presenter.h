@@ -6,7 +6,7 @@
 namespace domain
 {
     class Mission;
-    class Vehicle;
+    class AbstractVehicle;
 }
 
 namespace presentation
@@ -27,8 +27,8 @@ namespace presentation
         void removeMission(domain::Mission* mission);
         void updateMissionItems();
 
-        void addVehicle(domain::Vehicle* vehicle);
-        void removeVehicle(domain::Vehicle* vehicle);
+        void addVehicle(domain::AbstractVehicle* vehicle);
+        void removeVehicle(domain::AbstractVehicle* vehicle);
 
     protected:
         void connectView(QObject* view) override;

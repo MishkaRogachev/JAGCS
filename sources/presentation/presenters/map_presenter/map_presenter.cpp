@@ -91,14 +91,16 @@ void MapPresenter::updateMissionItems()
     d->pointModel.setMissionItems(items);
 }
 
-void MapPresenter::addVehicle(domain::Vehicle* vehicle)
+void MapPresenter::addVehicle(domain::AbstractVehicle* vehicle)
 {
-    d->vehicleModel.addVehicle(vehicle);
+    domain::Vehicle* veh = qobject_cast<domain::Vehicle*>(vehicle);
+    if (veh) d->vehicleModel.addVehicle(veh);
 }
 
-void MapPresenter::removeVehicle(domain::Vehicle* vehicle)
+void MapPresenter::removeVehicle(domain::AbstractVehicle* vehicle)
 {
-    d->vehicleModel.removeVehicle(vehicle);
+    domain::Vehicle* veh = qobject_cast<domain::Vehicle*>(vehicle);
+    if (veh) d->vehicleModel.removeVehicle(veh);
 }
 
 void MapPresenter::connectView(QObject* view)

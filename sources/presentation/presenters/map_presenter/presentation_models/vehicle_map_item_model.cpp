@@ -81,8 +81,6 @@ void VehicleMapItemModel::addVehicle(domain::Vehicle* vehicle)
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     d->vehicles.append(vehicle);
 
-    connect(vehicle, &domain::Vehicle::typeChanged,
-            this, &VehicleMapItemModel::onVehicleTypeChanged);
     connect(vehicle, &domain::Vehicle::stateChanged,
             this, &VehicleMapItemModel::onVehicleStateChanged);
     connect(vehicle, &domain::Vehicle::attitudeChanged,
@@ -107,13 +105,6 @@ void VehicleMapItemModel::removeVehicle(domain::Vehicle* vehicle)
     disconnect(vehicle, 0, this, 0);
 
     this->endRemoveRows();
-}
-
-void VehicleMapItemModel::onVehicleTypeChanged()
-{
-    QModelIndex index = this->vehicleIndex(qobject_cast<domain::Vehicle*>(
-                                               this->sender()));
-    if (index.isValid()) emit dataChanged(index, index, { MarkRole });
 }
 
 void VehicleMapItemModel::onVehicleStateChanged()

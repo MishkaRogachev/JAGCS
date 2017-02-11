@@ -32,14 +32,6 @@ Mission* AbstractVehicle::assignedMission() const
     return m_assignedMission;
 }
 
-void AbstractVehicle::setType(int type)
-{
-    if (m_type == type) return;
-
-    m_type = type;
-    emit typeChanged(type);
-}
-
 void AbstractVehicle::assignMission(Mission* mission)
 {
     if (m_assignedMission == mission) return;

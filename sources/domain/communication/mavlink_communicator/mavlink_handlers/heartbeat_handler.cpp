@@ -71,14 +71,24 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
-    Vehicle* vehicle = m_vehicleService->forceVehicle(message.sysid);
-
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    vehicle->setType(::decodeType(heartbeat.type));
-    vehicle->setState(::decodeState(heartbeat.system_status));
+    int type = ::decodeType(heartbeat.type);
+    Vehicle* vehicle = m_vehicleService->vehicleForId(message.sysid);
 
+    if (vehicle && vehicle->type() != type)
+    {
+        m_vehicleService->deleteVehicle(vehicle);
+    }
+
+    if (!vehicle)
+    {
+        m_vehicleService->createVehicle(message.sysid, type);
+        vehicle = m_vehicleService->vehicleForId(message.sysid);
+    }
+
+    vehicle->setState(::decodeState(heartbeat.system_status));
     vehicle->setAutonomous(heartbeat.base_mode & MAV_MODE_FLAG_AUTO_ENABLED);
     vehicle->setGuided(heartbeat.base_mode & MAV_MODE_FLAG_GUIDED_ENABLED);
     vehicle->setStabilized(heartbeat.base_mode & MAV_MODE_FLAG_STABILIZE_ENABLED);
