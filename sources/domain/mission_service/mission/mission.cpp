@@ -56,7 +56,7 @@ MissionVehicle* Mission::assignment() const
     return m_assignment;
 }
 
-Vehicle* Mission::assignedVehicle() const
+AbstractVehicle* Mission::assignedVehicle() const
 {
     return m_assignment->vehicle();
 }
@@ -134,7 +134,7 @@ void Mission::unassignVehicle()
     this->assignVehicle(nullptr);
 }
 
-void Mission::assignVehicle(Vehicle* vehicle)
+void Mission::assignVehicle(AbstractVehicle* vehicle)
 {
     if (m_assignment->vehicle() == vehicle) return;
 

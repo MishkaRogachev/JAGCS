@@ -7,7 +7,7 @@
 namespace domain
 {
     class MissionVehicle;
-    class Vehicle;
+    class AbstractVehicle;
 
     class Mission: public QObject
     {
@@ -26,7 +26,7 @@ namespace domain
         MissionItem* take(int seq);
 
         MissionVehicle* assignment() const;
-        Vehicle* assignedVehicle() const;
+        AbstractVehicle* assignedVehicle() const;
 
     public slots:
         void setCount(int count);
@@ -38,12 +38,12 @@ namespace domain
         void exchange(int first, int last);
 
         void unassignVehicle();
-        void assignVehicle(Vehicle* vehicle);
+        void assignVehicle(AbstractVehicle* vehicle);
 
     signals:
         void missionItemsChanged(const QList<MissionItem*>& items);
 
-        void assigned(Vehicle* vehicle);
+        void assigned(AbstractVehicle* vehicle);
         void unassigned();
 
     private:

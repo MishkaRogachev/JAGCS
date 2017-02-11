@@ -16,7 +16,7 @@ using namespace domain;
 
 namespace
 {
-    Vehicle::Type decodeType(uint8_t type)
+    int decodeType(uint8_t type)
     {
         switch (type) //TODO: other vehicles
         {

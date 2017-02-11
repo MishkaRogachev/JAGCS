@@ -5,12 +5,12 @@
 
 // Internal
 #include "mission.h"
-#include "vehicle.h"
+#include "abstract_vehicle.h"
 #include "home_mission_item.h"
 
 using namespace domain;
 
-MissionVehicle::MissionVehicle(Mission* mission, Vehicle* vehicle):
+MissionVehicle::MissionVehicle(Mission* mission, AbstractVehicle* vehicle):
     QObject(mission),
     m_mission(mission),
     m_vehicle(vehicle),
@@ -31,7 +31,7 @@ Mission* MissionVehicle::mission() const
     return m_mission;
 }
 
-Vehicle* MissionVehicle::vehicle() const
+AbstractVehicle* MissionVehicle::vehicle() const
 {
     return m_vehicle;
 }
@@ -58,16 +58,15 @@ MissionVehicle::Status MissionVehicle::status() const
     return m_status;
 }
 
-void MissionVehicle::setVehicle(Vehicle* vehicle)
+void MissionVehicle::setVehicle(AbstractVehicle* vehicle)
 {
     if (m_vehicle == vehicle) return;
 
-    Vehicle* oldVehicle = nullptr;
+    AbstractVehicle* oldVehicle = nullptr;
     if (m_vehicle)
     {
         oldVehicle = m_vehicle;
-        disconnect(m_vehicle, &Vehicle::homePositionChanged,
-                   this, &MissionVehicle::onHomePositionChanged);
+        disconnect(m_vehicle, 0, this, 0);
     }
 
     m_vehicle = vehicle;
@@ -76,9 +75,11 @@ void MissionVehicle::setVehicle(Vehicle* vehicle)
     if (m_vehicle)
     {
         m_vehicle->assignMission(m_mission);
-        connect(m_vehicle, &Vehicle::homePositionChanged,
+
+        /* TODO: update move mission position
+        connect(m_vehicle, &AbstractVehicle::homePositionChanged,
                 this, &MissionVehicle::onHomePositionChanged);
-        this->onHomePositionChanged(m_vehicle->homePosition());
+        this->onHomePositionChanged(m_vehicle->homePosition());*/
     }
 
     emit vehicleChanged(m_vehicle);

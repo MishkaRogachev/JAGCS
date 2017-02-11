@@ -2,6 +2,7 @@
 #define VEHICLE_H
 
 // Internal
+#include "abstract_vehicle.h"
 #include "command.h"
 
 #include "attitude.h"
@@ -14,11 +15,10 @@ namespace domain
 {
     class Mission;
 
-    class Vehicle: public QObject // TODO: vehicle hierarchy: Abstract, Land, Aeral, Navy etc
+    class Vehicle: public AbstractVehicle // TODO: vehicle hierarchy: Land, Aerial, Navy etc
     {
         Q_OBJECT
 
-        Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
         Q_PROPERTY(State state READ state WRITE setState NOTIFY stateChanged)
 
         Q_PROPERTY(bool armed READ isArmed WRITE setArmed NOTIFY armedChanged)
@@ -80,8 +80,7 @@ namespace domain
     public:
         enum Type
         {
-            UnknownType = 0,
-            FixedWingAircraft
+            FixedWingAircraft = UnknownType + 1
         };
 
         enum State
@@ -99,9 +98,6 @@ namespace domain
         Vehicle(uint8_t vehicleId, QObject* parent);
         ~Vehicle() override;
 
-        uint8_t vehicleId() const;
-
-        Type type() const;
         State state() const;
 
         bool isArmed() const;
@@ -139,10 +135,7 @@ namespace domain
 
         bool ahrsAvalible() const;
 
-        Mission* assignedMission() const;
-
     public slots:
-        void setType(Type type);
         void setState(State state);
 
         void setArmed(bool armed);
@@ -178,11 +171,7 @@ namespace domain
 
         void setAhrsAvalible(bool ahrsAvalible);
 
-        void assignMission(Mission* mission);
-        void unassignMission();
-
     signals:
-        void typeChanged(Type type);
         void stateChanged(State state);
 
         void armedChanged(bool armed);
@@ -220,15 +209,10 @@ namespace domain
 
         void ahrsAvalibleChanged(bool ahrsAvalible);
 
-        void assignedMissionChanged(Mission* mission);
-
         void executeCommand(Command command, const QVariantList& args);
         void sendHomePositionSetting(const Position& homePosition);
 
     private:
-        uint8_t m_vehicleId;
-
-        Type m_type;
         State m_state;
 
         bool m_armed;
@@ -263,8 +247,6 @@ namespace domain
         bool m_rangeFinderAvalible;
 
         bool m_ahrsAvalible;
-
-        Mission* m_assignedMission;
 
         Q_ENUM(Type)
         Q_ENUM(State)

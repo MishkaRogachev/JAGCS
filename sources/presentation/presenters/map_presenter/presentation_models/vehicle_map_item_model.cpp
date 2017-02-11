@@ -14,12 +14,12 @@ public:
     QMap<domain::Vehicle*, QVariantList> tracks;
     // TODO: Rammer-Duglas-Pecker polyline simplification
 
-    QUrl vehicleTypeToMark(domain::Vehicle::Type type)
+    QUrl vehicleTypeToMark(int type)
     {
         switch (type) {
         case domain::Vehicle::FixedWingAircraft:
             return QUrl("qrc:/indicators/plane_map_mark.svg");
-        case domain::Vehicle::UnknownType:
+        case domain::AbstractVehicle::UnknownType:
         default:
             return QUrl("qrc:/indicators/unknown_mark.svg");
         }

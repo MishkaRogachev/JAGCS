@@ -10,9 +10,7 @@
 using namespace domain;
 
 Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
-    QObject(parent),
-    m_vehicleId(vehicleId),
-    m_type(Vehicle::UnknownType),
+    AbstractVehicle(vehicleId, Vehicle::UnknownType, parent),
     m_state(Vehicle::UnknownState),
     m_armed(false),
     m_autonomous(false),
@@ -30,24 +28,11 @@ Vehicle::Vehicle(uint8_t vehicleId, QObject* parent):
     m_compasAvalible(false),
     m_heading(0),
     m_rangeFinderAvalible(false),
-    m_ahrsAvalible(false),
-    m_assignedMission(nullptr)
+    m_ahrsAvalible(false)
 {}
 
 Vehicle::~Vehicle()
-{
-    if (m_assignedMission) this->unassignMission();
-}
-
-uint8_t Vehicle::vehicleId() const
-{
-    return m_vehicleId;
-}
-
-Vehicle::Type Vehicle::type() const
-{
-    return m_type;
-}
+{}
 
 Vehicle::State Vehicle::state() const
 {
@@ -187,19 +172,6 @@ bool Vehicle::rangeFinderAvalible() const
 bool Vehicle::ahrsAvalible() const
 {
     return m_ahrsAvalible;
-}
-
-Mission* Vehicle::assignedMission() const
-{
-    return m_assignedMission;
-}
-
-void Vehicle::setType(Vehicle::Type type)
-{
-    if (m_type == type) return;
-
-    m_type = type;
-    emit typeChanged(type);
 }
 
 void Vehicle::setState(Vehicle::State state)
@@ -396,28 +368,4 @@ void Vehicle::setAhrsAvalible(bool ahrsAvalible)
 
     m_ahrsAvalible = ahrsAvalible;
     emit ahrsAvalibleChanged(ahrsAvalible);
-}
-
-void Vehicle::unassignMission()
-{
-    this->assignMission(nullptr);
-}
-
-void Vehicle::assignMission(Mission* mission)
-{
-    if (m_assignedMission == mission) return;
-
-    if (m_assignedMission)
-    {
-        m_assignedMission->unassignVehicle();
-    }
-
-    m_assignedMission = mission;
-
-    if (m_assignedMission)
-    {
-        m_assignedMission->assignVehicle(this);
-    }
-
-    emit assignedMissionChanged(mission);
 }

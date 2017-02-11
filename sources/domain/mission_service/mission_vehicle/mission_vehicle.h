@@ -9,7 +9,7 @@
 
 namespace domain
 {
-    class Vehicle;
+    class AbstractVehicle;
     class Mission;
 
     class MissionVehicle: public QObject
@@ -26,11 +26,11 @@ namespace domain
             Error
         };
 
-        explicit MissionVehicle(Mission* mission, Vehicle* vehicle = nullptr);
+        explicit MissionVehicle(Mission* mission, AbstractVehicle* vehicle = nullptr);
         ~MissionVehicle() override;
 
         Mission* mission() const;
-        Vehicle* vehicle() const;
+        AbstractVehicle* vehicle() const;
         uint8_t vehicleId() const;
 
         int currentProgress() const;
@@ -39,7 +39,7 @@ namespace domain
         Status status() const;
 
     public slots:
-        void setVehicle(Vehicle* vehicle);
+        void setVehicle(AbstractVehicle* vehicle);
 
         void setCurrentProgress(int currentProgress);
         void setTotalProgress(int totalProgress);
@@ -47,7 +47,7 @@ namespace domain
         void setStatus(Status status);
 
     signals:
-        void vehicleChanged(Vehicle* vehicle);
+        void vehicleChanged(AbstractVehicle* vehicle);
 
         void currentProgressChanged(int currentProgress);
         void totalProgressChanged(int totalProgress);
@@ -59,7 +59,7 @@ namespace domain
 
     private:
         Mission* const m_mission;
-        Vehicle* m_vehicle;
+        AbstractVehicle* m_vehicle;
 
         int m_currentProgress;
         int m_totalProgress;

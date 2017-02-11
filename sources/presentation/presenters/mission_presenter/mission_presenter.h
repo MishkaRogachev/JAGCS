@@ -7,7 +7,7 @@ namespace domain
 {
     class MissionService;
     class VehicleService;
-    class Vehicle;
+    class AbstractVehicle;
 }
 
 namespace presentation
@@ -35,8 +35,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onVehicleAdded(domain::Vehicle* vehicle);
-        void onVehicleRemoved(domain::Vehicle* vehicle);
+        void onVehicleAdded(domain::AbstractVehicle* vehicle);
+        void onVehicleRemoved(domain::AbstractVehicle* vehicle);
 
         void onMissionSelected(const QString& missionName);
         void onAddMission();
