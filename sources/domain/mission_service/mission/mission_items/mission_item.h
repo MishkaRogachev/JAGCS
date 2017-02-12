@@ -11,7 +11,7 @@ namespace domain
 {
     class Mission;
 
-    class MissionItem: public QObject // TODO: avalible modes
+    class MissionItem: public QObject
     {
         Q_OBJECT
 

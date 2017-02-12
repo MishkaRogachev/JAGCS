@@ -111,9 +111,12 @@ void HomePositionHandler::onVehicleAdded(AbstractVehicle* vehicle)
 {
     this->sendHomePositionRequest(vehicle->vehicleId());
 
-    // TODO: home position request
-    //connect(vehicle, &Vehicle::sendHomePositionSetting,
-    //        this, &HomePositionHandler::sendHomePositionSetting);
+    auto baseVehicle = qobject_cast<BaseVehicle*>(vehicle);
+    if (baseVehicle)
+    {
+        connect(baseVehicle, &BaseVehicle::sendHomePositionSetting,
+                this, &HomePositionHandler::sendHomePositionSetting);
+    }
 
     m_reqestTimers[vehicle->vehicleId()].start(::reqestInterval, this);
 }
@@ -121,4 +124,5 @@ void HomePositionHandler::onVehicleAdded(AbstractVehicle* vehicle)
 void HomePositionHandler::onVehicleRemoved(AbstractVehicle* vehicle)
 {
     m_reqestTimers.remove(vehicle->vehicleId());
+    disconnect(vehicle, 0, this, 0);
 }

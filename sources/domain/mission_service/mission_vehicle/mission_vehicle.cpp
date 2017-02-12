@@ -5,7 +5,7 @@
 
 // Internal
 #include "mission.h"
-#include "abstract_vehicle.h"
+#include "base_vehicle.h"
 #include "home_mission_item.h"
 
 using namespace domain;
@@ -76,10 +76,13 @@ void MissionVehicle::setVehicle(AbstractVehicle* vehicle)
     {
         m_vehicle->assignMission(m_mission);
 
-        /* TODO: update move mission position
-        connect(m_vehicle, &AbstractVehicle::homePositionChanged,
-                this, &MissionVehicle::onHomePositionChanged);
-        this->onHomePositionChanged(m_vehicle->homePosition());*/
+        auto baseVehicle = qobject_cast<BaseVehicle*>(m_vehicle);
+        if (m_vehicle)
+        {
+            connect(baseVehicle, &BaseVehicle::homePositionChanged,
+                    this, &MissionVehicle::onHomePositionChanged);
+            this->onHomePositionChanged(baseVehicle->homePosition());
+        }
     }
 
     emit vehicleChanged(m_vehicle);
