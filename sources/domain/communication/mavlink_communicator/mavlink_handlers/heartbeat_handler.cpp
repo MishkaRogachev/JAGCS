@@ -30,6 +30,9 @@ namespace
         case MAV_TYPE_COAXIAL:
         case MAV_TYPE_HELICOPTER:
             return AerialVehicle::Helicopter;
+        case MAV_TYPE_AIRSHIP:
+        case MAV_TYPE_FREE_BALLOON:
+            return AerialVehicle::Airship;
         case MAV_TYPE_VTOL_DUOROTOR:
         case MAV_TYPE_VTOL_QUADROTOR:
         case MAV_TYPE_VTOL_TILTROTOR:

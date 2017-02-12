@@ -39,6 +39,7 @@ namespace domain
             FixedWingAircraft = UnknownType + 1,
             Multirotor,
             Helicopter,
+            Airship,
             Vtol
         };
 

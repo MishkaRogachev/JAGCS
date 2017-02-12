@@ -60,6 +60,7 @@ void VehicleService::createVehicle(uint8_t vehicleId, int type)
     case AerialVehicle::FixedWingAircraft:
     case AerialVehicle::Multirotor:
     case AerialVehicle::Helicopter:
+    case AerialVehicle::Airship:
     case AerialVehicle::Vtol:
         this->addVehicle(new AerialVehicle(vehicleId,
                                            AerialVehicle::Type(type),
