@@ -136,6 +136,11 @@
         <translation>м</translation>
     </message>
     <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
         <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="151"/>
         <source>Hsns, m</source>
         <translation>Hснс, м</translation>

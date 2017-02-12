@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import "qrc:/JS/helper.js" as Helper
 
-Rectangle { // TODO: rename to ladded
+Rectangle {
     id: root
 
     property alias value: label.value

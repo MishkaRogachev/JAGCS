@@ -85,6 +85,11 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
+        <source>km</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="180"/>
         <source>V</source>
         <translation></translation>

@@ -118,9 +118,9 @@ Column {
 
                 FdLabel {
                     id: homeLabel
-                    value: homeDistance
-                    digits: 0
-                    suffix: qsTr("m")
+                    value:  homeDistance > 1000 ? homeDistance / 1000 : homeDistance
+                    digits: homeDistance > 1000 ? 1 : 0
+                    suffix: homeDistance > 1000 ? qsTr("km") : qsTr("m")
                     available: homeDistance > -1
                     width: parent.width
                 }
