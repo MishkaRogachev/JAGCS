@@ -18,6 +18,7 @@ namespace domain
         ~Mission() override;
 
         int count() const;
+        int currentIndex() const;
 
         MissionItem* item(int seq) const;
         const QList<MissionItem*>& items() const;
@@ -30,6 +31,7 @@ namespace domain
 
     public slots:
         void setCount(int count);
+        void setCurrentIndex(int index);
         void setMissionItem(int seq, MissionItem* item);
 
         void addNewMissionItem();
@@ -42,6 +44,7 @@ namespace domain
 
     signals:
         void missionItemsChanged(const QList<MissionItem*>& items);
+        void currentIndexChanged(int index);
 
         void assigned(AbstractVehicle* vehicle);
         void unassigned();
@@ -49,6 +52,7 @@ namespace domain
     private:
         QList<MissionItem*> m_items;
         MissionVehicle* const m_assignment;
+        int m_currentIndex;
     };
 }
 

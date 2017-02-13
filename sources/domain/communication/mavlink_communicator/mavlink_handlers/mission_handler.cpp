@@ -359,8 +359,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         }
     }
 
-    item->setCurrent(msgItem.current);
     mission->setMissionItem(msgItem.seq, item);
+    if (msgItem.current) mission->setCurrentIndex(msgItem.seq);
 
     mission->assignment()->setCurrentProgress(mission->count());
 

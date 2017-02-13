@@ -12,7 +12,8 @@ using namespace domain;
 
 Mission::Mission(QObject* parent):
     QObject(parent),
-    m_assignment(new MissionVehicle(this))
+    m_assignment(new MissionVehicle(this)),
+    m_currentIndex(-1)
 {}
 
 Mission::~Mission()
@@ -27,6 +28,11 @@ Mission::~Mission()
 int Mission::count() const
 {
     return m_items.count();
+}
+
+int Mission::currentIndex() const
+{
+    return m_currentIndex;
 }
 
 MissionItem* Mission::item(int seq) const
@@ -74,6 +80,23 @@ void Mission::setCount(int count)
     }
 
     emit missionItemsChanged(m_items);
+}
+
+void Mission::setCurrentIndex(int index)
+{
+    if (m_currentIndex == index || index >= m_items.count()) return;
+
+    if (m_currentIndex > -1 && m_items[m_currentIndex])
+    {
+        m_items[index]->setCurrent(false);
+    }
+
+    m_currentIndex = index;
+
+    if (m_currentIndex > -1 && m_items[m_currentIndex])
+    {
+        m_items[index]->setCurrent(true);
+    }
 }
 
 void Mission::setMissionItem(int seq, MissionItem* item)
