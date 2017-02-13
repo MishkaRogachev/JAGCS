@@ -5,7 +5,7 @@
 #include <QMap>
 
 // Internal
-#include "mission_item.h"
+#include "abstract_mission_item.h"
 
 namespace presentation
 {
@@ -23,7 +23,7 @@ namespace presentation
         void setCommand(QObject* item, const QString& command);
 
     private:
-        domain::MissionItem* cast(QObject* item) const;
+        domain::AbstractMissionItem* cast(QObject* item) const;
 
         QMap<domain::Command, QString> m_commandNames;
     };

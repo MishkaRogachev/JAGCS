@@ -25,7 +25,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
 {
     if (index.row() < 0 || index.row() >= m_items.count()) return QVariant();
 
-    domain::MissionItem* item = m_items.at(index.row());
+    domain::AbstractMissionItem* item = m_items.at(index.row());
 
     switch (role)
     {
@@ -75,13 +75,13 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
 }
 
-void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
+void MissionPointMapItemModel::addMissionItem(domain::AbstractMissionItem* item)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
 
     m_items.append(item);
 
-    connect(item, &domain::MissionItem::currentChanged,
+    connect(item, &domain::AbstractMissionItem::currentChanged,
             this, &MissionPointMapItemModel::onCurrentChanged);
 
     domain::PositionMissionItem* positionItem =
@@ -114,7 +114,7 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
     this->endInsertRows();
 }
 
-void MissionPointMapItemModel::removeMissionItem(domain::MissionItem* item)
+void MissionPointMapItemModel::removeMissionItem(domain::AbstractMissionItem* item)
 {
     int row = m_items.indexOf(item);
     if (row == -1) return;
@@ -129,14 +129,14 @@ void MissionPointMapItemModel::removeMissionItem(domain::MissionItem* item)
                      this->index(m_items.count() - 1), { ItemSequenceRole });
 }
 
-void MissionPointMapItemModel::setMissionItems(const QList<domain::MissionItem*>& items)
+void MissionPointMapItemModel::setMissionItems(const QList<domain::AbstractMissionItem*>& items)
 {
     if (!m_items.empty())
     {
         this->clearMissionItems();
     }
 
-    for (domain::MissionItem* item: items)
+    for (domain::AbstractMissionItem* item: items)
     {
         if (item) this->addMissionItem(item);
     }
@@ -167,7 +167,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
 }
 
 QModelIndex MissionPointMapItemModel::missionItemIndex(
-        domain::MissionItem* item) const
+        domain::AbstractMissionItem* item) const
 {
     return this->index(m_items.indexOf(item));
 }
@@ -175,7 +175,7 @@ QModelIndex MissionPointMapItemModel::missionItemIndex(
 void MissionPointMapItemModel::onCommandChanged()
 {
     QModelIndex index = this->missionItemIndex(
-                            qobject_cast<domain::MissionItem*>(this->sender()));
+                            qobject_cast<domain::AbstractMissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index,
     { ItemCoordinateRole, // some commands not display on map
       ItemSequenceRole });
@@ -184,27 +184,27 @@ void MissionPointMapItemModel::onCommandChanged()
 void MissionPointMapItemModel::onCoordinateChanged()
 {
     QModelIndex index = this->missionItemIndex(
-                            qobject_cast<domain::MissionItem*>(this->sender()));
+                            qobject_cast<domain::AbstractMissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemCoordinateRole });
 }
 
 void MissionPointMapItemModel::onAcceptanceRadiusChanged()
 {
     QModelIndex index = this->missionItemIndex(
-                            qobject_cast<domain::MissionItem*>(this->sender()));
+                            qobject_cast<domain::AbstractMissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemAcceptanceRadius });
 }
 
 void MissionPointMapItemModel::onRadiusChanged()
 {
     QModelIndex index = this->missionItemIndex(
-                            qobject_cast<domain::MissionItem*>(this->sender()));
+                            qobject_cast<domain::AbstractMissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemRadius });
 }
 
 void MissionPointMapItemModel::onCurrentChanged()
 {
     QModelIndex index = this->missionItemIndex(
-                            qobject_cast<domain::MissionItem*>(this->sender()));
+                            qobject_cast<domain::AbstractMissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemCurrent });
 }

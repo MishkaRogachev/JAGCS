@@ -4,7 +4,7 @@
 #include <QVariant>
 
 // Internal
-#include "mission_item.h"
+#include "abstract_mission_item.h"
 
 using namespace presentation;
 
@@ -22,9 +22,9 @@ MissionViewHelper::MissionViewHelper(QObject* parent):
     m_commandNames[domain::Command::Landing] = tr("LANDING");
 }
 
-domain::MissionItem* MissionViewHelper::cast(QObject* item) const
+domain::AbstractMissionItem* MissionViewHelper::cast(QObject* item) const
 {
-    return qobject_cast<domain::MissionItem*>(item);
+    return qobject_cast<domain::AbstractMissionItem*>(item);
 }
 
 QStringList MissionViewHelper::avaliableCommands(QObject* item) const
@@ -54,7 +54,7 @@ void MissionViewHelper::setCommand(QObject* item, const QString& command)
 
     if (index > -1)
     {
-        domain::MissionItem* missionItem = this->cast(item);
+        domain::AbstractMissionItem* missionItem = this->cast(item);
         missionItem->replaceWithCommand(
                     this->cast(missionItem)->avalibleCommands()[index]);
     }

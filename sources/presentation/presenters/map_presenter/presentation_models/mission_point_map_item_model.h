@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class MissionItem;
+    class AbstractMissionItem;
 }
 
 namespace presentation
@@ -32,15 +32,15 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void addMissionItem(domain::MissionItem* item);
-        void removeMissionItem(domain::MissionItem* item);
-        void setMissionItems(const QList<domain::MissionItem*>& items);
+        void addMissionItem(domain::AbstractMissionItem* item);
+        void removeMissionItem(domain::AbstractMissionItem* item);
+        void setMissionItems(const QList<domain::AbstractMissionItem*>& items);
         void clearMissionItems();
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
-        QModelIndex missionItemIndex(domain::MissionItem* item) const;
+        QModelIndex missionItemIndex(domain::AbstractMissionItem* item) const;
 
     private slots:
         void onCommandChanged();
@@ -50,7 +50,7 @@ namespace presentation
         void onCurrentChanged();
 
     private:
-        QList<domain::MissionItem*> m_items;
+        QList<domain::AbstractMissionItem*> m_items;
     };
 }
 

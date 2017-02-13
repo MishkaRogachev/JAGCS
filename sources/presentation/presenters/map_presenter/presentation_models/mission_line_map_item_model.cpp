@@ -32,7 +32,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
-        for (domain::MissionItem* item: mission->items())
+        for (domain::AbstractMissionItem* item: mission->items())
         {
             domain::PositionMissionItem* positionItem =
                     qobject_cast<domain::PositionMissionItem*>(item);
@@ -104,7 +104,7 @@ QModelIndex MissionLineMapItemModel::missionIndex(domain::Mission* mission) cons
 
 void MissionLineMapItemModel::updateMissionItems(domain::Mission* mission)
 {
-    for (domain::MissionItem* item: mission->items())
+    for (domain::AbstractMissionItem* item: mission->items())
     {
         if (!item) continue;
 
@@ -132,5 +132,5 @@ void MissionLineMapItemModel::updateMissionPath(domain::Mission* mission)
 void MissionLineMapItemModel::onMissionItemPositionChanged()
 {
     this->updateMissionPath(
-                qobject_cast<domain::MissionItem*>(this->sender())->mission());
+                qobject_cast<domain::AbstractMissionItem*>(this->sender())->mission());
 }

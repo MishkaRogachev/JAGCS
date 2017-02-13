@@ -2,7 +2,7 @@
 #define MISSION_H
 
 // Internal
-#include "mission_item.h"
+#include "abstract_mission_item.h"
 
 namespace domain
 {
@@ -20,11 +20,11 @@ namespace domain
         int count() const;
         int currentIndex() const;
 
-        MissionItem* item(int seq) const;
-        const QList<MissionItem*>& items() const;
-        int sequence(MissionItem* item) const;
+        AbstractMissionItem* item(int seq) const;
+        const QList<AbstractMissionItem*>& items() const;
+        int sequence(AbstractMissionItem* item) const;
 
-        MissionItem* take(int seq);
+        AbstractMissionItem* take(int seq);
 
         MissionVehicle* assignment() const;
         AbstractVehicle* assignedVehicle() const;
@@ -32,10 +32,10 @@ namespace domain
     public slots:
         void setCount(int count);
         void setCurrentIndex(int index);
-        void setMissionItem(int seq, MissionItem* item);
+        void setMissionItem(int seq, AbstractMissionItem* item);
 
         void addNewMissionItem();
-        void removeMissionItem(MissionItem* item);
+        void removeMissionItem(AbstractMissionItem* item);
 
         void exchange(int first, int last);
 
@@ -43,14 +43,14 @@ namespace domain
         void assignVehicle(AbstractVehicle* vehicle);
 
     signals:
-        void missionItemsChanged(const QList<MissionItem*>& items);
+        void missionItemsChanged(const QList<AbstractMissionItem*>& items);
         void currentIndexChanged(int index);
 
         void assigned(AbstractVehicle* vehicle);
         void unassigned();
 
     private:
-        QList<MissionItem*> m_items;
+        QList<AbstractMissionItem*> m_items;
         MissionVehicle* const m_assignment;
         int m_currentIndex;
     };

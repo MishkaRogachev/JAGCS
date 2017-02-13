@@ -10,7 +10,7 @@ using namespace domain;
 
 AltitudeMissionItem::AltitudeMissionItem(Mission* mission, Command command,
                                          bool relativeAltitude):
-    MissionItem(mission, command),
+    AbstractMissionItem(mission, command),
     m_altitude(0),
     m_relativeAltitude(relativeAltitude)
 {}
@@ -58,7 +58,7 @@ float AltitudeMissionItem::climb() const
     return 0;
 }
 
-void AltitudeMissionItem::clone(MissionItem* mission)
+void AltitudeMissionItem::clone(AbstractMissionItem* mission)
 {
     auto altitudeItem = qobject_cast<AltitudeMissionItem*>(mission);
 
@@ -67,8 +67,6 @@ void AltitudeMissionItem::clone(MissionItem* mission)
         this->setAltitude(altitudeItem->altitude());
         this->setRelativeAltitude(altitudeItem->isRelativeAltitude());
     }
-
-    MissionItem::clone(mission);
 }
 
 void AltitudeMissionItem::setAltitude(float altitude)

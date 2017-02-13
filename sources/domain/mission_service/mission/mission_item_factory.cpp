@@ -23,7 +23,7 @@ MissionItemFactory::MissionItemFactory(Mission* mision):
     m_mision(mision)
 {}
 
-MissionItem* MissionItemFactory::create(Command command)
+AbstractMissionItem* MissionItemFactory::create(Command command)
 {
     switch (command) {
     case Command::Home:

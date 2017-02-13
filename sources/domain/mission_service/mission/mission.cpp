@@ -35,24 +35,24 @@ int Mission::currentIndex() const
     return m_currentIndex;
 }
 
-MissionItem* Mission::item(int seq) const
+AbstractMissionItem* Mission::item(int seq) const
 {
     return m_items.value(seq, nullptr);
 }
 
-const QList<MissionItem*>& Mission::items() const
+const QList<AbstractMissionItem*>& Mission::items() const
 {
     return m_items;
 }
 
-int Mission::sequence(MissionItem* item) const
+int Mission::sequence(AbstractMissionItem* item) const
 {
     return m_items.indexOf(item);
 }
 
-MissionItem* Mission::take(int seq)
+AbstractMissionItem* Mission::take(int seq)
 {
-    MissionItem* item = m_items.takeAt(seq);
+    AbstractMissionItem* item = m_items.takeAt(seq);
     emit missionItemsChanged(m_items);
     return item;
 }
@@ -88,25 +88,25 @@ void Mission::setCurrentIndex(int index)
 
     if (m_currentIndex > -1 && m_items[m_currentIndex])
     {
-        m_items[index]->setCurrent(false);
+        m_items[index]->currentChanged(false);
     }
 
     m_currentIndex = index;
 
     if (m_currentIndex > -1 && m_items[m_currentIndex])
     {
-        m_items[index]->setCurrent(true);
+        m_items[index]->currentChanged(true);
     }
 }
 
-void Mission::setMissionItem(int seq, MissionItem* item)
+void Mission::setMissionItem(int seq, AbstractMissionItem* item)
 {
     if (seq >= m_items.count())
     {
         this->setCount(seq + 1);
     }
 
-    MissionItem* oldItem = m_items[seq];
+    AbstractMissionItem* oldItem = m_items[seq];
 
     m_items[seq] = item;
     emit missionItemsChanged(m_items);
@@ -130,7 +130,7 @@ void Mission::addNewMissionItem()
     emit missionItemsChanged(m_items);
 }
 
-void Mission::removeMissionItem(MissionItem* item)
+void Mission::removeMissionItem(AbstractMissionItem* item)
 {
     this->take(m_items.indexOf(item));
     delete item;
@@ -138,7 +138,7 @@ void Mission::removeMissionItem(MissionItem* item)
 
 void Mission::exchange(int first, int last)
 {
-    MissionItem* item = m_items[first];
+    AbstractMissionItem* item = m_items[first];
     m_items[first] = m_items[last];
     m_items[last] = item;
 

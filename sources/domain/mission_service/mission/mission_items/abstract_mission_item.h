@@ -1,5 +1,5 @@
-#ifndef MISSION_ITEM_H
-#define MISSION_ITEM_H
+#ifndef ABSTRACT_MISSION_ITEM_H
+#define ABSTRACT_MISSION_ITEM_H
 
 // Qt
 #include <QObject>
@@ -11,7 +11,7 @@ namespace domain
 {
     class Mission;
 
-    class MissionItem: public QObject
+    class AbstractMissionItem: public QObject // TODO: Abstract
     {
         Q_OBJECT
 
@@ -19,11 +19,10 @@ namespace domain
         Q_PROPERTY(Mission* mission READ mission CONSTANT)
         Q_PROPERTY(Command command READ command CONSTANT)
 
-        Q_PROPERTY(bool current READ isCurrent WRITE setCurrent
-                   NOTIFY currentChanged)
+        Q_PROPERTY(bool current READ isCurrent NOTIFY currentChanged)
 
     public:
-        MissionItem(Mission* mission, Command command);
+        AbstractMissionItem(Mission* mission, Command command);
 
         int sequence() const;
         Q_INVOKABLE bool isFirst() const;
@@ -36,7 +35,7 @@ namespace domain
 
         bool isCurrent() const;
 
-        virtual void clone(MissionItem* mission);
+        virtual void clone(AbstractMissionItem* mission) = 0;
 
     public slots:
         void replaceWithCommand(Command command);
@@ -44,16 +43,13 @@ namespace domain
         void moveUp();
         void moveDown();
 
-        void setCurrent(bool current);
-
     signals:
         void currentChanged(bool current);
 
     private:
         Mission* const m_mission;
         const Command m_command;
-        bool m_current;
     };
 }
 
-#endif // MISSION_ITEM_H
+#endif // ABSTRACT_MISSION_ITEM_H

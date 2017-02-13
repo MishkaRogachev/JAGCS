@@ -23,7 +23,7 @@ namespace domain
 
         Q_INVOKABLE float azimuth() const;
 
-        void clone(MissionItem* mission) override;
+        void clone(AbstractMissionItem* mission) override;
 
     public slots:
         void setLatitude(double latitude);

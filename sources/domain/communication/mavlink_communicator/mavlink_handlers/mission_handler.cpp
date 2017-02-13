@@ -160,7 +160,7 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     Mission* mission = m_missionService->missionForVehicleId(id);
     if (!mission || mission->count() <= seq) return;
 
-    MissionItem* item = mission->item(seq);
+    AbstractMissionItem* item = mission->item(seq);
 
     mavlink_message_t message;
     mavlink_mission_item_t msgItem;
@@ -291,7 +291,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
     MissionItemFactory factory(mission);
-    MissionItem* item = factory.create(::decodeCommand(msgItem.command, msgItem.seq));
+    AbstractMissionItem* item = factory.create(::decodeCommand(msgItem.command, msgItem.seq));
 
     AltitudeMissionItem* altitudeItem = qobject_cast<AltitudeMissionItem*>(item);
     if (altitudeItem)

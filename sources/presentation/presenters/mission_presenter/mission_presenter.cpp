@@ -97,7 +97,7 @@ void MissionPresenter::updateMissionItems()
 
     if (d->selectedMission)
     {
-        for (domain::MissionItem* item: d->selectedMission->items())
+        for (domain::AbstractMissionItem* item: d->selectedMission->items())
             list.append(item);
     }
 
@@ -212,7 +212,7 @@ void MissionPresenter::onAddMissionItem()
 void MissionPresenter::onRemoveMissionItem(QObject* item)
 {
     if (d->selectedMission) d->selectedMission->removeMissionItem(
-                qobject_cast<domain::MissionItem*>(item));
+                qobject_cast<domain::AbstractMissionItem*>(item));
 }
 
 void MissionPresenter::onVehicleSelected(const QString& vehicleName)

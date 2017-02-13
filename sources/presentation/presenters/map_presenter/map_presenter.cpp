@@ -81,7 +81,7 @@ void MapPresenter::removeMission(domain::Mission* mission)
 
 void MapPresenter::updateMissionItems()
 {
-    QList<domain::MissionItem*> items;
+    QList<domain::AbstractMissionItem*> items;
 
     for (domain::Mission* mission: d->lineModel.missions())
     {

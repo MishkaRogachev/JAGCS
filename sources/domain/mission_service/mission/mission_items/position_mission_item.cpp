@@ -46,7 +46,7 @@ float PositionMissionItem::azimuth() const
     return 0.0;
 }
 
-void PositionMissionItem::clone(MissionItem* mission)
+void PositionMissionItem::clone(AbstractMissionItem* mission)
 {
     auto positionItem = qobject_cast<PositionMissionItem*>(mission);
 

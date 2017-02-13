@@ -1,7 +1,7 @@
 #ifndef MISSION_ITEM_FACTORY_H
 #define MISSION_ITEM_FACTORY_H
 
-#include "mission_item.h"
+#include "abstract_mission_item.h"
 
 namespace domain
 {
@@ -10,7 +10,7 @@ namespace domain
     public:
         MissionItemFactory(Mission* mision);
 
-        MissionItem* create(Command command);
+        AbstractMissionItem* create(Command command);
 
     private:
         Mission* m_mision;

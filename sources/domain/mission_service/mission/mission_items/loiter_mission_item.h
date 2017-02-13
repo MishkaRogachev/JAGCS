@@ -18,7 +18,7 @@ namespace domain
 
         float radius() const;
 
-        void clone(MissionItem* mission) override;
+        void clone(AbstractMissionItem* mission) override;
 
     public slots:
         void setRadius(float radius);

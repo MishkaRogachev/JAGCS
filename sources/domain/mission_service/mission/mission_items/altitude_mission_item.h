@@ -1,11 +1,11 @@
 #ifndef ALTITUDE_MISSION_ITEM_H
 #define ALTITUDE_MISSION_ITEM_H
 
-#include "mission_item.h"
+#include "abstract_mission_item.h"
 
 namespace domain
 {
-    class AltitudeMissionItem: public MissionItem
+    class AltitudeMissionItem: public AbstractMissionItem
     {
         Q_OBJECT
 
@@ -26,7 +26,7 @@ namespace domain
 
         Q_INVOKABLE float climb() const;
 
-        void clone(MissionItem* mission) override;
+        void clone(AbstractMissionItem* mission) override;
 
     public slots:
         void setAltitude(float altitude);

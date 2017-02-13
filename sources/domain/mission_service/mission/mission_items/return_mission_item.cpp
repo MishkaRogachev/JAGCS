@@ -3,5 +3,10 @@
 using namespace domain;
 
 ReturnMissionItem::ReturnMissionItem(Mission* mission):
-    MissionItem(mission, Command::Return)
+    AbstractMissionItem(mission, Command::Return)
 {}
+
+void ReturnMissionItem::clone(AbstractMissionItem* mission)
+{
+    Q_UNUSED(mission)
+}

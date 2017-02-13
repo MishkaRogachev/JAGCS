@@ -12,7 +12,7 @@ float LoiterMissionItem::radius() const
     return m_radius;
 }
 
-void LoiterMissionItem::clone(MissionItem* mission)
+void LoiterMissionItem::clone(AbstractMissionItem* mission)
 {
     auto loiterItem = qobject_cast<LoiterMissionItem*>(mission);
 
