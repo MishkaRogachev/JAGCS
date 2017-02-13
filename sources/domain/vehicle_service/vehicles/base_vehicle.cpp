@@ -1,5 +1,9 @@
 #include "base_vehicle.h"
 
+// Internal
+#include "mission.h"
+#include "position_mission_item.h"
+
 using namespace domain;
 
 BaseVehicle::BaseVehicle(uint8_t vehicleId, int type, QObject* parent):
@@ -77,6 +81,40 @@ float BaseVehicle::homeDistance() const
         m_homePosition.coordinate().isValid())
     {
         return m_position.coordinate().distanceTo(m_homePosition.coordinate());
+    }
+    return -1;
+}
+
+float BaseVehicle::missionDirection() const
+{
+    if (!m_position.coordinate().isValid() || !m_assignedMission) return -1;
+
+    for (int index = m_assignedMission->currentIndex();
+         index < m_assignedMission->count(); ++index)
+    {
+        auto item = qobject_cast<PositionMissionItem*>(
+                        m_assignedMission->item(index));
+        if (!item) continue;
+
+        return m_position.coordinate().azimuthTo(
+                    QGeoCoordinate(item->latitude(), item->longitude()));
+    }
+    return -1;
+}
+
+float BaseVehicle::missionDistance() const
+{
+    if (!m_position.coordinate().isValid() || !m_assignedMission) return -1;
+
+    for (int index = m_assignedMission->currentIndex();
+         index < m_assignedMission->count(); ++index)
+    {
+        auto item = qobject_cast<PositionMissionItem*>(
+                        m_assignedMission->item(index));
+        if (!item) continue;
+
+        return m_position.coordinate().distanceTo(
+                    QGeoCoordinate(item->latitude(), item->longitude()));
     }
     return -1;
 }

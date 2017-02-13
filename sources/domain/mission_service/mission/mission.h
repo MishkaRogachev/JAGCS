@@ -21,7 +21,9 @@ namespace domain
         int currentIndex() const;
 
         AbstractMissionItem* item(int seq) const;
+        AbstractMissionItem* currentItem() const;
         const QList<AbstractMissionItem*>& items() const;
+
         int sequence(AbstractMissionItem* item) const;
 
         AbstractMissionItem* take(int seq);

@@ -40,7 +40,7 @@ namespace domain
 
         void executeCommand(Command command, const QVariantList& args);
 
-    private:
+    protected:
         const uint8_t m_vehicleId;
         const int m_type;
 

@@ -40,6 +40,11 @@ AbstractMissionItem* Mission::item(int seq) const
     return m_items.value(seq, nullptr);
 }
 
+AbstractMissionItem*Mission::currentItem() const
+{
+    return this->item(m_currentIndex);
+}
+
 const QList<AbstractMissionItem*>& Mission::items() const
 {
     return m_items;
