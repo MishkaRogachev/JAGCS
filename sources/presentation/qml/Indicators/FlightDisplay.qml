@@ -19,7 +19,9 @@ Column {
     property alias course: compass.course
     property alias windDirection: compass.windDirection
     property alias homeDirection: compass.homeDirection
+    property alias missionDirection: compass.missionDirection
 
+    property real missionDistance: 0.0
     property real homeDistance: 0.0
 
     property alias charge: battery.charge
@@ -118,7 +120,8 @@ Column {
 
                 FdLabel {
                     id: homeLabel
-                    value:  homeDistance > 1000 ? homeDistance / 1000 : homeDistance
+                    value: homeDistance > 1000 ?
+                               homeDistance / 1000 : homeDistance
                     digits: homeDistance > 1000 ? 1 : 0
                     suffix: homeDistance > 1000 ? qsTr("km") : qsTr("m")
                     available: homeDistance > -1
@@ -130,16 +133,19 @@ Column {
                     width: palette.fontPixelSize
                     height: width
                     radius: width / 2
-                    color: palette.raisedColor
-                    border.color: palette.selectionColor
+                    color: missionDistance > -1 ?
+                               palette.raisedColor : palette.sunkenColor
+                    border.color: missionDistance > -1 ?
+                                      palette.selectionColor : palette.disabledColor
                     border.width: 2
                 }
 
                 FdLabel {
-                    // TODO: value: missionDistance
-                    digits: 0
-                    suffix: qsTr("m")
-                    //available: missionDistance > -1
+                    value: missionDistance > 1000 ?
+                               missionDistance / 1000 : missionDistance
+                    digits: missionDistance > 1000 ? 1 : 0
+                    suffix: missionDistance > 1000 ? qsTr("km") : qsTr("m")
+                    available: missionDistance > -1
                     width: parent.width
                 }
             }

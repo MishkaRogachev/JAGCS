@@ -1,7 +1,4 @@
 import QtQuick 2.6
-import QtGraphicalEffects 1.0
-
-import "../Controls"
 
 Rectangle {
     id: root
@@ -10,6 +7,7 @@ Rectangle {
     property real course: 0
     property real windDirection: 0
     property real homeDirection: 0
+    property real missionDirection: 0
 
     property color scalesColor: palette.textColor
     property color courseColor: palette.textColor
@@ -131,32 +129,21 @@ Rectangle {
         }
     }
 
-    Item {
+    CompassItem {
         anchors.centerIn: parent
         width: root.width
         height: root.height
         rotation: homeDirection - heading
         visible: homeDirection > -1
+        iconSource: "qrc:/icons/home.svg"
+    }
 
-        Rectangle {
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: root.width / 6
-            height: width
-            color: palette.backgroundColor
-            border.color: palette.missionColor
-            border.width: 2
-            radius: width / 2
-            rotation: -parent.rotation
-
-            ColoredIcon {
-                anchors.centerIn: parent
-                width: parent.width * 0.8
-                height: parent.height * 0.8
-                source: "qrc:/icons/home.svg"
-                color: palette.textColor
-            }
-        }
+    CompassItem {
+        anchors.centerIn: parent
+        width: root.width
+        height: root.height
+        rotation: missionDirection - heading
+        visible: missionDirection > -1
     }
 
     Image {
