@@ -68,6 +68,8 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
         if (loiterItem) return loiterItem->radius();
         else return 0;
     }
+    case ItemCurrent:
+        return item->isCurrent();
     default:
         return QVariant();
     }
@@ -78,6 +80,9 @@ void MissionPointMapItemModel::addMissionItem(domain::MissionItem* item)
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
 
     m_items.append(item);
+
+    connect(item, &domain::MissionItem::currentChanged,
+            this, &MissionPointMapItemModel::onCurrentChanged);
 
     domain::PositionMissionItem* positionItem =
             qobject_cast<domain::PositionMissionItem*>(item);
@@ -156,6 +161,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemIconRole] = "itemIcon";
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
+    roles[ItemCurrent] = "itemCurrent";
 
     return roles;
 }
@@ -194,4 +200,11 @@ void MissionPointMapItemModel::onRadiusChanged()
     QModelIndex index = this->missionItemIndex(
                             qobject_cast<domain::MissionItem*>(this->sender()));
     if (index.isValid()) emit dataChanged(index, index, { ItemRadius });
+}
+
+void MissionPointMapItemModel::onCurrentChanged()
+{
+    QModelIndex index = this->missionItemIndex(
+                            qobject_cast<domain::MissionItem*>(this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { ItemCurrent });
 }

@@ -22,7 +22,8 @@ namespace presentation
             ItemSequenceRole,
             ItemIconRole,
             ItemAcceptanceRadius,
-            ItemRadius
+            ItemRadius,
+            ItemCurrent
         };
 
         MissionPointMapItemModel(QObject* parent = nullptr);
@@ -46,6 +47,7 @@ namespace presentation
         void onCoordinateChanged();
         void onAcceptanceRadiusChanged();
         void onRadiusChanged();
+        void onCurrentChanged();
 
     private:
         QList<domain::MissionItem*> m_items;

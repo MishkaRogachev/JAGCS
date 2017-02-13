@@ -16,7 +16,7 @@ MapItemView {
             height: width
             radius: width / 2
             color: palette.backgroundColor
-            border.color: palette.missionColor
+            border.color: itemCurrent ? palette.highlightColor : palette.missionColor
             border.width: 4
 
             ColoredIcon {
