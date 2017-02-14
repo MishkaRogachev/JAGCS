@@ -19,6 +19,8 @@ MapItemView {
                 anchors.centerIn: parent
                 rotation: direction
                 source: mark
+                width: palette.controlBaseSize * 3
+                height: width
             }
 
             Label {
