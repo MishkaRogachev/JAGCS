@@ -13,18 +13,57 @@ Pane {
     property var vehicleNames
     property alias selectedVehicle: vehicleView.vehicle
 
+    property bool cornerMap: false
+    property bool cornerVisible: true
+
     signal vehicleSelected(string name)
 
     padding: 0
 
-    FlightMapView {
-        id: map
-        objectName: "map"
+    Item {
+        id: background
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: sidebar.right
         anchors.right: parent.right
     }
+
+    Item {
+        id: corner
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        width: parent.width / 4
+        height: cornerVisible ? width * 3 / 4 : 0// TODO: ratio
+    }
+
+    FlightMapView {
+        id: map
+        objectName: "map"
+        anchors.fill: cornerMap ? corner : background
+        z: cornerMap
+    }
+
+    VideoView {
+        objectName: "video"
+        anchors.fill: cornerMap ? background : corner
+    }
+
+    Row {
+        anchors.bottom: corner.top
+        anchors.left: corner.left
+        z: 2
+
+        Button {
+            onClicked: cornerVisible = !cornerVisible
+            iconSource: cornerVisible ? "qrc:/ui/hide.svg" : "qrc:/ui/show.svg"
+        }
+
+        Button {
+            onClicked: cornerMap = !cornerMap
+            iconSource: cornerMap ? "qrc:/icons/video.svg" : "qrc:/icons/map-marker.svg"
+        }
+    }
+
 
     Item {
         id: sidebar
@@ -51,12 +90,6 @@ Pane {
             Item {
                 width: 1
                 Layout.fillHeight: true
-            }
-
-            VideoView {
-                objectName: "video"
-                Layout.fillWidth: true
-                Layout.preferredHeight: width * 3 / 4
             }
         }
     }
