@@ -4,9 +4,12 @@
         <file>ui/ok.svg</file>
         <file>ui/plus.svg</file>
         <file>ui/minus.svg</file>
+        <file>ui/show.svg</file>
+        <file>ui/hide.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/quit.svg</file>
         <file>icons/map-marker.svg</file>
+        <file>icons/video.svg</file>
         <file>icons/fit.svg</file>
         <file>icons/remove.svg</file>
         <file>icons/add.svg</file>
