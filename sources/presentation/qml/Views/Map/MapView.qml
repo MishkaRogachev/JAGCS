@@ -19,6 +19,13 @@ Map {
     activeMapType: supportedMapTypes[5] // TerrainMapType
     copyrightsVisible: false
 
+    Behavior on center {
+        CoordinateAnimation {
+            duration: 200
+            easing.type: Easing.InOutQuad
+        }
+    }
+
     MissionLineMapOverlayView {
         model: lineModel
     }

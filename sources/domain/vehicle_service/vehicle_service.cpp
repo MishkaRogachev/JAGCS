@@ -12,7 +12,7 @@ VehicleService::VehicleService(QObject* parent):
     QObject(parent)
 {
     qRegisterMetaType<Attitude>("Attitude");
-    qRegisterMetaType<Position>("Navigation");
+    qRegisterMetaType<Position>("Position");
     qRegisterMetaType<Gps>("Gps");
     qRegisterMetaType<Wind>("Wind");
     qRegisterMetaType<PowerSystem>("PowerSystem");

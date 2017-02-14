@@ -48,7 +48,7 @@ Pane {
         anchors.fill: cornerMap ? background : corner
     }
 
-    Row {
+    RowLayout {
         anchors.bottom: corner.top
         anchors.left: corner.left
         z: 2
@@ -60,7 +60,7 @@ Pane {
 
         Button {
             onClicked: cornerMap = !cornerMap
-            iconSource: cornerMap ? "qrc:/icons/video.svg" : "qrc:/icons/map-marker.svg"
+            iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
         }
     }
 
@@ -76,10 +76,31 @@ Pane {
             id: column
             height: parent.height
 
-            ComboBox {
-                model: vehicleNames
-                Layout.fillWidth: true
-                onCurrentTextChanged: vehicleSelected(currentText)
+            RowLayout {
+
+                ComboBox {
+                    model: vehicleNames
+                    Layout.fillWidth: true
+                    onCurrentTextChanged: vehicleSelected(currentText)
+                }
+
+                Button {
+                    id: centerButton
+                    checkable: true
+                    iconSource: "qrc:/icons/center.svg"
+
+                    Connections {
+                        enabled: centerButton.checked
+                        target: selectedVehicle
+                        ignoreUnknownSignals: true
+                        onPositionChanged: {
+                            if (!centerButton.checked ||
+                                    !selectedVehicle.position.coordinate.isValid)
+                                return;
+                            map.center = selectedVehicle.position.coordinate;
+                        }
+                    }
+                }
             }
 
             VehicleView {
