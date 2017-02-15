@@ -47,4 +47,12 @@ Map {
     }
 
     Component.onDestruction: saveMapViewport()
+
+    function setGesturesEnabled(enabled) {
+        gesture.acceptedGestures = enabled ?
+                    (MapGestureArea.PinchGesture |
+                     MapGestureArea.PanGesture |
+                     MapGestureArea.FlickGesture) :
+                    MapGestureArea.PinchGesture
+    }
 }
