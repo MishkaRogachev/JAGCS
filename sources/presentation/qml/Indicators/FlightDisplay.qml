@@ -184,9 +184,9 @@ Column {
                 FdLabel {
                     width: parent.width
                     suffix: qsTr("V")
-                    value: voltage.toFixed(2)
+                    value: voltage
                     digits: 2
-                    enabled: voltage > -1
+                    available: voltage > -1
                 }
 
                 ColoredIcon {
@@ -200,8 +200,9 @@ Column {
                 FdLabel {
                     width: parent.width
                     suffix: qsTr("A")
+                    value: current
                     digits: 2
-                    enabled: current > -1
+                    available: current > -1
                 }
             }
         }
