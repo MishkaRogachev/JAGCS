@@ -40,7 +40,7 @@ AbstractMissionItem* Mission::item(int seq) const
     return m_items.value(seq, nullptr);
 }
 
-AbstractMissionItem*Mission::currentItem() const
+AbstractMissionItem* Mission::currentItem() const
 {
     return this->item(m_currentIndex);
 }

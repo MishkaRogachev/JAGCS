@@ -87,7 +87,9 @@ float BaseVehicle::homeDistance() const
 
 float BaseVehicle::missionDirection() const
 {
-    if (!m_position.coordinate().isValid() || !m_assignedMission) return -1;
+    if (!m_position.coordinate().isValid() ||
+        !m_assignedMission ||
+        m_assignedMission->currentIndex() == -1) return -1;
 
     for (int index = m_assignedMission->currentIndex();
          index < m_assignedMission->count(); ++index)
@@ -104,7 +106,9 @@ float BaseVehicle::missionDirection() const
 
 float BaseVehicle::missionDistance() const
 {
-    if (!m_position.coordinate().isValid() || !m_assignedMission) return -1;
+    if (!m_position.coordinate().isValid() ||
+        !m_assignedMission ||
+        m_assignedMission->currentIndex() == -1) return -1;
 
     for (int index = m_assignedMission->currentIndex();
          index < m_assignedMission->count(); ++index)
