@@ -7,7 +7,6 @@ Rectangle {
     property real course: 0
     property real windDirection: 0
     property real homeDirection: 0
-    property real missionDirection: 0
 
     property color scalesColor: palette.textColor
     property color courseColor: palette.textColor
@@ -136,14 +135,6 @@ Rectangle {
         rotation: homeDirection - heading
         visible: homeDirection > -1
         iconSource: "qrc:/icons/home.svg"
-    }
-
-    CompassItem {
-        anchors.centerIn: parent
-        width: root.width
-        height: root.height
-        rotation: missionDirection - heading
-        visible: missionDirection > -1
     }
 
     Image {

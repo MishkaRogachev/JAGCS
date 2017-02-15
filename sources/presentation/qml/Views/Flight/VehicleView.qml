@@ -97,7 +97,6 @@ ColumnLayout {
         windDirection: vehicle ? vehicle.wind.direction : -1
         homeDirection: vehicle ? vehicle.homeDirection : -1
         homeDistance: vehicle ? vehicle.homeDistance : -1
-        missionDirection: vehicle ? vehicle.missionDirection : -1
         missionDistance: vehicle ? vehicle.missionDistance : -1
 
         snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0

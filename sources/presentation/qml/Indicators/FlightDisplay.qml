@@ -19,7 +19,6 @@ Column {
     property alias course: compass.course
     property alias windDirection: compass.windDirection
     property alias homeDirection: compass.homeDirection
-    property alias missionDirection: compass.missionDirection
 
     property real missionDistance: 0.0
     property real homeDistance: 0.0
