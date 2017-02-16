@@ -14,7 +14,7 @@ Pane {
     property alias selectedVehicle: vehicleView.vehicle
 
     property bool cornerMap: false
-    property bool cornerVisible: true
+    property bool cornerVisible: false
 
     signal vehicleSelected(string name)
 
@@ -32,8 +32,8 @@ Pane {
         id: corner
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        width: parent.width / 4
-        height: cornerVisible ? width * 3 / 4 : 0// TODO: ratio
+        width: background.width / 3
+        height: cornerVisible ? background.height / 3 : 0
     }
 
     FlightMapView {
@@ -48,22 +48,20 @@ Pane {
         anchors.fill: cornerMap ? background : corner
     }
 
-    RowLayout {
-        anchors.bottom: corner.top
-        anchors.left: corner.left
+    Button {
+        onClicked: cornerMap = !cornerMap
+        iconSource: cornerMap ? "qrc:/icons/map-marker.svg" :
+                                "qrc:/icons/video.svg"
+        anchors.bottom: parent.bottom
+        anchors.right: corner.left
+    }
+
+    Button {
+        onClicked: cornerVisible = !cornerVisible
+        iconSource: cornerVisible ? "qrc:/ui/hide.svg" : "qrc:/ui/show.svg"
+        anchors.bottom: parent.bottom
+        anchors.right: corner.right
         z: 2
-
-        Button {
-            onClicked: cornerVisible = !cornerVisible
-            iconSource: cornerVisible ? "qrc:/ui/hide.svg" :
-                                        "qrc:/ui/show.svg"
-        }
-
-        Button {
-            onClicked: cornerMap = !cornerMap
-            iconSource: cornerMap ? "qrc:/icons/map-marker.svg" :
-                                    "qrc:/icons/video.svg"
-        }
     }
 
     Item {

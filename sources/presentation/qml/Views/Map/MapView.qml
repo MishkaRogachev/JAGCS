@@ -10,8 +10,8 @@ Map {
     property var lineModel
     property var pointModel
     property var vehicleModel
-    property var mouseCoordinate: map.toCoordinate(Qt.point(mouseArea.mouseX,
-                                                            mouseArea.mouseY));
+
+    property var mouseCoordinate: QtPositioning.coordinate()
 
     signal saveMapViewport()
     signal picked(var coordinate)
@@ -53,14 +53,15 @@ Map {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onPositionChanged: bar.coordinate = mouseCoordinate
+        onExited: mouseCoordinate = QtPositioning.coordinate()
+        onPositionChanged: mouseCoordinate = map.toCoordinate(Qt.point(mouseX, mouseY))
         onClicked: map.picked(mouseCoordinate)
     }
 
-    MapStatusBar {
-        id: bar
-        anchors.bottom: parent.bottom
-        width: parent.width
+    onCenterChanged: {
+        if (!mouseArea.containsMouse) return;
+
+        mouseCoordinate = map.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
     }
 
     Component.onDestruction: saveMapViewport()

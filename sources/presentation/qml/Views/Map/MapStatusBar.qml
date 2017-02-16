@@ -17,14 +17,20 @@ Pane {
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: palette.fontPixelSize / 1.5
             Layout.fillWidth: true
-            text: qsTr("Lat:") + Helper.degreesToDmsString(coordinate.latitude, false)
+            text: qsTr("Lat:") + (coordinate.isValid ?
+                                      Helper.degreesToDmsString(
+                                          coordinate.latitude, false) :
+                                      "-")
         }
 
         Label {
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: palette.fontPixelSize / 1.5
             Layout.fillWidth: true
-            text: qsTr("Lon:") + Helper.degreesToDmsString(coordinate.longitude, true)
+            text: qsTr("Lon:") + (coordinate.isValid ?
+                                      Helper.degreesToDmsString(
+                                          coordinate.longitude, true) :
+                                      "-")
         }
     }
 }

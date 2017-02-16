@@ -5,4 +5,11 @@ import "../Map/Overlays"
 
 MapView {
     id: root
+
+    MapStatusBar {
+        id: bar
+        anchors.bottom: parent.bottom
+        coordinate: root.mouseCoordinate
+        width: parent.width
+    }
 }
