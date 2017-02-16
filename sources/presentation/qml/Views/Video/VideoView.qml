@@ -11,5 +11,12 @@ Rectangle {
     VideoOutput {
         id: videoOutput
         anchors.fill: parent
+        anchors.bottomMargin: bar.height
+    }
+
+    VideoStatusBar {
+        id: bar
+        anchors.bottom: parent.bottom
+        width: parent.width
     }
 }

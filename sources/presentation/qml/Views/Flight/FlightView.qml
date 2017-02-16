@@ -33,7 +33,7 @@ Pane {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         width: background.width / 3
-        height: cornerVisible ? background.height / 3 : 0
+        height: cornerVisible ? background.height / 3 + palette.controlBaseSize : 0
     }
 
     FlightMapView {

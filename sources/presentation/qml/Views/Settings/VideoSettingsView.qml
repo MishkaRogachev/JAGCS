@@ -15,7 +15,6 @@ Frame {
         sources.currentIndex = sourcesModel.indexOf(source);
     }
 
-
     ColumnLayout{
         anchors.fill: parent
 
