@@ -55,15 +55,16 @@ Pane {
 
         Button {
             onClicked: cornerVisible = !cornerVisible
-            iconSource: cornerVisible ? "qrc:/ui/hide.svg" : "qrc:/ui/show.svg"
+            iconSource: cornerVisible ? "qrc:/ui/hide.svg" :
+                                        "qrc:/ui/show.svg"
         }
 
         Button {
             onClicked: cornerMap = !cornerMap
-            iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
+            iconSource: cornerMap ? "qrc:/icons/map-marker.svg" :
+                                    "qrc:/icons/video.svg"
         }
     }
-
 
     Item {
         id: sidebar

@@ -43,6 +43,7 @@
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/ConnectionStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
+        <file>Views/Map/MapStatusBar.qml</file>
         <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
         <file>Views/Map/Overlays/MissionLineMapOverlayView.qml</file>
         <file>Views/Map/Overlays/MissionPointMapOverlayView.qml</file>
