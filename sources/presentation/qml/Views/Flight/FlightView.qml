@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
-
+import "../Map"
 import "../Video"
 
 Pane {
@@ -36,7 +36,7 @@ Pane {
         height: cornerVisible ? background.height / 3 + palette.controlBaseSize : 0
     }
 
-    FlightMapView {
+    MapView {
         id: map
         objectName: "map"
         anchors.fill: cornerMap ? corner : background

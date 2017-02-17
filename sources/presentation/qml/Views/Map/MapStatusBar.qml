@@ -23,6 +23,7 @@ Pane {
             Menu {
                 id: menu
                 visible: parent.checked
+                width: palette.controlBaseSize * 5
 
                 MenuItem {
                     text: qsTr("Vehicles")

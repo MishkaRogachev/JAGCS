@@ -53,10 +53,8 @@
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/VideoStatusBar.qml</file>
         <file>Views/Flight/FlightView.qml</file>
-        <file>Views/Flight/FlightMapView.qml</file>
         <file>Views/Flight/VehicleView.qml</file>
         <file>Views/Mission/MissionView.qml</file>
-        <file>Views/Mission/MissionMapView.qml</file>
         <file>Views/Mission/MissionItemView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/GuiSettingsView.qml</file>

@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
+import "../Map"
 
 Pane {
     id: root
@@ -33,7 +34,7 @@ Pane {
 
     padding: 0
 
-    MissionMapView {
+    MapView {
         id: map
         objectName: "map"
         anchors.top: topbar.bottom

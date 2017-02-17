@@ -63,6 +63,14 @@ Map {
         model: hdopVisible ? vehicleModel : 0
     }
 
+    MapStatusBar {
+        id: bar
+        anchors.bottom: parent.bottom
+        coordinate: root.mouseCoordinate
+        width: parent.width
+        z: 3
+    }
+
     MouseArea {
         id: mouseArea
         anchors.fill: parent
