@@ -11,6 +11,8 @@ Map {
     property var pointModel
     property var vehicleModel
 
+    property bool vehicleVisible: true
+
     property var mouseCoordinate: QtPositioning.coordinate()
 
     signal saveMapViewport()
@@ -46,7 +48,7 @@ Map {
     }
 
     VehicleMapOverlayView {
-        model: vehicleModel
+        model: vehicleVisible ? vehicleModel : 0
     }
 
     MouseArea {

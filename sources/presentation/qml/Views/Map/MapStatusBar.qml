@@ -10,17 +10,36 @@ Pane {
     id: root
 
     property var coordinate: QtPositioning.coordinate();
-    height: palette.controlBaseSize
+
+    padding: 0
 
     RowLayout {
+
+        Button {
+            iconSource: "qrc:/icons/layers.svg"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: if (!menu.visible) menu.open()
+
+            Menu {
+                id: menu
+                y: -parent.height
+
+                MenuItem {
+                    text: qsTr("Vehicles")
+                    checkable: true
+                    checked: map.vehicleVisible
+                    onCheckedChanged: map.vehicleVisible = checked
+                }
+            }
+        }
+
         Label {
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: palette.fontPixelSize / 1.5
             Layout.fillWidth: true
             text: qsTr("Lat:") + (coordinate.isValid ?
                                       Helper.degreesToDmsString(
-                                          coordinate.latitude, false) :
-                                      "-")
+                                          coordinate.latitude, false) : "-")
         }
 
         Label {
@@ -29,8 +48,7 @@ Pane {
             Layout.fillWidth: true
             text: qsTr("Lon:") + (coordinate.isValid ?
                                       Helper.degreesToDmsString(
-                                          coordinate.longitude, true) :
-                                      "-")
+                                          coordinate.longitude, true) : "-")
         }
     }
 }
