@@ -18,17 +18,31 @@ Pane {
         Button {
             iconSource: "qrc:/icons/layers.svg"
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: if (!menu.visible) menu.open()
+            onClicked: menu.open()
 
             Menu {
                 id: menu
-                y: -parent.height
+                visible: parent.checked
 
                 MenuItem {
                     text: qsTr("Vehicles")
                     checkable: true
                     checked: map.vehicleVisible
                     onCheckedChanged: map.vehicleVisible = checked
+                }
+
+                MenuItem {
+                    text: qsTr("Track")
+                    checkable: true
+                    checked: map.trackVisible
+                    onCheckedChanged: map.trackVisible = checked
+                }
+
+                MenuItem {
+                    text: qsTr("Hdop")
+                    checkable: true
+                    checked: map.hdopVisible
+                    onCheckedChanged: map.hdopVisible = checked
                 }
 
                 MenuItem {

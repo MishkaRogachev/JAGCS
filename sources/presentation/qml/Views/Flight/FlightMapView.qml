@@ -12,12 +12,4 @@ MapView {
         coordinate: root.mouseCoordinate
         width: parent.width
     }
-
-    TrackMapOverlayView {
-        model: vehicleModel
-    }
-
-    HdopRadiusMapOverlayView {
-        model: vehicleModel
-    }
 }

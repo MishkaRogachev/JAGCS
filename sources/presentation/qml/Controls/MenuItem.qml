@@ -9,6 +9,7 @@ MenuItem {
     property alias iconSource: icon.source
     property color iconColor: label.color
 
+    leftPadding: icon.width
     font.pixelSize: palette.fontPixelSize
 
     background: Rectangle {
@@ -23,13 +24,12 @@ MenuItem {
         color: iconColor
         source: control.checked ? "qrc:/ui/ok.svg" : ""
         anchors.verticalCenter: parent.verticalCenter
-        width: palette.controlBaseSize
+        width: palette.controlBaseSize * 0.6
         height: width
     }
 
     contentItem: Label {
         id: label
-        leftPadding: icon.width
         font: control.font
         text: control.text
         color: control.pressed ? palette.selectedTextColor: palette.textColor
