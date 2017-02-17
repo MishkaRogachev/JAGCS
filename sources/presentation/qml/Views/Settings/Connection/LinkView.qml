@@ -81,15 +81,27 @@ Frame {
 
         RowLayout {
 
+            Image {
+                source: "qrc:/icons/rx.svg"
+                anchors.verticalCenter: parent.verticalCenter
+                sourceSize.width: palette.controlBaseSize / 2
+                sourceSize.height: palette.controlBaseSize / 2
+            }
+
             Label {
-                iconSource: "qrc:/icons/rx.svg"
                 text: (link ? link.bytesReceivedSec : "") + qsTr(" b/s")
                 horizontalAlignment: Text.AlignHCenter
                 Layout.preferredWidth: 102
             }
 
+            Image {
+                source: "qrc:/icons/tx.svg"
+                anchors.verticalCenter: parent.verticalCenter
+                sourceSize.width: palette.controlBaseSize / 2
+                sourceSize.height: palette.controlBaseSize / 2
+            }
+
             Label {
-                iconSource: "qrc:/icons/tx.svg"
                 text: (link ? link.bytesSentSec : "") + qsTr(" b/s")
                 horizontalAlignment: Text.AlignHCenter
                 Layout.preferredWidth: 102
