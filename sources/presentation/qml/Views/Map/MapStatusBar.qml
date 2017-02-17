@@ -30,6 +30,20 @@ Pane {
                     checked: map.vehicleVisible
                     onCheckedChanged: map.vehicleVisible = checked
                 }
+
+                MenuItem {
+                    text: qsTr("Mission Points")
+                    checkable: true
+                    checked: map.missionPointsVisible
+                    onCheckedChanged: map.missionPointsVisible = checked
+                }
+
+                MenuItem {
+                    text: qsTr("Mission Lines")
+                    checkable: true
+                    checked: map.missionLinesVisible
+                    onCheckedChanged: map.missionLinesVisible = checked
+                }
             }
         }
 

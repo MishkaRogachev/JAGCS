@@ -12,6 +12,8 @@ Map {
     property var vehicleModel
 
     property bool vehicleVisible: true
+    property bool missionPointsVisible: true
+    property bool missionLinesVisible: true
 
     property var mouseCoordinate: QtPositioning.coordinate()
 
@@ -32,19 +34,19 @@ Map {
     }
 
     MissionLineMapOverlayView {
-        model: lineModel
+        model: missionLinesVisible ? lineModel : 0
     }
 
     RadiusMapOverlayView {
-        model: pointModel
+        model: missionPointsVisible ? pointModel : 0
     }
 
     AcceptanceRadiusMapOverlayView {
-        model: pointModel
+        model: missionPointsVisible ? pointModel : 0
     }
 
     MissionPointMapOverlayView {
-        model: pointModel
+        model: missionPointsVisible ? pointModel : 0
     }
 
     VehicleMapOverlayView {
