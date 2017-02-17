@@ -4,22 +4,22 @@
 <context>
     <name>Compass</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="67"/>
         <source>N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="68"/>
         <source>E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="72"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="69"/>
         <source>S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="70"/>
         <source>W</source>
         <translation></translation>
     </message>
@@ -60,58 +60,59 @@
 <context>
     <name>FlightDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="68"/>
         <source>IAS, m/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="69"/>
         <source>Hbar, m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="74"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="75"/>
         <source>GS, m/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="88"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="89"/>
         <source>TAS, m/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="106"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="107"/>
         <source>m/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="125"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="146"/>
         <source>km</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="180"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="185"/>
         <source>V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="196"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="201"/>
         <source>A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="141"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="125"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="146"/>
         <source>m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="151"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="156"/>
         <source>Hsns, m</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="165"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="170"/>
         <source>Hgeo, m</source>
         <translation></translation>
     </message>
@@ -210,6 +211,44 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="121"/>
         <source>Remove</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>MapStatusBar</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="28"/>
+        <source>Vehicles</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="35"/>
+        <source>Track</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="42"/>
+        <source>Hdop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="49"/>
+        <source>Mission Points</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="56"/>
+        <source>Mission Lines</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="68"/>
+        <source>Lat:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="77"/>
+        <source>Lon:</source>
         <translation></translation>
     </message>
 </context>
@@ -372,27 +411,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="116"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="117"/>
         <source>AUTO</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="124"/>
         <source>GUIDED</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="130"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="131"/>
         <source>STAB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="138"/>
         <source>ARMED</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="157"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="158"/>
         <source>Send</source>
         <translation></translation>
     </message>
@@ -400,8 +439,16 @@
 <context>
     <name>VideoSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/VideoSettingsView.qml" line="27"/>
+        <location filename="../sources/presentation/qml/Views/Settings/VideoSettingsView.qml" line="26"/>
         <source>Video source</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>VideoStatusBar</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Video/VideoStatusBar.qml" line="16"/>
+        <source>Source:</source>
         <translation></translation>
     </message>
 </context>
