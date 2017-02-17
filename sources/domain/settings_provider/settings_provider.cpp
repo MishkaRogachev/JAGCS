@@ -19,6 +19,7 @@ public:
     {
         settings.clear();
 
+        settings.setValue(gui_settings::fullscreen, true);
         settings.setValue(gui_settings::locale, "en");
         settings.setValue(gui_settings::uiSize, 36);
         settings.setValue(gui_settings::paletteStyle, 0);

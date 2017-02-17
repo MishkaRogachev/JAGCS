@@ -17,6 +17,9 @@ GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
 
 void GuiSettingsPresenter::updateView()
 {
+    this->setViewProperty(PROPERTY(fullscreen), domain::SettingsProvider::value(
+                              domain::gui_settings::fullscreen));
+
     const QStringList& locales = domain::TranslationManager::avalibleLocales();
     int index = locales.indexOf(domain::TranslationManager::currentLocale());
     this->setViewProperty(PROPERTY(localeIndex), index);
@@ -42,6 +45,9 @@ void GuiSettingsPresenter::connectView(QObject* view)
 
 void GuiSettingsPresenter::onUpdateSettings()
 {
+    domain::SettingsProvider::setValue(domain::gui_settings::fullscreen,
+                                       this->viewProperty(PROPERTY(fullscreen)).toBool());
+
     const QStringList& locales = domain::TranslationManager::avalibleLocales();
     QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
     domain::TranslationManager::setCurrentLocale(locale);

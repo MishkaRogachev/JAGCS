@@ -5,6 +5,7 @@ namespace domain
 {
     namespace gui_settings
     {
+        const char* const fullscreen = "Gui/fullscreen";
         const char* const locale = "Gui/locale";
         const char* const uiSize = "Gui/uiSize";
         const char* const paletteStyle = "Gui/paletteStyle";

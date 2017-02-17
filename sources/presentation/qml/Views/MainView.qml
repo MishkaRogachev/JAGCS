@@ -9,13 +9,14 @@ import "Status"
 ApplicationWindow {
     id: main
 
-    visibility: "FullScreen"
-    flags: Qt.FramelessWindowHint
+    visibility: fullscreen ? "FullScreen" : "Maximized"
     minimumWidth: 1024
     minimumHeight: 768
     visible: true
 
     property string mode
+
+    property bool fullscreen: true
     property alias uiSize: palette.controlBaseSize
     property int paletteStyle: 0
 
@@ -65,6 +66,7 @@ ApplicationWindow {
     }
 
     function updateUiSettings() {
+        fullscreen = settings.value("Gui/fullscreen");
         uiSize = settings.value("Gui/uiSize");
         paletteStyle = settings.value("Gui/paletteStyle");
     }

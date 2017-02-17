@@ -7,6 +7,7 @@ import "qrc:/Controls"
 Frame {
     id: root
 
+    property alias fullscreen: fullscreenBox.checked
     property alias locales: languageBox.model
     property alias localeIndex: languageBox.currentIndex
     property alias uiSize: uiSlider.value
@@ -20,6 +21,21 @@ Frame {
         anchors.margins: palette.controlBaseSize / 2
         rowSpacing: palette.controlBaseSize / 2
         columns: 3
+
+        Label {
+            text: qsTr("Fullscreen")
+            Layout.fillWidth: true
+        }
+
+        CheckBox {
+            id: fullscreenBox
+            Layout.columnSpan: 2
+            Layout.alignment: Qt.AlignRight
+            onCheckedChanged: {
+                root.updateSettings();
+                main.updateUiSettings();
+            }
+        }
 
         Label {
             text: qsTr("Language")
