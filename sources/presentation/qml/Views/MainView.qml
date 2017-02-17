@@ -9,7 +9,7 @@ import "Status"
 ApplicationWindow {
     id: main
 
-    visibility: "Maximized"
+    visibility: "FullScreen"
     flags: Qt.FramelessWindowHint
     minimumWidth: 1024
     minimumHeight: 768

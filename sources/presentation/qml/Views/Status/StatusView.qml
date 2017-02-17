@@ -14,6 +14,17 @@ ToolBar {
         anchors.fill: parent
         spacing: 1
 
+        Image {
+            source: "qrc:/icons/jagcs.svg"
+            anchors.verticalCenter: parent.verticalCenter
+            sourceSize.width: palette.controlBaseSize
+            sourceSize.height: palette.controlBaseSize
+        }
+
+        Label {
+            text: "JAGCS"
+        }
+
         Item { Layout.fillWidth: true }
 
         ConnectionStatusView {
