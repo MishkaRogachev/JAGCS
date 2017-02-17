@@ -18,30 +18,20 @@ MenuItem {
         border.color: control.activeFocus ? palette.selectionColor : "transparent"
     }
 
-    contentItem: Item {
-        implicitWidth: row.width
-        implicitHeight: row.height
+    indicator: ColoredIcon {
+        id: icon
+        color: iconColor
+        source: control.checked ? "qrc:/ui/ok.svg" : ""
+        anchors.verticalCenter: parent.verticalCenter
+        width: palette.controlBaseSize
+        height: width
+    }
 
-        Row {
-            id: row
-            anchors.centerIn: parent
-            height: parent.availableHeight
-            spacing: 5
-
-            ColoredIcon {
-                id: icon
-                color: iconColor
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Label {
-                id: label
-                font: control.font
-                text: control.text
-                color: control.pressed || control.checked ?
-                           palette.selectedTextColor: palette.textColor
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
+    contentItem: Label {
+        id: label
+        leftPadding: icon.width
+        font: control.font
+        text: control.text
+        color: control.pressed ? palette.selectedTextColor: palette.textColor
     }
 }

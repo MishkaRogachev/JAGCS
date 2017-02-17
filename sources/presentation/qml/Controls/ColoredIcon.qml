@@ -7,14 +7,12 @@ Item {
     property alias source: image.source
     property alias color: overlay.color
 
-    width: image.width
-    height: image.height
+    width: image.sourceSize.width
+    height: image.sourceSize.height
 
     Image {
         id: image
-        anchors.centerIn: parent
-        sourceSize.width: parent.width
-        sourceSize.height: parent.height
+        anchors.fill: parent
         visible: false
     }
 
@@ -22,6 +20,7 @@ Item {
         id: overlay
         anchors.fill: parent
         source: image
+        visible: image.status == Image.Ready
     }
 }
 

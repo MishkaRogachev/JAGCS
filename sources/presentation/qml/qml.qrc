@@ -13,7 +13,6 @@
         <file>Controls/Label.qml</file>
         <file>Controls/Menu.qml</file>
         <file>Controls/MenuItem.qml</file>
-        <file>Controls/MenuButton.qml</file>
         <file>Controls/Frame.qml</file>
         <file>Controls/ProgressBar.qml</file>
         <file>Controls/Slider.qml</file>
