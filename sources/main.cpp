@@ -1,5 +1,6 @@
 // Qt
 #include <QApplication>
+#include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
@@ -14,8 +15,11 @@
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+
     app.setApplicationName("JAGCS");
     app.setOrganizationName("JAGCS");
+
+    app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
     domain::TranslationManager::init();
 
