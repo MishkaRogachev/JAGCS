@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
 
     app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
+    domain::SettingsProvider::instance(); // force main thread instance
     domain::TranslationManager::init();
 
     domain::DomainEntry entry;

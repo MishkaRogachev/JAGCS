@@ -65,6 +65,11 @@ QVariant SettingsProvider::value(const QString& key,
     return instance()->d->settings.value(key, defaultValue);
 }
 
+bool SettingsProvider::boolValue(const QString& key, bool defaultValue)
+{
+    return SettingsProvider::value(key, defaultValue).toBool();
+}
+
 void SettingsProvider::setValue(const QString& key, const QVariant& value)
 {
     instance()->d->settings.setValue(key, value);

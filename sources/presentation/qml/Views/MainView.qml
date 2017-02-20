@@ -9,16 +9,14 @@ import "Status"
 ApplicationWindow {
     id: main
 
-    visibility: fullscreen ? "FullScreen" : "Maximized"
-    minimumWidth: 1024
-    minimumHeight: 768
-    visible: true
-
     property string mode
 
-    property bool fullscreen: true
     property alias uiSize: palette.controlBaseSize
     property int paletteStyle: 0
+
+    minimumWidth: 1024
+    minimumHeight: 768
+    visibility: "Hidden"
 
     Palette {
         id: palette
@@ -66,7 +64,7 @@ ApplicationWindow {
     }
 
     function updateUiSettings() {
-        fullscreen = settings.value("Gui/fullscreen");
+        visibility = settings.boolValue("Gui/fullscreen") ? "FullScreen" : "Windowed"
         uiSize = settings.value("Gui/uiSize");
         paletteStyle = settings.value("Gui/paletteStyle");
     }
