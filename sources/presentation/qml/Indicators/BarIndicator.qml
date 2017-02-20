@@ -7,7 +7,7 @@ Canvas {
     property real value: minValue
     property real minValue: 0
     property real maxValue: 1
-    property color fillColor: value
+    property color fillColor
 
     onValueChanged: requestPaint()
     onMinValueChanged: requestPaint()
@@ -27,11 +27,11 @@ Canvas {
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = fillColor;
-        ctx.fillRect(1, zero, width - 2, zero - offset);
+        ctx.fillRect(1, height - zero, width - 2, offset - height);
 
         ctx.strokeStyle = palette.textColor;
-        ctx.moveTo(0, zero);
-        ctx.lineTo(width, zero);
+        ctx.moveTo(0, height - zero);
+        ctx.lineTo(width, height - zero);
         ctx.stroke();
     }
 }
