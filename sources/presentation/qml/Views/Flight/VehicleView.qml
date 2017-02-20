@@ -89,6 +89,7 @@ ColumnLayout {
         barometerAvalible: vehicle && vehicle.barometerAvalible
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0
+        throttle: vehicle ? vehicle.throttle : 0
         rangeFinderAvalible: vehicle && vehicle.rangeFinderAvalible
 
         compassAvalible: vehicle && vehicle.compasAvalible

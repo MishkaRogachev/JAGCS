@@ -33,5 +33,5 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
     vehicle->setBarometricAltitude(vfrHud.alt);
     vehicle->setBarometricClimb(vfrHud.climb);
     vehicle->setHeading(vfrHud.heading);
-    // TODO: throttle
+    vehicle->setThrottle(vfrHud.throttle);
 }

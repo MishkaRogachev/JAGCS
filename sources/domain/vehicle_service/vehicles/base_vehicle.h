@@ -48,6 +48,8 @@ namespace domain
         Q_PROPERTY(float groundSpeed READ groundSpeed WRITE setGroundSpeed
                    NOTIFY groundSpeedChanged)
 
+        Q_PROPERTY(int throttle READ throttle WRITE setThrottle
+                   NOTIFY throttleChanged)
         Q_PROPERTY(PowerSystem powerSystem READ powerSystem
                    WRITE setPowerSystem NOTIFY powerSystemChanged)
 
@@ -92,10 +94,11 @@ namespace domain
         Gps gps() const;
         float groundSpeed() const;
 
+        int throttle() const;
+        PowerSystem powerSystem() const;
+
         bool compasAvalible() const;
         int heading() const;
-
-        PowerSystem powerSystem() const;
 
     public slots:
         void setState(State state);
@@ -115,6 +118,7 @@ namespace domain
         void setGps(const Gps& gps);
         void setGroundSpeed(float groundSpeed);
 
+        void setThrottle(int throttle);
         void setPowerSystem(const PowerSystem& powerSystem);
 
         void setCompasAvalible(bool compasAvalible);
@@ -142,6 +146,7 @@ namespace domain
         void gpsChanged(Gps gps);
         void groundSpeedChanged(float groundSpeed);
 
+        void throttleChanged(int throttle);
         void powerSystemChanged(PowerSystem powerSystem);
 
         void compasAvalibleChanged(bool compasAvalible);
@@ -167,6 +172,7 @@ namespace domain
         Gps m_gps;
         float m_groundSpeed;
 
+        int m_throttle;
         PowerSystem m_powerSystem;
 
         bool m_compasAvalible;

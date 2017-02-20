@@ -43,8 +43,12 @@ Column {
     }
 
     property int climb: 0
-    property int minClimb: -12
+    property int minClimb: -6
     property int maxClimb: 12
+
+    property int throttle: 0
+    property int minThrottle: 0
+    property int maxThrottle: 100
 
     property bool rangeFinderAvalible: false
     property int geometricAltitude: 0
@@ -60,10 +64,21 @@ Column {
         spacing: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
+        BarIndicator {
+            id: throttleScale
+            anchors.verticalCenter: parent.verticalCenter
+            width: root.width * 0.03 - 1
+            height: horizont.height * 0.8
+            value: throttle
+            fillColor: palette.selectionColor
+            minValue: minThrottle
+            maxValue: maxThrottle
+        }
+
         ArtificialHorizont {
             id: horizont
             anchors.verticalCenter: parent.verticalCenter
-            width: root.width * 0.97
+            width: root.width * 0.94
             height: width
             velocityPrefix: qsTr("IAS, m/s")
             altitudePrefix: qsTr("Hbar, m")
@@ -207,9 +222,9 @@ Column {
         }
 
         BarIndicator {
-            id: groundSpeedScale
+            id: climbScale
             anchors.verticalCenter: parent.verticalCenter
-            width: root.width - horizont.width - 1
+            width: root.width * 0.03 - 1
             height: horizont.height * 0.8
             value: climb
             fillColor: {

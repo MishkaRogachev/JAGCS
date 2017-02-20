@@ -1,5 +1,8 @@
 #include "base_vehicle.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "mission.h"
 #include "position_mission_item.h"
@@ -16,6 +19,7 @@ BaseVehicle::BaseVehicle(uint8_t vehicleId, int type, QObject* parent):
     m_insAvalible(false),
     m_gpsAvalible(false),
     m_groundSpeed(0),
+    m_throttle(0),
     m_compasAvalible(false),
     m_heading(0)
 {}
@@ -153,6 +157,11 @@ int BaseVehicle::heading() const
     return m_heading;
 }
 
+int BaseVehicle::throttle() const
+{
+    return m_throttle;
+}
+
 void BaseVehicle::setState(BaseVehicle::State state)
 {
     if (m_state == state) return;
@@ -251,6 +260,14 @@ void BaseVehicle::setGroundSpeed(float groundSpeed)
 
     m_groundSpeed = groundSpeed;
     emit groundSpeedChanged(groundSpeed);
+}
+
+void BaseVehicle::setThrottle(int throttle)
+{
+    if (m_throttle == throttle) return;
+
+    m_throttle = throttle;
+    emit throttleChanged(throttle);
 }
 
 void BaseVehicle::setPowerSystem(const PowerSystem& powerSystem)
