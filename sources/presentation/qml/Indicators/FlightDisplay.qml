@@ -43,7 +43,7 @@ Column {
     }
 
     property int climb: 0
-    property int minClimb: -6
+    property int minClimb: -12
     property int maxClimb: 12
 
     property int throttle: 0
@@ -61,18 +61,18 @@ Column {
     Behavior on heading { PropertyAnimation { duration: 100 } }
 
     Row {
-        spacing: 1
         anchors.horizontalCenter: parent.horizontalCenter
 
         BarIndicator {
             id: throttleScale
             anchors.verticalCenter: parent.verticalCenter
-            width: root.width * 0.03 - 1
+            width: root.width * 0.03
             height: horizont.height * 0.8
             value: throttle
             fillColor: palette.selectionColor
             minValue: minThrottle
             maxValue: maxThrottle
+            z: 1
         }
 
         ArtificialHorizont {
@@ -224,7 +224,7 @@ Column {
         BarIndicator {
             id: climbScale
             anchors.verticalCenter: parent.verticalCenter
-            width: root.width * 0.03 - 1
+            width: root.width * 0.03
             height: horizont.height * 0.8
             value: climb
             fillColor: {
@@ -242,7 +242,6 @@ Column {
         id: compass
         width: horizont.width * 0.6
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: -(root.width - horizont.width) / 2
         scalesColor: compassAvalible ? palette.textColor : palette.disabledColor
         courseColor: snsColor
     }

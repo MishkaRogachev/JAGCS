@@ -9,6 +9,8 @@ Canvas {
     property real maxValue: 1
     property color fillColor
 
+    Behavior on value { PropertyAnimation { duration: 100 } }
+
     onValueChanged: requestPaint()
     onMinValueChanged: requestPaint()
     onMaxValueChanged: requestPaint()
