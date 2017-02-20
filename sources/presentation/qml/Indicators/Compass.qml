@@ -63,13 +63,13 @@ Rectangle {
                     ctx.translate(0, fontPixelSize);
                     ctx.rotate((-i + heading) * Math.PI / 180);
 
-                    ctx.font = 'bold ' + fontPixelSize + 'px sans-serif';
+                    ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
                     if (i == 0) ctx.fillText(qsTr("N"), 0, 2);
                     else if (i == 90) ctx.fillText(qsTr("E"), 0, 2);
                     else if (i == 180) ctx.fillText(qsTr("S"), 0, 2);
                     else if (i == 270) ctx.fillText(qsTr("W"), 0, 2);
 
-                    ctx.font = fontPixelSize * 0.8 + 'px sans-serif';
+                    ctx.font = fontPixelSize * 0.8 + 'px "Open Sans"';
                     if (i == 30) ctx.fillText("3", 0, 2);
                     else if (i == 60) ctx.fillText("6", 0, 2);
                     else if (i == 120) ctx.fillText("12", 0, 2);

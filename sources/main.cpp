@@ -1,8 +1,10 @@
 // Qt
 #include <QApplication>
+#include <QFontDatabase>
 #include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QDebug>
 
 // Internal
 #include "domain_entry.h"
@@ -18,6 +20,12 @@ int main(int argc, char* argv[])
 
     app.setApplicationName("JAGCS");
     app.setOrganizationName("JAGCS");
+
+    QFontDatabase::addApplicationFont(":/fonts/OpenSans-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/OpenSans-Italic.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/OpenSans-Regular.ttf");
+
+    app.setFont(QFont("OpenSans"));
 
     app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 

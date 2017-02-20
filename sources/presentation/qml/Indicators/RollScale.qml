@@ -54,7 +54,7 @@ Item {
             ctx.lineTo(palette.controlBaseSize / 4,
                        -height / 2 + palette.controlBaseSize / 4);
 
-            ctx.font = 'bold ' + fontPixelSize + 'px sans-serif';
+            ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.fillText(Math.abs(roll), 0, -height / 2 +
                          palette.controlBaseSize / 1.5);
 

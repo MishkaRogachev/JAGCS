@@ -28,7 +28,7 @@ Item {
             ctx.lineWidth = 2;
             ctx.strokeStyle = scaleColor;
             ctx.fillStyle = scaleColor;
-            ctx.font = fontPixelSize + 'px sans-serif';
+            ctx.font = fontPixelSize + 'px "Open Sans"';
             ctx.textBaseline = 'middle';
 
             ctx.save();
