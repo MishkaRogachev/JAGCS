@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
+        <file>fonts/OpenSans-Bold.ttf</file>
+        <file>fonts/OpenSans-Italic.ttf</file>
+        <file>fonts/OpenSans-Regular.ttf</file>
         <file>ui/menu_arrow.svg</file>
         <file>ui/ok.svg</file>
         <file>ui/plus.svg</file>
