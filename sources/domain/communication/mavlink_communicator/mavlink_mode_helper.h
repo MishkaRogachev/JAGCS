@@ -28,12 +28,12 @@ namespace domain
             if (mode == 12) return QT_TRANSLATE_NOOP("MAVLINK", "LOITER");
             if (mode == 14) return QT_TRANSLATE_NOOP("MAVLINK", "AVOID ADSB");
             if (mode == 15) return QT_TRANSLATE_NOOP("MAVLINK", "GUIDED");
-            if (mode == 16) return QT_TRANSLATE_NOOP("MAVLINK", "INITIALISING");
+            if (mode == 16) return QT_TRANSLATE_NOOP("MAVLINK", "INITIALISE");
             if (mode == 17) return QT_TRANSLATE_NOOP("MAVLINK", "QSTABILIZE");
             if (mode == 18) return QT_TRANSLATE_NOOP("MAVLINK", "QHOVER");
             if (mode == 19) return QT_TRANSLATE_NOOP("MAVLINK", "QLOITER");
             if (mode == 20) return QT_TRANSLATE_NOOP("MAVLINK", "QLAND");
-            if (mode == 21) return QT_TRANSLATE_NOOP("MAVLINK", "QRTL");
+            if (mode == 21) return QT_TRANSLATE_NOOP("MAVLINK", "QRETURN");
             return QT_TRANSLATE_NOOP("MAVLINK", "APM PLANE NONE");
         case MAV_TYPE_TRICOPTER:
         case MAV_TYPE_QUADROTOR:

@@ -83,27 +83,27 @@
         <translation type="vanished">В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="83"/>
         <source>IAS, m/s</source>
         <translation>IAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="69"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="84"/>
         <source>Hbar, m</source>
         <translation>Hбар, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="90"/>
         <source>GS, m/s</source>
         <translation>GS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="89"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="104"/>
         <source>TAS, m/s</source>
         <translation>TAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="107"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="122"/>
         <source>m/s</source>
         <translation>м/с</translation>
     </message>
@@ -112,7 +112,7 @@
         <translation type="vanished">Напряж.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="185"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="200"/>
         <source>V</source>
         <translation>В</translation>
     </message>
@@ -121,7 +121,7 @@
         <translation type="vanished">Ток   </translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="201"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="216"/>
         <source>A</source>
         <translation>А</translation>
     </message>
@@ -130,24 +130,24 @@
         <translation type="vanished">WS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="125"/>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="146"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="140"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
         <source>m</source>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="125"/>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="146"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="140"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
         <source>km</source>
         <translation>км</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="156"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="171"/>
         <source>Hsns, m</source>
         <translation>Hснс, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="185"/>
         <source>Hgeo, m</source>
         <translation>Hгео, м</translation>
     </message>
@@ -163,42 +163,47 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="53"/>
         <source>UI size</source>
         <translation>Размер интерфейса</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="61"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="77"/>
         <source>Palette</source>
         <translation>Палитра</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="83"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="99"/>
         <source>Indoor</source>
         <translation>Дневная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="89"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="105"/>
         <source>Artificial horizon</source>
         <translation>Авиагоризонт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="105"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="121"/>
         <source>Western</source>
         <translation>Западный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="108"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="124"/>
         <source>Russian</source>
         <translation>Отечественный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="80"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="96"/>
         <source>Outdoor</source>
         <translation>Ночная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="25"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="26"/>
+        <source>Fullscreen</source>
+        <translation>Полноэкранный</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="41"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -231,66 +236,307 @@
         <translation>Авто ответ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="86"/>
-        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="92"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="105"/>
         <source> b/s</source>
         <translation> б/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="100"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="112"/>
         <source>Drops: </source>
         <translation>Потери: </translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="111"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="123"/>
         <source>Disconnect</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="112"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="124"/>
         <source>Connect</source>
         <translation>Подключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="121"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Connection/LinkView.qml" line="133"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
 </context>
 <context>
+    <name>MAVLINK</name>
+    <message>
+        <source>Unknown</source>
+        <translation type="vanished">Неизвестно</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="17"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="76"/>
+        <source>MANUAL</source>
+        <translation>РУЧНОЙ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="18"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="51"/>
+        <source>CIRCLE</source>
+        <translation>КРУГ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="19"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="44"/>
+        <source>STABILIZE</source>
+        <translation>СТАБ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="20"/>
+        <source>TRAINING</source>
+        <translation>ТРЕН</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="21"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="45"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="89"/>
+        <source>ACRO</source>
+        <translation>АКРО</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="22"/>
+        <source>FBWA</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="23"/>
+        <source>FBWB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="24"/>
+        <source>CRUISE</source>
+        <translation>КРУИЗ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="25"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="56"/>
+        <source>AUTOTUNE</source>
+        <translation>АВТО ТЮН</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="26"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="47"/>
+        <source>AUTO</source>
+        <translation>АВТО</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="27"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="50"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="84"/>
+        <source>RETURN</source>
+        <translation>ВОЗВРАТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="28"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="49"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="82"/>
+        <source>LOITER</source>
+        <translation>БРАЖ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="29"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="60"/>
+        <source>AVOID ADSB</source>
+        <translation>ИЗБ ADSB</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="30"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="48"/>
+        <source>GUIDED</source>
+        <translation>ВЕДОМ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="31"/>
+        <source>INITIALISE</source>
+        <translation>ИНИЦ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="32"/>
+        <source>QSTABILIZE</source>
+        <translation>КСТАБ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="33"/>
+        <source>QHOVER</source>
+        <translation>КЗАВИС</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="34"/>
+        <source>QLOITER</source>
+        <translation>КБРАЖ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="35"/>
+        <source>QLAND</source>
+        <translation>КПОСАД</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="36"/>
+        <source>QRETURN</source>
+        <translation>КВОЗВРАТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="37"/>
+        <source>APM PLANE NONE</source>
+        <translation>APM PLANE НЕТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="46"/>
+        <source>ALT HOLD</source>
+        <translation>УДЕР ВЫС</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="52"/>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="85"/>
+        <source>LAND</source>
+        <translation>ПОСАД</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="53"/>
+        <source>DRIFT</source>
+        <translation>ДРИФТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="54"/>
+        <source>SPORT</source>
+        <translation>СПОРТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="55"/>
+        <source>FLIP</source>
+        <translation>ПЕРЕВОРОТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="57"/>
+        <source>POS HOLD</source>
+        <translation>УД ПОЗИЦ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="58"/>
+        <source>BRAKE</source>
+        <translation>ТОРМОЗ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="59"/>
+        <source>THROW</source>
+        <translation>БРОСОК</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="61"/>
+        <source>GUIDED NO SNS</source>
+        <translation>ВЕДОМ БЕЗ СНС</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="66"/>
+        <source>APM NONE</source>
+        <translation>APM НЕТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="77"/>
+        <source>ALT CTL</source>
+        <translation>УПР ВЫС</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="78"/>
+        <source>POS CTL</source>
+        <translation>УПР ПОС</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="80"/>
+        <source>READY</source>
+        <translation>ГОТОВ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="81"/>
+        <source>TAKEOFF</source>
+        <translation>ВЗЛЁТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="83"/>
+        <source>MISSION</source>
+        <translation>МИССИЯ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="86"/>
+        <source>RTGS</source>
+        <translation>ВОЗВРАТ К ПУ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="87"/>
+        <source>FOLLOW</source>
+        <translation>СЛЕД</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="88"/>
+        <source>PX4 AUTO NONE</source>
+        <translation>PX4 AUTO НЕТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="90"/>
+        <source>OFFBOARD</source>
+        <translation>ТЕЛЕУПРАВ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="91"/>
+        <source>STABILIZED</source>
+        <translation>СТАБ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="92"/>
+        <source>RATTITUDE</source>
+        <translation>ПОЛОЖ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="95"/>
+        <source>PX4 NONE</source>
+        <translation>PX4 НЕТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="110"/>
+        <source>NONE</source>
+        <translation>НЕТ</translation>
+    </message>
+</context>
+<context>
     <name>MapStatusBar</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="50"/>
         <source>Vehicles</source>
         <translation>Аппараты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="35"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="57"/>
         <source>Track</source>
         <translation>Трек</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="42"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="64"/>
         <source>Hdop</source>
         <translation>Hdop</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="49"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="71"/>
         <source>Mission Points</source>
         <translation>Точки маршрута</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="78"/>
         <source>Mission Lines</source>
         <translation>Линии маршрута</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="90"/>
         <source>Lat:</source>
         <translation>Шир.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="99"/>
         <source>Lon:</source>
         <translation>Дол.:</translation>
     </message>
@@ -377,7 +623,7 @@
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="148"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="151"/>
         <source>Add Item</source>
         <translation>Добавить элемент</translation>
     </message>
@@ -510,27 +756,27 @@
         <translation>VDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="117"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="118"/>
         <source>AUTO</source>
         <translation>АВТО</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="124"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="125"/>
         <source>GUIDED</source>
         <translation>ВЕДОМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="131"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="132"/>
         <source>STAB</source>
         <translation>СТАБ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="138"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="139"/>
         <source>ARMED</source>
         <translation>ГОТОВ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="158"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="159"/>
         <source>Send</source>
         <translation>Ввод</translation>
     </message>
@@ -611,7 +857,7 @@
         <translation>Не назначено</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="155"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="156"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
     </message>
@@ -645,12 +891,12 @@
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="18"/>
         <source>LOITER ALT</source>
-        <translation>КРУГ ДО ВЫСОТЫ</translation>
+        <translation>БРАЖ ДО ВЫСОТЫ</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="19"/>
         <source>LOITER TURNS</source>
-        <translation>КУРГ ОБОРОТОВ</translation>
+        <translation>БРАЖ ОБОРОТОВ</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_view_helper.cpp" line="20"/>
