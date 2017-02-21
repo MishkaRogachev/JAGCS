@@ -111,12 +111,13 @@ void MissionPresenter::updateSelectedVehicle()
     {
         int index = d->vehicleAliases.values().indexOf(
                         d->vehicleAliases[vehicle]) + 1;
-        this->setViewProperty(PROPERTY(selectedVehicle), index);
+        this->setViewProperty(PROPERTY(selectedVehicleId), index);
     }
     else
     {
-        this->setViewProperty(PROPERTY(selectedVehicle), 0);
+        this->setViewProperty(PROPERTY(selectedVehicleId), 0);
     }
+    this->setViewProperty(PROPERTY(selectedVehicle), QVariant::fromValue(vehicle));
 }
 
 void MissionPresenter::updateCurrentProgress(int currentProgress)
@@ -221,11 +222,15 @@ void MissionPresenter::onVehicleSelected(const QString& vehicleName)
 
     if (d->vehicleAliases.values().contains(vehicleName))
     {
-        d->selectedMission->assignVehicle(d->vehicleAliases.key(vehicleName));
+        domain::AbstractVehicle* vehicle = d->vehicleAliases.key(vehicleName);
+        d->selectedMission->assignVehicle(vehicle);
+        this->setViewProperty(PROPERTY(selectedVehicle),
+                              QVariant::fromValue(vehicle));
     }
     else
     {
         d->selectedMission->unassignVehicle();
+        this->setViewProperty(PROPERTY(selectedVehicle), QVariant());
     }
 }
 

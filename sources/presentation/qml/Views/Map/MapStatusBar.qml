@@ -14,6 +14,27 @@ Pane {
     padding: 0
 
     RowLayout {
+        spacing: 0
+
+        Button {
+            id: centerButton
+            checkable: true
+            iconSource: "qrc:/icons/center.svg"
+            enabled: selectedVehicle
+            onEnabledChanged: if (!enabled && checked) checked = false
+            onCheckedChanged: map.setGesturesEnabled(!checked)
+
+            Connections {
+                target: selectedVehicle
+                ignoreUnknownSignals: true
+                onPositionChanged: {
+                    if (!centerButton.checked ||
+                        !selectedVehicle.position.coordinate.isValid)
+                        return;
+                    map.center = selectedVehicle.position.coordinate;
+                }
+            }
+        }
 
         Button {
             iconSource: "qrc:/icons/layers.svg"

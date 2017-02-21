@@ -75,31 +75,10 @@ Pane {
             id: column
             height: parent.height
 
-            RowLayout {
-
-                ComboBox {
-                    model: vehicleNames
-                    Layout.fillWidth: true
-                    onCurrentTextChanged: vehicleSelected(currentText)
-                }
-
-                Button {
-                    id: centerButton
-                    checkable: true
-                    iconSource: "qrc:/icons/center.svg"
-                    onCheckedChanged: map.setGesturesEnabled(!checked)
-
-                    Connections {
-                        target: selectedVehicle
-                        ignoreUnknownSignals: true
-                        onPositionChanged: {
-                            if (!centerButton.checked ||
-                                !selectedVehicle.position.coordinate.isValid)
-                                return;
-                            map.center = selectedVehicle.position.coordinate;
-                        }
-                    }
-                }
+            ComboBox {
+                model: vehicleNames
+                Layout.fillWidth: true
+                onCurrentTextChanged: vehicleSelected(currentText)
             }
 
             VehicleView {

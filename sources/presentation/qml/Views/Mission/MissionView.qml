@@ -10,11 +10,13 @@ Pane {
 
     property QtObject helper
 
+    property QtObject selectedVehicle
+
     property alias missionNames: missionBox.model
     property alias vehicleNames: vehicleBox.model
 
     property alias selectedMission: missionBox.currentIndex
-    property alias selectedVehicle: vehicleBox.currentIndex
+    property alias selectedVehicleId: vehicleBox.currentIndex
 
     property int currentProgress: 0
     property int totalProgress: 0
@@ -90,13 +92,13 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: selectedMission != -1 && selectedVehicle > 0
+                enabled: selectedMission != -1 && selectedVehicleId > 0
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: selectedMission != -1 && selectedVehicle > 0
+                enabled: selectedMission != -1 && selectedVehicleId > 0
                 onClicked: uploadMission()
             }
 
