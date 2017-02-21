@@ -66,13 +66,43 @@ namespace domain
         return QT_TRANSLATE_NOOP("MAVLINK", "APM NONE");
     }
 
+    QString decodePx4Mode(uint32_t mode)
+    {
+        uint8_t mainMode = (mode >> 0) & 0xFF;
+        uint8_t autoMode = (mode >> 8) & 0xFF;
+
+        switch (mainMode)
+        {
+        case 1: return QT_TRANSLATE_NOOP("MAVLINK", "MANUAL");
+        case 2: return QT_TRANSLATE_NOOP("MAVLINK", "ALT CTL");
+        case 3: return QT_TRANSLATE_NOOP("MAVLINK", "POS CTL");
+        case 4:
+            if (autoMode == 1) return QT_TRANSLATE_NOOP("MAVLINK", "READY");
+            if (autoMode == 2) return QT_TRANSLATE_NOOP("MAVLINK", "TAKEOFF");
+            if (autoMode == 3) return QT_TRANSLATE_NOOP("MAVLINK", "LOITER");
+            if (autoMode == 4) return QT_TRANSLATE_NOOP("MAVLINK", "MISSION");
+            if (autoMode == 5) return QT_TRANSLATE_NOOP("MAVLINK", "RETURN");
+            if (autoMode == 6) return QT_TRANSLATE_NOOP("MAVLINK", "LAND");
+            if (autoMode == 7) return QT_TRANSLATE_NOOP("MAVLINK", "RTGS");
+            if (autoMode == 8) return QT_TRANSLATE_NOOP("MAVLINK", "FOLLOW");
+            return QT_TRANSLATE_NOOP("MAVLINK", "PX4 AUTO NONE");
+        case 5: return QT_TRANSLATE_NOOP("MAVLINK", "ACRO");
+        case 6: return QT_TRANSLATE_NOOP("MAVLINK", "OFFBOARD");
+        case 7: return QT_TRANSLATE_NOOP("MAVLINK", "STABILIZED");
+        case 8: return QT_TRANSLATE_NOOP("MAVLINK", "RATTITUDE");
+        }
+
+        return QT_TRANSLATE_NOOP("MAVLINK", "PX4 NONE");
+    }
+
     QString decodeCustomMode(uint8_t ap, uint8_t type, uint32_t mode)
     {
         switch (ap)
         {
         case MAV_AUTOPILOT_ARDUPILOTMEGA:
             return decodeApmMode(type, mode);
-            break;
+        case MAV_AUTOPILOT_PX4:
+            return decodePx4Mode(mode);
         default:
             break;
         }
