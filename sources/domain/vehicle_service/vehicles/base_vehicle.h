@@ -16,6 +16,8 @@ namespace domain
         Q_OBJECT
 
         Q_PROPERTY(State state READ state WRITE setState NOTIFY stateChanged)
+        Q_PROPERTY(QString modeString READ modeString
+                   WRITE setModeString NOTIFY modeStringChanged)
 
         Q_PROPERTY(bool armed READ isArmed WRITE setArmed NOTIFY armedChanged)
         Q_PROPERTY(bool autonomous READ autonomous WRITE setAutonomous
@@ -74,6 +76,7 @@ namespace domain
         BaseVehicle(uint8_t vehicleId, int type, QObject* parent);
 
         State state() const;
+        QString modeString() const;
 
         bool isArmed() const;
         bool autonomous() const;
@@ -102,6 +105,7 @@ namespace domain
 
     public slots:
         void setState(State state);
+        void setModeString(const QString& modeString);
 
         void setArmed(bool armed);
         void setAutonomous(bool autonomous);
@@ -126,6 +130,7 @@ namespace domain
 
     signals:
         void stateChanged(State state);
+        void modeStringChanged(const QString& modeString);
 
         void armedChanged(bool armed);
         void autonomousChanged(bool autonomous);
@@ -156,6 +161,7 @@ namespace domain
 
     private:
         State m_state;
+        QString m_modeString;
 
         bool m_armed;
         bool m_autonomous;

@@ -11,7 +11,7 @@ namespace domain
 {
     class Mission;
 
-    class AbstractMissionItem: public QObject // TODO: Abstract
+    class AbstractMissionItem: public QObject
     {
         Q_OBJECT
 

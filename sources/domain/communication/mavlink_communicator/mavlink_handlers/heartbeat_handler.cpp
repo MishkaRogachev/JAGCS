@@ -9,6 +9,8 @@
 
 // Internal
 #include "mavlink_communicator.h"
+#include "mavlink_mode_helper.h"
+
 #include "vehicle_service.h"
 #include "aerial_vehicle.h"
 
@@ -107,6 +109,9 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         vehicle = m_vehicleService->baseVehicle(message.sysid);
     }
 
+    vehicle->setModeString(decodeCustomMode(heartbeat.autopilot,
+                                            heartbeat.type,
+                                            heartbeat.custom_mode));
     vehicle->setState(::decodeState(heartbeat.system_status));
     vehicle->setAutonomous(heartbeat.base_mode & MAV_MODE_FLAG_AUTO_ENABLED);
     vehicle->setGuided(heartbeat.base_mode & MAV_MODE_FLAG_GUIDED_ENABLED);

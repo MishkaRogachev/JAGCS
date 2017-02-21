@@ -29,6 +29,11 @@ BaseVehicle::State BaseVehicle::state() const
     return m_state;
 }
 
+QString BaseVehicle::modeString() const
+{
+    return m_modeString;
+}
+
 bool BaseVehicle::isArmed() const
 {
     return m_armed;
@@ -168,6 +173,14 @@ void BaseVehicle::setState(BaseVehicle::State state)
 
     m_state = state;
     emit stateChanged(state);
+}
+
+void BaseVehicle::setModeString(const QString& modeString)
+{
+    if (m_modeString == modeString) return;
+
+    m_modeString = modeString;
+    emit modeStringChanged(modeString);
 }
 
 void BaseVehicle::setArmed(bool armed)
