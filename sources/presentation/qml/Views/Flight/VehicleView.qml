@@ -12,16 +12,16 @@ ColumnLayout {
 
     property QtObject vehicle
 
-    spacing: palette.controlBaseSize / 4 // TODO: palette spacing
+    spacing: 0
 
     Item {
         id: sns
         Layout.preferredWidth: root.width
-        Layout.preferredHeight: gpsColumn.height
+        Layout.preferredHeight: gpsColumn.height + palette.controlBaseSize / 4
 
         Column {
             id: gpsColumn
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
             anchors.left: parent.left
             anchors.leftMargin: palette.controlBaseSize / 8
 
@@ -43,7 +43,7 @@ ColumnLayout {
         }
 
         Row {
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
             anchors.right: parent.right
             anchors.rightMargin: palette.controlBaseSize / 8
             spacing: 5
@@ -100,7 +100,7 @@ ColumnLayout {
         homeDistance: vehicle ? vehicle.homeDistance : -1
         missionDistance: vehicle ? vehicle.missionDistance : -1
 
-        snsAltitude: vehicle ? vehicle.gps.coordinate.altitude : 0.0
+        snsAltitude: vehicle ? vehicle.gps.altitude : 0.0
         snsFix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
 
         charge: vehicle ? vehicle.powerSystem.charge : -1
@@ -115,23 +115,7 @@ ColumnLayout {
         spacing: height / 2
 
         Label {
-            text: qsTr("AUTO")
-            color: vehicle && vehicle.autonomous ?
-                       palette.textColor : palette.disabledColor
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            text: qsTr("GUIDED")
-            color: vehicle && vehicle.guided ?
-                       palette.textColor : palette.disabledColor
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            text: qsTr("STAB")
-            color: vehicle && vehicle.stabilized ?
-                       palette.textColor : palette.disabledColor
+            text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
             anchors.verticalCenter: parent.verticalCenter
         }
 

@@ -27,6 +27,14 @@ QGeoCoordinate Gps::coordinate() const
     return m_coordinate;
 }
 
+float Gps::altitude() const
+{
+    if (m_coordinate.type() != QGeoCoordinate::Coordinate3D)
+        return 0;
+
+    return m_coordinate.altitude();
+}
+
 float Gps::course() const
 {
     return m_course;

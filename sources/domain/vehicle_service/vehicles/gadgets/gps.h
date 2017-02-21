@@ -13,6 +13,7 @@ namespace domain
         Q_PROPERTY(Fix fix READ fix CONSTANT)
         Q_PROPERTY(int satellitesVisible READ satellitesVisible CONSTANT)
         Q_PROPERTY(QGeoCoordinate coordinate READ coordinate CONSTANT)
+        Q_PROPERTY(float altitude READ altitude CONSTANT)
         Q_PROPERTY(float course READ course CONSTANT)
         Q_PROPERTY(int eph READ eph CONSTANT)
         Q_PROPERTY(int epv READ epv CONSTANT)
@@ -35,6 +36,7 @@ namespace domain
         Fix fix() const;
         int satellitesVisible() const;
         QGeoCoordinate coordinate() const;
+        float altitude() const;
         float course() const;
         int eph() const;
         int epv() const;
