@@ -23,6 +23,7 @@ namespace domain
         void sendMissionCount(uint8_t id);
         void sendMissionItem(uint8_t id, uint16_t seq);
         void sendMissionAck(uint8_t id);
+        void sendMissionStart(uint8_t id, int startPoint);
 
     protected:
         void processMissionCount(const mavlink_message_t& message);
