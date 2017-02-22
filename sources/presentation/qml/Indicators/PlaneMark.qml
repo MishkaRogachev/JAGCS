@@ -7,8 +7,11 @@ Item {
     property int pitch: 0
     property int roll: 0
 
+    property color markColor
+
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
+    onMarkColorChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
@@ -21,8 +24,8 @@ Item {
             var offset = Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
             ctx.lineWidth = 4;
-            ctx.strokeStyle = palette.selectedTextColor;
-            ctx.fillStyle = palette.selectedTextColor;
+            ctx.strokeStyle = markColor;
+            ctx.fillStyle = markColor;
 
             ctx.save();
             ctx.beginPath();

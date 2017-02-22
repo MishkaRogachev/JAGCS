@@ -78,6 +78,7 @@ ColumnLayout {
         id: fd
         width: palette.controlBaseSize * 8
 
+        armed: vehicle && vehicle.armed
         insAvalible: vehicle && vehicle.insAvalible
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
         roll: vehicle ? vehicle.attitude.roll : 0.0
@@ -116,13 +117,6 @@ ColumnLayout {
 
         Label {
             text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            text: qsTr("ARMED")
-            color: vehicle && vehicle.armed ?
-                       palette.textColor : palette.disabledColor
             anchors.verticalCenter: parent.verticalCenter
         }
     }

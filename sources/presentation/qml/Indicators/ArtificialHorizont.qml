@@ -1,8 +1,12 @@
 ﻿import QtQuick 2.6
 import QtGraphicalEffects 1.0
 
+import "../Controls"
+
 Item {
     id: root
+
+    property bool armed: false
 
     property int pitch: 0.0
     property int roll: 0.0
@@ -72,7 +76,15 @@ Item {
             height: pitchScale.height
             pitch: pitchInverted ? 0 : -root.pitch
             roll: rollInverted ? -root.roll : 0
+            markColor: armed ? palette.selectedTextColor : palette.negativeColor
         }
+            Label {
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: -height
+                text: qsTr("DISARMED")
+                font.bold: true
+                color: armed ? "transparent" : palette.negativeColor
+            }
     }
 
     Rectangle {
