@@ -4,7 +4,7 @@
 #include <QVariant>
 
 // Internal
-#include "abstract_vehicle.h"
+#include "base_vehicle.h"
 
 using namespace presentation;
 
@@ -16,9 +16,19 @@ FlightViewHelper::FlightViewHelper(QObject* parent):
     m_commandNames[domain::Command::Disarm] = tr("DISARM");
 }
 
-QStringList FlightViewHelper::avaliableCommands() const
+QStringList FlightViewHelper::avaliableCommands(QObject* object) const
 {
-    return m_commandNames.values();
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(object);
+    if (!vehicle) return QStringList();
+
+    QMap<domain::Command, QString> commandNames = m_commandNames;
+
+    if (vehicle->isArmed())
+        commandNames.remove(domain::Command::Arm);
+    else
+        commandNames.remove(domain::Command::Disarm);
+
+    return commandNames.values();
 }
 
 void FlightViewHelper::executeCommand(const QString& command, QObject* object)

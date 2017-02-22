@@ -17,7 +17,7 @@ namespace presentation
     public:
         explicit FlightViewHelper(QObject* parent = nullptr);
 
-        Q_INVOKABLE QStringList avaliableCommands() const;
+        Q_INVOKABLE QStringList avaliableCommands(QObject* object) const;
 
     public slots:
         void executeCommand(const QString& command, QObject* object);

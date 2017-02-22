@@ -111,14 +111,10 @@ ColumnLayout {
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
 
-    Row {
+    Label {
+        text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
+        horizontalAlignment: Qt.AlignHCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: height / 2
-
-        Label {
-            text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
-            anchors.verticalCenter: parent.verticalCenter
-        }
     }
 
     RowLayout {
@@ -127,7 +123,6 @@ ColumnLayout {
 
         ComboBox {
             id: commandBox
-            model: commandHelper ? commandHelper.avaliableCommands() : 0
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -138,5 +133,22 @@ ColumnLayout {
             onClicked: commandHelper.executeCommand(commandBox.currentText, vehicle)
             // TODO: args
         }
+    }
+
+    function updateCommands() {
+        if (!commandHelper || !vehicle) {
+            commandBox.model = []
+        }
+        else {
+            commandBox.model = commandHelper.avaliableCommands(vehicle);
+        }
+    }
+
+    onVehicleChanged: updateCommands()
+
+    Connections {
+        target: vehicle
+        ignoreUnknownSignals: true
+        onArmedChanged: updateCommands()
     }
 }
