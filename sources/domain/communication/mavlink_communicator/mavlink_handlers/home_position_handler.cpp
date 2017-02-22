@@ -114,7 +114,7 @@ void HomePositionHandler::onVehicleAdded(AbstractVehicle* vehicle)
     auto baseVehicle = qobject_cast<BaseVehicle*>(vehicle);
     if (baseVehicle)
     {
-        connect(baseVehicle, &BaseVehicle::sendHomePositionSetting,
+        connect(baseVehicle, &BaseVehicle::commandHomePosition,
                 this, &HomePositionHandler::sendHomePositionSetting);
     }
 

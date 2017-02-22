@@ -10,7 +10,7 @@
 #include "mavlink_communicator.h"
 
 #include "vehicle_service.h"
-#include "abstract_vehicle.h"
+#include "base_vehicle.h"
 
 using namespace domain;
 
@@ -28,35 +28,15 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
     Q_UNUSED(message) // TODO: handle command quitantion
 }
 
-void CommandHandler::sendCommand(Command command, const QVariantList& args)
+void CommandHandler::sendArmDisarm(bool arm)
 {
-    auto vehicle = qobject_cast<domain::AbstractVehicle*>(this->sender());
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
     if (!vehicle) return;
 
-    switch (command)
-    {
-    case Command::Arm:
-        this->sendArmDisarm(vehicle->vehicleId(), true);
-        break;
-    case Command::Disarm:
-        this->sendArmDisarm(vehicle->vehicleId(), false);
-        break;
-    case Command::Return:
-        this->sendReturn(vehicle->vehicleId());
-        break;
-        // TODO: other commands
-    default:
-        qDebug() << "Not handled command" << int(command);
-        break;
-    }
-}
-
-void CommandHandler::sendArmDisarm(uint8_t id, bool arm)
-{
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = id;
+    command.target_system = vehicle->vehicleId();
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -70,12 +50,15 @@ void CommandHandler::sendArmDisarm(uint8_t id, bool arm)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void CommandHandler::sendReturn(uint8_t id)
+void CommandHandler::sendReturn()
 {
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
+    if (!vehicle) return;
+
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = id;
+    command.target_system = vehicle->vehicleId();
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -89,12 +72,16 @@ void CommandHandler::sendReturn(uint8_t id)
 
 void CommandHandler::onVehicleAdded(AbstractVehicle* vehicle)
 {
-    connect(vehicle, &AbstractVehicle::executeCommand,
-            this, &CommandHandler::sendCommand);
+    auto baseVehicle = qobject_cast<domain::BaseVehicle*>(vehicle);
+    {
+        connect(baseVehicle, &BaseVehicle::commandArmDisarm,
+                this, &CommandHandler::sendArmDisarm);
+        connect(baseVehicle, &BaseVehicle::commandReturn,
+                this, &CommandHandler::sendReturn);
+    }
 }
 
 void CommandHandler::onVehicleRemoved(AbstractVehicle* vehicle)
 {
-    disconnect(vehicle, &AbstractVehicle::executeCommand,
-               this, &CommandHandler::sendCommand);
+    disconnect(vehicle, 0, this, 0);
 }

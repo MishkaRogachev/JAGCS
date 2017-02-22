@@ -4,9 +4,6 @@
 // Qt
 #include <QObject>
 
-// Internal
-#include "command.h"
-
 namespace domain
 {
     class Mission;
@@ -37,8 +34,6 @@ namespace domain
 
     signals:
         void assignedMissionChanged(Mission* mission);
-
-        void executeCommand(Command command, const QVariantList& args);
 
     protected:
         const uint8_t m_vehicleId;

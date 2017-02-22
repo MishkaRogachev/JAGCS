@@ -12,6 +12,8 @@ namespace domain
 
     class RcChannelsHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
         RcChannelsHandler(VehicleService* vehicleService,
                           MavLinkCommunicator* communicator);

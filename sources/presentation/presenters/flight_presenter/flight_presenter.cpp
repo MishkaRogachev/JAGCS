@@ -9,7 +9,6 @@
 #include "vehicle_service.h"
 #include "abstract_vehicle.h"
 
-#include "flight_view_helper.h"
 #include "video_presenter.h"
 #include "flight_map_presenter.h"
 
@@ -22,7 +21,6 @@ public:
 
     QMap<domain::AbstractVehicle*, QString> vehicleAliases;
 
-    FlightViewHelper helper;
     VideoPresenter* video;
     FlightMapPresenter* map;
 };
@@ -60,8 +58,6 @@ void FlightPresenter::updateVehicles()
 
 void FlightPresenter::connectView(QObject* view)
 {
-    this->setViewProperty(PROPERTY(commandHelper), QVariant::fromValue(&d->helper));
-
     d->video->setView(view->findChild<QObject*>(NAME(video)));
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 

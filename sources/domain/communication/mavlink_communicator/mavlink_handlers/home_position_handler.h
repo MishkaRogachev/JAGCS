@@ -16,6 +16,8 @@ namespace domain
 
     class HomePositionHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
         HomePositionHandler(VehicleService* vehicleService,
                             MavLinkCommunicator* communicator);

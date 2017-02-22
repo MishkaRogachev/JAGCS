@@ -3,7 +3,6 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
-#include "command.h"
 
 namespace domain
 {
@@ -12,17 +11,17 @@ namespace domain
 
     class CommandHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
         CommandHandler(VehicleService* vehicleService,
                        MavLinkCommunicator* communicator);
 
-   public slots:
+    public slots:
        void processMessage(const mavlink_message_t& message) override;
 
-       void sendCommand(Command command, const QVariantList& args);
-
-       void sendArmDisarm(uint8_t id, bool arm);
-       void sendReturn(uint8_t id);
+       void sendArmDisarm(bool arm);
+       void sendReturn();
 
     private slots:
         void onVehicleAdded(domain::AbstractVehicle* vehicle);

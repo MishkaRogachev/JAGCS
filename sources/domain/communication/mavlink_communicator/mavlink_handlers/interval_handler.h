@@ -7,6 +7,8 @@ namespace domain
 {
     class IntervalHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
         IntervalHandler(MavLinkCommunicator* communicator);
 

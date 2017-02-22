@@ -157,7 +157,9 @@ namespace domain
         void compasAvalibleChanged(bool compasAvalible);
         void headingChanged(int heading);
 
-        void sendHomePositionSetting(const Position& homePosition);
+        void commandHomePosition(const Position& homePosition);
+        void commandArmDisarm(bool arm);
+        void commandReturn();
 
     private:
         State m_state;

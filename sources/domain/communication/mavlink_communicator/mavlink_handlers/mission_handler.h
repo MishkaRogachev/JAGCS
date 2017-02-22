@@ -10,6 +10,8 @@ namespace domain
 
     class MissionHandler: public AbstractMavLinkHandler
     {
+        Q_OBJECT
+
     public:
         MissionHandler(MissionService* missionService,
                        MavLinkCommunicator* communicator);
