@@ -1,5 +1,8 @@
 #include "abstract_vehicle.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "mission.h"
 
@@ -32,6 +35,11 @@ Mission* AbstractVehicle::assignedMission() const
     return m_assignedMission;
 }
 
+int AbstractVehicle::missionItems() const
+{
+    return m_assignedMission ? m_assignedMission->count() : 0;
+}
+
 void AbstractVehicle::assignMission(Mission* mission)
 {
     if (m_assignedMission == mission) return;
@@ -39,6 +47,7 @@ void AbstractVehicle::assignMission(Mission* mission)
     if (m_assignedMission)
     {
         m_assignedMission->unassignVehicle();
+        disconnect(m_assignedMission, 0, this, 0);
     }
 
     m_assignedMission = mission;
@@ -46,8 +55,11 @@ void AbstractVehicle::assignMission(Mission* mission)
     if (m_assignedMission)
     {
         m_assignedMission->assignVehicle(this);
+        connect(m_assignedMission, &Mission::missionItemsChanged, this,
+                [this]() { emit missionItemsChanged(this->missionItems()); });
     }
 
+    emit missionItemsChanged(this->missionItems());
     emit assignedMissionChanged(mission);
 }
 

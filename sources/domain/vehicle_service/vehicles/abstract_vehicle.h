@@ -15,6 +15,8 @@ namespace domain
         Q_PROPERTY(uint8_t vehicleId READ vehicleId CONSTANT)
         Q_PROPERTY(int type READ type CONSTANT)
 
+        Q_PROPERTY(int missionItems READ missionItems NOTIFY missionItemsChanged)
+
     public:
         enum Type
         {
@@ -28,12 +30,15 @@ namespace domain
         int type() const;
         Mission* assignedMission() const;
 
+        int missionItems() const;
+
     public slots:
         void assignMission(Mission* mission);
         void unassignMission();
 
     signals:
         void assignedMissionChanged(Mission* mission);
+        void missionItemsChanged(int missionItems);
 
     protected:
         const uint8_t m_vehicleId;
