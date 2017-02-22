@@ -122,6 +122,7 @@ ColumnLayout {
             horizontalAlignment: Qt.AlignHCenter
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
+            font.bold: true
             Layout.preferredWidth: root.width * 2 / 3
         }
 
