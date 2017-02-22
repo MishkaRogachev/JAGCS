@@ -8,6 +8,8 @@ Switch {
 
     property bool inputChecked: checked
 
+    font.pixelSize: palette.fontPixelSize
+
     indicator: Rectangle {
         implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize / 4

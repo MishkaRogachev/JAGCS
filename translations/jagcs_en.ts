@@ -661,13 +661,18 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="120"/>
         <source>Mode:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
-        <source>Send</source>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <source>Disarm</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <source>Arm</source>
         <translation></translation>
     </message>
 </context>
@@ -703,26 +708,8 @@
 <context>
     <name>presentation::FlightPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="76"/>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="72"/>
         <source>MAV %1</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>presentation::FlightViewHelper</name>
-    <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="14"/>
-        <source>RETURN</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="15"/>
-        <source>ARM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="16"/>
-        <source>DISARM</source>
         <translation></translation>
     </message>
 </context>

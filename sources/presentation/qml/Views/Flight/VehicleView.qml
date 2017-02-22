@@ -28,6 +28,7 @@ ColumnLayout {
             Label {
                 color: fd.snsColor
                 font.pixelSize: palette.fontPixelSize * 0.6
+                font.bold: true
                 text: qsTr("Lat.:") +
                       (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.latitude,
                                                            false) : qsTr("None"))
@@ -36,6 +37,7 @@ ColumnLayout {
             Label {
                 color: fd.snsColor
                 font.pixelSize: palette.fontPixelSize * 0.6
+                font.bold: true
                 text: qsTr("Lon.:") +
                       (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.longitude,
                                                            true) : qsTr("None"))
@@ -62,12 +64,14 @@ ColumnLayout {
                 Label {
                     color: fd.snsColor
                     font.pixelSize: palette.fontPixelSize * 0.6
+                    font.bold: true
                     text: qsTr("HDOP:") + (vehicle ? vehicle.gps.eph : qsTr("None"))
                 }
 
                 Label {
                     color: fd.snsColor
                     font.pixelSize: palette.fontPixelSize * 0.6
+                    font.bold: true
                     text: qsTr("VDOP:") + (vehicle ? vehicle.gps.epv : qsTr("None"))
                 }
             }
@@ -124,6 +128,8 @@ ColumnLayout {
         Switch {
             anchors.verticalCenter: parent.verticalCenter
             text: inputChecked ? qsTr("Disarm") : qsTr("Arm")
+            font.pixelSize: palette.fontPixelSize / 1.5
+            font.bold: true
             Layout.preferredWidth: root.width / 3
             inputChecked: vehicle && vehicle.armed
             onInputCheckedChanged: checked = inputChecked

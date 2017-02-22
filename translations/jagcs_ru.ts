@@ -764,9 +764,19 @@
         <translation>VDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="120"/>
         <source>Mode:</source>
         <translation>Режим:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <source>Disarm</source>
+        <translation>Разрад</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <source>Arm</source>
+        <translation>Заряд</translation>
     </message>
     <message>
         <source>AUTO</source>
@@ -785,9 +795,8 @@
         <translation type="vanished">ГОТОВ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
         <source>Send</source>
-        <translation>Ввод</translation>
+        <translation type="vanished">Ввод</translation>
     </message>
     <message>
         <source>DISARM</source>
@@ -830,7 +839,7 @@
 <context>
     <name>presentation::FlightPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="76"/>
+        <location filename="../sources/presentation/presenters/flight_presenter/flight_presenter.cpp" line="72"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
     </message>
@@ -838,19 +847,16 @@
 <context>
     <name>presentation::FlightViewHelper</name>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="14"/>
         <source>RETURN</source>
-        <translation>ВОЗВРАТ</translation>
+        <translation type="vanished">ВОЗВРАТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="15"/>
         <source>ARM</source>
-        <translation>ЗАРЯД</translation>
+        <translation type="vanished">ЗАРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/flight_presenter/flight_view_helper.cpp" line="16"/>
         <source>DISARM</source>
-        <translation>РАЗРЯД</translation>
+        <translation type="vanished">РАЗРЯД</translation>
     </message>
 </context>
 <context>
