@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>ArtificialHorizont</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/ArtificialHorizont.qml" line="84"/>
+        <source>DISARMED</source>
+        <translation>РАЗРЯЖЕН</translation>
+    </message>
+</context>
+<context>
     <name>Compass</name>
     <message>
         <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="67"/>
@@ -83,27 +91,27 @@
         <translation type="vanished">В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="83"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="84"/>
         <source>IAS, m/s</source>
         <translation>IAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="84"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="85"/>
         <source>Hbar, m</source>
         <translation>Hбар, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="90"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="91"/>
         <source>GS, m/s</source>
         <translation>GS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="105"/>
         <source>TAS, m/s</source>
         <translation>TAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="122"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="123"/>
         <source>m/s</source>
         <translation>м/с</translation>
     </message>
@@ -112,7 +120,7 @@
         <translation type="vanished">Напряж.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="200"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="201"/>
         <source>V</source>
         <translation>В</translation>
     </message>
@@ -121,7 +129,7 @@
         <translation type="vanished">Ток   </translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="216"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="217"/>
         <source>A</source>
         <translation>А</translation>
     </message>
@@ -130,24 +138,24 @@
         <translation type="vanished">WS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="140"/>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="141"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="162"/>
         <source>m</source>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="140"/>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="161"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="141"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="162"/>
         <source>km</source>
         <translation>км</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="171"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="172"/>
         <source>Hsns, m</source>
         <translation>Hснс, м</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="185"/>
+        <location filename="../sources/presentation/qml/Indicators/FlightDisplay.qml" line="186"/>
         <source>Hgeo, m</source>
         <translation>Hгео, м</translation>
     </message>
@@ -756,27 +764,28 @@
         <translation>VDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="118"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="119"/>
+        <source>Mode:</source>
+        <translation>Режим:</translation>
+    </message>
+    <message>
         <source>AUTO</source>
-        <translation>АВТО</translation>
+        <translation type="vanished">АВТО</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="125"/>
         <source>GUIDED</source>
-        <translation>ВЕДОМ</translation>
+        <translation type="vanished">ВЕДОМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="132"/>
         <source>STAB</source>
-        <translation>СТАБ</translation>
+        <translation type="vanished">СТАБ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="139"/>
         <source>ARMED</source>
-        <translation>ГОТОВ</translation>
+        <translation type="vanished">ГОТОВ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="159"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="137"/>
         <source>Send</source>
         <translation>Ввод</translation>
     </message>
