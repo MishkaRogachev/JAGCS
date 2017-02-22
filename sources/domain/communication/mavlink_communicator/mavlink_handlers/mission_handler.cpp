@@ -264,29 +264,6 @@ void MissionHandler::sendMissionAck(uint8_t id)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::sendMissionStart(uint8_t id, int startPoint)
-{
-    Mission* mission = m_missionService->missionForVehicleId(id);
-    if (!mission || mission->count() < 2) return;
-
-    mavlink_message_t message;
-    mavlink_command_long_t command;
-
-    command.target_system = id;
-    command.target_component = 0;
-    command.confirmation = 0;
-
-    command.command = MAV_CMD_MISSION_START;
-
-    command.param1 = startPoint;
-    command.param2 = mission->count() - 1;
-
-    mavlink_msg_command_long_encode(m_communicator->systemId(),
-                                    m_communicator->componentId(),
-                                    &message, &command);
-    m_communicator->sendMessageAllLinks(message);
-}
-
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
     Mission* mission = m_missionService->missionForVehicleId(message.sysid);

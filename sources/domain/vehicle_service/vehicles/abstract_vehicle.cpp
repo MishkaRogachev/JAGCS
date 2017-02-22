@@ -67,4 +67,3 @@ void AbstractVehicle::unassignMission()
 {
     this->assignMission(nullptr);
 }
-

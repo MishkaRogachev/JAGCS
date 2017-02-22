@@ -123,7 +123,7 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
             font.bold: true
-            Layout.preferredWidth: root.width * 2 / 3
+            Layout.preferredWidth: fd.width * 2 / 3
         }
 
         Switch {
@@ -131,10 +131,42 @@ ColumnLayout {
             text: inputChecked ? qsTr("Disarm") : qsTr("Arm")
             font.pixelSize: palette.fontPixelSize / 1.5
             font.bold: true
-            Layout.preferredWidth: root.width / 3
+            Layout.preferredWidth: fd.width / 3
             inputChecked: vehicle && vehicle.armed
             onInputCheckedChanged: checked = inputChecked
             onCheckedChanged: if (checked != inputChecked) vehicle.commandArmDisarm(checked)
+            enabled: vehicle
+        }
+    }
+
+    RowLayout {
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Label {
+            anchors.verticalCenter: parent.verticalCenter
+            text: qsTr("Item")
+            font.bold: true
+        }
+
+        ComboBox {
+            id: selectedItemBox
+            anchors.verticalCenter: parent.verticalCenter
+            model: vehicle ? vehicle.missionItems : []
+            enabled: vehicle
+        }
+
+        Button {
+            iconSource: "qrc:/icons/play.svg"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: vehicle.commandJumpTo(selectedItemBox.currentText)
+            enabled: vehicle
+        }
+
+        Button {
+            iconSource: "qrc:/icons/home.svg"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: vehicle.commandReturn()
+            enabled: vehicle
         }
     }
 }

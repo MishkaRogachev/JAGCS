@@ -40,6 +40,9 @@ namespace domain
         void assignedMissionChanged(Mission* mission);
         void missionItemsChanged(int missionItems);
 
+        void commandReturn();
+        void commandJumpTo(int missionItem);
+
     protected:
         const uint8_t m_vehicleId;
         const int m_type;

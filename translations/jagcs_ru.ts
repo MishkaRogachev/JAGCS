@@ -468,7 +468,7 @@
     <message>
         <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="83"/>
         <source>MISSION</source>
-        <translation>МИССИЯ</translation>
+        <translation>МАРШРУТ</translation>
     </message>
     <message>
         <location filename="../sources/domain/communication/mavlink_communicator/mavlink_mode_helper.h" line="86"/>
@@ -633,7 +633,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="151"/>
         <source>Add Item</source>
-        <translation>Добавить элемент</translation>
+        <translation>Добавить ПМ</translation>
     </message>
 </context>
 <context>
@@ -736,47 +736,52 @@
         <translation type="vanished">А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="32"/>
         <source>Lat.:</source>
         <translation>Шир.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="33"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="41"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="65"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="43"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="75"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="39"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="41"/>
         <source>Lon.:</source>
         <translation>Дол.:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="68"/>
         <source>HDOP:</source>
         <translation>HDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="75"/>
         <source>VDOP:</source>
         <translation>VDOP:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="120"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="124"/>
         <source>Mode:</source>
         <translation>Режим:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="131"/>
         <source>Disarm</source>
         <translation>Разрад</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="131"/>
         <source>Arm</source>
         <translation>Заряд</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="147"/>
+        <source>Item</source>
+        <translation>ПМ</translation>
     </message>
     <message>
         <source>AUTO</source>
@@ -864,7 +869,7 @@
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="72"/>
         <source>Mission</source>
-        <translation>Задание</translation>
+        <translation>Маршрут</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="85"/>

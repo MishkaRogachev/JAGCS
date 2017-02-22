@@ -159,7 +159,6 @@ namespace domain
 
         void commandHomePosition(const Position& homePosition);
         void commandArmDisarm(bool arm);
-        void commandReturn();
 
     private:
         State m_state;

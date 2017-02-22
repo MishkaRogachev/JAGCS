@@ -633,46 +633,51 @@
 <context>
     <name>VehicleView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="32"/>
         <source>Lat.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="33"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="41"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="65"/>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="43"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="75"/>
         <source>None</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="39"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="41"/>
         <source>Lon.:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="68"/>
         <source>HDOP:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="75"/>
         <source>VDOP:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="120"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="124"/>
         <source>Mode:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="131"/>
         <source>Disarm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="131"/>
         <source>Arm</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Flight/VehicleView.qml" line="147"/>
+        <source>Item</source>
         <translation></translation>
     </message>
 </context>
