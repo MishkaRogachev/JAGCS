@@ -98,6 +98,9 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     case MAVLINK_MSG_ID_MISSION_ACK:
         this->processMissionAck(message);
         break;
+    case MAVLINK_MSG_ID_MISSION_CURRENT:
+        this->processMissionCurrent(message);
+        break;
     default:
         break;
     }
@@ -389,4 +392,15 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     mavlink_msg_mission_ack_decode(&message, &missionAck);
 
     // TODO: handle missionAck.type
+}
+
+void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
+{
+    Mission* mission = m_missionService->missionForVehicleId(message.sysid);
+    if (!mission) return;
+
+    mavlink_mission_current_t missionCurrent;
+    mavlink_msg_mission_current_decode(&message, &missionCurrent);
+
+    mission->setCurrentIndex(missionCurrent.seq);
 }

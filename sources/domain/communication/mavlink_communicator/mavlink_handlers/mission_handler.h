@@ -25,12 +25,14 @@ namespace domain
         void sendMissionCount(uint8_t id);
         void sendMissionItem(uint8_t id, uint16_t seq);
         void sendMissionAck(uint8_t id);
+        // TODO: MISSION_SET_CURRENT, MISSION_ITEM_REACHED
 
     protected:
         void processMissionCount(const mavlink_message_t& message);
         void processMissionItem(const mavlink_message_t& message);
         void processMissionRequest(const mavlink_message_t& message);
         void processMissionAck(const mavlink_message_t& message);
+        void processMissionCurrent(const mavlink_message_t& message);
 
     private:
         MissionService* m_missionService;
