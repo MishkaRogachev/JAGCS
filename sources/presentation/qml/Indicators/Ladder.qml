@@ -5,6 +5,7 @@ Rectangle {
     id: root
 
     property alias value: label.value
+    property int warningValue: minValue
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
@@ -13,6 +14,7 @@ Rectangle {
 
     property alias prefix: label.prefix
     property color scaleColor: palette.textColor
+    property color warningColor: palette.negativeColor
 
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
                             (canvasRotation <= -90 && canvasRotation > -180)
@@ -33,11 +35,8 @@ Rectangle {
             ctx.clearRect(0, 0, width, height);
 
             ctx.save();
-            ctx.beginPath();
 
             ctx.lineWidth = 2;
-            ctx.strokeStyle = scaleColor;
-            ctx.fillStyle = scaleColor;
             ctx.font = fontPixelSize + 'px "Open Sans"';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
@@ -46,6 +45,11 @@ Rectangle {
             var counter = 0;
             for (var i = minValue - (minValue % valueStep); i <= maxValue;
                  i += (valueStep / 2)) {
+
+                ctx.beginPath();
+                ctx.strokeStyle = i < warningValue ? warningColor : scaleColor;
+                ctx.fillStyle = i < warningValue ? warningColor : scaleColor;
+
                 var major = (counter++ % 2) == 0;
                 var xPos = canvasRotation > 0 ?
                             width - Helper.mapToRange(i, minValue, maxValue, width) :
@@ -59,9 +63,8 @@ Rectangle {
                     ctx.fillText(i, 0, 2);
                     ctx.restore();
                 }
+                ctx.stroke();
             }
-
-            ctx.stroke();
             ctx.restore();
         }
     }
