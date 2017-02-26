@@ -9,7 +9,6 @@ Canvas {
     property real maxValue: 1
     property color fillColor
 
-    // FIXME: bar 1 <
     Behavior on value { PropertyAnimation { duration: 100 } }
 
     onValueChanged: requestPaint()

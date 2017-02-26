@@ -11,6 +11,7 @@ Column {
     property alias roll: horizont.roll
     property alias indicatedAirSpeed: horizont.velocity
     property alias altitude: horizont.altitude
+    property alias terrainAltitude: horizont.terrainAltitude
     property alias rollInverted: horizont.rollInverted
     property alias barometerAvalible: horizont.altitudeAvalible
     property alias airSpeedAvalible: horizont.velocityAvalible

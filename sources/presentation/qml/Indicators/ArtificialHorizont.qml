@@ -12,6 +12,7 @@ Item {
     property int roll: 0.0
     property int velocity: 0.0
     property int altitude: 0.0
+    property int terrainAltitude: 0.0
 
     property alias velocityPrefix: velocityLadder.prefix
     property alias altitudePrefix: altitudeLadder.prefix
@@ -133,6 +134,8 @@ Item {
         anchors.right: parent.right
         width: parent.width * 0.2
         height: parent.height * 0.8
+        warningValue: terrainAltitude
+//        warningColor: palette.groundColor
         value: root.altitude
         minValue: altitude + minAltitude
         maxValue: altitude + maxAltitude
