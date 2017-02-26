@@ -27,6 +27,9 @@ namespace domain
         Q_PROPERTY(float barometricClimb READ barometricClimb
                    WRITE setBarometricClimb NOTIFY barometricClimbChanged)
 
+        Q_PROPERTY(float homeAltitude READ homeAltitude
+                   NOTIFY homeAltitudeChanged)
+
         Q_PROPERTY(bool rangeFinderAvalible READ rangeFinderAvalible
                    WRITE setRangeFinderAvalible NOTIFY rangeFinderAvalibleChanged)
 
@@ -55,6 +58,8 @@ namespace domain
         float barometricAltitude() const;
         float barometricClimb() const;
 
+        float homeAltitude() const;
+
         bool rangeFinderAvalible() const;
 
         bool ahrsAvalible() const;
@@ -82,6 +87,8 @@ namespace domain
         void barometerAvalibleChanged(bool barometerAvalible);
         void barometricAltitudeChanged(float barometricAltitude);
         void barometricClimbChanged(float barometricClimb);
+
+        void homeAltitudeChanged(float homeAltitude);
 
         void rangeFinderAvalibleChanged(bool rangeFinderAvalible);
 

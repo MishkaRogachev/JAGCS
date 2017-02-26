@@ -15,7 +15,10 @@ AerialVehicle::AerialVehicle(uint8_t vehicleId, Type type, QObject* parent):
     m_barometricClimb(0),
     m_rangeFinderAvalible(false),
     m_ahrsAvalible(false)
-{}
+{
+    connect(this, &BaseVehicle::homePositionChanged, this,
+            [this]() { emit homeAltitudeChanged(this->homeAltitude()); } );
+}
 
 AerialVehicle::~AerialVehicle()
 {}
@@ -53,6 +56,12 @@ float AerialVehicle::barometricAltitude() const
 float AerialVehicle::barometricClimb() const
 {
     return m_barometricClimb;
+}
+
+float AerialVehicle::homeAltitude() const
+{
+    return m_homePosition.coordinate().type() == QGeoCoordinate::Coordinate3D ?
+                m_homePosition.coordinate().altitude() : 0;
 }
 
 bool AerialVehicle::rangeFinderAvalible() const

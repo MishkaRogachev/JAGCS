@@ -12,8 +12,6 @@ ColumnLayout {
 
     property QtObject vehicle
 
-    spacing: 0
-
     Item {
         id: sns
         Layout.preferredWidth: root.width
@@ -93,6 +91,7 @@ ColumnLayout {
         groundSpeed: vehicle ? vehicle.groundSpeed : 0.0
         barometerAvalible: vehicle && vehicle.barometerAvalible
         altitude: vehicle ? vehicle.barometricAltitude : 0.0
+        terrainAltitude: vehicle ? vehicle.homeAltitude : 0.0
         climb: vehicle ? vehicle.barometricClimb : 0.0
         throttle: vehicle ? vehicle.throttle : 0
         rangeFinderAvalible: vehicle && vehicle.rangeFinderAvalible

@@ -160,7 +160,7 @@ namespace domain
         void commandHomePosition(const Position& homePosition);
         void commandArmDisarm(bool arm);
 
-    private:
+    protected:
         State m_state;
         QString m_modeString;
 
