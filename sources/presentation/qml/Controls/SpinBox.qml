@@ -10,6 +10,7 @@ Control {
     property real from: 0
     property real to: 0
     property real stepSize: 1
+    property bool focused: contentItem.activeFocus
 
     onValueChanged: {
         if (from >= to) return;

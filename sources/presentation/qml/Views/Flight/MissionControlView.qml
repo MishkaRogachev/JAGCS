@@ -23,7 +23,6 @@ ColumnLayout {
             enabled: vehicle
             onCurrentIndexChanged: {
                 if (!vehicle || currentIndex === vehicle.currentItem) return;
-
                 vehicle.commandJumpTo(currentIndex)
             }
 

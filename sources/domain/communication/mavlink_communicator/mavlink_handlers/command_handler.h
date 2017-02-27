@@ -25,6 +25,7 @@ namespace domain
        void sendMissionRestart();
        void sendMissionStart(int startPoint);
        void sendMissionJumpTo(int startPoint);
+       //TODO: SET_ROLL_PITCH_YAW_THRUST
 
     private slots:
         void onVehicleAdded(domain::AbstractVehicle* vehicle);

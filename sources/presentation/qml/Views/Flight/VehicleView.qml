@@ -142,8 +142,9 @@ Column {
         width: root.width
 
         TabButton {
-            text: qsTr("Attitude")
+            text: qsTr("Manual")
         }
+
         TabButton {
             text: qsTr("Mission")
         }
@@ -154,12 +155,7 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
         currentIndex: bar.currentIndex
 
-        Item {
-            // TODO: manual
-        }
-
-        MissionControlView {
-
-        }
+        ManualControlView {}
+        MissionControlView {}
     }
 }
