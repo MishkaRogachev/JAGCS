@@ -21,6 +21,7 @@
         <file>icons/add.svg</file>
         <file>icons/connect.svg</file>
         <file>icons/disconnect.svg</file>
+        <file>icons/restart.svg</file>
         <file>icons/rx.svg</file>
         <file>icons/tx.svg</file>
         <file>icons/play.svg</file>

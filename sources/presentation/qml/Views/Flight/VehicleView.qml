@@ -150,7 +150,8 @@ Column {
     }
 
     StackLayout {
-        width: parent.width
+        width: parent.width - palette.controlBaseSize / 4
+        anchors.horizontalCenter: parent.horizontalCenter
         currentIndex: bar.currentIndex
 
         Item {
