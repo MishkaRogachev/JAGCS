@@ -14,7 +14,7 @@ ColumnLayout {
 
     Item {
         id: sns
-        Layout.preferredWidth: root.width
+        Layout.fillWidth: true
         Layout.preferredHeight: gpsColumn.height + palette.controlBaseSize / 4
 
         Column {
@@ -78,8 +78,7 @@ ColumnLayout {
 
     FlightDisplay {
         id: fd
-        width: palette.controlBaseSize * 8
-
+        Layout.fillWidth: true
         armed: vehicle && vehicle.armed
         insAvalible: vehicle && vehicle.insAvalible
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
@@ -122,7 +121,6 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
             font.bold: true
-            Layout.preferredWidth: fd.width * 2 / 3
         }
 
         Switch {
@@ -130,7 +128,6 @@ ColumnLayout {
             text: inputChecked ? qsTr("Disarm") : qsTr("Arm")
             font.pixelSize: palette.fontPixelSize / 1.5
             font.bold: true
-            Layout.preferredWidth: fd.width / 3
             inputChecked: vehicle && vehicle.armed
             onInputCheckedChanged: checked = inputChecked
             onCheckedChanged: if (checked != inputChecked) vehicle.commandArmDisarm(checked)
@@ -138,34 +135,35 @@ ColumnLayout {
         }
     }
 
-    RowLayout {
+    GridLayout {
         anchors.horizontalCenter: parent.horizontalCenter
+        columns: 2
 
         Label {
-            anchors.verticalCenter: parent.verticalCenter
             text: qsTr("Item")
             font.bold: true
         }
 
         ComboBox {
             id: selectedItemBox
-            anchors.verticalCenter: parent.verticalCenter
             model: vehicle ? vehicle.missionItems : []
             enabled: vehicle
         }
 
         Button {
             iconSource: "qrc:/icons/play.svg"
-            anchors.verticalCenter: parent.verticalCenter
             onClicked: vehicle.commandJumpTo(selectedItemBox.currentText)
             enabled: vehicle
         }
 
         Button {
             iconSource: "qrc:/icons/home.svg"
-            anchors.verticalCenter: parent.verticalCenter
             onClicked: vehicle.commandReturn()
             enabled: vehicle
         }
+    }
+
+    Item {
+        Layout.fillHeight: true
     }
 }

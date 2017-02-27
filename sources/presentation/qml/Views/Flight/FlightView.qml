@@ -68,11 +68,10 @@ Pane {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: column.width
+        width: height / 2.5
 
         ColumnLayout {
-            id: column
-            height: parent.height
+            anchors.fill: parent
 
             ComboBox {
                 model: vehicleNames
@@ -83,10 +82,6 @@ Pane {
             VehicleView {
                 id: vehicleView
                 Layout.fillWidth: true
-            }
-
-            Item {
-                width: 1
                 Layout.fillHeight: true
             }
         }
