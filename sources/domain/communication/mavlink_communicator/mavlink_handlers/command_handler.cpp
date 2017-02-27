@@ -70,6 +70,11 @@ void CommandHandler::sendReturn()
     m_communicator->sendMessageAllLinks(message);
 }
 
+void CommandHandler::sendMissionRestart()
+{
+    this->sendMissionStart(1);
+}
+
 void CommandHandler::sendMissionStart(int startPoint)
 {
     auto vehicle = qobject_cast<domain::AbstractVehicle*>(this->sender());
@@ -93,12 +98,36 @@ void CommandHandler::sendMissionStart(int startPoint)
     m_communicator->sendMessageAllLinks(message);
 }
 
+void CommandHandler::sendMissionJumpTo(int startPoint)
+{
+    auto vehicle = qobject_cast<domain::AbstractVehicle*>(this->sender());
+    if (!vehicle) return;
+
+    mavlink_message_t message;
+    mavlink_command_long_t command;
+
+    command.target_system = vehicle->vehicleId();
+    command.target_component = 0;
+    command.confirmation = 0;
+
+    command.command = MAV_CMD_DO_JUMP;
+
+    command.param1 = startPoint;
+
+    mavlink_msg_command_long_encode(m_communicator->systemId(),
+                                    m_communicator->componentId(),
+                                    &message, &command);
+    m_communicator->sendMessageAllLinks(message);
+}
+
 void CommandHandler::onVehicleAdded(AbstractVehicle* vehicle)
 {
     connect(vehicle, &AbstractVehicle::commandReturn,
             this, &CommandHandler::sendReturn);
-    connect(vehicle, &AbstractVehicle::commandJumpTo,
+    connect(vehicle, &AbstractVehicle::commandStart,
             this, &CommandHandler::sendMissionStart);
+    connect(vehicle, &AbstractVehicle::commandJumpTo,
+            this, &CommandHandler::sendMissionJumpTo);
 
     auto baseVehicle = qobject_cast<domain::BaseVehicle*>(vehicle);
     {

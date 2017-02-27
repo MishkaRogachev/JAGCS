@@ -16,6 +16,7 @@ namespace domain
         Q_PROPERTY(int type READ type CONSTANT)
 
         Q_PROPERTY(int missionItems READ missionItems NOTIFY missionItemsChanged)
+        Q_PROPERTY(int currentItem READ currentItem NOTIFY currentItemChanged)
 
     public:
         enum Type
@@ -31,6 +32,7 @@ namespace domain
         Mission* assignedMission() const;
 
         int missionItems() const;
+        int currentItem() const;
 
     public slots:
         void assignMission(Mission* mission);
@@ -39,8 +41,11 @@ namespace domain
     signals:
         void assignedMissionChanged(Mission* mission);
         void missionItemsChanged(int missionItems);
+        void currentItemChanged(int currentItem);
 
         void commandReturn();
+        void commandRestart();
+        void commandStart(int missionItem);
         void commandJumpTo(int missionItem);
 
     protected:

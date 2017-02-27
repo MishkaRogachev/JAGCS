@@ -22,7 +22,9 @@ namespace domain
 
        void sendArmDisarm(bool arm);
        void sendReturn();
+       void sendMissionRestart();
        void sendMissionStart(int startPoint);
+       void sendMissionJumpTo(int startPoint);
 
     private slots:
         void onVehicleAdded(domain::AbstractVehicle* vehicle);

@@ -40,6 +40,11 @@ int AbstractVehicle::missionItems() const
     return m_assignedMission ? m_assignedMission->count() : 0;
 }
 
+int AbstractVehicle::currentItem() const
+{
+    return m_assignedMission ? m_assignedMission->currentIndex() : 0;
+}
+
 void AbstractVehicle::assignMission(Mission* mission)
 {
     if (m_assignedMission == mission) return;

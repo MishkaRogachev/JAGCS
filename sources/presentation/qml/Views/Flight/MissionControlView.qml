@@ -19,7 +19,19 @@ ColumnLayout {
             id: selectedItemBox
             Layout.fillWidth: true
             model: vehicle ? vehicle.missionItems : []
+            currentIndex: -1
             enabled: vehicle
+            onCurrentIndexChanged: {
+                if (!vehicle || currentIndex === vehicle.currentItem) return;
+
+                vehicle.commandJumpTo(currentIndex)
+            }
+
+            Connections {
+                target: vehicle
+                ignoreUnknownSignals: true
+                onCurrentItemChanged: selectedItemBox.currentIndex = currentItem;
+            }
         }
     }
 
@@ -40,7 +52,7 @@ ColumnLayout {
 
         Button {
             iconSource: "qrc:/icons/play.svg"
-            onClicked: vehicle.commandJumpTo(selectedItemBox.currentText)
+            onClicked: vehicle.commandStart(selectedItemBox.currentIndex)
             enabled: vehicle
         }
     }
