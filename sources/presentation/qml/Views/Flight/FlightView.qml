@@ -68,7 +68,7 @@ Pane {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: height / 2.5
+        width: height / 3
 
         ColumnLayout {
             anchors.fill: parent
@@ -82,6 +82,10 @@ Pane {
             VehicleView {
                 id: vehicleView
                 Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+
+            Item {
                 Layout.fillHeight: true
             }
         }

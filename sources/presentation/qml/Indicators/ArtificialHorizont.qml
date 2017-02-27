@@ -79,13 +79,14 @@ Item {
             roll: rollInverted ? -root.roll : 0
             markColor: armed ? palette.selectedTextColor : palette.negativeColor
         }
-            Label {
-                anchors.centerIn: parent
-                anchors.verticalCenterOffset: -height
-                text: qsTr("DISARMED")
-                font.bold: true
-                color: armed ? "transparent" : palette.negativeColor
-            }
+
+        Label {
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: -height
+            text: qsTr("DISARMED")
+            font.bold: true
+            color: armed ? "transparent" : palette.negativeColor
+        }
     }
 
     Rectangle {

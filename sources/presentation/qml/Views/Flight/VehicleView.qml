@@ -7,15 +7,16 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls"
 import "../../Indicators"
 
-ColumnLayout {
+Column {
     id: root
 
     property QtObject vehicle
+    spacing: palette.controlBaseSize / 4
 
     Item {
         id: sns
-        Layout.fillWidth: true
-        Layout.preferredHeight: gpsColumn.height + palette.controlBaseSize / 4
+        width: parent.width
+        height: gpsColumn.height + palette.controlBaseSize / 4
 
         Column {
             id: gpsColumn
@@ -78,7 +79,7 @@ ColumnLayout {
 
     FlightDisplay {
         id: fd
-        Layout.fillWidth: true
+        width: parent.width
         armed: vehicle && vehicle.armed
         insAvalible: vehicle && vehicle.insAvalible
         pitch: vehicle ? vehicle.attitude.pitch : 0.0
@@ -113,13 +114,14 @@ ColumnLayout {
         rollInverted: parseInt(settings.value("Gui/fdRollInverted"))
     }
 
-    RowLayout {
+    Row {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Label {
+            width: root.width / 2
             horizontalAlignment: Qt.AlignHCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: qsTr("Mode:") + ' ' + (vehicle ? vehicle.modeString : "-")
+            text: (vehicle ? vehicle.modeString : "-")
             font.bold: true
         }
 
@@ -135,35 +137,28 @@ ColumnLayout {
         }
     }
 
-    GridLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
-        columns: 2
+    TabBar {
+        id: bar
+        width: root.width
 
-        Label {
-            text: qsTr("Item")
-            font.bold: true
+        TabButton {
+            text: qsTr("Attitude")
         }
-
-        ComboBox {
-            id: selectedItemBox
-            model: vehicle ? vehicle.missionItems : []
-            enabled: vehicle
-        }
-
-        Button {
-            iconSource: "qrc:/icons/play.svg"
-            onClicked: vehicle.commandJumpTo(selectedItemBox.currentText)
-            enabled: vehicle
-        }
-
-        Button {
-            iconSource: "qrc:/icons/home.svg"
-            onClicked: vehicle.commandReturn()
-            enabled: vehicle
+        TabButton {
+            text: qsTr("Mission")
         }
     }
 
-    Item {
-        Layout.fillHeight: true
+    StackLayout {
+        width: parent.width
+        currentIndex: bar.currentIndex
+
+        Item {
+            // TODO: manual
+        }
+
+        MissionControlView {
+
+        }
     }
 }

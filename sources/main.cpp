@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
                 PROPERTY(settings), domain::SettingsProvider::instance());
     presenter.setView(engine.rootObjects().first());
 
-    presenter.setMode("flight");
+    presenter.setMode("mission");
 
     return app.exec();
 }
