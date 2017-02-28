@@ -13,66 +13,57 @@ GridLayout {
     columns: 2
 
     Label {
-        text: qsTr("Pitch")
+        text: qsTr("X")
     }
 
-    SpinBox {
-        id: pitchBox
+    Slider {
+        id: x
         Layout.fillWidth: true
-        onValueChanged: sendPitchRollYawThottle()
+        from: -1000
+        to: 1000
+        onPressedChanged: if (vehicle && !pressed) sendManualInput()
     }
 
     Label {
-        text: qsTr("Roll")
+        text: qsTr("Y")
     }
 
-    SpinBox {
-        id: rollBox
+    Slider {
+        id: y
         Layout.fillWidth: true
-        onValueChanged: sendPitchRollYawThottle()
+        from: -1000
+        to: 1000
+        onPressedChanged: if (vehicle && !pressed) sendManualInput()
     }
 
     Label {
-        text: qsTr("Yaw")
+        text: qsTr("Z")
     }
 
-    SpinBox {
-        id: yawBox
+    Slider {
+        id: z
         Layout.fillWidth: true
-        onValueChanged: sendPitchRollYawThottle()
+        from: -1000
+        to: 1000
+        onPressedChanged: if (vehicle && !pressed) sendManualInput()
     }
 
     Label {
-        text: qsTr("Throttle")
+        text: qsTr("R")
     }
 
-    SpinBox {
-        id: throttleBox
+    Slider {
+        id: r
         Layout.fillWidth: true
-        onValueChanged: sendPitchRollYawThottle()
+        from: -1000
+        to: 1000
+        onPressedChanged: if (vehicle && !pressed) sendManualInput()
     }
 
-    Connections {
-        target: vehicle
-        ignoreUnknownSignals: true
-        onAttitudeChanged: {
-            updating = true;
-            if (!pitchBox.focused) pitchBox.value = attitude.pitch.toFixed(2);
-            if (!rollBox.focused) rollBox.value = attitude.roll.toFixed(2);
-            if (!yawBox.focused) yawBox.value = attitude.yaw.toFixed(2);
-            updating = false;
-        }
-        onThrottleChanged: {
-            updating = true;
-            if (!throttleBox.focused) throttleBox.value = throttle.toFixed(0);
-            updating = false;
-        }
-    }
+    // TODO: feedback Connections
 
-    function sendPitchRollYawThottle() {
-        if (!vehicle || updating) return;
-
-        vehicle.commandPitchRollYawThrottle(pitchBox.value, rollBox.value,
-                                            yawBox.value, throttleBox.value);
+    function sendManualInput() {
+        vehicle.commandManualInput(x.position, y.position,
+                                   z.position, r.position);
     }
 }

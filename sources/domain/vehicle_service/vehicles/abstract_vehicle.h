@@ -47,6 +47,7 @@ namespace domain
         void commandRestart();
         void commandStart(int missionItem);
         void commandJumpTo(int missionItem);
+        void commandManualInput(int x, int y, int z, int r);
 
     protected:
         const uint8_t m_vehicleId;
