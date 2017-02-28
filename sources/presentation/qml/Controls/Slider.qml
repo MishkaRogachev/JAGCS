@@ -6,6 +6,8 @@ import "./"
 Slider {
     id: control
 
+    property real visualValue: from + position * (to - from)
+
     height: palette.controlBaseSize
 
     background: Rectangle {

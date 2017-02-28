@@ -10,7 +10,7 @@ GridLayout {
     property bool updating: false
 
     enabled: vehicle
-    columns: 2
+    columns: 3
 
     Label {
         text: qsTr("X")
@@ -22,6 +22,12 @@ GridLayout {
         from: -1000
         to: 1000
         onPressedChanged: if (vehicle && !pressed) sendManualInput()
+    }
+
+    Label {
+        text: x.visualValue.toFixed(0)
+        horizontalAlignment: Qt.AlignHCenter
+        Layout.preferredWidth: palette.controlBaseSize * 1.5
     }
 
     Label {
@@ -37,6 +43,12 @@ GridLayout {
     }
 
     Label {
+        text: y.visualValue.toFixed(0)
+        horizontalAlignment: Qt.AlignHCenter
+        Layout.preferredWidth: palette.controlBaseSize * 1.5
+    }
+
+    Label {
         text: qsTr("Z")
     }
 
@@ -49,6 +61,12 @@ GridLayout {
     }
 
     Label {
+        text: z.visualValue.toFixed(0)
+        horizontalAlignment: Qt.AlignHCenter
+        Layout.preferredWidth: palette.controlBaseSize * 1.5
+    }
+
+    Label {
         text: qsTr("R")
     }
 
@@ -57,13 +75,19 @@ GridLayout {
         Layout.fillWidth: true
         from: -1000
         to: 1000
+        value: -1000
         onPressedChanged: if (vehicle && !pressed) sendManualInput()
+    }
+
+    Label {
+        text: r.value.toFixed(0)
+        horizontalAlignment: Qt.AlignHCenter
+        Layout.preferredWidth: palette.controlBaseSize * 1.5
     }
 
     // TODO: feedback Connections
 
     function sendManualInput() {
-        vehicle.commandManualInput(x.position, y.position,
-                                   z.position, r.position);
+        vehicle.commandManualInput(x.value, y.value, z.value, r.value);
     }
 }
