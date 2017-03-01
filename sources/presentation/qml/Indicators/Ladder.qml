@@ -37,7 +37,7 @@ Rectangle {
             ctx.save();
 
             ctx.lineWidth = 2;
-            ctx.font = fontPixelSize + 'px "Open Sans"';
+            ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
