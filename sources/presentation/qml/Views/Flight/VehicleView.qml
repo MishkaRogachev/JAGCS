@@ -99,8 +99,8 @@ Column {
         compassAvalible: vehicle && vehicle.compasAvalible
         heading: vehicle ? vehicle.heading : 0.0
         course: vehicle && vehicle.gpsAvalible ? vehicle.gps.course : -1
-        windDirection: vehicle ? vehicle.wind.direction : -1
-        homeDirection: vehicle ? vehicle.homeDirection : -1
+        windDirection: vehicle && vehicle.wind.speed > 0 ? vehicle.wind.direction : -1
+        homeDirection: vehicle && vehicle.homeDistance > 1 ? vehicle.homeDirection : -1
         homeDistance: vehicle ? vehicle.homeDistance : -1
         missionDistance: vehicle ? vehicle.missionDistance : -1
 
@@ -155,7 +155,7 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
         currentIndex: bar.currentIndex
 
-        ManualControlView {}
         MissionControlView {}
+        ManualControlView {}
     }
 }
