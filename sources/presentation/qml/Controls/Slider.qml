@@ -24,7 +24,7 @@ Slider {
         Rectangle {
             width: control.visualPosition * parent.width
             height: parent.height
-            color: palette.selectionColor
+            color: control.enabled ? palette.selectionColor : palette.disabledColor
             radius: height / 2
         }
     }
@@ -35,7 +35,7 @@ Slider {
         implicitWidth: palette.controlBaseSize / 1.5
         implicitHeight: implicitWidth
         radius: width / 2
-        color: palette.highlightColor
+        color: control.enabled ? palette.highlightColor : palette.disabledColor
 
         Rectangle {
             anchors.centerIn: parent

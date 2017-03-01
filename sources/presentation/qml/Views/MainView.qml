@@ -24,7 +24,7 @@ ApplicationWindow {
         property color trackColor: "#F44336"
         property color missionColor: paletteStyle ? "#00897B" : "#1DE9B6"
 
-        property color skyColor: paletteStyle ? "#80D8FF" : "#2979FF"
+        property color skyColor: paletteStyle ? "#80DEEF" : "#00BCD4"
         property color groundColor: paletteStyle ? "#A1887F" : "#795548"
 
         backgroundColor: paletteStyle ? "#CFD8DC" : "#37474F"
