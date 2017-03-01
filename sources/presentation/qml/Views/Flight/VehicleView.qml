@@ -142,11 +142,11 @@ Column {
         width: root.width
 
         TabButton {
-            text: qsTr("Manual")
+            text: qsTr("Mission")
         }
 
         TabButton {
-            text: qsTr("Mission")
+            text: qsTr("Manual")
         }
     }
 
