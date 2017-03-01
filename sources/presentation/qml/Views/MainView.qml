@@ -35,7 +35,7 @@ ApplicationWindow {
         disabledColor: paletteStyle ? "#9E9E9E" : "#212121"
 
         textColor: paletteStyle ? "#37474F" : "#FAFAFA"
-        selectedTextColor: "#424242"
+        selectedTextColor: "#242424"
 
         highlightColor: "#00E676"
         selectionColor: "#69F0AE"
