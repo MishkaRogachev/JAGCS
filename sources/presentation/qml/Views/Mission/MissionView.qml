@@ -50,9 +50,9 @@ Pane {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.leftMargin: 6
-        anchors.rightMargin: 6
-        height: palette.controlBaseSize + 12
+        anchors.leftMargin: palette.margins
+        anchors.rightMargin: palette.margins
+        height: palette.controlBaseSize + palette.spacing
 
         RowLayout {
             anchors.fill: parent

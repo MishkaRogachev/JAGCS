@@ -32,7 +32,8 @@ Pane {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         width: background.width / 3
-        height: cornerVisible ? background.height / 3 + palette.controlBaseSize : 0
+        height: cornerVisible ?
+                    (background.height / 3 + palette.controlBaseSize) : 0
     }
 
     MapView {
@@ -68,7 +69,7 @@ Pane {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: height / 3
+        width: root.width / 5
 
         ColumnLayout {
             anchors.fill: parent

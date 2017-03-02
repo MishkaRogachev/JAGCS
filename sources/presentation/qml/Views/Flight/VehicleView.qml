@@ -11,42 +11,40 @@ Column {
     id: root
 
     property QtObject vehicle
-    spacing: palette.controlBaseSize / 4
+    spacing: palette.spacing
 
     Item {
         id: sns
         width: parent.width
-        height: gpsColumn.height + palette.controlBaseSize / 4
+        height: gpsColumn.height + palette.spacing
 
         Column {
             id: gpsColumn
             anchors.top: parent.top
             anchors.left: parent.left
-            anchors.leftMargin: palette.controlBaseSize / 8
+            anchors.leftMargin: palette.margins
 
             Label {
                 color: fd.snsColor
                 font.pixelSize: palette.fontPixelSize * 0.6
                 font.bold: true
-                text: qsTr("Lat.:") +
-                      (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.latitude,
-                                                           false) : qsTr("None"))
+                text: qsTr("Lat.:") + (vehicle ? Helper.degreesToDmsString(
+                         vehicle.gps.coordinate.latitude, false) : qsTr("None"))
             }
 
             Label {
                 color: fd.snsColor
                 font.pixelSize: palette.fontPixelSize * 0.6
                 font.bold: true
-                text: qsTr("Lon.:") +
-                      (vehicle ? Helper.degreesToDmsString(vehicle.gps.coordinate.longitude,
-                                                           true) : qsTr("None"))
+                text: qsTr("Lon.:") + (vehicle ? Helper.degreesToDmsString(
+                         vehicle.gps.coordinate.longitude, true) : qsTr("None"))
             }
         }
 
         Row {
             anchors.top: parent.top
             anchors.right: parent.right
-            anchors.rightMargin: palette.controlBaseSize / 8
+            anchors.rightMargin: palette.margins
             spacing: 5
 
             GpsIndicator {
@@ -151,7 +149,7 @@ Column {
     }
 
     StackLayout {
-        width: parent.width - palette.controlBaseSize / 4
+        width: parent.width - palette.spacing
         anchors.horizontalCenter: parent.horizontalCenter
         currentIndex: bar.currentIndex
 

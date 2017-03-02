@@ -19,8 +19,12 @@ Frame {
         if (pickButton.visible) pickButton.pick();
     }
 
+    padding: palette.margins
+
     ColumnLayout {
         width: parent.width
+
+        spacing: palette.spacing
 
         RowLayout {
             Label {
