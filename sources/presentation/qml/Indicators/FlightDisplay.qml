@@ -113,7 +113,7 @@ Column {
 
                 ColoredIcon {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: palette.fontPixelSize
+                    width: parent.width / 2
                     height: width
                     source: "qrc:/icons/wind.svg"
                     color: homeLabel.color
@@ -129,7 +129,7 @@ Column {
 
                 ColoredIcon {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: palette.fontPixelSize
+                    width: parent.width / 2
                     height: width
                     source: "qrc:/icons/home.svg"
                     color: homeLabel.color
@@ -147,7 +147,7 @@ Column {
 
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: palette.fontPixelSize
+                    width: parent.width / 3
                     height: width
                     radius: width / 2
                     color: missionDistance > -1 ?
@@ -195,7 +195,7 @@ Column {
                 BatteryIndicator {
                     id: battery
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: palette.controlBaseSize * 0.75
+                    width: parent.width / 2
                     height: width
                 }
 
@@ -209,7 +209,7 @@ Column {
 
                 ColoredIcon {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: palette.controlBaseSize * 0.75
+                    width: parent.width / 2
                     height: width
                     source: "qrc:/icons/current.svg"
                     color: homeLabel.color
