@@ -61,7 +61,7 @@ Item {
         PitchScale {
             id: pitchScale
             anchors.centerIn: parent
-            fontPixelSize: palette.fontPixelSize * 0.8
+            width: parent.width / 2
             height: parent.height - palette.controlBaseSize * 2
             pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll
@@ -108,7 +108,6 @@ Item {
     RollScale {
         id: rollScale
         anchors.fill: parent
-        fontPixelSize: palette.fontPixelSize * 1.2
         roll: rollInverted ? -root.roll : root.roll
         minRoll: root.minRoll
         maxRoll: root.maxRoll

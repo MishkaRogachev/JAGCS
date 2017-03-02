@@ -9,7 +9,7 @@ Item {
     property int maxRoll: 25
     property int rollStep: 5
     property color scaleColor: palette.textColor
-    property int fontPixelSize: palette.fontPixelSize
+    property int fontPixelSize: width * 0.08
 
     onRollChanged: canvas.requestPaint()
     onScaleColorChanged: canvas.requestPaint()
