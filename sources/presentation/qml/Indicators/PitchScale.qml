@@ -15,6 +15,8 @@ Item {
     width: palette.controlBaseSize * 3
     onPitchChanged: canvas.requestPaint()
     onScaleColorChanged: canvas.requestPaint()
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas

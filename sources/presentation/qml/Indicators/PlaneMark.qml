@@ -12,6 +12,8 @@ Item {
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
     onMarkColorChanged: canvas.requestPaint()
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas

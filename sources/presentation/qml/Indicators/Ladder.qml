@@ -23,6 +23,8 @@ Rectangle {
     clip: true
     onValueChanged: canvas.requestPaint()
     onScaleColorChanged: canvas.requestPaint()
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
