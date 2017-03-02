@@ -9,6 +9,8 @@ import "../Video"
 Pane {
     id: root
 
+    property QtObject joystick
+
     property var vehicleNames
     property alias selectedVehicle: vehicleView.vehicle
 

@@ -18,6 +18,8 @@ namespace domain
         explicit JoystickController(QObject* parent = nullptr);
         ~JoystickController() override;
 
+        void init();
+
         double axisX() const;
         double axisY() const;
         double axisZ() const;

@@ -85,6 +85,15 @@ GridLayout {
         Layout.preferredWidth: palette.controlBaseSize * 1.5
     }
 
+    Connections {
+        target: joystick
+        ignoreUnknownSignals: true
+        onAxisXChanged: x.value = axisX * 1000
+        onAxisYChanged: y.value = axisY * 1000
+        onAxisZChanged: z.value = axisZ * 1000
+        onAxisRChanged: r.value = axisR * 1000
+    }
+
     // TODO: feedback Connections
 
     function sendManualInput() {

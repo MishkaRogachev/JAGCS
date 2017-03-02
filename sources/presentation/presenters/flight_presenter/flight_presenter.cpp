@@ -9,6 +9,8 @@
 #include "vehicle_service.h"
 #include "abstract_vehicle.h"
 
+#include "joystick_controller.h"
+
 #include "video_presenter.h"
 #include "flight_map_presenter.h"
 
@@ -21,6 +23,8 @@ public:
 
     QMap<domain::AbstractVehicle*, QString> vehicleAliases;
 
+    domain::JoystickController joystick;
+
     VideoPresenter* video;
     FlightMapPresenter* map;
 };
@@ -32,6 +36,8 @@ FlightPresenter::FlightPresenter(domain::MissionService* missionService,
     d(new Impl())
 {
     d->vehicleService = vehicleService;
+
+    d->joystick.init();
 
     d->video = new VideoPresenter(this);
     d->map = new FlightMapPresenter(missionService, vehicleService, this);
@@ -58,6 +64,7 @@ void FlightPresenter::updateVehicles()
 
 void FlightPresenter::connectView(QObject* view)
 {
+    this->setViewProperty(PROPERTY(joystick), QVariant::fromValue(&d->joystick));
     d->video->setView(view->findChild<QObject*>(NAME(video)));
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 
