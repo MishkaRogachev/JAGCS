@@ -2,8 +2,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/JS/helper.js" as Helper
-
 import "qrc:/Controls"
 import "../../Indicators"
 
@@ -13,66 +11,9 @@ Column {
     property QtObject vehicle
     spacing: palette.spacing
 
-    Item {
+    SnsDisplay {
         id: sns
         width: parent.width
-        height: gpsColumn.height + palette.spacing
-
-        Column {
-            id: gpsColumn
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.leftMargin: palette.margins
-
-            Label {
-                color: fd.snsColor
-                font.pixelSize: palette.fontPixelSize * 0.6
-                font.bold: true
-                text: qsTr("Lat.:") + (vehicle ? Helper.degreesToDmsString(
-                         vehicle.gps.coordinate.latitude, false) : qsTr("None"))
-            }
-
-            Label {
-                color: fd.snsColor
-                font.pixelSize: palette.fontPixelSize * 0.6
-                font.bold: true
-                text: qsTr("Lon.:") + (vehicle ? Helper.degreesToDmsString(
-                         vehicle.gps.coordinate.longitude, true) : qsTr("None"))
-            }
-        }
-
-        Row {
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.rightMargin: palette.margins
-            spacing: 5
-
-            GpsIndicator {
-                fix: vehicle && vehicle.gpsAvalible ? vehicle.gps.fix : -1
-                satellitesVisible: vehicle ? vehicle.gps.satellitesVisible : -1
-                anchors.verticalCenter: parent.verticalCenter
-                width: palette.controlBaseSize
-                height: width
-            }
-
-            Column {
-                anchors.verticalCenter: parent.verticalCenter
-
-                Label {
-                    color: fd.snsColor
-                    font.pixelSize: palette.fontPixelSize * 0.6
-                    font.bold: true
-                    text: qsTr("HDOP:") + (vehicle ? vehicle.gps.eph : qsTr("None"))
-                }
-
-                Label {
-                    color: fd.snsColor
-                    font.pixelSize: palette.fontPixelSize * 0.6
-                    font.bold: true
-                    text: qsTr("VDOP:") + (vehicle ? vehicle.gps.epv : qsTr("None"))
-                }
-            }
-        }
     }
 
     FlightDisplay {

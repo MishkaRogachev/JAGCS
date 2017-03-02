@@ -26,7 +26,7 @@
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
-        <file>Indicators/GpsIndicator.qml</file>
+        <file>Indicators/SnsDisplay.qml</file>
         <file>Indicators/BarIndicator.qml</file>
         <file>Indicators/Horizont.qml</file>
         <file>Indicators/PlaneMark.qml</file>
