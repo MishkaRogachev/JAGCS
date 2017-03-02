@@ -84,6 +84,7 @@ Item {
             anchors.centerIn: parent
             anchors.verticalCenterOffset: -height
             text: qsTr("DISARMED")
+            font.pixelSize: root.width * 0.08
             font.bold: true
             color: armed ? "transparent" : palette.negativeColor
         }

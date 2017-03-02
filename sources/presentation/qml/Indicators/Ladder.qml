@@ -9,7 +9,7 @@ Rectangle {
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
-    property int fontPixelSize: palette.fontPixelSize * 0.7
+    property int fontPixelSize: root.width * 0.2
     property alias canvasRotation: canvas.rotation
 
     property alias prefix: label.prefix

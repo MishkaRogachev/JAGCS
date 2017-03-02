@@ -13,6 +13,7 @@ Text {
     wrapMode: Text.WordWrap
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
-    font.pixelSize: palette.fontPixelSize * 0.7
-    text: available ? prefix + " " + value.toFixed(digits) + " " + suffix : "-"
+    font.pixelSize: root.width * 0.23
+    text: available ? (prefix.length > 0 ? prefix + "\n" : "") +
+                      value.toFixed(digits) + " " + suffix : "-"
 }

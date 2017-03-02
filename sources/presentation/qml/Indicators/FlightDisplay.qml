@@ -97,12 +97,13 @@ Column {
 
             Column {
                 anchors.top: parent.bottom
-                anchors.topMargin: -2 * palette.controlBaseSize / 3
+                anchors.topMargin: palette.spacing - tasLabel.height
                 anchors.left: parent.left
                 width: parent.width * 0.2
-                spacing: palette.controlBaseSize / 4
+                spacing: palette.spacing
 
                 FdLabel {
+                    id: tasLabel
                     prefix: qsTr("TAS, m/s")
                     value: trueAirSpeed
                     digits: 1
@@ -178,12 +179,13 @@ Column {
 
             Column {
                 anchors.top: parent.bottom
-                anchors.topMargin: -2 * palette.controlBaseSize / 3
+                anchors.topMargin: palette.spacing - hGeoLabel.height
                 anchors.right: parent.right
                 width: parent.width * 0.2
-                spacing: palette.controlBaseSize / 4
+                spacing: palette.spacing
 
                 FdLabel {
+                    id: hGeoLabel
                     prefix: qsTr("Hgeo, m")
                     value: geometricAltitude
                     width: parent.width

@@ -11,7 +11,7 @@ Rectangle {
     property color scalesColor: palette.textColor
     property color courseColor: palette.textColor
     property color windColor: palette.skyColor
-    property int fontPixelSize: palette.fontPixelSize
+    property int fontPixelSize: root.width * 0.12
 
     onHeadingChanged: canvas.requestPaint();
     onCourseChanged: canvas.requestPaint();
