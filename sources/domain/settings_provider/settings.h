@@ -12,6 +12,11 @@ namespace domain
         const char* const fdRollInverted = "Gui/fdRollInverted";
     }
 
+    namespace manual_settings
+    {
+        const char* const useJoystick = "Manual/useJoystick";
+    }
+
     namespace map_settings
     {
         const char* const zoomLevel = "Map/zoomLevel";

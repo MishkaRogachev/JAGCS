@@ -6,6 +6,9 @@
 #include <QDebug>
 
 // Internal
+#include "settings.h"
+#include "settings_provider.h"
+
 #include "vehicle_service.h"
 #include "abstract_vehicle.h"
 
@@ -23,7 +26,7 @@ public:
 
     QMap<domain::AbstractVehicle*, QString> vehicleAliases;
 
-    domain::JoystickController joystick;
+    domain::JoystickController* joystick = nullptr;
 
     VideoPresenter* video;
     FlightMapPresenter* map;
@@ -37,7 +40,12 @@ FlightPresenter::FlightPresenter(domain::MissionService* missionService,
 {
     d->vehicleService = vehicleService;
 
-    d->joystick.init();
+    if (domain::SettingsProvider::value(
+            domain::manual_settings::useJoystick).toBool())
+    {
+        auto joystick = new domain::JoystickController(this);
+        if (joystick->init()) d->joystick = joystick;
+    }
 
     d->video = new VideoPresenter(this);
     d->map = new FlightMapPresenter(missionService, vehicleService, this);
@@ -64,7 +72,7 @@ void FlightPresenter::updateVehicles()
 
 void FlightPresenter::connectView(QObject* view)
 {
-    this->setViewProperty(PROPERTY(joystick), QVariant::fromValue(&d->joystick));
+    this->setViewProperty(PROPERTY(joystick), QVariant::fromValue(d->joystick));
     d->video->setView(view->findChild<QObject*>(NAME(video)));
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 

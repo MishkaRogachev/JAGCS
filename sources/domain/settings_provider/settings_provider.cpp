@@ -25,6 +25,8 @@ public:
         settings.setValue(gui_settings::paletteStyle, 0);
         settings.setValue(gui_settings::fdRollInverted, 0);
 
+        settings.setValue(domain::manual_settings::useJoystick, true);
+
         settings.setValue(map_settings::zoomLevel, 16.0);
         settings.setValue(map_settings::centerLatitude, 55.968954);
         settings.setValue(map_settings::centerLongitude, 37.110155);

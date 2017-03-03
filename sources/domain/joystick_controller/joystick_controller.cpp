@@ -23,19 +23,36 @@ JoystickController::~JoystickController()
     delete d;
 }
 
-void JoystickController::init()
+bool JoystickController::init()
 {
+    if (d->pad)
+    {
+        d->pad->deleteLater();
+    }
+
     auto pads = QGamepadManager::instance()->connectedGamepads();
 
     if (!pads.isEmpty())
     {
         d->pad = new QGamepad(pads.first(), this);
 
-        connect(d->pad, &QGamepad::axisLeftXChanged, this, &JoystickController::axisXChanged);
-        connect(d->pad, &QGamepad::axisLeftYChanged, this, &JoystickController::axisYChanged);
-        connect(d->pad, &QGamepad::axisRightXChanged, this, &JoystickController::axisZChanged);
-        connect(d->pad, &QGamepad::axisRightYChanged, this, &JoystickController::axisRChanged);
+        connect(d->pad, &QGamepad::axisLeftXChanged,
+                this, &JoystickController::axisXChanged);
+        connect(d->pad, &QGamepad::axisLeftYChanged,
+                this, &JoystickController::axisYChanged);
+        connect(d->pad, &QGamepad::axisRightXChanged,
+                this, &JoystickController::axisZChanged);
+        connect(d->pad, &QGamepad::axisRightYChanged,
+                this, &JoystickController::axisRChanged);
+
+        return d->pad->isConnected();
     }
+    else
+    {
+        d->pad = nullptr;
+    }
+
+    return false;
 }
 
 double JoystickController::axisX() const
