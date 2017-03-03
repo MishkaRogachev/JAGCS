@@ -9,6 +9,8 @@ Frame {
 
     property alias useJoystick: useJoystickBox.checked
 
+    signal setUseJoystick(bool use)
+
     GridLayout {
         anchors.fill: parent
         rowSpacing: palette.spacing
@@ -21,6 +23,7 @@ Frame {
 
         CheckBox {
             id: useJoystickBox
+            onCheckedChanged: setUseJoystick(checked)
         }
 
         Item {
