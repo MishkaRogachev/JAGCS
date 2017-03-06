@@ -16,11 +16,11 @@ namespace domain
 
     public:
         explicit VehicleService(QObject* parent = nullptr);
+        ~VehicleService() override;
 
-        AbstractVehicle* vehicle(int index) const;
-        const QList<AbstractVehicle*>& vehicles() const;
+        QList<AbstractVehicle*> vehicles() const;
 
-        AbstractVehicle* vehicleForId(uint8_t id) const;
+        AbstractVehicle* vehicle(uint8_t id) const;
         BaseVehicle* baseVehicle(uint8_t id) const;
         AerialVehicle* aerialVehicle(uint8_t id) const;
 
@@ -35,7 +35,8 @@ namespace domain
         void vehicleRemoved(AbstractVehicle* vehicle);
 
     private:
-        QList<AbstractVehicle*> m_vehicles;
+        class Impl;
+        Impl* const d;
     };
 }
 

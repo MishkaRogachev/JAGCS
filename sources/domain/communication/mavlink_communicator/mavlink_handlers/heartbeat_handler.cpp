@@ -101,6 +101,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     if (vehicle && vehicle->type() != type)
     {
         m_vehicleService->deleteVehicle(vehicle);
+        vehicle = nullptr;
     }
 
     if (!vehicle)

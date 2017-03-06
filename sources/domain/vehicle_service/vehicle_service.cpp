@@ -1,6 +1,7 @@
 #include "vehicle_service.h"
 
 // Qt
+#include <QMap>
 #include <QDebug>
 
 // Internal
@@ -8,8 +9,15 @@
 
 using namespace domain;
 
+class VehicleService::Impl
+{
+public:
+    QMap<uint8_t, AbstractVehicle*> vehicles;
+};
+
 VehicleService::VehicleService(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    d(new Impl())
 {
     qRegisterMetaType<Attitude>("Attitude");
     qRegisterMetaType<Position>("Position");
@@ -18,38 +26,34 @@ VehicleService::VehicleService(QObject* parent):
     qRegisterMetaType<PowerSystem>("PowerSystem");
 }
 
-AbstractVehicle* VehicleService::vehicle(int index) const
+VehicleService::~VehicleService()
 {
-    return m_vehicles.at(index);
+    delete d;
 }
 
-const QList<AbstractVehicle*>& VehicleService::vehicles() const
+QList<AbstractVehicle*> VehicleService::vehicles() const
 {
-    return m_vehicles;
+    return d->vehicles.values();
 }
 
-AbstractVehicle* VehicleService::vehicleForId(uint8_t id) const
+AbstractVehicle* VehicleService::vehicle(uint8_t id) const
 {
-    for (domain::AbstractVehicle* vehicle: m_vehicles)
-    {
-        if (vehicle->vehicleId() == id) return vehicle;
-    }
-    return nullptr;
+    return d->vehicles.value(id, nullptr);
 }
 
 BaseVehicle* VehicleService::baseVehicle(uint8_t id) const
 {
-    return qobject_cast<BaseVehicle*>(this->vehicleForId(id));
+    return qobject_cast<BaseVehicle*>(this->vehicle(id));
 }
 
 AerialVehicle* VehicleService::aerialVehicle(uint8_t id) const
 {
-    return qobject_cast<AerialVehicle*>(this->vehicleForId(id));
+    return qobject_cast<AerialVehicle*>(this->vehicle(id));
 }
 
 void VehicleService::addVehicle(AbstractVehicle* vehicle)
 {
-    m_vehicles.append(vehicle);
+    d->vehicles[vehicle->vehicleId()] = vehicle;
     emit vehicleAdded(vehicle);
 }
 
@@ -74,7 +78,7 @@ void VehicleService::createVehicle(uint8_t vehicleId, int type)
 
 void VehicleService::removeVehicle(AbstractVehicle* vehicle)
 {
-    m_vehicles.removeOne(vehicle);
+    d->vehicles.remove(vehicle->vehicleId());
     emit vehicleRemoved(vehicle);
 }
 
