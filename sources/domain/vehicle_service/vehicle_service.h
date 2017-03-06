@@ -30,9 +30,14 @@ namespace domain
         void removeVehicle(AbstractVehicle* vehicle);
         void deleteVehicle(AbstractVehicle* vehicle);
 
+        void prolongVehicle(AbstractVehicle* vehicle);
+
     signals:
         void vehicleAdded(AbstractVehicle* vehicle);
         void vehicleRemoved(AbstractVehicle* vehicle);
+
+    protected:
+        void timerEvent(QTimerEvent* event);
 
     private:
         class Impl;
