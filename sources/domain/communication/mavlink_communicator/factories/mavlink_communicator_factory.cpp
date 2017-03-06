@@ -12,7 +12,7 @@
 #include "vfr_hud_handler.h"
 #include "command_handler.h"
 #include "home_position_handler.h"
-#include "rc_channels_handler.h"
+#include "manual_handler.h"
 #include "mission_handler.h"
 
 #include "settings.h"
@@ -40,7 +40,7 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new VfrHudHandler(m_vehicleService, communicator);
     new CommandHandler(m_vehicleService, communicator);
     new HomePositionHandler(m_vehicleService, communicator);
-    new RcChannelsHandler(m_vehicleService, communicator);
+    new ManualHandler(m_vehicleService, communicator);
     new MissionHandler(m_missionService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
 
