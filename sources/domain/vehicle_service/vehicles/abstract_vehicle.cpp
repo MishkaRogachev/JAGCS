@@ -51,8 +51,8 @@ void AbstractVehicle::assignMission(Mission* mission)
 
     if (m_assignedMission)
     {
-        m_assignedMission->unassignVehicle();
         disconnect(m_assignedMission, 0, this, 0);
+        m_assignedMission->unassignVehicle();
     }
 
     m_assignedMission = mission;
