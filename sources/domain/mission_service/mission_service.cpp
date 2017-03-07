@@ -64,8 +64,12 @@ void MissionService::addMission(Mission* mission)
 {
     d->missions.append(mission);
 
-    connect(mission, &Mission::assigned, this, &MissionService::onMissionAssigned);
-    connect(mission, &Mission::unassigned, this, &MissionService::onMissionUnassigned);
+    connect(mission, &Mission::assigned,
+            this, &MissionService::onMissionAssigned);
+    connect(mission, &Mission::unassigned,
+            this, &MissionService::onMissionUnassigned);
+    connect(mission, &Mission::missionItemDataChanged,
+            this, &MissionService::onMissionItemDataChanged);
 
     emit missionAdded(mission);
     if (mission->assignedVehicle()) emit missionAssigned(mission);
@@ -125,4 +129,14 @@ void MissionService::onMissionAssigned()
 void MissionService::onMissionUnassigned()
 {
     emit missionUnassigned(qobject_cast<Mission*>(this->sender()));
+}
+
+void MissionService::onMissionItemDataChanged(AbstractMissionItem* item)
+{
+    Mission* mission = qobject_cast<Mission*>(this->sender());
+    if (!mission) return;
+
+    mission->assignment()->setStatus(MissionVehicle::Uploading);
+    emit sendMissionItem(mission->assignment()->vehicleId(),
+                         item->sequence());
 }

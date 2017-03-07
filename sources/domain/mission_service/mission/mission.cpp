@@ -58,6 +58,7 @@ int Mission::sequence(AbstractMissionItem* item) const
 AbstractMissionItem* Mission::take(int seq)
 {
     AbstractMissionItem* item = m_items.takeAt(seq);
+    disconnect(item, 0, this, 0);
     emit missionItemsChanged(m_items);
     return item;
 }
@@ -114,6 +115,8 @@ void Mission::setMissionItem(int seq, AbstractMissionItem* item)
     AbstractMissionItem* oldItem = m_items[seq];
 
     m_items[seq] = item;
+    connect(item, &AbstractMissionItem::dataChanged,
+            this, &Mission::onMissionItemDataChanged);
     emit missionItemsChanged(m_items);
 
     if (oldItem) delete oldItem;
@@ -126,6 +129,8 @@ void Mission::addNewMissionItem()
     m_items.append(factory.create(seq == 0 ? Command::Home : seq == 1 ?
                                                  Command::Takeoff :
                                                  Command::Waypoint));
+    connect(m_items.last(), &AbstractMissionItem::dataChanged,
+            this, &Mission::onMissionItemDataChanged);
     AltitudeMissionItem* item = qobject_cast<AltitudeMissionItem*>(m_items.last());
     if (item)
     {
@@ -170,4 +175,12 @@ void Mission::assignVehicle(AbstractVehicle* vehicle)
 
     if (vehicle) emit assigned(vehicle);
     else emit unassigned();
+}
+
+void Mission::onMissionItemDataChanged()
+{
+    auto item = qobject_cast<AbstractMissionItem*>(this->sender());
+    if (!item || !m_assignment->vehicle()) return;
+
+    emit missionItemDataChanged(item);
 }

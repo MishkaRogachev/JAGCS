@@ -18,4 +18,5 @@ void LoiterTurnsMissionItem::setTurns(int turns)
 
     m_turns = turns;
     emit turnsChanged(turns);
+    emit dataChanged();
 }

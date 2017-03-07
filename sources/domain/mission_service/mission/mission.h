@@ -46,10 +46,14 @@ namespace domain
 
     signals:
         void missionItemsChanged(const QList<AbstractMissionItem*>& items);
+        void missionItemDataChanged(AbstractMissionItem* item);
         void currentIndexChanged(int index);
 
         void assigned(AbstractVehicle* vehicle);
         void unassigned();
+
+    private slots:
+        void onMissionItemDataChanged();
 
     private:
         QList<AbstractMissionItem*> m_items;

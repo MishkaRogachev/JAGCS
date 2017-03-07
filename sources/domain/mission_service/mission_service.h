@@ -6,6 +6,7 @@
 namespace domain
 {
     class Mission;
+    class AbstractMissionItem;
     class AbstractVehicle;
 
     class MissionService: public QObject
@@ -47,6 +48,7 @@ namespace domain
     private slots:
         void onMissionAssigned();
         void onMissionUnassigned();
+        void onMissionItemDataChanged(AbstractMissionItem* item);
 
     private:
         class Impl;

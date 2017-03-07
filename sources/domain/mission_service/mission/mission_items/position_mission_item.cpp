@@ -65,6 +65,7 @@ void PositionMissionItem::setLatitude(double latitude)
 
     m_latitude = latitude;
     emit latitudeChanged(latitude);
+    emit dataChanged();
 }
 
 void PositionMissionItem::setLongitude(double longitude)
@@ -73,4 +74,5 @@ void PositionMissionItem::setLongitude(double longitude)
 
     m_longitude = longitude;
     emit longitudeChanged(longitude);
+    emit dataChanged();
 }

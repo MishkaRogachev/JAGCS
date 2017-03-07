@@ -30,4 +30,5 @@ void LoiterMissionItem::setRadius(float radius)
 
     m_radius = radius;
     emit radiusChanged(radius);
+    emit dataChanged();
 }

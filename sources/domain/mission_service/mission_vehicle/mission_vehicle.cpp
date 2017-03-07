@@ -111,6 +111,8 @@ void MissionVehicle::setCurrentProgress(int currentProgress)
 
     m_currentProgress = currentProgress;
     emit currentProgressChanged(currentProgress);
+
+    if (m_currentProgress == m_totalProgress) this->setStatus(Actual);
 }
 
 void MissionVehicle::setTotalProgress(int totalProgress)
