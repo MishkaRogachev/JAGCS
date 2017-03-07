@@ -130,6 +130,35 @@ void MissionPresenter::updateTotalProgress(int totalProgress)
     this->setViewProperty(PROPERTY(totalProgress), totalProgress);
 }
 
+void MissionPresenter::updateMissionStatus()
+{
+    if (!d->selectedMission)
+    {
+        this->setViewProperty(PROPERTY(statusString), tr("None"));
+        return;
+    }
+
+    switch (d->selectedMission->assignment()->status()) {
+    case domain::MissionVehicle::Idle:
+        this->setViewProperty(PROPERTY(statusString), tr("Idle"));
+        break;
+    case domain::MissionVehicle::Downloading:
+        this->setViewProperty(PROPERTY(statusString), tr("Downloading"));
+        break;
+    case domain::MissionVehicle::Uploading:
+        this->setViewProperty(PROPERTY(statusString), tr("Uploading"));
+        break;
+    case domain::MissionVehicle::Actual:
+        this->setViewProperty(PROPERTY(statusString), tr("Actual"));
+        break;
+    case domain::MissionVehicle::NotActual:
+        this->setViewProperty(PROPERTY(statusString), tr("Not actual"));
+        break;
+    default:
+        break;
+    }
+}
+
 void MissionPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
@@ -185,9 +214,13 @@ void MissionPresenter::onMissionSelected(const QString& missionName)
         connect(d->selectedMission->assignment(),
                 &domain::MissionVehicle::totalProgressChanged,
                 this, &MissionPresenter::updateTotalProgress);
+        connect(d->selectedMission->assignment(),
+                &domain::MissionVehicle::statusChanged,
+                this, &MissionPresenter::updateMissionStatus);
 
         this->updateCurrentProgress(d->selectedMission->assignment()->currentProgress());
         this->updateTotalProgress(d->selectedMission->assignment()->totalProgress());
+        this->updateMissionStatus();
         this->updateSelectedVehicle();
     }
     this->updateMissionItems();

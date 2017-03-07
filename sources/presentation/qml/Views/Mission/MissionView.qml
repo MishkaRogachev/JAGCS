@@ -20,6 +20,7 @@ Pane {
 
     property int currentProgress: 0
     property int totalProgress: 0
+    property string statusString: qsTr("None")
 
     property var missionItems: []
 
@@ -107,6 +108,12 @@ Pane {
                 from: 0
                 to: totalProgress
                 value: currentProgress
+            }
+
+            Label {
+                text: statusString
+                horizontalAlignment: Qt.AlignHCenter
+                Layout.preferredWidth: palette.controlBaseWidth
             }
         }
     }

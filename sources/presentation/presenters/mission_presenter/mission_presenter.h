@@ -6,8 +6,8 @@
 namespace domain
 {
     class MissionService;
-    class VehicleService;
     class AbstractVehicle;
+    class VehicleService;
 }
 
 namespace presentation
@@ -30,6 +30,7 @@ namespace presentation
 
         void updateCurrentProgress(int currentProgress);
         void updateTotalProgress(int totalProgress);
+        void updateMissionStatus();
 
     protected:
         void connectView(QObject* view) override;
