@@ -70,6 +70,9 @@ void MissionService::addMission(Mission* mission)
             this, &MissionService::onMissionUnassigned);
     connect(mission, &Mission::missionItemDataChanged,
             this, &MissionService::onMissionItemDataChanged);
+    connect(mission, &Mission::missionItemAdded,
+            this, &MissionService::onMissionItemDataChanged);
+
 
     emit missionAdded(mission);
     if (mission->assignedVehicle()) emit missionAssigned(mission);

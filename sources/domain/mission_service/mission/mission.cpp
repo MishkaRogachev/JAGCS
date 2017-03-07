@@ -117,6 +117,7 @@ void Mission::setMissionItem(int seq, AbstractMissionItem* item)
     m_items[seq] = item;
     connect(item, &AbstractMissionItem::dataChanged,
             this, &Mission::onMissionItemDataChanged);
+    emit missionItemAdded(item);
     emit missionItemsChanged(m_items);
 
     if (oldItem) delete oldItem;
@@ -137,6 +138,7 @@ void Mission::addNewMissionItem()
         item->setAltitude(-1 * item->climb());
     }
 
+    emit missionItemAdded(item);
     emit missionItemsChanged(m_items);
 }
 
@@ -160,6 +162,8 @@ void Mission::exchange(int first, int last)
     }
 
     emit missionItemsChanged(m_items);
+    emit missionItemDataChanged(m_items[first]);
+    emit missionItemDataChanged(m_items[last]);
 }
 
 void Mission::unassignVehicle()

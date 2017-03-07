@@ -46,6 +46,7 @@ namespace domain
 
     signals:
         void missionItemsChanged(const QList<AbstractMissionItem*>& items);
+        void missionItemAdded(AbstractMissionItem* item);
         void missionItemDataChanged(AbstractMissionItem* item);
         void currentIndexChanged(int index);
 
