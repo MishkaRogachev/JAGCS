@@ -85,7 +85,6 @@ Pane {
             VehicleView {
                 id: vehicleView
                 Layout.fillWidth: true
-                onHeightChanged: console.log(height, root.height)
             }
 
             Item {

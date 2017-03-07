@@ -6,6 +6,7 @@
 
 // Internal
 #include "mission.h"
+#include "mission_vehicle.h"
 #include "position_mission_item.h"
 #include "return_mission_item.h"
 
@@ -53,6 +54,8 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         }
         return line;
     }
+    case MissionActualRole:
+        return mission->assignment()->status() == domain::MissionVehicle::Actual;
     default:
         return QVariant();
     }
@@ -71,6 +74,8 @@ void MissionLineMapItemModel::addMission(domain::Mission* mission)
 
     connect(mission, &domain::Mission::missionItemsChanged,
             this, [this, mission]() { this->updateMissionItems(mission); });
+    connect(mission->assignment(), &domain::MissionVehicle::statusChanged,
+            this, &MissionLineMapItemModel::onMissionStatusChanged);
 
     this->endInsertRows();
 
@@ -93,6 +98,7 @@ QHash<int, QByteArray> MissionLineMapItemModel::roleNames() const
     QHash<int, QByteArray> roles;
 
     roles[MissionPathRole] = "missionPath";
+    roles[MissionActualRole] = "missionActual";
 
     return roles;
 }
@@ -131,6 +137,13 @@ void MissionLineMapItemModel::updateMissionPath(domain::Mission* mission)
 
 void MissionLineMapItemModel::onMissionItemPositionChanged()
 {
-    this->updateMissionPath(
-                qobject_cast<domain::AbstractMissionItem*>(this->sender())->mission());
+    this->updateMissionPath(qobject_cast<domain::AbstractMissionItem*>(
+                                this->sender())->mission());
+}
+
+void MissionLineMapItemModel::onMissionStatusChanged()
+{
+    QModelIndex index = this->missionIndex(
+                            qobject_cast<domain::Mission*>(this->sender()));
+    if (index.isValid()) emit dataChanged(index, index, { MissionActualRole });
 }

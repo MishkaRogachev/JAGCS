@@ -17,7 +17,8 @@ namespace presentation
     public:
         enum MissionLineMapItemRoles
         {
-            MissionPathRole = Qt::UserRole + 1
+            MissionPathRole = Qt::UserRole + 1,
+            MissionActualRole
         };
 
         MissionLineMapItemModel(QObject* parent = nullptr);
@@ -40,6 +41,7 @@ namespace presentation
         void updateMissionItems(domain::Mission* mission);
         void updateMissionPath(domain::Mission* mission);
         void onMissionItemPositionChanged();
+        void onMissionStatusChanged();
 
     private:
         QList<domain::Mission*> m_missions;
