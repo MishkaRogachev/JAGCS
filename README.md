@@ -20,3 +20,4 @@ cd build
 cmake ..
 make
 ```
+![alt tag](https://raw.githubusercontent.com/MishkaRogachev/JAGCS/master/ui.png)
