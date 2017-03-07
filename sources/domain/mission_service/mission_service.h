@@ -40,7 +40,9 @@ namespace domain
 
         // TODO: remove from interface
         void requestMission(uint8_t id);
+        void requestMissionItem(uint8_t id, uint16_t seq);
         void sendMission(uint8_t id);
+        void sendMissionItem(uint8_t id, uint16_t seq);
 
     private slots:
         void onMissionAssigned();

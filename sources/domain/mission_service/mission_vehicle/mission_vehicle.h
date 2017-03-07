@@ -22,8 +22,8 @@ namespace domain
             Idle,
             Downloading,
             Uploading,
-            Ready,
-            Error
+            Actual,
+            NotActual
         };
 
         explicit MissionVehicle(Mission* mission, AbstractVehicle* vehicle = nullptr);

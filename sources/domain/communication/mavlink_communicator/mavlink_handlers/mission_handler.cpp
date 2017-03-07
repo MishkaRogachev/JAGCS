@@ -79,8 +79,13 @@ MissionHandler::MissionHandler(MissionService* missionService,
 {
     connect(missionService, &MissionService::requestMission,
             this, &MissionHandler::requestMission);
+    connect(missionService, &MissionService::requestMissionItem,
+            this, &MissionHandler::requestMissionItem);
+
     connect(missionService, &MissionService::sendMission,
-            this, &MissionHandler::sendMissionCount);
+            this, &MissionHandler::sendMission);
+    connect(missionService, &MissionService::sendMissionItem,
+            this, &MissionHandler::sendMissionItem);
 }
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
@@ -137,7 +142,7 @@ void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::sendMissionCount(uint8_t id)
+void MissionHandler::sendMission(uint8_t id)
 {
     Mission* mission = m_missionService->missionForVehicleId(id);
     if (!mission) return;
@@ -244,12 +249,6 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     m_communicator->sendMessageAllLinks(message);
 
     mission->assignment()->setCurrentProgress(item->sequence());
-
-    if (mission->assignment()->currentProgress() ==
-        mission->assignment()->totalProgress())
-    {
-        mission->assignment()->setStatus(MissionVehicle::Ready);
-    }
 }
 
 void MissionHandler::sendMissionAck(uint8_t id)
@@ -366,13 +365,6 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     if (msgItem.current) mission->setCurrentIndex(msgItem.seq);
 
     mission->assignment()->setCurrentProgress(mission->count());
-
-    if (mission->assignment()->currentProgress() ==
-        mission->assignment()->totalProgress())
-    {
-        this->sendMissionAck(message.sysid);
-        mission->assignment()->setStatus(MissionVehicle::Ready);
-    }
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)

@@ -86,6 +86,8 @@ void MissionVehicle::setVehicle(AbstractVehicle* vehicle)
     }
 
     emit vehicleChanged(m_vehicle);
+
+    this->setStatus(m_vehicle ? NotActual : Idle);
 }
 
 void MissionVehicle::onHomePositionChanged(const Position& homePosition)
