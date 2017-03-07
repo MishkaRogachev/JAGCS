@@ -141,7 +141,7 @@ Pane {
                         sidebar.contentY = column.height - sidebar.height;
                 }
 
-                MissionItemView {
+                MissionItemView { // TODO: separate mission item edit
                     item: modelData
                     Layout.preferredWidth: column.width
                     avalibleCommands: helper ? helper.avaliableCommands(modelData) : 0

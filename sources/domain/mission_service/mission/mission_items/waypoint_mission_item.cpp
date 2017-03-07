@@ -18,5 +18,4 @@ void WaypointMissionItem::setAcceptanceRadius(float acceptanceRadius)
 
     m_acceptanceRadius = acceptanceRadius;
     emit acceptanceRadiusChanged(acceptanceRadius);
-    emit dataChanged();
 }

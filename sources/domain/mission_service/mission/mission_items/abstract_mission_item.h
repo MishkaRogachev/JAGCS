@@ -44,7 +44,6 @@ namespace domain
         void moveDown();
 
     signals:
-        void dataChanged();
         void currentChanged(bool current);
 
     private:

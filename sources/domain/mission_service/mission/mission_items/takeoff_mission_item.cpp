@@ -18,5 +18,4 @@ void TakeoffMissionItem::setPitch(float pitch)
 
     m_pitch = pitch;
     emit pitchChanged(pitch);
-    emit dataChanged();
 }

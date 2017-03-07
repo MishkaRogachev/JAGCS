@@ -75,7 +75,6 @@ void AltitudeMissionItem::setAltitude(float altitude)
 
     m_altitude = altitude;
     emit altitudeChanged(altitude);
-    emit dataChanged();
 }
 
 void AltitudeMissionItem::setRelativeAltitude(bool relativeAltitude)
@@ -84,5 +83,4 @@ void AltitudeMissionItem::setRelativeAltitude(bool relativeAltitude)
 
     m_relativeAltitude = relativeAltitude;
     emit relativeAltitudeChanged(relativeAltitude);
-    emit dataChanged();
 }
