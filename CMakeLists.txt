@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT JAGCS)
+set(PROJECT jagcs)
 project(${PROJECT})
 
 # CMake modules
@@ -95,3 +95,14 @@ add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
+
+# Install instructions
+install(TARGETS ${PROJECT} DESTINATION "/usr/bin")
+install(FILES "debian/jagcs.desktop" DESTINATION "/usr/share/applications/")
+install(FILES "resources/icons/jagcs.svg" DESTINATION "/usr/share/icons/")
+
+# CPack Debian package
+option(WITH_DEBIAN "Include instructions to make Debian package")
+if (WITH_DEBIAN)
+    add_subdirectory(debian)
+endif (WITH_DEBIAN)

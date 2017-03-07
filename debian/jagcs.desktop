@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=JAGCS
+GenericName=jagcs
+Exec=jagcs
+Terminal=false
+Categories=Education;Robotics;
+Comment=Just Another Ground Station
+Icon=/usr/share/icons/jagcs.svg
