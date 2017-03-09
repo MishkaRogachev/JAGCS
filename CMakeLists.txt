@@ -38,20 +38,8 @@ find_package(Qt5 COMPONENTS
     Gamepad
 REQUIRED)
 
-# Global libraries
 set(LIBRARIES
-# Qt5
-    Qt5::Core
-    Qt5::Network
-    Qt5::SerialPort
-    Qt5::Gui
-    Qt5::Quick
-    Qt5::Multimedia
-    Qt5::Positioning
-    Qt5::Location
-    Qt5::Charts
-    Qt5::QuickControls2
-    Qt5::Gamepad
+# Libraries
 )
 
 # Sources and headrers
@@ -95,6 +83,21 @@ add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
+
+# Use qt5 modules
+qt5_use_modules(${PROJECT}
+    Core
+    Network
+    SerialPort
+    Gui
+    Quick
+    Multimedia
+    Positioning
+    Location
+    Charts
+    QuickControls2
+    Gamepad
+)
 
 # Install instructions
 install(TARGETS ${PROJECT} DESTINATION "/usr/bin")
