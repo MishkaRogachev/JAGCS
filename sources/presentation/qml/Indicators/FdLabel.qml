@@ -10,7 +10,6 @@ Text {
     property bool available: true
 
     color: available ? palette.textColor : palette.disabledColor
-    wrapMode: Text.WordWrap
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
     font.pixelSize: root.width * 0.23
