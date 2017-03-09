@@ -1,5 +1,8 @@
 #include "mavlink_communicator_factory.h"
 
+// Qt
+#include <QSerialPortInfo>
+
 // Internal
 #include "mavlink_communicator.h"
 
@@ -18,6 +21,7 @@
 #include "settings.h"
 #include "settings_provider.h"
 #include "udp_link.h"
+#include "serial_link.h"
 
 using namespace domain;
 
@@ -44,11 +48,22 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
     new MissionHandler(m_missionService, communicator);
     // TODO: NAV_CONTROLLER_OUTPUT
 
-    UdpLink* defaultUdpLink = new UdpLink(SettingsProvider::value(
-                                              connection_settings::port).toInt(),
-                                          communicator);
-    communicator->addLink(defaultUdpLink);
-    defaultUdpLink->up();
+    UdpLink* udpLink = new UdpLink(SettingsProvider::value(
+                                       connection_settings::port).toInt(),
+                                   communicator);
+    communicator->addLink(udpLink);
+    udpLink->up();
+
+    // TODO: serial device manager, active serial device
+    auto ports = QSerialPortInfo::availablePorts();
+    if (!ports.empty())
+    {
+        SerialLink* serialLink = new SerialLink(
+                 ports.first().portName(),
+                 SettingsProvider::value(connection_settings::baudRate).toInt(),
+                 communicator);
+        serialLink->up();
+    }
 
     return communicator;
 }
