@@ -27,6 +27,7 @@ find_package(Qt5 COMPONENTS
     Core
     Network
     SerialPort
+    Sql
     Gui
     Quick
     LinguistTools
@@ -89,6 +90,7 @@ qt5_use_modules(${PROJECT}
     Core
     Network
     SerialPort
+    Sql
     Gui
     Quick
     Multimedia

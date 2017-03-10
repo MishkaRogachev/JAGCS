@@ -2,8 +2,11 @@
 
 // Qt
 #include <QScopedPointer>
+#include <QDebug>
 
 // Internal
+#include "db_manager.h"
+
 #include "settings_provider.h"
 
 #include "mission_service.h"
@@ -22,6 +25,8 @@ using namespace domain;
 class DomainEntry::Impl
 {
 public:
+    data_source::DbManager dbManager;
+
     VehicleService vehicleService;
     MissionService missionService;
     ProxyManager proxyManager;
@@ -34,6 +39,8 @@ DomainEntry::DomainEntry():
 {
     qRegisterMetaType<Endpoint>("Endpoint");
     qRegisterMetaType<EndpointList>("EndpointList");
+
+    qDebug() << d->dbManager.open("jagcs.sqlite");
 
     QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
                      &d->missionService, &MissionService::addVehiclesMision);
