@@ -7,16 +7,35 @@ import "qrc:/Controls"
 Frame {
     id: root
 
+    property string version: qsTr("(undefined version)")
+    property string revision: qsTr("Undefined")
+    property string qtVersion: qsTr("Undefined")
+
     GridLayout {
         columns: 2
+        rowSpacing: palette.spacing
 
         Label {
-            text: "Just another ground control station"
+            text: "Just another ground control station " + version
             font.bold: true
             Layout.columnSpan: 2
         }
 
-        // TODO: version, revision, Qt version
+        Label {
+            text: qsTr("Revision")
+        }
+
+        Label {
+            text: revision
+        }
+
+        Label {
+            text: qsTr("Qt version")
+        }
+
+        Label {
+            text: qtVersion
+        }
 
         Label {
             text: qsTr("Contacts")
