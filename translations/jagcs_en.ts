@@ -4,19 +4,40 @@
 <context>
     <name>AboutView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="22"/>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="10"/>
+        <source>(undefined version)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="12"/>
+        <source>Undefined</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="25"/>
+        <source>Revision</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="33"/>
+        <source>Qt version</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="41"/>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="49"/>
         <source>Web site</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="57"/>
         <source>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -603,7 +624,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="23"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="158"/>
@@ -694,7 +715,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="36"/>
@@ -808,32 +829,32 @@
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="137"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="143"/>
         <source>Idle</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="146"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="149"/>
         <source>Uploading</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="152"/>
         <source>Actual</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="155"/>
         <source>Not actual</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="185"/>
