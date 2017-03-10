@@ -23,7 +23,9 @@ Pane {
                     qsTr("Manual"),
                     qsTr("Connection"),
                     qsTr("Video"),
-                    qsTr("Networking") ]
+                    qsTr("Networking"),
+                    qsTr("About")
+                ]
             }
 
             Item {
@@ -46,6 +48,7 @@ Pane {
             ConnectionSettingsView { objectName: "connections" }
             VideoSettingsView { objectName: "video" }
             NetworkSettingsView { objectName: "network" }
+            AboutView { objectName: "about" }
         }
     }
 }
