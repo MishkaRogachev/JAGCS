@@ -62,6 +62,7 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
                  ports.first().portName(),
                  SettingsProvider::value(connection_settings::baudRate).toInt(),
                  communicator);
+        communicator->addLink(serialLink);
         serialLink->up();
     }
 
