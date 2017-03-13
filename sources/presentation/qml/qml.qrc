@@ -12,6 +12,7 @@
         <file>Controls/Palette.qml</file>
         <file>Controls/ToolBar.qml</file>
         <file>Controls/Label.qml</file>
+        <file>Controls/Link.qml</file>
         <file>Controls/Menu.qml</file>
         <file>Controls/MenuItem.qml</file>
         <file>Controls/Frame.qml</file>
@@ -66,5 +67,6 @@
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
         <file>Views/Settings/Connection/LinkView.qml</file>
+        <file>Views/Settings/AboutView.qml</file>
     </qresource>
 </RCC>

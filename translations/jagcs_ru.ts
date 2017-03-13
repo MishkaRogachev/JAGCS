@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>AboutView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="10"/>
+        <source>(undefined version)</source>
+        <translation>(неизвестная версия)</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="12"/>
+        <source>Undefined</source>
+        <translation>Неизвестная</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="25"/>
+        <source>Revision</source>
+        <translation>Ревизия</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="33"/>
+        <source>Qt version</source>
+        <translation>Версия Qt</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="41"/>
+        <source>Contacts</source>
+        <translation>Контакты</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="49"/>
+        <source>Web site</source>
+        <translation>Веб сайт</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="57"/>
+        <source>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</source>
+        <translation>ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНО ВЫРАЖЕННЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ ГАРАНТИИ ТОВАРНОЙ ПРИГОДНОСТИ, СООТВЕТСТВИЯ ПО ЕГО КОНКРЕТНОМУ НАЗНАЧЕНИЮ И ОТСУТСТВИЯ НАРУШЕНИЙ, НО НЕ ОГРАНИЧИВАЯСЬ ИМИ. НИ В КАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПО КАКИМ-ЛИБО ИСКАМ, ЗА УЩЕРБ ИЛИ ПО ИНЫМ ТРЕБОВАНИЯМ, В ТОМ ЧИСЛЕ, ПРИ ДЕЙСТВИИ КОНТРАКТА, ДЕЛИКТЕ ИЛИ ИНОЙ СИТУАЦИИ, ВОЗНИКШИМ ИЗ-ЗА ИСПОЛЬЗОВАНИЯ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ ИЛИ ИНЫХ ДЕЙСТВИЙ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ.</translation>
+    </message>
+</context>
+<context>
     <name>ArtificialHorizont</name>
     <message>
         <location filename="../sources/presentation/qml/Indicators/ArtificialHorizont.qml" line="86"/>
@@ -670,7 +709,12 @@
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="151"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="23"/>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="158"/>
         <source>Add Item</source>
         <translation>Добавить ПМ</translation>
     </message>
@@ -756,7 +800,12 @@
         <translation>Сеть</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
+        <source>About</source>
+        <translation>О программе</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="36"/>
         <source>Make defaults</source>
         <translation>По-умолчанию</translation>
     </message>
@@ -952,7 +1001,37 @@
         <translation>Не назначено</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="156"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="137"/>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="143"/>
+        <source>Idle</source>
+        <translation>Простой</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="146"/>
+        <source>Downloading</source>
+        <translation>Загрузка</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="149"/>
+        <source>Uploading</source>
+        <translation>Выгрузка</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="152"/>
+        <source>Actual</source>
+        <translation>Актуально</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="155"/>
+        <source>Not actual</source>
+        <translation>Не актульно</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="185"/>
         <source>MAV %1</source>
         <translation>БЛА %1</translation>
     </message>

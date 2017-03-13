@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
+    <name>AboutView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="10"/>
+        <source>(undefined version)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="12"/>
+        <source>Undefined</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="25"/>
+        <source>Revision</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="33"/>
+        <source>Qt version</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="41"/>
+        <source>Contacts</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="49"/>
+        <source>Web site</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/AboutView.qml" line="57"/>
+        <source>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>ArtificialHorizont</name>
     <message>
         <location filename="../sources/presentation/qml/Indicators/ArtificialHorizont.qml" line="86"/>
@@ -583,7 +622,12 @@
 <context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="151"/>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="23"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="158"/>
         <source>Add Item</source>
         <translation></translation>
     </message>
@@ -669,7 +713,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
+        <source>About</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="36"/>
         <source>Make defaults</source>
         <translation></translation>
     </message>
@@ -778,7 +827,37 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="156"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="137"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="143"/>
+        <source>Idle</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="146"/>
+        <source>Downloading</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="149"/>
+        <source>Uploading</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="152"/>
+        <source>Actual</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="155"/>
+        <source>Not actual</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="185"/>
         <source>MAV %1</source>
         <translation></translation>
     </message>

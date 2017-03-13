@@ -10,6 +10,7 @@
 #include "connection_settings_presenter.h"
 #include "video_settings_presenter.h"
 #include "network_settings_presenter.h"
+#include "about_presenter.h"
 
 using namespace presentation;
 
@@ -21,6 +22,7 @@ public:
     ConnectionSettingsPresenter* connections;
     VideoSettingsPresenter* video;
     NetworkSettingsPresenter* network;
+    AboutPresenter* about;
 };
 
 SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* parent):
@@ -32,6 +34,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry, QObject* parent
     d->connections = new ConnectionSettingsPresenter(entry->communicator(), this);
     d->video = new VideoSettingsPresenter(this);
     d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
+    d->about = new AboutPresenter(this);
 }
 
 SettingsPresenter::~SettingsPresenter()
@@ -57,6 +60,7 @@ void SettingsPresenter::connectView(QObject* view)
     d->connections->setView(view->findChild<QObject*>(NAME(connections)));
     d->video->setView(view->findChild<QObject*>(NAME(video)));
     d->network->setView(view->findChild<QObject*>(NAME(network)));
+    d->about->setView(view->findChild<QObject*>(NAME(about)));
 
     connect(view, SIGNAL(makeDefaults()), this, SLOT(onMakeDefaults()));
 }

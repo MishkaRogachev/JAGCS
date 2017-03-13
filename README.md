@@ -1,6 +1,8 @@
 # JAGCS
 Just another ground control station
 
+[![Build Status](https://travis-ci.org/MishkaRogachev/JAGCS.svg?branch=master)](https://travis-ci.org/MishkaRogachev/JAGCS)
+
 ### Source code
 Clone using git with comand
 ```
