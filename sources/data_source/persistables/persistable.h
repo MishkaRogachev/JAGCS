@@ -9,14 +9,23 @@ namespace data_source
     {
     public:
         Persistable();
+        virtual ~Persistable();
+
+        int id() const;
 
         bool createTable();
         bool dropTable();
 
-        //virtual bool save() = 0;
+        bool insert();
 
     protected:
-        virtual QString tableName() const = 0;
+        virtual const char* tableName() const = 0;
+        virtual const char* tableParams() const = 0;
+        virtual QString params() const = 0;
+
+    private:
+        class Impl;
+        Impl* const d;
 
         Q_DISABLE_COPY(Persistable)
     };

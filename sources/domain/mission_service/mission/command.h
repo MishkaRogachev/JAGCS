@@ -3,7 +3,7 @@
 
 namespace domain
 {
-    enum class Command
+    enum class Command // TODO: data_source
     {
         UnknownCommand = 0,
         Home,

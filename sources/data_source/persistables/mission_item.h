@@ -2,6 +2,7 @@
 #define MISSION_ITEM_H
 
 #include "persistable.h"
+#include "command.h"
 
 namespace data_source
 {
@@ -11,8 +12,16 @@ namespace data_source
         MissionItem();
         //bool save() override;
 
+        domain::Command command() const;
+        void setCommand(const domain::Command& command);
+
     protected:
-        QString tableName() const override;
+        const char* tableName() const override;
+        const char* tableParams() const override;
+        QString params() const override;
+
+    private:
+        domain::Command m_command;
     };
 }
 
