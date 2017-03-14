@@ -51,11 +51,11 @@ ApplicationWindow {
 
     Loader {
         anchors.fill: parent
-        sourceComponent: creteModeView(mode)
+        sourceComponent: createModeView(mode)
         onItemChanged: if (item) item.objectName = mode
     }
 
-    function creteModeView(mode) {
+    function createModeView(mode) {
         switch (mode) {
         case "flight": return Qt.createComponent("Flight/FlightView.qml");
         case "mission": return Qt.createComponent("Mission/MissionView.qml");
