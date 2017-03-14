@@ -37,7 +37,16 @@ bool MissionItemRepository::createRepository()
 {
     d->query.prepare("CREATE TABLE mission_items ("
                      "id INTEGER PRIMARY KEY NOT NULL,"
-                     "command INTEGER)");
+                     "sequence INTEGER,"
+                     "command INTEGER,"
+                     "altitude REAL,"
+                     "altitude_relative BOOLEAN,"
+                     "latitude DOUBLE,"
+                     "longitude DOUBLE,"
+                     "radius REAL,"
+                     "pitch REAL,"
+                     "turns INTEGER)");
+
     return d->runQuerry();
 }
 
@@ -49,8 +58,21 @@ bool MissionItemRepository::dropRepository()
 
 MissionItem* MissionItemRepository::createMissionItem()
 {
-    d->query.prepare("INSERT INTO mission_items VALUES (NULL, :command)");
-    d->query.bindValue(":command", int(Command::UnknownCommand));
+    d->query.prepare("INSERT INTO mission_items ("
+                     "sequence, command, altitude, altitude_relative, "
+                     "latitude, longitude, radius, pitch, turns) "
+                     "VALUES (:sequence, :command, :altitude, :altitude_relative, "
+                     ":latitude, :longitude, :radius, :pitch, :turns)");
+
+    d->query.bindValue(":sequence", -1);
+    d->query.bindValue(":command", 0);
+    d->query.bindValue(":altitude", 0);
+    d->query.bindValue(":altitude_relative", 0);
+    d->query.bindValue(":latitude", 0);
+    d->query.bindValue(":longitude", 0);
+    d->query.bindValue(":radius", 0);
+    d->query.bindValue(":pitch", 0);
+    d->query.bindValue(":turns", 0);
 
     if (d->runQuerry()) return new MissionItem(d->query.lastInsertId().toInt());
     return nullptr;
@@ -58,21 +80,53 @@ MissionItem* MissionItemRepository::createMissionItem()
 
 MissionItem* MissionItemRepository::readMissionItem(int id)
 {
-    d->query.prepare("SELECT command FROM mission_items WHERE id = :id");
+    d->query.prepare("SELECT * FROM mission_items WHERE id = :id");
     d->query.bindValue(":id", id);
 
     if (d->runQuerry() && d->query.next())
     {
-        return new MissionItem(id, Command(d->query.value("command").toInt()));
+        auto item = new MissionItem(id);
+
+        item->setSequence(d->query.value("sequence").toInt());
+        item->setCommand(Command(d->query.value("command").toInt()));
+        item->setAltitude(d->query.value("altitude").toFloat());
+        item->setAltitudeRelative(d->query.value("altitude_relative").toBool());
+        item->setLatitude(d->query.value("latitude").toDouble());
+        item->setLongitude(d->query.value("longitude").toDouble());
+        item->setRadius(d->query.value("radius").toFloat());
+        item->setPitch(d->query.value("pitch").toFloat());
+        item->setTurns(d->query.value("turns").toInt());
+
+        return item;
     }
     return nullptr;
 }
 
 bool MissionItemRepository::updateMissionItem(MissionItem* item)
 {
-    d->query.prepare("UPDATE mission_items SET command = :command WHERE id = :id");
-    d->query.bindValue(":command", int(item->command()));
+    d->query.prepare("UPDATE mission_items SET "
+                     "sequence = :sequence,"
+                     "command = :command,"
+                     "altitude = :altitude,"
+                     "altitude_relative = :altitude_relative,"
+                     "latitude = :latitude,"
+                     "longitude = :longitude,"
+                     "radius = :radius,"
+                     "pitch = :pitch,"
+                     "turns = :turns "
+                     "WHERE id = :id");
+
     d->query.bindValue(":id", item->id());
+    d->query.bindValue(":sequence", item->sequence());
+    d->query.bindValue(":command", int(item->command()));
+    d->query.bindValue(":altitude", item->altitude());
+    d->query.bindValue(":altitude_relative", item->isAltitudeRelative());
+    d->query.bindValue(":latitude", item->latitude());
+    d->query.bindValue(":longitude", item->longitude());
+    d->query.bindValue(":radius", item->radius());
+    d->query.bindValue(":pitch", item->pitch());
+    d->query.bindValue(":turns", item->turns());
+
     return d->runQuerry();
 }
 

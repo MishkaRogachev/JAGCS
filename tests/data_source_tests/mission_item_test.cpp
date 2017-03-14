@@ -21,8 +21,7 @@ void MissionItemTests::testCrud()
 
     auto compareItem = repository.readMissionItem(item->id());
 
-    QCOMPARE(item->id(), compareItem->id());
-    QCOMPARE(item->command(), compareItem->command());
+    QCOMPARE(*item, *compareItem);
 
     delete compareItem;
 

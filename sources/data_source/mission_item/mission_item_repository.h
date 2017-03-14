@@ -4,6 +4,9 @@
 // Qt
 #include <QList>
 
+// Internal
+#include "command.h"
+
 namespace data_source
 {
     class MissionItem;
@@ -17,7 +20,7 @@ namespace data_source
         bool createRepository();
         bool dropRepository();
 
-        MissionItem* createMissionItem();
+        MissionItem* createMissionItem(); // TODO: invalid item instead null
         MissionItem* readMissionItem(int id);
         bool updateMissionItem(MissionItem* item);
         bool deleteMissionItem(MissionItem* item);
