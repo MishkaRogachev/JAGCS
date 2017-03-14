@@ -11,5 +11,5 @@ int main(int argc, char* argv[])
     MissionItemTests missionItemTest;
     QTest::qExec(&missionItemTest);
 
-    return app.exec();
+    return 0;
 }

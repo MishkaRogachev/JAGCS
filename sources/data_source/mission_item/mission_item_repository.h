@@ -18,8 +18,9 @@ namespace data_source
         bool dropRepository();
 
         MissionItem* createMissionItem();
-        bool removeMissionItem(MissionItem* item);
+        MissionItem* readMissionItem(int id);
         bool updateMissionItem(MissionItem* item);
+        bool deleteMissionItem(MissionItem* item);
 
         QList<MissionItem*> querty() const;
 

@@ -56,17 +56,29 @@ MissionItem* MissionItemRepository::createMissionItem()
     return nullptr;
 }
 
-bool MissionItemRepository::removeMissionItem(MissionItem* item)
+MissionItem* MissionItemRepository::readMissionItem(int id)
 {
-    d->query.prepare("DELETE FROM mission_items WHERE id = :id");
-    d->query.bindValue(":id", item->id());
-    return d->runQuerry();
+    d->query.prepare("SELECT command FROM mission_items WHERE id = :id");
+    d->query.bindValue(":id", id);
+
+    if (d->runQuerry() && d->query.next())
+    {
+        return new MissionItem(id, Command(d->query.value("command").toInt()));
+    }
+    return nullptr;
 }
 
 bool MissionItemRepository::updateMissionItem(MissionItem* item)
 {
     d->query.prepare("UPDATE mission_items SET command = :command WHERE id = :id");
     d->query.bindValue(":command", int(item->command()));
+    d->query.bindValue(":id", item->id());
+    return d->runQuerry();
+}
+
+bool MissionItemRepository::deleteMissionItem(MissionItem* item)
+{
+    d->query.prepare("DELETE FROM mission_items WHERE id = :id");
     d->query.bindValue(":id", item->id());
     return d->runQuerry();
 }

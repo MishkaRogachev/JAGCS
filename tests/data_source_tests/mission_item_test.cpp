@@ -15,12 +15,16 @@ void MissionItemTests::testCrud()
 
     repository.createRepository();
 
-    {
-        auto item = repository.createMissionItem();
-        item->setCommand(Command::Landing);
-        repository.updateMissionItem(item);
-        delete item;
-    }
+    auto item = repository.createMissionItem();
+    item->setCommand(Command::Landing);
+    repository.updateMissionItem(item);
+
+    auto compareItem = repository.readMissionItem(item->id());
+
+    QCOMPARE(item->id(), compareItem->id());
+    QCOMPARE(item->command(), compareItem->command());
+
+    delete item;
 
     repository.dropRepository();
 }
