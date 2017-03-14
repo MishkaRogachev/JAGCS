@@ -24,6 +24,11 @@ void MissionItemTests::testCrud()
     QCOMPARE(item->id(), compareItem->id());
     QCOMPARE(item->command(), compareItem->command());
 
+    delete compareItem;
+
+    QVERIFY(repository.deleteMissionItem(item));
+    QVERIFY(!repository.readMissionItem(item->id()));
+
     delete item;
 
     repository.dropRepository();
