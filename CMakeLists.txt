@@ -120,3 +120,9 @@ option(WITH_DEBIAN "Include instructions to make Debian package")
 if (WITH_DEBIAN)
     add_subdirectory(debian)
 endif (WITH_DEBIAN)
+
+# Tests
+option(WITH_TESTS "Include tests")
+if(WITH_TESTS)
+    add_subdirectory(tests)
+endif(WITH_TESTS)
