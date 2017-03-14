@@ -50,7 +50,7 @@ bool MissionItemRepository::dropRepository()
 MissionItem* MissionItemRepository::createMissionItem()
 {
     d->query.prepare("INSERT INTO mission_items VALUES (NULL, :command)");
-    d->query.bindValue(":command", int(domain::Command::UnknownCommand));
+    d->query.bindValue(":command", int(Command::UnknownCommand));
 
     if (d->runQuerry()) return new MissionItem(d->query.lastInsertId().toInt());
     return nullptr;

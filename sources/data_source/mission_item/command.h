@@ -1,9 +1,9 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-namespace domain
+namespace data_source
 {
-    enum class Command // TODO: data_source
+    enum class Command
     {
         UnknownCommand = 0,
         Home,

@@ -8,16 +8,16 @@ namespace data_source
     class MissionItem
     {
     public:
-        MissionItem(int id, domain::Command command = domain::Command::UnknownCommand);
+        MissionItem(int id, Command command = Command::UnknownCommand);
 
         int id() const;
 
-        domain::Command command() const;
-        void setCommand(domain::Command command);
+        Command command() const;
+        void setCommand(Command command);
 
     private:
         const int m_id;
-        domain::Command m_command;
+        Command m_command;
     };
 }
 

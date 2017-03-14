@@ -7,6 +7,8 @@
 // Internal
 #include "command.h"
 
+using namespace data_source; // FIXME: temporary
+
 namespace domain
 {
     class Mission;

@@ -25,7 +25,7 @@ namespace presentation
     private:
         domain::AbstractMissionItem* cast(QObject* item) const;
 
-        QMap<domain::Command, QString> m_commandNames;
+        QMap<Command, QString> m_commandNames;
     };
 }
 
