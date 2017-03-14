@@ -59,11 +59,14 @@ MissionItem* MissionItemRepository::createMissionItem()
 bool MissionItemRepository::removeMissionItem(MissionItem* item)
 {
     d->query.prepare("DELETE FROM mission_items WHERE id = :id");
-    d->query.bindValue(":id", int(item->id()));
+    d->query.bindValue(":id", item->id());
     return d->runQuerry();
 }
 
 bool MissionItemRepository::updateMissionItem(MissionItem* item)
 {
-
+    d->query.prepare("UPDATE mission_items SET command = :command WHERE id = :id");
+    d->query.bindValue(":command", int(item->command()));
+    d->query.bindValue(":id", item->id());
+    return d->runQuerry();
 }
