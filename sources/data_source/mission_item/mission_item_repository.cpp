@@ -47,19 +47,23 @@ bool MissionItemRepository::dropRepository()
     return d->runQuerry();
 }
 
-bool MissionItemRepository::addMissionItem(MissionItem* item)
+MissionItem* MissionItemRepository::createMissionItem()
 {
     d->query.prepare("INSERT INTO mission_items VALUES (NULL, :command)");
-    d->query.bindValue(":command", int(item->command()));
+    d->query.bindValue(":command", int(domain::Command::UnknownCommand));
+
+    if (d->runQuerry()) return new MissionItem(d->query.lastInsertId().toInt());
+    return nullptr;
+}
+
+bool MissionItemRepository::removeMissionItem(MissionItem* item)
+{
+    d->query.prepare("DELETE FROM mission_items WHERE id = :id");
+    d->query.bindValue(":id", int(item->id()));
     return d->runQuerry();
 }
 
-void MissionItemRepository::removeMissionItem(MissionItem* item)
-{
-
-}
-
-void MissionItemRepository::updateMissionItem(MissionItem* item)
+bool MissionItemRepository::updateMissionItem(MissionItem* item)
 {
 
 }
