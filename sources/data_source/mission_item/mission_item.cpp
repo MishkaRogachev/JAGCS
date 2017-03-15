@@ -7,6 +7,7 @@ using namespace data_source;
 
 MissionItem::MissionItem(int id):
     m_id(id),
+    m_missionId(-1),
     m_sequence(-1),
     m_command(Command::UnknownCommand),
     m_altitude(qQNaN()),
@@ -21,6 +22,16 @@ MissionItem::MissionItem(int id):
 int MissionItem::id() const
 {
     return m_id;
+}
+
+int MissionItem::missionId() const
+{
+    return m_missionId;
+}
+
+void MissionItem::setMissionId(int missionId)
+{
+    m_missionId = missionId;
 }
 
 int MissionItem::sequence() const
@@ -112,4 +123,5 @@ void MissionItem::setPeriods(int periods)
 {
     m_periods = periods;
 }
+
 

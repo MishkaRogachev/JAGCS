@@ -37,6 +37,7 @@ bool MissionItemRepository::createRepository()
 {
     d->query.prepare("CREATE TABLE mission_items ("
                      "id INTEGER PRIMARY KEY NOT NULL,"
+                     "mission_id INTEGER,"
                      "sequence INTEGER,"
                      "command INTEGER,"
                      "altitude REAL,"
@@ -58,10 +59,10 @@ bool MissionItemRepository::dropRepository()
 
 MissionItem* MissionItemRepository::createMissionItem()
 {
-    d->query.prepare("INSERT INTO mission_items ("
+    d->query.prepare("INSERT INTO mission_items (mission_id, "
                      "sequence, command, altitude, altitude_relative, "
                      "latitude, longitude, radius, pitch, periods) "
-                     "VALUES (NULL, NULL, NULL, NULL, "
+                     "VALUES (NULL, NULL, NULL, NULL, NULL, "
                      "NULL, NULL, NULL, NULL, NULL)");
 
     if (d->runQuerry()) return new MissionItem(d->query.lastInsertId().toInt());
@@ -77,6 +78,7 @@ MissionItem* MissionItemRepository::readMissionItem(int id)
     {
         auto item = new MissionItem(id);
 
+        item->setMissionId(d->query.value("mission_id").toInt());
         item->setSequence(d->query.value("sequence").toInt());
         item->setCommand(Command(d->query.value("command").toInt()));
         item->setAltitude(d->query.value("altitude").toFloat());
@@ -95,6 +97,7 @@ MissionItem* MissionItemRepository::readMissionItem(int id)
 bool MissionItemRepository::updateMissionItem(MissionItem* item)
 {
     d->query.prepare("UPDATE mission_items SET "
+                     "mission_id = :mission_id,"
                      "sequence = :sequence,"
                      "command = :command,"
                      "altitude = :altitude,"
@@ -106,6 +109,7 @@ bool MissionItemRepository::updateMissionItem(MissionItem* item)
                      "periods = :periods "
                      "WHERE id = :id");
 
+    d->query.bindValue(":mission_id", item->missionId());
     d->query.bindValue(":id", item->id());
     d->query.bindValue(":sequence", item->sequence());
     d->query.bindValue(":command", int(item->command()));

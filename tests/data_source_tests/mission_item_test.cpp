@@ -18,6 +18,7 @@ void MissionItemTests::testCrud()
     auto item = repository.createMissionItem();
 
     item->setCommand(Command::Landing);
+    item->setMissionId(45);
     item->setLatitude(34.567);
     item->setLongitude(45.241);
     item->setPeriods(2);
@@ -26,6 +27,7 @@ void MissionItemTests::testCrud()
 
     auto compareItem = repository.readMissionItem(item->id());
 
+    QCOMPARE(item->missionId(), compareItem->missionId());
     QCOMPARE(item->command(), compareItem->command());
     QVERIFY(qFuzzyCompare(item->latitude(), compareItem->latitude()));
     QVERIFY(qFuzzyCompare(item->longitude(), compareItem->longitude()));

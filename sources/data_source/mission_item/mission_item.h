@@ -13,6 +13,9 @@ namespace data_source
 
         int id() const;
 
+        int missionId() const;
+        void setMissionId(int missionId);
+
         int sequence() const;
         void setSequence(int sequence);
 
@@ -42,6 +45,7 @@ namespace data_source
 
     private:
         const int m_id;
+        int m_missionId;
         int m_sequence;
         Command m_command;
         float m_altitude;
