@@ -9,12 +9,12 @@ MissionItem::MissionItem(int id):
     m_id(id),
     m_sequence(-1),
     m_command(Command::UnknownCommand),
-    m_altitude(0),
+    m_altitude(qQNaN()),
     m_altitudeRelative(false),
-    m_latitude(0), // FIXME: use qQNaN values!
-    m_longitude(0),
-    m_radius(0),
-    m_pitch(0),
+    m_latitude(qQNaN()),
+    m_longitude(qQNaN()),
+    m_radius(qQNaN()),
+    m_pitch(qQNaN()),
     m_turns(0)
 {}
 
@@ -111,19 +111,5 @@ int MissionItem::turns() const
 void MissionItem::setTurns(int turns)
 {
     m_turns = turns;
-}
-
-bool MissionItem::operator ==(const MissionItem& other) const
-{
-    return m_id == other.id() &&
-            m_sequence == other.sequence() &&
-            m_command == other.command() &&
-            qFuzzyCompare(m_altitude, other.altitude()) ;//&&
-//            m_altitudeRelative == other.isAltitudeRelative() &&
-//            qFuzzyCompare(m_latitude, other.latitude()) &&
-//            qFuzzyCompare(m_longitude, other.longitude()) &&
-//            qFuzzyCompare(m_radius, other.radius()) &&
-//            qFuzzyCompare(m_pitch, other.pitch()) &&
-//            m_turns == other.turns();
 }
 

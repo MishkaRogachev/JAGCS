@@ -40,8 +40,6 @@ namespace data_source
         int turns() const;
         void setTurns(int turns);
 
-        bool operator ==(const MissionItem& other) const;
-
     private:
         const int m_id;
         int m_sequence;
