@@ -25,7 +25,7 @@ namespace data_source
         bool updateMissionItem(MissionItem* item);
         bool deleteMissionItem(MissionItem* item);
 
-        QList<MissionItem*> querty() const;
+        QList<MissionItem*> queryMissionItems(int missionId);
 
     private:
         class Impl;

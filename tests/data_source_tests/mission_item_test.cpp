@@ -1,7 +1,6 @@
 #include "mission_item_test.h"
 
 // Internal
-#include "db_manager.h"
 #include "mission_item.h"
 #include "mission_item_repository.h"
 
@@ -9,8 +8,6 @@ using namespace data_source;
 
 void MissionItemTests::testCrud()
 {
-    DbManager manager;
-    manager.open("test_db");
     MissionItemRepository repository;
 
     repository.createRepository();
@@ -39,6 +36,33 @@ void MissionItemTests::testCrud()
     QVERIFY(!repository.readMissionItem(item->id()));
 
     delete item;
+
+    repository.dropRepository();
+}
+
+void MissionItemTests::testQueryMissionItems()
+{
+    MissionItemRepository repository;
+
+    repository.createRepository();
+
+    QList<MissionItem*> items;
+
+    for (int i = 0; i < 17; ++i)
+    {
+        items.append(repository.createMissionItem());
+        items.last()->setMissionId(7);
+        items.last()->setSequence(i);
+        items.last()->setCommand(Command(qrand() % 10));
+        repository.updateMissionItem(items.last());
+    }
+
+    QList<MissionItem*> compareItems = repository.queryMissionItems(7);
+
+    QCOMPARE(items.count(), compareItems.count());
+
+    while (!items.isEmpty()) delete items.takeFirst();
+    while (!compareItems.isEmpty()) delete compareItems.takeFirst();
 
     repository.dropRepository();
 }

@@ -130,3 +130,34 @@ bool MissionItemRepository::deleteMissionItem(MissionItem* item)
     d->query.bindValue(":id", item->id());
     return d->runQuerry();
 }
+
+QList<MissionItem*> MissionItemRepository::queryMissionItems(int missionId)
+{
+    QList<MissionItem*> items;
+
+    d->query.prepare("SELECT * FROM mission_items WHERE mission_id = :mission_id");
+    d->query.bindValue(":mission_id", missionId);
+
+    if (!d->runQuerry()) return items;
+
+    while (d->query.next())
+    {
+        // TODO: Refactor to determinate method
+        auto item = new MissionItem(d->query.value("id").toInt());
+
+        item->setMissionId(d->query.value("mission_id").toInt());
+        item->setSequence(d->query.value("sequence").toInt());
+        item->setCommand(Command(d->query.value("command").toInt()));
+        item->setAltitude(d->query.value("altitude").toFloat());
+        item->setAltitudeRelative(d->query.value("altitude_relative").toBool());
+        item->setLatitude(d->query.value("latitude").toDouble());
+        item->setLongitude(d->query.value("longitude").toDouble());
+        item->setRadius(d->query.value("radius").toFloat());
+        item->setPitch(d->query.value("pitch").toFloat());
+        item->setPeriods(d->query.value("periods").toInt());
+
+        items.append(item);
+    }
+
+    return items;
+}
