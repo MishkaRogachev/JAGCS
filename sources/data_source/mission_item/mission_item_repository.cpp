@@ -61,18 +61,8 @@ MissionItem* MissionItemRepository::createMissionItem()
     d->query.prepare("INSERT INTO mission_items ("
                      "sequence, command, altitude, altitude_relative, "
                      "latitude, longitude, radius, pitch, periods) "
-                     "VALUES (:sequence, :command, :altitude, :altitude_relative, "
-                     ":latitude, :longitude, :radius, :pitch, :periods)");
-
-    d->query.bindValue(":sequence", -1);
-    d->query.bindValue(":command", 0);
-    d->query.bindValue(":altitude", 0);
-    d->query.bindValue(":altitude_relative", 0);
-    d->query.bindValue(":latitude", 0);
-    d->query.bindValue(":longitude", 0);
-    d->query.bindValue(":radius", 0);
-    d->query.bindValue(":pitch", 0);
-    d->query.bindValue(":periods", 0);
+                     "VALUES (NULL, NULL, NULL, NULL, "
+                     "NULL, NULL, NULL, NULL, NULL)");
 
     if (d->runQuerry()) return new MissionItem(d->query.lastInsertId().toInt());
     return nullptr;
