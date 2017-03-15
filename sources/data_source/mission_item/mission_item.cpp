@@ -15,7 +15,7 @@ MissionItem::MissionItem(int id):
     m_longitude(qQNaN()),
     m_radius(qQNaN()),
     m_pitch(qQNaN()),
-    m_turns(0)
+    m_periods(0)
 {}
 
 int MissionItem::id() const
@@ -103,13 +103,13 @@ void MissionItem::setPitch(float pitch)
     m_pitch = pitch;
 }
 
-int MissionItem::turns() const
+int MissionItem::periods() const
 {
-    return m_turns;
+    return m_periods;
 }
 
-void MissionItem::setTurns(int turns)
+void MissionItem::setPeriods(int periods)
 {
-    m_turns = turns;
+    m_periods = periods;
 }
 

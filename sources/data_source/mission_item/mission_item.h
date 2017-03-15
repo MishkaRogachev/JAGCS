@@ -37,8 +37,8 @@ namespace data_source
         float pitch() const;
         void setPitch(float pitch);
 
-        int turns() const;
-        void setTurns(int turns);
+        int periods() const;
+        void setPeriods(int periods);
 
     private:
         const int m_id;
@@ -50,7 +50,7 @@ namespace data_source
         double m_longitude;
         float m_radius;
         float m_pitch;
-        int m_turns;
+        int m_periods;
     };
 }
 

@@ -20,7 +20,7 @@ void MissionItemTests::testCrud()
     item->setCommand(Command::Landing);
     item->setLatitude(34.567);
     item->setLongitude(45.241);
-    item->setTurns(2);
+    item->setPeriods(2);
 
     repository.updateMissionItem(item);
 
@@ -29,14 +29,14 @@ void MissionItemTests::testCrud()
     QCOMPARE(item->command(), compareItem->command());
     QVERIFY(qFuzzyCompare(item->latitude(), compareItem->latitude()));
     QVERIFY(qFuzzyCompare(item->longitude(), compareItem->longitude()));
-    QCOMPARE(item->turns(), compareItem->turns());
+    QCOMPARE(item->periods(), compareItem->periods());
 
     delete compareItem;
 
-    //QVERIFY(repository.deleteMissionItem(item));
-    //QVERIFY(!repository.readMissionItem(item->id()));
+    QVERIFY(repository.deleteMissionItem(item));
+    QVERIFY(!repository.readMissionItem(item->id()));
 
     delete item;
 
-    //repository.dropRepository();
+    repository.dropRepository();
 }

@@ -45,7 +45,7 @@ bool MissionItemRepository::createRepository()
                      "longitude DOUBLE,"
                      "radius REAL,"
                      "pitch REAL,"
-                     "turns INTEGER)");
+                     "periods INTEGER)");
 
     return d->runQuerry();
 }
@@ -60,9 +60,9 @@ MissionItem* MissionItemRepository::createMissionItem()
 {
     d->query.prepare("INSERT INTO mission_items ("
                      "sequence, command, altitude, altitude_relative, "
-                     "latitude, longitude, radius, pitch, turns) "
+                     "latitude, longitude, radius, pitch, periods) "
                      "VALUES (:sequence, :command, :altitude, :altitude_relative, "
-                     ":latitude, :longitude, :radius, :pitch, :turns)");
+                     ":latitude, :longitude, :radius, :pitch, :periods)");
 
     d->query.bindValue(":sequence", -1);
     d->query.bindValue(":command", 0);
@@ -72,7 +72,7 @@ MissionItem* MissionItemRepository::createMissionItem()
     d->query.bindValue(":longitude", 0);
     d->query.bindValue(":radius", 0);
     d->query.bindValue(":pitch", 0);
-    d->query.bindValue(":turns", 0);
+    d->query.bindValue(":periods", 0);
 
     if (d->runQuerry()) return new MissionItem(d->query.lastInsertId().toInt());
     return nullptr;
@@ -95,7 +95,7 @@ MissionItem* MissionItemRepository::readMissionItem(int id)
         item->setLongitude(d->query.value("longitude").toDouble());
         item->setRadius(d->query.value("radius").toFloat());
         item->setPitch(d->query.value("pitch").toFloat());
-        item->setTurns(d->query.value("turns").toInt());
+        item->setPeriods(d->query.value("periods").toInt());
 
         return item;
     }
@@ -113,7 +113,7 @@ bool MissionItemRepository::updateMissionItem(MissionItem* item)
                      "longitude = :longitude,"
                      "radius = :radius,"
                      "pitch = :pitch,"
-                     "turns = :turns "
+                     "periods = :periods "
                      "WHERE id = :id");
 
     d->query.bindValue(":id", item->id());
@@ -125,7 +125,7 @@ bool MissionItemRepository::updateMissionItem(MissionItem* item)
     d->query.bindValue(":longitude", item->longitude());
     d->query.bindValue(":radius", item->radius());
     d->query.bindValue(":pitch", item->pitch());
-    d->query.bindValue(":turns", item->turns());
+    d->query.bindValue(":periods", item->periods());
 
     return d->runQuerry();
 }
