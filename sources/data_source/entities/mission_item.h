@@ -12,6 +12,13 @@ namespace data_source
     public:
         MissionItem(int id);
 
+        static QString tableName();
+        static QString insertString(); // TODO: from properties
+        static QString updateString(); // TODO: from properties
+
+        void bindQuery(QSqlQuery& query) const;
+        void updateFromQuery(const QSqlQuery& query);
+
         int missionId() const;
         void setMissionId(int missionId);
 

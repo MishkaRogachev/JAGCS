@@ -9,7 +9,7 @@ class MissionItemTests : public QObject
 
 private slots:
     void testCrud();
-    void testQueryMissionItems();
+    //void testQueryMissionItems();
 };
 
 #endif // MISSION_ITEM_TEST_H

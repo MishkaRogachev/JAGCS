@@ -2,47 +2,40 @@
 
 // Internal
 #include "mission_item.h"
-#include "mission_item_repository.h"
+#include "generic_repository.h"
+#include "generic_repository_impl.h"
 
 using namespace data_source;
 
 void MissionItemTests::testCrud()
 {
-    MissionItemRepository repository;
+    GenericRepository<MissionItem> repository;
 
-    repository.createRepository();
+    auto item = repository.create();
 
-    auto item = repository.createMissionItem();
+    item.setCommand(Command::Landing);
+    item.setMissionId(45);
+    item.setLatitude(34.567);
+    item.setLongitude(45.241);
+    item.setPeriods(2);
 
-    item->setCommand(Command::Landing);
-    item->setMissionId(45);
-    item->setLatitude(34.567);
-    item->setLongitude(45.241);
-    item->setPeriods(2);
+    repository.update(item);
 
-    repository.updateMissionItem(item);
+    auto compareItem = repository.read(item.id());
 
-    auto compareItem = repository.readMissionItem(item->id());
+    QCOMPARE(item.missionId(), compareItem.missionId());
+    QCOMPARE(item.command(), compareItem.command());
+    QVERIFY(qFuzzyCompare(item.latitude(), compareItem.latitude()));
+    QVERIFY(qFuzzyCompare(item.longitude(), compareItem.longitude()));
+    QCOMPARE(item.periods(), compareItem.periods());
 
-    QCOMPARE(item->missionId(), compareItem->missionId());
-    QCOMPARE(item->command(), compareItem->command());
-    QVERIFY(qFuzzyCompare(item->latitude(), compareItem->latitude()));
-    QVERIFY(qFuzzyCompare(item->longitude(), compareItem->longitude()));
-    QCOMPARE(item->periods(), compareItem->periods());
-
-    delete compareItem;
-
-    QVERIFY(repository.deleteMissionItem(item));
-    QVERIFY(!repository.readMissionItem(item->id()));
-
-    delete item;
-
-    repository.dropRepository();
+    QVERIFY(repository.remove(item));
+    QVERIFY(!repository.read(item.id()).isValid());
 }
-
+/*
 void MissionItemTests::testQueryMissionItems()
 {
-    MissionItemRepository repository;
+    GenericRepository repository;
 
     repository.createRepository();
 
@@ -50,18 +43,18 @@ void MissionItemTests::testQueryMissionItems()
 
     for (int i = 0; i < 17; ++i)
     {
-        items.append(repository.createMissionItem());
+        items.append(repository.create());
         items.last()->setMissionId(7);
         items.last()->setSequence(i);
         items.last()->setCommand(Command(qrand() % 10));
-        repository.updateMissionItem(items.last());
+        repository.update(items.last());
     }
 
-    items.append(repository.createMissionItem());
+    items.append(repository.create());
     items.last()->setMissionId(8);
     items.last()->setSequence(0);
     items.last()->setCommand(Command(qrand() % 10));
-    repository.updateMissionItem(items.last());
+    repository.update(items.last());
 
     QList<MissionItem*> compareItems = repository.queryMissionItems(7);
 
@@ -71,4 +64,4 @@ void MissionItemTests::testQueryMissionItems()
     while (!compareItems.isEmpty()) delete compareItems.takeFirst();
 
     repository.dropRepository();
-}
+}*/
