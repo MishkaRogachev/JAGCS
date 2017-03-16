@@ -1,17 +1,19 @@
 #include "entities_test.h"
 
 // Internal
-#include "mission_item.h"
-#include "generic_repository.h"
-#include "generic_repository_impl.h"
+#include "mission_item_repository.h"
+
+#include "mission.h"
 
 using namespace data_source;
 
 void EntitiesTest::testMissionItemCrud()
 {
-    GenericRepository<MissionItem> repository;
+    MissionItemRepository repository;
 
-    auto item = repository.create();
+    MissionItem item = repository.create();
+
+    QVERIFY(item.isValid());
 
     item.setCommand(Command::Landing);
     item.setMissionId(45);
@@ -21,7 +23,9 @@ void EntitiesTest::testMissionItemCrud()
 
     repository.update(item);
 
-    auto compareItem = repository.read(item.id());
+    MissionItem compareItem = repository.read(item.id());
+
+    QVERIFY(compareItem.isValid());
 
     QCOMPARE(item.missionId(), compareItem.missionId());
     QCOMPARE(item.command(), compareItem.command());
@@ -31,6 +35,39 @@ void EntitiesTest::testMissionItemCrud()
 
     QVERIFY(repository.remove(item));
     QVERIFY(!repository.read(item.id()).isValid());
+}
+
+void EntitiesTest::testSelectMissionItems()
+{
+    MissionItemRepository repository;
+
+    for (int i = 0; i < 15; ++i)
+    {
+        MissionItem item = repository.create();
+        item.setSequence(i);
+        item.setCommand(Command(qrand() % 8 + 1));
+        item.setSequence(i);
+        item.setMissionId(i % 3);
+        item.setPeriods(3);
+        repository.update(item);
+    }
+
+    QCOMPARE(repository.select("periods = 3").count(), 15);
+    QCOMPARE(repository.select("sequence = 7").first().sequence(), 7);
+    QCOMPARE(repository.selectMissionItems(0).count(), 5);
+}
+
+void EntitiesTest::testMissionCrud()
+{
+//    GenericRepository<Mission> repository;
+
+//    auto mission = repository.create();
+
+//    QVERIFY(mission.isValid());
+//    mission.setName("Test mission");
+
+//    repository.update(mission);
+
 }
 /*
 void MissionItemTests::testQueryMissionItems()

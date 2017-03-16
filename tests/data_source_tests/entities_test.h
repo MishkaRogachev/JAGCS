@@ -9,6 +9,8 @@ class EntitiesTest : public QObject
 
 private slots:
     void testMissionItemCrud();
+    void testSelectMissionItems();
+    void testMissionCrud();
     //void testQueryMissionItems();
 };
 

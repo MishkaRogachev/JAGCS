@@ -59,9 +59,29 @@ bool GenericRepository<T>::update(T entity)
 template<class T>
 bool GenericRepository<T>::remove(T entity)
 {
-    m_query.prepare("DELETE FROM " + T::tableName() +" WHERE id = :id");
+    m_query.prepare("DELETE FROM " + T::tableName() + " WHERE id = :id");
     m_query.bindValue(":id", entity.id());
     return this->runQuerry();
+}
+
+template<class T>
+QList<T> GenericRepository<T>::select(const QString& condition)
+{
+    QList<T> entities;
+
+    m_query.prepare("SELECT * FROM " + T::tableName() + " WHERE " + condition);
+
+    if (!this->runQuerry()) return entities;
+
+    while (m_query.next())
+    {
+        T entity(m_query.value("id").toInt());
+        entity.updateFromQuery(m_query);
+        entity.setValid(true);
+        entities.append(entity);
+    }
+
+    return entities;
 }
 
 template<class T>

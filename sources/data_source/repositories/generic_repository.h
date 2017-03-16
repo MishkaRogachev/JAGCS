@@ -18,6 +18,8 @@ namespace data_source
         bool update(T entity);
         bool remove(T entity);
 
+        QList<T> select(const QString& condition);
+
     protected:
         bool runQuerry();
 
