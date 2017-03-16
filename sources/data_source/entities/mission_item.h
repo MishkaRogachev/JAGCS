@@ -2,16 +2,15 @@
 #define MISSION_ITEM_H
 
 // Internal
+#include "base_entity.h"
 #include "command.h"
 
 namespace data_source
 {
-    class MissionItem
+    class MissionItem: public BaseEntity
     {
     public:
         MissionItem(int id);
-
-        int id() const;
 
         int missionId() const;
         void setMissionId(int missionId);
@@ -44,7 +43,6 @@ namespace data_source
         void setPeriods(int periods);
 
     private:
-        const int m_id;
         int m_missionId;
         int m_sequence;
         Command m_command;

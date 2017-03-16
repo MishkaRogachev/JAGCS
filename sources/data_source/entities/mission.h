@@ -4,16 +4,17 @@
 // Qt
 #include <QList>
 
+// Internal
+#include "base_entity.h"
+
 namespace data_source
 {
     class MissionItem;
 
-    class Mission
+    class Mission: public BaseEntity
     {
     public:
         Mission(int id);
-
-        int id() const;
 
         QString name() const;
         void setName(const QString& name);
@@ -24,7 +25,6 @@ namespace data_source
         void removeItem(int index);
 
     private:
-        const int m_id;
         QString m_name;
         QList<MissionItem*> m_items;
     };

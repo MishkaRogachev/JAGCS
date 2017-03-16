@@ -6,7 +6,7 @@
 using namespace data_source;
 
 MissionItem::MissionItem(int id):
-    m_id(id),
+    BaseEntity(id),
     m_missionId(-1),
     m_sequence(-1),
     m_command(Command::UnknownCommand),
@@ -18,11 +18,6 @@ MissionItem::MissionItem(int id):
     m_pitch(qQNaN()),
     m_periods(0)
 {}
-
-int MissionItem::id() const
-{
-    return m_id;
-}
 
 int MissionItem::missionId() const
 {

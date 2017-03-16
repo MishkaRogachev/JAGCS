@@ -6,13 +6,8 @@
 using namespace data_source;
 
 Mission::Mission(int id):
-    m_id(id)
+    BaseEntity(id)
 {}
-
-int Mission::id() const
-{
-    return m_id;
-}
 
 QString Mission::name() const
 {
