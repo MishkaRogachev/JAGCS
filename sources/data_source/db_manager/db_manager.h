@@ -14,8 +14,12 @@ namespace data_source
 
     public:
         explicit DbManager(QObject* parent = nullptr);
+        ~DbManager() override;
 
         bool open(const QString& dbName);
+
+        bool create();
+        bool drop();
 
     private:
         QSqlDatabase m_db;
