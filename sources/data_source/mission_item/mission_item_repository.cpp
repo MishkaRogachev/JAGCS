@@ -22,6 +22,34 @@ public:
         qWarning() << query.lastError() << query.executedQuery();
         return false;
     }
+
+    void fillItem(MissionItem* item)
+    {
+        item->setMissionId(query.value("mission_id").toInt());
+        item->setSequence(query.value("sequence").toInt());
+        item->setCommand(Command(query.value("command").toInt()));
+        item->setAltitude(query.value("altitude").toFloat());
+        item->setAltitudeRelative(query.value("altitude_relative").toBool());
+        item->setLatitude(query.value("latitude").toDouble());
+        item->setLongitude(query.value("longitude").toDouble());
+        item->setRadius(query.value("radius").toFloat());
+        item->setPitch(query.value("pitch").toFloat());
+        item->setPeriods(query.value("periods").toInt());
+    }
+
+    void bindItem(MissionItem* item)
+    {
+        query.bindValue(":mission_id", item->missionId());
+        query.bindValue(":sequence", item->sequence());
+        query.bindValue(":command", int(item->command()));
+        query.bindValue(":altitude", item->altitude());
+        query.bindValue(":altitude_relative", item->isAltitudeRelative());
+        query.bindValue(":latitude", item->latitude());
+        query.bindValue(":longitude", item->longitude());
+        query.bindValue(":radius", item->radius());
+        query.bindValue(":pitch", item->pitch());
+        query.bindValue(":periods", item->periods());
+    }
 };
 
 MissionItemRepository::MissionItemRepository():
@@ -77,18 +105,7 @@ MissionItem* MissionItemRepository::readMissionItem(int id)
     if (d->runQuerry() && d->query.next())
     {
         auto item = new MissionItem(id);
-
-        item->setMissionId(d->query.value("mission_id").toInt());
-        item->setSequence(d->query.value("sequence").toInt());
-        item->setCommand(Command(d->query.value("command").toInt()));
-        item->setAltitude(d->query.value("altitude").toFloat());
-        item->setAltitudeRelative(d->query.value("altitude_relative").toBool());
-        item->setLatitude(d->query.value("latitude").toDouble());
-        item->setLongitude(d->query.value("longitude").toDouble());
-        item->setRadius(d->query.value("radius").toFloat());
-        item->setPitch(d->query.value("pitch").toFloat());
-        item->setPeriods(d->query.value("periods").toInt());
-
+        d->fillItem(item);
         return item;
     }
     return nullptr;
@@ -109,18 +126,8 @@ bool MissionItemRepository::updateMissionItem(MissionItem* item)
                      "periods = :periods "
                      "WHERE id = :id");
 
-    d->query.bindValue(":mission_id", item->missionId());
     d->query.bindValue(":id", item->id());
-    d->query.bindValue(":sequence", item->sequence());
-    d->query.bindValue(":command", int(item->command()));
-    d->query.bindValue(":altitude", item->altitude());
-    d->query.bindValue(":altitude_relative", item->isAltitudeRelative());
-    d->query.bindValue(":latitude", item->latitude());
-    d->query.bindValue(":longitude", item->longitude());
-    d->query.bindValue(":radius", item->radius());
-    d->query.bindValue(":pitch", item->pitch());
-    d->query.bindValue(":periods", item->periods());
-
+    d->bindItem(item);
     return d->runQuerry();
 }
 
@@ -144,18 +151,7 @@ QList<MissionItem*> MissionItemRepository::queryMissionItems(int missionId)
     {
         // TODO: Refactor to determinate method
         auto item = new MissionItem(d->query.value("id").toInt());
-
-        item->setMissionId(d->query.value("mission_id").toInt());
-        item->setSequence(d->query.value("sequence").toInt());
-        item->setCommand(Command(d->query.value("command").toInt()));
-        item->setAltitude(d->query.value("altitude").toFloat());
-        item->setAltitudeRelative(d->query.value("altitude_relative").toBool());
-        item->setLatitude(d->query.value("latitude").toDouble());
-        item->setLongitude(d->query.value("longitude").toDouble());
-        item->setRadius(d->query.value("radius").toFloat());
-        item->setPitch(d->query.value("pitch").toFloat());
-        item->setPeriods(d->query.value("periods").toInt());
-
+        d->fillItem(item);
         items.append(item);
     }
 

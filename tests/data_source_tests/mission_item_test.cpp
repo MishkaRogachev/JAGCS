@@ -57,9 +57,15 @@ void MissionItemTests::testQueryMissionItems()
         repository.updateMissionItem(items.last());
     }
 
+    items.append(repository.createMissionItem());
+    items.last()->setMissionId(8);
+    items.last()->setSequence(0);
+    items.last()->setCommand(Command(qrand() % 10));
+    repository.updateMissionItem(items.last());
+
     QList<MissionItem*> compareItems = repository.queryMissionItems(7);
 
-    QCOMPARE(items.count(), compareItems.count());
+    QCOMPARE(items.count() - 1, compareItems.count());
 
     while (!items.isEmpty()) delete items.takeFirst();
     while (!compareItems.isEmpty()) delete compareItems.takeFirst();
