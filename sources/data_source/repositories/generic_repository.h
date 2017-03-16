@@ -11,6 +11,7 @@ namespace data_source
     {
     public:
         GenericRepository();
+        virtual ~GenericRepository();
 
         T create();
         T read(int id);

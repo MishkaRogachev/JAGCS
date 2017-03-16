@@ -72,8 +72,6 @@ void MissionItem::updateFromQuery(const QSqlQuery& query)
     m_radius = query.value("radius").toFloat();
     m_pitch = query.value("pitch").toFloat();
     m_periods = query.value("periods").toInt();
-
-    this->setValid(true);
 }
 
 int MissionItem::missionId() const

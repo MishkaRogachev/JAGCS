@@ -11,11 +11,20 @@ GenericRepository<T>::GenericRepository()
 {}
 
 template<class T>
+GenericRepository<T>::~GenericRepository()
+{}
+
+template<class T>
 T GenericRepository<T>::create()
 {
     m_query.prepare("INSERT INTO " + T::tableName() + " " + T::insertString());
 
-    if (this->runQuerry()) return T(m_query.lastInsertId().toInt());
+    if (this->runQuerry())
+    {
+        T entity(m_query.lastInsertId().toInt());
+        entity.setValid(true);
+        return entity;
+    }
     return T(-1);
 }
 
@@ -30,6 +39,7 @@ T GenericRepository<T>::read(int id)
     if (this->runQuerry() && m_query.next())
     {
         entity.updateFromQuery(m_query);
+        entity.setValid(true);
     }
     return entity;
 }
