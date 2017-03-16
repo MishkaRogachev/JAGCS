@@ -5,7 +5,7 @@
 #include "db_manager.h"
 
 // Tests
-#include "mission_item_test.h"
+#include "entities_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
     manager.open("test_db");
     manager.create();
 
-    MissionItemTests missionItemTest;
-    QTest::qExec(&missionItemTest);
+    EntitiesTest entitiesTest;
+    QTest::qExec(&entitiesTest);
 
     manager.drop();
 

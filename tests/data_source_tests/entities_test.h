@@ -3,12 +3,12 @@
 
 #include <QtTest/QTest>
 
-class MissionItemTests : public QObject
+class EntitiesTest : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void testCrud();
+    void testMissionItemCrud();
     //void testQueryMissionItems();
 };
 

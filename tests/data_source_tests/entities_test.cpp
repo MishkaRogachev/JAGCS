@@ -1,4 +1,4 @@
-#include "mission_item_test.h"
+#include "entities_test.h"
 
 // Internal
 #include "mission_item.h"
@@ -7,7 +7,7 @@
 
 using namespace data_source;
 
-void MissionItemTests::testCrud()
+void EntitiesTest::testMissionItemCrud()
 {
     GenericRepository<MissionItem> repository;
 
