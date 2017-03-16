@@ -2,26 +2,24 @@
 #define BASE_ENTITY_H
 
 // Qt
-#include <QString>
+#include <QObject>
 
 class QSqlQuery;
 
 namespace data_source
 {
-    class BaseEntity
+    class BaseEntity: public QObject
     {
+        Q_OBJECT
+
     public:
-        BaseEntity(int id);
+        BaseEntity(int id, QObject* parent = nullptr);
         virtual ~BaseEntity();
 
         int id() const;
 
-        bool isValid() const;
-        void setValid(bool isValid);
-
     private:
         const int m_id;
-        bool m_valid;
     };
 }
 

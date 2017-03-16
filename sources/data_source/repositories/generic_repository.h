@@ -13,12 +13,12 @@ namespace data_source
         GenericRepository();
         virtual ~GenericRepository();
 
-        T create();
-        T read(int id);
-        bool update(T entity);
-        bool remove(T entity);
+        T* create();
+        T* read(int id);
+        bool update(T* entity);
+        bool remove(T* entity);
 
-        QList<T> select(const QString& condition);
+        QList<T*> select(const QString& condition);
 
     protected:
         bool runQuerry();

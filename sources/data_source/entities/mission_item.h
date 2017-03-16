@@ -9,8 +9,10 @@ namespace data_source
 {
     class MissionItem: public BaseEntity
     {
+        Q_OBJECT
+
     public:
-        MissionItem(int id);
+        MissionItem(int id, QObject* parent = nullptr);
 
         static QString tableName();
         static QString insertString(); // TODO: from properties

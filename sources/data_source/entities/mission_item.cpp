@@ -6,8 +6,8 @@
 
 using namespace data_source;
 
-MissionItem::MissionItem(int id):
-    BaseEntity(id),
+MissionItem::MissionItem(int id, QObject* parent):
+    BaseEntity(id, parent),
     m_missionId(-1),
     m_sequence(-1),
     m_command(Command::UnknownCommand),

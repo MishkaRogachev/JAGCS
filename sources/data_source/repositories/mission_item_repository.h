@@ -13,7 +13,7 @@ namespace data_source
     public:
         MissionItemRepository();
 
-        QList<MissionItem> selectMissionItems(int missionId);
+        QList<MissionItem*> selectMissionItems(int missionId);
     };
 }
 

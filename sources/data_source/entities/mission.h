@@ -1,9 +1,6 @@
 #ifndef MISSION_H
 #define MISSION_H
 
-// Qt
-#include <QList>
-
 // Internal
 #include "base_entity.h"
 
@@ -13,8 +10,10 @@ namespace data_source
 
     class Mission: public BaseEntity
     {
+        Q_OBJECT
+
     public:
-        Mission(int id);
+        Mission(int id, QObject* parent = nullptr);
 
         QString name() const;
         void setName(const QString& name);
