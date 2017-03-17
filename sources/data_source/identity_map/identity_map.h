@@ -23,6 +23,8 @@ namespace data_source
         void removeMission(const MissionPtr& mission);
         void removeMissionItem(const MissionItemPtr& missionItem);
 
+        void clear();
+
     private:
         class Impl;
         Impl* const d;

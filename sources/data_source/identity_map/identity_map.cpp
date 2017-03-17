@@ -81,3 +81,9 @@ void IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
     d->missionItems.remove(missionItem->id());
     d->missionItemRepository.remove(missionItem.data());
 }
+
+void IdentityMap::clear()
+{
+    d->missions.clear();
+    d->missionItems.clear();
+}
