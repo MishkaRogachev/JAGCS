@@ -55,10 +55,12 @@ set(LIBRARIES
 )
 
 # Sources and headrers
-file(GLOB_RECURSE HEADERS "sources/*.h")
-file(GLOB_RECURSE SOURCES "sources/*.cpp")
-file(GLOB_RECURSE QML "sources/*.qml")
-file(GLOB_RECURSE JS "sources/*.js")
+#file(GLOB_RECURSE HEADERS "sources/*.h")
+#file(GLOB_RECURSE SOURCES "sources/*.cpp") TEMPORARY
+file(GLOB_RECURSE HEADERS "sources/data_source/*.h")
+file(GLOB_RECURSE SOURCES "sources/data_source/*.cpp" "sources/main.cpp")
+#file(GLOB_RECURSE QML "sources/*.qml")
+#file(GLOB_RECURSE JS "sources/*.js")
 
 # Includes
 include_directories("3dparty/mavlink_v1")

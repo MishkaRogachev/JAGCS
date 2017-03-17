@@ -1,4 +1,4 @@
-// Qt
+/*// Qt
 #include <QApplication>
 #include <QFontDatabase>
 #include <QIcon>
@@ -12,10 +12,10 @@
 #include "settings_provider.h"
 #include "translation_manager.h"
 
-#include "main_presenter.h"
+#include "main_presenter.h"*/
 
 int main(int argc, char* argv[])
-{
+{/* TEMPORARY
     QApplication app(argc, argv);
 
     app.setApplicationName("JAGCS");
@@ -42,5 +42,5 @@ int main(int argc, char* argv[])
 
     presenter.setMode("mission");
 
-    return app.exec();
+    return app.exec();*/
 }
