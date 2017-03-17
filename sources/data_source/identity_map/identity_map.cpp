@@ -12,8 +12,8 @@ using namespace data_source;
 class IdentityMap::Impl
 {
 public:
-    QHash<int, Mission*> missions;
-    QHash<int, MissionItem*> missionItems;
+    QHash<int, MissionPtr> missions;
+    QHash<int, MissionItemPtr> missionItems;
 
     MissionRepository missionRepository;
     MissionItemRepository missionItemRepository;
@@ -28,20 +28,56 @@ IdentityMap::~IdentityMap()
     delete d;
 }
 
-Mission* IdentityMap::mission(int id)
+MissionPtr IdentityMap::mission(int id)
 {
     if (d->missions.contains(id)) return d->missions[id];
 
-    Mission* entity = d->missionRepository.read(id);
+    MissionPtr entity(d->missionRepository.read(id));
     if (entity) d->missions[id] = entity;
     return entity;
 }
 
-MissionItem* IdentityMap::missionItem(int id)
+MissionItemPtr IdentityMap::missionItem(int id)
 {
     if (d->missionItems.contains(id)) return d->missionItems[id];
 
-    MissionItem* entity = d->missionItemRepository.read(id);
+    MissionItemPtr entity(d->missionItemRepository.read(id));
     if (entity) d->missionItems[id] = entity;
     return entity;
+}
+
+MissionPtr IdentityMap::createMission()
+{
+    MissionPtr entity(d->missionRepository.create());
+    if (entity) d->missions[entity->id()] = entity;
+    return entity;
+}
+
+MissionItemPtr IdentityMap::createMissionItem()
+{
+    MissionItemPtr entity(d->missionItemRepository.create());
+    if (entity) d->missionItems[entity->id()] = entity;
+    return entity;
+}
+
+void IdentityMap::saveMission(const MissionPtr& mission)
+{
+    d->missionRepository.update(mission.data());
+}
+
+void IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
+{
+    d->missionItemRepository.update(missionItem.data());
+}
+
+void IdentityMap::removeMission(const MissionPtr& mission)
+{
+    d->missions.remove(mission->id());
+    d->missionRepository.remove(mission.data());
+}
+
+void IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
+{
+    d->missionItems.remove(missionItem->id());
+    d->missionItemRepository.remove(missionItem.data());
 }

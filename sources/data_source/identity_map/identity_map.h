@@ -1,19 +1,27 @@
 #ifndef IDENTITY_MAP_H
 #define IDENTITY_MAP_H
 
+#include "identity_traits.h"
+
 namespace data_source
 {
-    class Mission;
-    class MissionItem;
-
     class IdentityMap
     {
     public:
         IdentityMap();
         ~IdentityMap();
 
-        Mission* mission(int id);
-        MissionItem* missionItem(int id);
+        MissionPtr mission(int id);
+        MissionItemPtr missionItem(int id);
+
+        MissionPtr createMission();
+        MissionItemPtr createMissionItem();
+
+        void saveMission(const MissionPtr& mission);
+        void saveMissionItem(const MissionItemPtr& missionItem);
+
+        void removeMission(const MissionPtr& mission);
+        void removeMissionItem(const MissionItemPtr& missionItem);
 
     private:
         class Impl;
