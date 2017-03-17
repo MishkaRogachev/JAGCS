@@ -10,10 +10,10 @@ namespace data_source
 
     class Mission: public BaseEntity
     {
-        Q_OBJECT
+        Q_GADGET
 
     public:
-        Mission(int id, QObject* parent = nullptr);
+        Mission(int id);
 
         QString name() const;
         void setName(const QString& name);

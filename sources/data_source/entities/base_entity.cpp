@@ -8,8 +8,7 @@
 
 using namespace data_source;
 
-BaseEntity::BaseEntity(int id, QObject* parent):
-    QObject(parent),
+BaseEntity::BaseEntity(int id):
     m_id(id)
 {}
 
@@ -34,29 +33,25 @@ QList<QString> BaseEntity::fields() const
     return list;
 }
 
-void BaseEntity::bindQuery(QSqlQuery& query) const
+void BaseEntity::bindQuery(QSqlQuery& query, const QMetaObject& meta) const
 {
-    const QMetaObject* meta = this->metaObject();
-
-    for (int i = meta->propertyOffset(); i < meta->propertyCount(); ++i)
+    for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
-        query.bindValue(QString(":") + QString(meta->property(i).name()),
-                        meta->property(i).read(this));
+        query.bindValue(QString(":") + QString(meta.property(i).name()),
+                        meta.property(i).read(this));
     }
 }
 
-void BaseEntity::updateFromQuery(const QSqlQuery& query)
+void BaseEntity::updateFromQuery(const QSqlQuery& query, const QMetaObject& meta)
 {
-    const QMetaObject* meta = this->metaObject();
-
-    for (int i = meta->propertyOffset(); i < meta->propertyCount(); ++i)
+    for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
-        QVariant value = query.value(meta->property(i).name());
+        QVariant value = query.value(meta.property(i).name());
 
         // workaround for enums
-        if (!meta->property(i).write(this, value) && !value.isNull())
+        if (!meta.property(i).write(this, value) && !value.isNull())
         {
-            meta->property(i).write(this, value.toInt());
+            meta.property(i).write(this, value.toInt());
         }
     }
 }

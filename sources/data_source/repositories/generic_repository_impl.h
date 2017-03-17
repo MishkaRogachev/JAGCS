@@ -20,7 +20,8 @@ GenericRepository<T>::~GenericRepository()
 template<class T>
 T* GenericRepository<T>::create()
 {
-    m_query.prepare("INSERT INTO " + T::tableName() + " " + T::insertString());
+    m_query.prepare("INSERT INTO " + T::tableName() + " " +
+                    T::insertString(T::staticMetaObject));
 
     if (this->runQuerry())
     {
@@ -39,7 +40,7 @@ T* GenericRepository<T>::read(int id)
     if (this->runQuerry() && m_query.next())
     {
         T* entity = new T(id);
-        entity->updateFromQuery(m_query);
+        entity->updateFromQuery(m_query, T::staticMetaObject);
         return entity;
     }
     return nullptr;
@@ -49,11 +50,11 @@ template<class T>
 bool GenericRepository<T>::update(T* entity)
 {
     m_query.prepare("UPDATE " + T::tableName() + " SET " +
-                     T::updateString() +
+                     T::updateString(T::staticMetaObject) +
                      "WHERE id = :id");
 
     m_query.bindValue(":id", entity->id());
-    entity->bindQuery(m_query);
+    entity->bindQuery(m_query, T::staticMetaObject);
     return this->runQuerry();
 }
 
@@ -77,7 +78,7 @@ QList<T*> GenericRepository<T>::select(const QString& condition)
     while (m_query.next())
     {
         T* entity = new T(m_query.value("id").toInt());
-        entity->updateFromQuery(m_query);
+        entity->updateFromQuery(m_query, T::staticMetaObject);
         entities.append(entity);
     }
 

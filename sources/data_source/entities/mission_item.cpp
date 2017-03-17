@@ -1,9 +1,12 @@
 #include "mission_item.h"
 
+// Qt
+#include <QDebug>
+
 using namespace data_source;
 
-MissionItem::MissionItem(int id, QObject* parent):
-    BaseEntity(id, parent),
+MissionItem::MissionItem(int id):
+    BaseEntity(id),
     m_missionId(-1),
     m_sequence(-1),
     m_command(Command::UnknownCommand),
@@ -19,16 +22,6 @@ MissionItem::MissionItem(int id, QObject* parent):
 QString MissionItem::tableName()
 {
     return "mission_items";
-}
-
-QString MissionItem::insertString()
-{
-    return BaseEntity::insertString(MissionItem::staticMetaObject);
-}
-
-QString MissionItem::updateString()
-{
-    return BaseEntity::updateString(MissionItem::staticMetaObject);
 }
 
 int MissionItem::missionId() const

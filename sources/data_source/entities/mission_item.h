@@ -8,7 +8,7 @@ namespace data_source
 {
     class MissionItem: public BaseEntity
     {
-        Q_OBJECT
+        Q_GADGET
 
         Q_PROPERTY(int missionId READ missionId WRITE setMissionId)
         Q_PROPERTY(int sequence READ sequence WRITE setSequence)
@@ -35,11 +35,9 @@ namespace data_source
             Landing,
         };
 
-        MissionItem(int id, QObject* parent = nullptr);
+        MissionItem(int id);
 
         static QString tableName();
-        static QString insertString();
-        static QString updateString();
 
         int missionId() const;
         void setMissionId(int missionId);

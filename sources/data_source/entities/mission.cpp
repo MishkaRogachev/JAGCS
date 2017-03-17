@@ -5,8 +5,8 @@
 
 using namespace data_source;
 
-Mission::Mission(int id, QObject* parent):
-    BaseEntity(id, parent)
+Mission::Mission(int id):
+    BaseEntity(id)
 {}
 
 QString Mission::name() const

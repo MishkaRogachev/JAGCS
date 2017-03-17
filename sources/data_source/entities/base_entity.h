@@ -10,18 +10,18 @@ namespace data_source
 {
     class BaseEntity: public QObject
     {
-        Q_OBJECT
+        Q_GADGET
 
     public:
-        BaseEntity(int id, QObject* parent = nullptr);
+        BaseEntity(int id);
         virtual ~BaseEntity();
 
         int id() const;
 
         virtual QList<QString> fields() const;
 
-        virtual void bindQuery(QSqlQuery& query) const;
-        virtual void updateFromQuery(const QSqlQuery& query);
+        virtual void bindQuery(QSqlQuery& query, const QMetaObject& meta) const;
+        virtual void updateFromQuery(const QSqlQuery& query, const QMetaObject& meta);
 
         static QStringList propertyNames(const QMetaObject& meta);
         static QString insertString(const QMetaObject& meta);
