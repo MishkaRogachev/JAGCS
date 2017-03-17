@@ -38,8 +38,8 @@ namespace data_source
         MissionItem(int id, QObject* parent = nullptr);
 
         static QString tableName();
-        static QString insertString(); // TODO: from properties
-        static QString updateString(); // TODO: from properties
+        static QString insertString();
+        static QString updateString();
 
         int missionId() const;
         void setMissionId(int missionId);

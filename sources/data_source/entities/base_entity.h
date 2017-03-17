@@ -23,6 +23,10 @@ namespace data_source
         virtual void bindQuery(QSqlQuery& query) const;
         virtual void updateFromQuery(const QSqlQuery& query);
 
+        static QStringList propertyNames(const QMetaObject& meta);
+        static QString insertString(const QMetaObject& meta);
+        static QString updateString(const QMetaObject& meta);
+
     private:
         const int m_id;
     };

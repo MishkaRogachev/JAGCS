@@ -23,23 +23,12 @@ QString MissionItem::tableName()
 
 QString MissionItem::insertString()
 {
-    return "(missionId, sequence, command, altitude, altitudeRelative, "
-            "latitude, longitude, radius, pitch, periods) "
-           "VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
+    return BaseEntity::insertString(MissionItem::staticMetaObject);
 }
 
 QString MissionItem::updateString()
 {
-    return "missionId = :missionId,"
-           "sequence = :sequence,"
-           "command = :command,"
-           "altitude = :altitude,"
-           "altitudeRelative = :altitudeRelative,"
-           "latitude = :latitude,"
-           "longitude = :longitude,"
-           "radius = :radius,"
-           "pitch = :pitch,"
-           "periods = :periods ";
+    return BaseEntity::updateString(MissionItem::staticMetaObject);
 }
 
 int MissionItem::missionId() const

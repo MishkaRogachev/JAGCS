@@ -60,3 +60,40 @@ void BaseEntity::updateFromQuery(const QSqlQuery& query)
         }
     }
 }
+
+QStringList BaseEntity::propertyNames(const QMetaObject& meta)
+{
+    QStringList list;
+
+    for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
+    {
+        list.append(meta.property(i).name());
+    }
+
+    return list;
+}
+
+QString BaseEntity::insertString(const QMetaObject& meta)
+{
+    QStringList names =  BaseEntity::propertyNames(meta);
+    QStringList values;
+
+    for (int i = 0; i < names.count(); ++i)
+    {
+        values.append("NULL");
+    }
+
+    return "(" + names.join(", ") + ") VALUES (" + values.join(", ") + ")";
+}
+
+QString BaseEntity::updateString(const QMetaObject& meta)
+{
+    QStringList placeholders;
+
+    for (const QString& name: BaseEntity::propertyNames(meta))
+    {
+        placeholders.append(name + " = :" + name);
+    }
+
+    return placeholders.join(", ") + " ";
+}
