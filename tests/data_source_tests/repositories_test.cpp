@@ -1,4 +1,4 @@
-#include "entities_test.h"
+#include "repositories_test.h"
 
 // Qt
 #include <QDebug>
@@ -9,7 +9,7 @@
 
 using namespace data_source;
 
-void EntitiesTest::testMissionItemCrud()
+void RepositoriesTest::testMissionItemCrud()
 {
     MissionItemRepository repository;
 
@@ -37,9 +37,12 @@ void EntitiesTest::testMissionItemCrud()
 
     QVERIFY(repository.remove(item));
     QVERIFY(!repository.read(item->id()));
+
+    delete item;
+    delete compareItem;
 }
 
-void EntitiesTest::testSelectMissionItems()
+void RepositoriesTest::testSelectMissionItems()
 {
     MissionItemRepository repository;
 
@@ -52,14 +55,38 @@ void EntitiesTest::testSelectMissionItems()
         item->setMissionId(i % 3);
         item->setPeriods(3);
         repository.update(item);
+        delete item;
     }
 
-    QCOMPARE(repository.select("periods = 3").count(), 15);
-    QCOMPARE(repository.select("sequence = 7").first()->sequence(), 7);
-    QCOMPARE(repository.selectMissionItems(0).count(), 5);
+    {
+        auto result = repository.select("periods = 3");
+
+        QCOMPARE(result.count(), 15);
+        QCOMPARE(result.first()->periods(), 3);
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
+
+    {
+        auto result = repository.select("sequence = 7");
+
+        QCOMPARE(result.count(), 1);
+        QCOMPARE(result.first()->sequence(), 7);
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
+
+    {
+        auto result = repository.selectMissionItems(0);
+
+        QCOMPARE(result.count(), 5);
+        QCOMPARE(result.first()->missionId(), 0);
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
 }
 
-void EntitiesTest::testMissionCrud()
+void RepositoriesTest::testMissionCrud()
 {
     MissionRepository repository;
 
@@ -74,5 +101,29 @@ void EntitiesTest::testMissionCrud()
 
     QVERIFY(compareMission);
     QCOMPARE(mission->name(), compareMission->name());
+}
+
+void RepositoriesTest::testSelectMissions()
+{
+    MissionRepository repository;
+
+    for (int i = 0; i < 6; ++i)
+    {
+        Mission* mission = repository.create();
+
+        QVERIFY(mission);
+        mission->setName(QString("Mission %1").arg(i));
+
+        repository.update(mission);
+    }
+
+    {
+        auto result = repository.select("name = \"Mission 3\"");
+
+        QCOMPARE(result.count(), 1);
+        QCOMPARE(result.first()->name(), QString("Mission 3"));
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
 }
 
