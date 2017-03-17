@@ -3,7 +3,6 @@
 
 // Internal
 #include "base_entity.h"
-#include "command.h"
 
 namespace data_source
 {
@@ -11,15 +10,36 @@ namespace data_source
     {
         Q_OBJECT
 
+        Q_PROPERTY(int missionId READ missionId WRITE setMissionId)
+        Q_PROPERTY(int sequence READ sequence WRITE setSequence)
+        Q_PROPERTY(Command command READ command WRITE setCommand)
+        Q_PROPERTY(float altitude READ altitude WRITE setAltitude)
+        Q_PROPERTY(bool altitudeRelative READ isAltitudeRelative WRITE setAltitudeRelative)
+        Q_PROPERTY(double latitude READ latitude WRITE setLatitude)
+        Q_PROPERTY(double longitude READ longitude WRITE setLongitude)
+        Q_PROPERTY(float radius READ radius WRITE setRadius)
+        Q_PROPERTY(float pitch READ pitch WRITE setPitch)
+        Q_PROPERTY(int periods READ periods WRITE setPeriods)
+
     public:
+        enum Command: quint8
+        {
+            UnknownCommand = 0,
+            Home,
+            Takeoff,
+            Waypoint,
+            LoiterAltitude,
+            LoiterTurns,
+            Continue,
+            Return,
+            Landing,
+        };
+
         MissionItem(int id, QObject* parent = nullptr);
 
         static QString tableName();
         static QString insertString(); // TODO: from properties
         static QString updateString(); // TODO: from properties
-
-        void bindQuery(QSqlQuery& query) const;
-        void updateFromQuery(const QSqlQuery& query);
 
         int missionId() const;
         void setMissionId(int missionId);
@@ -62,6 +82,8 @@ namespace data_source
         float m_radius;
         float m_pitch;
         int m_periods;
+
+        Q_ENUM(Command)
     };
 }
 

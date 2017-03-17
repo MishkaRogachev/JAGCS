@@ -1,5 +1,8 @@
 #include "entities_test.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "mission_item_repository.h"
 #include "mission_repository.h"
@@ -14,7 +17,7 @@ void EntitiesTest::testMissionItemCrud()
 
     QVERIFY(item);
 
-    item->setCommand(Command::Landing);
+    item->setCommand(MissionItem::Landing);
     item->setMissionId(45);
     item->setLatitude(34.567);
     item->setLongitude(45.241);
@@ -44,7 +47,7 @@ void EntitiesTest::testSelectMissionItems()
     {
         MissionItem* item = repository.create();
         item->setSequence(i);
-        item->setCommand(Command(qrand() % 8 + 1));
+        item->setCommand(MissionItem::Command(qrand() % 8 + 1));
         item->setSequence(i);
         item->setMissionId(i % 3);
         item->setPeriods(3);

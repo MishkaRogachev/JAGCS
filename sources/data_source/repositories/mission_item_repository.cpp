@@ -8,5 +8,5 @@ MissionItemRepository::MissionItemRepository():
 
 QList<MissionItem*> MissionItemRepository::selectMissionItems(int missionId)
 {
-    return this->select(QString("mission_id = %1").arg(missionId));
+    return this->select(QString("missionId = %1").arg(missionId));
 }

@@ -18,6 +18,11 @@ namespace data_source
 
         int id() const;
 
+        virtual QList<QString> fields() const;
+
+        virtual void bindQuery(QSqlQuery& query) const;
+        virtual void updateFromQuery(const QSqlQuery& query);
+
     private:
         const int m_id;
     };

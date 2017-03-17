@@ -1,9 +1,5 @@
 #include "mission_item.h"
 
-// Qt
-#include <QSqlQuery>
-#include <QVariant>
-
 using namespace data_source;
 
 MissionItem::MissionItem(int id, QObject* parent):
@@ -27,51 +23,23 @@ QString MissionItem::tableName()
 
 QString MissionItem::insertString()
 {
-    return "(mission_id, sequence, command, altitude, altitude_relative, "
+    return "(missionId, sequence, command, altitude, altitudeRelative, "
             "latitude, longitude, radius, pitch, periods) "
            "VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
 }
 
 QString MissionItem::updateString()
 {
-    return "mission_id = :mission_id,"
+    return "missionId = :missionId,"
            "sequence = :sequence,"
            "command = :command,"
            "altitude = :altitude,"
-           "altitude_relative = :altitude_relative,"
+           "altitudeRelative = :altitudeRelative,"
            "latitude = :latitude,"
            "longitude = :longitude,"
            "radius = :radius,"
            "pitch = :pitch,"
            "periods = :periods ";
-}
-
-void MissionItem::bindQuery(QSqlQuery& query) const
-{
-    query.bindValue(":mission_id", m_missionId);
-    query.bindValue(":sequence", m_sequence);
-    query.bindValue(":command", int(m_command));
-    query.bindValue(":altitude", m_altitude);
-    query.bindValue(":altitude_relative", m_altitudeRelative);
-    query.bindValue(":latitude", m_latitude);
-    query.bindValue(":longitude", m_longitude);
-    query.bindValue(":radius", m_radius);
-    query.bindValue(":pitch", m_pitch);
-    query.bindValue(":periods", m_periods);
-}
-
-void MissionItem::updateFromQuery(const QSqlQuery& query)
-{
-    m_missionId = query.value("mission_id").toInt();
-    m_sequence = query.value("sequence").toInt();
-    m_command = Command(query.value("command").toInt());
-    m_altitude = query.value("altitude").toFloat();
-    m_altitudeRelative = query.value("altitude_relative").toBool();
-    m_latitude = query.value("latitude").toDouble();
-    m_longitude = query.value("longitude").toDouble();
-    m_radius = query.value("radius").toFloat();
-    m_pitch = query.value("pitch").toFloat();
-    m_periods = query.value("periods").toInt();
 }
 
 int MissionItem::missionId() const
@@ -94,7 +62,7 @@ void MissionItem::setSequence(int sequence)
     m_sequence = sequence;
 }
 
-Command MissionItem::command() const
+MissionItem::Command MissionItem::command() const
 {
     return m_command;
 }
@@ -173,5 +141,3 @@ void MissionItem::setPeriods(int periods)
 {
     m_periods = periods;
 }
-
-
