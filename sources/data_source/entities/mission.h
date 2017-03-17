@@ -15,7 +15,7 @@ namespace data_source
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
-        Mission(int id);
+        Mission();
 
         static QString tableName();
 

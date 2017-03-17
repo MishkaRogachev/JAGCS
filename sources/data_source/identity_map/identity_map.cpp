@@ -48,15 +48,19 @@ MissionItemPtr IdentityMap::missionItem(int id)
 
 MissionPtr IdentityMap::createMission()
 {
-    MissionPtr entity(d->missionRepository.create());
-    if (entity) d->missions[entity->id()] = entity;
+    MissionPtr entity(new Mission());
+    if (!d->missionRepository.insert(entity.data())) return MissionPtr();
+
+    d->missions[entity->id()] = entity;
     return entity;
 }
 
 MissionItemPtr IdentityMap::createMissionItem()
 {
-    MissionItemPtr entity(d->missionItemRepository.create());
-    if (entity) d->missionItems[entity->id()] = entity;
+    MissionItemPtr entity(new MissionItem());
+    if (!d->missionItemRepository.insert(entity.data())) return MissionItemPtr();
+
+    d->missionItems[entity->id()] = entity;
     return entity;
 }
 

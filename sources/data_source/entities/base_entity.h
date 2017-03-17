@@ -12,11 +12,14 @@ namespace data_source
     {
         Q_GADGET
 
+        Q_PROPERTY(int id READ id WRITE setId)
+
     public:
-        BaseEntity(int id);
+        BaseEntity();
         virtual ~BaseEntity();
 
         int id() const;
+        void setId(int id);
 
         virtual QList<QString> fields() const;
 
@@ -28,7 +31,7 @@ namespace data_source
         static QString updateString(const QMetaObject& meta);
 
     private:
-        const int m_id;
+        int m_id;
     };
 }
 

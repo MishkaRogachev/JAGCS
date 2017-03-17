@@ -35,7 +35,7 @@ namespace data_source
             Landing,
         };
 
-        MissionItem(int id);
+        MissionItem();
 
         static QString tableName();
 

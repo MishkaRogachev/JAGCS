@@ -13,8 +13,8 @@ namespace data_source
         GenericRepository();
         virtual ~GenericRepository();
 
-        T* create();
         T* read(int id);
+        bool insert(T* entity);
         bool update(T* entity);
         bool remove(T* entity);
 

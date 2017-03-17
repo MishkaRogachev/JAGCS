@@ -13,7 +13,8 @@ void RepositoriesTest::testMissionItemCrud()
 {
     MissionItemRepository repository;
 
-    MissionItem* item = repository.create();
+    MissionItem* item = new MissionItem();
+    repository.insert(item);
 
     QVERIFY(item);
 
@@ -48,7 +49,8 @@ void RepositoriesTest::testSelectMissionItems()
 
     for (int i = 0; i < 15; ++i)
     {
-        MissionItem* item = repository.create();
+        MissionItem* item = new MissionItem();
+        repository.insert(item);
         item->setSequence(i);
         item->setCommand(MissionItem::Command(qrand() % 8 + 1));
         item->setSequence(i);
@@ -90,7 +92,8 @@ void RepositoriesTest::testMissionCrud()
 {
     MissionRepository repository;
 
-    Mission* mission = repository.create();
+    Mission* mission = new Mission();
+    repository.insert(mission);
 
     QVERIFY(mission);
     mission->setName("Test mission");
@@ -109,7 +112,8 @@ void RepositoriesTest::testSelectMissions()
 
     for (int i = 0; i < 6; ++i)
     {
-        Mission* mission = repository.create();
+        Mission* mission = new Mission();
+        repository.insert(mission);
 
         QVERIFY(mission);
         mission->setName(QString("Mission %1").arg(i));

@@ -8,8 +8,8 @@
 
 using namespace data_source;
 
-BaseEntity::BaseEntity(int id):
-    m_id(id)
+BaseEntity::BaseEntity():
+    m_id(0)
 {}
 
 BaseEntity::~BaseEntity()
@@ -18,6 +18,11 @@ BaseEntity::~BaseEntity()
 int BaseEntity::id() const
 {
     return m_id;
+}
+
+void BaseEntity::setId(int id)
+{
+    m_id = id;
 }
 
 QList<QString> BaseEntity::fields() const
@@ -73,9 +78,9 @@ QString BaseEntity::insertString(const QMetaObject& meta)
     QStringList names =  BaseEntity::propertyNames(meta);
     QStringList values;
 
-    for (int i = 0; i < names.count(); ++i)
+    for (const QString& name: names)
     {
-        values.append("NULL");
+        values.append(":" + name);
     }
 
     return "(" + names.join(", ") + ") VALUES (" + values.join(", ") + ")";
