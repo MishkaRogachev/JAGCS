@@ -26,17 +26,23 @@ bool DbManager::create()
 {
     QSqlQuery query;
     query.prepare("CREATE TABLE mission_items ("
-                     "id INTEGER PRIMARY KEY NOT NULL,"
-                     "missionId INTEGER,"
-                     "sequence INTEGER,"
-                     "command SMALLINT,"
-                     "altitude REAL,"
-                     "altitudeRelative BOOLEAN,"
-                     "latitude DOUBLE,"
-                     "longitude DOUBLE,"
-                     "radius REAL,"
-                     "pitch REAL,"
-                     "periods INTEGER)");
+                  "id INTEGER PRIMARY KEY NOT NULL,"
+                  "missionId INTEGER,"
+                  "sequence INTEGER,"
+                  "command SMALLINT,"
+                  "altitude REAL,"
+                  "altitudeRelative BOOLEAN,"
+                  "latitude DOUBLE,"
+                  "longitude DOUBLE,"
+                  "radius REAL,"
+                  "pitch REAL,"
+                  "periods INTEGER)");
+
+    if (!query.exec()) return false;
+
+    query.prepare("CREATE TABLE missions ("
+                  "id INTEGER PRIMARY KEY NOT NULL,"
+                  "name STRING)");
 
     return query.exec();
 }
@@ -44,6 +50,12 @@ bool DbManager::create()
 bool DbManager::drop()
 {
     QSqlQuery query;
+
     query.prepare("DROP TABLE mission_items");
+
+    if (!query.exec()) return false;
+
+    query.prepare("DROP TABLE missions");
+
     return query.exec();
 }

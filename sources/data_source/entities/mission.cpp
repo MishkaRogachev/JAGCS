@@ -9,6 +9,11 @@ Mission::Mission(int id):
     BaseEntity(id)
 {}
 
+QString Mission::tableName()
+{
+    return "missions";
+}
+
 QString Mission::name() const
 {
     return m_name;

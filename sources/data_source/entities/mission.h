@@ -12,8 +12,12 @@ namespace data_source
     {
         Q_GADGET
 
+        Q_PROPERTY(QString name READ name WRITE setName)
+
     public:
         Mission(int id);
+
+        static QString tableName();
 
         QString name() const;
         void setName(const QString& name);

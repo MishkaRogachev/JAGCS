@@ -61,14 +61,18 @@ void EntitiesTest::testSelectMissionItems()
 
 void EntitiesTest::testMissionCrud()
 {
-//    MissionRepository repository;
+    MissionRepository repository;
 
-//    auto mission = repository.create();
+    Mission* mission = repository.create();
 
-//    QVERIFY(mission.isValid());
-//    mission.setName("Test mission");
+    QVERIFY(mission);
+    mission->setName("Test mission");
 
-//    repository.update(mission);
+    repository.update(mission);
 
+    Mission* compareMission = repository.read(mission->id());
+
+    QVERIFY(compareMission);
+    QCOMPARE(mission->name(), compareMission->name());
 }
 
