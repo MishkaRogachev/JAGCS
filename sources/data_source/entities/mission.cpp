@@ -5,8 +5,8 @@
 
 using namespace data_source;
 
-Mission::Mission():
-    BaseEntity()
+Mission::Mission(IdentityMap* iMap):
+    BaseEntity(iMap)
 {}
 
 QString Mission::tableName()
@@ -24,17 +24,17 @@ void Mission::setName(const QString& name)
     m_name = name;
 }
 
-const QList<MissionItem*>& Mission::items() const
+const MissionItemPtrList& Mission::items() const
 {
     return m_items;
 }
 
-MissionItem* Mission::item(int index) const
+MissionItemPtr Mission::item(int index) const
 {
     return m_items.at(index);
 }
 
-void Mission::addItem(MissionItem* item)
+void Mission::addItem(MissionItemPtr item)
 {
     m_items.append(item);
 }

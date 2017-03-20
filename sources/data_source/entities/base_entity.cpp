@@ -8,7 +8,8 @@
 
 using namespace data_source;
 
-BaseEntity::BaseEntity():
+BaseEntity::BaseEntity(IdentityMap* iMap):
+    m_iMap(iMap),
     m_id(0)
 {}
 

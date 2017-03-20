@@ -4,8 +4,11 @@
 #include <QHash>
 
 // Internal
-#include "mission_repository.h"
-#include "mission_item_repository.h"
+#include "generic_repository.h"
+#include "generic_repository_impl.h"
+
+#include "mission.h"
+#include "mission_item.h"
 
 using namespace data_source;
 
@@ -15,8 +18,8 @@ public:
     QHash<int, MissionPtr> missions;
     QHash<int, MissionItemPtr> missionItems;
 
-    MissionRepository missionRepository;
-    MissionItemRepository missionItemRepository;
+    GenericRepository<Mission> missionRepository;
+    GenericRepository<MissionItem> missionItemRepository;
 };
 
 IdentityMap::IdentityMap():
@@ -32,8 +35,13 @@ MissionPtr IdentityMap::mission(int id)
 {
     if (d->missions.contains(id)) return d->missions[id];
 
-    MissionPtr entity(d->missionRepository.read(id));
-    if (entity) d->missions[id] = entity;
+    MissionPtr entity(d->missionRepository.read(id, this));
+    if (entity)
+    {
+        d->missions[id] = entity;
+
+        // TODO: load child MissionItems
+    }
     return entity;
 }
 
@@ -41,24 +49,14 @@ MissionItemPtr IdentityMap::missionItem(int id)
 {
     if (d->missionItems.contains(id)) return d->missionItems[id];
 
-    MissionItemPtr entity(d->missionItemRepository.read(id));
+    MissionItemPtr entity(d->missionItemRepository.read(id, this));
     if (entity) d->missionItems[id] = entity;
     return entity;
 }
 
-MissionItemPtr IdentityMap::itemForMission(const MissionPtr& mission, int seq)
-{
-    auto result = d->missionItemRepository.select(
-                      QString("missionId=%1 and seq=%2").
-                      arg(mission->id()).arg(seq));
-    if (result.empty()) return MissionItemPtr();
-
-    return MissionItemPtr(result.first());
-}
-
 MissionPtr IdentityMap::createMission()
 {
-    MissionPtr entity(new Mission());
+    MissionPtr entity(new Mission(this));
     if (!d->missionRepository.insert(entity.data())) return MissionPtr();
 
     d->missions[entity->id()] = entity;
@@ -67,17 +65,26 @@ MissionPtr IdentityMap::createMission()
 
 MissionItemPtr IdentityMap::createItemForMission(const MissionPtr& mission)
 {
-    MissionItemPtr entity(new MissionItem());
-    entity->setMissionId(mission->id());
-    if (!d->missionItemRepository.insert(entity.data())) return MissionItemPtr();
+    MissionItemPtr missionItem(new MissionItem(this));
+    missionItem->setMissionId(mission->id());
+    if (!d->missionItemRepository.insert(missionItem.data())) return MissionItemPtr();
 
-    d->missionItems[entity->id()] = entity;
-    return entity;
+    d->missionItems[missionItem->id()] = missionItem;
+    mission->addItem(missionItem); // TODO: sequence
+    return missionItem;
 }
 
 void IdentityMap::saveMission(const MissionPtr& mission)
 {
     d->missionRepository.update(mission.data());
+}
+
+void IdentityMap::saveMissionAll(const MissionPtr& mission)
+{
+    this->saveMission(mission);
+
+    for (const MissionItemPtr& item: mission->items())
+        this->saveMissionItem(item);
 }
 
 void IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
@@ -87,18 +94,28 @@ void IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
 
 void IdentityMap::removeMission(const MissionPtr& mission)
 {
-    d->missions.remove(mission->id());
+    for (const MissionItemPtr& item: mission->items())
+        this->removeMissionItem(item);
+
+    this->unloadMission(mission);
     d->missionRepository.remove(mission.data());
 }
 
 void IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
 {
-    d->missionItems.remove(missionItem->id());
+    this->unloadMissionItem(missionItem);
     d->missionItemRepository.remove(missionItem.data());
 }
 
-void IdentityMap::clear()
+void IdentityMap::unloadMission(const MissionPtr& mission)
 {
-    d->missions.clear();
-    d->missionItems.clear();
+    for (const MissionItemPtr& item: mission->items())
+        this->unloadMissionItem(item);
+
+    d->missions.remove(mission->id());
+}
+
+void IdentityMap::unloadMissionItem(const MissionItemPtr& missionItem)
+{
+    d->missionItems.remove(missionItem->id());
 }

@@ -13,18 +13,19 @@ namespace data_source
 
         MissionPtr mission(int id);
         MissionItemPtr missionItem(int id);
-        MissionItemPtr itemForMission(const MissionPtr& mission, int seq);
 
         MissionPtr createMission();
         MissionItemPtr createItemForMission(const MissionPtr& mission);
 
         void saveMission(const MissionPtr& mission);
+        void saveMissionAll(const MissionPtr& mission);
         void saveMissionItem(const MissionItemPtr& missionItem);
 
         void removeMission(const MissionPtr& mission);
         void removeMissionItem(const MissionItemPtr& missionItem);
 
-        void clear();
+        void unloadMission(const MissionPtr& mission);
+        void unloadMissionItem(const MissionItemPtr& missionItem);
 
     private:
         class Impl;

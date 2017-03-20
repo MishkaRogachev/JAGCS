@@ -7,6 +7,8 @@
 
 namespace data_source
 {
+    class IdentityMap;
+
     class Mission;
     class MissionItem;
 

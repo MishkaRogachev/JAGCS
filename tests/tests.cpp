@@ -6,8 +6,7 @@
 #include "db_manager.h"
 
 // Tests
-#include "repositories_test.h"
-#include "identity_test.h"
+#include "entities_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -29,11 +28,8 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    RepositoriesTest repositoriesTest;
-    QTest::qExec(&repositoriesTest);
-
-    IdentityTest identityTest;
-    QTest::qExec(&identityTest);
+    EntitiesTest entitiesTest;
+    QTest::qExec(&entitiesTest);
 
     manager.drop();
 

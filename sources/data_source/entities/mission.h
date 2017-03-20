@@ -6,8 +6,6 @@
 
 namespace data_source
 {
-    class MissionItem;
-
     class Mission: public BaseEntity
     {
         Q_GADGET
@@ -15,21 +13,21 @@ namespace data_source
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
-        Mission();
+        Mission(IdentityMap* iMap);
 
         static QString tableName();
 
         QString name() const;
         void setName(const QString& name);
 
-        const QList<MissionItem*>& items() const;
-        MissionItem* item(int index) const;
-        void addItem(MissionItem* item);
+        const MissionItemPtrList& items() const;
+        MissionItemPtr item(int index) const;
+        void addItem(MissionItemPtr item);
         void removeItem(int index);
 
     private:
         QString m_name;
-        QList<MissionItem*> m_items;
+        MissionItemPtrList m_items;
     };
 }
 

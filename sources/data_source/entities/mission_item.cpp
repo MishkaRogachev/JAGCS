@@ -3,11 +3,15 @@
 // Qt
 #include <QDebug>
 
+// Internal
+#include "identity_map.h"
+#include "mission.h"
+
 using namespace data_source;
 
-MissionItem::MissionItem():
-    BaseEntity(),
-    m_missionId(-1),
+MissionItem::MissionItem(IdentityMap* iMap):
+    BaseEntity(iMap),
+    m_mission(nullptr),
     m_sequence(-1),
     m_command(Command::UnknownCommand),
     m_altitude(qQNaN()),
@@ -17,7 +21,8 @@ MissionItem::MissionItem():
     m_radius(qQNaN()),
     m_pitch(qQNaN()),
     m_periods(0)
-{}
+{
+}
 
 QString MissionItem::tableName()
 {
@@ -26,12 +31,22 @@ QString MissionItem::tableName()
 
 int MissionItem::missionId() const
 {
-    return m_missionId;
+    return m_mission ? m_mission->id() : -1;
+}
+
+MissionPtr MissionItem::mission() const
+{
+    return m_mission;
+}
+
+void MissionItem::setMission(MissionPtr mission)
+{
+    m_mission = mission;
 }
 
 void MissionItem::setMissionId(int missionId)
 {
-    m_missionId = missionId;
+    m_mission = missionId > -1 ? m_iMap->mission(missionId) : MissionPtr();
 }
 
 int MissionItem::sequence() const

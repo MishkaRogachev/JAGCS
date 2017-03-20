@@ -4,6 +4,9 @@
 // Qt
 #include <QObject>
 
+// Internal
+#include "identity_traits.h"
+
 class QSqlQuery;
 
 namespace data_source
@@ -15,7 +18,7 @@ namespace data_source
         Q_PROPERTY(int id READ id WRITE setId)
 
     public:
-        BaseEntity();
+        explicit BaseEntity(IdentityMap* iMap);
         virtual ~BaseEntity();
 
         int id() const;
@@ -29,6 +32,9 @@ namespace data_source
         static QStringList propertyNames(const QMetaObject& meta);
         static QString insertString(const QMetaObject& meta);
         static QString updateString(const QMetaObject& meta);
+
+    protected:
+        IdentityMap* const m_iMap;
 
     private:
         int m_id;

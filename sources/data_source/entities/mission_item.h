@@ -35,11 +35,13 @@ namespace data_source
             Landing,
         };
 
-        MissionItem();
+        MissionItem(IdentityMap* iMap);
 
         static QString tableName();
 
         int missionId() const;
+        MissionPtr mission() const;
+        void setMission(MissionPtr mission);
         void setMissionId(int missionId);
 
         int sequence() const;
@@ -70,7 +72,7 @@ namespace data_source
         void setPeriods(int periods);
 
     private:
-        int m_missionId;
+        MissionPtr m_mission;
         int m_sequence;
         Command m_command;
         float m_altitude;

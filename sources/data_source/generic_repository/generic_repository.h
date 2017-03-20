@@ -6,6 +6,8 @@
 
 namespace data_source
 {
+    class IdentityMap;
+
     template <class T>
     class GenericRepository
     {
@@ -13,7 +15,7 @@ namespace data_source
         GenericRepository();
         virtual ~GenericRepository();
 
-        T* read(int id);
+        T* read(int id, IdentityMap* iMap);
         bool insert(T* entity);
         bool update(T* entity);
         bool remove(T* entity);
