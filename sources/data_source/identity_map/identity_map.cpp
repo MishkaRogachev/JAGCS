@@ -41,7 +41,7 @@ MissionPtr IdentityMap::mission(int id)
         d->missions[id] = mission;
 
         auto items = d->missionItemRepository.selectId(
-                         QString("missionId = %1").arg(id));
+                         QString("missionId = %1 ORDER BY sequence").arg(id));
         for (int id : items)
         {
             MissionItemPtr item = this->missionItem(id);
@@ -73,10 +73,11 @@ MissionItemPtr IdentityMap::createItemForMission(const MissionPtr& mission)
 {
     MissionItemPtr missionItem(new MissionItem(this));
     missionItem->setMissionId(mission->id());
+    missionItem->setSequence(mission->count());
     if (!d->missionItemRepository.insert(missionItem.data())) return MissionItemPtr();
 
     d->missionItems[missionItem->id()] = missionItem;
-    mission->addItem(missionItem); // TODO: sequence
+    mission->addItem(missionItem);
     return missionItem;
 }
 

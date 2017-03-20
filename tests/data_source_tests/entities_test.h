@@ -10,7 +10,8 @@ class EntitiesTest: public QObject
 private slots:
     void testMissionCrud();
     void testMissionItemCrud();
-    void testItemsInMission();
+    void testMissionItemsInMission();
+    void testMissionItemSequence();
 };
 
 #endif // ENTITIES_TEST_H

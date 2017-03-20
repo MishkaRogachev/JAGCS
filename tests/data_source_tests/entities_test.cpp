@@ -59,9 +59,12 @@ void EntitiesTest::testMissionItemCrud()
     QVERIFY(qFuzzyCompare(item->latitude(), iMap.missionItem(item->id())->latitude()));
     QVERIFY(qFuzzyCompare(item->longitude(), iMap.missionItem(item->id())->longitude()));
     QVERIFY(qFuzzyCompare(item->altitude(), iMap.missionItem(item->id())->altitude()));
+
+    mission = iMap.mission(mission->id());
+    iMap.removeMission(mission);
 }
 
-void EntitiesTest::testItemsInMission()
+void EntitiesTest::testMissionItemsInMission()
 {
     IdentityMap iMap;
 
@@ -76,6 +79,7 @@ void EntitiesTest::testItemsInMission()
     QCOMPARE(mission->items().count(), 15);
     QCOMPARE(iMap.mission(mission->id())->items().count(), 15);
 
+    iMap.saveMissionAll(mission);
     iMap.unloadMission(mission);
     QCOMPARE(iMap.mission(mission->id())->items().count(), 15);
 
@@ -86,4 +90,41 @@ void EntitiesTest::testItemsInMission()
     QCOMPARE(mission->items().count(), 14);
     iMap.unloadMission(mission);
     QCOMPARE(iMap.mission(mission->id())->items().count(), 14);
+
+    QCOMPARE(mission->item(0)->periods(), 0);
+    QCOMPARE(mission->item(1)->periods(), 1);
+    QCOMPARE(mission->item(2)->periods(), 2);
+    QCOMPARE(mission->item(3)->periods(), 4);
+
+    mission = iMap.mission(mission->id());
+    iMap.removeMission(mission);
+}
+
+void EntitiesTest::testMissionItemSequence()
+{
+    IdentityMap iMap;
+
+    MissionPtr mission = iMap.createMission();
+
+    for (int i = 0; i < 25; ++i) iMap.createItemForMission(mission);
+
+    iMap.unloadMission(mission);
+    mission = iMap.mission(mission->id());
+
+    for (int i = 0; i < 25; ++i) QCOMPARE(i, mission->item(i)->sequence());
+
+    iMap.removeMissionItem(mission->takeItem(5));
+    iMap.removeMissionItem(mission->takeItem(7));
+    iMap.removeMissionItem(mission->takeItem(8));
+
+    for (int i = 0; i < 22; ++i) QCOMPARE(i, mission->item(i)->sequence());
+
+    iMap.saveMissionAll(mission);
+    iMap.unloadMission(mission);
+    mission = iMap.mission(mission->id());
+
+    for (int i = 0; i < 22; ++i) QCOMPARE(i, mission->item(i)->sequence());
+
+    mission = iMap.mission(mission->id());
+    iMap.removeMission(mission);
 }
