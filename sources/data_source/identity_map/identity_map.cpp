@@ -46,6 +46,16 @@ MissionItemPtr IdentityMap::missionItem(int id)
     return entity;
 }
 
+MissionItemPtr IdentityMap::itemForMission(const MissionPtr& mission, int seq)
+{
+    auto result = d->missionItemRepository.select(
+                      QString("missionId=%1 and seq=%2").
+                      arg(mission->id()).arg(seq));
+    if (result.empty()) return MissionItemPtr();
+
+    return MissionItemPtr(result.first());
+}
+
 MissionPtr IdentityMap::createMission()
 {
     MissionPtr entity(new Mission());
@@ -55,7 +65,7 @@ MissionPtr IdentityMap::createMission()
     return entity;
 }
 
-MissionItemPtr IdentityMap::createMissionItem(const MissionPtr& mission)
+MissionItemPtr IdentityMap::createItemForMission(const MissionPtr& mission)
 {
     MissionItemPtr entity(new MissionItem());
     entity->setMissionId(mission->id());

@@ -36,7 +36,7 @@ void IdentityTest::testMissionItemIdentity()
     IdentityMap map;
 
     MissionPtr mission = map.createMission();
-    MissionItemPtr missionItem = map.createMissionItem(mission);
+    MissionItemPtr missionItem = map.createItemForMission(mission);
 
     QCOMPARE(missionItem->missionId(), mission->id());
     QCOMPARE(missionItem->id(), map.missionItem(missionItem->id())->id());
