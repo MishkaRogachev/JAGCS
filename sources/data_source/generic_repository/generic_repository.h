@@ -21,6 +21,7 @@ namespace data_source
         bool remove(T* entity);
 
         QList<T*> select(const QString& condition);
+        QList<int> selectId(const QString& condition);
 
     protected:
         bool runQuerry();

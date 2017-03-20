@@ -29,6 +29,11 @@ const MissionItemPtrList& Mission::items() const
     return m_items;
 }
 
+MissionItemPtrList&Mission::items()
+{
+    return m_items;
+}
+
 MissionItemPtr Mission::item(int index) const
 {
     return m_items.at(index);

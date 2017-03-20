@@ -21,6 +21,7 @@ namespace data_source
         void setName(const QString& name);
 
         const MissionItemPtrList& items() const;
+        MissionItemPtrList& items();
         MissionItemPtr item(int index) const;
         void addItem(MissionItemPtr item);
         void removeItem(int index);

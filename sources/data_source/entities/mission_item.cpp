@@ -21,8 +21,7 @@ MissionItem::MissionItem(IdentityMap* iMap):
     m_radius(qQNaN()),
     m_pitch(qQNaN()),
     m_periods(0)
-{
-}
+{}
 
 QString MissionItem::tableName()
 {

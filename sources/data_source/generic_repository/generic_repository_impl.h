@@ -89,6 +89,20 @@ QList<T*> GenericRepository<T>::select(const QString& condition)
 }
 
 template<class T>
+QList<int> GenericRepository<T>::selectId(const QString& condition)
+{
+    QList<int> idList;
+
+    m_query.prepare("SELECT id FROM " + T::tableName() + " WHERE " + condition);
+
+    if (!this->runQuerry()) return idList;
+
+    while (m_query.next()) idList.append(m_query.value("id").toInt());
+
+    return idList;
+}
+
+template<class T>
 bool GenericRepository<T>::runQuerry()
 {
     if (m_query.exec()) return true;

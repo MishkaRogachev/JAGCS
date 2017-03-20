@@ -31,7 +31,5 @@ int main(int argc, char* argv[])
     EntitiesTest entitiesTest;
     QTest::qExec(&entitiesTest);
 
-    manager.drop();
-
     return 0;
 }

@@ -35,14 +35,20 @@ MissionPtr IdentityMap::mission(int id)
 {
     if (d->missions.contains(id)) return d->missions[id];
 
-    MissionPtr entity(d->missionRepository.read(id, this));
-    if (entity)
+    MissionPtr mission(d->missionRepository.read(id, this));
+    if (mission)
     {
-        d->missions[id] = entity;
+        d->missions[id] = mission;
 
-        // TODO: load child MissionItems
+        auto items = d->missionItemRepository.selectId(
+                         QString("missionId = %1").arg(id));
+        for (int id : items)
+        {
+            MissionItemPtr item = this->missionItem(id);
+            if (item) mission->addItem(item);
+        }
     }
-    return entity;
+    return mission;
 }
 
 MissionItemPtr IdentityMap::missionItem(int id)
