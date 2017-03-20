@@ -9,85 +9,6 @@
 
 using namespace data_source;
 
-void RepositoriesTest::testMissionItemCrud()
-{
-    MissionItemRepository repository;
-
-    MissionItem* item = new MissionItem();
-    repository.insert(item);
-
-    QVERIFY(item);
-
-    item->setCommand(MissionItem::Landing);
-    item->setMissionId(45);
-    item->setLatitude(34.567);
-    item->setLongitude(45.241);
-    item->setPeriods(2);
-
-    repository.update(item);
-
-    MissionItem* compareItem = repository.read(item->id());
-
-    QVERIFY(compareItem);
-
-    QCOMPARE(item->missionId(), compareItem->missionId());
-    QCOMPARE(item->command(), compareItem->command());
-    QVERIFY(qFuzzyCompare(item->latitude(), compareItem->latitude()));
-    QVERIFY(qFuzzyCompare(item->longitude(), compareItem->longitude()));
-    QCOMPARE(item->periods(), compareItem->periods());
-
-    QVERIFY(repository.remove(item));
-    QVERIFY(!repository.read(item->id()));
-
-    delete item;
-    delete compareItem;
-}
-
-void RepositoriesTest::testSelectMissionItems()
-{
-    MissionItemRepository repository;
-
-    for (int i = 0; i < 15; ++i)
-    {
-        MissionItem* item = new MissionItem();
-        repository.insert(item);
-        item->setSequence(i);
-        item->setCommand(MissionItem::Command(qrand() % 8 + 1));
-        item->setSequence(i);
-        item->setMissionId(i % 3);
-        item->setPeriods(3);
-        repository.update(item);
-        delete item;
-    }
-
-    {
-        auto result = repository.select("periods = 3");
-
-        QCOMPARE(result.count(), 15);
-        QCOMPARE(result.first()->periods(), 3);
-
-        while (!result.isEmpty()) delete result.takeFirst();
-    }
-
-    {
-        auto result = repository.select("sequence = 7");
-
-        QCOMPARE(result.count(), 1);
-        QCOMPARE(result.first()->sequence(), 7);
-
-        while (!result.isEmpty()) delete result.takeFirst();
-    }
-
-    {
-        auto result = repository.selectMissionItems(0);
-
-        QCOMPARE(result.count(), 5);
-        QCOMPARE(result.first()->missionId(), 0);
-
-        while (!result.isEmpty()) delete result.takeFirst();
-    }
-}
-
 void RepositoriesTest::testMissionCrud()
 {
     MissionRepository repository;
@@ -130,4 +51,98 @@ void RepositoriesTest::testSelectMissions()
         while (!result.isEmpty()) delete result.takeFirst();
     }
 }
+
+void RepositoriesTest::testMissionItemCrud()
+{
+    Mission* mission = new Mission();
+    {
+        MissionRepository repository;
+        repository.insert(mission);
+    }
+
+    MissionItemRepository repository;
+
+    MissionItem* item = new MissionItem();
+    item->setMissionId(mission->id());
+    repository.insert(item);
+
+    QVERIFY(item);
+
+    item->setCommand(MissionItem::Landing);
+    item->setLatitude(34.567);
+    item->setLongitude(45.241);
+    item->setPeriods(2);
+
+    repository.update(item);
+
+    MissionItem* compareItem = repository.read(item->id());
+
+    QVERIFY(compareItem);
+
+    QCOMPARE(item->missionId(), compareItem->missionId());
+    QCOMPARE(item->command(), compareItem->command());
+    QVERIFY(qFuzzyCompare(item->latitude(), compareItem->latitude()));
+    QVERIFY(qFuzzyCompare(item->longitude(), compareItem->longitude()));
+    QCOMPARE(item->periods(), compareItem->periods());
+
+    QVERIFY(repository.remove(item));
+    QVERIFY(!repository.read(item->id()));
+
+    delete item;
+    delete compareItem;
+    delete mission;
+}
+
+void RepositoriesTest::testSelectMissionItems()
+{
+    Mission* mission = new Mission();
+    {
+        MissionRepository repository;
+        repository.insert(mission);
+    }
+
+    MissionItemRepository repository;
+
+    for (int i = 0; i < 15; ++i)
+    {
+        MissionItem* item = new MissionItem();
+        item->setMissionId(mission->id());
+        repository.insert(item);
+        item->setSequence(i);
+        item->setCommand(MissionItem::Command(qrand() % 8 + 1));
+        item->setSequence(i);
+        item->setPeriods(3);
+        repository.update(item);
+        delete item;
+    }
+
+    {
+        auto result = repository.select("periods = 3");
+
+        QCOMPARE(result.count(), 15);
+        QCOMPARE(result.first()->periods(), 3);
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
+
+    {
+        auto result = repository.select("sequence = 7");
+
+        QCOMPARE(result.count(), 1);
+        QCOMPARE(result.first()->sequence(), 7);
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
+
+    {
+        auto result = repository.selectMissionItems(mission->id());
+
+        QCOMPARE(result.count(), 15);
+        QCOMPARE(result.first()->missionId(), mission->id());
+
+        while (!result.isEmpty()) delete result.takeFirst();
+    }
+    delete mission;
+}
+
 

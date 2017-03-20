@@ -8,10 +8,10 @@ class RepositoriesTest: public QObject
     Q_OBJECT
 
 private slots:
-    void testMissionItemCrud();
-    void testSelectMissionItems();
     void testMissionCrud();
     void testSelectMissions();
+    void testMissionItemCrud();
+    void testSelectMissionItems();
 };
 
 #endif // REPOSITORIES_TEST_H

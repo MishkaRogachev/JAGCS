@@ -2,6 +2,8 @@
 
 // Qt
 #include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
 using namespace data_source;
 
@@ -21,30 +23,48 @@ bool DbManager::open(const QString& dbName)
     return m_db.open();
 }
 
-
 bool DbManager::create()
 {
     QSqlQuery query;
-    query.prepare("CREATE TABLE mission_items ("
-                  "id INTEGER PRIMARY KEY NOT NULL,"
-                  "missionId INTEGER,"
-                  "sequence INTEGER,"
-                  "command SMALLINT,"
-                  "altitude REAL,"
-                  "altitudeRelative BOOLEAN,"
-                  "latitude DOUBLE,"
-                  "longitude DOUBLE,"
-                  "radius REAL,"
-                  "pitch REAL,"
-                  "periods INTEGER)");
+    bool result = false;
 
-    if (!query.exec()) return false;
+    result = query.exec("PRAGMA FOREIGN_KEYS=ON;");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
 
-    query.prepare("CREATE TABLE missions ("
-                  "id INTEGER PRIMARY KEY NOT NULL,"
-                  "name STRING)");
+    result = query.exec("CREATE TABLE missions ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "name STRING)");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
 
-    return query.exec();
+    result = query.exec("CREATE TABLE mission_items ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "missionId INTEGER,"
+                        "sequence INTEGER,"
+                        "command SMALLINT,"
+                        "altitude REAL,"
+                        "altitudeRelative BOOLEAN,"
+                        "latitude DOUBLE,"
+                        "longitude DOUBLE,"
+                        "radius REAL,"
+                        "pitch REAL,"
+                        "periods INTEGER,"
+                        "FOREIGN KEY(missionId) REFERENCES missions(id))");
+
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
+
+    return true;
 }
 
 bool DbManager::drop()
