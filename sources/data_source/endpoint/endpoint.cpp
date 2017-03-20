@@ -1,6 +1,6 @@
 #include "endpoint.h"
 
-using namespace domain;
+using namespace data_source;
 
 Endpoint::Endpoint(const QHostAddress& address, quint16 port):
     m_address(address),
@@ -29,6 +29,5 @@ quint16& Endpoint::rPort()
 
 bool Endpoint::operator ==(const Endpoint& other)
 {
-    return m_address == other.address() &&
-            m_port == other.port();
+    return m_address == other.address() && m_port == other.port();
 }

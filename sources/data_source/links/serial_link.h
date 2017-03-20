@@ -5,7 +5,7 @@
 
 class QSerialPort;
 
-namespace domain
+namespace data_source
 {
     class SerialLink: public AbstractLink
     {

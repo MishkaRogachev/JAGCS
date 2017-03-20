@@ -7,7 +7,7 @@
 
 class QUdpSocket;
 
-namespace domain
+namespace data_source
 {
     class UdpLink: public AbstractLink
     {

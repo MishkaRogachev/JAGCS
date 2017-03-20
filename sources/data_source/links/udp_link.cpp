@@ -3,7 +3,7 @@
 // Qt
 #include <QUdpSocket>
 
-using namespace domain;
+using namespace data_source;
 
 UdpLink::UdpLink(int port, QObject* parent):
     AbstractLink(parent),

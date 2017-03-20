@@ -9,7 +9,7 @@ namespace
     const int second = 1000;
 }
 
-using namespace domain;
+using namespace data_source;
 
 AbstractLink::AbstractLink(QObject* parent):
     QObject(parent),
