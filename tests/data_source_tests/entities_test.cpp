@@ -128,3 +128,47 @@ void EntitiesTest::testMissionItemSequence()
     mission = iMap.mission(mission->id());
     iMap.removeMission(mission);
 }
+
+void EntitiesTest::testMissionItemUpDown()
+{
+    IdentityMap iMap;
+
+    MissionPtr mission = iMap.createMission();
+
+    for (int i = 0; i < 10; ++i)
+    {
+        MissionItemPtr item = iMap.createItemForMission(mission);
+        item->setPeriods(i);
+    }
+
+    QCOMPARE(mission->item(0)->periods(), 0);
+    QCOMPARE(mission->item(9)->periods(), 9);
+
+    mission->insertItem(0, mission->takeItem(9));
+
+    QCOMPARE(mission->item(0)->periods(), 9);
+    QCOMPARE(mission->item(9)->periods(), 8);
+
+    mission->insertItem(9, mission->takeItem(1));
+
+    QCOMPARE(mission->item(1)->periods(), 1);
+    QCOMPARE(mission->item(9)->periods(), 0);
+
+    QCOMPARE(mission->item(3)->periods(), 3);
+    QCOMPARE(mission->item(4)->periods(), 4);
+
+    mission->item(3)->up();
+
+    QCOMPARE(mission->item(4)->periods(), 3);
+    QCOMPARE(mission->item(3)->periods(), 4);
+
+    QCOMPARE(mission->item(7)->periods(), 7);
+    QCOMPARE(mission->item(6)->periods(), 6);
+
+    mission->item(7)->down();
+
+    QCOMPARE(mission->item(7)->periods(), 6);
+    QCOMPARE(mission->item(6)->periods(), 7);
+
+    iMap.removeMission(mission);
+}

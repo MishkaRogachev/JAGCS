@@ -1,6 +1,7 @@
 #include "mission.h"
 
 // Internal
+#include "identity_map.h"
 #include "mission_item.h"
 
 using namespace data_source;
@@ -60,6 +61,7 @@ MissionItemPtr Mission::takeItem(int index)
 void Mission::insertItem(int index, const MissionItemPtr& item)
 {
     m_items.insert(index, item);
+    item->setMission(m_iMap->mission(this->id()));
     this->fixSequenceOrder();
 }
 

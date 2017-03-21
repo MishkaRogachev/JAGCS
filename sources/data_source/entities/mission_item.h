@@ -71,6 +71,9 @@ namespace data_source
         int periods() const;
         void setPeriods(int periods);
 
+        void up();
+        void down();
+
     private:
         MissionPtr m_mission;
         int m_sequence;

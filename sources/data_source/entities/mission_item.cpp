@@ -137,3 +137,19 @@ void MissionItem::setPeriods(int periods)
 {
     m_periods = periods;
 }
+
+void MissionItem::up()
+{
+    if (m_mission.isNull() || m_sequence >= m_mission->count() - 1) return;
+
+    MissionPtr mission(m_mission);
+    mission->insertItem(m_sequence + 1, m_mission->takeItem(m_sequence));
+}
+
+void MissionItem::down()
+{
+    if (m_mission.isNull() || m_sequence < 1) return;
+
+    MissionPtr mission(m_mission);
+    mission->insertItem(m_sequence - 1, m_mission->takeItem(m_sequence));
+}

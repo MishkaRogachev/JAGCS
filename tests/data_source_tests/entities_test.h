@@ -12,6 +12,7 @@ private slots:
     void testMissionItemCrud();
     void testMissionItemsInMission();
     void testMissionItemSequence();
+    void testMissionItemUpDown();
 };
 
 #endif // ENTITIES_TEST_H
