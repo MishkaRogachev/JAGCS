@@ -40,8 +40,6 @@ namespace data_source
         static QString tableName();
 
         int missionId() const;
-        MissionPtr mission() const;
-        void setMission(MissionPtr mission);
         void setMissionId(int missionId);
 
         int sequence() const;
@@ -71,11 +69,8 @@ namespace data_source
         int periods() const;
         void setPeriods(int periods);
 
-        void up();
-        void down();
-
     private:
-        MissionPtr m_mission;
+        int m_missionId;
         int m_sequence;
         Command m_command;
         float m_altitude;

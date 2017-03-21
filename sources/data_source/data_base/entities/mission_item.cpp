@@ -11,7 +11,7 @@ using namespace data_source;
 
 MissionItem::MissionItem(IdentityMap* iMap):
     BaseEntity(iMap),
-    m_mission(nullptr),
+    m_missionId(0),
     m_sequence(-1),
     m_command(Command::UnknownCommand),
     m_altitude(qQNaN()),
@@ -30,22 +30,12 @@ QString MissionItem::tableName()
 
 int MissionItem::missionId() const
 {
-    return m_mission ? m_mission->id() : -1;
-}
-
-MissionPtr MissionItem::mission() const
-{
-    return m_mission;
-}
-
-void MissionItem::setMission(MissionPtr mission)
-{
-    m_mission = mission;
+    return m_missionId;
 }
 
 void MissionItem::setMissionId(int missionId)
 {
-    m_mission = missionId > -1 ? m_iMap->mission(missionId) : MissionPtr();
+    m_missionId = missionId;
 }
 
 int MissionItem::sequence() const
@@ -136,20 +126,4 @@ int MissionItem::periods() const
 void MissionItem::setPeriods(int periods)
 {
     m_periods = periods;
-}
-
-void MissionItem::up()
-{
-    if (m_mission.isNull() || m_sequence >= m_mission->count() - 1) return;
-
-    MissionPtr mission(m_mission);
-    mission->insertItem(m_sequence + 1, m_mission->takeItem(m_sequence));
-}
-
-void MissionItem::down()
-{
-    if (m_mission.isNull() || m_sequence < 1) return;
-
-    MissionPtr mission(m_mission);
-    mission->insertItem(m_sequence - 1, m_mission->takeItem(m_sequence));
 }

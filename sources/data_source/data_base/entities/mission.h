@@ -26,11 +26,17 @@ namespace data_source
         MissionItemPtrList& items();
         MissionItemPtr item(int index) const;
 
-        void addItem(const MissionItemPtr& item);
+        void appendItem(const MissionItemPtr& item);
         MissionItemPtr takeItem(int index);
         void insertItem(int index,const MissionItemPtr& item);
+        void setItem(int index,const MissionItemPtr& item);
+
+        void exchangePosition(int first, int last);
+        void moveUp(int index);
+        void moveDown(int index);
 
         void fixSequenceOrder();
+        void setCount(int count);
 
     private:
         QString m_name;

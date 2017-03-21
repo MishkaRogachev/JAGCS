@@ -40,10 +40,10 @@ void DataBaseTest::testMissionItemCrud()
     IdentityMap iMap;
 
     MissionPtr mission = iMap.createMission();
-    MissionItemPtr item = iMap.createItemForMission(mission);
+    MissionItemPtr item = iMap.appendNewMissionItem(mission);
 
     QVERIFY(item);
-    QCOMPARE(item->mission(), mission);
+    QCOMPARE(item->missionId(), mission->id());
     QCOMPARE(item, iMap.missionItem(item->id()));
 
     item->setCommand(MissionItem::Landing);
@@ -54,8 +54,8 @@ void DataBaseTest::testMissionItemCrud()
     iMap.saveMissionItem(item);
     iMap.unloadMissionItem(item);
 
-    QCOMPARE(item->mission()->id(), iMap.missionItem(item->id())->mission()->id());
-    QCOMPARE(item->mission(), iMap.missionItem(item->id())->mission());
+    QVERIFY(iMap.missionItem(item->id()));
+    QCOMPARE(item->missionId(), iMap.missionItem(item->id())->missionId());
     QVERIFY(qFuzzyCompare(item->latitude(), iMap.missionItem(item->id())->latitude()));
     QVERIFY(qFuzzyCompare(item->longitude(), iMap.missionItem(item->id())->longitude()));
     QVERIFY(qFuzzyCompare(item->altitude(), iMap.missionItem(item->id())->altitude()));
@@ -72,7 +72,7 @@ void DataBaseTest::testMissionItemsInMission()
 
     for (int i = 0; i < 15; ++i)
     {
-        MissionItemPtr item = iMap.createItemForMission(mission);
+        MissionItemPtr item = iMap.appendNewMissionItem(mission);
         item->setPeriods(i);
     }
 
@@ -106,7 +106,7 @@ void DataBaseTest::testMissionItemSequence()
 
     MissionPtr mission = iMap.createMission();
 
-    for (int i = 0; i < 25; ++i) iMap.createItemForMission(mission);
+    for (int i = 0; i < 25; ++i) iMap.appendNewMissionItem(mission);
 
     iMap.unloadMission(mission);
     mission = iMap.mission(mission->id());
@@ -137,37 +137,51 @@ void DataBaseTest::testMissionItemUpDown()
 
     for (int i = 0; i < 10; ++i)
     {
-        MissionItemPtr item = iMap.createItemForMission(mission);
+        MissionItemPtr item = iMap.appendNewMissionItem(mission);
         item->setPeriods(i);
     }
 
     QCOMPARE(mission->item(0)->periods(), 0);
+    QCOMPARE(mission->item(0)->sequence(), 0);
     QCOMPARE(mission->item(9)->periods(), 9);
+    QCOMPARE(mission->item(9)->sequence(), 9);
 
     mission->insertItem(0, mission->takeItem(9));
 
     QCOMPARE(mission->item(0)->periods(), 9);
+    QCOMPARE(mission->item(0)->sequence(), 0);
     QCOMPARE(mission->item(9)->periods(), 8);
+    QCOMPARE(mission->item(9)->sequence(), 9);
 
     mission->insertItem(9, mission->takeItem(1));
 
     QCOMPARE(mission->item(1)->periods(), 1);
+    QCOMPARE(mission->item(1)->sequence(), 1);
     QCOMPARE(mission->item(9)->periods(), 0);
+    QCOMPARE(mission->item(9)->sequence(), 9);
 
+    QCOMPARE(mission->item(3)->sequence(), 3);
     QCOMPARE(mission->item(3)->periods(), 3);
     QCOMPARE(mission->item(4)->periods(), 4);
+    QCOMPARE(mission->item(4)->sequence(), 4);
 
-    mission->item(3)->up();
+    mission->moveUp(3);
 
+    QCOMPARE(mission->item(4)->sequence(), 4);
     QCOMPARE(mission->item(4)->periods(), 3);
+    QCOMPARE(mission->item(3)->sequence(), 3);
     QCOMPARE(mission->item(3)->periods(), 4);
 
+    QCOMPARE(mission->item(7)->sequence(), 7);
     QCOMPARE(mission->item(7)->periods(), 7);
+    QCOMPARE(mission->item(6)->sequence(), 6);
     QCOMPARE(mission->item(6)->periods(), 6);
 
-    mission->item(7)->down();
+    mission->moveDown(7);
 
+    QCOMPARE(mission->item(7)->sequence(), 7);
     QCOMPARE(mission->item(7)->periods(), 6);
+    QCOMPARE(mission->item(6)->sequence(), 6);
     QCOMPARE(mission->item(6)->periods(), 7);
 
     iMap.removeMission(mission);

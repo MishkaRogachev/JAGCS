@@ -45,7 +45,7 @@ MissionPtr IdentityMap::mission(int id)
         for (int id : items)
         {
             MissionItemPtr item = this->missionItem(id);
-            if (item) mission->addItem(item);
+            if (item) mission->appendItem(item);
         }
     }
     return mission;
@@ -69,15 +69,27 @@ MissionPtr IdentityMap::createMission()
     return entity;
 }
 
-MissionItemPtr IdentityMap::createItemForMission(const MissionPtr& mission)
+MissionItemPtr IdentityMap::createMissionItem(const MissionPtr& mission)
 {
     MissionItemPtr missionItem(new MissionItem(this));
     missionItem->setMissionId(mission->id());
-    missionItem->setSequence(mission->count());
-    if (!d->missionItemRepository.insert(missionItem.data())) return MissionItemPtr();
+
+    if (!d->missionItemRepository.insert(missionItem.data()))
+    {
+        return MissionItemPtr();
+    }
 
     d->missionItems[missionItem->id()] = missionItem;
-    mission->addItem(missionItem);
+    return missionItem;
+}
+
+MissionItemPtr IdentityMap::appendNewMissionItem(const MissionPtr& mission)
+{
+    MissionItemPtr missionItem = this->createMissionItem(mission);
+    if (missionItem)
+    {
+        mission->appendItem(missionItem);
+    }
     return missionItem;
 }
 

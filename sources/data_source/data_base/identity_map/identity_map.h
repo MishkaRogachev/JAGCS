@@ -15,7 +15,8 @@ namespace data_source
         MissionItemPtr missionItem(int id);
 
         MissionPtr createMission();
-        MissionItemPtr createItemForMission(const MissionPtr& mission);
+        MissionItemPtr createMissionItem(const MissionPtr& mission);
+        MissionItemPtr appendNewMissionItem(const MissionPtr& mission);
 
         void saveMission(const MissionPtr& mission);
         void saveMissionAll(const MissionPtr& mission);
