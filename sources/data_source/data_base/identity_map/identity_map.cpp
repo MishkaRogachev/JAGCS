@@ -56,7 +56,10 @@ MissionItemPtr IdentityMap::missionItem(int id)
     if (d->missionItems.contains(id)) return d->missionItems[id];
 
     MissionItemPtr entity(d->missionItemRepository.read(id, this));
-    if (entity) d->missionItems[id] = entity;
+    if (entity)
+    {
+        d->missionItems[id] = entity;
+    }
     return entity;
 }
 
@@ -80,16 +83,6 @@ MissionItemPtr IdentityMap::createMissionItem(const MissionPtr& mission)
     }
 
     d->missionItems[missionItem->id()] = missionItem;
-    return missionItem;
-}
-
-MissionItemPtr IdentityMap::appendNewMissionItem(const MissionPtr& mission)
-{
-    MissionItemPtr missionItem = this->createMissionItem(mission);
-    if (missionItem)
-    {
-        mission->appendItem(missionItem);
-    }
     return missionItem;
 }
 

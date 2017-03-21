@@ -54,6 +54,7 @@ void Mission::appendItem(const MissionItemPtr& item)
 MissionItemPtr Mission::takeItem(int index)
 {
     MissionItemPtr item = m_items.takeAt(index);
+    item->setSequence(-1);
     this->fixSequenceOrder();
     return item;
 }

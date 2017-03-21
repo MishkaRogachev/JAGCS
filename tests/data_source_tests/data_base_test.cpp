@@ -40,7 +40,7 @@ void DataBaseTest::testMissionItemCrud()
     IdentityMap iMap;
 
     MissionPtr mission = iMap.createMission();
-    MissionItemPtr item = iMap.appendNewMissionItem(mission);
+    MissionItemPtr item = iMap.createMissionItem(mission);
 
     QVERIFY(item);
     QCOMPARE(item->missionId(), mission->id());
@@ -72,7 +72,8 @@ void DataBaseTest::testMissionItemsInMission()
 
     for (int i = 0; i < 15; ++i)
     {
-        MissionItemPtr item = iMap.appendNewMissionItem(mission);
+        MissionItemPtr item = iMap.createMissionItem(mission);
+        mission->appendItem(item);
         item->setPeriods(i);
     }
 
@@ -106,7 +107,11 @@ void DataBaseTest::testMissionItemSequence()
 
     MissionPtr mission = iMap.createMission();
 
-    for (int i = 0; i < 25; ++i) iMap.appendNewMissionItem(mission);
+    for (int i = 0; i < 25; ++i)
+    {
+        MissionItemPtr missionItem = iMap.createMissionItem(mission);
+        mission->appendItem(missionItem);
+    }
 
     iMap.unloadMission(mission);
     mission = iMap.mission(mission->id());
@@ -137,7 +142,8 @@ void DataBaseTest::testMissionItemUpDown()
 
     for (int i = 0; i < 10; ++i)
     {
-        MissionItemPtr item = iMap.appendNewMissionItem(mission);
+        MissionItemPtr item = iMap.createMissionItem(mission);
+        mission->appendItem(item);
         item->setPeriods(i);
     }
 
