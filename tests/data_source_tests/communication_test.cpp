@@ -1,4 +1,4 @@
-#include "links_test.h"
+#include "communication_test.h"
 
 // Qt
 #include <QSignalSpy>
@@ -11,7 +11,7 @@
 
 using namespace data_source;
 
-void LinksTest::testUdpLink()
+void CommunicationTest::testUdpLink()
 {
     UdpLink link1(60000);
     QSignalSpy spy1(&link1, SIGNAL(dataReceived(QByteArray)));

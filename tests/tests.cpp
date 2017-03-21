@@ -6,8 +6,8 @@
 #include "db_manager.h"
 
 // Tests
-#include "entities_test.h"
-#include "links_test.h"
+#include "data_base_test.h"
+#include "communication_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -29,11 +29,11 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    EntitiesTest entitiesTest;
-    QTest::qExec(&entitiesTest);
+    DataBaseTest dbTest;
+    QTest::qExec(&dbTest);
 
-    LinksTest linksTest;
-    QTest::qExec(&linksTest);
+    CommunicationTest comTest;
+    QTest::qExec(&comTest);
 
     return 0;
 }

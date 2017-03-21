@@ -1,4 +1,4 @@
-#include "entities_test.h"
+#include "data_base_test.h"
 
 // Qt
 #include <QDebug>
@@ -11,7 +11,7 @@
 
 using namespace data_source;
 
-void EntitiesTest::testMissionCrud()
+void DataBaseTest::testMissionCrud()
 {
     IdentityMap iMap;
 
@@ -35,7 +35,7 @@ void EntitiesTest::testMissionCrud()
     QVERIFY(iMap.mission(mission->id()).isNull());
 }
 
-void EntitiesTest::testMissionItemCrud()
+void DataBaseTest::testMissionItemCrud()
 {
     IdentityMap iMap;
 
@@ -64,7 +64,7 @@ void EntitiesTest::testMissionItemCrud()
     iMap.removeMission(mission);
 }
 
-void EntitiesTest::testMissionItemsInMission()
+void DataBaseTest::testMissionItemsInMission()
 {
     IdentityMap iMap;
 
@@ -100,7 +100,7 @@ void EntitiesTest::testMissionItemsInMission()
     iMap.removeMission(mission);
 }
 
-void EntitiesTest::testMissionItemSequence()
+void DataBaseTest::testMissionItemSequence()
 {
     IdentityMap iMap;
 
@@ -129,7 +129,7 @@ void EntitiesTest::testMissionItemSequence()
     iMap.removeMission(mission);
 }
 
-void EntitiesTest::testMissionItemUpDown()
+void DataBaseTest::testMissionItemUpDown()
 {
     IdentityMap iMap;
 

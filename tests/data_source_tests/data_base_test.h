@@ -1,9 +1,9 @@
-#ifndef ENTITIES_TEST_H
-#define ENTITIES_TEST_H
+#ifndef DATA_BASE_TEST_H
+#define DATA_BASE_TEST_H
 
 #include <QTest>
 
-class EntitiesTest: public QObject
+class DataBaseTest: public QObject
 {
     Q_OBJECT
 
@@ -15,4 +15,4 @@ private slots:
     void testMissionItemUpDown();
 };
 
-#endif // ENTITIES_TEST_H
+#endif // DATA_BASE_TEST_H
