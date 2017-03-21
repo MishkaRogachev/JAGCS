@@ -3,10 +3,9 @@
 
 #include <QObject>
 
-namespace domain
+namespace data_source
 {
     class AbstractLink;
-    class VehicleService;
 
     class AbstractCommunicator: public QObject
     {

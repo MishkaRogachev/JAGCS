@@ -6,14 +6,15 @@
 // MAVLink
 #include <mavlink_types.h>
 
-namespace domain
+namespace data_source
 {
     class MavLinkCommunicator: public AbstractCommunicator
     {
         Q_OBJECT
 
     public:
-        explicit MavLinkCommunicator(QObject* parent = nullptr);
+         MavLinkCommunicator(uint8_t systemId, uint8_t componentId,
+                             QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         bool isAddLinkEnabled() override;

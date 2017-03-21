@@ -10,16 +10,11 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-#include "settings.h"
-
 #include "abstract_link.h"
-
-#include "vehicle_service.h"
 
 // TODO: multiplexing
 
-using namespace domain;
+using namespace data_source;
 
 class MavLinkCommunicator::Impl
 {
@@ -32,16 +27,15 @@ public:
     AbstractLink* receivedLink = nullptr;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
+MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId,
+                                         QObject* parent):
     AbstractCommunicator(parent),
     d(new Impl())
 {
     qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
 
-    d->systemId = SettingsProvider::value(
-                      connection_settings::systemId).toUInt();
-    d->componentId = SettingsProvider::value(
-                         connection_settings::componentId).toUInt();
+    d->systemId = systemId;
+    d->componentId = componentId;
 
     for (uint8_t channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
         d->avalibleChannels.append(channel);
@@ -104,7 +98,6 @@ void MavLinkCommunicator::setSystemId(uint8_t systemId)
     if (d->systemId == systemId) return;
 
     d->systemId = systemId;
-    SettingsProvider::setValue(connection_settings::systemId, systemId);
     emit systemIdChanged(systemId);
 }
 
@@ -113,7 +106,6 @@ void MavLinkCommunicator::setComponentId(uint8_t componentId)
     if (d->componentId == componentId) return;
 
     d->componentId = componentId;
-    SettingsProvider::setValue(connection_settings::componentId, componentId);
     emit componentIdChanged(componentId);
 }
 
