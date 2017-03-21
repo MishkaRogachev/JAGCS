@@ -41,6 +41,7 @@ void DataBaseTest::testMissionItemCrud()
 
     MissionPtr mission = iMap.createMission();
     MissionItemPtr item = iMap.createMissionItem(mission);
+    mission->appendItem(item);
 
     QVERIFY(item);
     QCOMPARE(item->missionId(), mission->id());
