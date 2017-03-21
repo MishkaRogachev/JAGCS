@@ -7,6 +7,7 @@
 
 // Tests
 #include "entities_test.h"
+#include "links_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -30,6 +31,9 @@ int main(int argc, char* argv[])
 
     EntitiesTest entitiesTest;
     QTest::qExec(&entitiesTest);
+
+    LinksTest linksTest;
+    QTest::qExec(&linksTest);
 
     return 0;
 }

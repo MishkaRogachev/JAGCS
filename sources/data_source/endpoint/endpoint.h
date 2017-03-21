@@ -9,7 +9,6 @@ namespace data_source
 {
     class Endpoint
     {
-
         Q_GADGET
 
         Q_PROPERTY(QHostAddress address READ address CONSTANT)
