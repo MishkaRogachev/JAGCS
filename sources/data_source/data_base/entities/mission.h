@@ -13,7 +13,7 @@ namespace data_source
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
-        Mission(IdentityMap* iMap);
+        explicit Mission(IdentityMap* iMap);
 
         static QString tableName();
 

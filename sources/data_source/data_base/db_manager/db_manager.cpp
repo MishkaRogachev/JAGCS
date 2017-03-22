@@ -64,6 +64,16 @@ bool DbManager::create()
         return false;
     }
 
+    result = query.exec("CREATE TABLE vehicles ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "mavId INTEGER,"
+                        "name STRING)");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
+
     return true;
 }
 
