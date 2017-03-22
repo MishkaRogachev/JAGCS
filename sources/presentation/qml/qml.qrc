@@ -34,7 +34,7 @@
         <file>Indicators/Ladder.qml</file>
         <file>Indicators/PitchScale.qml</file>
         <file>Indicators/RollScale.qml</file>
-        <file>Indicators/ArtificialHorizont.qml</file>
+        <file>Indicators/ArtificialHorizon.qml</file>
         <file>Indicators/FdLabel.qml</file>
         <file>Indicators/FlightDisplay.qml</file>
         <file>Indicators/Compass.qml</file>
