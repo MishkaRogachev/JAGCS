@@ -6,8 +6,8 @@
 
 using namespace data_source;
 
-Mission::Mission(IdentityMap* iMap):
-    BaseEntity(iMap)
+Mission::Mission(int id):
+    BaseEntity(id)
 {}
 
 QString Mission::tableName()

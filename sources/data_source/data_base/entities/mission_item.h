@@ -35,7 +35,7 @@ namespace data_source
             Landing,
         };
 
-        explicit MissionItem(IdentityMap* iMap);
+        MissionItem(int id = 0);
 
         static QString tableName();
 

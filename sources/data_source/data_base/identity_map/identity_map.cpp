@@ -34,128 +34,128 @@ IdentityMap::~IdentityMap()
     delete d;
 }
 
-MissionPtr IdentityMap::mission(int id)
+MissionPtr IdentityMap::mission(int id, bool reload)
 {
-    if (d->missions.contains(id)) return d->missions[id];
+    bool contains = d->missions.contains(id);
+    if (!contains) d->missions[id] = MissionPtr::create(id);
 
-    MissionPtr mission(d->missionRepository.read(id, this));
-    if (mission)
+    if (!contains || reload)
     {
-        d->missions[id] = mission;
+        // TODO: handle if read fails
+        d->missionRepository.read(d->missions[id].data());
 
-        auto items = d->missionItemRepository.selectId(
-                         QString("missionId = %1 ORDER BY sequence").arg(id));
-        for (int id : items)
+        for (int itemId : d->missionItemRepository.selectId(
+                 QString("missionId = %1 ORDER BY sequence").arg(id)))
         {
-            MissionItemPtr item = this->missionItem(id);
-            if (item) mission->appendItem(item);
+            MissionItemPtr item = this->missionItem(itemId, reload);
+            if (item) d->missions[id]->appendItem(item);
         }
     }
-    return mission;
+
+    return d->missions[id];
 }
 
-MissionItemPtr IdentityMap::missionItem(int id)
+MissionItemPtr IdentityMap::missionItem(int id, bool reload)
 {
-    if (d->missionItems.contains(id)) return d->missionItems[id];
+    bool contains = d->missionItems.contains(id);
+    if (!contains) d->missionItems[id] = MissionItemPtr::create(id);
 
-    MissionItemPtr missionItem(d->missionItemRepository.read(id, this));
-    if (missionItem)
+    if (!contains || reload)
     {
-        d->missionItems[id] = missionItem;
+        d->missionItemRepository.read(d->missionItems[id].data());
     }
-    return missionItem;
+
+    return d->missionItems[id];
 }
 
-VehiclePtr IdentityMap::vehicle(int id)
+VehiclePtr IdentityMap::vehicle(int id, bool reload)
 {
-    if (d->vehicles.contains(id)) return d->vehicles[id];
+    bool contains = d->vehicles.contains(id);
+    if (!contains) d->vehicles[id] = VehiclePtr::create(id);
 
-    VehiclePtr vehicle(d->vehicleRepository.read(id, this));
-    if (vehicle)
+    if (!contains || reload)
     {
-        d->vehicles[id] = vehicle;
+        d->vehicleRepository.read(d->vehicles[id].data());
     }
-    return vehicle;
+
+    return d->vehicles[id];
 }
 
-MissionPtr IdentityMap::createMission()
+bool IdentityMap::saveMission(const MissionPtr& mission)
 {
-    MissionPtr entity(new Mission(this));
-    if (!d->missionRepository.insert(entity.data())) return MissionPtr();
-
-    d->missions[entity->id()] = entity;
-    return entity;
-}
-
-MissionItemPtr IdentityMap::createMissionItem(const MissionPtr& mission)
-{
-    MissionItemPtr missionItem(new MissionItem(this));
-    missionItem->setMissionId(mission->id());
-
-    if (!d->missionItemRepository.insert(missionItem.data()))
+    // TODO: db transaction
+    if (mission->id() > 0)
     {
-        return MissionItemPtr();
+        if (!d->missionRepository.update(mission.data())) return false;
+    }
+    else
+    {
+        if (!d->missionRepository.insert(mission.data())) return false;
+
+        for (const MissionItemPtr& item: mission->items())
+            item->setId(mission->id());
+    }
+
+    for (const MissionItemPtr& item: mission->items())
+    {
+        if (!this->saveMissionItem(item)) return false;
+    }
+
+    d->missions[mission->id()] = mission;
+    return true;
+}
+
+bool IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
+{
+    if (missionItem->id() > 0)
+    {
+        if (!d->missionItemRepository.update(missionItem.data())) return false;
+    }
+    else
+    {
+        if (!d->missionItemRepository.insert(missionItem.data())) return false;
     }
 
     d->missionItems[missionItem->id()] = missionItem;
-    return missionItem;
+    return true;
 }
 
-VehiclePtr IdentityMap::createVehicle()
+bool IdentityMap::saveVehicle(const VehiclePtr& vehicle)
 {
-    VehiclePtr vehicle(new Vehicle(this));
-
-    if (!d->vehicleRepository.insert(vehicle.data()))
+    if (vehicle->id() > 0)
     {
-        return VehiclePtr();
+        if (!d->vehicleRepository.update(vehicle.data())) return false;
+    }
+    else
+    {
+        if (!d->vehicleRepository.insert(vehicle.data())) return false;
     }
 
     d->vehicles[vehicle->id()] = vehicle;
-    return vehicle;
+    return true;
 }
 
-void IdentityMap::saveMission(const MissionPtr& mission)
-{
-    d->missionRepository.update(mission.data());
-}
-
-void IdentityMap::saveMissionAll(const MissionPtr& mission)
-{
-    this->saveMission(mission);
-
-    for (const MissionItemPtr& item: mission->items())
-        this->saveMissionItem(item);
-}
-
-void IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
-{
-    d->missionItemRepository.update(missionItem.data());
-}
-
-void IdentityMap::saveVehicle(const VehiclePtr& vehicle)
-{
-    d->vehicleRepository.update(vehicle.data());
-}
-
-void IdentityMap::removeMission(const MissionPtr& mission)
+bool IdentityMap::removeMission(const MissionPtr& mission)
 {
     for (const MissionItemPtr& item: mission->items())
-        this->removeMissionItem(item);
+    {
+        if (!this->removeMissionItem(item)) return false;
+    }
 
     this->unloadMission(mission);
-    d->missionRepository.remove(mission.data());
+    return d->missionRepository.remove(mission.data());
 }
 
-void IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
+bool IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
 {
     this->unloadMissionItem(missionItem);
-    d->missionItemRepository.remove(missionItem.data());
+    return d->missionItemRepository.remove(missionItem.data());
 }
 
-void IdentityMap::removeVehicle(const VehiclePtr& vehicle)
+bool IdentityMap::removeVehicle(const VehiclePtr& vehicle)
 {
     this->unloadVehicle(vehicle);
-    d->vehicleRepository.remove(vehicle.data());
+    return d->vehicleRepository.remove(vehicle.data());
 }
 
 void IdentityMap::unloadMission(const MissionPtr& mission)

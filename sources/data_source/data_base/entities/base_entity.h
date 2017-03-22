@@ -18,7 +18,7 @@ namespace data_source
         Q_PROPERTY(int id READ id WRITE setId)
 
     public:
-        explicit BaseEntity(IdentityMap* iMap);
+        BaseEntity(int id);
         virtual ~BaseEntity();
 
         int id() const;
@@ -32,9 +32,6 @@ namespace data_source
         static QStringList propertyNames(const QMetaObject& meta);
         static QString insertString(const QMetaObject& meta);
         static QString updateString(const QMetaObject& meta);
-
-    protected:
-        IdentityMap* const m_iMap;
 
     private:
         int m_id;

@@ -9,8 +9,8 @@
 
 using namespace data_source;
 
-MissionItem::MissionItem(IdentityMap* iMap):
-    BaseEntity(iMap),
+MissionItem::MissionItem(int id):
+    BaseEntity(id),
     m_missionId(0),
     m_sequence(-1),
     m_command(Command::UnknownCommand),

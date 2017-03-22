@@ -11,22 +11,17 @@ namespace data_source
         IdentityMap();
         ~IdentityMap();
 
-        MissionPtr mission(int id);
-        MissionItemPtr missionItem(int id);
-        VehiclePtr vehicle(int id);
+        MissionPtr mission(int id, bool reload = false);
+        MissionItemPtr missionItem(int id, bool reload = false);
+        VehiclePtr vehicle(int id, bool reload = false);
 
-        MissionPtr createMission();
-        MissionItemPtr createMissionItem(const MissionPtr& mission);
-        VehiclePtr createVehicle();
+        bool saveMission(const MissionPtr& mission);
+        bool saveMissionItem(const MissionItemPtr& missionItem);
+        bool saveVehicle(const VehiclePtr& vehicle);
 
-        void saveMission(const MissionPtr& mission);
-        void saveMissionAll(const MissionPtr& mission);
-        void saveMissionItem(const MissionItemPtr& missionItem);
-        void saveVehicle(const VehiclePtr& vehicle);
-
-        void removeMission(const MissionPtr& mission);
-        void removeMissionItem(const MissionItemPtr& missionItem);
-        void removeVehicle(const VehiclePtr& vehicle);
+        bool removeMission(const MissionPtr& mission);
+        bool removeMissionItem(const MissionItemPtr& missionItem);
+        bool removeVehicle(const VehiclePtr& vehicle);
 
         void unloadMission(const MissionPtr& mission);
         void unloadMissionItem(const MissionItemPtr& missionItem);

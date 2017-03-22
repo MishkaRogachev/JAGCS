@@ -33,19 +33,17 @@ bool GenericRepository<T>::insert(T* entity)
 }
 
 template<class T>
-T* GenericRepository<T>::read(int id, IdentityMap* iMap)
+bool GenericRepository<T>::read(T* entity)
 {
     m_query.prepare("SELECT * FROM " + T::tableName() + " WHERE id = :id");
-    m_query.bindValue(":id", id);
+    m_query.bindValue(":id", entity->id());
 
     if (this->runQuerry() && m_query.next())
     {
-        T* entity = new T(iMap);
-        entity->setId(id);
         entity->updateFromQuery(m_query, T::staticMetaObject);
-        return entity;
+        return true;
     }
-    return nullptr;
+    return false;
 }
 
 template<class T>
