@@ -7,17 +7,24 @@ project(${PROJECT})
 
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
-include(cmake/GitRevision.cmake)
 
 # Versions
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 
+# Get git revision hash
+execute_process(
+  COMMAND git rev-parse HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_REVISION
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 add_definitions(-DVERSION_MAJOR=${VERSION_MAJOR})
 add_definitions(-DVERSION_MINOR=${VERSION_MINOR})
 add_definitions(-DVERSION_PATCH=${VERSION_PATCH})
-add_definitions(-DGIT_REVISION=${GIT_REVISION})
+add_definitions(-DGIT_REVISION="${GIT_REVISION}")
 
 # Set default output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)

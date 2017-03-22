@@ -18,7 +18,7 @@ void AboutPresenter::connectView(QObject* view)
                               QVersionNumber(VERSION_MAJOR,
                                              VERSION_MINOR,
                                              VERSION_PATCH).toString()));
-    this->setViewProperty(PROPERTY(revision), QVariant::fromValue(GIT_REVISION));
+    this->setViewProperty(PROPERTY(revision), QString(GIT_REVISION));
     this->setViewProperty(PROPERTY(qtVersion), QVariant::fromValue(
                               QVersionNumber(QT_VERSION_MAJOR,
                                              QT_VERSION_MINOR,

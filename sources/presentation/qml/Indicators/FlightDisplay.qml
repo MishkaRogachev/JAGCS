@@ -77,7 +77,7 @@ Column {
             z: 1
         }
 
-        ArtificialHorizont {
+        ArtificialHorizon {
             id: horizont
             anchors.verticalCenter: parent.verticalCenter
             width: root.width * 0.94
