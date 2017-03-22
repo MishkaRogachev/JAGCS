@@ -58,7 +58,6 @@ Frame {
             Layout.columnSpan: 2
             wrapMode: Text.WordWrap
             Layout.maximumWidth: root.width - palette.margins * 2
-            onWidthChanged: console.log(width)
         }
     }
 }
