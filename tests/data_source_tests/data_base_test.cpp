@@ -8,6 +8,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
+#include "vehicle.h"
 
 using namespace data_source;
 
@@ -192,4 +193,30 @@ void DataBaseTest::testMissionItemUpDown()
     QCOMPARE(mission->item(6)->periods(), 7);
 
     iMap.removeMission(mission);
+}
+
+void DataBaseTest::testVehicleCrud()
+{
+    IdentityMap iMap;
+
+    VehiclePtr vehicle = iMap.createVehicle();
+
+    QVERIFY(vehicle);
+
+    vehicle->setName("Ridiculous vehicle");
+    vehicle->setMavId(13);
+
+    QCOMPARE(vehicle->name(), iMap.vehicle(vehicle->id())->name());
+    QCOMPARE(vehicle->mavId(), iMap.vehicle(vehicle->id())->mavId());
+    QCOMPARE(vehicle, iMap.vehicle(vehicle->id()));
+
+    iMap.saveVehicle(vehicle);
+    iMap.unloadVehicle(vehicle);
+
+    QCOMPARE(vehicle->name(), iMap.vehicle(vehicle->id())->name());
+    QVERIFY(vehicle != iMap.vehicle(vehicle->id()));
+
+    iMap.removeVehicle(vehicle);
+
+    QVERIFY(iMap.vehicle(vehicle->id()).isNull());
 }

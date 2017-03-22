@@ -9,6 +9,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
+#include "vehicle.h"
 
 using namespace data_source;
 
@@ -17,9 +18,11 @@ class IdentityMap::Impl
 public:
     QHash<int, MissionPtr> missions;
     QHash<int, MissionItemPtr> missionItems;
+    QHash<int, VehiclePtr> vehicles;
 
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> missionItemRepository;
+    GenericRepository<Vehicle> vehicleRepository;
 };
 
 IdentityMap::IdentityMap():
@@ -55,12 +58,24 @@ MissionItemPtr IdentityMap::missionItem(int id)
 {
     if (d->missionItems.contains(id)) return d->missionItems[id];
 
-    MissionItemPtr entity(d->missionItemRepository.read(id, this));
-    if (entity)
+    MissionItemPtr missionItem(d->missionItemRepository.read(id, this));
+    if (missionItem)
     {
-        d->missionItems[id] = entity;
+        d->missionItems[id] = missionItem;
     }
-    return entity;
+    return missionItem;
+}
+
+VehiclePtr IdentityMap::vehicle(int id)
+{
+    if (d->vehicles.contains(id)) return d->vehicles[id];
+
+    VehiclePtr vehicle(d->vehicleRepository.read(id, this));
+    if (vehicle)
+    {
+        d->vehicles[id] = vehicle;
+    }
+    return vehicle;
 }
 
 MissionPtr IdentityMap::createMission()
@@ -86,6 +101,19 @@ MissionItemPtr IdentityMap::createMissionItem(const MissionPtr& mission)
     return missionItem;
 }
 
+VehiclePtr IdentityMap::createVehicle()
+{
+    VehiclePtr vehicle(new Vehicle(this));
+
+    if (!d->vehicleRepository.insert(vehicle.data()))
+    {
+        return VehiclePtr();
+    }
+
+    d->vehicles[vehicle->id()] = vehicle;
+    return vehicle;
+}
+
 void IdentityMap::saveMission(const MissionPtr& mission)
 {
     d->missionRepository.update(mission.data());
@@ -104,6 +132,11 @@ void IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
     d->missionItemRepository.update(missionItem.data());
 }
 
+void IdentityMap::saveVehicle(const VehiclePtr& vehicle)
+{
+    d->vehicleRepository.update(vehicle.data());
+}
+
 void IdentityMap::removeMission(const MissionPtr& mission)
 {
     for (const MissionItemPtr& item: mission->items())
@@ -119,6 +152,12 @@ void IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
     d->missionItemRepository.remove(missionItem.data());
 }
 
+void IdentityMap::removeVehicle(const VehiclePtr& vehicle)
+{
+    this->unloadVehicle(vehicle);
+    d->vehicleRepository.remove(vehicle.data());
+}
+
 void IdentityMap::unloadMission(const MissionPtr& mission)
 {
     for (const MissionItemPtr& item: mission->items())
@@ -130,4 +169,9 @@ void IdentityMap::unloadMission(const MissionPtr& mission)
 void IdentityMap::unloadMissionItem(const MissionItemPtr& missionItem)
 {
     d->missionItems.remove(missionItem->id());
+}
+
+void IdentityMap::unloadVehicle(const VehiclePtr& vehicle)
+{
+    d->vehicles.remove(vehicle->id());
 }
