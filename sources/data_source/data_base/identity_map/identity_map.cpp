@@ -34,7 +34,7 @@ IdentityMap::~IdentityMap()
     delete d;
 }
 
-MissionPtr IdentityMap::mission(int id, bool reload)
+MissionPtr IdentityMap::readMission(int id, bool reload)
 {
     bool contains = d->missions.contains(id);
     if (!contains) d->missions[id] = MissionPtr::create(id);
@@ -44,18 +44,21 @@ MissionPtr IdentityMap::mission(int id, bool reload)
         // TODO: handle if read fails
         d->missionRepository.read(d->missions[id].data());
 
-        for (int itemId : d->missionItemRepository.selectId(
-                 QString("missionId = %1 ORDER BY sequence").arg(id)))
+        auto ids = d->missionItemRepository.selectId(
+                       QString("missionId = %1 ORDER BY sequence").arg(id));
+        d->missions[id]->setCount(ids);
+
+        for (int itemId : ids)
         {
-            MissionItemPtr item = this->missionItem(itemId, reload);
-            if (item) d->missions[id]->appendItem(item);
+            MissionItemPtr item = this->readMissionItem(itemId, reload);
+            if (item) d->missions[id]->setItem(item->sequence(), item);
         }
     }
 
     return d->missions[id];
 }
 
-MissionItemPtr IdentityMap::missionItem(int id, bool reload)
+MissionItemPtr IdentityMap::readMissionItem(int id, bool reload)
 {
     bool contains = d->missionItems.contains(id);
     if (!contains) d->missionItems[id] = MissionItemPtr::create(id);
@@ -68,7 +71,7 @@ MissionItemPtr IdentityMap::missionItem(int id, bool reload)
     return d->missionItems[id];
 }
 
-VehiclePtr IdentityMap::vehicle(int id, bool reload)
+VehiclePtr IdentityMap::readVehicle(int id, bool reload)
 {
     bool contains = d->vehicles.contains(id);
     if (!contains) d->vehicles[id] = VehiclePtr::create(id);
@@ -143,6 +146,7 @@ bool IdentityMap::removeMission(const MissionPtr& mission)
     }
 
     this->unloadMission(mission);
+    mission->setId(0);
     return d->missionRepository.remove(mission.data());
 }
 

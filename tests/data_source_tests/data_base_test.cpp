@@ -12,29 +12,67 @@
 
 using namespace data_source;
 
-void DataBaseTest::testMissionCrud()
+IdentityMap iMap;
+
+void DataBaseTest::testMission()
 {
     IdentityMap iMap;
 
-    MissionPtr mission = iMap.createMission();
-
-    QVERIFY(mission);
-
+    MissionPtr mission = MissionPtr::create();
     mission->setName("Some ridiculous name");
 
-    QCOMPARE(mission->name(), iMap.mission(mission->id())->name());
-    QCOMPARE(mission, iMap.mission(mission->id()));
+    QVERIFY2(iMap.saveMission(mission), "Can't insert mission");
+    int id = mission->id();
+    QVERIFY2(id > 0, "Mission id after insert mus be > 0");
 
-    iMap.saveMission(mission);
-    iMap.unloadMission(mission);
+    mission->setName("Another ridiculous name");
 
-    QCOMPARE(mission->name(), iMap.mission(mission->id())->name());
-    QVERIFY(mission != iMap.mission(mission->id()));
+    QVERIFY2(iMap.saveMission(mission), "Can't update mission");
 
-    iMap.removeMission(mission);
+    QCOMPARE(mission, iMap.readMission(id));
 
-    QVERIFY(iMap.mission(mission->id()).isNull());
+    mission->setName("Reload will erase this ridiculous name");
+
+    QCOMPARE(mission, iMap.readMission(id, true)); // But pointer will be the same
+
+    QCOMPARE(mission->name(), QString("Another ridiculous name"));
+
+    QVERIFY2(iMap.removeMission(mission), "Can't remove mission");
+    QCOMPARE(mission->id(), 0); // Mission id must be zero after remove
 }
+
+void DataBaseTest::testMissionItems()
+{
+    IdentityMap iMap;
+
+    MissionPtr mission = MissionPtr::create();
+    mission->setName("Items Mission");
+    iMap.saveMission(mission);
+
+    MissionItemPtr item = MissionItemPtr::create();
+
+    item->setCommand(MissionItem::Takeoff);
+    item->setLatitude(45.6711);
+    item->setLongitude(37.4869);
+    item->setAltitude(350.75);
+    mission->appendItem(item);
+
+    item = MissionItemPtr::create();
+
+    item->setCommand(MissionItem::Waypoint);
+    item->setLatitude(45.3923);
+    item->setLongitude(37.6241);
+    item->setAltitude(423.17);
+    mission->appendItem(item);
+
+    QVERIFY2(iMap.saveMission(mission), "Can't insert mission with items");
+
+    iMap.readMission(mission->id(), true); // reload mission
+
+    QCOMPARE(mission->items().count(), 2);
+}
+
+/*
 
 void DataBaseTest::testMissionItemCrud()
 {
@@ -82,7 +120,7 @@ void DataBaseTest::testMissionItemsInMission()
     QCOMPARE(mission->items().count(), 15);
     QCOMPARE(iMap.mission(mission->id())->items().count(), 15);
 
-    iMap.saveMissionAll(mission);
+    iMap.saveMission(mission);
     iMap.unloadMission(mission);
     QCOMPARE(iMap.mission(mission->id())->items().count(), 15);
 
@@ -126,7 +164,7 @@ void DataBaseTest::testMissionItemSequence()
 
     for (int i = 0; i < 22; ++i) QCOMPARE(i, mission->item(i)->sequence());
 
-    iMap.saveMissionAll(mission);
+    iMap.saveMission(mission);
     iMap.unloadMission(mission);
     mission = iMap.mission(mission->id());
 
@@ -220,3 +258,4 @@ void DataBaseTest::testVehicleCrud()
 
     QVERIFY(iMap.vehicle(vehicle->id()).isNull());
 }
+*/

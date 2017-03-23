@@ -8,12 +8,14 @@ class DataBaseTest: public QObject
     Q_OBJECT
 
 private slots:
-    void testMissionCrud();
+    void testMission();
+    void testMissionItems();
+    /*void testMissionCrud();
     void testMissionItemCrud();
     void testMissionItemsInMission();
     void testMissionItemSequence();
     void testMissionItemUpDown();
-    void testVehicleCrud();
+    void testVehicleCrud();*/
 };
 
 #endif // DATA_BASE_TEST_H

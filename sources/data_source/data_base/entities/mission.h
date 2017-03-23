@@ -28,6 +28,7 @@ namespace data_source
 
         void appendItem(const MissionItemPtr& item);
         MissionItemPtr takeItem(int index);
+        MissionItemPtr takeLast();
         void insertItem(int index,const MissionItemPtr& item);
         void setItem(int index,const MissionItemPtr& item);
 

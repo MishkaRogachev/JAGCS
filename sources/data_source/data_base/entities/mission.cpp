@@ -48,6 +48,7 @@ MissionItemPtr Mission::item(int index) const
 void Mission::appendItem(const MissionItemPtr& item)
 {
     item->setSequence(this->count());
+    item->setMissionId(this->id());
     m_items.append(item);
 }
 
@@ -55,14 +56,37 @@ MissionItemPtr Mission::takeItem(int index)
 {
     MissionItemPtr item = m_items.takeAt(index);
     item->setSequence(-1);
+    item->setMissionId(this->id());
     this->fixSequenceOrder();
+    return item;
+}
+
+MissionItemPtr Mission::takeLast()
+{
+    MissionItemPtr item = m_items.takeLast();
+    item->setSequence(-1);
+    item->setMissionId(this->id());
     return item;
 }
 
 void Mission::insertItem(int index, const MissionItemPtr& item)
 {
     m_items.insert(index, item);
+    item->setMissionId(this->id());
     this->fixSequenceOrder();
+}
+
+void Mission::setItem(int index, const MissionItemPtr& item)
+{
+    if (index < m_items.count())
+    {
+        this->takeItem(index);
+        this->insertItem(index, item);
+        return;
+    }
+
+    while (index > m_items.count()) this->appendItem(MissionItemPtr());
+    this->appendItem(item);
 }
 
 void Mission::exchangePosition(int first, int last)
@@ -98,5 +122,6 @@ void Mission::fixSequenceOrder()
 
 void Mission::setCount(int count)
 {
-    m_items.reserve(count);
+    while (m_items.count() > count) this->takeLast();
+    if (m_items.count() < count) m_items.reserve(count);
 }
