@@ -15,17 +15,17 @@ namespace data_source
         MissionItemPtr readMissionItem(int id, bool reload = false);
         VehiclePtr readVehicle(int id, bool reload = false);
 
-        bool saveMission(const MissionPtr& mission);
-        bool saveMissionItem(const MissionItemPtr& missionItem);
-        bool saveVehicle(const VehiclePtr& vehicle);
+        bool save(const MissionPtr& mission);
+        bool save(const MissionItemPtr& missionItem);
+        bool save(const VehiclePtr& vehicle);
 
-        bool removeMission(const MissionPtr& mission);
-        bool removeMissionItem(const MissionItemPtr& missionItem);
-        bool removeVehicle(const VehiclePtr& vehicle);
+        bool remove(const MissionPtr& mission);
+        bool remove(const MissionItemPtr& missionItem);
+        bool remove(const VehiclePtr& vehicle);
 
-        void unloadMission(const MissionPtr& mission);
-        void unloadMissionItem(const MissionItemPtr& missionItem);
-        void unloadVehicle(const VehiclePtr& vehicle);
+        void unload(const MissionPtr& mission);
+        void unload(const MissionItemPtr& missionItem);
+        void unload(const VehiclePtr& vehicle);
 
     private:
         class Impl;

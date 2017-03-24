@@ -21,13 +21,13 @@ void DataBaseTest::testMission()
     MissionPtr mission = MissionPtr::create();
     mission->setName("Some ridiculous name");
 
-    QVERIFY2(iMap.saveMission(mission), "Can't insert mission");
+    QVERIFY2(iMap.save(mission), "Can't insert mission");
     int id = mission->id();
     QVERIFY2(id > 0, "Mission id after insert mus be > 0");
 
     mission->setName("Another ridiculous name");
 
-    QVERIFY2(iMap.saveMission(mission), "Can't update mission");
+    QVERIFY2(iMap.save(mission), "Can't update mission");
 
     QCOMPARE(mission, iMap.readMission(id));
 
@@ -37,7 +37,7 @@ void DataBaseTest::testMission()
 
     QCOMPARE(mission->name(), QString("Another ridiculous name"));
 
-    QVERIFY2(iMap.removeMission(mission), "Can't remove mission");
+    QVERIFY2(iMap.remove(mission), "Can't remove mission");
     QCOMPARE(mission->id(), 0); // Mission id must be zero after remove
 }
 
@@ -47,7 +47,7 @@ void DataBaseTest::testMissionItems()
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Items Mission");
-    iMap.saveMission(mission);
+    iMap.save(mission);
 
     MissionItemPtr item = MissionItemPtr::create();
 
@@ -65,7 +65,7 @@ void DataBaseTest::testMissionItems()
     item->setAltitude(423.17);
     mission->appendItem(item);
 
-    QVERIFY2(iMap.saveMission(mission), "Can't insert mission with items");
+    QVERIFY2(iMap.save(mission), "Can't insert mission with items");
 
     iMap.readMission(mission->id(), true); // reload mission
 
@@ -82,11 +82,11 @@ void DataBaseTest::testMissionItems()
 
     QCOMPARE(mission->items().count(), 4);
     QCOMPARE(mission->item(2)->command(), MissionItem::UnknownCommand);
-    QVERIFY2(iMap.saveMission(mission), "Can't save mission with items");
+    QVERIFY2(iMap.save(mission), "Can't save mission with items");
 
     QVERIFY2(item->id(), "Id must be setted on insert");
 
-    QVERIFY2(iMap.removeMission(mission), "Can't remove mission");
+    QVERIFY2(iMap.remove(mission), "Can't remove mission");
     QCOMPARE(item->id(), 0); // Item id must be zero after remove
 }
 
@@ -105,7 +105,7 @@ void DataBaseTest::testMissionItemSequence()
         mission->appendItem(item);
     }
 
-    QVERIFY2(iMap.saveMission(mission), "Can't save mission with 15 items");
+    QVERIFY2(iMap.save(mission), "Can't save mission with 15 items");
 }
 
 /*

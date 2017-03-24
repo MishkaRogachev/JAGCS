@@ -84,7 +84,7 @@ VehiclePtr IdentityMap::readVehicle(int id, bool reload)
     return d->vehicles[id];
 }
 
-bool IdentityMap::saveMission(const MissionPtr& mission)
+bool IdentityMap::save(const MissionPtr& mission)
 {
     // TODO: db transaction
     if (mission->id() > 0)
@@ -101,14 +101,14 @@ bool IdentityMap::saveMission(const MissionPtr& mission)
 
     for (const MissionItemPtr& item: mission->items())
     {
-        if (!this->saveMissionItem(item)) return false;
+        if (!this->save(item)) return false;
     }
 
     d->missions[mission->id()] = mission;
     return true;
 }
 
-bool IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
+bool IdentityMap::save(const MissionItemPtr& missionItem)
 {
     if (missionItem->id() > 0)
     {
@@ -123,7 +123,7 @@ bool IdentityMap::saveMissionItem(const MissionItemPtr& missionItem)
     return true;
 }
 
-bool IdentityMap::saveVehicle(const VehiclePtr& vehicle)
+bool IdentityMap::save(const VehiclePtr& vehicle)
 {
     if (vehicle->id() > 0)
     {
@@ -138,45 +138,45 @@ bool IdentityMap::saveVehicle(const VehiclePtr& vehicle)
     return true;
 }
 
-bool IdentityMap::removeMission(const MissionPtr& mission)
+bool IdentityMap::remove(const MissionPtr& mission)
 {
     for (const MissionItemPtr& item: mission->items())
     {
-        if (!this->removeMissionItem(item)) return false;
+        if (!this->remove(item)) return false;
     }
 
-    this->unloadMission(mission);
+    this->unload(mission);
     mission->setId(0);
     return d->missionRepository.remove(mission.data());
 }
 
-bool IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
+bool IdentityMap::remove(const MissionItemPtr& missionItem)
 {
-    this->unloadMissionItem(missionItem);
+    this->unload(missionItem);
     missionItem->setId(0);
     return d->missionItemRepository.remove(missionItem.data());
 }
 
-bool IdentityMap::removeVehicle(const VehiclePtr& vehicle)
+bool IdentityMap::remove(const VehiclePtr& vehicle)
 {
-    this->unloadVehicle(vehicle);
+    this->unload(vehicle);
     return d->vehicleRepository.remove(vehicle.data());
 }
 
-void IdentityMap::unloadMission(const MissionPtr& mission)
+void IdentityMap::unload(const MissionPtr& mission)
 {
     for (const MissionItemPtr& item: mission->items())
-        this->unloadMissionItem(item);
+        this->unload(item);
 
     d->missions.remove(mission->id());
 }
 
-void IdentityMap::unloadMissionItem(const MissionItemPtr& missionItem)
+void IdentityMap::unload(const MissionItemPtr& missionItem)
 {
     d->missionItems.remove(missionItem->id());
 }
 
-void IdentityMap::unloadVehicle(const VehiclePtr& vehicle)
+void IdentityMap::unload(const VehiclePtr& vehicle)
 {
     d->vehicles.remove(vehicle->id());
 }
