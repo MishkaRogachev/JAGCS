@@ -90,38 +90,25 @@ void DataBaseTest::testMissionItems()
     QCOMPARE(item->id(), 0); // Item id must be zero after remove
 }
 
-/*
-
-void DataBaseTest::testMissionItemCrud()
+void DataBaseTest::testMissionItemSequence()
 {
     IdentityMap iMap;
 
-    MissionPtr mission = iMap.createMission();
-    MissionItemPtr item = iMap.createMissionItem(mission);
-    mission->appendItem(item);
+    MissionPtr mission = MissionPtr::create();
 
-    QVERIFY(item);
-    QCOMPARE(item->missionId(), mission->id());
-    QCOMPARE(item, iMap.missionItem(item->id()));
+    MissionItemPtr item;
+    for (int i = 0; i < 15; ++i)
+    {
+        item = MissionItemPtr::create();;
+        item->setCommand(MissionItem::LoiterTurns);
+        item->setPeriods(i);
+        mission->appendItem(item);
+    }
 
-    item->setCommand(MissionItem::Landing);
-    item->setLatitude(45.6711);
-    item->setLongitude(37.4869);
-    item->setAltitude(350.75);
-
-    iMap.saveMissionItem(item);
-    iMap.unloadMissionItem(item);
-
-    QVERIFY(iMap.missionItem(item->id()));
-    QCOMPARE(item->missionId(), iMap.missionItem(item->id())->missionId());
-    QVERIFY(qFuzzyCompare(item->latitude(), iMap.missionItem(item->id())->latitude()));
-    QVERIFY(qFuzzyCompare(item->longitude(), iMap.missionItem(item->id())->longitude()));
-    QVERIFY(qFuzzyCompare(item->altitude(), iMap.missionItem(item->id())->altitude()));
-
-    mission = iMap.mission(mission->id());
-    iMap.removeMission(mission);
+    QVERIFY2(iMap.saveMission(mission), "Can't save mission with 15 items");
 }
 
+/*
 void DataBaseTest::testMissionItemsInMission()
 {
     IdentityMap iMap;

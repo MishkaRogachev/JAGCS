@@ -10,6 +10,7 @@ class DataBaseTest: public QObject
 private slots:
     void testMission();
     void testMissionItems();
+    void testMissionItemSequence();
     /*void testMissionCrud();
     void testMissionItemCrud();
     void testMissionItemsInMission();

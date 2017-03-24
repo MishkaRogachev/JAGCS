@@ -96,7 +96,7 @@ bool IdentityMap::saveMission(const MissionPtr& mission)
         if (!d->missionRepository.insert(mission.data())) return false;
 
         for (const MissionItemPtr& item: mission->items())
-            item->setId(mission->id());
+            item->setMissionId(mission->id());
     }
 
     for (const MissionItemPtr& item: mission->items())
@@ -153,6 +153,7 @@ bool IdentityMap::removeMission(const MissionPtr& mission)
 bool IdentityMap::removeMissionItem(const MissionItemPtr& missionItem)
 {
     this->unloadMissionItem(missionItem);
+    missionItem->setId(0);
     return d->missionItemRepository.remove(missionItem.data());
 }
 
