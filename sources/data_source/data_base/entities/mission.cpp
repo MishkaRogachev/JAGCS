@@ -85,7 +85,7 @@ void Mission::setItem(int index, const MissionItemPtr& item)
         return;
     }
 
-    while (index > m_items.count()) this->appendItem(MissionItemPtr());
+    while (index > m_items.count()) this->appendItem(MissionItemPtr::create());
     this->appendItem(item);
 }
 

@@ -70,6 +70,24 @@ void DataBaseTest::testMissionItems()
     iMap.readMission(mission->id(), true); // reload mission
 
     QCOMPARE(mission->items().count(), 2);
+
+    item = MissionItemPtr::create();
+
+    item->setCommand(MissionItem::Waypoint);
+    item->setLatitude(45.3977);
+    item->setLongitude(37.6513);
+    item->setAltitude(474.44);
+
+    mission->setItem(3, item);
+
+    QCOMPARE(mission->items().count(), 4);
+    QCOMPARE(mission->item(2)->command(), MissionItem::UnknownCommand);
+    QVERIFY2(iMap.saveMission(mission), "Can't save mission with items");
+
+    QVERIFY2(item->id(), "Id must be setted on insert");
+
+    QVERIFY2(iMap.removeMission(mission), "Can't remove mission");
+    QCOMPARE(item->id(), 0); // Item id must be zero after remove
 }
 
 /*

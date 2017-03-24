@@ -46,7 +46,7 @@ MissionPtr IdentityMap::readMission(int id, bool reload)
 
         auto ids = d->missionItemRepository.selectId(
                        QString("missionId = %1 ORDER BY sequence").arg(id));
-        d->missions[id]->setCount(ids);
+        d->missions[id]->setCount(ids.count());
 
         for (int itemId : ids)
         {
