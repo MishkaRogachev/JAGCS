@@ -150,30 +150,21 @@ void DataBaseTest::testMissionItemSequence()
     QVERIFY2(iMap.remove(mission), "Can't remove mission");
 }
 
-/*
-void DataBaseTest::testVehicleCrud()
+void DataBaseTest::testVehicle()
 {
-    IdentityMap iMap;
-
-    VehiclePtr vehicle = iMap.createVehicle();
-
-    QVERIFY(vehicle);
+    VehiclePtr vehicle = VehiclePtr::create();
 
     vehicle->setName("Ridiculous vehicle");
     vehicle->setMavId(13);
 
-    QCOMPARE(vehicle->name(), iMap.vehicle(vehicle->id())->name());
-    QCOMPARE(vehicle->mavId(), iMap.vehicle(vehicle->id())->mavId());
-    QCOMPARE(vehicle, iMap.vehicle(vehicle->id()));
+    QVERIFY2(iMap.save(vehicle), "Can't insert vehicle");
+    int id = vehicle->id();
+    QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
 
-    iMap.saveVehicle(vehicle);
-    iMap.unloadVehicle(vehicle);
+    QVERIFY2(iMap.readVehicle(id, true), "Can't reload vehicle");
 
-    QCOMPARE(vehicle->name(), iMap.vehicle(vehicle->id())->name());
-    QVERIFY(vehicle != iMap.vehicle(vehicle->id()));
+    QVERIFY2(vehicle->name() == ("Ridiculous vehicle"), "Vehicles names are different");
+    QCOMPARE(int(vehicle->mavId()), 13);
 
-    iMap.removeVehicle(vehicle);
-
-    QVERIFY(iMap.vehicle(vehicle->id()).isNull());
+    QVERIFY2(iMap.remove(vehicle), "Can't remove vehicle");
 }
-*/
