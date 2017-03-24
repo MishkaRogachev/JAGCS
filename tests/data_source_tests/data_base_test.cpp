@@ -106,138 +106,51 @@ void DataBaseTest::testMissionItemSequence()
     }
 
     QVERIFY2(iMap.save(mission), "Can't save mission with 15 items");
-}
 
-/*
-void DataBaseTest::testMissionItemsInMission()
-{
-    IdentityMap iMap;
-
-    MissionPtr mission = iMap.createMission();
+    QVERIFY2(iMap.readMission(mission->id(), true), "Can't reload mission");
+    QCOMPARE(mission->items().count(), 15);
 
     for (int i = 0; i < 15; ++i)
     {
-        MissionItemPtr item = iMap.createMissionItem(mission);
-        mission->appendItem(item);
-        item->setPeriods(i);
+        QCOMPARE(mission->item(i)->sequence(), i);
     }
 
-    QCOMPARE(mission->items().count(), 15);
-    QCOMPARE(iMap.mission(mission->id())->items().count(), 15);
-
-    iMap.saveMission(mission);
-    iMap.unloadMission(mission);
-    QCOMPARE(iMap.mission(mission->id())->items().count(), 15);
-
-    mission = iMap.mission(mission->id());
-
-    iMap.removeMissionItem(mission->items().takeAt(3));
-
-    QCOMPARE(mission->items().count(), 14);
-    iMap.unloadMission(mission);
-    QCOMPARE(iMap.mission(mission->id())->items().count(), 14);
-
-    QCOMPARE(mission->item(0)->periods(), 0);
-    QCOMPARE(mission->item(1)->periods(), 1);
-    QCOMPARE(mission->item(2)->periods(), 2);
-    QCOMPARE(mission->item(3)->periods(), 4);
-
-    mission = iMap.mission(mission->id());
-    iMap.removeMission(mission);
-}
-
-void DataBaseTest::testMissionItemSequence()
-{
-    IdentityMap iMap;
-
-    MissionPtr mission = iMap.createMission();
-
-    for (int i = 0; i < 25; ++i)
-    {
-        MissionItemPtr missionItem = iMap.createMissionItem(mission);
-        mission->appendItem(missionItem);
-    }
-
-    iMap.unloadMission(mission);
-    mission = iMap.mission(mission->id());
-
-    for (int i = 0; i < 25; ++i) QCOMPARE(i, mission->item(i)->sequence());
-
-    iMap.removeMissionItem(mission->takeItem(5));
-    iMap.removeMissionItem(mission->takeItem(7));
-    iMap.removeMissionItem(mission->takeItem(8));
-
-    for (int i = 0; i < 22; ++i) QCOMPARE(i, mission->item(i)->sequence());
-
-    iMap.saveMission(mission);
-    iMap.unloadMission(mission);
-    mission = iMap.mission(mission->id());
-
-    for (int i = 0; i < 22; ++i) QCOMPARE(i, mission->item(i)->sequence());
-
-    mission = iMap.mission(mission->id());
-    iMap.removeMission(mission);
-}
-
-void DataBaseTest::testMissionItemUpDown()
-{
-    IdentityMap iMap;
-
-    MissionPtr mission = iMap.createMission();
-
-    for (int i = 0; i < 10; ++i)
-    {
-        MissionItemPtr item = iMap.createMissionItem(mission);
-        mission->appendItem(item);
-        item->setPeriods(i);
-    }
-
-    QCOMPARE(mission->item(0)->periods(), 0);
-    QCOMPARE(mission->item(0)->sequence(), 0);
-    QCOMPARE(mission->item(9)->periods(), 9);
-    QCOMPARE(mission->item(9)->sequence(), 9);
-
-    mission->insertItem(0, mission->takeItem(9));
-
-    QCOMPARE(mission->item(0)->periods(), 9);
-    QCOMPARE(mission->item(0)->sequence(), 0);
-    QCOMPARE(mission->item(9)->periods(), 8);
-    QCOMPARE(mission->item(9)->sequence(), 9);
-
-    mission->insertItem(9, mission->takeItem(1));
-
-    QCOMPARE(mission->item(1)->periods(), 1);
-    QCOMPARE(mission->item(1)->sequence(), 1);
-    QCOMPARE(mission->item(9)->periods(), 0);
-    QCOMPARE(mission->item(9)->sequence(), 9);
-
-    QCOMPARE(mission->item(3)->sequence(), 3);
-    QCOMPARE(mission->item(3)->periods(), 3);
-    QCOMPARE(mission->item(4)->periods(), 4);
-    QCOMPARE(mission->item(4)->sequence(), 4);
-
-    mission->moveUp(3);
-
-    QCOMPARE(mission->item(4)->sequence(), 4);
-    QCOMPARE(mission->item(4)->periods(), 3);
+    iMap.remove(mission->takeItem(3));
     QCOMPARE(mission->item(3)->sequence(), 3);
     QCOMPARE(mission->item(3)->periods(), 4);
 
+    item = MissionItemPtr::create();
+    item->setCommand(MissionItem::Waypoint);
+    mission->insertItem(2, item);
+    QCOMPARE(mission->item(2)->sequence(), 2);
+
+    mission->exchangePosition(4, 7);
+    QCOMPARE(mission->item(4)->sequence(), 4);
+    QCOMPARE(mission->item(4)->periods(), 7);
     QCOMPARE(mission->item(7)->sequence(), 7);
-    QCOMPARE(mission->item(7)->periods(), 7);
-    QCOMPARE(mission->item(6)->sequence(), 6);
-    QCOMPARE(mission->item(6)->periods(), 6);
+    QCOMPARE(mission->item(7)->periods(), 4);
 
-    mission->moveDown(7);
+    QVERIFY2(iMap.readMission(mission->id(), true), "Can't reload mission");
 
-    QCOMPARE(mission->item(7)->sequence(), 7);
-    QCOMPARE(mission->item(7)->periods(), 6);
-    QCOMPARE(mission->item(6)->sequence(), 6);
-    QCOMPARE(mission->item(6)->periods(), 7);
+    for (int i = 0; i < 15; ++i)
+    {
+        QCOMPARE(mission->item(i)->sequence(), i);
+    }
 
-    iMap.removeMission(mission);
+    item = MissionItemPtr::create();
+    item->setCommand(MissionItem::Landing);
+    mission->setItem(19, item);
+
+    QCOMPARE(mission->items().count(), 20);
+    for (int i = 0; i < 20; ++i)
+    {
+        QCOMPARE(mission->item(i)->sequence(), i);
+    }
+
+    QVERIFY2(iMap.remove(mission), "Can't remove mission");
 }
 
+/*
 void DataBaseTest::testVehicleCrud()
 {
     IdentityMap iMap;
