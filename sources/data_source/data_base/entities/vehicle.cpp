@@ -12,12 +12,12 @@ QString Vehicle::tableName()
     return "vehicles";
 }
 
-quint8 Vehicle::mavId() const
+int Vehicle::mavId() const
 {
     return m_mavId;
 }
 
-void Vehicle::setMavId(quint8 mavId)
+void Vehicle::setMavId(int mavId)
 {
     m_mavId = mavId;
 }

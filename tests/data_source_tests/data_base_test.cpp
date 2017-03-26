@@ -12,8 +12,6 @@
 
 using namespace data_source;
 
-IdentityMap iMap;
-
 void DataBaseTest::testMission()
 {
     IdentityMap iMap;
@@ -152,6 +150,8 @@ void DataBaseTest::testMissionItemSequence()
 
 void DataBaseTest::testVehicle()
 {
+    IdentityMap iMap;
+
     VehiclePtr vehicle = VehiclePtr::create();
 
     vehicle->setName("Ridiculous vehicle");
@@ -164,7 +164,7 @@ void DataBaseTest::testVehicle()
     QVERIFY2(iMap.readVehicle(id, true), "Can't reload vehicle");
 
     QVERIFY2(vehicle->name() == ("Ridiculous vehicle"), "Vehicles names are different");
-    QCOMPARE(int(vehicle->mavId()), 13);
+    QCOMPARE(vehicle->mavId(), 13);
 
     QVERIFY2(iMap.remove(vehicle), "Can't remove vehicle");
 }

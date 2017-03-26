@@ -10,7 +10,7 @@ namespace data_source
     {
         Q_GADGET
 
-        Q_PROPERTY(quint8 mavId READ mavId WRITE setMavId)
+        Q_PROPERTY(int mavId READ mavId WRITE setMavId)
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
@@ -18,14 +18,14 @@ namespace data_source
 
         static QString tableName();
 
-        quint8 mavId() const;
-        void setMavId(quint8 mavId);
+        int mavId() const;
+        void setMavId(int mavId);
 
         QString name() const;
         void setName(const QString& name);
 
     private:
-        quint8 m_mavId;
+        int m_mavId;
         QString m_name;
     };
 }
