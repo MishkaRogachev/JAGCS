@@ -118,8 +118,6 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     vehicle->setGuided(heartbeat.base_mode & MAV_MODE_FLAG_GUIDED_ENABLED);
     vehicle->setStabilized(heartbeat.base_mode & MAV_MODE_FLAG_STABILIZE_ENABLED);
     vehicle->setArmed(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-
-    m_vehicleService->prolongVehicle(vehicle);
 }
 
 void HeartbeatHandler::sendHeartbeat()
