@@ -4,7 +4,6 @@
 #include <QDebug>
 
 // Internal
-#include "identity_map.h"
 #include "mission.h"
 
 using namespace data_source;

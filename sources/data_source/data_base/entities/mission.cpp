@@ -1,7 +1,6 @@
 #include "mission.h"
 
 // Internal
-#include "identity_map.h"
 #include "mission_item.h"
 
 using namespace data_source;
