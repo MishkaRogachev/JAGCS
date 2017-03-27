@@ -74,6 +74,19 @@ bool DbManager::create()
         return false;
     }
 
+    result = query.exec("CREATE TABLE mission_assignments ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "missionId INTEGER,"
+                        "vehicleId INTEGER,"
+                        "status SMALLINT,"
+                        "FOREIGN KEY(missionId) REFERENCES missions(id),"
+                        "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
+
     return true;
 }
 
@@ -86,6 +99,14 @@ bool DbManager::drop()
     if (!query.exec()) return false;
 
     query.prepare("DROP TABLE missions");
+
+    if (!query.exec()) return false;
+
+    query.prepare("DROP TABLE vehicles");
+
+    if (!query.exec()) return false;
+
+    query.prepare("DROP TABLE mission_assignments");
 
     return query.exec();
 }
