@@ -6,7 +6,7 @@ MissionAssignment::MissionAssignment(int id):
     BaseEntity(id),
     m_missionId(0),
     m_vehicleId(0),
-    m_status(Idle)
+    m_status(NotActual)
 {}
 
 QString MissionAssignment::tableName()

@@ -17,11 +17,10 @@ namespace data_source
     public:
         enum Status
         {
-            Idle,
-            Downloading,
-            Uploading,
             Actual,
-            NotActual
+            NotActual,
+            Downloading,
+            Uploading
         };
 
         MissionAssignment(int id = 0);
@@ -41,6 +40,8 @@ namespace data_source
         int m_missionId;
         int m_vehicleId;
         Status m_status;
+
+        Q_ENUM(Status)
     };
 }
 

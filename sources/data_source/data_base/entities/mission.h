@@ -29,8 +29,8 @@ namespace data_source
         void appendItem(const MissionItemPtr& item);
         MissionItemPtr takeItem(int index);
         MissionItemPtr takeLast();
-        void insertItem(int index,const MissionItemPtr& item);
-        void setItem(int index,const MissionItemPtr& item);
+        void insertItem(int index, const MissionItemPtr& item);
+        void setItem(int index, const MissionItemPtr& item);
 
         void exchangePosition(int first, int last);
         void moveUp(int index);
@@ -39,9 +39,13 @@ namespace data_source
         void fixSequenceOrder();
         void setCount(int count);
 
+        MissionAssignmentPtr assignment() const;
+        void setAssignment(const MissionAssignmentPtr& assignment);
+
     private:
         QString m_name;
         MissionItemPtrList m_items;
+        MissionAssignmentPtr m_assignment;
     };
 }
 

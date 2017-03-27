@@ -2,6 +2,7 @@
 
 // Internal
 #include "mission_item.h"
+#include "mission_assignment.h"
 
 using namespace data_source;
 
@@ -123,4 +124,15 @@ void Mission::setCount(int count)
 {
     while (m_items.count() > count) this->takeLast();
     if (m_items.count() < count) m_items.reserve(count);
+}
+
+MissionAssignmentPtr Mission::assignment() const
+{
+    return m_assignment;
+}
+
+void Mission::setAssignment(const MissionAssignmentPtr& assignment)
+{
+    m_assignment = assignment;
+    if (assignment) assignment->setMissionId(this->id());
 }
