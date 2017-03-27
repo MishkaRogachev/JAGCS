@@ -9,6 +9,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "vehicle.h"
+#include "mission_assignment.h"
 
 using namespace data_source;
 
@@ -106,7 +107,7 @@ void DataBaseTest::testMissionItemSequence()
     QVERIFY2(iMap.save(mission), "Can't save mission with 15 items");
 
     QVERIFY2(iMap.readMission(mission->id(), true), "Can't reload mission");
-    QCOMPARE(mission->items().count(), 15);
+    QCOMPARE(mission->count(), 15);
 
     for (int i = 0; i < 15; ++i)
     {
@@ -116,11 +117,14 @@ void DataBaseTest::testMissionItemSequence()
     iMap.remove(mission->takeItem(3));
     QCOMPARE(mission->item(3)->sequence(), 3);
     QCOMPARE(mission->item(3)->periods(), 4);
+    QCOMPARE(mission->count(), 14);
 
     item = MissionItemPtr::create();
     item->setCommand(MissionItem::Waypoint);
     mission->insertItem(2, item);
     QCOMPARE(mission->item(2)->sequence(), 2);
+
+    QVERIFY2(iMap.save(mission), "Can't save mission with 14 items");
 
     mission->exchangePosition(4, 7);
     QCOMPARE(mission->item(4)->sequence(), 4);
@@ -129,6 +133,7 @@ void DataBaseTest::testMissionItemSequence()
     QCOMPARE(mission->item(7)->periods(), 4);
 
     QVERIFY2(iMap.readMission(mission->id(), true), "Can't reload mission");
+    QCOMPARE(mission->count(), 15);
 
     for (int i = 0; i < 15; ++i)
     {
@@ -167,4 +172,21 @@ void DataBaseTest::testVehicle()
     QCOMPARE(vehicle->mavId(), 13);
 
     QVERIFY2(iMap.remove(vehicle), "Can't remove vehicle");
+}
+
+void DataBaseTest::testMissionAssignment()
+{
+    IdentityMap iMap;
+
+    VehiclePtr vehicle = VehiclePtr::create();
+    vehicle->setName("Assigned vehicle");
+
+    MissionPtr mission = MissionPtr::create();
+    mission->setName("Assigned mission");
+
+    mission->setAssignment(MissionAssignmentPtr::create());
+    mission->assignment()->setVehicleId(vehicle->id());
+
+    //iMap.save(vehicle);
+    //iMap.save(mission);
 }
