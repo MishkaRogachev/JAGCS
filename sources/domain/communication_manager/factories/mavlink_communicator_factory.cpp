@@ -15,8 +15,8 @@ MavLinkCommunicatorFactory::MavLinkCommunicatorFactory():
 AbstractCommunicator* MavLinkCommunicatorFactory::create()
 {
     auto communicator = new MavLinkCommunicator(
-             SettingsProvider::value(connection_settings::systemId).toInt(),
-             SettingsProvider::value(connection_settings::componentId).toInt());
+         SettingsProvider::value(settings::communication::systemId).toInt(),
+         SettingsProvider::value(settings::communication::componentId).toInt());
 
     return communicator;
 }

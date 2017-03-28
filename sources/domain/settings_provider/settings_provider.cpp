@@ -17,29 +17,32 @@ public:
 
     void makeDefaults()
     {
+        using namespace settings;
         settings.clear();
 
-        settings.setValue(gui_settings::fullscreen, true);
-        settings.setValue(gui_settings::locale, "en");
-        settings.setValue(gui_settings::uiSize, 36);
-        settings.setValue(gui_settings::paletteStyle, 0);
-        settings.setValue(gui_settings::fdRollInverted, 0);
+        settings.setValue(data_base::name, true);
 
-        settings.setValue(domain::manual_settings::useJoystick, true);
+        settings.setValue(gui::fullscreen, true);
+        settings.setValue(gui::locale, "en");
+        settings.setValue(gui::uiSize, 36);
+        settings.setValue(gui::paletteStyle, 0);
+        settings.setValue(gui::fdRollInverted, 0);
 
-        settings.setValue(map_settings::zoomLevel, 16.0);
-        settings.setValue(map_settings::centerLatitude, 55.968954);
-        settings.setValue(map_settings::centerLongitude, 37.110155);
+        settings.setValue(manual::useJoystick, true);
 
-        settings.setValue(proxy_settings::type, 0);
+        settings.setValue(map::zoomLevel, 16.0);
+        settings.setValue(map::centerLatitude, 55.968954);
+        settings.setValue(map::centerLongitude, 37.110155);
 
-        settings.setValue(connection_settings::systemId, 255);
-        settings.setValue(connection_settings::componentId, 0);
-        settings.setValue(connection_settings::baudRate, 57600);
-        settings.setValue(connection_settings::port, 14550);
+        settings.setValue(proxy::type, 0);
 
-        settings.setValue(mission_settings::defaultAcceptanceRadius, 3);
-        settings.setValue(mission_settings::defaultTakeoffPitch, 15);
+        settings.setValue(communication::systemId, 255);
+        settings.setValue(communication::componentId, 0);
+        settings.setValue(communication::baudRate, 57600);
+        settings.setValue(communication::port, 14550);
+
+        settings.setValue(mission::defaultAcceptanceRadius, 3);
+        settings.setValue(mission::defaultTakeoffPitch, 15);
     }
 };
 

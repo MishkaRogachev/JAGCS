@@ -1,9 +1,13 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-namespace domain
+namespace settings
 {
-    namespace gui_settings
+    namespace data_base
+    {
+        const char* const name = "Data_base/name";
+    }
+    namespace gui
     {
         const char* const fullscreen = "Gui/fullscreen";
         const char* const locale = "Gui/locale";
@@ -12,24 +16,24 @@ namespace domain
         const char* const fdRollInverted = "Gui/fdRollInverted";
     }
 
-    namespace manual_settings
+    namespace manual
     {
         const char* const useJoystick = "Manual/useJoystick";
     }
 
-    namespace map_settings
+    namespace map
     {
         const char* const zoomLevel = "Map/zoomLevel";
         const char* const centerLatitude = "Map/centerLatitude";
         const char* const centerLongitude = "Map/centerLongitude";
     }
 
-    namespace video_settings
+    namespace video
     {
         const char* const device = "Video/device";
     }
 
-    namespace proxy_settings
+    namespace proxy
     {
         const char* const type = "NetworkProxy/type";
         const char* const hostName = "NetworkProxy/hostName";
@@ -38,7 +42,7 @@ namespace domain
         const char* const password = "NetworkProxy/password";
     }
 
-    namespace connection_settings
+    namespace communication
     {
         const char* const systemId = "Connection/systemId";
         const char* const componentId = "Connection/componentId";
@@ -47,7 +51,7 @@ namespace domain
         const char* const port = "Connection/port";
     }
 
-    namespace mission_settings
+    namespace mission
     {
         const char* const defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
         const char* const defaultTakeoffPitch = "Mission/defaultTakeoffPitch";

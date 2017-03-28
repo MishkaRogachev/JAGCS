@@ -34,13 +34,13 @@ CommunicationManager::~CommunicationManager()
 void CommunicationManager::addUdpLonk()
 {
     d->communicator->addLink(new UdpLink(SettingsProvider::value(
-                                     connection_settings::port).toInt()));
+                              settings::communication::port).toInt()));
 }
 
 void CommunicationManager::addSerialLink()
 {
     d->communicator->addLink(new SerialLink(SettingsProvider::value(
-                                  connection_settings::serialDevice).toString(),
+                              settings::communication::serialDevice).toString(),
                                             SettingsProvider::value(
-                                  connection_settings::baudRate).toInt()));
+                              settings::communication::baudRate).toInt()));
 }
