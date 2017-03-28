@@ -9,6 +9,9 @@
 
 #include "settings_provider.h"
 
+#include "communication_manager.h"
+#include "mavlink_communicator_factory.h"
+
 using namespace data_source;
 using namespace domain;
 
@@ -17,19 +20,22 @@ class DomainFacade::Impl
 public:
     DbManager dataBase;
     IdentityMap iMap;
+    QScopedPointer<CommunicationManager> manager;
 };
 
 DomainFacade::DomainFacade():
     d(new Impl())
 {
     // TODO: replace by migrations
-
-    QString dbName = SettingsProvider::value(settings::data_base::name);
+    auto dbName = SettingsProvider::value(settings::data_base::name).toString();
     QFileInfo file(dbName);
     bool exist = file.exists();
 
     d->dataBase.open(dbName);
     if (!exist) d->dataBase.create();
+
+    MavLinkCommunicatorFactory comFactory;
+    d->manager.reset(new CommunicationManager(&comFactory));
 }
 
 DomainFacade::~DomainFacade()

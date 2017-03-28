@@ -1,6 +1,7 @@
 #ifndef COMMUNICATION_MANAGER_H
 #define COMMUNICATION_MANAGER_H
 
+// Qt
 #include <QObject>
 
 namespace domain
@@ -21,7 +22,7 @@ namespace domain
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 

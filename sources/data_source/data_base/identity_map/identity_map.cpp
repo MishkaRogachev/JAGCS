@@ -30,9 +30,7 @@ IdentityMap::IdentityMap():
 {}
 
 IdentityMap::~IdentityMap()
-{
-    delete d;
-}
+{}
 
 MissionPtr IdentityMap::readMission(int id, bool reload)
 {

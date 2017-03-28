@@ -1,6 +1,10 @@
 #ifndef IDENTITY_MAP_H
 #define IDENTITY_MAP_H
 
+// Qt
+#include <QScopedPointer>
+
+// Internal
 #include "identity_traits.h"
 
 namespace data_source
@@ -29,7 +33,7 @@ namespace data_source
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 

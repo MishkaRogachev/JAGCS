@@ -27,9 +27,7 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* factory,
 }
 
 CommunicationManager::~CommunicationManager()
-{
-    delete d;
-}
+{}
 
 void CommunicationManager::addUdpLonk()
 {

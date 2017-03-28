@@ -1,6 +1,7 @@
 #ifndef DB_MANAGER_H
 #define DB_MANAGER_H
 
+// Qt
 #include <QObject>
 #include <QSqlDatabase>
 
