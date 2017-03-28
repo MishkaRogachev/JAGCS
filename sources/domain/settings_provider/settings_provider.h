@@ -4,6 +4,9 @@
 // Qt
 #include <QVariant>
 
+// Internal
+#include "settings.h"
+
 namespace domain
 {
     class SettingsProvider: public QObject
