@@ -1,19 +1,19 @@
-#ifndef IDENTITY_MAP_H
-#define IDENTITY_MAP_H
+#ifndef DB_ENTRY_H
+#define DB_ENTRY_H
 
 // Qt
 #include <QScopedPointer>
 
 // Internal
-#include "identity_traits.h"
+#include "db_traits.h"
 
 namespace data_source
 {
-    class IdentityMap // TODO: replace with ORM library
+    class DbEntry // TODO: ORM
     {
     public:
-        IdentityMap();
-        ~IdentityMap();
+        DbEntry();
+        ~DbEntry();
 
         MissionPtr readMission(int id, bool reload = false);
         MissionItemPtr readMissionItem(int id, bool reload = false);
@@ -37,4 +37,4 @@ namespace data_source
     };
 }
 
-#endif // IDENTITY_MAP_H
+#endif // DB_ENTRY_H

@@ -18,7 +18,7 @@ GenericRepository<T>::~GenericRepository()
 {}
 
 template<class T>
-bool GenericRepository<T>::insert(T* entity)
+bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
 {
     m_query.prepare("INSERT INTO " + T::tableName() + " " +
                     entity->insertString(T::staticMetaObject));
@@ -27,27 +27,38 @@ bool GenericRepository<T>::insert(T* entity)
     if (this->runQuerry())
     {
         entity->setId(m_query.lastInsertId().toInt());
+        m_map[entity->id()] = entity;
         return true;
     }
     return false;
 }
 
 template<class T>
-bool GenericRepository<T>::read(T* entity)
+QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
 {
-    m_query.prepare("SELECT * FROM " + T::tableName() + " WHERE id = :id");
-    m_query.bindValue(":id", entity->id());
+    bool contains = m_map.contains(id);
 
-    if (this->runQuerry() && m_query.next())
+    if (!contains || reload)
     {
-        entity->updateFromQuery(m_query, T::staticMetaObject);
-        return true;
+        m_query.prepare("SELECT * FROM " + T::tableName() + " WHERE id = :id");
+        m_query.bindValue(":id", id);
+
+        if (this->runQuerry() && m_query.next())
+        {
+            QSharedPointer<T> item = contains ? m_map[id] :
+                                                QSharedPointer<T>::create();
+            item->setId(id);
+            item->updateFromQuery(m_query, T::staticMetaObject);
+            m_map[id] = item;
+            return item;
+        }
+        return QSharedPointer<T>();
     }
-    return false;
+    return m_map[id];
 }
 
 template<class T>
-bool GenericRepository<T>::update(T* entity)
+bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
 {
     m_query.prepare("UPDATE " + T::tableName() + " SET " +
                     entity->updateString(T::staticMetaObject) +
@@ -55,35 +66,47 @@ bool GenericRepository<T>::update(T* entity)
 
     m_query.bindValue(":id", entity->id());
     entity->bindQuery(m_query, T::staticMetaObject);
-    return this->runQuerry();
+
+    if (!this->runQuerry()) return false;
+    m_map[entity->id()] = entity;
+    return true;
 }
 
 template<class T>
-bool GenericRepository<T>::remove(T* entity)
+bool GenericRepository<T>::remove(const QSharedPointer<T>& entity)
 {
     m_query.prepare("DELETE FROM " + T::tableName() + " WHERE id = :id");
     m_query.bindValue(":id", entity->id());
-    return this->runQuerry();
+    if (!this->runQuerry()) return false;
+    this->unload(entity->id());
+    entity->setId(0);
+    return true;
 }
 
 template<class T>
-QList<T*> GenericRepository<T>::select(const QString& condition)
+bool GenericRepository<T>::save(const QSharedPointer<T>& entity)
 {
-    QList<T*> entities;
-
-    m_query.prepare("SELECT * FROM " + T::tableName() + " WHERE " + condition);
-
-    if (!this->runQuerry()) return entities;
-
-    while (m_query.next())
+    if (entity->id() > 0)
     {
-        T* entity = new T();
-        entity->setId(m_query.value("id").toInt());
-        entity->updateFromQuery(m_query, T::staticMetaObject);
-        entities.append(entity);
+        if (!this->update(entity)) return false;
     }
+    else
+    {
+        if (!this->insert(entity)) return false;
+    }
+    return true;
+}
 
-    return entities;
+template<class T>
+bool GenericRepository<T>::contains(int id)
+{
+    return m_map.contains(id);
+}
+
+template<class T>
+void GenericRepository<T>::unload(int id)
+{
+    m_map.remove(id);
 }
 
 template<class T>

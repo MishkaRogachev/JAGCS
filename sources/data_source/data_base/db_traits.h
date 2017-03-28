@@ -1,5 +1,5 @@
-#ifndef IDENTITY_TRAITS_H
-#define IDENTITY_TRAITS_H
+#ifndef DB_TRAITS_H
+#define DB_TRAITS_H
 
 // Qt
 #include <QSharedPointer>
@@ -20,4 +20,4 @@ namespace data_source
     using VehiclePtrList = QList<VehiclePtr>;
 }
 
-#endif // IDENTITY_TRAITS_H
+#endif // DB_TRAITS_H

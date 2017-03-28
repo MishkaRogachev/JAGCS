@@ -3,11 +3,11 @@
 
 // Qt
 #include <QSqlQuery>
+#include <QHash>
+#include <QSharedPointer>
 
 namespace data_source
 {
-    class IdentityMap;
-
     template <class T>
     class GenericRepository
     {
@@ -15,12 +15,15 @@ namespace data_source
         GenericRepository();
         virtual ~GenericRepository();
 
-        bool read(T* entity);
-        bool insert(T* entity);
-        bool update(T* entity);
-        bool remove(T* entity);
+        QSharedPointer<T> read(int id, bool reload = false);
+        bool insert(const QSharedPointer<T>& entity);
+        bool update(const QSharedPointer<T>& entity);
+        bool remove(const QSharedPointer<T>& entity);
 
-        QList<T*> select(const QString& condition);
+        bool save(const QSharedPointer<T>& entity);
+        bool contains(int id);
+        void unload(int id);
+
         QList<int> selectId(const QString& condition);
 
     protected:
@@ -28,6 +31,7 @@ namespace data_source
 
     private:
         QSqlQuery m_query;
+        QHash<int, QSharedPointer<T> > m_map;
     };
 }
 

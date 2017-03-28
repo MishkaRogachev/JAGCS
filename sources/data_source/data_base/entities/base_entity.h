@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "identity_traits.h"
+#include "db_traits.h"
 
 class QSqlQuery;
 
@@ -22,7 +22,7 @@ namespace data_source
         virtual ~BaseEntity();
 
         int id() const;
-        void setId(int id);
+        virtual void setId(int id);
 
         virtual QList<QString> fields() const;
 

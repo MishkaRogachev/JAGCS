@@ -17,6 +17,8 @@ namespace data_source
 
         static QString tableName();
 
+        void setId(int id) override;
+
         QString name() const;
         void setName(const QString& name);
 
@@ -31,6 +33,7 @@ namespace data_source
         MissionItemPtr takeLast();
         void insertItem(int index, const MissionItemPtr& item);
         void setItem(int index, const MissionItemPtr& item);
+        void clearItems();
 
         void exchangePosition(int first, int last);
         void moveUp(int index);

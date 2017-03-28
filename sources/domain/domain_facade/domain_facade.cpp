@@ -5,7 +5,7 @@
 
 // Internal
 #include "db_manager.h"
-#include "identity_map.h"
+#include "db_entry.h"
 
 #include "settings_provider.h"
 
@@ -19,7 +19,7 @@ class DomainFacade::Impl
 {
 public:
     DbManager dataBase;
-    IdentityMap iMap;
+    DbEntry dbEntry;
     QScopedPointer<CommunicationManager> manager;
 };
 

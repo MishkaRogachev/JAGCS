@@ -14,6 +14,16 @@ QString Mission::tableName()
     return "missions";
 }
 
+void Mission::setId(int id)
+{
+    BaseEntity::setId(id);
+
+    for (const MissionItemPtr& item: m_items)
+    {
+        item->setMissionId(id);
+    }
+}
+
 QString Mission::name() const
 {
     return m_name;
@@ -86,6 +96,11 @@ void Mission::setItem(int index, const MissionItemPtr& item)
 
     while (index > m_items.count()) this->appendItem(MissionItemPtr::create());
     this->appendItem(item);
+}
+
+void Mission::clearItems()
+{
+    m_items.clear();
 }
 
 void Mission::exchangePosition(int first, int last)
