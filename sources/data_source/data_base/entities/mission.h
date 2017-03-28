@@ -39,13 +39,9 @@ namespace data_source
         void fixSequenceOrder();
         void setCount(int count);
 
-        MissionAssignmentPtr assignment() const;
-        void setAssignment(const MissionAssignmentPtr& assignment);
-
     private:
         QString m_name;
         MissionItemPtrList m_items;
-        MissionAssignmentPtr m_assignment;
     };
 }
 

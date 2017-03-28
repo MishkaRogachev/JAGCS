@@ -12,7 +12,6 @@ private slots:
     void testMissionItems();
     void testMissionItemSequence();
     void testVehicle();
-    void testMissionAssignment();
 };
 
 #endif // DATA_BASE_TEST_H

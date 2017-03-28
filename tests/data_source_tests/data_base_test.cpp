@@ -9,7 +9,6 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "vehicle.h"
-#include "mission_assignment.h"
 
 using namespace data_source;
 
@@ -172,21 +171,4 @@ void DataBaseTest::testVehicle()
     QCOMPARE(vehicle->mavId(), 13);
 
     QVERIFY2(iMap.remove(vehicle), "Can't remove vehicle");
-}
-
-void DataBaseTest::testMissionAssignment()
-{
-    IdentityMap iMap;
-
-    VehiclePtr vehicle = VehiclePtr::create();
-    vehicle->setName("Assigned vehicle");
-
-    MissionPtr mission = MissionPtr::create();
-    mission->setName("Assigned mission");
-
-    mission->setAssignment(MissionAssignmentPtr::create());
-    mission->assignment()->setVehicleId(vehicle->id());
-
-    //iMap.save(vehicle);
-    //iMap.save(mission);
 }
