@@ -1,19 +1,18 @@
 // Qt
 #include <QApplication>
-//#include <QFontDatabase>
-//#include <QIcon>
-//#include <QQmlApplicationEngine>
-//#include <QQmlContext>
+#include <QFontDatabase>
+#include <QIcon>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QDebug>
 
 // Internal
 #include "settings_provider.h"
 #include "domain_facade.h"
 
-//
-//#include "translation_manager.h"
+#include "translation_manager.h"
 
-//#include "main_presenter.h"
+#include "main_presenter.h"
 
 int main(int argc, char* argv[])
 {
@@ -22,9 +21,6 @@ int main(int argc, char* argv[])
     app.setApplicationName("JAGCS");
     app.setOrganizationName("JAGCS");
 
-    domain::DomainFacade facade;
-
-    /* TEMPORARY
     QFontDatabase::addApplicationFont(":/fonts/OpenSans-Bold.ttf");
     QFontDatabase::addApplicationFont(":/fonts/OpenSans-Italic.ttf");
     QFontDatabase::addApplicationFont(":/fonts/OpenSans-Regular.ttf");
@@ -33,18 +29,17 @@ int main(int argc, char* argv[])
 
     app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
-    domain::SettingsProvider::instance(); // force main thread instance
     domain::TranslationManager::init();
 
-    domain::DomainEntry entry;
-    presentation::MainPresenter presenter(&entry);
+    domain::DomainFacade facade;
+    presentation::MainPresenter presenter(&facade);
 
     QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));
     engine.rootContext()->setContextProperty(
                 PROPERTY(settings), domain::SettingsProvider::instance());
     presenter.setView(engine.rootObjects().first());
 
-    presenter.setMode("mission");*/
+    presenter.setMode("mission");
 
     return app.exec();
 }

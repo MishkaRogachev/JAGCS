@@ -5,27 +5,25 @@
 #include <QVariant>
 
 // Internal
-#include "domain_entry.h"
-#include "settings_provider.h"
-#include "settings.h"
+#include "domain_facade.h"
 
 #include "status_presenter.h"
-#include "flight_presenter.h"
-#include "mission_presenter.h"
-#include "settings_presenter.h"
+//#include "flight_presenter.h"
+//#include "mission_presenter.h"
+//#include "settings_presenter.h"
 
 using namespace presentation;
 
 class MainPresenter::Impl
 {
 public:
-    domain::DomainEntry* entry;
+    domain::DomainFacade* entry;
 
     StatusPresenter* status;
     BasePresenter* modePresenter = nullptr;
 };
 
-MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
+MainPresenter::MainPresenter(domain::DomainFacade* entry, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
@@ -51,7 +49,7 @@ void MainPresenter::setMode(const QString& mode)
     }
 
     this->setViewProperty(PROPERTY(mode), mode);
-
+/*
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
         d->modePresenter = new FlightPresenter(d->entry->missionService(),
@@ -67,7 +65,7 @@ void MainPresenter::setMode(const QString& mode)
     else if (mode == "settings")
     {
         d->modePresenter = new SettingsPresenter(d->entry, this);
-    }
+    }*/
 
     if (d->modePresenter)
     {

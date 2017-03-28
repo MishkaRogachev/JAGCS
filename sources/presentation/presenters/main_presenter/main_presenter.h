@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class DomainEntry;
+    class DomainFacade;
 }
 
 namespace presentation
@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MainPresenter(domain::DomainEntry* entry,
+        explicit MainPresenter(domain::DomainFacade* entry,
                                QObject* object = nullptr);
         ~MainPresenter() override;
 
