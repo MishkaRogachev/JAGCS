@@ -5,12 +5,15 @@
 
 namespace domain
 {
+    class ICommunicatorFactory;
+
     class CommunicationManager: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit CommunicationManager(QObject* parent = nullptr);
+        explicit CommunicationManager(ICommunicatorFactory* factory,
+                                      QObject* parent = nullptr);
         ~CommunicationManager() override;
 
         void addUdpLonk();

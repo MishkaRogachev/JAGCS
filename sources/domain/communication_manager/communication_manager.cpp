@@ -7,6 +7,8 @@
 
 #include "settings_provider.h"
 
+#include "i_communicator_factory.h"
+
 using namespace data_source;
 using namespace domain;
 
@@ -16,10 +18,13 @@ public:
     AbstractCommunicator* communicator;
 };
 
-CommunicationManager::CommunicationManager(QObject* parent):
+CommunicationManager::CommunicationManager(ICommunicatorFactory* factory,
+                                           QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    d->communicator = factory->create();
+}
 
 CommunicationManager::~CommunicationManager()
 {
