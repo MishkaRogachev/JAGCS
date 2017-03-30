@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
-import "Connection"
+import "Communications"
 
 Pane {
     id: root
@@ -21,7 +21,7 @@ Pane {
                 model: [
                     qsTr("GUI"),
                     qsTr("Manual"),
-                    qsTr("Connection"),
+                    qsTr("Communications"),
                     qsTr("Video"),
                     qsTr("Networking"),
                     qsTr("About")
@@ -34,7 +34,7 @@ Pane {
 
             Button {
                 text: qsTr("Make defaults")
-                Layout.fillWidth: true
+                Layout.preferredWidth: palette.controlBaseWidth
                 onClicked: makeDefaults()
             }
         }
@@ -45,7 +45,7 @@ Pane {
 
             GuiSettingsView { objectName: "gui" }
             ManualSettingsView { objectName: "manual" }
-            ConnectionSettingsView { objectName: "connections" }
+            CommunicationsView { objectName: "communications" }
             VideoSettingsView { objectName: "video" }
             NetworkSettingsView { objectName: "network" }
             AboutView { objectName: "about" }

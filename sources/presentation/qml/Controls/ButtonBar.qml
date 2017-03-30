@@ -19,7 +19,7 @@ ColumnLayout {
 
         Button {
             checkable: true
-            Layout.fillWidth: true
+            Layout.preferredWidth: palette.controlBaseWidth
             text: modelData
             Component.onCompleted: {
                 group.addButton(this)

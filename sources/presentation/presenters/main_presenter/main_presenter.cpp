@@ -10,33 +10,31 @@
 #include "status_presenter.h"
 //#include "flight_presenter.h"
 //#include "mission_presenter.h"
-//#include "settings_presenter.h"
+#include "settings_presenter.h"
 
 using namespace presentation;
 
 class MainPresenter::Impl
 {
 public:
-    domain::DomainFacade* entry;
+    domain::DomainFacade* facede;
 
     StatusPresenter* status;
     BasePresenter* modePresenter = nullptr;
 };
 
-MainPresenter::MainPresenter(domain::DomainFacade* entry, QObject* object):
+MainPresenter::MainPresenter(domain::DomainFacade* facede, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->entry = entry;
+    d->facede = facede;
 
     d->status = new StatusPresenter(this);
     connect(d->status, &StatusPresenter::setMode, this, &MainPresenter::setMode);
 }
 
 MainPresenter::~MainPresenter()
-{
-    delete d;
-}
+{}
 
 void MainPresenter::setMode(const QString& mode)
 {
@@ -52,20 +50,20 @@ void MainPresenter::setMode(const QString& mode)
 /*
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->entry->missionService(),
-                                               d->entry->vehicleService(),
+        d->modePresenter = new FlightPresenter(d->facede->missionService(),
+                                               d->facede->vehicleService(),
                                                this);
     }
     if (mode == "mission")
     {
-        d->modePresenter = new MissionPresenter(d->entry->missionService(),
-                                                d->entry->vehicleService(),
+        d->modePresenter = new MissionPresenter(d->facede->missionService(),
+                                                d->facede->vehicleService(),
                                                 this);
     }
-    else if (mode == "settings")
+    else*/ if (mode == "settings")
     {
-        d->modePresenter = new SettingsPresenter(d->entry, this);
-    }*/
+        d->modePresenter = new SettingsPresenter(d->facede, this);
+    }
 
     if (d->modePresenter)
     {

@@ -65,8 +65,7 @@
         <file>Views/Settings/ManualSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
-        <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
-        <file>Views/Settings/Connection/LinkView.qml</file>
+        <file>Views/Settings/Communications/CommunicationsView.qml</file>
         <file>Views/Settings/AboutView.qml</file>
     </qresource>
 </RCC>

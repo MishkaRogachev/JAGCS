@@ -1,7 +1,7 @@
 #ifndef DOMAIN_FACADE_H
 #define DOMAIN_FACADE_H
 
-// QtZz
+// Qt
 #include <QScopedPointer>
 
 namespace domain

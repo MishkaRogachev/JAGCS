@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MainPresenter(domain::DomainFacade* entry,
+        explicit MainPresenter(domain::DomainFacade* facede,
                                QObject* object = nullptr);
         ~MainPresenter() override;
 
@@ -27,7 +27,7 @@ namespace presentation
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 

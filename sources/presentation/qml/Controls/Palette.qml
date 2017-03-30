@@ -6,7 +6,7 @@ QtObject {
     property int controlBaseSize: 36
 
     property int fontPixelSize: controlBaseSize / 2
-    property int controlBaseWidth: controlBaseSize * 4
+    property int controlBaseWidth: controlBaseSize * 6
     property int spacing: controlBaseSize / 4
     property int margins: controlBaseSize / 8
 
