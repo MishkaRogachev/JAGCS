@@ -16,8 +16,6 @@ namespace data_source
     public:
         Vehicle();
 
-        static QString tableName();
-
         int mavId() const;
         void setMavId(int mavId);
 

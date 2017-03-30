@@ -9,11 +9,6 @@ Mission::Mission():
     BaseEntity()
 {}
 
-QString Mission::tableName()
-{
-    return "missions";
-}
-
 void Mission::setId(int id)
 {
     BaseEntity::setId(id);

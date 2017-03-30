@@ -11,7 +11,8 @@
 using namespace data_source;
 
 template<class T>
-GenericRepository<T>::GenericRepository()
+GenericRepository<T>::GenericRepository(const QString& tableName):
+    m_tableName(tableName)
 {}
 
 template<class T>
@@ -29,7 +30,7 @@ bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
         values.append(":" + name);
     }
 
-    m_query.prepare("INSERT INTO " + T::tableName() + " (" +
+    m_query.prepare("INSERT INTO " + m_tableName + " (" +
                     names.join(", ") + ") VALUES (" + values.join(", ") + ")");
     this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
@@ -49,7 +50,7 @@ QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
 
     if (!contains || reload)
     {
-        m_query.prepare("SELECT * FROM " + T::tableName() + " WHERE id = :id");
+        m_query.prepare("SELECT * FROM " + m_tableName + " WHERE id = :id");
         m_query.bindValue(":id", id);
 
         if (this->runQuerry() && m_query.next())
@@ -76,7 +77,7 @@ bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
         placeholders.append(name + " = :" + name);
     }
 
-    m_query.prepare("UPDATE " + T::tableName() + " SET " +
+    m_query.prepare("UPDATE " + m_tableName + " SET " +
                     placeholders.join(", ") + " WHERE id = :id");
 
     m_query.bindValue(":id", entity->id());
@@ -90,7 +91,7 @@ bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
 template<class T>
 bool GenericRepository<T>::remove(const QSharedPointer<T>& entity)
 {
-    m_query.prepare("DELETE FROM " + T::tableName() + " WHERE id = :id");
+    m_query.prepare("DELETE FROM " + m_tableName + " WHERE id = :id");
     m_query.bindValue(":id", entity->id());
     if (!this->runQuerry()) return false;
     this->unload(entity->id());
@@ -129,7 +130,7 @@ QList<int> GenericRepository<T>::selectId(const QString& condition)
 {
     QList<int> idList;
 
-    m_query.prepare("SELECT id FROM " + T::tableName() + " WHERE " + condition);
+    m_query.prepare("SELECT id FROM " + m_tableName + " WHERE " + condition);
 
     if (!this->runQuerry()) return idList;
 

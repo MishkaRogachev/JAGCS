@@ -19,6 +19,12 @@ public:
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> missionItemRepository;
     GenericRepository<Vehicle> vehicleRepository;
+
+    Impl():
+        missionRepository("missions"),
+        missionItemRepository("mission_items"),
+        vehicleRepository("vehicles")
+    {}
 };
 
 DbEntry::DbEntry():

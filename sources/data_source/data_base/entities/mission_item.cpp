@@ -22,11 +22,6 @@ MissionItem::MissionItem():
     m_periods(0)
 {}
 
-QString MissionItem::tableName()
-{
-    return "mission_items";
-}
-
 int MissionItem::missionId() const
 {
     return m_missionId;

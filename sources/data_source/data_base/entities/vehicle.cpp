@@ -7,11 +7,6 @@ Vehicle::Vehicle():
     m_mavId(0)
 {}
 
-QString Vehicle::tableName()
-{
-    return "vehicles";
-}
-
 int Vehicle::mavId() const
 {
     return m_mavId;

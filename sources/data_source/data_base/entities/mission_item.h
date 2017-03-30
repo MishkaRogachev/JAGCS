@@ -37,8 +37,6 @@ namespace data_source
 
         MissionItem();
 
-        static QString tableName();
-
         int missionId() const;
         void setMissionId(int missionId);
 

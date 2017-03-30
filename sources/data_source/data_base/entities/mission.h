@@ -15,8 +15,6 @@ namespace data_source
     public:
         Mission();
 
-        static QString tableName();
-
         void setId(int id) override;
 
         QString name() const;

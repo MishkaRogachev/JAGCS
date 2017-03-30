@@ -12,7 +12,7 @@ namespace data_source
     class GenericRepository
     {
     public:
-        GenericRepository();
+        GenericRepository(const QString& tableName);
         virtual ~GenericRepository();
 
         QSharedPointer<T> read(int id, bool reload = false);
@@ -39,6 +39,7 @@ namespace data_source
 
     private:
         QSqlQuery m_query;
+        const QString m_tableName;
         QHash<int, QSharedPointer<T> > m_map;
     };
 }
