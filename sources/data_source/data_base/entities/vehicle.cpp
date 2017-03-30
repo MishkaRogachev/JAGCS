@@ -2,8 +2,8 @@
 
 using namespace data_source;
 
-Vehicle::Vehicle(int id):
-    BaseEntity(id),
+Vehicle::Vehicle():
+    BaseEntity(),
     m_mavId(0)
 {}
 

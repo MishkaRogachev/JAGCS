@@ -18,7 +18,7 @@ namespace data_source
         Q_PROPERTY(int id READ id WRITE setId)
 
     public:
-        BaseEntity(int id);
+        BaseEntity();
         virtual ~BaseEntity();
 
         int id() const;

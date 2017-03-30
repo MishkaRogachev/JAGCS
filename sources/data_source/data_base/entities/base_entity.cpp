@@ -8,8 +8,8 @@
 
 using namespace data_source;
 
-BaseEntity::BaseEntity(int id):
-    m_id(id)
+BaseEntity::BaseEntity():
+    m_id(0)
 {}
 
 BaseEntity::~BaseEntity()

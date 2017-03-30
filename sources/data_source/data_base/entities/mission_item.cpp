@@ -8,8 +8,8 @@
 
 using namespace data_source;
 
-MissionItem::MissionItem(int id):
-    BaseEntity(id),
+MissionItem::MissionItem():
+    BaseEntity(),
     m_missionId(0),
     m_sequence(-1),
     m_command(Command::UnknownCommand),

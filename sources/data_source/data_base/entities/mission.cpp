@@ -5,8 +5,8 @@
 
 using namespace data_source;
 
-Mission::Mission(int id):
-    BaseEntity(id)
+Mission::Mission():
+    BaseEntity()
 {}
 
 QString Mission::tableName()
