@@ -4,6 +4,7 @@
 #include "generic_repository.h"
 
 // Qt
+#include <QMetaProperty>
 #include <QSqlError>
 #include <QDebug>
 
@@ -20,9 +21,17 @@ GenericRepository<T>::~GenericRepository()
 template<class T>
 bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
 {
-    m_query.prepare("INSERT INTO " + T::tableName() + " " +
-                    entity->insertString(T::staticMetaObject));
-    entity->bindQuery(m_query, T::staticMetaObject);
+    QStringList names = this->propertyNames(T::staticMetaObject);
+    QStringList values;
+
+    for (const QString& name: names)
+    {
+        values.append(":" + name);
+    }
+
+    m_query.prepare("INSERT INTO " + T::tableName() + " (" +
+                    names.join(", ") + ") VALUES (" + values.join(", ") + ")");
+    this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
     if (this->runQuerry())
     {
@@ -45,12 +54,12 @@ QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
 
         if (this->runQuerry() && m_query.next())
         {
-            QSharedPointer<T> item = contains ? m_map[id] :
-                                                QSharedPointer<T>::create();
-            item->setId(id);
-            item->updateFromQuery(m_query, T::staticMetaObject);
-            m_map[id] = item;
-            return item;
+            QSharedPointer<T> entity = contains ? m_map[id] :
+                                                  QSharedPointer<T>::create();
+            entity->setId(id);
+            this->updateFromQuery(m_query, T::staticMetaObject, entity.data());
+            m_map[id] = entity;
+            return entity;
         }
         return QSharedPointer<T>();
     }
@@ -60,12 +69,18 @@ QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
 template<class T>
 bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
 {
+    QStringList placeholders;
+
+    for (const QString& name: this->propertyNames(T::staticMetaObject))
+    {
+        placeholders.append(name + " = :" + name);
+    }
+
     m_query.prepare("UPDATE " + T::tableName() + " SET " +
-                    entity->updateString(T::staticMetaObject) +
-                    "WHERE id = :id");
+                    placeholders.join(", ") + " WHERE id = :id");
 
     m_query.bindValue(":id", entity->id());
-    entity->bindQuery(m_query, T::staticMetaObject);
+    this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
     if (!this->runQuerry()) return false;
     m_map[entity->id()] = entity;
@@ -129,6 +144,48 @@ bool GenericRepository<T>::runQuerry()
     if (m_query.exec()) return true;
     qWarning() << m_query.lastError() << m_query.executedQuery();
     return false;
+}
+
+template<class T>
+QStringList GenericRepository<T>::propertyNames(const QMetaObject& meta)
+{
+    QStringList list;
+
+    for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
+    {
+        list.append(meta.property(i).name());
+    }
+
+    return list;
+}
+
+template<class T>
+void GenericRepository<T>::bindQuery(QSqlQuery& query,
+                                     const QMetaObject& meta,
+                                     T* entity)
+{
+    for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
+    {
+        query.bindValue(QString(":") + QString(meta.property(i).name()),
+                        meta.property(i).read(entity));
+    }
+}
+
+template<class T>
+void GenericRepository<T>::updateFromQuery(const QSqlQuery& query,
+                                           const QMetaObject& meta,
+                                           T* entity)
+{
+    for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
+    {
+        QVariant value = query.value(meta.property(i).name());
+
+        // workaround for enums
+        if (!meta.property(i).write(entity, value) && !value.isNull())
+        {
+            meta.property(i).write(entity, value.toInt());
+        }
+    }
 }
 
 #endif // GENERIC_REPOSITORY_IMPL_H

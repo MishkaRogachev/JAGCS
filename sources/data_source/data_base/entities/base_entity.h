@@ -24,15 +24,6 @@ namespace data_source
         int id() const;
         virtual void setId(int id);
 
-        virtual QList<QString> fields() const;
-
-        virtual void bindQuery(QSqlQuery& query, const QMetaObject& meta) const;
-        virtual void updateFromQuery(const QSqlQuery& query, const QMetaObject& meta);
-
-        static QStringList propertyNames(const QMetaObject& meta);
-        static QString insertString(const QMetaObject& meta);
-        static QString updateString(const QMetaObject& meta);
-
     private:
         int m_id;
     };

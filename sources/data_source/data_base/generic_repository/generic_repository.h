@@ -28,6 +28,14 @@ namespace data_source
 
     protected:
         bool runQuerry();
+        QStringList propertyNames(const QMetaObject& meta);
+
+        void bindQuery(QSqlQuery& query,
+                       const QMetaObject& meta,
+                       T* entity);
+        void updateFromQuery(const QSqlQuery& query,
+                             const QMetaObject& meta,
+                             T* entity);
 
     private:
         QSqlQuery m_query;
