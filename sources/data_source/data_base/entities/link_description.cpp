@@ -22,6 +22,16 @@ void LinkDescription::setType(LinkDescription::Type type)
     m_type = type;
 }
 
+int LinkDescription::port() const
+{
+    return m_port;
+}
+
+void LinkDescription::setPort(int port)
+{
+    m_port = port;
+}
+
 QString LinkDescription::device() const
 {
     return m_device;

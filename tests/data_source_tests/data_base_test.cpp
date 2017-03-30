@@ -9,6 +9,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "vehicle.h"
+#include "link_description.h"
 
 using namespace data_source;
 
@@ -167,8 +168,27 @@ void DataBaseTest::testVehicle()
 
     QVERIFY2(dbEntry.readVehicle(id, true), "Can't reload vehicle");
 
-    QVERIFY2(vehicle->name() == ("Ridiculous vehicle"), "Vehicles names are different");
+    QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
     QCOMPARE(vehicle->mavId(), 13);
 
     QVERIFY2(dbEntry.remove(vehicle), "Can't remove vehicle");
+}
+
+void DataBaseTest::testLinkDescription()
+{
+    DbEntry dbEntry;
+
+    LinkDescriptionPtr link = LinkDescriptionPtr::create();
+    link->setName("UDP link");
+    link->setType(LinkDescription::Udp);
+    link->setPort(8080);
+
+    QVERIFY2(dbEntry.save(link), "Can't insert link");
+    dbEntry.readLink(link->id(), true);
+
+    QVERIFY2(link->name() == "UDP link", "Link name are different");
+    QCOMPARE(link->type(), LinkDescription::Udp);
+    QCOMPARE(link->port(), 8080);
+
+    QVERIFY2(dbEntry.remove(link), "Can't remove link");
 }

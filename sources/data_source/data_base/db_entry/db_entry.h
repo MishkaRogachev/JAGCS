@@ -9,7 +9,7 @@
 
 namespace data_source
 {
-    class DbEntry // TODO: ORM
+    class DbEntry // TODO: facade interface(missions, itemsForMission etc)
     {
     public:
         DbEntry();
@@ -18,18 +18,22 @@ namespace data_source
         MissionPtr readMission(int id, bool reload = false);
         MissionItemPtr readMissionItem(int id, bool reload = false);
         VehiclePtr readVehicle(int id, bool reload = false);
+        LinkDescriptionPtr readLink(int id, bool reload);
 
         bool save(const MissionPtr& mission);
         bool save(const MissionItemPtr& missionItem);
         bool save(const VehiclePtr& vehicle);
+        bool save(const LinkDescriptionPtr& link);
 
         bool remove(const MissionPtr& mission);
         bool remove(const MissionItemPtr& missionItem);
         bool remove(const VehiclePtr& vehicle);
+        bool remove(const LinkDescriptionPtr& link);
 
         void unload(const MissionPtr& mission);
         void unload(const MissionItemPtr& missionItem);
         void unload(const VehiclePtr& vehicle);
+        void unload(const LinkDescriptionPtr& link);
 
     private:
         class Impl;

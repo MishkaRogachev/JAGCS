@@ -30,6 +30,9 @@ namespace data_source
         Type type() const;
         void setType(Type type);
 
+        int port() const;
+        void setPort(int port);
+
         QString device() const;
         void setDevice(const QString& device);
 
@@ -42,6 +45,7 @@ namespace data_source
     private:
         QString m_name;
         Type m_type = UnknownType;
+        int m_port = 0;
         QString m_device;
         int m_baudRate = -1;
         bool m_autoConnect = false;
