@@ -7,8 +7,6 @@
 // Internal
 #include "db_traits.h"
 
-class QSqlQuery;
-
 namespace data_source
 {
     class BaseEntity: public QObject
@@ -18,14 +16,13 @@ namespace data_source
         Q_PROPERTY(int id READ id WRITE setId)
 
     public:
-        BaseEntity();
         virtual ~BaseEntity();
 
         int id() const;
         virtual void setId(int id);
 
     private:
-        int m_id;
+        int m_id = 0;
     };
 }
 

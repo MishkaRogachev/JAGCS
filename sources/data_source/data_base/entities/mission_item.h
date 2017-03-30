@@ -35,8 +35,6 @@ namespace data_source
             Landing,
         };
 
-        MissionItem();
-
         int missionId() const;
         void setMissionId(int missionId);
 
@@ -68,19 +66,18 @@ namespace data_source
         void setPeriods(int periods);
 
     private:
-        int m_missionId;
-        int m_sequence;
-        Command m_command;
-        float m_altitude;
-        bool m_altitudeRelative;
-        double m_latitude;
-        double m_longitude;
-        float m_radius;
-        float m_pitch;
-        int m_periods;
+        int m_missionId = 0;
+        int m_sequence = -1;
+        Command m_command = Command::UnknownCommand;
+        float m_altitude = qQNaN();
+        bool m_altitudeRelative = false;
+        double m_latitude = qQNaN();
+        double m_longitude = qQNaN();
+        float m_radius = qQNaN();
+        float m_pitch = qQNaN();
+        int m_periods = 0;
 
         Q_ENUM(Command)
     };
 }
-
 #endif // MISSION_ITEM_H

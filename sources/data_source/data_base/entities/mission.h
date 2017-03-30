@@ -13,8 +13,6 @@ namespace data_source
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
-        Mission();
-
         void setId(int id) override;
 
         QString name() const;

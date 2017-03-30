@@ -5,10 +5,6 @@
 
 using namespace data_source;
 
-Mission::Mission():
-    BaseEntity()
-{}
-
 void Mission::setId(int id)
 {
     BaseEntity::setId(id);

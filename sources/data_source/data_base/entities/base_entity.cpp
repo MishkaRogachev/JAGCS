@@ -2,10 +2,6 @@
 
 using namespace data_source;
 
-BaseEntity::BaseEntity():
-    m_id(0)
-{}
-
 BaseEntity::~BaseEntity()
 {}
 

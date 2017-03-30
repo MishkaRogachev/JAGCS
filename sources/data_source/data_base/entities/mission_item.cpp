@@ -8,20 +8,6 @@
 
 using namespace data_source;
 
-MissionItem::MissionItem():
-    BaseEntity(),
-    m_missionId(0),
-    m_sequence(-1),
-    m_command(Command::UnknownCommand),
-    m_altitude(qQNaN()),
-    m_altitudeRelative(false),
-    m_latitude(qQNaN()),
-    m_longitude(qQNaN()),
-    m_radius(qQNaN()),
-    m_pitch(qQNaN()),
-    m_periods(0)
-{}
-
 int MissionItem::missionId() const
 {
     return m_missionId;
