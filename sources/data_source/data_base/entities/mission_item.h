@@ -68,7 +68,7 @@ namespace data_source
     private:
         int m_missionId = 0;
         int m_sequence = -1;
-        Command m_command = Command::UnknownCommand;
+        Command m_command = UnknownCommand;
         float m_altitude = qQNaN();
         bool m_altitudeRelative = false;
         double m_latitude = qQNaN();

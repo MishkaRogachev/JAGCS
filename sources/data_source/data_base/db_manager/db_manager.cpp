@@ -74,6 +74,20 @@ bool DbManager::create()
         return false;
     }
 
+    result = query.exec("CREATE TABLE links ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "name STRING,"
+                        "type SMALLINT,"
+                        "port INTEGER,"
+                        "device STRING,"
+                        "baudRate INTEGER,"
+                        "autoConnect BOOLEAN)");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
+
     return true;
 }
 
@@ -90,6 +104,10 @@ bool DbManager::drop()
     if (!query.exec()) return false;
 
     query.prepare("DROP TABLE vehicles");
+
+    if (!query.exec()) return false;
+
+    query.prepare("DROP TABLE links");
 
     return query.exec();
 }
