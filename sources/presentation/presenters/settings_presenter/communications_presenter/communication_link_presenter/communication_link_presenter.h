@@ -30,8 +30,11 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onSave();
-        void onRestore();
+        void onSetType(const QString& type);
+        void onSetName(const QString& name);
+        void onSetPort(int port);
+        void onSetDevice(const QString& device);
+        void onSetBaudRate(int rate);
 
     private:
         data_source::LinkDescription* m_description;

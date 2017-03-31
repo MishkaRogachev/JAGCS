@@ -12,19 +12,26 @@ Frame {
     property bool connected: false
 
     property alias name: nameField.text
-    property alias typeName: typeBox.currentText
+    property string typeName
     property alias typeNames: typeBox.model
     property alias port: portBox.value
-    property alias device: deviceBox.currentText
+    property string device
     property alias devices: deviceBox.model
-    property alias baudRate: baudBox.currentText
+    property string baudRate
     property alias baudRates: baudBox.model
     property alias autoConnect: autoconnectBox.checked
 
-    signal save()
-    signal restore()
+    signal setType(string type)
+    signal setName(string name)
+    signal setPort(int port)
+    signal setDevice(string device)
+    signal setBaudRate(int baudRate)
     signal remove()
     signal setConnected(bool connected)
+
+    onTypeNameChanged: typeBox.currentIndex = typeBox.model.indexOf(typeName)
+    onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
+    onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
     GridLayout {
         anchors.fill: parent
@@ -40,6 +47,7 @@ Frame {
             id: nameField
             Layout.fillWidth: true
             placeholderText: qsTr("Enter name")
+            onEditingFinished: setName(text)
         }
 
         Label {
@@ -50,6 +58,7 @@ Frame {
         ComboBox {
             id: typeBox
             Layout.fillWidth: true
+            onCurrentTextChanged: setType(currentText)
         }
 
         Label {
@@ -65,6 +74,7 @@ Frame {
             to: 65535
             decimals: 0
             visible: type == LinkDescription.Udp
+            onValueChanged: setPort(value)
         }
 
         Label {
@@ -77,6 +87,7 @@ Frame {
             id: deviceBox
             Layout.fillWidth: true
             visible: type == LinkDescription.Serial
+            onCurrentTextChanged: setDevice(currentText)
         }
 
         Label {
@@ -89,10 +100,16 @@ Frame {
             id: baudBox
             Layout.fillWidth: true
             visible: type == LinkDescription.Serial
+            onCurrentTextChanged: setBaudRate(currentText)
         }
 
         RowLayout {
             Layout.columnSpan: 4
+
+            Item {
+                height: parent.height
+                Layout.fillWidth: true
+            }
 
             CheckBox {
                 id: autoconnectBox
@@ -100,26 +117,9 @@ Frame {
             }
 
             Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-            }
-
-            Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-            }
-
-            Button {
                 text: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
                 onClicked: remove()
-            }
-
-            Item {
-                height: parent.height
-                Layout.fillWidth: true
             }
 
             Button {
