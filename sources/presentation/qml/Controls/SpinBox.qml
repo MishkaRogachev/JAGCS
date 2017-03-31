@@ -10,6 +10,8 @@ Control {
     property real from: 0
     property real to: 0
     property real stepSize: 1
+    property int decimals: 2
+
     property bool focused: contentItem.activeFocus
 
     onValueChanged: {
@@ -50,6 +52,12 @@ Control {
         selectedTextColor: palette.selectedTextColor
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
+        validator: DoubleValidator {
+            top: control.to
+            bottom: control.from
+            notation: DoubleValidator.StandardNotation
+            decimals: control.decimals
+        }
     }
 
     Button {

@@ -7,8 +7,6 @@ import "qrc:/Controls"
 ColumnLayout {
     id: root
 
-    property var commLinks
-
     signal addUdpLink()
     signal addSerialLink()
 
@@ -38,11 +36,11 @@ ColumnLayout {
             id: column
             width: parent.width
             anchors.centerIn: parent
-            spacing: 8
+            spacing: palette.spacing
 
             Repeater {
                 id: repeater
-                model: commLinks
+                model: 2
 
                 CommunicationLinkView {
                     Layout.fillWidth: true

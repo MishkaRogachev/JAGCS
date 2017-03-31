@@ -11,8 +11,11 @@
 #include "domain_facade.h"
 
 #include "translation_manager.h"
+#include "qml_declarations.h"
 
 #include "main_presenter.h"
+
+#include "link_description.h"
 
 int main(int argc, char* argv[])
 {
@@ -33,6 +36,8 @@ int main(int argc, char* argv[])
 
     domain::DomainFacade facade;
     presentation::MainPresenter presenter(&facade);
+
+    registerQmlTypes();
 
     QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));
     engine.rootContext()->setContextProperty(
