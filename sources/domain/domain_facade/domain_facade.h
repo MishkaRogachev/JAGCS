@@ -6,11 +6,15 @@
 
 namespace domain
 {
+    class CommunicationManager;
+
     class DomainFacade
     {
     public:
         DomainFacade();
         ~DomainFacade();
+
+        CommunicationManager* communicationManager() const;
 
     private:
         class Impl;

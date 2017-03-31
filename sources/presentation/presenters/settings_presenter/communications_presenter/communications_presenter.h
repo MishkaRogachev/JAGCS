@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class DomainFacade;
+    class CommunicationManager;
 }
 
 namespace presentation
@@ -15,11 +15,18 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationsPresenter(QObject* parent);
+        CommunicationsPresenter(domain::CommunicationManager* manager,
+                                QObject* parent);
         ~CommunicationsPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
+
+    private slots:
+        void updateCommunicationsLinks();
+
+        void onAddUdpLink();
+        void onAddSerialLink();
 
     private:
         class Impl;

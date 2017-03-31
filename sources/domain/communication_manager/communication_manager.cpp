@@ -2,10 +2,8 @@
 
 // Internal
 #include "abstract_communicator.h"
-#include "udp_link.h"
-#include "serial_link.h"
-
-#include "settings_provider.h"
+#include "db_entry.h"
+#include "link_description.h"
 
 #include "i_communicator_factory.h"
 
@@ -16,29 +14,32 @@ class CommunicationManager::Impl
 {
 public:
     AbstractCommunicator* communicator;
+    DbEntry* entry;
+
+    data_source::LinkDescriptionPtrList descriptions;
 };
 
 CommunicationManager::CommunicationManager(ICommunicatorFactory* factory,
+                                           DbEntry* entry,
                                            QObject* parent):
     QObject(parent),
     d(new Impl())
 {
     d->communicator = factory->create();
+    d->entry = entry;
+
+    d->descriptions = d->entry->readLinks();
+
+    for (const LinkDescriptionPtr& description: d->descriptions)
+    {
+        // TODO: link from description
+    }
 }
 
 CommunicationManager::~CommunicationManager()
 {}
 
-void CommunicationManager::addUdpLonk()
+void CommunicationManager::addLink(AbstractLink* link)
 {
-    d->communicator->addLink(new UdpLink(SettingsProvider::value(
-                              settings::communication::port).toInt()));
-}
-
-void CommunicationManager::addSerialLink()
-{
-    d->communicator->addLink(new SerialLink(SettingsProvider::value(
-                              settings::communication::serialDevice).toString(),
-                                            SettingsProvider::value(
-                              settings::communication::baudRate).toInt()));
+    d->communicator->addLink(link);
 }

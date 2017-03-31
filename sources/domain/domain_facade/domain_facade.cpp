@@ -35,8 +35,13 @@ DomainFacade::DomainFacade():
     if (!exist) d->dataBase.create();
 
     MavLinkCommunicatorFactory comFactory;
-    d->manager.reset(new CommunicationManager(&comFactory));
+    d->manager.reset(new CommunicationManager(&comFactory, &d->dbEntry));
 }
 
 DomainFacade::~DomainFacade()
 {}
+
+CommunicationManager* DomainFacade::communicationManager() const
+{
+    return d->manager.data();
+}

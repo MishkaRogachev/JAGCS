@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        SettingsPresenter(domain::DomainFacade* facede, QObject* parent);
+        SettingsPresenter(domain::DomainFacade* facade, QObject* parent);
         ~SettingsPresenter() override;
 
     public slots:

@@ -17,17 +17,17 @@ using namespace presentation;
 class MainPresenter::Impl
 {
 public:
-    domain::DomainFacade* facede;
+    domain::DomainFacade* facade;
 
     StatusPresenter* status;
     BasePresenter* modePresenter = nullptr;
 };
 
-MainPresenter::MainPresenter(domain::DomainFacade* facede, QObject* object):
+MainPresenter::MainPresenter(domain::DomainFacade* facade, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->facede = facede;
+    d->facade = facade;
 
     d->status = new StatusPresenter(this);
     connect(d->status, &StatusPresenter::setMode, this, &MainPresenter::setMode);
@@ -50,19 +50,19 @@ void MainPresenter::setMode(const QString& mode)
 /*
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->facede->missionService(),
-                                               d->facede->vehicleService(),
+        d->modePresenter = new FlightPresenter(d->facade->missionService(),
+                                               d->facade->vehicleService(),
                                                this);
     }
     if (mode == "mission")
     {
-        d->modePresenter = new MissionPresenter(d->facede->missionService(),
-                                                d->facede->vehicleService(),
+        d->modePresenter = new MissionPresenter(d->facade->missionService(),
+                                                d->facade->vehicleService(),
                                                 this);
     }
     else*/ if (mode == "settings")
     {
-        d->modePresenter = new SettingsPresenter(d->facede, this);
+        d->modePresenter = new SettingsPresenter(d->facade, this);
     }
 
     if (d->modePresenter)

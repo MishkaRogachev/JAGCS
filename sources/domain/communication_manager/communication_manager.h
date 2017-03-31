@@ -4,6 +4,12 @@
 // Qt
 #include <QObject>
 
+namespace data_source
+{
+    class AbstractLink;
+    class DbEntry;
+}
+
 namespace domain
 {
     class ICommunicatorFactory;
@@ -13,12 +19,13 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit CommunicationManager(ICommunicatorFactory* factory,
-                                      QObject* parent = nullptr);
+        CommunicationManager(ICommunicatorFactory* factory,
+                             data_source::DbEntry* entry,
+                             QObject* parent = nullptr);
         ~CommunicationManager() override;
 
-        void addUdpLonk();
-        void addSerialLink();
+    public slots:
+        void addLink(data_source::AbstractLink* link);
 
     private:
         class Impl;

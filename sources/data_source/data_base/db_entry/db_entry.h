@@ -35,6 +35,8 @@ namespace data_source
         void unload(const VehiclePtr& vehicle);
         void unload(const LinkDescriptionPtr& link);
 
+        LinkDescriptionPtrList readLinks();
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

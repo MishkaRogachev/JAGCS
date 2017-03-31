@@ -25,13 +25,15 @@ public:
 //    AboutPresenter* about;
 };
 
-SettingsPresenter::SettingsPresenter(domain::DomainFacade* facede, QObject* parent):
+SettingsPresenter::SettingsPresenter(domain::DomainFacade* facade, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
 //    d->gui = new GuiSettingsPresenter(this);
 //    d->manual = new ManualSettingsPresenter(this);
-    d->communications = new CommunicationsPresenter(this);
+    d->communications = new CommunicationsPresenter(
+                            facade->communicationManager(),
+                            this);
 //    d->video = new VideoSettingsPresenter(this);
 //    d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
 //    d->about = new AboutPresenter(this);

@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MainPresenter(domain::DomainFacade* facede,
+        explicit MainPresenter(domain::DomainFacade* facade,
                                QObject* object = nullptr);
         ~MainPresenter() override;
 
