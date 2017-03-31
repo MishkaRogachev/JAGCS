@@ -8,7 +8,7 @@ QtObject {
     property int fontPixelSize: controlBaseSize / 2
     property int controlBaseWidth: controlBaseSize * 6
     property int spacing: controlBaseSize / 4
-    property int margins: controlBaseSize / 8
+    property int margins: controlBaseSize / 6
 
     property color backgroundColor: "#37474F"
     property color sunkenColor: "#263238"

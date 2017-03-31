@@ -9,6 +9,8 @@ Frame {
     id: root
 
     property int type: LinkDescription.UnknownType
+    property bool connected: false
+
     property alias name: nameField.text
     property alias typeName: typeBox.currentText
     property alias typeNames: typeBox.model
@@ -20,7 +22,9 @@ Frame {
     property alias autoConnect: autoconnectBox.checked
 
     signal save()
-    signal reset()
+    signal restore()
+    signal remove()
+    signal setConnected(bool connected)
 
     GridLayout {
         anchors.fill: parent
@@ -90,22 +94,39 @@ Frame {
         RowLayout {
             Layout.columnSpan: 4
 
+            CheckBox {
+                id: autoconnectBox
+                text: qsTr("Autoconnect")
+            }
+
+            Button {
+                text: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+            }
+
+            Button {
+                text: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+            }
+
+            Button {
+                text: qsTr("Remove")
+                iconSource: "qrc:/icons/remove.svg"
+                onClicked: remove()
+            }
+
             Item {
                 height: parent.height
                 Layout.fillWidth: true
             }
 
-            CheckBox {
-                id: autoconnectBox
-                text: tr("Autoconnect")
-            }
-
             Button {
-                text: qsTr("Connect")
-            }
-
-            Button {
-                text: qsTr("Remove")
+                text: connected ? qsTr("Disconnect") : qsTr("Connect")
+                iconSource: connected ? "qrc:/icons/disconnect.svg" :
+                                        "qrc:/icons/connect.svg"
+                onClicked: setConnected(!connected)
             }
         }
     }

@@ -11,7 +11,8 @@ Button {
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
-    implicitWidth: Math.max(palette.controlBaseSize, row.width)
+    implicitWidth: Math.max(palette.controlBaseSize,
+                            row.width + palette.margins * 2)
     implicitHeight: palette.controlBaseSize
 
     background: Rectangle {

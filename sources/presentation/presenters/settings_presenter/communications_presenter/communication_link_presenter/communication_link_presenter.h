@@ -3,6 +3,11 @@
 
 #include "base_presenter.h"
 
+namespace data_source
+{
+    class LinkDescription;
+}
+
 namespace presentation
 {
     class CommunicationLinkPresenter: public BasePresenter
@@ -10,15 +15,26 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(QObject* parent);
-        ~CommunicationLinkPresenter() override;
+        CommunicationLinkPresenter(data_source::LinkDescription* description,
+                                   QObject* parent = nullptr);
+
+        data_source::LinkDescription* description() const;
+
+    public slots:
+        void updateView();
+
+    signals:
+        void remove();
 
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onSave();
+        void onRestore();
+
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        data_source::LinkDescription* m_description;
     };
 }
 
