@@ -12,16 +12,17 @@
         <file>icons/jagcs.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/quit.svg</file>
+        <file>icons/restore.svg</file>
+        <file>icons/save.svg</file>
+        <file>icons/remove.svg</file>
         <file>icons/map-marker.svg</file>
         <file>icons/center.svg</file>
         <file>icons/layers.svg</file>
         <file>icons/video.svg</file>
         <file>icons/fit.svg</file>
-        <file>icons/remove.svg</file>
         <file>icons/add.svg</file>
         <file>icons/connect.svg</file>
         <file>icons/disconnect.svg</file>
-        <file>icons/restart.svg</file>
         <file>icons/rx.svg</file>
         <file>icons/tx.svg</file>
         <file>icons/play.svg</file>

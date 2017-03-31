@@ -44,7 +44,7 @@ ColumnLayout {
         }
 
         Button {
-            iconSource: "qrc:/icons/restart.svg"
+            iconSource: "qrc:/icons/restore.svg"
             onClicked: vehicle.commandRestart()
             enabled: vehicle
         }
