@@ -11,16 +11,16 @@ namespace data_source
     {
         Q_OBJECT
 
-        Q_PROPERTY(QString portName READ portName WRITE setPortName NOTIFY portNameChanged)
+        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
         Q_PROPERTY(qint32 baudRate READ baudRate WRITE setBaudRate NOTIFY baudRateChanged)
 
     public:
-        SerialLink(const QString& portName, qint32 baudRate,
+        SerialLink(const QString& device, qint32 baudRate,
                    QObject* parent = nullptr);
 
         bool isUp() const override;
 
-        QString portName() const;
+        QString device() const;
         qint32 baudRate() const;
 
     public slots:
@@ -29,11 +29,11 @@ namespace data_source
 
         void sendDataImpl(const QByteArray& data) override;
 
-        void setPortName(QString portName);
+        void setDevice(QString device);
         void setBaudRate(qint32 baudRate);
 
     signals:
-        void portNameChanged(QString portName);
+        void deviceChanged(QString device);
         void baudRateChanged(qint32 baudRate);
 
     private slots:

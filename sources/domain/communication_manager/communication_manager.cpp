@@ -39,7 +39,7 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* factory,
 CommunicationManager::~CommunicationManager()
 {}
 
-void CommunicationManager::addLink(AbstractLink* link)
+void CommunicationManager::addLink(const LinkDescription& description)
 {
-    d->communicator->addLink(link);
+    d->communicator->addLink(description);
 }

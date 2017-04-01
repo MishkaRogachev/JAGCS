@@ -6,7 +6,7 @@
 
 namespace data_source
 {
-    class AbstractLink;
+    class LinkDescription;
     class DbEntry;
 }
 
@@ -25,7 +25,7 @@ namespace domain
         ~CommunicationManager() override;
 
     public slots:
-        void addLink(data_source::AbstractLink* link);
+        void addLink(const data_source::LinkDescription& description);
 
     private:
         class Impl;

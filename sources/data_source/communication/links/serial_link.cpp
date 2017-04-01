@@ -21,7 +21,7 @@ bool SerialLink::isUp() const
     return m_port->isOpen();
 }
 
-QString SerialLink::portName() const
+QString SerialLink::device() const
 {
     return m_port->portName();
 }
@@ -61,12 +61,12 @@ void SerialLink::sendDataImpl(const QByteArray& data)
     m_port->write(data.data(), data.size());
 }
 
-void SerialLink::setPortName(QString portName)
+void SerialLink::setDevice(QString device)
 {
-    if (m_port->portName() == portName) return;
+    if (m_port->portName() == device) return;
 
-    m_port->setPortName(portName);
-    emit portNameChanged(m_port->portName());
+    m_port->setPortName(device);
+    emit deviceChanged(m_port->portName());
 }
 
 void SerialLink::setBaudRate(qint32 baudRate)

@@ -37,11 +37,15 @@ void CommunicationsPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(addUdpLink()), this, SLOT(onAddUdpLink()));
     connect(view, SIGNAL(addSerialLink()), this, SLOT(onAddSerialLink()));
+
+    this->updateCommunicationsLinks();
 }
 
 void CommunicationsPresenter::updateCommunicationsLinks()
 {
     QList<QObject*> list; // TODO: list
+
+    for (d->linkPresenters.re)
 
     this->setViewProperty(PROPERTY(commLinks), QVariant::fromValue(list));
 }

@@ -6,7 +6,6 @@
 
 namespace data_source
 {
-    // TODO: add persistable base class to store objects in SQLite DB
     class AbstractLink: public QObject
     {
         Q_OBJECT
