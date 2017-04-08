@@ -29,7 +29,7 @@ namespace domain
         data_source::LinkDescriptionPtrList links() const;
 
     public slots:
-        void addLink(const data_source::LinkDescriptionPtr& description);
+        void saveLink(const data_source::LinkDescriptionPtr& description);
         void removeLink(const data_source::LinkDescriptionPtr& description);
 
     private:

@@ -14,6 +14,7 @@ namespace data_source
                 const LinkDescriptionPtr& description = LinkDescriptionPtr());
 
         AbstractLink* create() override;
+        void update(AbstractLink* link) override;
 
         LinkDescriptionPtr description() const;
         void setDescription(const LinkDescriptionPtr& description);

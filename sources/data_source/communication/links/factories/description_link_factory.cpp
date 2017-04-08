@@ -29,6 +29,36 @@ AbstractLink* DescriptionLinkFactory::create()
     }
 }
 
+void DescriptionLinkFactory::update(AbstractLink* link)
+{
+    if (m_description.isNull()) return;
+
+    switch (m_description->type())
+    {
+    case LinkDescription::Udp:
+    {
+       UdpLink* udpLink = qobject_cast<UdpLink*>(link);
+       if (!udpLink) return;
+
+       udpLink->setPort(m_description->port());
+
+       break;
+    }
+    case LinkDescription::Serial:
+    {
+        SerialLink* serialLink = qobject_cast<SerialLink*>(link);
+        if (!serialLink) return;
+
+        serialLink->setDevice(m_description->device());
+        serialLink->setBaudRate(m_description->baudRate());
+
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 LinkDescriptionPtr DescriptionLinkFactory::description() const
 {
     return m_description;

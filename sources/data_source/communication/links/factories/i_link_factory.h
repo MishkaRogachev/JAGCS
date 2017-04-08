@@ -12,6 +12,7 @@ namespace data_source
         virtual ~ILinkFactory() {}
 
         virtual AbstractLink* create() = 0;
+        virtual void update(AbstractLink* link) = 0;
     };
 }
 

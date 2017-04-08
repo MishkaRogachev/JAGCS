@@ -52,7 +52,7 @@ void CommunicationsPresenter::onAddUdpLink()
     description->setPort(domain::SettingsProvider::value(
                             settings::communication::port).toInt());
 
-    d->manager->addLink(description);
+    d->manager->saveLink(description);
 }
 
 void CommunicationsPresenter::onAddSerialLink()
@@ -63,6 +63,6 @@ void CommunicationsPresenter::onAddSerialLink()
     description->setBaudRate(domain::SettingsProvider::value(
                             settings::communication::baudRate).toInt());
 
-    d->manager->addLink(description);
+    d->manager->saveLink(description);
 }
 

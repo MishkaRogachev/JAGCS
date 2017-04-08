@@ -23,6 +23,27 @@ public:
     DbEntry* entry;
 
     QMap<data_source::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
+
+    AbstractLink* createLinkFromDescription(const LinkDescriptionPtr& description)
+    {
+        DescriptionLinkFactory factory(description);
+        AbstractLink* link = factory.create();
+        if (!link) return nullptr;
+
+        descriptedLinks[description] = link;
+        communicator->addLink(link);
+
+        if (description->isAutoConnect()) link->up();
+
+        return link;
+    }
+
+    void updateLinkFromDescription(AbstractLink* link,
+                                   const LinkDescriptionPtr& description)
+    {
+        DescriptionLinkFactory factory(description);
+        factory.update(link);
+    }
 };
 
 CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
@@ -34,17 +55,9 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
     d->communicator = commFactory->create();
     d->entry = entry;
 
-    DescriptionLinkFactory factory; // TODO: link to description notify
     for (const LinkDescriptionPtr& description: d->entry->loadLinks())
     {
-        AbstractLink* link = factory.create();
-        if (!link) continue;
-
-        d->descriptedLinks[description] = link;
-        d->communicator->addLink(link);
-        link->setParent(this);
-
-        if (description->isAutoConnect()) link->up();
+        d->createLinkFromDescription(description)->setParent(this);
     }
 }
 
@@ -61,17 +74,20 @@ LinkDescriptionPtrList CommunicationManager::links() const
     return d->descriptedLinks.keys();
 }
 
-void CommunicationManager::addLink(const LinkDescriptionPtr& description)
+void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
 {
-    DescriptionLinkFactory factory(description);
-    AbstractLink* link = factory.create();
-    if (!link) return;
+    AbstractLink* link;
 
-    d->descriptedLinks[description] = link;
-    d->communicator->addLink(link);
-    link->setParent(this);
-
-    if (description->isAutoConnect()) link->up();
+    if (d->descriptedLinks.contains(description))
+    {
+        link = d->descriptedLinks[description];
+        d->updateLinkFromDescription(link, description);
+    }
+    else
+    {
+        link = d->createLinkFromDescription(description);
+        link->setParent(this);
+    }
 
     d->entry->save(description);
 }
