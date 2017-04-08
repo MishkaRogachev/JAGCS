@@ -34,15 +34,32 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
     d->communicator = commFactory->create();
     d->entry = entry;
 
-    LinkDescriptionPtrList descriptions = d->entry->readLinks();
-    DescriptionLinkFactory linkFactory;
+    DescriptionLinkFactory factory; // TODO: link to description notify
+    for (const LinkDescriptionPtr& description: d->entry->loadLinks())
+    {
+        AbstractLink* link = factory.create();
+        if (!link) continue;
 
-    for (const LinkDescriptionPtr& description: descriptions)
-        this->addLink(description);
+        d->descriptedLinks[description] = link;
+        d->communicator->addLink(link);
+        link->setParent(this);
+
+        if (description->isAutoConnect()) link->up();
+    }
 }
 
 CommunicationManager::~CommunicationManager()
-{}
+{
+    for (const LinkDescriptionPtr& description: d->descriptedLinks.keys())
+    {
+        d->entry->save(description);
+    }
+}
+
+LinkDescriptionPtrList CommunicationManager::links() const
+{
+    return d->descriptedLinks.keys();
+}
 
 void CommunicationManager::addLink(const LinkDescriptionPtr& description)
 {
@@ -55,4 +72,15 @@ void CommunicationManager::addLink(const LinkDescriptionPtr& description)
     link->setParent(this);
 
     if (description->isAutoConnect()) link->up();
+
+    d->entry->save(description);
+}
+
+void CommunicationManager::removeLink(const LinkDescriptionPtr& description)
+{
+    AbstractLink* link = d->descriptedLinks.take(description);
+    d->communicator->removeLink(link);
+    delete link;
+
+    d->entry->remove(description);
 }

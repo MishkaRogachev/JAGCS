@@ -150,7 +150,7 @@ void DbEntry::unload(const LinkDescriptionPtr& link)
     d->linkRepository.unload(link->id());
 }
 
-LinkDescriptionPtrList DbEntry::readLinks()
+LinkDescriptionPtrList DbEntry::loadLinks()
 {
     LinkDescriptionPtrList list;
     return list;
