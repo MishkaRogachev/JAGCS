@@ -7,6 +7,8 @@ import "qrc:/Controls"
 ColumnLayout {
     id: root
 
+    property int links: 0
+
     signal addUdpLink()
     signal addSerialLink()
 
@@ -40,7 +42,7 @@ ColumnLayout {
 
             Repeater {
                 id: repeater
-                model: 2
+                model: links
 
                 CommunicationLinkView {
                     Layout.fillWidth: true

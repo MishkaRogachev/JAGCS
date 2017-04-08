@@ -20,13 +20,13 @@ namespace
 using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
-        data_source::LinkDescription* description,
+        const data_source::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
     m_description(description)
 {}
 
-data_source::LinkDescription* CommunicationLinkPresenter::description() const
+data_source::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 {
     return m_description;
 }

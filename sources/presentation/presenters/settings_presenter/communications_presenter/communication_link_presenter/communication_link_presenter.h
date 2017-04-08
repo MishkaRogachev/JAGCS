@@ -1,12 +1,9 @@
 #ifndef COMMUNICATION_LINK_PRESENTER_H
 #define COMMUNICATION_LINK_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
-
-namespace data_source
-{
-    class LinkDescription;
-}
+#include "db_traits.h"
 
 namespace presentation
 {
@@ -15,10 +12,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(data_source::LinkDescription* description,
+        CommunicationLinkPresenter(const data_source::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
-        data_source::LinkDescription* description() const;
+        data_source::LinkDescriptionPtr description() const;
 
     public slots:
         void updateView();
@@ -37,7 +34,7 @@ namespace presentation
         void onSetBaudRate(int rate);
 
     private:
-        data_source::LinkDescription* m_description;
+        data_source::LinkDescriptionPtr m_description;
     };
 }
 

@@ -87,6 +87,8 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
     {
         link = d->createLinkFromDescription(description);
         link->setParent(this);
+
+        emit linksChanged(this->links());
     }
 
     d->entry->save(description);
@@ -97,6 +99,8 @@ void CommunicationManager::removeLink(const LinkDescriptionPtr& description)
     AbstractLink* link = d->descriptedLinks.take(description);
     d->communicator->removeLink(link);
     delete link;
+
+    emit linksChanged(this->links());
 
     d->entry->remove(description);
 }

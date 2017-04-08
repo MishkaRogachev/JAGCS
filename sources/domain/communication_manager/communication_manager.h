@@ -32,6 +32,9 @@ namespace domain
         void saveLink(const data_source::LinkDescriptionPtr& description);
         void removeLink(const data_source::LinkDescriptionPtr& description);
 
+    signals:
+        void linksChanged(const data_source::LinkDescriptionPtrList& links);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

@@ -1,5 +1,8 @@
 #include "communications_presenter.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "link_description.h"
 
@@ -26,6 +29,9 @@ CommunicationsPresenter::CommunicationsPresenter(
     d(new Impl())
 {
     d->manager = manager;
+
+    connect(manager, &CommunicationManager::linksChanged,
+            this, &CommunicationsPresenter::updateCommunicationsLinks);
 }
 
 CommunicationsPresenter::~CommunicationsPresenter()
@@ -41,7 +47,27 @@ void CommunicationsPresenter::connectView(QObject* view)
 
 void CommunicationsPresenter::updateCommunicationsLinks()
 {
-    // TODO:
+    data_source::LinkDescriptionPtrList links = d->manager->links();
+
+    for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
+    {
+        if (links.contains(linkPresenter->description()))
+        {
+            links.removeOne(linkPresenter->description());
+            continue;
+        }
+
+        d->linkPresenters.removeOne(linkPresenter);
+        linkPresenter->deleteLater();
+    }
+
+    for (const data_source::LinkDescriptionPtr& description: links)
+    {
+        d->linkPresenters.append(new CommunicationLinkPresenter(description,
+                                                                this));
+    }
+
+    this->setViewProperty(PROPERTY(links), d->linkPresenters.count());
 }
 
 void CommunicationsPresenter::onAddUdpLink()
