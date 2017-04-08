@@ -10,7 +10,8 @@ namespace data_source
     class DescriptionLinkFactory: public ILinkFactory
     {
     public:
-        DescriptionLinkFactory();
+        DescriptionLinkFactory(
+                const LinkDescriptionPtr& description = LinkDescriptionPtr());
 
         AbstractLink* create() override;
 

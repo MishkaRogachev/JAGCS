@@ -1,11 +1,9 @@
 #include "communications_presenter.h"
 
 // Internal
+#include "link_description.h"
+
 #include "settings_provider.h"
-
-#include "udp_link.h"
-#include "serial_link.h"
-
 #include "communication_manager.h"
 
 #include "communication_link_presenter.h"
@@ -43,24 +41,28 @@ void CommunicationsPresenter::connectView(QObject* view)
 
 void CommunicationsPresenter::updateCommunicationsLinks()
 {
-    QList<QObject*> list; // TODO: list
-
-    for (d->linkPresenters.re)
-
-    this->setViewProperty(PROPERTY(commLinks), QVariant::fromValue(list));
+    // TODO:
 }
 
 void CommunicationsPresenter::onAddUdpLink()
 {
-    d->manager->addLink(new data_source::UdpLink(SettingsProvider::value(
-                                        settings::communication::port).toInt()));
+    auto description = data_source::LinkDescriptionPtr::create();
+
+    description->setType(data_source::LinkDescription::Udp);
+    description->setPort(domain::SettingsProvider::value(
+                            settings::communication::port).toInt());
+
+    d->manager->addLink(description);
 }
 
 void CommunicationsPresenter::onAddSerialLink()
 {
-    d->manager->addLink(new data_source::SerialLink(SettingsProvider::value(
-                              settings::communication::serialDevice).toString(),
-                                                    SettingsProvider::value(
-                              settings::communication::baudRate).toInt()));
+    auto description = data_source::LinkDescriptionPtr::create();
+
+    description->setType(data_source::LinkDescription::Serial);
+    description->setBaudRate(domain::SettingsProvider::value(
+                            settings::communication::baudRate).toInt());
+
+    d->manager->addLink(description);
 }
 

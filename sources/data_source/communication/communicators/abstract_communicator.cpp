@@ -25,7 +25,6 @@ void AbstractCommunicator::sendDataAllLinks(const QByteArray& data)
 void AbstractCommunicator::addLink(AbstractLink* link)
 {
     m_links.append(link);
-    link->setParent(this);
 
     connect(link, &AbstractLink::dataReceived,
             this, &AbstractCommunicator::onDataReceived);
@@ -36,7 +35,6 @@ void AbstractCommunicator::addLink(AbstractLink* link)
 void AbstractCommunicator::removeLink(AbstractLink* link)
 {
     m_links.removeOne(link);
-    if (link->parent() == this) link->setParent(nullptr);
 
     disconnect(link, &AbstractLink::dataReceived,
                this, &AbstractCommunicator::onDataReceived);

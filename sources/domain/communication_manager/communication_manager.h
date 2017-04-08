@@ -4,9 +4,11 @@
 // Qt
 #include <QObject>
 
+// Internal
+#include "db_traits.h"
+
 namespace data_source
 {
-    class LinkDescription;
     class DbEntry;
 }
 
@@ -19,13 +21,13 @@ namespace domain
         Q_OBJECT
 
     public:
-        CommunicationManager(ICommunicatorFactory* factory,
+        CommunicationManager(ICommunicatorFactory* commFactory,
                              data_source::DbEntry* entry,
                              QObject* parent = nullptr);
         ~CommunicationManager() override;
 
     public slots:
-        void addLink(const data_source::LinkDescription& description);
+        void addLink(const data_source::LinkDescriptionPtr& description);
 
     private:
         class Impl;

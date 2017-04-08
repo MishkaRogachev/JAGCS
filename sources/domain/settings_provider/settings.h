@@ -46,7 +46,6 @@ namespace settings
     {
         const char* const systemId = "Connection/systemId";
         const char* const componentId = "Connection/componentId";
-        const char* const serialDevice = "Connection/serialDevice";
         const char* const baudRate = "Connection/baudRate";
         const char* const port = "Connection/port";
     }

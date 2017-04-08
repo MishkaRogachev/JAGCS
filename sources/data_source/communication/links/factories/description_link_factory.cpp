@@ -8,8 +8,10 @@
 
 using namespace data_source;
 
-DescriptionLinkFactory::DescriptionLinkFactory():
-    ILinkFactory()
+DescriptionLinkFactory::DescriptionLinkFactory(
+        const LinkDescriptionPtr& description):
+    ILinkFactory(),
+    m_description(description)
 {}
 
 AbstractLink* DescriptionLinkFactory::create()
