@@ -18,7 +18,7 @@ namespace data_source
         MissionPtr readMission(int id, bool reload = false);
         MissionItemPtr readMissionItem(int id, bool reload = false);
         VehiclePtr readVehicle(int id, bool reload = false);
-        LinkDescriptionPtr readLink(int id, bool reload);
+        LinkDescriptionPtr readLink(int id, bool reload = false);
 
         bool save(const MissionPtr& mission);
         bool save(const MissionItemPtr& missionItem);

@@ -153,6 +153,12 @@ void DbEntry::unload(const LinkDescriptionPtr& link)
 LinkDescriptionPtrList DbEntry::loadLinks()
 {
     LinkDescriptionPtrList list;
+
+    for (int id: d->linkRepository.selectId())
+    {
+        list.append(this->readLink(id));
+    }
+
     return list;
 }
 

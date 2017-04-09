@@ -24,7 +24,7 @@ namespace data_source
         bool contains(int id);
         void unload(int id);
 
-        QList<int> selectId(const QString& condition);
+        QList<int> selectId(const QString& condition = QString());
 
     protected:
         bool runQuerry();

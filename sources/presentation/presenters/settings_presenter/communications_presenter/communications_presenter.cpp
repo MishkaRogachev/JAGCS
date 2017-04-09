@@ -74,6 +74,7 @@ void CommunicationsPresenter::onAddUdpLink()
 {
     auto description = data_source::LinkDescriptionPtr::create();
 
+    description->setName(tr("New UDP Link"));
     description->setType(data_source::LinkDescription::Udp);
     description->setPort(domain::SettingsProvider::value(
                             settings::communication::port).toInt());
@@ -85,6 +86,7 @@ void CommunicationsPresenter::onAddSerialLink()
 {
     auto description = data_source::LinkDescriptionPtr::create();
 
+    description->setName(tr("New Serial Link"));
     description->setType(data_source::LinkDescription::Serial);
     description->setBaudRate(domain::SettingsProvider::value(
                             settings::communication::baudRate).toInt());

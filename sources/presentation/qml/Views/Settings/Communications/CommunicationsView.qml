@@ -67,13 +67,13 @@ ColumnLayout {
             MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
-                onTriggered: addUdpLink()()
+                onTriggered: addUdpLink()
             }
 
             MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
-                onTriggered: addSerialLink()()
+                onTriggered: addSerialLink()
             }
         }
     }
