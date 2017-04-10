@@ -20,7 +20,7 @@ public:
         using namespace settings;
         settings.clear();
 
-        settings.setValue(data_base::name, "jagcs");
+        settings.setValue(data_base::name, "jagcs_db");
 
         settings.setValue(gui::fullscreen, true);
         settings.setValue(gui::locale, "en");

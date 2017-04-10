@@ -2,6 +2,7 @@
 
 // Qt
 #include <QFileInfo>
+#include <QDebug>
 
 // Internal
 #include "db_manager.h"
@@ -27,12 +28,17 @@ DomainFacade::DomainFacade():
     d(new Impl())
 {
     // TODO: replace by migrations
-    auto dbName = SettingsProvider::value(settings::data_base::name).toString();
+    QString dbName = SettingsProvider::value(settings::data_base::name).toString();
     QFileInfo file(dbName);
     bool exist = file.exists();
 
     d->dataBase.open(dbName);
-    if (!exist) d->dataBase.create();
+    if (!exist) exist = d->dataBase.create();
+
+    if (!exist)
+    {
+        qCritical() << "Error while creating DB" << dbName;
+    }
 
     MavLinkCommunicatorFactory comFactory;
     d->manager.reset(new CommunicationManager(&comFactory, &d->dbEntry));
