@@ -25,6 +25,7 @@ namespace presentation
 
     protected:
         void connectView(QObject* view) override;
+        void setViewSignalsEnbled(bool enabled);
 
     private slots:
         void onSetType(const QString& type);

@@ -7,7 +7,7 @@ import "qrc:/Controls"
 ColumnLayout {
     id: root
 
-    property int links: 0
+    property var links
 
     signal addUdpLink()
     signal addSerialLink()
@@ -45,7 +45,9 @@ ColumnLayout {
                 model: links
 
                 CommunicationLinkView {
+                    id: linkView
                     Layout.fillWidth: true
+                    Component.onCompleted: modelData.setView(linkView)
                 }
             }
         }

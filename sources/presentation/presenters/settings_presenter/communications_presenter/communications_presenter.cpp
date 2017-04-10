@@ -65,9 +65,17 @@ void CommunicationsPresenter::updateCommunicationsLinks()
     {
         d->linkPresenters.append(new CommunicationLinkPresenter(description,
                                                                 this));
+        connect(d->linkPresenters.last(), &CommunicationLinkPresenter::remove,
+                this, &CommunicationsPresenter::onRemove);
     }
 
-    this->setViewProperty(PROPERTY(links), d->linkPresenters.count());
+    QList<QObject*> objectList;
+    for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
+    {
+        objectList.append(linkPresenter);
+    }
+
+    this->setViewProperty(PROPERTY(links), QVariant::fromValue(objectList));
 }
 
 void CommunicationsPresenter::onAddUdpLink()
@@ -92,5 +100,14 @@ void CommunicationsPresenter::onAddSerialLink()
                             settings::communication::baudRate).toInt());
 
     d->manager->saveLink(description);
+}
+
+void CommunicationsPresenter::onRemove()
+{
+    auto linkPresenter = qobject_cast<CommunicationLinkPresenter*>(this->sender());
+    if (!linkPresenter) return;
+
+    d->manager->removeLink(linkPresenter->description());
+    this->updateCommunicationsLinks();
 }
 
