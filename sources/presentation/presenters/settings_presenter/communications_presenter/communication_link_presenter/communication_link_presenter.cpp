@@ -86,6 +86,8 @@ void CommunicationLinkPresenter::onSetType(const QString& type)
 {
     m_description->setType(::typeMap.key(
                               type, data_source::LinkDescription::UnknownType));
+
+    this->updateView();
 }
 
 void CommunicationLinkPresenter::onSetName(const QString& name)

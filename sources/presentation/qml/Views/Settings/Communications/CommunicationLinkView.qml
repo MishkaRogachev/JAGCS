@@ -17,7 +17,7 @@ Frame {
     property alias port: portBox.value
     property string device
     property alias devices: deviceBox.model
-    property string baudRate
+    property int baudRate
     property alias baudRates: baudBox.model
     property alias autoConnect: autoconnectBox.checked
 
