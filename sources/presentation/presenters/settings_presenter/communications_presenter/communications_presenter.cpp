@@ -67,6 +67,8 @@ void CommunicationsPresenter::updateCommunicationsLinks()
                                                                 this));
         connect(d->linkPresenters.last(), &CommunicationLinkPresenter::remove,
                 this, &CommunicationsPresenter::onRemove);
+        connect(d->linkPresenters.last(), &CommunicationLinkPresenter::changed,
+                this, &CommunicationsPresenter::onChanged);
     }
 
     QList<QObject*> objectList;
@@ -108,6 +110,12 @@ void CommunicationsPresenter::onRemove()
     if (!linkPresenter) return;
 
     d->manager->removeLink(linkPresenter->description());
-    this->updateCommunicationsLinks();
 }
 
+void CommunicationsPresenter::onChanged()
+{
+    auto linkPresenter = qobject_cast<CommunicationLinkPresenter*>(this->sender());
+    if (!linkPresenter) return;
+
+    d->manager->saveLink(linkPresenter->description());
+}

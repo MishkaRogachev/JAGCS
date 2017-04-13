@@ -21,6 +21,7 @@ namespace presentation
         void updateView();
 
     signals:
+        void changed();
         void remove();
 
     protected:
@@ -28,7 +29,6 @@ namespace presentation
         void setViewSignalsEnbled(bool enabled);
 
     private slots:
-        void onSetType(const QString& type);
         void onSetName(const QString& name);
         void onSetPort(int port);
         void onSetDevice(const QString& device);

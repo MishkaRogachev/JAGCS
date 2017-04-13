@@ -8,12 +8,8 @@ import "qrc:/Controls"
 Frame {
     id: root
 
-    property int type: LinkDescription.UnknownType
     property bool connected: false
-
-    property alias name: nameField.text
-    property string typeName
-    property alias typeNames: typeBox.model
+    property int type: LinkDescription.UnknownType
     property alias port: portBox.value
     property string device
     property alias devices: deviceBox.model
@@ -21,7 +17,6 @@ Frame {
     property alias baudRates: baudBox.model
     property alias autoConnect: autoconnectBox.checked
 
-    signal setType(string type)
     signal setName(string name)
     signal setPort(int port)
     signal setDevice(string device)
@@ -29,7 +24,6 @@ Frame {
     signal remove()
     signal setConnected(bool connected)
 
-    onTypeNameChanged: typeBox.currentIndex = typeBox.model.indexOf(typeName)
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
@@ -52,13 +46,19 @@ Frame {
 
         Label {
             text: qsTr("Type:");
+            enabled: false
             Layout.fillWidth: true
         }
 
-        ComboBox {
-            id: typeBox
+        Label {
             Layout.fillWidth: true
-            onCurrentTextChanged: setType(currentText)
+            text: {
+                switch (type) {
+                case LinkDescription.Udp: return qsTr("UDP");
+                case LinkDescription.Serial: return qsTr("Serial");
+                default: return qsTr("Unknown");
+                }
+            }
         }
 
         Label {

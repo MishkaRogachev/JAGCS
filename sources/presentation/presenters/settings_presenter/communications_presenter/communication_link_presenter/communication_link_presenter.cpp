@@ -9,15 +9,6 @@
 // Internal
 #include "link_description.h"
 
-namespace
-{
-    static const QMap <data_source::LinkDescription::Type, QString> typeMap =
-    {
-        { data_source::LinkDescription::Udp, QObject::tr("UDP") },
-        { data_source::LinkDescription::Serial, QObject::tr("Serial") }
-    };
-}
-
 using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
@@ -37,7 +28,6 @@ void CommunicationLinkPresenter::updateView()
     this->setViewSignalsEnbled(false);
 
     this->setViewProperty(PROPERTY(type), m_description->type());
-    this->setViewProperty(PROPERTY(typeName), ::typeMap.value(m_description->type()));
     this->setViewProperty(PROPERTY(name), m_description->name());
     this->setViewProperty(PROPERTY(port), m_description->port());
     this->setViewProperty(PROPERTY(device), m_description->device());
@@ -49,9 +39,6 @@ void CommunicationLinkPresenter::updateView()
 
 void CommunicationLinkPresenter::connectView(QObject* view)
 {
-    QStringList typeNames = ::typeMap.values();
-    this->setViewProperty(PROPERTY(typeNames), typeNames);
-
     QStringList devices;
     for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
         devices.append(info.portName());
@@ -82,30 +69,34 @@ void CommunicationLinkPresenter::setViewSignalsEnbled(bool enabled)
     }
 }
 
-void CommunicationLinkPresenter::onSetType(const QString& type)
-{
-    m_description->setType(::typeMap.key(
-                              type, data_source::LinkDescription::UnknownType));
-
-    this->updateView();
-}
-
 void CommunicationLinkPresenter::onSetName(const QString& name)
 {
+    if (m_description->name() == name) return;
+
     m_description->setName(name);
+    emit changed();
 }
 
 void CommunicationLinkPresenter::onSetPort(int port)
 {
+    if (m_description->port() == port) return;
+
     m_description->setPort(port);
+    emit changed();
 }
 
 void CommunicationLinkPresenter::onSetDevice(const QString& device)
 {
+    if (m_description->device() == device) return;
+
     m_description->setDevice(device);
+    emit changed();
 }
 
 void CommunicationLinkPresenter::onSetBaudRate(int rate)
 {
+    if (m_description->baudRate() == rate) return;
+
     m_description->setBaudRate(rate);
+    emit changed();
 }
