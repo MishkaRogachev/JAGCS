@@ -27,8 +27,8 @@ namespace presentation
 
         void onAddUdpLink();
         void onAddSerialLink();
-        void onRemove();
         void onChanged();
+        void onRemove();
 
     private:
         class Impl;

@@ -15,7 +15,7 @@ UdpLink::UdpLink(int port, QObject* parent):
                      this, &UdpLink::readPendingDatagrams);
 }
 
-bool UdpLink::isUp() const
+bool UdpLink::isConnected() const
 {
     return m_socket->state() == QAbstractSocket::BoundState;
 }
@@ -45,9 +45,9 @@ Endpoint UdpLink::endpoint(int index) const
     return m_endpoints.at(index);
 }
 
-void UdpLink::up()
+void UdpLink::connectLink()
 {
-    if (this->isUp()) return;
+    if (this->isConnected()) return;
 
     if (!m_socket->bind(m_port))
     {
@@ -62,9 +62,9 @@ void UdpLink::up()
     }
 }
 
-void UdpLink::down()
+void UdpLink::disconnectLink()
 {
-    if (!this->isUp()) return;
+    if (!this->isConnected()) return;
 
     m_socket->close();
     emit upChanged(false);
@@ -82,10 +82,10 @@ void UdpLink::setPort(int port)
 
     m_port = port;
 
-    if (this->isUp())
+    if (this->isConnected())
     {
-        this->down();
-        this->up();
+        this->disconnectLink();
+        this->connectLink();
     }
 
     emit portChanged(port);

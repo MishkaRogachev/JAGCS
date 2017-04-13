@@ -10,12 +10,12 @@ Frame {
 
     property bool connected: false
     property int type: LinkDescription.UnknownType
+    property alias name: nameField.text
     property alias port: portBox.value
     property string device
     property alias devices: deviceBox.model
     property int baudRate
     property alias baudRates: baudBox.model
-    property alias autoConnect: autoconnectBox.checked
 
     signal setName(string name)
     signal setPort(int port)
@@ -29,20 +29,8 @@ Frame {
 
     GridLayout {
         anchors.fill: parent
-        columns: 4
+        columns: 2
         rowSpacing: palette.spacing
-
-        Label {
-            text: qsTr("Name:");
-            Layout.fillWidth: true
-        }
-
-        TextField {
-            id: nameField
-            Layout.fillWidth: true
-            placeholderText: qsTr("Enter name")
-            onEditingFinished: setName(text)
-        }
 
         Label {
             text: qsTr("Type:");
@@ -59,6 +47,18 @@ Frame {
                 default: return qsTr("Unknown");
                 }
             }
+        }
+
+        Label {
+            text: qsTr("Name:");
+            Layout.fillWidth: true
+        }
+
+        TextField {
+            id: nameField
+            Layout.fillWidth: true
+            placeholderText: qsTr("Enter name")
+            onEditingFinished: setName(text)
         }
 
         Label {
@@ -104,16 +104,11 @@ Frame {
         }
 
         RowLayout {
-            Layout.columnSpan: 4
+            Layout.columnSpan: 2
 
             Item {
                 height: parent.height
                 Layout.fillWidth: true
-            }
-
-            CheckBox {
-                id: autoconnectBox
-                text: qsTr("Autoconnect")
             }
 
             Button {

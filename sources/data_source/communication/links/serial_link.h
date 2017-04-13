@@ -18,14 +18,14 @@ namespace data_source
         SerialLink(const QString& device, qint32 baudRate,
                    QObject* parent = nullptr);
 
-        bool isUp() const override;
+        bool isConnected() const override;
 
         QString device() const;
         qint32 baudRate() const;
 
     public slots:
-        void up() override;
-        void down() override;
+        void connectLink() override;
+        void disconnectLink() override;
 
         void sendDataImpl(const QByteArray& data) override;
 

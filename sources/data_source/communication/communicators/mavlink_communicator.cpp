@@ -112,7 +112,7 @@ void MavLinkCommunicator::setComponentId(uint8_t componentId)
 void MavLinkCommunicator::sendMessage(mavlink_message_t& message,
                                       AbstractLink* link)
 {
-    if (!link || !link->isUp()) return;
+    if (!link || !link->isConnected()) return;
 
     static const uint8_t messageKeys[256] = MAVLINK_MESSAGE_CRCS;
     mavlink_finalize_message_chan(&message,

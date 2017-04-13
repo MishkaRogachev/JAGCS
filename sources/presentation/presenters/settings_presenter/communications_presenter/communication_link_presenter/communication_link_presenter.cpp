@@ -32,7 +32,7 @@ void CommunicationLinkPresenter::updateView()
     this->setViewProperty(PROPERTY(port), m_description->port());
     this->setViewProperty(PROPERTY(device), m_description->device());
     this->setViewProperty(PROPERTY(baudRate), m_description->baudRate());
-    this->setViewProperty(PROPERTY(autoConnect), m_description->isAutoConnect());
+    this->setViewProperty(PROPERTY(connected), m_description->isAutoConnect());
 
     this->setViewSignalsEnbled(true);
 }
@@ -56,11 +56,11 @@ void CommunicationLinkPresenter::setViewSignalsEnbled(bool enabled)
 {
     if (enabled)
     {
-        connect(m_view, SIGNAL(setType(QString)), this, SLOT(onSetType(QString)));
         connect(m_view, SIGNAL(setName(QString)), this, SLOT(onSetName(QString)));
         connect(m_view, SIGNAL(setPort(int)), this, SLOT(onSetPort(int)));
         connect(m_view, SIGNAL(setDevice(QString)), this, SLOT(onSetDevice(QString)));
         connect(m_view, SIGNAL(setBaudRate(int)), this, SLOT(onSetBaudRate(int)));
+        connect(m_view, SIGNAL(setConnected(bool)), this, SLOT(onSetConnected(bool)));
         connect(m_view, SIGNAL(remove()), this, SIGNAL(remove()));
     }
     else
@@ -98,5 +98,14 @@ void CommunicationLinkPresenter::onSetBaudRate(int rate)
     if (m_description->baudRate() == rate) return;
 
     m_description->setBaudRate(rate);
+    emit changed();
+}
+
+void CommunicationLinkPresenter::onSetConnected(bool connected)
+{
+    qDebug() << connected;
+    if (m_description->isAutoConnect() == connected) return;
+
+    m_description->setAutoConnect(connected);
     emit changed();
 }

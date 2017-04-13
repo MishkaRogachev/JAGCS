@@ -10,7 +10,7 @@ namespace data_source
     {
         Q_OBJECT
 
-        Q_PROPERTY(bool isUp READ isUp NOTIFY upChanged)
+        Q_PROPERTY(bool isConnected READ isConnected NOTIFY upChanged)
 
         Q_PROPERTY(int bytesReceivedSec READ bytesReceivedSec
                    NOTIFY statisticsChanged)
@@ -25,7 +25,7 @@ namespace data_source
     public:
         explicit AbstractLink(QObject* parent = nullptr);
 
-        virtual bool isUp() const = 0;
+        virtual bool isConnected() const = 0;
 
         int bytesReceivedSec() const;
         int bytesSentSec() const;
@@ -34,8 +34,9 @@ namespace data_source
         int packetsDrops() const;
 
     public slots:
-        virtual void up() = 0;
-        virtual void down() = 0;
+        void setConnected(bool connected);
+        virtual void connectLink() = 0;
+        virtual void disconnectLink() = 0;
 
         void sendData(const QByteArray& data);
 
@@ -43,7 +44,7 @@ namespace data_source
         void setPacketsDrops(int packetsDrops);
 
     signals:
-        void upChanged(bool isUp);
+        void upChanged(bool isConnected);
         void dataReceived(const QByteArray& data);
 
         void statisticsChanged();

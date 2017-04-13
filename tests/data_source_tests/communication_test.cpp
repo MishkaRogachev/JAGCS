@@ -15,11 +15,11 @@ void CommunicationTest::testUdpLink()
 {
     UdpLink link1(60000);
     QSignalSpy spy1(&link1, SIGNAL(dataReceived(QByteArray)));
-    link1.up();
+    link1.connectLink();
 
     UdpLink link2(60001);
     QSignalSpy spy2(&link2, SIGNAL(dataReceived(QByteArray)));
-    link2.up();
+    link2.connectLink();
 
     link1.addEndpoint(Endpoint(QHostAddress::LocalHost, 60001));
 

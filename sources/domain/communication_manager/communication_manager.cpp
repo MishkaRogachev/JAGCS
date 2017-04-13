@@ -2,6 +2,7 @@
 
 // Qt
 #include <QMap>
+#include <QDebug>
 
 // Internal
 #include "db_entry.h"
@@ -33,7 +34,7 @@ public:
         descriptedLinks[description] = link;
         communicator->addLink(link);
 
-        if (description->isAutoConnect()) link->up();
+        if (description->isAutoConnect()) link->connectLink();
 
         return link;
     }
@@ -88,7 +89,16 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
         link = d->createLinkFromDescription(description);
         link->setParent(this);
 
+        d->descriptedLinks[description] = link;
+        d->communicator->addLink(link);
+
         emit linksChanged(this->links());
+    }
+
+    if (description->isAutoConnect() != link->isConnected())
+    {
+        link->setConnected(description->isAutoConnect());
+        description->setAutoConnect(link->isConnected());
     }
 
     d->entry->save(description);

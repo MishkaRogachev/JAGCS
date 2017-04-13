@@ -21,6 +21,7 @@ namespace presentation
         void updateView();
 
     signals:
+        void setConnected(bool connected);
         void changed();
         void remove();
 
@@ -33,6 +34,7 @@ namespace presentation
         void onSetPort(int port);
         void onSetDevice(const QString& device);
         void onSetBaudRate(int rate);
+        void onSetConnected(bool connected);
 
     private:
         data_source::LinkDescriptionPtr m_description;

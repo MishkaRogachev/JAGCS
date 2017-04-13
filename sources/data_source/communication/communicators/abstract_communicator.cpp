@@ -18,7 +18,7 @@ void AbstractCommunicator::sendDataAllLinks(const QByteArray& data)
 {
     for (AbstractLink* link: m_links)
     {
-        if (link->isUp()) link->sendData(data);
+        if (link->isConnected()) link->sendData(data);
     }
 }
 

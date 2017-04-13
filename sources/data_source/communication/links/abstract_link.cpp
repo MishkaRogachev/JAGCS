@@ -43,6 +43,11 @@ int AbstractLink::packetsDrops() const
     return m_packetsDrops;
 }
 
+void AbstractLink::setConnected(bool connected)
+{
+    connected ? this->connectLink() : this->disconnectLink();
+}
+
 void AbstractLink::sendData(const QByteArray& data)
 {
     m_bytesSent += data.size();

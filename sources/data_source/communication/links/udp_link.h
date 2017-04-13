@@ -20,7 +20,7 @@ namespace data_source
     public:
         UdpLink(int port, QObject* parent = nullptr);
 
-        bool isUp() const override;
+        bool isConnected() const override;
 
         int port() const;
         EndpointList endpoints() const;
@@ -30,8 +30,8 @@ namespace data_source
         Q_INVOKABLE Endpoint endpoint(int index) const; // TODO: link and endpoint presenters
 
     public slots:
-        void up() override;
-        void down() override;
+        void connectLink() override;
+        void disconnectLink() override;
 
         void sendDataImpl(const QByteArray& data) override;
 

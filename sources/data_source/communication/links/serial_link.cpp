@@ -16,7 +16,7 @@ SerialLink::SerialLink(const QString& portName, qint32 baudRate,
     connect(m_port, &QSerialPort::readyRead, this, &SerialLink::readSerialData);
 }
 
-bool SerialLink::isUp() const
+bool SerialLink::isConnected() const
 {
     return m_port->isOpen();
 }
@@ -31,9 +31,9 @@ qint32 SerialLink::baudRate() const
     return m_port->baudRate();
 }
 
-void SerialLink::up()
+void SerialLink::connectLink()
 {
-    if (this->isUp()) return;
+    if (this->isConnected()) return;
 
     if (!m_port->open(QIODevice::ReadWrite))
     {
@@ -48,9 +48,9 @@ void SerialLink::up()
     }
 }
 
-void SerialLink::down()
+void SerialLink::disconnectLink()
 {
-    if (!this->isUp()) return;
+    if (!this->isConnected()) return;
 
     m_port->close();
     emit upChanged(false);
