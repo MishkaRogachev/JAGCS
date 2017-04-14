@@ -1,7 +1,9 @@
 #ifndef COMMUNICATIONS_PRESENTER_H
 #define COMMUNICATIONS_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "db_traits.h"
 
 namespace domain
 {
@@ -23,6 +25,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
+        void onLinkAdded(const data_source::LinkDescriptionPtr& description);
+        void onLinkRemoved(const data_source::LinkDescriptionPtr& description);
         void updateCommunicationsLinks();
 
         void onAddUdpLink();

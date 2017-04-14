@@ -33,8 +33,12 @@ namespace domain
         void removeLink(const data_source::LinkDescriptionPtr& description);
 
     signals:
+        void linkAdded(const data_source::LinkDescriptionPtr& description);
+        void linkRemoved(const data_source::LinkDescriptionPtr& description);
         void linkChanged(const data_source::LinkDescriptionPtr& description);
-        void linksChanged(const data_source::LinkDescriptionPtrList& links);
+
+    private slots:
+        void onLinkStatisticsChanged();
 
     private:
         class Impl;

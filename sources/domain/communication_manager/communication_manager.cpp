@@ -25,7 +25,7 @@ public:
 
     QMap<data_source::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
 
-    AbstractLink* createLinkFromDescription(const LinkDescriptionPtr& description)
+    AbstractLink* linkFromDescription(const LinkDescriptionPtr& description)
     {
         DescriptionLinkFactory factory(description);
         AbstractLink* link = factory.create();
@@ -58,7 +58,10 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
 
     for (const LinkDescriptionPtr& description: d->entry->loadLinks())
     {
-        d->createLinkFromDescription(description)->setParent(this);
+        AbstractLink* link = d->linkFromDescription(description);
+        link->setParent(this);
+        connect(link, &AbstractLink::statisticsChanged,
+                this, &CommunicationManager::onLinkStatisticsChanged);
     }
 }
 
@@ -86,13 +89,14 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
     }
     else
     {
-        link = d->createLinkFromDescription(description);
+        link = d->linkFromDescription(description);
         link->setParent(this);
+        connect(link, &AbstractLink::statisticsChanged,
+                this, &CommunicationManager::onLinkStatisticsChanged);
 
         d->descriptedLinks[description] = link;
         d->communicator->addLink(link);
-
-        emit linksChanged(this->links());
+        emit linkAdded(description);
     }
 
     if (description->isAutoConnect() != link->isConnected())
@@ -112,7 +116,13 @@ void CommunicationManager::removeLink(const LinkDescriptionPtr& description)
     d->communicator->removeLink(link);
     delete link;
 
-    emit linksChanged(this->links());
-
     d->entry->remove(description);
+    emit linkRemoved(description);
+}
+
+void CommunicationManager::onLinkStatisticsChanged()
+{
+    AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
+
+    //TODO: statisticsd
 }

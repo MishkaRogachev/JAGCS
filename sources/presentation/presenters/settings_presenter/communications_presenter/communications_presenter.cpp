@@ -30,8 +30,16 @@ CommunicationsPresenter::CommunicationsPresenter(
 {
     d->manager = manager;
 
-    connect(manager, &CommunicationManager::linksChanged,
-            this, &CommunicationsPresenter::updateCommunicationsLinks);
+    connect(manager, &CommunicationManager::linkAdded,
+            this, &CommunicationsPresenter::onLinkAdded);
+    connect(manager, &CommunicationManager::linkRemoved,
+            this, &CommunicationsPresenter::onLinkRemoved);
+
+    for (const data_source::LinkDescriptionPtr& description: manager->links())
+    {
+        d->linkPresenters.append(new CommunicationLinkPresenter(
+                                     d->manager, description, this));
+    }
 }
 
 CommunicationsPresenter::~CommunicationsPresenter()
@@ -45,28 +53,31 @@ void CommunicationsPresenter::connectView(QObject* view)
     this->updateCommunicationsLinks();
 }
 
-void CommunicationsPresenter::updateCommunicationsLinks()
+void CommunicationsPresenter::onLinkAdded(
+        const data_source::LinkDescriptionPtr& description)
 {
-    data_source::LinkDescriptionPtrList links = d->manager->links();
+    d->linkPresenters.append(new CommunicationLinkPresenter(
+                                 d->manager, description, this));
 
+    this->updateCommunicationsLinks();
+}
+
+void CommunicationsPresenter::onLinkRemoved(
+        const data_source::LinkDescriptionPtr& description)
+{
     for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
     {
-        if (links.contains(linkPresenter->description()))
-        {
-            links.removeOne(linkPresenter->description());
-            continue;
-        }
+        if (linkPresenter->description() != description) continue;
 
         d->linkPresenters.removeOne(linkPresenter);
-        linkPresenter->deleteLater();
+        delete linkPresenter;
+        this->updateCommunicationsLinks();
+        return;
     }
+}
 
-    for (const data_source::LinkDescriptionPtr& description: links)
-    {
-        d->linkPresenters.append(new CommunicationLinkPresenter(
-                                     d->manager, description, this));
-    }
-
+void CommunicationsPresenter::updateCommunicationsLinks()
+{
     QList<QObject*> objectList;
     for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
     {
