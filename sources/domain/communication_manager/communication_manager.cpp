@@ -101,6 +101,8 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
         description->setAutoConnect(link->isConnected());
     }
 
+    emit linkChanged(description);
+
     d->entry->save(description);
 }
 

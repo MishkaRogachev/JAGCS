@@ -63,12 +63,8 @@ void CommunicationsPresenter::updateCommunicationsLinks()
 
     for (const data_source::LinkDescriptionPtr& description: links)
     {
-        d->linkPresenters.append(new CommunicationLinkPresenter(description,
-                                                                this));
-        connect(d->linkPresenters.last(), &CommunicationLinkPresenter::remove,
-                this, &CommunicationsPresenter::onRemove);
-        connect(d->linkPresenters.last(), &CommunicationLinkPresenter::changed,
-                this, &CommunicationsPresenter::onChanged);
+        d->linkPresenters.append(new CommunicationLinkPresenter(
+                                     d->manager, description, this));
     }
 
     QList<QObject*> objectList;
@@ -102,20 +98,4 @@ void CommunicationsPresenter::onAddSerialLink()
                             settings::communication::baudRate).toInt());
 
     d->manager->saveLink(description);
-}
-
-void CommunicationsPresenter::onRemove()
-{
-    auto linkPresenter = qobject_cast<CommunicationLinkPresenter*>(this->sender());
-    if (!linkPresenter) return;
-
-    d->manager->removeLink(linkPresenter->description());
-}
-
-void CommunicationsPresenter::onChanged()
-{
-    auto linkPresenter = qobject_cast<CommunicationLinkPresenter*>(this->sender());
-    if (!linkPresenter) return;
-
-    d->manager->saveLink(linkPresenter->description());
 }

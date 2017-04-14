@@ -5,6 +5,11 @@
 #include "base_presenter.h"
 #include "db_traits.h"
 
+namespace domain
+{
+    class CommunicationManager;
+}
+
 namespace presentation
 {
     class CommunicationLinkPresenter: public BasePresenter
@@ -12,7 +17,8 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(const data_source::LinkDescriptionPtr& description,
+        CommunicationLinkPresenter(domain::CommunicationManager* manager,
+                                   const data_source::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
         data_source::LinkDescriptionPtr description() const;
@@ -22,8 +28,6 @@ namespace presentation
 
     signals:
         void setConnected(bool connected);
-        void changed();
-        void remove();
 
     protected:
         void connectView(QObject* view) override;
@@ -35,8 +39,10 @@ namespace presentation
         void onSetDevice(const QString& device);
         void onSetBaudRate(int rate);
         void onSetConnected(bool connected);
+        void onRemove();
 
     private:
+        domain::CommunicationManager* const m_manager;
         data_source::LinkDescriptionPtr m_description;
     };
 }

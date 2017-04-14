@@ -7,16 +7,24 @@
 #include <QDebug>
 
 // Internal
+#include "communication_manager.h"
 #include "link_description.h"
 
 using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
+        domain::CommunicationManager* manager,
         const data_source::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
+    m_manager(manager),
     m_description(description)
-{}
+{
+    connect(m_manager, &domain::CommunicationManager::linkChanged, this,
+            [this](const data_source::LinkDescriptionPtr& description) {
+        if (m_description == description) this->updateView();
+    });
+}
 
 data_source::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 {
@@ -61,7 +69,7 @@ void CommunicationLinkPresenter::setViewSignalsEnbled(bool enabled)
         connect(m_view, SIGNAL(setDevice(QString)), this, SLOT(onSetDevice(QString)));
         connect(m_view, SIGNAL(setBaudRate(int)), this, SLOT(onSetBaudRate(int)));
         connect(m_view, SIGNAL(setConnected(bool)), this, SLOT(onSetConnected(bool)));
-        connect(m_view, SIGNAL(remove()), this, SIGNAL(remove()));
+        connect(m_view, SIGNAL(remove()), this, SLOT(onRemove()));
     }
     else
     {
@@ -74,7 +82,7 @@ void CommunicationLinkPresenter::onSetName(const QString& name)
     if (m_description->name() == name) return;
 
     m_description->setName(name);
-    emit changed();
+    m_manager->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetPort(int port)
@@ -82,7 +90,7 @@ void CommunicationLinkPresenter::onSetPort(int port)
     if (m_description->port() == port) return;
 
     m_description->setPort(port);
-    emit changed();
+    m_manager->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetDevice(const QString& device)
@@ -90,7 +98,7 @@ void CommunicationLinkPresenter::onSetDevice(const QString& device)
     if (m_description->device() == device) return;
 
     m_description->setDevice(device);
-    emit changed();
+    m_manager->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetBaudRate(int rate)
@@ -98,14 +106,18 @@ void CommunicationLinkPresenter::onSetBaudRate(int rate)
     if (m_description->baudRate() == rate) return;
 
     m_description->setBaudRate(rate);
-    emit changed();
+    m_manager->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetConnected(bool connected)
 {
-    qDebug() << connected;
     if (m_description->isAutoConnect() == connected) return;
 
     m_description->setAutoConnect(connected);
-    emit changed();
+    m_manager->saveLink(m_description);
+}
+
+void CommunicationLinkPresenter::onRemove()
+{
+    m_manager->removeLink(m_description);
 }
