@@ -40,6 +40,7 @@ public:
         settings.setValue(communication::componentId, 0);
         settings.setValue(communication::baudRate, 57600);
         settings.setValue(communication::port, 14550);
+        settings.setValue(communication::statisticsCount, 20);
 
         settings.setValue(mission::defaultAcceptanceRadius, 3);
         settings.setValue(mission::defaultTakeoffPitch, 15);

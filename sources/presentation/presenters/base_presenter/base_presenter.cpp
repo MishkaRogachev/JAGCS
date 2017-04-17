@@ -51,8 +51,17 @@ void BasePresenter::invokeViewMethod(const char* name)
     QMetaObject::invokeMethod(m_view, name);
 }
 
-void BasePresenter::invokeViewMethod(const char* name, const QVariant& value)
+void BasePresenter::invokeViewMethod(const char* name, const QVariant& arg)
 {
-    QMetaObject::invokeMethod(m_view, name, Q_ARG(QVariant, value));
+    QMetaObject::invokeMethod(m_view, name, Q_ARG(QVariant, arg));
+}
+
+void BasePresenter::invokeViewMethod(const char* name,
+                                     const QVariant& arg1,
+                                     const QVariant& arg2)
+{
+     QMetaObject::invokeMethod(m_view, name,
+                               Q_ARG(QVariant, arg1),
+                               Q_ARG(QVariant, arg2));
 }
 

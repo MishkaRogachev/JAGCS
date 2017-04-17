@@ -7,6 +7,8 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
 #include "communication_manager.h"
 #include "link_description.h"
 
@@ -23,6 +25,13 @@ CommunicationLinkPresenter::CommunicationLinkPresenter(
     connect(m_manager, &domain::CommunicationManager::linkChanged, this,
             [this](const data_source::LinkDescriptionPtr& description) {
         if (m_description == description) this->updateView();
+    });
+
+    connect(m_manager, &domain::CommunicationManager::linkStatisticsChanged, this,
+            [this](const data_source::LinkDescriptionPtr& description,
+            int sentBytes, int recvBytes) {
+        if (m_description == description) this->updateStatistics(sentBytes,
+                                                                 recvBytes);
     });
 }
 
@@ -45,6 +54,12 @@ void CommunicationLinkPresenter::updateView()
     this->setViewSignalsEnbled(true);
 }
 
+void CommunicationLinkPresenter::updateStatistics(int sentBytes, int recvBytes)
+{
+    this->invokeViewMethod(PROPERTY(updateStatistics),
+                           sentBytes, recvBytes);
+}
+
 void CommunicationLinkPresenter::connectView(QObject* view)
 {
     QStringList devices;
@@ -56,6 +71,10 @@ void CommunicationLinkPresenter::connectView(QObject* view)
     for (qint32 rate: QSerialPortInfo::standardBaudRates())
         baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
+
+    this->setViewProperty(PROPERTY(statisticsCount),
+                          domain::SettingsProvider::value(
+                              settings::communication::statisticsCount));
 
     this->updateView();
 }

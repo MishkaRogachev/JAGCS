@@ -36,6 +36,8 @@ namespace domain
         void linkAdded(const data_source::LinkDescriptionPtr& description);
         void linkRemoved(const data_source::LinkDescriptionPtr& description);
         void linkChanged(const data_source::LinkDescriptionPtr& description);
+        void linkStatisticsChanged(const data_source::LinkDescriptionPtr& description,
+                                   int sentBytes, int recvBytes);
 
     private slots:
         void onLinkStatisticsChanged();

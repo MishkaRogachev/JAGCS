@@ -58,10 +58,9 @@ void UdpLink::connectLink()
     }
     else
     {
+        AbstractLink::connectLink();
         emit upChanged(true);
     }
-
-    AbstractLink::connectLink();
 }
 
 void UdpLink::disconnectLink()
@@ -69,8 +68,8 @@ void UdpLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_socket->close();
-    emit upChanged(false);
     AbstractLink::disconnectLink();
+    emit upChanged(false);
 }
 
 void UdpLink::sendDataImpl(const QByteArray& data)

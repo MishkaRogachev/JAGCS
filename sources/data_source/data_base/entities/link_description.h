@@ -42,12 +42,6 @@ namespace data_source
         bool isAutoConnect() const;
         void setAutoConnect(bool autoConnect);
 
-        const QList<int>& sentBytes() const;
-        QList<int>& sentBytes();
-
-        const QList<int>& recvBytes() const;
-        QList<int>& recvBytes();
-
     private:
         QString m_name;
         Type m_type = UnknownType;
@@ -55,10 +49,6 @@ namespace data_source
         QString m_device;
         int m_baudRate = -1;
         bool m_autoConnect = false;
-
-        // Don't persist
-        QList<int> m_sentBytes;
-        QList<int> m_recvBytes;
 
         Q_ENUM(Type)
     };

@@ -44,10 +44,9 @@ void SerialLink::connectLink()
     }
     else
     {
+        AbstractLink::connectLink();
         emit upChanged(true);
     }
-
-    AbstractLink::connectLink();
 }
 
 void SerialLink::disconnectLink()
@@ -55,8 +54,8 @@ void SerialLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_port->close();
-    emit upChanged(false);
     AbstractLink::disconnectLink();
+    emit upChanged(false);
 }
 
 void SerialLink::sendDataImpl(const QByteArray& data)

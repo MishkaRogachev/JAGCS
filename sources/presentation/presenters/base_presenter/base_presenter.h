@@ -28,8 +28,12 @@ namespace presentation
 
     protected slots:
         void setViewProperty(const char* name, const QVariant& value);
+
         void invokeViewMethod(const char* name);
-        void invokeViewMethod(const char* name, const QVariant& value);
+        void invokeViewMethod(const char* name, const QVariant& arg);
+        void invokeViewMethod(const char* name,
+                              const QVariant& arg1,
+                              const QVariant& arg2);
 
     protected:
         QPointer<QObject> m_view;

@@ -12,8 +12,6 @@
 #include "abstract_link.h"
 #include "description_link_factory.h"
 
-#include "settings_provider.h"
-
 #include "i_communicator_factory.h"
 
 using namespace data_source;
@@ -126,22 +124,7 @@ void CommunicationManager::onLinkStatisticsChanged()
 {
     AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
 
-    int statisticsCount = SettingsProvider::value(
-                              settings::communication::statisticsCount).toInt();
-
-    LinkDescriptionPtr description = d->descriptedLinks.key(link);
-
-    description->recvBytes().append(link->bytesReceivedSec());
-    if (description->recvBytes().count() > statisticsCount)
-    {
-        description->recvBytes().takeFirst();
-    }
-
-    description->sentBytes().append(link->bytesSentSec());
-    if (description->sentBytes().count() > statisticsCount)
-    {
-        description->sentBytes().takeFirst();
-    }
-
-    emit linkChanged(description);
+    emit linkStatisticsChanged(d->descriptedLinks.key(link),
+                               link->bytesSentSec(),
+                               link->bytesReceivedSec());
 }
