@@ -18,10 +18,9 @@ AbstractLink::AbstractLink(QObject* parent):
     m_bytesSentSec(0),
     m_bytesSent(0),
     m_packetsReceived(0),
-    m_packetsDrops(0)
-{
-    m_statisticsTimer = this->startTimer(::second);
-}
+    m_packetsDrops(0),
+    m_statisticsTimer(0)
+{}
 
 int AbstractLink::bytesReceivedSec() const
 {
@@ -46,6 +45,21 @@ int AbstractLink::packetsDrops() const
 void AbstractLink::setConnected(bool connected)
 {
     connected ? this->connectLink() : this->disconnectLink();
+}
+
+void AbstractLink::connectLink()
+{
+    if (m_statisticsTimer) this->killTimer(m_statisticsTimer);
+    m_statisticsTimer = this->startTimer(::second);
+}
+
+void AbstractLink::disconnectLink()
+{
+    if (m_statisticsTimer)
+    {
+        this->killTimer(m_statisticsTimer);
+        m_statisticsTimer = 0;
+    }
 }
 
 void AbstractLink::sendData(const QByteArray& data)

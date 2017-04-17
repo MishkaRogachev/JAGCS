@@ -35,8 +35,8 @@ namespace data_source
 
     public slots:
         void setConnected(bool connected);
-        virtual void connectLink() = 0;
-        virtual void disconnectLink() = 0;
+        virtual void connectLink();
+        virtual void disconnectLink();
 
         void sendData(const QByteArray& data);
 
