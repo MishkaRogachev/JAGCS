@@ -61,3 +61,23 @@ void LinkDescription::setAutoConnect(bool autoConnect)
 {
     m_autoConnect = autoConnect;
 }
+
+const QList<int>& LinkDescription::sentBytes() const
+{
+    return m_sentBytes;
+}
+
+QList<int>& LinkDescription::sentBytes()
+{
+     return m_sentBytes;
+}
+
+const QList<int>& LinkDescription::recvBytes() const
+{
+    return m_recvBytes;
+}
+
+QList<int>& LinkDescription::recvBytes()
+{
+    return m_recvBytes;
+}

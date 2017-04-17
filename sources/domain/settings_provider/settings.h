@@ -44,10 +44,11 @@ namespace settings
 
     namespace communication
     {
-        const char* const systemId = "Connection/systemId";
-        const char* const componentId = "Connection/componentId";
-        const char* const baudRate = "Connection/baudRate";
-        const char* const port = "Connection/port";
+        const char* const systemId = "Communication/systemId";
+        const char* const componentId = "Communication/componentId";
+        const char* const baudRate = "Communication/baudRate";
+        const char* const port = "Communication/port";
+        const char* const statisticsCount = "Communication/statisticsCount";
     }
 
     namespace mission
