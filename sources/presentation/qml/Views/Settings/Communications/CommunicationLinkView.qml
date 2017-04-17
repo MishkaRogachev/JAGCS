@@ -37,6 +37,8 @@ Frame {
         sentSeries.append(statisticsCounter, sentBytes);
         recvSeries.append(statisticsCounter, recvBytes);
         statisticsCounter++;
+
+        valueAxis.max = Math.max(valueAxis.max, Math.max(sentBytes, recvBytes));
     }
 
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
@@ -139,24 +141,29 @@ Frame {
             Layout.fillHeight: true
             antialiasing: true
             animationOptions: ChartView.SeriesAnimations
-            backgroundRoundness: 0
+            backgroundColor: "transparent"
+            legend.labelColor: palette.textColor
+            legend.alignment: Qt.AlignRight
+            margins.top: 0
+            margins.bottom: 0
 
             ValueAxis {
                 id: timeAxis
                 min: Math.max(0, statisticsCounter - statisticsCount)
                 max: statisticsCounter
-                tickCount: 1
+                labelsColor: palette.textColor
             }
 
             ValueAxis {
                 id: valueAxis
                 min: 0
-                max: 10
+                labelsColor: palette.textColor
             }
 
             LineSeries {
                 id: sentSeries
                 name: qsTr("Bytes sent")
+                width: 3
                 color: palette.neutralColor
                 axisX: timeAxis
                 axisY: valueAxis
@@ -164,8 +171,9 @@ Frame {
 
             LineSeries {
                 id: recvSeries
-                name: qsTr("Bytes sent")
-                color: palette.positiveColor
+                name: qsTr("Bytes received")
+                width: 3
+                color: palette.highlightColor
                 axisX: timeAxis
                 axisY: valueAxis
             }
