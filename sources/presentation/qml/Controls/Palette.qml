@@ -25,5 +25,5 @@ QtObject {
 
     property color negativeColor: "#F44336"
     property color neutralColor: "#FFC107"
-    property color positiveColor: "#4CAF50"
+    property color positiveColor: "#00E676"
 }

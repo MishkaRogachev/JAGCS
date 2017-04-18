@@ -25,22 +25,23 @@ Frame {
     signal remove()
     signal setConnected(bool connected)
 
-    property int statisticsCounter: 0
     property int statisticsCount: 0
+    property int counter: 0
 
     function updateStatistics(sentBytes, recvBytes) {
-        if (sentSeries.count > statisticsCount)
-        {
-            sentSeries.remove(0);
-            recvSeries.remove(0);
-        }
-        sentSeries.append(statisticsCounter, sentBytes);
-        recvSeries.append(statisticsCounter, recvBytes);
-        statisticsCounter++;
+        if (sentSeries.count > statisticsCount) sentSeries.remove(0);
+        if (recvSeries.count > statisticsCount) recvSeries.remove(0);
 
-        valueAxis.max = Math.max(valueAxis.max, Math.max(sentBytes, recvBytes));
+        sentSeries.append(counter, sentBytes);
+        recvSeries.append(counter, recvBytes);
+
+        valueAxis.max = Math.max(valueAxis.max, recvBytes);
+        valueAxis.max = Math.max(valueAxis.max, sentBytes);
+
+        counter++;
     }
 
+    onConnectedChanged: if (!connected) updateStatistics(0, 0)
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
@@ -149,33 +150,40 @@ Frame {
 
             ValueAxis {
                 id: timeAxis
-                min: Math.max(0, statisticsCounter - statisticsCount)
-                max: statisticsCounter
+                min: Math.max(0, counter - statisticsCount)
+                max: counter - 1
                 labelsColor: palette.textColor
             }
 
             ValueAxis {
                 id: valueAxis
                 min: 0
+                max: 0
                 labelsColor: palette.textColor
             }
 
-            LineSeries {
-                id: sentSeries
+            AreaSeries {
                 name: qsTr("Bytes sent")
-                width: 3
-                color: palette.neutralColor
                 axisX: timeAxis
                 axisY: valueAxis
+                borderWidth: 3
+                color: palette.positiveColor
+                opacity: 0.5
+                borderColor: palette.positiveColor
+
+                upperSeries: LineSeries { id: sentSeries }
             }
 
-            LineSeries {
-                id: recvSeries
+            AreaSeries {
                 name: qsTr("Bytes received")
-                width: 3
-                color: palette.highlightColor
                 axisX: timeAxis
                 axisY: valueAxis
+                borderWidth: 3
+                color: palette.skyColor
+                opacity: 0.5
+                borderColor: palette.skyColor
+
+                upperSeries: LineSeries { id: recvSeries }
             }
         }
     }
