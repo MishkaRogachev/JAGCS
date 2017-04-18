@@ -36,13 +36,6 @@ ApplicationWindow {
 
         textColor: paletteStyle ? "#37474F" : "#FAFAFA"
         selectedTextColor: "#242424"
-
-        highlightColor: "#00E676"
-        selectionColor: "#69F0AE"
-
-        negativeColor: "#F44336"
-        neutralColor: "#FFC107"
-        positiveColor: "#4CAF50"
     }
 
     header: StatusView {
