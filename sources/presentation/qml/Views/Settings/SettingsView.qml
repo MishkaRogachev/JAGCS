@@ -20,7 +20,6 @@ Pane {
                 anchors.top: parent.top
                 model: [
                     qsTr("GUI"),
-                    qsTr("Manual"),
                     qsTr("Communications"),
                     qsTr("Video"),
                     qsTr("Networking"),
@@ -44,7 +43,6 @@ Pane {
             currentIndex: bar.currentIndex
 
             GuiSettingsView { objectName: "gui" }
-            ManualSettingsView { objectName: "manual" }
             CommunicationsView { objectName: "communications" }
             VideoSettingsView { objectName: "video" }
             NetworkSettingsView { objectName: "network" }

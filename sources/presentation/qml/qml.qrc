@@ -62,7 +62,6 @@
         <file>Views/Mission/MissionItemView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/GuiSettingsView.qml</file>
-        <file>Views/Settings/ManualSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Settings/Communications/CommunicationsView.qml</file>
