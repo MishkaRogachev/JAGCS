@@ -5,12 +5,13 @@
 
 using namespace domain;
 
-AbstractMavLinkHandler::AbstractMavLinkHandler(MavLinkCommunicator* communicator):
+AbstractMavLinkHandler::AbstractMavLinkHandler(
+        data_source::MavLinkCommunicator* communicator):
     QObject(communicator),
     m_communicator(communicator)
 {
     Q_ASSERT(communicator);
-    connect(communicator, &MavLinkCommunicator::messageReceived,
+    connect(communicator, &data_source::MavLinkCommunicator::messageReceived,
             this, &AbstractMavLinkHandler::processMessage);
 }
 

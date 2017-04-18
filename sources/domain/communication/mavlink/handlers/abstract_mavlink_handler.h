@@ -7,23 +7,26 @@
 // Qt
 #include <QObject>
 
-namespace domain
+namespace data_source
 {
     class MavLinkCommunicator;
+}
 
+namespace domain
+{
     class AbstractMavLinkHandler: public QObject
     {
         Q_OBJECT
 
     public:
-        AbstractMavLinkHandler(MavLinkCommunicator* communicator);
+        AbstractMavLinkHandler(data_source::MavLinkCommunicator* communicator);
         ~AbstractMavLinkHandler() override;
 
     public slots:
         virtual void processMessage(const mavlink_message_t& message) = 0;
 
     protected:
-        MavLinkCommunicator* const m_communicator;
+        data_source::MavLinkCommunicator* const m_communicator;
     };
 }
 
