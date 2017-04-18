@@ -42,9 +42,7 @@ MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId,
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
-{
-    delete d;
-}
+{}
 
 bool MavLinkCommunicator::isAddLinkEnabled()
 {

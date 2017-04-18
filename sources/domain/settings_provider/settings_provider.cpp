@@ -56,7 +56,6 @@ SettingsProvider::SettingsProvider():
 SettingsProvider::~SettingsProvider()
 {
     d->settings.sync();
-    delete d;
 }
 
 SettingsProvider* SettingsProvider::instance()

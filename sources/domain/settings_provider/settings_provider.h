@@ -32,7 +32,7 @@ namespace domain
         SettingsProvider();
 
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
         Q_DISABLE_COPY(SettingsProvider)
     };
 }

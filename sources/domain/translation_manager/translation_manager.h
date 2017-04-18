@@ -1,7 +1,9 @@
 #ifndef TRANSLATION_MANAGER_H
 #define TRANSLATION_MANAGER_H
 
+// Qt
 #include <QString>
+#include <QScopedPointer>
 
 namespace domain
 {
@@ -22,7 +24,7 @@ namespace domain
         TranslationManager();
 
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 

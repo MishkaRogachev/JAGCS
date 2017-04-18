@@ -24,9 +24,7 @@ TranslationManager::TranslationManager():
 {}
 
 TranslationManager::~TranslationManager()
-{
-    delete d;
-}
+{}
 
 TranslationManager* TranslationManager::instance()
 {

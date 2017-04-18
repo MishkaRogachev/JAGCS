@@ -45,7 +45,7 @@ namespace data_source
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 
