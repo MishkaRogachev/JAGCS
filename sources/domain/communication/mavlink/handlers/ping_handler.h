@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        PingHandler(MavLinkCommunicator* communicator); // TODO: send ping
+        PingHandler(data_source::MavLinkCommunicator* communicator); // TODO: send ping
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

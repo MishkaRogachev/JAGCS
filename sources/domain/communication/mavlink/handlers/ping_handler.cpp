@@ -8,7 +8,7 @@
 
 using namespace domain;
 
-PingHandler::PingHandler(MavLinkCommunicator* communicator):
+PingHandler::PingHandler(data_source::MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator)
 {}
 
