@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
 import "Communications"
+import "Vehicles"
 
 Pane {
     id: root
@@ -19,9 +20,10 @@ Pane {
                 id: bar
                 anchors.top: parent.top
                 model: [
-                    qsTr("GUI"),
                     qsTr("Communications"),
+                    qsTr("Vehicles"),
                     qsTr("Video"),
+                    qsTr("GUI"),
                     qsTr("Networking"),
                     qsTr("About")
                 ]
@@ -42,9 +44,10 @@ Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
-            GuiSettingsView { objectName: "gui" }
             CommunicationsView { objectName: "communications" }
+            VehiclesView { objectName: "vehicles" }
             VideoSettingsView { objectName: "video" }
+            GuiSettingsView { objectName: "gui" }
             NetworkSettingsView { objectName: "network" }
             AboutView { objectName: "about" }
         }
