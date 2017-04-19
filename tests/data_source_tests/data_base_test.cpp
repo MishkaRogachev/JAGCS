@@ -8,7 +8,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
-#include "vehicle.h"
+#include "vehicle_description.h"
 #include "link_description.h"
 
 using namespace data_source;
@@ -153,11 +153,11 @@ void DataBaseTest::testMissionItemSequence()
     QVERIFY2(dbEntry.remove(mission), "Can't remove mission");
 }
 
-void DataBaseTest::testVehicle()
+void DataBaseTest::testVehicleDescription()
 {
     DbEntry dbEntry;
 
-    VehiclePtr vehicle = VehiclePtr::create();
+    VehicleDescriptionPtr vehicle = VehicleDescriptionPtr::create();
 
     vehicle->setName("Ridiculous vehicle");
     vehicle->setMavId(13);

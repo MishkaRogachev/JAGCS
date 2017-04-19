@@ -1,12 +1,12 @@
-#ifndef VEHICLE_H
-#define VEHICLE_H
+#ifndef VEHICLE_DESCRIPTION_H
+#define VEHICLE_DESCRIPTION_H
 
 // Internal
 #include "base_entity.h"
 
 namespace data_source
 {
-    class Vehicle: public BaseEntity
+    class VehicleDescription: public BaseEntity
     {
         Q_GADGET
 
@@ -14,7 +14,7 @@ namespace data_source
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
-        Vehicle();
+        VehicleDescription();
 
         int mavId() const;
         void setMavId(int mavId);
@@ -28,4 +28,4 @@ namespace data_source
     };
 }
 
-#endif // VEHICLE_H
+#endif // VEHICLE_DESCRIPTION_H

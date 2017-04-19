@@ -9,7 +9,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
-#include "vehicle.h"
+#include "vehicle_description.h"
 #include "link_description.h"
 
 using namespace data_source;
@@ -19,7 +19,7 @@ class DbEntry::Impl
 public:
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> missionItemRepository;
-    GenericRepository<Vehicle> vehicleRepository;
+    GenericRepository<VehicleDescription> vehicleRepository;
     GenericRepository<LinkDescription> linkRepository;
 
     Impl():
@@ -64,7 +64,7 @@ MissionItemPtr DbEntry::readMissionItem(int id, bool reload)
     return d->missionItemRepository.read(id, reload);
 }
 
-VehiclePtr DbEntry::readVehicle(int id, bool reload)
+VehicleDescriptionPtr DbEntry::readVehicle(int id, bool reload)
 {
     return d->vehicleRepository.read(id, reload);
 }
@@ -92,7 +92,7 @@ bool DbEntry::save(const MissionItemPtr& missionItem)
     return d->missionItemRepository.save(missionItem);
 }
 
-bool DbEntry::save(const VehiclePtr& vehicle)
+bool DbEntry::save(const VehicleDescriptionPtr& vehicle)
 {
     return d->vehicleRepository.save(vehicle);
 }
@@ -117,7 +117,7 @@ bool DbEntry::remove(const MissionItemPtr& missionItem)
     return d->missionItemRepository.remove(missionItem);
 }
 
-bool DbEntry::remove(const VehiclePtr& vehicle)
+bool DbEntry::remove(const VehicleDescriptionPtr& vehicle)
 {
     return d->vehicleRepository.remove(vehicle);
 }
@@ -140,7 +140,7 @@ void DbEntry::unload(const MissionItemPtr& missionItem)
     d->missionItemRepository.unload(missionItem->id());
 }
 
-void DbEntry::unload(const VehiclePtr& vehicle)
+void DbEntry::unload(const VehicleDescriptionPtr& vehicle)
 {
     d->vehicleRepository.unload(vehicle->id());
 }

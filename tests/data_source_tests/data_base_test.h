@@ -11,7 +11,7 @@ private slots:
     void testMission();
     void testMissionItems();
     void testMissionItemSequence();
-    void testVehicle();
+    void testVehicleDescription();
     void testLinkDescription();
 };
 

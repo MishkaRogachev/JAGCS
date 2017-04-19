@@ -9,17 +9,17 @@ namespace data_source
 {
     class Mission;
     class MissionItem;
-    class Vehicle;
+    class VehicleDescription;
     class LinkDescription;
 
     using MissionPtr = QSharedPointer<Mission>;
     using MissionItemPtr = QSharedPointer<MissionItem>;
-    using VehiclePtr = QSharedPointer<Vehicle>;
+    using VehicleDescriptionPtr = QSharedPointer<VehicleDescription>;
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
 
     using MissionPtrList = QList<MissionPtr>;
     using MissionItemPtrList = QList<MissionItemPtr>;
-    using VehiclePtrList = QList<VehiclePtr>;
+    using VehicleDescriptionPtrList = QList<VehicleDescriptionPtr>;
     using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
 }
 
