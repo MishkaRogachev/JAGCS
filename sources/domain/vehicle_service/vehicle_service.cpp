@@ -57,3 +57,34 @@ VehicleDescriptionPtrList VehicleService::vehicles() const
 {
     return d->descriptions;
 }
+
+void VehicleService::saveVehicle(const VehicleDescriptionPtr& description)
+{
+    BaseVehicle* vehicle;
+
+    if (d->descriptions.contains(description))
+    {
+        vehicle = d->descriptedVehicles[description];
+        // TODO: update vehicle
+    }
+    else
+    {
+        d->descriptions.append(description);
+        vehicle = d->vehicleFromDescription(description);
+        vehicle->setParent(this);
+        emit vehicleAdded(description);
+    }
+
+    d->entry->save(description);
+}
+
+void VehicleService::removeVehicle(const VehicleDescriptionPtr& description)
+{
+    d->descriptions.removeOne(description);
+    BaseVehicle* vehicle = d->descriptedVehicles.take(description);
+    delete vehicle;
+
+    d->entry->remove(description);
+
+    emit vehicleRemoved(description);
+}

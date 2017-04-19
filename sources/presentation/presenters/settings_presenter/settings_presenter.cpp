@@ -5,10 +5,11 @@
 
 #include "settings_provider.h"
 
-#include "gui_settings_presenter.h"
 #include "communications_presenter.h"
+#include "vehicles_presenter.h"
 //#include "video_settings_presenter.h"
 //#include "network_settings_presenter.h"
+#include "gui_settings_presenter.h"
 #include "about_presenter.h"
 
 using namespace presentation;
@@ -16,23 +17,27 @@ using namespace presentation;
 class SettingsPresenter::Impl
 {
 public:
-    GuiSettingsPresenter* gui;
     CommunicationsPresenter* communications;
+    VehiclesPresenter* vehicles;
 //    VideoSettingsPresenter* video;
 //    NetworkSettingsPresenter* network;
+    GuiSettingsPresenter* gui;
     AboutPresenter* about;
 };
 
-SettingsPresenter::SettingsPresenter(domain::DomainFacade* facade, QObject* parent):
+SettingsPresenter::SettingsPresenter(domain::DomainFacade* facade,
+                                     QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->gui = new GuiSettingsPresenter(this);
+
     d->communications = new CommunicationsPresenter(
                             facade->communicationManager(),
                             this);
+    d->vehicles = new VehiclesPresenter(facade->vehicleService(), this);
 //    d->video = new VideoSettingsPresenter(this);
 //    d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
+    d->gui = new GuiSettingsPresenter(this);
     d->about = new AboutPresenter(this);
 }
 
@@ -52,10 +57,11 @@ void SettingsPresenter::hide()
 
 void SettingsPresenter::connectView(QObject* view)
 {
-    d->gui->setView(view->findChild<QObject*>(NAME(gui)));
     d->communications->setView(view->findChild<QObject*>(NAME(communications)));
+    d->vehicles->setView(view->findChild<QObject*>(NAME(vehicles)));
 //    d->video->setView(view->findChild<QObject*>(NAME(video)));
 //    d->network->setView(view->findChild<QObject*>(NAME(network)));
+    d->gui->setView(view->findChild<QObject*>(NAME(gui)));
     d->about->setView(view->findChild<QObject*>(NAME(about)));
 
     connect(view, SIGNAL(makeDefaults()), this, SLOT(onMakeDefaults()));

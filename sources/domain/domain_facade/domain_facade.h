@@ -7,6 +7,7 @@
 namespace domain
 {
     class CommunicationManager;
+    class VehicleService;
 
     class DomainFacade
     {
@@ -15,6 +16,7 @@ namespace domain
         ~DomainFacade();
 
         CommunicationManager* communicationManager() const;
+        VehicleService* vehicleService() const;
 
     private:
         class Impl;

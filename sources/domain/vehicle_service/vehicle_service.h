@@ -25,6 +25,14 @@ namespace domain
 
         data_source::VehicleDescriptionPtrList vehicles() const;
 
+    public slots:
+        void saveVehicle(const data_source::VehicleDescriptionPtr& description);
+        void removeVehicle(const data_source::VehicleDescriptionPtr& description);
+
+    signals:
+        void vehicleAdded(const data_source::VehicleDescriptionPtr& description);
+        void vehicleRemoved(const data_source::VehicleDescriptionPtr& description);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

@@ -13,6 +13,8 @@
 #include "communication_manager.h"
 #include "mavlink_communicator_factory.h"
 
+#include "vehicle_service.h"
+
 using namespace data_source;
 using namespace domain;
 
@@ -21,7 +23,9 @@ class DomainFacade::Impl
 public:
     DbManager dataBase;
     DbEntry dbEntry;
-    QScopedPointer<CommunicationManager> manager;
+
+    QScopedPointer<CommunicationManager> communicationManager;
+    QScopedPointer<VehicleService> vehicleService;
 };
 
 DomainFacade::DomainFacade():
@@ -41,7 +45,10 @@ DomainFacade::DomainFacade():
     }
 
     MavLinkCommunicatorFactory comFactory;
-    d->manager.reset(new CommunicationManager(&comFactory, &d->dbEntry));
+    d->communicationManager.reset(new CommunicationManager(&comFactory,
+                                                           &d->dbEntry));
+
+    d->vehicleService.reset(new VehicleService(&d->dbEntry));
 }
 
 DomainFacade::~DomainFacade()
@@ -49,5 +56,10 @@ DomainFacade::~DomainFacade()
 
 CommunicationManager* DomainFacade::communicationManager() const
 {
-    return d->manager.data();
+    return d->communicationManager.data();
+}
+
+VehicleService* DomainFacade::vehicleService() const
+{
+    return d->vehicleService.data();
 }

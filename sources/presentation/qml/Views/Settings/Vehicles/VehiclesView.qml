@@ -41,7 +41,7 @@ ColumnLayout {
 
             Repeater {
                 id: repeater
-                model: links
+                model: vehicles
 
                 Item {
                     // TODO: vehicle view

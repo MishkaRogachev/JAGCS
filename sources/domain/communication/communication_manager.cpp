@@ -96,8 +96,6 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
         link->setParent(this);
         connect(link, &AbstractLink::statisticsChanged,
                 this, &CommunicationManager::onLinkStatisticsChanged);
-
-        d->descriptedLinks[description] = link;
         d->communicator->addLink(link);
         emit linkAdded(description);
     }
