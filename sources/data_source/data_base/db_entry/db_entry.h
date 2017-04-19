@@ -36,6 +36,7 @@ namespace data_source
         void unload(const LinkDescriptionPtr& link);
 
         LinkDescriptionPtrList loadLinks();
+        VehicleDescriptionPtrList loadVehicles();
 
     private:
         class Impl;

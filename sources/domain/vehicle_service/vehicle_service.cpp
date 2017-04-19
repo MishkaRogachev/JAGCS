@@ -6,7 +6,10 @@
 
 // Internal
 #include "db_entry.h"
-#include "link_description.h"
+#include "vehicle_description.h"
+
+#include "base_vehicle.h"
+#include "description_vehicle_factory.h"
 
 using namespace data_source;
 using namespace domain;
@@ -14,14 +17,35 @@ using namespace domain;
 class VehicleService::Impl
 {
 public:
-    // QMap<VehicleDescriptionPtr, BaseVehicle*> vehicles;
+    DbEntry* entry;
+    QMap<VehicleDescriptionPtr, BaseVehicle*> vehicles;
 
+    BaseVehicle* vehicleFromDescription(const VehicleDescriptionPtr& description)
+    {
+        DescriptionVehicleFactory factory(description);
+
+        vehicles[description] = factory.create();
+        return vehicles[description];
+    }
 };
 
-VehicleService::VehicleService(QObject* parent):
+VehicleService::VehicleService(DbEntry* entry, QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    d->entry = entry;
+
+    for (const VehicleDescriptionPtr& description: d->entry->loadVehicles())
+    {
+        BaseVehicle* vehicle = d->vehicleFromDescription(description);
+        vehicle->setParent(this);
+    }
+}
 
 VehicleService::~VehicleService()
 {}
+
+VehicleDescriptionPtrList VehicleService::vehicles() const
+{
+    return d->vehicles.keys();
+}

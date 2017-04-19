@@ -56,7 +56,7 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
     d->communicator = commFactory->create();
     d->entry = entry;
 
-    for (const LinkDescriptionPtr& description: d->entry->loadLinks())
+    for (const LinkDescriptionPtr& description: entry->loadLinks())
     {
         AbstractLink* link = d->linkFromDescription(description);
         link->setParent(this);

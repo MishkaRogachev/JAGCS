@@ -162,3 +162,15 @@ LinkDescriptionPtrList DbEntry::loadLinks()
     return list;
 }
 
+VehicleDescriptionPtrList DbEntry::loadVehicles()
+{
+    VehicleDescriptionPtrList list;
+
+    for (int id: d->vehicleRepository.selectId())
+    {
+        list.append(this->readVehicle(id));
+    }
+
+    return list;
+}
+
