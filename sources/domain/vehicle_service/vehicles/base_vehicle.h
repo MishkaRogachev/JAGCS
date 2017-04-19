@@ -76,7 +76,7 @@ namespace domain
             PowerOff
         };
 
-        BaseVehicle(int type, QObject* parent);
+        BaseVehicle(int type = UnknownType, QObject* parent = nullptr);
 
         int type() const;
         State state() const;
