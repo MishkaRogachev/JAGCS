@@ -46,7 +46,7 @@ namespace domain
             Vtol
         };
 
-        AerialVehicle(uint8_t vehicleId, Type type, QObject* parent);
+        AerialVehicle(Type type, QObject* parent);
         ~AerialVehicle() override;
 
         bool airSpeedAvalible() const;

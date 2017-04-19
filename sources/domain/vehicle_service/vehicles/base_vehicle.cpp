@@ -3,14 +3,11 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "mission.h"
-#include "position_mission_item.h"
-
 using namespace domain;
 
-BaseVehicle::BaseVehicle(uint8_t vehicleId, int type, QObject* parent):
-    AbstractVehicle(vehicleId, type, parent),
+BaseVehicle::BaseVehicle(int type, QObject* parent):
+    QObject(parent),
+    m_type(type),
     m_state(BaseVehicle::UnknownState),
     m_armed(false),
     m_autonomous(false),
@@ -23,6 +20,11 @@ BaseVehicle::BaseVehicle(uint8_t vehicleId, int type, QObject* parent):
     m_compasAvalible(false),
     m_heading(0)
 {}
+
+int BaseVehicle::type() const
+{
+    return m_type;
+}
 
 BaseVehicle::State BaseVehicle::state() const
 {
@@ -90,44 +92,6 @@ float BaseVehicle::homeDistance() const
         m_homePosition.coordinate().isValid())
     {
         return m_position.coordinate().distanceTo(m_homePosition.coordinate());
-    }
-    return -1;
-}
-
-float BaseVehicle::missionDirection() const
-{
-    if (!m_position.coordinate().isValid() ||
-        !m_assignedMission ||
-        m_assignedMission->currentIndex() == -1) return -1;
-
-    for (int index = m_assignedMission->currentIndex();
-         index < m_assignedMission->count(); ++index)
-    {
-        auto item = qobject_cast<PositionMissionItem*>(
-                        m_assignedMission->item(index));
-        if (!item) continue;
-
-        return m_position.coordinate().azimuthTo(
-                    QGeoCoordinate(item->latitude(), item->longitude()));
-    }
-    return -1;
-}
-
-float BaseVehicle::missionDistance() const
-{
-    if (!m_position.coordinate().isValid() ||
-        !m_assignedMission ||
-        m_assignedMission->currentIndex() == -1) return -1;
-
-    for (int index = m_assignedMission->currentIndex();
-         index < m_assignedMission->count(); ++index)
-    {
-        auto item = qobject_cast<PositionMissionItem*>(
-                        m_assignedMission->item(index));
-        if (!item) continue;
-
-        return m_position.coordinate().distanceTo(
-                    QGeoCoordinate(item->latitude(), item->longitude()));
     }
     return -1;
 }

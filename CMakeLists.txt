@@ -73,8 +73,13 @@ file(GLOB_RECURSE JS "sources/*.js")
 include_directories("3dparty/mavlink_v1")
 include_directories("3dparty/mavlink_v1/ardupilotmega")
 
-HEADER_DIRECTORIES(INCLUDES "sources")
-include_directories(${INCLUDES})
+# HEADER_DIRECTORIES(INCLUDES "sources")
+# include_directories(${INCLUDES})
+
+HEADER_DIRECTORIES(DATA_SOURCE "sources/data_source")
+HEADER_DIRECTORIES(DOMAIN "sources/domain")
+HEADER_DIRECTORIES(PRESENTATION "sources/presentation")
+include_directories(${DATA_SOURCE} ${DOMAIN} ${PRESENTATION})
 
 # Translations
 file(GLOB TS_FILES "translations/*.ts")
