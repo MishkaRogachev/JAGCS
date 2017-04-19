@@ -18,14 +18,16 @@ class VehicleService::Impl
 {
 public:
     DbEntry* entry;
-    QMap<VehicleDescriptionPtr, BaseVehicle*> vehicles;
+
+    QList<VehicleDescriptionPtr> descriptions;
+    QMap<VehicleDescriptionPtr, BaseVehicle*> descriptedVehicles;
 
     BaseVehicle* vehicleFromDescription(const VehicleDescriptionPtr& description)
     {
         DescriptionVehicleFactory factory(description);
 
-        vehicles[description] = factory.create();
-        return vehicles[description];
+        descriptedVehicles[description] = factory.create();
+        return descriptedVehicles[description];
     }
 };
 
@@ -37,15 +39,21 @@ VehicleService::VehicleService(DbEntry* entry, QObject* parent):
 
     for (const VehicleDescriptionPtr& description: d->entry->loadVehicles())
     {
+        d->descriptions.append(description);
         BaseVehicle* vehicle = d->vehicleFromDescription(description);
         vehicle->setParent(this);
     }
 }
 
 VehicleService::~VehicleService()
-{}
+{
+    for (const VehicleDescriptionPtr& description: d->descriptions)
+    {
+        d->entry->save(description);
+    }
+}
 
 VehicleDescriptionPtrList VehicleService::vehicles() const
 {
-    return d->vehicles.keys();
+    return d->descriptions;
 }

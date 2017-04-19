@@ -23,6 +23,7 @@ public:
     AbstractCommunicator* communicator;
     DbEntry* entry;
 
+    data_source::LinkDescriptionPtrList descriptions;
     QMap<data_source::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
 
     AbstractLink* linkFromDescription(const LinkDescriptionPtr& description)
@@ -58,6 +59,7 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
 
     for (const LinkDescriptionPtr& description: entry->loadLinks())
     {
+        d->descriptions.append(description);
         AbstractLink* link = d->linkFromDescription(description);
         link->setParent(this);
         connect(link, &AbstractLink::statisticsChanged,
@@ -67,7 +69,7 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
 
 CommunicationManager::~CommunicationManager()
 {
-    for (const LinkDescriptionPtr& description: d->descriptedLinks.keys())
+    for (const LinkDescriptionPtr& description: d->descriptions)
     {
         d->entry->save(description);
     }
@@ -75,20 +77,21 @@ CommunicationManager::~CommunicationManager()
 
 LinkDescriptionPtrList CommunicationManager::links() const
 {
-    return d->descriptedLinks.keys();
+    return d->descriptions;
 }
 
 void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
 {
     AbstractLink* link;
 
-    if (d->descriptedLinks.contains(description))
+    if (d->descriptions.contains(description))
     {
         link = d->descriptedLinks[description];
         d->updateLinkFromDescription(link, description);
     }
     else
     {
+        d->descriptions.append(description);
         link = d->linkFromDescription(description);
         link->setParent(this);
         connect(link, &AbstractLink::statisticsChanged,
@@ -112,6 +115,7 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
 
 void CommunicationManager::removeLink(const LinkDescriptionPtr& description)
 {
+    d->descriptions.removeOne(description);
     AbstractLink* link = d->descriptedLinks.take(description);
     d->communicator->removeLink(link);
     delete link;
