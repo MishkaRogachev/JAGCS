@@ -43,8 +43,10 @@ ColumnLayout {
                 id: repeater
                 model: vehicles
 
-                Item {
-                    // TODO: vehicle view
+                VehicleDescriptionView {
+                    id: descriptionView
+                    Layout.fillWidth: true
+                    Component.onCompleted: modelData.setView(descriptionView)
                 }
             }
         }

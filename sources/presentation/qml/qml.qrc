@@ -64,6 +64,7 @@
         <file>Views/Settings/Communications/CommunicationsView.qml</file>
         <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
         <file>Views/Settings/Vehicles/VehiclesView.qml</file>
+        <file>Views/Settings/Vehicles/VehicleDescriptionView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
         <file>Views/Settings/GuiSettingsView.qml</file>
         <file>Views/Settings/NetworkSettingsView.qml</file>

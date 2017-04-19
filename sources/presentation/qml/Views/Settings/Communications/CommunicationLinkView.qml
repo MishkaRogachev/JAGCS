@@ -54,7 +54,6 @@ Frame {
 
             Label {
                 text: qsTr("Type:")
-                enabled: false
             }
 
             Label {
