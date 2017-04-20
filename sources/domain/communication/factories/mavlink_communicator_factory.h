@@ -15,7 +15,7 @@ namespace domain
         data_source::AbstractCommunicator* create() override;
 
     private:
-        VehicleService* m_vehicleServeice;
+        VehicleService* m_vehicleService;
     };
 }
 

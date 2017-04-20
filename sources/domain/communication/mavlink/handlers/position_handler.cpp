@@ -12,10 +12,11 @@
 
 #include "mavlink_protocol_helpers.h"
 
+using namespace data_source;
 using namespace domain;
 
 PositionHandler::PositionHandler(VehicleService* vehicleService,
-                                             MavLinkCommunicator* communicator):
+                                 MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
@@ -30,8 +31,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
 
-    vehicle->setPosition(Position(decodeCoordinate(
-                                      position.lat, position.lon, position.alt),
-                                  QVector3D(
-                                      position.vx, position.vy, position.vz)));
+    vehicle->setPosition(Position(
+                    decodeCoordinate(position.lat, position.lon, position.alt),
+                    QVector3D(position.vx, position.vy, position.vz)));
 }
