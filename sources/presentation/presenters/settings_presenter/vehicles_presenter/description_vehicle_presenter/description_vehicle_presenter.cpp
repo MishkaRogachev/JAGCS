@@ -47,8 +47,14 @@ void DescriptionVehiclePresenter::onSetName(const QString& name)
 
 void DescriptionVehiclePresenter::onSetMavId(int id)
 {
-    m_description->setMavId(id);
-    m_service->saveVehicle(m_description);
+    if (m_description->setMavId(id))
+    {
+        m_service->saveVehicle(m_description);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(mavId), m_description->mavId());
+    }
 }
 
 void DescriptionVehiclePresenter::onRemove()

@@ -15,9 +15,10 @@ namespace data_source
 
     public:
         VehicleDescription();
+        ~VehicleDescription() override;
 
         int mavId() const;
-        void setMavId(int mavId);
+        bool setMavId(int mavId);
 
         QString name() const;
         void setName(const QString& name);
@@ -25,6 +26,8 @@ namespace data_source
     private:
         int m_mavId;
         QString m_name;
+
+        static QMap<VehicleDescription*, int> m_mavIds;
     };
 }
 

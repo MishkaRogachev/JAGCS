@@ -66,7 +66,7 @@ bool DbManager::create()
 
     result = query.exec("CREATE TABLE vehicles ("
                         "id INTEGER PRIMARY KEY NOT NULL,"
-                        "mavId INTEGER,"
+                        "mavId INTEGER UNIQUE,"
                         "name STRING)");
     if (!result)
     {
