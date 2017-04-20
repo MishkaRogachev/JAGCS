@@ -8,8 +8,11 @@ import "qrc:/Controls"
 Frame {
     id: root
 
+    property alias name: nameField.text
+    property alias mavId: idBox.value
+
     signal setName(string name)
-    signal setId(int id)
+    signal setMavId(int id)
     signal remove()
 
     GridLayout {
@@ -36,21 +39,14 @@ Frame {
             from: 0
             to: 255
             decimals: 0
-            onValueChanged: setId(value)
-        }
-
-        Label {
-            text: qsTr("Type:")
-        }
-
-        ComboBox {
-            model: [ qsTr("Fixed Wing") ] // TODO: types
+            onValueChanged: setMavId(value)
         }
 
         Button {
             text: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             onClicked: remove()
+            Layout.alignment: Qt.AlignRight
         }
     }
 }

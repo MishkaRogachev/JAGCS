@@ -17,9 +17,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(domain::CommunicationManager* manager,
-                                   const data_source::LinkDescriptionPtr& description,
-                                   QObject* parent = nullptr);
+        CommunicationLinkPresenter(
+                domain::CommunicationManager* manager,
+                const data_source::LinkDescriptionPtr& description,
+                QObject* parent = nullptr);
 
         data_source::LinkDescriptionPtr description() const;
 

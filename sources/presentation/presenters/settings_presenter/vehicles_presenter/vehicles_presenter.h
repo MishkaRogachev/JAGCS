@@ -1,7 +1,9 @@
 #ifndef VEHICLES_PRESENTER_H
 #define VEHICLES_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "db_traits.h"
 
 namespace domain
 {
@@ -23,6 +25,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
+        void onVehicleAdded(const data_source::VehicleDescriptionPtr& vehicle);
+        void onVehicleRemoved(const data_source::VehicleDescriptionPtr& vehicle);
         void updateVehicles();
 
         void onAddVehicle();
