@@ -15,6 +15,7 @@ namespace data_source
 namespace domain
 {
     class BaseVehicle;
+    class AerialVehicle;
 
     class VehicleService: public QObject
     {
@@ -25,13 +26,17 @@ namespace domain
                                 QObject* parent = nullptr);
         ~VehicleService() override;
 
-        data_source::VehicleDescriptionPtrList vehicles() const;
+        data_source::VehicleDescriptionPtrList descriptions() const;
+        data_source::VehicleDescriptionPtr findDescriptiontByMavId(quint8 mavId) const;
 
-        BaseVehicle* requestBaseVehicle(quint8 mavId);
+        BaseVehicle* baseVehicle(const data_source::VehicleDescriptionPtr& description);
+        BaseVehicle* baseVehicle(quint8 mavId);
+        AerialVehicle* aerialVehicle(const data_source::VehicleDescriptionPtr& description);
+        AerialVehicle* aerialVehicle(quint8 mavId);
 
     public slots:
-        void saveVehicle(const data_source::VehicleDescriptionPtr& description);
-        void removeVehicle(const data_source::VehicleDescriptionPtr& description);
+        void saveDescription(const data_source::VehicleDescriptionPtr& description);
+        void removeByDescription(const data_source::VehicleDescriptionPtr& description);
 
     signals:
         void vehicleAdded(const data_source::VehicleDescriptionPtr& description);

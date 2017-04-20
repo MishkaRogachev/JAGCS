@@ -8,10 +8,13 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
 
 #include "vehicle_service.h"
+#include "vehicle_description.h"
 #include "aerial_vehicle.h"
 
 using namespace data_source;
@@ -97,8 +100,22 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
     int type = ::decodeType(heartbeat.type);
-    BaseVehicle* vehicle = m_vehicleService->requestBaseVehicle(message.sysid);
-    // TODO: type to description
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
+
+    if (!vehicle &&
+        SettingsProvider::value(settings::communication::autoAdd).toBool())
+    {
+        VehicleDescriptionPtr description = VehicleDescriptionPtr::create();
+
+        description->setName(tr("Auto added vehicle"));
+        description->setMavId(message.sysid);
+        // TODO: type to description
+
+        m_vehicleService->saveDescription(description);
+        vehicle = m_vehicleService->baseVehicle(description);
+    }
+
+    if (!vehicle) return;
 
     vehicle->setModeString(decodeCustomMode(heartbeat.autopilot,
                                             heartbeat.type,

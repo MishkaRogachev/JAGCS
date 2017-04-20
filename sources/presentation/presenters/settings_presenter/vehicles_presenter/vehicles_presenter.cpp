@@ -32,7 +32,7 @@ VehiclesPresenter::VehiclesPresenter(domain::VehicleService* service,
             this, &VehiclesPresenter::onVehicleRemoved);
 
     for (const data_source::VehicleDescriptionPtr& description:
-         service->vehicles())
+         service->descriptions())
     {
         d->vehiclePresenters.append(new DescriptionVehiclePresenter(
                                         service, description, this));
@@ -88,5 +88,5 @@ void VehiclesPresenter::onAddVehicle()
 
     description->setName(tr("New Vehicle"));
 
-    d->service->saveVehicle(description);
+    d->service->saveDescription(description);
 }

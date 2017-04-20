@@ -42,14 +42,14 @@ void DescriptionVehiclePresenter::connectView(QObject* view)
 void DescriptionVehiclePresenter::onSetName(const QString& name)
 {
     m_description->setName(name);
-    m_service->saveVehicle(m_description);
+    m_service->saveDescription(m_description);
 }
 
 void DescriptionVehiclePresenter::onSetMavId(int id)
 {
     if (m_description->setMavId(id))
     {
-        m_service->saveVehicle(m_description);
+        m_service->saveDescription(m_description);
     }
     else
     {
@@ -59,5 +59,5 @@ void DescriptionVehiclePresenter::onSetMavId(int id)
 
 void DescriptionVehiclePresenter::onRemove()
 {
-    m_service->removeVehicle(m_description);
+    m_service->removeByDescription(m_description);
 }

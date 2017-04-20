@@ -8,7 +8,7 @@
 #include "db_entry.h"
 #include "vehicle_description.h"
 
-#include "base_vehicle.h"
+#include "aerial_vehicle.h"
 #include "description_vehicle_factory.h"
 
 using namespace data_source;
@@ -53,31 +53,44 @@ VehicleService::~VehicleService()
     }
 }
 
-VehicleDescriptionPtrList VehicleService::vehicles() const
+VehicleDescriptionPtrList VehicleService::descriptions() const
 {
     return d->descriptions;
 }
 
-BaseVehicle* VehicleService::requestBaseVehicle(quint8 mavId)
+VehicleDescriptionPtr VehicleService::findDescriptiontByMavId(quint8 mavId) const
 {
-    for (const VehicleDescriptionPtr& description: d->descriptions)
+    auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
+                           [mavId](const VehicleDescriptionPtr& description)
     {
-        if (description->mavId() == mavId)
-        {
-            return d->descriptedVehicles.value(description, nullptr);
-        }
-    }
+        return description->mavId() == mavId;
+    });
 
-    VehicleDescriptionPtr description = VehicleDescriptionPtr::create();
+    if (it != d->descriptions.cend()) return *it;
+    return VehicleDescriptionPtr();
+}
 
-    description->setName(tr("Auto added vehicle"));
-    description->setMavId(mavId);
-
-    this->saveVehicle(description);
+BaseVehicle* VehicleService::baseVehicle(const VehicleDescriptionPtr& description)
+{
     return d->descriptedVehicles.value(description, nullptr);
 }
 
-void VehicleService::saveVehicle(const VehicleDescriptionPtr& description)
+BaseVehicle* VehicleService::baseVehicle(quint8 mavId)
+{
+    return this->baseVehicle(this->findDescriptiontByMavId(mavId));
+}
+
+AerialVehicle* VehicleService::aerialVehicle(const VehicleDescriptionPtr& description)
+{
+    return qobject_cast<AerialVehicle*>(this->baseVehicle(description));
+}
+
+AerialVehicle* VehicleService::aerialVehicle(quint8 mavId)
+{
+    return this->aerialVehicle(this->findDescriptiontByMavId(mavId));
+}
+
+void VehicleService::saveDescription(const VehicleDescriptionPtr& description)
 {
     BaseVehicle* vehicle;
 
@@ -97,7 +110,7 @@ void VehicleService::saveVehicle(const VehicleDescriptionPtr& description)
     d->entry->save(description);
 }
 
-void VehicleService::removeVehicle(const VehicleDescriptionPtr& description)
+void VehicleService::removeByDescription(const VehicleDescriptionPtr& description)
 {
     d->descriptions.removeOne(description);
     BaseVehicle* vehicle = d->descriptedVehicles.take(description);
