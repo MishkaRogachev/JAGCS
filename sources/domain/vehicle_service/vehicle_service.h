@@ -14,6 +14,8 @@ namespace data_source
 
 namespace domain
 {
+    class BaseVehicle;
+
     class VehicleService: public QObject
     {
         Q_OBJECT
@@ -24,6 +26,8 @@ namespace domain
         ~VehicleService() override;
 
         data_source::VehicleDescriptionPtrList vehicles() const;
+
+        BaseVehicle* requestBaseVehicle(quint8 mavId);
 
     public slots:
         void saveVehicle(const data_source::VehicleDescriptionPtr& description);

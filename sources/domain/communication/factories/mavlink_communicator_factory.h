@@ -5,12 +5,17 @@
 
 namespace domain
 {
+    class VehicleService;
+
     class MavLinkCommunicatorFactory: public ICommunicatorFactory
     {
     public:
-        MavLinkCommunicatorFactory();
+        MavLinkCommunicatorFactory(VehicleService* vehicleServeice);
 
         data_source::AbstractCommunicator* create() override;
+
+    private:
+        VehicleService* m_vehicleServeice;
     };
 }
 

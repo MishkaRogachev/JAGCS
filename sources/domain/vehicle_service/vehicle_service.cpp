@@ -58,6 +58,25 @@ VehicleDescriptionPtrList VehicleService::vehicles() const
     return d->descriptions;
 }
 
+BaseVehicle* VehicleService::requestBaseVehicle(quint8 mavId)
+{
+    for (const VehicleDescriptionPtr& description: d->descriptions)
+    {
+        if (description->mavId() == mavId)
+        {
+            return d->descriptedVehicles.value(description, nullptr);
+        }
+    }
+
+    VehicleDescriptionPtr description = VehicleDescriptionPtr::create();
+
+    description->setName(tr("Auto added vehicle"));
+    description->setMavId(mavId);
+
+    this->saveVehicle(description);
+    return d->descriptedVehicles.value(description, nullptr);
+}
+
 void VehicleService::saveVehicle(const VehicleDescriptionPtr& description)
 {
     BaseVehicle* vehicle;
@@ -65,7 +84,7 @@ void VehicleService::saveVehicle(const VehicleDescriptionPtr& description)
     if (d->descriptions.contains(description))
     {
         vehicle = d->descriptedVehicles[description];
-        // TODO: update vehicle
+        // TODO: update vehicle's properties
     }
     else
     {

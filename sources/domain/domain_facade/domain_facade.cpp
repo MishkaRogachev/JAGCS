@@ -44,11 +44,11 @@ DomainFacade::DomainFacade():
         qCritical() << "Error while creating DB" << dbName;
     }
 
-    MavLinkCommunicatorFactory comFactory;
+    d->vehicleService.reset(new VehicleService(&d->dbEntry));
+
+    MavLinkCommunicatorFactory comFactory(d->vehicleService.data());
     d->communicationManager.reset(new CommunicationManager(&comFactory,
                                                            &d->dbEntry));
-
-    d->vehicleService.reset(new VehicleService(&d->dbEntry));
 }
 
 DomainFacade::~DomainFacade()

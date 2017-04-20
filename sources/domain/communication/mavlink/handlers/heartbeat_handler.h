@@ -5,10 +5,14 @@
 
 class QTimer;
 
+namespace data_source
+{
+    class MavLinkCommunicator;
+}
+
 namespace domain
 {
     class VehicleService;
-    class MavLinkCommunicator;
 
     class HeartbeatHandler: public AbstractMavLinkHandler
     {
@@ -16,7 +20,7 @@ namespace domain
 
     public:
         HeartbeatHandler(VehicleService* vehicleService,
-                         MavLinkCommunicator* communicator);
+                         data_source::MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
     public slots:

@@ -5,12 +5,15 @@
 #include "mavlink_communicator.h"
 
 #include "ping_handler.h"
+#include "heartbeat_handler.h"
 
 using namespace data_source;
 using namespace domain;
 
-MavLinkCommunicatorFactory::MavLinkCommunicatorFactory():
-    ICommunicatorFactory()
+MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
+        VehicleService* vehicleServeice):
+    ICommunicatorFactory(),
+    m_vehicleServeice(vehicleServeice)
 {}
 
 AbstractCommunicator* MavLinkCommunicatorFactory::create()
@@ -20,6 +23,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
          SettingsProvider::value(settings::communication::componentId).toInt());
 
     new PingHandler(communicator);
+    new HeartbeatHandler(m_vehicleServeice, communicator);
 
     return communicator;
 }

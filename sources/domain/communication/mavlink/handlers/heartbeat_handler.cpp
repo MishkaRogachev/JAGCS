@@ -14,6 +14,7 @@
 #include "vehicle_service.h"
 #include "aerial_vehicle.h"
 
+using namespace data_source;
 using namespace domain;
 
 namespace
@@ -45,7 +46,7 @@ namespace
             return AerialVehicle::Vtol;
         case MAV_TYPE_GENERIC:
         default:
-            return AbstractVehicle::UnknownType;
+            return BaseVehicle::UnknownType;
         }
     }
 
@@ -96,19 +97,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
     int type = ::decodeType(heartbeat.type);
-    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
-
-    if (vehicle && vehicle->type() != type)
-    {
-        m_vehicleService->deleteVehicle(vehicle);
-        vehicle = nullptr;
-    }
-
-    if (!vehicle)
-    {
-        m_vehicleService->createVehicle(message.sysid, type);
-        vehicle = m_vehicleService->baseVehicle(message.sysid);
-    }
+    BaseVehicle* vehicle = m_vehicleService->requestBaseVehicle(message.sysid);
+    // TODO: type to description
 
     vehicle->setModeString(decodeCustomMode(heartbeat.autopilot,
                                             heartbeat.type,
@@ -118,8 +108,6 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     vehicle->setGuided(heartbeat.base_mode & MAV_MODE_FLAG_GUIDED_ENABLED);
     vehicle->setStabilized(heartbeat.base_mode & MAV_MODE_FLAG_STABILIZE_ENABLED);
     vehicle->setArmed(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-
-    m_vehicleService->prolongVehicle(vehicle);
 }
 
 void HeartbeatHandler::sendHeartbeat()
