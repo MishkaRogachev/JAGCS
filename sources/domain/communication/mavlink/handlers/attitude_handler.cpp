@@ -10,6 +10,7 @@
 #include "vehicle_service.h"
 #include "base_vehicle.h"
 
+using namespace data_source;
 using namespace domain;
 
 AttitudeHandler::AttitudeHandler(VehicleService* vehicleService,
