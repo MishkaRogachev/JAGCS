@@ -7,6 +7,7 @@
 #include "ping_handler.h"
 #include "heartbeat_handler.h"
 #include "attitude_handler.h"
+#include "vfr_hud_handler.h"
 
 using namespace data_source;
 using namespace domain;
@@ -26,6 +27,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new PingHandler(communicator);
     new HeartbeatHandler(m_vehicleServeice, communicator);
     new AttitudeHandler(m_vehicleServeice, communicator);
+    new VfrHudHandler(m_vehicleServeice, communicator);
 
     return communicator;
 }
