@@ -10,7 +10,7 @@
 using namespace domain;
 
 WindHandler::WindHandler(VehicleService* vehicleService,
-                         MavLinkCommunicator* communicator):
+                         data_source::MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
