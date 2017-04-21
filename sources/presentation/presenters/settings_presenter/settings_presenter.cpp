@@ -7,8 +7,8 @@
 
 #include "communications_presenter.h"
 #include "vehicles_presenter.h"
-//#include "video_settings_presenter.h"
-//#include "network_settings_presenter.h"
+#include "video_settings_presenter.h"
+#include "network_settings_presenter.h"
 #include "gui_settings_presenter.h"
 #include "about_presenter.h"
 
@@ -19,8 +19,8 @@ class SettingsPresenter::Impl
 public:
     CommunicationsPresenter* communications;
     VehiclesPresenter* vehicles;
-//    VideoSettingsPresenter* video;
-//    NetworkSettingsPresenter* network;
+    VideoSettingsPresenter* video;
+    NetworkSettingsPresenter* network;
     GuiSettingsPresenter* gui;
     AboutPresenter* about;
 };
@@ -35,8 +35,8 @@ SettingsPresenter::SettingsPresenter(domain::DomainFacade* facade,
                             facade->communicationManager(),
                             this);
     d->vehicles = new VehiclesPresenter(facade->vehicleService(), this);
-//    d->video = new VideoSettingsPresenter(this);
-//    d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
+    d->video = new VideoSettingsPresenter(this);
+    d->network = new NetworkSettingsPresenter(facade->proxyManager(), this);
     d->gui = new GuiSettingsPresenter(this);
     d->about = new AboutPresenter(this);
 }
@@ -59,8 +59,8 @@ void SettingsPresenter::connectView(QObject* view)
 {
     d->communications->setView(view->findChild<QObject*>(NAME(communications)));
     d->vehicles->setView(view->findChild<QObject*>(NAME(vehicles)));
-//    d->video->setView(view->findChild<QObject*>(NAME(video)));
-//    d->network->setView(view->findChild<QObject*>(NAME(network)));
+    d->video->setView(view->findChild<QObject*>(NAME(video)));
+    d->network->setView(view->findChild<QObject*>(NAME(network)));
     d->gui->setView(view->findChild<QObject*>(NAME(gui)));
     d->about->setView(view->findChild<QObject*>(NAME(about)));
 

@@ -62,10 +62,8 @@ set(LIBRARIES
 )
 
 # Sources and headrers
-#file(GLOB_RECURSE HEADERS "sources/*.h")
-#file(GLOB_RECURSE SOURCES "sources/*.cpp") TEMPORARY
-file(GLOB_RECURSE HEADERS "sources/data_source/*.h" "sources/domain/*.h" "sources/presentation/*.h")
-file(GLOB_RECURSE SOURCES "sources/data_source/*.cpp" "sources/domain/*.cpp" "sources/presentation/*.cpp" "sources/main.cpp")
+file(GLOB_RECURSE HEADERS "sources/*.h")
+file(GLOB_RECURSE SOURCES "sources/*.cpp")
 file(GLOB_RECURSE QML "sources/*.qml")
 file(GLOB_RECURSE JS "sources/*.js")
 
@@ -73,13 +71,8 @@ file(GLOB_RECURSE JS "sources/*.js")
 include_directories("3dparty/mavlink_v1")
 include_directories("3dparty/mavlink_v1/ardupilotmega")
 
-# HEADER_DIRECTORIES(INCLUDES "sources")
-# include_directories(${INCLUDES})
-
-HEADER_DIRECTORIES(DATA_SOURCE "sources/data_source")
-HEADER_DIRECTORIES(DOMAIN "sources/domain")
-HEADER_DIRECTORIES(PRESENTATION "sources/presentation")
-include_directories(${DATA_SOURCE} ${DOMAIN} ${PRESENTATION})
+HEADER_DIRECTORIES(INCLUDES "sources")
+include_directories(${INCLUDES})
 
 # Translations
 file(GLOB TS_FILES "translations/*.ts")
