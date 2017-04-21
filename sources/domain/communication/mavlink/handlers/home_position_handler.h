@@ -7,11 +7,11 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
+#include "db_traits.h"
 
 namespace domain
 {
     class VehicleService;
-    class AbstractVehicle;
     class Position;
 
     class HomePositionHandler: public AbstractMavLinkHandler
@@ -20,7 +20,7 @@ namespace domain
 
     public:
         HomePositionHandler(VehicleService* vehicleService,
-                            MavLinkCommunicator* communicator);
+                            data_source::MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
@@ -32,12 +32,12 @@ namespace domain
         void timerEvent(QTimerEvent* event);
 
     private slots:
-        void onVehicleAdded(AbstractVehicle* vehicle);
-        void onVehicleRemoved(AbstractVehicle* vehicle);
+        void onVehicleAdded(const data_source::VehicleDescriptionPtr& description);
+        void onVehicleRemoved(const data_source::VehicleDescriptionPtr& description);
 
     private:
         VehicleService* const m_vehicleService;
-        QMap<uint8_t, QBasicTimer> m_reqestTimers;
+        QMap<data_source::VehicleDescriptionPtr, QBasicTimer> m_reqestTimers;
     };
 }
 
