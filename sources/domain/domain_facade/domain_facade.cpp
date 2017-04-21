@@ -10,6 +10,8 @@
 
 #include "settings_provider.h"
 
+#include "proxy_manager.h"
+
 #include "communication_manager.h"
 #include "mavlink_communicator_factory.h"
 
@@ -23,6 +25,7 @@ class DomainFacade::Impl
 public:
     DbManager dataBase;
     DbEntry dbEntry;
+    ProxyManager proxyManager;
 
     QScopedPointer<CommunicationManager> communicationManager;
     QScopedPointer<VehicleService> vehicleService;
@@ -62,4 +65,9 @@ CommunicationManager* DomainFacade::communicationManager() const
 VehicleService* DomainFacade::vehicleService() const
 {
     return d->vehicleService.data();
+}
+
+ProxyManager*DomainFacade::proxyManager() const
+{
+    return &d->proxyManager;
 }

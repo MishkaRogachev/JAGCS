@@ -8,6 +8,7 @@ namespace domain
 {
     class CommunicationManager;
     class VehicleService;
+    class ProxyManager;
 
     class DomainFacade
     {
@@ -17,6 +18,7 @@ namespace domain
 
         CommunicationManager* communicationManager() const;
         VehicleService* vehicleService() const;
+        ProxyManager* proxyManager() const;
 
     private:
         class Impl;
