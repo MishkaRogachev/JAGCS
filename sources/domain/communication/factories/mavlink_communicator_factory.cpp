@@ -8,6 +8,7 @@
 #include "heartbeat_handler.h"
 #include "attitude_handler.h"
 #include "position_handler.h"
+#include "gps_handler.h"
 #include "vfr_hud_handler.h"
 
 using namespace data_source;
@@ -29,6 +30,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new HeartbeatHandler(m_vehicleService, communicator);
     new AttitudeHandler(m_vehicleService, communicator);
     new PositionHandler(m_vehicleService, communicator);
+    new GpsHandler(m_vehicleService, communicator);
     new VfrHudHandler(m_vehicleService, communicator);
 
     return communicator;

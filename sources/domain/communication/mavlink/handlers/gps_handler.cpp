@@ -29,7 +29,7 @@ namespace
 }
 
 GpsHandler::GpsHandler(VehicleService* vehicleService,
-                             MavLinkCommunicator* communicator):
+                       data_source::MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {} // TODO: handle GPS_STATUS
