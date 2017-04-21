@@ -72,7 +72,6 @@ void FlightPresenter::onVehicleSelected(const QString& vehicleName)
         if (description->name() != vehicleName) continue;
 
         // TODO: specialized vehicle presenter
-        qDebug() << vehicleName << d->vehicleService->baseVehicle(description);
         QObject* vehicle = d->vehicleService->baseVehicle(description);
         this->setViewProperty(PROPERTY(selectedVehicle),
                               QVariant::fromValue(vehicle));

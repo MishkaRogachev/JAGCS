@@ -33,11 +33,10 @@ int main(int argc, char* argv[])
     app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
     domain::TranslationManager::init();
+    registerQmlTypes();
 
     domain::DomainFacade facade;
     presentation::MainPresenter presenter(&facade);
-
-    registerQmlTypes();
 
     QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));
     engine.rootContext()->setContextProperty(

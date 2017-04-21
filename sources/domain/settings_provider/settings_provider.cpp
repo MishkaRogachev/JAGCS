@@ -36,7 +36,7 @@ public:
 
         settings.setValue(communication::systemId, 255);
         settings.setValue(communication::componentId, 0);
-        settings.setValue(communication::autoAdd, 0);
+        settings.setValue(communication::autoAdd, true);
         settings.setValue(communication::baudRate, 57600);
         settings.setValue(communication::port, 14550);
         settings.setValue(communication::statisticsCount, 20);
