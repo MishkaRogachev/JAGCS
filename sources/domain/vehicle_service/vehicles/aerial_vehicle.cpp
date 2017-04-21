@@ -5,8 +5,8 @@
 
 using namespace domain;
 
-AerialVehicle::AerialVehicle(Type type, QObject* parent):
-    BaseVehicle(type, parent),
+AerialVehicle::AerialVehicle(quint8 mavId, Type type, QObject* parent):
+    BaseVehicle(mavId, type, parent),
     m_airSpeedAvalible(false),
     m_indicatedAirSpeed(0),
     m_trueAirSpeed(0),

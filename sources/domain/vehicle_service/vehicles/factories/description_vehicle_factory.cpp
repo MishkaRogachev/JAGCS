@@ -1,6 +1,7 @@
 #include "description_vehicle_factory.h"
 
 // Internal
+#include "vehicle_description.h"
 #include "aerial_vehicle.h"
 
 using namespace domain;
@@ -15,7 +16,8 @@ BaseVehicle* DescriptionVehicleFactory::create()
     if (m_description.isNull()) return nullptr;
 
     // TODO: vehicle type
-    return new AerialVehicle(AerialVehicle::FixedWingAircraft);
+    return new AerialVehicle(m_description->mavId(),
+                             AerialVehicle::FixedWingAircraft);
 }
 
 data_source::VehicleDescriptionPtr DescriptionVehicleFactory::description() const

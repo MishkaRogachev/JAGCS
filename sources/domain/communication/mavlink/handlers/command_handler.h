@@ -3,11 +3,11 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
+#include "db_traits.h"
 
 namespace domain
 {
     class VehicleService;
-    class AbstractVehicle;
 
     class CommandHandler: public AbstractMavLinkHandler
     {
@@ -15,7 +15,7 @@ namespace domain
 
     public:
         CommandHandler(VehicleService* vehicleService,
-                       MavLinkCommunicator* communicator);
+                       data_source::MavLinkCommunicator* communicator);
 
     public slots:
        void processMessage(const mavlink_message_t& message) override;
@@ -27,8 +27,7 @@ namespace domain
        void sendMissionJumpTo(int startPoint);
 
     private slots:
-        void onVehicleAdded(domain::AbstractVehicle* vehicle);
-        void onVehicleRemoved(domain::AbstractVehicle* vehicle);
+        void onVehicleAdded(const data_source::VehicleDescriptionPtr& description);
 
    private:
        VehicleService* m_vehicleService;

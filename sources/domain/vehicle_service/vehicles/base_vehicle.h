@@ -16,6 +16,7 @@ namespace domain
     {
         Q_OBJECT
 
+        Q_PROPERTY(quint8 mavId READ mavId WRITE setMavId NOTIFY mavIdChanged)
         Q_PROPERTY(int type READ type CONSTANT)
         Q_PROPERTY(State state READ state WRITE setState NOTIFY stateChanged)
         Q_PROPERTY(QString modeString READ modeString
@@ -58,6 +59,8 @@ namespace domain
         Q_PROPERTY(int heading READ heading WRITE setHeading
                    NOTIFY headingChanged)
 
+        quint8 m_mavId;
+
     public:
         enum Type
         {
@@ -76,8 +79,10 @@ namespace domain
             PowerOff
         };
 
-        BaseVehicle(int type = UnknownType, QObject* parent = nullptr);
+        BaseVehicle(quint8 mavId, int type = UnknownType,
+                    QObject* parent = nullptr);
 
+        quint8 mavId() const;
         int type() const;
         State state() const;
         QString modeString() const;
@@ -106,6 +111,7 @@ namespace domain
         int heading() const;
 
     public slots:
+        void setMavId(quint8 mavId);
         void setState(State state);
         void setModeString(const QString& modeString);
 
@@ -131,6 +137,7 @@ namespace domain
         void setHeading(int heading);
 
     signals:
+        void mavIdChanged(quint8 mavId);
         void stateChanged(State state);
         void modeStringChanged(const QString& modeString);
 
@@ -157,6 +164,9 @@ namespace domain
         void compasAvalibleChanged(bool compasAvalible);
         void headingChanged(int heading);
 
+        void commandReturn();
+        void commandStartMission(int startPoint);
+        void commandJumpToMission(int startPoint);
         void commandHomePosition(const Position& homePosition);
         void commandArmDisarm(bool arm);
 

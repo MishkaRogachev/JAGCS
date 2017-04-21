@@ -97,7 +97,7 @@ void VehicleService::saveDescription(const VehicleDescriptionPtr& description)
     if (d->descriptions.contains(description))
     {
         vehicle = d->descriptedVehicles[description];
-        // TODO: update vehicle's properties
+        vehicle->setMavId(description->mavId());
     }
     else
     {

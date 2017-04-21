@@ -5,8 +5,9 @@
 
 using namespace domain;
 
-BaseVehicle::BaseVehicle(int type, QObject* parent):
+BaseVehicle::BaseVehicle(quint8 mavId, int type, QObject* parent):
     QObject(parent),
+    m_mavId(mavId),
     m_type(type),
     m_state(BaseVehicle::UnknownState),
     m_armed(false),
@@ -20,6 +21,11 @@ BaseVehicle::BaseVehicle(int type, QObject* parent):
     m_compasAvalible(false),
     m_heading(0)
 {}
+
+quint8 BaseVehicle::mavId() const
+{
+    return m_mavId;
+}
 
 int BaseVehicle::type() const
 {
@@ -124,6 +130,14 @@ bool BaseVehicle::compasAvalible() const
 int BaseVehicle::heading() const
 {
     return m_heading;
+}
+
+void BaseVehicle::setMavId(quint8 mavId)
+{
+    if (m_mavId == mavId) return;
+
+    m_mavId = mavId;
+    emit mavIdChanged(mavId);
 }
 
 int BaseVehicle::throttle() const

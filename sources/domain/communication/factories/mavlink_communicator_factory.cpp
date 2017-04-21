@@ -12,6 +12,7 @@
 #include "gps_handler.h"
 #include "vfr_hud_handler.h"
 #include "wind_handler.h"
+#include "command_handler.h"
 
 using namespace data_source;
 using namespace domain;
@@ -36,6 +37,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new GpsHandler(m_vehicleService, communicator);
     new VfrHudHandler(m_vehicleService, communicator);
     new WindHandler(m_vehicleService, communicator);
+    new CommandHandler(m_vehicleService, communicator);
 
     return communicator;
 }

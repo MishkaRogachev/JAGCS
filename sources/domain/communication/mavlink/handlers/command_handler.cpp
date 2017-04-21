@@ -7,6 +7,7 @@
 #include <QDebug>
 
 // Internal
+#include "vehicle_description.h"
 #include "mavlink_communicator.h"
 
 #include "vehicle_service.h"
@@ -15,7 +16,7 @@
 using namespace domain;
 
 CommandHandler::CommandHandler(VehicleService* vehicleService,
-                               MavLinkCommunicator* communicator):
+                               data_source::MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {
@@ -36,7 +37,7 @@ void CommandHandler::sendArmDisarm(bool arm)
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = vehicle->vehicleId();
+    command.target_system = vehicle->mavId();
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -58,7 +59,7 @@ void CommandHandler::sendReturn()
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = vehicle->vehicleId();
+    command.target_system = vehicle->mavId();
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -77,20 +78,20 @@ void CommandHandler::sendMissionRestart()
 
 void CommandHandler::sendMissionStart(int startPoint)
 {
-    auto vehicle = qobject_cast<domain::AbstractVehicle*>(this->sender());
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
     if (!vehicle) return;
 
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = vehicle->vehicleId();
+    command.target_system = vehicle->mavId();
     command.target_component = 0;
     command.confirmation = 0;
 
     command.command = MAV_CMD_MISSION_START;
 
     command.param1 = startPoint;
-    command.param2 = vehicle->missionItems() - 1;
+    //TODO: command.param2 = vehicle->missionItems() - 1;
 
     mavlink_msg_command_long_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
@@ -100,13 +101,13 @@ void CommandHandler::sendMissionStart(int startPoint)
 
 void CommandHandler::sendMissionJumpTo(int startPoint)
 {
-    auto vehicle = qobject_cast<domain::AbstractVehicle*>(this->sender());
+    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
     if (!vehicle) return;
 
     mavlink_message_t message;
     mavlink_command_long_t command;
 
-    command.target_system = vehicle->vehicleId();
+    command.target_system = vehicle->mavId();
     command.target_component = 0;
     command.confirmation = 0;
 
@@ -120,23 +121,16 @@ void CommandHandler::sendMissionJumpTo(int startPoint)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void CommandHandler::onVehicleAdded(AbstractVehicle* vehicle)
+void CommandHandler::onVehicleAdded(const data_source::VehicleDescriptionPtr& description)
 {
-    connect(vehicle, &AbstractVehicle::commandReturn,
+    BaseVehicle* vehicle = m_vehicleService->baseVehicle(description);
+
+    connect(vehicle, &BaseVehicle::commandReturn,
             this, &CommandHandler::sendReturn);
-    connect(vehicle, &AbstractVehicle::commandStart,
+    connect(vehicle, &BaseVehicle::commandStartMission,
             this, &CommandHandler::sendMissionStart);
-    connect(vehicle, &AbstractVehicle::commandJumpTo,
+    connect(vehicle, &BaseVehicle::commandJumpToMission,
             this, &CommandHandler::sendMissionJumpTo);
-
-    auto baseVehicle = qobject_cast<domain::BaseVehicle*>(vehicle);
-    {
-        connect(baseVehicle, &BaseVehicle::commandArmDisarm,
-                this, &CommandHandler::sendArmDisarm);
-    }
-}
-
-void CommandHandler::onVehicleRemoved(AbstractVehicle* vehicle)
-{
-    disconnect(vehicle, 0, this, 0);
+    connect(vehicle, &BaseVehicle::commandArmDisarm,
+            this, &CommandHandler::sendArmDisarm);
 }
