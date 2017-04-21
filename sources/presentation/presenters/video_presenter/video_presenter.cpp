@@ -37,16 +37,14 @@ VideoPresenter::VideoPresenter(QObject* parent):
 }
 
 VideoPresenter::~VideoPresenter()
-{
-    delete d;
-}
+{}
 
 void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
     QCameraInfo info(domain::SettingsProvider::value(
-                         domain::video_settings::device).toByteArray());
+                         settings::video::device).toByteArray());
     if (info.isNull())
     {
         d->camera = nullptr;

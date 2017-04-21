@@ -8,7 +8,7 @@
 #include "domain_facade.h"
 
 #include "status_presenter.h"
-//#include "flight_presenter.h"
+#include "flight_presenter.h"
 //#include "mission_presenter.h"
 #include "settings_presenter.h"
 
@@ -47,20 +47,19 @@ void MainPresenter::setMode(const QString& mode)
     }
 
     this->setViewProperty(PROPERTY(mode), mode);
-/*
+
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->facade->missionService(),
-                                               d->facade->vehicleService(),
+        d->modePresenter = new FlightPresenter(d->facade->vehicleService(),
                                                this);
     }
-    if (mode == "mission")
+    /*if (mode == "mission")
     {
         d->modePresenter = new MissionPresenter(d->facade->missionService(),
                                                 d->facade->vehicleService(),
                                                 this);
-    }
-    else*/ if (mode == "settings")
+    }*/
+    else if (mode == "settings")
     {
         d->modePresenter = new SettingsPresenter(d->facade, this);
     }

@@ -16,11 +16,6 @@ namespace settings
         const char* const fdRollInverted = "Gui/fdRollInverted";
     }
 
-    namespace manual
-    {
-        const char* const useJoystick = "Manual/useJoystick";
-    }
-
     namespace map
     {
         const char* const zoomLevel = "Map/zoomLevel";
