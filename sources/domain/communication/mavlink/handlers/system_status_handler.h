@@ -13,7 +13,7 @@ namespace domain
 
     public:
         SystemStatusHandler(VehicleService* vehicleService,
-                            MavLinkCommunicator* communicator);
+                            data_source::MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

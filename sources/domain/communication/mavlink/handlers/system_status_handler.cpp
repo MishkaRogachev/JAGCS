@@ -12,7 +12,7 @@
 using namespace domain;
 
 SystemStatusHandler::SystemStatusHandler(VehicleService* vehicleService,
-                                         MavLinkCommunicator* communicator):
+                                         data_source::MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService)
 {}
