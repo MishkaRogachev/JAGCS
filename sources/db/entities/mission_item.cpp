@@ -6,7 +6,7 @@
 // Internal
 #include "mission.h"
 
-using namespace data_source;
+using namespace db;
 
 int MissionItem::missionId() const
 {

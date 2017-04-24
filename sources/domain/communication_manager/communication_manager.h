@@ -7,7 +7,7 @@
 // Internal
 #include "db_traits.h"
 
-namespace data_source
+namespace db
 {
     class DbEntry;
 }
@@ -25,21 +25,21 @@ namespace domain
 
     public:
         CommunicationManager(comm::ICommunicatorFactory* commFactory,
-                             data_source::DbEntry* entry,
+                             db::DbEntry* entry,
                              QObject* parent = nullptr);
         ~CommunicationManager() override;
 
-        data_source::LinkDescriptionPtrList links() const;
+        db::LinkDescriptionPtrList links() const;
 
     public slots:
-        void saveLink(const data_source::LinkDescriptionPtr& description);
-        void removeLink(const data_source::LinkDescriptionPtr& description);
+        void saveLink(const db::LinkDescriptionPtr& description);
+        void removeLink(const db::LinkDescriptionPtr& description);
 
     signals:
-        void linkAdded(const data_source::LinkDescriptionPtr& description);
-        void linkRemoved(const data_source::LinkDescriptionPtr& description);
-        void linkChanged(const data_source::LinkDescriptionPtr& description);
-        void linkStatisticsChanged(const data_source::LinkDescriptionPtr& description,
+        void linkAdded(const db::LinkDescriptionPtr& description);
+        void linkRemoved(const db::LinkDescriptionPtr& description);
+        void linkChanged(const db::LinkDescriptionPtr& description);
+        void linkStatisticsChanged(const db::LinkDescriptionPtr& description,
                                    int sentBytes, int recvBytes);
 
     private slots:

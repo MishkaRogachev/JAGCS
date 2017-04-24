@@ -46,7 +46,7 @@ FlightPresenter::~FlightPresenter()
 void FlightPresenter::updateVehicles()
 {
     QStringList vehicleNames;
-    for (const data_source::VehicleDescriptionPtr& description:
+    for (const db::VehicleDescriptionPtr& description:
          d->vehicleService->descriptions())
     {
         vehicleNames.append(description->name());
@@ -66,7 +66,7 @@ void FlightPresenter::connectView(QObject* view)
 
 void FlightPresenter::onVehicleSelected(const QString& vehicleName)
 {
-    for (const data_source::VehicleDescriptionPtr& description:
+    for (const db::VehicleDescriptionPtr& description:
          d->vehicleService->descriptions())
     {
         if (description->name() != vehicleName) continue;

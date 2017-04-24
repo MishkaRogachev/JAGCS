@@ -12,7 +12,7 @@ void registerQmlTypes()
     qRegisterMetaType<domain::Wind>("Wind");
     qRegisterMetaType<domain::PowerSystem>("PowerSystem");
 
-    qmlRegisterType<data_source::LinkDescription>("JAGCS", 1, 0, "LinkDescription");
+    qmlRegisterType<db::LinkDescription>("JAGCS", 1, 0, "LinkDescription");
 }
 
 #endif // QML_DECLARATIONS_H

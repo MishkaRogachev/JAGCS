@@ -16,26 +16,26 @@ using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
         domain::CommunicationManager* manager,
-        const data_source::LinkDescriptionPtr& description,
+        const db::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
     m_manager(manager),
     m_description(description)
 {
     connect(m_manager, &domain::CommunicationManager::linkChanged, this,
-            [this](const data_source::LinkDescriptionPtr& description) {
+            [this](const db::LinkDescriptionPtr& description) {
         if (m_description == description) this->updateView();
     });
 
     connect(m_manager, &domain::CommunicationManager::linkStatisticsChanged, this,
-            [this](const data_source::LinkDescriptionPtr& description,
+            [this](const db::LinkDescriptionPtr& description,
             int sentBytes, int recvBytes) {
         if (m_description == description) this->updateStatistics(sentBytes,
                                                                  recvBytes);
     });
 }
 
-data_source::LinkDescriptionPtr CommunicationLinkPresenter::description() const
+db::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 {
     return m_description;
 }

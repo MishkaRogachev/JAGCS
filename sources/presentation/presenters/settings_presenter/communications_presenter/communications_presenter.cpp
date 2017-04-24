@@ -35,7 +35,7 @@ CommunicationsPresenter::CommunicationsPresenter(
     connect(manager, &CommunicationManager::linkRemoved,
             this, &CommunicationsPresenter::onLinkRemoved);
 
-    for (const data_source::LinkDescriptionPtr& description: manager->links())
+    for (const db::LinkDescriptionPtr& description: manager->links())
     {
         d->linkPresenters.append(new CommunicationLinkPresenter(
                                      d->manager, description, this));
@@ -54,7 +54,7 @@ void CommunicationsPresenter::connectView(QObject* view)
 }
 
 void CommunicationsPresenter::onLinkAdded(
-        const data_source::LinkDescriptionPtr& description)
+        const db::LinkDescriptionPtr& description)
 {
     d->linkPresenters.append(new CommunicationLinkPresenter(
                                  d->manager, description, this));
@@ -63,7 +63,7 @@ void CommunicationsPresenter::onLinkAdded(
 }
 
 void CommunicationsPresenter::onLinkRemoved(
-        const data_source::LinkDescriptionPtr& description)
+        const db::LinkDescriptionPtr& description)
 {
     for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
     {
@@ -89,10 +89,10 @@ void CommunicationsPresenter::updateCommunicationsLinks()
 
 void CommunicationsPresenter::onAddUdpLink()
 {
-    auto description = data_source::LinkDescriptionPtr::create();
+    auto description = db::LinkDescriptionPtr::create();
 
     description->setName(tr("New UDP Link"));
-    description->setType(data_source::LinkDescription::Udp);
+    description->setType(db::LinkDescription::Udp);
     description->setPort(domain::SettingsProvider::value(
                             settings::communication::port).toInt());
 
@@ -101,10 +101,10 @@ void CommunicationsPresenter::onAddUdpLink()
 
 void CommunicationsPresenter::onAddSerialLink()
 {
-    auto description = data_source::LinkDescriptionPtr::create();
+    auto description = db::LinkDescriptionPtr::create();
 
     description->setName(tr("New Serial Link"));
-    description->setType(data_source::LinkDescription::Serial);
+    description->setType(db::LinkDescription::Serial);
     description->setBaudRate(domain::SettingsProvider::value(
                             settings::communication::baudRate).toInt());
 

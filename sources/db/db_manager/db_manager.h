@@ -7,7 +7,7 @@
 
 class QSqlDatabase;
 
-namespace data_source
+namespace db
 {
     class DbManager: public QObject
     {

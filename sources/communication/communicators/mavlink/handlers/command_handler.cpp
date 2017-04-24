@@ -123,7 +123,7 @@ void CommandHandler::sendMissionJumpTo(int startPoint)
 }
 
 void CommandHandler::onVehicleAdded(
-        const data_source::VehicleDescriptionPtr& description)
+        const db::VehicleDescriptionPtr& description)
 {
     BaseVehicle* vehicle = m_vehicleService->baseVehicle(description);
 

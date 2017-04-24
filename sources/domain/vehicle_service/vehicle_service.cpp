@@ -11,7 +11,7 @@
 #include "aerial_vehicle.h"
 #include "description_vehicle_factory.h"
 
-using namespace data_source;
+using namespace db;
 using namespace domain;
 
 class VehicleService::Impl

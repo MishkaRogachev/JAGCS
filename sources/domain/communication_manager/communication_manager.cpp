@@ -14,7 +14,7 @@
 
 #include "i_communicator_factory.h"
 
-using namespace data_source;
+using namespace db;
 using namespace comm;
 using namespace domain;
 
@@ -24,8 +24,8 @@ public:
     AbstractCommunicator* communicator;
     DbEntry* entry;
 
-    data_source::LinkDescriptionPtrList descriptions;
-    QMap<data_source::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
+    db::LinkDescriptionPtrList descriptions;
+    QMap<db::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
 
     AbstractLink* linkFromDescription(const LinkDescriptionPtr& description)
     {

@@ -11,16 +11,16 @@ namespace domain
     {
     public:
         DescriptionVehicleFactory(
-                const data_source::VehicleDescriptionPtr& description =
-                data_source::VehicleDescriptionPtr());
+                const db::VehicleDescriptionPtr& description =
+                db::VehicleDescriptionPtr());
 
         BaseVehicle* create() override;
 
-        data_source::VehicleDescriptionPtr description() const;
-        void setDescription(const data_source::VehicleDescriptionPtr& description);
+        db::VehicleDescriptionPtr description() const;
+        void setDescription(const db::VehicleDescriptionPtr& description);
 
     private:
-        data_source::VehicleDescriptionPtr m_description;
+        db::VehicleDescriptionPtr m_description;
     };
 }
 

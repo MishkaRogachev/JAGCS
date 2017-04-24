@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
-    data_source::DbManager manager;
+    db::DbManager manager;
 
     manager.open("test_db");
     bool created = manager.create();

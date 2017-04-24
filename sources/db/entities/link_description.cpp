@@ -1,6 +1,6 @@
 #include "link_description.h"
 
-using namespace data_source;
+using namespace db;
 
 QString LinkDescription::name() const
 {

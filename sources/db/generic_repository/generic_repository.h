@@ -6,7 +6,7 @@
 #include <QHash>
 #include <QSharedPointer>
 
-namespace data_source
+namespace db
 {
     template <class T>
     class GenericRepository

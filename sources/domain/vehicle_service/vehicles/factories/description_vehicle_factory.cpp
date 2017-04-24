@@ -7,7 +7,7 @@
 using namespace domain;
 
 DescriptionVehicleFactory::DescriptionVehicleFactory(
-        const data_source::VehicleDescriptionPtr& description):
+        const db::VehicleDescriptionPtr& description):
     m_description(description)
 {}
 
@@ -20,13 +20,13 @@ BaseVehicle* DescriptionVehicleFactory::create()
                              AerialVehicle::FixedWingAircraft);
 }
 
-data_source::VehicleDescriptionPtr DescriptionVehicleFactory::description() const
+db::VehicleDescriptionPtr DescriptionVehicleFactory::description() const
 {
     return m_description;
 }
 
 void DescriptionVehicleFactory::setDescription(
-        const data_source::VehicleDescriptionPtr& description)
+        const db::VehicleDescriptionPtr& description)
 {
     m_description = description;
 }

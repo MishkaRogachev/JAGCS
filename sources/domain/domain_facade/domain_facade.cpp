@@ -17,7 +17,7 @@
 
 #include "vehicle_service.h"
 
-using namespace data_source;
+using namespace db;
 using namespace domain;
 
 class DomainFacade::Impl

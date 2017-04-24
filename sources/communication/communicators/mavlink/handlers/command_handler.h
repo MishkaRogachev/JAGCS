@@ -30,7 +30,7 @@ namespace comm
        void sendMissionJumpTo(int startPoint);
 
     private slots:
-        void onVehicleAdded(const data_source::VehicleDescriptionPtr& description);
+        void onVehicleAdded(const db::VehicleDescriptionPtr& description);
 
    private:
        domain::VehicleService* m_vehicleService;

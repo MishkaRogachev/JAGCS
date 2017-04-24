@@ -39,7 +39,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    data_source::VehicleDescriptionPtr description =
+    db::VehicleDescriptionPtr description =
             m_vehicleService->findDescriptiontByMavId(message.sysid);
     if (description.isNull()) return;
 
@@ -111,7 +111,7 @@ void HomePositionHandler::timerEvent(QTimerEvent* event)
 }
 
 void HomePositionHandler::onVehicleAdded(
-        const data_source::VehicleDescriptionPtr& description)
+        const db::VehicleDescriptionPtr& description)
 {
     this->sendHomePositionRequest(description->mavId());
 
@@ -124,7 +124,7 @@ void HomePositionHandler::onVehicleAdded(
 }
 
 void HomePositionHandler::onVehicleRemoved(
-        const data_source::VehicleDescriptionPtr& description)
+        const db::VehicleDescriptionPtr& description)
 {
     m_reqestTimers.remove(description);
 }

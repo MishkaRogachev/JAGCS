@@ -31,7 +31,7 @@ VehiclesPresenter::VehiclesPresenter(domain::VehicleService* service,
     connect(service, &domain::VehicleService::vehicleRemoved,
             this, &VehiclesPresenter::onVehicleRemoved);
 
-    for (const data_source::VehicleDescriptionPtr& description:
+    for (const db::VehicleDescriptionPtr& description:
          service->descriptions())
     {
         d->vehiclePresenters.append(new DescriptionVehiclePresenter(
@@ -50,7 +50,7 @@ void VehiclesPresenter::connectView(QObject* view)
 }
 
 void VehiclesPresenter::onVehicleAdded(
-        const data_source::VehicleDescriptionPtr& vehicle)
+        const db::VehicleDescriptionPtr& vehicle)
 {
     d->vehiclePresenters.append(new DescriptionVehiclePresenter(
                                     d->service, vehicle, this));
@@ -58,7 +58,7 @@ void VehiclesPresenter::onVehicleAdded(
 }
 
 void VehiclesPresenter::onVehicleRemoved(
-        const data_source::VehicleDescriptionPtr& vehicle)
+        const db::VehicleDescriptionPtr& vehicle)
 {
     for (DescriptionVehiclePresenter* vehiclePresenter: d->vehiclePresenters)
     {
@@ -84,7 +84,7 @@ void VehiclesPresenter::updateVehicles()
 
 void VehiclesPresenter::onAddVehicle()
 {
-    auto description = data_source::VehicleDescriptionPtr::create();
+    auto description = db::VehicleDescriptionPtr::create();
 
     description->setName(tr("New Vehicle"));
 

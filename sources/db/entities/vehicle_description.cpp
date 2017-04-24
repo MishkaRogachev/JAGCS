@@ -3,7 +3,7 @@
 // Qt
 #include <QMap>
 
-using namespace data_source;
+using namespace db;
 
 QMap<VehicleDescription*, int> VehicleDescription::m_mavIds;
 

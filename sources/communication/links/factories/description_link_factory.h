@@ -10,17 +10,17 @@ namespace comm
     class DescriptionLinkFactory: public ILinkFactory
     {
     public:
-        DescriptionLinkFactory(const data_source::LinkDescriptionPtr& description =
-                data_source::LinkDescriptionPtr());
+        DescriptionLinkFactory(const db::LinkDescriptionPtr& description =
+                db::LinkDescriptionPtr());
 
         AbstractLink* create() override;
         void update(AbstractLink* link) override;
 
-        data_source::LinkDescriptionPtr description() const;
-        void setDescription(const data_source::LinkDescriptionPtr& description);
+        db::LinkDescriptionPtr description() const;
+        void setDescription(const db::LinkDescriptionPtr& description);
 
     private:
-        data_source::LinkDescriptionPtr m_description;
+        db::LinkDescriptionPtr m_description;
     };
 }
 

@@ -7,7 +7,7 @@
 // Internal
 #include "db_traits.h"
 
-namespace data_source
+namespace db
 {
     class DbEntry;
 }
@@ -22,25 +22,25 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit VehicleService(data_source::DbEntry* entry,
+        explicit VehicleService(db::DbEntry* entry,
                                 QObject* parent = nullptr);
         ~VehicleService() override;
 
-        data_source::VehicleDescriptionPtrList descriptions() const;
-        data_source::VehicleDescriptionPtr findDescriptiontByMavId(quint8 mavId) const;
+        db::VehicleDescriptionPtrList descriptions() const;
+        db::VehicleDescriptionPtr findDescriptiontByMavId(quint8 mavId) const;
 
-        BaseVehicle* baseVehicle(const data_source::VehicleDescriptionPtr& description);
+        BaseVehicle* baseVehicle(const db::VehicleDescriptionPtr& description);
         BaseVehicle* baseVehicle(quint8 mavId);
-        AerialVehicle* aerialVehicle(const data_source::VehicleDescriptionPtr& description);
+        AerialVehicle* aerialVehicle(const db::VehicleDescriptionPtr& description);
         AerialVehicle* aerialVehicle(quint8 mavId);
 
     public slots:
-        void saveDescription(const data_source::VehicleDescriptionPtr& description);
-        void removeByDescription(const data_source::VehicleDescriptionPtr& description);
+        void saveDescription(const db::VehicleDescriptionPtr& description);
+        void removeByDescription(const db::VehicleDescriptionPtr& description);
 
     signals:
-        void vehicleAdded(const data_source::VehicleDescriptionPtr& description);
-        void vehicleRemoved(const data_source::VehicleDescriptionPtr& description);
+        void vehicleAdded(const db::VehicleDescriptionPtr& description);
+        void vehicleRemoved(const db::VehicleDescriptionPtr& description);
 
     private:
         class Impl;

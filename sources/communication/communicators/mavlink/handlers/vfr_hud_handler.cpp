@@ -7,7 +7,7 @@
 #include "vehicle_service.h"
 #include "aerial_vehicle.h"
 
-using namespace data_source;
+using namespace db;
 using namespace comm;
 using namespace domain;
 

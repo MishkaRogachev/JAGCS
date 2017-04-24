@@ -4,7 +4,7 @@
 // Internal
 #include "base_entity.h"
 
-namespace data_source
+namespace db
 {
     class Mission: public BaseEntity
     {

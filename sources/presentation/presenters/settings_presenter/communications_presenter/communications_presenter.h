@@ -25,8 +25,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onLinkAdded(const data_source::LinkDescriptionPtr& description);
-        void onLinkRemoved(const data_source::LinkDescriptionPtr& description);
+        void onLinkAdded(const db::LinkDescriptionPtr& description);
+        void onLinkRemoved(const db::LinkDescriptionPtr& description);
         void updateCommunicationsLinks();
 
         void onAddUdpLink();

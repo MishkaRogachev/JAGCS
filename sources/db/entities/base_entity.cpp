@@ -1,6 +1,6 @@
 #include "base_entity.h"
 
-using namespace data_source;
+using namespace db;
 
 BaseEntity::~BaseEntity()
 {}

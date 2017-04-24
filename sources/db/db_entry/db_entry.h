@@ -7,7 +7,7 @@
 // Internal
 #include "db_traits.h"
 
-namespace data_source
+namespace db
 {
     class DbEntry // TODO: facade interface(missions, itemsForMission etc)
     {

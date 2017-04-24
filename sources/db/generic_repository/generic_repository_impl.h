@@ -8,7 +8,7 @@
 #include <QSqlError>
 #include <QDebug>
 
-using namespace data_source;
+using namespace db;
 
 template<class T>
 GenericRepository<T>::GenericRepository(const QString& tableName):

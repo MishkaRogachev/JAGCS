@@ -19,10 +19,10 @@ namespace presentation
     public:
         CommunicationLinkPresenter(
                 domain::CommunicationManager* manager,
-                const data_source::LinkDescriptionPtr& description,
+                const db::LinkDescriptionPtr& description,
                 QObject* parent = nullptr);
 
-        data_source::LinkDescriptionPtr description() const;
+        db::LinkDescriptionPtr description() const;
 
     public slots:
         void updateView();
@@ -45,7 +45,7 @@ namespace presentation
 
     private:
         domain::CommunicationManager* const m_manager;
-        data_source::LinkDescriptionPtr m_description;
+        db::LinkDescriptionPtr m_description;
     };
 }
 

@@ -35,12 +35,12 @@ namespace comm
         void timerEvent(QTimerEvent* event);
 
     private slots:
-        void onVehicleAdded(const data_source::VehicleDescriptionPtr& description);
-        void onVehicleRemoved(const data_source::VehicleDescriptionPtr& description);
+        void onVehicleAdded(const db::VehicleDescriptionPtr& description);
+        void onVehicleRemoved(const db::VehicleDescriptionPtr& description);
 
     private:
         domain::VehicleService* const m_vehicleService;
-        QMap<data_source::VehicleDescriptionPtr, QBasicTimer> m_reqestTimers;
+        QMap<db::VehicleDescriptionPtr, QBasicTimer> m_reqestTimers;
     };
 }
 

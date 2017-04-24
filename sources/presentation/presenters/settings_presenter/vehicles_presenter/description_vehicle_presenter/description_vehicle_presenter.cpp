@@ -11,14 +11,14 @@ using namespace presentation;
 
 DescriptionVehiclePresenter::DescriptionVehiclePresenter(
         domain::VehicleService* service,
-        const data_source::VehicleDescriptionPtr& description,
+        const db::VehicleDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
     m_service(service),
     m_description(description)
 {}
 
-data_source::VehicleDescriptionPtr DescriptionVehiclePresenter::description() const
+db::VehicleDescriptionPtr DescriptionVehiclePresenter::description() const
 {
     return m_description;
 }

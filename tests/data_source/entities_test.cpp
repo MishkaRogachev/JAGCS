@@ -11,7 +11,7 @@
 #include "vehicle_description.h"
 #include "link_description.h"
 
-using namespace data_source;
+using namespace db;
 
 void EntitiesTest::testMission()
 {

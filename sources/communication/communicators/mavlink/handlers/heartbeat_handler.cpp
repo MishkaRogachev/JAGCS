@@ -18,7 +18,7 @@
 #include "aerial_vehicle.h"
 
 using namespace comm;
-using namespace data_source;
+using namespace db;
 using namespace domain;
 
 namespace

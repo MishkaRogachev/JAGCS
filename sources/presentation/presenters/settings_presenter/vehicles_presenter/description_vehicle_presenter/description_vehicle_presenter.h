@@ -19,10 +19,10 @@ namespace presentation
     public:
         DescriptionVehiclePresenter(
                 domain::VehicleService* service,
-                const data_source::VehicleDescriptionPtr& description,
+                const db::VehicleDescriptionPtr& description,
                 QObject* parent = nullptr);
 
-        data_source::VehicleDescriptionPtr description() const;
+        db::VehicleDescriptionPtr description() const;
 
     public slots:
         void updateView();
@@ -37,7 +37,7 @@ namespace presentation
 
     private:
         domain::VehicleService* const m_service;
-        data_source::VehicleDescriptionPtr m_description;
+        db::VehicleDescriptionPtr m_description;
     };
 }
 

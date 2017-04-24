@@ -5,7 +5,7 @@
 #include <QSharedPointer>
 #include <QList>
 
-namespace data_source // TODO: correct namespaces - db, com, services
+namespace db
 {
     class Mission;
     class MissionItem;

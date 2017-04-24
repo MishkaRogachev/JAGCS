@@ -25,8 +25,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onVehicleAdded(const data_source::VehicleDescriptionPtr& vehicle);
-        void onVehicleRemoved(const data_source::VehicleDescriptionPtr& vehicle);
+        void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
+        void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
         void updateVehicles();
 
         void onAddVehicle();

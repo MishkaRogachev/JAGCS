@@ -5,7 +5,7 @@
 #include <QSqlError>
 #include <QDebug>
 
-using namespace data_source;
+using namespace db;
 
 DbManager::DbManager(QObject* parent):
     QObject(parent),

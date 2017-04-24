@@ -3,7 +3,7 @@
 // Internal
 #include "mission_item.h"
 
-using namespace data_source;
+using namespace db;
 
 void Mission::setId(int id)
 {
