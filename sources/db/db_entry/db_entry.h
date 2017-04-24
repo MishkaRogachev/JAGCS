@@ -37,6 +37,7 @@ namespace db
 
         LinkDescriptionPtrList loadLinks();
         VehicleDescriptionPtrList loadVehicles();
+        MissionPtrList loadMissions();
 
     private:
         class Impl;

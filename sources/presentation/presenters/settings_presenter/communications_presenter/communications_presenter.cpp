@@ -30,9 +30,9 @@ CommunicationsPresenter::CommunicationsPresenter(
 {
     d->service = service;
 
-    connect(manager, &CommunicationService::linkAdded,
+    connect(service, &CommunicationService::linkAdded,
             this, &CommunicationsPresenter::onLinkAdded);
-    connect(manager, &CommunicationService::linkRemoved,
+    connect(service, &CommunicationService::linkRemoved,
             this, &CommunicationsPresenter::onLinkRemoved);
 
     for (const db::LinkDescriptionPtr& description: service->links())

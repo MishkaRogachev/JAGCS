@@ -19,7 +19,7 @@ class VehicleService::Impl
 public:
     DbEntry* entry;
 
-    QList<VehicleDescriptionPtr> descriptions;
+    VehicleDescriptionPtrList descriptions;
     QMap<VehicleDescriptionPtr, BaseVehicle*> descriptedVehicles;
 
     BaseVehicle* vehicleFromDescription(const VehicleDescriptionPtr& description)

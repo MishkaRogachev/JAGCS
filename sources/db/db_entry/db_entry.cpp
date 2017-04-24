@@ -174,3 +174,15 @@ VehicleDescriptionPtrList DbEntry::loadVehicles()
     return list;
 }
 
+MissionPtrList DbEntry::loadMissions()
+{
+    MissionPtrList list;
+
+    for (int id: d->missionRepository.selectId())
+    {
+        list.append(this->readMission(id));
+    }
+
+    return list;
+}
+

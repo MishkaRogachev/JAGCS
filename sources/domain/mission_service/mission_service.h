@@ -22,6 +22,20 @@ namespace domain
         explicit MissionService(db::DbEntry* entry, QObject* parent = nullptr);
         ~MissionService() override;
 
+        db::MissionPtrList missions() const;
+
+    public slots:
+        void saveMission(const db::MissionPtr& mission);
+        void removeMission(const db::MissionPtr& mission);
+        void saveMissionItem(const db::MissionItemPtr& item);
+        void removeMissionItem(const db::MissionItemPtr& item);
+
+    signals:
+        void missionAdded(const db::MissionPtr& mission);
+        void missionRemoved(const db::MissionPtr& mission);
+        void missionItemAdded(const db::MissionItemPtr& mission);
+        void missionItemRemoved(const db::MissionItemPtr& mission);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
