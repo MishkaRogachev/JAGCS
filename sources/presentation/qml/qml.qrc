@@ -59,7 +59,6 @@
         <file>Views/Flight/ManualControlView.qml</file>
         <file>Views/Flight/MissionControlView.qml</file>
         <file>Views/Mission/MissionView.qml</file>
-        <file>Views/Mission/MissionItemView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/Communications/CommunicationsView.qml</file>
         <file>Views/Settings/Communications/CommunicationLinkView.qml</file>

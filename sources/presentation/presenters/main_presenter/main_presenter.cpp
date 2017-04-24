@@ -9,7 +9,7 @@
 
 #include "status_presenter.h"
 #include "flight_presenter.h"
-//#include "mission_presenter.h"
+#include "mission_presenter.h"
 #include "settings_presenter.h"
 
 using namespace presentation;
@@ -53,12 +53,10 @@ void MainPresenter::setMode(const QString& mode)
         d->modePresenter = new FlightPresenter(d->facade->vehicleService(),
                                                this);
     }
-    /*if (mode == "mission")
+    if (mode == "mission")
     {
-        d->modePresenter = new MissionPresenter(d->facade->missionService(),
-                                                d->facade->vehicleService(),
-                                                this);
-    }*/
+        d->modePresenter = new MissionPresenter(d->facade, this);
+    }
     else if (mode == "settings")
     {
         d->modePresenter = new SettingsPresenter(d->facade, this);
