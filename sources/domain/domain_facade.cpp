@@ -12,10 +12,11 @@
 
 #include "proxy_manager.h"
 
-#include "communication_manager.h"
-#include "mavlink_communicator_factory.h"
-
 #include "vehicle_service.h"
+#include "mission_service.h"
+
+#include "communication_service.h"
+#include "mavlink_communicator_factory.h"
 
 using namespace db;
 using namespace domain;
@@ -27,8 +28,10 @@ public:
     DbEntry dbEntry;
     ProxyManager proxyManager;
 
-    QScopedPointer<CommunicationManager> communicationManager;
     QScopedPointer<VehicleService> vehicleService;
+    QScopedPointer<MissionService> missionService;
+
+    QScopedPointer<CommunicationService> commService;
 };
 
 DomainFacade::DomainFacade():
@@ -48,26 +51,31 @@ DomainFacade::DomainFacade():
     }
 
     d->vehicleService.reset(new VehicleService(&d->dbEntry));
+    d->missionService.reset(new MissionService(&d->dbEntry));
 
     comm::MavLinkCommunicatorFactory comFactory(d->vehicleService.data(),
              SettingsProvider::value(settings::communication::systemId).toInt(),
              SettingsProvider::value(settings::communication::componentId).toInt());
 
-    d->communicationManager.reset(new CommunicationManager(&comFactory,
-                                                           &d->dbEntry));
+    d->commService.reset(new CommunicationService(&comFactory, &d->dbEntry));
 }
 
 DomainFacade::~DomainFacade()
 {}
 
-CommunicationManager* DomainFacade::communicationManager() const
+CommunicationService* DomainFacade::commService() const
 {
-    return d->communicationManager.data();
+    return d->commService.data();
 }
 
 VehicleService* DomainFacade::vehicleService() const
 {
     return d->vehicleService.data();
+}
+
+MissionService* DomainFacade::missionService() const
+{
+    return d->missionService.data();
 }
 
 ProxyManager*DomainFacade::proxyManager() const

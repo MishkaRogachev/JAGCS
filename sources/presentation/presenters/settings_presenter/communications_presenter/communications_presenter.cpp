@@ -7,7 +7,7 @@
 #include "link_description.h"
 
 #include "settings_provider.h"
-#include "communication_manager.h"
+#include "communication_service.h"
 
 #include "communication_link_presenter.h"
 
@@ -17,28 +17,28 @@ using namespace domain;
 class CommunicationsPresenter::Impl
 {
 public:
-    domain::CommunicationManager* manager;
+    domain::CommunicationService* service;
 
     QList<CommunicationLinkPresenter*> linkPresenters;
 };
 
 CommunicationsPresenter::CommunicationsPresenter(
-        domain::CommunicationManager* manager,
+        domain::CommunicationService* service,
         QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->manager = manager;
+    d->service = service;
 
-    connect(manager, &CommunicationManager::linkAdded,
+    connect(manager, &CommunicationService::linkAdded,
             this, &CommunicationsPresenter::onLinkAdded);
-    connect(manager, &CommunicationManager::linkRemoved,
+    connect(manager, &CommunicationService::linkRemoved,
             this, &CommunicationsPresenter::onLinkRemoved);
 
-    for (const db::LinkDescriptionPtr& description: manager->links())
+    for (const db::LinkDescriptionPtr& description: service->links())
     {
         d->linkPresenters.append(new CommunicationLinkPresenter(
-                                     d->manager, description, this));
+                                     d->service, description, this));
     }
 }
 
@@ -57,7 +57,7 @@ void CommunicationsPresenter::onLinkAdded(
         const db::LinkDescriptionPtr& description)
 {
     d->linkPresenters.append(new CommunicationLinkPresenter(
-                                 d->manager, description, this));
+                                 d->service, description, this));
 
     this->updateCommunicationsLinks();
 }
@@ -96,7 +96,7 @@ void CommunicationsPresenter::onAddUdpLink()
     description->setPort(domain::SettingsProvider::value(
                             settings::communication::port).toInt());
 
-    d->manager->saveLink(description);
+    d->service->saveLink(description);
 }
 
 void CommunicationsPresenter::onAddSerialLink()
@@ -108,5 +108,5 @@ void CommunicationsPresenter::onAddSerialLink()
     description->setBaudRate(domain::SettingsProvider::value(
                             settings::communication::baudRate).toInt());
 
-    d->manager->saveLink(description);
+    d->service->saveLink(description);
 }

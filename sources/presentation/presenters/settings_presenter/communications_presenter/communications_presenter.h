@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class CommunicationManager;
+    class CommunicationService;
 }
 
 namespace presentation
@@ -17,8 +17,8 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationsPresenter(domain::CommunicationManager* manager,
-                                QObject* parent);
+        explicit CommunicationsPresenter(domain::CommunicationService* service,
+                                         QObject* parent = nullptr);
         ~CommunicationsPresenter() override;
 
     protected:

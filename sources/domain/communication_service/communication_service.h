@@ -1,5 +1,5 @@
-#ifndef COMMUNICATION_MANAGER_H
-#define COMMUNICATION_MANAGER_H
+#ifndef COMMUNICATION_SERVICE_H
+#define COMMUNICATION_SERVICE_H
 
 // Qt
 #include <QObject>
@@ -19,15 +19,15 @@ namespace comm
 
 namespace domain
 {
-    class CommunicationManager: public QObject
+    class CommunicationService: public QObject
     {
         Q_OBJECT
 
     public:
-        CommunicationManager(comm::ICommunicatorFactory* commFactory,
+        CommunicationService(comm::ICommunicatorFactory* commFactory,
                              db::DbEntry* entry,
                              QObject* parent = nullptr);
-        ~CommunicationManager() override;
+        ~CommunicationService() override;
 
         db::LinkDescriptionPtrList links() const;
 
@@ -51,4 +51,4 @@ namespace domain
     };
 }
 
-#endif // COMMUNICATION_MANAGER_H
+#endif // COMMUNICATION_SERVICE_H

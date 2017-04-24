@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class CommunicationManager;
+    class CommunicationService;
 }
 
 namespace presentation
@@ -17,10 +17,9 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(
-                domain::CommunicationManager* manager,
-                const db::LinkDescriptionPtr& description,
-                QObject* parent = nullptr);
+        CommunicationLinkPresenter(domain::CommunicationService* service,
+                                   const db::LinkDescriptionPtr& description,
+                                   QObject* parent = nullptr);
 
         db::LinkDescriptionPtr description() const;
 
@@ -44,7 +43,7 @@ namespace presentation
         void onRemove();
 
     private:
-        domain::CommunicationManager* const m_manager;
+        domain::CommunicationService* const m_service;
         db::LinkDescriptionPtr m_description;
     };
 }

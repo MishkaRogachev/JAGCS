@@ -1,4 +1,4 @@
-#include "communication_manager.h"
+#include "communication_service.h"
 
 // Qt
 #include <QMap>
@@ -18,7 +18,7 @@ using namespace db;
 using namespace comm;
 using namespace domain;
 
-class CommunicationManager::Impl
+class CommunicationService::Impl
 {
 public:
     AbstractCommunicator* communicator;
@@ -49,7 +49,7 @@ public:
     }
 };
 
-CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
+CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
                                            DbEntry* entry,
                                            QObject* parent):
     QObject(parent),
@@ -64,11 +64,11 @@ CommunicationManager::CommunicationManager(ICommunicatorFactory* commFactory,
         AbstractLink* link = d->linkFromDescription(description);
         link->setParent(this);
         connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicationManager::onLinkStatisticsChanged);
+                this, &CommunicationService::onLinkStatisticsChanged);
     }
 }
 
-CommunicationManager::~CommunicationManager()
+CommunicationService::~CommunicationService()
 {
     for (const LinkDescriptionPtr& description: d->descriptions)
     {
@@ -76,12 +76,12 @@ CommunicationManager::~CommunicationManager()
     }
 }
 
-LinkDescriptionPtrList CommunicationManager::links() const
+LinkDescriptionPtrList CommunicationService::links() const
 {
     return d->descriptions;
 }
 
-void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
+void CommunicationService::saveLink(const LinkDescriptionPtr& description)
 {
     AbstractLink* link;
 
@@ -96,7 +96,7 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
         link = d->linkFromDescription(description);
         link->setParent(this);
         connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicationManager::onLinkStatisticsChanged);
+                this, &CommunicationService::onLinkStatisticsChanged);
         d->communicator->addLink(link);
         emit linkAdded(description);
     }
@@ -112,7 +112,7 @@ void CommunicationManager::saveLink(const LinkDescriptionPtr& description)
     d->entry->save(description);
 }
 
-void CommunicationManager::removeLink(const LinkDescriptionPtr& description)
+void CommunicationService::removeLink(const LinkDescriptionPtr& description)
 {
     d->descriptions.removeOne(description);
     AbstractLink* link = d->descriptedLinks.take(description);
@@ -123,7 +123,7 @@ void CommunicationManager::removeLink(const LinkDescriptionPtr& description)
     emit linkRemoved(description);
 }
 
-void CommunicationManager::onLinkStatisticsChanged()
+void CommunicationService::onLinkStatisticsChanged()
 {
     AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
 

@@ -9,25 +9,25 @@
 // Internal
 #include "settings_provider.h"
 
-#include "communication_manager.h"
+#include "communication_service.h"
 #include "link_description.h"
 
 using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
-        domain::CommunicationManager* manager,
+        domain::CommunicationService* service,
         const db::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
-    m_manager(manager),
+    m_service(service),
     m_description(description)
 {
-    connect(m_manager, &domain::CommunicationManager::linkChanged, this,
+    connect(m_service, &domain::CommunicationService::linkChanged, this,
             [this](const db::LinkDescriptionPtr& description) {
         if (m_description == description) this->updateView();
     });
 
-    connect(m_manager, &domain::CommunicationManager::linkStatisticsChanged, this,
+    connect(m_service, &domain::CommunicationService::linkStatisticsChanged, this,
             [this](const db::LinkDescriptionPtr& description,
             int sentBytes, int recvBytes) {
         if (m_description == description) this->updateStatistics(sentBytes,
@@ -101,7 +101,7 @@ void CommunicationLinkPresenter::onSetName(const QString& name)
     if (m_description->name() == name) return;
 
     m_description->setName(name);
-    m_manager->saveLink(m_description);
+    m_service->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetPort(int port)
@@ -109,7 +109,7 @@ void CommunicationLinkPresenter::onSetPort(int port)
     if (m_description->port() == port) return;
 
     m_description->setPort(port);
-    m_manager->saveLink(m_description);
+    m_service->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetDevice(const QString& device)
@@ -117,7 +117,7 @@ void CommunicationLinkPresenter::onSetDevice(const QString& device)
     if (m_description->device() == device) return;
 
     m_description->setDevice(device);
-    m_manager->saveLink(m_description);
+    m_service->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetBaudRate(int rate)
@@ -125,7 +125,7 @@ void CommunicationLinkPresenter::onSetBaudRate(int rate)
     if (m_description->baudRate() == rate) return;
 
     m_description->setBaudRate(rate);
-    m_manager->saveLink(m_description);
+    m_service->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onSetConnected(bool connected)
@@ -133,10 +133,10 @@ void CommunicationLinkPresenter::onSetConnected(bool connected)
     if (m_description->isAutoConnect() == connected) return;
 
     m_description->setAutoConnect(connected);
-    m_manager->saveLink(m_description);
+    m_service->saveLink(m_description);
 }
 
 void CommunicationLinkPresenter::onRemove()
 {
-    m_manager->removeLink(m_description);
+    m_service->removeLink(m_description);
 }

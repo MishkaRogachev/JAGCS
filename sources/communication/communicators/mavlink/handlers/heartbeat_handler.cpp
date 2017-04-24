@@ -108,7 +108,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     {
         VehicleDescriptionPtr description = VehicleDescriptionPtr::create();
 
-        description->setName(tr("Auto added vehicle"));
+        description->setName(tr("Vehicle %1").arg(message.sysid));
         description->setMavId(message.sysid);
         // TODO: type to description
 

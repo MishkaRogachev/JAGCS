@@ -6,8 +6,10 @@
 
 namespace domain
 {
-    class CommunicationManager;
+    class CommunicationService;
     class VehicleService;
+    class MissionService;
+
     class ProxyManager;
 
     class DomainFacade
@@ -16,8 +18,10 @@ namespace domain
         DomainFacade();
         ~DomainFacade();
 
-        CommunicationManager* communicationManager() const;
+        CommunicationService* commService() const;
         VehicleService* vehicleService() const;
+        MissionService* missionService() const;
+
         ProxyManager* proxyManager() const;
 
     private:

@@ -22,8 +22,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit VehicleService(db::DbEntry* entry,
-                                QObject* parent = nullptr);
+        explicit VehicleService(db::DbEntry* entry, QObject* parent = nullptr);
         ~VehicleService() override;
 
         db::VehicleDescriptionPtrList descriptions() const;

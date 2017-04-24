@@ -32,7 +32,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainFacade* facade,
 {
 
     d->communications = new CommunicationsPresenter(
-                            facade->communicationManager(),
+                            facade->commService(),
                             this);
     d->vehicles = new VehiclesPresenter(facade->vehicleService(), this);
     d->video = new VideoSettingsPresenter(this);
