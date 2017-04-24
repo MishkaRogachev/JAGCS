@@ -11,9 +11,6 @@ namespace comm
     {
         Q_OBJECT
 
-        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
-        Q_PROPERTY(qint32 baudRate READ baudRate WRITE setBaudRate NOTIFY baudRateChanged)
-
     public:
         SerialLink(const QString& device, qint32 baudRate,
                    QObject* parent = nullptr);

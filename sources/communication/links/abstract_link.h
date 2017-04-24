@@ -10,18 +10,6 @@ namespace comm
     {
         Q_OBJECT
 
-        Q_PROPERTY(bool isConnected READ isConnected NOTIFY upChanged)
-
-        Q_PROPERTY(int bytesReceivedSec READ bytesReceivedSec
-                   NOTIFY statisticsChanged)
-        Q_PROPERTY(int bytesSentSec READ bytesSentSec
-                   NOTIFY statisticsChanged)
-
-        Q_PROPERTY(int packetsReceived READ packetsReceived
-                   WRITE setPacketsReceived NOTIFY packetsReceivedChanged)
-        Q_PROPERTY(int packetsDrops READ packetsDrops
-                   WRITE setPacketsDrops NOTIFY packetsDropsChanged)
-
     public:
         explicit AbstractLink(QObject* parent = nullptr);
 
