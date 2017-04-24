@@ -61,18 +61,23 @@ set(LIBRARIES
 # Libraries
 )
 
-# Sources and headrers
+# Includes
+include_directories("3dparty/mavlink_v1")
+include_directories("3dparty/mavlink_v1/ardupilotmega")
+
+# Internal sources and headers
 file(GLOB_RECURSE HEADERS "sources/*.h")
 file(GLOB_RECURSE SOURCES "sources/*.cpp")
 file(GLOB_RECURSE QML "sources/*.qml")
 file(GLOB_RECURSE JS "sources/*.js")
 
-# Includes
-include_directories("3dparty/mavlink_v1")
-include_directories("3dparty/mavlink_v1/ardupilotmega")
-
 HEADER_DIRECTORIES(INCLUDES "sources")
 include_directories(${INCLUDES})
+
+# App sources and headers
+file(GLOB_RECURSE APP_HEADERS "app/*.h")
+file(GLOB_RECURSE APP_SOURCES "app/*.cpp")
+include_directories("app")
 
 # Translations
 file(GLOB TS_FILES "translations/*.ts")
@@ -98,7 +103,7 @@ qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
 # Executable target
 add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
-    ${JS} ${QRC_SOURCES} ${MOC_SOURCES})
+    ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
@@ -116,7 +121,6 @@ qt5_use_modules(${PROJECT}
     Location
     Charts
     QuickControls2
-    Gamepad
 )
 
 # Install instructions

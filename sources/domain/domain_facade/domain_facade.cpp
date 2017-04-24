@@ -49,7 +49,10 @@ DomainFacade::DomainFacade():
 
     d->vehicleService.reset(new VehicleService(&d->dbEntry));
 
-    MavLinkCommunicatorFactory comFactory(d->vehicleService.data());
+    comm::MavLinkCommunicatorFactory comFactory(d->vehicleService.data(),
+             SettingsProvider::value(settings::communication::systemId).toInt(),
+             SettingsProvider::value(settings::communication::componentId).toInt());
+
     d->communicationManager.reset(new CommunicationManager(&comFactory,
                                                            &d->dbEntry));
 }

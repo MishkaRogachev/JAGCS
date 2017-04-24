@@ -3,7 +3,7 @@
 // Qt
 #include <QMap>
 #include <QDir>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QTranslator>
 
 // Internal

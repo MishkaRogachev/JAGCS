@@ -10,13 +10,13 @@ find_package(Qt5 COMPONENTS Test REQUIRED)
 
 # Includes
 HEADER_DIRECTORIES(TEST_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${TEST_INCLUDES} ${INCLUDES})
+include_directories(${TEST_INCLUDES})
 
 # Test sources
-file(GLOB_RECURSE TEST_SOURCES "*.h" "*.cpp" "../sources/data_source/*.cpp")
+file(GLOB_RECURSE TEST_SOURCES "*.h" "*.cpp")
 
 # Executable
-add_executable(${PROJECT} ${TEST_SOURCES})
+add_executable(${PROJECT} ${TEST_SOURCES} ${SOURCES})
 set_target_properties(${PROJECT} PROPERTIES AUTOMOC TRUE)
 
 # Link Libraries
@@ -29,9 +29,9 @@ qt5_use_modules(${PROJECT}
     SerialPort
     Sql
     Gui
+    Quick
     Multimedia
     Positioning
-    Gamepad
     Test
 )
 
