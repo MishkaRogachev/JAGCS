@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "domain_facade.h"
@@ -38,16 +39,34 @@ MissionPresenter::~MissionPresenter()
 
 void MissionPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(selectMission(QString)), this, SLOT(onSelectMission(QString)));
-    connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
-    connect(view, SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
-    connect(view, SIGNAL(renameMission(QString)), this, SLOT(onRenameMission(QString)));
+    Q_UNUSED(view)
 
     this->updateMissions();
 }
 
+void MissionPresenter::setViewConneced(bool connected)
+{
+    if (connected)
+    {
+        connect(this->view(), SIGNAL(selectMission(QString)),
+                this, SLOT(onSelectMission(QString)));
+        connect(this->view(), SIGNAL(addMission()),
+                this, SLOT(onAddMission()));
+        connect(this->view(), SIGNAL(removeMission()),
+                this, SLOT(onRemoveMission()));
+        connect(this->view(), SIGNAL(renameMission(QString)),
+                this, SLOT(onRenameMission(QString)));
+    }
+    else
+    {
+        disconnect(this->view(), 0, this, 0);
+    }
+}
+
 void MissionPresenter::updateMissions()
 {
+    this->setViewConneced(false);
+
     QStringList missions;
     missions.append(QString());
 
@@ -58,6 +77,8 @@ void MissionPresenter::updateMissions()
     this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
     this->setViewProperty(PROPERTY(selectedMission), d->selectedMission.isNull() ?
                               QString() : d->selectedMission->name());
+
+    this->setViewConneced(true);
 }
 
 void MissionPresenter::onSelectMission(const QString& name)
@@ -80,7 +101,7 @@ void MissionPresenter::onAddMission()
                          d->missionService->missions().count()));
 
     d->missionService->saveMission(mission);
-    d->selectedMission = mission;
+    this->setViewProperty(PROPERTY(selectedMission), mission->name());
 }
 
 void MissionPresenter::onRemoveMission()
@@ -88,7 +109,7 @@ void MissionPresenter::onRemoveMission()
     if (d->selectedMission.isNull()) return;
 
     d->missionService->removeMission(d->selectedMission);
-    d->selectedMission.clear();
+    this->setViewProperty(PROPERTY(selectedMission), QString());
 }
 
 void MissionPresenter::onRenameMission(const QString& name)
@@ -98,4 +119,5 @@ void MissionPresenter::onRenameMission(const QString& name)
     d->selectedMission->setName(name);
     d->missionService->saveMission(d->selectedMission);
     this->updateMissions();
+    this->setViewProperty(PROPERTY(selectedMission), name);
 }

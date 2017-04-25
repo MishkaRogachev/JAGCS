@@ -22,6 +22,8 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+        void setViewConneced(bool connected);
+
     private slots:
         void updateMissions();
 

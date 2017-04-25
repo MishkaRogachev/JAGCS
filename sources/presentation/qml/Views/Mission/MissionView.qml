@@ -21,10 +21,11 @@ Pane {
 
     padding: 0
     onSelectedMissionChanged: {
-        if (selectedMission == missionsBox.currentText) return;
-
         edit.checked = false;
-        missionsBox.currentIndex = missionsBox.model.indexOf(selectedMission)
+        if (missionsBox.currentText != selectedMission)
+        {
+            missionsBox.currentIndex = missionsBox.model.indexOf(selectedMission);
+        }
     }
 
     ColumnLayout {
@@ -62,7 +63,7 @@ Pane {
                 enabled: selectedMission.length > 0
                 onCheckedChanged: {
                     if (checked) nameEdit.text = selectedMission;
-                    else renameMission(nameEdit.text)
+                    else renameMission(nameEdit.text);
                 }
             }
 
