@@ -24,6 +24,8 @@ namespace domain
 
         db::MissionPtrList missions() const;
 
+        db::MissionPtr findMissionByName(const QString& name) const;
+
     public slots:
         void saveMission(const db::MissionPtr& mission);
         void removeMission(const db::MissionPtr& mission);

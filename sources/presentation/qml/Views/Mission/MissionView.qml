@@ -20,6 +20,8 @@ Pane {
 
     padding: 0
     onSelectedMissionChanged: {
+        if (selectedMission == missionsBox.currentText) return;
+
         missionsBox.currentIndex = missionsBox.model.indexOf(selectedMission)
     }
 
@@ -39,6 +41,10 @@ Pane {
 
             ComboBox {
                 id: missionsBox
+                onCurrentTextChanged: {
+                    selectedMission = currentText;
+                    selectMission(currentText);
+                }
             }
 
             Button {
@@ -48,6 +54,7 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/remove.svg"
+                enabled: selectedMission.length > 0
                 onClicked: removeMission()
             }
 

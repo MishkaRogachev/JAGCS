@@ -39,6 +39,15 @@ MissionPtrList MissionService::missions() const
     return d->missions;
 }
 
+MissionPtr MissionService::findMissionByName(const QString& name) const
+{
+    for (const MissionPtr& mission: d->missions)
+    {
+        if (mission->name() == name) return mission;
+    }
+    return MissionPtr();
+}
+
 void MissionService::saveMission(const MissionPtr& mission)
 {
     if (!d->entry->save(mission)) return;

@@ -22,6 +22,13 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void updateMissions();
+
+        void onSelectMission(const QString& name);
+        void onAddMission();
+        void onRemoveMission();
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
