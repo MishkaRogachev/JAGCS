@@ -41,6 +41,7 @@ void MissionPresenter::connectView(QObject* view)
     connect(view, SIGNAL(selectMission(QString)), this, SLOT(onSelectMission(QString)));
     connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
     connect(view, SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
+    connect(view, SIGNAL(renameMission(QString)), this, SLOT(onRenameMission(QString)));
 
     this->updateMissions();
 }
@@ -55,6 +56,8 @@ void MissionPresenter::updateMissions()
         missions.append(mission->name());
     }
     this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
+    this->setViewProperty(PROPERTY(selectedMission), d->selectedMission.isNull() ?
+                              QString() : d->selectedMission->name());
 }
 
 void MissionPresenter::onSelectMission(const QString& name)
@@ -73,10 +76,11 @@ void MissionPresenter::onAddMission()
 {
     db::MissionPtr mission = db::MissionPtr::create();
 
-    mission->setName(tr("New Mission"));
+    mission->setName(tr("New Mission %1").arg(
+                         d->missionService->missions().count()));
 
     d->missionService->saveMission(mission);
-    this->setViewProperty(PROPERTY(selectedMission), mission->name());
+    d->selectedMission = mission;
 }
 
 void MissionPresenter::onRemoveMission()
@@ -84,5 +88,14 @@ void MissionPresenter::onRemoveMission()
     if (d->selectedMission.isNull()) return;
 
     d->missionService->removeMission(d->selectedMission);
-    this->setViewProperty(PROPERTY(selectedMission), QString());
+    d->selectedMission.clear();
+}
+
+void MissionPresenter::onRenameMission(const QString& name)
+{
+    if (d->selectedMission.isNull()) return;
+
+    d->selectedMission->setName(name);
+    d->missionService->saveMission(d->selectedMission);
+    this->updateMissions();
 }

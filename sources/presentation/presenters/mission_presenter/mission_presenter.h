@@ -28,6 +28,7 @@ namespace presentation
         void onSelectMission(const QString& name);
         void onAddMission();
         void onRemoveMission();
+        void onRenameMission(const QString& name);
 
     private:
         class Impl;

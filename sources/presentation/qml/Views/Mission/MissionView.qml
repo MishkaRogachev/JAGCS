@@ -15,6 +15,7 @@ Pane {
     signal selectMission(string name)
     signal addMission()
     signal removeMission()
+    signal renameMission(string name)
     signal uploadMission()
     signal downloadMission()
 
@@ -22,6 +23,7 @@ Pane {
     onSelectedMissionChanged: {
         if (selectedMission == missionsBox.currentText) return;
 
+        edit.checked = false;
         missionsBox.currentIndex = missionsBox.model.indexOf(selectedMission)
     }
 
@@ -32,7 +34,7 @@ Pane {
         anchors.bottom: parent.bottom
 
         GridLayout {
-            columns: 4
+            columns: 5
             Layout.margins: palette.margins
 
             Label {
@@ -41,9 +43,26 @@ Pane {
 
             ComboBox {
                 id: missionsBox
+                visible: !edit.checked
                 onCurrentTextChanged: {
                     selectedMission = currentText;
                     selectMission(currentText);
+                }
+            }
+
+            TextField {
+                id: nameEdit
+                visible: edit.checked
+            }
+
+            Button {
+                id: edit
+                iconSource: "qrc:/icons/edit.svg"
+                checkable: true
+                enabled: selectedMission.length > 0
+                onCheckedChanged: {
+                    if (checked) nameEdit.text = selectedMission;
+                    else renameMission(nameEdit.text)
                 }
             }
 
@@ -64,6 +83,7 @@ Pane {
 
             ComboBox {
                 id: vehiclesBox
+                Layout.columnSpan: 2
             }
 
             Button {
@@ -79,7 +99,7 @@ Pane {
             ProgressBar {
                 id: progressBar
                 to: 100
-                Layout.columnSpan: 4
+                Layout.columnSpan: 5
                 Layout.fillWidth: true
             }
         }

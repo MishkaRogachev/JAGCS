@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 24 24"
+   height="24"
+   width="24">
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,-6.4505263,16.214478)"
+     id="g4150">
+    <g
+       transform="translate(0.64223873,0.01770329)"
+       id="g4155">
+      <path
+         id="path4141"
+         d="m 22.994141,13.632812 3.514364,-0.03133 c 1.219264,-0.01087 2.201172,-0.981858 2.201172,-2.201171 l 0,-2.7304695 c 0,-1.2193129 -0.981908,-2.2120409 -2.201172,-2.2011719 L 22.994141,6.5 Z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         id="path4148"
+         d="m 2.7910156,12.144531 2.1582032,1.488281 17.2480472,0 0,-7.132812 -17.2480472,0 -2.1582032,1.4882812 0,4.1562498 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         id="path4146"
+         d="m 2.0371094,8.5097656 -2.25781252,1.5566404 2.25781252,1.556641 0,-3.1132814 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
