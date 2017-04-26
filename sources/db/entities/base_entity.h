@@ -9,7 +9,7 @@
 
 namespace db
 {
-    class BaseEntity: public QObject
+    class BaseEntity
     {
         Q_GADGET
 

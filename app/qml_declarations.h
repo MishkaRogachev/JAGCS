@@ -12,7 +12,8 @@ void registerQmlTypes()
     qRegisterMetaType<domain::Wind>("Wind");
     qRegisterMetaType<domain::PowerSystem>("PowerSystem");
 
-    qmlRegisterType<db::LinkDescription>("JAGCS", 1, 0, "LinkDescription");
+    qmlRegisterUncreatableType<db::LinkDescription>("JAGCS", 1, 0, "LinkDescription",
+                                                    "Can't create DB entities in QML");
 }
 
 #endif // QML_DECLARATIONS_H

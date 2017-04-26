@@ -170,7 +170,7 @@ void GenericRepository<T>::bindQuery(QSqlQuery& query,
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
         query.bindValue(QString(":") + QString(meta.property(i).name()),
-                        meta.property(i).read(entity));
+                        meta.property(i).readOnGadget(entity));
     }
 }
 
@@ -184,9 +184,9 @@ void GenericRepository<T>::updateFromQuery(const QSqlQuery& query,
         QVariant value = query.value(meta.property(i).name());
 
         // workaround for enums
-        if (!meta.property(i).write(entity, value) && !value.isNull())
+        if (!meta.property(i).writeOnGadget(entity, value) && !value.isNull())
         {
-            meta.property(i).write(entity, value.toInt());
+            meta.property(i).writeOnGadget(entity, value.toInt());
         }
     }
 }
