@@ -39,6 +39,11 @@ namespace db
         VehicleDescriptionPtrList loadVehicles();
         MissionPtrList loadMissions();
 
+        MissionAssignmentPtr missionAssignment(const MissionPtr& mission);
+        MissionAssignmentPtr vehicleAssignment(const VehicleDescriptionPtr& vehicle);
+        void assign(const MissionPtr& mission, const VehicleDescriptionPtr& vehicle);
+        void unassign(const MissionPtr& mission);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

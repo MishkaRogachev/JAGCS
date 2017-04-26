@@ -17,7 +17,8 @@ namespace db
     public:
         enum Status: quint8
         {
-            NotActual = 0,
+            Unknown = 0,
+            NotActual,
             Downloading,
             Uploading,
             Actual

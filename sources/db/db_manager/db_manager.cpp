@@ -35,6 +35,30 @@ bool DbManager::create()
         return false;
     }
 
+    result = query.exec("CREATE TABLE links ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "name STRING,"
+                        "type SMALLINT,"
+                        "port INTEGER,"
+                        "device STRING,"
+                        "baudRate INTEGER,"
+                        "autoConnect BOOLEAN)");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
+
+    result = query.exec("CREATE TABLE vehicles ("
+                        "id INTEGER PRIMARY KEY NOT NULL,"
+                        "mavId INTEGER UNIQUE,"
+                        "name STRING)");
+    if (!result)
+    {
+        qDebug() << query.lastError();
+        return false;
+    }
+
     result = query.exec("CREATE TABLE missions ("
                         "id INTEGER PRIMARY KEY NOT NULL,"
                         "name STRING)");
@@ -64,24 +88,14 @@ bool DbManager::create()
         return false;
     }
 
-    result = query.exec("CREATE TABLE vehicles ("
+    result = query.exec("CREATE TABLE mission_assignments ("
                         "id INTEGER PRIMARY KEY NOT NULL,"
-                        "mavId INTEGER UNIQUE,"
-                        "name STRING)");
-    if (!result)
-    {
-        qDebug() << query.lastError();
-        return false;
-    }
+                        "missionId INTEGER,"
+                        "vehicleId INTEGER,"
+                        "status SMALLINT,"
+                        "FOREIGN KEY(missionId) REFERENCES missions(id),"
+                        "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))");
 
-    result = query.exec("CREATE TABLE links ("
-                        "id INTEGER PRIMARY KEY NOT NULL,"
-                        "name STRING,"
-                        "type SMALLINT,"
-                        "port INTEGER,"
-                        "device STRING,"
-                        "baudRate INTEGER,"
-                        "autoConnect BOOLEAN)");
     if (!result)
     {
         qDebug() << query.lastError();

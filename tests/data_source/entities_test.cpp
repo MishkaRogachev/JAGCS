@@ -8,6 +8,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
+#include "mission_assignment.h"
 #include "vehicle_description.h"
 #include "link_description.h"
 
@@ -171,6 +172,31 @@ void EntitiesTest::testVehicleDescription()
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
     QCOMPARE(vehicle->mavId(), 13);
 
+    QVERIFY2(dbEntry.remove(vehicle), "Can't remove vehicle");
+}
+
+void EntitiesTest::testMissionAssignment()
+{
+    DbEntry dbEntry;
+
+    MissionPtr mission = MissionPtr::create();
+    mission->setName("Assigned mission");
+    QVERIFY2(dbEntry.save(mission), "Can't insert mission");
+
+    VehicleDescriptionPtr vehicle = VehicleDescriptionPtr::create();
+    vehicle->setName("Assigned vehicle");
+    QVERIFY2(dbEntry.save(vehicle), "Can't insert vehicle");
+
+    dbEntry.assign(mission, vehicle);
+
+    QCOMPARE(dbEntry.missionAssignment(mission)->vehicleId(), vehicle->id());
+    QCOMPARE(dbEntry.vehicleAssignment(vehicle)->missionId(), mission->id());
+
+    dbEntry.unassign(mission);
+
+    QVERIFY2(dbEntry.missionAssignment(mission).isNull(), "Unassigned must be null");
+
+    QVERIFY2(dbEntry.remove(mission), "Can't remove mission");
     QVERIFY2(dbEntry.remove(vehicle), "Can't remove vehicle");
 }
 

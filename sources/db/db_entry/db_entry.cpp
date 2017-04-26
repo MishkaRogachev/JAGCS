@@ -9,6 +9,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
+#include "mission_assignment.h"
 #include "vehicle_description.h"
 #include "link_description.h"
 
@@ -20,12 +21,14 @@ public:
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> missionItemRepository;
     GenericRepository<VehicleDescription> vehicleRepository;
+    GenericRepository<MissionAssignment> assignmentsRepository;
     GenericRepository<LinkDescription> linkRepository;
 
     Impl():
         missionRepository("missions"),
         missionItemRepository("mission_items"),
         vehicleRepository("vehicles"),
+        assignmentsRepository("mission_assignments"),
         linkRepository("links")
     {}
 };
@@ -184,5 +187,53 @@ MissionPtrList DbEntry::loadMissions()
     }
 
     return list;
+}
+
+MissionAssignmentPtr DbEntry::missionAssignment(const MissionPtr& mission)
+{
+    for (int id: d->assignmentsRepository.selectId(
+             QString("missionId = %1").arg(mission->id())))
+    {
+        return d->assignmentsRepository.read(id);
+    }
+    return MissionAssignmentPtr();
+}
+
+MissionAssignmentPtr DbEntry::vehicleAssignment(const VehicleDescriptionPtr& vehicle)
+{
+    for (int id: d->assignmentsRepository.selectId(
+             QString("vehicleId = %1").arg(vehicle->id())))
+    {
+        return d->assignmentsRepository.read(id);
+    }
+    return MissionAssignmentPtr();
+}
+
+void DbEntry::assign(const MissionPtr& mission,
+                     const VehicleDescriptionPtr& vehicle)
+{
+    MissionAssignmentPtr assignment = this->missionAssignment(mission);
+
+    if (assignment.isNull())
+    {
+        assignment = MissionAssignmentPtr::create();
+        assignment->setMissionId(mission->id());
+    }
+
+    if (assignment->vehicleId() != vehicle->id())
+    {
+        assignment->setVehicleId(vehicle->id());
+        assignment->setStatus(MissionAssignment::NotActual);
+    }
+
+    d->assignmentsRepository.save(assignment);
+}
+
+void DbEntry::unassign(const MissionPtr& mission)
+{
+    MissionAssignmentPtr assignment = this->missionAssignment(mission);
+    if (assignment.isNull()) return;
+
+    d->assignmentsRepository.remove(assignment);
 }
 

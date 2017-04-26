@@ -9,11 +9,13 @@ namespace db
 {
     class Mission;
     class MissionItem;
+    class MissionAssignment;
     class VehicleDescription;
     class LinkDescription;
 
     using MissionPtr = QSharedPointer<Mission>;
     using MissionItemPtr = QSharedPointer<MissionItem>;
+    using MissionAssignmentPtr  = QSharedPointer<MissionAssignment>;
     using VehicleDescriptionPtr = QSharedPointer<VehicleDescription>;
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
 
