@@ -24,7 +24,7 @@ namespace db
         void setName(const QString& name);
 
     private:
-        int m_mavId;
+        int m_mavId = 0;
         QString m_name;
 
         static QMap<VehicleDescription*, int> m_mavIds;
