@@ -58,12 +58,29 @@ VehicleDescriptionPtrList VehicleService::descriptions() const
     return d->descriptions;
 }
 
+VehicleDescriptionPtr VehicleService::description(int id) const
+{
+    return d->entry->readVehicle(id);
+}
+
 VehicleDescriptionPtr VehicleService::findDescriptiontByMavId(quint8 mavId) const
 {
     auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
                            [mavId](const VehicleDescriptionPtr& description)
     {
         return description->mavId() == mavId;
+    });
+
+    if (it != d->descriptions.cend()) return *it;
+    return VehicleDescriptionPtr();
+}
+
+VehicleDescriptionPtr VehicleService::findDescriptiontByName(const QString& name) const
+{
+    auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
+                           [name](const VehicleDescriptionPtr& description)
+    {
+        return description->name() == name;
     });
 
     if (it != d->descriptions.cend()) return *it;

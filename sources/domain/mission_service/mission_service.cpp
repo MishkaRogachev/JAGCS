@@ -48,6 +48,22 @@ MissionPtr MissionService::findMissionByName(const QString& name) const
     return MissionPtr();
 }
 
+MissionAssignmentPtr MissionService::assignment(const MissionPtr& mission)
+{
+    return d->entry->missionAssignment(mission);
+}
+
+void MissionService::assign(const MissionPtr& mission,
+                            const VehicleDescriptionPtr& vehicle)
+{
+    d->entry->assign(mission, vehicle);
+}
+
+void MissionService::unassign(const MissionPtr& mission)
+{
+    d->entry->unassign(mission);
+}
+
 void MissionService::saveMission(const MissionPtr& mission)
 {
     if (!d->entry->save(mission)) return;

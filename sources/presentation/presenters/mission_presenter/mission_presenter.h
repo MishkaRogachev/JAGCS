@@ -22,15 +22,18 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
-        void setViewConneced(bool connected);
+        void setViewConnected(bool connected);
 
     private slots:
         void updateMissions();
+        void updateAssignment();
+        void updateVehicles();
 
         void onSelectMission(const QString& name);
         void onAddMission();
         void onRemoveMission();
         void onRenameMission(const QString& name);
+        void onAssignVehicle(const QString& name);
 
     private:
         class Impl;

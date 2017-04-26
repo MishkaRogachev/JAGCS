@@ -26,7 +26,10 @@ namespace domain
         ~VehicleService() override;
 
         db::VehicleDescriptionPtrList descriptions() const;
+        db::VehicleDescriptionPtr description(int id) const;
+        // TODO: fix vehicles search
         db::VehicleDescriptionPtr findDescriptiontByMavId(quint8 mavId) const;
+        db::VehicleDescriptionPtr findDescriptiontByName(const QString& name) const;
 
         BaseVehicle* baseVehicle(const db::VehicleDescriptionPtr& description);
         BaseVehicle* baseVehicle(quint8 mavId);

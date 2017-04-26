@@ -39,6 +39,7 @@ namespace db
         VehicleDescriptionPtrList loadVehicles();
         MissionPtrList loadMissions();
 
+        // TODO: db and services segregation of duties
         MissionAssignmentPtr missionAssignment(const MissionPtr& mission);
         MissionAssignmentPtr vehicleAssignment(const VehicleDescriptionPtr& vehicle);
         void assign(const MissionPtr& mission, const VehicleDescriptionPtr& vehicle);

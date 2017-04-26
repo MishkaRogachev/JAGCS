@@ -23,8 +23,12 @@ namespace domain
         ~MissionService() override;
 
         db::MissionPtrList missions() const;
-
         db::MissionPtr findMissionByName(const QString& name) const;
+
+        db::MissionAssignmentPtr assignment(const db::MissionPtr& mission);
+        void assign(const db::MissionPtr& mission,
+                    const db::VehicleDescriptionPtr& vehicle);
+        void unassign(const db::MissionPtr& mission);
 
     public slots:
         void saveMission(const db::MissionPtr& mission);

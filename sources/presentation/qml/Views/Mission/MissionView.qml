@@ -9,7 +9,9 @@ Pane {
     id: root
 
     property alias missions: missionsBox.model
+    property alias vehicles: vehiclesBox.model
     property string selectedMission
+    property string assignedVehicle
     property int progress: progressBar.value
 
     signal selectMission(string name)
@@ -25,6 +27,12 @@ Pane {
         if (missionsBox.currentText != selectedMission)
         {
             missionsBox.currentIndex = missionsBox.model.indexOf(selectedMission);
+        }
+    }
+    onAssignedVehicleChanged: {
+        if (vehiclesBox.currentText != assignedVehicle)
+        {
+            vehiclesBox.currentIndex = vehiclesBox.model.indexOf(assignedVehicle);
         }
     }
 
@@ -84,16 +92,23 @@ Pane {
 
             ComboBox {
                 id: vehiclesBox
+                enabled: selectedMission.length > 0
                 Layout.columnSpan: 2
+                onCurrentTextChanged: {
+                    assignedVehicle = currentText;
+                    assignVehicle(currentText);
+                }
             }
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
+                enabled: selectedMission.length > 0
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
+                enabled: selectedMission.length > 0
                 onClicked: uploadMission()
             }
 
