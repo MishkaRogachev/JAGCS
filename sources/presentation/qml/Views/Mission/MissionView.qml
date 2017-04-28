@@ -18,6 +18,7 @@ Pane {
     signal addMission()
     signal removeMission()
     signal renameMission(string name)
+    signal assignVehicle(string name)
     signal uploadMission()
     signal downloadMission()
 

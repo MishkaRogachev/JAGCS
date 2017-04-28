@@ -179,10 +179,19 @@ void MissionPresenter::onRenameMission(const QString& name)
 
 void MissionPresenter::onAssignVehicle(const QString& name)
 {
+    if (!d->selectedMission) return;
     db::VehicleDescriptionPtr vehicle =
             d->vehicleService->findDescriptiontByName(name);
-    if (!vehicle || !d->selectedMission) return;
 
-    d->missionService->assign(d->selectedMission, vehicle);
+    if (vehicle)
+    {
+        d->missionService->assign(d->selectedMission, vehicle);
+    }
+    else
+    {
+        d->missionService->unassign(d->selectedMission);
+    }
+
+
     this->updateAssignment();
 }
