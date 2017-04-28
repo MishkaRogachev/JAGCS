@@ -5,6 +5,7 @@
 
 #include "mission.h"
 #include "mission_item.h"
+#include "mission_assignment.h"
 
 using namespace db;
 using namespace domain;
@@ -56,6 +57,13 @@ MissionAssignmentPtr MissionService::assignment(const MissionPtr& mission)
 void MissionService::assign(const MissionPtr& mission,
                             const VehicleDescriptionPtr& vehicle)
 {
+    db::MissionAssignmentPtr assignment = d->entry->vehicleAssignment(vehicle);
+    if (assignment)
+    {
+        if (assignment->missionId() == mission->id()) return;
+
+        d->entry->unassign(assignment);
+    }
     d->entry->assign(mission, vehicle);
 }
 

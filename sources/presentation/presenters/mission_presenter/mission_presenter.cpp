@@ -192,6 +192,5 @@ void MissionPresenter::onAssignVehicle(const QString& name)
         d->missionService->unassign(d->selectedMission);
     }
 
-
     this->updateAssignment();
 }

@@ -219,21 +219,22 @@ void DbEntry::assign(const MissionPtr& mission,
         assignment = MissionAssignmentPtr::create();
         assignment->setMissionId(mission->id());
     }
+    else if (assignment->vehicleId() == vehicle->id()) return;
 
-    if (assignment->vehicleId() != vehicle->id())
-    {
-        assignment->setVehicleId(vehicle->id());
-        assignment->setStatus(MissionAssignment::NotActual);
-    }
+    assignment->setVehicleId(vehicle->id());
+    assignment->setStatus(MissionAssignment::NotActual);
 
     d->assignmentsRepository.save(assignment);
+}
+
+void DbEntry::unassign(const MissionAssignmentPtr& assignment)
+{
+    d->assignmentsRepository.remove(assignment);
 }
 
 void DbEntry::unassign(const MissionPtr& mission)
 {
     MissionAssignmentPtr assignment = this->missionAssignment(mission);
-    if (assignment.isNull()) return;
-
-    d->assignmentsRepository.remove(assignment);
+    if (assignment) this->unassign(assignment);
 }
 
