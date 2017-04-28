@@ -29,7 +29,7 @@
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/SnsDisplay.qml</file>
         <file>Indicators/BarIndicator.qml</file>
-        <file>Indicators/Horizont.qml</file>
+        <file>Indicators/Horizon.qml</file>
         <file>Indicators/PlaneMark.qml</file>
         <file>Indicators/Ladder.qml</file>
         <file>Indicators/PitchScale.qml</file>

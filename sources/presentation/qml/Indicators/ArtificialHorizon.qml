@@ -48,8 +48,8 @@ Item {
         anchors.fill: parent
         visible: false
 
-        Horizont {
-            id: horizont
+        Horizon {
+            id: horizon
             anchors.fill: parent
             effectiveHeight: pitchScale.height
             pitch: pitchInverted ? root.pitch : 0
