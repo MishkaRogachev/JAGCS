@@ -5,29 +5,22 @@
 #include <QDebug>
 
 // Internal
-#include "domain_facade.h"
-
-#include "mission_service.h"
-
 #include "mission_item.h"
 
 using namespace presentation;
 
-class MissionItemPresenter::Impl
+MissionItemPresenter::MissionItemPresenter(QObject* object):
+    BasePresenter(object)
+{}
+
+void MissionItemPresenter::setMissionItem(const db::MissionItemPtr& item)
 {
-public:
-    db::MissionItemPtr item;
+    if (m_item == item) return;
 
-};
+    m_item = item;
+    this->update();
+}
 
-MissionItemPresenter::MissionItemPresenter(domain::DomainFacade* facade,
-                                           QObject* object):
-    BasePresenter(object),
-    d(new Impl())
-{}
-
-MissionItemPresenter::~MissionItemPresenter()
-{}
 
 void MissionItemPresenter::connectView(QObject* view)
 {
@@ -36,9 +29,16 @@ void MissionItemPresenter::connectView(QObject* view)
 
 void MissionItemPresenter::update()
 {
-    if (d->item)
+    if (m_item)
     {
-        this->setViewProperty(PROPERTY(command), d->item->command());
+        this->setViewProperty(PROPERTY(command), m_item->command());
+        this->setViewProperty(PROPERTY(altitude), m_item->altitude());
+        this->setViewProperty(PROPERTY(isAltitudeRelative), m_item->isAltitudeRelative());
+        this->setViewProperty(PROPERTY(latitude), m_item->latitude());
+        this->setViewProperty(PROPERTY(longitude), m_item->longitude());
+        this->setViewProperty(PROPERTY(radius), m_item->radius());
+        this->setViewProperty(PROPERTY(pitch), m_item->pitch());
+        this->setViewProperty(PROPERTY(periods), m_item->periods());
     }
     else
     {

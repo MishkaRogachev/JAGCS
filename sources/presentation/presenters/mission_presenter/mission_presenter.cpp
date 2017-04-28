@@ -49,7 +49,7 @@ MissionPresenter::MissionPresenter(domain::DomainFacade* facade,
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehicles);
 
-    d->missionItem =  new MissionItemPresenter(facade, this);
+    d->missionItem =  new MissionItemPresenter(this);
 }
 
 MissionPresenter::~MissionPresenter()

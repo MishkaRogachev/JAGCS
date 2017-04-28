@@ -9,97 +9,100 @@ import "../Map"
 GridLayout {
     id: root
 
-    property int sequence: 0
     property int command: MissionItem.UnknownCommand
+
+    property bool altitudeVisible: command == MissionItem.Continue ||
+                                   positionVisible
+
+    property bool positionVisible: command == MissionItem.Home ||
+                                   command == MissionItem.Takeoff ||
+                                   command == MissionItem.Waypoint ||
+                                   command == MissionItem.Landing ||
+                                   radiusVisible
+
+    property bool radiusVisible: command == MissionItem.LoiterAltitude ||
+                                 command == MissionItem.LoiterTurns
+
+    property bool pitchVisible: command == MissionItem.Takeoff
+    property bool periodsVisible: command == MissionItem.periods
+
+    signal setCommand(int command);
 
     columns: 2
 
     Label {
-        text: qsTr("Item")
-        Layout.fillWidth: true
-    }
-
-    RowLayout {
-        Layout.alignment: Qt.AlignRight
-
-        Button {
-            iconSource: "qrc:/icons/left.svg"
-        }
-
-        Label {
-            Layout.alignment: Qt.AlignVCenter
-            Layout.preferredWidth: palette.controlBaseSize
-            horizontalAlignment: Qt.AlignHCenter
-            text: sequence
-        }
-
-        Button {
-            iconSource: "qrc:/icons/right.svg"
-        }
-    }
-
-    Label {
         text: qsTr("Command")
+        visible: sequence !== -1
     }
 
     ComboBox {
-        model: [ qsTr("Command") ]
+        model: [ qsTr("Home"), qsTr("Takeoff"), qsTr("Waypoint"),
+            qsTr("LoiterAltitude"), qsTr("LoiterTurns"), qsTr("Continue"),
+            qsTr("Return"), qsTr("Landing") ]
+        visible: sequence !== -1
     }
 
     Label {
         text: qsTr("Altitude")
+        visible: altitudeVisible
     }
 
     SpinBox {
-
+        visible: altitudeVisible
     }
 
     Label {
         text: qsTr("Altitude relative")
+        visible: altitudeVisible
     }
 
     CheckBox {
-
+        visible: altitudeVisible
     }
 
     Label {
         text: qsTr("Latitude")
+        visible: positionVisible
     }
 
     CoordSpinBox {
-
+        visible: positionVisible
     }
 
     Label {
         text: qsTr("Longitude")
+        visible: positionVisible
     }
 
     CoordSpinBox {
-
+        visible: positionVisible
     }
 
     Label {
         text: qsTr("Radius")
+        visible: radiusVisible
     }
 
     SpinBox {
-
+        visible: radiusVisible
     }
 
     Label {
         text: qsTr("Pitch")
+        visible: pitchVisible
     }
 
     SpinBox {
-
+        visible: pitchVisible
     }
 
     Label {
         text: qsTr("Periods")
+        visible: periodsVisible
     }
 
     SpinBox {
-
+        visible: periodsVisible
     }
 
     Item {

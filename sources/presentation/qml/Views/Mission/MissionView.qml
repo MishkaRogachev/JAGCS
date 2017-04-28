@@ -13,6 +13,7 @@ Pane {
     property string selectedMission
     property string assignedVehicle
     property int progress: progressBar.value
+    property int sequence: -1
 
     signal selectMission(string name)
     signal addMission()
@@ -117,6 +118,28 @@ Pane {
                 to: 100
                 Layout.columnSpan: 5
                 Layout.fillWidth: true
+            }
+        }
+
+        RowLayout {
+            Label {
+                text: qsTr("Item")
+                Layout.fillWidth: true
+            }
+
+            Button {
+                iconSource: "qrc:/icons/left.svg"
+            }
+
+            Label {
+                Layout.alignment: Qt.AlignVCenter
+                Layout.preferredWidth: palette.controlBaseSize
+                horizontalAlignment: Qt.AlignHCenter
+                text: sequence > -1 ? sequence : "-"
+            }
+
+            Button {
+                iconSource: "qrc:/icons/right.svg"
             }
         }
 

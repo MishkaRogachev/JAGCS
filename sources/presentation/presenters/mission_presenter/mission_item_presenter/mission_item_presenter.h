@@ -1,7 +1,9 @@
 #ifndef MISSION_ITEM_PRESENTER_H
 #define MISSION_ITEM_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "db_traits.h"
 
 namespace domain
 {
@@ -15,9 +17,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        MissionItemPresenter(domain::DomainFacade* facade,
-                             QObject* object = nullptr);
-        ~MissionItemPresenter() override;
+        MissionItemPresenter(QObject* object = nullptr);
+
+    public slots:
+        void setMissionItem(const db::MissionItemPtr& item);
 
     protected:
         void connectView(QObject* view) override;
@@ -26,8 +29,7 @@ namespace presentation
         void update();
 
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+         db::MissionItemPtr m_item;
     };
 }
 

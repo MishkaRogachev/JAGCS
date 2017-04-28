@@ -9,6 +9,8 @@
         <file>ui/minus.svg</file>
         <file>ui/show.svg</file>
         <file>ui/hide.svg</file>
+        <file>indicators/unknown_mark.svg</file>
+        <file>indicators/plane_map_mark.svg</file>
         <file>icons/jagcs.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/quit.svg</file>
@@ -17,6 +19,10 @@
         <file>icons/save.svg</file>
         <file>icons/edit.svg</file>
         <file>icons/remove.svg</file>
+        <file>icons/left.svg</file>
+        <file>icons/right.svg</file>
+        <file>icons/up.svg</file>
+        <file>icons/down.svg</file>
         <file>icons/map-marker.svg</file>
         <file>icons/center.svg</file>
         <file>icons/layers.svg</file>
@@ -32,13 +38,9 @@
         <file>icons/gps.svg</file>
         <file>icons/battery.svg</file>
         <file>icons/current.svg</file>
-        <file>indicators/plane_map_mark.svg</file>
-        <file>indicators/unknown_mark.svg</file>
         <file>icons/flight.svg</file>
         <file>icons/download.svg</file>
         <file>icons/upload.svg</file>
-        <file>icons/up.svg</file>
-        <file>icons/down.svg</file>
         <file>icons/landing.svg</file>
         <file>icons/takeoff.svg</file>
     </qresource>
