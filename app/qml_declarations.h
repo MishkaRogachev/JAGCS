@@ -1,8 +1,10 @@
 #ifndef QML_DECLARATIONS_H
 #define QML_DECLARATIONS_H
 
-#include "link_description.h"
+// Internal
 #include "aerial_vehicle.h"
+#include "link_description.h"
+#include "mission_item.h"
 
 void registerQmlTypes()
 {
@@ -12,8 +14,10 @@ void registerQmlTypes()
     qRegisterMetaType<domain::Wind>("Wind");
     qRegisterMetaType<domain::PowerSystem>("PowerSystem");
 
-    qmlRegisterUncreatableType<db::LinkDescription>("JAGCS", 1, 0, "LinkDescription",
-                                                    "Can't create DB entities in QML");
+    qmlRegisterUncreatableType<db::LinkDescription>(
+                "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
+    qmlRegisterUncreatableType<db::MissionItem>(
+                "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
 }
 
 #endif // QML_DECLARATIONS_H

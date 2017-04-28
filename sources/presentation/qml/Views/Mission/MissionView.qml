@@ -22,7 +22,6 @@ Pane {
     signal uploadMission()
     signal downloadMission()
 
-    padding: 0
     onSelectedMissionChanged: {
         edit.checked = false;
         if (missionsBox.currentText != selectedMission)
@@ -121,8 +120,8 @@ Pane {
             }
         }
 
-        Item { // TODO: MissionItemView
-            Layout.fillHeight: true
+        MissionItemView {
+            objectName: "missionItem"
         }
     }
 
