@@ -14,6 +14,8 @@
 #include "mission_assignment.h"
 #include "vehicle_description.h"
 
+#include "mission_item_presenter.h"
+
 using namespace presentation;
 
 class MissionPresenter::Impl
@@ -23,6 +25,8 @@ public:
     domain::VehicleService* vehicleService;
 
     db::MissionPtr selectedMission;
+
+    MissionItemPresenter* missionItem;
 };
 
 using namespace presentation;
@@ -44,6 +48,8 @@ MissionPresenter::MissionPresenter(domain::DomainFacade* facade,
             this, &MissionPresenter::updateVehicles);
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehicles);
+
+    d->missionItem =  new MissionItemPresenter(facade, this);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -52,6 +58,7 @@ MissionPresenter::~MissionPresenter()
 void MissionPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
+    d->missionItem->setView(view->findChild<QObject*>(NAME(missionItem)));
 
     this->updateVehicles();
     this->updateMissions();
