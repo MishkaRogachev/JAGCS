@@ -14,6 +14,7 @@ Pane {
     property string assignedVehicle
     property int progress: progressBar.value
     property int sequence: -1
+    property int count: 0
 
     signal selectMission(string name)
     signal addMission()
@@ -22,6 +23,10 @@ Pane {
     signal assignVehicle(string name)
     signal uploadMission()
     signal downloadMission()
+
+    signal selectItem(int sequence)
+    signal addItem()
+    signal removeItem()
 
     onSelectedMissionChanged: {
         edit.checked = false;
@@ -122,13 +127,23 @@ Pane {
         }
 
         RowLayout {
+            Layout.margins: palette.margins
+
             Label {
                 text: qsTr("Item")
                 Layout.fillWidth: true
             }
 
             Button {
+                iconSource: "qrc:/icons/remove.svg"
+                enabled: sequence > 0
+                onClicked: removeItem()
+            }
+
+            Button {
                 iconSource: "qrc:/icons/left.svg"
+                enabled: sequence > 1
+                onClicked: selectItem(sequence - 1)
             }
 
             Label {
@@ -140,6 +155,14 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/right.svg"
+                enabled: sequence + 1 < count
+                onClicked: selectItem(sequence + 1)
+            }
+
+            Button {
+                iconSource: "qrc:/icons/add.svg"
+                enabled: selectedMission.length && sequence + 1 == count
+                onClicked: addItem()
             }
         }
 

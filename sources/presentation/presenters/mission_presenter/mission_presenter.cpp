@@ -11,6 +11,7 @@
 #include "vehicle_service.h"
 
 #include "mission.h"
+#include "mission_item.h"
 #include "mission_assignment.h"
 #include "vehicle_description.h"
 
@@ -26,7 +27,7 @@ public:
 
     db::MissionPtr selectedMission;
 
-    MissionItemPresenter* missionItem;
+    MissionItemPresenter* itemPresenter;
 };
 
 using namespace presentation;
@@ -49,7 +50,7 @@ MissionPresenter::MissionPresenter(domain::DomainFacade* facade,
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehicles);
 
-    d->missionItem =  new MissionItemPresenter(this);
+    d->itemPresenter =  new MissionItemPresenter(this);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -58,7 +59,7 @@ MissionPresenter::~MissionPresenter()
 void MissionPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
-    d->missionItem->setView(view->findChild<QObject*>(NAME(missionItem)));
+    d->itemPresenter->setView(view->findChild<QObject*>(NAME(missionItem)));
 
     this->updateVehicles();
     this->updateMissions();
@@ -78,6 +79,10 @@ void MissionPresenter::setViewConnected(bool connected)
                 this, SLOT(onRenameMission(QString)));
         connect(this->view(), SIGNAL(assignVehicle(QString)),
                 this, SLOT(onAssignVehicle(QString)));
+
+        connect(this->view(), SIGNAL(addItem()), this, SLOT(onAddItem()));
+        connect(this->view(), SIGNAL(removeItem()), this, SLOT(onRemoveItem()));
+        connect(this->view(), SIGNAL(selectItem(int)), this, SLOT(updateItem(int)));
     }
     else
     {
@@ -97,8 +102,10 @@ void MissionPresenter::updateMissions()
         missions.append(mission->name());
     }
     this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
-    this->setViewProperty(PROPERTY(selectedMission), d->selectedMission.isNull() ?
-                              QString() : d->selectedMission->name());
+    this->setViewProperty(PROPERTY(selectedMission), d->selectedMission ?
+                              d->selectedMission->name() : QString());
+    this->setViewProperty(PROPERTY(count), d->selectedMission ?
+                              d->selectedMission->count() : 0);
     this->setViewConnected(true);
 
     this->updateAssignment();
@@ -142,17 +149,36 @@ void MissionPresenter::updateVehicles()
     this->updateAssignment();
 }
 
+void MissionPresenter::updateItem(int sequence)
+{
+    if (d->selectedMission && sequence < d->selectedMission->count())
+    {
+        this->setViewProperty(PROPERTY(sequence), sequence);
+        if (sequence > 0)
+        {
+            d->itemPresenter->setMissionItem(d->selectedMission->item(sequence));
+        }
+        return;
+    }
+
+    this->setViewProperty(PROPERTY(sequence), -1);
+    d->itemPresenter->setMissionItem(db::MissionItemPtr());
+}
+
 void MissionPresenter::onSelectMission(const QString& name)
 {
     if (name.isEmpty())
     {
         d->selectedMission = db::MissionPtr();
+        this->updateItem(-1);
     }
     else
     {
         d->selectedMission = d->missionService->findMissionByName(name);
+        this->updateItem(d->selectedMission->count() - 1);
     }
     this->updateAssignment();
+
 }
 
 void MissionPresenter::onAddMission()
@@ -163,6 +189,13 @@ void MissionPresenter::onAddMission()
                          d->missionService->missions().count()));
 
     d->missionService->saveMission(mission);
+
+    db::MissionItemPtr item = db::MissionItemPtr::create();
+
+    item->setCommand(db::MissionItem::Home);
+    mission->appendItem(item);
+    d->missionService->saveMissionItem(item);
+
     this->setViewProperty(PROPERTY(selectedMission), mission->name());
 }
 
@@ -172,6 +205,7 @@ void MissionPresenter::onRemoveMission()
 
     d->missionService->removeMission(d->selectedMission);
     this->setViewProperty(PROPERTY(selectedMission), QString());
+    this->updateItem(-1);
 }
 
 void MissionPresenter::onRenameMission(const QString& name)
@@ -200,4 +234,27 @@ void MissionPresenter::onAssignVehicle(const QString& name)
     }
 
     this->updateAssignment();
+}
+
+void MissionPresenter::onAddItem()
+{
+    if (!d->selectedMission) return;
+
+    db::MissionItemPtr item = db::MissionItemPtr::create();
+
+    item->setCommand(d->selectedMission->count() > 1 ?
+                         db::MissionItem::Waypoint :
+                         db::MissionItem::Takeoff);
+    d->selectedMission->appendItem(item);
+
+    d->missionService->saveMissionItem(item);
+
+    this->setViewProperty(PROPERTY(count), d->selectedMission->count());
+}
+
+void MissionPresenter::onRemoveItem()
+{
+    if (!d->selectedMission) return;
+
+    this->setViewProperty(PROPERTY(count), d->selectedMission->count());
 }
