@@ -136,13 +136,13 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/remove.svg"
-                enabled: sequence > 0
+                enabled: sequence >= 0
                 onClicked: removeItem()
             }
 
             Button {
                 iconSource: "qrc:/icons/left.svg"
-                enabled: sequence > 1
+                enabled: sequence != -1 && sequence > 0
                 onClicked: selectItem(sequence - 1)
             }
 
@@ -155,13 +155,13 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/right.svg"
-                enabled: sequence + 1 < count
+                enabled: sequence != -1 && sequence + 1 < count
                 onClicked: selectItem(sequence + 1)
             }
 
             Button {
                 iconSource: "qrc:/icons/add.svg"
-                enabled: selectedMission.length && sequence + 1 == count
+                enabled: sequence != -1 && sequence + 1 == count
                 onClicked: addItem()
             }
         }

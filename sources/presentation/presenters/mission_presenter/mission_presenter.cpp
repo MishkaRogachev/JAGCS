@@ -189,13 +189,6 @@ void MissionPresenter::onAddMission()
                          d->missionService->missions().count()));
 
     d->missionService->saveMission(mission);
-
-    db::MissionItemPtr item = db::MissionItemPtr::create();
-
-    item->setCommand(db::MissionItem::Home);
-    mission->appendItem(item);
-    d->missionService->saveMissionItem(item);
-
     this->setViewProperty(PROPERTY(selectedMission), mission->name());
 }
 
@@ -204,6 +197,7 @@ void MissionPresenter::onRemoveMission()
     if (d->selectedMission.isNull()) return;
 
     d->missionService->removeMission(d->selectedMission);
+    d->selectedMission.clear();
     this->setViewProperty(PROPERTY(selectedMission), QString());
     this->updateItem(-1);
 }
@@ -242,7 +236,7 @@ void MissionPresenter::onAddItem()
 
     db::MissionItemPtr item = db::MissionItemPtr::create();
 
-    item->setCommand(d->selectedMission->count() > 1 ?
+    item->setCommand(d->selectedMission->count() > 0 ?
                          db::MissionItem::Waypoint :
                          db::MissionItem::Takeoff);
     d->selectedMission->appendItem(item);
@@ -250,6 +244,7 @@ void MissionPresenter::onAddItem()
     d->missionService->saveMissionItem(item);
 
     this->setViewProperty(PROPERTY(count), d->selectedMission->count());
+    this->updateItem(item->sequence());
 }
 
 void MissionPresenter::onRemoveItem()

@@ -25,7 +25,6 @@ namespace db
         enum Command: quint8
         {
             UnknownCommand = 0,
-            Home,
             Takeoff,
             Waypoint,
             LoiterAltitude,

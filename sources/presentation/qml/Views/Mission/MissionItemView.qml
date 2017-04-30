@@ -14,8 +14,7 @@ GridLayout {
     property bool altitudeVisible: command == MissionItem.Continue ||
                                    positionVisible
 
-    property bool positionVisible: command == MissionItem.Home ||
-                                   command == MissionItem.Takeoff ||
+    property bool positionVisible: command == MissionItem.Takeoff ||
                                    command == MissionItem.Waypoint ||
                                    command == MissionItem.Landing ||
                                    radiusVisible
@@ -36,7 +35,7 @@ GridLayout {
     }
 
     ComboBox {
-        model: [ qsTr("Home"), qsTr("Takeoff"), qsTr("Waypoint"),
+        model: [ qsTr("Takeoff"), qsTr("Waypoint"),
             qsTr("LoiterAltitude"), qsTr("LoiterTurns"), qsTr("Continue"),
             qsTr("Return"), qsTr("Landing") ]
         visible: sequence !== -1
