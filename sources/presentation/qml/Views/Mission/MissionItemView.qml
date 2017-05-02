@@ -9,6 +9,9 @@ import "../Map"
 GridLayout {
     id: root
 
+    property int sequence: -1
+    property int count: 0
+
     property int command: MissionItem.UnknownCommand
 
     property bool altitudeVisible: command == MissionItem.Continue ||
@@ -25,9 +28,53 @@ GridLayout {
     property bool pitchVisible: command == MissionItem.Takeoff
     property bool periodsVisible: command == MissionItem.periods
 
+    signal selectItem(int sequence)
+    signal addItem()
+    signal removeItem()
+
     signal setCommand(int command);
 
     columns: 2
+
+    RowLayout {
+        Layout.columnSpan: 2
+
+        Label {
+            text: qsTr("Item")
+            Layout.fillWidth: true
+        }
+
+        Button {
+            iconSource: "qrc:/icons/remove.svg"
+            enabled: sequence >= 0
+            onClicked: removeItem()
+        }
+
+        Button {
+            iconSource: "qrc:/icons/left.svg"
+            enabled: sequence != -1 && sequence > 0
+            onClicked: selectItem(sequence - 1)
+        }
+
+        Label {
+            Layout.alignment: Qt.AlignVCenter
+            Layout.preferredWidth: palette.controlBaseSize
+            horizontalAlignment: Qt.AlignHCenter
+            text: sequence > -1 ? sequence : "-"
+        }
+
+        Button {
+            iconSource: "qrc:/icons/right.svg"
+            enabled: sequence != -1 && sequence + 1 < count
+            onClicked: selectItem(sequence + 1)
+        }
+
+        Button {
+            iconSource: "qrc:/icons/add.svg"
+            enabled: sequence != -1 && sequence + 1 == count
+            onClicked: addItem()
+        }
+    }
 
     Label {
         text: qsTr("Command")

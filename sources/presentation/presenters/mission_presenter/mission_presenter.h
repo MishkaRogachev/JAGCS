@@ -28,16 +28,12 @@ namespace presentation
         void updateMissions();
         void updateAssignment();
         void updateVehicles();
-        void updateItem(int sequence);
 
         void onSelectMission(const QString& name);
         void onAddMission();
         void onRemoveMission();
         void onRenameMission(const QString& name);
         void onAssignVehicle(const QString& name);
-
-        void onAddItem();
-        void onRemoveItem();
 
     private:
         class Impl;

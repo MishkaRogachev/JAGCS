@@ -33,12 +33,19 @@ namespace db
         bool remove(const LinkDescriptionPtr& link);
         bool remove(const MissionAssignmentPtr& assignment);
 
-        LinkDescriptionPtrList loadLinks();
-        VehicleDescriptionPtrList loadVehicles();
-        MissionPtrList loadMissions();
+        LinkDescriptionPtrList loadLinks(const QString& condition = QString(),
+                                         bool reload  = false);
+        VehicleDescriptionPtrList loadVehicles(const QString& condition = QString(),
+                                               bool reload  = false);
+        MissionPtrList loadMissions(const QString& condition = QString(),
+                                    bool reload  = false);
+        MissionItemPtrList loadItems(const QString& condition = QString(),
+                                     bool reload  = false);
 
         MissionAssignmentPtr missionAssignment(int missionId);
         MissionAssignmentPtr vehicleAssignment(int vehicleId);
+
+        MissionItemPtrList missionItems(int missionId);
 
     private:
         class Impl;

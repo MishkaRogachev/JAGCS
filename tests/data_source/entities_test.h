@@ -10,7 +10,6 @@ class EntitiesTest: public QObject
 private slots:
     void testMission();
     void testMissionItems();
-    void testMissionItemSequence();
     void testVehicleDescription();
     void testMissionAssignment();
     void testLinkDescription();

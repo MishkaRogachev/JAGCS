@@ -19,16 +19,16 @@ class DbFacade::Impl
 {
 public:
     GenericRepository<Mission> missionRepository;
-    GenericRepository<MissionItem> missionItemRepository;
+    GenericRepository<MissionItem> itemRepository;
     GenericRepository<VehicleDescription> vehicleRepository;
-    GenericRepository<MissionAssignment> assignmentsRepository;
+    GenericRepository<MissionAssignment> assignmentRepository;
     GenericRepository<LinkDescription> linkRepository;
 
     Impl():
         missionRepository("missions"),
-        missionItemRepository("mission_items"),
+        itemRepository("mission_items"),
         vehicleRepository("vehicles"),
-        assignmentsRepository("mission_assignments"),
+        assignmentRepository("mission_assignments"),
         linkRepository("links")
     {}
 };
@@ -42,29 +42,12 @@ DbFacade::~DbFacade()
 
 MissionPtr DbFacade::readMission(int id, bool reload)
 {
-    bool loadItems = !d->missionRepository.contains(id) || reload;
-    MissionPtr mission = d->missionRepository.read(id, reload);
-    if (loadItems)
-    {
-        mission->clearItems();
-        QList<int> itemIds = d->missionItemRepository.selectId(
-                           QString("missionId = %1 ORDER BY sequence").arg(id));
-
-        mission->setCount(itemIds.count());
-
-        for (int itemId : itemIds)
-        {
-            MissionItemPtr item = this->readMissionItem(itemId, reload);
-            if (item) mission->setItem(item->sequence(), item);
-        }
-    }
-
-    return mission;
+    return d->missionRepository.read(id, reload);
 }
 
 MissionItemPtr DbFacade::readMissionItem(int id, bool reload)
 {
-    return d->missionItemRepository.read(id, reload);
+    return d->itemRepository.read(id, reload);
 }
 
 VehicleDescriptionPtr DbFacade::readVehicle(int id, bool reload)
@@ -79,25 +62,17 @@ LinkDescriptionPtr DbFacade::readLink(int id, bool reload)
 
 MissionAssignmentPtr DbFacade::readAssignment(int id, bool reload)
 {
-    return d->assignmentsRepository.read(id, reload);
+    return d->assignmentRepository.read(id, reload);
 }
 
 bool DbFacade::save(const MissionPtr& mission)
 {
-    // TODO: db transaction
-    if (!d->missionRepository.save(mission)) return false;
-
-    for (const MissionItemPtr& item: mission->items())
-    {
-        if (!this->save(item)) return false;
-    }
-
-    return true;
+    return d->missionRepository.save(mission);
 }
 
 bool DbFacade::save(const MissionItemPtr& missionItem)
 {
-    return d->missionItemRepository.save(missionItem);
+    return d->itemRepository.save(missionItem);
 }
 
 bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
@@ -112,15 +87,15 @@ bool DbFacade::save(const LinkDescriptionPtr& link)
 
 bool DbFacade::save(const MissionAssignmentPtr& assignment)
 {
-    return d->assignmentsRepository.save(assignment);
+    return d->assignmentRepository.save(assignment);
 }
 
 bool DbFacade::remove(const MissionPtr& mission)
 {
     db::MissionAssignmentPtr assignment = this->missionAssignment(mission->id());
-    if (!assignment.isNull()) this->remove(assignment);
+    if (assignment && !this->remove(assignment)) return false;
 
-    for (const MissionItemPtr& item: mission->items())
+    for (const MissionItemPtr& item: this->missionItems(mission->id()))
     {
         if (!this->remove(item)) return false;
     }
@@ -130,11 +105,14 @@ bool DbFacade::remove(const MissionPtr& mission)
 
 bool DbFacade::remove(const MissionItemPtr& missionItem)
 {
-    return d->missionItemRepository.remove(missionItem);
+    return d->itemRepository.remove(missionItem);
 }
 
 bool DbFacade::remove(const VehicleDescriptionPtr& vehicle)
 {
+    db::MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
+    if (assignment && !this->remove(assignment)) return false;
+
     return d->vehicleRepository.remove(vehicle);
 }
 
@@ -145,48 +123,59 @@ bool DbFacade::remove(const LinkDescriptionPtr& link)
 
 bool DbFacade::remove(const MissionAssignmentPtr& assignment)
 {
-    return d->assignmentsRepository.remove(assignment);
+    return d->assignmentRepository.remove(assignment);
 }
 
-LinkDescriptionPtrList DbFacade::loadLinks()
+LinkDescriptionPtrList DbFacade::loadLinks(const QString& condition, bool reload)
 {
     LinkDescriptionPtrList list;
 
-    for (int id: d->linkRepository.selectId())
+    for (int id: d->linkRepository.selectId(condition))
     {
-        list.append(this->readLink(id));
+        list.append(this->readLink(id, reload));
     }
 
     return list;
 }
 
-VehicleDescriptionPtrList DbFacade::loadVehicles()
+VehicleDescriptionPtrList DbFacade::loadVehicles(const QString& condition, bool reload)
 {
     VehicleDescriptionPtrList list;
 
-    for (int id: d->vehicleRepository.selectId())
+    for (int id: d->vehicleRepository.selectId(condition))
     {
-        list.append(this->readVehicle(id));
+        list.append(this->readVehicle(id, reload));
     }
 
     return list;
 }
 
-MissionPtrList DbFacade::loadMissions()
+MissionPtrList DbFacade::loadMissions(const QString& condition, bool reload)
 {
     MissionPtrList list;
 
-    for (int id: d->missionRepository.selectId())
+    for (int id: d->missionRepository.selectId(condition))
     {
-        list.append(this->readMission(id));
+        list.append(this->readMission(id, reload));
     }
 
+    return list;
+}
+
+MissionItemPtrList DbFacade::loadItems(const QString& condition, bool reload)
+{
+    MissionItemPtrList list;
+
+    for (int id: d->itemRepository.selectId(condition))
+    {
+        list.append(this->readMissionItem(id, reload));
+    }
     return list;
 }
 
 MissionAssignmentPtr DbFacade::missionAssignment(int missionId)
 {
-    for (int id: d->assignmentsRepository.selectId(
+    for (int id: d->assignmentRepository.selectId(
              QString("missionId = %1").arg(missionId)))
     {
         return this->readAssignment(id);
@@ -196,10 +185,15 @@ MissionAssignmentPtr DbFacade::missionAssignment(int missionId)
 
 MissionAssignmentPtr DbFacade::vehicleAssignment(int vehicleId)
 {
-    for (int id: d->assignmentsRepository.selectId(
+    for (int id: d->assignmentRepository.selectId(
              QString("vehicleId = %1").arg(vehicleId)))
     {
         return this->readAssignment(id);
     }
     return MissionAssignmentPtr();
+}
+
+MissionItemPtrList DbFacade::missionItems(int missionId)
+{
+    return this->loadItems(QString("missionId = %1").arg(missionId));
 }
