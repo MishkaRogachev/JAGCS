@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class DomainFacade;
+    class DomainEntry;
 }
 
 namespace presentation

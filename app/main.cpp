@@ -8,7 +8,7 @@
 
 // Internal
 #include "settings_provider.h"
-#include "domain_facade.h"
+#include "domain_entry.h"
 
 #include "translation_manager.h"
 #include "qml_declarations.h"
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     domain::TranslationManager::init();
     registerQmlTypes();
 
-    domain::DomainFacade facade;
+    domain::DomainEntry facade;
     presentation::MainPresenter presenter(&facade);
 
     QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));

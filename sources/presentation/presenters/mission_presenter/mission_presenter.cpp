@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "domain_facade.h"
+#include "domain_entry.h"
 
 #include "mission_service.h"
 #include "vehicle_service.h"
@@ -32,13 +32,13 @@ public:
 
 using namespace presentation;
 
-MissionPresenter::MissionPresenter(domain::DomainFacade* facade,
+MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
                                    QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->missionService = facade->missionService();
-    d->vehicleService = facade->vehicleService();
+    d->missionService = entry->missionService();
+    d->vehicleService = entry->vehicleService();
 
     connect(d->missionService, &domain::MissionService::missionAdded,
             this, &MissionPresenter::updateMissions);

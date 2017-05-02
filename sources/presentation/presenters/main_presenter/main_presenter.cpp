@@ -5,7 +5,7 @@
 #include <QVariant>
 
 // Internal
-#include "domain_facade.h"
+#include "domain_entry.h"
 
 #include "status_presenter.h"
 #include "flight_presenter.h"
@@ -17,17 +17,17 @@ using namespace presentation;
 class MainPresenter::Impl
 {
 public:
-    domain::DomainFacade* facade;
+    domain::DomainEntry* entry;
 
     StatusPresenter* status;
     BasePresenter* modePresenter = nullptr;
 };
 
-MainPresenter::MainPresenter(domain::DomainFacade* facade, QObject* object):
+MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->facade = facade;
+    d->entry = entry;
 
     d->status = new StatusPresenter(this);
     connect(d->status, &StatusPresenter::setMode, this, &MainPresenter::setMode);
@@ -50,16 +50,16 @@ void MainPresenter::setMode(const QString& mode)
 
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->facade->vehicleService(),
+        d->modePresenter = new FlightPresenter(d->entry->vehicleService(),
                                                this);
     }
     if (mode == "mission")
     {
-        d->modePresenter = new MissionPresenter(d->facade, this);
+        d->modePresenter = new MissionPresenter(d->entry, this);
     }
     else if (mode == "settings")
     {
-        d->modePresenter = new SettingsPresenter(d->facade, this);
+        d->modePresenter = new SettingsPresenter(d->entry, this);
     }
 
     if (d->modePresenter)

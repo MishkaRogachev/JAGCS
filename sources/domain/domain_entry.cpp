@@ -1,4 +1,4 @@
-#include "domain_facade.h"
+#include "domain_entry.h"
 
 // Qt
 #include <QFileInfo>
@@ -21,7 +21,7 @@
 using namespace db;
 using namespace domain;
 
-class DomainFacade::Impl
+class DomainEntry::Impl
 {
 public:
     DbManager dataBase;
@@ -34,7 +34,7 @@ public:
     QScopedPointer<CommunicationService> commService;
 };
 
-DomainFacade::DomainFacade():
+DomainEntry::DomainEntry():
     d(new Impl())
 {
     // TODO: replace by migrations
@@ -60,25 +60,25 @@ DomainFacade::DomainFacade():
     d->commService.reset(new CommunicationService(&comFactory, &d->dbFacade));
 }
 
-DomainFacade::~DomainFacade()
+DomainEntry::~DomainEntry()
 {}
 
-CommunicationService* DomainFacade::commService() const
+CommunicationService* DomainEntry::commService() const
 {
     return d->commService.data();
 }
 
-VehicleService* DomainFacade::vehicleService() const
+VehicleService* DomainEntry::vehicleService() const
 {
     return d->vehicleService.data();
 }
 
-MissionService* DomainFacade::missionService() const
+MissionService* DomainEntry::missionService() const
 {
     return d->missionService.data();
 }
 
-ProxyManager*DomainFacade::proxyManager() const
+ProxyManager*DomainEntry::proxyManager() const
 {
     return &d->proxyManager;
 }

@@ -1,5 +1,5 @@
-#ifndef DOMAIN_FACADE_H
-#define DOMAIN_FACADE_H
+#ifndef DOMAIN_ENTRY_H
+#define DOMAIN_ENTRY_H
 
 // Qt
 #include <QScopedPointer>
@@ -12,11 +12,11 @@ namespace domain
 
     class ProxyManager;
 
-    class DomainFacade
+    class DomainEntry
     {
     public:
-        DomainFacade();
-        ~DomainFacade();
+        DomainEntry();
+        ~DomainEntry();
 
         CommunicationService* commService() const;
         VehicleService* vehicleService() const;
@@ -30,4 +30,4 @@ namespace domain
     };
 }
 
-#endif // DOMAIN_FACADE_H
+#endif // DOMAIN_ENTRY_H

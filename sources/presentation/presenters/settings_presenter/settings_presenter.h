@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class DomainFacade;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -15,7 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        SettingsPresenter(domain::DomainFacade* facade, QObject* parent);
+        SettingsPresenter(domain::DomainEntry* entry, QObject* parent);
         ~SettingsPresenter() override;
 
     public slots:
