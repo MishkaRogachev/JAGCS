@@ -19,6 +19,7 @@ namespace db
         MissionItemPtr readMissionItem(int id, bool reload = false);
         VehicleDescriptionPtr readVehicle(int id, bool reload = false);
         LinkDescriptionPtr readLink(int id, bool reload = false);
+        MissionAssignmentPtr readAssignment(int id, bool reload = false);
 
         bool save(const MissionPtr& mission);
         bool save(const MissionItemPtr& missionItem);
@@ -31,11 +32,6 @@ namespace db
         bool remove(const VehicleDescriptionPtr& vehicle);
         bool remove(const LinkDescriptionPtr& link);
         bool remove(const MissionAssignmentPtr& assignment);
-
-        void unload(const MissionPtr& mission);
-        void unload(const MissionItemPtr& missionItem);
-        void unload(const VehicleDescriptionPtr& vehicle);
-        void unload(const LinkDescriptionPtr& link);
 
         LinkDescriptionPtrList loadLinks();
         VehicleDescriptionPtrList loadVehicles();

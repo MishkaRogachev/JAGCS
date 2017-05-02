@@ -77,6 +77,11 @@ LinkDescriptionPtr DbEntry::readLink(int id, bool reload)
     return d->linkRepository.read(id, reload);
 }
 
+MissionAssignmentPtr DbEntry::readAssignment(int id, bool reload)
+{
+    return d->assignmentsRepository.read(id, reload);
+}
+
 bool DbEntry::save(const MissionPtr& mission)
 {
     // TODO: db transaction
@@ -140,29 +145,6 @@ bool DbEntry::remove(const MissionAssignmentPtr& assignment)
     return d->assignmentsRepository.remove(assignment);
 }
 
-void DbEntry::unload(const MissionPtr& mission)
-{
-    for (const MissionItemPtr& item: mission->items())
-        this->unload(item);
-
-    d->missionRepository.unload(mission->id());
-}
-
-void DbEntry::unload(const MissionItemPtr& missionItem)
-{
-    d->missionItemRepository.unload(missionItem->id());
-}
-
-void DbEntry::unload(const VehicleDescriptionPtr& vehicle)
-{
-    d->vehicleRepository.unload(vehicle->id());
-}
-
-void DbEntry::unload(const LinkDescriptionPtr& link)
-{
-    d->linkRepository.unload(link->id());
-}
-
 LinkDescriptionPtrList DbEntry::loadLinks()
 {
     LinkDescriptionPtrList list;
@@ -204,7 +186,7 @@ MissionAssignmentPtr DbEntry::missionAssignment(int missionId)
     for (int id: d->assignmentsRepository.selectId(
              QString("missionId = %1").arg(missionId)))
     {
-        return d->assignmentsRepository.read(id);
+        return this->readAssignment(id);
     }
     return MissionAssignmentPtr();
 }
@@ -214,7 +196,7 @@ MissionAssignmentPtr DbEntry::vehicleAssignment(int vehicleId)
     for (int id: d->assignmentsRepository.selectId(
              QString("vehicleId = %1").arg(vehicleId)))
     {
-        return d->assignmentsRepository.read(id);
+        return this->readAssignment(id);
     }
     return MissionAssignmentPtr();
 }

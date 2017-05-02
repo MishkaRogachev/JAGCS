@@ -126,6 +126,12 @@ void GenericRepository<T>::unload(int id)
 }
 
 template<class T>
+void GenericRepository<T>::clear()
+{
+    m_map.remove(clear);
+}
+
+template<class T>
 QList<int> GenericRepository<T>::selectId(const QString& condition)
 {
     QList<int> idList;

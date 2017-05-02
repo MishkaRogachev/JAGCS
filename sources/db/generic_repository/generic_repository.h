@@ -23,6 +23,7 @@ namespace db
         bool save(const QSharedPointer<T>& entity);
         bool contains(int id);
         void unload(int id);
+        void clear();
 
         QList<int> selectId(const QString& condition = QString());
 
