@@ -108,13 +108,13 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: selectedMission.length > 0
+                enabled: selectedMission.length > 0 && assignedVehicle.length > 0
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: selectedMission.length > 0
+                enabled: selectedMission.length > 0 && assignedVehicle.length > 0
                 onClicked: uploadMission()
             }
 
