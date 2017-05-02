@@ -117,6 +117,9 @@ bool DbFacade::save(const MissionAssignmentPtr& assignment)
 
 bool DbFacade::remove(const MissionPtr& mission)
 {
+    db::MissionAssignmentPtr assignment = this->missionAssignment(mission->id());
+    if (!assignment.isNull()) this->remove(assignment);
+
     for (const MissionItemPtr& item: mission->items())
     {
         if (!this->remove(item)) return false;

@@ -113,9 +113,6 @@ void MissionService::saveMission(const MissionPtr& mission)
 
 void MissionService::removeMission(const MissionPtr& mission)
 {
-    db::MissionAssignmentPtr assignment = this->missionAssignment(mission);
-
-    if (!assignment.isNull()) d->facade->remove(assignment);
     if (!d->facade->remove(mission)) return;
 
     d->missions.removeOne(mission);
