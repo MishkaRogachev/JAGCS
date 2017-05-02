@@ -9,7 +9,7 @@
 
 namespace db
 {
-    class DbEntry;
+    class DbFacade;
 }
 
 namespace domain
@@ -22,14 +22,14 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit VehicleService(db::DbEntry* entry, QObject* parent = nullptr);
+        explicit VehicleService(db::DbFacade* facade, QObject* parent = nullptr);
         ~VehicleService() override;
 
         db::VehicleDescriptionPtrList descriptions() const;
         db::VehicleDescriptionPtr description(int id) const;
         // TODO: fix vehicles search
-        db::VehicleDescriptionPtr findDescriptiontByMavId(quint8 mavId) const;
-        db::VehicleDescriptionPtr findDescriptiontByName(const QString& name) const;
+        db::VehicleDescriptionPtr findDescriptionByMavId(quint8 mavId) const;
+        db::VehicleDescriptionPtr findDescriptionByName(const QString& name) const;
 
         BaseVehicle* baseVehicle(const db::VehicleDescriptionPtr& description);
         BaseVehicle* baseVehicle(quint8 mavId);

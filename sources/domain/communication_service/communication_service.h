@@ -9,7 +9,7 @@
 
 namespace db
 {
-    class DbEntry;
+    class DbFacade;
 }
 
 namespace comm
@@ -25,7 +25,7 @@ namespace domain
 
     public:
         CommunicationService(comm::ICommunicatorFactory* commFactory,
-                             db::DbEntry* entry,
+                             db::DbFacade* facade,
                              QObject* parent = nullptr);
         ~CommunicationService() override;
 

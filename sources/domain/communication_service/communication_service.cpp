@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_entry.h"
+#include "db_facade.h"
 #include "link_description.h"
 
 #include "abstract_communicator.h"
@@ -22,7 +22,7 @@ class CommunicationService::Impl
 {
 public:
     AbstractCommunicator* communicator;
-    DbEntry* entry;
+    DbFacade* facade;
 
     db::LinkDescriptionPtrList descriptions;
     QMap<db::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
@@ -50,15 +50,15 @@ public:
 };
 
 CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
-                                           DbEntry* entry,
+                                           DbFacade* facade,
                                            QObject* parent):
     QObject(parent),
     d(new Impl())
 {
     d->communicator = commFactory->create();
-    d->entry = entry;
+    d->facade = facade;
 
-    for (const LinkDescriptionPtr& description: entry->loadLinks())
+    for (const LinkDescriptionPtr& description: facade->loadLinks())
     {
         d->descriptions.append(description);
         AbstractLink* link = d->linkFromDescription(description);
@@ -72,7 +72,7 @@ CommunicationService::~CommunicationService()
 {
     for (const LinkDescriptionPtr& description: d->descriptions)
     {
-        d->entry->save(description);
+        d->facade->save(description);
     }
 }
 
@@ -109,7 +109,7 @@ void CommunicationService::saveLink(const LinkDescriptionPtr& description)
 
     emit linkChanged(description);
 
-    d->entry->save(description);
+    d->facade->save(description);
 }
 
 void CommunicationService::removeLink(const LinkDescriptionPtr& description)
@@ -119,7 +119,7 @@ void CommunicationService::removeLink(const LinkDescriptionPtr& description)
     d->communicator->removeLink(link);
     delete link;
 
-    d->entry->remove(description);
+    d->facade->remove(description);
     emit linkRemoved(description);
 }
 

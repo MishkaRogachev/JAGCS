@@ -40,7 +40,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
     db::VehicleDescriptionPtr description =
-            m_vehicleService->findDescriptiontByMavId(message.sysid);
+            m_vehicleService->findDescriptionByMavId(message.sysid);
     if (description.isNull()) return;
 
     BaseVehicle* vehicle = m_vehicleService->baseVehicle(description);

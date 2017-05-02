@@ -9,7 +9,7 @@
 
 namespace db
 {
-    class DbEntry;
+    class DbFacade;
 }
 
 namespace domain
@@ -19,7 +19,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit MissionService(db::DbEntry* entry, QObject* parent = nullptr);
+        explicit MissionService(db::DbFacade* facade, QObject* parent = nullptr);
         ~MissionService() override;
 
         db::MissionPtrList missions() const;

@@ -6,7 +6,7 @@
 
 // Internal
 #include "db_manager.h"
-#include "db_entry.h"
+#include "db_facade.h"
 
 #include "settings_provider.h"
 
@@ -25,7 +25,7 @@ class DomainFacade::Impl
 {
 public:
     DbManager dataBase;
-    DbEntry dbEntry;
+    DbFacade dbFacade;
     ProxyManager proxyManager;
 
     QScopedPointer<VehicleService> vehicleService;
@@ -50,14 +50,14 @@ DomainFacade::DomainFacade():
         qCritical() << "Error while creating DB" << dbName;
     }
 
-    d->vehicleService.reset(new VehicleService(&d->dbEntry));
-    d->missionService.reset(new MissionService(&d->dbEntry));
+    d->vehicleService.reset(new VehicleService(&d->dbFacade));
+    d->missionService.reset(new MissionService(&d->dbFacade));
 
     comm::MavLinkCommunicatorFactory comFactory(d->vehicleService.data(),
              SettingsProvider::value(settings::communication::systemId).toInt(),
              SettingsProvider::value(settings::communication::componentId).toInt());
 
-    d->commService.reset(new CommunicationService(&comFactory, &d->dbEntry));
+    d->commService.reset(new CommunicationService(&comFactory, &d->dbFacade));
 }
 
 DomainFacade::~DomainFacade()

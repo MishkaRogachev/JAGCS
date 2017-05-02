@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_entry.h"
+#include "db_facade.h"
 #include "vehicle_description.h"
 
 #include "aerial_vehicle.h"
@@ -17,7 +17,7 @@ using namespace domain;
 class VehicleService::Impl
 {
 public:
-    DbEntry* entry;
+    DbFacade* facade;
 
     VehicleDescriptionPtrList descriptions;
     QMap<VehicleDescriptionPtr, BaseVehicle*> descriptedVehicles;
@@ -31,13 +31,13 @@ public:
     }
 };
 
-VehicleService::VehicleService(DbEntry* entry, QObject* parent):
+VehicleService::VehicleService(DbFacade* facade, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->entry = entry;
+    d->facade = facade;
 
-    for (const VehicleDescriptionPtr& description: d->entry->loadVehicles())
+    for (const VehicleDescriptionPtr& description: d->facade->loadVehicles())
     {
         d->descriptions.append(description);
         BaseVehicle* vehicle = d->vehicleFromDescription(description);
@@ -49,7 +49,7 @@ VehicleService::~VehicleService()
 {
     for (const VehicleDescriptionPtr& description: d->descriptions)
     {
-        d->entry->save(description);
+        d->facade->save(description);
     }
 }
 
@@ -60,10 +60,10 @@ VehicleDescriptionPtrList VehicleService::descriptions() const
 
 VehicleDescriptionPtr VehicleService::description(int id) const
 {
-    return d->entry->readVehicle(id);
+    return d->facade->readVehicle(id);
 }
 
-VehicleDescriptionPtr VehicleService::findDescriptiontByMavId(quint8 mavId) const
+VehicleDescriptionPtr VehicleService::findDescriptionByMavId(quint8 mavId) const
 {
     auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
                            [mavId](const VehicleDescriptionPtr& description)
@@ -75,7 +75,7 @@ VehicleDescriptionPtr VehicleService::findDescriptiontByMavId(quint8 mavId) cons
     return VehicleDescriptionPtr();
 }
 
-VehicleDescriptionPtr VehicleService::findDescriptiontByName(const QString& name) const
+VehicleDescriptionPtr VehicleService::findDescriptionByName(const QString& name) const
 {
     auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
                            [name](const VehicleDescriptionPtr& description)
@@ -94,7 +94,7 @@ BaseVehicle* VehicleService::baseVehicle(const VehicleDescriptionPtr& descriptio
 
 BaseVehicle* VehicleService::baseVehicle(quint8 mavId)
 {
-    return this->baseVehicle(this->findDescriptiontByMavId(mavId));
+    return this->baseVehicle(this->findDescriptionByMavId(mavId));
 }
 
 AerialVehicle* VehicleService::aerialVehicle(const VehicleDescriptionPtr& description)
@@ -104,7 +104,7 @@ AerialVehicle* VehicleService::aerialVehicle(const VehicleDescriptionPtr& descri
 
 AerialVehicle* VehicleService::aerialVehicle(quint8 mavId)
 {
-    return this->aerialVehicle(this->findDescriptiontByMavId(mavId));
+    return this->aerialVehicle(this->findDescriptionByMavId(mavId));
 }
 
 void VehicleService::saveDescription(const VehicleDescriptionPtr& description)
@@ -124,7 +124,7 @@ void VehicleService::saveDescription(const VehicleDescriptionPtr& description)
         emit vehicleAdded(description);
     }
 
-    d->entry->save(description);
+    d->facade->save(description);
 }
 
 void VehicleService::removeByDescription(const VehicleDescriptionPtr& description)
@@ -133,7 +133,7 @@ void VehicleService::removeByDescription(const VehicleDescriptionPtr& descriptio
     BaseVehicle* vehicle = d->descriptedVehicles.take(description);
     delete vehicle;
 
-    d->entry->remove(description);
+    d->facade->remove(description);
 
     emit vehicleRemoved(description);
 }

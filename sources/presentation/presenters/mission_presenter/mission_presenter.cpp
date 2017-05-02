@@ -217,7 +217,7 @@ void MissionPresenter::onAssignVehicle(const QString& name)
 {
     if (!d->selectedMission) return;
     db::VehicleDescriptionPtr vehicle =
-            d->vehicleService->findDescriptiontByName(name);
+            d->vehicleService->findDescriptionByName(name);
 
     if (vehicle)
     {

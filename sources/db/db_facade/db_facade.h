@@ -1,5 +1,5 @@
-#ifndef DB_ENTRY_H
-#define DB_ENTRY_H
+#ifndef DB_FACADE_H
+#define DB_FACADE_H
 
 // Qt
 #include <QScopedPointer>
@@ -9,11 +9,11 @@
 
 namespace db
 {
-    class DbEntry // TODO: db facade
+    class DbFacade
     {
     public:
-        DbEntry();
-        ~DbEntry();
+        DbFacade();
+        ~DbFacade();
 
         MissionPtr readMission(int id, bool reload = false);
         MissionItemPtr readMissionItem(int id, bool reload = false);
@@ -46,4 +46,4 @@ namespace db
     };
 }
 
-#endif // DB_ENTRY_H
+#endif // DB_FACADE_H
