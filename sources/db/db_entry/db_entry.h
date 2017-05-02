@@ -9,7 +9,7 @@
 
 namespace db
 {
-    class DbEntry // TODO: facade interface(missions, itemsForMission etc)
+    class DbEntry // TODO: db facade
     {
     public:
         DbEntry();
@@ -24,11 +24,13 @@ namespace db
         bool save(const MissionItemPtr& missionItem);
         bool save(const VehicleDescriptionPtr& vehicle);
         bool save(const LinkDescriptionPtr& link);
+        bool save(const MissionAssignmentPtr& assignment);
 
         bool remove(const MissionPtr& mission);
         bool remove(const MissionItemPtr& missionItem);
         bool remove(const VehicleDescriptionPtr& vehicle);
         bool remove(const LinkDescriptionPtr& link);
+        bool remove(const MissionAssignmentPtr& assignment);
 
         void unload(const MissionPtr& mission);
         void unload(const MissionItemPtr& missionItem);
@@ -39,12 +41,8 @@ namespace db
         VehicleDescriptionPtrList loadVehicles();
         MissionPtrList loadMissions();
 
-        // TODO: db and services segregation of duties, work with entities by id
-        MissionAssignmentPtr missionAssignment(const MissionPtr& mission);
-        MissionAssignmentPtr vehicleAssignment(const VehicleDescriptionPtr& vehicle);
-        void assign(const MissionPtr& mission, const VehicleDescriptionPtr& vehicle);
-        void unassign(const MissionAssignmentPtr& assignment);
-        void unassign(const MissionPtr& mission);
+        MissionAssignmentPtr missionAssignment(int missionId);
+        MissionAssignmentPtr vehicleAssignment(int vehicleId);
 
     private:
         class Impl;

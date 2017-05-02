@@ -116,7 +116,7 @@ void MissionPresenter::updateAssignment()
     this->setViewConnected(false);
     if (d->selectedMission)
     {
-        db::MissionAssignmentPtr assignment = d->missionService->assignment(
+        db::MissionAssignmentPtr assignment = d->missionService->missionAssignment(
                                                   d->selectedMission);
         if (assignment)
         {
@@ -174,7 +174,7 @@ void MissionPresenter::onSelectMission(const QString& name)
     }
     else
     {
-        d->selectedMission = d->missionService->findMissionByName(name);
+        d->selectedMission = d->missionService->missionByName(name);
         this->updateItem(d->selectedMission->count() - 1);
     }
     this->updateAssignment();
@@ -204,8 +204,9 @@ void MissionPresenter::onRemoveMission()
 
 void MissionPresenter::onRenameMission(const QString& name)
 {
-    if (d->selectedMission.isNull()) return;
+    if (d->selectedMission.isNull() || name.isEmpty()) return;
 
+    // TODO: check unique name
     d->selectedMission->setName(name);
     d->missionService->saveMission(d->selectedMission);
     this->updateMissions();

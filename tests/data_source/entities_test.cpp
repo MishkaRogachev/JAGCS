@@ -187,14 +187,17 @@ void EntitiesTest::testMissionAssignment()
     vehicle->setName("Assigned vehicle");
     QVERIFY2(dbEntry.save(vehicle), "Can't insert vehicle");
 
-    dbEntry.assign(mission, vehicle);
+    MissionAssignmentPtr assignment = MissionAssignmentPtr::create();
+    assignment->setMissionId(mission->id());
+    assignment->setVehicleId(vehicle->id());
+    QVERIFY2(dbEntry.save(assignment), "Can't insert assignment");
 
-    QCOMPARE(dbEntry.missionAssignment(mission)->vehicleId(), vehicle->id());
-    QCOMPARE(dbEntry.vehicleAssignment(vehicle)->missionId(), mission->id());
+    QCOMPARE(dbEntry.missionAssignment(mission->id()), assignment);
+    QCOMPARE(dbEntry.vehicleAssignment(vehicle->id()), assignment);
 
-    dbEntry.unassign(mission);
+     QVERIFY2(dbEntry.remove(assignment), "Can't remove assignment");
 
-    QVERIFY2(dbEntry.missionAssignment(mission).isNull(), "Unassigned must be null");
+    QVERIFY2(dbEntry.missionAssignment(mission->id()).isNull(), "Unassigned must be null");
 
     QVERIFY2(dbEntry.remove(mission), "Can't remove mission");
     QVERIFY2(dbEntry.remove(vehicle), "Can't remove vehicle");

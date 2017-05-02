@@ -105,6 +105,11 @@ bool DbEntry::save(const LinkDescriptionPtr& link)
     return d->linkRepository.save(link);
 }
 
+bool DbEntry::save(const MissionAssignmentPtr& assignment)
+{
+    return d->assignmentsRepository.save(assignment);
+}
+
 bool DbEntry::remove(const MissionPtr& mission)
 {
     for (const MissionItemPtr& item: mission->items())
@@ -128,6 +133,11 @@ bool DbEntry::remove(const VehicleDescriptionPtr& vehicle)
 bool DbEntry::remove(const LinkDescriptionPtr& link)
 {
     return d->linkRepository.remove(link);
+}
+
+bool DbEntry::remove(const MissionAssignmentPtr& assignment)
+{
+    return d->assignmentsRepository.remove(assignment);
 }
 
 void DbEntry::unload(const MissionPtr& mission)
@@ -189,52 +199,22 @@ MissionPtrList DbEntry::loadMissions()
     return list;
 }
 
-MissionAssignmentPtr DbEntry::missionAssignment(const MissionPtr& mission)
+MissionAssignmentPtr DbEntry::missionAssignment(int missionId)
 {
     for (int id: d->assignmentsRepository.selectId(
-             QString("missionId = %1").arg(mission->id())))
+             QString("missionId = %1").arg(missionId)))
     {
         return d->assignmentsRepository.read(id);
     }
     return MissionAssignmentPtr();
 }
 
-MissionAssignmentPtr DbEntry::vehicleAssignment(const VehicleDescriptionPtr& vehicle)
+MissionAssignmentPtr DbEntry::vehicleAssignment(int vehicleId)
 {
     for (int id: d->assignmentsRepository.selectId(
-             QString("vehicleId = %1").arg(vehicle->id())))
+             QString("vehicleId = %1").arg(vehicleId)))
     {
         return d->assignmentsRepository.read(id);
     }
     return MissionAssignmentPtr();
 }
-
-void DbEntry::assign(const MissionPtr& mission,
-                     const VehicleDescriptionPtr& vehicle)
-{
-    MissionAssignmentPtr assignment = this->missionAssignment(mission);
-
-    if (assignment.isNull())
-    {
-        assignment = MissionAssignmentPtr::create();
-        assignment->setMissionId(mission->id());
-    }
-    else if (assignment->vehicleId() == vehicle->id()) return;
-
-    assignment->setVehicleId(vehicle->id());
-    assignment->setStatus(MissionAssignment::NotActual);
-
-    d->assignmentsRepository.save(assignment);
-}
-
-void DbEntry::unassign(const MissionAssignmentPtr& assignment)
-{
-    d->assignmentsRepository.remove(assignment);
-}
-
-void DbEntry::unassign(const MissionPtr& mission)
-{
-    MissionAssignmentPtr assignment = this->missionAssignment(mission);
-    if (assignment) this->unassign(assignment);
-}
-

@@ -6,6 +6,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
+#include "vehicle_description.h"
 
 using namespace db;
 using namespace domain;
@@ -40,7 +41,7 @@ MissionPtrList MissionService::missions() const
     return d->missions;
 }
 
-MissionPtr MissionService::findMissionByName(const QString& name) const
+MissionPtr MissionService::missionByName(const QString& name) const
 {
     for (const MissionPtr& mission: d->missions)
     {
@@ -49,27 +50,54 @@ MissionPtr MissionService::findMissionByName(const QString& name) const
     return MissionPtr();
 }
 
-MissionAssignmentPtr MissionService::assignment(const MissionPtr& mission)
+MissionPtr MissionService::missionByVehicle(const VehicleDescriptionPtr& vehicle) const
 {
-    return d->entry->missionAssignment(mission);
+    db::MissionAssignmentPtr vehicleAssignment =
+            d->entry->vehicleAssignment(vehicle->id());
+    if (!vehicleAssignment) return db::MissionPtr();
+
+    return d->entry->readMission(vehicleAssignment->missionId());
 }
 
-void MissionService::assign(const MissionPtr& mission,
-                            const VehicleDescriptionPtr& vehicle)
+MissionAssignmentPtr MissionService::missionAssignment(const MissionPtr& mission) const
 {
-    db::MissionAssignmentPtr assignment = d->entry->vehicleAssignment(vehicle);
-    if (assignment)
-    {
-        if (assignment->missionId() == mission->id()) return;
+    return d->entry->missionAssignment(mission->id());
+}
 
-        d->entry->unassign(assignment);
+void MissionService::assign(const MissionPtr& mission, const VehicleDescriptionPtr& vehicle)
+{
+    // Unassign current vehicle's assignment
+    db::MissionAssignmentPtr vehicleAssignment =
+            d->entry->vehicleAssignment(vehicle->id());
+    if (vehicleAssignment)
+    {
+        if (vehicleAssignment->missionId() == mission->id()) return;
+
+        if (!d->entry->remove(vehicleAssignment)) return;
+        emit assignmentRemoved(vehicleAssignment);
     }
-    d->entry->assign(mission, vehicle);
+
+    // Read current mission assignment, if exist
+    MissionAssignmentPtr assignment = this->missionAssignment(mission);
+    if (assignment.isNull())
+    {
+        assignment = MissionAssignmentPtr::create();
+        assignment->setMissionId(mission->id());
+    }
+    else if (assignment->vehicleId() == vehicle->id()) return;
+
+    bool isNew = assignment->id() == 0;
+    assignment->setVehicleId(vehicle->id());
+    assignment->setStatus(MissionAssignment::NotActual);
+
+    d->entry->save(assignment);
+    emit (isNew ? assignmentAdded(assignment) : assignmentChanged(assignment));
 }
 
 void MissionService::unassign(const MissionPtr& mission)
 {
-    d->entry->unassign(mission);
+    db::MissionAssignmentPtr assignment = this->missionAssignment(mission);
+    if (!assignment.isNull()) d->entry->remove(assignment);
 }
 
 void MissionService::saveMission(const MissionPtr& mission)
@@ -85,6 +113,9 @@ void MissionService::saveMission(const MissionPtr& mission)
 
 void MissionService::removeMission(const MissionPtr& mission)
 {
+    db::MissionAssignmentPtr assignment = this->missionAssignment(mission);
+
+    if (!assignment.isNull()) d->entry->remove(assignment);
     if (!d->entry->remove(mission)) return;
 
     d->missions.removeOne(mission);

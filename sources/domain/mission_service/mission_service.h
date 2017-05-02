@@ -23,11 +23,12 @@ namespace domain
         ~MissionService() override;
 
         db::MissionPtrList missions() const;
-        db::MissionPtr findMissionByName(const QString& name) const;
 
-        db::MissionAssignmentPtr assignment(const db::MissionPtr& mission);
-        void assign(const db::MissionPtr& mission,
-                    const db::VehicleDescriptionPtr& vehicle);
+        db::MissionPtr missionByName(const QString& name) const;
+        db::MissionPtr missionByVehicle(const db::VehicleDescriptionPtr& vehicle) const;
+
+        db::MissionAssignmentPtr missionAssignment(const db::MissionPtr& mission) const;
+        void assign(const db::MissionPtr& mission, const db::VehicleDescriptionPtr& vehicle);
         void unassign(const db::MissionPtr& mission);
 
     public slots:
@@ -39,8 +40,15 @@ namespace domain
     signals:
         void missionAdded(const db::MissionPtr& mission);
         void missionRemoved(const db::MissionPtr& mission);
+        void missionChanged(const db::MissionPtr& mission);
+
+        void assignmentAdded(const db::MissionAssignmentPtr& missionAssignment);
+        void assignmentRemoved(const db::MissionAssignmentPtr& missionAssignment);
+        void assignmentChanged(const db::MissionAssignmentPtr& missionAssignment);
+
         void missionItemAdded(const db::MissionItemPtr& mission);
         void missionItemRemoved(const db::MissionItemPtr& mission);
+        void missionItemChanged(const db::MissionItemPtr& mission);
 
     private:
         class Impl;
