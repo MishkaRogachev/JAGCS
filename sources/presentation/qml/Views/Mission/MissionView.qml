@@ -70,8 +70,16 @@ Pane {
                 checkable: true
                 enabled: selectedMission.length > 0
                 onCheckedChanged: {
-                    if (checked) nameEdit.text = selectedMission;
-                    else renameMission(nameEdit.text);
+                    if (checked)
+                    {
+                        nameEdit.text = selectedMission;
+                        nameEdit.forceActiveFocus();
+                        nameEdit.selectAll();
+                    }
+                    else
+                    {
+                        renameMission(nameEdit.text);
+                    }
                 }
             }
 

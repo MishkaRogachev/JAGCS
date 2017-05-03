@@ -8,6 +8,8 @@ TextField {
 
     font.pixelSize: palette.fontPixelSize
     color: palette.textColor
+    selectionColor: palette.selectionColor
+    selectedTextColor: palette.selectedTextColor
 
     background: Rectangle {
         implicitWidth: palette.controlBaseWidth
