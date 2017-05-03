@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class DomainEntry;
+    class MissionService;
 }
 
 namespace presentation
@@ -17,19 +17,30 @@ namespace presentation
         Q_OBJECT
 
     public:
-        MissionItemPresenter(QObject* object = nullptr);
+        explicit MissionItemPresenter(domain::MissionService* service,
+                                      QObject* object = nullptr);
+        ~MissionItemPresenter() override;
+
+        db::MissionPtr selectedMission() const;
 
     public slots:
+        void selectMission(const db::MissionPtr& mission);
         void setMissionItem(const db::MissionItemPtr& item);
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void update();
+        void updateCount(bool gotoNewItem = false);
+        void updateItem();
+
+        void onAddItem();
+        void onRemoveItem();
+        void onSelectItem(int index);
 
     private:
-         db::MissionItemPtr m_item;
+         class Impl;
+         QScopedPointer<Impl> const d;
     };
 }
 

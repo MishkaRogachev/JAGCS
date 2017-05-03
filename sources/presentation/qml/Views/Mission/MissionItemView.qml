@@ -9,7 +9,7 @@ import "../Map"
 GridLayout {
     id: root
 
-    property int sequence: -1
+    property int sequence: 0
     property int count: 0
 
     property int command: MissionItem.UnknownCommand
@@ -46,13 +46,13 @@ GridLayout {
 
         Button {
             iconSource: "qrc:/icons/remove.svg"
-            enabled: sequence >= 0
+            enabled: sequence > 0
             onClicked: removeItem()
         }
 
         Button {
             iconSource: "qrc:/icons/left.svg"
-            enabled: sequence != -1 && sequence > 0
+            enabled: sequence > 1
             onClicked: selectItem(sequence - 1)
         }
 
@@ -60,18 +60,18 @@ GridLayout {
             Layout.alignment: Qt.AlignVCenter
             Layout.preferredWidth: palette.controlBaseSize
             horizontalAlignment: Qt.AlignHCenter
-            text: sequence > -1 ? sequence : "-"
+            text: sequence + "/" + count
         }
 
         Button {
             iconSource: "qrc:/icons/right.svg"
-            enabled: sequence != -1 && sequence + 1 < count
+            enabled: sequence < count
             onClicked: selectItem(sequence + 1)
         }
 
         Button {
             iconSource: "qrc:/icons/add.svg"
-            enabled: sequence != -1 && sequence + 1 == count
+            enabled: sequence == count && selectedMission.length > 0
             onClicked: addItem()
         }
     }

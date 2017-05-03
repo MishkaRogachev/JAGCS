@@ -50,7 +50,7 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehicles);
 
-    d->itemPresenter =  new MissionItemPresenter(this);
+    d->itemPresenter =  new MissionItemPresenter(d->missionService, this);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -79,10 +79,6 @@ void MissionPresenter::setViewConnected(bool connected)
                 this, SLOT(onRenameMission(QString)));
         connect(this->view(), SIGNAL(assignVehicle(QString)),
                 this, SLOT(onAssignVehicle(QString)));
-
-        connect(this->view(), SIGNAL(addItem()), this, SLOT(onAddItem()));
-        connect(this->view(), SIGNAL(removeItem()), this, SLOT(onRemoveItem()));
-        connect(this->view(), SIGNAL(selectItem(int)), this, SLOT(updateItem(int)));
     }
     else
     {
@@ -103,17 +99,16 @@ void MissionPresenter::updateMissions()
     }
     this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
     this->setViewConnected(true);
-
-    this->updateAssignment();
 }
 
 void MissionPresenter::updateAssignment()
 {
     this->setViewConnected(false);
+
     if (d->selectedMission)
     {
-        db::MissionAssignmentPtr assignment = d->missionService->missionAssignment(
-                                                  d->selectedMission);
+        db::MissionAssignmentPtr assignment =
+                d->missionService->missionAssignment(d->selectedMission);
         if (assignment)
         {
             db::VehicleDescriptionPtr vehicle =
@@ -125,6 +120,7 @@ void MissionPresenter::updateAssignment()
         }
     }
     this->setViewProperty(PROPERTY(assignedVehicle), QString());
+
     this->setViewConnected(true);
 }
 
@@ -147,18 +143,12 @@ void MissionPresenter::updateVehicles()
 
 void MissionPresenter::onSelectMission(const QString& name)
 {
-    if (name.isEmpty())
-    {
-        d->selectedMission = db::MissionPtr();
-        // TODO: MissionItemPresenter
-    }
-    else
-    {
-        d->selectedMission = d->missionService->missionByName(name);
-        // TODO: MissionItemPresenter
-    }
-    this->updateAssignment();
+    d->selectedMission = name.isEmpty() ?
+                             db::MissionPtr() :
+                             d->missionService->missionByName(name);
 
+    this->updateAssignment();
+    d->itemPresenter->selectMission(d->selectedMission);
 }
 
 void MissionPresenter::onAddMission()
@@ -179,7 +169,8 @@ void MissionPresenter::onRemoveMission()
     d->missionService->removeMission(d->selectedMission);
     d->selectedMission.clear();
     this->setViewProperty(PROPERTY(selectedMission), QString());
-    // TODO: MissionItemPresenter
+
+    d->itemPresenter->selectMission(d->selectedMission);
 }
 
 void MissionPresenter::onRenameMission(const QString& name)

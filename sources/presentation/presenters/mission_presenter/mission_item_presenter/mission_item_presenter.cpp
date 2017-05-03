@@ -7,41 +7,126 @@
 // Internal
 #include "mission_item.h"
 
+#include "mission_service.h"
+
 using namespace presentation;
 
-MissionItemPresenter::MissionItemPresenter(QObject* object):
-    BasePresenter(object)
+class MissionItemPresenter::Impl
+{
+public:
+    db::MissionPtr selectedMission;
+    db::MissionItemPtr item;
+
+    domain::MissionService* service;
+};
+
+MissionItemPresenter::MissionItemPresenter(domain::MissionService* service,
+                                           QObject* object):
+    BasePresenter(object),
+    d(new Impl())
+{
+    d->service = service;
+
+    connect(service, &domain::MissionService::missionItemAdded,
+            this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemRemoved,
+            this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemChanged,
+            this, [this](const db::MissionItemPtr& item) {
+        if (item == d->item) this->updateItem();
+    });
+}
+
+MissionItemPresenter::~MissionItemPresenter()
 {}
+
+db::MissionPtr MissionItemPresenter::selectedMission() const
+{
+    return d->selectedMission;
+}
+
+void MissionItemPresenter::selectMission(const db::MissionPtr& mission)
+{
+    if (d->selectedMission == mission) return;
+
+    d->selectedMission = mission;
+    this->updateCount(true);
+}
 
 void MissionItemPresenter::setMissionItem(const db::MissionItemPtr& item)
 {
-    if (m_item == item) return;
+    if (d->item == item) return;
 
-    m_item = item;
-    this->update();
+    d->item = item;
+    this->updateItem();
 }
-
 
 void MissionItemPresenter::connectView(QObject* view)
 {
-    this->update();
+    connect(view, SIGNAL(addItem()), this, SLOT(onAddItem()));
+    connect(view, SIGNAL(removeItem()), this, SLOT(onRemoveItem()));
+    connect(view, SIGNAL(selectItem(int)), this, SLOT(onSelectItem(int)));
+
+    this->updateCount(true);
 }
 
-void MissionItemPresenter::update()
+void MissionItemPresenter::updateCount(bool gotoNewItem)
 {
-    if (m_item)
+    if (d->selectedMission)
     {
-        this->setViewProperty(PROPERTY(command), m_item->command());
-        this->setViewProperty(PROPERTY(altitude), m_item->altitude());
-        this->setViewProperty(PROPERTY(isAltitudeRelative), m_item->isAltitudeRelative());
-        this->setViewProperty(PROPERTY(latitude), m_item->latitude());
-        this->setViewProperty(PROPERTY(longitude), m_item->longitude());
-        this->setViewProperty(PROPERTY(radius), m_item->radius());
-        this->setViewProperty(PROPERTY(pitch), m_item->pitch());
-        this->setViewProperty(PROPERTY(periods), m_item->periods());
+        db::MissionItemPtrList items = d->service->missionItems(d->selectedMission);
+
+        this->setViewProperty(PROPERTY(count), items.count());
+        if (gotoNewItem) this->onSelectItem(items.count());
     }
     else
     {
+        this->setViewProperty(PROPERTY(count), 0);
+        d->item.clear();
+        this->updateItem();
+    }
+}
+
+void MissionItemPresenter::updateItem()
+{
+    if (d->item)
+    {
+        this->setViewProperty(PROPERTY(sequence), d->item->sequence() + 1);
+        this->setViewProperty(PROPERTY(command), d->item->command());
+        this->setViewProperty(PROPERTY(altitude), d->item->altitude());
+        this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
+        this->setViewProperty(PROPERTY(latitude), d->item->latitude());
+        this->setViewProperty(PROPERTY(longitude), d->item->longitude());
+        this->setViewProperty(PROPERTY(radius), d->item->radius());
+        this->setViewProperty(PROPERTY(pitch), d->item->pitch());
+        this->setViewProperty(PROPERTY(periods), d->item->periods());
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(sequence), 0);
         this->setViewProperty(PROPERTY(command), db::MissionItem::UnknownCommand);
     }
+}
+
+void MissionItemPresenter::onAddItem()
+{
+    if (d->selectedMission.isNull()) return;
+
+    d->service->addNewMissionItem(d->selectedMission);
+    this->onSelectItem(this->viewProperty(PROPERTY(count)).toInt());
+}
+
+void MissionItemPresenter::onRemoveItem()
+{
+    if (d->item.isNull()) return;
+
+    d->service->removeMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSelectItem(int index)
+{
+    if (d->selectedMission.isNull()) return;
+
+    d->item = d->service->missionItem(d->selectedMission, index - 1);
+    this->updateItem();
 }
