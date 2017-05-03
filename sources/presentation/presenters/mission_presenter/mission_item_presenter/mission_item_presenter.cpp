@@ -1,6 +1,7 @@
 #include "mission_item_presenter.h"
 
 // Qt
+#include <QMap>
 #include <QVariant>
 #include <QDebug>
 
@@ -18,6 +19,16 @@ public:
     db::MissionItemPtr item;
 
     domain::MissionService* service;
+
+    const QMap<db::MissionItem::Command, QString> commands = {
+        { db::MissionItem::UnknownCommand, tr("None") },
+        { db::MissionItem::Takeoff, tr("Takeoff") },
+        { db::MissionItem::Waypoint, tr("Waypoint") },
+        { db::MissionItem::LoiterAltitude, tr("LoiterAltitude") },
+        { db::MissionItem::LoiterTurns, tr("LoiterTurns") },
+        { db::MissionItem::Continue, tr("Continue") },
+        { db::MissionItem::Return, tr("Return") },
+        { db::MissionItem::Landing, tr("Landing") } };
 };
 
 MissionItemPresenter::MissionItemPresenter(domain::MissionService* service,
@@ -66,6 +77,10 @@ void MissionItemPresenter::connectView(QObject* view)
     connect(view, SIGNAL(addItem()), this, SLOT(onAddItem()));
     connect(view, SIGNAL(removeItem()), this, SLOT(onRemoveItem()));
     connect(view, SIGNAL(selectItem(int)), this, SLOT(onSelectItem(int)));
+    connect(view, SIGNAL(setCommand(int)), this, SLOT(onSetCommand(int)));
+
+    QStringList commands = d->commands.values();
+    this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 
     this->updateCount(true);
 }
@@ -128,5 +143,13 @@ void MissionItemPresenter::onSelectItem(int index)
     if (d->selectedMission.isNull()) return;
 
     d->item = d->service->missionItem(d->selectedMission, index);
+    this->updateItem();
+}
+
+void MissionItemPresenter::onSetCommand(int command)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setCommand(db::MissionItem::Command(command));
     this->updateItem();
 }

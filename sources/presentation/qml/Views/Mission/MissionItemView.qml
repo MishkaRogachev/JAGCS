@@ -6,13 +6,14 @@ import JAGCS 1.0
 import "qrc:/Controls"
 import "../Map"
 
-GridLayout {
+ColumnLayout {
     id: root
 
     property int sequence: 0
     property int count: 0
 
     property int command: MissionItem.UnknownCommand
+    property alias commands: commandBox.model
 
     property bool altitudeVisible: command == MissionItem.Continue ||
                                    positionVisible
@@ -26,7 +27,7 @@ GridLayout {
                                  command == MissionItem.LoiterTurns
 
     property bool pitchVisible: command == MissionItem.Takeoff
-    property bool periodsVisible: command == MissionItem.periods
+    property bool periodsVisible: command == MissionItem.LoiterTurns
 
     signal selectItem(int sequence)
     signal addItem()
@@ -34,7 +35,7 @@ GridLayout {
 
     signal setCommand(int command);
 
-    columns: 2
+    onCommandChanged: commandBox.currentIndex = command;
 
     RowLayout {
         Layout.columnSpan: 2
@@ -76,82 +77,93 @@ GridLayout {
         }
     }
 
-    Label {
-        text: qsTr("Command")
-        visible: sequence !== -1
-    }
+    GridLayout {
+        columns: 2
 
-    ComboBox {
-        model: [ qsTr("Takeoff"), qsTr("Waypoint"),
-            qsTr("LoiterAltitude"), qsTr("LoiterTurns"), qsTr("Continue"),
-            qsTr("Return"), qsTr("Landing") ]
-        visible: sequence !== -1
-    }
+        Label {
+            text: qsTr("Command")
+            visible: sequence !== 0
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Altitude")
-        visible: altitudeVisible
-    }
+        ComboBox {
+            id: commandBox
+            visible: sequence !== 0
+            onCurrentIndexChanged: setCommand(currentIndex)
+        }
 
-    SpinBox {
-        visible: altitudeVisible
-    }
+        Label {
+            text: qsTr("Altitude")
+            visible: altitudeVisible
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Altitude relative")
-        visible: altitudeVisible
-    }
+        SpinBox {
+            visible: altitudeVisible
+        }
 
-    CheckBox {
-        visible: altitudeVisible
-    }
+        Label {
+            text: qsTr("Altitude relative")
+            visible: altitudeVisible
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Latitude")
-        visible: positionVisible
-    }
+        CheckBox {
+            visible: altitudeVisible
+        }
 
-    CoordSpinBox {
-        visible: positionVisible
-    }
+        Label {
+            text: qsTr("Latitude")
+            visible: positionVisible
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Longitude")
-        visible: positionVisible
-    }
+        CoordSpinBox {
+            visible: positionVisible
+        }
 
-    CoordSpinBox {
-        visible: positionVisible
-    }
+        Label {
+            text: qsTr("Longitude")
+            visible: positionVisible
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Radius")
-        visible: radiusVisible
-    }
+        CoordSpinBox {
+            visible: positionVisible
+        }
 
-    SpinBox {
-        visible: radiusVisible
-    }
+        Label {
+            text: qsTr("Radius")
+            visible: radiusVisible
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Pitch")
-        visible: pitchVisible
-    }
+        SpinBox {
+            visible: radiusVisible
+        }
 
-    SpinBox {
-        visible: pitchVisible
-    }
+        Label {
+            text: qsTr("Pitch")
+            visible: pitchVisible
+            Layout.fillWidth: true
+        }
 
-    Label {
-        text: qsTr("Periods")
-        visible: periodsVisible
-    }
+        SpinBox {
+            visible: pitchVisible
+        }
 
-    SpinBox {
-        visible: periodsVisible
-    }
+        Label {
+            text: qsTr("Periods")
+            visible: periodsVisible
+            Layout.fillWidth: true
+        }
 
-    Item {
-        Layout.fillHeight: true
+        SpinBox {
+            visible: periodsVisible
+        }
+
+        Item {
+            Layout.fillHeight: true
+        }
     }
 }

@@ -37,6 +37,7 @@ namespace presentation
         void onAddItem();
         void onRemoveItem();
         void onSelectItem(int index);
+        void onSetCommand(int command);
 
     private:
          class Impl;

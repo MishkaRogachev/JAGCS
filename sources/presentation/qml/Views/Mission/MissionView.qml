@@ -130,6 +130,7 @@ Pane {
 
         MissionItemView {
             objectName: "missionItem"
+            Layout.margins: palette.margins
         }
     }
 
