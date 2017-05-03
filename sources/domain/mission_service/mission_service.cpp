@@ -157,14 +157,14 @@ void MissionService::addNewMissionItem(const MissionPtr& mission)
     item->setMissionId(mission->id());
     item->setCommand(items.count() ?
                          db::MissionItem::Waypoint : db::MissionItem::Takeoff);
-    item->setSequence(items.count());
+    item->setSequence(items.count() + 1);
 
     if (d->facade->save(item)) emit missionItemAdded(item);
 }
 
 void MissionService::fixSequenceOrder(int missionId)
 {
-    int sequencer = 0;
+    int sequencer = 1;
     for (const db::MissionItemPtr& item : d->facade->missionItems(missionId))
     {
         if (item->sequence() != sequencer)

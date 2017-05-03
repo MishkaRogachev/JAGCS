@@ -91,7 +91,7 @@ void MissionItemPresenter::updateItem()
 {
     if (d->item)
     {
-        this->setViewProperty(PROPERTY(sequence), d->item->sequence() + 1);
+        this->setViewProperty(PROPERTY(sequence), d->item->sequence());
         this->setViewProperty(PROPERTY(command), d->item->command());
         this->setViewProperty(PROPERTY(altitude), d->item->altitude());
         this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
@@ -127,6 +127,6 @@ void MissionItemPresenter::onSelectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->item = d->service->missionItem(d->selectedMission, index - 1);
+    d->item = d->service->missionItem(d->selectedMission, index);
     this->updateItem();
 }
