@@ -195,5 +195,17 @@ MissionAssignmentPtr DbFacade::vehicleAssignment(int vehicleId)
 
 MissionItemPtrList DbFacade::missionItems(int missionId)
 {
-    return this->loadItems(QString("missionId = %1").arg(missionId));
+    return this->loadItems(QString("missionId = %1 ORDER BY sequence").arg(
+                               missionId));
+}
+
+MissionItemPtr DbFacade::missionItem(int missionId, int sequence)
+{
+    for (int id: d->itemRepository.selectId(
+             QString("missionId = %1 AND sequence = %2").arg(
+                 missionId).arg(sequence)))
+    {
+        return this->readMissionItem(id);
+    }
+    return MissionItemPtr();
 }

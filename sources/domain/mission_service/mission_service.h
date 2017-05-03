@@ -31,11 +31,18 @@ namespace domain
         void assign(const db::MissionPtr& mission, const db::VehicleDescriptionPtr& vehicle);
         void unassign(const db::MissionPtr& mission);
 
+        db::MissionItemPtrList missionItems(const db::MissionPtr& mission) const;
+        db::MissionItemPtr missionItem(const db::MissionPtr& mission,
+                                       int sequence) const;
+
     public slots:
         void saveMission(const db::MissionPtr& mission);
         void removeMission(const db::MissionPtr& mission);
+
         void saveMissionItem(const db::MissionItemPtr& item);
         void removeMissionItem(const db::MissionItemPtr& item);
+
+        void addNewMissionItem(const db::MissionPtr& mission);
 
     signals:
         void missionAdded(const db::MissionPtr& mission);

@@ -100,6 +100,17 @@ void MissionService::unassign(const MissionPtr& mission)
     if (!assignment.isNull()) d->facade->remove(assignment);
 }
 
+MissionItemPtrList MissionService::missionItems(const MissionPtr& mission) const
+{
+    return d->facade->missionItems(mission->id());
+}
+
+MissionItemPtr MissionService::missionItem(const MissionPtr& mission,
+                                           int sequence) const
+{
+    return d->facade->missionItem(mission->id(), sequence);
+}
+
 void MissionService::saveMission(const MissionPtr& mission)
 {
     if (!d->facade->save(mission)) return;
@@ -129,6 +140,20 @@ void MissionService::saveMissionItem(const MissionItemPtr& item)
 
 void MissionService::removeMissionItem(const MissionItemPtr& item)
 {
+    // FIXME: fix items sequence
     if (!d->facade->remove(item)) return;
     emit missionItemRemoved(item);
+}
+
+void MissionService::addNewMissionItem(const MissionPtr& mission)
+{
+    db::MissionItemPtr item = db::MissionItemPtr::create();
+    db::MissionItemPtrList items = d->facade->missionItems(mission->id());
+
+    item->setMissionId(mission->id());
+    item->setCommand(items.count() ?
+                         db::MissionItem::Waypoint : db::MissionItem::Takeoff);
+    item->setSequence(items.count());
+
+    if (d->facade->save(item)) emit missionItemAdded(item);
 }

@@ -46,6 +46,7 @@ namespace db
         MissionAssignmentPtr vehicleAssignment(int vehicleId);
 
         MissionItemPtrList missionItems(int missionId);
+        MissionItemPtr missionItem(int missionId, int sequence);
 
     private:
         class Impl;
