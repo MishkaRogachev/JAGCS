@@ -41,8 +41,9 @@ namespace domain
 
         void saveMissionItem(const db::MissionItemPtr& item);
         void removeMissionItem(const db::MissionItemPtr& item);
-
         void addNewMissionItem(const db::MissionPtr& mission);
+
+        void fixSequenceOrder(int missionId);
 
     signals:
         void missionAdded(const db::MissionPtr& mission);

@@ -1,5 +1,8 @@
 #include "mission_service.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "db_facade.h"
 
@@ -140,8 +143,9 @@ void MissionService::saveMissionItem(const MissionItemPtr& item)
 
 void MissionService::removeMissionItem(const MissionItemPtr& item)
 {
-    // FIXME: fix items sequence
     if (!d->facade->remove(item)) return;
+    this->fixSequenceOrder(item->missionId());
+
     emit missionItemRemoved(item);
 }
 
@@ -156,4 +160,19 @@ void MissionService::addNewMissionItem(const MissionPtr& mission)
     item->setSequence(items.count());
 
     if (d->facade->save(item)) emit missionItemAdded(item);
+}
+
+void MissionService::fixSequenceOrder(int missionId)
+{
+    int sequencer = 0;
+    for (const db::MissionItemPtr& item : d->facade->missionItems(missionId))
+    {
+        if (item->sequence() != sequencer)
+        {
+            item->setSequence(sequencer);
+            d->facade->save(item);
+            emit missionItemChanged(item);
+        }
+        sequencer++;
+    }
 }
