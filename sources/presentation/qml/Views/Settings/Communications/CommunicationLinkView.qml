@@ -85,7 +85,6 @@ Frame {
                 id: portBox
                 from: 0
                 to: 65535
-                decimals: 0
                 visible: type == LinkDescription.Udp
                 onValueChanged: setPort(value)
             }

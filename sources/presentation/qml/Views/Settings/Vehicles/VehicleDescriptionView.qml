@@ -38,7 +38,6 @@ Frame {
             id: idBox
             from: 0
             to: 255
-            decimals: 0
             onValueChanged: setMavId(value)
         }
 
