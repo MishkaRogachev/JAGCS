@@ -35,7 +35,7 @@ Pane {
 
             Button {
                 text: qsTr("Make defaults")
-                Layout.preferredWidth: palette.controlBaseWidth
+                Layout.preferredWidth: bar.width
                 onClicked: makeDefaults()
             }
         }
