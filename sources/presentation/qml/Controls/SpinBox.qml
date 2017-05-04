@@ -6,6 +6,8 @@ import "./" as Custom
 SpinBox {
     id: control
 
+    property bool isValid: value >= from && value <= to
+
     font.pixelSize: palette.fontPixelSize
     editable: true
     padding: 0
@@ -13,7 +15,11 @@ SpinBox {
     background: Rectangle {
         implicitWidth: palette.controlBaseSize * 5
         implicitHeight: palette.controlBaseSize
-        color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        color: {
+            if (!control.enabled) return palette.disabledColor;
+            if (!isValid) return palette.negativeColor;
+            return palette.sunkenColor;
+        }
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
     }
 
@@ -21,7 +27,7 @@ SpinBox {
         anchors.centerIn: parent
         anchors.horizontalCenterOffset: -(up.indicator.width +
                                           down.indicator.width) / 2
-        text: control.textFromValue(control.value, control.locale)
+        text: isValid ? control.textFromValue(control.value, control.locale) : "NaN"
         font: control.font
         readOnly: !control.editable
         validator: control.validator

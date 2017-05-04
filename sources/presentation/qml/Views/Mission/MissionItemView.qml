@@ -17,9 +17,9 @@ ColumnLayout {
 
     property alias altitude: altitudeEdit.value
     property alias isAltitudeRelative: altitudeRelativeEdit.checked
-    property alias latitude: latitudeEdit.value
-    property alias longitude: longitudeEdit.value
-    property alias radius: radiusEdit.value
+    property alias latitude: latitudeEdit.realValue
+    property alias longitude: longitudeEdit.realValue
+    property alias radius: radiusEdit.realValue
     property alias periods: periodsEdit.value
 
     property bool altitudeVisible: command == MissionItem.Continue ||
@@ -140,8 +140,8 @@ ColumnLayout {
         CoordSpinBox {
             id: latitudeEdit
             visible: positionVisible
-            //onValueChanged: setLatitude(value)
-            value: NaN
+            onRealValueChanged: setLatitude(realValue)
+            realValue: NaN
         }
 
         Label {
@@ -154,8 +154,8 @@ ColumnLayout {
             id: longitudeEdit
             visible: positionVisible
             isLongitude: true
-            //onValueChanged: setLongitude(value)
-            value: NaN
+            onRealValueChanged: setLongitude(realValue)
+            realValue: NaN
         }
 
         Label {
@@ -164,11 +164,12 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
-        SpinBox {
+        RealSpinBox {
             id: radiusEdit
             visible: radiusVisible
-            //onValueChanged: setRadius(value)
-            value: NaN
+            onRealValueChanged: setRadius(realValue)
+            to: 300000
+            realValue: NaN
         }
 
         Label {
