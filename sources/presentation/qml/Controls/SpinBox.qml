@@ -10,7 +10,6 @@ SpinBox {
 
     font.pixelSize: palette.fontPixelSize
     editable: true
-    padding: 0
 
     background: Rectangle {
         implicitWidth: palette.controlBaseSize * 6
@@ -37,7 +36,6 @@ SpinBox {
         selectByMouse: true
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-        inputMethodHints: Qt.ImhFormattedNumbers
     }
 
     down.indicator: Rectangle {

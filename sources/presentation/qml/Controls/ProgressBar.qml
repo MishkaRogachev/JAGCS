@@ -6,13 +6,10 @@ import "./"
 ProgressBar {
       id: control
 
-      implicitHeight: palette.controlBaseSize * 6
-
       background: Rectangle {
-          id: background
           width: control.availableWidth
           implicitWidth: palette.controlBaseSize * 6
-          height: control.height
+          implicitHeight: palette.controlBaseSize / 4
           radius: height / 2
           color: control.enabled ? palette.sunkenColor : palette.disabledColor
       }

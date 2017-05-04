@@ -41,10 +41,10 @@ Pane {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
+        Layout.margins: palette.margins
 
         GridLayout {
             columns: 5
-            Layout.margins: palette.margins
 
             Label {
                 text: qsTr("Mission")
@@ -130,7 +130,6 @@ Pane {
 
         MissionItemView {
             objectName: "missionItem"
-            Layout.margins: palette.margins
         }
     }
 
@@ -141,5 +140,6 @@ Pane {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.leftMargin: palette.margins
     }
 }
