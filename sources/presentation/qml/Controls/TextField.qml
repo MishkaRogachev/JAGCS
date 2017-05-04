@@ -10,9 +10,10 @@ TextField {
     color: palette.textColor
     selectionColor: palette.selectionColor
     selectedTextColor: palette.selectedTextColor
+    selectByMouse: true
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseWidth
+        implicitWidth: palette.controlBaseSize * 4
         implicitHeight: palette.controlBaseSize
         color: control.enabled ? palette.sunkenColor : palette.disabledColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"

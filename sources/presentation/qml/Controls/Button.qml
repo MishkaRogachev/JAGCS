@@ -11,13 +11,11 @@ Button {
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
-    implicitWidth: Math.max(palette.controlBaseSize,
-                            row.width + palette.margins * 2)
-    implicitHeight: palette.controlBaseSize
 
     background: Rectangle {
         id: backgroundItem
-        anchors.fill: parent
+        implicitWidth: palette.controlBaseSize
+        implicitHeight: palette.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         color: {
             if (control.checked) return palette.selectionColor;
@@ -27,7 +25,7 @@ Button {
         }
     }
 
-    contentItem: Item {
+    contentItem: Item { // TODO: common content item
         implicitWidth: row.width
         implicitHeight: row.height
 
@@ -35,7 +33,7 @@ Button {
             id: row
             anchors.centerIn: parent
             height: parent.availableHeight
-            spacing: 5
+            spacing: palette.spacing
 
             ColoredIcon {
                 id: icon

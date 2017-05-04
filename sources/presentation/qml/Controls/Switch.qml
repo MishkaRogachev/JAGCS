@@ -7,8 +7,11 @@ Switch {
     id: control
 
     property bool inputChecked: checked
+    property alias textColor: text.color
 
     font.pixelSize: palette.fontPixelSize
+
+    onInputCheckedChanged: if (checked != inputChecked) checked = inputChecked
 
     indicator: Rectangle {
         implicitWidth: palette.controlBaseSize
@@ -38,6 +41,7 @@ Switch {
     }
 
     contentItem: Text {
+        id: text
         text: control.text
         font: control.font
         color: palette.textColor

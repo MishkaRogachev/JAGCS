@@ -11,7 +11,7 @@ ProgressBar {
       background: Rectangle {
           id: background
           width: control.availableWidth
-          implicitWidth: palette.controlBaseWidth
+          implicitWidth: palette.controlBaseSize * 6
           height: control.height
           radius: height / 2
           color: control.enabled ? palette.sunkenColor : palette.disabledColor
