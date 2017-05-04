@@ -13,7 +13,7 @@ Slider {
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: palette.controlBaseSize * 6
+        implicitWidth: palette.controlBaseSize * 5
         implicitHeight: palette.controlBaseSize / 4
         width: control.availableWidth
         height: implicitHeight

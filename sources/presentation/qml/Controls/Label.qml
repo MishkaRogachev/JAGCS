@@ -10,5 +10,4 @@ Label {
     color: palette.textColor
     height: palette.controlBaseSize
     verticalAlignment: Qt.AlignVCenter
-    horizontalAlignment: Qt.AlignHCenter
 }

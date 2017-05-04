@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import "qrc:/JS/helper.js" as Helper
 import "./"
 
-SpinBox {
+RealSpinBox {
     id: control
 
     property bool isLongitude: false
