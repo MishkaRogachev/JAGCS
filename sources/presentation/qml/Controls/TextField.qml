@@ -13,7 +13,7 @@ TextField {
     selectByMouse: true
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize * 5
+        implicitWidth: palette.controlBaseSize * 6
         implicitHeight: palette.controlBaseSize
         color: control.enabled ? palette.sunkenColor : palette.disabledColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"

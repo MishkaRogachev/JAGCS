@@ -13,7 +13,7 @@ SpinBox {
     padding: 0
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize * 5
+        implicitWidth: palette.controlBaseSize * 6
         implicitHeight: palette.controlBaseSize
         color: {
             if (!control.enabled) return palette.disabledColor;
@@ -37,7 +37,7 @@ SpinBox {
         selectByMouse: true
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-        inputMethodHints: Qt.ImhFormattedNumbersOnly
+        inputMethodHints: Qt.ImhFormattedNumbers
     }
 
     down.indicator: Rectangle {
