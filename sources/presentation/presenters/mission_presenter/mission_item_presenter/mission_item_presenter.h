@@ -37,7 +37,15 @@ namespace presentation
         void onAddItem();
         void onRemoveItem();
         void onSelectItem(int index);
+
         void onSetCommand(int command);
+        void onSetAltitude(qreal altitude);
+        void onSetAltitudeRelative(bool relative);
+        void onSetLatitude(qreal latitude);
+        void onSetLongitude(qreal longitude);
+        void onSetRadius(qreal radius);
+        void onSetPeriods(int periods);
+        void onSetPitch(qreal pitch);
 
     private:
          class Impl;

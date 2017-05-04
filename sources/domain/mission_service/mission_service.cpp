@@ -138,7 +138,7 @@ void MissionService::saveMissionItem(const MissionItemPtr& item)
     bool isNew = item->id() == 0;
 
     if (!d->facade->save(item)) return;
-    if (isNew) emit missionItemAdded(item);
+    emit (isNew ? missionItemAdded(item) : missionItemChanged(item));
 }
 
 void MissionService::removeMissionItem(const MissionItemPtr& item)

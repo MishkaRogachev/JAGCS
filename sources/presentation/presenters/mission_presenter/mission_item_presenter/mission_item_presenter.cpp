@@ -77,7 +77,16 @@ void MissionItemPresenter::connectView(QObject* view)
     connect(view, SIGNAL(addItem()), this, SLOT(onAddItem()));
     connect(view, SIGNAL(removeItem()), this, SLOT(onRemoveItem()));
     connect(view, SIGNAL(selectItem(int)), this, SLOT(onSelectItem(int)));
+
     connect(view, SIGNAL(setCommand(int)), this, SLOT(onSetCommand(int)));
+    connect(view, SIGNAL(setAltitude(qreal)), this, SLOT(onSetAltitude(qreal)));
+//    signal setAltitude(real altitude)
+//    signal setAltitudeRelative(bool relative)
+//    signal setLatitude(real latitude)
+//    signal setLongitude(real longitude)
+//    signal setRadius(real radius)
+//    signal setPeriods(int periods)
+//    signal setPitch(real pitch)
 
     QStringList commands = d->commands.values();
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
@@ -151,5 +160,61 @@ void MissionItemPresenter::onSetCommand(int command)
     if (d->item.isNull()) return;
 
     d->item->setCommand(db::MissionItem::Command(command));
-    this->updateItem();
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetAltitude(qreal altitude)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setAltitude(altitude);
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetAltitudeRelative(bool relative)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setAltitudeRelative(relative);
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetLatitude(qreal latitude)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setLatitude(latitude);
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetLongitude(qreal longitude)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setLongitude(longitude);
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetRadius(qreal radius)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setRadius(radius);
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetPeriods(int periods)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setPeriods(periods);
+    d->service->saveMissionItem(d->item);
+}
+
+void MissionItemPresenter::onSetPitch(qreal pitch)
+{
+    if (d->item.isNull()) return;
+
+    d->item->setPitch(pitch);
+    d->service->saveMissionItem(d->item);
 }

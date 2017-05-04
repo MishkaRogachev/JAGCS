@@ -15,6 +15,13 @@ ColumnLayout {
     property int command: MissionItem.UnknownCommand
     property alias commands: commandBox.model
 
+    property alias altitude: altitudeEdit.value
+    property alias isAltitudeRelative: altitudeRelativeEdit.checked
+    property alias latitude: latitudeEdit.value
+    property alias longitude: longitudeEdit.value
+    property alias radius: radiusEdit.value
+    property alias periods: periodsEdit.value
+
     property bool altitudeVisible: command == MissionItem.Continue ||
                                    positionVisible
 
@@ -34,6 +41,13 @@ ColumnLayout {
     signal removeItem()
 
     signal setCommand(int command);
+    signal setAltitude(real altitude)
+    signal setAltitudeRelative(bool relative)
+    signal setLatitude(real latitude)
+    signal setLongitude(real longitude)
+    signal setRadius(real radius)
+    signal setPeriods(int periods)
+    signal setPitch(real pitch)
 
     onCommandChanged: commandBox.currentIndex = command;
 
@@ -99,7 +113,10 @@ ColumnLayout {
         }
 
         SpinBox {
+            id: altitudeEdit
             visible: altitudeVisible
+            //onValueChanged: setAltitude(value)
+            value: NaN
         }
 
         Label {
@@ -109,7 +126,9 @@ ColumnLayout {
         }
 
         CheckBox {
+            id: altitudeRelativeEdit
             visible: altitudeVisible
+            onCheckedChanged: setAltitudeRelative(checked)
         }
 
         Label {
@@ -119,7 +138,10 @@ ColumnLayout {
         }
 
         CoordSpinBox {
+            id: latitudeEdit
             visible: positionVisible
+            //onValueChanged: setLatitude(value)
+            value: NaN
         }
 
         Label {
@@ -129,7 +151,11 @@ ColumnLayout {
         }
 
         CoordSpinBox {
+            id: longitudeEdit
             visible: positionVisible
+            isLongitude: true
+            //onValueChanged: setLongitude(value)
+            value: NaN
         }
 
         Label {
@@ -139,7 +165,10 @@ ColumnLayout {
         }
 
         SpinBox {
+            id: radiusEdit
             visible: radiusVisible
+            //onValueChanged: setRadius(value)
+            value: NaN
         }
 
         Label {
@@ -149,7 +178,10 @@ ColumnLayout {
         }
 
         SpinBox {
+            id: pitchEdit
             visible: pitchVisible
+            //onValueChanged: setPitch(value)
+            value: NaN
         }
 
         Label {
@@ -159,7 +191,10 @@ ColumnLayout {
         }
 
         SpinBox {
+            id: periodsEdit
             visible: periodsVisible
+            //onValueChanged: setPeriods(value)
+            value: NaN
         }
 
         Item {
