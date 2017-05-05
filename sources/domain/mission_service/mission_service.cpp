@@ -157,8 +157,29 @@ void MissionService::addNewMissionItem(const MissionPtr& mission)
     db::MissionItemPtrList items = d->facade->missionItems(mission->id());
 
     item->setMissionId(mission->id());
-    item->setCommand(items.count() ?
-                         db::MissionItem::Waypoint : db::MissionItem::Takeoff);
+
+    if (items.count())
+    {
+        item->setCommand(db::MissionItem::Waypoint);
+
+        db::MissionItemPtr lastItem = items.last();
+        if (lastItem->isAltitudeRelative())
+        {
+            item->setAltitude(0);
+            item->setAltitudeRelative(true);
+        }
+        else
+        {
+            item->setAltitude(lastItem->altitude());
+        }
+    }
+    else
+    {
+        item->setCommand(db::MissionItem::Takeoff);
+        item->setAltitude(0);
+        item->setAltitudeRelative(true);
+    }
+
     item->setSequence(items.count() + 1);
 
     if (d->facade->save(item)) emit missionItemAdded(item);
