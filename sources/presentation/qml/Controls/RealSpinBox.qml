@@ -7,10 +7,11 @@ import "qrc:/JS/helper.js" as Helper
 Custom.SpinBox {
     id: control
 
-    property real realValue: from * precision
+    property real realValue: NaN
     property real precision: 0.01
-    property bool isValueNaN : isNaN(realValue)
-    value: realValue / precision
+
+    onRealValueChanged: value = realValue / precision
+    onValueChanged: realValue = value * precision
 
     validator: DoubleValidator {
         bottom: Math.min(control.from * precision, control.to * precision)
