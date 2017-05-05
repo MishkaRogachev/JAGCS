@@ -8,8 +8,12 @@ Custom.SpinBox {
     id: control
 
     property real realValue: NaN
+    property real realFrom: 0
+    property real realTo: 100
     property real precision: 0.01
 
+    to: realTo / precision
+    from: realFrom / precision
     onRealValueChanged: value = realValue / precision
     onValueChanged: realValue = value * precision
 

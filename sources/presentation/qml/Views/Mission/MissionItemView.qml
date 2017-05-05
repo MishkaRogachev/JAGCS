@@ -116,6 +116,8 @@ ColumnLayout {
         RealSpinBox {
             id: altitudeEdit
             visible: altitudeVisible
+            realFrom: -500 // 418 m Daed Sea shore
+            realTo: 20000 // TODO: constants to config
             onRealValueChanged: setAltitude(realValue)
         }
 
@@ -165,6 +167,7 @@ ColumnLayout {
         RealSpinBox {
             id: radiusEdit
             visible: radiusVisible
+            realTo: 5000 // TODO: constants to config
             onRealValueChanged: setRadius(realValue)
             to: 300000
         }
@@ -178,6 +181,8 @@ ColumnLayout {
         RealSpinBox {
             id: pitchEdit
             visible: pitchVisible
+            realFrom: -90
+            realTo: 90 // TODO: constants to config
             onRealValueChanged: setPitch(realValue)
         }
 
