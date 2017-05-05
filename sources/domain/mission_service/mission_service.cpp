@@ -164,6 +164,14 @@ void MissionService::addNewMissionItem(const MissionPtr& mission)
     if (d->facade->save(item)) emit missionItemAdded(item);
 }
 
+void MissionService::saveMissionItems(const MissionPtr& mission)
+{
+    for (const db::MissionItemPtr& item: d->facade->missionItems(mission->id()))
+    {
+        this->saveMissionItem(item);
+    }
+}
+
 void MissionService::fixSequenceOrder(int missionId)
 {
     int sequencer = 1;

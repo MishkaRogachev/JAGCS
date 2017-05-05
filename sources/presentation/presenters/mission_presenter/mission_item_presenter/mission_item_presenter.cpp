@@ -49,7 +49,12 @@ MissionItemPresenter::MissionItemPresenter(domain::MissionService* service,
 }
 
 MissionItemPresenter::~MissionItemPresenter()
-{}
+{
+    if (d->selectedMission)
+    {
+        d->service->saveMissionItems(d->selectedMission);
+    }
+}
 
 db::MissionPtr MissionItemPresenter::selectedMission() const
 {
@@ -59,6 +64,11 @@ db::MissionPtr MissionItemPresenter::selectedMission() const
 void MissionItemPresenter::selectMission(const db::MissionPtr& mission)
 {
     if (d->selectedMission == mission) return;
+
+    if (d->selectedMission)
+    {
+        d->service->saveMissionItems(d->selectedMission);
+    }
 
     d->selectedMission = mission;
     this->updateCount(true);
