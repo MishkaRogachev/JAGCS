@@ -137,8 +137,6 @@ void MissionService::saveMissionItem(const MissionItemPtr& item)
 {
     bool isNew = item->id() == 0;
 
-    qDebug() << "isNew" << isNew << item->id();
-
     if (!d->facade->save(item)) return;
     emit (isNew ? missionItemAdded(item) : missionItemChanged(item));
 }

@@ -32,6 +32,8 @@ CheckBox {
         text: control.text
         font: control.font
         verticalAlignment: Text.AlignVCenter
-        leftPadding: control.indicator.width + control.spacing
+        leftPadding: control.indicator.width + (text.length > 0 ?
+                                                    control.spacing :
+                                                    -control.spacing)
     }
 }
