@@ -15,12 +15,13 @@ ColumnLayout {
     property int command: MissionItem.UnknownCommand
     property alias commands: commandBox.model
 
-    property alias altitude: altitudeEdit.value
+    property alias altitude: altitudeEdit.realValue
     property alias isAltitudeRelative: altitudeRelativeEdit.checked
     property alias latitude: latitudeEdit.realValue
     property alias longitude: longitudeEdit.realValue
     property alias radius: radiusEdit.realValue
     property alias periods: periodsEdit.value
+    property alias pitch: pitchEdit.realValue
 
     property bool altitudeVisible: command == MissionItem.Continue ||
                                    positionVisible
@@ -112,11 +113,10 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
-        SpinBox {
+        RealSpinBox {
             id: altitudeEdit
             visible: altitudeVisible
-            //onValueChanged: setAltitude(value)
-            value: NaN
+            onRealValueChanged: setAltitude(realValue)
         }
 
         Label {
@@ -141,7 +141,6 @@ ColumnLayout {
             id: latitudeEdit
             visible: positionVisible
             onRealValueChanged: setLatitude(realValue)
-            realValue: NaN
         }
 
         Label {
@@ -155,7 +154,6 @@ ColumnLayout {
             visible: positionVisible
             isLongitude: true
             onRealValueChanged: setLongitude(realValue)
-            realValue: NaN
         }
 
         Label {
@@ -169,7 +167,6 @@ ColumnLayout {
             visible: radiusVisible
             onRealValueChanged: setRadius(realValue)
             to: 300000
-            realValue: NaN
         }
 
         Label {
@@ -178,11 +175,10 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
-        SpinBox {
+        RealSpinBox {
             id: pitchEdit
             visible: pitchVisible
-            //onValueChanged: setPitch(value)
-            value: NaN
+            onRealValueChanged: setPitch(realValue)
         }
 
         Label {
@@ -194,8 +190,7 @@ ColumnLayout {
         SpinBox {
             id: periodsEdit
             visible: periodsVisible
-            //onValueChanged: setPeriods(value)
-            value: NaN
+            onValueChanged: setPeriods(value)
         }
 
         Item {

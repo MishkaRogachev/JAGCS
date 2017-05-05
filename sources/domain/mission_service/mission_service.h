@@ -54,9 +54,9 @@ namespace domain
         void assignmentRemoved(const db::MissionAssignmentPtr& missionAssignment);
         void assignmentChanged(const db::MissionAssignmentPtr& missionAssignment);
 
-        void missionItemAdded(const db::MissionItemPtr& mission);
-        void missionItemRemoved(const db::MissionItemPtr& mission);
-        void missionItemChanged(const db::MissionItemPtr& mission);
+        void missionItemAdded(const db::MissionItemPtr& item);
+        void missionItemRemoved(const db::MissionItemPtr& item);
+        void missionItemChanged(const db::MissionItemPtr& item);
 
     private:
         class Impl;

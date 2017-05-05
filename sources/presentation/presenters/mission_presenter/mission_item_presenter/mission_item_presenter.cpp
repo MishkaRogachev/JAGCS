@@ -80,13 +80,12 @@ void MissionItemPresenter::connectView(QObject* view)
 
     connect(view, SIGNAL(setCommand(int)), this, SLOT(onSetCommand(int)));
     connect(view, SIGNAL(setAltitude(qreal)), this, SLOT(onSetAltitude(qreal)));
-//    signal setAltitude(real altitude)
-//    signal setAltitudeRelative(bool relative)
-//    signal setLatitude(real latitude)
-//    signal setLongitude(real longitude)
-//    signal setRadius(real radius)
-//    signal setPeriods(int periods)
-//    signal setPitch(real pitch)
+    connect(view, SIGNAL(setAltitudeRelative(bool)), this, SLOT(onSetAltitudeRelative(bool)));
+    connect(view, SIGNAL(setLatitude(qreal)), this, SLOT(onSetLatitude(qreal)));
+    connect(view, SIGNAL(setLongitude(qreal)), this, SLOT(onSetLongitude(qreal)));
+    connect(view, SIGNAL(setRadius(qreal)), this, SLOT(onSetRadius(qreal)));
+    connect(view, SIGNAL(setPeriods(int)), this, SLOT(onSetPeriods(int)));
+    connect(view, SIGNAL(setPitch(qreal)), this, SLOT(onSetPitch(qreal)));
 
     QStringList commands = d->commands.values();
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
@@ -160,7 +159,7 @@ void MissionItemPresenter::onSetCommand(int command)
     if (d->item.isNull()) return;
 
     d->item->setCommand(db::MissionItem::Command(command));
-    d->service->saveMissionItem(d->item);
+    this->updateItem();
 }
 
 void MissionItemPresenter::onSetAltitude(qreal altitude)
@@ -168,7 +167,6 @@ void MissionItemPresenter::onSetAltitude(qreal altitude)
     if (d->item.isNull()) return;
 
     d->item->setAltitude(altitude);
-    d->service->saveMissionItem(d->item);
 }
 
 void MissionItemPresenter::onSetAltitudeRelative(bool relative)
@@ -176,7 +174,6 @@ void MissionItemPresenter::onSetAltitudeRelative(bool relative)
     if (d->item.isNull()) return;
 
     d->item->setAltitudeRelative(relative);
-    d->service->saveMissionItem(d->item);
 }
 
 void MissionItemPresenter::onSetLatitude(qreal latitude)
@@ -184,7 +181,6 @@ void MissionItemPresenter::onSetLatitude(qreal latitude)
     if (d->item.isNull()) return;
 
     d->item->setLatitude(latitude);
-    d->service->saveMissionItem(d->item);
 }
 
 void MissionItemPresenter::onSetLongitude(qreal longitude)
@@ -192,7 +188,6 @@ void MissionItemPresenter::onSetLongitude(qreal longitude)
     if (d->item.isNull()) return;
 
     d->item->setLongitude(longitude);
-    d->service->saveMissionItem(d->item);
 }
 
 void MissionItemPresenter::onSetRadius(qreal radius)
@@ -200,7 +195,6 @@ void MissionItemPresenter::onSetRadius(qreal radius)
     if (d->item.isNull()) return;
 
     d->item->setRadius(radius);
-    d->service->saveMissionItem(d->item);
 }
 
 void MissionItemPresenter::onSetPeriods(int periods)
@@ -208,7 +202,6 @@ void MissionItemPresenter::onSetPeriods(int periods)
     if (d->item.isNull()) return;
 
     d->item->setPeriods(periods);
-    d->service->saveMissionItem(d->item);
 }
 
 void MissionItemPresenter::onSetPitch(qreal pitch)
@@ -216,5 +209,4 @@ void MissionItemPresenter::onSetPitch(qreal pitch)
     if (d->item.isNull()) return;
 
     d->item->setPitch(pitch);
-    d->service->saveMissionItem(d->item);
 }
