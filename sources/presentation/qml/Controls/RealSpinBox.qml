@@ -14,8 +14,20 @@ Custom.SpinBox {
 
     to: realTo / precision
     from: realFrom / precision
-    onRealValueChanged: value = realValue / precision
-    onValueChanged: realValue = value * precision
+
+    onRealValueChanged: {
+        console.log(realValue, isNaN(realValue))
+        if (!isNaN(realValue)) {
+            isValid = true;
+            value = realValue / precision;
+        }
+        else isValid = false;
+    }
+    onValueChanged: {
+       if (isValid) realValue = value * precision;
+       else realValue = 0;
+    }
+    isValid: false
 
     validator: DoubleValidator {
         bottom: Math.min(control.from * precision, control.to * precision)
