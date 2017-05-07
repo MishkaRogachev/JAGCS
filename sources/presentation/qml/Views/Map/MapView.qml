@@ -19,7 +19,7 @@ Map {
 
     property var mouseCoordinate: QtPositioning.coordinate()
 
-    signal saveMapViewport()
+    signal saveViewPort()
     signal picked(var coordinate)
 
     plugin: Plugin { name: "osm" }
@@ -86,7 +86,7 @@ Map {
         mouseCoordinate = map.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
     }
 
-    Component.onDestruction: saveMapViewport()
+    Component.onDestruction: saveViewPort()
 
     function setGesturesEnabled(enabled) {
         gesture.acceptedGestures = enabled ?

@@ -20,6 +20,10 @@ namespace presentation
                              QObject* object = nullptr);
         ~LocationMapPresenter() override;
 
+        double centerLatitude() const override;
+        double centerLongitude() const override;
+        float zoomLevel() const override;
+
     public slots:
         void setMapCenter(double latitude, double longitude) override;
         void setZoomLevel(float zoomLevel) override;

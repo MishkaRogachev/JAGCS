@@ -22,6 +22,25 @@ LocationMapPresenter::LocationMapPresenter(domain::MissionService* service,
 LocationMapPresenter::~LocationMapPresenter()
 {}
 
+double LocationMapPresenter::centerLatitude() const
+{
+    QGeoCoordinate center = this->viewProperty(
+                                PROPERTY(center)).value<QGeoCoordinate>();
+    return center.latitude();
+}
+
+double LocationMapPresenter::centerLongitude() const
+{
+    QGeoCoordinate center = this->viewProperty(
+                                PROPERTY(center)).value<QGeoCoordinate>();
+    return center.longitude();
+}
+
+float LocationMapPresenter::zoomLevel() const
+{
+    return this->viewProperty(PROPERTY(zoomLevel)).toFloat();
+}
+
 void LocationMapPresenter::setMapCenter(double latitude, double longitude)
 {
     QGeoCoordinate center(latitude, longitude);

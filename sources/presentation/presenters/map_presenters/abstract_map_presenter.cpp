@@ -9,15 +9,18 @@ AbstractMapPresenter::AbstractMapPresenter(QObject* object):
     BasePresenter(object)
 {}
 
-AbstractMapPresenter::~AbstractMapPresenter()
+void AbstractMapPresenter::saveViewPort()
 {
-    // TODO: save current latitude and longitude
+    domain::SettingsProvider::setValue(settings::map::centerLatitude,
+                                       this->centerLatitude());
+    domain::SettingsProvider::setValue(settings::map::centerLongitude,
+                                       this->centerLongitude());
+    domain::SettingsProvider::setValue(settings::map::zoomLevel,
+                                       this->zoomLevel());
 }
 
 void AbstractMapPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
-
     this->setMapCenter(domain::SettingsProvider::value(
                            settings::map::centerLatitude).toDouble(),
                        domain::SettingsProvider::value(
@@ -25,4 +28,6 @@ void AbstractMapPresenter::connectView(QObject* view)
 
     this->setZoomLevel(domain::SettingsProvider::value(
                            settings::map::zoomLevel).toFloat());
+
+     connect(view, SIGNAL(saveViewPort()), this, SLOT(saveViewPort()));
 }
