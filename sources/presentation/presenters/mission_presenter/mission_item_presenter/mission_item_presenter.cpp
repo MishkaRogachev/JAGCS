@@ -61,7 +61,7 @@ db::MissionPtr MissionItemPresenter::selectedMission() const
     return d->selectedMission;
 }
 
-void MissionItemPresenter::selectMission(const db::MissionPtr& mission)
+void MissionItemPresenter::setMission(const db::MissionPtr& mission)
 {
     if (d->selectedMission == mission) return;
 

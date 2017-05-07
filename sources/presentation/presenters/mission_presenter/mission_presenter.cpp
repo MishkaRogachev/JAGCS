@@ -16,6 +16,7 @@
 #include "vehicle_description.h"
 
 #include "mission_item_presenter.h"
+#include "location_map_presenter.h"
 
 using namespace presentation;
 
@@ -27,7 +28,8 @@ public:
 
     db::MissionPtr selectedMission;
 
-    MissionItemPresenter* itemPresenter;
+    MissionItemPresenter* item;
+    AbstractMapPresenter* map;
 };
 
 using namespace presentation;
@@ -50,7 +52,8 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehicles);
 
-    d->itemPresenter =  new MissionItemPresenter(d->missionService, this);
+    d->item = new MissionItemPresenter(d->missionService, this);
+    d->map = new LocationMapPresenter(d->missionService, this);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -58,8 +61,8 @@ MissionPresenter::~MissionPresenter()
 
 void MissionPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
-    d->itemPresenter->setView(view->findChild<QObject*>(NAME(missionItem)));
+    d->item->setView(view->findChild<QObject*>(NAME(missionItem)));
+    d->map->setView(view->findChild<QObject*>(NAME(map)));
 
     this->updateVehicles();
     this->updateMissions();
@@ -148,7 +151,7 @@ void MissionPresenter::onSelectMission(const QString& name)
                              d->missionService->missionByName(name);
 
     this->updateAssignment();
-    d->itemPresenter->selectMission(d->selectedMission);
+    d->item->setMission(d->selectedMission);
 }
 
 void MissionPresenter::onAddMission()
@@ -170,7 +173,7 @@ void MissionPresenter::onRemoveMission()
     d->selectedMission.clear();
     this->setViewProperty(PROPERTY(selectedMission), QString());
 
-    d->itemPresenter->selectMission(d->selectedMission);
+    d->item->setMission(d->selectedMission);
 }
 
 void MissionPresenter::onRenameMission(const QString& name)

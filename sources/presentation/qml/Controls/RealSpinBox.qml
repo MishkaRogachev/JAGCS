@@ -16,7 +16,6 @@ Custom.SpinBox {
     from: realFrom / precision
 
     onRealValueChanged: {
-        console.log(realValue, isNaN(realValue))
         if (!isNaN(realValue)) {
             isValid = true;
             value = realValue / precision;

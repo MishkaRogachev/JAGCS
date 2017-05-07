@@ -24,7 +24,7 @@ namespace presentation
         db::MissionPtr selectedMission() const;
 
     public slots:
-        void selectMission(const db::MissionPtr& mission);
+        void setMission(const db::MissionPtr& mission);
         void setMissionItem(const db::MissionItemPtr& item);
 
     protected:
