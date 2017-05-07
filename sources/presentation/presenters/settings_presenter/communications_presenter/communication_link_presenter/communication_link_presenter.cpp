@@ -63,6 +63,7 @@ void CommunicationLinkPresenter::updateStatistics(int sentBytes, int recvBytes)
 void CommunicationLinkPresenter::connectView(QObject* view)
 {
     QStringList devices;
+    devices.append(QString());
     for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
         devices.append(info.portName());
     this->setViewProperty(PROPERTY(devices), devices);
