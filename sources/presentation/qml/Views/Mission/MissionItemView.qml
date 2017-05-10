@@ -155,10 +155,13 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
-        Button {
-            iconSource: "qrc:/icons/map-marker.svg"
+        MapPickButton {
             visible: positionVisible
             Layout.rowSpan: 2
+            onPicked: {
+                latitudeEdit.realValue = coordinate.latitude;
+                longitudeEdit.realValue = coordinate.longitude;
+            }
         }
 
         Label {

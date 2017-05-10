@@ -16,7 +16,7 @@ Button {
     Connections {
         target: map
         onPicked: {
-            if (!pickButton.checked) return;
+            if (!root.checked) return;
             root.checked = false;
             picked(coordinate)
         }

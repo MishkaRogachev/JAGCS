@@ -101,7 +101,6 @@ void MissionPointMapItemModel::onMissionItemRemoved(
 void MissionPointMapItemModel::onMissionItemChanged(
         const db::MissionItemPtr& item)
 {
-    qDebug() << "changed" << item << this->itemIndex(item);
     QModelIndex index = this->itemIndex(item);
     emit dataChanged(index, index, { ItemCoordinateRole,
                                      ItemSequenceRole,
