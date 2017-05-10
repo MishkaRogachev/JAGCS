@@ -52,7 +52,7 @@ ColumnLayout {
     onCommandChanged: commandBox.currentIndex = command;
 
     GridLayout {
-        columns: 2
+        columns: 3
 
         Label {
             text: qsTr("Item")
@@ -60,6 +60,8 @@ ColumnLayout {
         }
 
         RowLayout {
+            Layout.columnSpan: 2
+
             Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
@@ -106,6 +108,8 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
+        Spacer { visible: sequence !== 0; }
+
         Label {
             text: qsTr("Altitude")
             visible: altitudeVisible
@@ -121,6 +125,8 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
+        Spacer { visible: altitudeVisible }
+
         Label {
             text: qsTr("Altitude relative")
             visible: altitudeVisible
@@ -134,6 +140,8 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
+        Spacer { visible: altitudeVisible }
+
         Label {
             text: qsTr("Latitude")
             visible: positionVisible
@@ -145,6 +153,12 @@ ColumnLayout {
             visible: positionVisible
             onRealValueChanged: setLatitude(realValue)
             Layout.alignment: Qt.AlignRight
+        }
+
+        Button {
+            iconSource: "qrc:/icons/map-marker.svg"
+            visible: positionVisible
+            Layout.rowSpan: 2
         }
 
         Label {
@@ -175,6 +189,8 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
+        Spacer { visible: radiusVisible }
+
         Label {
             text: qsTr("Pitch")
             visible: pitchVisible
@@ -190,6 +206,8 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
+        Spacer { visible: pitchVisible }
+
         Label {
             text: qsTr("Periods")
             visible: periodsVisible
@@ -204,7 +222,9 @@ ColumnLayout {
             Layout.alignment: Qt.AlignRight
         }
 
-        Item {
+        Spacer { visible: periodsVisible }
+
+        Spacer {
             Layout.fillHeight: true
         }
     }

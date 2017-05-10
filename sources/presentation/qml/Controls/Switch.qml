@@ -45,7 +45,7 @@ Switch {
         text: control.text
         font: control.font
         color: palette.textColor
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Qt.AlignLeft
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
     }
