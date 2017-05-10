@@ -102,6 +102,7 @@ void MissionPointMapItemModel::onMissionItemChanged(
         const db::MissionItemPtr& item)
 {
     QModelIndex index = this->itemIndex(item);
+    if (!index.isValid()) return;
     emit dataChanged(index, index, { ItemCoordinateRole,
                                      ItemSequenceRole,
                                      ItemIconRole,

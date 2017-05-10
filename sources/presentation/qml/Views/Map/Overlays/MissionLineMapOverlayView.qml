@@ -5,7 +5,7 @@ import QtPositioning 5.6
 MapItemView {
     delegate: MapPolyline {
         line.width: 6
-        line.color: missionActual ? palette.missionColor : palette.neutralColor
+        line.color: palette.missionColor
         path: missionPath
     }
 }

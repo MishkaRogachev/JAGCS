@@ -29,8 +29,8 @@ namespace presentation
             ItemCurrent
         };
 
-        explicit MissionPointMapItemModel(
-                domain::MissionService* service, QObject* parent = nullptr);
+        explicit MissionPointMapItemModel(domain::MissionService* service,
+                                          QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;

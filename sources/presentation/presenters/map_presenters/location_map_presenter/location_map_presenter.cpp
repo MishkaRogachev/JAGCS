@@ -6,6 +6,7 @@
 
 // Internal
 #include "mission_point_map_item_model.h"
+#include "mission_line_map_item_model.h"
 
 using namespace presentation;
 
@@ -13,9 +14,11 @@ class LocationMapPresenter::Impl
 {
 public:
     MissionPointMapItemModel pointModel;
+    MissionLineMapItemModel lineModel;
 
     Impl(domain::MissionService* service):
-        pointModel(service)
+        pointModel(service),
+        lineModel(service)
     {}
 };
 
@@ -63,4 +66,5 @@ void LocationMapPresenter::connectView(QObject* view)
     AbstractMapPresenter::connectView(view);
 
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
+    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
 }

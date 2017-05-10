@@ -44,6 +44,11 @@ MissionPtrList MissionService::missions() const
     return d->missions;
 }
 
+MissionPtr MissionService::mission(int id) const
+{
+    return d->facade->readMission(id);
+}
+
 MissionPtr MissionService::missionByName(const QString& name) const
 {
     for (const MissionPtr& mission: d->missions)

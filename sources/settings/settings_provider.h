@@ -7,7 +7,7 @@
 // Internal
 #include "settings.h"
 
-namespace domain
+namespace domain // TODO: settings namespace
 {
     class SettingsProvider: public QObject
     {

@@ -24,6 +24,7 @@ namespace domain
 
         db::MissionPtrList missions() const;
 
+        db::MissionPtr mission(int id) const; // TODO: fix
         db::MissionPtr missionByName(const QString& name) const;
         db::MissionPtr missionByVehicle(const db::VehicleDescriptionPtr& vehicle) const;
 
