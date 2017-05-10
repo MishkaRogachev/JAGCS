@@ -193,6 +193,11 @@ MissionAssignmentPtr DbFacade::vehicleAssignment(int vehicleId)
     return MissionAssignmentPtr();
 }
 
+MissionItemPtrList DbFacade::missionItems()
+{
+    return this->loadItems();
+}
+
 MissionItemPtrList DbFacade::missionItems(int missionId)
 {
     return this->loadItems(QString("missionId = %1 ORDER BY sequence").arg(

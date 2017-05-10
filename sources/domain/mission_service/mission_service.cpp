@@ -103,6 +103,11 @@ void MissionService::unassign(const MissionPtr& mission)
     if (!assignment.isNull()) d->facade->remove(assignment);
 }
 
+MissionItemPtrList MissionService::missionItems() const
+{
+    return d->facade->missionItems();
+}
+
 MissionItemPtrList MissionService::missionItems(const MissionPtr& mission) const
 {
     return d->facade->missionItems(mission->id());

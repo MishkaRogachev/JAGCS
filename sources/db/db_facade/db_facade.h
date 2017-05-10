@@ -45,6 +45,7 @@ namespace db
         MissionAssignmentPtr missionAssignment(int missionId);
         MissionAssignmentPtr vehicleAssignment(int vehicleId);
 
+        MissionItemPtrList missionItems(); // TODO: fix API namings
         MissionItemPtrList missionItems(int missionId);
         MissionItemPtr missionItem(int missionId, int sequence);
 

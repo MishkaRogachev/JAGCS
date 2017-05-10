@@ -4,20 +4,26 @@
 #include <QVariant>
 #include <QGeoCoordinate>
 
+// Internal
+#include "mission_point_map_item_model.h"
+
 using namespace presentation;
 
 class LocationMapPresenter::Impl
 {
 public:
-    domain::MissionService* service;
+    MissionPointMapItemModel pointModel;
+
+    Impl(domain::MissionService* service):
+        pointModel(service)
+    {}
 };
 
 LocationMapPresenter::LocationMapPresenter(domain::MissionService* service,
                                            QObject* object):
-    d(new Impl())
-{
-    d->service = service;
-}
+    AbstractMapPresenter(object),
+    d(new Impl(service))
+{}
 
 LocationMapPresenter::~LocationMapPresenter()
 {}
@@ -55,4 +61,6 @@ void LocationMapPresenter::setZoomLevel(float zoomLevel)
 void LocationMapPresenter::connectView(QObject* view)
 {
     AbstractMapPresenter::connectView(view);
+
+    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
 }
