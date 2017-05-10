@@ -137,6 +137,12 @@ void MissionService::saveMission(const MissionPtr& mission)
 
 void MissionService::removeMission(const MissionPtr& mission)
 {
+
+    for (const db::MissionItemPtr& item: this->missionItems(mission))
+    {
+        this->removeMissionItem(item);
+    }
+
     if (!d->facade->remove(mission)) return;
 
     d->missions.removeOne(mission);
