@@ -26,12 +26,11 @@ ColumnLayout {
     property bool altitudeVisible: command == MissionItem.Continue ||
                                    positionVisible
 
-    property bool positionVisible: command == MissionItem.Takeoff ||
-                                   command == MissionItem.Waypoint ||
-                                   command == MissionItem.Landing ||
+    property bool positionVisible: command == MissionItem.Landing ||
                                    radiusVisible
 
-    property bool radiusVisible: command == MissionItem.LoiterAltitude ||
+    property bool radiusVisible: command == MissionItem.Waypoint ||
+                                 command == MissionItem.LoiterAltitude ||
                                  command == MissionItem.LoiterTurns
 
     property bool pitchVisible: command == MissionItem.Takeoff

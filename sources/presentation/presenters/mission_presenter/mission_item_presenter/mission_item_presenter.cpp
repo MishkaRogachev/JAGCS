@@ -42,10 +42,6 @@ MissionItemPresenter::MissionItemPresenter(domain::MissionService* service,
             this, &MissionItemPresenter::updateCount);
     connect(service, &domain::MissionService::missionItemRemoved,
             this, &MissionItemPresenter::updateCount);
-    connect(service, &domain::MissionService::missionItemChanged,
-            this, [this](const db::MissionItemPtr& item) {
-        if (item == d->item) this->updateItem();
-    });
 }
 
 MissionItemPresenter::~MissionItemPresenter()
@@ -170,6 +166,7 @@ void MissionItemPresenter::onSetCommand(int command)
 
     d->item->setCommand(db::MissionItem::Command(command));
     this->updateItem();
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetAltitude(qreal altitude)
@@ -177,6 +174,7 @@ void MissionItemPresenter::onSetAltitude(qreal altitude)
     if (d->item.isNull()) return;
 
     d->item->setAltitude(altitude);
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetAltitudeRelative(bool relative)
@@ -184,6 +182,7 @@ void MissionItemPresenter::onSetAltitudeRelative(bool relative)
     if (d->item.isNull()) return;
 
     d->item->setAltitudeRelative(relative);
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetLatitude(qreal latitude)
@@ -191,6 +190,7 @@ void MissionItemPresenter::onSetLatitude(qreal latitude)
     if (d->item.isNull()) return;
 
     d->item->setLatitude(latitude);
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetLongitude(qreal longitude)
@@ -198,6 +198,7 @@ void MissionItemPresenter::onSetLongitude(qreal longitude)
     if (d->item.isNull()) return;
 
     d->item->setLongitude(longitude);
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetRadius(qreal radius)
@@ -205,6 +206,7 @@ void MissionItemPresenter::onSetRadius(qreal radius)
     if (d->item.isNull()) return;
 
     d->item->setRadius(radius);
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetPeriods(int periods)
@@ -212,6 +214,7 @@ void MissionItemPresenter::onSetPeriods(int periods)
     if (d->item.isNull()) return;
 
     d->item->setPeriods(periods);
+    emit d->service->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetPitch(qreal pitch)
@@ -219,4 +222,5 @@ void MissionItemPresenter::onSetPitch(qreal pitch)
     if (d->item.isNull()) return;
 
     d->item->setPitch(pitch);
+    emit d->service->missionItemChanged(d->item);
 }
