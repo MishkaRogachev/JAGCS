@@ -45,15 +45,20 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index,
     {
     case ItemCoordinateRole:
     {
-        QGeoCoordinate coordinate(item->latitude(), item->longitude());
-        if (coordinate.isValid()) return QVariant::fromValue(coordinate);
-        return QVariant::fromValue(QGeoCoordinate());
+        if (item->command() == db::MissionItem::Waypoint ||
+            item->command() == db::MissionItem::Landing ||
+            item->command() == db::MissionItem::LoiterAltitude ||
+            item->command() == db::MissionItem::LoiterTurns)
+        {
+            QGeoCoordinate coordinate(item->latitude(), item->longitude());
+            if (coordinate.isValid()) return QVariant::fromValue(coordinate);
+            return QVariant::fromValue(QGeoCoordinate());
+        }
+        else return QVariant::fromValue(QGeoCoordinate());
     }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
     case ItemIconRole:
-        if (item->command() == db::MissionItem::Takeoff)
-            return "qrc:/icons/takeoff.svg";
         if (item->command() == db::MissionItem::Landing)
             return "qrc:/icons/landing.svg";
         return QString("");

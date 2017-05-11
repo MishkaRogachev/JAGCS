@@ -48,17 +48,20 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         QVariantList line;
         for (const db::MissionItemPtr& item: m_service->missionItems(mission))
         {
-            if (item->command() == db::MissionItem::Return && !line.isEmpty())
-            {
-                line.append(line[0]); // Return to home line
-            }
-            else
+            if (item->command() == db::MissionItem::Waypoint ||
+                item->command() == db::MissionItem::Landing ||
+                item->command() == db::MissionItem::LoiterAltitude ||
+                item->command() == db::MissionItem::LoiterTurns)
             {
                 QGeoCoordinate coordinate(item->latitude(), item->longitude());
                 if (coordinate.isValid())
                 {
                     line.append(QVariant::fromValue(coordinate));
                 }
+            }
+            else if (item->command() == db::MissionItem::Return && !line.isEmpty())
+            {
+                line.append(line[0]); // Return to home line
             }
         }
         return line;
