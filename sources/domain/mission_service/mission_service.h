@@ -49,17 +49,17 @@ namespace domain
         void fixSequenceOrder(int missionId);
 
     signals:
-        void missionAdded(const db::MissionPtr& mission);
-        void missionRemoved(const db::MissionPtr& mission);
-        void missionChanged(const db::MissionPtr& mission);
+        void missionAdded(db::MissionPtr mission);
+        void missionRemoved(db::MissionPtr mission);
+        void missionChanged(db::MissionPtr mission);
 
-        void assignmentAdded(const db::MissionAssignmentPtr& missionAssignment);
-        void assignmentRemoved(const db::MissionAssignmentPtr& missionAssignment);
-        void assignmentChanged(const db::MissionAssignmentPtr& missionAssignment);
+        void assignmentAdded(db::MissionAssignmentPtr missionAssignment);
+        void assignmentRemoved(db::MissionAssignmentPtr missionAssignment);
+        void assignmentChanged(db::MissionAssignmentPtr missionAssignment);
 
-        void missionItemAdded(const db::MissionItemPtr& item);
-        void missionItemRemoved(const db::MissionItemPtr& item);
-        void missionItemChanged(const db::MissionItemPtr& item);
+        void missionItemAdded(db::MissionItemPtr item);
+        void missionItemRemoved(db::MissionItemPtr item);
+        void missionItemChanged(db::MissionItemPtr item);
 
     private:
         class Impl;

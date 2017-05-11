@@ -41,8 +41,8 @@ namespace domain
         void removeByDescription(const db::VehicleDescriptionPtr& description);
 
     signals:
-        void vehicleAdded(const db::VehicleDescriptionPtr& description);
-        void vehicleRemoved(const db::VehicleDescriptionPtr& description);
+        void vehicleAdded(db::VehicleDescriptionPtr description);
+        void vehicleRemoved(db::VehicleDescriptionPtr description);
 
     private:
         class Impl;

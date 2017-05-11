@@ -9,7 +9,7 @@
 
 namespace db
 {
-    class DbFacade
+    class DbFacade // TODO: work with db in separated thread
     {
     public:
         DbFacade();
