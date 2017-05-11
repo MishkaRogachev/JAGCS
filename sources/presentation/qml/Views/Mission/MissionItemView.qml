@@ -36,6 +36,8 @@ ColumnLayout {
     property bool pitchVisible: command == MissionItem.Takeoff
     property bool periodsVisible: command == MissionItem.LoiterTurns
 
+    property alias picking: pickButton.checked
+
     signal selectItem(int sequence)
     signal addItem()
     signal removeItem()
@@ -156,6 +158,7 @@ ColumnLayout {
         }
 
         MapPickButton {
+            id: pickButton
             visible: positionVisible
             Layout.rowSpan: 2
             onPicked: {

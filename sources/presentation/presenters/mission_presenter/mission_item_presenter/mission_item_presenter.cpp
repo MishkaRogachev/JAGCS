@@ -142,7 +142,9 @@ void MissionItemPresenter::onAddItem()
     if (d->selectedMission.isNull()) return;
 
     d->service->addNewMissionItem(d->selectedMission);
-    this->onSelectItem(this->viewProperty(PROPERTY(count)).toInt());
+    int count = this->viewProperty(PROPERTY(count)).toInt();
+    this->onSelectItem(count);
+    this->setViewProperty(PROPERTY(picking), count > 1);
 }
 
 void MissionItemPresenter::onRemoveItem()
