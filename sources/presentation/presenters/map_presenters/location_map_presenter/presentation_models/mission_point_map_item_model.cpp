@@ -34,8 +34,7 @@ int MissionPointMapItemModel::rowCount(const QModelIndex& parent) const
     return m_items.count();
 }
 
-QVariant MissionPointMapItemModel::data(const QModelIndex& index,
-                                                int role) const
+QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count()) return QVariant();
 
@@ -108,12 +107,7 @@ void MissionPointMapItemModel::onMissionItemChanged(
 {
     QModelIndex index = this->itemIndex(item);
     if (!index.isValid()) return;
-    emit dataChanged(index, index, { ItemCoordinateRole,
-                                     ItemSequenceRole,
-                                     ItemIconRole,
-                                     ItemAcceptanceRadius,
-                                     ItemRadius,
-                                     ItemCurrent });
+    emit dataChanged(index, index);
 }
 
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
