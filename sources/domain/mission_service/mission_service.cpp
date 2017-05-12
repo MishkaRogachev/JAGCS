@@ -72,6 +72,11 @@ MissionAssignmentPtr MissionService::missionAssignment(const MissionPtr& mission
     return d->facade->missionAssignment(mission->id());
 }
 
+MissionAssignmentPtr MissionService::vehicleAssignment(const VehicleDescriptionPtr& vehicle) const
+{
+    return d->facade->vehicleAssignment(vehicle->id());
+}
+
 void MissionService::assign(const MissionPtr& mission, const VehicleDescriptionPtr& vehicle)
 {
     // Unassign current vehicle's assignment

@@ -29,6 +29,7 @@ namespace domain
         db::MissionPtr missionByVehicle(const db::VehicleDescriptionPtr& vehicle) const;
 
         db::MissionAssignmentPtr missionAssignment(const db::MissionPtr& mission) const;
+        db::MissionAssignmentPtr vehicleAssignment(const db::VehicleDescriptionPtr& vehicle) const;
         void assign(const db::MissionPtr& mission, const db::VehicleDescriptionPtr& vehicle);
         void unassign(const db::MissionPtr& mission);
 
