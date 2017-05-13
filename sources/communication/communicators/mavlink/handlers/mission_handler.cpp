@@ -101,7 +101,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {
-        //TODO: this->requestMissionItem(message.sysid, seq);
+        // TODO: this->requestMissionItem(message.sysid, seq);
     }
 }
 
@@ -125,7 +125,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setMissionId(assignment->missionId());
         item->setSequence(msgItem.seq);
     }
-    // TODO: command
+
+    item->setCommand(::decodeCommand(msgItem.command));
 
     switch (msgItem.frame)
     {
@@ -150,20 +151,45 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setLatitude(msgItem.x);
         item->setLongitude(msgItem.y);
     }
-    // TODO: other params
+
+    switch (msgItem.command)
+    {
+    case MAV_CMD_NAV_TAKEOFF:
+        item->setPitch(msgItem.param1);
+        break;
+    case MAV_CMD_NAV_WAYPOINT:
+    case MAV_CMD_NAV_LOITER_TO_ALT:
+        item->setRadius(msgItem.param2);
+        break;
+    case MAV_CMD_NAV_LOITER_TURNS:
+        item->setPeriods(msgItem.param1);
+        item->setRadius(msgItem.param3);
+        break;
+    default:
+        break;
+    }
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
 {
+    mavlink_mission_request_t request;
+    mavlink_msg_mission_request_decode(&message, &request);
 
+    // TODO: this->sendMissionItem(message.sysid, request.seq);
 }
 
 void MissionHandler::processMissionAck(const mavlink_message_t& message)
 {
+    mavlink_mission_ack_t missionAck;
+    mavlink_msg_mission_ack_decode(&message, &missionAck);
 
+    // TODO: handle missionAck.type
 }
 
 void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 {
+    mavlink_mission_current_t missionCurrent;
+    mavlink_msg_mission_current_decode(&message, &missionCurrent);
 
+    // TODO: handle missionCurrent.seq
 }
