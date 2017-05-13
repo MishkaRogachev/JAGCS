@@ -170,8 +170,11 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     if (assignment.isNull() ||
         assignment->status() != db::MissionAssignment::Uploading) return;
 
+    // TODO: home item
+
     db::MissionItemPtr item = m_missionService->missionItem(
                                   assignment->missionId(), seq);
+    if (item.isNull()) return;
 
     mavlink_message_t message;
     mavlink_mission_item_t msgItem;
