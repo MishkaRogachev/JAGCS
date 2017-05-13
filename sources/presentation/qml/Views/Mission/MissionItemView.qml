@@ -24,6 +24,7 @@ ColumnLayout {
     property alias pitch: pitchEdit.realValue
 
     property bool altitudeVisible: command == MissionItem.Continue ||
+                                   command == MissionItem.Takeoff ||
                                    positionVisible
 
     property bool positionVisible: command == MissionItem.Landing ||
