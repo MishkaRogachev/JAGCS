@@ -35,8 +35,7 @@ namespace domain
 
         db::MissionItemPtrList missionItems() const;
         db::MissionItemPtrList missionItems(int missionId) const;
-        db::MissionItemPtr missionItem(const db::MissionPtr& mission,
-                                       int sequence) const;
+        db::MissionItemPtr missionItem(int missionId, int sequence) const;
 
     public slots:
         void saveMission(const db::MissionPtr& mission);

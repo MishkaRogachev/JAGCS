@@ -108,7 +108,6 @@ void MissionHandler::requestMission(uint8_t id)
                                             m_communicator->componentId(),
                                             &message, &request);
     m_communicator->sendMessageAllLinks(message);
-
 }
 
 void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
@@ -141,7 +140,7 @@ void MissionHandler::sendMission(uint8_t id)
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
     count.count = m_missionService->missionItems(assignment->missionId()).count();
 
-//    assignment->setCurrentProgress(0);
+//    TODO: assignment->setCurrentProgress(0);
 //    assignment->setTotalProgress(count.count);
 
     mavlink_msg_mission_count_encode(m_communicator->systemId(),
@@ -152,11 +151,88 @@ void MissionHandler::sendMission(uint8_t id)
 
 void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
 {
+    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(id);
+    if (vehicle.isNull()) return;
+    db::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicle);
+    if (assignment.isNull() ||
+        assignment->status() != db::MissionAssignment::Uploading) return;
+
+    db::MissionItemPtr item = m_missionService->missionItem(
+                                  assignment->missionId(), seq);
+
+    mavlink_message_t message;
+    mavlink_mission_item_t msgItem;
+
+    msgItem.target_system = id;
+    msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
+
+    msgItem.seq = item->sequence();
+    msgItem.autocontinue = item->sequence() <
+                           m_missionService->missionItems(
+                               assignment->missionId()).count() - 1; // TODO: count to mission
+
+    msgItem.command = ::encodeCommand(item->command());
+
+    if (!qIsNaN(item->altitude()))
+    {
+        msgItem.frame = item->isAltitudeRelative() ?
+                            MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
+        msgItem.z = item->altitude();
+    }
+
+    if (!qIsNaN(item->latitude()))
+    {
+        msgItem.x = item->latitude();
+    }
+
+    if (!qIsNaN(item->longitude()))
+    {
+        msgItem.y = item->longitude();
+    }
+
+    switch (msgItem.command)
+    {
+    case MAV_CMD_NAV_TAKEOFF:
+        msgItem.param1 = item->pitch();
+    case MAV_CMD_NAV_LAND:// TODO: abort altitude
+        // TODO: yaw
+        //msgItem.param4 = takeoffItem->yaw();
+        break;
+    case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+        // TODO: climb
+        //msgItem.param1 = item->climb() > 1 ? 1 : altitudeItem->climb() < 0 ? -1 : 0;
+        break;
+    case MAV_CMD_NAV_WAYPOINT:
+    case MAV_CMD_NAV_LOITER_TO_ALT:
+        msgItem.param2 = item->radius();
+        break;
+    case MAV_CMD_NAV_LOITER_TURNS:
+        msgItem.param1 = item->periods();
+        msgItem.param3 = item->radius();
+        break;
+    default:
+        break;
+    }
+
+    mavlink_msg_mission_item_encode(m_communicator->systemId(),
+                                    m_communicator->componentId(),
+                                    &message, &msgItem);
+    m_communicator->sendMessageAllLinks(message);
 }
 
 void MissionHandler::sendMissionAck(uint8_t id)
 {
+    mavlink_message_t message;
+    mavlink_mission_ack_t ackItem;
 
+    ackItem.target_system = id;
+    ackItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    ackItem.type = MAV_MISSION_ACCEPTED;
+
+    mavlink_msg_mission_ack_encode(m_communicator->systemId(),
+                                   m_communicator->componentId(),
+                                   &message, &ackItem);
+    m_communicator->sendMessageAllLinks(message);
 }
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
@@ -166,7 +242,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {
-        // TODO: this->requestMissionItem(message.sysid, seq);
+        this->requestMissionItem(message.sysid, seq);
     }
 }
 
@@ -181,9 +257,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
-    db::MissionItemPtr item = m_missionService->missionItem(
-                                  m_missionService->mission(assignment->missionId()),
-                                  msgItem.seq);
+    db::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(),
+                                                            msgItem.seq);
     if (item.isNull())
     {
         item.create();
@@ -240,7 +315,7 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
     mavlink_mission_request_t request;
     mavlink_msg_mission_request_decode(&message, &request);
 
-    // TODO: this->sendMissionItem(message.sysid, request.seq);
+    this->sendMissionItem(message.sysid, request.seq);
 }
 
 void MissionHandler::processMissionAck(const mavlink_message_t& message)

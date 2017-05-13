@@ -123,10 +123,9 @@ MissionItemPtrList MissionService::missionItems(int missionId) const
     return d->facade->missionItems(missionId);
 }
 
-MissionItemPtr MissionService::missionItem(const MissionPtr& mission,
-                                           int sequence) const
+MissionItemPtr MissionService::missionItem(int missionId, int sequence) const
 {
-    return d->facade->missionItem(mission->id(), sequence);
+    return d->facade->missionItem(missionId, sequence);
 }
 
 void MissionService::saveMission(const MissionPtr& mission)

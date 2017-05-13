@@ -160,7 +160,7 @@ void MissionItemPresenter::onSelectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->item = d->service->missionItem(d->selectedMission, index);
+    d->item = d->service->missionItem(d->selectedMission->id(), index);
     this->updateItem();
 }
 
