@@ -1,7 +1,9 @@
 #ifndef MISSION_HANDLER_H
 #define MISSION_HANDLER_H
 
+// Internal
 #include "abstract_mavlink_handler.h"
+#include "db_traits.h"
 
 namespace domain
 {
@@ -23,10 +25,11 @@ namespace comm
     public slots:
        void processMessage(const mavlink_message_t& message) override;
 
-       void requestMission(uint8_t id);
+       void download(const db::MissionAssignmentPtr& assignment);
+       void upload(const db::MissionAssignmentPtr& assignment);
+
        void requestMissionItem(uint8_t id, uint16_t seq);
 
-       void sendMission(uint8_t id);
        void sendMissionItem(uint8_t id, uint16_t seq);
        void sendMissionAck(uint8_t id);
        // TODO: MISSION_SET_CURRENT, MISSION_ITEM_REACHED

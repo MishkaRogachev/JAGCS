@@ -6,6 +6,7 @@
 namespace domain
 {
     class VehicleService;
+    class MissionService;
 }
 
 namespace comm
@@ -14,12 +15,14 @@ namespace comm
     {
     public:
         MavLinkCommunicatorFactory(domain::VehicleService* vehicleServeice,
+                                   domain::MissionService* missionService,
                                    quint8 systemId, quint8 componentId);
 
         AbstractCommunicator* create() override;
 
     private:
         domain::VehicleService* m_vehicleService;
+        domain::MissionService* m_missionService;
         quint8 m_systemId;
         quint8 m_componentId;
     };

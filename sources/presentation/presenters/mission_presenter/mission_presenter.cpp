@@ -204,3 +204,23 @@ void MissionPresenter::onAssignVehicle(const QString& name)
 
     this->updateAssignment();
 }
+
+void MissionPresenter::onUploadMission()
+{
+    if (!d->selectedMission) return;
+    db::MissionAssignmentPtr assignment =
+            d->missionService->missionAssignment(d->selectedMission);
+    if (assignment.isNull()) return;
+
+    emit d->missionService->upload(assignment);
+}
+
+void MissionPresenter::onDownloadMission()
+{
+    if (!d->selectedMission) return;
+    db::MissionAssignmentPtr assignment =
+            d->missionService->missionAssignment(d->selectedMission);
+    if (assignment.isNull()) return;
+
+    emit d->missionService->download(assignment);
+}

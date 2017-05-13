@@ -53,9 +53,11 @@ DomainEntry::DomainEntry():
     d->vehicleService.reset(new VehicleService(&d->dbFacade));
     d->missionService.reset(new MissionService(&d->dbFacade));
 
-    comm::MavLinkCommunicatorFactory comFactory(d->vehicleService.data(),
-             SettingsProvider::value(settings::communication::systemId).toInt(),
-             SettingsProvider::value(settings::communication::componentId).toInt());
+    comm::MavLinkCommunicatorFactory comFactory(
+                d->vehicleService.data(),
+                d->missionService.data(),
+                SettingsProvider::value(settings::communication::systemId).toInt(),
+                SettingsProvider::value(settings::communication::componentId).toInt());
 
     d->commService.reset(new CommunicationService(&comFactory, &d->dbFacade));
 }

@@ -33,6 +33,8 @@ namespace presentation
         void onRemoveMission();
         void onRenameMission(const QString& name);
         void onAssignVehicle(const QString& name);
+        void onUploadMission();
+        void onDownloadMission();
 
     private:
         class Impl;

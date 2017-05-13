@@ -69,7 +69,12 @@ MissionHandler::MissionHandler(domain::MissionService* missionService,
     AbstractMavLinkHandler(communicator),
     m_missionService(missionService),
     m_vehicleService(vehicleService)
-{}
+{
+    connect(missionService, &domain::MissionService::download,
+            this, &MissionHandler::download);
+    connect(missionService, &domain::MissionService::upload,
+            this, &MissionHandler::upload);
+}
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
 {
@@ -94,19 +99,50 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     }
 }
 
-void MissionHandler::requestMission(uint8_t id)
+void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 {
-    mavlink_message_t message;
-    mavlink_mission_request_list_t request;
+    db::VehicleDescriptionPtr vehicle = m_vehicleService->description(
+                                            assignment->vehicleId());
+    if (vehicle.isNull()) return;
+
+    assignment->setStatus(db::MissionAssignment::Downloading);
 
     // TODO: request Timer
 
-    request.target_system = id;
+    mavlink_message_t message;
+    mavlink_mission_request_list_t request;
+
+    request.target_system = vehicle->mavId();
     request.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
     mavlink_msg_mission_request_list_encode(m_communicator->systemId(),
                                             m_communicator->componentId(),
                                             &message, &request);
+    m_communicator->sendMessageAllLinks(message);
+}
+
+void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
+{
+    db::VehicleDescriptionPtr vehicle = m_vehicleService->description(assignment->vehicleId());
+    if (vehicle.isNull()) return;
+
+    assignment->setStatus(db::MissionAssignment::Uploading);
+
+    // TODO: upload Timer
+
+    mavlink_message_t message;
+    mavlink_mission_count_t count;
+
+    count.target_system = vehicle->mavId();
+    count.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    count.count = m_missionService->missionItems(assignment->missionId()).count();
+
+//    TODO: assignment->setCurrentProgress(0);
+//    assignment->setTotalProgress(count.count);
+
+    mavlink_msg_mission_count_encode(m_communicator->systemId(),
+                                     m_communicator->componentId(),
+                                     &message, &count);
     m_communicator->sendMessageAllLinks(message);
 }
 
@@ -122,30 +158,6 @@ void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
     mavlink_msg_mission_request_encode(m_communicator->systemId(),
                                        m_communicator->componentId(),
                                        &message, &missionRequest);
-    m_communicator->sendMessageAllLinks(message);
-}
-
-void MissionHandler::sendMission(uint8_t id)
-{
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(id);
-    if (vehicle.isNull()) return;
-    db::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicle);
-    if (assignment.isNull() ||
-        assignment->status() != db::MissionAssignment::Uploading) return;
-
-    mavlink_message_t message;
-    mavlink_mission_count_t count;
-
-    count.target_system = id;
-    count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = m_missionService->missionItems(assignment->missionId()).count();
-
-//    TODO: assignment->setCurrentProgress(0);
-//    assignment->setTotalProgress(count.count);
-
-    mavlink_msg_mission_count_encode(m_communicator->systemId(),
-                                     m_communicator->componentId(),
-                                     &message, &count);
     m_communicator->sendMessageAllLinks(message);
 }
 

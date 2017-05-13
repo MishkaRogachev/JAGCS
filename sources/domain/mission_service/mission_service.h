@@ -53,13 +53,16 @@ namespace domain
         void missionRemoved(db::MissionPtr mission);
         void missionChanged(db::MissionPtr mission);
 
-        void assignmentAdded(db::MissionAssignmentPtr missionAssignment);
-        void assignmentRemoved(db::MissionAssignmentPtr missionAssignment);
-        void assignmentChanged(db::MissionAssignmentPtr missionAssignment);
+        void assignmentAdded(db::MissionAssignmentPtr assignment);
+        void assignmentRemoved(db::MissionAssignmentPtr assignment);
+        void assignmentChanged(db::MissionAssignmentPtr assignment);
 
         void missionItemAdded(db::MissionItemPtr item);
         void missionItemRemoved(db::MissionItemPtr item);
         void missionItemChanged(db::MissionItemPtr item);
+
+        void download(db::MissionAssignmentPtr assignment);
+        void upload(db::MissionAssignmentPtr assignment);
 
     private:
         class Impl;

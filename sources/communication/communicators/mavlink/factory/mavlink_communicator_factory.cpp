@@ -14,14 +14,17 @@
 #include "vfr_hud_handler.h"
 #include "wind_handler.h"
 #include "command_handler.h"
+#include "mission_handler.h"
 
 using namespace comm;
 
 MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
         domain::VehicleService* vehicleServeice,
+        domain::MissionService* missionService,
         quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),
     m_vehicleService(vehicleServeice),
+    m_missionService(missionService),
     m_systemId(systemId),
     m_componentId(componentId)
 {}
@@ -40,6 +43,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new VfrHudHandler(m_vehicleService, communicator);
     new WindHandler(m_vehicleService, communicator);
     new CommandHandler(m_vehicleService, communicator);
+    new MissionHandler(m_missionService, m_vehicleService, communicator);
 
     return communicator;
 }
