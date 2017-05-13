@@ -270,11 +270,13 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
+    if (msgItem.seq == 0) return; // have no interes in home point
+
     db::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(),
                                                             msgItem.seq);
     if (item.isNull())
     {
-        item.create();
+        item = db::MissionItemPtr::create();
         item->setMissionId(assignment->missionId());
         item->setSequence(msgItem.seq);
     }
@@ -321,6 +323,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     default:
         break;
     }
+
+    m_missionService->saveMissionItem(item);
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
