@@ -123,7 +123,8 @@ void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 
 void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 {
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->description(assignment->vehicleId());
+    db::VehicleDescriptionPtr vehicle = m_vehicleService->description(
+                                            assignment->vehicleId());
     if (vehicle.isNull()) return;
 
     assignment->setStatus(db::MissionAssignment::Uploading);

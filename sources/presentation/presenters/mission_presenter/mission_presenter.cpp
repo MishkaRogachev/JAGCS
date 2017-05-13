@@ -82,6 +82,10 @@ void MissionPresenter::setViewConnected(bool connected)
                 this, SLOT(onRenameMission(QString)));
         connect(this->view(), SIGNAL(assignVehicle(QString)),
                 this, SLOT(onAssignVehicle(QString)));
+        connect(this->view(), SIGNAL(uploadMission()),
+                this, SLOT(onUploadMission()));
+        connect(this->view(), SIGNAL(downloadMission()),
+                this, SLOT(onDownloadMission()));
     }
     else
     {
@@ -114,15 +118,21 @@ void MissionPresenter::updateAssignment()
                 d->missionService->missionAssignment(d->selectedMission);
         if (assignment)
         {
+            this->setViewProperty(PROPERTY(assignedStatus), assignment->status());
+
             db::VehicleDescriptionPtr vehicle =
                     d->vehicleService->description(assignment->vehicleId());
-
-            this->setViewProperty(PROPERTY(assignedVehicle), vehicle->name());
+            if (vehicle)
+            {
+                this->setViewProperty(PROPERTY(assignedVehicle),
+                                      vehicle->name());
+            }
             this->setViewConnected(true);
             return;
         }
     }
     this->setViewProperty(PROPERTY(assignedVehicle), QString());
+    this->setViewProperty(PROPERTY(assignedStatus), db::MissionAssignment::Unknown);
 
     this->setViewConnected(true);
 }
@@ -213,6 +223,7 @@ void MissionPresenter::onUploadMission()
     if (assignment.isNull()) return;
 
     emit d->missionService->upload(assignment);
+    this->updateAssignment();
 }
 
 void MissionPresenter::onDownloadMission()
@@ -223,4 +234,5 @@ void MissionPresenter::onDownloadMission()
     if (assignment.isNull()) return;
 
     emit d->missionService->download(assignment);
+    this->updateAssignment();
 }

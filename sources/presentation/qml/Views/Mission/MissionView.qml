@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls"
 import "../Map"
@@ -12,6 +13,7 @@ Pane {
     property alias vehicles: vehiclesBox.model
     property string selectedMission
     property string assignedVehicle
+    property int assignedStatus: MissionAssignment.Unknown
     property int progress: progressBar.value
 
     signal selectMission(string name)
@@ -111,12 +113,14 @@ Pane {
             Button {
                 iconSource: "qrc:/icons/download.svg"
                 enabled: selectedMission.length > 0 && assignedVehicle.length > 0
+                checked: assignedStatus == MissionAssignment.Downloading
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
                 enabled: selectedMission.length > 0 && assignedVehicle.length > 0
+                checked: assignedStatus == MissionAssignment.Uploading
                 onClicked: uploadMission()
             }
 
