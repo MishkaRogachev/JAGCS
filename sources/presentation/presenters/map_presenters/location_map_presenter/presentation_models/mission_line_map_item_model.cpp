@@ -46,7 +46,8 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
-        for (const db::MissionItemPtr& item: m_service->missionItems(mission))
+        for (const db::MissionItemPtr& item:
+             m_service->missionItems(mission->id()))
         {
             if (item->command() == db::MissionItem::Waypoint ||
                 item->command() == db::MissionItem::Landing ||

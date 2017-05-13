@@ -94,6 +94,71 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     }
 }
 
+void MissionHandler::requestMission(uint8_t id)
+{
+    mavlink_message_t message;
+    mavlink_mission_request_list_t request;
+
+    // TODO: request Timer
+
+    request.target_system = id;
+    request.target_component = MAV_COMP_ID_MISSIONPLANNER;
+
+    mavlink_msg_mission_request_list_encode(m_communicator->systemId(),
+                                            m_communicator->componentId(),
+                                            &message, &request);
+    m_communicator->sendMessageAllLinks(message);
+
+}
+
+void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
+{
+    mavlink_message_t message;
+    mavlink_mission_request_t missionRequest;
+
+    missionRequest.target_system = id;
+    missionRequest.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    missionRequest.seq = seq;
+
+    mavlink_msg_mission_request_encode(m_communicator->systemId(),
+                                       m_communicator->componentId(),
+                                       &message, &missionRequest);
+    m_communicator->sendMessageAllLinks(message);
+}
+
+void MissionHandler::sendMission(uint8_t id)
+{
+    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(id);
+    if (vehicle.isNull()) return;
+    db::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicle);
+    if (assignment.isNull() ||
+        assignment->status() != db::MissionAssignment::Uploading) return;
+
+    mavlink_message_t message;
+    mavlink_mission_count_t count;
+
+    count.target_system = id;
+    count.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    count.count = m_missionService->missionItems(assignment->missionId()).count();
+
+//    assignment->setCurrentProgress(0);
+//    assignment->setTotalProgress(count.count);
+
+    mavlink_msg_mission_count_encode(m_communicator->systemId(),
+                                     m_communicator->componentId(),
+                                     &message, &count);
+    m_communicator->sendMessageAllLinks(message);
+}
+
+void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
+{
+}
+
+void MissionHandler::sendMissionAck(uint8_t id)
+{
+
+}
+
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
     mavlink_mission_count_t missionCount;

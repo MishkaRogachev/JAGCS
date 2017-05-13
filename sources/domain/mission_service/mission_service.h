@@ -34,7 +34,7 @@ namespace domain
         void unassign(const db::MissionPtr& mission);
 
         db::MissionItemPtrList missionItems() const;
-        db::MissionItemPtrList missionItems(const db::MissionPtr& mission) const;
+        db::MissionItemPtrList missionItems(int missionId) const;
         db::MissionItemPtr missionItem(const db::MissionPtr& mission,
                                        int sequence) const;
 

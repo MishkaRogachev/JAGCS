@@ -20,8 +20,16 @@ namespace comm
                        domain::VehicleService* vehicleService,
                        MavLinkCommunicator* communicator);
 
-   public slots:
+    public slots:
        void processMessage(const mavlink_message_t& message) override;
+
+       void requestMission(uint8_t id);
+       void requestMissionItem(uint8_t id, uint16_t seq);
+
+       void sendMission(uint8_t id);
+       void sendMissionItem(uint8_t id, uint16_t seq);
+       void sendMissionAck(uint8_t id);
+       // TODO: MISSION_SET_CURRENT, MISSION_ITEM_REACHED
 
     protected:
         void processMissionCount(const mavlink_message_t& message);

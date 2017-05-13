@@ -6,6 +6,7 @@
 #include <QDebug>
 
 // Internal
+#include "mission.h"
 #include "mission_item.h"
 
 #include "mission_service.h"
@@ -103,7 +104,8 @@ void MissionItemPresenter::updateCount(bool gotoNewItem)
 {
     if (d->selectedMission)
     {
-        db::MissionItemPtrList items = d->service->missionItems(d->selectedMission);
+        db::MissionItemPtrList items = d->service->missionItems(
+                                           d->selectedMission->id());
 
         this->setViewProperty(PROPERTY(count), items.count());
         if (gotoNewItem) this->onSelectItem(items.count());

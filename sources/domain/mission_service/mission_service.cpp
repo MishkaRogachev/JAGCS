@@ -118,9 +118,9 @@ MissionItemPtrList MissionService::missionItems() const
     return d->facade->missionItems();
 }
 
-MissionItemPtrList MissionService::missionItems(const MissionPtr& mission) const
+MissionItemPtrList MissionService::missionItems(int missionId) const
 {
-    return d->facade->missionItems(mission->id());
+    return d->facade->missionItems(missionId);
 }
 
 MissionItemPtr MissionService::missionItem(const MissionPtr& mission,
@@ -142,7 +142,7 @@ void MissionService::saveMission(const MissionPtr& mission)
 
 void MissionService::removeMission(const MissionPtr& mission)
 {
-    for (const db::MissionItemPtr& item: this->missionItems(mission))
+    for (const db::MissionItemPtr& item: this->missionItems(mission->id()))
     {
         this->removeMissionItem(item);
     }
