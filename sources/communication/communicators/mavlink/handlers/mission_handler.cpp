@@ -3,6 +3,9 @@
 // MAVLink
 #include <mavlink.h>
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "mavlink_communicator.h"
 
@@ -170,64 +173,76 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     if (assignment.isNull() ||
         assignment->status() != db::MissionAssignment::Uploading) return;
 
-    // TODO: home item
-
-    db::MissionItemPtr item = m_missionService->missionItem(
-                                  assignment->missionId(), seq);
-    if (item.isNull()) return;
-
     mavlink_message_t message;
     mavlink_mission_item_t msgItem;
 
     msgItem.target_system = id;
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
-    msgItem.seq = item->sequence();
-    msgItem.autocontinue = item->sequence() <
-                           m_missionService->missionItems(
-                               assignment->missionId()).count() - 1; // TODO: count to mission
-
-    msgItem.command = ::encodeCommand(item->command());
-
-    if (!qIsNaN(item->altitude()))
+    if (seq == 0) // fake home point
     {
-        msgItem.frame = item->isAltitudeRelative() ?
-                            MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
-        msgItem.z = item->altitude();
+        msgItem.seq = 0;
+        msgItem.autocontinue = true;
+        msgItem.command = MAV_CMD_NAV_WAYPOINT;
+        msgItem.frame = MAV_FRAME_GLOBAL;
+
+        msgItem.x = 0;
+        msgItem.y = 0;
+        msgItem.z = 0;
     }
-
-    if (!qIsNaN(item->latitude()))
+    else
     {
-        msgItem.x = item->latitude();
-    }
+        db::MissionItemPtr item = m_missionService->missionItem(
+                                      assignment->missionId(), seq);
+        if (item.isNull()) return;
 
-    if (!qIsNaN(item->longitude()))
-    {
-        msgItem.y = item->longitude();
-    }
+        msgItem.seq = item->sequence();
+        msgItem.autocontinue = item->sequence() <
+                               m_missionService->missionItems(
+                                   assignment->missionId()).count() - 1; // TODO: count to mission
 
-    switch (msgItem.command)
-    {
-    case MAV_CMD_NAV_TAKEOFF:
-        msgItem.param1 = item->pitch();
-    case MAV_CMD_NAV_LAND:// TODO: abort altitude
-        // TODO: yaw
-        //msgItem.param4 = takeoffItem->yaw();
-        break;
-    case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-        // TODO: climb
-        //msgItem.param1 = item->climb() > 1 ? 1 : altitudeItem->climb() < 0 ? -1 : 0;
-        break;
-    case MAV_CMD_NAV_WAYPOINT:
-    case MAV_CMD_NAV_LOITER_TO_ALT:
-        msgItem.param2 = item->radius();
-        break;
-    case MAV_CMD_NAV_LOITER_TURNS:
-        msgItem.param1 = item->periods();
-        msgItem.param3 = item->radius();
-        break;
-    default:
-        break;
+        msgItem.command = ::encodeCommand(item->command());
+
+        if (!qIsNaN(item->altitude()))
+        {
+            msgItem.frame = item->isAltitudeRelative() ?
+                                MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
+            msgItem.z = item->altitude();
+        }
+
+        if (!qIsNaN(item->latitude()))
+        {
+            msgItem.x = item->latitude();
+        }
+
+        if (!qIsNaN(item->longitude()))
+        {
+            msgItem.y = item->longitude();
+        }
+
+        switch (msgItem.command)
+        {
+        case MAV_CMD_NAV_TAKEOFF:
+            msgItem.param1 = item->pitch();
+        case MAV_CMD_NAV_LAND:// TODO: abort altitude
+            // TODO: yaw
+            //msgItem.param4 = takeoffItem->yaw();
+            break;
+        case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+            // TODO: climb
+            //msgItem.param1 = item->climb() > 1 ? 1 : altitudeItem->climb() < 0 ? -1 : 0;
+            break;
+        case MAV_CMD_NAV_WAYPOINT:
+        case MAV_CMD_NAV_LOITER_TO_ALT:
+            msgItem.param2 = item->radius();
+            break;
+        case MAV_CMD_NAV_LOITER_TURNS:
+            msgItem.param1 = item->periods();
+            msgItem.param3 = item->radius();
+            break;
+        default:
+            break;
+        }
     }
 
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
