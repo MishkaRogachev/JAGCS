@@ -139,7 +139,7 @@ void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 
     count.target_system = vehicle->mavId();
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = m_missionService->missionItems(assignment->missionId()).count();
+    count.count = m_missionService->mission(assignment->missionId())->count();
 
 //    TODO: assignment->setCurrentProgress(0);
 //    assignment->setTotalProgress(count.count);
@@ -196,10 +196,9 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
                                       assignment->missionId(), seq);
         if (item.isNull()) return;
 
-        msgItem.seq = item->sequence();
-        msgItem.autocontinue = item->sequence() <
-                               m_missionService->missionItems(
-                                   assignment->missionId()).count() - 1; // TODO: count to mission
+        msgItem.seq = seq;
+        msgItem.autocontinue =
+                seq < m_missionService->mission(assignment->missionId())->count();
 
         msgItem.command = ::encodeCommand(item->command());
 

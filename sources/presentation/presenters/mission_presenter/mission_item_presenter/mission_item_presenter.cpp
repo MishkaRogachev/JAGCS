@@ -104,11 +104,8 @@ void MissionItemPresenter::updateCount(bool gotoNewItem)
 {
     if (d->selectedMission)
     {
-        db::MissionItemPtrList items = d->service->missionItems(
-                                           d->selectedMission->id());
-
-        this->setViewProperty(PROPERTY(count), items.count());
-        if (gotoNewItem) this->onSelectItem(items.count());
+        this->setViewProperty(PROPERTY(count), d->selectedMission->count());
+        if (gotoNewItem) this->onSelectItem(d->selectedMission->count());
     }
     else
     {
@@ -143,8 +140,8 @@ void MissionItemPresenter::onAddItem()
 {
     if (d->selectedMission.isNull()) return;
 
-    d->service->addNewMissionItem(d->selectedMission);
-    int count = this->viewProperty(PROPERTY(count)).toInt();
+    d->service->addNewMissionItem(d->selectedMission->id());
+    int count = d->selectedMission->count();
     this->onSelectItem(count);
     this->setViewProperty(PROPERTY(picking), count > 1);
 }

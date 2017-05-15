@@ -157,7 +157,16 @@ void MissionService::saveMissionItem(const MissionItemPtr& item)
     bool isNew = item->id() == 0;
 
     if (!d->facade->save(item)) return;
-    emit (isNew ? missionItemAdded(item) : missionItemChanged(item));
+
+    if (isNew)
+    {
+        this->fixSequenceOrder(item->missionId());
+        emit missionItemAdded(item);
+    }
+    else
+    {
+        emit missionItemChanged(item);
+    }
 }
 
 void MissionService::removeMissionItem(const MissionItemPtr& item)
@@ -168,18 +177,19 @@ void MissionService::removeMissionItem(const MissionItemPtr& item)
     emit missionItemRemoved(item);
 }
 
-void MissionService::addNewMissionItem(const MissionPtr& mission)
+void MissionService::addNewMissionItem(int missionId)
 {
+    db::MissionPtr mission = this->mission(missionId);
+    if (mission.isNull()) return;
+
     db::MissionItemPtr item = db::MissionItemPtr::create();
-    db::MissionItemPtrList items = d->facade->missionItems(mission->id());
+    item->setMissionId(missionId);
 
-    item->setMissionId(mission->id());
-
-    if (items.count())
+    if (mission->count())
     {
         item->setCommand(db::MissionItem::Waypoint);
 
-        db::MissionItemPtr lastItem = items.last();
+        db::MissionItemPtr lastItem = this->missionItem(missionId, mission->count());
         if (lastItem->isAltitudeRelative())
         {
             item->setAltitude(0);
@@ -197,9 +207,11 @@ void MissionService::addNewMissionItem(const MissionPtr& mission)
         item->setAltitudeRelative(true);
     }
 
-    item->setSequence(items.count() + 1);
+    item->setSequence(mission->count() + 1);
+    mission->setCount(item->sequence());
 
-    if (d->facade->save(item)) emit missionItemAdded(item);
+    if (d->facade->save(item) &&
+        d->facade->save(mission)) emit missionItemAdded(item);
 }
 
 void MissionService::saveMissionItems(const MissionPtr& mission)
@@ -212,15 +224,18 @@ void MissionService::saveMissionItems(const MissionPtr& mission)
 
 void MissionService::fixSequenceOrder(int missionId)
 {
-    int sequencer = 1;
+    int counter = 0;
     for (const db::MissionItemPtr& item : d->facade->missionItems(missionId))
     {
-        if (item->sequence() != sequencer)
+        counter++;
+        if (item->sequence() != counter)
         {
-            item->setSequence(sequencer);
+            item->setSequence(counter);
             d->facade->save(item);
             emit missionItemChanged(item);
         }
-        sequencer++;
     }
+
+    db::MissionPtr mission = this->mission(missionId);
+    mission->setCount(counter);
 }

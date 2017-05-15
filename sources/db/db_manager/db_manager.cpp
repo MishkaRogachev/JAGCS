@@ -61,7 +61,8 @@ bool DbManager::create()
 
     result = query.exec("CREATE TABLE missions ("
                         "id INTEGER PRIMARY KEY NOT NULL,"
-                        "name STRING)");
+                        "name STRING,"
+                        "count INTEGER)");
     if (!result)
     {
         qDebug() << query.lastError();
