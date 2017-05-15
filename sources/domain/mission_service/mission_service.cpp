@@ -46,16 +46,7 @@ MissionPtrList MissionService::missions() const
 
 MissionPtr MissionService::mission(int id) const
 {
-    return d->facade->readMission(id);
-}
-
-MissionPtr MissionService::missionByName(const QString& name) const
-{
-    for (const MissionPtr& mission: d->missions)
-    {
-        if (mission->name() == name) return mission;
-    }
-    return MissionPtr();
+    return d->facade->mission(id);
 }
 
 MissionPtr MissionService::missionByVehicle(const VehicleDescriptionPtr& vehicle) const
@@ -64,7 +55,7 @@ MissionPtr MissionService::missionByVehicle(const VehicleDescriptionPtr& vehicle
             d->facade->vehicleAssignment(vehicle->id());
     if (!vehicleAssignment) return db::MissionPtr();
 
-    return d->facade->readMission(vehicleAssignment->missionId());
+    return d->facade->mission(vehicleAssignment->missionId());
 }
 
 MissionAssignmentPtr MissionService::missionAssignment(const MissionPtr& mission) const

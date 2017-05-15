@@ -29,11 +29,11 @@ void EntitiesTest::testMission()
 
     QVERIFY2(dbFacade.save(mission), "Can't update mission");
 
-    QCOMPARE(mission, dbFacade.readMission(id));
+    QCOMPARE(mission, dbFacade.mission(id));
 
     mission->setName("Reload will erase this ridiculous name");
 
-    QCOMPARE(mission, dbFacade.readMission(id, true)); // But pointer will be the same
+    QCOMPARE(mission, dbFacade.mission(id, true)); // But pointer will be the same
 
     QCOMPARE(mission->name(), QString("Another ridiculous name"));
 
@@ -78,7 +78,7 @@ void EntitiesTest::testVehicleDescription()
     int id = vehicle->id();
     QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
 
-    QVERIFY2(dbFacade.readVehicle(id, true), "Can't reload vehicle");
+    QVERIFY2(dbFacade.vehicle(id, true), "Can't reload vehicle");
 
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
     QCOMPARE(vehicle->mavId(), 13);
@@ -124,7 +124,7 @@ void EntitiesTest::testLinkDescription()
     link->setPort(8080);
 
     QVERIFY2(dbFacade.save(link), "Can't insert link");
-    dbFacade.readLink(link->id(), true);
+    dbFacade.link(link->id(), true);
 
     QVERIFY2(link->name() == "UDP link", "Link name are different");
     QCOMPARE(link->type(), LinkDescription::Udp);

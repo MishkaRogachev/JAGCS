@@ -15,11 +15,11 @@ namespace db
         DbFacade();
         ~DbFacade();
 
-        MissionPtr readMission(int id, bool reload = false);
-        MissionItemPtr readMissionItem(int id, bool reload = false);
-        VehicleDescriptionPtr readVehicle(int id, bool reload = false);
-        LinkDescriptionPtr readLink(int id, bool reload = false);
-        MissionAssignmentPtr readAssignment(int id, bool reload = false);
+        MissionPtr mission(int id, bool reload = false);
+        MissionItemPtr missionItem(int id, bool reload = false);
+        VehicleDescriptionPtr vehicle(int id, bool reload = false);
+        LinkDescriptionPtr link(int id, bool reload = false);
+        MissionAssignmentPtr assignment(int id, bool reload = false);
 
         bool save(const MissionPtr& mission);
         bool save(const MissionItemPtr& missionItem);

@@ -93,7 +93,7 @@ ColumnLayout {
 
             Button {
                 iconSource: "qrc:/icons/add.svg"
-                enabled: sequence == count && selectedMission.length > 0
+                enabled: sequence == count && selectedMission > 0
                 onClicked: addItem()
             }
         }

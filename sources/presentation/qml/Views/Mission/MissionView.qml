@@ -11,12 +11,12 @@ Pane {
 
     property alias missions: missionsBox.model
     property alias vehicles: vehiclesBox.model
-    property string selectedMission
+    property alias selectedMission: missionsBox.currentIndex
     property string assignedVehicle
     property int assignedStatus: MissionAssignment.Unknown
     property int progress: progressBar.value
 
-    signal selectMission(string name)
+    signal selectMission(int index)
     signal addMission()
     signal removeMission()
     signal renameMission(string name)
@@ -24,13 +24,6 @@ Pane {
     signal uploadMission()
     signal downloadMission()
 
-    onSelectedMissionChanged: {
-        edit.checked = false;
-        if (missionsBox.currentText != selectedMission)
-        {
-            missionsBox.currentIndex = missionsBox.model.indexOf(selectedMission);
-        }
-    }
     onAssignedVehicleChanged: {
         if (vehiclesBox.currentText != assignedVehicle)
         {
@@ -55,10 +48,7 @@ Pane {
             ComboBox {
                 id: missionsBox
                 visible: !edit.checked
-                onCurrentTextChanged: {
-                    selectedMission = currentText;
-                    selectMission(currentText);
-                }
+                onCurrentIndexChanged: selectMission(currentIndex);
             }
 
             TextField {
@@ -70,11 +60,11 @@ Pane {
                 id: edit
                 iconSource: "qrc:/icons/edit.svg"
                 checkable: true
-                enabled: selectedMission.length > 0
+                enabled: selectedMission > 0
                 onCheckedChanged: {
                     if (checked)
                     {
-                        nameEdit.text = selectedMission;
+                        nameEdit.text = missionsBox.currentText;
                         nameEdit.forceActiveFocus();
                         nameEdit.selectAll();
                     }
@@ -92,7 +82,7 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/remove.svg"
-                enabled: selectedMission.length > 0
+                enabled: selectedMission > 0
                 onClicked: removeMission()
             }
 
@@ -102,7 +92,7 @@ Pane {
 
             ComboBox {
                 id: vehiclesBox
-                enabled: selectedMission.length > 0
+                enabled: selectedMission > 0
                 Layout.columnSpan: 2
                 onCurrentTextChanged: {
                     assignedVehicle = currentText;
@@ -112,14 +102,14 @@ Pane {
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: selectedMission.length > 0 && assignedVehicle.length > 0
+                enabled: selectedMission > 0 && assignedVehicle.length > 0
                 checked: assignedStatus == MissionAssignment.Downloading
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: selectedMission.length > 0 && assignedVehicle.length > 0
+                enabled: selectedMission > 0 && assignedVehicle.length > 0
                 checked: assignedStatus == MissionAssignment.Uploading
                 onClicked: uploadMission()
             }

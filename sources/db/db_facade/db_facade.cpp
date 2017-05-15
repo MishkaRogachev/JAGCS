@@ -40,27 +40,27 @@ DbFacade::DbFacade():
 DbFacade::~DbFacade()
 {}
 
-MissionPtr DbFacade::readMission(int id, bool reload)
+MissionPtr DbFacade::mission(int id, bool reload)
 {
     return d->missionRepository.read(id, reload);
 }
 
-MissionItemPtr DbFacade::readMissionItem(int id, bool reload)
+MissionItemPtr DbFacade::missionItem(int id, bool reload)
 {
     return d->itemRepository.read(id, reload);
 }
 
-VehicleDescriptionPtr DbFacade::readVehicle(int id, bool reload)
+VehicleDescriptionPtr DbFacade::vehicle(int id, bool reload)
 {
     return d->vehicleRepository.read(id, reload);
 }
 
-LinkDescriptionPtr DbFacade::readLink(int id, bool reload)
+LinkDescriptionPtr DbFacade::link(int id, bool reload)
 {
     return d->linkRepository.read(id, reload);
 }
 
-MissionAssignmentPtr DbFacade::readAssignment(int id, bool reload)
+MissionAssignmentPtr DbFacade::assignment(int id, bool reload)
 {
     return d->assignmentRepository.read(id, reload);
 }
@@ -132,7 +132,7 @@ LinkDescriptionPtrList DbFacade::loadLinks(const QString& condition, bool reload
 
     for (int id: d->linkRepository.selectId(condition))
     {
-        list.append(this->readLink(id, reload));
+        list.append(this->link(id, reload));
     }
 
     return list;
@@ -144,7 +144,7 @@ VehicleDescriptionPtrList DbFacade::loadVehicles(const QString& condition, bool 
 
     for (int id: d->vehicleRepository.selectId(condition))
     {
-        list.append(this->readVehicle(id, reload));
+        list.append(this->vehicle(id, reload));
     }
 
     return list;
@@ -156,7 +156,7 @@ MissionPtrList DbFacade::loadMissions(const QString& condition, bool reload)
 
     for (int id: d->missionRepository.selectId(condition))
     {
-        list.append(this->readMission(id, reload));
+        list.append(this->mission(id, reload));
     }
 
     return list;
@@ -168,7 +168,7 @@ MissionItemPtrList DbFacade::loadItems(const QString& condition, bool reload)
 
     for (int id: d->itemRepository.selectId(condition))
     {
-        list.append(this->readMissionItem(id, reload));
+        list.append(this->missionItem(id, reload));
     }
     return list;
 }
@@ -178,7 +178,7 @@ MissionAssignmentPtr DbFacade::missionAssignment(int missionId)
     for (int id: d->assignmentRepository.selectId(
              QString("missionId = %1").arg(missionId)))
     {
-        return this->readAssignment(id);
+        return this->assignment(id);
     }
     return MissionAssignmentPtr();
 }
@@ -188,7 +188,7 @@ MissionAssignmentPtr DbFacade::vehicleAssignment(int vehicleId)
     for (int id: d->assignmentRepository.selectId(
              QString("vehicleId = %1").arg(vehicleId)))
     {
-        return this->readAssignment(id);
+        return this->assignment(id);
     }
     return MissionAssignmentPtr();
 }
@@ -210,7 +210,7 @@ MissionItemPtr DbFacade::missionItem(int missionId, int sequence)
              QString("missionId = %1 AND sequence = %2").arg(
                  missionId).arg(sequence)))
     {
-        return this->readMissionItem(id);
+        return this->missionItem(id);
     }
     return MissionItemPtr();
 }

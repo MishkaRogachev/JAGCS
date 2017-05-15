@@ -1,7 +1,9 @@
 #ifndef MISSION_PRESENTER_H
 #define MISSION_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "db_traits.h"
 
 namespace domain
 {
@@ -19,16 +21,21 @@ namespace presentation
                                   QObject* object = nullptr);
         ~MissionPresenter() override;
 
+    public slots:
+        void selectMission(const db::MissionPtr& mission);
+
     protected:
         void connectView(QObject* view) override;
         void setViewConnected(bool connected);
 
     private slots:
-        void updateMissions();
+        void onMissionAdded(const db::MissionPtr& mission);
+        void onMissionRemoved(const db::MissionPtr& mission);
+        void updateMissionsBox();
         void updateAssignment();
         void updateVehicles();
 
-        void onSelectMission(const QString& name);
+        void onSelectMission(int index);
         void onAddMission();
         void onRemoveMission();
         void onRenameMission(const QString& name);

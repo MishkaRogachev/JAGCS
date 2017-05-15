@@ -60,7 +60,7 @@ VehicleDescriptionPtrList VehicleService::descriptions() const
 
 VehicleDescriptionPtr VehicleService::description(int id) const
 {
-    return d->facade->readVehicle(id);
+    return d->facade->vehicle(id);
 }
 
 VehicleDescriptionPtr VehicleService::findDescriptionByMavId(quint8 mavId) const
