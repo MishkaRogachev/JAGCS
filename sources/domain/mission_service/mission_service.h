@@ -14,7 +14,7 @@ namespace db
 
 namespace domain
 {
-    class MissionService: public QObject
+    class MissionService: public QObject // TODO: deprecate
     {
         Q_OBJECT
 
@@ -23,9 +23,7 @@ namespace domain
         ~MissionService() override;
 
         db::MissionPtrList missions() const;
-
         db::MissionPtr mission(int id) const;
-        db::MissionPtr missionByVehicle(const db::VehicleDescriptionPtr& vehicle) const;
 
         db::MissionAssignmentPtr missionAssignment(const db::MissionPtr& mission) const;
         db::MissionAssignmentPtr vehicleAssignment(const db::VehicleDescriptionPtr& vehicle) const;

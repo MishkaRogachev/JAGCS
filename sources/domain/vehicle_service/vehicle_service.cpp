@@ -75,18 +75,6 @@ VehicleDescriptionPtr VehicleService::findDescriptionByMavId(quint8 mavId) const
     return VehicleDescriptionPtr();
 }
 
-VehicleDescriptionPtr VehicleService::findDescriptionByName(const QString& name) const
-{
-    auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
-                           [name](const VehicleDescriptionPtr& description)
-    {
-        return description->name() == name;
-    });
-
-    if (it != d->descriptions.cend()) return *it;
-    return VehicleDescriptionPtr();
-}
-
 BaseVehicle* VehicleService::baseVehicle(const VehicleDescriptionPtr& description)
 {
     return d->descriptedVehicles.value(description, nullptr);

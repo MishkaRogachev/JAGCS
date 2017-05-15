@@ -32,14 +32,16 @@ namespace presentation
         void onMissionAdded(const db::MissionPtr& mission);
         void onMissionRemoved(const db::MissionPtr& mission);
         void updateMissionsBox();
+        void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
+        void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
+        void updateVehiclesBox();
         void updateAssignment();
-        void updateVehicles();
 
         void onSelectMission(int index);
         void onAddMission();
         void onRemoveMission();
         void onRenameMission(const QString& name);
-        void onAssignVehicle(const QString& name);
+        void onAssignVehicle(int index);
         void onUploadMission();
         void onDownloadMission();
 

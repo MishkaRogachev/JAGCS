@@ -49,15 +49,6 @@ MissionPtr MissionService::mission(int id) const
     return d->facade->mission(id);
 }
 
-MissionPtr MissionService::missionByVehicle(const VehicleDescriptionPtr& vehicle) const
-{
-    db::MissionAssignmentPtr vehicleAssignment =
-            d->facade->vehicleAssignment(vehicle->id());
-    if (!vehicleAssignment) return db::MissionPtr();
-
-    return d->facade->mission(vehicleAssignment->missionId());
-}
-
 MissionAssignmentPtr MissionService::missionAssignment(const MissionPtr& mission) const
 {
     return d->facade->missionAssignment(mission->id());

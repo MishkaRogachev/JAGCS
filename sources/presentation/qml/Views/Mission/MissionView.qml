@@ -12,7 +12,7 @@ Pane {
     property alias missions: missionsBox.model
     property alias vehicles: vehiclesBox.model
     property alias selectedMission: missionsBox.currentIndex
-    property string assignedVehicle
+    property alias assignedVehicle: vehiclesBox.currentIndex
     property int assignedStatus: MissionAssignment.Unknown
     property int progress: progressBar.value
 
@@ -20,16 +20,9 @@ Pane {
     signal addMission()
     signal removeMission()
     signal renameMission(string name)
-    signal assignVehicle(string name)
+    signal assignVehicle(int index)
     signal uploadMission()
     signal downloadMission()
-
-    onAssignedVehicleChanged: {
-        if (vehiclesBox.currentText != assignedVehicle)
-        {
-            vehiclesBox.currentIndex = vehiclesBox.model.indexOf(assignedVehicle);
-        }
-    }
 
     ColumnLayout {
         id: column
@@ -94,22 +87,19 @@ Pane {
                 id: vehiclesBox
                 enabled: selectedMission > 0
                 Layout.columnSpan: 2
-                onCurrentTextChanged: {
-                    assignedVehicle = currentText;
-                    assignVehicle(currentText);
-                }
+                onCurrentIndexChanged: assignVehicle(currentIndex)
             }
 
             Button {
                 iconSource: "qrc:/icons/download.svg"
-                enabled: selectedMission > 0 && assignedVehicle.length > 0
+                enabled: selectedMission > 0 && assignedVehicle > 0
                 checked: assignedStatus == MissionAssignment.Downloading
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: selectedMission > 0 && assignedVehicle.length > 0
+                enabled: selectedMission > 0 && assignedVehicle > 0
                 checked: assignedStatus == MissionAssignment.Uploading
                 onClicked: uploadMission()
             }

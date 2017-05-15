@@ -17,7 +17,7 @@ namespace domain
     class BaseVehicle;
     class AerialVehicle;
 
-    class VehicleService: public QObject
+    class VehicleService: public QObject // TODO: refactor to telemetryService
     {
         Q_OBJECT
 
@@ -29,7 +29,6 @@ namespace domain
         db::VehicleDescriptionPtr description(int id) const;
         // TODO: fix vehicles search
         db::VehicleDescriptionPtr findDescriptionByMavId(quint8 mavId) const;
-        db::VehicleDescriptionPtr findDescriptionByName(const QString& name) const;
 
         BaseVehicle* baseVehicle(const db::VehicleDescriptionPtr& description);
         BaseVehicle* baseVehicle(quint8 mavId);
