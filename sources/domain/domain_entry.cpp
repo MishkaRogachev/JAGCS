@@ -14,6 +14,7 @@
 
 #include "vehicle_service.h"
 #include "mission_service.h"
+#include "command_service.h"
 
 #include "communication_service.h"
 #include "mavlink_communicator_factory.h"
@@ -30,6 +31,7 @@ public:
 
     QScopedPointer<VehicleService> vehicleService;
     QScopedPointer<MissionService> missionService;
+    CommandService commandService;
 
     QScopedPointer<CommunicationService> commService;
 };
@@ -56,6 +58,7 @@ DomainEntry::DomainEntry():
     comm::MavLinkCommunicatorFactory comFactory(
                 d->vehicleService.data(),
                 d->missionService.data(),
+                &d->commandService,
                 SettingsProvider::value(settings::communication::systemId).toInt(),
                 SettingsProvider::value(settings::communication::componentId).toInt());
 
@@ -78,6 +81,11 @@ VehicleService* DomainEntry::vehicleService() const
 MissionService* DomainEntry::missionService() const
 {
     return d->missionService.data();
+}
+
+CommandService*DomainEntry::commandService() const
+{
+    return &d->commandService;
 }
 
 ProxyManager*DomainEntry::proxyManager() const

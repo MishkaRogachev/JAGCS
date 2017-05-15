@@ -9,6 +9,7 @@ namespace domain
 {
     class MissionService;
     class VehicleService;
+    class CommandService;
 }
 
 namespace comm
@@ -20,6 +21,7 @@ namespace comm
     public:
         MissionHandler(domain::MissionService* missionService,
                        domain::VehicleService* vehicleService,
+                       domain::CommandService* commandService,
                        MavLinkCommunicator* communicator);
 
     public slots:

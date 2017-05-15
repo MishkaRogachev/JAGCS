@@ -6,9 +6,10 @@
 
 namespace domain
 {
-    class CommunicationService;
     class VehicleService;
     class MissionService;
+    class CommandService;
+    class CommunicationService;
 
     class ProxyManager;
 
@@ -18,9 +19,11 @@ namespace domain
         DomainEntry();
         ~DomainEntry();
 
-        CommunicationService* commService() const;
         VehicleService* vehicleService() const;
         MissionService* missionService() const;
+        CommandService* commandService() const;
+
+        CommunicationService* commService() const;
 
         ProxyManager* proxyManager() const;
 

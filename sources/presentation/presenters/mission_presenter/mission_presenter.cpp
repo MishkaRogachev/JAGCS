@@ -9,6 +9,7 @@
 
 #include "mission_service.h"
 #include "vehicle_service.h"
+#include "command_service.h"
 
 #include "mission.h"
 #include "mission_item.h"
@@ -25,6 +26,7 @@ class MissionPresenter::Impl
 public:
     domain::MissionService* missionService;
     domain::VehicleService* vehicleService;
+    domain::CommandService* commandService;
 
     db::MissionPtr selectedMission;
 
@@ -41,6 +43,7 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
 {
     d->missionService = entry->missionService();
     d->vehicleService = entry->vehicleService();
+    d->commandService = entry->commandService();
 
     connect(d->missionService, &domain::MissionService::missionAdded,
             this, &MissionPresenter::updateMissions);
@@ -222,7 +225,7 @@ void MissionPresenter::onUploadMission()
             d->missionService->missionAssignment(d->selectedMission);
     if (assignment.isNull()) return;
 
-    emit d->missionService->upload(assignment);
+    d->commandService->upload(assignment);
     this->updateAssignment();
 }
 
@@ -233,6 +236,6 @@ void MissionPresenter::onDownloadMission()
             d->missionService->missionAssignment(d->selectedMission);
     if (assignment.isNull()) return;
 
-    emit d->missionService->download(assignment);
+    d->commandService->download(assignment);
     this->updateAssignment();
 }

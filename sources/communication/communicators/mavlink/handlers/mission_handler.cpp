@@ -11,6 +11,7 @@
 
 #include "mission_service.h"
 #include "vehicle_service.h"
+#include "command_service.h"
 
 #include "mission.h"
 #include "mission_item.h"
@@ -68,14 +69,15 @@ using namespace comm;
 
 MissionHandler::MissionHandler(domain::MissionService* missionService,
                                domain::VehicleService* vehicleService,
+                               domain::CommandService* commandService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_missionService(missionService),
     m_vehicleService(vehicleService)
 {
-    connect(missionService, &domain::MissionService::download,
+    connect(commandService, &domain::CommandService::download,
             this, &MissionHandler::download);
-    connect(missionService, &domain::MissionService::upload,
+    connect(commandService, &domain::CommandService::upload,
             this, &MissionHandler::upload);
 }
 

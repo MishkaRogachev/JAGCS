@@ -60,9 +60,6 @@ namespace domain
         void missionItemRemoved(db::MissionItemPtr item);
         void missionItemChanged(db::MissionItemPtr item);
 
-        void download(db::MissionAssignmentPtr assignment);
-        void upload(db::MissionAssignmentPtr assignment);
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;

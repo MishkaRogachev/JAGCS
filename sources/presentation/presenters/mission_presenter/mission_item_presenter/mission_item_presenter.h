@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MissionItemPresenter(domain::MissionService* service,
+        explicit MissionItemPresenter(domain::MissionService* missionService,
                                       QObject* object = nullptr);
         ~MissionItemPresenter() override;
 
