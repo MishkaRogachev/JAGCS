@@ -18,8 +18,6 @@ class MissionService::Impl
 {
 public:
     DbFacade* facade;
-
-    MissionPtrList missions;
 };
 
 MissionService::MissionService(db::DbFacade* facade, QObject* parent):
@@ -28,20 +26,25 @@ MissionService::MissionService(db::DbFacade* facade, QObject* parent):
 {
     d->facade = facade;
 
-    d->missions = facade->loadMissions();
+    connect(facade, &DbFacade::missionAdded, this, &MissionService::missionAdded);
+    connect(facade, &DbFacade::missionRemoved, this, &MissionService::missionRemoved);
+    connect(facade, &DbFacade::missionChanged, this, &MissionService::missionChanged);
+
+    connect(facade, &DbFacade::missionItemAdded, this, &MissionService::missionItemAdded);
+    connect(facade, &DbFacade::missionItemRemoved, this, &MissionService::missionItemRemoved);
+    connect(facade, &DbFacade::missionItemChanged, this, &MissionService::missionItemChanged);
+
+    connect(facade, &DbFacade::assignmentAdded, this, &MissionService::assignmentAdded);
+    connect(facade, &DbFacade::assignmentRemoved, this, &MissionService::assignmentRemoved);
+    connect(facade, &DbFacade::assignmentChanged, this, &MissionService::assignmentChanged);
 }
 
 MissionService::~MissionService()
-{
-    for (const MissionPtr& mission: d->missions)
-    {
-        d->facade->save(mission);
-    }
-}
+{}
 
 MissionPtrList MissionService::missions() const
 {
-    return d->missions;
+    return d->facade->loadMissions();;
 }
 
 MissionPtr MissionService::mission(int id) const
@@ -61,38 +64,12 @@ MissionAssignmentPtr MissionService::vehicleAssignment(const VehicleDescriptionP
 
 void MissionService::assign(const MissionPtr& mission, const VehicleDescriptionPtr& vehicle)
 {
-    // Unassign current vehicle's assignment
-    db::MissionAssignmentPtr vehicleAssignment =
-            d->facade->vehicleAssignment(vehicle->id());
-    if (vehicleAssignment)
-    {
-        if (vehicleAssignment->missionId() == mission->id()) return;
-
-        if (!d->facade->remove(vehicleAssignment)) return;
-        emit assignmentRemoved(vehicleAssignment);
-    }
-
-    // Read current mission assignment, if exist
-    MissionAssignmentPtr assignment = this->missionAssignment(mission);
-    if (assignment.isNull())
-    {
-        assignment = MissionAssignmentPtr::create();
-        assignment->setMissionId(mission->id());
-    }
-    else if (assignment->vehicleId() == vehicle->id()) return;
-
-    bool isNew = assignment->id() == 0;
-    assignment->setVehicleId(vehicle->id());
-    assignment->setStatus(MissionAssignment::NotActual);
-
-    d->facade->save(assignment);
-    emit (isNew ? assignmentAdded(assignment) : assignmentChanged(assignment));
+    d->facade->assign(mission->id(), vehicle->id());
 }
 
 void MissionService::unassign(const MissionPtr& mission)
 {
-    db::MissionAssignmentPtr assignment = this->missionAssignment(mission);
-    if (!assignment.isNull()) d->facade->remove(assignment);
+    d->facade->unassign(mission->id());
 }
 
 MissionItemPtrList MissionService::missionItems() const
@@ -112,112 +89,30 @@ MissionItemPtr MissionService::missionItem(int missionId, int sequence) const
 
 void MissionService::saveMission(const MissionPtr& mission)
 {
-    if (!d->facade->save(mission)) return;
-
-    if (!d->missions.contains(mission))
-    {
-        d->missions.append(mission);
-        emit missionAdded(mission);
-    }
+    d->facade->save(mission);
 }
 
 void MissionService::removeMission(const MissionPtr& mission)
 {
-    for (const db::MissionItemPtr& item: this->missionItems(mission->id()))
-    {
-        this->removeMissionItem(item);
-    }
-
-    if (!d->facade->remove(mission)) return;
-
-    d->missions.removeOne(mission);
-    emit missionRemoved(mission);
+    d->facade->remove(mission);
 }
 
 void MissionService::saveMissionItem(const MissionItemPtr& item)
 {
-    bool isNew = item->id() == 0;
-
-    if (!d->facade->save(item)) return;
-
-    if (isNew)
-    {
-        this->fixSequenceOrder(item->missionId());
-        emit missionItemAdded(item);
-    }
-    else
-    {
-        emit missionItemChanged(item);
-    }
+    d->facade->save(item);
 }
 
 void MissionService::removeMissionItem(const MissionItemPtr& item)
 {
-    if (!d->facade->remove(item)) return;
-    this->fixSequenceOrder(item->missionId());
-
-    emit missionItemRemoved(item);
+    d->facade->remove(item);
 }
 
 void MissionService::addNewMissionItem(int missionId)
 {
-    db::MissionPtr mission = this->mission(missionId);
-    if (mission.isNull()) return;
-
-    db::MissionItemPtr item = db::MissionItemPtr::create();
-    item->setMissionId(missionId);
-
-    if (mission->count())
-    {
-        item->setCommand(db::MissionItem::Waypoint);
-
-        db::MissionItemPtr lastItem = this->missionItem(missionId, mission->count());
-        if (lastItem->isAltitudeRelative())
-        {
-            item->setAltitude(0);
-            item->setAltitudeRelative(true);
-        }
-        else
-        {
-            item->setAltitude(lastItem->altitude());
-        }
-    }
-    else
-    {
-        item->setCommand(db::MissionItem::Takeoff);
-        item->setAltitude(0);
-        item->setAltitudeRelative(true);
-    }
-
-    item->setSequence(mission->count() + 1);
-    mission->setCount(item->sequence());
-
-    if (d->facade->save(item) &&
-        d->facade->save(mission)) emit missionItemAdded(item);
+    d->facade->addNewMissionItem(missionId);
 }
 
-void MissionService::saveMissionItems(const MissionPtr& mission)
+void MissionService::saveMissionItems(int missionId)
 {
-    for (const db::MissionItemPtr& item: d->facade->missionItems(mission->id()))
-    {
-        this->saveMissionItem(item);
-    }
-}
-
-void MissionService::fixSequenceOrder(int missionId)
-{
-    int counter = 0;
-    for (const db::MissionItemPtr& item : d->facade->missionItems(missionId))
-    {
-        counter++;
-        if (item->sequence() != counter)
-        {
-            item->setSequence(counter);
-            d->facade->save(item);
-            emit missionItemChanged(item);
-        }
-    }
-
-    db::MissionPtr mission = this->mission(missionId);
-    mission->setCount(counter);
+    d->facade->saveMissionItems(missionId);
 }

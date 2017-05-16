@@ -41,21 +41,20 @@ namespace domain
         void saveMissionItem(const db::MissionItemPtr& item);
         void removeMissionItem(const db::MissionItemPtr& item);
         void addNewMissionItem(int missionId);
-        void saveMissionItems(const db::MissionPtr& mission);
-
-        void fixSequenceOrder(int missionId);
+        void saveMissionItems(int missionId);
 
     signals:
         void missionAdded(db::MissionPtr mission);
         void missionRemoved(db::MissionPtr mission);
-
-        void assignmentAdded(db::MissionAssignmentPtr assignment);
-        void assignmentRemoved(db::MissionAssignmentPtr assignment);
-        void assignmentChanged(db::MissionAssignmentPtr assignment);
+        void missionChanged(db::MissionPtr mission);
 
         void missionItemAdded(db::MissionItemPtr item);
         void missionItemRemoved(db::MissionItemPtr item);
         void missionItemChanged(db::MissionItemPtr item);
+
+        void assignmentAdded(db::MissionAssignmentPtr assignment);
+        void assignmentRemoved(db::MissionAssignmentPtr assignment);
+        void assignmentChanged(db::MissionAssignmentPtr assignment);
 
     private:
         class Impl;

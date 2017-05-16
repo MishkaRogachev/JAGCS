@@ -49,7 +49,7 @@ MissionItemPresenter::~MissionItemPresenter()
 {
     if (d->selectedMission)
     {
-        d->missionService->saveMissionItems(d->selectedMission);
+        d->missionService->saveMissionItems(d->selectedMission->id());
     }
 }
 
@@ -64,7 +64,7 @@ void MissionItemPresenter::setMission(const db::MissionPtr& mission)
 
     if (d->selectedMission) // TODO: save only nessesory data
     {
-        d->missionService->saveMissionItems(d->selectedMission);
+        d->missionService->saveMissionItems(d->selectedMission->id());
     }
 
     d->selectedMission = mission;

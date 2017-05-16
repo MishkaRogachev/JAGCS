@@ -33,7 +33,8 @@ public:
     {}
 };
 
-DbFacade::DbFacade():
+DbFacade::DbFacade(QObject* parent):
+    QObject(parent),
     d(new Impl())
 {}
 
@@ -67,12 +68,37 @@ MissionAssignmentPtr DbFacade::assignment(int id, bool reload)
 
 bool DbFacade::save(const MissionPtr& mission)
 {
-    return d->missionRepository.save(mission);
+    bool isNew = mission->id() == 0;
+    if (!d->missionRepository.save(mission)) return false;
+
+    if (isNew)
+    {
+        emit missionAdded(mission);
+    }
+    else
+    {
+        emit missionChanged(mission);  // TODO: check changed flag
+    }
+
+    return true;
 }
 
-bool DbFacade::save(const MissionItemPtr& missionItem)
+bool DbFacade::save(const MissionItemPtr& item)
 {
-    return d->itemRepository.save(missionItem);
+    bool isNew = item->id() == 0;
+    if (!d->itemRepository.save(item)) return false;
+
+    if (isNew)
+    {
+        this->fixMissionItemOrder(item->missionId());
+        emit missionItemAdded(item);
+    }
+    else
+    {
+        emit missionItemChanged(item);  // TODO: check changed flag
+    }
+
+    return true;
 }
 
 bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
@@ -92,7 +118,7 @@ bool DbFacade::save(const MissionAssignmentPtr& assignment)
 
 bool DbFacade::remove(const MissionPtr& mission)
 {
-    db::MissionAssignmentPtr assignment = this->missionAssignment(mission->id());
+    MissionAssignmentPtr assignment = this->missionAssignment(mission->id());
     if (assignment && !this->remove(assignment)) return false;
 
     for (const MissionItemPtr& item: this->missionItems(mission->id()))
@@ -100,17 +126,23 @@ bool DbFacade::remove(const MissionPtr& mission)
         if (!this->remove(item)) return false;
     }
 
-    return d->missionRepository.remove(mission);
+    if (!d->missionRepository.remove(mission)) return false;
+
+    emit missionRemoved(mission);
+    return true;
 }
 
-bool DbFacade::remove(const MissionItemPtr& missionItem)
+bool DbFacade::remove(const MissionItemPtr& item)
 {
-    return d->itemRepository.remove(missionItem);
+    if (!d->itemRepository.remove(item)) return false;
+
+    this->fixMissionItemOrder(item->missionId());
+    return true;
 }
 
 bool DbFacade::remove(const VehicleDescriptionPtr& vehicle)
 {
-    db::MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
+    MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
     if (assignment && !this->remove(assignment)) return false;
 
     return d->vehicleRepository.remove(vehicle);
@@ -213,4 +245,102 @@ MissionItemPtr DbFacade::missionItem(int missionId, int sequence)
         return this->missionItem(id);
     }
     return MissionItemPtr();
+}
+
+void DbFacade::addNewMissionItem(int missionId)
+{
+    MissionPtr mission = this->mission(missionId);
+    if (mission.isNull()) return;
+
+    MissionItemPtr item = MissionItemPtr::create();
+    item->setMissionId(missionId);
+
+    if (mission->count()) // TODO: init other params
+    {
+        item->setCommand(MissionItem::Waypoint);
+
+        MissionItemPtr lastItem = this->missionItem(missionId, mission->count());
+        if (lastItem->isAltitudeRelative())
+        {
+            item->setAltitude(0);
+            item->setAltitudeRelative(true);
+        }
+        else
+        {
+            item->setAltitude(lastItem->altitude());
+        }
+    }
+    else
+    {
+        item->setCommand(MissionItem::Takeoff);
+        item->setAltitude(0);
+        item->setAltitudeRelative(true);
+    }
+
+    this->save(item);
+}
+
+void DbFacade::saveMissionItems(int missionId)
+{
+    for (const MissionItemPtr& item: this->missionItems(missionId))
+    {
+        this->save(item);
+    }
+}
+
+void DbFacade::fixMissionItemOrder(int missionId)
+{
+    int counter = 0;
+    for (const MissionItemPtr& item : this->missionItems(missionId))
+    {
+        counter++;
+        if (item->sequence() != counter)
+        {
+            item->setSequence(counter);
+            emit missionItemChanged(item);
+        }
+    }
+
+    MissionPtr mission = this->mission(missionId);
+    if (mission->count() != counter)
+    {
+        mission->setCount(counter);
+        emit missionChanged(mission);
+    }
+}
+
+void DbFacade::assign(int missionId, int vehicleId)
+{
+    // Unassign current vehicle's assignment
+    MissionAssignmentPtr vehicleAssignment = this->vehicleAssignment(vehicleId);
+    if (vehicleAssignment)
+    {
+        if (vehicleAssignment->missionId() == missionId) return;
+
+        if (!this->remove(vehicleAssignment)) return;
+        emit assignmentRemoved(vehicleAssignment);
+    }
+
+    // Read current mission assignment, if exist
+    MissionAssignmentPtr missionAssignment = this->missionAssignment(missionId);
+    if (missionAssignment.isNull())
+    {
+        missionAssignment = MissionAssignmentPtr::create();
+        missionAssignment->setMissionId(missionId);
+    }
+    else if (missionAssignment->vehicleId() == vehicleId) return;
+
+    bool isNew = missionAssignment->id() == 0;
+    missionAssignment->setVehicleId(vehicleId);
+    missionAssignment->setStatus(MissionAssignment::NotActual);
+
+    this->save(missionAssignment);
+    emit (isNew ? assignmentAdded(missionAssignment) :
+                  assignmentChanged(missionAssignment));
+}
+
+void DbFacade::unassign(int missionId)
+{
+    MissionAssignmentPtr assignment = this->missionAssignment(missionId);
+    if (!assignment.isNull()) this->remove(assignment);
 }
