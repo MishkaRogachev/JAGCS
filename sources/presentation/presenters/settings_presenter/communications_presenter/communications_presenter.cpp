@@ -28,7 +28,7 @@ public:
 };
 
 CommunicationsPresenter::CommunicationsPresenter(domain::DomainEntry* entry,
-        QObject* parent):
+                                                 QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -42,12 +42,12 @@ CommunicationsPresenter::CommunicationsPresenter(domain::DomainEntry* entry,
     connect(d->dbFacade, &db::DbFacade::linkRemoved,
             this, &CommunicationsPresenter::onLinkRemoved);
     connect(d->service, &CommunicationService::linkStatisticsChanged,
-                this, &CommunicationsPresenter::onLinkStatisticsChanged);
+            this, &CommunicationsPresenter::onLinkStatisticsChanged);
 
     for (const db::LinkDescriptionPtr& description: d->dbFacade->links())
     {
         d->linkPresenters[description] =
-                new CommunicationLinkPresenter(d->dbFacade, description, this);
+                new CommunicationLinkPresenter(d->dbFacade, d->service, description, this);
     }
 }
 
@@ -65,7 +65,8 @@ void CommunicationsPresenter::connectView(QObject* view)
 void CommunicationsPresenter::onLinkAdded(
         const db::LinkDescriptionPtr& description)
 {
-    d->linkPresenters[description] = new CommunicationLinkPresenter(d->dbFacade, description, this);
+    d->linkPresenters[description] =
+            new CommunicationLinkPresenter(d->dbFacade, d->service, description, this);
 
     this->updateCommunicationsLinks();
 }
