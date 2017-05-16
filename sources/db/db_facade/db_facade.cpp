@@ -71,15 +71,7 @@ bool DbFacade::save(const MissionPtr& mission)
     bool isNew = mission->id() == 0;
     if (!d->missionRepository.save(mission)) return false;
 
-    if (isNew)
-    {
-        emit missionAdded(mission);
-    }
-    else
-    {
-        emit missionChanged(mission);  // TODO: check changed flag
-    }
-
+    emit (isNew ? missionAdded(mission) : missionChanged(mission));
     return true;
 }
 
@@ -103,17 +95,21 @@ bool DbFacade::save(const MissionItemPtr& item)
 
 bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
 {
-    return d->vehicleRepository.save(vehicle);
+    return d->vehicleRepository.save(vehicle);//TODO: emit
 }
 
 bool DbFacade::save(const LinkDescriptionPtr& link)
 {
-    return d->linkRepository.save(link);
+    return d->linkRepository.save(link);//TODO: emit
 }
 
 bool DbFacade::save(const MissionAssignmentPtr& assignment)
 {
-    return d->assignmentRepository.save(assignment);
+    bool isNew = assignment->id() == 0;
+    if (!d->assignmentRepository.save(assignment)) return false;
+
+    emit (isNew ? assignmentAdded(assignment) : assignmentChanged(assignment));
+    return true;
 }
 
 bool DbFacade::remove(const MissionPtr& mission)
@@ -137,6 +133,7 @@ bool DbFacade::remove(const MissionItemPtr& item)
     if (!d->itemRepository.remove(item)) return false;
 
     this->fixMissionItemOrder(item->missionId());
+    emit missionItemRemoved(item);
     return true;
 }
 
@@ -146,16 +143,21 @@ bool DbFacade::remove(const VehicleDescriptionPtr& vehicle)
     if (assignment && !this->remove(assignment)) return false;
 
     return d->vehicleRepository.remove(vehicle);
+    //TODO: emit
 }
 
 bool DbFacade::remove(const LinkDescriptionPtr& link)
 {
     return d->linkRepository.remove(link);
+    //TODO: emit
 }
 
 bool DbFacade::remove(const MissionAssignmentPtr& assignment)
 {
-    return d->assignmentRepository.remove(assignment);
+    if (!d->assignmentRepository.remove(assignment)) return false;
+
+    emit assignmentRemoved(assignment);
+    return true;
 }
 
 LinkDescriptionPtrList DbFacade::links(const QString& condition, bool reload)
@@ -277,6 +279,8 @@ void DbFacade::addNewMissionItem(int missionId)
         item->setAltitudeRelative(true);
     }
 
+    item->setSequence(mission->count() + 1);
+
     this->save(item);
 }
 
@@ -297,7 +301,7 @@ void DbFacade::fixMissionItemOrder(int missionId)
         if (item->sequence() != counter)
         {
             item->setSequence(counter);
-            emit missionItemChanged(item);
+            this->save(item);
         }
     }
 
@@ -305,7 +309,7 @@ void DbFacade::fixMissionItemOrder(int missionId)
     if (mission->count() != counter)
     {
         mission->setCount(counter);
-        emit missionChanged(mission);
+        this->save(mission);
     }
 }
 
@@ -318,7 +322,6 @@ void DbFacade::assign(int missionId, int vehicleId)
         if (vehicleAssignment->missionId() == missionId) return;
 
         if (!this->remove(vehicleAssignment)) return;
-        emit assignmentRemoved(vehicleAssignment);
     }
 
     // Read current mission assignment, if exist
@@ -330,13 +333,10 @@ void DbFacade::assign(int missionId, int vehicleId)
     }
     else if (missionAssignment->vehicleId() == vehicleId) return;
 
-    bool isNew = missionAssignment->id() == 0;
     missionAssignment->setVehicleId(vehicleId);
     missionAssignment->setStatus(MissionAssignment::NotActual);
 
     this->save(missionAssignment);
-    emit (isNew ? assignmentAdded(missionAssignment) :
-                  assignmentChanged(missionAssignment));
 }
 
 void DbFacade::unassign(int missionId)
