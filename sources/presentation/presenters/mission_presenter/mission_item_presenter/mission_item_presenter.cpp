@@ -6,10 +6,9 @@
 #include <QDebug>
 
 // Internal
+#include "db_facade.h"
 #include "mission.h"
 #include "mission_item.h"
-
-#include "mission_service.h"
 
 using namespace presentation;
 
@@ -19,7 +18,7 @@ public:
     db::MissionPtr selectedMission;
     db::MissionItemPtr item;
 
-    domain::MissionService* missionService;
+    db::DbFacade* dbFacade;
 
     const QMap<db::MissionItem::Command, QString> commands = {
         { db::MissionItem::UnknownCommand, tr("None") },
@@ -32,16 +31,15 @@ public:
         { db::MissionItem::Landing, tr("Landing") } };
 };
 
-MissionItemPresenter::MissionItemPresenter(domain::MissionService* missionService,
-                                           QObject* object):
+MissionItemPresenter::MissionItemPresenter(db::DbFacade* dbFacade, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->missionService = missionService;
+    d->dbFacade = dbFacade;
 
-    connect(missionService, &domain::MissionService::missionItemAdded,
+    connect(dbFacade, &db::DbFacade::missionItemAdded,
             this, &MissionItemPresenter::updateCount);
-    connect(missionService, &domain::MissionService::missionItemRemoved,
+    connect(dbFacade, &db::DbFacade::missionItemRemoved,
             this, &MissionItemPresenter::updateCount);
 }
 
@@ -49,7 +47,7 @@ MissionItemPresenter::~MissionItemPresenter()
 {
     if (d->selectedMission)
     {
-        d->missionService->saveMissionItems(d->selectedMission->id());
+        d->dbFacade->saveMissionItems(d->selectedMission->id());
     }
 }
 
@@ -64,7 +62,7 @@ void MissionItemPresenter::setMission(const db::MissionPtr& mission)
 
     if (d->selectedMission) // TODO: save only nessesory data
     {
-        d->missionService->saveMissionItems(d->selectedMission->id());
+        d->dbFacade->saveMissionItems(d->selectedMission->id());
     }
 
     d->selectedMission = mission;
@@ -140,7 +138,7 @@ void MissionItemPresenter::onAddItem()
 {
     if (d->selectedMission.isNull()) return;
 
-    d->missionService->addNewMissionItem(d->selectedMission->id());
+    d->dbFacade->addNewMissionItem(d->selectedMission->id());
     int count = d->selectedMission->count();
     this->onSelectItem(count);
     this->setViewProperty(PROPERTY(picking), count > 1);
@@ -150,14 +148,14 @@ void MissionItemPresenter::onRemoveItem()
 {
     if (d->item.isNull()) return;
 
-    d->missionService->removeMissionItem(d->item);
+    d->dbFacade->remove(d->item);
 }
 
 void MissionItemPresenter::onSelectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->item = d->missionService->missionItem(d->selectedMission->id(), index);
+    d->item = d->dbFacade->missionItem(d->selectedMission->id(), index);
     this->updateItem();
 }
 
@@ -167,7 +165,7 @@ void MissionItemPresenter::onSetCommand(int command)
 
     d->item->setCommand(db::MissionItem::Command(command));
     this->updateItem();
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetAltitude(qreal altitude)
@@ -175,7 +173,7 @@ void MissionItemPresenter::onSetAltitude(qreal altitude)
     if (d->item.isNull()) return;
 
     d->item->setAltitude(altitude);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetAltitudeRelative(bool relative)
@@ -183,7 +181,7 @@ void MissionItemPresenter::onSetAltitudeRelative(bool relative)
     if (d->item.isNull()) return;
 
     d->item->setAltitudeRelative(relative);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetLatitude(qreal latitude)
@@ -191,7 +189,7 @@ void MissionItemPresenter::onSetLatitude(qreal latitude)
     if (d->item.isNull()) return;
 
     d->item->setLatitude(latitude);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetLongitude(qreal longitude)
@@ -199,7 +197,7 @@ void MissionItemPresenter::onSetLongitude(qreal longitude)
     if (d->item.isNull()) return;
 
     d->item->setLongitude(longitude);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetRadius(qreal radius)
@@ -207,7 +205,7 @@ void MissionItemPresenter::onSetRadius(qreal radius)
     if (d->item.isNull()) return;
 
     d->item->setRadius(radius);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetPeriods(int periods)
@@ -215,7 +213,7 @@ void MissionItemPresenter::onSetPeriods(int periods)
     if (d->item.isNull()) return;
 
     d->item->setPeriods(periods);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }
 
 void MissionItemPresenter::onSetPitch(qreal pitch)
@@ -223,5 +221,5 @@ void MissionItemPresenter::onSetPitch(qreal pitch)
     if (d->item.isNull()) return;
 
     d->item->setPitch(pitch);
-    emit d->missionService->missionItemChanged(d->item);
+    emit d->dbFacade->missionItemChanged(d->item);
 }

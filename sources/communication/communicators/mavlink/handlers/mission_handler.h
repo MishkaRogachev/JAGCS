@@ -5,9 +5,13 @@
 #include "abstract_mavlink_handler.h"
 #include "db_traits.h"
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
-    class MissionService;
     class VehicleService;
     class CommandService;
 }
@@ -19,7 +23,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        MissionHandler(domain::MissionService* missionService,
+        MissionHandler(db::DbFacade* dbFacade,
                        domain::VehicleService* vehicleService,
                        domain::CommandService* commandService,
                        MavLinkCommunicator* communicator);
@@ -44,7 +48,7 @@ namespace comm
         void processMissionCurrent(const mavlink_message_t& message);
 
    private:
-       domain::MissionService* m_missionService;
+       db::DbFacade* m_dbFacade;
        domain::VehicleService* m_vehicleService;
     };
 }

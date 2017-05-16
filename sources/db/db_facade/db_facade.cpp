@@ -158,7 +158,7 @@ bool DbFacade::remove(const MissionAssignmentPtr& assignment)
     return d->assignmentRepository.remove(assignment);
 }
 
-LinkDescriptionPtrList DbFacade::loadLinks(const QString& condition, bool reload)
+LinkDescriptionPtrList DbFacade::links(const QString& condition, bool reload)
 {
     LinkDescriptionPtrList list;
 
@@ -170,7 +170,7 @@ LinkDescriptionPtrList DbFacade::loadLinks(const QString& condition, bool reload
     return list;
 }
 
-VehicleDescriptionPtrList DbFacade::loadVehicles(const QString& condition, bool reload)
+VehicleDescriptionPtrList DbFacade::vehicles(const QString& condition, bool reload)
 {
     VehicleDescriptionPtrList list;
 
@@ -182,7 +182,7 @@ VehicleDescriptionPtrList DbFacade::loadVehicles(const QString& condition, bool 
     return list;
 }
 
-MissionPtrList DbFacade::loadMissions(const QString& condition, bool reload)
+MissionPtrList DbFacade::missions(const QString& condition, bool reload)
 {
     MissionPtrList list;
 
@@ -194,7 +194,7 @@ MissionPtrList DbFacade::loadMissions(const QString& condition, bool reload)
     return list;
 }
 
-MissionItemPtrList DbFacade::loadItems(const QString& condition, bool reload)
+MissionItemPtrList DbFacade::items(const QString& condition, bool reload)
 {
     MissionItemPtrList list;
 
@@ -227,12 +227,12 @@ MissionAssignmentPtr DbFacade::vehicleAssignment(int vehicleId)
 
 MissionItemPtrList DbFacade::missionItems()
 {
-    return this->loadItems();
+    return this->items();
 }
 
 MissionItemPtrList DbFacade::missionItems(int missionId)
 {
-    return this->loadItems(QString("missionId = %1 ORDER BY sequence").arg(
+    return this->items(QString("missionId = %1 ORDER BY sequence").arg(
                                missionId));
 }
 

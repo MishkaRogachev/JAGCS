@@ -4,10 +4,14 @@
 // Qt
 #include <QScopedPointer>
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
     class VehicleService;
-    class MissionService;
     class CommandService;
     class CommunicationService;
 
@@ -19,8 +23,9 @@ namespace domain
         DomainEntry();
         ~DomainEntry();
 
+        db::DbFacade* dbFacade() const;
+
         VehicleService* vehicleService() const;
-        MissionService* missionService() const;
         CommandService* commandService() const;
 
         CommunicationService* commService() const;

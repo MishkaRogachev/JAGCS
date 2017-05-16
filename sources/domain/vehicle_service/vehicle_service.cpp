@@ -37,7 +37,7 @@ VehicleService::VehicleService(DbFacade* facade, QObject* parent):
 {
     d->facade = facade;
 
-    for (const VehicleDescriptionPtr& description: d->facade->loadVehicles())
+    for (const VehicleDescriptionPtr& description: d->facade->vehicles())
     {
         d->descriptions.append(description);
         BaseVehicle* vehicle = d->vehicleFromDescription(description);

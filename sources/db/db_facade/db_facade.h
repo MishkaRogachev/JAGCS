@@ -36,14 +36,11 @@ namespace db
         bool remove(const LinkDescriptionPtr& link);
         bool remove(const MissionAssignmentPtr& assignment);
 
-        LinkDescriptionPtrList loadLinks(const QString& condition = QString(),
-                                         bool reload  = false);
-        VehicleDescriptionPtrList loadVehicles(const QString& condition = QString(),
-                                               bool reload  = false);
-        MissionPtrList loadMissions(const QString& condition = QString(),
-                                    bool reload  = false);
-        MissionItemPtrList loadItems(const QString& condition = QString(),
-                                     bool reload  = false);
+        LinkDescriptionPtrList links(const QString& condition = QString(), bool reload  = false);
+        VehicleDescriptionPtrList vehicles(const QString& condition = QString(), bool reload  = false);
+        MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
+        MissionItemPtrList items(const QString& condition = QString(), bool reload  = false);
+
 // new API
     public:
         MissionAssignmentPtr missionAssignment(int missionId);

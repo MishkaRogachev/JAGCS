@@ -5,9 +5,9 @@
 #include "base_presenter.h"
 #include "db_traits.h"
 
-namespace domain
+namespace db
 {
-    class MissionService;
+    class DbFacade;
 }
 
 namespace presentation
@@ -17,8 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MissionItemPresenter(domain::MissionService* missionService,
-                                      QObject* object = nullptr);
+        explicit MissionItemPresenter(db::DbFacade* dbFacade, QObject* object = nullptr);
         ~MissionItemPresenter() override;
 
         db::MissionPtr selectedMission() const;

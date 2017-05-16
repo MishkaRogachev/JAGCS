@@ -3,10 +3,14 @@
 
 #include "i_communicator_factory.h"
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
     class VehicleService;
-    class MissionService;
     class CommandService;
 }
 
@@ -15,16 +19,16 @@ namespace comm
     class MavLinkCommunicatorFactory: public ICommunicatorFactory
     {
     public:
-        MavLinkCommunicatorFactory(domain::VehicleService* vehicleServeice,
-                                   domain::MissionService* missionService,
+        MavLinkCommunicatorFactory(db::DbFacade* dbFacade,
+                                   domain::VehicleService* vehicleServeice,
                                    domain::CommandService* commandService,
                                    quint8 systemId, quint8 componentId);
 
         AbstractCommunicator* create() override;
 
     private:
+        db::DbFacade* m_dbFacade;
         domain::VehicleService* m_vehicleService;
-        domain::MissionService* m_missionService;
         domain::CommandService* m_commandService;
         quint8 m_systemId;
         quint8 m_componentId;

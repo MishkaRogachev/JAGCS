@@ -7,9 +7,9 @@
 // Internal
 #include "db_traits.h"
 
-namespace domain
+namespace db
 {
-    class MissionService;
+    class DbFacade;
 }
 
 namespace presentation
@@ -29,8 +29,7 @@ namespace presentation
             ItemCurrent
         };
 
-        explicit MissionPointMapItemModel(domain::MissionService* service,
-                                          QObject* parent = nullptr);
+        explicit MissionPointMapItemModel(db::DbFacade* dbFacade, QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
@@ -45,7 +44,7 @@ namespace presentation
         QModelIndex itemIndex(const db::MissionItemPtr& item) const;
 
     private:
-        domain::MissionService* m_service;
+        db::DbFacade* m_dbFacade;
         db::MissionItemPtrList m_items;
     };
 }

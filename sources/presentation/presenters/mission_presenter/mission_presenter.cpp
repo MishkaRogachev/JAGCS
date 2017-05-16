@@ -7,14 +7,14 @@
 // Internal
 #include "domain_entry.h"
 
-#include "mission_service.h"
-#include "vehicle_service.h"
-#include "command_service.h"
-
+#include "db_facade.h"
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
 #include "vehicle_description.h"
+
+#include "vehicle_service.h"
+#include "command_service.h"
 
 #include "mission_item_presenter.h"
 #include "location_map_presenter.h"
@@ -24,7 +24,7 @@ using namespace presentation;
 class MissionPresenter::Impl
 {
 public:
-    domain::MissionService* missionService;
+    db::DbFacade* dbFacade;
     domain::VehicleService* vehicleService;
     domain::CommandService* commandService;
 
@@ -44,16 +44,16 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     BasePresenter(object),
     d(new Impl())
 {
-    d->missionService = entry->missionService();
+    d->dbFacade = entry->dbFacade();
     d->vehicleService = entry->vehicleService();
     d->commandService = entry->commandService();
 
-    d->missions.append(d->missionService->missions());
+    d->missions.append(d->dbFacade->missions());
     d->vehicles.append(d->vehicleService->descriptions());
 
-    connect(d->missionService, &domain::MissionService::missionAdded,
+    connect(d->dbFacade, &db::DbFacade::missionAdded,
             this, &MissionPresenter::onMissionAdded);
-    connect(d->missionService, &domain::MissionService::missionRemoved,
+    connect(d->dbFacade, &db::DbFacade::missionRemoved,
             this, &MissionPresenter::onMissionRemoved);
 
     connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
@@ -61,8 +61,8 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::onVehicleRemoved);
 
-    d->item = new MissionItemPresenter(d->missionService, this);
-    d->map = new LocationMapPresenter(d->missionService, this);
+    d->item = new MissionItemPresenter(d->dbFacade, this);
+    d->map = new LocationMapPresenter(d->dbFacade, this);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -177,7 +177,7 @@ void MissionPresenter::updateAssignment()
     if (d->selectedMission)
     {
         db::MissionAssignmentPtr assignment =
-                d->missionService->missionAssignment(d->selectedMission);
+                d->dbFacade->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
             this->setViewProperty(PROPERTY(assignedStatus), assignment->status());
@@ -215,10 +215,9 @@ void MissionPresenter::onAddMission()
 {
     db::MissionPtr mission = db::MissionPtr::create();
 
-    mission->setName(tr("New Mission %1").arg(
-                         d->missionService->missions().count()));
+    mission->setName(tr("New Mission %1").arg(d->dbFacade->missions().count()));
 
-    d->missionService->saveMission(mission);
+    d->dbFacade->save(mission);
     this->selectMission(mission);
 }
 
@@ -226,7 +225,7 @@ void MissionPresenter::onRemoveMission()
 {
     if (d->selectedMission.isNull()) return;
 
-    d->missionService->removeMission(d->selectedMission);
+    d->dbFacade->remove(d->selectedMission);
     d->selectedMission.clear();
     this->setViewProperty(PROPERTY(selectedMission), 0);
 
@@ -239,7 +238,7 @@ void MissionPresenter::onRenameMission(const QString& name)
 
     // TODO: check unique name
     d->selectedMission->setName(name);
-    d->missionService->saveMission(d->selectedMission);
+    d->dbFacade->save(d->selectedMission);
     this->updateMissionsBox();
 }
 
@@ -250,11 +249,11 @@ void MissionPresenter::onAssignVehicle(int index)
 
     if (vehicle)
     {
-        d->missionService->assign(d->selectedMission, vehicle);
+        d->dbFacade->assign(d->selectedMission->id(), vehicle->id());
     }
     else
     {
-        d->missionService->unassign(d->selectedMission);
+        d->dbFacade->unassign(d->selectedMission->id());
     }
 
     this->updateAssignment();
@@ -263,8 +262,7 @@ void MissionPresenter::onAssignVehicle(int index)
 void MissionPresenter::onUploadMission()
 {
     if (!d->selectedMission) return;
-    db::MissionAssignmentPtr assignment =
-            d->missionService->missionAssignment(d->selectedMission);
+    db::MissionAssignmentPtr assignment = d->dbFacade->missionAssignment(d->selectedMission->id());
     if (assignment.isNull()) return;
 
     d->commandService->upload(assignment);
@@ -274,8 +272,7 @@ void MissionPresenter::onUploadMission()
 void MissionPresenter::onDownloadMission()
 {
     if (!d->selectedMission) return;
-    db::MissionAssignmentPtr assignment =
-            d->missionService->missionAssignment(d->selectedMission);
+    db::MissionAssignmentPtr assignment = d->dbFacade->missionAssignment(d->selectedMission->id());
     if (assignment.isNull()) return;
 
     d->commandService->download(assignment);

@@ -5,25 +5,24 @@
 #include <QDebug>
 
 // Internal
+#include "db_facade.h"
 #include "mission.h"
 #include "mission_item.h"
-#include "mission_service.h"
 
 using namespace presentation;
 
-MissionLineMapItemModel::MissionLineMapItemModel(
-        domain::MissionService* service, QObject* parent):
+MissionLineMapItemModel::MissionLineMapItemModel(db::DbFacade* dbFacade, QObject* parent):
     QAbstractListModel(parent),
-    m_service(service)
+    m_dbFacade(dbFacade)
 {
-    connect(service, &domain::MissionService::missionAdded,
+    connect(dbFacade, &db::DbFacade::missionAdded,
             this, &MissionLineMapItemModel::onMissionAdded);
-    connect(service, &domain::MissionService::missionRemoved,
+    connect(dbFacade, &db::DbFacade::missionRemoved,
             this, &MissionLineMapItemModel::onMissionRemoved);
-    connect(service, &domain::MissionService::missionItemChanged,
+    connect(dbFacade, &db::DbFacade::missionItemChanged,
             this, &MissionLineMapItemModel::onMissionItemChanged);
 
-    for (const db::MissionPtr& item: service->missions())
+    for (const db::MissionPtr& item: dbFacade->missions())
     {
         this->onMissionAdded(item);
     }
@@ -46,8 +45,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
-        for (const db::MissionItemPtr& item:
-             m_service->missionItems(mission->id()))
+        for (const db::MissionItemPtr& item: m_dbFacade->missionItems(mission->id()))
         {
             if (item->command() == db::MissionItem::Waypoint ||
                 item->command() == db::MissionItem::Landing ||
@@ -90,7 +88,7 @@ void MissionLineMapItemModel::onMissionRemoved(const db::MissionPtr& mission)
 
 void MissionLineMapItemModel::onMissionItemChanged(const db::MissionItemPtr& item)
 {
-    db::MissionPtr mission = m_service->mission(item->missionId());
+    db::MissionPtr mission = m_dbFacade->mission(item->missionId());
     QModelIndex index = this->index(m_missions.indexOf(mission));
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }

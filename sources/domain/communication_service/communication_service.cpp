@@ -58,7 +58,7 @@ CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
     d->communicator = commFactory->create();
     d->facade = facade;
 
-    for (const LinkDescriptionPtr& description: facade->loadLinks())
+    for (const LinkDescriptionPtr& description: facade->links())
     {
         d->descriptions.append(description);
         AbstractLink* link = d->linkFromDescription(description);

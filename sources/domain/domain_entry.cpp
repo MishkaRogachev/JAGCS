@@ -13,7 +13,6 @@
 #include "proxy_manager.h"
 
 #include "vehicle_service.h"
-#include "mission_service.h"
 #include "command_service.h"
 
 #include "communication_service.h"
@@ -30,7 +29,6 @@ public:
     ProxyManager proxyManager;
 
     QScopedPointer<VehicleService> vehicleService;
-    QScopedPointer<MissionService> missionService;
     CommandService commandService;
 
     QScopedPointer<CommunicationService> commService;
@@ -53,11 +51,10 @@ DomainEntry::DomainEntry():
     }
 
     d->vehicleService.reset(new VehicleService(&d->dbFacade));
-    d->missionService.reset(new MissionService(&d->dbFacade));
 
     comm::MavLinkCommunicatorFactory comFactory(
+                &d->dbFacade,
                 d->vehicleService.data(),
-                d->missionService.data(),
                 &d->commandService,
                 SettingsProvider::value(settings::communication::systemId).toInt(),
                 SettingsProvider::value(settings::communication::componentId).toInt());
@@ -68,6 +65,11 @@ DomainEntry::DomainEntry():
 DomainEntry::~DomainEntry()
 {}
 
+DbFacade* DomainEntry::dbFacade() const
+{
+    return &d->dbFacade;
+}
+
 CommunicationService* DomainEntry::commService() const
 {
     return d->commService.data();
@@ -76,11 +78,6 @@ CommunicationService* DomainEntry::commService() const
 VehicleService* DomainEntry::vehicleService() const
 {
     return d->vehicleService.data();
-}
-
-MissionService* DomainEntry::missionService() const
-{
-    return d->missionService.data();
 }
 
 CommandService*DomainEntry::commandService() const

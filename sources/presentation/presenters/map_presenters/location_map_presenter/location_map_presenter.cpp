@@ -16,16 +16,16 @@ public:
     MissionPointMapItemModel pointModel;
     MissionLineMapItemModel lineModel;
 
-    Impl(domain::MissionService* service):
-        pointModel(service),
-        lineModel(service)
+    Impl(db::DbFacade* dbFacade):
+        pointModel(dbFacade),
+        lineModel(dbFacade)
     {}
 };
 
-LocationMapPresenter::LocationMapPresenter(domain::MissionService* service,
+LocationMapPresenter::LocationMapPresenter(db::DbFacade* dbFacade,
                                            QObject* object):
     AbstractMapPresenter(object),
-    d(new Impl(service))
+    d(new Impl(dbFacade))
 {}
 
 LocationMapPresenter::~LocationMapPresenter()

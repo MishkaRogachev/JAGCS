@@ -19,13 +19,13 @@
 using namespace comm;
 
 MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
+        db::DbFacade* dbFacade,
         domain::VehicleService* vehicleServeice,
-        domain::MissionService* missionService,
         domain::CommandService* commandService,
         quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),
+    m_dbFacade(dbFacade),
     m_vehicleService(vehicleServeice),
-    m_missionService(missionService),
     m_commandService(commandService),
     m_systemId(systemId),
     m_componentId(componentId)
@@ -45,7 +45,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new VfrHudHandler(m_vehicleService, communicator);
     new WindHandler(m_vehicleService, communicator);
     new CommandHandler(m_vehicleService, communicator);
-    new MissionHandler(m_missionService, m_vehicleService, m_commandService, communicator);
+    new MissionHandler(m_dbFacade, m_vehicleService, m_commandService, communicator);
 
     return communicator;
 }
