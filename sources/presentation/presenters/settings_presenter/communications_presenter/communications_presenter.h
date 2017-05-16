@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class CommunicationService;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit CommunicationsPresenter(domain::CommunicationService* service,
+        explicit CommunicationsPresenter(domain::DomainEntry* entry,
                                          QObject* parent = nullptr);
         ~CommunicationsPresenter() override;
 
@@ -26,6 +26,8 @@ namespace presentation
 
     private slots:
         void onLinkAdded(const db::LinkDescriptionPtr& description);
+        void onLinkChanged(const db::LinkDescriptionPtr& description);
+        void onLinkStatisticsChanged(const db::LinkDescriptionPtr& description);
         void onLinkRemoved(const db::LinkDescriptionPtr& description);
         void updateCommunicationsLinks();
 

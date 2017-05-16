@@ -5,6 +5,11 @@
 #include "base_presenter.h"
 #include "db_traits.h"
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
     class CommunicationService;
@@ -17,7 +22,8 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(domain::CommunicationService* service,
+        CommunicationLinkPresenter(db::DbFacade* dbFacade,
+                                   domain::CommunicationService* service,
                                    const db::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
@@ -25,7 +31,7 @@ namespace presentation
 
     public slots:
         void updateView();
-        void updateStatistics(int sentBytes, int recvBytes);
+        void updateStatistics();
 
     signals:
         void setConnected(bool connected);
@@ -43,7 +49,8 @@ namespace presentation
         void onRemove();
 
     private:
-        domain::CommunicationService* const m_service;
+        db::DbFacade* m_dbFacade;
+        domain::CommunicationService* m_service;
         db::LinkDescriptionPtr m_description;
     };
 }

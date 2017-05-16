@@ -9,31 +9,23 @@
 // Internal
 #include "settings_provider.h"
 
+#include "db_facade.h"
+#include "link_description.h"\
+
 #include "communication_service.h"
-#include "link_description.h"
 
 using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
+        db::DbFacade* dbFacade,
         domain::CommunicationService* service,
         const db::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
+    m_dbFacade(dbFacade),
     m_service(service),
     m_description(description)
-{
-    connect(m_service, &domain::CommunicationService::linkChanged, this,
-            [this](const db::LinkDescriptionPtr& description) {
-        if (m_description == description) this->updateView();
-    });
-
-    connect(m_service, &domain::CommunicationService::linkStatisticsChanged, this,
-            [this](const db::LinkDescriptionPtr& description,
-            int sentBytes, int recvBytes) {
-        if (m_description == description) this->updateStatistics(sentBytes,
-                                                                 recvBytes);
-    });
-}
+{}
 
 db::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 {
@@ -49,15 +41,16 @@ void CommunicationLinkPresenter::updateView()
     this->setViewProperty(PROPERTY(port), m_description->port());
     this->setViewProperty(PROPERTY(device), m_description->device());
     this->setViewProperty(PROPERTY(baudRate), m_description->baudRate());
-    this->setViewProperty(PROPERTY(connected), m_description->isAutoConnect());
 
     this->setViewSignalsEnbled(true);
 }
 
-void CommunicationLinkPresenter::updateStatistics(int sentBytes, int recvBytes)
+void CommunicationLinkPresenter::updateStatistics()
 {
+    this->setViewProperty(PROPERTY(connected), m_description->isConnected());
     this->invokeViewMethod(PROPERTY(updateStatistics),
-                           sentBytes, recvBytes);
+                           m_description->bytesSentSec(),
+                           m_description->bytesRecvSec());
 }
 
 void CommunicationLinkPresenter::connectView(QObject* view)
@@ -102,7 +95,7 @@ void CommunicationLinkPresenter::onSetName(const QString& name)
     if (m_description->name() == name) return;
 
     m_description->setName(name);
-    m_service->saveLink(m_description);
+    m_dbFacade->save(m_description);
 }
 
 void CommunicationLinkPresenter::onSetPort(int port)
@@ -110,7 +103,7 @@ void CommunicationLinkPresenter::onSetPort(int port)
     if (m_description->port() == port) return;
 
     m_description->setPort(port);
-    m_service->saveLink(m_description);
+    m_dbFacade->save(m_description);
 }
 
 void CommunicationLinkPresenter::onSetDevice(const QString& device)
@@ -118,7 +111,7 @@ void CommunicationLinkPresenter::onSetDevice(const QString& device)
     if (m_description->device() == device) return;
 
     m_description->setDevice(device);
-    m_service->saveLink(m_description);
+    m_dbFacade->save(m_description);
 }
 
 void CommunicationLinkPresenter::onSetBaudRate(int rate)
@@ -126,18 +119,15 @@ void CommunicationLinkPresenter::onSetBaudRate(int rate)
     if (m_description->baudRate() == rate) return;
 
     m_description->setBaudRate(rate);
-    m_service->saveLink(m_description);
+    m_dbFacade->save(m_description);
 }
 
 void CommunicationLinkPresenter::onSetConnected(bool connected)
 {
-    if (m_description->isAutoConnect() == connected) return;
-
-    m_description->setAutoConnect(connected);
-    m_service->saveLink(m_description);
+    m_service->setLinkConnected(m_description, connected);
 }
 
 void CommunicationLinkPresenter::onRemove()
 {
-    m_service->removeLink(m_description);
+    m_dbFacade->remove(m_description);
 }

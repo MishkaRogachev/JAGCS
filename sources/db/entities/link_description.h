@@ -42,6 +42,15 @@ namespace db
         bool isAutoConnect() const;
         void setAutoConnect(bool autoConnect);
 
+        bool isConnected() const;
+        void setConnected(bool isConnected);
+
+        int bytesSentSec() const;
+        void setBytesSentSec(int bytesSentSec);
+
+        int bytesRecvSec() const;
+        void setBytesRecvSec(int bytesRecvSec);
+
     private:
         QString m_name;
         Type m_type = UnknownType;
@@ -49,6 +58,10 @@ namespace db
         QString m_device;
         int m_baudRate = -1;
         bool m_autoConnect = false;
+
+        bool m_connected = false;
+        int m_bytesSentSec = 0;
+        int m_bytesRecvSec = 0;
 
         Q_ENUM(Type)
     };

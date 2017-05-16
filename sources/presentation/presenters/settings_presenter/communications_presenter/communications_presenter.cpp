@@ -1,9 +1,13 @@
 #include "communications_presenter.h"
 
 // Qt
+#include <QMap>
 #include <QDebug>
 
 // Internal
+#include "domain_entry.h"
+
+#include "db_facade.h"
 #include "link_description.h"
 
 #include "settings_provider.h"
@@ -17,28 +21,33 @@ using namespace domain;
 class CommunicationsPresenter::Impl
 {
 public:
+    db::DbFacade* dbFacade;
     domain::CommunicationService* service;
 
-    QList<CommunicationLinkPresenter*> linkPresenters;
+    QMap<db::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
 };
 
-CommunicationsPresenter::CommunicationsPresenter(
-        domain::CommunicationService* service,
+CommunicationsPresenter::CommunicationsPresenter(domain::DomainEntry* entry,
         QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = service;
+    d->dbFacade = entry->dbFacade();
+    d->service = entry->commService();
 
-    connect(service, &CommunicationService::linkAdded,
+    connect(d->dbFacade, &db::DbFacade::linkAdded,
             this, &CommunicationsPresenter::onLinkAdded);
-    connect(service, &CommunicationService::linkRemoved,
+    connect(d->dbFacade, &db::DbFacade::linkChanged,
+            this, &CommunicationsPresenter::onLinkChanged);
+    connect(d->dbFacade, &db::DbFacade::linkRemoved,
             this, &CommunicationsPresenter::onLinkRemoved);
+    connect(d->service, &CommunicationService::linkStatisticsChanged,
+                this, &CommunicationsPresenter::onLinkStatisticsChanged);
 
-    for (const db::LinkDescriptionPtr& description: service->links())
+    for (const db::LinkDescriptionPtr& description: d->dbFacade->links())
     {
-        d->linkPresenters.append(new CommunicationLinkPresenter(
-                                     d->service, description, this));
+        d->linkPresenters[description] =
+                new CommunicationLinkPresenter(d->dbFacade, description, this);
     }
 }
 
@@ -56,30 +65,35 @@ void CommunicationsPresenter::connectView(QObject* view)
 void CommunicationsPresenter::onLinkAdded(
         const db::LinkDescriptionPtr& description)
 {
-    d->linkPresenters.append(new CommunicationLinkPresenter(
-                                 d->service, description, this));
+    d->linkPresenters[description] = new CommunicationLinkPresenter(d->dbFacade, description, this);
 
     this->updateCommunicationsLinks();
+}
+
+void CommunicationsPresenter::onLinkChanged(const db::LinkDescriptionPtr& description)
+{
+    d->linkPresenters[description]->updateView();
+}
+
+void CommunicationsPresenter::onLinkStatisticsChanged(const db::LinkDescriptionPtr& description)
+{
+    d->linkPresenters[description]->updateStatistics();
 }
 
 void CommunicationsPresenter::onLinkRemoved(
         const db::LinkDescriptionPtr& description)
 {
-    for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
-    {
-        if (linkPresenter->description() != description) continue;
+    if (!d->linkPresenters.contains(description)) return;
+    CommunicationLinkPresenter* linkPresenter = d->linkPresenters.take(description);
 
-        d->linkPresenters.removeOne(linkPresenter);
-        delete linkPresenter;
-        this->updateCommunicationsLinks();
-        return;
-    }
+    delete linkPresenter;
+    this->updateCommunicationsLinks();
 }
 
 void CommunicationsPresenter::updateCommunicationsLinks()
 {
     QList<QObject*> objectList;
-    for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters)
+    for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters.values())
     {
         objectList.append(linkPresenter);
     }
@@ -96,7 +110,7 @@ void CommunicationsPresenter::onAddUdpLink()
     description->setPort(domain::SettingsProvider::value(
                             settings::communication::port).toInt());
 
-    d->service->saveLink(description);
+    d->dbFacade->save(description);
 }
 
 void CommunicationsPresenter::onAddSerialLink()
@@ -108,5 +122,5 @@ void CommunicationsPresenter::onAddSerialLink()
     description->setBaudRate(domain::SettingsProvider::value(
                             settings::communication::baudRate).toInt());
 
-    d->service->saveLink(description);
+    d->dbFacade->save(description);
 }

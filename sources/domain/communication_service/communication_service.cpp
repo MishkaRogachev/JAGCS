@@ -14,7 +14,6 @@
 
 #include "i_communicator_factory.h"
 
-using namespace db;
 using namespace comm;
 using namespace domain;
 
@@ -22,12 +21,11 @@ class CommunicationService::Impl
 {
 public:
     AbstractCommunicator* communicator;
-    DbFacade* facade;
+    db::DbFacade* dbFacade;
 
-    db::LinkDescriptionPtrList descriptions;
     QMap<db::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
 
-    AbstractLink* linkFromDescription(const LinkDescriptionPtr& description)
+    AbstractLink* linkFromDescription(const db::LinkDescriptionPtr& description)
     {
         DescriptionLinkFactory factory(description);
         AbstractLink* link = factory.create();
@@ -42,7 +40,7 @@ public:
     }
 
     void updateLinkFromDescription(AbstractLink* link,
-                                   const LinkDescriptionPtr& description)
+                                   const db::LinkDescriptionPtr& description)
     {
         DescriptionLinkFactory factory(description);
         factory.update(link);
@@ -50,84 +48,66 @@ public:
 };
 
 CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
-                                           DbFacade* facade,
+                                           db::DbFacade* facade,
                                            QObject* parent):
     QObject(parent),
     d(new Impl())
 {
     d->communicator = commFactory->create();
-    d->facade = facade;
+    d->dbFacade = facade;
 
-    for (const LinkDescriptionPtr& description: facade->links())
-    {
-        d->descriptions.append(description);
-        AbstractLink* link = d->linkFromDescription(description);
-        link->setParent(this);
-        connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicationService::onLinkStatisticsChanged);
-    }
+    for (const db::LinkDescriptionPtr& description: facade->links())
+        this->onLinkAdded(description);
 }
 
 CommunicationService::~CommunicationService()
+{}
+
+void CommunicationService::setLinkConnected(const db::LinkDescriptionPtr& description,
+                                            bool connected)
 {
-    for (const LinkDescriptionPtr& description: d->descriptions)
-    {
-        d->facade->save(description);
-    }
+    AbstractLink* link = d->descriptedLinks[description];
+    if (!link) return;
+
+    link->setConnected(connected);
+    link->statisticsChanged();
 }
 
-LinkDescriptionPtrList CommunicationService::links() const
+void CommunicationService::onLinkAdded(const db::LinkDescriptionPtr& description)
 {
-    return d->descriptions;
+    AbstractLink* link = d->linkFromDescription(description);
+    link->setParent(this);
+    connect(link, &AbstractLink::statisticsChanged,
+            this, &CommunicationService::onLinkStatisticsChanged);
+    link->statisticsChanged();
 }
 
-void CommunicationService::saveLink(const LinkDescriptionPtr& description)
+void CommunicationService::onLinkChanged(const db::LinkDescriptionPtr& description)
 {
-    AbstractLink* link;
-
-    if (d->descriptions.contains(description))
-    {
-        link = d->descriptedLinks[description];
-        d->updateLinkFromDescription(link, description);
-    }
-    else
-    {
-        d->descriptions.append(description);
-        link = d->linkFromDescription(description);
-        link->setParent(this);
-        connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicationService::onLinkStatisticsChanged);
-        d->communicator->addLink(link);
-        emit linkAdded(description);
-    }
-
-    if (description->isAutoConnect() != link->isConnected())
-    {
-        link->setConnected(description->isAutoConnect());
-        description->setAutoConnect(link->isConnected());
-    }
-
-    emit linkChanged(description);
-
-    d->facade->save(description);
+    AbstractLink* link = d->descriptedLinks[description];
+    if (!link) return;
+    d->updateLinkFromDescription(link, description);
+    link->statisticsChanged();
 }
 
-void CommunicationService::removeLink(const LinkDescriptionPtr& description)
+void CommunicationService::onLinkRemoved(const db::LinkDescriptionPtr& description)
 {
-    d->descriptions.removeOne(description);
+    if (!d->descriptedLinks.contains(description)) return;
     AbstractLink* link = d->descriptedLinks.take(description);
+
     d->communicator->removeLink(link);
     delete link;
-
-    d->facade->remove(description);
-    emit linkRemoved(description);
 }
 
 void CommunicationService::onLinkStatisticsChanged()
 {
     AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
+    db::LinkDescriptionPtr description = d->descriptedLinks.key(link);
+    if (description.isNull()) return;
 
-    emit linkStatisticsChanged(d->descriptedLinks.key(link),
-                               link->bytesSentSec(),
-                               link->bytesReceivedSec());
+    description->setBytesRecvSec(link->bytesReceivedSec());
+    description->setBytesSentSec(link->bytesSentSec());
+    description->setConnected(link->isConnected());
+
+    emit linkStatisticsChanged(description);
 }

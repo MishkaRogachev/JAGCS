@@ -61,3 +61,33 @@ void LinkDescription::setAutoConnect(bool autoConnect)
 {
     m_autoConnect = autoConnect;
 }
+
+bool LinkDescription::isConnected() const
+{
+    return m_connected;
+}
+
+void LinkDescription::setConnected(bool connected)
+{
+    m_connected = connected;
+}
+
+int LinkDescription::bytesSentSec() const
+{
+    return m_bytesSentSec;
+}
+
+void LinkDescription::setBytesSentSec(int bytesSentSec)
+{
+    m_bytesSentSec = bytesSentSec;
+}
+
+int LinkDescription::bytesRecvSec() const
+{
+    return m_bytesRecvSec;
+}
+
+void LinkDescription::setBytesRecvSec(int bytesRecvSec)
+{
+    m_bytesRecvSec = bytesRecvSec;
+}

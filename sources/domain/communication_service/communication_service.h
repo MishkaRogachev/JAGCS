@@ -29,21 +29,17 @@ namespace domain
                              QObject* parent = nullptr);
         ~CommunicationService() override;
 
-        db::LinkDescriptionPtrList links() const;
-
     public slots:
-        void saveLink(const db::LinkDescriptionPtr& description);
-        void removeLink(const db::LinkDescriptionPtr& description);
-
-    signals:
-        void linkAdded(const db::LinkDescriptionPtr& description);
-        void linkRemoved(const db::LinkDescriptionPtr& description);
-        void linkChanged(const db::LinkDescriptionPtr& description);
-        void linkStatisticsChanged(const db::LinkDescriptionPtr& description,
-                                   int sentBytes, int recvBytes);
+        void setLinkConnected(const db::LinkDescriptionPtr& description, bool connected);
 
     private slots:
+        void onLinkAdded(const db::LinkDescriptionPtr& description);
+        void onLinkChanged(const db::LinkDescriptionPtr& description);
+        void onLinkRemoved(const db::LinkDescriptionPtr& description);
         void onLinkStatisticsChanged();
+
+    signals:
+        void linkStatisticsChanged(const db::LinkDescriptionPtr& description);
 
     private:
         class Impl;

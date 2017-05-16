@@ -31,9 +31,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
     d(new Impl())
 {
 
-    d->communications = new CommunicationsPresenter(
-                            entry->commService(),
-                            this);
+    d->communications = new CommunicationsPresenter(entry, this);
     d->vehicles = new VehiclesPresenter(entry->vehicleService(), this);
     d->video = new VideoSettingsPresenter(this);
     d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
