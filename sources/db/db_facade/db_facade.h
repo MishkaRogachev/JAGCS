@@ -39,14 +39,11 @@ namespace db
         LinkDescriptionPtrList links(const QString& condition = QString(), bool reload  = false);
         VehicleDescriptionPtrList vehicles(const QString& condition = QString(), bool reload  = false);
         MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
-        MissionItemPtrList items(const QString& condition = QString(), bool reload  = false);
+        MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
 
-// new API
-    public:
         MissionAssignmentPtr missionAssignment(int missionId);
         MissionAssignmentPtr vehicleAssignment(int vehicleId);
 
-        MissionItemPtrList missionItems();
         MissionItemPtrList missionItems(int missionId);
         MissionItemPtr missionItem(int missionId, int sequence);
 

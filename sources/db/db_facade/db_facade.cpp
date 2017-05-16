@@ -196,7 +196,7 @@ MissionPtrList DbFacade::missions(const QString& condition, bool reload)
     return list;
 }
 
-MissionItemPtrList DbFacade::items(const QString& condition, bool reload)
+MissionItemPtrList DbFacade::missionItems(const QString& condition, bool reload)
 {
     MissionItemPtrList list;
 
@@ -227,14 +227,9 @@ MissionAssignmentPtr DbFacade::vehicleAssignment(int vehicleId)
     return MissionAssignmentPtr();
 }
 
-MissionItemPtrList DbFacade::missionItems()
-{
-    return this->items();
-}
-
 MissionItemPtrList DbFacade::missionItems(int missionId)
 {
-    return this->items(QString("missionId = %1 ORDER BY sequence").arg(
+    return this->missionItems(QString("missionId = %1 ORDER BY sequence").arg(
                                missionId));
 }
 
@@ -257,7 +252,7 @@ void DbFacade::addNewMissionItem(int missionId)
     MissionItemPtr item = MissionItemPtr::create();
     item->setMissionId(missionId);
 
-    if (mission->count()) // TODO: init other params
+    if (mission->count()) // TODO: default parms to settings
     {
         item->setCommand(MissionItem::Waypoint);
 
@@ -271,12 +266,14 @@ void DbFacade::addNewMissionItem(int missionId)
         {
             item->setAltitude(lastItem->altitude());
         }
+        item->setRadius(0);
     }
     else
     {
         item->setCommand(MissionItem::Takeoff);
         item->setAltitude(0);
         item->setAltitudeRelative(true);
+        item->setPitch(15);
     }
 
     item->setSequence(mission->count() + 1);
