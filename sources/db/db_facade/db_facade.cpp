@@ -20,15 +20,15 @@ class DbFacade::Impl
 public:
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> itemRepository;
-    GenericRepository<VehicleDescription> vehicleRepository;
     GenericRepository<MissionAssignment> assignmentRepository;
+    GenericRepository<VehicleDescription> vehicleRepository;
     GenericRepository<LinkDescription> linkRepository;
 
     Impl():
         missionRepository("missions"),
         itemRepository("mission_items"),
-        vehicleRepository("vehicles"),
         assignmentRepository("mission_assignments"),
+        vehicleRepository("vehicles"),
         linkRepository("links")
     {}
 };
@@ -51,6 +51,11 @@ MissionItemPtr DbFacade::missionItem(int id, bool reload)
     return d->itemRepository.read(id, reload);
 }
 
+MissionAssignmentPtr DbFacade::assignment(int id, bool reload)
+{
+    return d->assignmentRepository.read(id, reload);
+}
+
 VehicleDescriptionPtr DbFacade::vehicle(int id, bool reload)
 {
     return d->vehicleRepository.read(id, reload);
@@ -59,11 +64,6 @@ VehicleDescriptionPtr DbFacade::vehicle(int id, bool reload)
 LinkDescriptionPtr DbFacade::link(int id, bool reload)
 {
     return d->linkRepository.read(id, reload);
-}
-
-MissionAssignmentPtr DbFacade::assignment(int id, bool reload)
-{
-    return d->assignmentRepository.read(id, reload);
 }
 
 bool DbFacade::save(const MissionPtr& mission)
@@ -93,16 +93,6 @@ bool DbFacade::save(const MissionItemPtr& item)
     return true;
 }
 
-bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
-{
-    return d->vehicleRepository.save(vehicle);//TODO: emit
-}
-
-bool DbFacade::save(const LinkDescriptionPtr& link)
-{
-    return d->linkRepository.save(link);//TODO: emit
-}
-
 bool DbFacade::save(const MissionAssignmentPtr& assignment)
 {
     bool isNew = assignment->id() == 0;
@@ -110,6 +100,22 @@ bool DbFacade::save(const MissionAssignmentPtr& assignment)
 
     emit (isNew ? assignmentAdded(assignment) : assignmentChanged(assignment));
     return true;
+}
+
+bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
+{
+    bool isNew = vehicle->id() == 0;
+    if (!d->vehicleRepository.save(vehicle)) return false;
+
+    emit (isNew ? vehicleAdded(vehicle) : vehicleChanged(vehicle));
+}
+
+bool DbFacade::save(const LinkDescriptionPtr& link)
+{
+    bool isNew = link->id() == 0;
+    if (!d->linkRepository.save(link)) return false;
+
+    emit (isNew ? linkAdded(link) : linkChanged(link));
 }
 
 bool DbFacade::remove(const MissionPtr& mission)
@@ -137,26 +143,28 @@ bool DbFacade::remove(const MissionItemPtr& item)
     return true;
 }
 
-bool DbFacade::remove(const VehicleDescriptionPtr& vehicle)
-{
-    MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
-    if (assignment && !this->remove(assignment)) return false;
-
-    return d->vehicleRepository.remove(vehicle);
-    //TODO: emit
-}
-
-bool DbFacade::remove(const LinkDescriptionPtr& link)
-{
-    return d->linkRepository.remove(link);
-    //TODO: emit
-}
-
 bool DbFacade::remove(const MissionAssignmentPtr& assignment)
 {
     if (!d->assignmentRepository.remove(assignment)) return false;
 
     emit assignmentRemoved(assignment);
+    return true;
+}
+
+bool DbFacade::remove(const VehicleDescriptionPtr& vehicle)
+{
+    MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
+    if (assignment && !this->remove(assignment)) return false;
+
+    if (!d->vehicleRepository.remove(vehicle)) return false;
+    emit vehicleRemoved(vehicle);
+    return true;
+}
+
+bool DbFacade::remove(const LinkDescriptionPtr& link)
+{
+    if (!d->linkRepository.remove(link)) return false;
+    emit linkRemoved(link);
     return true;
 }
 
