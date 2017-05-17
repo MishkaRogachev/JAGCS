@@ -24,6 +24,7 @@ namespace db
         bool drop();
 
     private slots:
+        void onVersionChanged(const QDateTime& version);
         void onDbError(const QString& error);
 
     private:

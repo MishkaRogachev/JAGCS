@@ -3,6 +3,7 @@
 
 // Qt
 #include <QSqlQuery>
+#include <QDateTime>
 
 namespace db
 {
@@ -16,6 +17,9 @@ namespace db
 
         virtual bool up();
         virtual bool down();
+
+        virtual QDateTime version() const = 0;
+        static const QString format;
 
     protected:
         QSqlQuery m_query;

@@ -17,15 +17,15 @@ namespace db
         explicit DbMigrator(DbMigrationFactory* factory, QObject* parent = nullptr);
         ~DbMigrator() override;
 
-        bool migrate(const QDateTime& time = QDateTime::currentDateTime());
+        bool migrate(const QDateTime& version = QDateTime::currentDateTime());
         bool drop();
 
     signals:
-        void versionChanged(QDateTime current);
+        void versionChanged(QDateTime version);
         void error(const QString& error);
 
     private:
-        MigrationMap m_migrations;
+        MigrationList m_migrations;
         QDateTime m_version;
     };
 }

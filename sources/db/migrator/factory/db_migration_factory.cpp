@@ -5,11 +5,11 @@
 
 using namespace db;
 
-MigrationMap DbMigrationFactory::create()
+MigrationList DbMigrationFactory::create()
 {
-    MigrationMap map;
+    MigrationList list;
 
-    map[QDateTime::fromString("14:37:15-17.05.2017", "hh:mm:ss-dd.MM.yyyy")] = new InitMigration();
+    list.append(new InitMigration());
 
-    return map;
+    return list;
 }

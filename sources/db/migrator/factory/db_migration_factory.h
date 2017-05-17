@@ -2,21 +2,19 @@
 #define DB_MIGRATION_FACTORY_H
 
 // Qt
-#include <QMap>
 #include <QScopedPointer>
-#include <QDateTime>
 
 // Internal
 #include "db_migration.h"
 
 namespace db
 {
-    using MigrationMap = QMap<QDateTime, DbMigration* >;
+    using MigrationList = QList<DbMigration*>;
 
     class DbMigrationFactory
     {
     public:
-        MigrationMap create();
+        MigrationList create();
     };
 }
 

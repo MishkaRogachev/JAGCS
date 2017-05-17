@@ -40,7 +40,7 @@ DomainEntry::DomainEntry():
     if (!d->dataBase.open(SettingsProvider::value(settings::data_base::name).toString()))
     {
         qFatal("Unable to estblish DB connection");
-        qApp->quit();
+        qApp->quit(); // TODO: quit gently
     }
 
     d->vehicleService.reset(new VehicleService(&d->dbFacade));

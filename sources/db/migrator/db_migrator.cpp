@@ -1,5 +1,8 @@
 #include "db_migrator.h"
 
+// Qt
+#include <QDebug>
+
 using namespace db;
 
 DbMigrator::DbMigrator(DbMigrationFactory* factory, QObject* parent):
@@ -9,27 +12,26 @@ DbMigrator::DbMigrator(DbMigrationFactory* factory, QObject* parent):
 
 DbMigrator::~DbMigrator()
 {
-    for (DbMigration* migration: m_migrations.values())
-        delete migration;
+    while (!m_migrations.isEmpty()) delete m_migrations.takeLast();
 }
 
-bool DbMigrator::migrate(const QDateTime& time)
+bool DbMigrator::migrate(const QDateTime& version)
 {
-    for (const QDateTime& version: m_migrations.keys())
+    for (DbMigration* migration: m_migrations)
     {
-        if (version < m_version) continue;
-        if (version > time) return true;
+        if (migration->version() < m_version) continue;
+        if (migration->version() > version) return true;
 
-        DbMigration* migration = m_migrations[version];
         if (!migration->up())
         {
-            emit error(tr("Migrate version: %1, error: %2").
-                       arg(version.toString("hh:mm:ss-dd.MM.yyyy").arg(migration->errorSring())));
+            emit error(tr("Migrate version: %1, error: %2").arg(
+                           migration->version().toString(migration->format)).arg(
+                           migration->errorSring()));
             return false;
         }
 
-        m_version = version;
-        emit versionChanged(version);
+        m_version = migration->version();
+        emit versionChanged(m_version);
     }
 
     return true;
@@ -37,21 +39,21 @@ bool DbMigrator::migrate(const QDateTime& time)
 
 bool DbMigrator::drop()
 {
-    QList<QDateTime> versions = m_migrations.keys();
-    std::reverse(versions.begin(), versions.end());
+    MigrationList migrations = m_migrations;
+    std::reverse(migrations.begin(), migrations.end());
 
-    for (const QDateTime& version: versions)
+    for (DbMigration* migration: migrations)
     {
-        DbMigration* migration = m_migrations[version];
         if (!migration->down())
         {
-            emit error(tr("Drop migration version: %1, error: %2").
-                       arg(version.toString("hh:mm:ss-dd.MM.yyyy")).arg(migration->errorSring()));
+            emit error(tr("Drop migration version: %1, error: %2").arg(
+                           migration->version().toString(migration->format)).arg(
+                           migration->errorSring()));
             return false;
         }
 
-        m_version = version;
-        emit versionChanged(version);
+        m_version = migration->version();
+        emit versionChanged(m_version);
     }
 
     return true;

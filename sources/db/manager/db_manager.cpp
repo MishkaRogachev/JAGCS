@@ -17,6 +17,7 @@ DbManager::DbManager(QObject* parent):
     DbMigrationFactory factory;
     m_migrator = new DbMigrator(&factory, this);
 
+    connect(m_migrator, &DbMigrator::versionChanged, this, &DbManager::onVersionChanged);
     connect(m_migrator, &DbMigrator::error, this, &DbManager::onDbError);
 }
 
@@ -53,7 +54,12 @@ bool DbManager::drop()
     return m_migrator->drop();
 }
 
+void DbManager::onVersionChanged(const QDateTime& version)
+{
+    qDebug() << "DB version" << version;
+}
+
 void DbManager::onDbError(const QString& error)
 {
-    qDebug() << error;
+    qWarning() << error;
 }

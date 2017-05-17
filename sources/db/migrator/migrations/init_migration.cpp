@@ -9,6 +9,9 @@ bool InitMigration::up()
 {
     if (!m_query.prepare("PRAGMA FOREIGN_KEYS=ON;") || !m_query.exec()) return false;
 
+    if (!m_query.prepare("CREATE TABLE schema_versions ("
+                         "version STRING NOT NULL)") || !m_query.exec()) return false;
+
     if (!m_query.prepare("CREATE TABLE links ("
                          "id INTEGER PRIMARY KEY NOT NULL,"
                          "name STRING,"
@@ -52,6 +55,10 @@ bool InitMigration::up()
                          "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))") ||
         !m_query.exec()) return false;
 
+    if (!m_query.prepare("INSERT INTO schema_versions (version) "
+                         "VALUES (\"" + this->version().toString(format) + "\");") ||
+        !m_query.exec()) return false;
+
     return true;
 }
 
@@ -62,6 +69,12 @@ bool InitMigration::down()
     if (!m_query.prepare("DROP TABLE missions") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE vehicles") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE links") || !m_query.exec()) return false;
+    if (!m_query.prepare("DROP TABLE schema_versions") || !m_query.exec()) return false;
 
-    return m_query.exec();
+    return true;
+}
+
+QDateTime InitMigration::version() const
+{
+    return QDateTime::fromString("14:37:15-17.05.2017", format);
 }

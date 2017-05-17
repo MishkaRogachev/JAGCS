@@ -5,6 +5,8 @@
 
 using namespace db;
 
+const QString DbMigration::format = "hh:mm:ss-dd.MM.yyyy";
+
 DbMigration::DbMigration()
 {}
 

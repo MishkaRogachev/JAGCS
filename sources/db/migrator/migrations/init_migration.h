@@ -11,6 +11,7 @@ namespace db
         bool up();
         bool down();
 
+        QDateTime version() const override;
     };
 }
 
