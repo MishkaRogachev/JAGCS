@@ -9,6 +9,8 @@ class QSqlDatabase;
 
 namespace db
 {
+    class DbMigrator;
+
     class DbManager: public QObject
     {
         Q_OBJECT
@@ -18,12 +20,15 @@ namespace db
         ~DbManager() override;
 
         bool open(const QString& dbName);
-
-        bool create();
+        bool migrate();
         bool drop();
+
+    private slots:
+        void onDbError(const QString& error);
 
     private:
         QSqlDatabase m_db;
+        DbMigrator* m_migrator;
     };
 }
 

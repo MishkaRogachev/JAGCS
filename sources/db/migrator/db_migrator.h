@@ -14,20 +14,19 @@ namespace db
         Q_OBJECT
 
     public:
-        explicit DbMigrator(QObject* parent = nullptr);
+        explicit DbMigrator(DbMigrationFactory* factory, QObject* parent = nullptr);
+        ~DbMigrator() override;
 
-    public slots:
-        void create();
-        void drop();
-        void migrate(const QDateTime& time = QDateTime::currentDateTime());
+        bool migrate(const QDateTime& time = QDateTime::currentDateTime());
+        bool drop();
 
     signals:
-        void currentChanged(QDateTime current);
+        void versionChanged(QDateTime current);
         void error(const QString& error);
 
     private:
         MigrationMap m_migrations;
-        QDateTime m_current;
+        QDateTime m_version;
     };
 }
 

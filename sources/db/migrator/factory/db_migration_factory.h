@@ -3,6 +3,7 @@
 
 // Qt
 #include <QMap>
+#include <QScopedPointer>
 #include <QDateTime>
 
 // Internal
@@ -10,7 +11,7 @@
 
 namespace db
 {
-    using MigrationMap = QMap<QDateTime, DbMigration>;
+    using MigrationMap = QMap<QDateTime, DbMigration* >;
 
     class DbMigrationFactory
     {

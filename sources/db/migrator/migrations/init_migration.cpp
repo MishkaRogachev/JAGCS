@@ -63,5 +63,5 @@ bool InitMigration::down()
     if (!m_query.prepare("DROP TABLE vehicles") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE links") || !m_query.exec()) return false;
 
-    return query.exec();
+    return m_query.exec();
 }

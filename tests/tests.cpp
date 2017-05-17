@@ -21,19 +21,14 @@ int main(int argc, char* argv[])
     db::DbManager manager;
 
     manager.open("test_db");
-    bool created = manager.create();
-
-    if (!created)
-    {
-        qDebug() << "Error while creating DB!";
-        return 0;
-    }
 
     EntitiesTest entitiesTest;
     QTest::qExec(&entitiesTest);
 
     LinksTest linksTest;
     QTest::qExec(&linksTest);
+
+    manager.drop();
 
     return 0;
 }

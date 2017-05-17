@@ -1,7 +1,7 @@
 #include "domain_entry.h"
 
 // Qt
-#include <QFileInfo>
+#include <QGuiApplication>
 #include <QDebug>
 
 // Internal
@@ -37,17 +37,10 @@ public:
 DomainEntry::DomainEntry():
     d(new Impl())
 {
-    // TODO: replace by migrations
-    QString dbName = SettingsProvider::value(settings::data_base::name).toString();
-    QFileInfo file(dbName);
-    bool exist = file.exists();
-
-    d->dataBase.open(dbName);
-    if (!exist) exist = d->dataBase.create();
-
-    if (!exist)
+    if (!d->dataBase.open(SettingsProvider::value(settings::data_base::name).toString()))
     {
-        qCritical() << "Error while creating DB" << dbName;
+        qFatal("Unable to estblish DB connection");
+        qApp->quit();
     }
 
     d->vehicleService.reset(new VehicleService(&d->dbFacade));

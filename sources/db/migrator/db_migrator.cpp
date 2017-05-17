@@ -2,37 +2,57 @@
 
 using namespace db;
 
-DbMigrator::DbMigrator(QObject* parent):
-    QObject(parent)
+DbMigrator::DbMigrator(DbMigrationFactory* factory, QObject* parent):
+    QObject(parent),
+    m_migrations(factory->create())
 {}
 
-void DbMigrator::create()
+DbMigrator::~DbMigrator()
 {
-    if (m_migrations.isEmpty())
-    {
-        emit error(tr("Init migration does not exist!"));
-        return;
-    }
-
-    if (!m_migrations.first().up())
-    {
-        emit error(tr("Init migration error: %1").arg(m_migrations.first().errorString()));
-        return;
-    }
-
-    m_current = m_migrations.firstKey();
-    emit currentChanged(m_current);
+    for (DbMigration* migration: m_migrations.values())
+        delete migration;
 }
 
-void DbMigrator::drop()
+bool DbMigrator::migrate(const QDateTime& time)
 {
+    for (const QDateTime& version: m_migrations.keys())
+    {
+        if (version < m_version) continue;
+        if (version > time) return true;
 
+        DbMigration* migration = m_migrations[version];
+        if (!migration->up())
+        {
+            emit error(tr("Migrate version: %1, error: %2").
+                       arg(version.toString("hh:mm:ss-dd.MM.yyyy").arg(migration->errorSring())));
+            return false;
+        }
+
+        m_version = version;
+        emit versionChanged(version);
+    }
+
+    return true;
 }
 
-void DbMigrator::migrate(const QDateTime& time)
+bool DbMigrator::drop()
 {
-    for (const QDateTime& key: m_migrations)
-    {
+    QList<QDateTime> versions = m_migrations.keys();
+    std::reverse(versions.begin(), versions.end());
 
+    for (const QDateTime& version: versions)
+    {
+        DbMigration* migration = m_migrations[version];
+        if (!migration->down())
+        {
+            emit error(tr("Drop migration version: %1, error: %2").
+                       arg(version.toString("hh:mm:ss-dd.MM.yyyy")).arg(migration->errorSring()));
+            return false;
+        }
+
+        m_version = version;
+        emit versionChanged(version);
     }
+
+    return true;
 }

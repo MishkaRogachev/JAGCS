@@ -108,6 +108,7 @@ bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
     if (!d->vehicleRepository.save(vehicle)) return false;
 
     emit (isNew ? vehicleAdded(vehicle) : vehicleChanged(vehicle));
+    return true;
 }
 
 bool DbFacade::save(const LinkDescriptionPtr& link)
@@ -116,6 +117,7 @@ bool DbFacade::save(const LinkDescriptionPtr& link)
     if (!d->linkRepository.save(link)) return false;
 
     emit (isNew ? linkAdded(link) : linkChanged(link));
+    return true;
 }
 
 bool DbFacade::remove(const MissionPtr& mission)
