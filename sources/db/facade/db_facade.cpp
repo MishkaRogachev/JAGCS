@@ -341,7 +341,7 @@ void DbFacade::assign(int missionId, int vehicleId)
     else if (missionAssignment->vehicleId() == vehicleId) return;
 
     missionAssignment->setVehicleId(vehicleId);
-    missionAssignment->setStatus(MissionAssignment::NotActual);
+    //missionAssignment->setStatus(MissionAssignment::NotActual);
 
     this->save(missionAssignment);
 }

@@ -22,12 +22,3 @@ void MissionAssignment::setVehicleId(int vehicleId)
     m_vehicleId = vehicleId;
 }
 
-MissionAssignment::Status MissionAssignment::status() const
-{
-    return m_status;
-}
-
-void MissionAssignment::setStatus(MissionAssignment::Status status)
-{
-    m_status = status;
-}

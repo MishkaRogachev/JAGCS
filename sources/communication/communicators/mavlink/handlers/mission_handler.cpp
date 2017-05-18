@@ -110,7 +110,7 @@ void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
                                             assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    assignment->setStatus(db::MissionAssignment::Downloading);
+    //assignment->setStatus(db::MissionAssignment::Downloading);
 
     // TODO: request Timer
 
@@ -132,7 +132,7 @@ void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
                                             assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    assignment->setStatus(db::MissionAssignment::Uploading);
+    //assignment->setStatus(db::MissionAssignment::Uploading);
 
     // TODO: upload Timer
 
@@ -172,8 +172,7 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(id);
     if (vehicle.isNull()) return;
     db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicle->id());
-    if (assignment.isNull() ||
-        assignment->status() != db::MissionAssignment::Uploading) return;
+    if (assignment.isNull()) return;
 
     mavlink_message_t message;
     mavlink_mission_item_t msgItem;
@@ -281,8 +280,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(message.sysid);
     if (vehicle.isNull()) return;
     db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicle->id());
-    if (assignment.isNull() ||
-        assignment->status() != db::MissionAssignment::Downloading) return;
+    if (assignment.isNull()) return;
 
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);

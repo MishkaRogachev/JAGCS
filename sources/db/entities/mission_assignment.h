@@ -12,7 +12,6 @@ namespace db
 
         Q_PROPERTY(int missionId READ missionId WRITE setMissionId)
         Q_PROPERTY(int vehicleId READ vehicleId WRITE setVehicleId)
-        Q_PROPERTY(Status status READ status WRITE setStatus)
 
     public:
         enum Status: quint8
@@ -30,13 +29,11 @@ namespace db
         int vehicleId() const;
         void setVehicleId(int vehicleId);
 
-        Status status() const;
-        void setStatus(Status status);
-
     private:
         int m_missionId = 0;
         int m_vehicleId = 0;
-        Status m_status = NotActual;
+
+        QList<Status> m_statuses;
 
         Q_ENUM(Status)
     };

@@ -180,7 +180,7 @@ void MissionPresenter::updateAssignment()
                 d->dbFacade->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
-            this->setViewProperty(PROPERTY(assignedStatus), assignment->status());
+            //this->setViewProperty(PROPERTY(assignedStatus), assignment->status());
 
             db::VehicleDescriptionPtr vehicle =
                     d->vehicleService->description(assignment->vehicleId());

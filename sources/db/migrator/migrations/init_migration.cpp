@@ -50,7 +50,6 @@ bool InitMigration::up()
                          "id INTEGER PRIMARY KEY NOT NULL,"
                          "missionId INTEGER,"
                          "vehicleId INTEGER,"
-                         "status SMALLINT,"
                          "FOREIGN KEY(missionId) REFERENCES missions(id),"
                          "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))") ||
         !m_query.exec()) return false;
