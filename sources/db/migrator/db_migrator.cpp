@@ -62,7 +62,8 @@ bool DbMigrator::drop()
 bool DbMigrator::readVersion()
 {
     QSqlQuery query;
-    if (query.exec("SELECT version FROM schema_versions LIMIT 1") && query.next())
+    if (query.exec("SELECT version FROM schema_versions ORDER BY version DESC LIMIT 1") &&
+        query.next())
     {
         QString versionString = query.value("version").toString();
         if (versionString.isEmpty()) return false;
