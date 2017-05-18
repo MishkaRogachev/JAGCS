@@ -19,10 +19,15 @@ namespace db
 
         bool migrate(const QDateTime& version = QDateTime::currentDateTime());
         bool drop();
+        bool readVersion();
+
 
     signals:
         void versionChanged(QDateTime version);
         void error(const QString& error);
+
+    private slots:
+        void setVersion(const QDateTime& version);
 
     private:
         MigrationList m_migrations;

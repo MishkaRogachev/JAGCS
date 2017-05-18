@@ -1,6 +1,8 @@
 #include "db_migrator.h"
 
 // Qt
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
 
 using namespace db;
@@ -30,8 +32,7 @@ bool DbMigrator::migrate(const QDateTime& version)
             return false;
         }
 
-        m_version = migration->version();
-        emit versionChanged(m_version);
+        this->setVersion(migration->version());
     }
 
     return true;
@@ -52,9 +53,32 @@ bool DbMigrator::drop()
             return false;
         }
 
-        m_version = migration->version();
-        emit versionChanged(m_version);
+        this->setVersion(migration->version());
     }
 
     return true;
+}
+
+bool DbMigrator::readVersion()
+{
+    QSqlQuery query;
+    if (query.exec("SELECT version FROM schema_versions LIMIT 1") && query.next())
+    {
+        QString versionString = query.value("version").toString();
+        if (versionString.isEmpty()) return false;
+        QDateTime version = QDateTime::fromString(versionString, DbMigration::format);
+        this->setVersion(version);
+    }
+    else
+    {
+        emit error(query.lastError().text());
+        return false;
+    }
+    return true;
+}
+
+void DbMigrator::setVersion(const QDateTime& version)
+{
+    m_version = version;
+    emit versionChanged(version);
 }

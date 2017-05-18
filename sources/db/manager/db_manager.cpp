@@ -32,8 +32,11 @@ bool DbManager::open(const QString& dbName)
     bool exist = file.exists();
 
     m_db.setDatabaseName(dbName);
-    bool opened = m_db.open();
-    if (!opened)
+    bool ok = m_db.open();
+
+    if (ok && exist) ok = m_migrator->readVersion();
+
+    if (!ok)
     {
         this->onDbError(m_db.lastError().text());
         return false;
