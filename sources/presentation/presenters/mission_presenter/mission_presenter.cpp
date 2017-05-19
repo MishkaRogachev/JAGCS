@@ -55,6 +55,8 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
             this, &MissionPresenter::onMissionAdded);
     connect(d->dbFacade, &db::DbFacade::missionRemoved,
             this, &MissionPresenter::onMissionRemoved);
+    connect(d->dbFacade, &db::DbFacade::assignmentChanged,
+            this, &MissionPresenter::updateAssignment); // TODO: assignment QObject
 
     connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);
@@ -180,7 +182,11 @@ void MissionPresenter::updateAssignment()
                 d->dbFacade->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
-            //this->setViewProperty(PROPERTY(assignedStatus), assignment->status());
+            QStringList statuses;
+            for (db::MissionAssignment::Status status: assignment->statuses())
+                statuses.append(QString::number(status));
+
+            this->setViewProperty(PROPERTY(statuses), QVariant::fromValue(statuses));
 
             db::VehicleDescriptionPtr vehicle =
                     d->vehicleService->description(assignment->vehicleId());
@@ -244,8 +250,10 @@ void MissionPresenter::onRenameMission(const QString& name)
 
 void MissionPresenter::onAssignVehicle(int index)
 {
-    if (!d->selectedMission && index > 0 && index < d->missions.count() + 1) return;
-    db::VehicleDescriptionPtr vehicle = d->vehicles.at(index - 1);
+    if (!d->selectedMission) return;
+    db::VehicleDescriptionPtr vehicle = (index > 0 && index <= d->missions.count()) ?
+                                            d->vehicles.at(index - 1) :
+                                            db::VehicleDescriptionPtr();
 
     if (vehicle)
     {

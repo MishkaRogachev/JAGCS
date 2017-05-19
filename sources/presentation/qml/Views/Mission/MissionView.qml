@@ -14,7 +14,7 @@ Pane {
     property alias selectedMission: missionsBox.currentIndex
     property alias assignedVehicle: vehiclesBox.currentIndex
     property int assignedStatus: MissionAssignment.Unknown
-    property int progress: progressBar.value
+    property var statuses: []
 
     signal selectMission(int index)
     signal addMission()
@@ -30,6 +30,7 @@ Pane {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         Layout.margins: palette.margins
+        spacing: palette.spacing
 
         GridLayout {
             columns: 5
@@ -103,16 +104,63 @@ Pane {
                 checked: assignedStatus == MissionAssignment.Uploading
                 onClicked: uploadMission()
             }
+        }
 
-            ProgressBar {
-                id: progressBar
-                to: 100
-                Layout.columnSpan: 5
+        RowLayout {
+            spacing: 0
+
+            Label {
+                visible: repeater.count == 0
+                text: qsTr("Not synchronized")
+                horizontalAlignment: Qt.AlignHCenter
                 Layout.fillWidth: true
+            }
+
+            Repeater {
+                id: repeater
+                model: statuses
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: palette.controlBaseSize
+
+                    property bool selected: missionItem.sequence === (index + 1)
+
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.height
+                        height: width
+                        radius: width / 2
+                        color: selected ? palette.selectionColor : palette.raisedColor
+                        border.color: {
+                            switch (modelData) {
+                            case MissionAssignment.Actual: return palette.positiveColor;
+                            case MissionAssignment.Downloading:
+                            case MissionAssignment.Uploading: return palette.neutralColor;
+                            case MissionAssignment.NotActual:
+                            default: return palette.negativeColor;
+                            }
+                        }
+                        border.width: 4
+
+                        Label { // TODO: mode icon
+                            text: index + 1
+                            color: selected ? palette.selectedTextColor : palette.textColor
+                            anchors.centerIn: parent
+                            font.bold: true
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: missionItem.selectItem(index + 1)
+                        }
+                    }
+                }
             }
         }
 
         MissionItemView {
+            id: missionItem
             objectName: "missionItem"
         }
     }
