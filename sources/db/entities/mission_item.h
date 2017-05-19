@@ -34,6 +34,14 @@ namespace db
             Landing,
         };
 
+        enum Status: quint8
+        {
+            NotActual = 0,
+            Downloading,
+            Uploading,
+            Actual
+        };
+
         int missionId() const;
         void setMissionId(int missionId);
 
@@ -64,6 +72,9 @@ namespace db
         int periods() const;
         void setPeriods(int periods);
 
+        Status status() const;
+        void setStatus(const Status& status);
+
     private:
         int m_missionId = 0;
         int m_sequence = -1;
@@ -76,7 +87,10 @@ namespace db
         float m_pitch = qQNaN();
         int m_periods = 0;
 
+        Status m_status = NotActual;
+
         Q_ENUM(Command)
+        Q_ENUM(Status)
     };
 }
 #endif // MISSION_ITEM_H

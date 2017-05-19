@@ -36,6 +36,7 @@ namespace presentation
         void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
         void updateVehiclesBox();
         void updateAssignment();
+        void updateStatuses();
 
         void onSelectMission(int index);
         void onAddMission();

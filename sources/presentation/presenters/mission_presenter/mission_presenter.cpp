@@ -55,12 +55,20 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
             this, &MissionPresenter::onMissionAdded);
     connect(d->dbFacade, &db::DbFacade::missionRemoved,
             this, &MissionPresenter::onMissionRemoved);
+
     connect(d->dbFacade, &db::DbFacade::assignmentAdded,
             this, &MissionPresenter::updateAssignment);
     connect(d->dbFacade, &db::DbFacade::assignmentRemoved,
             this, &MissionPresenter::updateAssignment);
     connect(d->dbFacade, &db::DbFacade::assignmentChanged,
             this, &MissionPresenter::updateAssignment); // TODO: assignment QObject
+
+    connect(d->dbFacade, &db::DbFacade::missionItemAdded,
+            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+    connect(d->dbFacade, &db::DbFacade::missionItemRemoved,
+            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+    connect(d->dbFacade, &db::DbFacade::missionItemChanged,
+            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
 
     connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);
@@ -82,6 +90,7 @@ void MissionPresenter::selectMission(const db::MissionPtr& mission)
     this->setViewProperty(PROPERTY(selectedMission),
                           d->missions.indexOf(d->selectedMission) + 1);
     this->updateAssignment();
+    this->updateStatuses();
 }
 
 void MissionPresenter::connectView(QObject* view)
@@ -186,14 +195,7 @@ void MissionPresenter::updateAssignment()
                 d->dbFacade->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
-            QStringList statuses;
-            for (db::MissionAssignment::Status status: assignment->statuses())
-                statuses.append(QString::number(status));
-
-            this->setViewProperty(PROPERTY(statuses), QVariant::fromValue(statuses));
-
-            db::VehicleDescriptionPtr vehicle =
-                    d->vehicleService->description(assignment->vehicleId());
+            db::VehicleDescriptionPtr vehicle = d->vehicleService->description(assignment->vehicleId());
             if (vehicle)
             {
                 this->setViewProperty(PROPERTY(assignedVehicle),
@@ -204,9 +206,24 @@ void MissionPresenter::updateAssignment()
         }
     }
     this->setViewProperty(PROPERTY(assignedVehicle), 0);
-    this->setViewProperty(PROPERTY(assignedStatus), db::MissionAssignment::Unknown);
 
     this->setViewConnected(true);
+}
+
+void MissionPresenter::updateStatuses()
+{
+    QStringList statuses;
+
+    if (d->selectedMission)
+    {
+        for (const db::MissionItemPtr& item:
+             d->dbFacade->missionItems(d->selectedMission->id()))
+        {
+            statuses.append(QString::number(item->status()));
+        }
+    }
+
+    this->setViewProperty(PROPERTY(statuses), statuses);
 }
 
 void MissionPresenter::onSelectMission(int index)

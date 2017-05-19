@@ -107,3 +107,13 @@ void MissionItem::setPeriods(int periods)
 {
     m_periods = periods;
 }
+
+MissionItem::Status MissionItem::status() const
+{
+    return m_status;
+}
+
+void MissionItem::setStatus(const Status& status)
+{
+    m_status = status;
+}

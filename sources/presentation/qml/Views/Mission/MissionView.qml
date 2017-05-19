@@ -94,27 +94,20 @@ Pane {
             Button {
                 iconSource: "qrc:/icons/download.svg"
                 enabled: selectedMission > 0 && assignedVehicle > 0
-                checked: assignedStatus == MissionAssignment.Downloading
+                //checked: assignedStatus == MissionAssignment.Downloading
                 onClicked: downloadMission()
             }
 
             Button {
                 iconSource: "qrc:/icons/upload.svg"
                 enabled: selectedMission > 0 && assignedVehicle > 0
-                checked: assignedStatus == MissionAssignment.Uploading
+                //checked: assignedStatus == MissionAssignment.Uploading
                 onClicked: uploadMission()
             }
         }
 
         RowLayout {
             spacing: 0
-
-            Label {
-                visible: repeater.count == 0
-                text: qsTr("Not synchronized")
-                horizontalAlignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
 
             Repeater {
                 id: repeater
@@ -134,10 +127,11 @@ Pane {
                         color: selected ? palette.selectionColor : palette.raisedColor
                         border.color: {
                             switch (parseInt(modelData)) {
-                            case MissionAssignment.Actual: return palette.positiveColor;
-                            case MissionAssignment.Downloading:
-                            case MissionAssignment.Uploading: return palette.neutralColor;
-                            case MissionAssignment.NotActual:
+                            case MissionItem.Actual: return palette.positiveColor;
+                            case MissionItem.StatusNone: return palette.sunkenColor;
+                            case MissionItem.Downloading:
+                            case MissionItem.Uploading: return palette.neutralColor;
+                            case MissionItem.NotActual:
                             default: return palette.negativeColor;
                             }
                         }

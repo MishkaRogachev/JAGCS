@@ -21,14 +21,3 @@ void MissionAssignment::setVehicleId(int vehicleId)
 {
     m_vehicleId = vehicleId;
 }
-
-const QVector<MissionAssignment::Status>& MissionAssignment::statuses() const
-{
-    return m_statuses;
-}
-
-QVector<MissionAssignment::Status>& MissionAssignment::statuses()
-{
-    return m_statuses;
-}
-
