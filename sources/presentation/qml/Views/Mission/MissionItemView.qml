@@ -1,204 +1,238 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls"
+import "../Map"
 
-Frame {
+ColumnLayout {
     id: root
 
-    property QtObject item: null
+    property int sequence: 0
+    property int count: 0
 
-    property var avalibleCommands
-    property string command
+    property int command: MissionItem.UnknownCommand
+    property alias commands: commandBox.model
 
-    signal remove()
-    signal setCommand(string command)
+    property alias altitude: altitudeEdit.realValue
+    property alias isAltitudeRelative: altitudeRelativeEdit.checked
+    property alias latitude: latitudeEdit.realValue
+    property alias longitude: longitudeEdit.realValue
+    property alias radius: radiusEdit.realValue
+    property alias periods: periodsEdit.value
+    property alias pitch: pitchEdit.realValue
 
-    function pick() {
-        if (pickButton.visible) pickButton.pick();
-    }
+    property bool altitudeVisible: command == MissionItem.Continue ||
+                                   command == MissionItem.Takeoff ||
+                                   positionVisible
 
-    padding: palette.margins
+    property bool positionVisible: command == MissionItem.Landing ||
+                                   radiusVisible
 
-    ColumnLayout {
-        width: parent.width
+    property bool radiusVisible: command == MissionItem.Waypoint ||
+                                 command == MissionItem.LoiterAltitude ||
+                                 command == MissionItem.LoiterTurns
 
-        spacing: palette.spacing
+    property bool pitchVisible: command == MissionItem.Takeoff
+    property bool periodsVisible: command == MissionItem.LoiterTurns
+
+    property alias picking: pickButton.checked
+
+    signal selectItem(int sequence)
+    signal addItem()
+    signal removeItem()
+
+    signal setCommand(int command);
+    signal setAltitude(real altitude)
+    signal setAltitudeRelative(bool relative)
+    signal setLatitude(real latitude)
+    signal setLongitude(real longitude)
+    signal setRadius(real radius)
+    signal setPeriods(int periods)
+    signal setPitch(real pitch)
+
+    onCommandChanged: commandBox.currentIndex = command;
+
+    GridLayout {
+        columns: 3
+
+        Label {
+            text: qsTr("Item")
+            Layout.fillWidth: true
+        }
 
         RowLayout {
-            Label {
-                font.bold: true
-                text: item ? "#" + item.sequence : ""
-            }
-
-            ComboBox {
-                model: avalibleCommands
-                Layout.fillWidth: true
-                currentIndex: avalibleCommands ?
-                                  avalibleCommands.indexOf(command) : -1
-                onCurrentTextChanged: root.setCommand(currentText)
-            }
-
-            MapPickButton {
-                id: pickButton
-                enabled: item && 'latitude' in item && 'longitude' in item
-                onPicked: {
-                    latitudeSpinBox.value = coordinate.latitude;
-                    longitudeSpinBox.value = coordinate.longitude;
-                }
-            }
-
-            Button {
-                iconSource: "qrc:/icons/up.svg"
-                enabled: item && !item.isFirst()
-                onClicked: item.moveUp()
-            }
-
-            Button {
-                iconSource: "qrc:/icons/down.svg"
-                enabled: item && !item.isLast()
-                onClicked: item.moveDown()
-            }
+            Layout.columnSpan: 2
 
             Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
-                onClicked: root.remove()
+                enabled: sequence > 0
+                onClicked: removeItem()
+            }
+
+            Button {
+                iconSource: "qrc:/icons/left.svg"
+                enabled: sequence > 1
+                onClicked: selectItem(sequence - 1)
+            }
+
+            Label {
+                Layout.alignment: Qt.AlignVCenter
+                Layout.fillWidth: true
+                horizontalAlignment: Qt.AlignHCenter
+                text: sequence + "/" + count
+            }
+
+            Button {
+                iconSource: "qrc:/icons/right.svg"
+                enabled: sequence < count
+                onClicked: selectItem(sequence + 1)
+            }
+
+            Button {
+                iconSource: "qrc:/icons/add.svg"
+                enabled: sequence == count && selectedMission > 0
+                onClicked: addItem()
             }
         }
 
-        GridLayout {
-            columns: 2
+        Label {
+            text: qsTr("Command")
+            visible: sequence !== 0
+            Layout.fillWidth: true
+        }
 
-            Label {
-                visible: item && 'latitude' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Lat.:")
+        ComboBox {
+            id: commandBox
+            visible: sequence !== 0
+            onCurrentIndexChanged: setCommand(currentIndex)
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Spacer { visible: sequence !== 0; }
+
+        Label {
+            text: qsTr("Altitude")
+            visible: altitudeVisible
+            Layout.fillWidth: true
+        }
+
+        RealSpinBox {
+            id: altitudeEdit
+            visible: altitudeVisible
+            realFrom: -500 // 418 m Daed Sea shore
+            realTo: 20000 // TODO: constants to config
+            onRealValueChanged: setAltitude(realValue)
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Spacer { visible: altitudeVisible }
+
+        Label {
+            text: qsTr("Altitude relative")
+            visible: altitudeVisible
+            Layout.fillWidth: true
+        }
+
+        CheckBox {
+            id: altitudeRelativeEdit
+            visible: altitudeVisible
+            onCheckedChanged: setAltitudeRelative(checked)
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Spacer { visible: altitudeVisible }
+
+        Label {
+            text: qsTr("Latitude")
+            visible: positionVisible
+            Layout.fillWidth: true
+        }
+
+        CoordSpinBox {
+            id: latitudeEdit
+            visible: positionVisible
+            onRealValueChanged: setLatitude(realValue)
+            Layout.alignment: Qt.AlignRight
+        }
+
+        MapPickButton {
+            id: pickButton
+            visible: positionVisible
+            Layout.rowSpan: 2
+            onPicked: {
+                latitudeEdit.realValue = coordinate.latitude;
+                longitudeEdit.realValue = coordinate.longitude;
             }
+        }
 
-            CoordSpinBox {
-                visible: item && 'latitude' in item
-                Layout.fillWidth: true
-                id: latitudeSpinBox
-                value: visible ? item.latitude : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setLatitude(value)
-            }
+        Label {
+            text: qsTr("Longitude")
+            visible: positionVisible
+            Layout.fillWidth: true
+        }
 
-            Label {
-                visible: item && 'longitude' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Lon.:")
-            }
+        CoordSpinBox {
+            id: longitudeEdit
+            visible: positionVisible
+            isLongitude: true
+            onRealValueChanged: setLongitude(realValue)
+            Layout.alignment: Qt.AlignRight
+        }
 
-            CoordSpinBox {
-                visible: item && 'longitude' in item
-                Layout.fillWidth: true
-                id: longitudeSpinBox
-                isLongitude: true
-                value: visible ? item.longitude : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setLongitude(value)
-            }
+        Label {
+            text: qsTr("Radius")
+            visible: radiusVisible
+            Layout.fillWidth: true
+        }
 
-            Label {
-                visible: item && 'altitude' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Alt.:")
-            }
+        RealSpinBox {
+            id: radiusEdit
+            visible: radiusVisible
+            realTo: 5000 // TODO: constants to config
+            onRealValueChanged: setRadius(realValue)
+            Layout.alignment: Qt.AlignRight
+        }
 
-            RowLayout {
-                SpinBox {
-                    id: altitudeBox
-                    visible: item && 'altitude' in item
-                    Layout.fillWidth: true
-                    from: -1000
-                    to: 20000
-                    value: visible ? item.altitude.toFixed(2) : 0
-                    onValueChanged: if (!isNaN(value) && visible) item.setAltitude(value)
-                }
+        Spacer { visible: radiusVisible }
 
-                CheckBox {
-                    visible: item && 'relativeAltitude' in item
-                    Layout.fillWidth: true
-                    text: qsTr("Rel.")
-                    checked: item && 'relativeAltitude' in item ?
-                                 item.relativeAltitude : false
-                    onCheckedChanged: {
-                        if (!visible || checked === item.relativeAltitude) return;
+        Label {
+            text: qsTr("Pitch")
+            visible: pitchVisible
+            Layout.fillWidth: true
+        }
 
-                        altitudeBox.value = item.altitude + (checked ?
-                                    -item.homeAltitude() : item.homeAltitude());
-                        item.setRelativeAltitude(checked)
-                    }
-                }
-            }
+        RealSpinBox {
+            id: pitchEdit
+            visible: pitchVisible
+            realFrom: -90
+            realTo: 90 // TODO: constants to config
+            onRealValueChanged: setPitch(realValue)
+            Layout.alignment: Qt.AlignRight
+        }
 
-            Label {
-                visible: item && 'pitch' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Pitch:")
-            }
+        Spacer { visible: pitchVisible }
 
-            SpinBox {
-                visible: item && 'pitch' in item
-                Layout.fillWidth: true
-                from: 0
-                to: 360
-                value: visible ? item.pitch.toFixed(2) : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setPitch(value)
-            }
+        Label {
+            text: qsTr("Periods")
+            visible: periodsVisible
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignRight
+        }
 
-            Label {
-                visible: item && 'acceptanceRadius' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Radius:")
-            }
+        SpinBox {
+            id: periodsEdit
+            visible: periodsVisible
+            onValueChanged: setPeriods(value)
+            Layout.alignment: Qt.AlignRight
+        }
 
-            SpinBox {
-                visible: item && 'acceptanceRadius' in item
-                Layout.fillWidth: true
-                from: 0
-                to: 5000
-                value: visible ? item.acceptanceRadius.toFixed(2) : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setAcceptanceRadius(value)
-            }
+        Spacer { visible: periodsVisible }
 
-            Label {
-                visible: item && 'radius' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Radius:")
-            }
-
-            SpinBox {
-                visible: item && 'radius' in item
-                Layout.fillWidth: true
-                from: 0
-                to: 5000
-                value: visible ? item.radius.toFixed(2) : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setRadius(value)
-            }
-
-            Label {
-                visible: item && 'turns' in item
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
-                text: qsTr("Turns:")
-            }
-
-            SpinBox {
-                visible: item && 'turns' in item
-                Layout.fillWidth: true
-                from: 0
-                to: 99
-                value: visible ? item.turns : 0
-                onValueChanged: if (!isNaN(value) && visible) item.setTurns(value)
-            }
+        Spacer {
+            Layout.fillHeight: true
         }
     }
 }

@@ -1,9 +1,10 @@
 #ifndef BASE_VEHICLE_H
 #define BASE_VEHICLE_H
 
-// Internal
-#include "abstract_vehicle.h"
+// Qt
+#include <QObject>
 
+// Internal
 #include "attitude.h"
 #include "position.h"
 #include "gps.h"
@@ -11,10 +12,12 @@
 
 namespace domain
 {
-    class BaseVehicle: public AbstractVehicle
+    class BaseVehicle: public QObject
     {
         Q_OBJECT
 
+        Q_PROPERTY(quint8 mavId READ mavId WRITE setMavId NOTIFY mavIdChanged)
+        Q_PROPERTY(int type READ type CONSTANT)
         Q_PROPERTY(State state READ state WRITE setState NOTIFY stateChanged)
         Q_PROPERTY(QString modeString READ modeString
                    WRITE setModeString NOTIFY modeStringChanged)
@@ -39,10 +42,6 @@ namespace domain
                    NOTIFY homeDirectionChanged)
         Q_PROPERTY(float homeDistance READ homeDistance
                    NOTIFY homeDistanceChanged)
-        Q_PROPERTY(float missionDirection READ missionDirection
-                   NOTIFY missionDirectionChanged)
-        Q_PROPERTY(float missionDistance READ missionDistance
-                   NOTIFY missionDistanceChanged)
 
         Q_PROPERTY(bool gpsAvalible READ gpsAvalible
                    WRITE setGpsAvalible NOTIFY gpsAvalibleChanged)
@@ -60,7 +59,14 @@ namespace domain
         Q_PROPERTY(int heading READ heading WRITE setHeading
                    NOTIFY headingChanged)
 
+        quint8 m_mavId;
+
     public:
+        enum Type
+        {
+            UnknownType = 0
+        };
+
         enum State
         {
             UnknownState = 0,
@@ -73,8 +79,11 @@ namespace domain
             PowerOff
         };
 
-        BaseVehicle(uint8_t vehicleId, int type, QObject* parent);
+        BaseVehicle(quint8 mavId, int type = UnknownType,
+                    QObject* parent = nullptr);
 
+        quint8 mavId() const;
+        int type() const;
         State state() const;
         QString modeString() const;
 
@@ -90,8 +99,6 @@ namespace domain
         Position homePosition() const;
         float homeDirection() const;
         float homeDistance() const;
-        float missionDirection() const;
-        float missionDistance() const;
 
         bool gpsAvalible() const;
         Gps gps() const;
@@ -104,6 +111,7 @@ namespace domain
         int heading() const;
 
     public slots:
+        void setMavId(quint8 mavId);
         void setState(State state);
         void setModeString(const QString& modeString);
 
@@ -129,6 +137,7 @@ namespace domain
         void setHeading(int heading);
 
     signals:
+        void mavIdChanged(quint8 mavId);
         void stateChanged(State state);
         void modeStringChanged(const QString& modeString);
 
@@ -144,8 +153,6 @@ namespace domain
         void homePositionChanged(Position homePosition);
         void homeDirectionChanged(float homeDirection);
         void homeDistanceChanged(float homeDistance);
-        void missionDirectionChanged(float missionDirection);
-        void missionDistanceChanged(float missionDistance);
 
         void gpsAvalibleChanged(bool gpsAvalible);
         void gpsChanged(Gps gps);
@@ -157,10 +164,14 @@ namespace domain
         void compasAvalibleChanged(bool compasAvalible);
         void headingChanged(int heading);
 
+        void commandReturn();
+        void commandStartMission(int startPoint);
+        void commandJumpToMission(int startPoint);
         void commandHomePosition(const Position& homePosition);
         void commandArmDisarm(bool arm);
 
     protected:
+        const int m_type;
         State m_state;
         QString m_modeString;
 
@@ -185,6 +196,7 @@ namespace domain
         bool m_compasAvalible;
         int m_heading;
 
+        Q_ENUM(Type)
         Q_ENUM(State)
     };
 }

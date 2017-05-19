@@ -1,13 +1,13 @@
 #ifndef MISSION_PRESENTER_H
 #define MISSION_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "db_traits.h"
 
 namespace domain
 {
-    class MissionService;
-    class AbstractVehicle;
-    class VehicleService;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -17,43 +17,39 @@ namespace presentation
         Q_OBJECT
 
     public:
-        MissionPresenter(domain::MissionService* missionService,
-                         domain::VehicleService* vehicleService,
-                         QObject* object);
+        explicit MissionPresenter(domain::DomainEntry* entry,
+                                  QObject* object = nullptr);
         ~MissionPresenter() override;
 
     public slots:
-        void updateMissions();
-        void updateVehicles();
-        void updateMissionItems();
-        void updateSelectedVehicle();
-
-        void updateCurrentProgress(int currentProgress);
-        void updateTotalProgress(int totalProgress);
-        void updateMissionStatus();
+        void selectMission(const db::MissionPtr& mission);
 
     protected:
         void connectView(QObject* view) override;
+        void setViewConnected(bool connected);
 
     private slots:
-        void onVehicleAdded(domain::AbstractVehicle* vehicle);
-        void onVehicleRemoved(domain::AbstractVehicle* vehicle);
+        void onMissionAdded(const db::MissionPtr& mission);
+        void onMissionRemoved(const db::MissionPtr& mission);
+        void updateMissionsBox();
+        void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
+        void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
+        void updateVehiclesBox();
+        void updateAssignment();
+        void updateStatuses();
 
-        void onMissionSelected(const QString& missionName);
+        void onSelectMission(int index);
         void onAddMission();
         void onRemoveMission();
-
-        void onAddMissionItem();
-        void onRemoveMissionItem(QObject* item);
-
-        void onVehicleSelected(const QString& vehicleName);
-        void onDownloadMission();
+        void onRenameMission(const QString& name);
+        void onAssignVehicle(int index);
         void onUploadMission();
+        void onDownloadMission();
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 
-#endif // MISSIONPRESENTER_H
+#endif // MISSION_PRESENTER_H

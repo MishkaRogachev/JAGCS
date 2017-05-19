@@ -1,280 +1,305 @@
 #include "mission_presenter.h"
 
 // Qt
-#include <QMap>
 #include <QVariant>
 #include <QDebug>
 
 // Internal
-#include "mission_service.h"
-#include "mission.h"
-#include "mission_vehicle.h"
-#include "vehicle_service.h"
-#include "abstract_vehicle.h"
+#include "domain_entry.h"
 
-#include "mission_map_presenter.h"
-#include "mission_view_helper.h"
+#include "db_facade.h"
+#include "mission.h"
+#include "mission_item.h"
+#include "mission_assignment.h"
+#include "vehicle_description.h"
+
+#include "vehicle_service.h"
+#include "command_service.h"
+
+#include "mission_item_presenter.h"
+#include "location_map_presenter.h"
 
 using namespace presentation;
 
 class MissionPresenter::Impl
 {
 public:
-    domain::MissionService* missionService;
+    db::DbFacade* dbFacade;
     domain::VehicleService* vehicleService;
+    domain::CommandService* commandService;
 
-    domain::Mission* selectedMission = nullptr;
+    db::MissionPtr selectedMission;
+    db::MissionPtrList missions;
 
-    QMap<domain::Mission*, QString> missionAliases;
-    QMap<domain::AbstractVehicle*, QString> vehicleAliases;
+    db::VehicleDescriptionPtrList vehicles;
 
-    MissionMapPresenter* map;
-    MissionViewHelper helper;
+    MissionItemPresenter* item;
+    AbstractMapPresenter* map;
 };
 
-MissionPresenter::MissionPresenter(domain::MissionService* missionService,
-                                   domain::VehicleService* vehicleService,
+using namespace presentation;
+
+MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
                                    QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->missionService = missionService;
-    d->vehicleService = vehicleService;
+    d->dbFacade = entry->dbFacade();
+    d->vehicleService = entry->vehicleService();
+    d->commandService = entry->commandService();
 
-    d->map = new MissionMapPresenter(missionService, vehicleService, this);
+    d->missions.append(d->dbFacade->missions());
+    d->vehicles.append(d->vehicleService->descriptions());
 
-    connect(missionService, &domain::MissionService::missionAdded,
-            this, &MissionPresenter::updateMissions);
-    connect(missionService, &domain::MissionService::missionRemoved,
-            this, &MissionPresenter::updateMissions);
+    connect(d->dbFacade, &db::DbFacade::missionAdded,
+            this, &MissionPresenter::onMissionAdded);
+    connect(d->dbFacade, &db::DbFacade::missionRemoved,
+            this, &MissionPresenter::onMissionRemoved);
 
-    connect(vehicleService, &domain::VehicleService::vehicleAdded,
+    connect(d->dbFacade, &db::DbFacade::assignmentAdded,
+            this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentRemoved,
+            this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentChanged,
+            this, &MissionPresenter::updateAssignment); // TODO: assignment QObject
+
+    connect(d->dbFacade, &db::DbFacade::missionItemAdded,
+            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+    connect(d->dbFacade, &db::DbFacade::missionItemRemoved,
+            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+    connect(d->dbFacade, &db::DbFacade::missionItemChanged,
+            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+
+    connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);
-    connect(vehicleService, &domain::VehicleService::vehicleRemoved,
+    connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::onVehicleRemoved);
 
-    for (domain::AbstractVehicle* vehicle: vehicleService->vehicles())
-        this->onVehicleAdded(vehicle);
+    d->item = new MissionItemPresenter(d->dbFacade, this);
+    d->map = new LocationMapPresenter(entry, this);
 }
 
 MissionPresenter::~MissionPresenter()
+{}
+
+void MissionPresenter::selectMission(const db::MissionPtr& mission)
 {
-    delete d;
-}
+    d->selectedMission = mission;
+    d->item->setMission(d->selectedMission);
 
-void MissionPresenter::updateMissions()
-{
-    d->missionAliases.clear();
-
-    int id = 0;
-    for (domain::Mission* mission: d->missionService->missions())
-    {
-        d->missionAliases[mission] = tr("Mission") + " " + QString::number(id++);
-    }
-
-    QStringList missionNames = d->missionAliases.values();
-    this->setViewProperty(PROPERTY(missionNames), missionNames);
-}
-
-void MissionPresenter::updateVehicles()
-{
-    disconnect(m_view, SIGNAL(vehicleSelected(QString)),
-               this, SLOT(onVehicleSelected(QString)));
-
-    QStringList vehicleNames = d->vehicleAliases.values();
-    vehicleNames.prepend(tr("Unassigned"));
-    this->setViewProperty(PROPERTY(vehicleNames), vehicleNames);
-
-    connect(m_view, SIGNAL(vehicleSelected(QString)),
-            this, SLOT(onVehicleSelected(QString)));
-
-    if (d->selectedMission) this->updateSelectedVehicle();
-}
-
-void MissionPresenter::updateMissionItems()
-{
-    QObjectList list;
-
-    if (d->selectedMission)
-    {
-        for (domain::AbstractMissionItem* item: d->selectedMission->items())
-            list.append(item);
-    }
-
-    this->setViewProperty(PROPERTY(missionItems), QVariant::fromValue(list));
-}
-
-void MissionPresenter::updateSelectedVehicle()
-{
-    domain::AbstractVehicle* vehicle = d->selectedMission->assignedVehicle();
-    if (vehicle)
-    {
-        int index = d->vehicleAliases.values().indexOf(
-                        d->vehicleAliases[vehicle]) + 1;
-        this->setViewProperty(PROPERTY(selectedVehicleId), index);
-    }
-    else
-    {
-        this->setViewProperty(PROPERTY(selectedVehicleId), 0);
-    }
-    this->setViewProperty(PROPERTY(selectedVehicle), QVariant::fromValue(vehicle));
-}
-
-void MissionPresenter::updateCurrentProgress(int currentProgress)
-{
-    this->setViewProperty(PROPERTY(currentProgress), currentProgress);
-}
-
-void MissionPresenter::updateTotalProgress(int totalProgress)
-{
-    this->setViewProperty(PROPERTY(totalProgress), totalProgress);
-}
-
-void MissionPresenter::updateMissionStatus()
-{
-    if (!d->selectedMission)
-    {
-        this->setViewProperty(PROPERTY(statusString), tr("None"));
-        return;
-    }
-
-    switch (d->selectedMission->assignment()->status()) {
-    case domain::MissionVehicle::Idle:
-        this->setViewProperty(PROPERTY(statusString), tr("Idle"));
-        break;
-    case domain::MissionVehicle::Downloading:
-        this->setViewProperty(PROPERTY(statusString), tr("Downloading"));
-        break;
-    case domain::MissionVehicle::Uploading:
-        this->setViewProperty(PROPERTY(statusString), tr("Uploading"));
-        break;
-    case domain::MissionVehicle::Actual:
-        this->setViewProperty(PROPERTY(statusString), tr("Actual"));
-        break;
-    case domain::MissionVehicle::NotActual:
-        this->setViewProperty(PROPERTY(statusString), tr("Not actual"));
-        break;
-    default:
-        break;
-    }
+    this->setViewProperty(PROPERTY(selectedMission),
+                          d->missions.indexOf(d->selectedMission) + 1);
+    this->updateAssignment();
+    this->updateStatuses();
 }
 
 void MissionPresenter::connectView(QObject* view)
 {
+    d->item->setView(view->findChild<QObject*>(NAME(missionItem)));
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 
-    this->setViewProperty(PROPERTY(helper), QVariant::fromValue(&d->helper));
-
-    connect(view, SIGNAL(missionSelected(QString)), this, SLOT(onMissionSelected(QString)));
-    connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
-    connect(view, SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
-
-    connect(view, SIGNAL(vehicleSelected(QString)), this, SLOT(onVehicleSelected(QString)));
-    connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
-    connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
-
-    connect(view, SIGNAL(addMissionItem()), this, SLOT(onAddMissionItem()));
-    connect(view, SIGNAL(removeMissionItem(QObject*)), this, SLOT(onRemoveMissionItem(QObject*)));
-
-    this->updateMissions();
-    this->updateVehicles();
+    this->updateVehiclesBox();
+    this->updateMissionsBox();
 }
 
-void MissionPresenter::onVehicleAdded(domain::AbstractVehicle* vehicle)
+void MissionPresenter::setViewConnected(bool connected)
 {
-    d->vehicleAliases[vehicle] = tr("MAV %1").arg(vehicle->vehicleId());
-
-    if (m_view) this->updateVehicles();
+    if (connected)
+    {
+        connect(this->view(), SIGNAL(selectMission(int)),
+                this, SLOT(onSelectMission(int)));
+        connect(this->view(), SIGNAL(addMission()),
+                this, SLOT(onAddMission()));
+        connect(this->view(), SIGNAL(removeMission()),
+                this, SLOT(onRemoveMission()));
+        connect(this->view(), SIGNAL(renameMission(QString)),
+                this, SLOT(onRenameMission(QString)));
+        connect(this->view(), SIGNAL(assignVehicle(int)),
+                this, SLOT(onAssignVehicle(int)));
+        connect(this->view(), SIGNAL(uploadMission()),
+                this, SLOT(onUploadMission()));
+        connect(this->view(), SIGNAL(downloadMission()),
+                this, SLOT(onDownloadMission()));
+    }
+    else
+    {
+        disconnect(this->view(), 0, this, 0);
+    }
 }
 
-void MissionPresenter::onVehicleRemoved(domain::AbstractVehicle* vehicle)
+void MissionPresenter::onMissionAdded(const db::MissionPtr& mission)
 {
-    d->vehicleAliases.remove(vehicle);
-
-    if (m_view) this->updateVehicles();
+    d->missions.append(mission);
+    this->updateMissionsBox();
 }
 
-void MissionPresenter::onMissionSelected(const QString& missionName)
+void MissionPresenter::onMissionRemoved(const db::MissionPtr& mission)
 {
+    d->missions.removeOne(mission);
+    this->updateMissionsBox();
+}
+
+void MissionPresenter::updateMissionsBox()
+{
+    this->setViewConnected(false);
+
+    QStringList missions;
+    missions.append(QString());
+
+    for (const db::MissionPtr& mission: d->missions)
+    {
+        missions.append(mission->name());
+    }
+    this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
+    this->setViewProperty(PROPERTY(selectedMission),
+                          d->missions.indexOf(d->selectedMission) + 1);
+    this->setViewConnected(true);
+}
+
+void MissionPresenter::onVehicleAdded(const db::VehicleDescriptionPtr& vehicle)
+{
+    d->vehicles.append(vehicle);
+    this->updateVehiclesBox();
+}
+
+void MissionPresenter::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)
+{
+    d->vehicles.removeOne(vehicle);
+    this->updateVehiclesBox();
+}
+
+void MissionPresenter::updateVehiclesBox()
+{
+    this->setViewConnected(false);
+
+    QStringList vehicles;
+    vehicles.append(QString());
+
+    for (const db::VehicleDescriptionPtr& vehicle: d->vehicles)
+    {
+        vehicles.append(vehicle->name());
+    }
+    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(vehicles));
+    this->setViewConnected(true);
+
+    this->updateAssignment();
+}
+
+void MissionPresenter::updateAssignment()
+{
+    this->setViewConnected(false);
+
     if (d->selectedMission)
     {
-        disconnect(d->selectedMission, 0, this, 0);
-        disconnect(d->selectedMission->assignment(), 0, this, 0);
+        db::MissionAssignmentPtr assignment =
+                d->dbFacade->missionAssignment(d->selectedMission->id());
+        if (assignment)
+        {
+            db::VehicleDescriptionPtr vehicle = d->vehicleService->description(assignment->vehicleId());
+            if (vehicle)
+            {
+                this->setViewProperty(PROPERTY(assignedVehicle),
+                                      d->vehicles.indexOf(vehicle) + 1);
+            }
+            this->setViewConnected(true);
+            return;
+        }
     }
+    this->setViewProperty(PROPERTY(assignedVehicle), 0);
 
-    d->selectedMission = d->missionAliases.key(missionName);
+    this->setViewConnected(true);
+}
+
+void MissionPresenter::updateStatuses()
+{
+    QStringList statuses;
 
     if (d->selectedMission)
     {
-        connect(d->selectedMission, &domain::Mission::missionItemsChanged,
-                this, &MissionPresenter::updateMissionItems);
-        connect(d->selectedMission->assignment(),
-                &domain::MissionVehicle::currentProgressChanged,
-                this, &MissionPresenter::updateCurrentProgress);
-        connect(d->selectedMission->assignment(),
-                &domain::MissionVehicle::totalProgressChanged,
-                this, &MissionPresenter::updateTotalProgress);
-        connect(d->selectedMission->assignment(),
-                &domain::MissionVehicle::statusChanged,
-                this, &MissionPresenter::updateMissionStatus);
-
-        this->updateCurrentProgress(d->selectedMission->assignment()->currentProgress());
-        this->updateTotalProgress(d->selectedMission->assignment()->totalProgress());
-        this->updateMissionStatus();
-        this->updateSelectedVehicle();
+        for (const db::MissionItemPtr& item:
+             d->dbFacade->missionItems(d->selectedMission->id()))
+        {
+            statuses.append(QString::number(item->status()));
+        }
     }
-    this->updateMissionItems();
+
+    this->setViewProperty(PROPERTY(statuses), statuses);
+}
+
+void MissionPresenter::onSelectMission(int index)
+{
+    if (index > 0 && index < d->missions.count() + 1)
+    {
+        this->selectMission(d->missions.at(index - 1));
+    }
+    else
+    {
+        this->selectMission(db::MissionPtr());
+    }
 }
 
 void MissionPresenter::onAddMission()
 {
-    d->missionService->addNewMission();
+    db::MissionPtr mission = db::MissionPtr::create();
+
+    mission->setName(tr("New Mission %1").arg(d->dbFacade->missions().count()));
+
+    d->dbFacade->save(mission);
+    this->selectMission(mission);
 }
 
 void MissionPresenter::onRemoveMission()
 {
+    if (d->selectedMission.isNull()) return;
+
+    d->dbFacade->remove(d->selectedMission);
+    d->selectedMission.clear();
+    this->setViewProperty(PROPERTY(selectedMission), 0);
+
+    d->item->setMission(db::MissionPtr());
+}
+
+void MissionPresenter::onRenameMission(const QString& name)
+{
+    if (d->selectedMission.isNull() || name.isEmpty()) return;
+
+    // TODO: check unique name
+    d->selectedMission->setName(name);
+    d->dbFacade->save(d->selectedMission);
+    this->updateMissionsBox();
+}
+
+void MissionPresenter::onAssignVehicle(int index)
+{
     if (!d->selectedMission) return;
+    db::VehicleDescriptionPtr vehicle = (index > 0 && index <= d->missions.count()) ?
+                                            d->vehicles.at(index - 1) :
+                                            db::VehicleDescriptionPtr();
 
-    d->missionService->deleteMission(d->selectedMission);
-}
-
-void MissionPresenter::onAddMissionItem()
-{
-    if (d->selectedMission) d->selectedMission->addNewMissionItem();
-}
-
-void MissionPresenter::onRemoveMissionItem(QObject* item)
-{
-    if (d->selectedMission) d->selectedMission->removeMissionItem(
-                qobject_cast<domain::AbstractMissionItem*>(item));
-}
-
-void MissionPresenter::onVehicleSelected(const QString& vehicleName)
-{
-    if (!d->selectedMission) return;
-
-    if (d->vehicleAliases.values().contains(vehicleName))
+    if (vehicle)
     {
-        domain::AbstractVehicle* vehicle = d->vehicleAliases.key(vehicleName);
-        d->selectedMission->assignVehicle(vehicle);
-        this->setViewProperty(PROPERTY(selectedVehicle),
-                              QVariant::fromValue(vehicle));
+        d->dbFacade->assign(d->selectedMission->id(), vehicle->id());
     }
     else
     {
-        d->selectedMission->unassignVehicle();
-        this->setViewProperty(PROPERTY(selectedVehicle), QVariant());
+        d->dbFacade->unassign(d->selectedMission->id());
     }
-}
-
-void MissionPresenter::onDownloadMission()
-{
-    if (!d->selectedMission) return;
-    d->missionService->downloadMission(d->selectedMission);
 }
 
 void MissionPresenter::onUploadMission()
 {
     if (!d->selectedMission) return;
-    d->missionService->uploadMission(d->selectedMission);
+    db::MissionAssignmentPtr assignment = d->dbFacade->missionAssignment(d->selectedMission->id());
+    if (assignment.isNull()) return;
+
+    d->commandService->upload(assignment);
+}
+
+void MissionPresenter::onDownloadMission()
+{
+    if (!d->selectedMission) return;
+    db::MissionAssignmentPtr assignment = d->dbFacade->missionAssignment(d->selectedMission->id());
+    if (assignment.isNull()) return;
+
+    d->commandService->download(assignment);
 }

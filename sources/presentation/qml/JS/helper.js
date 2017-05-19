@@ -4,6 +4,10 @@ function mapToRange(value, minValue, maxValue, length) {
     return (value - minValue) / (maxValue - minValue) * length;
 }
 
+function decimals(num) {
+    return (num.toString().split('.')[1] || []).length;
+}
+
 function pad(num, size) {
     var str = num.toString();
     while (str.length < size) str = "0" + str;

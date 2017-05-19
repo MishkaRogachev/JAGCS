@@ -9,5 +9,6 @@ MapItemView {
         color: "transparent"
         border.width: 4
         border.color: palette.missionColor
+        visible: itemCoordinate.isValid && itemRadius > 0
     }
 }

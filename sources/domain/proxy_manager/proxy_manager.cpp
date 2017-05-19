@@ -4,7 +4,6 @@
 #include <QNetworkProxy>
 
 // Internal
-#include "settings.h"
 #include "settings_provider.h"
 
 using namespace domain;
@@ -38,11 +37,11 @@ void ProxyManager::load()
     QNetworkProxy proxy;
 
     proxy.setType(static_cast<QNetworkProxy::ProxyType>(
-                      SettingsProvider::value(proxy_settings::type).toInt()));
-    proxy.setHostName(SettingsProvider::value(proxy_settings::hostName).toString());
-    proxy.setPort(SettingsProvider::value(proxy_settings::port).toInt());
-    proxy.setUser(SettingsProvider::value(proxy_settings::user).toString());
-    proxy.setPassword(SettingsProvider::value(proxy_settings::password).toString());
+                      SettingsProvider::value(settings::proxy::type).toInt()));
+    proxy.setHostName(SettingsProvider::value(settings::proxy::hostName).toString());
+    proxy.setPort(SettingsProvider::value(settings::proxy::port).toInt());
+    proxy.setUser(SettingsProvider::value(settings::proxy::user).toString());
+    proxy.setPassword(SettingsProvider::value(settings::proxy::password).toString());
 
     this->setProxy(proxy);
 }
@@ -51,9 +50,9 @@ void ProxyManager::save()
 {
     QNetworkProxy proxy = this->proxy();
 
-    SettingsProvider::setValue(proxy_settings::type, proxy.type());
-    SettingsProvider::setValue(proxy_settings::hostName, proxy.hostName());
-    SettingsProvider::setValue(proxy_settings::port, proxy.port());
-    SettingsProvider::setValue(proxy_settings::user, proxy.user());
-    SettingsProvider::setValue(proxy_settings::password, proxy.password());
+    SettingsProvider::setValue(settings::proxy::type, proxy.type());
+    SettingsProvider::setValue(settings::proxy::hostName, proxy.hostName());
+    SettingsProvider::setValue(settings::proxy::port, proxy.port());
+    SettingsProvider::setValue(settings::proxy::user, proxy.user());
+    SettingsProvider::setValue(settings::proxy::password, proxy.password());
 }

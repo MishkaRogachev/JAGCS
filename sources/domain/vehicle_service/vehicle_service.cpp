@@ -5,86 +5,123 @@
 #include <QDebug>
 
 // Internal
-#include "aerial_vehicle.h"
+#include "db_facade.h"
+#include "vehicle_description.h"
 
+#include "aerial_vehicle.h"
+#include "description_vehicle_factory.h"
+
+using namespace db;
 using namespace domain;
 
 class VehicleService::Impl
 {
 public:
-    QMap<uint8_t, AbstractVehicle*> vehicles;
+    DbFacade* facade;
+
+    VehicleDescriptionPtrList descriptions;
+    QMap<VehicleDescriptionPtr, BaseVehicle*> descriptedVehicles;
+
+    BaseVehicle* vehicleFromDescription(const VehicleDescriptionPtr& description)
+    {
+        DescriptionVehicleFactory factory(description);
+
+        descriptedVehicles[description] = factory.create();
+        return descriptedVehicles[description];
+    }
 };
 
-VehicleService::VehicleService(QObject* parent):
+VehicleService::VehicleService(DbFacade* facade, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<Attitude>("Attitude");
-    qRegisterMetaType<Position>("Position");
-    qRegisterMetaType<Gps>("Gps");
-    qRegisterMetaType<Wind>("Wind");
-    qRegisterMetaType<PowerSystem>("PowerSystem");
+    d->facade = facade;
+
+    for (const VehicleDescriptionPtr& description: d->facade->vehicles())
+    {
+        d->descriptions.append(description);
+        BaseVehicle* vehicle = d->vehicleFromDescription(description);
+        vehicle->setParent(this);
+    }
 }
 
 VehicleService::~VehicleService()
 {
-    delete d;
-}
-
-QList<AbstractVehicle*> VehicleService::vehicles() const
-{
-    return d->vehicles.values();
-}
-
-AbstractVehicle* VehicleService::vehicle(uint8_t id) const
-{
-    return d->vehicles.value(id, nullptr);
-}
-
-BaseVehicle* VehicleService::baseVehicle(uint8_t id) const
-{
-    return qobject_cast<BaseVehicle*>(this->vehicle(id));
-}
-
-AerialVehicle* VehicleService::aerialVehicle(uint8_t id) const
-{
-    return qobject_cast<AerialVehicle*>(this->vehicle(id));
-}
-
-void VehicleService::addVehicle(AbstractVehicle* vehicle)
-{
-    d->vehicles[vehicle->vehicleId()] = vehicle;
-    emit vehicleAdded(vehicle);
-}
-
-void VehicleService::createVehicle(uint8_t vehicleId, int type)
-{
-    switch (type)
+    for (const VehicleDescriptionPtr& description: d->descriptions)
     {
-    case AerialVehicle::FixedWingAircraft:
-    case AerialVehicle::Multirotor:
-    case AerialVehicle::Helicopter:
-    case AerialVehicle::Airship:
-    case AerialVehicle::Vtol:
-        this->addVehicle(new AerialVehicle(vehicleId,
-                                           AerialVehicle::Type(type),
-                                           this));
-        break;
-    default:
-        this->addVehicle(new BaseVehicle(vehicleId, type, this));
-        break;
+        d->facade->save(description);
     }
 }
 
-void VehicleService::removeVehicle(AbstractVehicle* vehicle)
+VehicleDescriptionPtrList VehicleService::descriptions() const
 {
-    d->vehicles.remove(vehicle->vehicleId());
-
-    emit vehicleRemoved(vehicle);
+    return d->descriptions;
 }
 
-void VehicleService::deleteVehicle(AbstractVehicle* vehicle)
+VehicleDescriptionPtr VehicleService::description(int id) const
 {
-    this->removeVehicle(vehicle);
-    vehicle->deleteLater();
+    return d->facade->vehicle(id);
+}
+
+VehicleDescriptionPtr VehicleService::findDescriptionByMavId(quint8 mavId) const
+{
+    auto it = std::find_if(d->descriptions.cbegin(), d->descriptions.cend(),
+                           [mavId](const VehicleDescriptionPtr& description)
+    {
+        return description->mavId() == mavId;
+    });
+
+    if (it != d->descriptions.cend()) return *it;
+    return VehicleDescriptionPtr();
+}
+
+BaseVehicle* VehicleService::baseVehicle(const VehicleDescriptionPtr& description)
+{
+    return d->descriptedVehicles.value(description, nullptr);
+}
+
+BaseVehicle* VehicleService::baseVehicle(quint8 mavId)
+{
+    return this->baseVehicle(this->findDescriptionByMavId(mavId));
+}
+
+AerialVehicle* VehicleService::aerialVehicle(const VehicleDescriptionPtr& description)
+{
+    return qobject_cast<AerialVehicle*>(this->baseVehicle(description));
+}
+
+AerialVehicle* VehicleService::aerialVehicle(quint8 mavId)
+{
+    return this->aerialVehicle(this->findDescriptionByMavId(mavId));
+}
+
+void VehicleService::saveDescription(const VehicleDescriptionPtr& description)
+{
+    BaseVehicle* vehicle;
+
+    if (d->descriptions.contains(description))
+    {
+        vehicle = d->descriptedVehicles[description];
+        vehicle->setMavId(description->mavId());
+    }
+    else
+    {
+        d->descriptions.append(description);
+        vehicle = d->vehicleFromDescription(description);
+        vehicle->setParent(this);
+        emit vehicleAdded(description);
+    }
+
+    d->facade->save(description);
+}
+
+void VehicleService::removeByDescription(const VehicleDescriptionPtr& description)
+{
+    d->descriptions.removeOne(description);
+    BaseVehicle* vehicle = d->descriptedVehicles.take(description);
+    delete vehicle;
+
+    d->facade->remove(description);
+
+    emit vehicleRemoved(description);
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="save.svg">
+  <sodipodi:namedview
+     pagecolor="#808080"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1620"
+     inkscape:window-height="979"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="25.326376"
+     inkscape:cx="9.9774766"
+     inkscape:cy="10.496242"
+     inkscape:window-x="235"
+     inkscape:window-y="68"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g4136" />
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="matrix(1.1740701,0,0,1.103692,-6.7851216,-1131.8247)"
+     style="fill:#ffffff;stroke:none">
+    <g
+       id="g4903"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+       transform="matrix(0.10700338,0,0,0.1105857,2.2172156,1022.5977)">
+      <g
+         id="g4184"
+         transform="matrix(3.2840164,0,0,3.2970863,54.758313,47.763153)">
+        <g
+           id="g4136">
+          <path
+             id="path4138"
+             d="m 38.115293,-1.5849583 -2.437975,0 -28.2780818,0 -9.0893835,0 0,49.6995913 7.0695205,0 33.3277398,0 8.079452,0 0,-40.9910059 z m -4.457838,2.02855473 0,14.19988357 -24.2383562,0 0,-14.19988357 z M 7.3992362,46.086078 l 0,-19.27127 29.2880138,0 0,19.27127 z"
+             inkscape:connector-curvature="0"
+             style="fill:#ffffff"
+             sodipodi:nodetypes="cccccccccccccccccccc" />
+          <path
+             id="path4146"
+             d="m 31.58592,2.4301081 -6,0 0,9.9999999 6,0 0,-9.9999999 z m -2,7.9999999 -2,0 0,-5.9999999 2,0 0,5.9999999 z"
+             inkscape:connector-curvature="0"
+             style="fill:#ffffff" />
+        </g>
+        <g
+           id="g4148" />
+        <g
+           id="g4150" />
+        <g
+           id="g4152" />
+        <g
+           id="g4154" />
+        <g
+           id="g4156" />
+        <g
+           id="g4158" />
+        <g
+           id="g4160" />
+        <g
+           id="g4162" />
+        <g
+           id="g4164" />
+        <g
+           id="g4166" />
+        <g
+           id="g4168" />
+        <g
+           id="g4170" />
+        <g
+           id="g4172" />
+        <g
+           id="g4174" />
+        <g
+           id="g4176" />
+      </g>
+    </g>
+  </g>
+</svg>

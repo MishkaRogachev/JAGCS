@@ -6,8 +6,6 @@
 
 // Internal
 #include "domain_entry.h"
-#include "settings_provider.h"
-#include "settings.h"
 
 #include "status_presenter.h"
 #include "flight_presenter.h"
@@ -36,9 +34,7 @@ MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
 }
 
 MainPresenter::~MainPresenter()
-{
-    delete d;
-}
+{}
 
 void MainPresenter::setMode(const QString& mode)
 {
@@ -54,15 +50,11 @@ void MainPresenter::setMode(const QString& mode)
 
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->entry->missionService(),
-                                               d->entry->vehicleService(),
-                                               this);
+        d->modePresenter = new FlightPresenter(d->entry, this);
     }
     if (mode == "mission")
     {
-        d->modePresenter = new MissionPresenter(d->entry->missionService(),
-                                                d->entry->vehicleService(),
-                                                this);
+        d->modePresenter = new MissionPresenter(d->entry, this);
     }
     else if (mode == "settings")
     {

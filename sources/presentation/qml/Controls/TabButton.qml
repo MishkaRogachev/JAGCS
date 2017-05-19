@@ -14,8 +14,8 @@ TabButton {
 
     background: Rectangle {
         id: backgroundItem
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: implicitWidth
+        implicitWidth: palette.controlBaseSize * 4
+        implicitHeight: palette.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         color: {
             if (control.checked) return palette.selectionColor;

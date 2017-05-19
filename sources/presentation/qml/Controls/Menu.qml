@@ -7,7 +7,7 @@ Menu {
     id: control
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseWidth
+        implicitWidth: palette.controlBaseSize * 6
         implicitHeight: palette.controlBaseSize
         color: palette.sunkenColor
     }

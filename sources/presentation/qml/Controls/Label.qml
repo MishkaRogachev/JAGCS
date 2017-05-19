@@ -8,4 +8,5 @@ Label {
 
     font.pixelSize: palette.fontPixelSize
     color: palette.textColor
+    verticalAlignment: Qt.AlignVCenter
 }

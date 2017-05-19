@@ -1,68 +1,84 @@
 #include "domain_entry.h"
 
 // Qt
-#include <QScopedPointer>
+#include <QGuiApplication>
+#include <QDebug>
 
 // Internal
+#include "db_manager.h"
+#include "db_facade.h"
+
 #include "settings_provider.h"
-
-#include "mission_service.h"
-#include "vehicle_service.h"
-#include "abstract_vehicle.h"
-
-#include "mavlink_communicator.h"
-#include "mavlink_communicator_factory.h"
 
 #include "proxy_manager.h"
 
-#include "endpoint.h"
+#include "vehicle_service.h"
+#include "command_service.h"
 
+#include "communication_service.h"
+#include "mavlink_communicator_factory.h"
+
+using namespace db;
 using namespace domain;
 
 class DomainEntry::Impl
 {
 public:
-    VehicleService vehicleService;
-    MissionService missionService;
+    DbManager dataBase;
+    DbFacade dbFacade;
     ProxyManager proxyManager;
 
-    QScopedPointer<MavLinkCommunicator> communicator;
+    QScopedPointer<VehicleService> vehicleService;
+    CommandService commandService;
+
+    QScopedPointer<CommunicationService> commService;
 };
 
 DomainEntry::DomainEntry():
     d(new Impl())
 {
-    qRegisterMetaType<Endpoint>("Endpoint");
-    qRegisterMetaType<EndpointList>("EndpointList");
+    if (!d->dataBase.open(SettingsProvider::value(settings::data_base::name).toString()))
+    {
+        qFatal("Unable to estblish DB connection");
+        qApp->quit(); // TODO: quit gently
+    }
 
-    QObject::connect(&d->vehicleService, &VehicleService::vehicleAdded,
-                     &d->missionService, &MissionService::addVehiclesMision);
+    d->vehicleService.reset(new VehicleService(&d->dbFacade));
 
-    MavLinkCommunicatorFactory factory(&d->vehicleService, &d->missionService);
-    d->communicator.reset(factory.create());
+    comm::MavLinkCommunicatorFactory comFactory(
+                &d->dbFacade,
+                d->vehicleService.data(),
+                &d->commandService,
+                SettingsProvider::value(settings::communication::systemId).toInt(),
+                SettingsProvider::value(settings::communication::componentId).toInt());
+
+    d->commService.reset(new CommunicationService(&comFactory, &d->dbFacade));
 }
 
 DomainEntry::~DomainEntry()
+{}
+
+DbFacade* DomainEntry::dbFacade() const
 {
-    delete d;
+    return &d->dbFacade;
 }
 
-AbstractCommunicator* DomainEntry::communicator() const
+CommunicationService* DomainEntry::commService() const
 {
-    return d->communicator.data();
+    return d->commService.data();
 }
 
 VehicleService* DomainEntry::vehicleService() const
 {
-    return &d->vehicleService;
+    return d->vehicleService.data();
 }
 
-MissionService* DomainEntry::missionService() const
+CommandService*DomainEntry::commandService() const
 {
-    return &d->missionService;
+    return &d->commandService;
 }
 
-ProxyManager* DomainEntry::proxyManager() const
+ProxyManager*DomainEntry::proxyManager() const
 {
     return &d->proxyManager;
 }

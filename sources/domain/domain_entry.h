@@ -1,13 +1,20 @@
 #ifndef DOMAIN_ENTRY_H
 #define DOMAIN_ENTRY_H
 
-#include <QtGlobal>
+// Qt
+#include <QScopedPointer>
+
+namespace db
+{
+    class DbFacade;
+}
 
 namespace domain
 {
-    class AbstractCommunicator;
     class VehicleService;
-    class MissionService;
+    class CommandService;
+    class CommunicationService;
+
     class ProxyManager;
 
     class DomainEntry
@@ -16,15 +23,18 @@ namespace domain
         DomainEntry();
         ~DomainEntry();
 
-        AbstractCommunicator* communicator() const;
+        db::DbFacade* dbFacade() const;
+
         VehicleService* vehicleService() const;
-        MissionService* missionService() const;
+        CommandService* commandService() const;
+
+        CommunicationService* commService() const;
+
         ProxyManager* proxyManager() const;
 
     private:
         class Impl;
-        Impl* const d;
-        Q_DISABLE_COPY(DomainEntry)
+        QScopedPointer<Impl> const d;
     };
 }
 

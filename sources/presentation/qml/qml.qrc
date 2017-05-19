@@ -23,13 +23,15 @@
         <file>Controls/ItemDelegate.qml</file>
         <file>Controls/Popup.qml</file>
         <file>Controls/SpinBox.qml</file>
+        <file>Controls/CoordSpinBox.qml</file>
+        <file>Controls/RealSpinBox.qml</file>
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
-        <file>Controls/CoordSpinBox.qml</file>
+        <file>Controls/Spacer.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/SnsDisplay.qml</file>
         <file>Indicators/BarIndicator.qml</file>
-        <file>Indicators/Horizont.qml</file>
+        <file>Indicators/Horizon.qml</file>
         <file>Indicators/PlaneMark.qml</file>
         <file>Indicators/Ladder.qml</file>
         <file>Indicators/PitchScale.qml</file>
@@ -61,12 +63,13 @@
         <file>Views/Mission/MissionView.qml</file>
         <file>Views/Mission/MissionItemView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
-        <file>Views/Settings/GuiSettingsView.qml</file>
-        <file>Views/Settings/ManualSettingsView.qml</file>
-        <file>Views/Settings/NetworkSettingsView.qml</file>
+        <file>Views/Settings/Communications/CommunicationsView.qml</file>
+        <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
+        <file>Views/Settings/Vehicles/VehiclesView.qml</file>
+        <file>Views/Settings/Vehicles/VehicleDescriptionView.qml</file>
         <file>Views/Settings/VideoSettingsView.qml</file>
-        <file>Views/Settings/Connection/ConnectionSettingsView.qml</file>
-        <file>Views/Settings/Connection/LinkView.qml</file>
+        <file>Views/Settings/GuiSettingsView.qml</file>
+        <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/AboutView.qml</file>
     </qresource>
 </RCC>

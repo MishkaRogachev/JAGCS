@@ -30,7 +30,7 @@ namespace presentation
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 

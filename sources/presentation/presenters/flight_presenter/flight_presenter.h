@@ -1,14 +1,12 @@
 #ifndef FLIGHT_PRESENTER_H
 #define FLIGHT_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
 
 namespace domain
 {
-    class MissionService;
-
-    class VehicleService;
-    class AbstractVehicle;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -18,9 +16,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        FlightPresenter(domain::MissionService* missionService,
-                        domain::VehicleService* vehicleService,
-                        QObject* object);
+        explicit FlightPresenter(domain::DomainEntry* entry, QObject* object);
         ~FlightPresenter() override;
 
     public slots:
@@ -30,14 +26,11 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onVehicleAdded(domain::AbstractVehicle* vehicle);
-        void onVehicleRemoved(domain::AbstractVehicle* vehicle);
-
         void onVehicleSelected(const QString& vehicleName);
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 
