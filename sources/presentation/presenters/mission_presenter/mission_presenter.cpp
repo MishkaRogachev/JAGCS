@@ -55,6 +55,10 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
             this, &MissionPresenter::onMissionAdded);
     connect(d->dbFacade, &db::DbFacade::missionRemoved,
             this, &MissionPresenter::onMissionRemoved);
+    connect(d->dbFacade, &db::DbFacade::assignmentAdded,
+            this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentRemoved,
+            this, &MissionPresenter::updateAssignment);
     connect(d->dbFacade, &db::DbFacade::assignmentChanged,
             this, &MissionPresenter::updateAssignment); // TODO: assignment QObject
 
@@ -263,8 +267,6 @@ void MissionPresenter::onAssignVehicle(int index)
     {
         d->dbFacade->unassign(d->selectedMission->id());
     }
-
-    this->updateAssignment();
 }
 
 void MissionPresenter::onUploadMission()
@@ -274,7 +276,6 @@ void MissionPresenter::onUploadMission()
     if (assignment.isNull()) return;
 
     d->commandService->upload(assignment);
-    this->updateAssignment();
 }
 
 void MissionPresenter::onDownloadMission()
@@ -284,5 +285,4 @@ void MissionPresenter::onDownloadMission()
     if (assignment.isNull()) return;
 
     d->commandService->download(assignment);
-    this->updateAssignment();
 }

@@ -133,7 +133,7 @@ Pane {
                         radius: width / 2
                         color: selected ? palette.selectionColor : palette.raisedColor
                         border.color: {
-                            switch (modelData) {
+                            switch (parseInt(modelData)) {
                             case MissionAssignment.Actual: return palette.positiveColor;
                             case MissionAssignment.Downloading:
                             case MissionAssignment.Uploading: return palette.neutralColor;
