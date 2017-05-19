@@ -4,9 +4,9 @@
 // Internal
 #include "abstract_map_presenter.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -16,7 +16,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit LocationMapPresenter(db::DbFacade* dbFacade, QObject* object = nullptr);
+        explicit LocationMapPresenter(domain::DomainEntry* entry, QObject* object = nullptr);
         ~LocationMapPresenter() override;
 
         double centerLatitude() const override;

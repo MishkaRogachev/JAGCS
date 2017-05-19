@@ -6,7 +6,7 @@
 
 namespace domain
 {
-    class VehicleService;
+    class DomainEntry;
 }
 
 namespace presentation
@@ -16,8 +16,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        FlightPresenter(domain::VehicleService* vehicleService,
-                        QObject* object);
+        explicit FlightPresenter(domain::DomainEntry* entry, QObject* object);
         ~FlightPresenter() override;
 
     public slots:

@@ -76,7 +76,7 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
             this, &MissionPresenter::onVehicleRemoved);
 
     d->item = new MissionItemPresenter(d->dbFacade, this);
-    d->map = new LocationMapPresenter(d->dbFacade, this);
+    d->map = new LocationMapPresenter(entry, this);
 }
 
 MissionPresenter::~MissionPresenter()

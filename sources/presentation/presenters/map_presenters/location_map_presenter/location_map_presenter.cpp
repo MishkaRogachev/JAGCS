@@ -5,8 +5,11 @@
 #include <QGeoCoordinate>
 
 // Internal
+#include "domain_entry.h"
+
 #include "mission_point_map_item_model.h"
 #include "mission_line_map_item_model.h"
+#include "vehicle_map_item_model.h"
 
 using namespace presentation;
 
@@ -15,17 +18,19 @@ class LocationMapPresenter::Impl
 public:
     MissionPointMapItemModel pointModel;
     MissionLineMapItemModel lineModel;
+    VehicleMapItemModel vehicleModel;
 
-    Impl(db::DbFacade* dbFacade):
+    Impl(db::DbFacade* dbFacade, domain::VehicleService* vehicleService):
         pointModel(dbFacade),
-        lineModel(dbFacade)
+        lineModel(dbFacade),
+        vehicleModel(vehicleService)
     {}
 };
 
-LocationMapPresenter::LocationMapPresenter(db::DbFacade* dbFacade,
+LocationMapPresenter::LocationMapPresenter(domain::DomainEntry* entry,
                                            QObject* object):
     AbstractMapPresenter(object),
-    d(new Impl(dbFacade))
+    d(new Impl(entry->dbFacade(), entry->vehicleService()))
 {}
 
 LocationMapPresenter::~LocationMapPresenter()
@@ -67,4 +72,5 @@ void LocationMapPresenter::connectView(QObject* view)
 
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
     this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
+    this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
 }

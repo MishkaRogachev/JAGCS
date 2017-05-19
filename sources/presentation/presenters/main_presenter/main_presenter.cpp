@@ -50,8 +50,7 @@ void MainPresenter::setMode(const QString& mode)
 
     if (mode == "flight") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->entry->vehicleService(),
-                                               this);
+        d->modePresenter = new FlightPresenter(d->entry, this);
     }
     if (mode == "mission")
     {
