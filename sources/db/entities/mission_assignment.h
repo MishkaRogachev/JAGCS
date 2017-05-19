@@ -4,6 +4,9 @@
 // Internal
 #include "base_entity.h"
 
+// Qt
+#include <QVector>
+
 namespace db
 {
     class MissionAssignment: public BaseEntity
@@ -29,11 +32,14 @@ namespace db
         int vehicleId() const;
         void setVehicleId(int vehicleId);
 
+        const QVector<Status>& statuses() const;
+        QVector<Status>& statuses();
+
     private:
         int m_missionId = 0;
         int m_vehicleId = 0;
 
-        QList<Status> m_statuses;
+        QVector<Status> m_statuses;
 
         Q_ENUM(Status)
     };

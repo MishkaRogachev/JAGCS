@@ -108,9 +108,11 @@ void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 {
     db::VehicleDescriptionPtr vehicle = m_vehicleService->description(
                                             assignment->vehicleId());
-    if (vehicle.isNull()) return;
+    db::MissionPtr mission = m_dbFacade->mission(assignment->missionId());
+    if (vehicle.isNull() || mission.isNull()) return;
 
-    //assignment->setStatus(db::MissionAssignment::Downloading);
+    assignment->statuses().clear();
+    m_dbFacade->assignmentChanged(assignment);
 
     // TODO: request Timer
 
@@ -130,9 +132,11 @@ void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 {
     db::VehicleDescriptionPtr vehicle = m_vehicleService->description(
                                             assignment->vehicleId());
-    if (vehicle.isNull()) return;
+    db::MissionPtr mission = m_dbFacade->mission(assignment->missionId());
+    if (vehicle.isNull() || mission.isNull()) return;
 
-    //assignment->setStatus(db::MissionAssignment::Uploading);
+    assignment->statuses().fill(db::MissionAssignment::Uploading, mission->count());
+    m_dbFacade->assignmentChanged(assignment);
 
     // TODO: upload Timer
 
@@ -141,10 +145,7 @@ void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 
     count.target_system = vehicle->mavId();
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = m_dbFacade->mission(assignment->missionId())->count();
-
-//    TODO: assignment->setCurrentProgress(0);
-//    assignment->setTotalProgress(count.count);
+    count.count = mission->count();
 
     mavlink_msg_mission_count_encode(m_communicator->systemId(),
                                      m_communicator->componentId(),
@@ -247,6 +248,12 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
                                     m_communicator->componentId(),
                                     &message, &msgItem);
     m_communicator->sendMessageAllLinks(message);
+
+    // TODO: wait ack
+    if (assignment->statuses().count() <= seq) assignment->statuses().resize(seq + 1);
+
+    assignment->statuses()[seq] = db::MissionAssignment::Actual;
+    m_dbFacade->assignmentChanged(assignment);
 }
 
 void MissionHandler::sendMissionAck(uint8_t id)
@@ -266,8 +273,16 @@ void MissionHandler::sendMissionAck(uint8_t id)
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
+    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(message.sysid);
+    if (vehicle.isNull()) return;
+    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicle->id());
+    if (assignment.isNull()) return;
+
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
+
+    assignment->statuses().fill(db::MissionAssignment::Downloading, missionCount.count - 1);
+    m_dbFacade->assignmentChanged(assignment);
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {
@@ -340,6 +355,12 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     }
 
     m_dbFacade->save(item);
+
+    if (assignment->statuses().count() > msgItem.seq)
+    {
+        assignment->statuses()[msgItem.seq] = db::MissionAssignment::Actual;
+        m_dbFacade->assignmentChanged(assignment);
+    }
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
