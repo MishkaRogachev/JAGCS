@@ -15,6 +15,7 @@ public:
     db::DbFacade* facade;
 
     QMap<int, Status> statuses;
+    QMap<int, Availables> availables;
     QMap<int, Attitude> attitudes;
     QMap<int, Position> positions;
     QMap<int, Position> homePositions;
@@ -37,6 +38,11 @@ TelemetryService::~TelemetryService()
 Status TelemetryService::status(int vehicleId) const
 {
     return d->statuses[vehicleId];
+}
+
+Availables TelemetryService::availables(int vehicleId) const
+{
+    return d->availables[vehicleId];
 }
 
 Attitude TelemetryService::attitude(int vehicleId) const
@@ -70,6 +76,14 @@ void TelemetryService::setStatus(int vehicleId, const Status& status)
 
     d->statuses[vehicleId] = status;
     emit statusChanged(vehicleId, status);
+}
+
+void TelemetryService::setAvailables(int vehicleId, const Availables& availables)
+{
+    if (d->availables[vehicleId] == availables) return;
+
+    d->availables[vehicleId] = availables;
+    emit availablesChanged(vehicleId, availables);
 }
 
 void TelemetryService::setAttitude(int vehicleId, const Attitude& attitude)

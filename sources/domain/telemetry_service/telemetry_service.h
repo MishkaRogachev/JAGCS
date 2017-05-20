@@ -6,6 +6,7 @@
 #include "db_traits.h"
 
 #include "status.h"
+#include "availables.h"
 #include "attitude.h"
 #include "position.h"
 #include "sns.h"
@@ -27,6 +28,7 @@ namespace domain
         ~TelemetryService() override;
 
         Status status(int vehicleId) const;
+        Availables availables(int vehicleId) const;
         Attitude attitude(int vehicleId) const;
         Position position(int vehicleId) const;
         Position homePosition(int vehicleId) const;
@@ -35,6 +37,7 @@ namespace domain
 
     public slots:
         void setStatus(int vehicleId, const Status& status);
+        void setAvailables(int vehicleId, const Availables& availables);
         void setAttitude(int vehicleId, const Attitude& attitude);
         void setPosition(int vehicleId, const Position& position);
         void setHomePosition(int vehicleId, const Position& position);
@@ -43,6 +46,7 @@ namespace domain
 
     signals:
         void statusChanged(int vehicleId, Status status);
+        void availablesChanged(int vehicleId, const Availables& availables);
         void attitudeChanged(int vehicleId, Attitude attitude);
         void positionChanged(int vehicleId, Position position);
         void homePositionChanged(int vehicleId, Position position);

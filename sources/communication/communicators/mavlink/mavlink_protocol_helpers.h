@@ -26,6 +26,11 @@ namespace comm
         return value * 100;
     }
 
+    inline uint16_t encodeGroundSpeed(float value)
+    {
+        return value * 100;
+    }
+
     inline double decodeLatLon(int32_t value)
     {
         return double(value) / 1e7;
@@ -38,7 +43,12 @@ namespace comm
 
     inline float decodeCourse(uint16_t value)
     {
-        return float(value) / 100;
+        return value == UINT16_MAX ? qQNaN() : float(value) / 100;
+    }
+
+    inline float decodeGroundSpeed(uint16_t value)
+    {
+        return value == UINT16_MAX ? qQNaN() : float(value) / 100;
     }
 
     inline float decodeVoltage(uint16_t value)
