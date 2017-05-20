@@ -14,10 +14,12 @@ class TelemetryService::Impl
 public:
     db::DbFacade* facade;
 
+    QMap<int, Status> statuses;
     QMap<int, Attitude> attitudes;
     QMap<int, Position> positions;
     QMap<int, Position> homePositions;
     QMap<int, Sns> snses;
+    QMap<int, PowerSystem> powerSystems;
 };
 
 TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
@@ -31,6 +33,11 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
 
 TelemetryService::~TelemetryService()
 {}
+
+Status TelemetryService::status(int vehicleId) const
+{
+    return d->statuses[vehicleId];
+}
 
 Attitude TelemetryService::attitude(int vehicleId) const
 {
@@ -50,6 +57,19 @@ Position TelemetryService::homePosition(int vehicleId) const
 Sns TelemetryService::sns(int vehicleId) const
 {
     return d->snses[vehicleId];
+}
+
+PowerSystem TelemetryService::powerSystem(int vehicleId) const
+{
+    return d->powerSystems[vehicleId];
+}
+
+void TelemetryService::setStatus(int vehicleId, const Status& status)
+{
+    if (d->statuses[vehicleId] == status) return;
+
+    d->statuses[vehicleId] = status;
+    emit statusChanged(vehicleId, status);
 }
 
 void TelemetryService::setAttitude(int vehicleId, const Attitude& attitude)
@@ -84,10 +104,20 @@ void TelemetryService::setSns(int vehicleId, const Sns& sns)
     emit snsChanged(vehicleId, sns);
 }
 
+void TelemetryService::setPowerSystem(int vehicleId, const PowerSystem& powerSystem)
+{
+    if (d->powerSystems[vehicleId] == powerSystem) return;
+
+    d->powerSystems[vehicleId] = powerSystem;
+    emit powerSystemChanged(vehicleId, powerSystem);
+}
+
 void TelemetryService::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)
 {
+    d->statuses.remove(vehicle->id());
     d->attitudes.remove(vehicle->id());
     d->positions.remove(vehicle->id());
     d->homePositions.remove(vehicle->id());
     d->snses.remove(vehicle->id());
+    d->powerSystems.remove(vehicle->id());
 }
