@@ -107,7 +107,7 @@ bool BaseVehicle::gpsAvalible() const
     return m_gpsAvalible;
 }
 
-Gps BaseVehicle::gps() const
+Sns BaseVehicle::gps() const
 {
     return m_gps;
 }
@@ -237,7 +237,7 @@ void BaseVehicle::setGpsAvalible(bool gpsAvalible)
     emit gpsAvalibleChanged(gpsAvalible);
 }
 
-void BaseVehicle::setGps(const Gps& gps)
+void BaseVehicle::setGps(const Sns& gps)
 {
     if (m_gps == gps) return;
 

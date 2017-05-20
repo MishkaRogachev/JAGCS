@@ -11,7 +11,7 @@ void registerQmlTypes()
 {
     qRegisterMetaType<domain::Attitude>("Attitude");
     qRegisterMetaType<domain::Position>("Position");
-    qRegisterMetaType<domain::Gps>("Gps");
+    qRegisterMetaType<domain::Sns>("Gps");
     qRegisterMetaType<domain::Wind>("Wind");
     qRegisterMetaType<domain::PowerSystem>("PowerSystem");
 

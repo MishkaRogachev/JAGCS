@@ -1,12 +1,12 @@
-#ifndef GPS_H
-#define GPS_H
+#ifndef SNS_H
+#define SNS_H
 
 // Qt
 #include <QGeoCoordinate>
 
 namespace domain
 {
-    class Gps // TODO: rename to SNS
+    class Sns // TODO: rename to SNS
     {
         Q_GADGET
 
@@ -27,7 +27,7 @@ namespace domain
             Fix3D
         };
 
-        Gps(Fix fix = NoGps,
+        Sns(Fix fix = NoGps,
             short satellitesVisible = -1,
             const QGeoCoordinate& coordinate = QGeoCoordinate(),
             float course = 0,
@@ -41,7 +41,7 @@ namespace domain
         int eph() const;
         int epv() const;
 
-        bool operator ==(const Gps& other);
+        bool operator ==(const Sns& other);
 
     private:
         Fix m_fix;
@@ -55,4 +55,4 @@ namespace domain
     };
 }
 
-#endif // GPS_H
+#endif // SNS_H

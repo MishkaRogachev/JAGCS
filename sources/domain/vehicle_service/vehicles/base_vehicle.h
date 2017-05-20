@@ -7,7 +7,7 @@
 // Internal
 #include "attitude.h"
 #include "position.h"
-#include "gps.h"
+#include "sns.h"
 #include "power_system.h"
 
 namespace domain
@@ -45,7 +45,7 @@ namespace domain
 
         Q_PROPERTY(bool gpsAvalible READ gpsAvalible
                    WRITE setGpsAvalible NOTIFY gpsAvalibleChanged)
-        Q_PROPERTY(Gps gps READ gps WRITE setGps NOTIFY gpsChanged)
+        Q_PROPERTY(Sns gps READ gps WRITE setGps NOTIFY gpsChanged)
         Q_PROPERTY(float groundSpeed READ groundSpeed WRITE setGroundSpeed
                    NOTIFY groundSpeedChanged)
 
@@ -101,7 +101,7 @@ namespace domain
         float homeDistance() const;
 
         bool gpsAvalible() const;
-        Gps gps() const;
+        Sns gps() const;
         float groundSpeed() const;
 
         int throttle() const;
@@ -127,7 +127,7 @@ namespace domain
         void setHomePosition(const Position& homePosition);
 
         void setGpsAvalible(bool gpsAvalible);
-        void setGps(const Gps& gps);
+        void setGps(const Sns& gps);
         void setGroundSpeed(float groundSpeed);
 
         void setThrottle(int throttle);
@@ -155,7 +155,7 @@ namespace domain
         void homeDistanceChanged(float homeDistance);
 
         void gpsAvalibleChanged(bool gpsAvalible);
-        void gpsChanged(Gps gps);
+        void gpsChanged(Sns gps);
         void groundSpeedChanged(float groundSpeed);
 
         void throttleChanged(int throttle);
@@ -187,7 +187,7 @@ namespace domain
         Position m_homePosition;
 
         bool m_gpsAvalible;
-        Gps m_gps;
+        Sns m_gps;
         float m_groundSpeed;
 
         int m_throttle;

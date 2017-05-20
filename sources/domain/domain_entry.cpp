@@ -14,6 +14,7 @@
 
 #include "vehicle_service.h"
 #include "command_service.h"
+#include "telemetry_service.h"
 
 #include "communication_service.h"
 #include "mavlink_communicator_factory.h"
@@ -29,9 +30,14 @@ public:
     ProxyManager proxyManager;
 
     QScopedPointer<VehicleService> vehicleService;
+    TelemetryService telemetryService;
     CommandService commandService;
 
     QScopedPointer<CommunicationService> commService;
+
+    Impl():
+        telemetryService(&dbFacade)
+    {}
 };
 
 DomainEntry::DomainEntry():
@@ -71,6 +77,11 @@ CommunicationService* DomainEntry::commService() const
 VehicleService* DomainEntry::vehicleService() const
 {
     return d->vehicleService.data();
+}
+
+TelemetryService* DomainEntry::telemetryService() const
+{
+    return &d->telemetryService;
 }
 
 CommandService*DomainEntry::commandService() const

@@ -14,17 +14,17 @@ using namespace domain;
 
 namespace
 {
-    Gps::Fix gpdFixFromFixType(uint8_t fixType)
+    Sns::Fix gpdFixFromFixType(uint8_t fixType)
     {
         switch (fixType) {
         case GPS_FIX_TYPE_NO_GPS:
-        default: return Gps::NoGps;
-        case GPS_FIX_TYPE_NO_FIX: return Gps::NoFix;
-        case GPS_FIX_TYPE_2D_FIX: return Gps::Fix2D;
+        default: return Sns::NoGps;
+        case GPS_FIX_TYPE_NO_FIX: return Sns::NoFix;
+        case GPS_FIX_TYPE_2D_FIX: return Sns::Fix2D;
         case GPS_FIX_TYPE_3D_FIX:
         case GPS_FIX_TYPE_DGPS:
         case GPS_FIX_TYPE_RTK_FLOAT:
-        case GPS_FIX_TYPE_RTK_FIXED: return Gps::Fix3D;
+        case GPS_FIX_TYPE_RTK_FIXED: return Sns::Fix3D;
         }
     }
 }
@@ -45,7 +45,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);
 
-    vehicle->setGps(Gps(::gpdFixFromFixType(gps.fix_type),
+    vehicle->setGps(Sns(::gpdFixFromFixType(gps.fix_type),
                         gps.satellites_visible < 255 ?
                             gps.satellites_visible : -1,
                         QGeoCoordinate(decodeLatLon(gps.lat),

@@ -12,6 +12,7 @@ namespace db
 namespace domain
 {
     class VehicleService;
+    class TelemetryService;
     class CommandService;
     class CommunicationService;
 
@@ -26,6 +27,7 @@ namespace domain
         db::DbFacade* dbFacade() const;
 
         VehicleService* vehicleService() const;
+        TelemetryService* telemetryService() const;
         CommandService* commandService() const;
 
         CommunicationService* commService() const;

@@ -1,8 +1,8 @@
-#include "gps.h"
+#include "sns.h"
 
 using namespace domain;
 
-Gps::Gps(Fix fix, short satellitesVisible, const QGeoCoordinate& coordinate,
+Sns::Sns(Fix fix, short satellitesVisible, const QGeoCoordinate& coordinate,
          float course, int eph, int epv):
     m_fix(fix),
     m_satellitesVisible(satellitesVisible),
@@ -12,22 +12,22 @@ Gps::Gps(Fix fix, short satellitesVisible, const QGeoCoordinate& coordinate,
     m_epv(epv)
 {}
 
-Gps::Fix Gps::fix() const
+Sns::Fix Sns::fix() const
 {
     return m_fix;
 }
 
-int Gps::satellitesVisible() const
+int Sns::satellitesVisible() const
 {
     return m_satellitesVisible;
 }
 
-QGeoCoordinate Gps::coordinate() const
+QGeoCoordinate Sns::coordinate() const
 {
     return m_coordinate;
 }
 
-float Gps::altitude() const
+float Sns::altitude() const
 {
     if (m_coordinate.type() != QGeoCoordinate::Coordinate3D)
         return 0;
@@ -35,22 +35,22 @@ float Gps::altitude() const
     return m_coordinate.altitude();
 }
 
-float Gps::course() const
+float Sns::course() const
 {
     return m_course;
 }
 
-int Gps::eph() const
+int Sns::eph() const
 {
     return m_eph;
 }
 
-int Gps::epv() const
+int Sns::epv() const
 {
     return m_epv;
 }
 
-bool Gps::operator ==(const Gps& other)
+bool Sns::operator ==(const Sns& other)
 {
     return m_fix == other.fix() &&
             m_coordinate == other.coordinate() &&
