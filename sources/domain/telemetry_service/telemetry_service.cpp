@@ -4,6 +4,7 @@
 #include <QMap>
 
 // Internal
+#include "vehicle_description.h"
 
 using namespace domain;
 
@@ -21,15 +22,15 @@ TelemetryService::TelemetryService(QObject* parent):
 TelemetryService::~TelemetryService()
 {}
 
-Attitude TelemetryService::attitude(const db::VehicleDescriptionPtr& vehicle) const
+Attitude TelemetryService::attitude(int vehicleId) const
 {
-    return d->attitudes[vehicle];
+    return d->attitudes[vehicleId];
 }
 
-void TelemetryService::setAttitude(const db::VehicleDescriptionPtr& vehicle, const Attitude& attitude)
+void TelemetryService::setAttitude(int vehicleId, const Attitude& attitude)
 {
-    if (d->attitudes[vehicle] == attitude) return;
+    if (d->attitudes[vehicleId] == attitude) return;
 
-    d->attitudes[vehicle] = attitude;
-    emit attitudeChanged(vehicle, attitude);
+    d->attitudes[vehicleId] = attitude;
+    emit attitudeChanged(vehicleId, attitude);
 }

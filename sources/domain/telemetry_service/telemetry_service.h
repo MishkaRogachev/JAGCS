@@ -17,13 +17,13 @@ namespace domain
         explicit TelemetryService(QObject* parent = nullptr);
         ~TelemetryService() override;
 
-        Attitude attitude(const db::VehicleDescriptionPtr& vehicle) const;
+        Attitude attitude(int vehicleId) const;
 
     public slots:
-        void setAttitude(const db::VehicleDescriptionPtr& vehicle, const Attitude& attitude);
+        void setAttitude(int vehicleId, const Attitude& attitude);
 
     signals:
-        void attitudeChanged(const db::VehicleDescriptionPtr& vehicle, const Attitude& attitude);
+        void attitudeChanged(int vehicleId, const Attitude& attitude);
 
     private:
         class Impl;
