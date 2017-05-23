@@ -47,7 +47,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new VfrHudHandler(m_telemetryService, communicator);
     new WindHandler(m_telemetryService, communicator);
     new CommandHandler(m_commandService, communicator);
-    new MissionHandler(m_dbFacade, m_vehicleService, m_commandService, communicator);
+    new MissionHandler(m_dbFacade, m_commandService, communicator);
 
     return communicator;
 }

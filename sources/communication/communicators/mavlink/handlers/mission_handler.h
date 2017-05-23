@@ -24,7 +24,6 @@ namespace comm
 
     public:
         MissionHandler(db::DbFacade* dbFacade,
-                       domain::VehicleService* vehicleService,
                        domain::CommandService* commandService,
                        MavLinkCommunicator* communicator);
 
@@ -34,10 +33,10 @@ namespace comm
        void download(const db::MissionAssignmentPtr& assignment);
        void upload(const db::MissionAssignmentPtr& assignment);
 
-       void requestMissionItem(uint8_t id, uint16_t seq);
+       void requestMissionItem(uint8_t mavId, uint16_t seq);
 
-       void sendMissionItem(uint8_t id, uint16_t seq);
-       void sendMissionAck(uint8_t id);
+       void sendMissionItem(uint8_t mavId, uint16_t seq);
+       void sendMissionAck(uint8_t mavId);
        // TODO: MISSION_SET_CURRENT, MISSION_ITEM_REACHED
 
     protected:
@@ -49,7 +48,6 @@ namespace comm
 
    private:
        db::DbFacade* m_dbFacade;
-       domain::VehicleService* m_vehicleService;
     };
 }
 

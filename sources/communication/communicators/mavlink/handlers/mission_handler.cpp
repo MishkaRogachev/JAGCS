@@ -16,7 +16,6 @@
 #include "mavlink_communicator.h"
 
 #include "command_service.h"
-#include "vehicle_service.h"
 
 namespace
 {
@@ -68,12 +67,10 @@ namespace
 using namespace comm;
 
 MissionHandler::MissionHandler(db::DbFacade* dbFacade,
-                               domain::VehicleService* vehicleService,
                                domain::CommandService* commandService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_dbFacade(dbFacade),
-    m_vehicleService(vehicleService)
+    m_dbFacade(dbFacade)
 {
     connect(commandService, &domain::CommandService::download,
             this, &MissionHandler::download);
@@ -106,7 +103,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
 void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 {
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->description(assignment->vehicleId());
+    db::VehicleDescriptionPtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
     for (const db::MissionItemPtr& item: m_dbFacade->missionItems(assignment->missionId()))
@@ -131,8 +128,7 @@ void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 
 void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 {
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->description(
-                                            assignment->vehicleId());
+    db::VehicleDescriptionPtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
     db::MissionPtr mission = m_dbFacade->mission(assignment->missionId());
     if (vehicle.isNull() || mission.isNull()) return;
 
@@ -157,12 +153,12 @@ void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
+void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
 {
     mavlink_message_t message;
     mavlink_mission_request_t missionRequest;
 
-    missionRequest.target_system = id;
+    missionRequest.target_system = mavId;
     missionRequest.target_component = MAV_COMP_ID_MISSIONPLANNER;
     missionRequest.seq = seq;
 
@@ -172,17 +168,16 @@ void MissionHandler::requestMissionItem(uint8_t id, uint16_t seq)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
+void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
 {
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(id);
-    if (vehicle.isNull()) return;
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicle->id());
+    int vehicleId = m_dbFacade->vehicleIdByMavId(mavId);
+    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_message_t message;
     mavlink_mission_item_t msgItem;
 
-    msgItem.target_system = id;
+    msgItem.target_system = mavId;
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
     if (seq == 0) // fake home point
@@ -258,12 +253,12 @@ void MissionHandler::sendMissionItem(uint8_t id, uint16_t seq)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::sendMissionAck(uint8_t id)
+void MissionHandler::sendMissionAck(uint8_t mavId)
 {
     mavlink_message_t message;
     mavlink_mission_ack_t ackItem;
 
-    ackItem.target_system = id;
+    ackItem.target_system = mavId;
     ackItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
     ackItem.type = MAV_MISSION_ACCEPTED;
 
@@ -275,9 +270,8 @@ void MissionHandler::sendMissionAck(uint8_t id)
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(message.sysid);
-    if (vehicle.isNull()) return;
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicle->id());
+    int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
+    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_count_t missionCount;
@@ -291,9 +285,8 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
 void MissionHandler::processMissionItem(const mavlink_message_t& message)
 {
-    db::VehicleDescriptionPtr vehicle = m_vehicleService->findDescriptionByMavId(message.sysid);
-    if (vehicle.isNull()) return;
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicle->id());
+    int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
+    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_t msgItem;
