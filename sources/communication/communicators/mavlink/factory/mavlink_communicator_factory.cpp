@@ -39,7 +39,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
 
     new PingHandler(communicator);
     new HeartbeatHandler(m_telemetryService, communicator);
-    new SystemStatusHandler(m_vehicleService, communicator);
+    new SystemStatusHandler(m_telemetryService, communicator);
     new AttitudeHandler(m_vehicleService, communicator);
     new PositionHandler(m_vehicleService, communicator);
     new HomePositionHandler(m_vehicleService, communicator);

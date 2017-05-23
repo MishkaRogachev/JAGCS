@@ -96,11 +96,11 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
-    mavlink_heartbeat_t heartbeat;
-    mavlink_msg_heartbeat_decode(&message, &heartbeat);
-
     int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
     if (!vehicleId) return;
+
+    mavlink_heartbeat_t heartbeat;
+    mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
     // TODO: set vehicle type from ::decodeType(heartbeat.type);
     // TODO: add vehicle if not exist

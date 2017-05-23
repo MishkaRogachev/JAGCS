@@ -4,76 +4,49 @@
 #include <mavlink.h>
 
 // Internal
+#include "telemetry_service.h"
 #include "vehicle_service.h"
 #include "aerial_vehicle.h"
 
 #include "mavlink_protocol_helpers.h"
 
+namespace
+{
+    bool avalible(const mavlink_sys_status_t& status, int subsystem)
+    {
+        return (status.onboard_control_sensors_present & subsystem) &&
+               (status.onboard_control_sensors_enabled & subsystem);
+    }
+}
+
 using namespace comm;
 using namespace domain;
 
-SystemStatusHandler::SystemStatusHandler(VehicleService* vehicleService,
+SystemStatusHandler::SystemStatusHandler(TelemetryService* telemetryService,
                                          MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService)
+    m_telemetryService(telemetryService)
 {}
 
 void SystemStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SYS_STATUS) return;
 
-    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
-    if (!vehicle) return;
+    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
+    if (!vehicleId) return;
 
     mavlink_sys_status_t status;
     mavlink_msg_sys_status_decode(&message, &status);
 
-    vehicle->setPowerSystem(PowerSystem(decodeVoltage(status.voltage_battery),
-                                        decodeCurrent(status.current_battery),
-                                        status.battery_remaining));
+    m_telemetryService->setAvailables(vehicleId, Availables(
+                    ::avalible(status, MAV_SYS_STATUS_AHRS),
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_3D_ACCEL) &&
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_3D_GYRO),
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_GPS),
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_3D_MAG),
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE),
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE),
+                    ::avalible(status, MAV_SYS_STATUS_SENSOR_LASER_POSITION)));
 
-    vehicle->setCompasAvalible((status.onboard_control_sensors_present &
-                                MAV_SYS_STATUS_SENSOR_3D_MAG) &&
-                               (status.onboard_control_sensors_enabled &
-                                MAV_SYS_STATUS_SENSOR_3D_MAG));
-
-    vehicle->setGpsAvalible((status.onboard_control_sensors_present &
-                             MAV_SYS_STATUS_SENSOR_GPS) &&
-                            (status.onboard_control_sensors_enabled &
-                             MAV_SYS_STATUS_SENSOR_GPS));
-
-    vehicle->setInsAvalible((status.onboard_control_sensors_present &
-                             MAV_SYS_STATUS_SENSOR_3D_ACCEL) &&
-                            (status.onboard_control_sensors_enabled &
-                             MAV_SYS_STATUS_SENSOR_3D_ACCEL) &&
-                            (status.onboard_control_sensors_present &
-                             MAV_SYS_STATUS_SENSOR_3D_GYRO) &&
-                            (status.onboard_control_sensors_enabled &
-                             MAV_SYS_STATUS_SENSOR_3D_GYRO));
-
-    auto aerial = qobject_cast<AerialVehicle*>(vehicle);
-    if (aerial)
-    {
-        aerial->setBarometerAvalible((status.onboard_control_sensors_present &
-                                      MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE) &&
-                                     (status.onboard_control_sensors_enabled &
-                                      MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE));
-
-        aerial->setAirSpeedAvalible((status.onboard_control_sensors_present &
-                                     MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE) &&
-                                    (status.onboard_control_sensors_enabled &
-                                     MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE));
-
-        aerial->setAhrsAvalible((status.onboard_control_sensors_present &
-                                 MAV_SYS_STATUS_AHRS) &&
-                                (status.onboard_control_sensors_enabled &
-                                 MAV_SYS_STATUS_AHRS));
-
-        aerial->setRangeFinderAvalible((status.onboard_control_sensors_present &
-                                        MAV_SYS_STATUS_SENSOR_LASER_POSITION) &&
-                                       (status.onboard_control_sensors_enabled &
-                                        MAV_SYS_STATUS_SENSOR_LASER_POSITION));
-    }
-
-    // TODO: handle sensors health
+    // TODO: battery
 }
