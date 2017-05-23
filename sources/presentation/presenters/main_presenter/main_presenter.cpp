@@ -8,7 +8,7 @@
 #include "domain_entry.h"
 
 #include "status_presenter.h"
-#include "flight_presenter.h"
+#include "combat_presenter.h"
 #include "mission_presenter.h"
 #include "settings_presenter.h"
 
@@ -23,8 +23,8 @@ public:
     BasePresenter* modePresenter = nullptr;
 };
 
-MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* object):
-    BasePresenter(object),
+MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {
     d->entry = entry;
@@ -48,9 +48,9 @@ void MainPresenter::setMode(const QString& mode)
 
     this->setViewProperty(PROPERTY(mode), mode);
 
-    if (mode == "flight") // TODO: MainPresenter mode enum
+    if (mode == "combat") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new FlightPresenter(d->entry, this);
+        d->modePresenter = new CombatPresenter(d->entry, this);
     }
     if (mode == "mission")
     {

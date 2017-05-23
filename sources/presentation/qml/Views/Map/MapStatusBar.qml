@@ -20,11 +20,11 @@ Pane {
             id: centerButton
             checkable: true
             iconSource: "qrc:/icons/center.svg"
-            enabled: selectedVehicle
+            //enabled: selectedVehicle
             onEnabledChanged: if (!enabled && checked) checked = false
             onCheckedChanged: map.setGesturesEnabled(!checked)
 
-            Connections {
+            /*Connections {
                 target: selectedVehicle
                 ignoreUnknownSignals: true
                 onPositionChanged: {
@@ -33,7 +33,7 @@ Pane {
                         return;
                     map.center = selectedVehicle.position.coordinate;
                 }
-            }
+            }*/
         }
 
         Button {

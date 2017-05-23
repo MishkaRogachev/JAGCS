@@ -40,8 +40,8 @@ public:
 using namespace presentation;
 
 MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
-                                   QObject* object):
-    BasePresenter(object),
+                                   QObject* parent):
+    BasePresenter(parent),
     d(new Impl())
 {
     d->dbFacade = entry->dbFacade();

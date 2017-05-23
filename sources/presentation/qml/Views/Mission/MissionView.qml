@@ -13,7 +13,6 @@ Pane {
     property alias vehicles: vehiclesBox.model
     property alias selectedMission: missionsBox.currentIndex
     property alias assignedVehicle: vehiclesBox.currentIndex
-    property int assignedStatus: MissionAssignment.Unknown
     property var statuses: []
 
     signal selectMission(int index)
