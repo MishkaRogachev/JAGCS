@@ -47,42 +47,42 @@ int TelemetryService::vehicleIdByMavId(int mavId) const
 
 bool TelemetryService::isOnline(int vehicleId)
 {
-    return d->online[vehicleId];
+    return d->online.value(vehicleId, false);
 }
 
 Status TelemetryService::status(int vehicleId) const
 {
-    return d->statuses[vehicleId];
+    return d->statuses.value(vehicleId);
 }
 
 Availables TelemetryService::availables(int vehicleId) const
 {
-    return d->availables[vehicleId];
+    return d->availables.value(vehicleId);
 }
 
 Attitude TelemetryService::attitude(int vehicleId) const
 {
-    return d->attitudes[vehicleId];
+    return d->attitudes.value(vehicleId);
 }
 
 Position TelemetryService::position(int vehicleId) const
 {
-    return d->positions[vehicleId];
+    return d->positions.value(vehicleId);
 }
 
 Position TelemetryService::homePosition(int vehicleId) const
 {
-    return d->homePositions[vehicleId];
+    return d->homePositions.value(vehicleId);
 }
 
 Sns TelemetryService::sns(int vehicleId) const
 {
-    return d->snses[vehicleId];
+    return d->snses.value(vehicleId);
 }
 
 PowerSystem TelemetryService::powerSystem(int vehicleId) const
 {
-    return d->powerSystems[vehicleId];
+    return d->powerSystems.value(vehicleId);
 }
 
 void TelemetryService::setStatus(int vehicleId, const Status& status)
