@@ -42,7 +42,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new SystemStatusHandler(m_telemetryService, communicator);
     new AttitudeHandler(m_telemetryService, communicator);
     new PositionHandler(m_telemetryService, communicator);
-    new HomePositionHandler(m_vehicleService, communicator);
+    new HomePositionHandler(m_telemetryService, communicator);
     new GpsHandler(m_vehicleService, communicator);
     new VfrHudHandler(m_vehicleService, communicator);
     new WindHandler(m_vehicleService, communicator);

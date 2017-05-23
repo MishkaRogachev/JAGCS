@@ -7,11 +7,10 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
-#include "db_traits.h"
 
 namespace domain
 {
-    class VehicleService;
+    class TelemetryService;
     class Position;
 }
 
@@ -22,25 +21,17 @@ namespace comm
         Q_OBJECT
 
     public:
-        HomePositionHandler(domain::VehicleService* vehicleService,
+        HomePositionHandler(domain::TelemetryService* telemetryService,
                             MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void sendHomePositionRequest(uint8_t id);
-        void sendHomePositionSetting(const domain::Position& position);
-
-    protected:
-        void timerEvent(QTimerEvent* event);
-
-    private slots:
-        void onVehicleAdded(const db::VehicleDescriptionPtr& description);
-        void onVehicleRemoved(const db::VehicleDescriptionPtr& description);
+        void sendHomePositionRequest(uint8_t mavId);
+        void sendHomePositionSetting(uint8_t mavId, const domain::Position& position);
 
     private:
-        domain::VehicleService* const m_vehicleService;
-        QMap<db::VehicleDescriptionPtr, QBasicTimer> m_reqestTimers;
+        domain::TelemetryService* const m_telemetryService;
     };
 }
 
