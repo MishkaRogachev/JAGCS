@@ -4,36 +4,35 @@
 #include <mavlink.h>
 
 // Internal
-#include "vehicle_service.h"
-#include "aerial_vehicle.h"
+#include "telemetry_service.h"
 
-using namespace db;
 using namespace comm;
 using namespace domain;
 
-VfrHudHandler::VfrHudHandler(VehicleService* vehicleService,
+VfrHudHandler::VfrHudHandler(TelemetryService* telemetryService,
                              MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService)
+    m_telemetryService(telemetryService)
 {}
 
 void VfrHudHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_VFR_HUD) return;
 
-    auto vehicle = m_vehicleService->aerialVehicle(message.sysid);
-    if (!vehicle) return;
+    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
+    if (!vehicleId) return;
 
     mavlink_vfr_hud_t vfrHud;
     mavlink_msg_vfr_hud_decode(&message, &vfrHud);
 
-    vehicle->setIndicatedAirSpeed(vfrHud.airspeed);
-    // TODO: TAS from MAVLink TAS = IAS + [(IAS X 2/100) X (DA/1000)]
-    vehicle->setTrueAirSpeed(vfrHud.airspeed + (vfrHud.airspeed * 0.02 *
-                                                vfrHud.alt / 1000));
-    vehicle->setGroundSpeed(vfrHud.groundspeed);
-    vehicle->setBarometricAltitude(vfrHud.alt);
-    vehicle->setBarometricClimb(vfrHud.climb);
-    vehicle->setHeading(vfrHud.heading);
-    vehicle->setThrottle(vfrHud.throttle);
+    // TODO: handle vfrHud data
+//    vehicle->setIndicatedAirSpeed(vfrHud.airspeed);
+//    // TODO: TAS from MAVLink TAS = IAS + [(IAS X 2/100) X (DA/1000)]
+//    vehicle->setTrueAirSpeed(vfrHud.airspeed + (vfrHud.airspeed * 0.02 *
+//                                                vfrHud.alt / 1000));
+//    vehicle->setGroundSpeed(vfrHud.groundspeed);
+//    vehicle->setBarometricAltitude(vfrHud.alt);
+//    vehicle->setBarometricClimb(vfrHud.climb);
+//    vehicle->setHeading(vfrHud.heading);
+//    vehicle->setThrottle(vfrHud.throttle);
 }

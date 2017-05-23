@@ -4,27 +4,27 @@
 #include <mavlink.h>
 
 // Internal
-#include "vehicle_service.h"
-#include "aerial_vehicle.h"
+#include "telemetry_service.h"
 
 using namespace comm;
 using namespace domain;
 
-WindHandler::WindHandler(VehicleService* vehicleService,
+WindHandler::WindHandler(TelemetryService* telemetryService,
                          MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService)
+    m_telemetryService(telemetryService)
 {}
 
 void WindHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_WIND) return;
 
-    AerialVehicle* vehicle = m_vehicleService->aerialVehicle(message.sysid);
-    if (!vehicle) return;
+    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
+    if (!vehicleId) return;
 
     mavlink_wind_t wind;
     mavlink_msg_wind_decode(&message, &wind);
 
-    vehicle->setWind(Wind(wind.direction, wind.speed, wind.speed_z));
+    // TODO: wind
+    //m_telemetryService->setA->setWind(Wind(wind.direction, wind.speed, wind.speed_z));
 }

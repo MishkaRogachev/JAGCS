@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class VehicleService;
+    class TelemetryService;
 }
 
 namespace comm
@@ -15,14 +15,14 @@ namespace comm
         Q_OBJECT
 
     public:
-        VfrHudHandler(domain::VehicleService* vehicleService,
+        VfrHudHandler(domain::TelemetryService* telemetryService,
                       MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
     private:
-        domain::VehicleService* m_vehicleService;
+        domain::TelemetryService* m_telemetryService;
     };
 }
 

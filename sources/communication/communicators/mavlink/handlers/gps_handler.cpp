@@ -4,8 +4,7 @@
 #include <mavlink.h>
 
 // Internal
-#include "vehicle_service.h"
-#include "base_vehicle.h"
+#include "telemetry_service.h"
 
 #include "mavlink_protocol_helpers.h"
 
@@ -29,28 +28,29 @@ namespace
     }
 }
 
-GpsHandler::GpsHandler(VehicleService* vehicleService,
+GpsHandler::GpsHandler(TelemetryService* telemetryService,
                        MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService)
+    m_telemetryService(telemetryService)
 {} // TODO: handle GPS_STATUS
 
 void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
-    if (!vehicle) return;
+    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
+    if (!vehicleId) return;
 
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);
 
-    vehicle->setGps(Sns(::gpdFixFromFixType(gps.fix_type),
-                        gps.satellites_visible < 255 ?
-                            gps.satellites_visible : -1,
-                        QGeoCoordinate(decodeLatLon(gps.lat),
-                                       decodeLatLon(gps.lon),
-                                       decodeAltitude(gps.alt)),
-                        decodeGroundSpeed(gps.vel), decodeCourse(gps.cog),
-                        gps.eph, gps.epv, gps.time_usec));
+    m_telemetryService->setSns(vehicleId,
+                               Sns(::gpdFixFromFixType(gps.fix_type),
+                                   gps.satellites_visible < 255 ?
+                                       gps.satellites_visible : -1,
+                                   QGeoCoordinate(decodeLatLon(gps.lat),
+                                                  decodeLatLon(gps.lon),
+                                                  decodeAltitude(gps.alt)),
+                                   decodeGroundSpeed(gps.vel), decodeCourse(gps.cog),
+                                   gps.eph, gps.epv, gps.time_usec));
 }
