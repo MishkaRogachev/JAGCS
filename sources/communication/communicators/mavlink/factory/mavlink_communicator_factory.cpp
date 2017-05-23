@@ -46,7 +46,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new GpsHandler(m_vehicleService, communicator);
     new VfrHudHandler(m_vehicleService, communicator);
     new WindHandler(m_vehicleService, communicator);
-    new CommandHandler(m_vehicleService, communicator);
+    new CommandHandler(m_commandService, communicator);
     new MissionHandler(m_dbFacade, m_vehicleService, m_commandService, communicator);
 
     return communicator;
