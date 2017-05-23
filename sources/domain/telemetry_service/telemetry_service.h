@@ -27,6 +27,9 @@ namespace domain
         explicit TelemetryService(db::DbFacade* facade, QObject* parent = nullptr);
         ~TelemetryService() override;
 
+        int vehicleIdByMavId(int mavId) const;
+
+        bool isOnline(int vehicleId);
         Status status(int vehicleId) const;
         Availables availables(int vehicleId) const;
         Attitude attitude(int vehicleId) const;
@@ -36,6 +39,7 @@ namespace domain
         PowerSystem powerSystem(int vehicleId) const;
 
     public slots:
+        void setOnline(int vehicleId, bool online);
         void setStatus(int vehicleId, const Status& status);
         void setAvailables(int vehicleId, const Availables& availables);
         void setAttitude(int vehicleId, const Attitude& attitude);
@@ -45,6 +49,7 @@ namespace domain
         void setPowerSystem(int vehicleId, const PowerSystem& powerSystem);
 
     signals:
+        void onlineChanged(bool online);
         void statusChanged(int vehicleId, Status status);
         void availablesChanged(int vehicleId, const Availables& availables);
         void attitudeChanged(int vehicleId, Attitude attitude);
@@ -52,6 +57,9 @@ namespace domain
         void homePositionChanged(int vehicleId, Position position);
         void snsChanged(int vehicleId, Sns sns);
         void powerSystemChanged(int vehicleId, PowerSystem powerSystem);
+
+    protected:
+        void timerEvent(QTimerEvent* event);
 
     private slots:
          void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);

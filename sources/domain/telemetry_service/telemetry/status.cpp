@@ -2,20 +2,14 @@
 
 using namespace domain;
 
-Status::Status(bool armed, bool online, const QString& modeString):
+Status::Status(bool armed, const QString& modeString):
     m_armed(armed),
-    m_online(online),
     m_modeString(modeString)
 {}
 
 bool Status::armed() const
 {
     return m_armed;
-}
-
-bool Status::online() const
-{
-    return m_online;
 }
 
 QString Status::modeString() const
@@ -25,7 +19,5 @@ QString Status::modeString() const
 
 bool Status::operator ==(const Status& other)
 {
-    return m_armed == other.armed() &&
-            m_online == other.online() &&
-            m_modeString == other.modeString();
+    return m_armed == other.armed() && m_modeString == other.modeString();
 }

@@ -13,12 +13,12 @@
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
 
+#include "telemetry_service.h"
 #include "vehicle_service.h"
 #include "vehicle_description.h"
 #include "aerial_vehicle.h"
 
 using namespace comm;
-using namespace db;
 using namespace domain;
 
 namespace
@@ -77,14 +77,13 @@ namespace
     }
 }
 
-HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
+HeartbeatHandler::HeartbeatHandler(TelemetryService* telemetryService,
                                    MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService),
-    m_timer(new QTimer())
+    m_telemetryService(telemetryService),
+    m_timer(new QTimer(this))
 {
-    QObject::connect(m_timer, &QTimer::timeout, m_timer,
-                     [this]() { this->sendHeartbeat(); });
+    QObject::connect(m_timer, &QTimer::timeout, this, &HeartbeatHandler::sendHeartbeat);
     m_timer->start(1000); //TODO: heartbeat emit disabling and freqency selecting
 }
 
@@ -100,32 +99,18 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    int type = ::decodeType(heartbeat.type);
-    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
+    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
+    if (!vehicleId) return;
 
-    if (!vehicle &&
-        SettingsProvider::value(settings::communication::autoAdd).toBool())
-    {
-        VehicleDescriptionPtr description = VehicleDescriptionPtr::create();
+    // TODO: set vehicle type from ::decodeType(heartbeat.type);
+    // TODO: add vehicle if not exist
 
-        description->setName(tr("Vehicle %1").arg(message.sysid));
-        description->setMavId(message.sysid);
-        // TODO: type to description
-
-        m_vehicleService->saveDescription(description);
-        vehicle = m_vehicleService->baseVehicle(description);
-    }
-
-    if (!vehicle) return;
-
-    vehicle->setModeString(decodeCustomMode(heartbeat.autopilot,
-                                            heartbeat.type,
-                                            heartbeat.custom_mode));
-    vehicle->setState(::decodeState(heartbeat.system_status));
-    vehicle->setAutonomous(heartbeat.base_mode & MAV_MODE_FLAG_AUTO_ENABLED);
-    vehicle->setGuided(heartbeat.base_mode & MAV_MODE_FLAG_GUIDED_ENABLED);
-    vehicle->setStabilized(heartbeat.base_mode & MAV_MODE_FLAG_STABILIZE_ENABLED);
-    vehicle->setArmed(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+    m_telemetryService->setStatus(vehicleId, Status(
+                                      heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY,
+                                      decodeCustomMode(heartbeat.autopilot,
+                                                       heartbeat.type,
+                                                       heartbeat.custom_mode)));
+    m_telemetryService->setOnline(vehicleId, true);
 }
 
 void HeartbeatHandler::sendHeartbeat()

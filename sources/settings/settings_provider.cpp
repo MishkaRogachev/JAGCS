@@ -41,6 +41,8 @@ public:
         settings.setValue(communication::port, 14550);
         settings.setValue(communication::statisticsCount, 20);
 
+        settings.setValue(telemetry::timeout, 1000);
+
         settings.setValue(mission::defaultAcceptanceRadius, 3);
         settings.setValue(mission::defaultTakeoffPitch, 15);
     }

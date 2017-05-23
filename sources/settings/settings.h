@@ -7,6 +7,7 @@ namespace settings
     {
         const char* const name = "Data_base/name";
     }
+
     namespace gui
     {
         const char* const fullscreen = "Gui/fullscreen";
@@ -45,6 +46,11 @@ namespace settings
         const char* const baudRate = "Communication/baudRate";
         const char* const port = "Communication/port";
         const char* const statisticsCount = "Communication/statisticsCount";
+    }
+
+    namespace telemetry
+    {
+        const char* const timeout = "Telemetry/timeout";
     }
 
     namespace mission

@@ -2,8 +2,11 @@
 
 // Qt
 #include <QMap>
+#include <QTimerEvent>
 
 // Internal
+#include "settings_provider.h"
+
 #include "db_facade.h"
 #include "vehicle_description.h"
 
@@ -14,6 +17,8 @@ class TelemetryService::Impl
 public:
     db::DbFacade* facade;
 
+    QMap<int, bool> online;
+    QMap<int, int> onlineTimers;
     QMap<int, Status> statuses;
     QMap<int, Availables> availables;
     QMap<int, Attitude> attitudes;
@@ -34,6 +39,16 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
 
 TelemetryService::~TelemetryService()
 {}
+
+int TelemetryService::vehicleIdByMavId(int mavId) const
+{
+    return d->facade->vehicleIdByMavId(mavId);
+}
+
+bool TelemetryService::isOnline(int vehicleId)
+{
+    return d->online[vehicleId];
+}
 
 Status TelemetryService::status(int vehicleId) const
 {
@@ -76,6 +91,22 @@ void TelemetryService::setStatus(int vehicleId, const Status& status)
 
     d->statuses[vehicleId] = status;
     emit statusChanged(vehicleId, status);
+}
+
+void TelemetryService::setOnline(int vehicleId, bool online)
+{
+    if (online)
+    {
+        int timerId = d->onlineTimers.key(vehicleId, -1);
+        if (timerId != -1) this->killTimer(timerId);
+
+        timerId = this->startTimer(SettingsProvider::value(settings::telemetry::timeout).toInt());
+        d->onlineTimers[timerId] = vehicleId;
+    }
+    if (d->online[vehicleId] == online) return;
+
+    d->online[vehicleId] = online;
+    emit onlineChanged(online);
 }
 
 void TelemetryService::setAvailables(int vehicleId, const Availables& availables)
@@ -124,6 +155,15 @@ void TelemetryService::setPowerSystem(int vehicleId, const PowerSystem& powerSys
 
     d->powerSystems[vehicleId] = powerSystem;
     emit powerSystemChanged(vehicleId, powerSystem);
+}
+
+void TelemetryService::timerEvent(QTimerEvent* event)
+{
+    if (!d->onlineTimers.contains(event->timerId())) return;
+
+    this->setOnline(d->onlineTimers[event->timerId()], false);
+    d->onlineTimers.remove(event->timerId());
+    this->killTimer(event->timerId());
 }
 
 void TelemetryService::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)

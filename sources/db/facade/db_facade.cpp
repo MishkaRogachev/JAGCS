@@ -254,6 +254,13 @@ MissionItemPtr DbFacade::missionItem(int missionId, int sequence)
     return MissionItemPtr();
 }
 
+int DbFacade::vehicleIdByMavId(int mavId) const
+{
+    for (int id: d->vehicleRepository.selectId(QString("mavId = %1").arg(mavId)))
+        return id;
+    return 0;
+}
+
 void DbFacade::addNewMissionItem(int missionId)
 {
     MissionPtr mission = this->mission(missionId);

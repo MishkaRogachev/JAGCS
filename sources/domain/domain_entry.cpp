@@ -53,6 +53,7 @@ DomainEntry::DomainEntry():
 
     comm::MavLinkCommunicatorFactory comFactory(
                 &d->dbFacade,
+                &d->telemetryService,
                 d->vehicleService.data(),
                 &d->commandService,
                 SettingsProvider::value(settings::communication::systemId).toInt(),

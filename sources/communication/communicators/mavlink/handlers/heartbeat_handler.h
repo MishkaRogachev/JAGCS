@@ -7,7 +7,7 @@ class QTimer;
 
 namespace domain
 {
-    class VehicleService;
+    class TelemetryService;
 }
 
 namespace comm
@@ -17,8 +17,8 @@ namespace comm
         Q_OBJECT
 
     public:
-        HeartbeatHandler(domain::VehicleService* vehicleService,
-                         MavLinkCommunicator* communicator);
+        explicit HeartbeatHandler(domain::TelemetryService* telemetryService,
+                                  MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
     public slots:
@@ -27,7 +27,7 @@ namespace comm
         void sendHeartbeat();
 
     private:
-        domain::VehicleService* m_vehicleService;
+        domain::TelemetryService* m_telemetryService;
         QTimer* m_timer;
     };
 }

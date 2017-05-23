@@ -47,6 +47,8 @@ namespace db
         MissionItemPtrList missionItems(int missionId);
         MissionItemPtr missionItem(int missionId, int sequence);
 
+        int vehicleIdByMavId(int mavId) const;
+
     public slots:
         void addNewMissionItem(int missionId);
         void saveMissionItems(int missionId);

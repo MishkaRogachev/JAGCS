@@ -20,11 +20,13 @@ using namespace comm;
 
 MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
         db::DbFacade* dbFacade,
+        domain::TelemetryService* telemetryService,
         domain::VehicleService* vehicleServeice,
         domain::CommandService* commandService,
         quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),
     m_dbFacade(dbFacade),
+    m_telemetryService(telemetryService),
     m_vehicleService(vehicleServeice),
     m_commandService(commandService),
     m_systemId(systemId),
@@ -36,7 +38,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
 
     new PingHandler(communicator);
-    new HeartbeatHandler(m_vehicleService, communicator);
+    new HeartbeatHandler(m_telemetryService, communicator);
     new SystemStatusHandler(m_vehicleService, communicator);
     new AttitudeHandler(m_vehicleService, communicator);
     new PositionHandler(m_vehicleService, communicator);
