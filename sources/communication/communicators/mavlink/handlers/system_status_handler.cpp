@@ -5,8 +5,6 @@
 
 // Internal
 #include "telemetry_service.h"
-#include "vehicle_service.h"
-#include "aerial_vehicle.h"
 
 #include "mavlink_protocol_helpers.h"
 

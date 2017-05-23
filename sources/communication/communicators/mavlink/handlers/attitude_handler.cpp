@@ -7,29 +7,28 @@
 #include <QtMath>
 
 // Internal
-#include "vehicle_service.h"
-#include "base_vehicle.h"
+#include "telemetry_service.h"
 
 using namespace comm;
 using namespace domain;
 
-AttitudeHandler::AttitudeHandler(VehicleService* vehicleService,
+AttitudeHandler::AttitudeHandler(TelemetryService* telemetryService,
                                  MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService)
+    m_telemetryService(telemetryService)
 {}
 
 void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_ATTITUDE) return;
 
-    BaseVehicle* vehicle = m_vehicleService->baseVehicle(message.sysid);
-    if (!vehicle) return;
+    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
+    if (!vehicleId) return;
 
     mavlink_attitude_t attitude;
     mavlink_msg_attitude_decode(&message, &attitude);
 
-    vehicle->setAttitude(Attitude(qRadiansToDegrees(attitude.pitch),
-                                  qRadiansToDegrees(attitude.roll),
-                                  qRadiansToDegrees(attitude.yaw)));
+    m_telemetryService->setAttitude(vehicleId, Attitude(qRadiansToDegrees(attitude.pitch),
+                                                        qRadiansToDegrees(attitude.roll),
+                                                        qRadiansToDegrees(attitude.yaw)));
 }
