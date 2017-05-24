@@ -8,7 +8,11 @@
 namespace domain
 {
     class DomainEntry;
+
+    class Status;
+    class Availables;
     class Attitude;
+    class Sns;
 }
 
 namespace presentation
@@ -32,7 +36,11 @@ namespace presentation
         void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
         void onVehicleChanged(const db::VehicleDescriptionPtr& vehicle);
 
+        void onOnlineChanged(int vehicleId, bool online);
+        void onStatusChanged(int vehicleId, const domain::Status& status);
+        void onAvailablesChanged(int vehicleId, const domain::Availables& availables);
         void onAttitudeChanged(int vehicleId, const domain::Attitude& attitude);
+        void onSnsChanged(int vehicleId, const domain::Sns& sns);
 
     private:
         class Impl;

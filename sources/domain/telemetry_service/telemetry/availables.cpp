@@ -3,13 +3,13 @@
 using namespace domain;
 
 Availables::Availables(bool ahrsAvailable, bool insAvailable,
-                       bool snsAvailable, bool compasAvailable,
+                       bool snsAvailable, bool compassAvailable,
                        bool airSpeedAvailable, bool barometerAvailable,
                        bool rangeFinderAvailable):
     m_ahrsAvailable(ahrsAvailable),
     m_insAvailable(insAvailable),
     m_snsAvailable(snsAvailable),
-    m_compasAvailable(compasAvailable),
+    m_compassAvailable(compassAvailable),
     m_airSpeedAvailable(airSpeedAvailable),
     m_barometerAvailable(barometerAvailable),
     m_rangeFinderAvailable(rangeFinderAvailable)
@@ -30,9 +30,9 @@ bool Availables::snsAvailable() const
     return m_snsAvailable;
 }
 
-bool Availables::compasAvailable() const
+bool Availables::compassAvailable() const
 {
-    return m_compasAvailable;
+    return m_compassAvailable;
 }
 
 bool Availables::airSpeedAvailable() const
@@ -55,7 +55,7 @@ bool Availables::operator ==(const Availables& other)
     return m_ahrsAvailable == other.ahrsAvailable() &&
             m_insAvailable == other.insAvailable() &&
             m_snsAvailable == other.snsAvailable() &&
-            m_compasAvailable == other.compasAvailable() &&
+            m_compassAvailable == other.compassAvailable() &&
             m_airSpeedAvailable == other.airSpeedAvailable() &&
             m_barometerAvailable == other.barometerAvailable() &&
             m_rangeFinderAvailable == other.rangeFinderAvailable();

@@ -13,6 +13,9 @@ RowLayout {
     property string name
     property int mavId
 
+    property alias armed: af.armed
+    property string modeString
+
     property alias pitch: af.pitch
     property alias roll: af.roll
     property alias yaw: compass.heading
@@ -35,6 +38,10 @@ RowLayout {
 
         Label {
             text: qsTr("MAV ID") + ": " + mavId
+        }
+
+        Label {
+            text: qsTr("Mode") + ": " + modeString
         }
     }
 }

@@ -37,8 +37,16 @@ CombatPresenter::CombatPresenter(domain::DomainEntry* entry, QObject* parent):
 
     d->map = new LocationMapPresenter(entry, this);
 
+    connect(d->telemetryService, &domain::TelemetryService::onlineChanged,
+            this, &CombatPresenter::onOnlineChanged);
+    connect(d->telemetryService, &domain::TelemetryService::statusChanged,
+            this, &CombatPresenter::onStatusChanged);
+    connect(d->telemetryService, &domain::TelemetryService::availablesChanged,
+            this, &CombatPresenter::onAvailablesChanged);
     connect(d->telemetryService, &domain::TelemetryService::attitudeChanged,
             this, &CombatPresenter::onAttitudeChanged);
+    connect(d->telemetryService, &domain::TelemetryService::snsChanged,
+            this, &CombatPresenter::onSnsChanged);
 
     for (const db::VehicleDescriptionPtr& vehicle: d->dbFacade->vehicles())
     {
@@ -91,7 +99,27 @@ void CombatPresenter::onVehicleChanged(const db::VehicleDescriptionPtr& vehicle)
     d->vehicles[vehicle->id()]->updateVehicle();
 }
 
+void CombatPresenter::onOnlineChanged(int vehicleId, bool online)
+{
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setOnline(online);
+}
+
+void CombatPresenter::onStatusChanged(int vehicleId, const domain::Status& status)
+{
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setStatus(status);
+}
+
+void CombatPresenter::onAvailablesChanged(int vehicleId, const domain::Availables& availables)
+{
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setAvailables(availables);
+}
+
 void CombatPresenter::onAttitudeChanged(int vehicleId, const domain::Attitude& attitude)
 {
     if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setAttitude(attitude);
+}
+
+void CombatPresenter::onSnsChanged(int vehicleId, const domain::Sns& sns)
+{
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setSns(sns);
 }

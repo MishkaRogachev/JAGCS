@@ -108,7 +108,7 @@ void TelemetryService::setOnline(int vehicleId, bool online)
     if (d->online[vehicleId] == online) return;
 
     d->online[vehicleId] = online;
-    emit onlineChanged(online);
+    emit onlineChanged(vehicleId, online);
 }
 
 void TelemetryService::setAvailables(int vehicleId, const Availables& availables)

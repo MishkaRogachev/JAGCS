@@ -14,7 +14,7 @@ namespace domain
         Availables(bool ahrsAvailable = false,
                    bool insAvailable = false,
                    bool snsAvailable = false,
-                   bool compasAvailable = false,
+                   bool compassAvailable = false,
                    bool airSpeedAvailable = false,
                    bool barometerAvailable = false,
                    bool rangeFinderAvailable = false);
@@ -22,7 +22,7 @@ namespace domain
         bool ahrsAvailable() const;
         bool insAvailable() const;
         bool snsAvailable() const;
-        bool compasAvailable() const;
+        bool compassAvailable() const;
         bool airSpeedAvailable() const;
         bool barometerAvailable() const;
         bool rangeFinderAvailable() const;
@@ -33,7 +33,7 @@ namespace domain
         bool m_ahrsAvailable;
         bool m_insAvailable;
         bool m_snsAvailable;
-        bool m_compasAvailable;
+        bool m_compassAvailable;
         bool m_airSpeedAvailable;
         bool m_barometerAvailable;
         bool m_rangeFinderAvailable;

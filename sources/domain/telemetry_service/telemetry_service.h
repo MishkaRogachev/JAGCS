@@ -49,7 +49,7 @@ namespace domain
         void setPowerSystem(int vehicleId, const PowerSystem& powerSystem);
 
     signals:
-        void onlineChanged(bool online);
+        void onlineChanged(int vehicleId, bool online);
         void statusChanged(int vehicleId, Status status);
         void availablesChanged(int vehicleId, const Availables& availables);
         void attitudeChanged(int vehicleId, Attitude attitude);
