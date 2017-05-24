@@ -1,5 +1,5 @@
-#ifndef VEHICLE_DESCRIPTION_H
-#define VEHICLE_DESCRIPTION_H
+#ifndef VEHICLE_H
+#define VEHICLE_H
 
 // Internal
 #include "base_entity.h"
@@ -31,4 +31,4 @@ namespace db
     };
 }
 
-#endif // VEHICLE_DESCRIPTION_H
+#endif // VEHICLE_H
