@@ -7,7 +7,7 @@ import "qrc:/Controls"
 ColumnLayout {
     id: root
 
-    property var links
+    property var links: []
 
     signal addUdpLink()
     signal addSerialLink()
@@ -37,7 +37,6 @@ ColumnLayout {
         ColumnLayout {
             id: column
             width: parent.width
-            anchors.centerIn: parent
             spacing: palette.spacing
 
             Repeater {

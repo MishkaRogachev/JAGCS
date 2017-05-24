@@ -73,11 +73,13 @@ void CommunicationsPresenter::onLinkAdded(
 
 void CommunicationsPresenter::onLinkChanged(const db::LinkDescriptionPtr& description)
 {
+    if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateView();
 }
 
 void CommunicationsPresenter::onLinkStatisticsChanged(const db::LinkDescriptionPtr& description)
 {
+    if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateStatistics();
 }
 

@@ -33,9 +33,6 @@ namespace presentation
         void updateView();
         void updateStatistics();
 
-    signals:
-        void setConnected(bool connected);
-
     protected:
         void connectView(QObject* view) override;
         void setViewSignalsEnbled(bool enabled);

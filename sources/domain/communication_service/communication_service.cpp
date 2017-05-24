@@ -58,6 +58,10 @@ CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
 
     for (const db::LinkDescriptionPtr& description: facade->links())
         this->onLinkAdded(description);
+
+    connect(d->dbFacade, &db::DbFacade::linkAdded, this, &CommunicationService::onLinkAdded);
+    connect(d->dbFacade, &db::DbFacade::linkRemoved, this, &CommunicationService::onLinkRemoved);
+    connect(d->dbFacade, &db::DbFacade::linkChanged, this, &CommunicationService::onLinkChanged);
 }
 
 CommunicationService::~CommunicationService()
