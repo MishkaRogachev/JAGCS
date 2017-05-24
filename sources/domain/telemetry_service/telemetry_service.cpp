@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QTimerEvent>
+#include <QDebug>
 
 // Internal
 #include "settings_provider.h"

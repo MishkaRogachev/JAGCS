@@ -65,7 +65,13 @@ CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
 }
 
 CommunicationService::~CommunicationService()
-{}
+{
+    for (const db::LinkDescriptionPtr& link: d->descriptedLinks.keys())
+    {
+        link->setAutoConnect(link->isConnected());
+        d->dbFacade->save(link);
+    }
+}
 
 void CommunicationService::setLinkConnected(const db::LinkDescriptionPtr& description,
                                             bool connected)

@@ -5,6 +5,7 @@
 
 // Qt
 #include <QtMath>
+#include <QDebug>
 
 // Internal
 #include "telemetry_service.h"
