@@ -16,7 +16,7 @@ namespace db
     using MissionPtr = QSharedPointer<Mission>;
     using MissionItemPtr = QSharedPointer<MissionItem>;
     using MissionAssignmentPtr  = QSharedPointer<MissionAssignment>;
-    using VehicleDescriptionPtr = QSharedPointer<VehicleDescription>;
+    using VehicleDescriptionPtr = QSharedPointer<VehicleDescription>; //TODO: rename to vehicle
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
 
     using MissionPtrList = QList<MissionPtr>;

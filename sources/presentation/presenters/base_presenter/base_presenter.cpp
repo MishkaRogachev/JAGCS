@@ -43,7 +43,7 @@ void BasePresenter::disconnectView(QObject* view)
 
 void BasePresenter::setViewProperty(const char* name, const QVariant& value)
 {
-    m_view->setProperty(name, value);
+    if (m_view) m_view->setProperty(name, value);
 }
 
 void BasePresenter::invokeViewMethod(const char* name)
