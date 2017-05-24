@@ -31,6 +31,7 @@ namespace presentation
         void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
         void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
         void onVehicleChanged(const db::VehicleDescriptionPtr& vehicle);
+
         void onAttitudeChanged(int vehicleId, const domain::Attitude& attitude);
 
     private:

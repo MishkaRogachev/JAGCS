@@ -17,7 +17,7 @@ Rectangle {
     onCourseChanged: canvas.requestPaint();
     onWindDirectionChanged: canvas.requestPaint();
 
-    height: width
+    implicitHeight: width
     radius: width / 2
     color: palette.sunkenColor
     clip: true

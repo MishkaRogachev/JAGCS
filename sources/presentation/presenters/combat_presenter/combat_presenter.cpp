@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "domain_entry.h"

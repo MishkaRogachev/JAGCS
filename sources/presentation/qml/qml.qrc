@@ -72,5 +72,6 @@
         <file>Views/Settings/NetworkSettingsView.qml</file>
         <file>Views/Settings/AboutView.qml</file>
         <file>Views/Combat/CombatView.qml</file>
+        <file>Views/Combat/VehicleView.qml</file>
     </qresource>
 </RCC>

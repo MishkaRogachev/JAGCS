@@ -18,7 +18,7 @@ namespace presentation
 
     public:
         VehiclePresenter(const db::VehicleDescriptionPtr& vehicle,
-                                  QObject* parent = nullptr);
+                         QObject* parent = nullptr);
 
     public slots:
         void updateVehicle();

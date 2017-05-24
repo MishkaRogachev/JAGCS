@@ -14,7 +14,8 @@ using namespace presentation;
 VehiclePresenter::VehiclePresenter(
         const db::VehicleDescriptionPtr& vehicle,
         QObject* parent):
-    BasePresenter(parent)
+    BasePresenter(parent),
+    m_vehicle(vehicle)
 {}
 
 void VehiclePresenter::updateVehicle()

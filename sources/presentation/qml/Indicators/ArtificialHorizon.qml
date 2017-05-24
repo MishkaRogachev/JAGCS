@@ -18,7 +18,7 @@ Item {
     property alias altitudePrefix: altitudeLadder.prefix
 
     property bool pitchInverted: true
-    property bool rollInverted: true
+    property bool rollInverted: false
     property bool insAvalible: true
     property bool altitudeAvalible: true
     property bool velocityAvalible: true
@@ -41,7 +41,7 @@ Item {
     Behavior on velocity { PropertyAnimation { duration: 100 } }
     Behavior on altitude { PropertyAnimation { duration: 100 } }
 
-    height: width
+    implicitHeight: width
 
     Item {
         id: pitchRollContents
