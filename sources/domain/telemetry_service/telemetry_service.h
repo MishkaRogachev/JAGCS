@@ -37,6 +37,8 @@ namespace domain
         Position homePosition(int vehicleId) const;
         Sns sns(int vehicleId) const;
         PowerSystem powerSystem(int vehicleId) const;
+        // TODO: Barometrics
+        // TODO: Airflow
 
     public slots:
         void setOnline(int vehicleId, bool online);
