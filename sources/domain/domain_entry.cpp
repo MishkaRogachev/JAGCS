@@ -12,7 +12,6 @@
 
 #include "proxy_manager.h"
 
-#include "vehicle_service.h"
 #include "command_service.h"
 #include "telemetry_service.h"
 
@@ -29,7 +28,6 @@ public:
     DbFacade dbFacade;
     ProxyManager proxyManager;
 
-    QScopedPointer<VehicleService> vehicleService;
     TelemetryService telemetryService;
     CommandService commandService;
 
@@ -49,12 +47,9 @@ DomainEntry::DomainEntry():
         qApp->quit(); // TODO: quit gently
     }
 
-    d->vehicleService.reset(new VehicleService(&d->dbFacade));
-
     comm::MavLinkCommunicatorFactory comFactory(
                 &d->dbFacade,
                 &d->telemetryService,
-                d->vehicleService.data(),
                 &d->commandService,
                 SettingsProvider::value(settings::communication::systemId).toInt(),
                 SettingsProvider::value(settings::communication::componentId).toInt());
@@ -73,11 +68,6 @@ DbFacade* DomainEntry::dbFacade() const
 CommunicationService* DomainEntry::commService() const
 {
     return d->commService.data();
-}
-
-VehicleService* DomainEntry::vehicleService() const
-{
-    return d->vehicleService.data();
 }
 
 TelemetryService* DomainEntry::telemetryService() const

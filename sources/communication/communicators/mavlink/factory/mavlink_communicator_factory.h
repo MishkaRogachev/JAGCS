@@ -10,7 +10,6 @@ namespace db
 
 namespace domain
 {
-    class VehicleService;
     class TelemetryService;
     class CommandService;
 }
@@ -22,7 +21,6 @@ namespace comm
     public:
         MavLinkCommunicatorFactory(db::DbFacade* dbFacade,
                                    domain::TelemetryService* telemetryService,
-                                   domain::VehicleService* vehicleServeice,
                                    domain::CommandService* commandService,
                                    quint8 systemId, quint8 componentId);
 
@@ -31,7 +29,6 @@ namespace comm
     private:
         db::DbFacade* m_dbFacade;
         domain::TelemetryService* m_telemetryService;
-        domain::VehicleService* m_vehicleService;
         domain::CommandService* m_commandService;
         quint8 m_systemId;
         quint8 m_componentId;

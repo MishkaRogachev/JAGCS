@@ -4,7 +4,7 @@
 #include <QVariant>
 
 // Internal
-#include "vehicle_service.h"
+#include "db_facade.h"
 #include "vehicle_description.h"
 
 #include "description_vehicle_presenter.h"
@@ -14,28 +14,27 @@ using namespace presentation;
 class VehiclesPresenter::Impl
 {
 public:
-    domain::VehicleService* service;
+    db::DbFacade* facade;
 
     QList<DescriptionVehiclePresenter*> vehiclePresenters;
 };
 
-VehiclesPresenter::VehiclesPresenter(domain::VehicleService* service,
-                                     QObject* parent):
+VehiclesPresenter::VehiclesPresenter(db::DbFacade* facade, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = service;
+    d->facade = facade;
 
-    connect(service, &domain::VehicleService::vehicleAdded,
+    connect(facade, &db::DbFacade::vehicleAdded,
             this, &VehiclesPresenter::onVehicleAdded);
-    connect(service, &domain::VehicleService::vehicleRemoved,
+    connect(facade, &db::DbFacade::vehicleRemoved,
             this, &VehiclesPresenter::onVehicleRemoved);
 
     for (const db::VehicleDescriptionPtr& description:
-         service->descriptions())
+         facade->vehicles())
     {
         d->vehiclePresenters.append(new DescriptionVehiclePresenter(
-                                        service, description, this));
+                                        facade, description, this));
     }
 }
 
@@ -53,7 +52,7 @@ void VehiclesPresenter::onVehicleAdded(
         const db::VehicleDescriptionPtr& vehicle)
 {
     d->vehiclePresenters.append(new DescriptionVehiclePresenter(
-                                    d->service, vehicle, this));
+                                    d->facade, vehicle, this));
     this->updateVehicles();
 }
 
@@ -62,7 +61,7 @@ void VehiclesPresenter::onVehicleRemoved(
 {
     for (DescriptionVehiclePresenter* vehiclePresenter: d->vehiclePresenters)
     {
-        if (vehiclePresenter->description() != vehicle) continue;
+        if (vehiclePresenter->vehicle() != vehicle) continue;
 
         d->vehiclePresenters.removeOne(vehiclePresenter);
         delete vehiclePresenter;
@@ -88,5 +87,5 @@ void VehiclesPresenter::onAddVehicle()
 
     description->setName(tr("New Vehicle"));
 
-    d->service->saveDescription(description);
+    d->facade->save(description);
 }

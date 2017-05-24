@@ -14,16 +14,15 @@
 #include "mavlink_mode_helper.h"
 
 #include "telemetry_service.h"
-#include "vehicle_service.h"
 #include "vehicle_description.h"
-#include "aerial_vehicle.h"
 
 using namespace comm;
 using namespace domain;
 
 namespace
 {
-    int decodeType(uint8_t type)
+    // TODO:  db-vehicle type
+    /*int decodeType(uint8_t type)
     {
         switch (type) //TODO: other vehicles
         {
@@ -74,7 +73,7 @@ namespace
         default:
             return BaseVehicle::UnknownState;
         }
-    }
+    }*/
 }
 
 HeartbeatHandler::HeartbeatHandler(TelemetryService* telemetryService,

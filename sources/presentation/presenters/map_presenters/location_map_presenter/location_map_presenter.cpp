@@ -20,17 +20,16 @@ public:
     MissionLineMapItemModel lineModel;
     VehicleMapItemModel vehicleModel;
 
-    Impl(db::DbFacade* dbFacade, domain::VehicleService* vehicleService):
+    Impl(db::DbFacade* dbFacade, domain::TelemetryService* telemetryService):
         pointModel(dbFacade),
         lineModel(dbFacade),
-        vehicleModel(vehicleService)
+        vehicleModel(dbFacade, telemetryService)
     {}
 };
 
-LocationMapPresenter::LocationMapPresenter(domain::DomainEntry* entry,
-                                           QObject* object):
+LocationMapPresenter::LocationMapPresenter(domain::DomainEntry* entry, QObject* object):
     AbstractMapPresenter(object),
-    d(new Impl(entry->dbFacade(), entry->vehicleService()))
+    d(new Impl(entry->dbFacade(), entry->telemetryService()))
 {}
 
 LocationMapPresenter::~LocationMapPresenter()

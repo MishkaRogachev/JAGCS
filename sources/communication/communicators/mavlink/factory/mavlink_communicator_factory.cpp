@@ -18,16 +18,13 @@
 
 using namespace comm;
 
-MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
-        db::DbFacade* dbFacade,
+MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(db::DbFacade* dbFacade,
         domain::TelemetryService* telemetryService,
-        domain::VehicleService* vehicleServeice,
         domain::CommandService* commandService,
         quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),
     m_dbFacade(dbFacade),
     m_telemetryService(telemetryService),
-    m_vehicleService(vehicleServeice),
     m_commandService(commandService),
     m_systemId(systemId),
     m_componentId(componentId)

@@ -7,10 +7,14 @@
 // Internal
 #include "db_traits.h"
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
-    class VehicleService;
-    class BaseVehicle;
+    class TelemetryService;
 }
 
 namespace presentation
@@ -30,7 +34,8 @@ namespace presentation
             HdopRadius
         };
 
-        VehicleMapItemModel(domain::VehicleService* vehicleService,
+        VehicleMapItemModel(db::DbFacade* dbFacade,
+                            domain::TelemetryService* vehicleService,
                             QObject* parent = nullptr);
         ~VehicleMapItemModel() override;
 
@@ -38,19 +43,13 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void onVehicleAdded(const db::VehicleDescriptionPtr& description);
-        void onVehicleRemoved(const db::VehicleDescriptionPtr& description);
-
-    private slots:
-        void onVehicleStateChanged();
-        void onVehicleAttitudeChanged();
-        void onVehiclePositionChanged();
-        void onVehicleGpsChanged();
+        void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
+        void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
-        QModelIndex vehicleIndex(domain::BaseVehicle* vehicle) const;
+        QModelIndex vehicleIndex(int vehicleId) const;
 
     private:
         class Impl;

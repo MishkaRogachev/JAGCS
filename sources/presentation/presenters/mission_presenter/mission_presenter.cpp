@@ -13,7 +13,6 @@
 #include "mission_assignment.h"
 #include "vehicle_description.h"
 
-#include "vehicle_service.h"
 #include "command_service.h"
 
 #include "mission_item_presenter.h"
@@ -25,7 +24,6 @@ class MissionPresenter::Impl
 {
 public:
     db::DbFacade* dbFacade;
-    domain::VehicleService* vehicleService;
     domain::CommandService* commandService;
 
     db::MissionPtr selectedMission;
@@ -45,11 +43,10 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     d(new Impl())
 {
     d->dbFacade = entry->dbFacade();
-    d->vehicleService = entry->vehicleService();
     d->commandService = entry->commandService();
 
     d->missions.append(d->dbFacade->missions());
-    d->vehicles.append(d->vehicleService->descriptions());
+    d->vehicles.append(d->dbFacade->vehicles());
 
     connect(d->dbFacade, &db::DbFacade::missionAdded,
             this, &MissionPresenter::onMissionAdded);
@@ -70,9 +67,9 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     connect(d->dbFacade, &db::DbFacade::missionItemChanged,
             this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
 
-    connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
+    connect(d->dbFacade, &db::DbFacade::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);
-    connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
+    connect(d->dbFacade, &db::DbFacade::vehicleRemoved,
             this, &MissionPresenter::onVehicleRemoved);
 
     d->item = new MissionItemPresenter(d->dbFacade, this);
@@ -195,7 +192,7 @@ void MissionPresenter::updateAssignment()
                 d->dbFacade->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
-            db::VehicleDescriptionPtr vehicle = d->vehicleService->description(assignment->vehicleId());
+            db::VehicleDescriptionPtr vehicle = d->dbFacade->vehicle(assignment->vehicleId());
             if (vehicle)
             {
                 this->setViewProperty(PROPERTY(assignedVehicle),

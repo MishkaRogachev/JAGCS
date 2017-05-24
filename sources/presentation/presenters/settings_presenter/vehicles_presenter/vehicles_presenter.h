@@ -5,9 +5,9 @@
 #include "base_presenter.h"
 #include "db_traits.h"
 
-namespace domain
+namespace db
 {
-    class VehicleService;
+    class DbFacade;
 }
 
 namespace presentation
@@ -17,8 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VehiclesPresenter(domain::VehicleService* service,
-                          QObject* parent = nullptr);
+        explicit VehiclesPresenter(db::DbFacade* facade, QObject* parent = nullptr);
         ~VehiclesPresenter() override;
 
     protected:

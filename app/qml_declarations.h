@@ -2,7 +2,11 @@
 #define QML_DECLARATIONS_H
 
 // Internal
-#include "aerial_vehicle.h"
+#include "attitude.h"
+#include "position.h"
+#include "sns.h"
+#include "wind.h"
+#include "power_system.h"
 
 #include "link_description.h"
 #include "mission_item.h"

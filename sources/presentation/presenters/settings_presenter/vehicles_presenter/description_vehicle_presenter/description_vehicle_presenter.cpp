@@ -4,29 +4,29 @@
 #include <QVariant>
 
 // Internal
+#include "db_facade.h"
 #include "vehicle_description.h"
-#include "vehicle_service.h"
 
 using namespace presentation;
 
 DescriptionVehiclePresenter::DescriptionVehiclePresenter(
-        domain::VehicleService* service,
+        db::DbFacade* facade,
         const db::VehicleDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
-    m_service(service),
-    m_description(description)
+    m_facade(facade),
+    m_vehicle(description)
 {}
 
-db::VehicleDescriptionPtr DescriptionVehiclePresenter::description() const
+db::VehicleDescriptionPtr DescriptionVehiclePresenter::vehicle() const
 {
-    return m_description;
+    return m_vehicle;
 }
 
 void DescriptionVehiclePresenter::updateView()
 {
-    this->setViewProperty(PROPERTY(name), m_description->name());
-    this->setViewProperty(PROPERTY(mavId), m_description->mavId());
+    this->setViewProperty(PROPERTY(name), m_vehicle->name());
+    this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
     // TODO: type
 }
 
@@ -41,23 +41,23 @@ void DescriptionVehiclePresenter::connectView(QObject* view)
 
 void DescriptionVehiclePresenter::onSetName(const QString& name)
 {
-    m_description->setName(name);
-    m_service->saveDescription(m_description);
+    m_vehicle->setName(name);
+    m_facade->save(m_vehicle);
 }
 
 void DescriptionVehiclePresenter::onSetMavId(int id)
 {
-    if (m_description->setMavId(id))
+    if (m_vehicle->setMavId(id))
     {
-        m_service->saveDescription(m_description);
+        m_facade->save(m_vehicle);
     }
     else
     {
-        this->setViewProperty(PROPERTY(mavId), m_description->mavId());
+        this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
     }
 }
 
 void DescriptionVehiclePresenter::onRemove()
 {
-    m_service->removeByDescription(m_description);
+    m_facade->remove(m_vehicle);
 }

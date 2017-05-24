@@ -5,10 +5,11 @@
 #include "base_presenter.h"
 #include "db_traits.h"
 
-namespace domain
+namespace db
 {
-    class VehicleService;
+    class DbFacade;
 }
+
 
 namespace presentation
 {
@@ -17,12 +18,11 @@ namespace presentation
         Q_OBJECT
 
     public:
-        DescriptionVehiclePresenter(
-                domain::VehicleService* service,
-                const db::VehicleDescriptionPtr& description,
-                QObject* parent = nullptr);
+        DescriptionVehiclePresenter(db::DbFacade* facade,
+                                    const db::VehicleDescriptionPtr& vehicle,
+                                    QObject* parent = nullptr);
 
-        db::VehicleDescriptionPtr description() const;
+        db::VehicleDescriptionPtr vehicle() const;
 
     public slots:
         void updateView();
@@ -36,8 +36,8 @@ namespace presentation
         void onRemove();
 
     private:
-        domain::VehicleService* const m_service;
-        db::VehicleDescriptionPtr m_description;
+        db::DbFacade* const m_facade;
+        db::VehicleDescriptionPtr m_vehicle;
     };
 }
 

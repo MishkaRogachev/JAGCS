@@ -32,7 +32,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
 {
 
     d->communications = new CommunicationsPresenter(entry, this);
-    d->vehicles = new VehiclesPresenter(entry->vehicleService(), this);
+    d->vehicles = new VehiclesPresenter(entry->dbFacade(), this);
     d->video = new VideoSettingsPresenter(this);
     d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
     d->gui = new GuiSettingsPresenter(this);
