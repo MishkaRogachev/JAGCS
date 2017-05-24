@@ -9,7 +9,7 @@
 #include "settings_provider.h"
 
 #include "db_facade.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 using namespace domain;
 
@@ -168,7 +168,7 @@ void TelemetryService::timerEvent(QTimerEvent* event)
     this->killTimer(event->timerId());
 }
 
-void TelemetryService::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)
+void TelemetryService::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
     d->statuses.remove(vehicle->id());
     d->attitudes.remove(vehicle->id());

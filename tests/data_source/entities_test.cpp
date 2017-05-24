@@ -9,7 +9,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 #include "link_description.h"
 
 using namespace db;
@@ -69,7 +69,7 @@ void EntitiesTest::testVehicleDescription()
 {
     DbFacade dbFacade;
 
-    VehicleDescriptionPtr vehicle = VehicleDescriptionPtr::create();
+    VehiclePtr vehicle = VehiclePtr::create();
 
     vehicle->setName("Ridiculous vehicle");
     vehicle->setMavId(13);
@@ -94,7 +94,7 @@ void EntitiesTest::testMissionAssignment()
     mission->setName("Assigned mission");
     QVERIFY2(dbFacade.save(mission), "Can't insert mission");
 
-    VehicleDescriptionPtr vehicle = VehicleDescriptionPtr::create();
+    VehiclePtr vehicle = VehiclePtr::create();
     vehicle->setName("Assigned vehicle");
     QVERIFY2(dbFacade.save(vehicle), "Can't insert vehicle");
 

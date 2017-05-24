@@ -7,7 +7,7 @@
 
 // Internal
 #include "db_facade.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 #include "telemetry_service.h"
 
@@ -43,7 +43,7 @@ VehicleMapItemModel::VehicleMapItemModel(db::DbFacade* dbFacade,
     connect(vehicleService, &domain::TelemetryService::snsChanged,
             this, &VehicleMapItemModel::onSnsChanged);
 
-    for (const db::VehicleDescriptionPtr& vehicle: dbFacade->vehicles())
+    for (const db::VehiclePtr& vehicle: dbFacade->vehicles())
     {
         this->onVehicleAdded(vehicle);
     }
@@ -85,7 +85,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void VehicleMapItemModel::onVehicleAdded(const db::VehicleDescriptionPtr& vehicle)
+void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     d->vehicleIds.append(vehicle->id());
@@ -93,7 +93,7 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehicleDescriptionPtr& vehicl
     this->endInsertRows();
 }
 
-void VehicleMapItemModel::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)
+void VehicleMapItemModel::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
     int row = d->vehicleIds.indexOf(vehicle->id());
     if (row == -1) return;

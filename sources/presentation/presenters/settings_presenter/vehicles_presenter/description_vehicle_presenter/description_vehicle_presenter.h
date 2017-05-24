@@ -18,11 +18,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        DescriptionVehiclePresenter(db::DbFacade* facade,
-                                    const db::VehicleDescriptionPtr& vehicle,
+        DescriptionVehiclePresenter(db::DbFacade* facade, const db::VehiclePtr& vehicle,
                                     QObject* parent = nullptr);
 
-        db::VehicleDescriptionPtr vehicle() const;
+        db::VehiclePtr vehicle() const;
 
     public slots:
         void updateView();
@@ -37,7 +36,7 @@ namespace presentation
 
     private:
         db::DbFacade* const m_facade;
-        db::VehicleDescriptionPtr m_vehicle;
+        db::VehiclePtr m_vehicle;
     };
 }
 

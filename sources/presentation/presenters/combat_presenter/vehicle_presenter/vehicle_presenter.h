@@ -20,8 +20,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VehiclePresenter(const db::VehicleDescriptionPtr& vehicle,
-                         QObject* parent = nullptr);
+        VehiclePresenter(const db::VehiclePtr& vehicle, QObject* parent = nullptr);
 
     public slots:
         void updateVehicle();
@@ -36,7 +35,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private:
-        db::VehicleDescriptionPtr m_vehicle;
+        db::VehiclePtr m_vehicle;
     };
 }
 

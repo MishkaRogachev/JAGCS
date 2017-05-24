@@ -9,7 +9,7 @@
 
 #include "db_facade.h"
 #include "link_description.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 #include "mission.h"
 #include "mission_assignment.h"
 
@@ -33,7 +33,7 @@ bool DefaultParamsMigration::up()
     defaultSerialLink->setAutoConnect(true);
     facade.save(defaultSerialLink);
 
-    VehicleDescriptionPtr defaultVehicle = VehicleDescriptionPtr::create();
+    VehiclePtr defaultVehicle = VehiclePtr::create();
     defaultVehicle->setMavId(1);
     defaultVehicle->setName(qApp->translate("DefaultParamsMigration", "Default Vehicle"));
     facade.save(defaultVehicle);

@@ -5,20 +5,18 @@
 
 // Internal
 #include "db_facade.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 using namespace presentation;
 
 DescriptionVehiclePresenter::DescriptionVehiclePresenter(
-        db::DbFacade* facade,
-        const db::VehicleDescriptionPtr& description,
-        QObject* parent):
+        db::DbFacade* facade, const db::VehiclePtr& vehicle, QObject* parent):
     BasePresenter(parent),
     m_facade(facade),
-    m_vehicle(description)
+    m_vehicle(vehicle)
 {}
 
-db::VehicleDescriptionPtr DescriptionVehiclePresenter::vehicle() const
+db::VehiclePtr DescriptionVehiclePresenter::vehicle() const
 {
     return m_vehicle;
 }

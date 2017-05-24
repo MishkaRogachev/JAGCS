@@ -4,7 +4,7 @@
 #include <QVariant>
 
 // Internal
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 #include "availables.h"
 #include "status.h"
@@ -15,9 +15,7 @@
 
 using namespace presentation;
 
-VehiclePresenter::VehiclePresenter(
-        const db::VehicleDescriptionPtr& vehicle,
-        QObject* parent):
+VehiclePresenter::VehiclePresenter(const db::VehiclePtr& vehicle, QObject* parent):
     BasePresenter(parent),
     m_vehicle(vehicle)
 {}

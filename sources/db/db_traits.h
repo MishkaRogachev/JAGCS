@@ -10,18 +10,18 @@ namespace db
     class Mission;
     class MissionItem;
     class MissionAssignment;
-    class VehicleDescription;
+    class Vehicle;
     class LinkDescription;
 
     using MissionPtr = QSharedPointer<Mission>;
     using MissionItemPtr = QSharedPointer<MissionItem>;
     using MissionAssignmentPtr  = QSharedPointer<MissionAssignment>;
-    using VehicleDescriptionPtr = QSharedPointer<VehicleDescription>; //TODO: rename to vehicle
+    using VehiclePtr = QSharedPointer<Vehicle>;
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
 
     using MissionPtrList = QList<MissionPtr>;
     using MissionItemPtrList = QList<MissionItemPtr>;
-    using VehicleDescriptionPtrList = QList<VehicleDescriptionPtr>;
+    using VehiclePtrList = QList<VehiclePtr>;
     using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
 }
 

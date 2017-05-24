@@ -10,7 +10,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 #include "link_description.h"
 
 using namespace db;
@@ -21,7 +21,7 @@ public:
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> itemRepository;
     GenericRepository<MissionAssignment> assignmentRepository;
-    GenericRepository<VehicleDescription> vehicleRepository;
+    GenericRepository<Vehicle> vehicleRepository;
     GenericRepository<LinkDescription> linkRepository;
 
     Impl():
@@ -56,7 +56,7 @@ MissionAssignmentPtr DbFacade::assignment(int id, bool reload)
     return d->assignmentRepository.read(id, reload);
 }
 
-VehicleDescriptionPtr DbFacade::vehicle(int id, bool reload)
+VehiclePtr DbFacade::vehicle(int id, bool reload)
 {
     return d->vehicleRepository.read(id, reload);
 }
@@ -102,7 +102,7 @@ bool DbFacade::save(const MissionAssignmentPtr& assignment)
     return true;
 }
 
-bool DbFacade::save(const VehicleDescriptionPtr& vehicle)
+bool DbFacade::save(const VehiclePtr& vehicle)
 {
     bool isNew = vehicle->id() == 0;
     if (!d->vehicleRepository.save(vehicle)) return false;
@@ -153,7 +153,7 @@ bool DbFacade::remove(const MissionAssignmentPtr& assignment)
     return true;
 }
 
-bool DbFacade::remove(const VehicleDescriptionPtr& vehicle)
+bool DbFacade::remove(const VehiclePtr& vehicle)
 {
     MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
     if (assignment && !this->remove(assignment)) return false;
@@ -182,9 +182,9 @@ LinkDescriptionPtrList DbFacade::links(const QString& condition, bool reload)
     return list;
 }
 
-VehicleDescriptionPtrList DbFacade::vehicles(const QString& condition, bool reload)
+VehiclePtrList DbFacade::vehicles(const QString& condition, bool reload)
 {
-    VehicleDescriptionPtrList list;
+    VehiclePtrList list;
 
     for (int id: d->vehicleRepository.selectId(condition))
     {

@@ -45,8 +45,8 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
-        void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
+        void onVehicleAdded(const db::VehiclePtr& vehicle);
+        void onVehicleRemoved(const db::VehiclePtr& vehicle);
 
         void onPositionChanged(int vehicleId, const domain::Position& position);
         void onSnsChanged(int vehicleId, const domain::Sns& sns);

@@ -9,7 +9,7 @@
 #include "domain_entry.h"
 
 #include "db_facade.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 #include "telemetry_service.h"
 
@@ -48,7 +48,7 @@ CombatPresenter::CombatPresenter(domain::DomainEntry* entry, QObject* parent):
     connect(d->telemetryService, &domain::TelemetryService::snsChanged,
             this, &CombatPresenter::onSnsChanged);
 
-    for (const db::VehicleDescriptionPtr& vehicle: d->dbFacade->vehicles())
+    for (const db::VehiclePtr& vehicle: d->dbFacade->vehicles())
     {
        this->onVehicleAdded(vehicle);
     }
@@ -79,7 +79,7 @@ void CombatPresenter::connectView(QObject* view)
     this->updateVehicles();
 }
 
-void CombatPresenter::onVehicleAdded(const db::VehicleDescriptionPtr& vehicle)
+void CombatPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
     d->vehicles[vehicle->id()] = new VehiclePresenter(vehicle, this);
 
@@ -88,13 +88,13 @@ void CombatPresenter::onVehicleAdded(const db::VehicleDescriptionPtr& vehicle)
     this->updateVehicles();
 }
 
-void CombatPresenter::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)
+void CombatPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
     d->vehicles.remove(vehicle->id());
     this->updateVehicles();
 }
 
-void CombatPresenter::onVehicleChanged(const db::VehicleDescriptionPtr& vehicle)
+void CombatPresenter::onVehicleChanged(const db::VehiclePtr& vehicle)
 {
     d->vehicles[vehicle->id()]->updateVehicle();
 }

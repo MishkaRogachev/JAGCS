@@ -11,7 +11,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 #include "command_service.h"
 
@@ -29,7 +29,7 @@ public:
     db::MissionPtr selectedMission;
     db::MissionPtrList missions;
 
-    db::VehicleDescriptionPtrList vehicles;
+    db::VehiclePtrList vehicles;
 
     MissionItemPresenter* item;
     AbstractMapPresenter* map;
@@ -153,13 +153,13 @@ void MissionPresenter::updateMissionsBox()
     this->setViewConnected(true);
 }
 
-void MissionPresenter::onVehicleAdded(const db::VehicleDescriptionPtr& vehicle)
+void MissionPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
     d->vehicles.append(vehicle);
     this->updateVehiclesBox();
 }
 
-void MissionPresenter::onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle)
+void MissionPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
     d->vehicles.removeOne(vehicle);
     this->updateVehiclesBox();
@@ -172,7 +172,7 @@ void MissionPresenter::updateVehiclesBox()
     QStringList vehicles;
     vehicles.append(QString());
 
-    for (const db::VehicleDescriptionPtr& vehicle: d->vehicles)
+    for (const db::VehiclePtr& vehicle: d->vehicles)
     {
         vehicles.append(vehicle->name());
     }
@@ -192,7 +192,7 @@ void MissionPresenter::updateAssignment()
                 d->dbFacade->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
-            db::VehicleDescriptionPtr vehicle = d->dbFacade->vehicle(assignment->vehicleId());
+            db::VehiclePtr vehicle = d->dbFacade->vehicle(assignment->vehicleId());
             if (vehicle)
             {
                 this->setViewProperty(PROPERTY(assignedVehicle),
@@ -269,9 +269,8 @@ void MissionPresenter::onRenameMission(const QString& name)
 void MissionPresenter::onAssignVehicle(int index)
 {
     if (!d->selectedMission) return;
-    db::VehicleDescriptionPtr vehicle = (index > 0 && index <= d->missions.count()) ?
-                                            d->vehicles.at(index - 1) :
-                                            db::VehicleDescriptionPtr();
+    db::VehiclePtr vehicle = (index > 0 && index <= d->missions.count()) ?
+                                 d->vehicles.at(index - 1) : db::VehiclePtr();
 
     if (vehicle)
     {

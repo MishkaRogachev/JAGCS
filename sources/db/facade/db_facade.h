@@ -21,23 +21,23 @@ namespace db
         MissionPtr mission(int id, bool reload = false);
         MissionItemPtr missionItem(int id, bool reload = false);
         MissionAssignmentPtr assignment(int id, bool reload = false);
-        VehicleDescriptionPtr vehicle(int id, bool reload = false);
+        VehiclePtr vehicle(int id, bool reload = false);
         LinkDescriptionPtr link(int id, bool reload = false);
 
         bool save(const MissionPtr& mission);
         bool save(const MissionItemPtr& item);
         bool save(const MissionAssignmentPtr& assignment);
-        bool save(const VehicleDescriptionPtr& vehicle);
+        bool save(const VehiclePtr& vehicle);
         bool save(const LinkDescriptionPtr& link);
 
         bool remove(const MissionPtr& mission);
         bool remove(const MissionItemPtr& item);
         bool remove(const MissionAssignmentPtr& assignment);
-        bool remove(const VehicleDescriptionPtr& vehicle);
+        bool remove(const VehiclePtr& vehicle);
         bool remove(const LinkDescriptionPtr& link);
 
         LinkDescriptionPtrList links(const QString& condition = QString(), bool reload  = false);
-        VehicleDescriptionPtrList vehicles(const QString& condition = QString(), bool reload  = false);
+        VehiclePtrList vehicles(const QString& condition = QString(), bool reload  = false);
         MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
         MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
 
@@ -70,9 +70,9 @@ namespace db
         void assignmentRemoved(db::MissionAssignmentPtr assignment);
         void assignmentChanged(db::MissionAssignmentPtr assignment);
 
-        void vehicleAdded(db::VehicleDescriptionPtr vehicle);
-        void vehicleRemoved(db::VehicleDescriptionPtr vehicle);
-        void vehicleChanged(db::VehicleDescriptionPtr vehicle);
+        void vehicleAdded(db::VehiclePtr vehicle);
+        void vehicleRemoved(db::VehiclePtr vehicle);
+        void vehicleChanged(db::VehiclePtr vehicle);
 
         void linkAdded(db::LinkDescriptionPtr link);
         void linkRemoved(db::LinkDescriptionPtr link);

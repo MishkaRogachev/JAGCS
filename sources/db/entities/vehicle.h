@@ -6,7 +6,7 @@
 
 namespace db
 {
-    class VehicleDescription: public BaseEntity
+    class Vehicle: public BaseEntity
     {
         Q_GADGET
 
@@ -14,8 +14,8 @@ namespace db
         Q_PROPERTY(QString name READ name WRITE setName)
 
     public:
-        VehicleDescription();
-        ~VehicleDescription() override;
+        Vehicle();
+        ~Vehicle() override;
 
         int mavId() const;
         bool setMavId(int mavId);
@@ -27,7 +27,7 @@ namespace db
         int m_mavId = 0;
         QString m_name;
 
-        static QMap<VehicleDescription*, int> m_mavIds;
+        static QMap<Vehicle*, int> m_mavIds;
     };
 }
 

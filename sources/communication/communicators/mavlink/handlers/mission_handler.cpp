@@ -10,7 +10,7 @@
 #include "db_facade.h"
 #include "mission.h"
 #include "mission_item.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 #include "mission_assignment.h"
 
 #include "mavlink_communicator.h"
@@ -103,7 +103,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
 void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 {
-    db::VehicleDescriptionPtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
+    db::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
     for (const db::MissionItemPtr& item: m_dbFacade->missionItems(assignment->missionId()))
@@ -128,7 +128,7 @@ void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
 
 void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 {
-    db::VehicleDescriptionPtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
+    db::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
     db::MissionPtr mission = m_dbFacade->mission(assignment->missionId());
     if (vehicle.isNull() || mission.isNull()) return;
 

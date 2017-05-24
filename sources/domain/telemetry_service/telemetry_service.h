@@ -64,7 +64,7 @@ namespace domain
         void timerEvent(QTimerEvent* event);
 
     private slots:
-         void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
+        void onVehicleRemoved(const db::VehiclePtr& vehicle);
 
     private:
         class Impl;

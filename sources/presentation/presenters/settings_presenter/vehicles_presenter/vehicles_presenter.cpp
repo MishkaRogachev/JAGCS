@@ -5,7 +5,7 @@
 
 // Internal
 #include "db_facade.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 #include "description_vehicle_presenter.h"
 
@@ -30,11 +30,9 @@ VehiclesPresenter::VehiclesPresenter(db::DbFacade* facade, QObject* parent):
     connect(facade, &db::DbFacade::vehicleRemoved,
             this, &VehiclesPresenter::onVehicleRemoved);
 
-    for (const db::VehicleDescriptionPtr& description:
-         facade->vehicles())
+    for (const db::VehiclePtr& vehicle: facade->vehicles())
     {
-        d->vehiclePresenters.append(new DescriptionVehiclePresenter(
-                                        facade, description, this));
+        d->vehiclePresenters.append(new DescriptionVehiclePresenter(facade, vehicle, this));
     }
 }
 
@@ -48,16 +46,13 @@ void VehiclesPresenter::connectView(QObject* view)
     this->updateVehicles();
 }
 
-void VehiclesPresenter::onVehicleAdded(
-        const db::VehicleDescriptionPtr& vehicle)
+void VehiclesPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
-    d->vehiclePresenters.append(new DescriptionVehiclePresenter(
-                                    d->facade, vehicle, this));
+    d->vehiclePresenters.append(new DescriptionVehiclePresenter(d->facade, vehicle, this));
     this->updateVehicles();
 }
 
-void VehiclesPresenter::onVehicleRemoved(
-        const db::VehicleDescriptionPtr& vehicle)
+void VehiclesPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
     for (DescriptionVehiclePresenter* vehiclePresenter: d->vehiclePresenters)
     {
@@ -83,7 +78,7 @@ void VehiclesPresenter::updateVehicles()
 
 void VehiclesPresenter::onAddVehicle()
 {
-    auto description = db::VehicleDescriptionPtr::create();
+    auto description = db::VehiclePtr::create();
 
     description->setName(tr("New Vehicle"));
 

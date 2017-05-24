@@ -14,7 +14,7 @@
 #include "mavlink_mode_helper.h"
 
 #include "telemetry_service.h"
-#include "vehicle_description.h"
+#include "vehicle.h"
 
 using namespace comm;
 using namespace domain;
