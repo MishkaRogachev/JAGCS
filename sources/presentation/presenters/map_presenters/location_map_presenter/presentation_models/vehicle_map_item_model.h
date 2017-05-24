@@ -15,6 +15,8 @@ namespace db
 namespace domain
 {
     class TelemetryService;
+    class Position;
+    class Sns;
 }
 
 namespace presentation
@@ -45,6 +47,9 @@ namespace presentation
     public slots:
         void onVehicleAdded(const db::VehicleDescriptionPtr& vehicle);
         void onVehicleRemoved(const db::VehicleDescriptionPtr& vehicle);
+
+        void onPositionChanged(int vehicleId, const domain::Position& position);
+        void onSnsChanged(int vehicleId, const domain::Sns& sns);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

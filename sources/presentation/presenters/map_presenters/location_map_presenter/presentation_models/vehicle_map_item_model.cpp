@@ -38,14 +38,10 @@ VehicleMapItemModel::VehicleMapItemModel(db::DbFacade* dbFacade,
     connect(dbFacade, &db::DbFacade::vehicleRemoved, this,
             &VehicleMapItemModel::onVehicleRemoved);
 
-//    connect(vehicle, &domain::BaseVehicle::stateChanged,
-//            this, &VehicleMapItemModel::onVehicleStateChanged);
-//    connect(vehicle, &domain::BaseVehicle::attitudeChanged,
-//            this, &VehicleMapItemModel::onVehicleAttitudeChanged);
-//    connect(vehicle, &domain::BaseVehicle::positionChanged,
-//            this, &VehicleMapItemModel::onVehiclePositionChanged);
-//    connect(vehicle, &domain::BaseVehicle::gpsChanged,
-//            this, &VehicleMapItemModel::onVehicleGpsChanged);
+    connect(vehicleService, &domain::TelemetryService::positionChanged,
+            this, &VehicleMapItemModel::onPositionChanged);
+    connect(vehicleService, &domain::TelemetryService::snsChanged,
+            this, &VehicleMapItemModel::onSnsChanged);
 
     for (const db::VehicleDescriptionPtr& vehicle: dbFacade->vehicles())
     {
@@ -68,22 +64,22 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 {
     if (index.row() < 0 || index.row() >= d->vehicleIds.count()) return QVariant();
 
-    auto vehicle = d->vehicleIds.at(index.row());
+    int vehicleId = d->vehicleIds.at(index.row());
 
     switch (role)
     {
-/*    case PositionRole:
-        return QVariant::fromValue(vehicle->position().coordinate());
+    case PositionRole:
+        return QVariant::fromValue(d->telemetryService->position(vehicleId).coordinate());
     case DirectionRole:
-        return vehicle->attitude().yaw();
+        return d->telemetryService->position(vehicleId).vector().z();
     case MarkRole:
         return QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
     case VehicleIdRole:
-        return 0; //TODO: vehicleId
+        return d->dbFacade->vehicle(vehicleId)->mavId();
     case TrackRole:
-        return d->tracks[vehicle];
+        return d->tracks[vehicleId];
     case HdopRadius:
-        return vehicle->gps().eph();*/
+        return d->telemetryService->sns(vehicleId).eph();
     default:
         return QVariant();
     }
@@ -109,30 +105,21 @@ void VehicleMapItemModel::onVehicleRemoved(const db::VehicleDescriptionPtr& vehi
     this->endRemoveRows();
 }
 
-/*
-void VehicleMapItemModel::onVehiclePositionChanged()
+void VehicleMapItemModel::onPositionChanged(int vehicleId, const domain::Position& position)
 {
-    auto vehicle = qobject_cast<domain::BaseVehicle*>(this->sender());
-    QModelIndex index = this->vehicleIndex(vehicle);
-    d->tracks[vehicle].append(QVariant::fromValue(
-                                  vehicle->position().coordinate()));
-    if (index.isValid()) emit dataChanged(index, index, {
-                                              PositionRole, TrackRole });
+    d->tracks[vehicleId].append(QVariant::fromValue(position.coordinate()));
+
+    QModelIndex index = this->vehicleIndex(vehicleId);
+    emit dataChanged(index, index, { PositionRole, DirectionRole, TrackRole });
 }
 
-void VehicleMapItemModel::onVehicleAttitudeChanged()
+void VehicleMapItemModel::onSnsChanged(int vehicleId, const domain::Sns& sns)
 {
-    QModelIndex index = this->vehicleIndex(qobject_cast<domain::BaseVehicle*>(
-                                               this->sender()));
-    if (index.isValid()) emit dataChanged(index, index, { DirectionRole });
-}
+    Q_UNUSED(sns)
 
-void VehicleMapItemModel::onVehicleGpsChanged()
-{
-    QModelIndex index = this->vehicleIndex(qobject_cast<domain::BaseVehicle*>(
-                                               this->sender()));
-    if (index.isValid()) emit dataChanged(index, index, { HdopRadius });
-}*/
+    QModelIndex index = this->vehicleIndex(vehicleId);
+    emit dataChanged(index, index, { HdopRadius });
+}
 
 QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
 {
