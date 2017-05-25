@@ -13,21 +13,24 @@ RowLayout {
     property string name
     property int mavId
 
-    property alias armed: af.armed
+    property bool armed
     property string modeString
 
-    property alias pitch: af.pitch
-    property alias roll: af.roll
-    property alias yaw: compass.heading
+    property real pitch
+    property real roll
+    property real yaw
 
     Indicators.ArtificialHorizon {
         id: af
-        Layout.minimumWidth: palette.controlBaseSize * 4
+        armed: root.armed
+        pitch: root.pitch
+        roll: root.roll
+        Layout.minimumWidth: palette.controlBaseSize * 2
     }
 
     Indicators.Compass {
         id: compass
-        Layout.minimumWidth: palette.controlBaseSize * 4
+        Layout.minimumWidth: palette.controlBaseSize * 3
     }
 
     ColumnLayout {

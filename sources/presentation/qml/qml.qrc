@@ -69,5 +69,7 @@
         <file>Views/Settings/AboutView.qml</file>
         <file>Views/Combat/CombatView.qml</file>
         <file>Views/Combat/VehicleView.qml</file>
+        <file>Indicators/FlightDirector.qml</file>
+        <file>Indicators/PrimaryFlightDisplay.qml</file>
     </qresource>
 </RCC>
