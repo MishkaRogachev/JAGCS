@@ -22,7 +22,25 @@ Map {
     signal saveViewPort()
     signal picked(var coordinate)
 
-    plugin: Plugin { name: "osm" }
+    plugin: Plugin {
+        name: "osm"
+
+//        PluginParameter {
+//            name: "osm.mapping.custom.host";
+//            value: "http://a.tile.openstreetmap.org/"
+//        TODO: tile server to settings
+//        }
+
+        PluginParameter {
+            name: "osm.mapping.offline.directory";
+            value: "~/.cache/QtLocation/osm"
+        }
+
+        PluginParameter {
+            name: "osm.mapping.providersrepository.disabled";
+            value: true
+        }
+    }
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     activeMapType: supportedMapTypes[5] // TerrainMapType
