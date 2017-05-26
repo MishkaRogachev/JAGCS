@@ -10,6 +10,7 @@ Pane {
     id: root
 
     property var vehicles: []
+    property int maximized: -1
 
     Flickable {
         id: flickable
@@ -26,14 +27,24 @@ Pane {
         ColumnLayout {
             id: column
             spacing: palette.spacing
+            width: palette.controlBaseSize * 12
+
+            VehicleView {
+                id: vehicleView
+                Layout.fillWidth: true
+                visible: maximized > -1
+                onVisibleChanged: if (visible) vehicles[maximized].setView(vehicleView)
+                onMinimize: maximized = -1
+            }
 
             Repeater {
-                model: vehicles
+                model: maximized == -1 ? vehicles : []
 
-                VehicleView {
-                    id: vehicleView
-                    //Layout.fillWidth: true
-                    Component.onCompleted: modelData.setView(vehicleView)
+                MinimizedVehicleView {
+                    id: minimizedVehicleView
+                    Layout.fillWidth: true
+                    Component.onCompleted: modelData.setView(minimizedVehicleView)
+                    onMaximize: maximized = index
                 }
             }
         }

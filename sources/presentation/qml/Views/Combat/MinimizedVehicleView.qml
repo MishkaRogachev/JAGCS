@@ -20,9 +20,10 @@ Controls.Frame {
     property real roll
     property real yaw
 
-    signal minimize()
+    signal maximize()
 
-    ColumnLayout {
+    RowLayout {
+        id: row
         anchors.fill: parent
 
         Indicators.ArtificialHorizon {
@@ -56,10 +57,9 @@ Controls.Frame {
         Controls.Button {
             anchors.right: parent.right
             anchors.top: parent.top
-            iconSource: "qrc:/ui/minus.svg"
-            onClicked: minimize()
+            iconSource: "qrc:/ui/plus.svg"
+            onClicked: maximize()
         }
     }
 }
-
 
