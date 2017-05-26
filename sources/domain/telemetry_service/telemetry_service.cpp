@@ -101,7 +101,7 @@ void TelemetryService::setOnline(int vehicleId, bool online)
         int timerId = d->onlineTimers.key(vehicleId, -1);
         if (timerId != -1) this->killTimer(timerId);
 
-        timerId = this->startTimer(SettingsProvider::value(
+        timerId = this->startTimer(settings::Provider::value(
                                        settings::telemetry::timeout).toInt());
         d->onlineTimers[timerId] = vehicleId;
     }

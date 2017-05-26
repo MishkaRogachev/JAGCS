@@ -39,8 +39,7 @@ int main(int argc, char* argv[])
     presentation::MainPresenter presenter(&facade);
 
     QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));
-    engine.rootContext()->setContextProperty(
-                PROPERTY(settings), domain::SettingsProvider::instance());
+    engine.rootContext()->setContextProperty(PROPERTY(settings), settings::Provider::instance());
     presenter.setView(engine.rootObjects().first());
 
     presenter.setMode("mission");

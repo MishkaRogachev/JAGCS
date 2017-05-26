@@ -67,5 +67,5 @@ void SettingsPresenter::connectView(QObject* view)
 
 void SettingsPresenter::onMakeDefaults()
 {
-    domain::SettingsProvider::makeDefaults();
+    settings::Provider::makeDefaults();
 }

@@ -8,9 +8,9 @@
 // Internal
 #include "settings.h"
 
-using namespace domain;
+using namespace settings;
 
-class SettingsProvider::Impl
+class Provider::Impl
 {
 public:
     QSettings settings;
@@ -48,45 +48,44 @@ public:
     }
 };
 
-SettingsProvider::SettingsProvider():
+Provider::Provider():
     d(new Impl())
 {
     if (d->settings.allKeys().isEmpty()) d->makeDefaults();
 }
 
-SettingsProvider::~SettingsProvider()
+Provider::~Provider()
 {
     d->settings.sync();
 }
 
-SettingsProvider* SettingsProvider::instance()
+Provider* Provider::instance()
 {
-    static SettingsProvider settings;
+    static Provider settings;
     return &settings;
 }
 
-QVariant SettingsProvider::value(const QString& key,
-                                 const QVariant& defaultValue)
+QVariant Provider::value(const QString& key, const QVariant& defaultValue)
 {
     return instance()->d->settings.value(key, defaultValue);
 }
 
-bool SettingsProvider::boolValue(const QString& key, bool defaultValue)
+bool Provider::boolValue(const QString& key, bool defaultValue)
 {
-    return SettingsProvider::value(key, defaultValue).toBool();
+    return Provider::value(key, defaultValue).toBool();
 }
 
-void SettingsProvider::setValue(const QString& key, const QVariant& value)
+void Provider::setValue(const QString& key, const QVariant& value)
 {
     instance()->d->settings.setValue(key, value);
 }
 
-void SettingsProvider::makeDefaults()
+void Provider::makeDefaults()
 {
     instance()->d->makeDefaults();
 }
 
-void SettingsProvider::sync()
+void Provider::sync()
 {
     instance()->d->settings.sync();
 }

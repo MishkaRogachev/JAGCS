@@ -66,8 +66,7 @@ void CommunicationLinkPresenter::connectView(QObject* view)
         baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
 
-    this->setViewProperty(PROPERTY(statisticsCount),
-                          domain::SettingsProvider::value(
+    this->setViewProperty(PROPERTY(statisticsCount), settings::Provider::value(
                               settings::communication::statisticsCount));
 
     this->updateView();

@@ -16,20 +16,15 @@ GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
 
 void GuiSettingsPresenter::updateView()
 {
-    this->setViewProperty(PROPERTY(fullscreen), domain::SettingsProvider::value(
-                              settings::gui::fullscreen));
+    this->setViewProperty(PROPERTY(fullscreen), settings::Provider::value(settings::gui::fullscreen));
 
     const QStringList& locales = domain::TranslationManager::avalibleLocales();
     int index = locales.indexOf(domain::TranslationManager::currentLocale());
     this->setViewProperty(PROPERTY(localeIndex), index);
 
-    this->setViewProperty(PROPERTY(uiSize), domain::SettingsProvider::value(
-                              settings::gui::uiSize));
-    this->setViewProperty(PROPERTY(paletteStyle), domain::SettingsProvider::value(
-                              settings::gui::paletteStyle));
-
-    this->setViewProperty(PROPERTY(fdRollInverted), domain::SettingsProvider::value(
-                              settings::gui::fdRollInverted));
+    this->setViewProperty(PROPERTY(uiSize), settings::Provider::value(settings::gui::uiSize));
+    this->setViewProperty(PROPERTY(paletteStyle), settings::Provider::value(settings::gui::paletteStyle));
+    this->setViewProperty(PROPERTY(fdRollInverted), settings::Provider::value(settings::gui::fdRollInverted));
 
 }
 
@@ -44,18 +39,13 @@ void GuiSettingsPresenter::connectView(QObject* view)
 
 void GuiSettingsPresenter::onUpdateSettings()
 {
-    domain::SettingsProvider::setValue(settings::gui::fullscreen,
-                                       this->viewProperty(PROPERTY(fullscreen)).toBool());
+    settings::Provider::setValue(settings::gui::fullscreen, this->viewProperty(PROPERTY(fullscreen)).toBool());
 
     const QStringList& locales = domain::TranslationManager::avalibleLocales();
     QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
     domain::TranslationManager::setCurrentLocale(locale);
 
-    domain::SettingsProvider::setValue(settings::gui::uiSize,
-                                       this->viewProperty(PROPERTY(uiSize)).toInt());
-    domain::SettingsProvider::setValue(settings::gui::paletteStyle,
-                                       this->viewProperty(PROPERTY(paletteStyle)));
-
-    domain::SettingsProvider::setValue(settings::gui::fdRollInverted,
-                                       this->viewProperty(PROPERTY(fdRollInverted)));
+    settings::Provider::setValue(settings::gui::uiSize, this->viewProperty(PROPERTY(uiSize)).toInt());
+    settings::Provider::setValue(settings::gui::paletteStyle, this->viewProperty(PROPERTY(paletteStyle)));
+    settings::Provider::setValue(settings::gui::fdRollInverted, this->viewProperty(PROPERTY(fdRollInverted)));
 }

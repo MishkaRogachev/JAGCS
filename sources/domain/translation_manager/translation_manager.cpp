@@ -58,7 +58,7 @@ void TranslationManager::setCurrentLocale(const QString& locale)
                                     locale, nullptr));
     }
 
-    SettingsProvider::setValue(settings::gui::locale, locale);
+    settings::Provider::setValue(settings::gui::locale, locale);
     instance()->d->locale = locale;
 }
 
@@ -75,7 +75,7 @@ void TranslationManager::init()
         instance()->d->localeTranslators[locale]->load(fileName, ":/");
     }
 
-    instance()->d->locale = SettingsProvider::value(settings::gui::locale).toString();
+    instance()->d->locale = settings::Provider::value(settings::gui::locale).toString();
     qApp->installTranslator(instance()->d->localeTranslators.value(
                                 instance()->d->locale, nullptr));
 }

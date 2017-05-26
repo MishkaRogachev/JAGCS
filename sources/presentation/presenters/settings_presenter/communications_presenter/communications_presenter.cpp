@@ -110,8 +110,7 @@ void CommunicationsPresenter::onAddUdpLink()
 
     description->setName(tr("New UDP Link"));
     description->setType(db::LinkDescription::Udp);
-    description->setPort(domain::SettingsProvider::value(
-                            settings::communication::port).toInt());
+    description->setPort(settings::Provider::value(settings::communication::port).toInt());
 
     d->dbFacade->save(description);
 }
@@ -122,8 +121,7 @@ void CommunicationsPresenter::onAddSerialLink()
 
     description->setName(tr("New Serial Link"));
     description->setType(db::LinkDescription::Serial);
-    description->setBaudRate(domain::SettingsProvider::value(
-                            settings::communication::baudRate).toInt());
+    description->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
 
     d->dbFacade->save(description);
 }

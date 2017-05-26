@@ -43,8 +43,7 @@ void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
 
-    QCameraInfo info(domain::SettingsProvider::value(
-                         settings::video::device).toByteArray());
+    QCameraInfo info(settings::Provider::value(settings::video::device).toByteArray());
     if (info.isNull())
     {
         d->camera = nullptr;

@@ -41,7 +41,7 @@ public:
 DomainEntry::DomainEntry():
     d(new Impl())
 {
-    if (!d->dataBase.open(SettingsProvider::value(settings::data_base::name).toString()))
+    if (!d->dataBase.open(settings::Provider::value(settings::data_base::name).toString()))
     {
         qFatal("Unable to estblish DB connection");
         qApp->quit(); // TODO: quit gently
@@ -51,8 +51,8 @@ DomainEntry::DomainEntry():
                 &d->dbFacade,
                 &d->telemetryService,
                 &d->commandService,
-                SettingsProvider::value(settings::communication::systemId).toInt(),
-                SettingsProvider::value(settings::communication::componentId).toInt());
+                settings::Provider::value(settings::communication::systemId).toInt(),
+                settings::Provider::value(settings::communication::componentId).toInt());
 
     d->commService.reset(new CommunicationService(&comFactory, &d->dbFacade));
 }

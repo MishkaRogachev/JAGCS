@@ -21,14 +21,14 @@ bool DefaultParamsMigration::up()
 
     LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
     defaultUdpLink->setType(LinkDescription::Udp);
-    defaultUdpLink->setPort(domain::SettingsProvider::value(settings::communication::port).toInt());
+    defaultUdpLink->setPort(settings::Provider::value(settings::communication::port).toInt());
     defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "Default UDP Link"));
     defaultUdpLink->setAutoConnect(true);
     facade.save(defaultUdpLink);
 
     LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
     defaultSerialLink->setType(LinkDescription::Serial);
-    defaultSerialLink->setBaudRate(domain::SettingsProvider::value(settings::communication::baudRate).toInt());
+    defaultSerialLink->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
     defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Default Serial Link"));
     defaultSerialLink->setAutoConnect(true);
     facade.save(defaultSerialLink);
