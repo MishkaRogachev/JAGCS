@@ -58,14 +58,14 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     connect(d->dbFacade, &db::DbFacade::assignmentRemoved,
             this, &MissionPresenter::updateAssignment);
     connect(d->dbFacade, &db::DbFacade::assignmentChanged,
-            this, &MissionPresenter::updateAssignment); // TODO: assignment QObject
+            this, &MissionPresenter::updateAssignment);
 
     connect(d->dbFacade, &db::DbFacade::missionItemAdded,
-            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+            this, &MissionPresenter::updateStatuses);
     connect(d->dbFacade, &db::DbFacade::missionItemRemoved,
-            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+            this, &MissionPresenter::updateStatuses);
     connect(d->dbFacade, &db::DbFacade::missionItemChanged,
-            this, &MissionPresenter::updateStatuses); // TODO: assignment QObject
+            this, &MissionPresenter::updateStatuses);
 
     connect(d->dbFacade, &db::DbFacade::vehicleAdded,
             this, &MissionPresenter::onVehicleAdded);

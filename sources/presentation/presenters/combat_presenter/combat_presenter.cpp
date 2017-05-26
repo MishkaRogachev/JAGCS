@@ -81,9 +81,7 @@ void CombatPresenter::connectView(QObject* view)
 
 void CombatPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
-    d->vehicles[vehicle->id()] = new VehiclePresenter(vehicle, this);
-
-    d->vehicles[vehicle->id()]->setAttitude(d->telemetryService->attitude(vehicle->id()));
+    d->vehicles[vehicle->id()] = new VehiclePresenter(d->telemetryService, vehicle, this);
 
     this->updateVehicles();
 }
@@ -101,25 +99,25 @@ void CombatPresenter::onVehicleChanged(const db::VehiclePtr& vehicle)
 
 void CombatPresenter::onOnlineChanged(int vehicleId, bool online)
 {
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setOnline(online);
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateOnline(online);
 }
 
 void CombatPresenter::onStatusChanged(int vehicleId, const domain::Status& status)
 {
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setStatus(status);
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateStatus(status);
 }
 
 void CombatPresenter::onAvailablesChanged(int vehicleId, const domain::Availables& availables)
 {
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setAvailables(availables);
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateAvailables(availables);
 }
 
 void CombatPresenter::onAttitudeChanged(int vehicleId, const domain::Attitude& attitude)
 {
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setAttitude(attitude);
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateAttitude(attitude);
 }
 
 void CombatPresenter::onSnsChanged(int vehicleId, const domain::Sns& sns)
 {
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->setSns(sns);
+    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateSns(sns);
 }
