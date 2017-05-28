@@ -283,7 +283,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     for (const db::MissionItemPtr& item:
          m_dbFacade->missionItems(assignment->missionId()))
     {
-        if (item->sequence() > missionCount.count) m_dbFacade->remove(item);
+        if (item->sequence() > missionCount.count - 1) m_dbFacade->remove(item);
     }
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
