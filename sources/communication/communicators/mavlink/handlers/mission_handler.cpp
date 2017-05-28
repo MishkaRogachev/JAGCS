@@ -145,7 +145,7 @@ void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
 
     count.target_system = vehicle->mavId();
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = mission->count();
+    count.count = mission->count() + 1;
 
     mavlink_msg_mission_count_encode(m_communicator->systemId(),
                                      m_communicator->componentId(),
@@ -274,8 +274,17 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
+    // TODO: check, we realy downloading
+
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
+
+    // Remove superfluous items
+    for (const db::MissionItemPtr& item:
+         m_dbFacade->missionItems(assignment->missionId()))
+    {
+        if (item->sequence() > missionCount.count) m_dbFacade->remove(item);
+    }
 
     for (uint16_t seq = 0; seq < missionCount.count; ++seq)
     {
