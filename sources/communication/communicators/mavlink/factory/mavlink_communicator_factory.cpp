@@ -43,6 +43,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new GpsHandler(m_telemetryService, communicator);
     new VfrHudHandler(m_telemetryService, communicator);
     new WindHandler(m_telemetryService, communicator);
+    // TODO: NAV_CONTROLLER_OUTPUT, RADIO_STATUS
     new CommandHandler(m_commandService, communicator);
     new MissionHandler(m_dbFacade, m_commandService, communicator);
 

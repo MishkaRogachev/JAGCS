@@ -52,7 +52,6 @@ void VehiclePresenter::updateAttitude(const domain::Attitude& attitude)
 {
     this->setViewProperty("pitch", attitude.pitch());
     this->setViewProperty("roll", attitude.roll());
-    this->setViewProperty("yaw", attitude.yaw());
 }
 
 void VehiclePresenter::updateSns(const domain::Sns& sns)

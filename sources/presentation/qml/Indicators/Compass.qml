@@ -5,10 +5,12 @@ Rectangle {
 
     property real course: 0
     property real heading: 0
+
     property int tickFactor: 5
     property real scalesRatio: 0.08
-    property color scalesColor: palette.textColor
     property int scalesOffset: root.width * scalesRatio
+
+    property color scalesColor: palette.textColor
 
     onCourseChanged: canvas.requestPaint()
     onHeadingChanged: canvas.requestPaint()
@@ -21,6 +23,7 @@ Rectangle {
     Canvas {
         id: canvas
         anchors.fill: parent
+        rotation: -course
 
         onPaint: {
             var ctx = canvas.getContext('2d');
@@ -28,7 +31,6 @@ Rectangle {
             ctx.clearRect(0, 0, width, height);
 
             ctx.save();
-            ctx.rotate(-course)
 
             // Scales Mark
             ctx.beginPath();

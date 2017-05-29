@@ -13,5 +13,7 @@ Controls.Frame {
 
     property real pitch
     property real roll
-    property real yaw
+
+    property real course
+    property real heading
 }

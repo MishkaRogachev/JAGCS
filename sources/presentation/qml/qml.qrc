@@ -37,10 +37,10 @@
         <file>Indicators/ArtificialHorizon.qml</file>
         <file>Indicators/FlightDirector.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
-        <file>Indicators/SnsDisplay.qml</file>
         <file>Indicators/BarIndicator.qml</file>
         <file>Indicators/FlightDisplay.qml</file>
         <file>Indicators/Compass.qml</file>
+        <file>Indicators/SituationIndicator.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
