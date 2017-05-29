@@ -37,12 +37,13 @@ Controls.Frame {
             text: qsTr("Mode") + ": " + modeString
         }
 
-        Indicators.ArtificialHorizon {
-            id: af
+        Indicators.FlightDirector {
             armed: root.armed
             pitch: root.pitch
             roll: root.roll
             Layout.fillWidth: true
+            speedPrefix: qsTr("IAS, m/s")
+            altitudePrefix: qsTr("Hbar, m")
         }
 
         Indicators.Compass {

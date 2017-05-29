@@ -1,108 +1,34 @@
 import QtQuick 2.6
+import QtGraphicalEffects 1.0
 
-import "../Controls"
+import "../Controls" as Controls
 
-Item {
+ArtificialHorizon {
     id: root
 
-    property bool armed: false
-
-    property int pitch: 0.0
-    property int roll: 0.0
-    property int velocity: 0.0
+    property int speed: 0.0
     property int altitude: 0.0
-    property int terrainAltitude: 0.0
+    property int throttle: 0
+    property int climb: 0
 
-    property alias velocityPrefix: velocityLadder.prefix
-    property alias altitudePrefix: altitudeLadder.prefix
+    property string speedPrefix
+    property string altitudePrefix
 
-    property bool pitchInverted: true
-    property bool rollInverted: false
-    property bool insAvalible: true
+    property bool speedAvalible: true
     property bool altitudeAvalible: true
-    property bool velocityAvalible: true
 
-    property int minVelocity: -13
-    property int maxVelocity: 13
-    property int velocityStep: 5
-    property int minPitch: -23
-    property int maxPitch: 23
-    property int pitchStep: 10
-    property int minRoll: -35
-    property int maxRoll: 35
-    property int rollStep: 10
+    property int minSpeed: -13
+    property int maxSpeed: 13
+    property int speedStep: 5
     property int minAltitude: -27
     property int maxAltitude: 27
     property int altitudeStep: 10
+    property int minThrottle: 0
+    property int maxThrottle: 100
+    property int minClimb: -12
+    property int maxClimb: 12
 
-    Behavior on pitch { PropertyAnimation { duration: 100 } }
-    Behavior on roll { PropertyAnimation { duration: 100 } }
-    Behavior on velocity { PropertyAnimation { duration: 100 } }
-    Behavior on altitude { PropertyAnimation { duration: 100 } }
-
-    implicitHeight: width
-
-    Item {
-        id: pitchRollContents
-        anchors.fill: parent
-        visible: false
-
-        Horizon {
-            id: horizon
-            anchors.fill: parent
-            effectiveHeight: pitchScale.height
-            pitch: pitchInverted ? root.pitch : 0
-            roll: rollInverted ? 0 : root.roll
-            minPitch: root.minPitch
-            maxPitch: root.maxPitch
-        }
-
-        PitchScale {
-            id: pitchScale
-            anchors.centerIn: parent
-            width: parent.width / 2
-            height: parent.height - palette.controlBaseSize * 2
-            pitch: pitchInverted ? root.pitch : 0
-            roll: rollInverted ? 0 : root.roll
-            minPitch: root.pitch + root.minPitch
-            maxPitch: root.pitch + root.maxPitch
-            pitchStep: root.pitchStep
-            opacity: insAvalible ? 1 : 0.33
-        }
-
-        PlaneMark {
-            anchors.centerIn: parent
-            width: parent.width * 0.6
-            height: pitchScale.height
-            pitch: pitchInverted ? 0 : -root.pitch
-            roll: rollInverted ? -root.roll : 0
-            markColor: armed ? palette.selectedTextColor : palette.negativeColor
-        }
-
-        Label {
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: -height
-            text: qsTr("DISARMED")
-            font.pixelSize: root.width * 0.08
-            font.bold: true
-            color: armed ? "transparent" : palette.negativeColor
-        }
-    }
-
-    Rectangle {
-        id: mask
-        anchors.fill: parent
-        anchors.margins: -4
-        radius: width / 2
-        border.color: palette.sunkenColor
-        border.width: 8
-    }
-
-    OpacityMask {
-        anchors.fill: parent
-        source: pitchRollContents
-        maskSource: mask
-    }
+    ratio: 1
 
     RollScale {
         id: rollScale
@@ -111,36 +37,64 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
-        opacity: insAvalible ? 1 : 0.33
+    }
+
+    BarIndicator {
+        id: throttleBar
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width * 0.03
+        height: parent.height * 0.8
+        value: throttle
+        fillColor: palette.selectionColor
+        minValue: minThrottle
+        maxValue: maxThrottle
     }
 
     Ladder {
-        id: velocityLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        width: parent.width * 0.2
+        anchors.left: throttleBar.right
+        width: parent.width * 0.17
         height: parent.height * 0.8
-        value: root.velocity
-        minValue: velocity + minVelocity
-        maxValue: velocity + maxVelocity
-        valueStep: velocityStep
-        scaleColor: velocityAvalible ? palette.textColor : palette.disabledColor
+        value: speed
+        minValue: speed + minSpeed
+        maxValue: speed + maxSpeed
+        valueStep: speedStep
+        scaleColor: speedAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: 90
+        prefix: speedPrefix
     }
 
     Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        width: parent.width * 0.2
+        anchors.right: climbScale.left
+        width: parent.width * 0.17
         height: parent.height * 0.8
-        warningValue: terrainAltitude
+//        warningValue: terrainAltitude
 //        warningColor: palette.groundColor
-        value: root.altitude
+        value: altitude
         minValue: altitude + minAltitude
         maxValue: altitude + maxAltitude
         valueStep: altitudeStep
         scaleColor: altitudeAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: -90
+        prefix: altitudePrefix
+    }
+
+    BarIndicator {
+        id: climbScale
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        width: root.width * 0.03
+        height: root.height * 0.8
+        value: climb
+        fillColor: {
+            if (!altitudeAvalible) return palette.disabledColor;
+            if (value > 0) return palette.skyColor;
+            if (value > minValue) return palette.groundColor;
+            return palette.negativeColor;
+        }
+        minValue: minClimb
+        maxValue: maxClimb
     }
 }

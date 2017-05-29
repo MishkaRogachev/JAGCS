@@ -27,7 +27,7 @@ Pane {
         ColumnLayout {
             id: column
             spacing: palette.spacing
-            width: palette.controlBaseSize * 12
+            width: palette.controlBaseSize * 11
 
             VehicleView {
                 id: vehicleView

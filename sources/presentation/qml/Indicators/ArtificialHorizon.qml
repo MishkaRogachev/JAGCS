@@ -1,7 +1,7 @@
 ﻿import QtQuick 2.6
 import QtGraphicalEffects 1.0
 
-import "../Controls"
+import "../Controls" as Controls
 
 Item {
     id: root
@@ -11,6 +11,7 @@ Item {
 
     property bool pitchInverted: true
     property bool rollInverted: false
+    property alias pitchScaleEnabled: pitchScale.visible
 
     property real pitch: 0.0
     property real roll: 0.0
@@ -44,6 +45,18 @@ Item {
             maxPitch: root.maxPitch
         }
 
+        PitchScale {
+            id: pitchScale
+            anchors.centerIn: parent
+            width: parent.width / 2
+            height: parent.height - palette.controlBaseSize * 2
+            pitch: pitchInverted ? root.pitch : 0
+            roll: rollInverted ? 0 : root.roll
+            minPitch: root.pitch + root.minPitch
+            maxPitch: root.pitch + root.maxPitch
+            pitchStep: root.pitchStep
+        }
+
         PlaneMark {
             id: mark
             anchors.centerIn: parent
@@ -54,11 +67,11 @@ Item {
             markColor: armed ? palette.selectedTextColor : palette.negativeColor
         }
 
-        Label {
+        Controls.Label {
             anchors.centerIn: parent
             anchors.verticalCenterOffset: -height
             text: qsTr("DISARMED")
-            font.pixelSize: root.width * 0.15
+            font.pixelSize: root.height * 0.1
             font.bold: true
             color: armed ? "transparent" : palette.negativeColor
         }

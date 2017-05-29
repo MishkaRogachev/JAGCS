@@ -26,10 +26,10 @@ Controls.Frame {
         id: row
 
         Indicators.ArtificialHorizon {
-            id: af
             armed: root.armed
             pitch: root.pitch
             roll: root.roll
+            pitchScaleEnabled: false
             markWidth: 2
             Layout.minimumWidth: palette.controlBaseSize * 2
         }
