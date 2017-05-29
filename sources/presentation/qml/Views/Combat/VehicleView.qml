@@ -25,32 +25,29 @@ Controls.Frame {
     ColumnLayout {
         anchors.fill: parent
 
+        Controls.Label {
+            text: qsTr("MAV") + ": " + name
+        }
+
+        Controls.Label {
+            text: qsTr("MAV ID") + ": " + mavId
+        }
+
+        Controls.Label {
+            text: qsTr("Mode") + ": " + modeString
+        }
+
         Indicators.ArtificialHorizon {
             id: af
             armed: root.armed
             pitch: root.pitch
             roll: root.roll
-            Layout.minimumWidth: palette.controlBaseSize * 2
+            Layout.fillWidth: true
         }
 
         Indicators.Compass {
             id: compass
-            Layout.minimumWidth: palette.controlBaseSize * 3
-        }
-
-        ColumnLayout {
-
-            Controls.Label {
-                text: qsTr("MAV") + ": " + name
-            }
-
-            Controls.Label {
-                text: qsTr("MAV ID") + ": " + mavId
-            }
-
-            Controls.Label {
-                text: qsTr("Mode") + ": " + modeString
-            }
+            Layout.fillWidth: true
         }
 
         Controls.Button {

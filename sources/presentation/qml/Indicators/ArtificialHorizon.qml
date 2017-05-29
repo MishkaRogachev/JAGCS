@@ -22,6 +22,7 @@ Item {
     property real maxRoll: 35
     property real rollStep: 10
 
+    property alias markWidth: mark.markWidth
     property real ratio: 1.618
 
     implicitHeight: width * ratio
@@ -44,6 +45,7 @@ Item {
         }
 
         PlaneMark {
+            id: mark
             anchors.centerIn: parent
             width: parent.width * 0.6
             height: parent.height

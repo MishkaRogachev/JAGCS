@@ -8,6 +8,7 @@ Item {
     property int roll: 0
 
     property color markColor
+    property int markWidth: 4
 
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
@@ -25,7 +26,7 @@ Item {
 
             var offset = Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
-            ctx.lineWidth = 4;
+            ctx.lineWidth = markWidth;
             ctx.strokeStyle = markColor;
             ctx.fillStyle = markColor;
 
@@ -45,7 +46,7 @@ Item {
             ctx.lineTo(width / 9 * 4, 0);
 
             ctx.moveTo(0, 0);
-            ctx.arc(0, 0, 3, 0, 2 * Math.PI, false);
+            ctx.arc(0, 0, markWidth, 0, 2 * Math.PI, false);
 
             ctx.stroke();
             ctx.restore();

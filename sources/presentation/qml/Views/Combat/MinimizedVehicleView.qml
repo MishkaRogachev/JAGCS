@@ -24,13 +24,13 @@ Controls.Frame {
 
     RowLayout {
         id: row
-        anchors.fill: parent
 
         Indicators.ArtificialHorizon {
             id: af
             armed: root.armed
             pitch: root.pitch
             roll: root.roll
+            markWidth: 2
             Layout.minimumWidth: palette.controlBaseSize * 2
         }
 
@@ -40,25 +40,24 @@ Controls.Frame {
         }
 
         ColumnLayout {
+            RowLayout {
+                Controls.Label {
+                    text: qsTr("MAV ID") + ": " + mavId
+                }
+
+                Controls.Button {
+                    iconSource: "qrc:/ui/plus.svg"
+                    onClicked: maximize()
+                }
+            }
 
             Controls.Label {
                 text: qsTr("MAV") + ": " + name
             }
 
             Controls.Label {
-                text: qsTr("MAV ID") + ": " + mavId
-            }
-
-            Controls.Label {
                 text: qsTr("Mode") + ": " + modeString
             }
-        }
-
-        Controls.Button {
-            anchors.right: parent.right
-            anchors.top: parent.top
-            iconSource: "qrc:/ui/plus.svg"
-            onClicked: maximize()
         }
     }
 }
