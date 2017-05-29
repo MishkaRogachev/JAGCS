@@ -3,8 +3,10 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls"
+
 import "../Map"
 import "../Video"
+import "VehicleViews"
 
 Pane {
     id: root
@@ -20,6 +22,7 @@ Pane {
         width: column.width
         Layout.margins: palette.margins
         contentHeight: column.height
+        interactive: !vehicleView.visible
         clip: true
 
         ScrollBar.vertical: ScrollBar {}
@@ -32,6 +35,7 @@ Pane {
             VehicleView {
                 id: vehicleView
                 Layout.fillWidth: true
+                Layout.fillHeight: true
                 visible: maximized > -1
                 onVisibleChanged: if (visible) vehicles[maximized].setView(vehicleView)
                 onMinimize: maximized = -1

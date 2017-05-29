@@ -4,6 +4,8 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: horizont
 
+    property bool available: true
+
     property int pitch: 0
     property int roll: 0
     property int minPitch: -25
@@ -36,10 +38,10 @@ Item {
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
 
-            ctx.fillStyle = palette.skyColor;
+            ctx.fillStyle = available ? palette.skyColor : palette.disabledColor;
             ctx.fillRect(-size / 2, -size / 2, size, size / 2);
 
-            ctx.fillStyle = palette.groundColor;
+            ctx.fillStyle = available ? palette.groundColor : palette.disabledColor;
             ctx.fillRect(-size / 2, 0, size, size / 2);
 
             ctx.lineWidth = 1;

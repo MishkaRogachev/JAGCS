@@ -7,25 +7,15 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Controls.Frame {
+AbstractVehicleView {
     id: root
-
-    property string name
-    property int mavId
-
-    property bool armed
-    property string modeString
-
-    property real pitch
-    property real roll
-    property real yaw
 
     signal maximize()
 
     RowLayout {
-        id: row
 
         Indicators.ArtificialHorizon {
+            available: root.online
             armed: root.armed
             pitch: root.pitch
             roll: root.roll
@@ -39,24 +29,28 @@ Controls.Frame {
             Layout.minimumWidth: palette.controlBaseSize * 3
         }
 
-        ColumnLayout {
-            RowLayout {
-                Controls.Label {
-                    text: qsTr("MAV ID") + ": " + mavId
-                }
+        GridLayout {
+            columns: 2
 
-                Controls.Button {
-                    iconSource: "qrc:/ui/plus.svg"
-                    onClicked: maximize()
-                }
+            Controls.Label {
+                text: qsTr("MAV ID") + ": " + mavId
+                Layout.fillWidth: true
+            }
+
+            Controls.Button {
+                iconSource: "qrc:/ui/plus.svg"
+                onClicked: maximize()
+                Layout.alignment: Qt.AlignRight
             }
 
             Controls.Label {
                 text: qsTr("MAV") + ": " + name
+                Layout.columnSpan: 2
             }
 
             Controls.Label {
                 text: qsTr("Mode") + ": " + modeString
+                Layout.columnSpan: 2
             }
         }
     }

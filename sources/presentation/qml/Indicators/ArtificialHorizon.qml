@@ -6,12 +6,8 @@ import "../Controls" as Controls
 Item {
     id: root
 
-    property bool available: true
+    property alias available: horizon.available
     property bool armed: false
-
-    property bool pitchInverted: true
-    property bool rollInverted: false
-    property alias pitchScaleEnabled: pitchScale.visible
 
     property real pitch: 0.0
     property real roll: 0.0
@@ -22,6 +18,10 @@ Item {
     property real minRoll: -35
     property real maxRoll: 35
     property real rollStep: 10
+
+    property bool pitchInverted: true
+    property bool rollInverted: false
+    property alias pitchScaleEnabled: pitchScale.visible
 
     property alias markWidth: mark.markWidth
     property real ratio: 1.618
@@ -37,6 +37,7 @@ Item {
         visible: false
 
         Horizon {
+            id: horizon
             anchors.fill: parent
             effectiveHeight: parent.height
             pitch: pitchInverted ? root.pitch : 0
