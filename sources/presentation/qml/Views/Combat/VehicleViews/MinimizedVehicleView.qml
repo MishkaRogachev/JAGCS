@@ -26,6 +26,10 @@ AbstractVehicleView {
 
         Indicators.Compass {
             id: compass
+            tickFactor: 15
+            scalesRatio: 0.11
+            course: root.course
+            heading: root.heading
             Layout.minimumWidth: palette.controlBaseSize * 3
         }
 

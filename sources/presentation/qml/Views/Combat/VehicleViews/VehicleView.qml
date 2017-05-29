@@ -57,6 +57,8 @@ AbstractVehicleView {
 
         Indicators.Compass {
             id: compass
+            course: root.course
+            heading: root.heading
             Layout.fillWidth: true
         }
     }
