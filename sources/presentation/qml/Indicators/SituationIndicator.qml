@@ -11,6 +11,7 @@ Compass {
     Canvas {
         id: canvas
         anchors.fill: parent
+        anchors.margins: scalesOffset * 2
         rotation: -targetBearing
 
         onPaint: {
@@ -53,12 +54,5 @@ Compass {
             ctx.stroke();
             ctx.restore();
         }
-    }
-
-    Image {
-        anchors.centerIn: parent
-        source: "qrc:/indicators/plane_map_mark.svg" // TODO: specified MAV mark
-        width: parent.width / 2
-        height: width
     }
 }

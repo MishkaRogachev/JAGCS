@@ -31,13 +31,6 @@ AbstractVehicleView {
             course: root.course
             heading: root.heading
             Layout.minimumWidth: palette.controlBaseSize * 3
-
-            Image {
-                anchors.centerIn: parent
-                source: "qrc:/indicators/plane_map_mark.svg" // TODO: specified MAV mark
-                width: parent.width / 2
-                height: width
-            }
         }
 
         GridLayout {

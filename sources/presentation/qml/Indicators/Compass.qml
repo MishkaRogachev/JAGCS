@@ -104,4 +104,12 @@ Rectangle {
             ctx.restore();
         }
     }
+
+    Image {
+        anchors.centerIn: parent
+        source: "qrc:/indicators/plane_map_mark.svg" // TODO: specified MAV mark
+        width: parent.width / 2
+        height: width
+        z: 1
+    }
 }
