@@ -12,7 +12,12 @@ AbstractVehicleView {
 
     signal maximize()
 
+    contentWidth: row.implicitWidth
+    contentHeight: row.implicitHeight
+
     RowLayout {
+        id: row
+        width: parent.width
 
         Indicators.ArtificialHorizon {
             available: root.online
@@ -33,30 +38,28 @@ AbstractVehicleView {
             Layout.minimumWidth: palette.controlBaseSize * 3
         }
 
-        GridLayout {
-            columns: 2
+        ColumnLayout {
 
             Controls.Label {
                 text: qsTr("MAV ID") + ": " + mavId
                 Layout.fillWidth: true
             }
 
-            Controls.Button {
-                iconSource: "qrc:/ui/plus.svg"
-                onClicked: maximize()
-                Layout.alignment: Qt.AlignRight
-            }
-
             Controls.Label {
                 text: qsTr("MAV") + ": " + name
-                Layout.columnSpan: 2
             }
 
             Controls.Label {
                 text: qsTr("Mode") + ": " + modeString
-                Layout.columnSpan: 2
             }
         }
+    }
+
+    Controls.Button {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        iconSource: "qrc:/ui/plus.svg"
+        onClicked: maximize()
     }
 }
 

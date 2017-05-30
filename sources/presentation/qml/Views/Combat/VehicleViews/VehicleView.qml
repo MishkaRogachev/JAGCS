@@ -17,23 +17,19 @@ AbstractVehicleView {
 
     signal minimize()
 
+    contentWidth: column.implicitWidth
+    contentHeight: column.implicitHeight
+
     ColumnLayout {
+        id: column
+        anchors.fill: parent
 
-        RowLayout {
-            Controls.Label {
-                text: qsTr("MAV") + ": " + name
-            }
+        Controls.Label {
+            text: qsTr("MAV") + ": " + name
+        }
 
-            Controls.Label {
-                text: qsTr("MAV ID") + ": " + mavId
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                Layout.alignment: Qt.AlignRight
-                iconSource: "qrc:/ui/minus.svg"
-                onClicked: minimize()
-            }
+        Controls.Label {
+            text: qsTr("MAV ID") + ": " + mavId
         }
 
         Controls.Label {
@@ -61,6 +57,13 @@ AbstractVehicleView {
             heading: root.heading
             Layout.fillWidth: true
         }
+    }
+
+    Controls.Button {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        iconSource: "qrc:/ui/minus.svg"
+        onClicked: minimize()
     }
 }
 
