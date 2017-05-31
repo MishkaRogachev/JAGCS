@@ -8,7 +8,7 @@
 #include <QDebug>
 
 // Internal
-#include "telemetry_service.h"
+#include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
@@ -23,13 +23,13 @@ void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_ATTITUDE) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_attitude_t attitude;
     mavlink_msg_attitude_decode(&message, &attitude);
 
-    m_telemetryService->setAttitude(vehicleId, Attitude(qRadiansToDegrees(attitude.pitch),
-                                                        qRadiansToDegrees(attitude.roll),
-                                                        qRadiansToDegrees(attitude.yaw)));
+    node->setValue({ telemetry::pitch }, qRadiansToDegrees(attitude.pitch));
+    node->setValue({ telemetry::roll }, qRadiansToDegrees(attitude.roll));
+    node->setValue({ telemetry::yaw }, qRadiansToDegrees(attitude.yaw));
 }

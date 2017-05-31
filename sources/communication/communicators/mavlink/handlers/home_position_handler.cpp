@@ -5,12 +5,14 @@
 
 // Qt
 #include <QDebug>
+#include <QVariant>
 
 // Internal
 #include "mavlink_communicator.h"
-
-#include "telemetry_service.h"
 #include "mavlink_protocol_helpers.h"
+
+#include "telemetry.h"
+#include "position.h"
 
 using namespace comm;
 using namespace domain;
@@ -27,20 +29,18 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);
 
-    m_telemetryService->setHomePosition(
-                vehicleId,
-                Position(QGeoCoordinate(decodeLatLon(home.latitude),
-                                        decodeLatLon(home.longitude),
-                                        decodeAltitude(home.altitude)),
-                         QVector3D(home.approach_x,
-                                   home.approach_y,
-                                   home.approach_z)));
+    QGeoCoordinate coordinate(decodeLatLon(home.latitude), decodeLatLon(home.longitude),
+                              decodeAltitude(home.altitude));
+    node->setValue( { telemetry::home, telemetry::coordinate }, QVariant::fromValue(coordinate));
+
+    QVector3D direction(home.approach_x, home.approach_y, home.approach_z);
+    node->setValue( { telemetry::home, telemetry::direction }, QVariant::fromValue(direction));
 }
 
 void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)

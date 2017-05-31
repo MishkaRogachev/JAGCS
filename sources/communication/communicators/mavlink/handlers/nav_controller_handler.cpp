@@ -7,8 +7,9 @@
 #include <QDebug>
 
 // Internal
-#include "telemetry_service.h"
 #include "mavlink_protocol_helpers.h"
+
+#include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
@@ -23,12 +24,20 @@ void NavControllerHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_nav_controller_output_t output;
     mavlink_msg_nav_controller_output_decode(&message, &output);
 
+    node->setValue( { telemetry::navi, telemetry::targetBearing }, output.target_bearing);
+    node->setValue( { telemetry::navi, telemetry::targetDistance }, output.wp_dist);
+    node->setValue( { telemetry::navi, telemetry::trackError }, output.xtrack_error);
+    node->setValue( { telemetry::navi, telemetry::altitudeError }, output.alt_error);
+
+    node->setValue( { telemetry::navi, telemetry::desiredPitch }, output.nav_pitch);
+    node->setValue( { telemetry::navi, telemetry::desiredRoll }, output.nav_roll);
+    node->setValue( { telemetry::navi, telemetry::desiredHeading }, output.nav_bearing);
     // TODO: handle NAV_CONTROLLER_OUTPUT
 }
 

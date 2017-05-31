@@ -3,28 +3,33 @@
 // MAVLink
 #include <mavlink.h>
 
-// Internal
-#include "telemetry_service.h"
+// Qt
+#include <QVariant>
+#include <QGeoCoordinate>
+#include <QDateTime>
 
+// Internal
 #include "mavlink_protocol_helpers.h"
+#include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
 namespace
 {
-    Sns::Fix gpdFixFromFixType(uint8_t fixType)
+    int gpdFixFromFixType(uint8_t fixType)
     {
+        return 0;/* TODO: gps fix
         switch (fixType) {
         case GPS_FIX_TYPE_NO_GPS:
-        default: return Sns::NoGps;
-        case GPS_FIX_TYPE_NO_FIX: return Sns::NoFix;
-        case GPS_FIX_TYPE_2D_FIX: return Sns::Fix2D;
+        default: return telemetry::SnsFix::NoGps;
+        case GPS_FIX_TYPE_NO_FIX: return telemetry::SnsFix::NoFix;
+        case GPS_FIX_TYPE_2D_FIX: return telemetry::SnsFix::Fix2D;
         case GPS_FIX_TYPE_3D_FIX:
         case GPS_FIX_TYPE_DGPS:
         case GPS_FIX_TYPE_RTK_FLOAT:
-        case GPS_FIX_TYPE_RTK_FIXED: return Sns::Fix3D;
-        }
+        case GPS_FIX_TYPE_RTK_FIXED: return telemetry::SnsFix::Fix3D;
+        }*/
     }
 }
 
@@ -38,19 +43,19 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);
 
-    m_telemetryService->setSns(vehicleId,
-                               Sns(::gpdFixFromFixType(gps.fix_type),
-                                   gps.satellites_visible < 255 ?
-                                       gps.satellites_visible : -1,
-                                   QGeoCoordinate(decodeLatLon(gps.lat),
-                                                  decodeLatLon(gps.lon),
-                                                  decodeAltitude(gps.alt)),
-                                   decodeGroundSpeed(gps.vel), decodeCourse(gps.cog),
-                                   gps.eph, gps.epv, gps.time_usec));
+    node->setValue( { telemetry::sns, telemetry::fix }, ::gpdFixFromFixType(gps.fix_type));
+    QGeoCoordinate coordinate(decodeLatLon(gps.lat), decodeLatLon(gps.lon), decodeAltitude(gps.alt));
+    node->setValue( { telemetry::sns, telemetry::coordinate }, QVariant::fromValue(coordinate));
+    node->setValue( { telemetry::sns, telemetry::groundspeed }, decodeGroundSpeed(gps.vel));
+    node->setValue( { telemetry::sns, telemetry::course }, decodeCourse(gps.cog));
+    node->setValue( { telemetry::sns, telemetry::eph }, gps.eph);
+    node->setValue( { telemetry::sns, telemetry::epv }, gps.epv);
+    node->setValue( { telemetry::sns, telemetry::time },
+                    QDateTime::fromMSecsSinceEpoch(gps.time_usec));
 }

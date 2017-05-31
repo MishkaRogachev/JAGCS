@@ -4,18 +4,9 @@
 #include <mavlink.h>
 
 // Internal
-#include "telemetry_service.h"
-
 #include "mavlink_protocol_helpers.h"
 
-namespace
-{
-    bool avalible(const mavlink_sys_status_t& status, int subsystem)
-    {
-        return (status.onboard_control_sensors_present & subsystem) &&
-               (status.onboard_control_sensors_enabled & subsystem);
-    }
-}
+#include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
@@ -30,21 +21,23 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SYS_STATUS) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_sys_status_t status;
     mavlink_msg_sys_status_decode(&message, &status);
 
-    m_telemetryService->setAvailables(vehicleId, Availables(
-                    ::avalible(status, MAV_SYS_STATUS_AHRS),
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_3D_ACCEL) &&
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_3D_GYRO),
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_GPS),
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_3D_MAG),
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE),
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE),
-                    ::avalible(status, MAV_SYS_STATUS_SENSOR_LASER_POSITION)));
+    node->setValue( { telemetry::ahrs, telemetry::present },
+                    status.onboard_control_sensors_present & MAV_SYS_STATUS_AHRS);
+    node->setValue( { telemetry::ahrs, telemetry::enabled },
+                    status.onboard_control_sensors_enabled & MAV_SYS_STATUS_AHRS);
+    node->setValue( { telemetry::ahrs, telemetry::operational },
+                    status.onboard_control_sensors_health & MAV_SYS_STATUS_AHRS);
+
+// TODO: MAV_SYS_STATUS_SENSOR_3D_ACCEL, MAV_SYS_STATUS_SENSOR_3D_GYRO, MAV_SYS_STATUS_SENSOR_3D_MAG,
+//       MAV_SYS_STATUS_SENSOR_GPS, MAV_SYS_STATUS_SENSOR_LASER_POSITION
+//       MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE, MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE,
+
 
     // TODO: battery
 }

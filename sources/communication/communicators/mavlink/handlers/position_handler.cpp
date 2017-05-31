@@ -4,11 +4,14 @@
 #include <mavlink.h>
 
 // Qt
+#include <QVector3D>
+#include <QVariant>
 #include <QDebug>
 
 // Internal
-#include "telemetry_service.h"
 #include "mavlink_protocol_helpers.h"
+
+#include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
@@ -23,13 +26,16 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
 
-    m_telemetryService->setPosition(vehicleId, Position(
-                                        decodeCoordinate(position.lat, position.lon, position.alt),
-                                        QVector3D(position.vx, position.vy, position.vz)));
+    QGeoCoordinate coordinate(decodeLatLon(position.lat), decodeLatLon(position.lon),
+                              decodeAltitude(position.alt));
+    node->setValue( { telemetry::position, telemetry::coordinate }, QVariant::fromValue(coordinate));
+
+    QVector3D direction(position.vx, position.vy, position.vz);
+    node->setValue( { telemetry::position, telemetry::direction }, QVariant::fromValue(direction));
 }

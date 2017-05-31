@@ -1,6 +1,11 @@
 #include "vehicle_telemetry_node_factory.h"
 
+// Qt
+#include <QCoreApplication>
+
 // Internal
+#include "vehicle.h"
+
 #include "telemetry_node.h"
 #include "telemetry_traits.h"
 
@@ -12,9 +17,15 @@ VehicleTelemetryNodeFactory::VehicleTelemetryNodeFactory(const db::VehiclePtr& v
 
 TelemetryNode* VehicleTelemetryNodeFactory::create()
 {
-    TelemetryNode* root = new TelemetryNode(tr("MAV %1").arg(vehicle->mavId()));
+    TelemetryNode* root = new TelemetryNode(qApp->translate("TelemetryNode",
+                                            ("MAV %1")).arg(m_vehicle->mavId()));
 
+    new TelemetryNode(telemetry::home, root);
+    new TelemetryNode(telemetry::ahrs, root);
+    new TelemetryNode(telemetry::sns, root);
+    new TelemetryNode(telemetry::baro, root);
     new TelemetryNode(telemetry::navi, root);
+    new TelemetryNode(telemetry::powerSystem, root);
 
     return root;
 }

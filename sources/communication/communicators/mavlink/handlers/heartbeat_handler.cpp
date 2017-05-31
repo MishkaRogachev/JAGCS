@@ -13,8 +13,7 @@
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
 
-#include "telemetry_service.h"
-#include "vehicle.h"
+#include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
@@ -95,8 +94,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
-    int vehicleId = m_telemetryService->vehicleIdByMavId(message.sysid);
-    if (!vehicleId) return;
+    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
 
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
@@ -104,12 +103,9 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     // TODO: set vehicle type from ::decodeType(heartbeat.type);
     // TODO: add vehicle if not exist
 
-    m_telemetryService->setStatus(vehicleId, Status(
-                                      heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY,
-                                      decodeCustomMode(heartbeat.autopilot,
-                                                       heartbeat.type,
-                                                       heartbeat.custom_mode)));
-    m_telemetryService->setOnline(vehicleId, true);
+    node->setValue(telemetry::online, true); // offline timer
+    node->setValue(telemetry::armed, heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+    node->setValue(telemetry::mode, decodeCustomMode(heartbeat.autopilot, heartbeat.type, heartbeat.custom_mode));
 }
 
 void HeartbeatHandler::sendHeartbeat()
