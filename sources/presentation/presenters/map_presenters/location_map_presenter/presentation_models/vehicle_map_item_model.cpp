@@ -86,7 +86,7 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     d->vehicleIds.append(vehicleId);
 
     domain::TelemetryNode* node = d->telemetryService->node(vehicle->id());
-    if (node) connect(node, &domain::TelemetryNode::parameterChanged, this,
+    if (node) connect(node, &domain::TelemetryNode::parametersChanged, this,
                       [this, vehicleId](const QVariantMap& parameters) {
         if (parameters.contains(telemetry::coordinate))
         {

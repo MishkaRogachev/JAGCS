@@ -36,12 +36,6 @@ namespace presentation
         void onVehicleRemoved(const db::VehiclePtr& vehicle);
         void onVehicleChanged(const db::VehiclePtr& vehicle);
 
-        void onOnlineChanged(int vehicleId, bool online);
-        void onStatusChanged(int vehicleId, const domain::Status& status);
-        void onAvailablesChanged(int vehicleId, const domain::Availables& availables);
-        void onAttitudeChanged(int vehicleId, const domain::Attitude& attitude);
-        void onSnsChanged(int vehicleId, const domain::Sns& sns);
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;

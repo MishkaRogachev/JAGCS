@@ -37,25 +37,14 @@ CombatPresenter::CombatPresenter(domain::DomainEntry* entry, QObject* parent):
 
     d->map = new LocationMapPresenter(entry, this);
 
-    connect(d->telemetryService, &domain::TelemetryService::onlineChanged,
-            this, &CombatPresenter::onOnlineChanged);
-    connect(d->telemetryService, &domain::TelemetryService::statusChanged,
-            this, &CombatPresenter::onStatusChanged);
-    connect(d->telemetryService, &domain::TelemetryService::availablesChanged,
-            this, &CombatPresenter::onAvailablesChanged);
-    connect(d->telemetryService, &domain::TelemetryService::attitudeChanged,
-            this, &CombatPresenter::onAttitudeChanged);
-    connect(d->telemetryService, &domain::TelemetryService::snsChanged,
-            this, &CombatPresenter::onSnsChanged);
+    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &CombatPresenter::onVehicleAdded);
+    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &CombatPresenter::onVehicleRemoved);
+    connect(d->dbFacade, &db::DbFacade::vehicleChanged, this, &CombatPresenter::onVehicleChanged);
 
     for (const db::VehiclePtr& vehicle: d->dbFacade->vehicles())
     {
        this->onVehicleAdded(vehicle);
     }
-
-    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &CombatPresenter::onVehicleAdded);
-    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &CombatPresenter::onVehicleRemoved);
-    connect(d->dbFacade, &db::DbFacade::vehicleChanged, this, &CombatPresenter::onVehicleChanged);
 }
 
 CombatPresenter::~CombatPresenter()
@@ -81,7 +70,9 @@ void CombatPresenter::connectView(QObject* view)
 
 void CombatPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
-    d->vehicles[vehicle->id()] = new VehiclePresenter(d->telemetryService, vehicle, this);
+    d->vehicles[vehicle->id()] = new VehiclePresenter(
+                                     d->telemetryService->node(vehicle->id()),
+                                     vehicle, this);
 
     this->updateVehicles();
 }
@@ -97,27 +88,3 @@ void CombatPresenter::onVehicleChanged(const db::VehiclePtr& vehicle)
     d->vehicles[vehicle->id()]->updateVehicle();
 }
 
-void CombatPresenter::onOnlineChanged(int vehicleId, bool online)
-{
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateOnline(online);
-}
-
-void CombatPresenter::onStatusChanged(int vehicleId, const domain::Status& status)
-{
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateStatus(status);
-}
-
-void CombatPresenter::onAvailablesChanged(int vehicleId, const domain::Availables& availables)
-{
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateAvailables(availables);
-}
-
-void CombatPresenter::onAttitudeChanged(int vehicleId, const domain::Attitude& attitude)
-{
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateAttitude(attitude);
-}
-
-void CombatPresenter::onSnsChanged(int vehicleId, const domain::Sns& sns)
-{
-    if (d->vehicles.contains(vehicleId)) d->vehicles[vehicleId]->updateSns(sns);
-}

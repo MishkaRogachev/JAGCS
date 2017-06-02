@@ -25,6 +25,11 @@ QVariant TelemetryNode::parameter(const QString& parameter) const
     return m_parameters.value(parameter);
 }
 
+QVariantMap TelemetryNode::parameters() const
+{
+    return m_parameters;
+}
+
 TelemetryNode* TelemetryNode::parentNode() const
 {
     return m_parentNode;
@@ -65,7 +70,7 @@ void TelemetryNode::setParameters(const QVariantMap& parameters)
         changed = true;
     }
 
-    if (changed) emit parameterChanged(parameters);
+    if (changed) emit parametersChanged(parameters);
 }
 
 void TelemetryNode::addChildNode(TelemetryNode* childNode)

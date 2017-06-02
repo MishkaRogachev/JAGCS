@@ -7,12 +7,7 @@
 
 namespace domain
 {
-    class TelemetryService;
-
-    class Status;
-    class Availables;
-    class Attitude;
-    class Sns;
+    class TelemetryNode;
 }
 
 namespace presentation
@@ -22,23 +17,20 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VehiclePresenter(domain::TelemetryService* telemetryService,
-                         const db::VehiclePtr& vehicle, QObject* parent = nullptr);
+        VehiclePresenter(domain::TelemetryNode* node, const db::VehiclePtr& vehicle,
+                         QObject* parent = nullptr);
 
     public slots:
         void updateVehicle();
 
-        void updateOnline(bool online);
-        void updateStatus(const domain::Status& status);
-        void updateAvailables(const domain::Availables& availables);
-        void updateAttitude(const domain::Attitude& attitude);
-        void updateSns(const domain::Sns& sns);
-
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onParametersChanged(const QVariantMap& parameters);
+
     private:
-        domain::TelemetryService* m_telemetryService;
+        domain::TelemetryNode* m_node;
         db::VehiclePtr m_vehicle;
     };
 }
