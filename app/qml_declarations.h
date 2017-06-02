@@ -2,23 +2,11 @@
 #define QML_DECLARATIONS_H
 
 // Internal
-#include "attitude.h"
-#include "position.h"
-#include "sns.h"
-#include "wind.h"
-#include "power_system.h"
-
 #include "link_description.h"
 #include "mission_item.h"
 
 void registerQmlTypes()
 {
-    qRegisterMetaType<domain::Attitude>("Attitude");
-    qRegisterMetaType<domain::Position>("Position");
-    qRegisterMetaType<domain::Sns>("Gps");
-    qRegisterMetaType<domain::Wind>("Wind");
-    qRegisterMetaType<domain::PowerSystem>("PowerSystem");
-
     qmlRegisterUncreatableType<db::LinkDescription>(
                 "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
     qmlRegisterUncreatableType<db::MissionItem>(

@@ -11,7 +11,6 @@
 namespace domain
 {
     class TelemetryService;
-    class Position;
 }
 
 namespace comm
@@ -28,7 +27,7 @@ namespace comm
         void processMessage(const mavlink_message_t& message) override;
 
         void sendHomePositionRequest(uint8_t mavId);
-        void sendHomePositionSetting(uint8_t mavId, const domain::Position& position);
+        // TODO: void sendHomePositionSetting(uint8_t mavId, const domain::Position& position);
 
     private:
         domain::TelemetryService* const m_telemetryService;

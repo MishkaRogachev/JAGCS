@@ -4,15 +4,15 @@
 #include <mavlink.h>
 
 // Qt
-#include <QDebug>
+#include <QVector3D>
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "mavlink_communicator.h"
 #include "mavlink_protocol_helpers.h"
 
 #include "telemetry.h"
-#include "position.h"
 
 using namespace comm;
 using namespace domain;
@@ -61,6 +61,7 @@ void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)
      m_communicator->sendMessageAllLinks(message);
 }
 
+/*
 void HomePositionHandler::sendHomePositionSetting(uint8_t mavId, const Position& position)
 {
     mavlink_message_t message;
@@ -82,3 +83,4 @@ void HomePositionHandler::sendHomePositionSetting(uint8_t mavId, const Position&
 
     m_communicator->sendMessageAllLinks(message);
 }
+*/
