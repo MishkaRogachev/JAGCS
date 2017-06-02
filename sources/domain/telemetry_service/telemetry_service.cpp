@@ -37,6 +37,11 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
 TelemetryService::~TelemetryService()
 {}
 
+QList<TelemetryNode*> TelemetryService::rootNodes() const
+{
+    return d->vehicleNodes.values();
+}
+
 TelemetryNode* TelemetryService::node(int vehicleId) const
 {
     return d->vehicleNodes.value(vehicleId, nullptr);

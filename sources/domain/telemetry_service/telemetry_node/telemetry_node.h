@@ -12,35 +12,26 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit TelemetryNode(const QString& name, TelemetryNode* parentNode = nullptr);
+        TelemetryNode(const QString& name, TelemetryNode* parentNode = nullptr);
         ~TelemetryNode() override;
 
         QString name() const;
 
-        QStringList parameters() const;
-        QVariantList values() const;
-
-        QVariant value(const QString& parameter) const;
-        QVariant value(const QStringList& path) const;
+        QVariant parameter(const QString& parameter) const;
 
         TelemetryNode* parentNode() const;
         TelemetryNode* childNode(const QString& name);
         TelemetryNode* childNode(const QStringList& path);
 
     public slots:
-        void setValue(const QString& parameter, const QVariant& value);
-        void setValue(const QStringList& path, const QVariant& value);
+        void setParameters(const QVariantMap& parameters);
 
     signals:
-        void parameterChanged(const QString& parameter, const QVariant& value);
-        void parameterChanged(const QStringList& path, const QVariant& value);
+        void parameterChanged(const QVariantMap& parameters);
 
     protected:
         void addChildNode(TelemetryNode* childNode);
         void removeChildNode(TelemetryNode* childNode);
-
-    private slots:
-        void onChildParameterChanged(const QStringList& path, const QVariant& value);
 
     private:
         const QString m_name;

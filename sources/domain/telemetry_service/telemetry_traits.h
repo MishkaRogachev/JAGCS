@@ -38,12 +38,11 @@ namespace telemetry
     const QString epv = "epv";
     const QString time = "time";
 
-    const QString home = "home";
-    const QString position = "position";
+    const QString homePosition = "homePosition";
 
     const QString ahrs = "ahrs";
     const QString sns = "sns";
-    const QString baro = "baro";
+    const QString barometer = "barometer";
     const QString navi = "navi";
     const QString powerSystem = "powerSystem";
     const QString wind = "wind";

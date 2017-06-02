@@ -28,7 +28,7 @@ namespace presentation
     public:
         enum VehicleMapItemRoles
         {
-            PositionRole = Qt::UserRole + 1,
+            CoordinateRole = Qt::UserRole + 1,
             DirectionRole,
             MarkRole,
             VehicleIdRole,
@@ -37,7 +37,7 @@ namespace presentation
         };
 
         VehicleMapItemModel(db::DbFacade* dbFacade,
-                            domain::TelemetryService* vehicleService,
+                            domain::TelemetryService* telemetryService,
                             QObject* parent = nullptr);
         ~VehicleMapItemModel() override;
 
@@ -48,13 +48,11 @@ namespace presentation
         void onVehicleAdded(const db::VehiclePtr& vehicle);
         void onVehicleRemoved(const db::VehiclePtr& vehicle);
 
-        void onPositionChanged(int vehicleId, const domain::Position& position);
-        void onSnsChanged(int vehicleId, const domain::Sns& sns);
-
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
         QModelIndex vehicleIndex(int vehicleId) const;
+        void onVehicleTelemetryChanged(int vehicleId, const QStringList& parameters);
 
     private:
         class Impl;

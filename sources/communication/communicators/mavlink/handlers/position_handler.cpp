@@ -34,8 +34,9 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 
     QGeoCoordinate coordinate(decodeLatLon(position.lat), decodeLatLon(position.lon),
                               decodeAltitude(position.alt));
-    node->setValue( { telemetry::position, telemetry::coordinate }, QVariant::fromValue(coordinate));
-
     QVector3D direction(position.vx, position.vy, position.vz);
-    node->setValue( { telemetry::position, telemetry::direction }, QVariant::fromValue(direction));
+
+    node->setParameters(
+    { { telemetry::coordinate, QVariant::fromValue(coordinate) },
+      { telemetry::direction, QVariant::fromValue(direction) } });
 }

@@ -20,32 +20,9 @@ QString TelemetryNode::name() const
     return m_name;
 }
 
-QStringList TelemetryNode::parameters() const
-{
-    return m_parameters.keys();
-}
-
-QVariantList TelemetryNode::values() const
-{
-    return m_parameters.values();
-}
-
-QVariant TelemetryNode::value(const QString& parameter) const
+QVariant TelemetryNode::parameter(const QString& parameter) const
 {
     return m_parameters.value(parameter);
-}
-
-QVariant TelemetryNode::value(const QStringList& path) const
-{
-    if (path.isEmpty()) return QVariant();
-
-    if (path.length() > 1)
-    {
-        QStringList rPath = path;
-        QString key = rPath.takeFirst();
-        if (m_childNodes.contains(key)) m_childNodes[key]->value(rPath);
-    }
-    else return this->value(path.first());
 }
 
 TelemetryNode* TelemetryNode::parentNode() const
@@ -55,6 +32,11 @@ TelemetryNode* TelemetryNode::parentNode() const
 
 TelemetryNode* TelemetryNode::childNode(const QString& name)
 {
+    if (!m_childNodes.contains(name))
+    {
+        new TelemetryNode(name, this);
+    }
+
     return m_childNodes.value(name, nullptr);
 }
 
@@ -71,50 +53,27 @@ TelemetryNode* TelemetryNode::childNode(const QStringList& path)
     return child->childNode(rPath);
 }
 
-void TelemetryNode::setValue(const QString& parameter, const QVariant& value)
+void TelemetryNode::setParameters(const QVariantMap& parameters)
 {
-    if (!m_parameters.contains(parameter) ||
-        m_parameters.value(parameter) == value) return;
+    bool changed = false;
 
-    m_parameters[parameter] = value;
-
-    emit parameterChanged(parameter, value);
-    emit parameterChanged({ parameter }, value);
-}
-
-void TelemetryNode::setValue(const QStringList& path, const QVariant& value)
-{
-    if (path.isEmpty()) return;
-
-    if (path.length() > 1)
+    for (const QString& key: parameters.keys())
     {
-        QStringList rPath = path;
-        QString key = rPath.takeFirst();
-        if (m_childNodes.contains(key)) m_childNodes[key]->setValue(rPath, value);
+        if (m_parameters.contains(key) && m_parameters[key] == parameters[key]) continue;
+
+        m_parameters[key] = parameters[key];
+        changed = true;
     }
-    else this->setValue(path.first(), value);
+
+    if (changed) emit parameterChanged(parameters);
 }
 
 void TelemetryNode::addChildNode(TelemetryNode* childNode)
 {
-    connect(childNode, QOverload<const QStringList&, const QVariant&>::of(
-                &TelemetryNode::parameterChanged),
-            this, &TelemetryNode::onChildParameterChanged);
-
     m_childNodes[childNode->name()] = childNode;
 }
 
 void TelemetryNode::removeChildNode(TelemetryNode* childNode)
 {
-    disconnect(childNode, 0, this, 0);
-
     m_childNodes.remove(childNode->name());
-}
-
-void TelemetryNode::onChildParameterChanged(const QStringList& path, const QVariant& value)
-{
-    QStringList rPath = path;
-    rPath.prepend(m_name);
-
-    emit parameterChanged(rPath, value);
 }

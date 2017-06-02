@@ -21,6 +21,7 @@ namespace domain
         explicit TelemetryService(db::DbFacade* facade, QObject* parent = nullptr);
         ~TelemetryService() override;
 
+        QList<TelemetryNode*> rootNodes() const;
         TelemetryNode* node(int vehicleId) const;
         TelemetryNode* nodeByMavId(int mavId) const;
 

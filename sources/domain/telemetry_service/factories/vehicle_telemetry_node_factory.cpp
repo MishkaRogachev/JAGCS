@@ -20,10 +20,10 @@ TelemetryNode* VehicleTelemetryNodeFactory::create()
     TelemetryNode* root = new TelemetryNode(qApp->translate("TelemetryNode",
                                             ("MAV %1")).arg(m_vehicle->mavId()));
 
-    new TelemetryNode(telemetry::home, root);
+    new TelemetryNode(telemetry::homePosition, root);
     new TelemetryNode(telemetry::ahrs, root);
     new TelemetryNode(telemetry::sns, root);
-    new TelemetryNode(telemetry::baro, root);
+    new TelemetryNode(telemetry::barometer, root);
     new TelemetryNode(telemetry::navi, root);
     new TelemetryNode(telemetry::powerSystem, root);
 

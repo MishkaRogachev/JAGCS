@@ -37,10 +37,11 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 
     QGeoCoordinate coordinate(decodeLatLon(home.latitude), decodeLatLon(home.longitude),
                               decodeAltitude(home.altitude));
-    node->setValue( { telemetry::home, telemetry::coordinate }, QVariant::fromValue(coordinate));
-
     QVector3D direction(home.approach_x, home.approach_y, home.approach_z);
-    node->setValue( { telemetry::home, telemetry::direction }, QVariant::fromValue(direction));
+
+    node->childNode(telemetry::homePosition)->setParameters(
+    { { telemetry::coordinate, QVariant::fromValue(coordinate) },
+      { telemetry::direction, QVariant::fromValue(direction) } });
 }
 
 void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)

@@ -103,9 +103,11 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     // TODO: set vehicle type from ::decodeType(heartbeat.type);
     // TODO: add vehicle if not exist
 
-    node->setValue(telemetry::online, true); // offline timer
-    node->setValue(telemetry::armed, heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-    node->setValue(telemetry::mode, decodeCustomMode(heartbeat.autopilot, heartbeat.type, heartbeat.custom_mode));
+    node->setParameters(
+    { { telemetry::online, true }, // TODO: offline timer
+      { telemetry::armed, heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY },
+      { telemetry::mode, decodeCustomMode(heartbeat.autopilot,
+        heartbeat.type, heartbeat.custom_mode) } });
 }
 
 void HeartbeatHandler::sendHeartbeat()
