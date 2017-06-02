@@ -67,7 +67,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case CoordinateRole: return node->parameter(telemetry::coordinate);
-    case DirectionRole: return node->parameter(telemetry::yaw);
+    case DirectionRole: return node->parameter(telemetry::heading);
     case MarkRole: return QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
     case VehicleIdRole: return d->dbFacade->vehicle(vehicleId)->mavId();
     case TrackRole:
@@ -117,7 +117,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[CoordinateRole] = "coordinate";
+    roles[CoordinateRole] = "position";
     roles[DirectionRole] = "direction";
     roles[MarkRole] = "mark";
     roles[VehicleIdRole] = "vehicleId";
@@ -142,7 +142,7 @@ void VehicleMapItemModel::onVehicleTelemetryChanged(int vehicleId,
 
     if (parameters.contains(telemetry::coordinate)) roles.append(
     { CoordinateRole, TrackRole });
-    if (parameters.contains(telemetry::yaw)) roles.append(DirectionRole);
+    if (parameters.contains(telemetry::heading)) roles.append(DirectionRole);
     if (parameters.contains(telemetry::eph)) roles.append(HdopRadius);
 
     emit dataChanged(index, index, roles);

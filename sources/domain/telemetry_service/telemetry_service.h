@@ -26,12 +26,7 @@ namespace domain
         TelemetryNode* nodeByMavId(int mavId) const;
 
     private slots:
-        void onVehicleAdded(const db::VehiclePtr& vehicle);
         void onVehicleRemoved(const db::VehiclePtr& vehicle);
-
-    signals:
-        void nodeAdded(domain::TelemetryNode* node);
-        void nodeRemoved(domain::TelemetryNode* node);
 
     private:
         class Impl;

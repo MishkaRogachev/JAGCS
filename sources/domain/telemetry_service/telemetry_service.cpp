@@ -28,10 +28,7 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
     d(new Impl())
 {
     d->facade = facade;
-
-    connect(d->facade, &db::DbFacade::vehicleAdded, this, &TelemetryService::onVehicleAdded);
     connect(d->facade, &db::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
-    // TODO: changed to change name
 }
 
 TelemetryService::~TelemetryService()
@@ -44,6 +41,11 @@ QList<TelemetryNode*> TelemetryService::rootNodes() const
 
 TelemetryNode* TelemetryService::node(int vehicleId) const
 {
+    if (!d->vehicleNodes.contains(vehicleId))
+    {
+        VehicleTelemetryNodeFactory factory(d->facade->vehicle(vehicleId));
+        d->vehicleNodes[vehicleId] = factory.create();
+    }
     return d->vehicleNodes.value(vehicleId, nullptr);
 }
 
@@ -52,16 +54,9 @@ TelemetryNode* TelemetryService::nodeByMavId(int mavId) const
     return this->node(d->facade->vehicleIdByMavId(mavId));
 }
 
-void TelemetryService::onVehicleAdded(const db::VehiclePtr& vehicle)
-{
-    VehicleTelemetryNodeFactory factory(vehicle);
-    d->vehicleNodes[vehicle->id()] = factory.create();
-    emit nodeAdded(d->vehicleNodes[vehicle->id()]);
-}
-
 void TelemetryService::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
-    TelemetryNode* node = d->vehicleNodes.take(vehicle->id());
-    emit nodeRemoved(node);
-    delete node;
+    delete d->vehicleNodes.take(vehicle->id());
 }
+
+
