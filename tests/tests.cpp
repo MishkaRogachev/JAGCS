@@ -8,6 +8,7 @@
 // Tests
 #include "entities_test.h"
 #include "links_test.h"
+#include "telemetry_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -27,6 +28,9 @@ int main(int argc, char* argv[])
 
     LinksTest linksTest;
     QTest::qExec(&linksTest);
+
+    TelemetryTest telemetryTest;
+    QTest::qExec(&telemetryTest);
 
     manager.drop();
 

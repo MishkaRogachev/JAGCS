@@ -34,11 +34,11 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
     node->setParameter({ telemetry::ahrs, telemetry::operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_AHRS);
 
-    node->setParameter({ telemetry::barometer, telemetry::present },
+    node->setParameter({ telemetry::barometric, telemetry::present },
                        status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE);
-    node->setParameter({ telemetry::barometer, telemetry::enabled },
+    node->setParameter({ telemetry::barometric, telemetry::enabled },
                        status.onboard_control_sensors_enabled & MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE);
-    node->setParameter({ telemetry::barometer, telemetry::operational },
+    node->setParameter({ telemetry::barometric, telemetry::operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE);
 
     node->notify();

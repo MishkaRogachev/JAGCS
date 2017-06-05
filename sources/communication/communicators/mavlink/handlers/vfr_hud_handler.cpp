@@ -31,8 +31,8 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
     node->setParameter(telemetry::groundspeed, vfrHud.groundspeed);
     node->setParameter(telemetry::heading, vfrHud.heading);
 
-    node->setParameter({ telemetry::barometer, telemetry::altitude }, vfrHud.alt);
-    node->setParameter({ telemetry::barometer, telemetry::climb }, vfrHud.climb);
+    node->setParameter({ telemetry::barometric, telemetry::altitude }, vfrHud.alt);
+    node->setParameter({ telemetry::barometric, telemetry::climb }, vfrHud.climb);
 
     node->setParameter({ telemetry::powerSystem, telemetry::throttle }, vfrHud.throttle);
 

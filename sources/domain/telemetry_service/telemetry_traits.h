@@ -11,14 +11,23 @@
 //  |-groundspeed                       real
 //  |-trueAirspeed                      real
 //  |-indicatedAirspeed                 real
+//  |-barometric
+//      |-present                       bool
+//      |-enabled                       bool
+//      |-operational                   bool
+//      |-altitude                      real
+//      |-climb                         real
 //  |-satellite
 //      |-fix                           int
 //      |-coordinate                    coordinate
 //      |-speed                         real
 //      |-course                        real
+//      |-altitude                      real
+//      |-climb                         real
 //      |-eph                           int
 //      |-epv                           int
 //      |-time                          time
+//      |-satellitesVisible             int
 //  |-navigator
 //  |   |-targetBearing                 real
 //  |   |-targetDistance                real
@@ -67,12 +76,13 @@ namespace telemetry
     const QString eph = "eph";
     const QString epv = "epv";
     const QString time = "time";
+    const QString satellitesVisible = "satellitesVisible";
 
     const QString home = "home";
 
     const QString ahrs = "ahrs";
     const QString satellite = "satellite";
-    const QString barometer = "barometer";
+    const QString barometric = "barometric";
     const QString navigator = "navigator";
     const QString powerSystem = "powerSystem";
     const QString wind = "wind";

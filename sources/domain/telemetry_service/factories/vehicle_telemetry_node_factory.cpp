@@ -23,7 +23,7 @@ TelemetryNode* VehicleTelemetryNodeFactory::create()
     new TelemetryNode(telemetry::home, root);
     new TelemetryNode(telemetry::ahrs, root);
     new TelemetryNode(telemetry::satellite, root);
-    new TelemetryNode(telemetry::barometer, root);
+    new TelemetryNode(telemetry::barometric, root);
     new TelemetryNode(telemetry::navigator, root);
     new TelemetryNode(telemetry::powerSystem, root);
 
