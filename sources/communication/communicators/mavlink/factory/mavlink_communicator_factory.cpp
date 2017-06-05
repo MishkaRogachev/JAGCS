@@ -8,6 +8,7 @@
 #include "heartbeat_handler.h"
 #include "system_status_handler.h"
 #include "attitude_handler.h"
+#include "pressure_handler.h"
 #include "position_handler.h"
 #include "home_position_handler.h"
 #include "gps_handler.h"
@@ -39,6 +40,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new HeartbeatHandler(m_telemetryService, communicator);
     new SystemStatusHandler(m_telemetryService, communicator);
     new AttitudeHandler(m_telemetryService, communicator);
+    new PressureHandler(m_telemetryService, communicator);
     new PositionHandler(m_telemetryService, communicator);
     new HomePositionHandler(m_telemetryService, communicator);
     new GpsHandler(m_telemetryService, communicator);

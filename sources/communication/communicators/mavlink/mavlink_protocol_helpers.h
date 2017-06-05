@@ -21,6 +21,11 @@ namespace comm
         return value * 1000;
     }
 
+    inline int16_t decodeTemperature(float value)
+    {
+        return value * 100;
+    }
+
     inline uint16_t encodeCourse(float value)
     {
         return value * 100;
@@ -39,6 +44,11 @@ namespace comm
     inline float decodeAltitude(int32_t value)
     {
         return float(value) / 1000;
+    }
+
+    inline float decodeTemperature(int16_t value)
+    {
+        return float(value) / 100;
     }
 
     inline float decodeCourse(uint16_t value)

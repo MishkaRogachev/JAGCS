@@ -48,6 +48,9 @@
 //  |  |-operational                    bool
 //  |  |-altitude                       real
 //  |  |-climb                          real
+//  |  |-absPressure                    int
+//  |  |-diffPressure                   int
+//  |  |-temperature                    real
 //  |-pitot
 //  |  |-present                        bool
 //  |  |-enabled                        bool
@@ -97,6 +100,10 @@ namespace telemetry
 
     const QString altitude = "altitude";
     const QString climb = "climb";
+
+    const QString absPressure = "absPressure";
+    const QString diffPressure = "diffPressure";
+    const QString temperature = "temperature";
 
     const QString throttle = "throttle";
 
