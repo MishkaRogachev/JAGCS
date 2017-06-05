@@ -28,6 +28,7 @@ namespace presentation
 
     private slots:
         void onParametersChanged(const QVariantMap& parameters);
+        void onSnsParametersChanged(const QVariantMap& parameters);
 
     private:
         domain::TelemetryNode* m_node;

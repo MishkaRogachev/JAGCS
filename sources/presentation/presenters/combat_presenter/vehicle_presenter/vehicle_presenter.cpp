@@ -32,6 +32,7 @@ void VehiclePresenter::connectView(QObject* view)
 
     this->updateVehicle();
     this->onParametersChanged(m_node->parameters());
+    this->onSnsParametersChanged(m_node->childNode(telemetry::sns)->parameters());
 }
 
 void VehiclePresenter::onParametersChanged(const QVariantMap& parameters)
@@ -39,5 +40,13 @@ void VehiclePresenter::onParametersChanged(const QVariantMap& parameters)
     for (const QString& key: parameters.keys())
     {
         this->setViewProperty(key.toLatin1().data(), parameters[key]);
+    }
+}
+
+void VehiclePresenter::onSnsParametersChanged(const QVariantMap& parameters)
+{
+    for (const QString& key: parameters.keys())
+    {
+        this->setViewProperty(telemetry::sns, key.toLatin1().data(), parameters[key]);
     }
 }

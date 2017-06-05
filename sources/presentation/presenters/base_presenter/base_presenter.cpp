@@ -46,6 +46,13 @@ void BasePresenter::setViewProperty(const char* name, const QVariant& value)
     if (m_view) m_view->setProperty(name, value);
 }
 
+void BasePresenter::setViewProperty(const QString& child, const char* name, const QVariant& value)
+{
+    if (!m_view) return;
+    QObject* childView = m_view->findChild<QObject*>(child);
+    if (childView) childView->setProperty(name, value);
+}
+
 void BasePresenter::invokeViewMethod(const char* name)
 {
     QMetaObject::invokeMethod(m_view, name);
@@ -56,12 +63,8 @@ void BasePresenter::invokeViewMethod(const char* name, const QVariant& arg)
     QMetaObject::invokeMethod(m_view, name, Q_ARG(QVariant, arg));
 }
 
-void BasePresenter::invokeViewMethod(const char* name,
-                                     const QVariant& arg1,
-                                     const QVariant& arg2)
+void BasePresenter::invokeViewMethod(const char* name, const QVariant& arg1, const QVariant& arg2)
 {
-     QMetaObject::invokeMethod(m_view, name,
-                               Q_ARG(QVariant, arg1),
-                               Q_ARG(QVariant, arg2));
+     QMetaObject::invokeMethod(m_view, name, Q_ARG(QVariant, arg1), Q_ARG(QVariant, arg2));
 }
 

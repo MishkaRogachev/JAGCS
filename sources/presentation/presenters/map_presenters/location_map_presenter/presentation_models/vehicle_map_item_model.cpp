@@ -86,14 +86,21 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     d->vehicleIds.append(vehicleId);
 
     domain::TelemetryNode* node = d->telemetryService->node(vehicle->id());
-    if (node) connect(node, &domain::TelemetryNode::parametersChanged, this,
-                      [this, vehicleId](const QVariantMap& parameters) {
-        if (parameters.contains(telemetry::coordinate))
-        {
-            d->tracks[vehicleId].append(parameters[telemetry::coordinate]);
-        }
-        this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
-    });
+    if (node) {
+        connect(node, &domain::TelemetryNode::parametersChanged, this,
+                [this, vehicleId](const QVariantMap& parameters) {
+            if (parameters.contains(telemetry::coordinate))
+            {
+                d->tracks[vehicleId].append(parameters[telemetry::coordinate]);
+            }
+            this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
+        });
+
+        connect(node->childNode(telemetry::sns), &domain::TelemetryNode::parametersChanged,
+                this, [this, vehicleId](const QVariantMap& parameters) {
+            this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
+        });
+    }
 
     this->endInsertRows();
 }
