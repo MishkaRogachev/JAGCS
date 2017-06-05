@@ -39,9 +39,10 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(home.altitude));
     QVector3D direction(home.approach_x, home.approach_y, home.approach_z);
 
-    node->childNode(telemetry::homePosition)->setParameters(
-    { { telemetry::coordinate, QVariant::fromValue(coordinate) },
-      { telemetry::direction, QVariant::fromValue(direction) } });
+    node->setParameter({ telemetry::home, telemetry::coordinate }, QVariant::fromValue(coordinate));
+    node->setParameter({ telemetry::home, telemetry::direction }, QVariant::fromValue(direction));
+
+    node->notify();
 }
 
 void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)

@@ -17,15 +17,22 @@ namespace domain
 
         QString name() const;
 
-        QVariant parameter(const QString& parameter) const;
+        QVariant parameter(const QString& name) const;
         QVariantMap parameters() const;
+        QVariantMap allParameters() const;
+        QStringList changedParameters() const;
+
+        QVariantMap takeChangedParameters();
 
         TelemetryNode* parentNode() const;
         TelemetryNode* childNode(const QString& name);
         TelemetryNode* childNode(const QStringList& path);
+        QList<TelemetryNode*> childNodes() const;
 
     public slots:
-        void setParameters(const QVariantMap& parameters);
+        void setParameter(const QString& name, const QVariant& value);
+        void setParameter(const QStringList& names, const QVariant& value);
+        void notify();
 
     signals:
         void parametersChanged(const QVariantMap& parameters);
@@ -37,6 +44,7 @@ namespace domain
     private:
         const QString m_name;
         QVariantMap m_parameters;
+        QStringList m_changedParameters;
 
         TelemetryNode* const m_parentNode;
         QMap<QString, TelemetryNode*> m_childNodes;

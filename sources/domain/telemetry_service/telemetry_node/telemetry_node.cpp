@@ -1,5 +1,8 @@
 #include "telemetry_node.h"
 
+// Internal
+#include "telemetry_traits.h"
+
 using namespace domain;
 
 TelemetryNode::TelemetryNode(const QString& name, TelemetryNode* parentNode):
@@ -20,14 +23,59 @@ QString TelemetryNode::name() const
     return m_name;
 }
 
-QVariant TelemetryNode::parameter(const QString& parameter) const
+QVariant TelemetryNode::parameter(const QString& name) const
 {
-    return m_parameters.value(parameter);
+    return m_parameters.value(name);
 }
 
 QVariantMap TelemetryNode::parameters() const
 {
     return m_parameters;
+}
+
+QVariantMap TelemetryNode::allParameters() const
+{
+    QVariantMap parameters = m_parameters;
+
+    for (TelemetryNode* child: this->childNodes())
+    {
+        QVariantMap childParameters = child->allParameters();
+        for (const QString& name: childParameters.keys())
+        {
+            QStringList path = { child->name(), name };
+            parameters[path.join(telemetry::separator)] = childParameters[name];
+        }
+    }
+
+    return parameters;
+}
+
+QStringList TelemetryNode::changedParameters() const
+{
+    return m_changedParameters;
+}
+
+QVariantMap TelemetryNode::takeChangedParameters()
+{
+    QVariantMap parameters;
+
+    while (!m_changedParameters.isEmpty())
+    {
+        QString key = m_changedParameters.takeFirst();
+        parameters[key] = m_parameters[key];
+    }
+
+    for (TelemetryNode* child: this->childNodes())
+    {
+        QVariantMap childParameters = child->takeChangedParameters();
+        for (const QString& name: childParameters.keys())
+        {
+            QStringList path = { child->name(), name };
+            parameters[path.join(telemetry::separator)] = childParameters[name];
+        }
+    }
+
+    return parameters;
 }
 
 TelemetryNode* TelemetryNode::parentNode() const
@@ -58,19 +106,35 @@ TelemetryNode* TelemetryNode::childNode(const QStringList& path)
     return child->childNode(rPath);
 }
 
-void TelemetryNode::setParameters(const QVariantMap& parameters)
+QList<TelemetryNode*> TelemetryNode::childNodes() const
 {
-    bool changed = false;
+    return m_childNodes.values();
+}
 
-    for (const QString& key: parameters.keys())
+void TelemetryNode::setParameter(const QString& name, const QVariant& value)
+{
+    int index = name.indexOf(telemetry::separator);
+    if (index > -1 && index < name.count() - 1)
     {
-        if (m_parameters.contains(key) && m_parameters[key] == parameters[key]) continue;
-
-        m_parameters[key] = parameters[key];
-        changed = true;
+        TelemetryNode* child = this->childNode(name.left(index));
+        child->setParameter(name.right(index + 1), value);
+        return;
     }
 
-    if (changed) emit parametersChanged(parameters);
+    if (m_parameters.contains(name) && m_parameters[name] == value) return;
+
+    m_parameters[name] = value;
+    m_changedParameters.append(name);
+}
+
+void TelemetryNode::setParameter(const QStringList& names, const QVariant& value)
+{
+    this->setParameter(names.join(telemetry::separator), value);
+}
+
+void TelemetryNode::notify()
+{
+    emit parametersChanged(this->takeChangedParameters());
 }
 
 void TelemetryNode::addChildNode(TelemetryNode* childNode)
@@ -82,3 +146,4 @@ void TelemetryNode::removeChildNode(TelemetryNode* childNode)
 {
     m_childNodes.remove(childNode->name());
 }
+

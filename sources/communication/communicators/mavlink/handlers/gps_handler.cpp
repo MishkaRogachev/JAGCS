@@ -52,12 +52,22 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     QGeoCoordinate coordinate(decodeLatLon(gps.lat), decodeLatLon(gps.lon),
                               decodeAltitude(gps.alt));
 
-    node->childNode(telemetry::sns)->setParameters(
-    { { telemetry::fix, ::gpdFixFromFixType(gps.fix_type) },
-      { telemetry::coordinate, QVariant::fromValue(coordinate) },
-      { telemetry::groundspeed, decodeGroundSpeed(gps.vel) },
-      { telemetry::course, decodeCourse(gps.cog) },
-      { telemetry::eph, short(gps.eph) },
-      { telemetry::epv, short(gps.epv) },
-      { telemetry::time, QDateTime::fromMSecsSinceEpoch(gps.time_usec) } });
+    node->setParameter({ telemetry::satellite, telemetry::fix },
+                       ::gpdFixFromFixType(gps.fix_type));
+    node->setParameter({ telemetry::satellite, telemetry::coordinate },
+                       QVariant::fromValue(coordinate));
+    node->setParameter({ telemetry::satellite, telemetry::speed },
+                       decodeGroundSpeed(gps.vel));
+    node->setParameter({ telemetry::satellite, telemetry::course },
+                       decodeCourse(gps.cog));
+    node->setParameter({ telemetry::satellite, telemetry::altitude },
+                       decodeAltitude(gps.alt));
+    node->setParameter({ telemetry::satellite, telemetry::eph }, gps.eph);
+    node->setParameter({ telemetry::satellite, telemetry::epv }, gps.epv);
+    node->setParameter({ telemetry::satellite, telemetry::time },
+                       QDateTime::fromMSecsSinceEpoch(gps.time_usec));
+    node->setParameter({ telemetry::satellite, telemetry::satellitesVisible },
+                       decodeAltitude(gps.satellites_visible));
+
+    node->notify();
 }

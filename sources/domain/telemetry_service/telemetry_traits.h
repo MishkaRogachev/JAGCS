@@ -4,8 +4,38 @@
 // Qt
 #include <QString>
 
+// mav
+//  |-online                            bool
+//  |-armed                             bool
+//  |-mode                              string
+//  |-groundspeed                       real
+//  |-trueAirspeed                      real
+//  |-indicatedAirspeed                 real
+//  |-satellite
+//      |-fix                           int
+//      |-coordinate                    coordinate
+//      |-speed                         real
+//      |-course                        real
+//      |-eph                           int
+//      |-epv                           int
+//      |-time                          time
+//  |-navigator
+//  |   |-targetBearing                 real
+//  |   |-targetDistance                real
+//  |   |-trackError                    real
+//  |   |-altitudeError                 real
+//  |   |-desiredPitch                  real
+//  |   |-desiredRoll                   real
+//  |   |-desiredHeading                real
+//  |-wind
+//      |-yaw                           real
+//      |-speed                         real
+//      |-climb                         real
+
 namespace telemetry
 {
+    const char separator = '_';
+
     const QString online = "online";
     const QString armed = "armed";
     const QString mode = "mode";
@@ -38,12 +68,12 @@ namespace telemetry
     const QString epv = "epv";
     const QString time = "time";
 
-    const QString homePosition = "homePosition";
+    const QString home = "home";
 
     const QString ahrs = "ahrs";
-    const QString sns = "sns";
+    const QString satellite = "satellite";
     const QString barometer = "barometer";
-    const QString navi = "navi";
+    const QString navigator = "navigator";
     const QString powerSystem = "powerSystem";
     const QString wind = "wind";
 

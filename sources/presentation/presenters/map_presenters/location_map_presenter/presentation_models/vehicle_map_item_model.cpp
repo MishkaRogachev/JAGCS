@@ -73,7 +73,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     case TrackRole:
         return d->tracks[vehicleId];
     case HdopRadius:
-        return node->childNode(telemetry::sns)->parameter(telemetry::eph);
+        return node->childNode(telemetry::satellite)->parameter(telemetry::eph);
     default:
         return QVariant();
     }
@@ -86,21 +86,14 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     d->vehicleIds.append(vehicleId);
 
     domain::TelemetryNode* node = d->telemetryService->node(vehicle->id());
-    if (node) {
-        connect(node, &domain::TelemetryNode::parametersChanged, this,
-                [this, vehicleId](const QVariantMap& parameters) {
-            if (parameters.contains(telemetry::coordinate))
-            {
-                d->tracks[vehicleId].append(parameters[telemetry::coordinate]);
-            }
-            this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
-        });
-
-        connect(node->childNode(telemetry::sns), &domain::TelemetryNode::parametersChanged,
-                this, [this, vehicleId](const QVariantMap& parameters) {
-            this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
-        });
-    }
+    if (node) connect(node, &domain::TelemetryNode::parametersChanged, this,
+                      [this, vehicleId](const QVariantMap& parameters) {
+        if (parameters.contains(telemetry::coordinate))
+        {
+            d->tracks[vehicleId].append(parameters[telemetry::coordinate]);
+        }
+        this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
+    });
 
     this->endInsertRows();
 }
@@ -150,7 +143,7 @@ void VehicleMapItemModel::onVehicleTelemetryChanged(int vehicleId,
     if (parameters.contains(telemetry::coordinate)) roles.append(
     { CoordinateRole, TrackRole });
     if (parameters.contains(telemetry::heading)) roles.append(DirectionRole);
-    if (parameters.contains(telemetry::eph)) roles.append(HdopRadius);
+    if (parameters.endsWith(telemetry::eph)) roles.append(HdopRadius);
 
     emit dataChanged(index, index, roles);
 }
