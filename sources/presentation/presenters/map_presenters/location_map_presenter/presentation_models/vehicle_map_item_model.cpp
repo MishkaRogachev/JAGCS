@@ -140,9 +140,8 @@ void VehicleMapItemModel::onVehicleTelemetryChanged(int vehicleId,
 
     QVector<int> roles;
 
-    if (parameters.contains(telemetry::coordinate)) roles.append(
-    { CoordinateRole, TrackRole });
-    if (parameters.contains(telemetry::heading)) roles.append(DirectionRole);
+    if (parameters.contains(telemetry::coordinate)) roles.append({ CoordinateRole, TrackRole });
+    if (parameters.endsWith(telemetry::heading)) roles.append(DirectionRole);
     if (parameters.endsWith(telemetry::eph)) roles.append(HdopRadius);
 
     emit dataChanged(index, index, roles);

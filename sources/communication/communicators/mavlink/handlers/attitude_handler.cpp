@@ -29,9 +29,12 @@ void AttitudeHandler::processMessage(const mavlink_message_t& message)
     mavlink_attitude_t attitude;
     mavlink_msg_attitude_decode(&message, &attitude);
 
-    node->setParameter(telemetry::pitch, qRadiansToDegrees(attitude.pitch));
-    node->setParameter(telemetry::roll, qRadiansToDegrees(attitude.roll));
-    node->setParameter(telemetry::yaw, qRadiansToDegrees(attitude.yaw));
+    node->setParameter({ telemetry::ahrs, telemetry::pitch }, qRadiansToDegrees(attitude.pitch));
+    node->setParameter({ telemetry::ahrs, telemetry::roll }, qRadiansToDegrees(attitude.roll));
+    node->setParameter({ telemetry::ahrs, telemetry::yaw }, qRadiansToDegrees(attitude.yaw));
+    node->setParameter({ telemetry::ahrs, telemetry::pitchspeed }, qRadiansToDegrees(attitude.pitchspeed));
+    node->setParameter({ telemetry::ahrs, telemetry::rollspeed }, qRadiansToDegrees(attitude.rollspeed));
+    node->setParameter({ telemetry::ahrs, telemetry::yawspeed }, qRadiansToDegrees(attitude.yawspeed));
 
     node->notify();
 }

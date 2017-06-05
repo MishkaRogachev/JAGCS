@@ -56,7 +56,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
                        ::gpdFixFromFixType(gps.fix_type));
     node->setParameter({ telemetry::satellite, telemetry::coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ telemetry::satellite, telemetry::speed },
+    node->setParameter({ telemetry::satellite, telemetry::groundspeed },
                        decodeGroundSpeed(gps.vel));
     node->setParameter({ telemetry::satellite, telemetry::course },
                        decodeCourse(gps.cog));

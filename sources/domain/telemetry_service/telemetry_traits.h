@@ -8,38 +8,66 @@
 //  |-online                            bool
 //  |-armed                             bool
 //  |-mode                              string
-//  |-groundspeed                       real
-//  |-trueAirspeed                      real
-//  |-indicatedAirspeed                 real
-//  |-barometric
-//      |-present                       bool
-//      |-enabled                       bool
-//      |-operational                   bool
-//      |-altitude                      real
-//      |-climb                         real
+//  |-coordinate                        coordinate
+//  |-direction                         direction
+//  |-home
+//  |  |-coordinate                     coordinate
+//  |  |-direction                      direction
+//  |-ahrs
+//  |  |-present                        bool
+//  |  |-enabled                        bool
+//  |  |-operational                    bool
+//  |  |-pitch                          real
+//  |  |-roll                           real
+//  |  |-yaw                            real
+//  |  |-pitchspeed                     real
+//  |  |-rollspeed                      real
+//  |  |-yawspeed                       real
 //  |-satellite
-//      |-fix                           int
-//      |-coordinate                    coordinate
-//      |-speed                         real
-//      |-course                        real
-//      |-altitude                      real
-//      |-climb                         real
-//      |-eph                           int
-//      |-epv                           int
-//      |-time                          time
-//      |-satellitesVisible             int
+//  |  |-present                        bool
+//  |  |-enabled                        bool
+//  |  |-operational                    bool
+//  |  |-fix                            int
+//  |  |-coordinate                     coordinate
+//  |  |-groundspeed                    real
+//  |  |-course                         real
+//  |  |-altitude                       real
+//  |  |-climb                          real
+//  |  |-eph                            int
+//  |  |-epv                            int
+//  |  |-time                           time
+//  |  |-satellitesVisible              int
+//  |-compass
+//  |  |-present                        bool
+//  |  |-enabled                        bool
+//  |  |-operational                    bool
+//  |  |-heading                        real
+//  |-barometric
+//  |  |-present                        bool
+//  |  |-enabled                        bool
+//  |  |-operational                    bool
+//  |  |-altitude                       real
+//  |  |-climb                          real
+//  |-pitot
+//  |  |-present                        bool
+//  |  |-enabled                        bool
+//  |  |-operational                    bool
+//  |  |-trueAirspeed                   real
+//  |  |-indicatedAirspeed              real
 //  |-navigator
-//  |   |-targetBearing                 real
-//  |   |-targetDistance                real
-//  |   |-trackError                    real
-//  |   |-altitudeError                 real
-//  |   |-desiredPitch                  real
-//  |   |-desiredRoll                   real
-//  |   |-desiredHeading                real
+//  |  |-targetBearing                  real
+//  |  |-targetDistance                 real
+//  |  |-trackError                     real
+//  |  |-altitudeError                  real
+//  |  |-desiredPitch                   real
+//  |  |-desiredRoll                    real
+//  |  |-desiredHeading                 real
+//  |-powerSystem
+//  |  |-throttle                       int
 //  |-wind
-//      |-yaw                           real
-//      |-speed                         real
-//      |-climb                         real
+//  |  |-yaw                            real
+//  |  |-speed                          real
+//  |  |-climb                          real
 
 namespace telemetry
 {
@@ -56,6 +84,9 @@ namespace telemetry
     const QString pitch = "pitch";
     const QString roll = "roll";
     const QString yaw = "yaw";
+    const QString pitchspeed = "pitchspeed";
+    const QString rollspeed = "rollspeed";
+    const QString yawspeed = "yawspeed";
     const QString heading = "heading";
     const QString course = "course";
 
@@ -82,7 +113,9 @@ namespace telemetry
 
     const QString ahrs = "ahrs";
     const QString satellite = "satellite";
+    const QString compass = "compass";
     const QString barometric = "barometric";
+    const QString pitot = "pitot";
     const QString navigator = "navigator";
     const QString powerSystem = "powerSystem";
     const QString wind = "wind";
