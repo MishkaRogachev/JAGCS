@@ -11,9 +11,10 @@ AbstractVehicleView {
     id: root
 
     property real indicatedAirSpeed
-    property real barometricalAltitude
     property int throttle
-    property real barometricClimb
+
+    property real barometric_altitude
+    property real barometric_climb
 
     signal minimize()
 
@@ -33,19 +34,19 @@ AbstractVehicleView {
         }
 
         Controls.Label {
-            text: qsTr("Mode") + ": " + modeString
+            text: qsTr("Mode") + ": " + mode
         }
 
         Indicators.FlightDirector {
             id: fd
             available: root.online
             armed: root.armed
-            pitch: root.pitch
-            roll: root.roll
+            pitch: root.ahrs_pitch
+            roll: root.ahrs_roll
             speed: root.indicatedAirSpeed
-            altitude: root.barometricalAltitude
+            altitude: root.barometric_altitude
             throttle: root.throttle
-            climb: root.barometricClimb
+            climb: root.barometric_climb
             speedPrefix: qsTr("IAS, m/s")
             altitudePrefix: qsTr("Hbar, m")
             Layout.fillWidth: true
@@ -53,8 +54,8 @@ AbstractVehicleView {
 
         Indicators.SituationIndicator {
             id: compass
-            course: root.course
-            heading: root.heading
+            course: root.satellite_course
+            heading: root.compass_heading
             Layout.fillWidth: true
         }
     }

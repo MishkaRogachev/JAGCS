@@ -9,11 +9,11 @@ Controls.Frame {
 
     property bool online
     property bool armed
-    property string modeString
+    property string mode
 
-    property real pitch
-    property real roll
+    property real ahrs_pitch
+    property real ahrs_roll
 
-    property real course
-    property real heading
+    property real satellite_course
+    property real compass_heading
 }

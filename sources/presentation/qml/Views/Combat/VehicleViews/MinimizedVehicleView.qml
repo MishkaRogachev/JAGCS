@@ -15,6 +15,8 @@ AbstractVehicleView {
     contentWidth: row.implicitWidth
     contentHeight: row.implicitHeight
 
+    property real ahrs_yawspeed
+
     RowLayout {
         id: row
         width: parent.width
@@ -22,8 +24,8 @@ AbstractVehicleView {
         Indicators.ArtificialHorizon {
             available: root.online
             armed: root.armed
-            pitch: root.pitch
-            roll: root.roll
+            pitch: root.ahrs_pitch
+            roll: root.ahrs_roll
             pitchScaleEnabled: false
             markWidth: 2
             Layout.minimumWidth: palette.controlBaseSize * 2
@@ -33,8 +35,8 @@ AbstractVehicleView {
             id: compass
             tickFactor: 15
             scalesRatio: 0.11
-            course: root.course
-            heading: root.heading
+            course: root.satellite_course
+            heading: root.compass_heading
             Layout.minimumWidth: palette.controlBaseSize * 3
         }
 
@@ -50,7 +52,7 @@ AbstractVehicleView {
             }
 
             Controls.Label {
-                text: qsTr("Mode") + ": " + modeString
+                text: qsTr("Mode") + ": " + mode
             }
         }
     }
