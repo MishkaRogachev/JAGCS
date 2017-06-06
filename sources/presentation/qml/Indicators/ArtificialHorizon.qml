@@ -24,7 +24,7 @@ Item {
     property alias pitchScaleEnabled: pitchScale.visible
 
     property alias markWidth: mark.markWidth
-    property real ratio: 1.618
+    property real ratio: 1.4
 
     implicitHeight: width * ratio
     clip: true

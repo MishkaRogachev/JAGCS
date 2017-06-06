@@ -59,7 +59,7 @@ ArtificialHorizon {
         minValue: speed + minSpeed
         maxValue: speed + maxSpeed
         valueStep: speedStep
-        scaleColor: speedAvalible ? palette.textColor : palette.disabledColor
+        color: speedAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: 90
         prefix: speedPrefix
     }
@@ -70,13 +70,11 @@ ArtificialHorizon {
         anchors.right: climbScale.left
         width: parent.width * 0.17
         height: parent.height * 0.8
-//        warningValue: terrainAltitude
-//        warningColor: palette.groundColor
         value: altitude
         minValue: altitude + minAltitude
         maxValue: altitude + maxAltitude
         valueStep: altitudeStep
-        scaleColor: altitudeAvalible ? palette.textColor : palette.disabledColor
+        color: altitudeAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: -90
         prefix: altitudePrefix
     }
