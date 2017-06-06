@@ -15,31 +15,33 @@ function pad(num, size) {
 }
 
 function degreesToDms(degrees, lng) {
-    var deg = Math.floor(degrees);
-    var frac = (degrees - deg) * 60;
+    var sign = degrees < 0 ? -1 : 1
+    var abs = Math.abs(degrees);
+    var deg = Math.floor(abs);
+    var frac = (abs - deg) * 60;
     var min = Math.floor(frac);
     var sec = Math.round((frac - min) * 6000) / 100;
 
     if (sec >= 60) { sec -= 60; min++; }
     if (min >= 60) { min -= 60; deg++; }
-    deg = Math.abs(deg)
     var degLimit = (lng ? 180 : 90);
-    if (deg >= degLimit) deg -= degLimit;
+    if (deg >= degLimit) { deg -= degLimit; sign = -sign; }
 
     return {
-        sign: degrees < 0 ? -1 : 1,
+        sign: sign,
         deg: deg,
         min: min,
         sec: sec.toFixed(2)
     }
 }
 
-function dmsToDegree(deg, min, sec) {
-    return deg + min / 60.0 + sec / 3600.0;
+function dmsToDegree(sign, deg, min, sec) {
+    return sign * (deg + min / 60.0 + sec / 3600.0);
 }
 
 function degreesToDmsString(degrees, lng) {
-    var dms = isNaN(degrees) ? degreesToDms(0, lng) : degreesToDms(degrees, lng);
+    if (isNaN(degrees)) return "NaN"
+    var dms = degreesToDms(degrees, lng);
     return pad(dms.deg, 3) + "\u00B0" +
            pad(dms.min, 2) + "\'" +
            pad(dms.sec, 5) + "\"" +
@@ -56,6 +58,6 @@ function dmsStringToDegree(string, lng) {
     split = split[1].split("\"");
     var sec = split[0];
     var sign = split[1] === "W" || split[1] === "S" ? -1 : 1;
-    return dmsToDegree(sign * parseInt(deg), parseInt(min), parseFloat(sec));
+    return dmsToDegree(sign, parseInt(deg, 10), parseInt(min, 10), parseFloat(sec, 10));
 }
 
