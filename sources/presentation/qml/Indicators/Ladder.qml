@@ -4,7 +4,7 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: root
 
-    property alias value: label.value
+    property int value: 0
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
@@ -16,7 +16,7 @@ Item {
     property int lineWidth: 2
     property alias canvasRotation: canvas.rotation
 
-    property alias prefix: label.prefix
+    property string prefix
     property color color: palette.textColor
 
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
@@ -73,14 +73,29 @@ Item {
                 }
             }
             ctx.stroke();
+
+            var markWidth = canvasRotation > 0 ? label.height : -label.height;
+            ctx.clearRect(width / 2 - markWidth / 2, lineWidth / 2, markWidth, height);
+
+            ctx.beginPath();
+            ctx.moveTo(width / 2 - markWidth / 2, majorTickSize);
+            ctx.lineTo(width / 2, lineWidth);
+            ctx.lineTo(width / 2 + markWidth / 2, majorTickSize);
+
+            ctx.stroke();
+
             ctx.restore();
         }
     }
 
-    FdLabel {
+    Text {
         id: label
         anchors.centerIn: parent
         width: canvas.height
         color: root.color
+        horizontalAlignment: Text.AlignHCenter
+        font.bold: true
+        font.pixelSize: fontPixelSize * 1.15
+        text: prefix + "\n" + value
     }
 }

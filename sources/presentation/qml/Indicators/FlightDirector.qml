@@ -40,7 +40,7 @@ Item {
         valueStep: speedStep
         color: airSpeedAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: 90
-        prefix: qsTr("IAS, m/s")
+        prefix: qsTr("IAS")
     }
 
     ArtificialHorizon {
@@ -61,7 +61,7 @@ Item {
         valueStep: altitudeStep
         color: altitudeAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: -90
-        prefix: qsTr("ALT, m")
+        prefix: qsTr("ALT")
     }
 }
 /*
