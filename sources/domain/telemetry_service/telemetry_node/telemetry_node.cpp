@@ -1,5 +1,8 @@
 #include "telemetry_node.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "telemetry_traits.h"
 
@@ -68,6 +71,7 @@ QVariantMap TelemetryNode::takeChangedParameters()
     for (TelemetryNode* child: this->childNodes())
     {
         QVariantMap childParameters = child->takeChangedParameters();
+
         for (const QString& name: childParameters.keys())
         {
             QStringList path = { child->name(), name };
@@ -113,11 +117,11 @@ QList<TelemetryNode*> TelemetryNode::childNodes() const
 
 void TelemetryNode::setParameter(const QString& name, const QVariant& value)
 {
-    int index = name.indexOf(telemetry::separator);
-    if (index > -1 && index < name.count() - 1)
+    QStringList split = name.split(telemetry::separator);
+    if (split.count() > 1)
     {
-        TelemetryNode* child = this->childNode(name.left(index));
-        child->setParameter(name.right(index + 1), value);
+        TelemetryNode* child = this->childNode(split.at(0));
+        child->setParameter(split.at(1), value);
         return;
     }
 

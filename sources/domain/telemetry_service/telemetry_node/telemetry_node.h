@@ -19,8 +19,8 @@ namespace domain
 
         QVariant parameter(const QString& name) const;
         QVariantMap parameters() const;
-        QVariantMap allParameters() const;
         QStringList changedParameters() const;
+        QVariantMap allParameters() const;
 
         QVariantMap takeChangedParameters();
 
@@ -35,7 +35,7 @@ namespace domain
         void notify();
 
     signals:
-        void parametersChanged(const QVariantMap& parameters);
+        void parametersChanged(QVariantMap parameters);
 
     protected:
         void addChildNode(TelemetryNode* childNode);
