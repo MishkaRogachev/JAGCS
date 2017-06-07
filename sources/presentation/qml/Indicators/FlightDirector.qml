@@ -3,6 +3,68 @@ import QtGraphicalEffects 1.0
 
 import "../Controls" as Controls
 
+Item {
+    id: root
+
+    property real indicatedAirSpeed: 0
+    property real trueAirSpeed: 0
+
+    property real barometricAltitude: 0
+    property real barometricClimb: 0
+
+    property bool airSpeedAvalible: true
+    property bool altitudeAvalible: true
+
+    property int minSpeed: -13
+    property int maxSpeed: 13
+    property int speedStep: 5
+
+    property int minAltitude: -27
+    property int maxAltitude: 27
+    property int altitudeStep: 10
+
+    property alias pitch: af.pitch
+    property alias roll: af.roll
+    property alias armed: af.armed
+
+    implicitHeight: af.height
+
+    Ladder {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        width: parent.width * 0.2
+        height: parent.height * 0.7
+        value: indicatedAirSpeed
+        minValue: indicatedAirSpeed + minSpeed
+        maxValue: indicatedAirSpeed + maxSpeed
+        valueStep: speedStep
+        color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+        canvasRotation: 90
+        prefix: qsTr("IAS, m/s")
+    }
+
+    ArtificialHorizon {
+        id: af
+        anchors.centerIn: parent
+        width: parent.width * 0.58
+    }
+
+    Ladder {
+        id: altitudeLadder
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        width: parent.width * 0.2
+        height: parent.height * 0.7
+        value: barometricAltitude
+        minValue: barometricAltitude + minAltitude
+        maxValue: barometricAltitude + maxAltitude
+        valueStep: altitudeStep
+        color: altitudeAvalible ? palette.textColor : palette.disabledColor
+        canvasRotation: -90
+        prefix: qsTr("ALT, m")
+    }
+}
+/*
 ArtificialHorizon {
     id: root
 
@@ -11,8 +73,8 @@ ArtificialHorizon {
     property int throttle: 0
     property int climb: 0
 
-    property string speedPrefix
-    property string altitudePrefix
+    property string speedPrefix: qsTr("IAS, m/s")
+    property string altitudePrefix: qsTr("Hbar, m")
 
     property bool speedAvalible: true
     property bool altitudeAvalible: true
@@ -28,7 +90,7 @@ ArtificialHorizon {
     property int minClimb: -12
     property int maxClimb: 12
 
-    ratio: 1
+    //ratio: 1
 
     RollScale {
         id: rollScale
@@ -96,3 +158,4 @@ ArtificialHorizon {
         maxValue: maxClimb
     }
 }
+*/

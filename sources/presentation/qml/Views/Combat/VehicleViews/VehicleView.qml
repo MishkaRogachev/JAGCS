@@ -11,7 +11,6 @@ AbstractVehicleView {
     id: root
 
     property real indicatedAirSpeed
-    property int throttle
 
     property real barometric_altitude
     property real barometric_climb
@@ -39,16 +38,13 @@ AbstractVehicleView {
 
         Indicators.FlightDirector {
             id: fd
-            available: root.online
+            //available: root.online
             armed: root.armed
             pitch: root.ahrs_pitch
             roll: root.ahrs_roll
-            speed: root.indicatedAirSpeed
-            altitude: root.barometric_altitude
-            throttle: root.throttle
-            climb: root.barometric_climb
-            speedPrefix: qsTr("IAS, m/s")
-            altitudePrefix: qsTr("Hbar, m")
+            indicatedAirSpeed: root.indicatedAirSpeed
+            barometricAltitude: root.barometric_altitude
+            barometricClimb: root.barometric_climb
             Layout.fillWidth: true
         }
 
