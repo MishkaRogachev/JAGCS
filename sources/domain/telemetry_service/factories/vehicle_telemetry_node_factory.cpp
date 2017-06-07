@@ -12,6 +12,7 @@
 using namespace domain;
 
 VehicleTelemetryNodeFactory::VehicleTelemetryNodeFactory(const db::VehiclePtr& vehicle):
+    ITelemetryNodeFactory(),
     m_vehicle(vehicle)
 {}
 
