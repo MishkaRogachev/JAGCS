@@ -57,6 +57,7 @@
         <file>Views/Combat/VehicleViews/VehicleView.qml</file>
         <file>Views/Combat/VehicleViews/MinimizedVehicleView.qml</file>
         <file>Views/Combat/VehicleViews/AbstractVehicleView.qml</file>
+        <file>Views/Control/ControlView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/VideoStatusBar.qml</file>
         <file>Views/Mission/MissionView.qml</file>

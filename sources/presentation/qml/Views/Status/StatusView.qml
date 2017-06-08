@@ -32,7 +32,7 @@ ToolBar {
         }
 
         StatusModeButton {
-            mode: "combat"
+            mode: "control"
             iconSource: "qrc:/icons/flight.svg"
             anchors.verticalCenter: parent.verticalCenter
         }

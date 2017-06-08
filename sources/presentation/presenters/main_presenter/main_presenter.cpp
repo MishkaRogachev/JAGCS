@@ -8,7 +8,7 @@
 #include "domain_entry.h"
 
 #include "status_presenter.h"
-#include "combat_presenter.h"
+#include "control_presenter.h"
 #include "mission_presenter.h"
 #include "settings_presenter.h"
 
@@ -48,9 +48,9 @@ void MainPresenter::setMode(const QString& mode)
 
     this->setViewProperty(PROPERTY(mode), mode);
 
-    if (mode == "combat") // TODO: MainPresenter mode enum
+    if (mode == "control") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new CombatPresenter(d->entry, this);
+        d->modePresenter = new ControlPresenter(d->entry, this);
     }
     if (mode == "mission")
     {
