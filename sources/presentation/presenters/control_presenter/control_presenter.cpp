@@ -38,57 +38,51 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
 
     d->map = new LocationMapPresenter(entry, this);
 
-    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::onVehicleAdded);
-    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::onVehicleRemoved);
-    connect(d->dbFacade, &db::DbFacade::vehicleChanged, this, &ControlPresenter::onVehicleChanged);
+    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
+    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
+    connect(d->dbFacade, &db::DbFacade::vehicleChanged, this, &ControlPresenter::updateVehiclesList);
 
-    for (const db::VehiclePtr& vehicle: d->dbFacade->vehicles())
-    {
-       this->onVehicleAdded(vehicle);
-    }
+    this->updateVehiclesList();
 }
 
 ControlPresenter::~ControlPresenter()
 {}
 
-void ControlPresenter::updateVehicles()
+void ControlPresenter::updateVehiclesList()
 {
-    QList<QObject*> objectList;
-    for (DashboardPresenter* dashboard: d->vehicleDashboards.values())
+    QStringList vehicles;
+    vehicles.append(QString());
+
+    for (const db::VehiclePtr& vehicle: d->dbFacade->vehicles())
     {
-        objectList.append(dashboard);
+        vehicles.append(vehicle->name());
     }
 
-    this->setViewProperty(PROPERTY(dashboards), QVariant::fromValue(objectList));
+    this->setViewProperty(PROPERTY(vehicles), vehicles);
 }
 
 void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 
-    this->updateVehicles();
+    connect(view, SIGNAL(selectVehicle(int)),
+            this, SLOT(onSelectVehicle(int)));
+
+    this->updateVehiclesList();
 }
 
-void ControlPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
+void ControlPresenter::onSelectVehicle(int index)
 {
-    VehicleDashboardFactory factory(d->telemetryService, vehicle);
+    db::VehiclePtrList vehicles  = d->dbFacade->vehicles();
 
-    DashboardPresenter* dashboard = factory.create();
-    if (!dashboard) return;
-
-    d->vehicleDashboards[vehicle->id()] = dashboard;
-
-    this->updateVehicles();
+    if (index > 0 && index <= vehicles.count())
+    {
+        qDebug() << vehicles[index - 1]->name(); // TODO: select
+    }
+    else
+    {
+        // TODO: unselect
+    }
 }
 
-void ControlPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
-{
-    d->vehicleDashboards.remove(vehicle->id());
-    this->updateVehicles();
-}
-
-void ControlPresenter::onVehicleChanged(const db::VehiclePtr& vehicle)
-{
-    // TODO: updateVehicle();
-}
 

@@ -21,15 +21,13 @@ namespace presentation
         ~ControlPresenter() override;
 
     public slots:
-        void updateVehicles();
+        void updateVehiclesList();
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void onVehicleAdded(const db::VehiclePtr& vehicle);
-        void onVehicleRemoved(const db::VehiclePtr& vehicle);
-        void onVehicleChanged(const db::VehiclePtr& vehicle);
+        void onSelectVehicle(int index);
 
     private:
         class Impl;
