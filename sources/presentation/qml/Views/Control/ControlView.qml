@@ -33,6 +33,10 @@ Pane {
                 onCurrentIndexChanged: selectVehicle(currentIndex)
             }
         }
+
+        Item {
+            Layout.fillHeight: true
+        }
     }
 
     MapView {
