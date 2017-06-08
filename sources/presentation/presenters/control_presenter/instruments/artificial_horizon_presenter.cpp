@@ -6,7 +6,7 @@ ArtificialHorizonPresenter::ArtificialHorizonPresenter(QObject* parent):
     AbstractInstrumentPresenter(parent)
 {}
 
-void ArtificialHorizonPresenter::onParametersChanged(const QVariantMap& parameters)
+void ArtificialHorizonPresenter::applyParameters(const QVariantMap& parameters)
 {
 
 }

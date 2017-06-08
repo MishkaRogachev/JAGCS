@@ -15,6 +15,7 @@
 
 #include "location_map_presenter.h"
 #include "vehicle_dashboard_factory.h"
+#include "dashboard_presenter.h"
 
 using namespace presentation;
 
@@ -25,6 +26,7 @@ public:
     domain::TelemetryService* telemetryService;
 
     AbstractMapPresenter* map;
+    QMap<int, DashboardPresenter*> vehicleDashboards;
 };
 
 ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
@@ -51,13 +53,13 @@ ControlPresenter::~ControlPresenter()
 
 void ControlPresenter::updateVehicles()
 {
-//    QList<QObject*> objectList;
-//    for (VehiclePresenter* vehicle: d->vehicles.values())
-//    {
-//        objectList.append(vehicle);
-//    }
+    QList<QObject*> objectList;
+    for (DashboardPresenter* dashboard: d->vehicleDashboards.values())
+    {
+        objectList.append(dashboard);
+    }
 
-//    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(objectList));
+    this->setViewProperty(PROPERTY(dashboards), QVariant::fromValue(objectList));
 }
 
 void ControlPresenter::connectView(QObject* view)
@@ -69,17 +71,20 @@ void ControlPresenter::connectView(QObject* view)
 
 void ControlPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
 {
-//    d->vehicles[vehicle->id()] = new VehiclePresenter(
-//                                     d->telemetryService->node(vehicle->id()),
-//                                     vehicle, this);
+    VehicleDashboardFactory factory(d->telemetryService, vehicle);
 
-//    this->updateVehicles();
+    DashboardPresenter* dashboard = factory.create();
+    if (!dashboard) return;
+
+    d->vehicleDashboards[vehicle->id()] = dashboard;
+
+    this->updateVehicles();
 }
 
 void ControlPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
 {
-//    d->vehicles.remove(vehicle->id());
-//    this->updateVehicles();
+    d->vehicleDashboards.remove(vehicle->id());
+    this->updateVehicles();
 }
 
 void ControlPresenter::onVehicleChanged(const db::VehiclePtr& vehicle)

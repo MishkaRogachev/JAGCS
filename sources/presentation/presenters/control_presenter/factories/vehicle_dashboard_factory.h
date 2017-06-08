@@ -12,11 +12,11 @@ namespace domain
 
 namespace presentation
 {
-    class VehicleTelemetryNodeFactory: public IDashboardFactory
+    class VehicleDashboardFactory: public IDashboardFactory
     {
     public:
-        VehicleTelemetryNodeFactory(domain::TelemetryService* telemetryService,
-                                    const db::VehiclePtr& vehicle);
+        VehicleDashboardFactory(domain::TelemetryService* telemetryService,
+                                const db::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 

@@ -13,7 +13,7 @@ namespace presentation
         explicit ArtificialHorizonPresenter(QObject* parent = nullptr);
 
     public slots:
-        void onParametersChanged(const QVariantMap& parameters) override;
+        void applyParameters(const QVariantMap& parameters) override;
 
     protected:
         void connectView(QObject* view) override;
