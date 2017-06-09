@@ -4,6 +4,11 @@
 // Internal
 #include "base_presenter.h"
 
+namespace domain
+{
+    class TelemetryNode;
+}
+
 namespace presentation
 {
     class AbstractInstrumentPresenter: public BasePresenter
@@ -11,10 +16,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit AbstractInstrumentPresenter(QObject* parent = nullptr);
+        AbstractInstrumentPresenter(domain::TelemetryNode* node, QObject* parent);
 
     public slots:
         virtual void onParametersChanged(const QVariantMap& parameters) = 0;
+
+    protected:
+        void connectView(QObject* view) override;
+
+        domain::TelemetryNode* m_node;
     };
 }
 

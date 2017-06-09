@@ -5,7 +5,8 @@
 #include "vehicle.h"
 
 #include "dashboard_presenter.h"
-#include "attitude_presenter.h"
+#include "ahrs_presenter.h"
+#include "barometric_presenter.h"
 
 using namespace presentation;
 
@@ -24,8 +25,10 @@ DashboardPresenter* VehicleDashboardFactory::create()
     // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
-    dashboard->addInstrument("fd", new AttitudePresenter(node->childNode(telemetry::ahrs),
-                                                         dashboard));
+    dashboard->addInstrument("fd", new AhrsPresenter(
+                                 node->childNode(telemetry::ahrs), dashboard));
+//    dashboard->addInstrument("fd", new BarometricPresenter(
+//                                 node->childNode(telemetry::barometric), dashboard));
 
     return dashboard;
 }

@@ -31,6 +31,7 @@ Pane {
             ComboBox {
                 id: vehiclesBox
                 onCurrentIndexChanged: selectVehicle(currentIndex)
+                Layout.fillWidth: true
             }
         }
 
