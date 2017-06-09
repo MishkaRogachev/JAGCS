@@ -9,13 +9,9 @@
 
 using namespace presentation;
 
-DashboardPresenter::DashboardPresenter(domain::TelemetryNode* node, QObject* parent):
-    BasePresenter(parent),
-    m_node(node)
-{
-    connect(m_node, &domain::TelemetryNode::parametersChanged,
-            this, &DashboardPresenter::onParametersChanged);
-}
+DashboardPresenter::DashboardPresenter(QObject* parent):
+    BasePresenter(parent)
+{}
 
 DashboardPresenter::~DashboardPresenter()
 {
@@ -34,8 +30,6 @@ void DashboardPresenter::connectView(QObject* view)
             this, SLOT(onInstrumentAdded(QString, QObject*)));
 
     this->setViewProperty(PROPERTY(instruments), QStringList(m_instruments.keys()));
-
-    this->onParametersChanged(m_node->parameters());
 }
 
 void DashboardPresenter::onInstrumentAdded(const QString& instrument, QObject* view)
@@ -44,12 +38,3 @@ void DashboardPresenter::onInstrumentAdded(const QString& instrument, QObject* v
 
     m_instruments[instrument]->setView(view);
 }
-
-void DashboardPresenter::onParametersChanged(const QVariantMap& parameters)
-{
-    for (AbstractInstrumentPresenter* instrument: m_instruments.values())
-    {
-        instrument->applyParameters(parameters);
-    }
-}
-

@@ -138,6 +138,11 @@ void TelemetryNode::setParameter(const QStringList& names, const QVariant& value
 
 void TelemetryNode::notify()
 {
+    for (TelemetryNode* child: this->childNodes())
+    {
+        child->notify();
+    }
+
     emit parametersChanged(this->takeChangedParameters());
 }
 

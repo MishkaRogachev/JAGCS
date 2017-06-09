@@ -1,11 +1,11 @@
 #include "vehicle_dashboard_factory.h"
 
 // Internal
-#include "telemetry_service.h"
+#include "telemetry.h"
 #include "vehicle.h"
 
 #include "dashboard_presenter.h"
-#include "artificial_horizon_presenter.h"
+#include "attitude_presenter.h"
 
 using namespace presentation;
 
@@ -18,10 +18,14 @@ VehicleDashboardFactory::VehicleDashboardFactory(domain::TelemetryService* telem
 
 DashboardPresenter* VehicleDashboardFactory::create()
 {
-    auto dashboard = new DashboardPresenter(m_telemetryService->node(m_vehicle->id()));
+    domain::TelemetryNode* node = m_telemetryService->node(m_vehicle->id());
+    if (!node) return nullptr;
 
     // TODO: vehicle type
-    dashboard->addInstrument("fd", new ArtificialHorizonPresenter(dashboard));
+    DashboardPresenter* dashboard = new DashboardPresenter();
+
+    dashboard->addInstrument("fd", new AttitudePresenter(node->childNode(telemetry::ahrs),
+                                                         dashboard));
 
     return dashboard;
 }

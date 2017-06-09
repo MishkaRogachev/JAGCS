@@ -7,11 +7,6 @@
 // Qt
 #include <QMap>
 
-namespace domain
-{
-    class TelemetryNode;
-}
-
 namespace presentation
 {
     class AbstractInstrumentPresenter;
@@ -21,7 +16,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        DashboardPresenter(domain::TelemetryNode* node, QObject* parent = nullptr);
+        DashboardPresenter(QObject* parent = nullptr);
         ~DashboardPresenter() override;
 
     public slots:
@@ -33,11 +28,7 @@ namespace presentation
     private slots:
         void onInstrumentAdded(const QString& instrument, QObject* view);
 
-    private slots:
-        void onParametersChanged(const QVariantMap& parameters);
-
     private:
-        domain::TelemetryNode* m_node;
         QMap<QString, AbstractInstrumentPresenter*> m_instruments;
     };
 }

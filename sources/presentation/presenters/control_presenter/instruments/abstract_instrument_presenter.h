@@ -14,7 +14,7 @@ namespace presentation
         explicit AbstractInstrumentPresenter(QObject* parent = nullptr);
 
     public slots:
-        virtual void applyParameters(const QVariantMap& parameters) = 0;
+        virtual void onParametersChanged(const QVariantMap& parameters) = 0;
     };
 }
 

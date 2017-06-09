@@ -81,11 +81,15 @@ void ControlPresenter::onSelectVehicle(int index)
     {
         VehicleDashboardFactory factory(d->telemetryService, vehicles[index - 1]);
         d->dashboard = factory.create();
-        d->dashboard->setView(this->view()->findChild<QObject*>(NAME(dashboard)));
+        if (d->dashboard)
+        {
+            d->dashboard->setParent(this);
+            d->dashboard->setView(this->view()->findChild<QObject*>(NAME(dashboard)));
+        }
     }
     else
     {
-        d->dashboard = 0;
+        d->dashboard = nullptr;
     }
 }
 
