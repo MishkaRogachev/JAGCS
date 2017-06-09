@@ -20,6 +20,7 @@ Pane {
         anchors.bottom: parent.bottom
         Layout.margins: palette.margins
         spacing: palette.spacing
+        width: palette.controlBaseSize * 10
 
         RowLayout {
 

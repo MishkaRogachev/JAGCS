@@ -20,9 +20,14 @@ ColumnLayout {
         }
     }
 
+    Item { Layout.fillHeight: truev}
+
     function createInstrument(modelData) {
         switch (modelData) {
-        case "af": return Qt.createComponent("Instruments/ArtificialHorizon.qml");
+        case "af": return Qt.createComponent("qrc:/Indicators/ArtificialHorizon.qml");
+        case "fd": return Qt.createComponent("qrc:/Indicators/FlightDirector.qml");
+        case "compas": return Qt.createComponent("qrc:/Indicators/Compass.qml");
+        case "hsi": return Qt.createComponent("qrc:/Indicators/SituationIndicator.qml");
         default: return null
         }
     }

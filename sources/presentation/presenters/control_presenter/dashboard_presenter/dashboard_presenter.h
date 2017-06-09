@@ -22,6 +22,7 @@ namespace presentation
 
     public:
         DashboardPresenter(domain::TelemetryNode* node, QObject* parent = nullptr);
+        ~DashboardPresenter() override;
 
     public slots:
         void addInstrument(const QString& viewName, AbstractInstrumentPresenter* instrument);

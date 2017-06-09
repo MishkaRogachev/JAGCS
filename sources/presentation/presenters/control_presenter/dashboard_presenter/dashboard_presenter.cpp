@@ -17,6 +17,11 @@ DashboardPresenter::DashboardPresenter(domain::TelemetryNode* node, QObject* par
             this, &DashboardPresenter::onParametersChanged);
 }
 
+DashboardPresenter::~DashboardPresenter()
+{
+    this->setViewProperty(PROPERTY(instruments), QStringList());
+}
+
 void DashboardPresenter::addInstrument(const QString& viewName,
                                        AbstractInstrumentPresenter* instrument)
 {

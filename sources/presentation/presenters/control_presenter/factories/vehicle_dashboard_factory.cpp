@@ -21,7 +21,7 @@ DashboardPresenter* VehicleDashboardFactory::create()
     auto dashboard = new DashboardPresenter(m_telemetryService->node(m_vehicle->id()));
 
     // TODO: vehicle type
-    dashboard->addInstrument("af", new ArtificialHorizonPresenter(dashboard));
+    dashboard->addInstrument("fd", new ArtificialHorizonPresenter(dashboard));
 
     return dashboard;
 }
