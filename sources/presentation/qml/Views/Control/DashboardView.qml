@@ -10,17 +10,19 @@ ColumnLayout {
 
     property var instruments
 
+    signal instrumentAdded(string name, QtObject view)
+
     Repeater {
         model: instruments
 
         Loader {
             Layout.fillWidth: true
             sourceComponent: createInstrument(modelData)
-            onItemChanged: if (item) item.objectName = modelData
+            onItemChanged: if (item) instrumentAdded(modelData, item)
         }
     }
 
-    Item { Layout.fillHeight: truev}
+    Item { Layout.fillHeight: true }
 
     function createInstrument(modelData) {
         switch (modelData) {

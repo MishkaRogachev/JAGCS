@@ -14,9 +14,6 @@ namespace presentation
 
     public slots:
         void applyParameters(const QVariantMap& parameters) override;
-
-    protected:
-        void connectView(QObject* view) override;
     };
 }
 

@@ -30,15 +30,19 @@ void DashboardPresenter::addInstrument(const QString& viewName,
 
 void DashboardPresenter::connectView(QObject* view)
 {
-    QStringList instruments = m_instruments.keys();
-    this->setViewProperty(PROPERTY(instruments), instruments);
+    connect(view, SIGNAL(instrumentAdded(QString, QObject*)),
+            this, SLOT(onInstrumentAdded(QString, QObject*)));
 
-    for (const QString& viewName: instruments)
-    {
-        m_instruments[viewName]->setView(view->findChild<QObject*>(viewName));
-    }
+    this->setViewProperty(PROPERTY(instruments), QStringList(m_instruments.keys()));
 
     this->onParametersChanged(m_node->parameters());
+}
+
+void DashboardPresenter::onInstrumentAdded(const QString& instrument, QObject* view)
+{
+    if (!m_instruments.contains(instrument)) return;
+
+    m_instruments[instrument]->setView(view);
 }
 
 void DashboardPresenter::onParametersChanged(const QVariantMap& parameters)

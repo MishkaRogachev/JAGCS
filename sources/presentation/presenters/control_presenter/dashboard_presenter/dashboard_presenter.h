@@ -31,6 +31,9 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
+        void onInstrumentAdded(const QString& instrument, QObject* view);
+
+    private slots:
         void onParametersChanged(const QVariantMap& parameters);
 
     private:
