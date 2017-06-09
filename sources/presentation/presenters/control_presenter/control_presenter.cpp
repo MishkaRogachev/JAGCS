@@ -26,7 +26,7 @@ public:
     domain::TelemetryService* telemetryService;
 
     AbstractMapPresenter* map;
-    QMap<int, DashboardPresenter*> vehicleDashboards;
+    DashboardPresenter* dashboard = nullptr;
 };
 
 ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
@@ -65,23 +65,27 @@ void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
 
-    connect(view, SIGNAL(selectVehicle(int)),
-            this, SLOT(onSelectVehicle(int)));
+    connect(view, SIGNAL(selectVehicle(int)), this, SLOT(onSelectVehicle(int)));
 
     this->updateVehiclesList();
 }
 
 void ControlPresenter::onSelectVehicle(int index)
 {
+    // TODO: check, if vehicle is the same
     db::VehiclePtrList vehicles  = d->dbFacade->vehicles();
+
+    if (d->dashboard) delete d->dashboard;
 
     if (index > 0 && index <= vehicles.count())
     {
-        qDebug() << vehicles[index - 1]->name(); // TODO: select
+        VehicleDashboardFactory factory(d->telemetryService, vehicles[index - 1]);
+        d->dashboard = factory.create();
+        d->dashboard->setView(this->view()->findChild<QObject*>(NAME(dashboard)));
     }
     else
     {
-        // TODO: unselect
+        d->dashboard = 0;
     }
 }
 

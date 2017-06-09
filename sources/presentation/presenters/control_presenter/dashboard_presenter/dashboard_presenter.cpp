@@ -25,7 +25,10 @@ void DashboardPresenter::addInstrument(const QString& viewName,
 
 void DashboardPresenter::connectView(QObject* view)
 {
-    for (const QString& viewName: m_instruments.keys())
+    QStringList instruments = m_instruments.keys();
+    this->setViewProperty(PROPERTY(instruments), instruments);
+
+    for (const QString& viewName: instruments)
     {
         m_instruments[viewName]->setView(view->findChild<QObject*>(viewName));
     }

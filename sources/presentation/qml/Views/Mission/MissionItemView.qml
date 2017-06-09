@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls"
-import "../Map"
 
 ColumnLayout {
     id: root
