@@ -1,16 +1,16 @@
-#ifndef STATUS_PRESENTER_H
-#define STATUS_PRESENTER_H
+#ifndef STATUSBAR_PRESENTER_H
+#define STATUSBAR_PRESENTER_H
 
 #include "base_presenter.h"
 
 namespace presentation
 {
-    class StatusPresenter: public BasePresenter
+    class StatusbarPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit StatusPresenter(QObject* parent);
+        explicit StatusbarPresenter(QObject* parent);
 
     signals:
         void setMode(const QString& mode);
@@ -20,4 +20,4 @@ namespace presentation
     };
 }
 
-#endif // STATUS_PRESENTER_H
+#endif // STATUSBAR_PRESENTER_H

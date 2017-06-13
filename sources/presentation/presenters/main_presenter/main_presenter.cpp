@@ -7,7 +7,7 @@
 // Internal
 #include "domain_entry.h"
 
-#include "status_presenter.h"
+#include "statusbar_presenter.h"
 #include "control_presenter.h"
 #include "mission_presenter.h"
 #include "settings_presenter.h"
@@ -19,7 +19,7 @@ class MainPresenter::Impl
 public:
     domain::DomainEntry* entry;
 
-    StatusPresenter* status;
+    StatusbarPresenter* statusbar;
     BasePresenter* modePresenter = nullptr;
 };
 
@@ -29,8 +29,8 @@ MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* parent):
 {
     d->entry = entry;
 
-    d->status = new StatusPresenter(this);
-    connect(d->status, &StatusPresenter::setMode, this, &MainPresenter::setMode);
+    d->statusbar = new StatusbarPresenter(this);
+    connect(d->statusbar, &StatusbarPresenter::setMode, this, &MainPresenter::setMode);
 }
 
 MainPresenter::~MainPresenter()
@@ -69,7 +69,7 @@ void MainPresenter::setMode(const QString& mode)
 
 void MainPresenter::connectView(QObject* view)
 {
-    d->status->setView(view->findChild<QObject*>(NAME(status)));
+    d->statusbar->setView(view->findChild<QObject*>(NAME(statusbar)));
 
     this->invokeViewMethod(PROPERTY(updateUiSettings));
 }

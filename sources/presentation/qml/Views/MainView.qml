@@ -39,7 +39,7 @@ ApplicationWindow {
     }
 
     header: StatusView {
-        objectName: "status"
+        objectName: "statusbar"
     }
 
     Loader {
