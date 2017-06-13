@@ -59,6 +59,7 @@
 //  |  |-operational                    bool
 //  |  |-trueAirspeed                   real
 //  |  |-indicatedAirspeed              real
+// TODO: rangefinder
 //  |-navigator
 //  |  |-targetBearing                  real
 //  |  |-targetDistance                 real

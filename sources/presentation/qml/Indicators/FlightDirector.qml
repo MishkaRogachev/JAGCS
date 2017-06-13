@@ -10,11 +10,14 @@ Item {
     property alias roll: af.roll
     property alias armed: af.armed
 
+    property real groundspeed: 0
     property real indicatedAirspeed: 0
     property real trueAirspeed: 0
 
-    property real barometricAltitude: 0
+    property int satelliteAltitude: 0
+    property int barometricAltitude: 0
     property real barometricClimb: 0
+    property int rangefinderAltitude: 0
 
     property bool airSpeedAvalible: true
     property bool altitudeAvalible: true
@@ -29,7 +32,17 @@ Item {
 
     implicitHeight: af.height
 
+    FdLabel {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        prefix: qsTr("GS")
+        digits: 1
+        value: groundspeed
+        width: speedLadder.width
+    }
+
     Ladder {
+        id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         width: parent.width * 0.2
@@ -43,10 +56,27 @@ Item {
         prefix: qsTr("IAS")
     }
 
+    FdLabel {
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        prefix: qsTr("TAS")
+        digits: 1
+        value: trueAirspeed
+        width: speedLadder.width
+    }
+
     ArtificialHorizon {
         id: af
         anchors.centerIn: parent
         width: parent.width * 0.58
+    }
+
+    FdLabel {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        prefix: qsTr("SAT")
+        value: satelliteAltitude
+        width: altitudeLadder.width
     }
 
     Ladder {
@@ -63,99 +93,12 @@ Item {
         canvasRotation: -90
         prefix: qsTr("ALT")
     }
-}
-/*
-ArtificialHorizon {
-    id: root
 
-    property int speed: 0.0
-    property int altitude: 0.0
-    property int throttle: 0
-    property int climb: 0
-
-    property string speedPrefix: qsTr("IAS, m/s")
-    property string altitudePrefix: qsTr("Hbar, m")
-
-    property bool speedAvalible: true
-    property bool altitudeAvalible: true
-
-    property int minSpeed: -13
-    property int maxSpeed: 13
-    property int speedStep: 5
-    property int minAltitude: -27
-    property int maxAltitude: 27
-    property int altitudeStep: 10
-    property int minThrottle: 0
-    property int maxThrottle: 100
-    property int minClimb: -12
-    property int maxClimb: 12
-
-    //ratio: 1
-
-    RollScale {
-        id: rollScale
-        anchors.fill: parent
-        roll: rollInverted ? -root.roll : root.roll
-        minRoll: root.minRoll
-        maxRoll: root.maxRoll
-        rollStep: root.rollStep
-    }
-
-    BarIndicator {
-        id: throttleBar
-        anchors.verticalCenter: parent.verticalCenter
-        width: parent.width * 0.03
-        height: parent.height * 0.8
-        value: throttle
-        fillColor: palette.selectionColor
-        minValue: minThrottle
-        maxValue: maxThrottle
-    }
-
-    Ladder {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: throttleBar.right
-        width: parent.width * 0.17
-        height: parent.height * 0.8
-        value: speed
-        minValue: speed + minSpeed
-        maxValue: speed + maxSpeed
-        valueStep: speedStep
-        color: speedAvalible ? palette.textColor : palette.disabledColor
-        canvasRotation: 90
-        prefix: speedPrefix
-    }
-
-    Ladder {
-        id: altitudeLadder
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: climbScale.left
-        width: parent.width * 0.17
-        height: parent.height * 0.8
-        value: altitude
-        minValue: altitude + minAltitude
-        maxValue: altitude + maxAltitude
-        valueStep: altitudeStep
-        color: altitudeAvalible ? palette.textColor : palette.disabledColor
-        canvasRotation: -90
-        prefix: altitudePrefix
-    }
-
-    BarIndicator {
-        id: climbScale
-        anchors.verticalCenter: parent.verticalCenter
+    FdLabel {
+        anchors.bottom: parent.bottom
         anchors.right: parent.right
-        width: root.width * 0.03
-        height: root.height * 0.8
-        value: climb
-        fillColor: {
-            if (!altitudeAvalible) return palette.disabledColor;
-            if (value > 0) return palette.skyColor;
-            if (value > minValue) return palette.groundColor;
-            return palette.negativeColor;
-        }
-        minValue: minClimb
-        maxValue: maxClimb
+        prefix: qsTr("RF")
+        value: rangefinderAltitude
+        width: altitudeLadder.width
     }
 }
-*/

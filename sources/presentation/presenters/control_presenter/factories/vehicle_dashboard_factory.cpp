@@ -7,6 +7,7 @@
 #include "dashboard_presenter.h"
 #include "status_presenter.h"
 #include "ahrs_presenter.h"
+#include "satellite_presenter.h"
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
 #include "compass_presenter.h"
@@ -32,6 +33,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                   node->childNode(telemetry::status), dashboard));
     dashboard->addInstrument("fd", new AhrsPresenter(
                                  node->childNode(telemetry::ahrs), dashboard));
+    dashboard->addInstrument("fd", new SatellitePresenter(
+                                 node->childNode(telemetry::satellite), dashboard));
     dashboard->addInstrument("fd", new BarometricPresenter(
                                  node->childNode(telemetry::barometric), dashboard));
     dashboard->addInstrument("fd", new PitotPresenter(
