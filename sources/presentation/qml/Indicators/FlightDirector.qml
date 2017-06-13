@@ -6,8 +6,12 @@ import "../Controls" as Controls
 Item {
     id: root
 
-    property real indicatedAirSpeed: 0
-    property real trueAirSpeed: 0
+    property alias pitch: af.pitch
+    property alias roll: af.roll
+    property alias armed: af.armed
+
+    property real indicatedAirspeed: 0
+    property real trueAirspeed: 0
 
     property real barometricAltitude: 0
     property real barometricClimb: 0
@@ -23,10 +27,6 @@ Item {
     property int maxAltitude: 27
     property int altitudeStep: 10
 
-    property alias pitch: af.pitch
-    property alias roll: af.roll
-    property alias armed: af.armed
-
     implicitHeight: af.height
 
     Ladder {
@@ -34,9 +34,9 @@ Item {
         anchors.left: parent.left
         width: parent.width * 0.2
         height: parent.height * 0.7
-        value: indicatedAirSpeed
-        minValue: indicatedAirSpeed + minSpeed
-        maxValue: indicatedAirSpeed + maxSpeed
+        value: indicatedAirspeed
+        minValue: indicatedAirspeed + minSpeed
+        maxValue: indicatedAirspeed + maxSpeed
         valueStep: speedStep
         color: airSpeedAvalible ? palette.textColor : palette.disabledColor
         canvasRotation: 90
