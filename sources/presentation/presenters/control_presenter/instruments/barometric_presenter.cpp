@@ -18,7 +18,7 @@ void BarometricPresenter::onParametersChanged(const QVariantMap& parameters)
     {
         if (key == telemetry::altitude)
             this->setViewProperty(PROPERTY(barometricAltitude), parameters[key]);
-        if (key == telemetry::climb)
+        else if (key == telemetry::climb)
             this->setViewProperty(PROPERTY(barometricClimb), parameters[key]);
     }
 }

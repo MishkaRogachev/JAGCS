@@ -18,7 +18,7 @@ void PitotPresenter::onParametersChanged(const QVariantMap& parameters)
     {
         if (key == telemetry::trueAirspeed)
             this->setViewProperty(PROPERTY(trueAirspeed), parameters[key]);
-        if (key == telemetry::indicatedAirspeed)
+        else if (key == telemetry::indicatedAirspeed)
             this->setViewProperty(PROPERTY(indicatedAirspeed), parameters[key]);
     }
 }

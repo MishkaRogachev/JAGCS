@@ -18,9 +18,9 @@ void AhrsPresenter::onParametersChanged(const QVariantMap& parameters)
     {
         if (key == telemetry::pitch)
             this->setViewProperty(PROPERTY(pitch), parameters[key]);
-        if (key == telemetry::roll)
+        else if (key == telemetry::roll)
             this->setViewProperty(PROPERTY(roll), parameters[key]);
-        if (key == telemetry::yaw)
+        else if (key == telemetry::yaw)
             this->setViewProperty(PROPERTY(yaw), parameters[key]);
     }
 }

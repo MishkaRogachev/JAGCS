@@ -18,9 +18,9 @@ void GenericPresenter::onParametersChanged(const QVariantMap& parameters)
     {
         if (key == telemetry::online)
             this->setViewProperty(PROPERTY(online), parameters[key]);
-        if (key == telemetry::armed)
+        else if (key == telemetry::armed)
             this->setViewProperty(PROPERTY(armed), parameters[key]);
-        if (key == telemetry::mode)
+        else if (key == telemetry::mode)
             this->setViewProperty(PROPERTY(mode), parameters[key]);
     }
 }

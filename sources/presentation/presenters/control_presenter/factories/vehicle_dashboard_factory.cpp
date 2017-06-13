@@ -9,6 +9,7 @@
 #include "ahrs_presenter.h"
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
+#include "compass_presenter.h"
 
 using namespace presentation;
 
@@ -34,6 +35,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(telemetry::barometric), dashboard));
     dashboard->addInstrument("fd", new PitotPresenter(
                                  node->childNode(telemetry::pitot), dashboard));
+    dashboard->addInstrument("hsi", new CompassPresenter(
+                                 node->childNode(telemetry::compass), dashboard));
 
     return dashboard;
 }
