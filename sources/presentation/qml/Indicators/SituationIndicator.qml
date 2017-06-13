@@ -12,7 +12,7 @@ Compass {
         id: canvas
         anchors.fill: parent
         anchors.margins: scalesOffset * 2
-        rotation: -targetBearing
+        rotation: targetBearing - heading
 
         onPaint: {
             var ctx = canvas.getContext('2d');

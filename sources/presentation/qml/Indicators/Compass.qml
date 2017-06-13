@@ -23,7 +23,7 @@ Rectangle {
     Canvas {
         id: canvas
         anchors.fill: parent
-        rotation: -course
+        rotation: -heading
 
         onPaint: {
             var ctx = canvas.getContext('2d');
@@ -62,7 +62,7 @@ Rectangle {
                 if (!(i % 30)) {
                     ctx.save();
                     ctx.translate(0, scalesOffset * 1.3);
-                    ctx.rotate((-i + course) * Math.PI / 180);
+                    ctx.rotate((-i + heading) * Math.PI / 180);
 
                     ctx.font = 'bold ' + scalesOffset * 1.2 + 'px "Open Sans"';
                     if (i == 0) ctx.fillText(qsTr("N"), 0, 2);
@@ -92,7 +92,7 @@ Rectangle {
 
             ctx.save();
 
-            ctx.rotate((course - heading) * Math.PI / 180);
+            ctx.rotate((-course) * Math.PI / 180);
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.moveTo(-scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
