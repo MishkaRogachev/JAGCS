@@ -1,4 +1,4 @@
-#include "generic_presenter.h"
+#include "status_presenter.h"
 
 // Qt
 #include <QDebug>
@@ -8,11 +8,11 @@
 
 using namespace presentation;
 
-GenericPresenter::GenericPresenter(domain::TelemetryNode* node, QObject* parent):
+StatusPresenter::StatusPresenter(domain::TelemetryNode* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void GenericPresenter::onParametersChanged(const QVariantMap& parameters)
+void StatusPresenter::onParametersChanged(const QVariantMap& parameters)
 {
     for (const QString& key: parameters.keys())
     {

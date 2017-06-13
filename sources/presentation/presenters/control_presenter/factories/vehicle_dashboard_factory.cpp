@@ -5,7 +5,7 @@
 #include "vehicle.h"
 
 #include "dashboard_presenter.h"
-#include "generic_presenter.h"
+#include "status_presenter.h"
 #include "ahrs_presenter.h"
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
@@ -28,7 +28,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
     // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
-    dashboard->addInstrument("fd", new GenericPresenter(node, dashboard));
+    dashboard->addInstrument("fd", new StatusPresenter(
+                                  node->childNode(telemetry::status), dashboard));
     dashboard->addInstrument("fd", new AhrsPresenter(
                                  node->childNode(telemetry::ahrs), dashboard));
     dashboard->addInstrument("fd", new BarometricPresenter(
