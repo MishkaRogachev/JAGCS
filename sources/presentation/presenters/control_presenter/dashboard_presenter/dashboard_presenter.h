@@ -26,7 +26,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onInstrumentAdded(const QString& instrument, QObject* view);
+        void onInstrumentAdded(const QString& key, QObject* view);
 
     private:
         QMap<QString, AbstractInstrumentPresenter*> m_instruments;

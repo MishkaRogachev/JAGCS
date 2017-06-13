@@ -27,8 +27,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
 
     dashboard->addInstrument("fd", new AhrsPresenter(
                                  node->childNode(telemetry::ahrs), dashboard));
-//    dashboard->addInstrument("fd", new BarometricPresenter(
-//                                 node->childNode(telemetry::barometric), dashboard));
+    dashboard->addInstrument("fd", new BarometricPresenter(
+                                 node->childNode(telemetry::barometric), dashboard));
 
     return dashboard;
 }

@@ -268,6 +268,7 @@ void MissionPresenter::onRenameMission(const QString& name)
 
 void MissionPresenter::onAssignVehicle(int index)
 {
+    // TODO: fix vehicle assignment
     if (!d->selectedMission) return;
     db::VehiclePtr vehicle = (index > 0 && index <= d->missions.count()) ?
                                  d->vehicles.at(index - 1) : db::VehiclePtr();

@@ -21,7 +21,7 @@ DashboardPresenter::~DashboardPresenter()
 void DashboardPresenter::addInstrument(const QString& viewName,
                                        AbstractInstrumentPresenter* instrument)
 {
-    m_instruments[viewName] = instrument;
+    m_instruments.insertMulti(viewName, instrument);
 }
 
 void DashboardPresenter::connectView(QObject* view)
@@ -29,12 +29,13 @@ void DashboardPresenter::connectView(QObject* view)
     connect(view, SIGNAL(instrumentAdded(QString, QObject*)),
             this, SLOT(onInstrumentAdded(QString, QObject*)));
 
-    this->setViewProperty(PROPERTY(instruments), QStringList(m_instruments.keys()));
+    this->setViewProperty(PROPERTY(instruments), QStringList(m_instruments.uniqueKeys()));
 }
 
-void DashboardPresenter::onInstrumentAdded(const QString& instrument, QObject* view)
+void DashboardPresenter::onInstrumentAdded(const QString& key, QObject* view)
 {
-    if (!m_instruments.contains(instrument)) return;
-
-    m_instruments[instrument]->setView(view);
+    for (AbstractInstrumentPresenter* instrument: m_instruments.values(key))
+    {
+        instrument->setView(view);
+    }
 }
