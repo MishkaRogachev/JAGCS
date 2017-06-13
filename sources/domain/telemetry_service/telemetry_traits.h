@@ -5,11 +5,13 @@
 #include <QString>
 
 // mav
-//  |-online                            bool
-//  |-armed                             bool
-//  |-mode                              string
-//  |-coordinate                        coordinate
-//  |-direction                         direction
+//  |-status
+//  |  |-online                         bool
+//  |  |-armed                          bool
+//  |  |-mode                           string
+//  |-position
+//  |  |-coordinate                     coordinate
+//  |  |-direction                      direction
 //  |-home
 //  |  |-coordinate                     coordinate
 //  |  |-direction                      direction
@@ -116,6 +118,9 @@ namespace telemetry
     const QString time = "time";
     const QString satellitesVisible = "satellitesVisible";
 
+    const QString status = "status";
+
+    const QString position = "position";
     const QString home = "home";
 
     const QString ahrs = "ahrs";
