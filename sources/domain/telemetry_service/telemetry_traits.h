@@ -77,8 +77,6 @@
 
 namespace telemetry
 {
-    const char separator = '_';
-
     const QString online = "online";
     const QString armed = "armed";
     const QString mode = "mode";

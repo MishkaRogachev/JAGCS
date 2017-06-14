@@ -20,8 +20,6 @@ namespace domain
         QVariant parameter(const QString& name) const;
         QVariantMap parameters() const;
         QStringList changedParameters() const;
-        QVariantMap allParameters() const;
-
         QVariantMap takeChangedParameters();
 
         TelemetryNode* parentNode() const;

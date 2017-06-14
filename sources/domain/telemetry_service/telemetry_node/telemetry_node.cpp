@@ -36,23 +36,6 @@ QVariantMap TelemetryNode::parameters() const
     return m_parameters;
 }
 
-QVariantMap TelemetryNode::allParameters() const
-{
-    QVariantMap parameters = m_parameters;
-
-    for (TelemetryNode* child: this->childNodes())
-    {
-        QVariantMap childParameters = child->allParameters();
-        for (const QString& name: childParameters.keys())
-        {
-            QStringList path = { child->name(), name };
-            parameters[path.join(telemetry::separator)] = childParameters[name];
-        }
-    }
-
-    return parameters;
-}
-
 QStringList TelemetryNode::changedParameters() const
 {
     return m_changedParameters;
@@ -66,17 +49,6 @@ QVariantMap TelemetryNode::takeChangedParameters()
     {
         QString key = m_changedParameters.takeFirst();
         parameters[key] = m_parameters[key];
-    }
-
-    for (TelemetryNode* child: this->childNodes())
-    {
-        QVariantMap childParameters = child->takeChangedParameters();
-
-        for (const QString& name: childParameters.keys())
-        {
-            QStringList path = { child->name(), name };
-            parameters[path.join(telemetry::separator)] = childParameters[name];
-        }
     }
 
     return parameters;
@@ -117,14 +89,6 @@ QList<TelemetryNode*> TelemetryNode::childNodes() const
 
 void TelemetryNode::setParameter(const QString& name, const QVariant& value)
 {
-    QStringList split = name.split(telemetry::separator);
-    if (split.count() > 1)
-    {
-        TelemetryNode* child = this->childNode(split.at(0));
-        child->setParameter(split.at(1), value);
-        return;
-    }
-
     if (m_parameters.contains(name) && m_parameters[name] == value) return;
 
     m_parameters[name] = value;
@@ -133,7 +97,14 @@ void TelemetryNode::setParameter(const QString& name, const QVariant& value)
 
 void TelemetryNode::setParameter(const QStringList& names, const QVariant& value)
 {
-    this->setParameter(names.join(telemetry::separator), value);
+    if (names.count() > 1)
+    {
+        TelemetryNode* child = this->childNode(names.at(0));
+        child->setParameter(names.at(1), value);
+        return;
+    }
+
+    if (names.count() == 1) this->setParameter(names.at(0), value);
 }
 
 void TelemetryNode::notify()

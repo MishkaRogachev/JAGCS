@@ -24,7 +24,6 @@ void TelemetryTest::testTelemetryTree()
     root.childNode(telemetry::satellite)->setParameter(telemetry::fix, 2);
 
     QCOMPARE(root.takeChangedParameters().count(), 2);
-    QCOMPARE(root.allParameters().count(), 3);
     QCOMPARE(spy.count(), 0);
 
     root.childNode(telemetry::barometric)->setParameter(telemetry::altitude, 670);
