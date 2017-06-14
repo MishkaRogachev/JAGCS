@@ -14,13 +14,10 @@ AhrsPresenter::AhrsPresenter(domain::TelemetryNode* node, QObject* parent):
 
 void AhrsPresenter::onParametersChanged(const QVariantMap& parameters)
 {
-    for (const QString& key: parameters.keys())
-    {
-        if (key == telemetry::pitch)
-            this->setViewProperty(PROPERTY(pitch), parameters[key]);
-        else if (key == telemetry::roll)
-            this->setViewProperty(PROPERTY(roll), parameters[key]);
-        else if (key == telemetry::yaw)
-            this->setViewProperty(PROPERTY(yaw), parameters[key]);
-    }
+    if (parameters.contains(telemetry::pitch))
+        this->setViewProperty(PROPERTY(pitch), parameters[telemetry::pitch]);
+    if (parameters.contains(telemetry::roll))
+        this->setViewProperty(PROPERTY(roll), parameters[telemetry::roll]);
+    if (parameters.contains(telemetry::yawspeed))
+        this->setViewProperty(PROPERTY(yawspeed), parameters[telemetry::yawspeed]);
 }

@@ -14,11 +14,8 @@ BarometricPresenter::BarometricPresenter(domain::TelemetryNode* node, QObject* p
 
 void BarometricPresenter::onParametersChanged(const QVariantMap& parameters)
 {
-    for (const QString& key: parameters.keys())
-    {
-        if (key == telemetry::altitude)
-            this->setViewProperty(PROPERTY(barometricAltitude), parameters[key]);
-        else if (key == telemetry::climb)
-            this->setViewProperty(PROPERTY(barometricClimb), parameters[key]);
-    }
+    if (parameters.contains(telemetry::altitude))
+        this->setViewProperty(PROPERTY(barometricAltitude), parameters[telemetry::altitude]);
+    if (parameters.contains(telemetry::climb))
+        this->setViewProperty(PROPERTY(barometricClimb), parameters[telemetry::climb]);
 }

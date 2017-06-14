@@ -14,11 +14,8 @@ PitotPresenter::PitotPresenter(domain::TelemetryNode* node, QObject* parent):
 
 void PitotPresenter::onParametersChanged(const QVariantMap& parameters)
 {
-    for (const QString& key: parameters.keys())
-    {
-        if (key == telemetry::trueAirspeed)
-            this->setViewProperty(PROPERTY(trueAirspeed), parameters[key]);
-        else if (key == telemetry::indicatedAirspeed)
-            this->setViewProperty(PROPERTY(indicatedAirspeed), parameters[key]);
-    }
+    if (parameters.contains(telemetry::trueAirspeed))
+        this->setViewProperty(PROPERTY(trueAirspeed), parameters[telemetry::trueAirspeed]);
+    if (parameters.contains(telemetry::indicatedAirspeed))
+        this->setViewProperty(PROPERTY(indicatedAirspeed), parameters[telemetry::indicatedAirspeed]);
 }

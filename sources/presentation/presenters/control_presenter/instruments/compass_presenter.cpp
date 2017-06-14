@@ -14,9 +14,6 @@ CompassPresenter::CompassPresenter(domain::TelemetryNode* node, QObject* parent)
 
 void CompassPresenter::onParametersChanged(const QVariantMap& parameters)
 {
-    for (const QString& key: parameters.keys())
-    {
-        if (key == telemetry::heading)
-            this->setViewProperty(PROPERTY(heading), parameters[key]);
-    }
+    if (parameters.contains(telemetry::heading))
+        this->setViewProperty(PROPERTY(heading), parameters[telemetry::heading]);
 }

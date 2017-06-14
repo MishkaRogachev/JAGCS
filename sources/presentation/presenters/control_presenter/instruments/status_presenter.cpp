@@ -14,13 +14,10 @@ StatusPresenter::StatusPresenter(domain::TelemetryNode* node, QObject* parent):
 
 void StatusPresenter::onParametersChanged(const QVariantMap& parameters)
 {
-    for (const QString& key: parameters.keys())
-    {
-        if (key == telemetry::online)
-            this->setViewProperty(PROPERTY(online), parameters[key]);
-        else if (key == telemetry::armed)
-            this->setViewProperty(PROPERTY(armed), parameters[key]);
-        else if (key == telemetry::mode)
-            this->setViewProperty(PROPERTY(mode), parameters[key]);
-    }
+    if (parameters.contains(telemetry::online))
+        this->setViewProperty(PROPERTY(online), parameters[telemetry::online]);
+    if (parameters.contains(telemetry::armed))
+        this->setViewProperty(PROPERTY(armed), parameters[telemetry::armed]);
+    if (parameters.contains(telemetry::mode))
+        this->setViewProperty(PROPERTY(mode), parameters[telemetry::mode]);
 }
