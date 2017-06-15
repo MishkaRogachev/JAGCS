@@ -30,17 +30,17 @@ DashboardPresenter* VehicleDashboardFactory::create()
     DashboardPresenter* dashboard = new DashboardPresenter();
 
     dashboard->addInstrument("fd", new StatusPresenter(
-                                  node->childNode(telemetry::status), dashboard));
+                                  node->childNode(domain::TelemetryId::Status), dashboard));
     dashboard->addInstrument("fd", new AhrsPresenter(
-                                 node->childNode(telemetry::ahrs), dashboard));
+                                 node->childNode(domain::TelemetryId::Ahrs), dashboard));
     dashboard->addInstrument("fd", new SatellitePresenter(
-                                 node->childNode(telemetry::satellite), dashboard));
+                                 node->childNode(domain::TelemetryId::Satellite), dashboard));
     dashboard->addInstrument("fd", new BarometricPresenter(
-                                 node->childNode(telemetry::barometric), dashboard));
+                                 node->childNode(domain::TelemetryId::Barometric), dashboard));
     dashboard->addInstrument("fd", new PitotPresenter(
-                                 node->childNode(telemetry::pitot), dashboard));
+                                 node->childNode(domain::TelemetryId::Pitot), dashboard));
     dashboard->addInstrument("hsi", new CompassPresenter(
-                                 node->childNode(telemetry::compass), dashboard));
+                                 node->childNode(domain::TelemetryId::Compass), dashboard));
 
     return dashboard;
 }

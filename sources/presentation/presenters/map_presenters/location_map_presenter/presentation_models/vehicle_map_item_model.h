@@ -6,6 +6,7 @@
 
 // Internal
 #include "db_traits.h"
+#include "telemetry_traits.h"
 
 namespace db
 {
@@ -52,7 +53,7 @@ namespace presentation
         QHash<int, QByteArray> roleNames() const override;
 
         QModelIndex vehicleIndex(int vehicleId) const;
-        void onVehicleTelemetryChanged(int vehicleId, const QStringList& parameters);
+        void onVehicleTelemetryChanged(int vehicleId, const domain::TelemetryList& parameters);
 
     private:
         class Impl;

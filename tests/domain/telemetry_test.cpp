@@ -11,23 +11,27 @@ using namespace domain;
 
 void TelemetryTest::testTelemetryTree()
 {
-    TelemetryNode root("root");
+    qRegisterMetaType<TelemetryId>("TelemetryId");
+    qRegisterMetaType<TelemetryList>("TelemetryList");
+    qRegisterMetaType<TelemetryMap>("TelemetryMap");
+
+    TelemetryNode root(TelemetryId::Root);
     QSignalSpy spy(&root, &TelemetryNode::parametersChanged);
 
-    root.childNode(telemetry::satellite)->setParameter(telemetry::altitude, 666);
-    root.childNode(telemetry::satellite)->setParameter(telemetry::climb, 13);
+    root.childNode(TelemetryId::Satellite)->setParameter(TelemetryId::Altitude, 666);
+    root.childNode(TelemetryId::Satellite)->setParameter(TelemetryId::Climb, 13);
 
-    QCOMPARE(root.takeChangedParameters().count(), 2);
+    QCOMPARE(root.childNode(TelemetryId::Satellite)->takeChangedParameters().count(), 2);
 
-    root.childNode(telemetry::satellite)->setParameter(telemetry::altitude, 665);
-    root.childNode(telemetry::satellite)->setParameter(telemetry::climb, 13);
-    root.childNode(telemetry::satellite)->setParameter(telemetry::fix, 2);
+    root.childNode(TelemetryId::Satellite)->setParameter(TelemetryId::Altitude, 665);
+    root.childNode(TelemetryId::Satellite)->setParameter(TelemetryId::Climb, 13);
+    root.childNode(TelemetryId::Satellite)->setParameter(TelemetryId::Fix, 2);
 
-    QCOMPARE(root.takeChangedParameters().count(), 2);
+    QCOMPARE(root.childNode(TelemetryId::Satellite)->takeChangedParameters().count(), 2);
     QCOMPARE(spy.count(), 0);
 
-    root.childNode(telemetry::barometric)->setParameter(telemetry::altitude, 670);
-    root.childNode(telemetry::satellite)->setParameter(telemetry::altitude, 669);
+    root.childNode(TelemetryId::Barometric)->setParameter(TelemetryId::Altitude, 670);
+    root.childNode(TelemetryId::Satellite)->setParameter(TelemetryId::Altitude, 669);
 
     root.notify();
     QCOMPARE(root.takeChangedParameters().count(), 0);

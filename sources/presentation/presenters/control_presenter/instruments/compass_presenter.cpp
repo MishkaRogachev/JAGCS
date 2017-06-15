@@ -12,8 +12,8 @@ CompassPresenter::CompassPresenter(domain::TelemetryNode* node, QObject* parent)
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void CompassPresenter::onParametersChanged(const QVariantMap& parameters)
+void CompassPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
 {
-    if (parameters.contains(telemetry::heading))
-        this->setViewProperty(PROPERTY(heading), parameters[telemetry::heading]);
+    if (parameters.contains(domain::TelemetryId::Heading))
+        this->setViewProperty(PROPERTY(heading), parameters[domain::TelemetryId::Heading]);
 }

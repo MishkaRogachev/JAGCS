@@ -66,14 +66,14 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 
     switch (role)
     {
-    case CoordinateRole: return node->parameter(telemetry::coordinate);
-    case DirectionRole: return node->parameter(telemetry::heading);
+    case CoordinateRole: return node->parameter(domain::TelemetryId::Coordinate);
+    case DirectionRole: return node->parameter(domain::TelemetryId::Heading);
     case MarkRole: return QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
     case VehicleIdRole: return d->dbFacade->vehicle(vehicleId)->mavId();
     case TrackRole:
         return d->tracks[vehicleId];
     case HdopRadius:
-        return node->childNode(telemetry::satellite)->parameter(telemetry::eph);
+        return node->childNode(domain::TelemetryId::Satellite)->parameter(domain::TelemetryId::Eph);
     default:
         return QVariant();
     }
@@ -87,10 +87,10 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
 
     domain::TelemetryNode* node = d->telemetryService->node(vehicle->id());
     if (node) connect(node, &domain::TelemetryNode::parametersChanged, this,
-                      [this, vehicleId](const QVariantMap& parameters) {
-        if (parameters.contains(telemetry::coordinate))
+                      [this, vehicleId](const domain::TelemetryMap& parameters) {
+        if (parameters.contains(domain::TelemetryId::Coordinate))
         {
-            d->tracks[vehicleId].append(parameters[telemetry::coordinate]);
+            d->tracks[vehicleId].append(parameters[domain::TelemetryId::Coordinate]);
         }
         this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
     });
@@ -132,17 +132,17 @@ QModelIndex VehicleMapItemModel::vehicleIndex(int vehicleId) const
     return this->index(d->vehicleIds.indexOf(vehicleId));
 }
 
-void VehicleMapItemModel::onVehicleTelemetryChanged(int vehicleId,
-                                                    const QStringList& parameters)
+void VehicleMapItemModel::onVehicleTelemetryChanged(
+        int vehicleId, const domain::TelemetryList& parameters)
 {
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
     QVector<int> roles;
 
-    if (parameters.contains(telemetry::coordinate)) roles.append({ CoordinateRole, TrackRole });
-    if (parameters.endsWith(telemetry::heading)) roles.append(DirectionRole);
-    if (parameters.endsWith(telemetry::eph)) roles.append(HdopRadius);
+    if (parameters.contains(domain::TelemetryId::Coordinate)) roles.append({ CoordinateRole, TrackRole });
+    if (parameters.contains(domain::TelemetryId::Heading)) roles.append(DirectionRole);
+    if (parameters.contains(domain::TelemetryId::Eph)) roles.append(HdopRadius);
 
     emit dataChanged(index, index, roles);
 }

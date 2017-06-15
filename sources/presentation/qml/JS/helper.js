@@ -61,3 +61,7 @@ function dmsStringToDegree(string, lng) {
     return dmsToDegree(sign, parseInt(deg, 10), parseInt(min, 10), parseFloat(sec, 10));
 }
 
+function isDmsString(string) {
+    return 0 < string.indexOf("\u00B0") < string.indexOf("\'") < string.indexOf("\"");
+}
+

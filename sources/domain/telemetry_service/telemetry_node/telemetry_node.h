@@ -3,7 +3,8 @@
 
 //Internal
 #include <QObject>
-#include <QVariantMap>
+
+#include "telemetry_traits.h"
 
 namespace domain
 {
@@ -12,40 +13,41 @@ namespace domain
         Q_OBJECT
 
     public:
-        TelemetryNode(const QString& name, TelemetryNode* parentNode = nullptr);
+        TelemetryNode(TelemetryId id, TelemetryNode* parentNode = nullptr);
         ~TelemetryNode() override;
 
-        QString name() const;
+        TelemetryId id() const;
 
-        QVariant parameter(const QString& name) const;
-        QVariantMap parameters() const;
-        QStringList changedParameters() const;
-        QVariantMap takeChangedParameters();
+        QVariant parameter(TelemetryId id) const;
+        TelemetryMap parameters() const;
+
+        TelemetryList changedParameterKeys() const;
+        TelemetryMap takeChangedParameters();
 
         TelemetryNode* parentNode() const;
-        TelemetryNode* childNode(const QString& name);
-        TelemetryNode* childNode(const QStringList& path);
+        TelemetryNode* childNode(TelemetryId id);
+        TelemetryNode* childNode(const TelemetryList& path);
         QList<TelemetryNode*> childNodes() const;
 
     public slots:
-        void setParameter(const QString& name, const QVariant& value);
-        void setParameter(const QStringList& names, const QVariant& value);
+        void setParameter(TelemetryId id, const QVariant& value);
+        void setParameter(const TelemetryList& path, const QVariant& value);
         void notify();
 
     signals:
-        void parametersChanged(QVariantMap parameters);
+        void parametersChanged(TelemetryMap parameters);
 
     protected:
         void addChildNode(TelemetryNode* childNode);
         void removeChildNode(TelemetryNode* childNode);
 
     private:
-        const QString m_name;
-        QVariantMap m_parameters;
-        QStringList m_changedParameters;
+        const TelemetryId m_id;
+        TelemetryMap m_parameters;
+        TelemetryList m_changedParameters;
 
         TelemetryNode* const m_parentNode;
-        QMap<QString, TelemetryNode*> m_childNodes;
+        QMap<TelemetryId, TelemetryNode*> m_childNodes;
     };
 }
 

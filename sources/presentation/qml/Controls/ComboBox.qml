@@ -16,7 +16,7 @@ ComboBox {
     }
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize * 6
+        implicitWidth: palette.controlBaseSize * 4
         implicitHeight: palette.controlBaseSize
         color: control.enabled ? palette.sunkenColor : palette.disabledColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"

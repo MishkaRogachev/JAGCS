@@ -2,9 +2,9 @@
 #define TELEMETRY_TRAITS_H
 
 // Qt
-#include <QString>
+#include <QVariant>
 
-// mav
+// root
 //  |-status
 //  |  |-online                         bool
 //  |  |-armed                          bool
@@ -75,78 +75,76 @@
 //  |  |-speed                          real
 //  |  |-climb                          real
 
-namespace telemetry
+namespace domain
 {
-    const QString online = "online";
-    const QString armed = "armed";
-    const QString mode = "mode";
-
-    const QString present = "present";
-    const QString enabled = "enabled";
-    const QString operational = "operational";
-
-    const QString pitch = "pitch";
-    const QString roll = "roll";
-    const QString yaw = "yaw";
-    const QString pitchspeed = "pitchspeed";
-    const QString rollspeed = "rollspeed";
-    const QString yawspeed = "yawspeed";
-    const QString heading = "heading";
-    const QString course = "course";
-
-    const QString indicatedAirspeed = "indicatedAirspeed";
-    const QString trueAirspeed = "trueAirspeed";
-    const QString groundspeed = "groundspeed";
-    const QString speed = "speed";
-
-    const QString altitude = "altitude";
-    const QString climb = "climb";
-
-    const QString absPressure = "absPressure";
-    const QString diffPressure = "diffPressure";
-    const QString temperature = "temperature";
-
-    const QString throttle = "throttle";
-
-    const QString coordinate = "coordinate";
-    const QString direction = "direction";
-
-    const QString fix = "fix";
-    const QString eph = "eph";
-    const QString epv = "epv";
-    const QString time = "time";
-    const QString satellitesVisible = "satellitesVisible";
-
-    const QString status = "status";
-
-    const QString position = "position";
-    const QString home = "home";
-
-    const QString ahrs = "ahrs";
-    const QString satellite = "satellite";
-    const QString compass = "compass";
-    const QString barometric = "barometric";
-    const QString pitot = "pitot";
-    const QString navigator = "navigator";
-    const QString powerSystem = "powerSystem";
-    const QString wind = "wind";
-
-    const QString targetBearing = "targetBearing";
-    const QString targetDistance = "targetDistance";
-    const QString trackError = "trackError";
-    const QString altitudeError = "altitudeError";
-
-    const QString desiredPitch = "desiredPitch";
-    const QString desiredRoll = "desiredRoll";
-    const QString desiredHeading = "desiredHeading";
-
-    enum class SnsFix
+    enum class TelemetryId
     {
-        NoGps,
-        NoFix,
-        Fix2D,
-        Fix3D
+        Root = 1,
+
+        Status = 100,
+        Online = 101,
+        Armed = 102,
+        Mode = 103,
+
+        Present = 200,
+        Enabled = 201,
+        Operational = 202,
+
+        Position = 300,
+        Coordinate = 301,
+        Direction = 302,
+        Home = 400,
+
+        Altitude = 501,
+        Climb = 502,
+        Course = 503,
+        Heading = 504,
+        Speed = 505,
+        Groundspeed = 506,
+        IndicatedAirspeed = 507,
+        TrueAirspeed = 508,
+        Temperature = 509,
+
+        Ahrs = 1000,
+        Pitch = 1001,
+        Roll = 1002,
+        Yaw = 1003,
+        PitchSpeed = 1004,
+        RollSpeed = 1005,
+        YawSpeed = 1006,
+
+        Satellite = 2000,
+        Fix = 2002,
+        Eph = 2003,
+        Epv = 2004,
+        Time = 2005,
+        SatellitesVisible = 2006,
+
+        Compass = 3000,
+
+        Barometric = 4000,
+        AbsPressure = 4001,
+        DiffPressure = 4002,
+
+        Pitot = 5000,
+
+        Navigator = 6000,
+        TargetBearing = 6001,
+        TargetDistance = 6002,
+        TrackError = 6003,
+        AltitudeError = 6004,
+        DesiredPitch = 6005,
+        DesiredRoll = 6006,
+        DesiredHeading = 6007,
+
+        PowerSystem = 7000,
+        Throttle = 7001,
+
+        Wind = 8000,
     };
+
+    using TelemetryList = QList<TelemetryId>;
+    using TelemetryMap = QMap<TelemetryId, QVariant>;
 }
 
 #endif // TELEMETRY_TRAITS_H

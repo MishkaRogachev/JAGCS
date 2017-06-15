@@ -25,9 +25,9 @@ void WindHandler::processMessage(const mavlink_message_t& message)
     mavlink_wind_t wind;
     mavlink_msg_wind_decode(&message, &wind);
 
-    node->setParameter({ telemetry::wind, telemetry::yaw }, wind.direction);
-    node->setParameter({ telemetry::wind, telemetry::speed }, wind.speed);
-    node->setParameter({ telemetry::wind, telemetry::climb }, wind.speed_z);
+    node->setParameter({ TelemetryId::Wind, TelemetryId::Yaw }, wind.direction);
+    node->setParameter({ TelemetryId::Wind, TelemetryId::Speed }, wind.speed);
+    node->setParameter({ TelemetryId::Wind, TelemetryId::Climb }, wind.speed_z);
 
     node->notify();
 }

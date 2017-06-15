@@ -4,29 +4,25 @@
 #include <QCoreApplication>
 
 // Internal
-#include "vehicle.h"
-
 #include "telemetry_node.h"
 #include "telemetry_traits.h"
 
 using namespace domain;
 
-VehicleTelemetryNodeFactory::VehicleTelemetryNodeFactory(const db::VehiclePtr& vehicle):
-    ITelemetryNodeFactory(),
-    m_vehicle(vehicle)
+VehicleTelemetryNodeFactory::VehicleTelemetryNodeFactory():
+    ITelemetryNodeFactory()
 {}
 
 TelemetryNode* VehicleTelemetryNodeFactory::create()
 {
-    TelemetryNode* root = new TelemetryNode(qApp->translate("TelemetryNode",
-                                            ("MAV %1")).arg(m_vehicle->mavId()));
+    TelemetryNode* root = new TelemetryNode(TelemetryId::Root);
 
-    new TelemetryNode(telemetry::home, root);
-    new TelemetryNode(telemetry::ahrs, root);
-    new TelemetryNode(telemetry::satellite, root);
-    new TelemetryNode(telemetry::barometric, root);
-    new TelemetryNode(telemetry::navigator, root);
-    new TelemetryNode(telemetry::powerSystem, root);
+    new TelemetryNode(TelemetryId::Home, root);
+    new TelemetryNode(TelemetryId::Ahrs, root);
+    new TelemetryNode(TelemetryId::Satellite, root);
+    new TelemetryNode(TelemetryId::Barometric, root);
+    new TelemetryNode(TelemetryId::Navigator, root);
+    new TelemetryNode(TelemetryId::PowerSystem, root);
 
     return root;
 }

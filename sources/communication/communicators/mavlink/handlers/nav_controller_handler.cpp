@@ -30,13 +30,13 @@ void NavControllerHandler::processMessage(const mavlink_message_t& message)
     mavlink_nav_controller_output_t output;
     mavlink_msg_nav_controller_output_decode(&message, &output);
 
-    node->setParameter({ telemetry::navigator, telemetry::targetBearing }, output.target_bearing);
-    node->setParameter({ telemetry::navigator, telemetry::targetDistance }, output.wp_dist);
-    node->setParameter({ telemetry::navigator, telemetry::trackError }, output.xtrack_error);
-    node->setParameter({ telemetry::navigator, telemetry::altitudeError }, output.alt_error);
-    node->setParameter({ telemetry::navigator, telemetry::desiredPitch }, output.nav_pitch);
-    node->setParameter({ telemetry::navigator, telemetry::desiredRoll }, output.nav_roll);
-    node->setParameter({ telemetry::navigator, telemetry::desiredHeading }, output.nav_bearing);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::TargetBearing }, output.target_bearing);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::TargetDistance }, output.wp_dist);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::TrackError }, output.xtrack_error);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::AltitudeError }, output.alt_error);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::DesiredPitch }, output.nav_pitch);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::DesiredRoll }, output.nav_roll);
+    node->setParameter({ TelemetryId::Navigator, TelemetryId::DesiredHeading }, output.nav_bearing);
 
     node->notify();
 }

@@ -13,7 +13,7 @@ namespace presentation
         explicit BarometricPresenter(domain::TelemetryNode* node, QObject* parent = nullptr);
 
     public slots:
-        void onParametersChanged(const QVariantMap& parameters) override;
+        void onParametersChanged(const domain::TelemetryMap& parameters) override;
     };
 }
 

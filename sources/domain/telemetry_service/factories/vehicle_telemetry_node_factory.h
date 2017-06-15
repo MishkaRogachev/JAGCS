@@ -10,12 +10,9 @@ namespace domain
     class VehicleTelemetryNodeFactory: public ITelemetryNodeFactory
     {
     public:
-        VehicleTelemetryNodeFactory(const db::VehiclePtr& vehicle);
+        VehicleTelemetryNodeFactory();
 
         TelemetryNode* create() override;
-
-    private:
-        db::VehiclePtr m_vehicle;
     };
 }
 

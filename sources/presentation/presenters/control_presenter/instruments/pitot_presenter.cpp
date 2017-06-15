@@ -12,10 +12,12 @@ PitotPresenter::PitotPresenter(domain::TelemetryNode* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void PitotPresenter::onParametersChanged(const QVariantMap& parameters)
+void PitotPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
 {
-    if (parameters.contains(telemetry::trueAirspeed))
-        this->setViewProperty(PROPERTY(trueAirspeed), parameters[telemetry::trueAirspeed]);
-    if (parameters.contains(telemetry::indicatedAirspeed))
-        this->setViewProperty(PROPERTY(indicatedAirspeed), parameters[telemetry::indicatedAirspeed]);
+    if (parameters.contains(domain::TelemetryId::TrueAirspeed))
+        this->setViewProperty(PROPERTY(trueAirspeed),
+                              parameters[domain::TelemetryId::TrueAirspeed]);
+    if (parameters.contains(domain::TelemetryId::IndicatedAirspeed))
+        this->setViewProperty(PROPERTY(indicatedAirspeed),
+                              parameters[domain::TelemetryId::IndicatedAirspeed]);
 }

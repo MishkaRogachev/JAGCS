@@ -12,10 +12,12 @@ BarometricPresenter::BarometricPresenter(domain::TelemetryNode* node, QObject* p
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void BarometricPresenter::onParametersChanged(const QVariantMap& parameters)
+void BarometricPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
 {
-    if (parameters.contains(telemetry::altitude))
-        this->setViewProperty(PROPERTY(barometricAltitude), parameters[telemetry::altitude]);
-    if (parameters.contains(telemetry::climb))
-        this->setViewProperty(PROPERTY(barometricClimb), parameters[telemetry::climb]);
+    if (parameters.contains(domain::TelemetryId::Altitude))
+        this->setViewProperty(PROPERTY(barometricAltitude),
+                              parameters[domain::TelemetryId::Altitude]);
+    if (parameters.contains(domain::TelemetryId::Climb))
+        this->setViewProperty(PROPERTY(barometricClimb),
+                              parameters[domain::TelemetryId::Climb]);
 }

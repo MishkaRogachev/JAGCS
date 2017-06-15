@@ -29,11 +29,11 @@ void PressureHandler::processMessage(const mavlink_message_t& message)
     mavlink_scaled_pressure_t pressure;
     mavlink_msg_scaled_pressure_decode(&message, &pressure);
 
-    node->setParameter({ telemetry::barometric, telemetry::absPressure },
+    node->setParameter({ TelemetryId::Barometric, TelemetryId::AbsPressure },
                        pressure.press_abs);
-    node->setParameter({ telemetry::barometric, telemetry::diffPressure },
+    node->setParameter({ TelemetryId::Barometric, TelemetryId::DiffPressure },
                        pressure.press_diff);
-    node->setParameter({ telemetry::barometric, telemetry::temperature },
+    node->setParameter({ TelemetryId::Barometric, TelemetryId::Temperature },
                        decodeTemperature(pressure.temperature));
 
     node->notify();

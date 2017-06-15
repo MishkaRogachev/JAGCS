@@ -25,16 +25,16 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
     mavlink_vfr_hud_t vfrHud;
     mavlink_msg_vfr_hud_decode(&message, &vfrHud);
 
-    node->setParameter({ telemetry::pitot, telemetry::indicatedAirspeed }, vfrHud.airspeed);
-    node->setParameter({ telemetry::pitot, telemetry::trueAirspeed },
+    node->setParameter({ TelemetryId::Pitot, TelemetryId::IndicatedAirspeed }, vfrHud.airspeed);
+    node->setParameter({ TelemetryId::Pitot, TelemetryId::TrueAirspeed },
                        vfrHud.airspeed + (vfrHud.airspeed * 0.02 * vfrHud.alt / 1000));
 
-    node->setParameter({ telemetry::compass, telemetry::heading }, vfrHud.heading);
+    node->setParameter({ TelemetryId::Compass, TelemetryId::Heading }, vfrHud.heading);
 
-    node->setParameter({ telemetry::barometric, telemetry::altitude }, vfrHud.alt);
-    node->setParameter({ telemetry::barometric, telemetry::climb }, vfrHud.climb);
+    node->setParameter({ TelemetryId::Barometric, TelemetryId::Altitude }, vfrHud.alt);
+    node->setParameter({ TelemetryId::Barometric, TelemetryId::Climb }, vfrHud.climb);
 
-    node->setParameter({ telemetry::powerSystem, telemetry::throttle }, vfrHud.throttle);
+    node->setParameter({ TelemetryId::PowerSystem, TelemetryId::Throttle }, vfrHud.throttle);
 
     node->notify();
 }

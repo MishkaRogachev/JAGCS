@@ -12,12 +12,15 @@ AhrsPresenter::AhrsPresenter(domain::TelemetryNode* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void AhrsPresenter::onParametersChanged(const QVariantMap& parameters)
+void AhrsPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
 {
-    if (parameters.contains(telemetry::pitch))
-        this->setViewProperty(PROPERTY(pitch), parameters[telemetry::pitch]);
-    if (parameters.contains(telemetry::roll))
-        this->setViewProperty(PROPERTY(roll), parameters[telemetry::roll]);
-    if (parameters.contains(telemetry::yawspeed))
-        this->setViewProperty(PROPERTY(yawspeed), parameters[telemetry::yawspeed]);
+    if (parameters.contains(domain::TelemetryId::Pitch))
+        this->setViewProperty(PROPERTY(pitch),
+                              parameters[domain::TelemetryId::Pitch]);
+    if (parameters.contains(domain::TelemetryId::Roll))
+        this->setViewProperty(PROPERTY(roll),
+                              parameters[domain::TelemetryId::Roll]);
+    if (parameters.contains(domain::TelemetryId::YawSpeed))
+        this->setViewProperty(PROPERTY(yawspeed),
+                              parameters[domain::TelemetryId::YawSpeed]);
 }

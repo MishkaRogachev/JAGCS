@@ -27,6 +27,10 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
+    qRegisterMetaType<TelemetryId>("TelemetryId");
+    qRegisterMetaType<TelemetryList>("TelemetryList");
+    qRegisterMetaType<TelemetryMap>("TelemetryMap");
+
     d->facade = facade;
     connect(d->facade, &db::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
 }
@@ -43,7 +47,7 @@ TelemetryNode* TelemetryService::node(int vehicleId) const
 {
     if (!d->vehicleNodes.contains(vehicleId))
     {
-        VehicleTelemetryNodeFactory factory(d->facade->vehicle(vehicleId));
+        VehicleTelemetryNodeFactory factory;
         d->vehicleNodes[vehicleId] = factory.create();
     }
     return d->vehicleNodes.value(vehicleId, nullptr);

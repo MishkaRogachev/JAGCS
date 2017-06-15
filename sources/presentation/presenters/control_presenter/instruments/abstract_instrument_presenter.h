@@ -3,6 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
+#include "telemetry_traits.h"
 
 namespace domain
 {
@@ -19,7 +20,7 @@ namespace presentation
         AbstractInstrumentPresenter(domain::TelemetryNode* node, QObject* parent);
 
     public slots:
-        virtual void onParametersChanged(const QVariantMap& parameters) = 0;
+        virtual void onParametersChanged(const domain::TelemetryMap& parameters) = 0;
 
     protected:
         void connectView(QObject* view) override;

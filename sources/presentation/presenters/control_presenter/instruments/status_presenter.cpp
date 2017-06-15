@@ -12,12 +12,12 @@ StatusPresenter::StatusPresenter(domain::TelemetryNode* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void StatusPresenter::onParametersChanged(const QVariantMap& parameters)
+void StatusPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
 {
-    if (parameters.contains(telemetry::online))
-        this->setViewProperty(PROPERTY(online), parameters[telemetry::online]);
-    if (parameters.contains(telemetry::armed))
-        this->setViewProperty(PROPERTY(armed), parameters[telemetry::armed]);
-    if (parameters.contains(telemetry::mode))
-        this->setViewProperty(PROPERTY(mode), parameters[telemetry::mode]);
+    if (parameters.contains(domain::TelemetryId::Online))
+        this->setViewProperty(PROPERTY(online), parameters[domain::TelemetryId::Online]);
+    if (parameters.contains(domain::TelemetryId::Armed))
+        this->setViewProperty(PROPERTY(armed), parameters[domain::TelemetryId::Armed]);
+    if (parameters.contains(domain::TelemetryId::Mode))
+        this->setViewProperty(PROPERTY(mode), parameters[domain::TelemetryId::Mode]);
 }

@@ -7,7 +7,8 @@ Button {
     id: control
 
     property alias iconSource: icon.source
-    property color iconColor: label.color
+    property alias iconColor: icon.color
+    property alias textColor: label.color
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
