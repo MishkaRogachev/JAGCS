@@ -67,10 +67,14 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 
     switch (role)
     {
-    case CoordinateRole: return node->parameter(domain::Telemetry::Coordinate);
-    case DirectionRole: return node->parameter(domain::Telemetry::Heading);
-    case MarkRole: return QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
-    case VehicleIdRole: return d->dbFacade->vehicle(vehicleId)->mavId();
+    case CoordinateRole:
+        return node->childNode(domain::Telemetry::Position)->parameter(domain::Telemetry::Coordinate);
+    case DirectionRole:
+        return node->childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
+    case MarkRole:
+        return QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
+    case VehicleIdRole:
+        return d->dbFacade->vehicle(vehicleId)->mavId();
     case TrackRole:
         return d->tracks[vehicleId];
     case HdopRadius:
@@ -88,14 +92,19 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
 
     domain::Telemetry* node = d->telemetryService->node(vehicle->id());
 
-   // node->childNode(domain::Telemetry::Position)
-    connect(node, &domain::Telemetry::parametersChanged, this,
-                      [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
-        if (parameters.contains(domain::Telemetry::Coordinate))
-        {
-            d->tracks[vehicleId].append(parameters[domain::Telemetry::Coordinate]);
-        }
-        this->onVehicleTelemetryChanged(vehicleId, parameters.keys());
+    connect(node->childNode(domain::Telemetry::Position), &domain::Telemetry::parametersChanged,
+            this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
+        this->onPositionParametersChanged(vehicleId, parameters);
+    });
+
+    connect(node->childNode(domain::Telemetry::Compass), &domain::Telemetry::parametersChanged,
+            this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
+        this->onCompassParametersChanged(vehicleId, parameters);
+    });
+
+    connect(node->childNode(domain::Telemetry::Satellite), &domain::Telemetry::parametersChanged,
+            this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
+        this->onSatelliteParametersChanged(vehicleId, parameters);
     });
 
     this->endInsertRows();
@@ -107,7 +116,7 @@ void VehicleMapItemModel::onVehicleRemoved(const db::VehiclePtr& vehicle)
     if (row == -1) return;
 
     domain::Telemetry* node = d->telemetryService->node(vehicle->id());
-    if (node) disconnect(node, 0, this, 0);
+    disconnect(node, 0, this, 0);
 
     this->beginRemoveRows(QModelIndex(), row, row);
     d->vehicleIds.removeOne(vehicle->id());
@@ -135,17 +144,38 @@ QModelIndex VehicleMapItemModel::vehicleIndex(int vehicleId) const
     return this->index(d->vehicleIds.indexOf(vehicleId));
 }
 
-void VehicleMapItemModel::onVehicleTelemetryChanged(
-        int vehicleId, const domain::Telemetry::TelemetryList& parameters)
+void VehicleMapItemModel::onPositionParametersChanged(
+        int vehicleId, const domain::Telemetry::TelemetryMap& parameters)
 {
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
-    QVector<int> roles;
+    if (parameters.contains(domain::Telemetry::Coordinate))
+    {
+        d->tracks[vehicleId].append(parameters[domain::Telemetry::Coordinate]);
+    }
 
-    if (parameters.contains(domain::Telemetry::Coordinate)) roles.append({ CoordinateRole, TrackRole });
-    if (parameters.contains(domain::Telemetry::Heading)) roles.append(DirectionRole);
-    if (parameters.contains(domain::Telemetry::Eph)) roles.append(HdopRadius);
+    emit dataChanged(index, index, { CoordinateRole });
+}
 
-    emit dataChanged(index, index, roles);
+void VehicleMapItemModel::onCompassParametersChanged(
+        int vehicleId, const domain::Telemetry::TelemetryMap& parameters)
+{
+    Q_UNUSED(parameters)
+
+    QModelIndex index = this->vehicleIndex(vehicleId);
+    if (!index.isValid()) return;
+
+    emit dataChanged(index, index, { DirectionRole });
+}
+
+void VehicleMapItemModel::onSatelliteParametersChanged(
+        int vehicleId, const domain::Telemetry::TelemetryMap& parameters)
+{
+    Q_UNUSED(parameters)
+
+    QModelIndex index = this->vehicleIndex(vehicleId);
+    if (!index.isValid()) return;
+
+    emit dataChanged(index, index, { HdopRadius });
 }

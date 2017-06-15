@@ -53,8 +53,14 @@ namespace presentation
         QHash<int, QByteArray> roleNames() const override;
 
         QModelIndex vehicleIndex(int vehicleId) const;
-        void onVehicleTelemetryChanged(
-                int vehicleId, const domain::Telemetry::TelemetryList& parameters);
+
+    private slots:
+        void onPositionParametersChanged(
+                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+        void onCompassParametersChanged(
+                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+        void onSatelliteParametersChanged(
+                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
 
     private:
         class Impl;
