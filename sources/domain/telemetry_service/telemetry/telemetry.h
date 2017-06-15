@@ -85,6 +85,13 @@
 //  |  |-Voltage                        real
 //  |  |-Current                        real
 //  |  |-Percentage                     int
+//  |-Radio
+//  |  |-Rssi                           int
+//  |  |-Noise                          int
+//  |  |-RemoteRssi                     int
+//  |  |-RemoteNoise                    int
+//  |  |-Errors                         int
+//  |  |-Fixed                          int
 //  |-Wind
 //  |  |-Yaw                            real
 //  |  |-Speed                          real
@@ -170,7 +177,15 @@ namespace domain
 
             Battery = 9000,
 
-            Wind = 10000,
+            Radio = 10000,
+            Rssi = 10001,
+            Noise = 10002,
+            RemoteRssi = 10003,
+            RemoteNoise = 10004,
+            Errors = 10005,
+            Fixed = 10006,
+
+            Wind = 11000,
         };
 
         using TelemetryList = QList<TelemetryId>;

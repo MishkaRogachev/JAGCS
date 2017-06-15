@@ -87,7 +87,9 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     d->vehicleIds.append(vehicleId);
 
     domain::Telemetry* node = d->telemetryService->node(vehicle->id());
-    if (node) connect(node, &domain::Telemetry::parametersChanged, this,
+
+   // node->childNode(domain::Telemetry::Position)
+    connect(node, &domain::Telemetry::parametersChanged, this,
                       [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
         if (parameters.contains(domain::Telemetry::Coordinate))
         {
