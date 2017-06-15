@@ -12,6 +12,7 @@
 #include "mavlink_communicator.h"
 #include "mavlink_protocol_helpers.h"
 
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -29,7 +30,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_home_position_t home;
@@ -39,9 +40,9 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(home.altitude));
     QVector3D direction(home.approach_x, home.approach_y, home.approach_z);
 
-    node->setParameter({ TelemetryId::Home, TelemetryId::Coordinate },
+    node->setParameter({ Telemetry::Home, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ TelemetryId::Home, TelemetryId::Direction },
+    node->setParameter({ Telemetry::Home, Telemetry::Direction },
                        QVariant::fromValue(direction));
 
     node->notify();

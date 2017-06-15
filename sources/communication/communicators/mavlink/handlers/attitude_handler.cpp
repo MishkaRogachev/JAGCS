@@ -5,9 +5,11 @@
 
 // Qt
 #include <QtMath>
+#include <QVariant>
 #include <QDebug>
 
 // Internal
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -23,18 +25,18 @@ void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_ATTITUDE) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_attitude_t attitude;
     mavlink_msg_attitude_decode(&message, &attitude);
 
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::Pitch }, qRadiansToDegrees(attitude.pitch));
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::Roll }, qRadiansToDegrees(attitude.roll));
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::Yaw }, qRadiansToDegrees(attitude.yaw));
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::PitchSpeed }, qRadiansToDegrees(attitude.pitchspeed));
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::RollSpeed }, qRadiansToDegrees(attitude.rollspeed));
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::YawSpeed }, qRadiansToDegrees(attitude.yawspeed));
+    node->setParameter({ Telemetry::Ahrs, Telemetry::Pitch }, qRadiansToDegrees(attitude.pitch));
+    node->setParameter({ Telemetry::Ahrs, Telemetry::Roll }, qRadiansToDegrees(attitude.roll));
+    node->setParameter({ Telemetry::Ahrs, Telemetry::Yaw }, qRadiansToDegrees(attitude.yaw));
+    node->setParameter({ Telemetry::Ahrs, Telemetry::PitchSpeed }, qRadiansToDegrees(attitude.pitchspeed));
+    node->setParameter({ Telemetry::Ahrs, Telemetry::RollSpeed }, qRadiansToDegrees(attitude.rollspeed));
+    node->setParameter({ Telemetry::Ahrs, Telemetry::YawSpeed }, qRadiansToDegrees(attitude.yawspeed));
 
     node->notify();
 }

@@ -3,17 +3,14 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_traits.h"
-
 using namespace presentation;
 
-CompassPresenter::CompassPresenter(domain::TelemetryNode* node, QObject* parent):
+CompassPresenter::CompassPresenter(domain::Telemetry* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void CompassPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
+void CompassPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::TelemetryId::Heading))
-        this->setViewProperty(PROPERTY(heading), parameters[domain::TelemetryId::Heading]);
+    if (parameters.contains(domain::Telemetry::Heading))
+        this->setViewProperty(PROPERTY(heading), parameters[domain::Telemetry::Heading]);
 }

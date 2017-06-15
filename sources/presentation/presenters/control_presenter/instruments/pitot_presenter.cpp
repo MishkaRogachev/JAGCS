@@ -3,21 +3,18 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_traits.h"
-
 using namespace presentation;
 
-PitotPresenter::PitotPresenter(domain::TelemetryNode* node, QObject* parent):
+PitotPresenter::PitotPresenter(domain::Telemetry* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void PitotPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
+void PitotPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::TelemetryId::TrueAirspeed))
+    if (parameters.contains(domain::Telemetry::TrueAirspeed))
         this->setViewProperty(PROPERTY(trueAirspeed),
-                              parameters[domain::TelemetryId::TrueAirspeed]);
-    if (parameters.contains(domain::TelemetryId::IndicatedAirspeed))
+                              parameters[domain::Telemetry::TrueAirspeed]);
+    if (parameters.contains(domain::Telemetry::IndicatedAirspeed))
         this->setViewProperty(PROPERTY(indicatedAirspeed),
-                              parameters[domain::TelemetryId::IndicatedAirspeed]);
+                              parameters[domain::Telemetry::IndicatedAirspeed]);
 }

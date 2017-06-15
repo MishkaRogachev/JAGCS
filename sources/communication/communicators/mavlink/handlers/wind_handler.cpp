@@ -1,9 +1,13 @@
 #include "wind_handler.h"
 
+// Qt
+#include <QVariant>
+
 // MAVLink
 #include <mavlink.h>
 
 // Internal
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -19,15 +23,15 @@ void WindHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_WIND) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_wind_t wind;
     mavlink_msg_wind_decode(&message, &wind);
 
-    node->setParameter({ TelemetryId::Wind, TelemetryId::Yaw }, wind.direction);
-    node->setParameter({ TelemetryId::Wind, TelemetryId::Speed }, wind.speed);
-    node->setParameter({ TelemetryId::Wind, TelemetryId::Climb }, wind.speed_z);
+    node->setParameter({ Telemetry::Wind, Telemetry::Yaw }, wind.direction);
+    node->setParameter({ Telemetry::Wind, Telemetry::Speed }, wind.speed);
+    node->setParameter({ Telemetry::Wind, Telemetry::Climb }, wind.speed_z);
 
     node->notify();
 }

@@ -3,9 +3,13 @@
 // MAVLink
 #include <mavlink.h>
 
+// Qt
+#include <QVariant>
+
 // Internal
 #include "mavlink_protocol_helpers.h"
 
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -21,45 +25,45 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SYS_STATUS) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_sys_status_t status;
     mavlink_msg_sys_status_decode(&message, &status);
 
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::Present },
+    node->setParameter({ Telemetry::Ahrs, Telemetry::Present },
                        status.onboard_control_sensors_present & MAV_SYS_STATUS_AHRS);
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::Enabled },
+    node->setParameter({ Telemetry::Ahrs, Telemetry::Enabled },
                        status.onboard_control_sensors_enabled & MAV_SYS_STATUS_AHRS);
-    node->setParameter({ TelemetryId::Ahrs, TelemetryId::Operational },
+    node->setParameter({ Telemetry::Ahrs, Telemetry::Operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_AHRS);
 
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Present },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Present },
                        status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_GPS);
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Enabled },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Enabled },
                        status.onboard_control_sensors_enabled & MAV_SYS_STATUS_SENSOR_GPS);
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Operational },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_GPS);
 
-    node->setParameter({ TelemetryId::Compass, TelemetryId::Present },
+    node->setParameter({ Telemetry::Compass, Telemetry::Present },
                        status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_3D_MAG);
-    node->setParameter({ TelemetryId::Compass, TelemetryId::Enabled },
+    node->setParameter({ Telemetry::Compass, Telemetry::Enabled },
                        status.onboard_control_sensors_enabled & MAV_SYS_STATUS_SENSOR_3D_MAG);
-    node->setParameter({ TelemetryId::Compass, TelemetryId::Operational },
+    node->setParameter({ Telemetry::Compass, Telemetry::Operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_3D_MAG);
 
-    node->setParameter({ TelemetryId::Barometric, TelemetryId::Present },
+    node->setParameter({ Telemetry::Barometric, Telemetry::Present },
                        status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE);
-    node->setParameter({ TelemetryId::Barometric, TelemetryId::Enabled },
+    node->setParameter({ Telemetry::Barometric, Telemetry::Enabled },
                        status.onboard_control_sensors_enabled & MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE);
-    node->setParameter({ TelemetryId::Barometric, TelemetryId::Operational },
+    node->setParameter({ Telemetry::Barometric, Telemetry::Operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_ABSOLUTE_PRESSURE);
 
-    node->setParameter({ TelemetryId::Pitot, TelemetryId::Present },
+    node->setParameter({ Telemetry::Pitot, Telemetry::Present },
                        status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE);
-    node->setParameter({ TelemetryId::Pitot, TelemetryId::Enabled },
+    node->setParameter({ Telemetry::Pitot, Telemetry::Enabled },
                        status.onboard_control_sensors_enabled & MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE);
-    node->setParameter({ TelemetryId::Pitot, TelemetryId::Operational },
+    node->setParameter({ Telemetry::Pitot, Telemetry::Operational },
                        status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE);
 
     node->notify();

@@ -10,10 +10,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit AhrsPresenter(domain::TelemetryNode* node, QObject* parent = nullptr);
+        explicit AhrsPresenter(domain::Telemetry* node, QObject* parent = nullptr);
 
     public slots:
-        void onParametersChanged(const domain::TelemetryMap& parameters) override;
+        void onParametersChanged(const domain::Telemetry::TelemetryMap& parameters) override;
     };
 }
 

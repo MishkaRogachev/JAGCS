@@ -1,14 +1,11 @@
-#include "telemetry_node.h"
+#include "telemetry.h"
 
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_traits.h"
-
 using namespace domain;
 
-TelemetryNode::TelemetryNode(TelemetryId id, TelemetryNode* parentNode):
+Telemetry::Telemetry(TelemetryId id, Telemetry* parentNode):
     QObject(parentNode),
     m_id(id),
     m_parentNode(parentNode)
@@ -16,34 +13,34 @@ TelemetryNode::TelemetryNode(TelemetryId id, TelemetryNode* parentNode):
     if (parentNode) parentNode->addChildNode(this);
 }
 
-TelemetryNode::~TelemetryNode()
+Telemetry::~Telemetry()
 {
     if (m_parentNode) m_parentNode->removeChildNode(this);
 }
 
-TelemetryId TelemetryNode::id() const
+Telemetry::TelemetryId Telemetry::id() const
 {
     return m_id;
 }
 
-QVariant TelemetryNode::parameter(TelemetryId id) const
+QVariant Telemetry::parameter(TelemetryId id) const
 {
     return m_parameters.value(id);
 }
 
-TelemetryMap TelemetryNode::parameters() const
+Telemetry::TelemetryMap Telemetry::parameters() const
 {
     return m_parameters;
 }
 
-TelemetryList TelemetryNode::changedParameterKeys() const
+QList<Telemetry::TelemetryId> Telemetry::changedParameterKeys() const
 {
     return m_changedParameters;
 }
 
-TelemetryMap TelemetryNode::takeChangedParameters()
+Telemetry::TelemetryMap Telemetry::takeChangedParameters()
 {
-    TelemetryMap parameters;
+    QMap<TelemetryId, QVariant> parameters;
 
     while (!m_changedParameters.isEmpty())
     {
@@ -54,27 +51,27 @@ TelemetryMap TelemetryNode::takeChangedParameters()
     return parameters;
 }
 
-TelemetryNode* TelemetryNode::parentNode() const
+Telemetry* Telemetry::parentNode() const
 {
     return m_parentNode;
 }
 
-TelemetryNode* TelemetryNode::childNode(TelemetryId id)
+Telemetry* Telemetry::childNode(TelemetryId id)
 {
     if (!m_childNodes.contains(id))
     {
-        new TelemetryNode(id, this);
+        new Telemetry(id, this);
     }
 
     return m_childNodes.value(id, nullptr);
 }
 
-TelemetryNode* TelemetryNode::childNode(const TelemetryList& path)
+Telemetry* Telemetry::childNode(const TelemetryList& path)
 {
     if (path.isEmpty()) return this;
 
-    TelemetryList rPath = path;
-    TelemetryNode* child = this->childNode(rPath.takeFirst());
+    QList<TelemetryId> rPath = path;
+    Telemetry* child = this->childNode(rPath.takeFirst());
 
     if (!child) return nullptr;
     if (rPath.isEmpty()) return child;
@@ -82,12 +79,12 @@ TelemetryNode* TelemetryNode::childNode(const TelemetryList& path)
     return child->childNode(rPath);
 }
 
-QList<TelemetryNode*> TelemetryNode::childNodes() const
+QList<Telemetry*> Telemetry::childNodes() const
 {
     return m_childNodes.values();
 }
 
-void TelemetryNode::setParameter(TelemetryId key, const QVariant& value)
+void Telemetry::setParameter(TelemetryId key, const QVariant& value)
 {
     if (m_parameters.contains(key) && m_parameters[key] == value) return;
 
@@ -95,11 +92,11 @@ void TelemetryNode::setParameter(TelemetryId key, const QVariant& value)
     m_changedParameters.append(key);
 }
 
-void TelemetryNode::setParameter(const TelemetryList& path, const QVariant& value)
+void Telemetry::setParameter(const QList<TelemetryId>& path, const QVariant& value)
 {
     if (path.count() > 1)
     {
-        TelemetryNode* child = this->childNode(path.at(0));
+        Telemetry* child = this->childNode(path.at(0));
         child->setParameter(path.at(1), value);
         return;
     }
@@ -107,9 +104,9 @@ void TelemetryNode::setParameter(const TelemetryList& path, const QVariant& valu
     if (path.count() == 1) this->setParameter(path.at(0), value);
 }
 
-void TelemetryNode::notify()
+void Telemetry::notify()
 {
-    for (TelemetryNode* child: this->childNodes())
+    for (Telemetry* child: this->childNodes())
     {
         child->notify();
     }
@@ -117,12 +114,12 @@ void TelemetryNode::notify()
     emit parametersChanged(this->takeChangedParameters());
 }
 
-void TelemetryNode::addChildNode(TelemetryNode* childNode)
+void Telemetry::addChildNode(Telemetry* childNode)
 {
     m_childNodes[childNode->id()] = childNode;
 }
 
-void TelemetryNode::removeChildNode(TelemetryNode* childNode)
+void Telemetry::removeChildNode(Telemetry* childNode)
 {
     m_childNodes.remove(childNode->id());
 }

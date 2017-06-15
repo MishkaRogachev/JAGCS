@@ -10,6 +10,8 @@
 
 // Internal
 #include "mavlink_protocol_helpers.h"
+
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -43,7 +45,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_gps_raw_int_t gps;
@@ -52,21 +54,21 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     QGeoCoordinate coordinate(decodeLatLon(gps.lat), decodeLatLon(gps.lon),
                               decodeAltitude(gps.alt));
 
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Fix },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Fix },
                        ::gpdFixFromFixType(gps.fix_type));
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Coordinate },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Groundspeed },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Groundspeed },
                        decodeGroundSpeed(gps.vel));
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Course },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Course },
                        decodeCourse(gps.cog));
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Altitude },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Altitude },
                        decodeAltitude(gps.alt));
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Eph }, gps.eph);
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Epv }, gps.epv);
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::Time },
+    node->setParameter({ Telemetry::Satellite, Telemetry::Eph }, gps.eph);
+    node->setParameter({ Telemetry::Satellite, Telemetry::Epv }, gps.epv);
+    node->setParameter({ Telemetry::Satellite, Telemetry::Time },
                        QDateTime::fromMSecsSinceEpoch(gps.time_usec));
-    node->setParameter({ TelemetryId::Satellite, TelemetryId::SatellitesVisible },
+    node->setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
                        decodeAltitude(gps.satellites_visible));
 
     node->notify();

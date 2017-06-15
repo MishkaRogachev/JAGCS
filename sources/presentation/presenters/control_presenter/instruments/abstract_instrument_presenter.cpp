@@ -3,17 +3,14 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_node.h"
-
 using namespace presentation;
 
-AbstractInstrumentPresenter::AbstractInstrumentPresenter(domain::TelemetryNode* node,
+AbstractInstrumentPresenter::AbstractInstrumentPresenter(domain::Telemetry* node,
                                                          QObject* parent):
     BasePresenter(parent),
     m_node(node)
 {
-    connect(node, &domain::TelemetryNode::parametersChanged,
+    connect(node, &domain::Telemetry::parametersChanged,
             this, &AbstractInstrumentPresenter::onParametersChanged);
 }
 

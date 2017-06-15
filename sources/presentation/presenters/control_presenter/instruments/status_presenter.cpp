@@ -3,21 +3,18 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_traits.h"
-
 using namespace presentation;
 
-StatusPresenter::StatusPresenter(domain::TelemetryNode* node, QObject* parent):
+StatusPresenter::StatusPresenter(domain::Telemetry* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void StatusPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
+void StatusPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::TelemetryId::Online))
-        this->setViewProperty(PROPERTY(online), parameters[domain::TelemetryId::Online]);
-    if (parameters.contains(domain::TelemetryId::Armed))
-        this->setViewProperty(PROPERTY(armed), parameters[domain::TelemetryId::Armed]);
-    if (parameters.contains(domain::TelemetryId::Mode))
-        this->setViewProperty(PROPERTY(mode), parameters[domain::TelemetryId::Mode]);
+    if (parameters.contains(domain::Telemetry::Online))
+        this->setViewProperty(PROPERTY(online), parameters[domain::Telemetry::Online]);
+    if (parameters.contains(domain::Telemetry::Armed))
+        this->setViewProperty(PROPERTY(armed), parameters[domain::Telemetry::Armed]);
+    if (parameters.contains(domain::Telemetry::Mode))
+        this->setViewProperty(PROPERTY(mode), parameters[domain::Telemetry::Mode]);
 }

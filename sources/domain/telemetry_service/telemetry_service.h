@@ -11,7 +11,7 @@ namespace db
 
 namespace domain
 {
-    class TelemetryNode;
+    class Telemetry;
 
     class TelemetryService: public QObject
     {
@@ -21,9 +21,9 @@ namespace domain
         explicit TelemetryService(db::DbFacade* facade, QObject* parent = nullptr);
         ~TelemetryService() override;
 
-        QList<TelemetryNode*> rootNodes() const;
-        TelemetryNode* node(int vehicleId) const;
-        TelemetryNode* nodeByMavId(int mavId) const;
+        QList<Telemetry*> rootNodes() const;
+        Telemetry* node(int vehicleId) const;
+        Telemetry* nodeByMavId(int mavId) const;
 
     private slots:
         void onVehicleRemoved(const db::VehiclePtr& vehicle);

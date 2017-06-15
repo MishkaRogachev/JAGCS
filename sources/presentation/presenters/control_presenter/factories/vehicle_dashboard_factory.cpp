@@ -1,7 +1,9 @@
 #include "vehicle_dashboard_factory.h"
 
 // Internal
+#include "telemetry_service.h"
 #include "telemetry.h"
+
 #include "vehicle.h"
 
 #include "dashboard_presenter.h"
@@ -23,24 +25,24 @@ VehicleDashboardFactory::VehicleDashboardFactory(domain::TelemetryService* telem
 
 DashboardPresenter* VehicleDashboardFactory::create()
 {
-    domain::TelemetryNode* node = m_telemetryService->node(m_vehicle->id());
+    domain::Telemetry* node = m_telemetryService->node(m_vehicle->id());
     if (!node) return nullptr;
 
     // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
     dashboard->addInstrument("fd", new StatusPresenter(
-                                  node->childNode(domain::TelemetryId::Status), dashboard));
+                                  node->childNode(domain::Telemetry::Status), dashboard));
     dashboard->addInstrument("fd", new AhrsPresenter(
-                                 node->childNode(domain::TelemetryId::Ahrs), dashboard));
+                                 node->childNode(domain::Telemetry::Ahrs), dashboard));
     dashboard->addInstrument("fd", new SatellitePresenter(
-                                 node->childNode(domain::TelemetryId::Satellite), dashboard));
+                                 node->childNode(domain::Telemetry::Satellite), dashboard));
     dashboard->addInstrument("fd", new BarometricPresenter(
-                                 node->childNode(domain::TelemetryId::Barometric), dashboard));
+                                 node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrument("fd", new PitotPresenter(
-                                 node->childNode(domain::TelemetryId::Pitot), dashboard));
+                                 node->childNode(domain::Telemetry::Pitot), dashboard));
     dashboard->addInstrument("hsi", new CompassPresenter(
-                                 node->childNode(domain::TelemetryId::Compass), dashboard));
+                                 node->childNode(domain::Telemetry::Compass), dashboard));
 
     return dashboard;
 }

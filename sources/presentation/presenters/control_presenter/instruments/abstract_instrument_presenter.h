@@ -3,12 +3,8 @@
 
 // Internal
 #include "base_presenter.h"
-#include "telemetry_traits.h"
 
-namespace domain
-{
-    class TelemetryNode;
-}
+#include "telemetry.h"
 
 namespace presentation
 {
@@ -17,15 +13,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        AbstractInstrumentPresenter(domain::TelemetryNode* node, QObject* parent);
+        AbstractInstrumentPresenter(domain::Telemetry* node, QObject* parent);
 
     public slots:
-        virtual void onParametersChanged(const domain::TelemetryMap& parameters) = 0;
+        virtual void onParametersChanged(const domain::Telemetry::TelemetryMap& parameters) = 0;
 
     protected:
         void connectView(QObject* view) override;
 
-        domain::TelemetryNode* m_node;
+        domain::Telemetry* m_node;
     };
 }
 

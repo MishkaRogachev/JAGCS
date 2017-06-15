@@ -4,6 +4,7 @@
 #include <mavlink.h>
 
 // Qt
+#include <QDebug>
 #include <QTimer>
 #include <QDebug>
 
@@ -13,6 +14,7 @@
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
 
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -94,7 +96,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_heartbeat_t heartbeat;
@@ -103,10 +105,10 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     // TODO: set vehicle type from ::decodeType(heartbeat.type);
     // TODO: add vehicle if not exist
     // TODO: online timer
-    node->setParameter({ TelemetryId::Status, TelemetryId::Online }, true);
-    node->setParameter({ TelemetryId::Status, TelemetryId::Armed },
+    node->setParameter({ Telemetry::Status, Telemetry::Online }, true);
+    node->setParameter({ Telemetry::Status, Telemetry::Armed },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-    node->setParameter({ TelemetryId::Status, TelemetryId::Mode },
+    node->setParameter({ Telemetry::Status, Telemetry::Mode },
                        decodeCustomMode(heartbeat.autopilot,
                                         heartbeat.type,
                                         heartbeat.custom_mode));

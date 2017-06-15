@@ -11,6 +11,7 @@
 // Internal
 #include "mavlink_protocol_helpers.h"
 
+#include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
@@ -26,7 +27,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    TelemetryNode* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
     if (!node) return;
 
     mavlink_global_position_int_t position;
@@ -36,9 +37,9 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(position.alt));
     QVector3D direction(position.vx, position.vy, position.vz);
 
-    node->setParameter({ TelemetryId::Home, TelemetryId::Coordinate },
+    node->setParameter({ Telemetry::Home, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ TelemetryId::Home, TelemetryId::Direction },
+    node->setParameter({ Telemetry::Home, Telemetry::Direction },
                        QVariant::fromValue(direction));
 
     node->notify();

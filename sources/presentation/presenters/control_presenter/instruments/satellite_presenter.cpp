@@ -3,36 +3,33 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_traits.h"
-
 using namespace presentation;
 
-SatellitePresenter::SatellitePresenter(domain::TelemetryNode* node, QObject* parent):
+SatellitePresenter::SatellitePresenter(domain::Telemetry* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void SatellitePresenter::onParametersChanged(const domain::TelemetryMap& parameters)
+void SatellitePresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::TelemetryId::Fix))
+    if (parameters.contains(domain::Telemetry::Fix))
         this->setViewProperty(PROPERTY(fix),
-                              parameters[domain::TelemetryId::Fix]);
-    if (parameters.contains(domain::TelemetryId::Groundspeed))
+                              parameters[domain::Telemetry::Fix]);
+    if (parameters.contains(domain::Telemetry::Groundspeed))
         this->setViewProperty(PROPERTY(groundspeed),
-                              parameters[domain::TelemetryId::Groundspeed]);
-    if (parameters.contains(domain::TelemetryId::Course))
+                              parameters[domain::Telemetry::Groundspeed]);
+    if (parameters.contains(domain::Telemetry::Course))
         this->setViewProperty(PROPERTY(course),
-                              parameters[domain::TelemetryId::Course]);
-    if (parameters.contains(domain::TelemetryId::Altitude))
+                              parameters[domain::Telemetry::Course]);
+    if (parameters.contains(domain::Telemetry::Altitude))
         this->setViewProperty(PROPERTY(satelliteAltitude),
-                              parameters[domain::TelemetryId::Altitude]);
-    if (parameters.contains(domain::TelemetryId::Eph))
+                              parameters[domain::Telemetry::Altitude]);
+    if (parameters.contains(domain::Telemetry::Eph))
         this->setViewProperty(PROPERTY(eph),
-                              parameters[domain::TelemetryId::Eph]);
-    if (parameters.contains(domain::TelemetryId::Epv))
+                              parameters[domain::Telemetry::Eph]);
+    if (parameters.contains(domain::Telemetry::Epv))
         this->setViewProperty(PROPERTY(epv),
-                              parameters[domain::TelemetryId::Epv]);
-    if (parameters.contains(domain::TelemetryId::SatellitesVisible))
+                              parameters[domain::Telemetry::Epv]);
+    if (parameters.contains(domain::Telemetry::SatellitesVisible))
         this->setViewProperty(PROPERTY(satellitesVisible),
-                              parameters[domain::TelemetryId::SatellitesVisible]);
+                              parameters[domain::Telemetry::SatellitesVisible]);
 }

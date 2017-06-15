@@ -3,24 +3,21 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "telemetry_traits.h"
-
 using namespace presentation;
 
-AhrsPresenter::AhrsPresenter(domain::TelemetryNode* node, QObject* parent):
+AhrsPresenter::AhrsPresenter(domain::Telemetry* node, QObject* parent):
     AbstractInstrumentPresenter(node, parent)
 {}
 
-void AhrsPresenter::onParametersChanged(const domain::TelemetryMap& parameters)
+void AhrsPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::TelemetryId::Pitch))
+    if (parameters.contains(domain::Telemetry::Pitch))
         this->setViewProperty(PROPERTY(pitch),
-                              parameters[domain::TelemetryId::Pitch]);
-    if (parameters.contains(domain::TelemetryId::Roll))
+                              parameters[domain::Telemetry::Pitch]);
+    if (parameters.contains(domain::Telemetry::Roll))
         this->setViewProperty(PROPERTY(roll),
-                              parameters[domain::TelemetryId::Roll]);
-    if (parameters.contains(domain::TelemetryId::YawSpeed))
+                              parameters[domain::Telemetry::Roll]);
+    if (parameters.contains(domain::Telemetry::YawSpeed))
         this->setViewProperty(PROPERTY(yawspeed),
-                              parameters[domain::TelemetryId::YawSpeed]);
+                              parameters[domain::Telemetry::YawSpeed]);
 }
