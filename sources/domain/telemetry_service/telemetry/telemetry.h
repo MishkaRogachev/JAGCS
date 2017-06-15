@@ -69,7 +69,7 @@
 //  |  |-TrueAirspeed                   real
 //  |  |-IndicatedAirspeed              real
 //  |-Rangefinder
-//  |  |-Distance                       real
+//  |  |-Elevation                      real
 //  |  |-Voltage                        real
 //  |-Navigator
 //  |  |-TargetBearing                  real
@@ -116,17 +116,18 @@ namespace domain
             Home = 400,
 
             Altitude = 501,
-            Climb = 502,
-            Course = 503,
-            Heading = 504,
-            Speed = 505,
-            Groundspeed = 506,
-            IndicatedAirspeed = 507,
-            TrueAirspeed = 508,
-            Temperature = 509,
-            Voltage = 510,
-            Current = 511,
-            Percentage = 512,
+            Elevation = 502,
+            Climb = 503,
+            Course = 504,
+            Heading = 505,
+            Speed = 506,
+            Groundspeed = 507,
+            IndicatedAirspeed = 508,
+            TrueAirspeed = 509,
+            Temperature = 510,
+            Voltage = 511,
+            Current = 512,
+            Percentage = 513,
 
             Ahrs = 1000,
             Pitch = 1001,

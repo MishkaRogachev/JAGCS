@@ -12,6 +12,7 @@
 #include "position_handler.h"
 #include "home_position_handler.h"
 #include "gps_handler.h"
+#include "rangefinder_handler.h"
 #include "vfr_hud_handler.h"
 #include "wind_handler.h"
 #include "nav_controller_handler.h"
@@ -45,6 +46,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new HomePositionHandler(m_telemetryService, communicator);
     new GpsHandler(m_telemetryService, communicator);
     new VfrHudHandler(m_telemetryService, communicator);
+    new RangefinderHandler(m_telemetryService, communicator);
     new WindHandler(m_telemetryService, communicator);
     new NavControllerHandler(m_telemetryService, communicator);
     // TODO: RADIO_STATUS

@@ -1,0 +1,40 @@
+#include "rangefinder_handler.h"
+
+// MAVLink
+#include <mavlink.h>
+
+// Qt
+#include <QDebug>
+
+// Internal
+#include "mavlink_protocol_helpers.h"
+
+#include "telemetry_service.h"
+#include "telemetry.h"
+
+using namespace comm;
+using namespace domain;
+
+RangefinderHandler::RangefinderHandler(TelemetryService* telemetryService,
+                                       MavLinkCommunicator* communicator):
+    AbstractMavLinkHandler(communicator),
+    m_telemetryService(telemetryService)
+{}
+
+void RangefinderHandler::processMessage(const mavlink_message_t& message)
+{
+    if (message.msgid != MAVLINK_MSG_ID_RANGEFINDER) return;
+
+    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
+    if (!node) return;
+
+    mavlink_rangefinder_t rangefinder;
+    mavlink_msg_scaled_pressure_decode(&message, &rangefinder);
+
+    node->setParameter({ Telemetry::Rangefinder, Telemetry::Elevation },
+                       rangefinder.distance);
+    node->setParameter({ Telemetry::Rangefinder, Telemetry::Voltage },
+                       rangefinder.voltage);
+
+    node->notify();
+}
