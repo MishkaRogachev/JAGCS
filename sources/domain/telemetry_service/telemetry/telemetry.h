@@ -5,76 +5,90 @@
 #include <QObject>
 #include <QMap>
 
-// root
-//  |-status
-//  |  |-online                         bool
-//  |  |-armed                          bool
-//  |  |-mode                           string
-//  |-position
-//  |  |-coordinate                     coordinate
-//  |  |-direction                      direction
-//  |-home
-//  |  |-coordinate                     coordinate
-//  |  |-direction                      direction
-//  |-ahrs
-//  |  |-present                        bool
-//  |  |-enabled                        bool
-//  |  |-operational                    bool
-//  |  |-pitch                          real
-//  |  |-roll                           real
-//  |  |-yaw                            real
-//  |  |-pitchspeed                     real
-//  |  |-rollspeed                      real
-//  |  |-yawspeed                       real
-//  |-satellite
-//  |  |-present                        bool
-//  |  |-enabled                        bool
-//  |  |-operational                    bool
-//  |  |-fix                            int
-//  |  |-coordinate                     coordinate
-//  |  |-groundspeed                    real
-//  |  |-course                         real
-//  |  |-altitude                       real
-//  |  |-climb                          real
-//  |  |-eph                            int
-//  |  |-epv                            int
-//  |  |-time                           time
-//  |  |-satellitesVisible              int
-//  |-compass
-//  |  |-present                        bool
-//  |  |-enabled                        bool
-//  |  |-operational                    bool
-//  |  |-heading                        real
-//  |-barometric
-//  |  |-present                        bool
-//  |  |-enabled                        bool
-//  |  |-operational                    bool
-//  |  |-altitude                       real
-//  |  |-climb                          real
-//  |  |-absPressure                    int
-//  |  |-diffPressure                   int
-//  |  |-temperature                    real
-//  |-pitot
-//  |  |-present                        bool
-//  |  |-enabled                        bool
-//  |  |-operational                    bool
-//  |  |-trueAirspeed                   real
-//  |  |-indicatedAirspeed              real
-// TODO: rangefinder
-//  |-navigator
-//  |  |-targetBearing                  real
-//  |  |-targetDistance                 real
-//  |  |-trackError                     real
-//  |  |-altitudeError                  real
-//  |  |-desiredPitch                   real
-//  |  |-desiredRoll                    real
-//  |  |-desiredHeading                 real
-//  |-powerSystem
-//  |  |-throttle                       int
-//  |-wind
-//  |  |-yaw                            real
-//  |  |-speed                          real
-//  |  |-climb                          real
+// Root
+//  |-Status
+//  |  |-Online                         bool
+//  |  |-Armed                          bool
+//  |  |-Mode                           string
+//  |-Position
+//  |  |-Coordinate                     coordinate
+//  |  |-Direction                      direction
+//  |-Home
+//  |  |-Coordinate                     coordinate
+//  |  |-Direction                      direction
+//  |-Ahrs
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
+//  |  |-Pitch                          real
+//  |  |-Roll                           real
+//  |  |-Yaw                            real
+//  |  |-Pitchspeed                     real
+//  |  |-Rollspeed                      real
+//  |  |-Yawspeed                       real
+//  |  |-Accel
+//  |  |  |-Present                     bool
+//  |  |  |-Enabled                     bool
+//  |  |  |-Operational                 bool
+//  |  |-Gyro
+//  |  |  |-Present                     bool
+//  |  |  |-Enabled                     bool
+//  |  |  |-Operational                 bool
+//  |-Satellite
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
+//  |  |-Fix                            int
+//  |  |-Coordinate                     coordinate
+//  |  |-Groundspeed                    real
+//  |  |-Course                         real
+//  |  |-Altitude                       real
+//  |  |-Climb                          real
+//  |  |-Eph                            int
+//  |  |-Epv                            int
+//  |  |-Time                           time
+//  |  |-SatellitesVisible              int
+//  |-Compass
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
+//  |  |-Heading                        real
+//  |-Barometric
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
+//  |  |-Altitude                       real
+//  |  |-Climb                          real
+//  |  |-AbsPressure                    int
+//  |  |-DiffPressure                   int
+//  |  |-Temperature                    real
+//  |-Pitot
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
+//  |  |-TrueAirspeed                   real
+//  |  |-IndicatedAirspeed              real
+//  |-Rangefinder
+//  |  |-Distance                       real
+//  |  |-Voltage                        real
+//  |-Navigator
+//  |  |-TargetBearing                  real
+//  |  |-TargetDistance                 real
+//  |  |-TrackError                     real
+//  |  |-AltitudeError                  real
+//  |  |-DesiredPitch                   real
+//  |  |-DesiredRoll                    real
+//  |  |-DesiredHeading                 real
+//  |-PowerSystem
+//  |  |-Throttle                       int
+//  |-Battery
+//  |  |-Voltage                        real
+//  |  |-Current                        real
+//  |  |-Percentage                     int
+//  |-Wind
+//  |  |-Yaw                            real
+//  |  |-Speed                          real
+//  |  |-Climb                          real
 
 namespace domain
 {
@@ -110,6 +124,9 @@ namespace domain
             IndicatedAirspeed = 507,
             TrueAirspeed = 508,
             Temperature = 509,
+            Voltage = 510,
+            Current = 511,
+            Percentage = 512,
 
             Ahrs = 1000,
             Pitch = 1001,
@@ -118,6 +135,8 @@ namespace domain
             PitchSpeed = 1004,
             RollSpeed = 1005,
             YawSpeed = 1006,
+            Accel = 1100,
+            Gyro = 1200,
 
             Satellite = 2000,
             Fix = 2002,
@@ -134,19 +153,23 @@ namespace domain
 
             Pitot = 5000,
 
-            Navigator = 6000,
-            TargetBearing = 6001,
-            TargetDistance = 6002,
-            TrackError = 6003,
-            AltitudeError = 6004,
-            DesiredPitch = 6005,
-            DesiredRoll = 6006,
-            DesiredHeading = 6007,
+            Rangefinder = 6000,
 
-            PowerSystem = 7000,
-            Throttle = 7001,
+            Navigator = 7000,
+            TargetBearing = 7001,
+            TargetDistance = 7002,
+            TrackError = 7003,
+            AltitudeError = 7004,
+            DesiredPitch = 7005,
+            DesiredRoll = 7006,
+            DesiredHeading = 7007,
 
-            Wind = 8000,
+            PowerSystem = 8000,
+            Throttle = 8001,
+
+            Battery = 9000,
+
+            Wind = 10000,
         };
 
         using TelemetryList = QList<TelemetryId>;
