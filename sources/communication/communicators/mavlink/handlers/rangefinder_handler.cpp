@@ -29,7 +29,7 @@ void RangefinderHandler::processMessage(const mavlink_message_t& message)
     if (!node) return;
 
     mavlink_rangefinder_t rangefinder;
-    mavlink_msg_scaled_pressure_decode(&message, &rangefinder);
+    mavlink_msg_rangefinder_decode(&message, &rangefinder);
 
     node->setParameter({ Telemetry::Rangefinder, Telemetry::Elevation },
                        rangefinder.distance);
