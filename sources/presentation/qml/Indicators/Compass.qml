@@ -36,13 +36,6 @@ Canvas {
         ctx.translate(width / 2, height / 2);
         ctx.save();
 
-        // Tick
-        ctx.lineWidth = 4; // TODO: color
-        ctx.beginPath();
-        ctx.moveTo(0, -height / 2)
-        ctx.lineTo(0, scalesOffset - height / 2);
-        ctx.stroke();
-
         // Scales
         for (var i = 0; i <= 360; i += tickFactor) {
             ctx.lineWidth = i % 30 ? 2 : 3;
@@ -88,8 +81,8 @@ Canvas {
         }
         ctx.restore();
 
+        // Course Mark
         ctx.save();
-
         ctx.rotate((course - heading) * Math.PI / 180);
         ctx.beginPath();
         ctx.lineWidth = 4;
@@ -98,6 +91,13 @@ Canvas {
         ctx.lineTo(scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
         ctx.stroke();
         ctx.restore();
+
+        // Tick
+        ctx.lineWidth = 4; // TODO: color
+        ctx.beginPath();
+        ctx.moveTo(0, -height / 2)
+        ctx.lineTo(0, scalesOffset - height / 2);
+        ctx.stroke();
 
         ctx.restore();
     }

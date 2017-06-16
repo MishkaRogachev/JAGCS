@@ -13,7 +13,6 @@ Item {
     property int minorTickSize: fontPixelSize * 0.4
     property int majorTickSize: fontPixelSize * 0.6
     property int textOrigin: fontPixelSize * 0.8
-    property int lineWidth: 2
     property alias canvasRotation: canvas.rotation
 
     property string prefix
@@ -35,7 +34,6 @@ Item {
 
             ctx.clearRect(0, 0, width, height);
 
-            ctx.lineWidth = lineWidth;
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
@@ -43,16 +41,17 @@ Item {
             ctx.textBaseline = vertical ? 'middle' : 'top';
             
             ctx.save();
-            ctx.translate(0, lineWidth);
-
+            ctx.translate(0, 2);
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(width, 0);
 
-            ctx.moveTo(lineWidth / 2, 0);
-            ctx.lineTo(lineWidth / 2, majorTickSize);
-            ctx.moveTo(width - lineWidth / 2, 0);
-            ctx.lineTo(width - lineWidth / 2, majorTickSize);
+            ctx.moveTo(1, 0);
+            ctx.lineTo(1, majorTickSize);
+            ctx.moveTo(width - 1, 0);
+            ctx.lineTo(width - 1, majorTickSize);
+            ctx.stroke();
 
             var counter = 0;
             for (var i = minValue - (minValue % valueStep); i <= maxValue;
@@ -62,28 +61,32 @@ Item {
                 var xPos = canvasRotation > 0 ?
                             width - Helper.mapToRange(i, minValue, maxValue, width) :
                             Helper.mapToRange(i, minValue, maxValue, width);
+
+                ctx.lineWidth = major ? 3 : 2;
+                ctx.beginPath();
                 ctx.moveTo(xPos, 0);
                 ctx.lineTo(xPos, major ? majorTickSize : minorTickSize);
+                ctx.stroke();
+
                 if (major) {
                     ctx.save();
                     ctx.translate(xPos, textOrigin);
                     ctx.rotate(-canvasRotation * Math.PI / 180);
-                    ctx.fillText(i, 0, lineWidth);
+                    ctx.fillText(i, 0, 2);
                     ctx.restore();
                 }
             }
-            ctx.stroke();
 
             var markWidth = canvasRotation > 0 ? label.height : -label.height;
-            ctx.clearRect(width / 2 - markWidth / 2, lineWidth / 2, markWidth, height);
+            ctx.clearRect(width / 2 - markWidth / 2, 1, markWidth, height);
 
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(width / 2 - markWidth / 2, majorTickSize);
-            ctx.lineTo(width / 2, lineWidth);
+            ctx.lineTo(width / 2, 2);
             ctx.lineTo(width / 2 + markWidth / 2, majorTickSize);
 
             ctx.stroke();
-
             ctx.restore();
         }
     }
