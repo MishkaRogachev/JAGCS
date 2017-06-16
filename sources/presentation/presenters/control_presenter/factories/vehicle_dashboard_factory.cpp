@@ -13,6 +13,7 @@
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
 #include "compass_presenter.h"
+#include "navigator_presenter.h"
 
 using namespace presentation;
 
@@ -46,6 +47,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Compass), dashboard));
     dashboard->addInstrument("nd", new SatellitePresenter(
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
+    dashboard->addInstrument("nd", new NavigatorPresenter(
+                                 node->childNode(domain::Telemetry::Navigator), dashboard));
 
     return dashboard;
 }
