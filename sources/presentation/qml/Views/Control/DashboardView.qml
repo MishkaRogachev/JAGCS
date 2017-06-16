@@ -12,6 +12,8 @@ ColumnLayout {
 
     signal instrumentAdded(string name, QtObject view)
 
+    spacing: palette.spacing
+
     Repeater {
         model: instruments
 
