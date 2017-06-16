@@ -39,7 +39,7 @@ Item {
         Horizon {
             id: horizon
             anchors.fill: parent
-            effectiveHeight: parent.height
+            effectiveHeight: pitchScale.height
             pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll
             minPitch: root.minPitch
@@ -49,7 +49,7 @@ Item {
         PitchScale {
             id: pitchScale
             anchors.centerIn: parent
-            width: parent.width / 2
+            width: parent.width
             height: parent.height - palette.controlBaseSize * 2
             pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll

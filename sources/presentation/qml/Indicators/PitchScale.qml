@@ -10,7 +10,7 @@ Item {
     property int maxPitch: 25
     property int pitchStep: 10
     property color scaleColor: palette.textColor
-    property int fontPixelSize: width * 0.12
+    property int fontPixelSize: width * 0.06
 
     onPitchChanged: canvas.requestPaint()
     onScaleColorChanged: canvas.requestPaint()
@@ -46,14 +46,17 @@ Item {
                 ctx.save();
 
                 ctx.translate(width / 2, yPos);
-                ctx.moveTo(major ? -width / 4 : -width / 8, 0);
-                ctx.lineTo(major ? width / 4 : width / 8, 0);
+
+                var tickLength = major ? Math.min(width / 14 + Math.abs(i) * 2, width / 4) :
+                                         width / 16
+                ctx.moveTo(-tickLength, 0);
+                ctx.lineTo(+tickLength, 0);
 
                 if (major) {
                     ctx.textAlign = 'left';
-                    ctx.fillText(i, width / 4 + 2, 2);
+                    ctx.fillText(i, tickLength + 2, 2);
                     ctx.textAlign = 'right';
-                    ctx.fillText(i, -width / 4 - 2, 2);
+                    ctx.fillText(i, -tickLength - 2, 2);
                 }
 
                 ctx.restore();
