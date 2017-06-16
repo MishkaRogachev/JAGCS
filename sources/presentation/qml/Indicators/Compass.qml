@@ -3,8 +3,8 @@ import QtQuick 2.6
 Rectangle {
     id: root
 
-    property real course: 0
     property real heading: 0
+    property real course: 0
 
     property int tickFactor: 5
     property real scalesRatio: 0.08
@@ -92,7 +92,7 @@ Rectangle {
 
             ctx.save();
 
-            ctx.rotate((-course) * Math.PI / 180);
+            ctx.rotate(course * Math.PI / 180);
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.moveTo(-scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);

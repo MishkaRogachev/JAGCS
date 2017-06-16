@@ -17,19 +17,20 @@ ColumnLayout {
 
         Loader {
             Layout.fillWidth: true
-            sourceComponent: createInstrument(modelData)
+            sourceComponent: createIndicator(modelData)
             onItemChanged: if (item) instrumentAdded(modelData, item)
         }
     }
 
     Item { Layout.fillHeight: true }
 
-    function createInstrument(modelData) {
+    function createIndicator(modelData) {
         switch (modelData) {
         case "af": return Qt.createComponent("qrc:/Indicators/ArtificialHorizon.qml");
-        case "fd": return Qt.createComponent("qrc:/Indicators/FlightDirector.qml");
+        case "fd": return Qt.createComponent("qrc:/Indicators/FlightDisplay.qml");
         case "compas": return Qt.createComponent("qrc:/Indicators/Compass.qml");
         case "hsi": return Qt.createComponent("qrc:/Indicators/SituationIndicator.qml");
+        case "nd": return Qt.createComponent("qrc:/Indicators/NavigationDisplay.qml");
         default: return null
         }
     }

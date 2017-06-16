@@ -41,8 +41,11 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrument("fd", new PitotPresenter(
                                  node->childNode(domain::Telemetry::Pitot), dashboard));
-    dashboard->addInstrument("hsi", new CompassPresenter(
+
+    dashboard->addInstrument("nd", new CompassPresenter(
                                  node->childNode(domain::Telemetry::Compass), dashboard));
+    dashboard->addInstrument("nd", new SatellitePresenter(
+                                 node->childNode(domain::Telemetry::Satellite), dashboard));
 
     return dashboard;
 }

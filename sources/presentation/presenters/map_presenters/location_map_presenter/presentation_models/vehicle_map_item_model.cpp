@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QUrl>
+#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -65,23 +66,34 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     domain::Telemetry* node = d->telemetryService->node(vehicleId);
     if (!node) return QVariant();
 
+    QVariant data;
+
     switch (role)
     {
     case CoordinateRole:
-        return node->childNode(domain::Telemetry::Position)->parameter(domain::Telemetry::Coordinate);
+        data = node->childNode(domain::Telemetry::Position)->parameter(domain::Telemetry::Coordinate);
+        if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
+        break;
     case DirectionRole:
-        return node->childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
+        data = node->childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
+        if (!data.isValid()) data = 0;
+        break;
     case MarkRole:
-        return QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
+        data = QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
+        break;
     case VehicleIdRole:
-        return d->dbFacade->vehicle(vehicleId)->mavId();
+        data = d->dbFacade->vehicle(vehicleId)->mavId();
+        break;
     case TrackRole:
-        return d->tracks[vehicleId];
+        data = d->tracks[vehicleId];
+        break;
     case HdopRadius:
-        return node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Eph);
-    default:
-        return QVariant();
+        data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Eph);
+        if (!data.isValid()) data = 0;
+        break;
     }
+
+    return data;
 }
 
 void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
