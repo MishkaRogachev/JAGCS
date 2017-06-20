@@ -21,21 +21,28 @@ ApplicationWindow {
     Palette {
         id: palette
 
-        property color trackColor: "#F44336"
-        property color missionColor: paletteStyle ? "#00897B" : "#1DE9B6"
+        property color trackColor: "#a51834"
+        property color missionColor: "#1ce9a5"
 
-        property color skyColor: paletteStyle ? "#80DEEF" : "#00BCD4"
-        property color groundColor: paletteStyle ? "#A1887F" : "#795548"
+        property color skyColor: paletteStyle ? "#64adf6" : "#00d4ff"
+        property color groundColor: paletteStyle ? "#86c34a" : "#7b4837"
 
-        backgroundColor: paletteStyle ? "#CFD8DC" : "#37474F"
-        sunkenColor: paletteStyle ? "#B0BEC5" : "#263238"
-        raisedColor: paletteStyle ? "#ECEFF1" : "#455A64"
-        buttonColor: paletteStyle ? "#F5F5F5" : "#546E7A"
+        backgroundColor: paletteStyle ? "#ced1da" : "#30393d"
+        sunkenColor: paletteStyle ? "#c3c6ce" : "#262e31"
+        raisedColor: paletteStyle ? "#e1e5ee" : "#384348"
+        buttonColor: paletteStyle ? "#f6f5f0" : "#54646b"
 
         disabledColor: paletteStyle ? "#9E9E9E" : "#212121"
 
-        textColor: paletteStyle ? "#37474F" : "#FAFAFA"
-        selectedTextColor: "#242424"
+        textColor: paletteStyle ? "#30393d" : "#f6f5f0"
+        selectedTextColor: "#070707"
+
+        highlightColor: "#61ffff"
+        selectionColor: "#61ffff"
+
+        negativeColor: "#e53535"
+        neutralColor: "#ff9800"
+        positiveColor: "#86c34a"
     }
 
     header: StatusView {
