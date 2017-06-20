@@ -28,6 +28,7 @@ ColumnLayout {
 
     function createIndicator(modelData) {
         switch (modelData) {
+        case "sd": return Qt.createComponent("qrc:/Indicators/SatelliteDisplay.qml");
         case "af": return Qt.createComponent("qrc:/Indicators/ArtificialHorizon.qml");
         case "fd": return Qt.createComponent("qrc:/Indicators/FlightDisplay.qml");
         case "compas": return Qt.createComponent("qrc:/Indicators/Compass.qml");

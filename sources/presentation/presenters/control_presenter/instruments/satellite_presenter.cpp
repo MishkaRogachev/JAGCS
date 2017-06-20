@@ -14,6 +14,9 @@ void SatellitePresenter::onParametersChanged(const domain::Telemetry::TelemetryM
     if (parameters.contains(domain::Telemetry::Fix))
         this->setViewProperty(PROPERTY(fix),
                               parameters[domain::Telemetry::Fix]);
+    if (parameters.contains(domain::Telemetry::Coordinate))
+        this->setViewProperty(PROPERTY(coordinate),
+                              parameters[domain::Telemetry::Coordinate]);
     if (parameters.contains(domain::Telemetry::Groundspeed))
         this->setViewProperty(PROPERTY(groundspeed),
                               parameters[domain::Telemetry::Groundspeed]);

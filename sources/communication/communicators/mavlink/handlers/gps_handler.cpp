@@ -54,8 +54,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     QGeoCoordinate coordinate(decodeLatLon(gps.lat), decodeLatLon(gps.lon),
                               decodeAltitude(gps.alt));
 
-    node->setParameter({ Telemetry::Satellite, Telemetry::Fix },
-                       ::gpdFixFromFixType(gps.fix_type));
+    node->setParameter({ Telemetry::Satellite, Telemetry::Fix }, gps.fix_type);
     node->setParameter({ Telemetry::Satellite, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
     node->setParameter({ Telemetry::Satellite, Telemetry::Groundspeed },

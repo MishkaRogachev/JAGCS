@@ -32,6 +32,9 @@ DashboardPresenter* VehicleDashboardFactory::create()
     // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
+    dashboard->addInstrument("sd", new SatellitePresenter(
+                                 node->childNode(domain::Telemetry::Satellite), dashboard));
+
     dashboard->addInstrument("fd", new StatusPresenter(
                                   node->childNode(domain::Telemetry::Status), dashboard));
     dashboard->addInstrument("fd", new AhrsPresenter(

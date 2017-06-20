@@ -41,6 +41,7 @@
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
         <file>Indicators/NavigationDisplay.qml</file>
+        <file>Indicators/SatelliteDisplay.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
