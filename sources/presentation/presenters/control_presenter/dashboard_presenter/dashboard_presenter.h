@@ -4,9 +4,6 @@
 // Internal
 #include "base_presenter.h"
 
-// Qt
-#include <QMap>
-
 namespace presentation
 {
     class AbstractInstrumentPresenter;
@@ -20,7 +17,8 @@ namespace presentation
         ~DashboardPresenter() override;
 
     public slots:
-        void addInstrument(const QString& viewName, AbstractInstrumentPresenter* instrument);
+        void addInstrument(const QString& instrument,
+                           AbstractInstrumentPresenter* presenter);
 
     protected:
         void connectView(QObject* view) override;
@@ -29,7 +27,8 @@ namespace presentation
         void onInstrumentAdded(const QString& key, QObject* view);
 
     private:
-        QMap<QString, AbstractInstrumentPresenter*> m_instruments;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
