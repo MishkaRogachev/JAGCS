@@ -37,8 +37,8 @@ ApplicationWindow {
         textColor: paletteStyle ? "#30393d" : "#f6f5f0"
         selectedTextColor: "#070707"
 
-        highlightColor: "#61ffff"
-        selectionColor: "#61ffff"
+        highlightColor: "#1effb4"
+        selectionColor: "#1ce9a5"
 
         negativeColor: "#e53535"
         neutralColor: "#ff9800"

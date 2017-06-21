@@ -8,22 +8,12 @@ import "../Controls" as Controls
 Item {
     id: root
 
+    property bool satelliteOperational: false
     property int fix: -1
     property int eph: 0
     property int epv: 0
     property int satellitesVisible: 0
     property var coordinate: QtPositioning.coordinate()
-
-    property color snsColor : {
-        switch (fix) {
-        case -1:
-        case 0: return palette.disabledColor;
-        case 1: return palette.negativeColor;
-        case 2: return palette.neutralColor;
-        case 3:
-        default: return palette.textColor;
-        }
-    }
 
     implicitHeight: row.height
 
@@ -34,25 +24,38 @@ Item {
 
         ColumnLayout {
             id: column
-            Layout.alignment: Qt.AlignLeft
+            Layout.fillWidth: true
 
             Controls.Label {
-                color: snsColor
-                font.pixelSize: root.width * 0.045
+                font.pixelSize: root.width * 0.042
                 font.bold: true
-                text: qsTr("Lat.:") + Helper.degreesToDmsString(coordinate.latitude, false)
+                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                text: qsTr("Lat.: ") + Helper.degreesToDmsString(coordinate.latitude, false)
             }
 
             Controls.Label {
-                color: snsColor
-                font.pixelSize: root.width * 0.045
+                font.pixelSize: root.width * 0.042
                 font.bold: true
-                text: qsTr("Lon.:") + Helper.degreesToDmsString(coordinate.longitude, true)
+                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                text: qsTr("Lon.: ") + Helper.degreesToDmsString(coordinate.longitude, true)
             }
         }
 
+        Item {
+            Layout.fillWidth: true
+        }
+
         Controls.ColoredIcon {
-            color: snsColor
+            color: {
+                switch (fix) {
+                case -1:
+                case 0: return palette.disabledColor;
+                case 1: return palette.negativeColor;
+                case 2: return palette.neutralColor;
+                case 3:
+                default: return palette.textColor;
+                }
+            }
             source: "qrc:/icons/gps.svg"
             height: column.height
             width: height
@@ -72,17 +75,17 @@ Item {
             Layout.alignment: Qt.AlignRight
 
             Controls.Label {
-                color: snsColor
-                font.pixelSize: root.width * 0.045
+                font.pixelSize: root.width * 0.042
                 font.bold: true
-                text: qsTr("HDOP:") + eph
+                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                text: qsTr("HDOP: ") + eph
             }
 
             Controls.Label {
-                color: snsColor
-                font.pixelSize: root.width * 0.045
+                font.pixelSize: root.width * 0.042
                 font.bold: true
-                text: qsTr("VDOP:") + epv
+                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                text: qsTr("VDOP: ") + epv
             }
         }
     }

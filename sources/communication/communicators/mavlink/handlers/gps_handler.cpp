@@ -68,7 +68,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     node->setParameter({ Telemetry::Satellite, Telemetry::Time },
                        QDateTime::fromMSecsSinceEpoch(gps.time_usec));
     node->setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
-                       decodeAltitude(gps.satellites_visible));
+                       gps.satellites_visible);
 
     node->notify();
 }
