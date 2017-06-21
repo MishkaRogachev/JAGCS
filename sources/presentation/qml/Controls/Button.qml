@@ -38,7 +38,7 @@ Button {
 
             ColoredIcon {
                 id: icon
-                color: iconColor
+                color: label.color
                 anchors.verticalCenter: parent.verticalCenter
                 height: control.height * 0.6
                 width: height
