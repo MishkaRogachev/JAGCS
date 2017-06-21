@@ -20,6 +20,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST")
+        color: palette.activeMissionColor
         value: targetDistance
         width: parent.width * 0.2
     }
@@ -50,6 +51,7 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("TRG")
+        color: palette.activeMissionColor
         digits: 2
         value: targetBearing
         width: parent.width * 0.2

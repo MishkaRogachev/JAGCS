@@ -25,8 +25,8 @@ Compass {
             ctx.beginPath();
 
             ctx.lineWidth = 1;
-            ctx.strokeStyle = palette.missionColor;
-            ctx.fillStyle = palette.missionColor;
+            ctx.strokeStyle = palette.activeMissionColor;
+            ctx.fillStyle = palette.activeMissionColor;
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
 

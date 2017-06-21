@@ -13,8 +13,6 @@ Canvas {
     property real textFactor: 1.6
     property int scalesOffset: root.width * scalesRatio
 
-    property color scalesColor: palette.textColor
-
     onCourseChanged: requestPaint()
     onHeadingChanged: requestPaint()
 
@@ -28,8 +26,8 @@ Canvas {
 
         ctx.save();
 
-        ctx.strokeStyle = scalesColor;
-        ctx.fillStyle = scalesColor;
+        ctx.strokeStyle = palette.textColor;
+        ctx.fillStyle = palette.textColor;
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'center';
 
@@ -82,6 +80,7 @@ Canvas {
         ctx.restore();
 
         // Course Mark
+        ctx.strokeStyle = palette.missionColor;
         ctx.save();
         ctx.rotate((course - heading) * Math.PI / 180);
         ctx.beginPath();
@@ -93,7 +92,8 @@ Canvas {
         ctx.restore();
 
         // Tick
-        ctx.lineWidth = 4; // TODO: color
+        ctx.strokeStyle = palette.textColor;
+        ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(0, -height / 2)
         ctx.lineTo(0, scalesOffset - height / 2);

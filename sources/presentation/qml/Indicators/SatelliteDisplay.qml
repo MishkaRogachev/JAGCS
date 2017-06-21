@@ -53,7 +53,7 @@ Item {
                 case 1: return palette.negativeColor;
                 case 2: return palette.neutralColor;
                 case 3:
-                default: return palette.textColor;
+                default: return palette.positiveColor;
                 }
             }
             source: "qrc:/icons/gps.svg"
