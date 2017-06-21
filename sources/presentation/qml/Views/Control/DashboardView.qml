@@ -34,6 +34,7 @@ ColumnLayout {
         case "compas": return Qt.createComponent("qrc:/Indicators/Compass.qml");
         case "hsi": return Qt.createComponent("qrc:/Indicators/SituationIndicator.qml");
         case "nd": return Qt.createComponent("qrc:/Indicators/NavigationDisplay.qml");
+        case "bat": return Qt.createComponent("qrc:/Indicators/BatteryStatus.qml");
         default: return null
         }
     }

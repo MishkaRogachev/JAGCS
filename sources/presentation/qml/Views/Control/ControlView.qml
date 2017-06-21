@@ -20,7 +20,7 @@ Pane {
         anchors.bottom: parent.bottom
         Layout.margins: palette.margins
         spacing: palette.spacing
-        width: height * 0.55
+        width: height * 0.5
 
         RowLayout {
 

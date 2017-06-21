@@ -17,6 +17,12 @@ void AhrsPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& p
     if (parameters.contains(domain::Telemetry::Roll))
         this->setViewProperty(PROPERTY(roll),
                               parameters[domain::Telemetry::Roll]);
+    if (parameters.contains(domain::Telemetry::Yaw))
+    {
+        this->setViewProperty(PROPERTY(yaw),
+                              parameters[domain::Telemetry::Yaw]);
+        qDebug() << "yaw" << parameters[domain::Telemetry::Yaw];
+    }
     if (parameters.contains(domain::Telemetry::YawSpeed))
         this->setViewProperty(PROPERTY(yawspeed),
                               parameters[domain::Telemetry::YawSpeed]);

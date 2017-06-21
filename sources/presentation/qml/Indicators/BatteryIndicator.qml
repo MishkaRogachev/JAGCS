@@ -1,20 +1,20 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 
-import "../Controls"
+import "../Controls" as Controls
 
-ColoredIcon {
+Controls.ColoredIcon {
     id: root
 
-    property int charge: -1
+    property int percentage: -1
 
     source: "qrc:/icons/battery.svg"
     color: {
-        if (charge > 50)
+        if (percentage > 50)
             return palette.positiveColor;
-        if (charge > 15)
+        if (percentage > 15)
             return palette.neutralColor;
-        if (charge > 0)
+        if (percentage > 0)
             return palette.negativeColor;
 
         return palette.disabledColor;
@@ -22,7 +22,7 @@ ColoredIcon {
 
     Text {
         id: textItem
-        text: charge > -1 ? charge : "-"
+        text: percentage > -1 ? percentage : "-"
         font.pixelSize: parent.height / 3
         font.bold: true
         anchors.centerIn: parent
@@ -35,7 +35,7 @@ ColoredIcon {
         anchors.bottomMargin: 3
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width - 6
-        height: charge > 0 ? (parent.height - 16) * charge / 100 : 0
+        height: percentage > 0 ? (parent.height - 16) * percentage / 100 : 0
         color: parent.color
         clip: true
 

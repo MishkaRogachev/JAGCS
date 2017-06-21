@@ -14,6 +14,7 @@
 #include "pitot_presenter.h"
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
+#include "battery_presenter.h"
 
 using namespace presentation;
 
@@ -52,6 +53,9 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
     dashboard->addInstrument("nd", new NavigatorPresenter(
                                  node->childNode(domain::Telemetry::Navigator), dashboard));
+
+    dashboard->addInstrument("bat", new BatteryPresenter(
+                                 node->childNode(domain::Telemetry::Battery), dashboard));
 
     return dashboard;
 }

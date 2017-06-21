@@ -29,6 +29,7 @@
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/Spacer.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
+        <file>Indicators/BatteryStatus.qml</file>
         <file>Indicators/BarIndicator.qml</file>
         <file>Indicators/Horizon.qml</file>
         <file>Indicators/PlaneMark.qml</file>

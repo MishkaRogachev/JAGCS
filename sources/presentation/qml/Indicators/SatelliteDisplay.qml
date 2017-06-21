@@ -27,14 +27,14 @@ Item {
             Layout.fillWidth: true
 
             Controls.Label {
-                font.pixelSize: root.width * 0.042
+                font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteOperational ? palette.textColor : palette.disabledColor
                 text: qsTr("Lat.: ") + Helper.degreesToDmsString(coordinate.latitude, false)
             }
 
             Controls.Label {
-                font.pixelSize: root.width * 0.042
+                font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteOperational ? palette.textColor : palette.disabledColor
                 text: qsTr("Lon.: ") + Helper.degreesToDmsString(coordinate.longitude, true)
@@ -75,14 +75,14 @@ Item {
             Layout.alignment: Qt.AlignRight
 
             Controls.Label {
-                font.pixelSize: root.width * 0.042
+                font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteOperational ? palette.textColor : palette.disabledColor
                 text: qsTr("HDOP: ") + eph
             }
 
             Controls.Label {
-                font.pixelSize: root.width * 0.042
+                font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteOperational ? palette.textColor : palette.disabledColor
                 text: qsTr("VDOP: ") + epv
