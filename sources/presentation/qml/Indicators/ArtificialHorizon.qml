@@ -15,8 +15,8 @@ Item {
     property real minPitch: -23
     property real maxPitch: 23
     property real pitchStep: 10
-    property real minRoll: -35
-    property real maxRoll: 35
+    property real minRoll: -45
+    property real maxRoll: 45
     property real rollStep: 10
 
     property bool pitchInverted: true
@@ -89,5 +89,15 @@ Item {
         anchors.fill: contents
         source: contents
         maskSource: mask
+    }
+
+    RollScale {
+        id: rollScale
+        anchors.fill: parent
+        roll: rollInverted ? -root.roll : root.roll
+        minRoll: root.minRoll
+        maxRoll: root.maxRoll
+        rollStep: root.rollStep
+        opacity: insAvalible ? 1 : 0.33
     }
 }
