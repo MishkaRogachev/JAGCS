@@ -40,6 +40,7 @@ namespace presentation
 
         void onSelectMission(int index);
         void onAddMission();
+        void onAddItem();
         void onRemoveMission();
         void onRenameMission(const QString& name);
         void onAssignVehicle(int index);

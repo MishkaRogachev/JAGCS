@@ -103,20 +103,14 @@ void MissionPresenter::setViewConnected(bool connected)
 {
     if (connected)
     {
-        connect(this->view(), SIGNAL(selectMission(int)),
-                this, SLOT(onSelectMission(int)));
-        connect(this->view(), SIGNAL(addMission()),
-                this, SLOT(onAddMission()));
-        connect(this->view(), SIGNAL(removeMission()),
-                this, SLOT(onRemoveMission()));
-        connect(this->view(), SIGNAL(renameMission(QString)),
-                this, SLOT(onRenameMission(QString)));
-        connect(this->view(), SIGNAL(assignVehicle(int)),
-                this, SLOT(onAssignVehicle(int)));
-        connect(this->view(), SIGNAL(uploadMission()),
-                this, SLOT(onUploadMission()));
-        connect(this->view(), SIGNAL(downloadMission()),
-                this, SLOT(onDownloadMission()));
+        connect(this->view(), SIGNAL(selectMission(int)), this, SLOT(onSelectMission(int)));
+        connect(this->view(), SIGNAL(addMission()), this, SLOT(onAddMission()));
+        connect(this->view(), SIGNAL(addItem()), this, SLOT(onAddItem()));
+        connect(this->view(), SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
+        connect(this->view(), SIGNAL(renameMission(QString)), this, SLOT(onRenameMission(QString)));
+        connect(this->view(), SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
+        connect(this->view(), SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
+        connect(this->view(), SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     }
     else
     {
@@ -243,6 +237,14 @@ void MissionPresenter::onAddMission()
 
     d->dbFacade->save(mission);
     this->selectMission(mission);
+}
+
+void MissionPresenter::onAddItem()
+{
+    if (d->selectedMission.isNull()) return;
+
+    d->dbFacade->addNewMissionItem(d->selectedMission->id());
+    d->item->selectItem(d->selectedMission->count());
 }
 
 void MissionPresenter::onRemoveMission()

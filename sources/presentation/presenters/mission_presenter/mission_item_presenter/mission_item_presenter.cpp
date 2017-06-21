@@ -77,11 +77,25 @@ void MissionItemPresenter::setMissionItem(const db::MissionItemPtr& item)
     this->updateItem();
 }
 
+void MissionItemPresenter::removeItem()
+{
+    if (d->item.isNull()) return;
+
+    d->dbFacade->remove(d->item);
+}
+
+void MissionItemPresenter::selectItem(int index)
+{
+    if (d->selectedMission.isNull()) return;
+
+    d->item = d->dbFacade->missionItem(d->selectedMission->id(), index);
+    this->updateItem();
+}
+
 void MissionItemPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(addItem()), this, SLOT(onAddItem()));
-    connect(view, SIGNAL(removeItem()), this, SLOT(onRemoveItem()));
-    connect(view, SIGNAL(selectItem(int)), this, SLOT(onSelectItem(int)));
+    connect(view, SIGNAL(removeItem()), this, SLOT(removeItem()));
+    connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
 
     connect(view, SIGNAL(setCommand(int)), this, SLOT(onSetCommand(int)));
     connect(view, SIGNAL(setAltitude(qreal)), this, SLOT(onSetAltitude(qreal)));
@@ -103,7 +117,7 @@ void MissionItemPresenter::updateCount(bool gotoNewItem)
     if (d->selectedMission)
     {
         this->setViewProperty(PROPERTY(count), d->selectedMission->count());
-        if (gotoNewItem) this->onSelectItem(d->selectedMission->count());
+        if (gotoNewItem) this->selectItem(d->selectedMission->count());
     }
     else
     {
@@ -132,31 +146,6 @@ void MissionItemPresenter::updateItem()
         this->setViewProperty(PROPERTY(sequence), 0);
         this->setViewProperty(PROPERTY(command), db::MissionItem::UnknownCommand);
     }
-}
-
-void MissionItemPresenter::onAddItem()
-{
-    if (d->selectedMission.isNull()) return;
-
-    d->dbFacade->addNewMissionItem(d->selectedMission->id());
-    int count = d->selectedMission->count();
-    this->onSelectItem(count);
-    this->setViewProperty(PROPERTY(picking), count > 1);
-}
-
-void MissionItemPresenter::onRemoveItem()
-{
-    if (d->item.isNull()) return;
-
-    d->dbFacade->remove(d->item);
-}
-
-void MissionItemPresenter::onSelectItem(int index)
-{
-    if (d->selectedMission.isNull()) return;
-
-    d->item = d->dbFacade->missionItem(d->selectedMission->id(), index);
-    this->updateItem();
 }
 
 void MissionItemPresenter::onSetCommand(int command)

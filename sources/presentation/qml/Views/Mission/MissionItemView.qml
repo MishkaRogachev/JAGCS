@@ -39,7 +39,6 @@ ColumnLayout {
     property alias picking: pickButton.checked
 
     signal selectItem(int sequence)
-    signal addItem()
     signal removeItem()
 
     signal setCommand(int command);

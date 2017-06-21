@@ -26,16 +26,15 @@ namespace presentation
         void setMission(const db::MissionPtr& mission);
         void setMissionItem(const db::MissionItemPtr& item);
 
+        void removeItem();
+        void selectItem(int index);
+
     protected:
         void connectView(QObject* view) override;
 
     private slots:
         void updateCount(bool gotoNewItem = false);
         void updateItem();
-
-        void onAddItem();
-        void onRemoveItem();
-        void onSelectItem(int index);
 
         void onSetCommand(int command);
         void onSetAltitude(qreal altitude);

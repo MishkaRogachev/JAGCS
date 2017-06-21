@@ -17,6 +17,7 @@ Pane {
 
     signal selectMission(int index)
     signal addMission()
+    signal addItem()
     signal removeMission()
     signal renameMission(string name)
     signal assignVehicle(int index)
@@ -106,49 +107,91 @@ Pane {
         }
 
         RowLayout {
-            spacing: 0
 
-            Repeater {
-                id: repeater
-                model: statuses
+            Button {
+                iconSource: "qrc:/icons/home.svg"
+                onClicked: flickable.contentX = 0// TODO: go home
+            }
 
-                Item {
-                    Layout.fillWidth: true
-                    Layout.minimumHeight: palette.controlBaseSize
+            Button {
+                iconSource: "qrc:/icons/left.svg"
+                autoRepeat: true
+                onClicked: flickable.flick(palette.controlBaseSize * 10, 0)
+                enabled: row.width > flickable.width && flickable.contentX > 0
+            }
 
-                    property bool selected: missionItem.sequence === (index + 1)
+            Button {
+                iconSource: "qrc:/icons/right.svg"
+                autoRepeat: true
+                onClicked: flickable.flick(-palette.controlBaseSize * 10, 0)
+                enabled: row.width > flickable.width &&
+                         flickable.contentX < (row.width - flickable.width)
+            }
 
-                    Rectangle {
-                        anchors.centerIn: parent
-                        width: parent.height
-                        height: width
-                        radius: width / 2
-                        color: selected ? palette.selectionColor : palette.raisedColor
-                        border.color: {
-                            switch (parseInt(modelData)) {
-                            case MissionItem.Actual: return palette.positiveColor;
-                            case MissionItem.StatusNone: return palette.sunkenColor;
-                            case MissionItem.Downloading:
-                            case MissionItem.Uploading: return palette.neutralColor;
-                            case MissionItem.NotActual:
-                            default: return palette.negativeColor;
+            Flickable {
+                id: flickable
+                Layout.fillWidth: true
+                implicitHeight: row.height
+                contentWidth: row.width
+                clip: true
+
+                RowLayout {
+                    id: row
+                    spacing: 1
+
+                    Repeater {
+                        id: repeater
+                        model: statuses
+                        onModelChanged: {
+                            if (row.width > flickable.width)
+                                flickable.contentX = row.width - flickable.width;
+                        }
+
+                        Item {
+                            Layout.minimumWidth: palette.controlBaseSize
+                            Layout.minimumHeight: palette.controlBaseSize
+
+                            property bool selected: missionItem.sequence === (index + 1)
+
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.height
+                                height: width
+                                radius: width / 2
+                                color: selected ? palette.selectionColor : palette.raisedColor
+                                border.color: {
+                                    switch (parseInt(modelData)) {
+                                    case MissionItem.Actual: return palette.positiveColor;
+                                    case MissionItem.StatusNone: return palette.sunkenColor;
+                                    case MissionItem.Downloading:
+                                    case MissionItem.Uploading: return palette.neutralColor;
+                                    case MissionItem.NotActual:
+                                    default: return palette.negativeColor;
+                                    }
+                                }
+                                border.width: 4
+
+                                Label { // TODO: mode icon
+                                    text: index + 1
+                                    color: selected ? palette.selectedTextColor : palette.textColor
+                                    anchors.centerIn: parent
+                                    font.bold: true
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: missionItem.selectItem(index + 1)
+                                }
                             }
-                        }
-                        border.width: 4
-
-                        Label { // TODO: mode icon
-                            text: index + 1
-                            color: selected ? palette.selectedTextColor : palette.textColor
-                            anchors.centerIn: parent
-                            font.bold: true
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: missionItem.selectItem(index + 1)
                         }
                     }
                 }
+            }
+
+            Button {
+                iconSource: "qrc:/icons/add.svg"
+                enabled: selectedMission > 0
+                onClicked: addItem()
             }
         }
 
