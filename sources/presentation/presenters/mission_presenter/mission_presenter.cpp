@@ -29,8 +29,6 @@ public:
     db::MissionPtr selectedMission;
     db::MissionPtrList missions;
 
-    db::VehiclePtrList vehicles;
-
     MissionItemPresenter* item;
     AbstractMapPresenter* map;
 };
@@ -46,31 +44,20 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     d->commandService = entry->commandService();
 
     d->missions.append(d->dbFacade->missions());
-    d->vehicles.append(d->dbFacade->vehicles());
 
-    connect(d->dbFacade, &db::DbFacade::missionAdded,
-            this, &MissionPresenter::onMissionAdded);
-    connect(d->dbFacade, &db::DbFacade::missionRemoved,
-            this, &MissionPresenter::onMissionRemoved);
+    connect(d->dbFacade, &db::DbFacade::missionAdded, this, &MissionPresenter::onMissionAdded);
+    connect(d->dbFacade, &db::DbFacade::missionRemoved, this, &MissionPresenter::onMissionRemoved);
 
-    connect(d->dbFacade, &db::DbFacade::assignmentAdded,
-            this, &MissionPresenter::updateAssignment);
-    connect(d->dbFacade, &db::DbFacade::assignmentRemoved,
-            this, &MissionPresenter::updateAssignment);
-    connect(d->dbFacade, &db::DbFacade::assignmentChanged,
-            this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentAdded, this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentRemoved, this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentChanged,  this, &MissionPresenter::updateAssignment);
 
-    connect(d->dbFacade, &db::DbFacade::missionItemAdded,
-            this, &MissionPresenter::updateStatuses);
-    connect(d->dbFacade, &db::DbFacade::missionItemRemoved,
-            this, &MissionPresenter::updateStatuses);
-    connect(d->dbFacade, &db::DbFacade::missionItemChanged,
-            this, &MissionPresenter::updateStatuses);
+    connect(d->dbFacade, &db::DbFacade::missionItemAdded, this, &MissionPresenter::updateStatuses);
+    connect(d->dbFacade, &db::DbFacade::missionItemRemoved, this, &MissionPresenter::updateStatuses);
+    connect(d->dbFacade, &db::DbFacade::missionItemChanged, this, &MissionPresenter::updateStatuses);
 
-    connect(d->dbFacade, &db::DbFacade::vehicleAdded,
-            this, &MissionPresenter::onVehicleAdded);
-    connect(d->dbFacade, &db::DbFacade::vehicleRemoved,
-            this, &MissionPresenter::onVehicleRemoved);
+    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &MissionPresenter::updateVehiclesBox);
+    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
 
     d->item = new MissionItemPresenter(d->dbFacade, this);
     d->map = new LocationMapPresenter(entry, this);
@@ -147,18 +134,6 @@ void MissionPresenter::updateMissionsBox()
     this->setViewConnected(true);
 }
 
-void MissionPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
-{
-    d->vehicles.append(vehicle);
-    this->updateVehiclesBox();
-}
-
-void MissionPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
-{
-    d->vehicles.removeOne(vehicle);
-    this->updateVehiclesBox();
-}
-
 void MissionPresenter::updateVehiclesBox()
 {
     this->setViewConnected(false);
@@ -166,7 +141,7 @@ void MissionPresenter::updateVehiclesBox()
     QStringList vehicles;
     vehicles.append(QString());
 
-    for (const db::VehiclePtr& vehicle: d->vehicles)
+    for (const db::VehiclePtr& vehicle: d->dbFacade->vehicles())
     {
         vehicles.append(vehicle->name());
     }
@@ -190,7 +165,7 @@ void MissionPresenter::updateAssignment()
             if (vehicle)
             {
                 this->setViewProperty(PROPERTY(assignedVehicle),
-                                      d->vehicles.indexOf(vehicle) + 1);
+                                      d->dbFacade->vehicles().indexOf(vehicle) + 1);
             }
             this->setViewConnected(true);
             return;
@@ -272,8 +247,12 @@ void MissionPresenter::onAssignVehicle(int index)
 {
     // TODO: fix vehicle assignment
     if (!d->selectedMission) return;
-    db::VehiclePtr vehicle = (index > 0 && index <= d->missions.count()) ?
-                                 d->vehicles.at(index - 1) : db::VehiclePtr();
+
+    db::VehiclePtrList vehicles = d->dbFacade->vehicles();
+    db::VehiclePtr vehicle = (index > 0 && index <= vehicles.count()) ?
+                                 vehicles.at(index - 1) : db::VehiclePtr();
+
+    qDebug() << index << vehicle;
 
     if (vehicle)
     {

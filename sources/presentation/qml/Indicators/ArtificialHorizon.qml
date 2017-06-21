@@ -98,6 +98,5 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
-        opacity: insAvalible ? 1 : 0.33
     }
 }

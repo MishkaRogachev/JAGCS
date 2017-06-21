@@ -32,8 +32,6 @@ namespace presentation
         void onMissionAdded(const db::MissionPtr& mission);
         void onMissionRemoved(const db::MissionPtr& mission);
         void updateMissionsBox();
-        void onVehicleAdded(const db::VehiclePtr& vehicle);
-        void onVehicleRemoved(const db::VehiclePtr& vehicle);
         void updateVehiclesBox();
         void updateAssignment();
         void updateStatuses();
