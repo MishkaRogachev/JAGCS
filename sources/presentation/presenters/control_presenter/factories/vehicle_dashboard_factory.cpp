@@ -15,6 +15,7 @@
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
 #include "battery_presenter.h"
+#include "radio_presenter.h"
 
 using namespace presentation;
 
@@ -33,7 +34,7 @@ DashboardPresenter* VehicleDashboardFactory::create()
     // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
-    dashboard->addInstrument("sd", new SatellitePresenter(
+    dashboard->addInstrument("satellite", new SatellitePresenter(
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
 
     dashboard->addInstrument("fd", new StatusPresenter(
@@ -47,15 +48,17 @@ DashboardPresenter* VehicleDashboardFactory::create()
     dashboard->addInstrument("fd", new PitotPresenter(
                                  node->childNode(domain::Telemetry::Pitot), dashboard));
 
-    dashboard->addInstrument("nd", new CompassPresenter(
+    dashboard->addInstrument("nav", new CompassPresenter(
                                  node->childNode(domain::Telemetry::Compass), dashboard));
-    dashboard->addInstrument("nd", new SatellitePresenter(
+    dashboard->addInstrument("nav", new SatellitePresenter(
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
-    dashboard->addInstrument("nd", new NavigatorPresenter(
+    dashboard->addInstrument("nav", new NavigatorPresenter(
                                  node->childNode(domain::Telemetry::Navigator), dashboard));
 
-    dashboard->addInstrument("bat", new BatteryPresenter(
+    dashboard->addInstrument("status", new BatteryPresenter(
                                  node->childNode(domain::Telemetry::Battery), dashboard));
+    dashboard->addInstrument("status", new RadioPresenter(
+                                 node->childNode(domain::Telemetry::Radio), dashboard));
 
     return dashboard;
 }

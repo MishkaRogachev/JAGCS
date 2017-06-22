@@ -9,6 +9,7 @@ Item {
     property real batteryVoltage: 0
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
+    property alias rssi: rssiItem.rssi
 
     implicitHeight: row.height
 
@@ -26,12 +27,14 @@ Item {
             font.pixelSize: root.width * 0.044
             font.bold: true
             color: battery.color
-            text: batteryVoltage.toFixed(2) + " V"
+            text: batteryVoltage.toFixed(2) + qsTr(" V")
         }
 
         Controls.ColoredIcon {
             id: current
             source: "qrc:/icons/current.svg"
+            implicitWidth: palette.controlBaseSize
+            implicitHeight: width
             color: {
                 if (batteryCurrent < -0.01)
                     return palette.positiveColor;
@@ -47,7 +50,18 @@ Item {
             font.pixelSize: root.width * 0.044
             font.bold: true
             color: current.color
-            text: batteryCurrent.toFixed(2) + " A"
+            text: batteryCurrent.toFixed(2) + qsTr(" A")
+        }
+
+        RssiIndicator {
+            id: rssiItem
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.Label {
+            font.pixelSize: root.width * 0.044
+            font.bold: true
+            text: rssi.toFixed(1) + qsTr(" dBm")
         }
     }
 }

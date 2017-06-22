@@ -43,7 +43,6 @@ Map {
     }
     gesture.flickDeceleration: 3000
     gesture.enabled: true
-    activeMapType: supportedMapTypes[5] // TerrainMapType
     copyrightsVisible: false
 
     Behavior on center {

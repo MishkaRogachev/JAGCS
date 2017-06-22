@@ -252,8 +252,6 @@ void MissionPresenter::onAssignVehicle(int index)
     db::VehiclePtr vehicle = (index > 0 && index <= vehicles.count()) ?
                                  vehicles.at(index - 1) : db::VehiclePtr();
 
-    qDebug() << index << vehicle;
-
     if (vehicle)
     {
         d->dbFacade->assign(d->selectedMission->id(), vehicle->id());

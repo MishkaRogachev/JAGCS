@@ -20,7 +20,6 @@ Canvas {
     Component.onCompleted: root.requestPaint()
 
     onPaint: {
-        console.log(width, height)
         var ctx = root.getContext('2d');
 
         ctx.clearRect(0, 0, width, height);

@@ -78,6 +78,11 @@ namespace comm
         return QGeoCoordinate(decodeLatLon(lat), decodeLatLon(lon),
                               decodeAltitude(alt));
     }
+
+    inline float decodeRssi(uint16_t value)
+    {
+        return qMin(qMax(qRound(value / 1.9 - 127.0), - 120), 0);
+    }
 }
 
 #endif // MAVLINK_PROTOCOL_HELPERS_H

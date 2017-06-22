@@ -9,6 +9,8 @@ Controls.ColoredIcon {
     property int percentage: -1
 
     source: "qrc:/icons/battery.svg"
+    implicitWidth: palette.controlBaseSize
+    implicitHeight: width
     color: {
         if (percentage > 50)
             return palette.positiveColor;

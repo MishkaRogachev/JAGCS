@@ -86,9 +86,9 @@
 //  |  |-Current                        real
 //  |  |-Percentage                     int
 //  |-Radio
-//  |  |-Rssi                           int
+//  |  |-Rssi                           real
 //  |  |-Noise                          int
-//  |  |-RemoteRssi                     int
+//  |  |-RemoteRssi                     real
 //  |  |-RemoteNoise                    int
 //  |  |-Errors                         int
 //  |  |-Fixed                          int

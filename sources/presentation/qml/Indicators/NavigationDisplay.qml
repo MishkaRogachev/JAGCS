@@ -52,7 +52,6 @@ Item {
         anchors.right: parent.right
         prefix: qsTr("TRG")
         color: palette.activeMissionColor
-        digits: 2
         value: targetBearing
         width: parent.width * 0.2
     }
@@ -61,7 +60,6 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         prefix: qsTr("HDG")
-        digits: 2
         value: heading
         width: parent.width * 0.2
     }
@@ -70,7 +68,6 @@ Item {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         prefix: qsTr("CRS")
-        digits: 2
         value: course
         width: parent.width * 0.2
     }

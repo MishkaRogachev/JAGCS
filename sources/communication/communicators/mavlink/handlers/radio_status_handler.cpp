@@ -32,11 +32,11 @@ void RadioStatusHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_radio_status_decode(&message, &radio);
 
     node->setParameter({ Telemetry::Rangefinder, Telemetry::Rssi },
-                       radio.rssi);
+                       decodeRssi(radio.rssi));
     node->setParameter({ Telemetry::Radio, Telemetry::Noise },
                        radio.noise);
     node->setParameter({ Telemetry::Rangefinder, Telemetry::RemoteRssi },
-                       radio.remrssi);
+                       decodeRssi(radio.remrssi));
     node->setParameter({ Telemetry::Radio, Telemetry::RemoteNoise },
                        radio.remnoise);
     node->setParameter({ Telemetry::Radio, Telemetry::Errors },
