@@ -11,6 +11,9 @@ SatellitePresenter::SatellitePresenter(domain::Telemetry* node, QObject* parent)
 
 void SatellitePresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
+    if (parameters.contains(domain::Telemetry::Enabled))
+        this->setViewProperty(PROPERTY(satelliteEnabled),
+                              parameters[domain::Telemetry::Enabled]);
     if (parameters.contains(domain::Telemetry::Operational))
         this->setViewProperty(PROPERTY(satelliteOperational),
                               parameters[domain::Telemetry::Operational]);

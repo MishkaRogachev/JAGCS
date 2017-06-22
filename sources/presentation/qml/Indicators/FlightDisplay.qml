@@ -18,6 +18,7 @@ Item {
     property real barometricClimb: 0
     property int rangefinderHeight: 0
 
+    property bool satelliteEnabled: false
     property bool satelliteOperational: false
     property bool airSpeedAvalible: true
     property bool altitudeAvalible: true
@@ -38,7 +39,9 @@ Item {
         prefix: qsTr("GS")
         digits: 1
         value: groundspeed
-        color: satelliteOperational ? palette.textColor : palette.disabledColor
+        color: satelliteEnabled ? satelliteOperational ? palette.textColor :
+                                                         palette.negativeColor :
+                                                         palette.disabledColor
         width: speedLadder.width
     }
 
@@ -76,7 +79,9 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("SAT")
-        color: satelliteOperational ? palette.textColor : palette.disabledColor
+        color: satelliteEnabled ? satelliteOperational ? palette.textColor :
+                                                         palette.negativeColor :
+                                                         palette.disabledColor
         value: satelliteAltitude
         width: altitudeLadder.width
     }

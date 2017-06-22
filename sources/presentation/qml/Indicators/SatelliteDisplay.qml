@@ -8,6 +8,7 @@ import "../Controls" as Controls
 Item {
     id: root
 
+    property bool satelliteEnabled: false
     property bool satelliteOperational: false
     property int fix: -1
     property int eph: 0
@@ -29,14 +30,18 @@ Item {
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
+                                                                 palette.negativeColor :
+                                                                 palette.disabledColor
                 text: qsTr("Lat.: ") + Helper.degreesToDmsString(coordinate.latitude, false)
             }
 
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
+                                                                 palette.negativeColor :
+                                                                 palette.disabledColor
                 text: qsTr("Lon.: ") + Helper.degreesToDmsString(coordinate.longitude, true)
             }
         }
@@ -77,14 +82,18 @@ Item {
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
+                                                                 palette.negativeColor :
+                                                                 palette.disabledColor
                 text: qsTr("HDOP: ") + eph
             }
 
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteOperational ? palette.textColor : palette.disabledColor
+                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
+                                                                 palette.negativeColor :
+                                                                 palette.disabledColor
                 text: qsTr("VDOP: ") + epv
             }
         }
