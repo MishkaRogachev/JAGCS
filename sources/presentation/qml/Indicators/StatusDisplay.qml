@@ -6,10 +6,9 @@ import "../Controls" as Controls
 Item {
     id: root
 
-    property real batteryVoltage: 0
-    property real batteryCurrent: 0
-    property alias batteryPercentage: battery.percentage
-    property alias rssi: rssiItem.rssi
+    property bool online: false
+    property bool armed: false
+    property string mode: qsTr("None")
 
     implicitHeight: row.height
 
@@ -18,50 +17,20 @@ Item {
         anchors.centerIn: parent
         width: parent.width
 
-        BatteryIndicator {
-            id: battery
-            Layout.alignment: Qt.AlignRight
+        Controls.Label {
+            font.pixelSize: root.width * 0.044
+            font.bold: true
+            text: armed ? qsTr("ARMED") : qsTr("DISARMED")
+            color: online ? palette.textColor : palette.disabledColor
+            Layout.alignment: Qt.AlignCenter
         }
 
         Controls.Label {
             font.pixelSize: root.width * 0.044
             font.bold: true
-            color: battery.color
-            text: batteryVoltage.toFixed(2) + qsTr(" V")
-        }
-
-        Controls.ColoredIcon {
-            id: current
-            source: "qrc:/icons/current.svg"
-            implicitWidth: palette.controlBaseSize
-            implicitHeight: width
-            color: {
-                if (batteryCurrent < -0.01)
-                    return palette.positiveColor;
-                if (batteryCurrent > 0.01)
-                    return palette.neutralColor;
-
-                return palette.textColor;
-            }
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Label {
-            font.pixelSize: root.width * 0.044
-            font.bold: true
-            color: current.color
-            text: batteryCurrent.toFixed(2) + qsTr(" A")
-        }
-
-        RssiIndicator {
-            id: rssiItem
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Label {
-            font.pixelSize: root.width * 0.044
-            font.bold: true
-            text: rssi.toFixed(1) + qsTr(" dBm")
+            text: qsTr("Mode: ") + mode
+            color: online ? palette.textColor : palette.disabledColor
+            Layout.alignment: Qt.AlignCenter
         }
     }
 }
