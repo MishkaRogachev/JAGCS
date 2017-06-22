@@ -113,7 +113,7 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
     node->setParameter({ Telemetry::Battery, Telemetry::Current },
                        ::decodeCurrent(status.current_battery));
     node->setParameter({ Telemetry::Battery, Telemetry::Percentage },
-                       ::decodeCurrent(status.battery_remaining));
+                       status.battery_remaining);
 
     node->notify();
 

@@ -8,7 +8,7 @@ Item {
 
     property real batteryVoltage: 0
     property real batteryCurrent: 0
-    property alias battery: battery.percentage
+    property alias batteryPercentage: battery.percentage
 
     implicitHeight: row.height
 
