@@ -16,6 +16,7 @@
 #include "location_map_presenter.h"
 #include "vehicle_dashboard_factory.h"
 #include "dashboard_presenter.h"
+#include "command_presenter.h"
 
 using namespace presentation;
 
@@ -26,6 +27,7 @@ public:
     domain::TelemetryService* telemetryService;
 
     AbstractMapPresenter* map;
+    CommandPresenter* commander;
     DashboardPresenter* dashboard = nullptr;
 };
 
@@ -37,6 +39,7 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     d->telemetryService = entry->telemetryService();
 
     d->map = new LocationMapPresenter(entry, this);
+    d->commander = new CommandPresenter(entry->commandService(), this);
 
     connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
@@ -64,6 +67,7 @@ void ControlPresenter::updateVehiclesList()
 void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
+    d->commander->setView(view->findChild<QObject*>(NAME(commander)));
 
     connect(view, SIGNAL(selectVehicle(int)), this, SLOT(onSelectVehicle(int)));
 

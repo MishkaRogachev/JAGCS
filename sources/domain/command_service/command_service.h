@@ -33,8 +33,8 @@ namespace domain
     signals:
         void gotCommand();
 
-        void download(db::MissionAssignmentPtr assignment);
-        void upload(db::MissionAssignmentPtr assignment);
+        void download(db::MissionAssignmentPtr assignment); // TODO: mission seervice
+        void upload(db::MissionAssignmentPtr assignment); // TODO: mission seervice
 
     private:
         class Impl;

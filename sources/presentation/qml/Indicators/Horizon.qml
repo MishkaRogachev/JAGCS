@@ -17,7 +17,6 @@ Canvas {
     onPitchChanged: root.requestPaint()
     onWidthChanged: root.requestPaint()
     onHeightChanged: root.requestPaint()
-    Component.onCompleted: root.requestPaint()
 
     onPaint: {
         var ctx = root.getContext('2d');

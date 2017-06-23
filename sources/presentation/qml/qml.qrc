@@ -60,6 +60,7 @@
         <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Control/ControlView.qml</file>
         <file>Views/Control/DashboardView.qml</file>
+        <file>Views/Control/CommandView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/VideoStatusBar.qml</file>
         <file>Views/Mission/MissionView.qml</file>
