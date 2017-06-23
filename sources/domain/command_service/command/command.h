@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <QObject>
+#include <QVariant>
 
 namespace domain
 {
@@ -12,7 +13,13 @@ namespace domain
     public:
         enum CommandType
         {
-            Idle
+            Idle,
+
+            ArmDisarm,
+
+            Return,
+            Start,
+            Jump
         };
 
         Command(CommandType type);

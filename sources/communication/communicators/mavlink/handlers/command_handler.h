@@ -6,6 +6,7 @@
 
 namespace domain
 {
+    class Command;
     class CommandService;
 }
 
@@ -22,11 +23,9 @@ namespace comm
     public slots:
        void processMessage(const mavlink_message_t& message) override;
 
-       void sendArmDisarm(int mavId, bool arm);
-       void sendReturn(int mavId);
-       void sendMissionRestart(int mavId);
-       void sendMissionStart(int mavId, int startPoint);
-       void sendMissionJumpTo(int mavId, int startPoint);
+    private slots:
+       void onGotCommand();
+       void sendCommand(const domain::Command& command);
 
    private:
        domain::CommandService* m_commandService;

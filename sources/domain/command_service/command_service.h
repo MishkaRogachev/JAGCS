@@ -24,6 +24,9 @@ namespace domain
         explicit CommandService(QObject* parent = nullptr);
         ~CommandService() override;
 
+        Command headCommand();
+        bool hasCommand() const;
+
     public slots:
         void executeCommand(const Command& command);
 

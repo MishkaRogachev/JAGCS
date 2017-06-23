@@ -1,8 +1,5 @@
 #include "command.h"
 
-// Qt
-#include <QVariant>
-
 using namespace domain;
 
 Command::Command(CommandType type):
