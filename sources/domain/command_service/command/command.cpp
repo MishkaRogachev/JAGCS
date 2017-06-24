@@ -2,8 +2,9 @@
 
 using namespace domain;
 
-Command::Command(CommandType type):
-    m_type(type)
+Command::Command(CommandType type, int vehicleId):
+    m_type(type),
+    m_vehicleId(vehicleId)
 {}
 
 Command::CommandType Command::type() const
@@ -24,4 +25,14 @@ QVariantList Command::arguments() const
 void Command::setArguments(const QVariantList& arguments)
 {
     m_arguments = arguments;
+}
+
+int Command::vehicleId() const
+{
+    return m_vehicleId;
+}
+
+void Command::setVehicleId(int vehicleId)
+{
+    m_vehicleId = vehicleId;
 }

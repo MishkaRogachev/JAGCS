@@ -4,6 +4,11 @@
 // Internal
 #include "abstract_mavlink_handler.h"
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
     class Command;
@@ -17,7 +22,8 @@ namespace comm
         Q_OBJECT
 
     public:
-        CommandHandler(domain::CommandService* commandService,
+        CommandHandler(db::DbFacade* dbFacade,
+                       domain::CommandService* commandService,
                        MavLinkCommunicator* communicator);
 
     public slots:
@@ -29,6 +35,7 @@ namespace comm
 
    private:
        domain::CommandService* m_commandService;
+       db::DbFacade* m_dbFacade;
     };
 }
 
