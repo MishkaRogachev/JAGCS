@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-import "../Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Item {
     id: root
@@ -16,7 +16,7 @@ Item {
 
     implicitHeight: hsi.height
 
-    FdLabel { // TODO: icon
+    Indicators.FdLabel { // TODO: icon
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST")
@@ -25,7 +25,7 @@ Item {
         width: parent.width * 0.2
     }
 
-    FdLabel { // TODO: icon
+    Indicators.FdLabel { // TODO: icon
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         prefix: qsTr("HOME")
@@ -33,7 +33,7 @@ Item {
         width: parent.width * 0.2
     }
 
-    FdLabel { // TODO: icon
+    Indicators.FdLabel { // TODO: icon
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         prefix: qsTr("WP")
@@ -41,13 +41,13 @@ Item {
         width: parent.width * 0.2
     }
 
-    SituationIndicator {
+    Indicators.SituationIndicator {
         id: hsi
         anchors.centerIn: parent
         width: parent.width * 0.6
     }
 
-    FdLabel { // TODO: icon
+    Indicators.FdLabel { // TODO: icon
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("TRG")
@@ -56,7 +56,7 @@ Item {
         width: parent.width * 0.2
     }
 
-    FdLabel { // TODO: icon
+    Indicators.FdLabel { // TODO: icon
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         prefix: qsTr("HDG")
@@ -64,7 +64,7 @@ Item {
         width: parent.width * 0.2
     }
 
-    FdLabel { // TODO: icon
+    Indicators.FdLabel { // TODO: icon
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         prefix: qsTr("CRS")

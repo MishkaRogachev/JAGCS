@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtPositioning 5.6
 
 import "qrc:/JS/helper.js" as Helper
-import "../Controls" as Controls
+import "qrc:/Controls" as Controls
 
 Item {
     id: root

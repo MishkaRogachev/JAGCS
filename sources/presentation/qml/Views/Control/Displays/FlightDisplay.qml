@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-import "../Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Item {
     id: root
@@ -33,7 +33,7 @@ Item {
 
     implicitHeight: af.height
 
-    FdLabel {
+    Indicators.FdLabel {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("GS")
@@ -45,7 +45,7 @@ Item {
         width: speedLadder.width
     }
 
-    Ladder {
+    Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -60,7 +60,7 @@ Item {
         prefix: qsTr("IAS")
     }
 
-    FdLabel {
+    Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         prefix: qsTr("TAS")
@@ -69,13 +69,13 @@ Item {
         width: speedLadder.width
     }
 
-    ArtificialHorizon {
+    Indicators.ArtificialHorizon {
         id: af
         anchors.centerIn: parent
         width: parent.width * 0.58
     }
 
-    FdLabel {
+    Indicators.FdLabel {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("SAT")
@@ -86,7 +86,7 @@ Item {
         width: altitudeLadder.width
     }
 
-    Ladder {
+    Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
@@ -101,7 +101,7 @@ Item {
         prefix: qsTr("ALT")
     }
 
-    FdLabel {
+    Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         prefix: qsTr("RF")

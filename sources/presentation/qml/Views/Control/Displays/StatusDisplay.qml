@@ -1,7 +1,8 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 
-import "../Controls" as Controls
+import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Item {
     id: root
@@ -20,7 +21,7 @@ Item {
         anchors.centerIn: parent
         width: parent.width
 
-        BatteryIndicator {
+        Indicators.BatteryIndicator {
             id: battery
             Layout.alignment: Qt.AlignRight
         }
