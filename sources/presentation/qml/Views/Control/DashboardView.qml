@@ -31,7 +31,6 @@ ColumnLayout {
         case "status": return Qt.createComponent("qrc:/Indicators/StatusDisplay.qml");
         case "satellite": return Qt.createComponent("qrc:/Indicators/SatelliteDisplay.qml");
         case "nav": return Qt.createComponent("qrc:/Indicators/NavigationDisplay.qml");
-        case "gadget": return Qt.createComponent("qrc:/Indicators/GadgetDisplay.qml");
         default: return null
         }
     }

@@ -33,9 +33,6 @@ DashboardPresenter* VehicleDashboardFactory::create()
     // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
-    dashboard->addInstrument("status", new StatusPresenter(
-                                 node->childNode(domain::Telemetry::Status), dashboard));
-
     dashboard->addInstrument("satellite", new SatellitePresenter(
                                  node->childNode(domain::Telemetry::Status), dashboard));
 
@@ -57,7 +54,9 @@ DashboardPresenter* VehicleDashboardFactory::create()
     dashboard->addInstrument("nav", new NavigatorPresenter(
                                  node->childNode(domain::Telemetry::Navigator), dashboard));
 
-    dashboard->addInstrument("gadget", new BatteryPresenter(
+    dashboard->addInstrument("status", new StatusPresenter(
+                                 node->childNode(domain::Telemetry::Status), dashboard));
+    dashboard->addInstrument("status", new BatteryPresenter(
                                  node->childNode(domain::Telemetry::Battery), dashboard));
 
     return dashboard;

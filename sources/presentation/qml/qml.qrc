@@ -44,7 +44,6 @@
         <file>Indicators/SatelliteDisplay.qml</file>
         <file>Indicators/FlightDisplay.qml</file>
         <file>Indicators/NavigationDisplay.qml</file>
-        <file>Indicators/GadgetDisplay.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
