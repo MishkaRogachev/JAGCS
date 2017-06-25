@@ -3,6 +3,11 @@
 
 #include "base_presenter.h"
 
+namespace domain
+{
+    class DomainEntry;
+}
+
 namespace presentation
 {
     class StatusbarPresenter: public BasePresenter
@@ -10,13 +15,18 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit StatusbarPresenter(QObject* parent);
+        explicit StatusbarPresenter(domain::DomainEntry* entry, QObject* parent = nullptr);
+        ~StatusbarPresenter() override;
 
     signals:
         void setMode(const QString& mode);
 
     protected:
         void connectView(QObject* view) override;
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

@@ -6,8 +6,12 @@
 using namespace presentation;
 
 RadioPresenter::RadioPresenter(domain::Telemetry* node, QObject* parent):
-    AbstractInstrumentPresenter(node, parent)
-{}
+    BasePresenter(parent),
+    m_node(node)
+{
+    connect(node, &domain::Telemetry::parametersChanged,
+            this, &RadioPresenter::onParametersChanged);
+}
 
 void RadioPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
@@ -15,4 +19,11 @@ void RadioPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& 
         this->setViewProperty(PROPERTY(rssi), parameters[domain::Telemetry::Rssi]);
     if (parameters.contains(domain::Telemetry::RemoteRssi))
         this->setViewProperty(PROPERTY(remoteRssi), parameters[domain::Telemetry::RemoteRssi]);
+}
+
+void RadioPresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->onParametersChanged(m_node->parameters());
 }

@@ -9,7 +9,6 @@ Item {
     property real batteryVoltage: 0
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
-    property alias rssi: rssiItem.rssi
 
     implicitHeight: row.height
 
@@ -51,17 +50,6 @@ Item {
             font.bold: true
             color: current.color
             text: batteryCurrent.toFixed(2) + qsTr(" A")
-        }
-
-        RssiIndicator {
-            id: rssiItem
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Label {
-            font.pixelSize: root.width * 0.044
-            font.bold: true
-            text: rssi.toFixed(1) + qsTr(" dBm")
         }
     }
 }

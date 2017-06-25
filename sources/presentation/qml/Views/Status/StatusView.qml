@@ -12,7 +12,7 @@ ToolBar {
 
     RowLayout {
         anchors.fill: parent
-        spacing: 1
+        spacing: palette.spacing
 
         Image {
             source: "qrc:/icons/jagcs.svg"
@@ -25,35 +25,39 @@ ToolBar {
             text: "JAGCS"
         }
 
+        RadioStatusView {
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
         Item { Layout.fillWidth: true }
 
-        ConnectionStatusView {
-            anchors.verticalCenter: parent.verticalCenter
-        }
+        RowLayout {
+            spacing: 1
 
-        StatusModeButton {
-            mode: "control"
-            iconSource: "qrc:/icons/flight.svg"
-            anchors.verticalCenter: parent.verticalCenter
-        }
+            StatusModeButton {
+                mode: "control"
+                iconSource: "qrc:/icons/flight.svg"
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-        StatusModeButton {
-            mode: "mission"
-            iconSource: "qrc:/icons/map-marker.svg"
-            anchors.verticalCenter: parent.verticalCenter
-        }
+            StatusModeButton {
+                mode: "mission"
+                iconSource: "qrc:/icons/map-marker.svg"
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-        StatusModeButton {
-            mode: "settings"
-            iconSource: "qrc:/icons/settings.svg"
-            anchors.verticalCenter: parent.verticalCenter
-        }
+            StatusModeButton {
+                mode: "settings"
+                iconSource: "qrc:/icons/settings.svg"
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-        Button {
-            iconSource: "qrc:/icons/quit.svg"
-            iconColor: palette.negativeColor
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: quit()
+            Button {
+                iconSource: "qrc:/icons/quit.svg"
+                iconColor: palette.negativeColor
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked: quit()
+            }
         }
     }
 }

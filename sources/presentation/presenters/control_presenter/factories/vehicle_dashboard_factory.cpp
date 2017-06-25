@@ -15,7 +15,6 @@
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
 #include "battery_presenter.h"
-#include "radio_presenter.h"
 
 using namespace presentation;
 
@@ -60,8 +59,6 @@ DashboardPresenter* VehicleDashboardFactory::create()
 
     dashboard->addInstrument("gadget", new BatteryPresenter(
                                  node->childNode(domain::Telemetry::Battery), dashboard));
-    dashboard->addInstrument("gadget", new RadioPresenter(
-                                 m_telemetryService->radioNode(), dashboard));
 
     return dashboard;
 }

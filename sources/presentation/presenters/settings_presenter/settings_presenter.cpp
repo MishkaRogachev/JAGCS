@@ -5,7 +5,7 @@
 
 #include "settings_provider.h"
 
-#include "communications_presenter.h"
+#include "communication_settings_presenter.h"
 #include "vehicles_presenter.h"
 #include "video_settings_presenter.h"
 #include "network_settings_presenter.h"
@@ -17,7 +17,7 @@ using namespace presentation;
 class SettingsPresenter::Impl
 {
 public:
-    CommunicationsPresenter* communications;
+    CommunicationSettingsPresenter* communications;
     VehiclesPresenter* vehicles;
     VideoSettingsPresenter* video;
     NetworkSettingsPresenter* network;
@@ -31,7 +31,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
     d(new Impl())
 {
 
-    d->communications = new CommunicationsPresenter(entry, this);
+    d->communications = new CommunicationSettingsPresenter(entry, this);
     d->vehicles = new VehiclesPresenter(entry->dbFacade(), this);
     d->video = new VideoSettingsPresenter(this);
     d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);

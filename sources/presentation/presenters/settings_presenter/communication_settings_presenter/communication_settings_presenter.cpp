@@ -1,4 +1,4 @@
-#include "communications_presenter.h"
+#include "communication_settings_presenter.h"
 
 // Qt
 #include <QMap>
@@ -18,7 +18,7 @@
 using namespace presentation;
 using namespace domain;
 
-class CommunicationsPresenter::Impl
+class CommunicationSettingsPresenter::Impl
 {
 public:
     db::DbFacade* dbFacade;
@@ -27,8 +27,8 @@ public:
     QMap<db::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
 };
 
-CommunicationsPresenter::CommunicationsPresenter(domain::DomainEntry* entry,
-                                                 QObject* parent):
+CommunicationSettingsPresenter::CommunicationSettingsPresenter(domain::DomainEntry* entry,
+                                                               QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -36,13 +36,13 @@ CommunicationsPresenter::CommunicationsPresenter(domain::DomainEntry* entry,
     d->service = entry->commService();
 
     connect(d->dbFacade, &db::DbFacade::linkAdded,
-            this, &CommunicationsPresenter::onLinkAdded);
+            this, &CommunicationSettingsPresenter::onLinkAdded);
     connect(d->dbFacade, &db::DbFacade::linkChanged,
-            this, &CommunicationsPresenter::onLinkChanged);
+            this, &CommunicationSettingsPresenter::onLinkChanged);
     connect(d->dbFacade, &db::DbFacade::linkRemoved,
-            this, &CommunicationsPresenter::onLinkRemoved);
+            this, &CommunicationSettingsPresenter::onLinkRemoved);
     connect(d->service, &CommunicationService::linkStatisticsChanged,
-            this, &CommunicationsPresenter::onLinkStatisticsChanged);
+            this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
 
     for (const db::LinkDescriptionPtr& description: d->dbFacade->links())
     {
@@ -51,10 +51,10 @@ CommunicationsPresenter::CommunicationsPresenter(domain::DomainEntry* entry,
     }
 }
 
-CommunicationsPresenter::~CommunicationsPresenter()
+CommunicationSettingsPresenter::~CommunicationSettingsPresenter()
 {}
 
-void CommunicationsPresenter::connectView(QObject* view)
+void CommunicationSettingsPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(addUdpLink()), this, SLOT(onAddUdpLink()));
     connect(view, SIGNAL(addSerialLink()), this, SLOT(onAddSerialLink()));
@@ -62,7 +62,7 @@ void CommunicationsPresenter::connectView(QObject* view)
     this->updateCommunicationsLinks();
 }
 
-void CommunicationsPresenter::onLinkAdded(
+void CommunicationSettingsPresenter::onLinkAdded(
         const db::LinkDescriptionPtr& description)
 {
     d->linkPresenters[description] =
@@ -71,19 +71,21 @@ void CommunicationsPresenter::onLinkAdded(
     this->updateCommunicationsLinks();
 }
 
-void CommunicationsPresenter::onLinkChanged(const db::LinkDescriptionPtr& description)
+void CommunicationSettingsPresenter::onLinkChanged(
+        const db::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateView();
 }
 
-void CommunicationsPresenter::onLinkStatisticsChanged(const db::LinkDescriptionPtr& description)
+void CommunicationSettingsPresenter::onLinkStatisticsChanged(
+        const db::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateStatistics();
 }
 
-void CommunicationsPresenter::onLinkRemoved(
+void CommunicationSettingsPresenter::onLinkRemoved(
         const db::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
@@ -93,7 +95,7 @@ void CommunicationsPresenter::onLinkRemoved(
     this->updateCommunicationsLinks();
 }
 
-void CommunicationsPresenter::updateCommunicationsLinks()
+void CommunicationSettingsPresenter::updateCommunicationsLinks()
 {
     QList<QObject*> objectList;
     for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters.values())
@@ -104,7 +106,7 @@ void CommunicationsPresenter::updateCommunicationsLinks()
     this->setViewProperty(PROPERTY(links), QVariant::fromValue(objectList));
 }
 
-void CommunicationsPresenter::onAddUdpLink()
+void CommunicationSettingsPresenter::onAddUdpLink()
 {
     auto description = db::LinkDescriptionPtr::create();
 
@@ -115,7 +117,7 @@ void CommunicationsPresenter::onAddUdpLink()
     d->dbFacade->save(description);
 }
 
-void CommunicationsPresenter::onAddSerialLink()
+void CommunicationSettingsPresenter::onAddSerialLink()
 {
     auto description = db::LinkDescriptionPtr::create();
 

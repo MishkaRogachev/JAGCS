@@ -1,5 +1,5 @@
-#ifndef COMMUNICATIONS_PRESENTER_H
-#define COMMUNICATIONS_PRESENTER_H
+#ifndef COMMUNICATION_SETTINGS_PRESENTER_H
+#define COMMUNICATION_SETTINGS_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -12,14 +12,14 @@ namespace domain
 
 namespace presentation
 {
-    class CommunicationsPresenter: public BasePresenter
+    class CommunicationSettingsPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit CommunicationsPresenter(domain::DomainEntry* entry,
-                                         QObject* parent = nullptr);
-        ~CommunicationsPresenter() override;
+        explicit CommunicationSettingsPresenter(domain::DomainEntry* entry,
+                                                QObject* parent = nullptr);
+        ~CommunicationSettingsPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
@@ -40,4 +40,4 @@ namespace presentation
     };
 }
 
-#endif // COMMUNICATIONS_PRESENTER_H
+#endif // COMMUNICATION_SETTINGS_PRESENTER_H

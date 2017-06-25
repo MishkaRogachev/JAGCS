@@ -48,7 +48,7 @@
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
-        <file>Views/Status/ConnectionStatusView.qml</file>
+        <file>Views/Status/RadioStatusView.qml</file>
         <file>Views/Map/MapView.qml</file>
         <file>Views/Map/MapStatusBar.qml</file>
         <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>

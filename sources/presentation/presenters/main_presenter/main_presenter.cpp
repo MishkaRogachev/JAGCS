@@ -29,7 +29,7 @@ MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* parent):
 {
     d->entry = entry;
 
-    d->statusbar = new StatusbarPresenter(this);
+    d->statusbar = new StatusbarPresenter(entry, this);
     connect(d->statusbar, &StatusbarPresenter::setMode, this, &MainPresenter::setMode);
 }
 
