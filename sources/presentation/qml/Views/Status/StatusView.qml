@@ -26,6 +26,7 @@ ToolBar {
         }
 
         RadioStatusView {
+            objectName: "radio"
             anchors.verticalCenter: parent.verticalCenter
         }
 

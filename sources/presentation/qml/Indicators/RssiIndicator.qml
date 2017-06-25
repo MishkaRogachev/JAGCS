@@ -14,6 +14,7 @@ Item {
     Row {
         id: row
         spacing: root.width / 20
+        layoutDirection: Qt.RightToLeft
         anchors.centerIn: parent
 
         Repeater {
@@ -23,9 +24,8 @@ Item {
             Rectangle {
                 anchors.bottom: parent.bottom
                 width: root.width / repeater.count - row.spacing
-                height: root.height - (repeater.count - index + 1) * root.height /
-                        (repeater.count + 2)
-                color: maxRssiValue / (repeater.count - index) >= rssi ?
+                height: (repeater.count - index + 1) * root.height / (repeater.count + 2)
+                color: maxRssiValue / (repeater.count - index) <= rssi ?
                            palette.selectionColor : palette.disabledColor
             }
         }
