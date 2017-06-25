@@ -25,7 +25,7 @@ void RangefinderHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_RANGEFINDER) return;
 
-    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->mavNode(message.sysid);
     if (!node) return;
 
     mavlink_rangefinder_t rangefinder;

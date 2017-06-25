@@ -15,7 +15,8 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit CommandPresenter(domain::CommandService* service, QObject* parent = nullptr);
+        explicit CommandPresenter(domain::CommandService* service,
+                                  QObject* parent = nullptr);
         ~CommandPresenter() override;
 
     protected:

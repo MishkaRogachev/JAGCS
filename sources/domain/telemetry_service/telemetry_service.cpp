@@ -21,6 +21,11 @@ public:
     db::DbFacade* facade;
 
     QMap<int, Telemetry*> vehicleNodes;
+    Telemetry radioNode;
+
+    Impl():
+        radioNode(Telemetry::Root)
+    {}
 };
 
 TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
@@ -36,10 +41,15 @@ TelemetryService::~TelemetryService()
 
 QList<Telemetry*> TelemetryService::rootNodes() const
 {
-    return d->vehicleNodes.values();
+    QList<Telemetry*> list;
+
+    list.append(d->vehicleNodes.values());
+    list.append(&d->radioNode);
+
+    return list;
 }
 
-Telemetry* TelemetryService::node(int vehicleId) const
+Telemetry* TelemetryService::vehicleNode(int vehicleId) const
 {
     if (!d->vehicleNodes.contains(vehicleId))
     {
@@ -49,9 +59,14 @@ Telemetry* TelemetryService::node(int vehicleId) const
     return d->vehicleNodes.value(vehicleId, nullptr);
 }
 
-Telemetry* TelemetryService::nodeByMavId(int mavId) const
+Telemetry* TelemetryService::mavNode(int mavId) const
 {
-    return this->node(d->facade->vehicleIdByMavId(mavId));
+    return this->vehicleNode(d->facade->vehicleIdByMavId(mavId));
+}
+
+Telemetry*TelemetryService::radioNode() const
+{
+    return &d->radioNode;
 }
 
 void TelemetryService::onVehicleRemoved(const db::VehiclePtr& vehicle)

@@ -27,7 +27,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->mavNode(message.sysid);
     if (!node) return;
 
     mavlink_global_position_int_t position;

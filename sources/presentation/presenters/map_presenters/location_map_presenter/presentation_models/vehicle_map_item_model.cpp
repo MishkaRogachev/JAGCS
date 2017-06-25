@@ -63,7 +63,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 
     int vehicleId = d->vehicleIds.at(index.row());
 
-    domain::Telemetry* node = d->telemetryService->node(vehicleId);
+    domain::Telemetry* node = d->telemetryService->vehicleNode(vehicleId);
     if (!node) return QVariant();
 
     QVariant data;
@@ -102,7 +102,7 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     d->vehicleIds.append(vehicleId);
 
-    domain::Telemetry* node = d->telemetryService->node(vehicle->id());
+    domain::Telemetry* node = d->telemetryService->vehicleNode(vehicle->id());
 
     connect(node->childNode(domain::Telemetry::Position), &domain::Telemetry::parametersChanged,
             this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
@@ -127,7 +127,7 @@ void VehicleMapItemModel::onVehicleRemoved(const db::VehiclePtr& vehicle)
     int row = d->vehicleIds.indexOf(vehicle->id());
     if (row == -1) return;
 
-    domain::Telemetry* node = d->telemetryService->node(vehicle->id());
+    domain::Telemetry* node = d->telemetryService->vehicleNode(vehicle->id());
     disconnect(node, 0, this, 0);
 
     this->beginRemoveRows(QModelIndex(), row, row);

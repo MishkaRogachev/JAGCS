@@ -28,7 +28,7 @@ VehicleDashboardFactory::VehicleDashboardFactory(domain::TelemetryService* telem
 
 DashboardPresenter* VehicleDashboardFactory::create()
 {
-    domain::Telemetry* node = m_telemetryService->node(m_vehicle->id());
+    domain::Telemetry* node = m_telemetryService->vehicleNode(m_vehicle->id());
     if (!node) return nullptr;
 
     // TODO: vehicle type
@@ -61,7 +61,7 @@ DashboardPresenter* VehicleDashboardFactory::create()
     dashboard->addInstrument("gadget", new BatteryPresenter(
                                  node->childNode(domain::Telemetry::Battery), dashboard));
     dashboard->addInstrument("gadget", new RadioPresenter(
-                                 node->childNode(domain::Telemetry::Radio), dashboard));
+                                 m_telemetryService->radioNode(), dashboard));
 
     return dashboard;
 }

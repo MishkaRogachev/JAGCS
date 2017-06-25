@@ -25,7 +25,7 @@ void PressureHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SCALED_PRESSURE) return;
 
-    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->mavNode(message.sysid);
     if (!node) return;
 
     mavlink_scaled_pressure_t pressure;

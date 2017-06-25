@@ -23,7 +23,7 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_VFR_HUD) return;
 
-    Telemetry* node = m_telemetryService->nodeByMavId(message.sysid);
+    Telemetry* node = m_telemetryService->mavNode(message.sysid);
     if (!node) return;
 
     mavlink_vfr_hud_t vfrHud;

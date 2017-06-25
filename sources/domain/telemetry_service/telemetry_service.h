@@ -22,8 +22,10 @@ namespace domain
         ~TelemetryService() override;
 
         QList<Telemetry*> rootNodes() const;
-        Telemetry* node(int vehicleId) const;
-        Telemetry* nodeByMavId(int mavId) const;
+        Telemetry* vehicleNode(int vehicleId) const;
+        Telemetry* mavNode(int mavId) const;
+        // TODO: multiply radio telemetry
+        Telemetry* radioNode() const;
 
     private slots:
         void onVehicleRemoved(const db::VehiclePtr& vehicle);

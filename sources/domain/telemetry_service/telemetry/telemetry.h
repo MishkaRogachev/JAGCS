@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QMap>
 
-// Root
+// mav
 //  |-Status
 //  |  |-Online                         bool
 //  |  |-Armed                          bool
@@ -85,17 +85,17 @@
 //  |  |-Voltage                        real
 //  |  |-Current                        real
 //  |  |-Percentage                     int
-//  |-Radio
-//  |  |-Rssi                           real
-//  |  |-Noise                          int
-//  |  |-RemoteRssi                     real
-//  |  |-RemoteNoise                    int
-//  |  |-Errors                         int
-//  |  |-Fixed                          int
 //  |-Wind
 //  |  |-Yaw                            real
 //  |  |-Speed                          real
 //  |  |-Climb                          real
+// radio
+//  |-Rssi                              real
+//  |-Noise                             int
+//  |-RemoteRssi                        real
+//  |-RemoteNoise                       int
+//  |-Errors                            int
+//  |-Fixed                             int
 
 namespace domain
 {
@@ -177,7 +177,6 @@ namespace domain
 
             Battery = 9000,
 
-            Radio = 10000,
             Rssi = 10001,
             Noise = 10002,
             RemoteRssi = 10003,
