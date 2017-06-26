@@ -1,12 +1,13 @@
 import QtQuick 2.6
 
 import "../Controls" as Controls
+import "qrc:/JS/helper.js" as Helper
 
 Item {
     id: root
 
-    property real rssi: 0
-    property real maxRssiValue: -120
+    property real rssi: minRssiValue
+    property real minRssiValue: -120
 
     implicitWidth: palette.controlBaseSize
     implicitHeight: implicitWidth
@@ -24,8 +25,8 @@ Item {
             Rectangle {
                 anchors.bottom: parent.bottom
                 width: root.width / repeater.count - row.spacing
-                height: (repeater.count - index + 1) * root.height / (repeater.count + 2)
-                color: maxRssiValue / (repeater.count - index) <= rssi ?
+                height: (repeater.count - index) * root.height / (repeater.count + 1)
+                color: rssi >= Helper.mapToRange(index, 0, 5, minRssiValue) ?
                            palette.selectionColor : palette.disabledColor
             }
         }

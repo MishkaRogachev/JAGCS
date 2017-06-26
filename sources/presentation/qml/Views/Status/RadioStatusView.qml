@@ -16,7 +16,8 @@ RowLayout {
 
     Controls.Label {
         text: qsTr("RSSI: ") + rssi.toFixed(1) + qsTr(" dBm")
-        font.pixelSize: palette.fontPixelSize * 0.75
+        font.pixelSize: palette.fontPixelSize * 0.6
+        font.bold: true
     }
 
     Indicators.RssiIndicator {
@@ -25,6 +26,7 @@ RowLayout {
 
     Controls.Label {
         text: qsTr("Rem. RSSI: ") + remoteRssi.toFixed(1) + qsTr(" dBm")
-        font.pixelSize: palette.fontPixelSize * 0.75
+        font.pixelSize: palette.fontPixelSize * 0.6
+        font.bold: true
     }
 }
