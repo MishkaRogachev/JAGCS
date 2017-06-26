@@ -64,6 +64,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
 
     dashboard->addInstrument("command", new StatusPresenter(
                                  node->childNode(domain::Telemetry::Status), dashboard));
+    dashboard->addInstrument("command", new NavigatorPresenter(
+                                 node->childNode(domain::Telemetry::Navigator), dashboard));
     dashboard->addInstrument("command", new CommandPresenter(
                                  m_commandService, m_vehicle->id(), dashboard));
 
