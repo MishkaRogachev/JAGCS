@@ -28,7 +28,7 @@ ColumnLayout {
         case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
         case "nav": return Qt.createComponent("Displays/NavigationDisplay.qml");
         case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
-        case "command": return Qt.createComponent("Displays/CommandDisplay.qml");
+        case "mission": return Qt.createComponent("Displays/MissionDisplay.qml");
         default: return null
         }
     }

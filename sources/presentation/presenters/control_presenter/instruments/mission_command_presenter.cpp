@@ -1,4 +1,4 @@
-#include "command_presenter.h"
+#include "mission_command_presenter.h"
 
 // Qt
 #include <QDebug>
@@ -9,7 +9,7 @@
 
 using namespace presentation;
 
-class CommandPresenter::Impl
+class MissionCommandPresenter::Impl
 {
 public:
     domain::CommandService* service = nullptr;
@@ -17,8 +17,9 @@ public:
     int vehicleId;
 };
 
-CommandPresenter::CommandPresenter(domain::CommandService* service, int vehicleId,
-                                   QObject* parent):
+MissionCommandPresenter::MissionCommandPresenter(domain::CommandService* service,
+                                                 int vehicleId,
+                                                 QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -26,37 +27,29 @@ CommandPresenter::CommandPresenter(domain::CommandService* service, int vehicleI
     d->vehicleId = vehicleId;
 }
 
-CommandPresenter::~CommandPresenter()
+MissionCommandPresenter::~MissionCommandPresenter()
 {}
 
-void CommandPresenter::connectView(QObject* view)
+void MissionCommandPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(commandArmDisarm(bool)), this, SLOT(onCommandArmDisarm(bool)));
     connect(view, SIGNAL(commandReturn()), this, SLOT(onCommandReturn()));
     connect(view, SIGNAL(commandStart()), this, SLOT(onCommandStart()));
     connect(view, SIGNAL(commandJumpTo(int)), this, SLOT(onCommandJumpTo(int)));
 }
 
-void CommandPresenter::onCommandArmDisarm(bool arm)
-{
-    domain::Command command(domain::Command::ArmDisarm, d->vehicleId);
-    command.addArgument(arm);
-    d->service->executeCommand(command);
-}
-
-void CommandPresenter::onCommandReturn()
+void MissionCommandPresenter::onCommandReturn()
 {
     domain::Command command(domain::Command::Return, d->vehicleId);
     d->service->executeCommand(command);
 }
 
-void CommandPresenter::onCommandStart()
+void MissionCommandPresenter::onCommandStart()
 {
     domain::Command command(domain::Command::Start, d->vehicleId);
     d->service->executeCommand(command);
 }
 
-void CommandPresenter::onCommandJumpTo(int item)
+void MissionCommandPresenter::onCommandJumpTo(int item)
 {
     domain::Command command(domain::Command::Jump, d->vehicleId);
     command.addArgument(item);

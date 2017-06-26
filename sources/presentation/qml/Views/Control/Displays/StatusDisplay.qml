@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Item {
+ColumnLayout {
     id: root
 
     property bool online: false
@@ -14,12 +14,10 @@ Item {
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
 
-    implicitHeight: row.height
+    signal commandArmDisarm(bool arm)
 
     RowLayout {
-        id: row
-        anchors.centerIn: parent
-        width: parent.width
+        Layout.fillWidth: true
 
         Indicators.BatteryIndicator {
             id: battery
@@ -27,7 +25,7 @@ Item {
         }
 
         Controls.Label {
-            font.pixelSize: root.width * 0.044
+            font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
             color: battery.color
             text: batteryVoltage.toFixed(2) + qsTr(" V")
@@ -50,14 +48,14 @@ Item {
         }
 
         Controls.Label {
-            font.pixelSize: root.width * 0.044
+            font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
             color: current.color
             text: batteryCurrent.toFixed(2) + qsTr(" A")
         }
 
         Controls.Label {
-            font.pixelSize: root.width * 0.05
+            font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
             text: mode
             color: {
@@ -65,8 +63,16 @@ Item {
                 if (!armed) return palette.negativeColor;
                 return palette.textColor;
             }
-            Layout.fillWidth: true
-            horizontalAlignment: Qt.AlignCenter
+            Layout.alignment: Qt.AlignCenter
         }
+    }
+
+    Controls.Switch {
+        text: armed ? qsTr("DISARM") : qsTr("ARM")
+        inputChecked: armed
+        onCheckedChanged: commandArmDisarm(checked)
+        Layout.fillWidth: true
+        font.pixelSize: palette.fontPixelSize * 0.75
+        font.bold: true
     }
 }

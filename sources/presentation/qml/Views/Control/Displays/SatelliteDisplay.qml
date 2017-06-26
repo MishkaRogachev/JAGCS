@@ -62,7 +62,7 @@ Item {
                 }
             }
             source: "qrc:/icons/gps.svg"
-            height: column.height
+            height: palette.controlBaseSize
             width: height
             Layout.alignment: Qt.AlignRight
 
