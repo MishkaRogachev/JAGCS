@@ -25,6 +25,8 @@ Controls.Pane {
 
             Controls.Label {
                 text: qsTr("Vehicle")
+                font.pixelSize: palette.fontPixelSize * 0.6
+                font.bold: true
             }
 
             Controls.ComboBox {
