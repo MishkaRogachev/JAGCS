@@ -29,7 +29,7 @@ Command CommandService::headCommand()
 
 bool CommandService::hasCommand() const
 {
-    return d->commandQueue.isEmpty();
+    return !d->commandQueue.isEmpty();
 }
 
 void CommandService::executeCommand(const Command& command)

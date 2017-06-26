@@ -20,7 +20,9 @@ namespace domain
 
             Return,
             Start,
-            Jump
+            Jump,
+
+            Parachute
         };
 
         Command(CommandType type, int vehicleId);
@@ -30,6 +32,7 @@ namespace domain
 
         QVariantList arguments() const;
         void setArguments(const QVariantList& arguments);
+        void addArgument(const QVariant& argument);
 
         int vehicleId() const;
         void setVehicleId(int vehicleId);

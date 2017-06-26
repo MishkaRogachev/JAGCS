@@ -27,6 +27,11 @@ void Command::setArguments(const QVariantList& arguments)
     m_arguments = arguments;
 }
 
+void Command::addArgument(const QVariant& argument)
+{
+    m_arguments.append(argument);
+}
+
 int Command::vehicleId() const
 {
     return m_vehicleId;

@@ -5,6 +5,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "mavlink_protocol_helpers.h"

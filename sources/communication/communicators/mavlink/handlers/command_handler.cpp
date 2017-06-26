@@ -27,6 +27,7 @@ namespace
         case Command::Return: return MAV_CMD_NAV_RETURN_TO_LAUNCH;
         case Command::Start: return MAV_CMD_MISSION_START;
         case Command::Jump: return MAV_CMD_DO_JUMP;
+        case Command::Parachute: return MAV_CMD_DO_PARACHUTE;
         case Command::Idle:
         default: return 0;
         }
