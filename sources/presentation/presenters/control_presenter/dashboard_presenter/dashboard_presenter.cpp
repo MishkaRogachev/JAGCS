@@ -6,7 +6,8 @@
 
 // Internal
 #include "telemetry.h"
-#include "abstract_instrument_presenter.h"
+
+#include "base_presenter.h"
 
 using namespace presentation;
 
@@ -14,7 +15,7 @@ class DashboardPresenter::Impl
 {
 public:
     QStringList instruments;
-    QMultiMap<QString, AbstractInstrumentPresenter*> instrumentPresenters;
+    QMultiMap<QString, BasePresenter*> instrumentPresenters;
 };
 
 DashboardPresenter::DashboardPresenter(QObject* parent):
@@ -27,8 +28,7 @@ DashboardPresenter::~DashboardPresenter()
     this->setViewProperty(PROPERTY(instruments), QStringList());
 }
 
-void DashboardPresenter::addInstrument(const QString& instrument,
-                                       AbstractInstrumentPresenter* presenter)
+void DashboardPresenter::addInstrument(const QString& instrument, BasePresenter* presenter)
 {
     if (!d->instruments.contains(instrument))
     {
@@ -48,7 +48,7 @@ void DashboardPresenter::connectView(QObject* view)
 
 void DashboardPresenter::onInstrumentAdded(const QString& key, QObject* view)
 {
-    for (AbstractInstrumentPresenter* instrument: d->instrumentPresenters.values(key))
+    for (BasePresenter* instrument: d->instrumentPresenters.values(key))
     {
         instrument->setView(view);
     }

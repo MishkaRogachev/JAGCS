@@ -59,7 +59,7 @@
         <file>Views/Control/Displays/FlightDisplay.qml</file>
         <file>Views/Control/Displays/NavigationDisplay.qml</file>
         <file>Views/Control/Displays/StatusDisplay.qml</file>
-        <file>Views/Control/CommandView.qml</file>
+        <file>Views/Control/Displays/CommandDisplay.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/VideoStatusBar.qml</file>
         <file>Views/Mission/MissionView.qml</file>

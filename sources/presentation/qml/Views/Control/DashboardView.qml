@@ -24,13 +24,11 @@ ColumnLayout {
 
     function createIndicator(modelData) {
         switch (modelData) {
-        case "af": return Qt.createComponent("Displays/ArtificialHorizon.qml");
-        case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
-        case "compas": return Qt.createComponent("Displays/Compass.qml");
-        case "hsi": return Qt.createComponent("qrc:/Indicators/SituationIndicator.qml");
-        case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
         case "satellite": return Qt.createComponent("Displays/SatelliteDisplay.qml");
+        case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
         case "nav": return Qt.createComponent("Displays/NavigationDisplay.qml");
+        case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
+        case "command": return Qt.createComponent("Displays/CommandDisplay.qml");
         default: return null
         }
     }

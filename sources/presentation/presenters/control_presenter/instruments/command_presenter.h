@@ -15,12 +15,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit CommandPresenter(domain::CommandService* service,
-                                  QObject* parent = nullptr);
+        CommandPresenter(domain::CommandService* service, int vehicleId,
+                         QObject* parent = nullptr);
         ~CommandPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
+
+    private slots:
+        void onCommandArmDisarm(bool arm);
 
     private:
         class Impl;

@@ -39,12 +39,6 @@ Controls.Pane {
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
-
-        CommandView {
-            enabled: selectedVehicle > 0
-            objectName: "commander"
-            Layout.fillWidth: true
-        }
     }
 
     MapView {

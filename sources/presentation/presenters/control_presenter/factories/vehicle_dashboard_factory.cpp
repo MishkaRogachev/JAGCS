@@ -15,13 +15,16 @@
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
 #include "battery_presenter.h"
+#include "command_presenter.h"
 
 using namespace presentation;
 
 VehicleDashboardFactory::VehicleDashboardFactory(domain::TelemetryService* telemetryService,
+                                                 domain::CommandService* commandService,
                                                  const db::VehiclePtr& vehicle):
     IDashboardFactory(),
     m_telemetryService(telemetryService),
+    m_commandService(commandService),
     m_vehicle(vehicle)
 {}
 
@@ -58,6 +61,11 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Status), dashboard));
     dashboard->addInstrument("status", new BatteryPresenter(
                                  node->childNode(domain::Telemetry::Battery), dashboard));
+
+    dashboard->addInstrument("command", new StatusPresenter(
+                                 node->childNode(domain::Telemetry::Status), dashboard));
+    dashboard->addInstrument("command", new CommandPresenter(
+                                 m_commandService, m_vehicle->id(), dashboard));
 
     return dashboard;
 }

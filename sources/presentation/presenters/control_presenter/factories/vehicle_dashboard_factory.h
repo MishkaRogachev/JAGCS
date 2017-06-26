@@ -8,6 +8,7 @@
 namespace domain
 {
     class TelemetryService;
+    class CommandService;
 }
 
 namespace presentation
@@ -16,12 +17,14 @@ namespace presentation
     {
     public:
         VehicleDashboardFactory(domain::TelemetryService* telemetryService,
+                                domain::CommandService* commandService,
                                 const db::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 
     private:
         domain::TelemetryService* m_telemetryService;
+        domain::CommandService* m_commandService;
         db::VehiclePtr m_vehicle;
     };
 }

@@ -6,8 +6,6 @@
 
 namespace presentation
 {
-    class AbstractInstrumentPresenter;
-
     class DashboardPresenter: public BasePresenter
     {
         Q_OBJECT
@@ -17,8 +15,7 @@ namespace presentation
         ~DashboardPresenter() override;
 
     public slots:
-        void addInstrument(const QString& instrument,
-                           AbstractInstrumentPresenter* presenter);
+        void addInstrument(const QString& instrument, BasePresenter* presenter);
 
     protected:
         void connectView(QObject* view) override;
