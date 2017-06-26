@@ -9,6 +9,9 @@ GridLayout {
     property bool armed: false
 
     signal commandArmDisarm(bool arm)
+    signal commandReturn()
+    signal commandStart()
+    signal commandJumpTo(int item)
 
     columns: 2
 
@@ -17,6 +20,24 @@ GridLayout {
         inputChecked: armed
         onCheckedChanged: commandArmDisarm(checked)
         Layout.fillWidth: true
-        Layout.columnSpan: 2
+    }
+
+    RowLayout {
+        Layout.fillWidth: true
+
+        Controls.Button {
+            iconSource: "qrc:/icons/home.svg"
+            onClicked: commandReturn()
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/play.svg"
+            onClicked: commandStart()
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/right.svg"
+            //onClicked: commandJumpTo()
+        }
     }
 }

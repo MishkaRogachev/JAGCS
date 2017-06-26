@@ -24,6 +24,9 @@ namespace presentation
 
     private slots:
         void onCommandArmDisarm(bool arm);
+        void onCommandReturn();
+        void onCommandStart();
+        void onCommandJumpTo(int item);
 
     private:
         class Impl;
