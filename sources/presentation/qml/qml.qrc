@@ -40,6 +40,7 @@
         <file>Indicators/FdLabel.qml</file>
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
+        <file>Indicators/WindIndicator.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>

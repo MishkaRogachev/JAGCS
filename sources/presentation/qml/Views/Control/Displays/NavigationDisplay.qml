@@ -12,7 +12,8 @@ Item {
 
     property int targetDistance: 0
     property int homeDistance: 0
-    property int waypoint: 0
+    property real windDirection: 0
+    property real windSpeed: 0
 
     implicitHeight: hsi.height
 
@@ -33,12 +34,12 @@ Item {
         width: parent.width * 0.2
     }
 
-    Indicators.FdLabel { // TODO: icon
+    Indicators.WindIndicator { // TODO: icon
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        prefix: qsTr("WP")
-        value: waypoint
         width: parent.width * 0.2
+        direction: windDirection
+        speed: windSpeed
     }
 
     Indicators.SituationIndicator {

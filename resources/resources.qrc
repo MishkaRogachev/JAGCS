@@ -11,6 +11,7 @@
         <file>ui/hide.svg</file>
         <file>indicators/unknown_mark.svg</file>
         <file>indicators/plane_map_mark.svg</file>
+        <file>indicators/wind_mark.svg</file>
         <file>icons/jagcs.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/quit.svg</file>

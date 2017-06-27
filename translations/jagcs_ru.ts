@@ -916,7 +916,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="62"/>
         <source>HDG</source>
-        <translation>ИК</translation>
+        <translation>КУРС</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="70"/>
