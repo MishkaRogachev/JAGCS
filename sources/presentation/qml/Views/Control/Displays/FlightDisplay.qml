@@ -9,6 +9,8 @@ Item {
     property alias roll: af.roll
     property alias armed: af.armed
 
+    property int throttle: 0
+
     property real groundspeed: 0
     property real indicatedAirspeed: 0
     property real trueAirspeed: 0
@@ -43,6 +45,14 @@ Item {
                                                          palette.negativeColor :
                                                          palette.disabledColor
         width: speedLadder.width
+    }
+
+    Indicators.BarIndicator {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        width: parent.width * 0.03
+        height: parent.height * 0.7
+        value: throttle
     }
 
     Indicators.Ladder {

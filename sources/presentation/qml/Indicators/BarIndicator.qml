@@ -7,7 +7,7 @@ Canvas {
     property real value: minValue
     property real minValue: 0
     property real maxValue: 100
-    property color fillColor
+    property color fillColor: palette.selectionColor
 
     Behavior on value { PropertyAnimation { duration: 100 } }
 
