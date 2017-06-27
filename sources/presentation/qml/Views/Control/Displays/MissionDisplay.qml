@@ -8,9 +8,10 @@ RowLayout {
 
     property int waypoint: 0
 
+    signal commandJumpTo(int item)
     signal commandReturn()
     signal commandStart()
-    signal commandJumpTo(int item)
+    signal pauseContinue(bool unpause)
 
     Controls.Button {
         iconSource: "qrc:/icons/left.svg"
@@ -40,5 +41,11 @@ RowLayout {
     Controls.Button {
         iconSource: "qrc:/icons/play.svg"
         onClicked: commandStart()
+    }
+
+    Controls.Button {
+        iconSource: "qrc:/icons/pause.svg"
+        checkable: true
+        onCheckedChanged: pauseContinue(!checked)
     }
 }

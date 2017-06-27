@@ -20,6 +20,7 @@ namespace domain
 
             Return,
             Start,
+            PauseContinue,
             Jump,
 
             Parachute

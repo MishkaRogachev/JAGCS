@@ -26,6 +26,7 @@ namespace
         case Command::ArmDisarm: return MAV_CMD_COMPONENT_ARM_DISARM;
         case Command::Return: return MAV_CMD_NAV_RETURN_TO_LAUNCH;
         case Command::Start: return MAV_CMD_MISSION_START;
+        case Command::PauseContinue: return MAV_CMD_DO_PAUSE_CONTINUE;
         case Command::Jump: return MAV_CMD_DO_JUMP;
         case Command::Parachute: return MAV_CMD_DO_PARACHUTE;
         case Command::Idle:

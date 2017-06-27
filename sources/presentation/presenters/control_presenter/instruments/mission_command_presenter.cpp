@@ -32,9 +32,17 @@ MissionCommandPresenter::~MissionCommandPresenter()
 
 void MissionCommandPresenter::connectView(QObject* view)
 {
+    connect(view, SIGNAL(commandJumpTo(int)), this, SLOT(onCommandJumpTo(int)));
     connect(view, SIGNAL(commandReturn()), this, SLOT(onCommandReturn()));
     connect(view, SIGNAL(commandStart()), this, SLOT(onCommandStart()));
-    connect(view, SIGNAL(commandJumpTo(int)), this, SLOT(onCommandJumpTo(int)));
+    connect(view, SIGNAL(pauseContinue(bool)), this, SLOT(onPauseContinue(bool)));
+}
+
+void MissionCommandPresenter::onCommandJumpTo(int item)
+{
+    domain::Command command(domain::Command::Jump, d->vehicleId);
+    command.addArgument(item);
+    d->service->executeCommand(command);
 }
 
 void MissionCommandPresenter::onCommandReturn()
@@ -49,9 +57,9 @@ void MissionCommandPresenter::onCommandStart()
     d->service->executeCommand(command);
 }
 
-void MissionCommandPresenter::onCommandJumpTo(int item)
+void MissionCommandPresenter::onPauseContinue(bool unpause)
 {
-    domain::Command command(domain::Command::Jump, d->vehicleId);
-    command.addArgument(item);
+    domain::Command command(domain::Command::PauseContinue, d->vehicleId);
+    command.addArgument(unpause);
     d->service->executeCommand(command);
 }
