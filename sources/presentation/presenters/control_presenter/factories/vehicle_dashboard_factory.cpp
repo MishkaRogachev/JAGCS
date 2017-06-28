@@ -12,6 +12,7 @@
 #include "satellite_presenter.h"
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
+#include "power_system_presenter.h"
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
 #include "battery_presenter.h"
@@ -51,6 +52,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrument("fd", new PitotPresenter(
                                  node->childNode(domain::Telemetry::Pitot), dashboard));
+    dashboard->addInstrument("fd", new PowerSystemPresenter(
+                                 node->childNode(domain::Telemetry::PowerSystem), dashboard));
 
     dashboard->addInstrument("nav", new CompassPresenter(
                                  node->childNode(domain::Telemetry::Compass), dashboard));
