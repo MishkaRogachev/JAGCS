@@ -49,8 +49,8 @@ Item {
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        width: parent.width * 0.03
+        anchors.right: speedLadder.right
+        width: speedLadder.majorTickSize
         height: parent.height * 0.7
         value: throttle
     }
@@ -94,6 +94,17 @@ Item {
                                                          palette.disabledColor
         value: satelliteAltitude
         width: altitudeLadder.width
+    }
+
+    Indicators.BarIndicator {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: altitudeLadder.left
+        width: altitudeLadder.majorTickSize
+        height: parent.height * 0.7
+        value: barometricClimb
+        fillColor: barometricClimb > 0 ? palette.skyColor : palette.groundColor
+        minValue: -10
+        maxValue: 10
     }
 
     Indicators.Ladder {
