@@ -34,11 +34,11 @@ namespace presentation
             MarkRole,
             VehicleIdRole,
             TrackRole,
-            HdopRadius
+            HdopRadius,
+            HomeCoordinateRole
         };
 
-        VehicleMapItemModel(db::DbFacade* dbFacade,
-                            domain::TelemetryService* telemetryService,
+        VehicleMapItemModel(db::DbFacade* dbFacade, domain::TelemetryService* telemetryService,
                             QObject* parent = nullptr);
         ~VehicleMapItemModel() override;
 
@@ -60,6 +60,8 @@ namespace presentation
         void onCompassParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
         void onSatelliteParametersChanged(
+                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+        void onHomeParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
 
     private:

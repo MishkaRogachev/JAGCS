@@ -13,7 +13,7 @@
 //  |-Position
 //  |  |-Coordinate                     coordinate
 //  |  |-Direction                      direction
-//  |-Home
+//  |-HomePosition
 //  |  |-Coordinate                     coordinate
 //  |  |-Direction                      direction
 //  |-Ahrs
@@ -120,10 +120,11 @@ namespace domain
             Position = 300,
             Coordinate = 301,
             Direction = 302,
-            Home = 400,
+
+            HomePosition = 400,
 
             Altitude = 501,
-            Elevation = 502,
+            Height = 502,
             Climb = 503,
             Course = 504,
             Heading = 505,

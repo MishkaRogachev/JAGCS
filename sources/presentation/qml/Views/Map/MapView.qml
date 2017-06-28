@@ -16,6 +16,7 @@ Map {
     property bool missionLinesVisible: true
     property bool trackVisible: true
     property bool hdopVisible: true
+    property bool homeVisible: true
 
     property var mouseCoordinate: QtPositioning.coordinate()
 
@@ -66,6 +67,10 @@ Map {
 
     MissionPointMapOverlayView {
         model: missionPointsVisible ? pointModel : 0
+    }
+
+    HomeMapOverlayView {
+        model: homeVisible ? vehicleModel : 0
     }
 
     VehicleMapOverlayView {
