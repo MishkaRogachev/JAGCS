@@ -14,6 +14,7 @@
 #include "telemetry_service.h"
 
 #include "location_map_presenter.h"
+#include "video_presenter.h"
 #include "vehicle_dashboard_factory.h"
 #include "dashboard_presenter.h"
 
@@ -25,6 +26,7 @@ public:
     domain::DomainEntry* entry;
 
     AbstractMapPresenter* map;
+    VideoPresenter* video = nullptr;
     DashboardPresenter* dashboard = nullptr;
 };
 
@@ -35,6 +37,7 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     d->entry = entry;
 
     d->map = new LocationMapPresenter(entry, this);
+    d->video = new VideoPresenter(this);
 
     db::DbFacade* dbFacade = entry->dbFacade();
     connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
@@ -63,6 +66,7 @@ void ControlPresenter::updateVehiclesList()
 void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
+    d->video->setView(view->findChild<QObject*>(NAME(video)));
 
     connect(view, SIGNAL(selectVehicle(int)), this, SLOT(onSelectVehicle(int)));
 

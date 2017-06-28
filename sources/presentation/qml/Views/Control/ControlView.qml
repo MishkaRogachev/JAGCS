@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 import "../Map"
+import "../Video"
 
 Controls.Pane {
     id: root
@@ -51,5 +52,14 @@ Controls.Pane {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
+    }
+
+    VideoView {
+        id: video
+        objectName: "video"
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        width: map.width / 3
+        height: map.height / 3
     }
 }
