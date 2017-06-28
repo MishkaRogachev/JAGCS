@@ -3,7 +3,6 @@
 
 // Internal
 #include "base_presenter.h"
-
 #include "telemetry.h"
 
 namespace presentation

@@ -12,6 +12,7 @@ Item {
 
     property int targetDistance: 0
     property int homeDistance: 0
+    property real homeDirection: 0
     property real windDirection: 0
     property real windSpeed: 0
 
@@ -46,6 +47,21 @@ Item {
         id: hsi
         anchors.centerIn: parent
         width: parent.width * 0.6
+
+        Item {
+            anchors.fill: parent
+            rotation: homeDirection - heading
+            visible: homeDistance > 0
+
+            Image {
+                width: parent.width * 0.12
+                height: width
+                anchors.centerIn: parent
+                anchors.verticalCenterOffset: -parent.height * 0.3
+                source: "qrc:/icons/home.svg"
+                rotation: -parent.rotation
+            }
+        }
     }
 
     Indicators.FdLabel {

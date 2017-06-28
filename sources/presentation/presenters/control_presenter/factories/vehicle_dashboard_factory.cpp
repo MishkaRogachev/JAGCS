@@ -16,6 +16,7 @@
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
 #include "battery_presenter.h"
+#include "home_presenter.h"
 #include "wind_presenter.h"
 #include "common_command_presenter.h"
 #include "mission_command_presenter.h"
@@ -61,6 +62,9 @@ DashboardPresenter* VehicleDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
     dashboard->addInstrument("nav", new NavigatorPresenter(
                                  node->childNode(domain::Telemetry::Navigator), dashboard));
+    dashboard->addInstrument("nav", new HomePresenter(
+                                 node->childNode(domain::Telemetry::Position),
+                                 node->childNode(domain::Telemetry::HomePosition), dashboard));
     dashboard->addInstrument("nav", new WindPresenter(
                                  node->childNode(domain::Telemetry::Wind), dashboard));
 
