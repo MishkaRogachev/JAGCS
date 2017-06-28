@@ -17,24 +17,24 @@ Item {
 
     implicitHeight: hsi.height
 
-    Indicators.FdLabel { // TODO: icon
+    Indicators.DistanceLabel {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST")
         color: palette.activeMissionColor
-        value: targetDistance
+        distance: targetDistance
         width: parent.width * 0.2
     }
 
-    Indicators.FdLabel { // TODO: icon
+    Indicators.DistanceLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         prefix: qsTr("HOME")
-        value: homeDistance
+        distance: homeDistance
         width: parent.width * 0.2
     }
 
-    Indicators.WindIndicator { // TODO: icon
+    Indicators.WindIndicator {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
@@ -48,7 +48,7 @@ Item {
         width: parent.width * 0.6
     }
 
-    Indicators.FdLabel { // TODO: icon
+    Indicators.FdLabel {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("TRG")
@@ -57,7 +57,7 @@ Item {
         width: parent.width * 0.2
     }
 
-    Indicators.FdLabel { // TODO: icon
+    Indicators.FdLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         prefix: qsTr("HDG")
@@ -65,7 +65,7 @@ Item {
         width: parent.width * 0.2
     }
 
-    Indicators.FdLabel { // TODO: icon
+    Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         prefix: qsTr("CRS")
