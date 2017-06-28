@@ -58,19 +58,16 @@
 <context>
     <name>CommandDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/CommandDisplay.qml" line="19"/>
         <source>DISARM</source>
-        <translation>РАЗРЯД</translation>
+        <translation type="vanished">РАЗРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/CommandDisplay.qml" line="19"/>
         <source>ARM</source>
-        <translation>ЗАРЯД</translation>
+        <translation type="vanished">ЗАРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/CommandDisplay.qml" line="49"/>
         <source>WP: </source>
-        <translation>ПМ: </translation>
+        <translation type="vanished">ПМ: </translation>
     </message>
 </context>
 <context>
@@ -270,6 +267,19 @@
     </message>
 </context>
 <context>
+    <name>DistanceLabel</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/DistanceLabel.qml" line="10"/>
+        <source>m</source>
+        <translation>м</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/DistanceLabel.qml" line="10"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+</context>
+<context>
     <name>FlightDisplay</name>
     <message>
         <source>W</source>
@@ -340,32 +350,32 @@
         <translation type="vanished">Ток, А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="39"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="41"/>
         <source>GS</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="70"/>
         <source>IAS</source>
         <translation>IAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="66"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="76"/>
         <source>TAS</source>
         <translation>TAS</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="81"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="91"/>
         <source>SAT</source>
         <translation>SAT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="101"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="122"/>
         <source>ALT</source>
         <translation>ALT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="107"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="128"/>
         <source>RF</source>
         <translation>РВ</translation>
     </message>
@@ -755,6 +765,14 @@
     </message>
 </context>
 <context>
+    <name>MissionDisplay</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="22"/>
+        <source>WP: </source>
+        <translation>ПМ: </translation>
+    </message>
+</context>
+<context>
     <name>MissionItemView</name>
     <message>
         <source>UNKNOWN</source>
@@ -894,32 +912,31 @@
 <context>
     <name>NavigationDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="22"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="23"/>
         <source>DIST</source>
         <translation>ДИСТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="32"/>
         <source>HOME</source>
         <translation>ДОМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="39"/>
         <source>WP</source>
-        <translation>ПМ</translation>
+        <translation type="vanished">ПМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="53"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="54"/>
         <source>TRG</source>
         <translation>ЦЕЛЬ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="62"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="63"/>
         <source>HDG</source>
         <translation>КУРС</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="71"/>
         <source>CRS</source>
         <translation>ПУ</translation>
     </message>
@@ -1096,14 +1113,24 @@
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="30"/>
         <source> V</source>
         <translation> В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="53"/>
         <source> A</source>
         <translation> А</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
+        <source>DISARM</source>
+        <translation>РАЗРЯД</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
+        <source>ARM</source>
+        <translation>ЗАРЯД</translation>
     </message>
 </context>
 <context>
@@ -1247,6 +1274,14 @@
         <location filename="../sources/presentation/qml/Views/Video/VideoStatusBar.qml" line="16"/>
         <source>Source:</source>
         <translation>Источник:</translation>
+    </message>
+</context>
+<context>
+    <name>WindIndicator</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/WindIndicator.qml" line="22"/>
+        <source>m/s</source>
+        <translation>м/с</translation>
     </message>
 </context>
 <context>

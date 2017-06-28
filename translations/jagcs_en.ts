@@ -49,24 +49,6 @@
     </message>
 </context>
 <context>
-    <name>CommandDisplay</name>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/CommandDisplay.qml" line="19"/>
-        <source>DISARM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/CommandDisplay.qml" line="19"/>
-        <source>ARM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/CommandDisplay.qml" line="49"/>
-        <source>WP: </source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>CommunicationLinkView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="56"/>
@@ -217,34 +199,47 @@
     </message>
 </context>
 <context>
+    <name>DistanceLabel</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/DistanceLabel.qml" line="10"/>
+        <source>m</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/DistanceLabel.qml" line="10"/>
+        <source>km</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>FlightDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="39"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="41"/>
         <source>GS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="70"/>
         <source>IAS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="66"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="76"/>
         <source>TAS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="81"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="91"/>
         <source>SAT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="101"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="122"/>
         <source>ALT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="107"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="128"/>
         <source>RF</source>
         <translation></translation>
     </message>
@@ -573,6 +568,14 @@
     </message>
 </context>
 <context>
+    <name>MissionDisplay</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="22"/>
+        <source>WP: </source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>MissionItemView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionItemView.qml" line="59"/>
@@ -636,32 +639,27 @@
 <context>
     <name>NavigationDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="22"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="23"/>
         <source>DIST</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="32"/>
         <source>HOME</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="39"/>
-        <source>WP</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="53"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="54"/>
         <source>TRG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="62"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="63"/>
         <source>HDG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="71"/>
         <source>CRS</source>
         <translation></translation>
     </message>
@@ -807,13 +805,23 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="30"/>
         <source> V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="53"/>
         <source> A</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
+        <source>DISARM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
+        <source>ARM</source>
         <translation></translation>
     </message>
 </context>
@@ -866,6 +874,14 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Video/VideoStatusBar.qml" line="16"/>
         <source>Source:</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>WindIndicator</name>
+    <message>
+        <location filename="../sources/presentation/qml/Indicators/WindIndicator.qml" line="22"/>
+        <source>m/s</source>
         <translation></translation>
     </message>
 </context>
