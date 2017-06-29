@@ -13,6 +13,7 @@ private slots:
     void testVehicleDescription();
     void testMissionAssignment();
     void testLinkDescription();
+    void testVideoSource();
 };
 
 #endif // ENTITIES_TEST_H

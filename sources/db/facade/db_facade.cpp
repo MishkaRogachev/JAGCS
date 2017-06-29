@@ -12,6 +12,7 @@
 #include "mission_assignment.h"
 #include "vehicle.h"
 #include "link_description.h"
+#include "video_source.h"
 
 using namespace db;
 
@@ -23,13 +24,15 @@ public:
     GenericRepository<MissionAssignment> assignmentRepository;
     GenericRepository<Vehicle> vehicleRepository;
     GenericRepository<LinkDescription> linkRepository;
+    GenericRepository<VideoSource> videoRepository;
 
     Impl():
         missionRepository("missions"),
         itemRepository("mission_items"),
         assignmentRepository("mission_assignments"),
         vehicleRepository("vehicles"),
-        linkRepository("links")
+        linkRepository("links"),
+        videoRepository("video_sources")
     {}
 };
 
@@ -64,6 +67,11 @@ VehiclePtr DbFacade::vehicle(int id, bool reload)
 LinkDescriptionPtr DbFacade::link(int id, bool reload)
 {
     return d->linkRepository.read(id, reload);
+}
+
+VideoSourcePtr DbFacade::videoSource(int id, bool reload)
+{
+    return d->videoRepository.read(id, reload);
 }
 
 bool DbFacade::save(const MissionPtr& mission)
@@ -117,6 +125,15 @@ bool DbFacade::save(const LinkDescriptionPtr& link)
     if (!d->linkRepository.save(link)) return false;
 
     emit (isNew ? linkAdded(link) : linkChanged(link));
+    return true;
+}
+
+bool DbFacade::save(const VideoSourcePtr& videoSource)
+{
+    bool isNew = videoSource->id() == 0;
+    if (!d->videoRepository.save(videoSource)) return false;
+
+    emit (isNew ? videoSourceAdded(videoSource) : videoSourceChanged(videoSource));
     return true;
 }
 
@@ -213,6 +230,17 @@ MissionItemPtrList DbFacade::missionItems(const QString& condition, bool reload)
     for (int id: d->itemRepository.selectId(condition))
     {
         list.append(this->missionItem(id, reload));
+    }
+    return list;
+}
+
+VideoSourcePtrList DbFacade::videoSources(const QString& condition, bool reload)
+{
+    VideoSourcePtrList list;
+
+    for (int id: d->videoRepository.selectId(condition))
+    {
+        list.append(this->videoSource(id, reload));
     }
     return list;
 }

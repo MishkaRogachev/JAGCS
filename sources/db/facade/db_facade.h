@@ -23,12 +23,14 @@ namespace db
         MissionAssignmentPtr assignment(int id, bool reload = false);
         VehiclePtr vehicle(int id, bool reload = false);
         LinkDescriptionPtr link(int id, bool reload = false);
+        VideoSourcePtr videoSource(int id, bool reload = false);
 
         bool save(const MissionPtr& mission);
         bool save(const MissionItemPtr& item);
         bool save(const MissionAssignmentPtr& assignment);
         bool save(const VehiclePtr& vehicle);
         bool save(const LinkDescriptionPtr& link);
+        bool save(const VideoSourcePtr& videoSource);
 
         bool remove(const MissionPtr& mission);
         bool remove(const MissionItemPtr& item);
@@ -40,6 +42,7 @@ namespace db
         VehiclePtrList vehicles(const QString& condition = QString(), bool reload  = false);
         MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
         MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
+        VideoSourcePtrList videoSources(const QString& condition = QString(), bool reload  = false);
 
         MissionAssignmentPtr missionAssignment(int missionId);
         MissionAssignmentPtr vehicleAssignment(int vehicleId);
@@ -77,6 +80,9 @@ namespace db
         void linkAdded(db::LinkDescriptionPtr link);
         void linkRemoved(db::LinkDescriptionPtr link);
         void linkChanged(db::LinkDescriptionPtr link);
+
+        void videoSourceAdded(db::VideoSourcePtr videoSource);
+        void videoSourceChanged(db::VideoSourcePtr videoSource);
 
     private:
         class Impl;

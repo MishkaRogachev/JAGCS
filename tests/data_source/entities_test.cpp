@@ -11,6 +11,7 @@
 #include "mission_assignment.h"
 #include "vehicle.h"
 #include "link_description.h"
+#include "video_source.h"
 
 using namespace db;
 
@@ -131,4 +132,20 @@ void EntitiesTest::testLinkDescription()
     QCOMPARE(link->port(), 8080);
 
     QVERIFY2(dbFacade.remove(link), "Can't remove link");
+}
+
+void EntitiesTest::testVideoSource()
+{
+    DbFacade dbFacade;
+
+    VideoSourcePtr video = VideoSourcePtr::create();
+    video->setType(VideoSource::Device);
+    video->setSource("/dev/video1");
+
+    QVERIFY2(dbFacade.save(video), "Can't insert video source");
+
+    QCOMPARE(video->type(), VideoSource::Device)
+    QCOMPARE(video->source(), "/dev/video1")
+
+    QVERIFY2(dbFacade.remove(link), "Can't remove video source");
 }
