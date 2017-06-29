@@ -187,6 +187,13 @@ bool DbFacade::remove(const LinkDescriptionPtr& link)
     return true;
 }
 
+bool DbFacade::remove(const VideoSourcePtr& videoSource)
+{
+    if (!d->videoRepository.remove(videoSource)) return false;
+    emit videoSourceRemoved(videoSource);
+    return true;
+}
+
 LinkDescriptionPtrList DbFacade::links(const QString& condition, bool reload)
 {
     LinkDescriptionPtrList list;

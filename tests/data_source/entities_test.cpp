@@ -144,8 +144,8 @@ void EntitiesTest::testVideoSource()
 
     QVERIFY2(dbFacade.save(video), "Can't insert video source");
 
-    QCOMPARE(video->type(), VideoSource::Device)
-    QCOMPARE(video->source(), "/dev/video1")
+    QCOMPARE(video->type(), VideoSource::Device);
+    QVERIFY2(video->source() == "/dev/video1", "Video sources are different");
 
-    QVERIFY2(dbFacade.remove(link), "Can't remove video source");
+    QVERIFY2(dbFacade.remove(video), "Can't remove video source");
 }

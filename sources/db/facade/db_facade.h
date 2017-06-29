@@ -37,6 +37,7 @@ namespace db
         bool remove(const MissionAssignmentPtr& assignment);
         bool remove(const VehiclePtr& vehicle);
         bool remove(const LinkDescriptionPtr& link);
+        bool remove(const VideoSourcePtr& videoSource);
 
         LinkDescriptionPtrList links(const QString& condition = QString(), bool reload  = false);
         VehiclePtrList vehicles(const QString& condition = QString(), bool reload  = false);
@@ -82,6 +83,7 @@ namespace db
         void linkChanged(db::LinkDescriptionPtr link);
 
         void videoSourceAdded(db::VideoSourcePtr videoSource);
+        void videoSourceRemoved(db::VideoSourcePtr videoSource);
         void videoSourceChanged(db::VideoSourcePtr videoSource);
 
     private:
