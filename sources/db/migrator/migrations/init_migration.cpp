@@ -54,6 +54,12 @@ bool InitMigration::up()
                          "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))") ||
         !m_query.exec()) return false;
 
+    if (!m_query.prepare("CREATE TABLE video_sources ("
+                         "id INTEGER PRIMARY KEY NOT NULL,"
+                         "type SMALLINT,"
+                         "source STRING)") ||
+        !m_query.exec()) return false;
+
     if (!m_query.prepare("INSERT INTO schema_versions (version) "
                          "VALUES (\"" + this->version().toString(format) + "\");") ||
         !m_query.exec()) return false;
@@ -68,6 +74,7 @@ bool InitMigration::down()
     if (!m_query.prepare("DROP TABLE missions") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE vehicles") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE links") || !m_query.exec()) return false;
+    if (!m_query.prepare("DROP TABLE video_sources") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE schema_versions") || !m_query.exec()) return false;
 
     return true;
