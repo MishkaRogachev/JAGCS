@@ -7,7 +7,8 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
-    property alias source: sourceField.text
+    property int type: VideoSource.UnknownType
+    property string source
     property bool changed: false
 
     signal save()
@@ -21,14 +22,36 @@ Controls.Frame {
         RowLayout {
 
             Controls.Label {
-                text: qsTr("Source:")
+                text: {
+                    switch (type) {
+                    case VideoSource.Stream: return qsTr("URL:")
+                    case VideoSource.Device: return qsTr("Device:")
+                    default: return qsTr("Unknown:")
+                    }
+                }
                 Layout.fillWidth: true
             }
 
             Controls.TextField {
-                id: sourceField
-                placeholderText: qsTr("Enter source")
-                onTextChanged: changed = true
+                visible: type == VideoSource.Stream
+                text: source
+                placeholderText: qsTr("Enter stream url")
+                Layout.fillWidth: true
+                onTextChanged: {
+                    source = text;
+                    changed = true;
+                }
+            }
+
+            Controls.ComboBox {
+                visible: type == VideoSource.Device
+                model: videoDevices
+                Layout.fillWidth: true
+                currentIndex: videoDevices.indexOf(source);
+                onCurrentTextChanged: {
+                    source = currentText;
+                    changed = true;
+                }
             }
         }
 

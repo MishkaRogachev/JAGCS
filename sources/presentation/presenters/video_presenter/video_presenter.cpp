@@ -6,9 +6,6 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-#include "settings.h"
-
 #include "video_provider.h"
 
 using namespace presentation;
@@ -42,7 +39,7 @@ VideoPresenter::~VideoPresenter()
 void VideoPresenter::updateSource()
 {
     if (d->camera) delete d->camera;
-
+/*
     QCameraInfo info(settings::Provider::value(settings::video::device).toByteArray());
     if (info.isNull())
     {
@@ -52,7 +49,7 @@ void VideoPresenter::updateSource()
     {
         d->camera = new QCamera(info, this);
         d->updateCameraVideoSurface();
-    }
+    }*/
 }
 
 void VideoPresenter::connectView(QObject* view)

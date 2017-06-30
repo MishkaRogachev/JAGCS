@@ -47,6 +47,7 @@ void VideoSettingsPresenter::connectView(QObject* view)
     connect(view, SIGNAL(addDeviceVideo()), this, SLOT(onAddDeviceVideo()));
     connect(view, SIGNAL(addStreamVideo()), this, SLOT(onAddStreamVideo()));
 
+    this->updateCameraInfo();
     this->updateVideoSources();
 }
 
@@ -78,6 +79,19 @@ void VideoSettingsPresenter::updateVideoSources()
     }
 
     this->setViewProperty(PROPERTY(videoSources), QVariant::fromValue(objectList));
+}
+
+void VideoSettingsPresenter::updateCameraInfo()
+{
+    QStringList videoDevices;
+    videoDevices.append(QString());
+
+    for (const QCameraInfo& info: QCameraInfo::availableCameras())
+    {
+        videoDevices.append(info.deviceName());
+    }
+
+    this->setViewProperty(PROPERTY(videoDevices), QVariant::fromValue(videoDevices));
 }
 
 void VideoSettingsPresenter::onAddDeviceVideo()

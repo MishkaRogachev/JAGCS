@@ -28,6 +28,8 @@ namespace presentation
         void onVideoSourceRemoved(const db::VideoSourcePtr& video);
         void updateVideoSources();
 
+        void updateCameraInfo();
+
         void onAddDeviceVideo();
         void onAddStreamVideo();
 

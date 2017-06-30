@@ -24,11 +24,6 @@ namespace settings
         const char* const centerLongitude = "Map/centerLongitude";
     }
 
-    namespace video
-    {
-        const char* const device = "Video/device";
-    }
-
     namespace proxy
     {
         const char* const type = "NetworkProxy/type";

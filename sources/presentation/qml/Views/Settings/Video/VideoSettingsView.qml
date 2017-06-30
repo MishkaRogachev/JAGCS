@@ -8,6 +8,7 @@ ColumnLayout {
     id: root
 
     property var videoSources
+    property var videoDevices: []
 
     signal addDeviceVideo()
     signal addStreamVideo()
