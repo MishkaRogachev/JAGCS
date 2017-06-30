@@ -5,21 +5,37 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-#include "settings.h"
+#include "db_facade.h"
+#include "video_source.h"
+
+#include "video_source_presenter.h"
 
 using namespace presentation;
 
 class VideoSettingsPresenter::Impl
 {
 public:
-    QList<QCameraInfo> cameras;
+    db::DbFacade* facade;
+
+    QList<VideoSourcePresenter*> videoPresenters;
 };
 
-VideoSettingsPresenter::VideoSettingsPresenter(QObject* parent):
+VideoSettingsPresenter::VideoSettingsPresenter(db::DbFacade* facade, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
-{}
+{
+    d->facade = facade;
+
+    connect(d->facade, &db::DbFacade::videoSourceAdded,
+            this, &VideoSettingsPresenter::onVideoSourceAdded);
+    connect(d->facade, &db::DbFacade::videoSourceRemoved,
+            this, &VideoSettingsPresenter::onVideoSourceRemoved);
+
+    for (const db::VideoSourcePtr& video: facade->videoSources())
+    {
+        d->videoPresenters.append(new VideoSourcePresenter(facade, video, this));
+    }
+}
 
 VideoSettingsPresenter::~VideoSettingsPresenter()
 {
@@ -28,34 +44,53 @@ VideoSettingsPresenter::~VideoSettingsPresenter()
 
 void VideoSettingsPresenter::connectView(QObject* view)
 {
-    this->updateSources();
+    connect(view, SIGNAL(addDeviceVideo()), this, SLOT(onAddDeviceVideo()));
+    connect(view, SIGNAL(addStreamVideo()), this, SLOT(onAddStreamVideo()));
 
-    connect(view, SIGNAL(sourceSelected(QString)),
-            this, SLOT(onSourceSelected(QString)));
+    this->updateVideoSources();
 }
 
-void VideoSettingsPresenter::onSourceSelected(const QString& source)
+void VideoSettingsPresenter::onVideoSourceAdded(const db::VideoSourcePtr& video)
 {
-    settings::Provider::setValue(settings::video::device, source);
+    d->videoPresenters.append(new VideoSourcePresenter(d->facade, video, this));
+    this->updateVideoSources();
 }
 
-void VideoSettingsPresenter::updateSources()
+void VideoSettingsPresenter::onVideoSourceRemoved(const db::VideoSourcePtr& video)
 {
-    d->cameras = QCameraInfo::availableCameras();
+    for (VideoSourcePresenter* videoPresenter: d->videoPresenters)
+    {
+        if (videoPresenter->video() != video) continue;
 
-    QStringList sourcesList;
-
-    sourcesList.append(tr("none"));
-
-    for (const QCameraInfo& info: d->cameras)
-        sourcesList.append(info.deviceName());
-
-    this->setViewProperty(PROPERTY(sourcesModel), sourcesList);
-
-    this->updateCurrentSource();
+        d->videoPresenters.removeOne(videoPresenter);
+        delete videoPresenter;
+        this->updateVideoSources();
+        return;
+    }
 }
 
-void VideoSettingsPresenter::updateCurrentSource()
+void VideoSettingsPresenter::updateVideoSources()
 {
-    this->invokeViewMethod(PROPERTY(setSource), settings::Provider::value(settings::video::device));
+    QList<QObject*> objectList;
+    for (VideoSourcePresenter* videoPresenter: d->videoPresenters)
+    {
+        objectList.append(videoPresenter);
+    }
+
+    this->setViewProperty(PROPERTY(videoSources), QVariant::fromValue(objectList));
 }
+
+void VideoSettingsPresenter::onAddDeviceVideo()
+{
+    db::VideoSourcePtr video = db::VideoSourcePtr::create();
+    video->setType(db::VideoSource::Device);
+    d->facade->save(video);
+}
+
+void VideoSettingsPresenter::onAddStreamVideo()
+{
+    db::VideoSourcePtr video = db::VideoSourcePtr::create();
+    video->setType(db::VideoSource::Stream);
+    d->facade->save(video);
+}
+

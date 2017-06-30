@@ -1,7 +1,14 @@
 #ifndef VIDEO_SETTINGS_PRESENTER_H
 #define VIDEO_SETTINGS_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "db_traits.h"
+
+namespace db
+{
+    class DbFacade;
+}
 
 namespace presentation
 {
@@ -10,18 +17,19 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoSettingsPresenter(QObject* parent);
+        explicit VideoSettingsPresenter(db::DbFacade* facade, QObject* parent);
         ~VideoSettingsPresenter() override;
-
-    public slots:
-        void updateSources();
-        void updateCurrentSource();
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void onSourceSelected(const QString& source);
+        void onVideoSourceAdded(const db::VideoSourcePtr& video);
+        void onVideoSourceRemoved(const db::VideoSourcePtr& video);
+        void updateVideoSources();
+
+        void onAddDeviceVideo();
+        void onAddStreamVideo();
 
     private:
         class Impl;

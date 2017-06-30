@@ -25,7 +25,6 @@ void DescriptionVehiclePresenter::updateView()
 {
     this->setViewProperty(PROPERTY(name), m_vehicle->name());
     this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
-    // TODO: type
 }
 
 void DescriptionVehiclePresenter::connectView(QObject* view)

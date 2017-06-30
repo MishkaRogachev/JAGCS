@@ -30,10 +30,9 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
     BasePresenter(parent),
     d(new Impl())
 {
-
     d->communications = new CommunicationSettingsPresenter(entry, this);
     d->vehicles = new VehiclesPresenter(entry->dbFacade(), this);
-    d->video = new VideoSettingsPresenter(this);
+    d->video = new VideoSettingsPresenter(entry->dbFacade(), this);
     d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
     d->gui = new GuiSettingsPresenter(this);
     d->about = new AboutPresenter(this);

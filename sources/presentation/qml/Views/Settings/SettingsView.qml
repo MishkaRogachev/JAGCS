@@ -1,12 +1,13 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
+
 import "Communications"
 import "Vehicles"
+import "Video"
 
-Pane {
+Controls.Pane {
     id: root
 
     signal makeDefaults()
@@ -16,7 +17,7 @@ Pane {
 
         ColumnLayout {
 
-            ButtonBar {
+            Controls.ButtonBar {
                 id: bar
                 anchors.top: parent.top
                 model: [
@@ -33,7 +34,7 @@ Pane {
                 Layout.fillHeight: true
             }
 
-            Button {
+            Controls.Button {
                 text: qsTr("Make defaults")
                 Layout.preferredWidth: bar.width
                 onClicked: makeDefaults()
@@ -44,8 +45,8 @@ Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
-            CommunicationsView { objectName: "communications" }
-            VehiclesView { objectName: "vehicles" }
+            CommunicationSettingsView { objectName: "communications" }
+            VehicleSettingsView { objectName: "vehicles" }
             VideoSettingsView { objectName: "video" }
             GuiSettingsView { objectName: "gui" }
             NetworkSettingsView { objectName: "network" }

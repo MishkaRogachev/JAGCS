@@ -25,10 +25,8 @@ VehiclesPresenter::VehiclesPresenter(db::DbFacade* facade, QObject* parent):
 {
     d->facade = facade;
 
-    connect(facade, &db::DbFacade::vehicleAdded,
-            this, &VehiclesPresenter::onVehicleAdded);
-    connect(facade, &db::DbFacade::vehicleRemoved,
-            this, &VehiclesPresenter::onVehicleRemoved);
+    connect(facade, &db::DbFacade::vehicleAdded, this, &VehiclesPresenter::onVehicleAdded);
+    connect(facade, &db::DbFacade::vehicleRemoved,  this, &VehiclesPresenter::onVehicleRemoved);
 
     for (const db::VehiclePtr& vehicle: facade->vehicles())
     {

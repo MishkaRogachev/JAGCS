@@ -10,7 +10,6 @@ namespace db
     class DbFacade;
 }
 
-
 namespace presentation
 {
     class DescriptionVehiclePresenter: public BasePresenter
