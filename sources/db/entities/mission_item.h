@@ -75,6 +75,9 @@ namespace db
         Status status() const;
         void setStatus(const Status& status);
 
+        bool isReached() const;
+        void setReached(bool reached);
+
     private:
         int m_missionId = 0;
         int m_sequence = -1;
@@ -88,6 +91,7 @@ namespace db
         int m_periods = 0;
 
         Status m_status = NotActual;
+        bool m_reached = false;
 
         Q_ENUM(Command)
         Q_ENUM(Status)

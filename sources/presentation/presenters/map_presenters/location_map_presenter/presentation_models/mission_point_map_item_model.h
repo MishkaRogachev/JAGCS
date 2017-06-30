@@ -26,7 +26,7 @@ namespace presentation
             ItemIconRole,
             ItemAcceptanceRadius,
             ItemRadius,
-            ItemCurrent
+            ItemReached
         };
 
         explicit MissionPointMapItemModel(db::DbFacade* dbFacade, QObject* parent = nullptr);

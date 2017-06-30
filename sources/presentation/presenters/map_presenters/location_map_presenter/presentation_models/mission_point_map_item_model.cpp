@@ -73,8 +73,8 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
             return item->radius();
         else return 0;
     }
-    case ItemCurrent:
-        return false; //TODO: current
+    case ItemReached:
+        return item->isReached();
     default:
         return QVariant();
     }
@@ -118,7 +118,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemIconRole] = "itemIcon";
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
-    roles[ItemCurrent] = "itemCurrent";
+    roles[ItemReached] = "itemReached";
 
     return roles;
 }

@@ -23,7 +23,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onCommandJumpTo(int item);
+        void onCommandSetWaypoint(int item);
         void onCommandReturn();
         void onCommandStart();
         void onPauseContinue(bool unpause);

@@ -17,6 +17,9 @@
 
 #include "command_service.h"
 
+#include "telemetry_service.h"
+#include "telemetry.h"
+
 namespace
 {
     db::MissionItem::Command decodeCommand(uint16_t command)
@@ -65,12 +68,15 @@ namespace
 }
 
 using namespace comm;
+using namespace domain;
 
 MissionHandler::MissionHandler(db::DbFacade* dbFacade,
+                               domain::TelemetryService* telemetryService,
                                domain::CommandService* commandService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_dbFacade(dbFacade)
+    m_dbFacade(dbFacade),
+    m_telemetryService(telemetryService)
 {
     connect(commandService, &domain::CommandService::download,
             this, &MissionHandler::download);
@@ -95,6 +101,9 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
         break;
     case MAVLINK_MSG_ID_MISSION_CURRENT:
         this->processMissionCurrent(message);
+        break;
+    case MAVLINK_MSG_ID_MISSION_ITEM_REACHED:
+        this->processMissionReached(message);
         break;
     default:
         break;
@@ -377,8 +386,25 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
 void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 {
-    mavlink_mission_current_t missionCurrent;
-    mavlink_msg_mission_current_decode(&message, &missionCurrent);
+    mavlink_mission_current_t current;
+    mavlink_msg_mission_current_decode(&message, &current);
 
-    // TODO: handle missionCurrent.seq
+    Telemetry* node = m_telemetryService->mavNode(message.sysid);
+    if (!node) return;
+
+    node->setParameter({ Telemetry::Navigator, Telemetry::CurrentWaypoint }, current.seq);
+}
+
+void MissionHandler::processMissionReached(const mavlink_message_t& message)
+{
+    int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
+    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
+    if (assignment.isNull()) return;
+
+    mavlink_mission_item_reached_t reached;
+    mavlink_msg_mission_item_reached_decode(&message, &reached);
+
+    db::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(), reached.seq);
+    if (item) item->setReached(true);
+    emit m_dbFacade->missionItemChanged(item);
 }

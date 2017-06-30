@@ -52,7 +52,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new RadioStatusHandler(m_telemetryService, communicator);
     new NavControllerHandler(m_telemetryService, communicator);
     new CommandHandler(m_dbFacade, m_commandService, communicator);
-    new MissionHandler(m_dbFacade, m_commandService, communicator);
+    new MissionHandler(m_dbFacade, m_telemetryService, m_commandService, communicator);
 
     return communicator;
 }

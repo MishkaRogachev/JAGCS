@@ -8,14 +8,14 @@ RowLayout {
 
     property int waypoint: 0
 
-    signal commandJumpTo(int item)
+    signal commandSetWaypoint(int item)
     signal commandReturn()
     signal commandStart()
     signal pauseContinue(bool unpause)
 
     Controls.Button {
         iconSource: "qrc:/icons/left.svg"
-        onClicked: commandJumpTo(waypoint - 1)
+        onClicked: commandSetWaypoint(waypoint - 1)
     }
 
     Controls.Label {
@@ -26,7 +26,7 @@ RowLayout {
 
     Controls.Button {
         iconSource: "qrc:/icons/right.svg"
-        onClicked: commandJumpTo(waypoint + 1)
+        onClicked: commandSetWaypoint(waypoint + 1)
     }
 
     Item {

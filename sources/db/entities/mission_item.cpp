@@ -117,3 +117,13 @@ void MissionItem::setStatus(const Status& status)
 {
     m_status = status;
 }
+
+bool MissionItem::isReached() const
+{
+    return m_reached;
+}
+
+void MissionItem::setReached(bool reached)
+{
+    m_reached = reached;
+}
