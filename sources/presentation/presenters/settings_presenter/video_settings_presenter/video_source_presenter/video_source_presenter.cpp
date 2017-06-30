@@ -8,6 +8,8 @@
 #include "db_facade.h"
 #include "video_source.h"
 
+#include "video_presenter.h"
+
 using namespace presentation;
 
 VideoSourcePresenter::VideoSourcePresenter(db::DbFacade* facade,
@@ -15,7 +17,8 @@ VideoSourcePresenter::VideoSourcePresenter(db::DbFacade* facade,
                                            QObject* parent):
     BasePresenter(parent),
     m_facade(facade),
-    m_video(video)
+    m_video(video),
+    m_preview(new VideoPresenter(video, this))
 {}
 
 db::VideoSourcePtr VideoSourcePresenter::video() const
@@ -29,13 +32,17 @@ void VideoSourcePresenter::restore()
     this->setViewProperty(PROPERTY(source), m_video->source());
 
     this->setViewProperty(PROPERTY(changed), false);
+    m_preview->updateSource();
 }
 
 void VideoSourcePresenter::save()
 {
     m_video->setSource(this->viewProperty(PROPERTY(source)).toString());
 
-    if (m_facade->save(m_video)) this->setViewProperty(PROPERTY(changed), false);
+    if (!m_facade->save(m_video)) return;
+
+    this->setViewProperty(PROPERTY(changed), false);
+    m_preview->updateSource();
 }
 
 void VideoSourcePresenter::remove()
@@ -45,6 +52,8 @@ void VideoSourcePresenter::remove()
 
 void VideoSourcePresenter::connectView(QObject* view)
 {
+    m_preview->setView(view->findChild<QObject*>(NAME(preview)));
+
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(restore()));
     connect(view, SIGNAL(remove()), this, SLOT(remove()));

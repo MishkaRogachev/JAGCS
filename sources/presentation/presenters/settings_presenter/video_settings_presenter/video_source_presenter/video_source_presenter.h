@@ -12,6 +12,8 @@ namespace db
 
 namespace presentation
 {
+    class VideoPresenter;
+
     class VideoSourcePresenter: public BasePresenter
     {
         Q_OBJECT
@@ -33,6 +35,7 @@ namespace presentation
     private:
         db::DbFacade* const m_facade;
         db::VideoSourcePtr m_video;
+        VideoPresenter* m_preview;
     };
 }
 

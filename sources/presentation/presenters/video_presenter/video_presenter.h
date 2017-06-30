@@ -2,15 +2,18 @@
 #define VIDEO_PRESENTER_H
 
 #include "base_presenter.h"
+#include "db_traits.h"
 
 namespace presentation
 {
+    class VideoProvider;
+
     class VideoPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit VideoPresenter(QObject* parent);
+        explicit VideoPresenter(const db::VideoSourcePtr& video, QObject* parent);
         ~VideoPresenter() override;
 
     public slots:

@@ -37,7 +37,7 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     d->entry = entry;
 
     d->map = new LocationMapPresenter(entry, this);
-    d->video = new VideoPresenter(this);
+    //d->video = new VideoPresenter(this);
 
     db::DbFacade* dbFacade = entry->dbFacade();
     connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
@@ -66,7 +66,7 @@ void ControlPresenter::updateVehiclesList()
 void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
-    d->video->setView(view->findChild<QObject*>(NAME(video)));
+    //d->video->setView(view->findChild<QObject*>(NAME(video)));
 
     connect(view, SIGNAL(selectVehicle(int)), this, SLOT(onSelectVehicle(int)));
 

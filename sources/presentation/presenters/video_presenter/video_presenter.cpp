@@ -3,9 +3,12 @@
 // Qt
 #include <QCamera>
 #include <QCameraInfo>
+#include <QMediaPlayer>
 #include <QDebug>
 
 // Internal
+#include "video_source.h"
+
 #include "video_provider.h"
 
 using namespace presentation;
@@ -13,24 +16,16 @@ using namespace presentation;
 class VideoPresenter::Impl
 {
 public:
-    QCamera* camera;
-
+    db::VideoSourcePtr video;
     VideoProvider provider;
-
-    void updateCameraVideoSurface()
-    {
-        if (!camera || !provider.videoSurface()) return;
-
-        camera->setViewfinder(provider.videoSurface());
-        camera->start();
-    }
+    QMediaObject* media = nullptr;
 };
 
-VideoPresenter::VideoPresenter(QObject* parent):
+VideoPresenter::VideoPresenter(const db::VideoSourcePtr& video, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    this->updateSource();
+    d->video = video;
 }
 
 VideoPresenter::~VideoPresenter()
@@ -38,22 +33,39 @@ VideoPresenter::~VideoPresenter()
 
 void VideoPresenter::updateSource()
 {
-    if (d->camera) delete d->camera;
-/*
-    QCameraInfo info(settings::Provider::value(settings::video::device).toByteArray());
-    if (info.isNull())
+    if (d->media)
     {
-        d->camera = nullptr;
+        delete d->media;
+        d->media = nullptr;
     }
-    else
+
+    switch (d->video->type()) { // TODO: media factory
+    case db::VideoSource::Device:
     {
-        d->camera = new QCamera(info, this);
-        d->updateCameraVideoSurface();
-    }*/
+        QCameraInfo info(d->video->source().toUtf8());
+        if (!info.isNull())
+        {
+            QCamera* camera = new QCamera(info, this);
+            camera->setViewfinder(d->provider.videoSurface());
+            camera->start();
+            d->media = camera;
+        }
+        break;
+    }
+    case db::VideoSource::Stream:
+    {
+        QMediaPlayer* player = new QMediaPlayer(this);
+        player->setMedia(QUrl(d->video->source()));
+        d->media = player;
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 void VideoPresenter::connectView(QObject* view)
 {
     view->setProperty(PROPERTY(videoSource), QVariant::fromValue(&d->provider));
-    d->updateCameraVideoSurface();
+    this->updateSource();
 }

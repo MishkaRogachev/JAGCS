@@ -4,12 +4,15 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
+import "../../Video"
+
 Controls.Frame {
     id: root
 
     property int type: VideoSource.UnknownType
     property string source
     property bool changed: false
+    property bool videoVisible: false
 
     signal save()
     signal restore()
@@ -53,9 +56,22 @@ Controls.Frame {
                     changed = true;
                 }
             }
+
+            Controls.Button {
+                iconSource: videoVisible ? "qrc:/ui/show.svg" : "qrc:/ui/hide.svg"
+                onClicked: videoVisible = !videoVisible
+            }
+        }
+
+        VideoView {
+            objectName: "preview"
+            visible: videoVisible
+            implicitWidth: controlsRow.width
+            Layout.alignment: Qt.AlignRight
         }
 
         RowLayout {
+            id: controlsRow
             Layout.alignment: Qt.AlignRight
 
             Controls.Button {
