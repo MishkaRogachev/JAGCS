@@ -39,6 +39,8 @@ void VideoPresenter::updateSource()
         d->media = nullptr;
     }
 
+    if (!d->provider.videoSurface()) return;
+
     switch (d->video->type()) { // TODO: media factory
     case db::VideoSource::Device:
     {
@@ -56,6 +58,8 @@ void VideoPresenter::updateSource()
     {
         QMediaPlayer* player = new QMediaPlayer(this);
         player->setMedia(QUrl(d->video->source()));
+        player->setVideoOutput(d->provider.videoSurface());
+        player->play();
         d->media = player;
         break;
     }

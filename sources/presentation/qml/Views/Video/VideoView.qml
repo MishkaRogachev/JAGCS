@@ -5,7 +5,7 @@ Rectangle {
     id: root
 
     property alias videoSource: videoOutput.source
-    property real ratio: 3/4
+    property real ratio: videoOutput.sourceRect.height / videoOutput.sourceRect.width
     implicitHeight: width * ratio
 
     color: "black"
