@@ -36,12 +36,13 @@ Item {
         width: parent.width * 0.2
     }
 
-    Indicators.WindIndicator {
+    Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
-        direction: windDirection
-        speed: windSpeed
+        prefix: qsTr("WIND")
+        value: windSpeed
+        suffix: qsTr("m/s")
     }
 
     Indicators.SituationIndicator {
