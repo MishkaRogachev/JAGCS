@@ -26,7 +26,7 @@ public:
     domain::DomainEntry* entry;
 
     AbstractMapPresenter* map;
-    VideoPresenter* video = nullptr;
+    QList<VideoPresenter*> videos;
     DashboardPresenter* dashboard = nullptr;
 };
 
@@ -40,11 +40,10 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     //d->video = new VideoPresenter(this);
 
     db::DbFacade* dbFacade = entry->dbFacade();
+
     connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
     connect(dbFacade, &db::DbFacade::vehicleChanged, this, &ControlPresenter::updateVehiclesList);
-
-    this->updateVehiclesList();
 }
 
 ControlPresenter::~ControlPresenter()
@@ -63,14 +62,27 @@ void ControlPresenter::updateVehiclesList()
     this->setViewProperty(PROPERTY(vehicles), vehicles);
 }
 
+void ControlPresenter::updateVideosList()
+{
+    // TODO: quadsplitter presenter
+    QObjectList videos;
+
+    for (const db::VideoSourcePtr& video: d->entry->dbFacade()->videoSources())
+    {
+        videos.append(new VideoPresenter(video, this));
+    }
+
+    this->setViewProperty(PROPERTY(videos), QVariant::fromValue(videos));
+}
+
 void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
-    //d->video->setView(view->findChild<QObject*>(NAME(video)));
 
     connect(view, SIGNAL(selectVehicle(int)), this, SLOT(onSelectVehicle(int)));
 
     this->updateVehiclesList();
+    this->updateVideosList();
 }
 
 void ControlPresenter::onSelectVehicle(int index)

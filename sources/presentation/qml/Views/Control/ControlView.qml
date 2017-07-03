@@ -11,6 +11,8 @@ Controls.Pane {
     property alias vehicles: vehiclesBox.model
     property alias selectedVehicle: vehiclesBox.currentIndex
 
+    property var videos: []
+
     signal selectVehicle(int index)
 
     ColumnLayout {
@@ -54,12 +56,19 @@ Controls.Pane {
         anchors.leftMargin: palette.margins
     }
 
-    VideoView {
-        id: video
-        objectName: "video"
+    RowLayout {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        width: map.width / 3
-        height: map.height / 3
+
+        Repeater {
+            id: videoRepater
+            model: videos
+
+            VideoView {
+                id: video
+                implicitWidth: palette.controlBaseSize * 7
+                Component.onCompleted: modelData.setView(video)
+            }
+        }
     }
 }

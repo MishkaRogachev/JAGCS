@@ -22,6 +22,7 @@ namespace presentation
 
     public slots:
         void updateVehiclesList();
+        void updateVideosList();
 
     protected:
         void connectView(QObject* view) override;
