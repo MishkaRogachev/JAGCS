@@ -21,6 +21,7 @@ namespace presentation
 
     protected:
         void connectView(QObject* view) override;
+        void disconnectView(QObject* view) override;
 
     private:
         class Impl;

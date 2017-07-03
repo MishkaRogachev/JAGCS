@@ -18,7 +18,7 @@ VideoSourcePresenter::VideoSourcePresenter(db::DbFacade* facade,
     BasePresenter(parent),
     m_facade(facade),
     m_video(video),
-    m_preview(new VideoPresenter(video, this))
+    m_preview(nullptr)
 {}
 
 db::VideoSourcePtr VideoSourcePresenter::video() const
@@ -32,7 +32,7 @@ void VideoSourcePresenter::restore()
     this->setViewProperty(PROPERTY(source), m_video->source());
 
     this->setViewProperty(PROPERTY(changed), false);
-    m_preview->updateSource();
+    if (m_preview) m_preview->updateSource();
 }
 
 void VideoSourcePresenter::save()
@@ -42,7 +42,7 @@ void VideoSourcePresenter::save()
     if (!m_facade->save(m_video)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
-    m_preview->updateSource();
+    if (m_preview) m_preview->updateSource();
 }
 
 void VideoSourcePresenter::remove()
@@ -52,11 +52,17 @@ void VideoSourcePresenter::remove()
 
 void VideoSourcePresenter::connectView(QObject* view)
 {
-    m_preview->setView(view->findChild<QObject*>(NAME(preview)));
-
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(restore()));
     connect(view, SIGNAL(remove()), this, SLOT(remove()));
 
+    connect(view, SIGNAL(setupPreview(QObject*)), this, SLOT(setupPreview(QObject*)));
+
     this->restore();
+}
+
+void VideoSourcePresenter::setupPreview(QObject* preview)
+{
+    if (!m_preview) m_preview = new VideoPresenter(m_video, this);
+    m_preview->setView(preview);
 }

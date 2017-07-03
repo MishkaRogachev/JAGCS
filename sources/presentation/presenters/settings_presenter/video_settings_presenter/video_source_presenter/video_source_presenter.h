@@ -32,6 +32,9 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void setupPreview(QObject* preview);
+
     private:
         db::DbFacade* const m_facade;
         db::VideoSourcePtr m_video;

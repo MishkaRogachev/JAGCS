@@ -12,11 +12,11 @@ Controls.Frame {
     property int type: VideoSource.UnknownType
     property string source
     property bool changed: false
-    property bool videoVisible: false
 
     signal save()
     signal restore()
     signal remove()
+    signal setupPreview(QtObject preview)
 
     ColumnLayout {
         anchors.fill: parent
@@ -58,14 +58,15 @@ Controls.Frame {
             }
 
             Controls.Button {
-                iconSource: videoVisible ? "qrc:/ui/show.svg" : "qrc:/ui/hide.svg"
-                onClicked: videoVisible = !videoVisible
+                iconSource: preview.visible ? "qrc:/ui/show.svg" : "qrc:/ui/hide.svg"
+                onClicked: preview.visible = !preview.visible
             }
         }
 
         VideoView {
-            objectName: "preview"
-            visible: videoVisible
+            id: preview
+            visible: false
+            onVisibleChanged: visible ? setupPreview(preview) : setupPreview(null)
             implicitWidth: controlsRow.width
             Layout.alignment: Qt.AlignRight
         }

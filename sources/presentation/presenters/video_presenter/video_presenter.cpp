@@ -73,3 +73,14 @@ void VideoPresenter::connectView(QObject* view)
     view->setProperty(PROPERTY(videoSource), QVariant::fromValue(&d->provider));
     this->updateSource();
 }
+
+void VideoPresenter::disconnectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    if (d->media)
+    {
+        delete d->media;
+        d->media = nullptr;
+    }
+}
