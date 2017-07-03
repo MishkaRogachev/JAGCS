@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 24 24"
+   height="24"
+   width="24">
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="fill:#ffffff;stroke:none"
+     transform="matrix(1.1740701,0,0,1.103692,-6.7851216,-1131.8247)"
+     id="layer1">
+    <g
+       transform="matrix(0.10700338,0,0,0.1105857,2.2172156,1022.5977)"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+       id="g4903">
+      <path
+         id="path4135"
+         transform="matrix(7.9599158,0,0,8.193192,33.28801,26.151025)"
+         d="M 12 6.6484375 C 6.2093825 6.6484375 1.515625 12 1.515625 12 C 1.515625 12 1.9957522 12.522896 2.7695312 13.216797 C 2.1743428 14.190773 0.34179684 15.097656 0.34179688 15.097656 C 0.34179688 15.097656 2.666706 14.783036 3.4238281 13.783203 C 3.8182763 14.107095 4.2777679 14.450006 4.7714844 14.791016 C 4.1567318 15.928473 2.8046875 17.007813 2.8046875 17.007812 C 2.8046875 17.007812 4.7120966 16.465993 5.4726562 15.25 C 5.8956224 15.514588 6.35026 15.76784 6.8222656 16.005859 C 6.4059952 17.155488 5.859375 18.21875 5.859375 18.21875 C 5.859375 18.21875 7.3377991 17.290963 7.5761719 16.361328 C 8.0785312 16.579891 8.6084119 16.761162 9.1503906 16.917969 C 9.0094205 17.972559 9.0214844 19.154297 9.0214844 19.154297 C 9.0214844 19.154297 9.8121694 18.076681 9.921875 17.117188 C 10.564539 17.25477 11.228211 17.338372 11.910156 17.345703 C 11.977525 18.332314 12.523437 19.628906 12.523438 19.628906 C 12.523438 19.628906 12.753854 18.37105 12.677734 17.3125 C 13.256305 17.271264 13.817863 17.170423 14.367188 17.039062 C 14.509223 17.99858 15.578125 19.074219 15.578125 19.074219 C 15.578125 19.074219 15.327001 17.860602 15.148438 16.824219 C 15.589797 16.685982 16.015556 16.520368 16.429688 16.341797 C 16.617554 17.290757 18.160156 18.257813 18.160156 18.257812 C 18.160156 18.257812 17.592416 17.154892 17.173828 15.980469 C 17.661898 15.736647 18.11512 15.470388 18.550781 15.199219 C 19.308369 16.182468 20.884766 16.863281 20.884766 16.863281 C 20.884766 16.863281 19.851477 15.706867 19.263672 14.740234 C 19.820224 14.358561 20.299839 13.985257 20.728516 13.630859 C 21.65369 14.41747 23.544922 14.675781 23.544922 14.675781 C 23.544922 14.675781 22.07481 13.951289 21.337891 13.101562 C 22.047973 12.466335 22.484375 12 22.484375 12 C 22.484375 12 17.790619 6.6484374 12 6.6484375 z M 12 8.0957031 C 16.452403 8.095703 21.589844 12 21.589844 12 C 21.589844 12 16.452401 16.087891 12 16.087891 C 7.5475985 16.087891 2.3320313 12 2.3320312 12 C 2.3320312 12 7.5475985 8.0957031 12 8.0957031 z "
+         style="opacity:1;fill:#f6f5f0;fill-opacity:1;stroke:#f6f5f0;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

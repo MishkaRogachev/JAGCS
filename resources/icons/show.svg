@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 24 24"
+   height="24"
+   width="24">
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="fill:#ffffff;stroke:none"
+     transform="matrix(1.1740701,0,0,1.103692,-6.7851216,-1131.8247)"
+     id="layer1">
+    <g
+       transform="matrix(0.10700338,0,0,0.1105857,2.2172156,1022.5977)"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+       id="g4903">
+      <path
+         id="path4135"
+         transform="matrix(7.9599158,0,0,8.193192,33.28801,26.151025)"
+         d="M 12 6.6484375 C 6.2093825 6.6484375 1.515625 12 1.515625 12 C 1.515625 12 6.2093826 17.351562 12 17.351562 C 17.790618 17.351563 22.484375 12 22.484375 12 C 22.484375 12 17.790619 6.6484374 12 6.6484375 z M 12 8.0957031 C 16.452403 8.095703 21.589844 12 21.589844 12 C 21.589844 12 16.452401 16.087891 12 16.087891 C 7.5475985 16.087891 2.3320313 12 2.3320312 12 C 2.3320312 12 7.5475985 8.0957031 12 8.0957031 z "
+         style="opacity:1;fill:#f6f5f0;fill-opacity:1;stroke:#f6f5f0;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <ellipse
+         ry="24.579571"
+         rx="23.879742"
+         cy="124.46933"
+         cx="128.80701"
+         id="path4155"
+         style="opacity:1;fill:#f6f5f0;fill-opacity:1;stroke:#f6f5f0;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

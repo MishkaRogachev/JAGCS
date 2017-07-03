@@ -47,6 +47,7 @@ ColumnLayout {
 
                 VideoSourceView {
                     id: sourceView
+                    number: index + 1
                     Layout.fillWidth: true
                     Component.onCompleted: modelData.setView(sourceView)
                 }

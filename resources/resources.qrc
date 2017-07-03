@@ -7,8 +7,8 @@
         <file>ui/ok.svg</file>
         <file>ui/plus.svg</file>
         <file>ui/minus.svg</file>
-        <file>ui/show.svg</file>
-        <file>ui/hide.svg</file>
+        <file>ui/up.svg</file>
+        <file>ui/down.svg</file>
         <file>indicators/unknown_mark.svg</file>
         <file>indicators/plane_map_mark.svg</file>
         <file>indicators/home_map_mark.svg</file>
@@ -25,6 +25,8 @@
         <file>icons/right.svg</file>
         <file>icons/up.svg</file>
         <file>icons/down.svg</file>
+        <file>icons/show.svg</file>
+        <file>icons/hide.svg</file>
         <file>icons/map-marker.svg</file>
         <file>icons/center.svg</file>
         <file>icons/layers.svg</file>
