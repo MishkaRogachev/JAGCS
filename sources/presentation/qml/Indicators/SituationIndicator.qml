@@ -4,15 +4,21 @@ import "qrc:/JS/helper.js" as Helper
 Compass {
     id: root
 
+    property bool guided: false
     property real targetBearing: 0
     property real trackError: 0
     property real maxTrackError: 100
+
+    onGuidedChanged: canvas.requestPaint()
+    onTargetBearingChanged: canvas.requestPaint()
+    onTrackErrorChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
         anchors.fill: parent
         anchors.margins: scalesOffset * 2
         rotation: targetBearing - heading
+        visible: guided
 
         onPaint: {
             var ctx = canvas.getContext('2d');

@@ -7,6 +7,7 @@ RowLayout {
     id: root
 
     property int waypoint: 0
+    property bool automatic: false
 
     signal commandSetWaypoint(int item)
     signal commandReturn()
@@ -15,6 +16,7 @@ RowLayout {
 
     Controls.Button {
         iconSource: "qrc:/icons/left.svg"
+        enabled: automatic
         onClicked: commandSetWaypoint(waypoint - 1)
     }
 
@@ -26,6 +28,7 @@ RowLayout {
 
     Controls.Button {
         iconSource: "qrc:/icons/right.svg"
+        enabled: automatic
         onClicked: commandSetWaypoint(waypoint + 1)
     }
 

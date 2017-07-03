@@ -5,6 +5,7 @@ import "qrc:/Indicators" as Indicators
 Item {
     id: root
 
+    property alias guided: hsi.guided
     property alias heading: hsi.heading
     property alias course: hsi.course
     property alias targetBearing: hsi.targetBearing
@@ -22,7 +23,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST")
-        color: palette.activeMissionColor
+        color: guided ? palette.activeMissionColor : palette.disabledColor
         distance: targetDistance
         width: parent.width * 0.2
     }
@@ -68,7 +69,7 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("TRG")
-        color: palette.activeMissionColor
+        color: guided ? palette.activeMissionColor : palette.disabledColor
         value: targetBearing
         width: parent.width * 0.2
     }

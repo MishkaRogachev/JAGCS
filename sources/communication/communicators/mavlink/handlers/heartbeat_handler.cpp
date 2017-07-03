@@ -108,6 +108,15 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     node->setParameter({ Telemetry::Status, Telemetry::Online }, true);
     node->setParameter({ Telemetry::Status, Telemetry::Armed },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+    node->setParameter({ Telemetry::Status, Telemetry::Auto },
+                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
+    node->setParameter({ Telemetry::Status, Telemetry::Guided },
+                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
+    node->setParameter({ Telemetry::Status, Telemetry::Stabilized },
+                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
+    node->setParameter({ Telemetry::Status, Telemetry::Manual },
+                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
+
     node->setParameter({ Telemetry::Status, Telemetry::Mode },
                        decodeCustomMode(heartbeat.autopilot,
                                         heartbeat.type,

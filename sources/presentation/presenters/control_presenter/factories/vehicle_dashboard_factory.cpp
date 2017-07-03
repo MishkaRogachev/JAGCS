@@ -56,6 +56,8 @@ DashboardPresenter* VehicleDashboardFactory::create()
     dashboard->addInstrument("fd", new PowerSystemPresenter(
                                  node->childNode(domain::Telemetry::PowerSystem), dashboard));
 
+    dashboard->addInstrument("nav", new StatusPresenter(
+                                 node->childNode(domain::Telemetry::Status), dashboard));
     dashboard->addInstrument("nav", new CompassPresenter(
                                  node->childNode(domain::Telemetry::Compass), dashboard));
     dashboard->addInstrument("nav", new SatellitePresenter(

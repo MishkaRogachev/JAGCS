@@ -112,7 +112,11 @@ namespace domain
             Status = 100,
             Online = 101,
             Armed = 102,
-            Mode = 103,
+            Auto = 103,
+            Guided = 104,
+            Stabilized = 105,
+            Manual = 106,
+            Mode = 110,
 
             Present = 200,
             Enabled = 201,
