@@ -16,7 +16,6 @@ ApplicationWindow {
 
     minimumWidth: 1024
     minimumHeight: 768
-    visibility: "Hidden"
 
     Palette {
         id: palette

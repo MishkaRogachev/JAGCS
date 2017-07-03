@@ -46,28 +46,31 @@ Controls.Pane {
         }
     }
 
-    MapView {
-        id: map
-        objectName: "map"
+    Controls.SplitLayout {
+        id: split
         anchors.left: column.right
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
-    }
 
-    RowLayout {
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        Controls.SplitLayoutItem {
+            MapView {
+                id: map
+                objectName: "map"
+            }
+        }
 
         Repeater {
             id: videoRepater
             model: videos
 
-            VideoView {
-                id: video
-                implicitWidth: palette.controlBaseSize * 7
-                Component.onCompleted: modelData.setView(video)
+            Controls.SplitLayoutItem {
+                VideoView {
+                    id: video
+                    implicitWidth: split.width / 3
+                    Component.onCompleted: modelData.setView(video)
+                }
             }
         }
     }

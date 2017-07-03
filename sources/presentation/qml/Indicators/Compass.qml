@@ -6,6 +6,7 @@ Canvas {
     property real heading: 0
     property real course: 0
 
+    property color courseColor: palette.missionColor
     property int tickFactor: 5
     property real scalesRatio: 0.08
     property real minorTickFactor: 0.4
@@ -80,7 +81,7 @@ Canvas {
         ctx.restore();
 
         // Course Mark
-        ctx.strokeStyle = palette.missionColor;
+        ctx.strokeStyle = courseColor;
         ctx.save();
         ctx.rotate((course - heading) * Math.PI / 180);
         ctx.beginPath();
