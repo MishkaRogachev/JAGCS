@@ -68,7 +68,7 @@ namespace comm
 
     inline float decodeCurrent(int16_t value)
     {
-        return float(value) / 10000;
+        return float(value) / 100;
     }
 
     inline QGeoCoordinate decodeCoordinate(int32_t lat, int32_t lon, int32_t alt)
