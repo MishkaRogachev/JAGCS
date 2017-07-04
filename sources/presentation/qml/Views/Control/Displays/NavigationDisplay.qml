@@ -64,6 +64,8 @@ Item {
                 rotation: -parent.rotation
             }
         }
+
+        // TODO: wind indicator
     }
 
     Indicators.FdLabel {

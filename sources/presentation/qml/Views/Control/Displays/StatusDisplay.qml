@@ -38,8 +38,10 @@ GridLayout {
         color: {
             if (batteryCurrent < -0.01)
                 return palette.positiveColor;
-            if (batteryCurrent > 0.01)
+            if (batteryCurrent > 5.0)
                 return palette.neutralColor;
+            if (batteryCurrent > 10.0)
+                return palette.negativeColor; // TODO: border values settings
 
             return palette.textColor;
         }
