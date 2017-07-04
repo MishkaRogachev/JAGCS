@@ -33,11 +33,6 @@ Canvas {
         ctx.fillStyle = fillColor;
         ctx.fillRect(1, height - zero, width - 2, zero - offset);
 
-        ctx.strokeStyle = palette.textColor;
-        ctx.moveTo(0, height - zero);
-        ctx.lineTo(width, height - zero);
-
         ctx.restore();
-        ctx.stroke();
     }
 }

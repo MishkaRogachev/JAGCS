@@ -4,8 +4,6 @@ import "qrc:/JS/helper.js" as Helper
 Canvas {
     id: root
 
-    property bool available: true
-
     property int pitch: 0
     property int roll: 0
     property int minPitch: -25
@@ -32,12 +30,11 @@ Canvas {
         ctx.rotate(-roll * Math.PI / 180);
         ctx.translate(0, offset - effectiveHeight / 2);
 
-        ctx.fillStyle = available ? palette.skyColor : palette.disabledColor;
+        ctx.fillStyle = palette.skyColor;
         ctx.fillRect(-size / 2, -size / 2, size, size / 2);
 
-        ctx.fillStyle = available ? palette.groundColor : palette.disabledColor;
+        ctx.fillStyle = palette.groundColor;
         ctx.fillRect(-size / 2, 0, size, size / 2);
-
 
         ctx.lineWidth = 1;
         ctx.strokeStyle = palette.textColor;

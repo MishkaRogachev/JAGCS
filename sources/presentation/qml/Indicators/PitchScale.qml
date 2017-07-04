@@ -9,11 +9,11 @@ Item {
     property int minPitch: -25
     property int maxPitch: 25
     property int pitchStep: 10
-    property color scaleColor: palette.textColor
+    property color color: palette.textColor
     property int fontPixelSize: width * 0.06
 
     onPitchChanged: canvas.requestPaint()
-    onScaleColorChanged: canvas.requestPaint()
+    onColorChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
 
@@ -27,8 +27,8 @@ Item {
             ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 2;
-            ctx.strokeStyle = scaleColor;
-            ctx.fillStyle = scaleColor;
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.textBaseline = 'middle';
 

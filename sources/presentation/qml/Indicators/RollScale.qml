@@ -8,11 +8,11 @@ Item {
     property int minRoll: -25
     property int maxRoll: 25
     property int rollStep: 5
-    property color scaleColor: palette.textColor
+    property color color: palette.textColor
     property int fontPixelSize: width * 0.1
 
     onRollChanged: canvas.requestPaint()
-    onScaleColorChanged: canvas.requestPaint()
+    onColorChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
 
@@ -25,8 +25,8 @@ Item {
             ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 3;
-            ctx.strokeStyle = scaleColor;
-            ctx.fillStyle = scaleColor;
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
 

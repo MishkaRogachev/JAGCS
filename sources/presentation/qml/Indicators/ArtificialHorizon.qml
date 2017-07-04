@@ -6,7 +6,7 @@ import "../Controls" as Controls
 Item {
     id: root
 
-    property alias available: horizon.available
+    property bool operational: false
     property bool armed: false
 
     property real pitch: 0.0
@@ -56,6 +56,8 @@ Item {
             minPitch: root.pitch + root.minPitch
             maxPitch: root.pitch + root.maxPitch
             pitchStep: root.pitchStep
+            color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
+                             palette.disabledColor
         }
 
         PlaneMark {
@@ -98,5 +100,7 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
+        color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
+                         palette.disabledColor
     }
 }

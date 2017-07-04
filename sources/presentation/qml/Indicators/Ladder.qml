@@ -15,13 +15,15 @@ Item {
     property int textOrigin: fontPixelSize * 0.8
     property alias canvasRotation: canvas.rotation
 
+    property bool operational: false
     property string prefix
-    property color color: palette.textColor
-
+    property color color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
+                                    palette.disabledColor
     property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
                             (canvasRotation <= -90 && canvasRotation > -180)
 
     clip: true
+    onColorChanged: canvas.requestPaint()
     onValueChanged: canvas.requestPaint()
 
     Canvas {

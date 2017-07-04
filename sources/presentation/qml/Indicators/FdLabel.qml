@@ -6,13 +6,14 @@ Text {
     property string prefix
     property string suffix
     property int digits: 0
-    property real value
-    property bool available: true
+    property real value: 0
+    property bool operational: false
 
-    color: available ? palette.textColor : palette.disabledColor
+    color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
+                     palette.disabledColor
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
     font.pixelSize: root.width * 0.23
-    text: available ? (prefix.length > 0 ? prefix + "\n" : "") +
-                      value.toFixed(digits) + " " + suffix : "-"
+    text: (prefix.length > 0 ? prefix + "\n" : "") +
+          (enabled ? value.toFixed(digits) + " " + suffix : "-")
 }

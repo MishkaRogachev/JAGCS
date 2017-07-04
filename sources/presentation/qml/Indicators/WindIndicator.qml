@@ -20,5 +20,7 @@ ColumnLayout {
         value: speed
         digits: 1
         suffix: qsTr("m/s")
+        enabled: true
+        operational: true // TODO: wind avability
     }
 }

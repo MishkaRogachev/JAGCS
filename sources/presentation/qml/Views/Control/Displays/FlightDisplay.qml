@@ -5,25 +5,32 @@ import "qrc:/Indicators" as Indicators
 Item {
     id: root
 
+    property bool ahrsEnabled: false
+    property bool ahrsOperational: false
     property alias pitch: af.pitch
     property alias roll: af.roll
     property alias armed: af.armed
 
     property int throttle: 0
 
+    property bool satelliteEnabled: false
+    property bool satelliteOperational: false
     property real groundspeed: 0
+    property int satelliteAltitude: 0
+
+    property bool airspeedEnabled: false
+    property bool airspeedOperational: false
     property real indicatedAirspeed: 0
     property real trueAirspeed: 0
 
-    property int satelliteAltitude: 0
+    property bool barometricEnabled: false
+    property bool barometricOperational: false
     property int barometricAltitude: 0
     property real barometricClimb: 0
-    property int rangefinderHeight: 0
 
-    property bool satelliteEnabled: false
-    property bool satelliteOperational: false
-    property bool airSpeedAvalible: true
-    property bool altitudeAvalible: true
+    property bool rangefinderEnabled: false
+    property bool rangefinderOperational: false
+    property int rangefinderHeight: 0
 
     property int minSpeed: -13
     property int maxSpeed: 13
@@ -41,9 +48,8 @@ Item {
         prefix: qsTr("GS")
         digits: 1
         value: groundspeed
-        color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                         palette.negativeColor :
-                                                         palette.disabledColor
+        enabled: satelliteEnabled
+        operational: satelliteOperational
         width: speedLadder.width
     }
 
@@ -65,7 +71,8 @@ Item {
         minValue: indicatedAirspeed + minSpeed
         maxValue: indicatedAirspeed + maxSpeed
         valueStep: speedStep
-        color: airSpeedAvalible ? palette.textColor : palette.disabledColor
+        enabled: airspeedEnabled
+        operational: airspeedOperational
         canvasRotation: 90
         prefix: qsTr("IAS")
     }
@@ -76,6 +83,8 @@ Item {
         prefix: qsTr("TAS")
         digits: 1
         value: trueAirspeed
+        enabled: airspeedEnabled
+        operational: airspeedOperational
         width: speedLadder.width
     }
 
@@ -83,16 +92,17 @@ Item {
         id: af
         anchors.centerIn: parent
         width: parent.width * 0.58
+        enabled: ahrsEnabled
+        operational: ahrsOperational
     }
 
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("SAT")
-        color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                         palette.negativeColor :
-                                                         palette.disabledColor
         value: satelliteAltitude
+        enabled: satelliteEnabled
+        operational: satelliteOperational
         width: altitudeLadder.width
     }
 
@@ -117,7 +127,8 @@ Item {
         minValue: barometricAltitude + minAltitude
         maxValue: barometricAltitude + maxAltitude
         valueStep: altitudeStep
-        color: altitudeAvalible ? palette.textColor : palette.disabledColor
+        enabled: barometricEnabled
+        operational: barometricOperational
         canvasRotation: -90
         prefix: qsTr("ALT")
     }
@@ -127,6 +138,8 @@ Item {
         anchors.right: parent.right
         prefix: qsTr("RF")
         value: rangefinderHeight
+        enabled: rangefinderEnabled
+        operational: rangefinderOperational
         width: altitudeLadder.width
     }
 }
