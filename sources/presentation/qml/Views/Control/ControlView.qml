@@ -8,10 +8,13 @@ import "../Video"
 Controls.Pane {
     id: root
 
+    property bool cornerMap: false
+    property bool cornerVisible: false
+
     property alias vehicles: vehiclesBox.model
     property alias selectedVehicle: vehiclesBox.currentIndex
 
-    property var videos: []
+    property alias videos: video.videoSources
 
     signal selectVehicle(int index)
 
@@ -46,32 +49,50 @@ Controls.Pane {
         }
     }
 
-    Controls.SplitLayout {
-        id: split
+    Item {
+        id: background
         anchors.left: column.right
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
+    }
 
-        Controls.SplitLayoutItem {
-            MapView {
-                id: map
-                objectName: "map"
-            }
-        }
+    Item {
+        id: corner
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: cornerVisible ? (background.height / 3 + palette.controlBaseSize) : 0
+        width: cornerMap ? height : video.ratio * height
+    }
 
-        Repeater {
-            id: videoRepater
-            model: videos
+    MapView {
+        id: map
+        objectName: "map"
+        anchors.fill: cornerMap ? corner : background
+        z: cornerMap
+    }
 
-            Controls.SplitLayoutItem {
-                VideoView {
-                    id: video
-                    implicitWidth: split.width / 3
-                    Component.onCompleted: modelData.setView(video)
-                }
-            }
-        }
+    VideoSplitView {
+        id: video
+        objectName: "video"
+        anchors.fill: cornerMap ? background : corner
+    }
+
+    Controls.Button {
+        onClicked: cornerMap = !cornerMap
+        iconSource: cornerMap ? "qrc:/icons/map-marker.svg" :
+                                "qrc:/icons/video.svg"
+        anchors.bottom: parent.bottom
+        anchors.right: cornerVisible ? corner.left : maxMinButton.left
+    }
+
+    Controls.Button {
+        id: maxMinButton
+        onClicked: cornerVisible = !cornerVisible
+        iconSource: cornerVisible ? "qrc:/icons/minimize.svg" : "qrc:/icons/maximize.svg"
+        anchors.bottom: parent.bottom
+        anchors.right: corner.right
+        z: 2
     }
 }

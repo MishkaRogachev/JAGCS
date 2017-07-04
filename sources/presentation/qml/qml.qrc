@@ -28,8 +28,6 @@
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/Spacer.qml</file>
-        <file>Controls/SplitLayout.qml</file>
-        <file>Controls/SplitLayoutItem.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
         <file>Indicators/BarIndicator.qml</file>
@@ -47,6 +45,8 @@
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/RadioStatusView.qml</file>
+        <file>Views/Video/VideoView.qml</file>
+        <file>Views/Video/VideoSplitView.qml</file>
         <file>Views/Map/MapView.qml</file>
         <file>Views/Map/MapStatusBar.qml</file>
         <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
@@ -64,8 +64,6 @@
         <file>Views/Control/Displays/NavigationDisplay.qml</file>
         <file>Views/Control/Displays/StatusDisplay.qml</file>
         <file>Views/Control/Displays/MissionDisplay.qml</file>
-        <file>Views/Video/VideoView.qml</file>
-        <file>Views/Video/VideoStatusBar.qml</file>
         <file>Views/Mission/MissionView.qml</file>
         <file>Views/Mission/MissionItemView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
