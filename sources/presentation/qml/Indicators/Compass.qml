@@ -6,6 +6,7 @@ Canvas {
     property real heading: 0
     property real course: 0
 
+    property color color: palette.textColor
     property color courseColor: palette.missionColor
     property int tickFactor: 5
     property real scalesRatio: 0.08
@@ -14,8 +15,11 @@ Canvas {
     property real textFactor: 1.6
     property int scalesOffset: root.width * scalesRatio
 
+    onWidthChanged: requestPaint()
+    onHeightChanged: requestPaint()
     onCourseChanged: requestPaint()
     onHeadingChanged: requestPaint()
+    onColorChanged: requestPaint()
 
     implicitHeight: width
     clip: true
@@ -27,8 +31,8 @@ Canvas {
 
         ctx.save();
 
-        ctx.strokeStyle = palette.textColor;
-        ctx.fillStyle = palette.textColor;
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'center';
 
@@ -93,7 +97,7 @@ Canvas {
         ctx.restore();
 
         // Tick
-        ctx.strokeStyle = palette.textColor;
+        ctx.strokeStyle = color;
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(0, -height / 2)

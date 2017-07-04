@@ -11,6 +11,10 @@ Item {
     property alias targetBearing: hsi.targetBearing
     property alias trackError: hsi.trackError
 
+    property bool compassEnabled: false
+    property bool compassOperational: false
+    property bool satelliteEnabled: false
+    property bool satelliteOperational: false
     property int targetDistance: 0
     property int homeDistance: 0
     property real homeDirection: 0
@@ -34,6 +38,7 @@ Item {
         prefix: qsTr("HOME")
         distance: homeDistance
         width: parent.width * 0.2
+        enabled: homeDistance > 0
     }
 
     Indicators.FdLabel {
@@ -43,12 +48,19 @@ Item {
         prefix: qsTr("WIND")
         value: windSpeed
         suffix: qsTr("m/s")
+        enabled: windSpeed > 0 // TODO: wind avability
     }
 
     Indicators.SituationIndicator {
         id: hsi
         anchors.centerIn: parent
         width: parent.width * 0.6
+        color: compassEnabled ? (compassOperational ? palette.textColor :
+                                                      palette.negativeColor) :
+                                palette.disabledColor
+        courseColor: satelliteEnabled ? (satelliteOperational ? palette.missionColor :
+                                                                palette.negativeColor) :
+                                        palette.disabledColor
 
         Item {
             anchors.fill: parent
@@ -83,6 +95,8 @@ Item {
         prefix: qsTr("HDG")
         value: heading
         width: parent.width * 0.2
+        enabled: compassEnabled
+        operational: compassOperational
     }
 
     Indicators.FdLabel {
@@ -91,5 +105,7 @@ Item {
         prefix: qsTr("CRS")
         value: course
         width: parent.width * 0.2
+        enabled: compassEnabled
+        operational: compassOperational
     }
 }

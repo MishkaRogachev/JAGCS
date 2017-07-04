@@ -30,7 +30,7 @@ GridLayout {
         text: batteryVoltage.toFixed(2) + qsTr(" V")
     }
 
-    Controls.ColoredIcon {
+    Controls.ColoredIcon { // TODO: wind avability
         id: current
         source: "qrc:/icons/current.svg"
         implicitWidth: palette.controlBaseSize
@@ -38,12 +38,14 @@ GridLayout {
         color: {
             if (batteryCurrent < -0.01)
                 return palette.positiveColor;
+            if (batteryCurrent > 0.0)
+                return palette.textColor;
             if (batteryCurrent > 5.0)
                 return palette.neutralColor;
             if (batteryCurrent > 10.0)
-                return palette.negativeColor; // TODO: border values settings
+                return palette.negativeColor; // TODO: settings
 
-            return palette.textColor;
+            return palette.disabledColor;
         }
         Layout.alignment: Qt.AlignRight
     }

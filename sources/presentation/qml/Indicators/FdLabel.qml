@@ -7,7 +7,7 @@ Text {
     property string suffix
     property int digits: 0
     property real value: 0
-    property bool operational: false
+    property bool operational: true
 
     color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
                      palette.disabledColor
