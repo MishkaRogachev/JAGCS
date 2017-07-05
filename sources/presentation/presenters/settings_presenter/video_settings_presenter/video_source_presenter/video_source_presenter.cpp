@@ -63,6 +63,12 @@ void VideoSourcePresenter::connectView(QObject* view)
 
 void VideoSourcePresenter::setupPreview(QObject* preview)
 {
-    if (!m_preview) m_preview = new VideoPresenter(m_video, this);
+    if (!m_preview)
+    {
+        m_preview = new VideoPresenter(this);
+        m_preview->setVideo(m_video);
+        m_preview->setView(preview);
+    }
+
     m_preview->setView(preview);
 }

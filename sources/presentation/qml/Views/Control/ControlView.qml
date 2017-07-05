@@ -14,8 +14,6 @@ Controls.Pane {
     property alias vehicles: vehiclesBox.model
     property alias selectedVehicle: vehiclesBox.currentIndex
 
-    property alias videos: video.videoSources
-
     signal selectVehicle(int index)
 
     ColumnLayout {
@@ -62,8 +60,10 @@ Controls.Pane {
         id: corner
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: cornerVisible ? (background.height / 3 + palette.controlBaseSize) : 0
-        width: cornerMap ? height : video.ratio * height
+        width: cornerVisible ? background.width / 3 : 0
+        height: cornerVisible ? cornerMap ? map.implicitHeight : video.implicitHeight : 0
+        //height: cornerVisible ? (background.height / 3 + palette.controlBaseSize * 2) : 0
+        //width: cornerMap ? height : height / video.ratio
     }
 
     MapView {

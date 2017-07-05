@@ -23,6 +23,8 @@ Map {
     signal saveViewPort()
     signal picked(var coordinate)
 
+    implicitHeight: width
+
     plugin: Plugin {
         name: "osm"
 

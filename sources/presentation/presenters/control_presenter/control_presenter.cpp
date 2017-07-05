@@ -14,7 +14,7 @@
 #include "telemetry_service.h"
 
 #include "location_map_presenter.h"
-#include "video_presenter.h"
+#include "video_split_presenter.h"
 #include "vehicle_dashboard_factory.h"
 #include "dashboard_presenter.h"
 
@@ -26,7 +26,7 @@ public:
     domain::DomainEntry* entry;
 
     AbstractMapPresenter* map;
-    QList<VideoPresenter*> videos;
+    VideoSplitPresenter* video;
     DashboardPresenter* dashboard = nullptr;
 };
 
@@ -36,10 +36,10 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
 {
     d->entry = entry;
 
-    d->map = new LocationMapPresenter(entry, this);
-    //d->video = new VideoPresenter(this);
-
     db::DbFacade* dbFacade = entry->dbFacade();
+
+    d->map = new LocationMapPresenter(entry, this);
+    d->video = new VideoSplitPresenter(dbFacade, this);
 
     connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
@@ -62,27 +62,14 @@ void ControlPresenter::updateVehiclesList()
     this->setViewProperty(PROPERTY(vehicles), vehicles);
 }
 
-void ControlPresenter::updateVideosList()
-{
-    // TODO: quadsplitter presenter
-    QObjectList videos;
-
-    for (const db::VideoSourcePtr& video: d->entry->dbFacade()->videoSources())
-    {
-        videos.append(new VideoPresenter(video, this));
-    }
-
-    this->setViewProperty(PROPERTY(videos), QVariant::fromValue(videos));
-}
-
 void ControlPresenter::connectView(QObject* view)
 {
     d->map->setView(view->findChild<QObject*>(NAME(map)));
+    d->video->setView(view->findChild<QObject*>(NAME(video)));
 
     connect(view, SIGNAL(selectVehicle(int)), this, SLOT(onSelectVehicle(int)));
 
     this->updateVehiclesList();
-    this->updateVideosList();
 }
 
 void ControlPresenter::onSelectVehicle(int index)

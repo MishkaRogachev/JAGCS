@@ -13,11 +13,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoPresenter(const db::VideoSourcePtr& video, QObject* parent);
+        explicit VideoPresenter(QObject* parent = nullptr);
         ~VideoPresenter() override;
+
+        db::VideoSourcePtr video() const;
 
     public slots:
         void updateSource();
+
+        void setVideo(const db::VideoSourcePtr& video);
 
     protected:
         void connectView(QObject* view) override;

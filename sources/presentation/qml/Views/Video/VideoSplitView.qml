@@ -3,27 +3,35 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-VideoView {
+ColumnLayout {
     id: root
 
-    property var videoSources
-    videoSource: videoSource[0]
+    property var videoSources: []
+    property alias videoSource: video.videoSource
 
-    Controls.Pane  {
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: palette.controlBaseSize
+    signal selectVideoSource(int index)
+
+    spacing: palette.spacing
+
+    VideoView {
+        id: video
+        Layout.fillWidth: true
+    }
+
+    Controls.Pane {
+        Layout.fillWidth: true
+        Layout.alignment: Qt.AlignBottom
+        Layout.maximumHeight: palette.controlBaseSize
 
         RowLayout {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
 
-            Controls.Button {
-                iconSource: "qrc:/icons/left.svg"
-            }
-
-            Controls.Button {
-                iconSource: "qrc:/icons/right.svg"
+            Controls.ComboBox {
+                model: videoSources
+                onCurrentIndexChanged: selectVideoSource(currentIndex)
             }
         }
     }
 }
+
