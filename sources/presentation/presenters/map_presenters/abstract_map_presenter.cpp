@@ -1,5 +1,8 @@
 #include "abstract_map_presenter.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "settings_provider.h"
 
@@ -18,9 +21,16 @@ void AbstractMapPresenter::saveViewPort()
 
 void AbstractMapPresenter::connectView(QObject* view)
 {
+    Q_UNUSED(view)
+
     this->setMapCenter(settings::Provider::value(settings::map::centerLatitude).toDouble(),
                        settings::Provider::value(settings::map::centerLongitude).toDouble());
     this->setZoomLevel(settings::Provider::value(settings::map::zoomLevel).toFloat());
+}
 
-     connect(view, SIGNAL(saveViewPort()), this, SLOT(saveViewPort()));
+void AbstractMapPresenter::disconnectView(QObject* view)
+{
+    this->saveViewPort();
+
+    BasePresenter::disconnectView(view);
 }

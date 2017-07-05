@@ -20,7 +20,6 @@ Map {
 
     property var mouseCoordinate: QtPositioning.coordinate()
 
-    signal saveViewPort()
     signal picked(var coordinate)
 
     implicitHeight: width
@@ -109,8 +108,6 @@ Map {
 
         mouseCoordinate = map.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
     }
-
-    Component.onDestruction: saveViewPort()
 
     function setGesturesEnabled(enabled) {
         gesture.acceptedGestures = enabled ?
