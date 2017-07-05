@@ -11,7 +11,7 @@ Item {
 
     signal selectVideoSource(int index)
 
-    implicitHeight: video.implicitHeight + pane.height
+    implicitHeight: video.implicitHeight + pane.height * 2
 
     VideoView {
         id: video
