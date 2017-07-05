@@ -17,24 +17,6 @@
 using namespace comm;
 using namespace domain;
 
-namespace
-{
-    int gpdFixFromFixType(uint8_t fixType)
-    {
-        return 0;/* TODO: gps fix
-        switch (fixType) {
-        case GPS_FIX_TYPE_NO_GPS:
-        default: return telemetry::SnsFix::NoGps;
-        case GPS_FIX_TYPE_NO_FIX: return telemetry::SnsFix::NoFix;
-        case GPS_FIX_TYPE_2D_FIX: return telemetry::SnsFix::Fix2D;
-        case GPS_FIX_TYPE_3D_FIX:
-        case GPS_FIX_TYPE_DGPS:
-        case GPS_FIX_TYPE_RTK_FLOAT:
-        case GPS_FIX_TYPE_RTK_FIXED: return telemetry::SnsFix::Fix3D;
-        }*/
-    }
-}
-
 GpsHandler::GpsHandler(TelemetryService* telemetryService,
                        MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),

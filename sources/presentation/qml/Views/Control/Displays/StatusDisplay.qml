@@ -13,10 +13,11 @@ GridLayout {
     property real batteryVoltage: 0
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
+    property int consumedCharge: 0
 
     signal commandArmDisarm(bool arm)
 
-    columns: 4
+    columns: 6
 
     Indicators.BatteryIndicator {
         id: battery
@@ -57,6 +58,14 @@ GridLayout {
         text: batteryCurrent.toFixed(2) + qsTr(" A")
     }
 
+    Controls.Label {
+        font.pixelSize: palette.fontPixelSize * 0.75
+        font.bold: true
+        color: consumedCharge > 0 ? palette.textColor : palette.disabledColor
+        text: consumedCharge + qsTr(" mAh")
+        Layout.columnSpan: 2
+    }
+
     Controls.Switch {
         text: armed ? qsTr("DISARM") : qsTr("ARM")
         inputChecked: armed
@@ -78,6 +87,6 @@ GridLayout {
         }
         horizontalAlignment: Qt.AlignHCenter
         Layout.fillWidth: true
-        Layout.columnSpan: 2
+        Layout.columnSpan: 4
     }
 }
