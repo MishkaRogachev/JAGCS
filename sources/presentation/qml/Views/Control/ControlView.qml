@@ -16,6 +16,8 @@ Controls.Pane {
 
     signal selectVehicle(int index)
 
+    padding: 0
+
     ColumnLayout {
         id: column
         anchors.top: parent.top
@@ -62,8 +64,6 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         width: cornerVisible ? background.width / 3 : 0
         height: cornerVisible ? cornerMap ? map.implicitHeight : video.implicitHeight : 0
-        //height: cornerVisible ? (background.height / 3 + palette.controlBaseSize * 2) : 0
-        //width: cornerMap ? height : height / video.ratio
     }
 
     MapView {

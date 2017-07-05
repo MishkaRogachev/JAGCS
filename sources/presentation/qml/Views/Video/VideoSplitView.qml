@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout {
+Item {
     id: root
 
     property var videoSources: []
@@ -11,17 +11,19 @@ ColumnLayout {
 
     signal selectVideoSource(int index)
 
-    spacing: palette.spacing
+    implicitHeight: video.implicitHeight + pane.height
 
     VideoView {
         id: video
-        Layout.fillWidth: true
+        width: parent.width
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     Controls.Pane {
-        Layout.fillWidth: true
-        Layout.alignment: Qt.AlignBottom
-        Layout.maximumHeight: palette.controlBaseSize
+        id: pane
+        width: parent.width
+        height: palette.controlBaseSize
+        anchors.bottom: parent.bottom
 
         RowLayout {
             anchors.verticalCenter: parent.verticalCenter
