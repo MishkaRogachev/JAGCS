@@ -18,8 +18,8 @@ Item {
     property real groundspeed: 0
     property int satelliteAltitude: 0
 
-    property bool airspeedEnabled: false
-    property bool airspeedOperational: false
+    property bool pitotEnabled: false
+    property bool pitotOperational: false
     property real indicatedAirspeed: 0
     property real trueAirspeed: 0
 
@@ -71,8 +71,8 @@ Item {
         minValue: indicatedAirspeed + minSpeed
         maxValue: indicatedAirspeed + maxSpeed
         valueStep: speedStep
-        enabled: airspeedEnabled
-        operational: airspeedOperational
+        enabled: pitotEnabled
+        operational: pitotOperational
         canvasRotation: 90
         prefix: qsTr("IAS")
     }
@@ -83,8 +83,8 @@ Item {
         prefix: qsTr("TAS")
         digits: 1
         value: trueAirspeed
-        enabled: airspeedEnabled
-        operational: airspeedOperational
+        enabled: pitotEnabled
+        operational: pitotOperational
         width: speedLadder.width
     }
 
