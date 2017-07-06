@@ -43,7 +43,7 @@
 <context>
     <name>ArtificialHorizon</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/ArtificialHorizon.qml" line="74"/>
+        <location filename="../sources/presentation/qml/Indicators/ArtificialHorizon.qml" line="76"/>
         <source>DISARMED</source>
         <translation>РАЗРЯЖЕН</translation>
     </message>
@@ -144,47 +144,66 @@
     </message>
 </context>
 <context>
-    <name>CommunicationsView</name>
+    <name>CommunicationSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationsView.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationSettingsView.qml" line="30"/>
         <source>No links present</source>
         <translation>Нет каналов связи</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationsView.qml" line="58"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationSettingsView.qml" line="58"/>
         <source>Add Link</source>
         <translation>Добавить канал связи</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationsView.qml" line="69"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationSettingsView.qml" line="69"/>
         <source>Udp</source>
         <translation>Udp</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationsView.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationSettingsView.qml" line="75"/>
         <source>Serial</source>
         <translation>Последовательный</translation>
     </message>
 </context>
 <context>
+    <name>CommunicationsView</name>
+    <message>
+        <source>No links present</source>
+        <translation type="vanished">Нет каналов связи</translation>
+    </message>
+    <message>
+        <source>Add Link</source>
+        <translation type="vanished">Добавить канал связи</translation>
+    </message>
+    <message>
+        <source>Udp</source>
+        <translation type="vanished">Udp</translation>
+    </message>
+    <message>
+        <source>Serial</source>
+        <translation type="vanished">Последовательный</translation>
+    </message>
+</context>
+<context>
     <name>Compass</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="65"/>
         <source>N</source>
         <translation>С</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="61"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="66"/>
         <source>E</source>
         <translation>В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="62"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="67"/>
         <source>S</source>
         <translation>Ю</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="68"/>
         <source>W</source>
         <translation>З</translation>
     </message>
@@ -238,9 +257,9 @@
 <context>
     <name>ControlView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/ControlView.qml" line="27"/>
+        <location filename="../sources/presentation/qml/Views/Control/ControlView.qml" line="33"/>
         <source>Vehicle</source>
-        <translation>Объект управления</translation>
+        <translation>Аппарат</translation>
     </message>
 </context>
 <context>
@@ -258,7 +277,7 @@
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="38"/>
         <source>Default Vehicle</source>
-        <translation>Объект управления по-умолчанию</translation>
+        <translation>Аппарат по-умолчанию</translation>
     </message>
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="42"/>
@@ -350,32 +369,32 @@
         <translation type="vanished">Ток, А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="41"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="48"/>
         <source>GS</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="77"/>
         <source>IAS</source>
         <translation>IAS, м/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="76"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="83"/>
         <source>TAS</source>
         <translation>TAS</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="91"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="102"/>
         <source>SAT</source>
         <translation>SAT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="122"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="133"/>
         <source>ALT</source>
         <translation>ALT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="128"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="139"/>
         <source>RF</source>
         <translation>РВ</translation>
     </message>
@@ -724,7 +743,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="50"/>
         <source>Vehicles</source>
-        <translation>Объекты управления</translation>
+        <translation>Аппараты</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Map/MapStatusBar.qml" line="57"/>
@@ -767,7 +786,7 @@
 <context>
     <name>MissionDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="22"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="24"/>
         <source>WP: </source>
         <translation>ПМ: </translation>
     </message>
@@ -906,18 +925,18 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Mission/MissionView.qml" line="84"/>
         <source>Vehicle</source>
-        <translation>Объект управления</translation>
+        <translation>Аппарат</translation>
     </message>
 </context>
 <context>
     <name>NavigationDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="23"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="29"/>
         <source>DIST</source>
         <translation>ДИСТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="32"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="38"/>
         <source>HOME</source>
         <translation>ДОМ</translation>
     </message>
@@ -926,17 +945,27 @@
         <translation type="vanished">ПМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="54"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="48"/>
+        <source>WIND</source>
+        <translation>ВЕТЕР</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="50"/>
+        <source>m/s</source>
+        <translation>м/с</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="86"/>
         <source>TRG</source>
         <translation>ЦЕЛЬ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="95"/>
         <source>HDG</source>
         <translation>КУРС</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="105"/>
         <source>CRS</source>
         <translation>ПУ</translation>
     </message>
@@ -1039,7 +1068,7 @@
 <context>
     <name>SettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="26"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
         <source>GUI</source>
         <translation>ГИП</translation>
     </message>
@@ -1052,32 +1081,32 @@
         <translation type="vanished">Связь</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="23"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="24"/>
         <source>Communications</source>
         <translation>Связь</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="24"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="25"/>
         <source>Vehicles</source>
-        <translation>Объекты управления</translation>
+        <translation>Аппараты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="25"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="26"/>
         <source>Video</source>
         <translation>Видео</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="28"/>
         <source>Networking</source>
         <translation>Сеть</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="29"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="38"/>
         <source>Make defaults</source>
         <translation>По-умолчанию</translation>
     </message>
@@ -1113,22 +1142,27 @@
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="31"/>
         <source> V</source>
         <translation> В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="53"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="58"/>
         <source> A</source>
         <translation> А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="65"/>
+        <source> mAh</source>
+        <translation> мАч</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="70"/>
         <source>DISARM</source>
         <translation>РАЗРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="70"/>
         <source>ARM</source>
         <translation>ЗАРЯД</translation>
     </message>
@@ -1154,6 +1188,19 @@
         <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="45"/>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>VehicleSettingsView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleSettingsView.qml" line="29"/>
+        <source>No vehciles present</source>
+        <translation>Нет аппаратов</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleSettingsView.qml" line="58"/>
+        <source>Add Vehicle</source>
+        <translation>Добавить аппарат</translation>
     </message>
 </context>
 <context>
@@ -1250,38 +1297,112 @@
 <context>
     <name>VehiclesView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehiclesView.qml" line="29"/>
         <source>No vehciles present</source>
-        <translation>Нет объектов управления</translation>
+        <translation type="vanished">Нет объектов управления</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehiclesView.qml" line="58"/>
         <source>Add Vehicle</source>
-        <translation>Добавить объект управления</translation>
+        <translation type="vanished">Добавить аппарат</translation>
     </message>
 </context>
 <context>
     <name>VideoSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/VideoSettingsView.qml" line="26"/>
         <source>Video source</source>
-        <translation>Источник видео</translation>
+        <translation type="vanished">Источник видео</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSettingsView.qml" line="31"/>
+        <source>No video sources present</source>
+        <translation>Нет источников видео</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSettingsView.qml" line="61"/>
+        <source>Add video source</source>
+        <translation>Добавить источник видео</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSettingsView.qml" line="72"/>
+        <source>Device</source>
+        <translation>Устройство</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSettingsView.qml" line="78"/>
+        <source>Stream</source>
+        <translation>Поток</translation>
+    </message>
+</context>
+<context>
+    <name>VideoSourceView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="32"/>
+        <source>Video</source>
+        <translation>Видео</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="44"/>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="52"/>
+        <source>Stream video</source>
+        <translation>Поток видео</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="53"/>
+        <source>Device</source>
+        <translation>Устройство</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="54"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="65"/>
+        <source>Unknown:</source>
+        <translation>Неизвестно</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="63"/>
+        <source>Stream URL:</source>
+        <translation>URL потока:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="64"/>
+        <source>Device file:</source>
+        <translation>Файл-устройство:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="73"/>
+        <source>Enter stream url</source>
+        <translation>Введите url потока</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="95"/>
+        <source>Restore</source>
+        <translation>Восстановить</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="103"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="111"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
     <name>VideoStatusBar</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Video/VideoStatusBar.qml" line="16"/>
         <source>Source:</source>
-        <translation>Источник:</translation>
+        <translation type="vanished">Источник:</translation>
     </message>
 </context>
 <context>
     <name>WindIndicator</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/WindIndicator.qml" line="22"/>
         <source>m/s</source>
-        <translation>м/с</translation>
+        <translation type="vanished">м/с</translation>
     </message>
 </context>
 <context>
@@ -1425,7 +1546,7 @@
         <translation type="vanished">БЛА %1</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="211"/>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_presenter.cpp" line="213"/>
         <source>New Mission %1</source>
         <translation>Новый маршрут %1</translation>
     </message>
@@ -1517,17 +1638,16 @@
 <context>
     <name>presentation::VehiclesPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/vehicles_presenter.cpp" line="83"/>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/vehicles_presenter.cpp" line="81"/>
         <source>New Vehicle</source>
-        <translation>Новый объект управления</translation>
+        <translation>Новый аппарат</translation>
     </message>
 </context>
 <context>
     <name>presentation::VideoSettingsPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/video_settings_presenter/video_settings_presenter.cpp" line="48"/>
         <source>none</source>
-        <translation>Нет</translation>
+        <translation type="vanished">Нет</translation>
     </message>
 </context>
 </TS>

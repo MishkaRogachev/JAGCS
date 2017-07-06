@@ -23,7 +23,7 @@ Controls.Pane {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        Layout.margins: palette.margins
+        anchors.margins: palette.margins
         spacing: palette.spacing
         width: height * 0.43
 
@@ -31,8 +31,6 @@ Controls.Pane {
 
             Controls.Label {
                 text: qsTr("Vehicle")
-                font.pixelSize: palette.fontPixelSize * 0.6
-                font.bold: true
             }
 
             Controls.ComboBox {
