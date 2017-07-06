@@ -26,7 +26,7 @@ db::VideoSourcePtr VideoSourcePresenter::video() const
     return m_video;
 }
 
-void VideoSourcePresenter::restore()
+void VideoSourcePresenter::updateView()
 {
     this->setViewProperty(PROPERTY(type), m_video->type());
     this->setViewProperty(PROPERTY(source), m_video->source());
@@ -53,12 +53,12 @@ void VideoSourcePresenter::remove()
 void VideoSourcePresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(restore()));
+    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
     connect(view, SIGNAL(remove()), this, SLOT(remove()));
 
     connect(view, SIGNAL(setupPreview(QObject*)), this, SLOT(setupPreview(QObject*)));
 
-    this->restore();
+    this->updateView();
 }
 
 void VideoSourcePresenter::setupPreview(QObject* preview)

@@ -32,18 +32,12 @@ namespace presentation
     public slots:
         void updateView();
         void updateStatistics();
+        void setConnected(bool connected);
+        void save();
+        void remove();
 
     protected:
         void connectView(QObject* view) override;
-        void setViewSignalsEnbled(bool enabled);
-
-    private slots:
-        void onSetName(const QString& name);
-        void onSetPort(int port);
-        void onSetDevice(const QString& device);
-        void onSetBaudRate(int rate);
-        void onSetConnected(bool connected);
-        void onRemove();
 
     private:
         db::DbFacade* m_dbFacade;

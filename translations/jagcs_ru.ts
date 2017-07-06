@@ -163,7 +163,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationSettingsView.qml" line="75"/>
         <source>Serial</source>
-        <translation>Последовательный</translation>
+        <translation>Последовательный порт</translation>
     </message>
 </context>
 <context>
@@ -267,12 +267,12 @@
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="25"/>
         <source>Default UDP Link</source>
-        <translation>Стандартное UDP соединение</translation>
+        <translation>UDP соединение</translation>
     </message>
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="32"/>
         <source>Default Serial Link</source>
-        <translation>Стандартное последовательное соединение</translation>
+        <translation>Последовательное соединение</translation>
     </message>
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="38"/>

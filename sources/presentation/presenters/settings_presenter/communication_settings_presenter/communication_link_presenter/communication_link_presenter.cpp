@@ -34,15 +34,13 @@ db::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 
 void CommunicationLinkPresenter::updateView()
 {
-    this->setViewSignalsEnbled(false);
-
     this->setViewProperty(PROPERTY(type), m_description->type());
     this->setViewProperty(PROPERTY(name), m_description->name());
     this->setViewProperty(PROPERTY(port), m_description->port());
     this->setViewProperty(PROPERTY(device), m_description->device());
     this->setViewProperty(PROPERTY(baudRate), m_description->baudRate());
 
-    this->setViewSignalsEnbled(true);
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
 void CommunicationLinkPresenter::updateStatistics()
@@ -51,6 +49,28 @@ void CommunicationLinkPresenter::updateStatistics()
     this->invokeViewMethod(PROPERTY(updateStatistics),
                            m_description->bytesSentSec(),
                            m_description->bytesRecvSec());
+}
+
+void CommunicationLinkPresenter::setConnected(bool connected)
+{
+    m_service->setLinkConnected(m_description, connected);
+}
+
+void CommunicationLinkPresenter::save()
+{
+    m_description->setName(this->viewProperty(PROPERTY(name)).toString());
+    m_description->setPort(this->viewProperty(PROPERTY(port)).toInt());
+    m_description->setDevice(this->viewProperty(PROPERTY(device)).toString());
+    m_description->setBaudRate(this->viewProperty(PROPERTY(baudRate)).toInt());
+
+    if (!m_dbFacade->save(m_description)) return;
+
+    this->setViewProperty(PROPERTY(changed), false);
+}
+
+void CommunicationLinkPresenter::remove()
+{
+    m_dbFacade->remove(m_description);
 }
 
 void CommunicationLinkPresenter::connectView(QObject* view)
@@ -69,64 +89,11 @@ void CommunicationLinkPresenter::connectView(QObject* view)
     this->setViewProperty(PROPERTY(statisticsCount), settings::Provider::value(
                               settings::communication::statisticsCount));
 
+    connect(view, SIGNAL(save()), this, SLOT(save()));
+    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
+    connect(view, SIGNAL(remove()), this, SLOT(remove()));
+    connect(view, SIGNAL(setConnected(bool)), this, SLOT(setConnected(bool)));
+
     this->updateView();
 }
 
-void CommunicationLinkPresenter::setViewSignalsEnbled(bool enabled)
-{
-    if (enabled)
-    {
-        connect(m_view, SIGNAL(setName(QString)), this, SLOT(onSetName(QString)));
-        connect(m_view, SIGNAL(setPort(int)), this, SLOT(onSetPort(int)));
-        connect(m_view, SIGNAL(setDevice(QString)), this, SLOT(onSetDevice(QString)));
-        connect(m_view, SIGNAL(setBaudRate(int)), this, SLOT(onSetBaudRate(int)));
-        connect(m_view, SIGNAL(setConnected(bool)), this, SLOT(onSetConnected(bool)));
-        connect(m_view, SIGNAL(remove()), this, SLOT(onRemove()));
-    }
-    else
-    {
-        disconnect(m_view, 0, this, 0);
-    }
-}
-
-void CommunicationLinkPresenter::onSetName(const QString& name)
-{
-    if (m_description->name() == name) return;
-
-    m_description->setName(name);
-    m_dbFacade->save(m_description);
-}
-
-void CommunicationLinkPresenter::onSetPort(int port)
-{
-    if (m_description->port() == port) return;
-
-    m_description->setPort(port);
-    m_dbFacade->save(m_description);
-}
-
-void CommunicationLinkPresenter::onSetDevice(const QString& device)
-{
-    if (m_description->device() == device) return;
-
-    m_description->setDevice(device);
-    m_dbFacade->save(m_description);
-}
-
-void CommunicationLinkPresenter::onSetBaudRate(int rate)
-{
-    if (m_description->baudRate() == rate) return;
-
-    m_description->setBaudRate(rate);
-    m_dbFacade->save(m_description);
-}
-
-void CommunicationLinkPresenter::onSetConnected(bool connected)
-{
-    m_service->setLinkConnected(m_description, connected);
-}
-
-void CommunicationLinkPresenter::onRemove()
-{
-    m_dbFacade->remove(m_description);
-}

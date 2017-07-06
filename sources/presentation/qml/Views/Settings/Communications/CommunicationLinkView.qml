@@ -1,12 +1,11 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtCharts 2.0
 import JAGCS 1.0
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
-Frame {
+Controls.Frame {
     id: root
 
     property bool connected: false
@@ -17,11 +16,10 @@ Frame {
     property alias devices: deviceBox.model
     property int baudRate
     property alias baudRates: baudBox.model
+    property bool changed: false
 
-    signal setName(string name)
-    signal setPort(int port)
-    signal setDevice(string device)
-    signal setBaudRate(int baudRate)
+    signal save()
+    signal restore()
     signal remove()
     signal setConnected(bool connected)
 
@@ -47,16 +45,19 @@ Frame {
 
     RowLayout {
         anchors.fill: parent
+        spacing: palette.spacing
 
         GridLayout {
-            columns: 2
+            columns: 4
             rowSpacing: palette.spacing
+            columnSpacing: palette.spacing
 
-            Label {
+            Controls.Label {
                 text: qsTr("Type:")
+                Layout.columnSpan: 2
             }
 
-            Label {
+            Controls.Label {
                 text: {
                     switch (type) {
                     case LinkDescription.Udp: return qsTr("UDP");
@@ -66,85 +67,115 @@ Frame {
                 }
             }
 
-            Label {
-                text: qsTr("Name:")
+            Controls.Button {
+                iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+                onClicked: chart.visible = !chart.visible
+                Layout.alignment: Qt.AlignRight
             }
 
-            TextField {
+            Controls.Label {
+                text: qsTr("Name:")
+                Layout.columnSpan: 2
+            }
+
+            Controls.TextField {
                 id: nameField
                 placeholderText: qsTr("Enter name")
-                onEditingFinished: setName(text)
+                onEditingFinished: changed = true
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
-            Label {
+            Controls.Label {
                 text: qsTr("Port:")
                 visible: type == LinkDescription.Udp
+                Layout.columnSpan: 2
             }
 
-            SpinBox {
+            Controls.SpinBox {
                 id: portBox
                 from: 0
                 to: 65535
                 visible: type == LinkDescription.Udp
-                onValueChanged: setPort(value)
+                onValueChanged: changed = true
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
-            Label {
+            Controls.Label {
                 text: qsTr("Device:")
                 visible: type == LinkDescription.Serial
+                Layout.columnSpan: 2
             }
 
-            ComboBox {
+            Controls.ComboBox {
                 id: deviceBox
                 visible: type == LinkDescription.Serial
-                onCurrentTextChanged: setDevice(currentText)
+                onCurrentTextChanged: changed = true
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
-            Label {
+            Controls.Label {
                 text: qsTr("Baud rate:")
                 visible: type == LinkDescription.Serial
+                Layout.columnSpan: 2
             }
 
-            ComboBox {
+            Controls.ComboBox {
                 id: baudBox
                 visible: type == LinkDescription.Serial
-                onCurrentTextChanged: setBaudRate(currentText)
+                onCurrentTextChanged: changed = true
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
-            RowLayout {
-                Layout.columnSpan: 2
+            Controls.Button {
+                text: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+                enabled: changed
+                Layout.fillWidth: true
+            }
 
-                Item {
-                    height: parent.height
-                    Layout.fillWidth: true
-                }
+            Controls.Button {
+                text: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+                enabled: changed
+                Layout.fillWidth: true
+            }
 
-                Button {
-                    text: qsTr("Remove")
-                    iconSource: "qrc:/icons/remove.svg"
-                    onClicked: remove()
-                }
+            Controls.Button {
+                enabled: !changed
+                text: connected ? qsTr("Disconnect") : qsTr("Connect")
+                iconSource: connected ? "qrc:/icons/disconnect.svg" :
+                                        "qrc:/icons/connect.svg"
+                onClicked: setConnected(!connected)
+            }
 
-                Button {
-                    text: connected ? qsTr("Disconnect") : qsTr("Connect")
-                    iconSource: connected ? "qrc:/icons/disconnect.svg" :
-                                            "qrc:/icons/connect.svg"
-                    onClicked: setConnected(!connected)
-                }
+            Controls.Button {
+                text: qsTr("Remove")
+                iconSource: "qrc:/icons/remove.svg"
+                onClicked: remove()
+                iconColor: palette.negativeColor
+                Layout.fillWidth: true
             }
         }
 
         ChartView {
             id: chart
+            implicitWidth: root.width / 2
             Layout.fillWidth: true
             Layout.fillHeight: true
             antialiasing: true
             animationOptions: ChartView.SeriesAnimations
             backgroundColor: "transparent"
             legend.labelColor: palette.textColor
-            legend.alignment: Qt.AlignRight
+            legend.alignment: Qt.AlignBottom
             margins.top: 0
             margins.bottom: 0
+            visible: false
 
             ValueAxis {
                 id: timeAxis

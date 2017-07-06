@@ -25,7 +25,7 @@ namespace presentation
         db::VideoSourcePtr video() const;
 
     public slots:
-        void restore();
+        void updateView();
         void save();
         void remove();
 
