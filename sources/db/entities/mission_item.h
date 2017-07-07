@@ -73,7 +73,7 @@ namespace db
         void setPeriods(int periods);
 
         Status status() const;
-        void setStatus(const Status& status);
+        void setStatus(Status status);
 
         bool isReached() const;
         void setReached(bool reached);

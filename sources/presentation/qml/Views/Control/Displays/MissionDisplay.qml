@@ -28,6 +28,7 @@ RowLayout {
         model: waypoints
         onCurrentTextChanged: if (currentText != waypoint) commandSetWaypoint(currentText)
         implicitWidth: palette.controlBaseSize * 2
+        enabled: guided
     }
 
     Item {

@@ -113,7 +113,7 @@ MissionItem::Status MissionItem::status() const
     return m_status;
 }
 
-void MissionItem::setStatus(const Status& status)
+void MissionItem::setStatus(Status status)
 {
     m_status = status;
 }

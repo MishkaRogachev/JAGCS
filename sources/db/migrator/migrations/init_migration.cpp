@@ -24,7 +24,8 @@ bool InitMigration::up()
     if (!m_query.prepare("CREATE TABLE vehicles ("
                          "id INTEGER PRIMARY KEY NOT NULL,"
                          "mavId INTEGER UNIQUE,"
-                         "name STRING)") || !m_query.exec()) return false;
+                         "name STRING,"
+                         "type SMALLINT)") || !m_query.exec()) return false;
 
     if (!m_query.prepare("CREATE TABLE missions ("
                          "id INTEGER PRIMARY KEY NOT NULL,"

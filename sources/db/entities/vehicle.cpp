@@ -42,3 +42,13 @@ void Vehicle::setName(const QString& name)
 {
     m_name = name;
 }
+
+Vehicle::Type Vehicle::type() const
+{
+    return m_type;
+}
+
+void Vehicle::setType(Type type)
+{
+    m_type = type;
+}

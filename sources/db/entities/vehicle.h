@@ -12,8 +12,30 @@ namespace db
 
         Q_PROPERTY(int mavId READ mavId WRITE setMavId)
         Q_PROPERTY(QString name READ name WRITE setName)
+        Q_PROPERTY(Type type READ type WRITE setType)
 
     public:
+        enum Type: quint8
+        {
+            Auto = 0,
+
+            FixedWing = 10,
+            FlyingWing = 11,
+
+            Quadcopter = 20,
+            Tricopter = 21,
+            Hexcopter = 22,
+
+            Helicopter = 30,
+            Coaxial = 31,
+
+            Vtol = 40,
+
+            Airship = 60,
+            Kite = 61,
+            Ornithopter
+        };
+
         Vehicle();
         ~Vehicle() override;
 
@@ -23,11 +45,17 @@ namespace db
         QString name() const;
         void setName(const QString& name);
 
+        Type type() const;
+        void setType(Type type);
+
     private:
         int m_mavId = 0;
         QString m_name;
+        Type m_type = Auto;
 
         static QMap<Vehicle*, int> m_mavIds;
+
+        Q_ENUM(Type)
     };
 }
 

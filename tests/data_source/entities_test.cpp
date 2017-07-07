@@ -74,6 +74,7 @@ void EntitiesTest::testVehicleDescription()
 
     vehicle->setName("Ridiculous vehicle");
     vehicle->setMavId(13);
+    vehicle->setType(Vehicle::FixedWing);
 
     QVERIFY2(dbFacade.save(vehicle), "Can't insert vehicle");
     int id = vehicle->id();
@@ -83,6 +84,7 @@ void EntitiesTest::testVehicleDescription()
 
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
     QCOMPARE(vehicle->mavId(), 13);
+    QCOMPARE(vehicle->type(), Vehicle::FixedWing);
 
     QVERIFY2(dbFacade.remove(vehicle), "Can't remove vehicle");
 }

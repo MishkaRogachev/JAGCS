@@ -36,6 +36,7 @@ bool DefaultParamsMigration::up()
     VehiclePtr defaultVehicle = VehiclePtr::create();
     defaultVehicle->setMavId(1);
     defaultVehicle->setName(qApp->translate("DefaultParamsMigration", "Default Vehicle"));
+    defaultVehicle->setType(Vehicle::Auto);
     facade.save(defaultVehicle);
 
     MissionPtr defaultMission = MissionPtr::create();
