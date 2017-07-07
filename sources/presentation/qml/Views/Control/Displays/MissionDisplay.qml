@@ -7,6 +7,7 @@ RowLayout {
     id: root
 
     property int waypoint: 0
+    property var waypoints: []
     property bool guided: false
 
     signal commandSetWaypoint(int item)
@@ -14,22 +15,19 @@ RowLayout {
     signal commandStart()
     signal pauseContinue(bool unpause)
 
-    Controls.Button {
-        iconSource: "qrc:/icons/left.svg"
-        enabled: guided
-        onClicked: commandSetWaypoint(waypoint - 1)
-    }
+    onWaypointChanged: waypointBox.currentIndex = waypoints.indexOf(waypoint)
 
     Controls.Label {
-        text: qsTr("WP: ") + waypoint
-        font.pixelSize: palette.fontPixelSize * 0.6
+        text: qsTr("WP: ")
+        font.pixelSize: palette.fontPixelSize * 0.75
         font.bold: true
     }
 
-    Controls.Button {
-        iconSource: "qrc:/icons/right.svg"
-        enabled: guided
-        onClicked: commandSetWaypoint(waypoint + 1)
+    Controls.ComboBox {
+        id: waypointBox
+        model: waypoints
+        onCurrentTextChanged: if (currentText != waypoint) commandSetWaypoint(currentText)
+        implicitWidth: palette.controlBaseSize * 2
     }
 
     Item {

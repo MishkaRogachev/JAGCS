@@ -7,24 +7,21 @@
 
 namespace domain
 {
-    class TelemetryService;
-    class CommandService;
+    class DomainEntry;
 }
+
 
 namespace presentation
 {
     class VehicleDashboardFactory: public IDashboardFactory
     {
     public:
-        VehicleDashboardFactory(domain::TelemetryService* telemetryService,
-                                domain::CommandService* commandService,
-                                const db::VehiclePtr& vehicle);
+        VehicleDashboardFactory(domain::DomainEntry* entry, const db::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 
     private:
-        domain::TelemetryService* m_telemetryService;
-        domain::CommandService* m_commandService;
+        domain::DomainEntry* m_entry;
         db::VehiclePtr m_vehicle;
     };
 }

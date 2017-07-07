@@ -83,9 +83,7 @@ void ControlPresenter::onSelectVehicle(int index)
 
     if (index > 0 && index <= vehicles.count())
     {
-        VehicleDashboardFactory factory(d->entry->telemetryService(),
-                                        d->entry->commandService(),
-                                        vehicles[index - 1]);
+        VehicleDashboardFactory factory(d->entry, vehicles[index - 1]);
 
         d->dashboard = factory.create();
         if (d->dashboard)

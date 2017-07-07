@@ -1,6 +1,7 @@
 #include "vehicle_dashboard_factory.h"
 
 // Internal
+#include "domain_entry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
@@ -20,21 +21,20 @@
 #include "wind_presenter.h"
 #include "common_command_presenter.h"
 #include "mission_command_presenter.h"
+#include "mission_status_presenter.h"
 
 using namespace presentation;
 
-VehicleDashboardFactory::VehicleDashboardFactory(domain::TelemetryService* telemetryService,
-                                                 domain::CommandService* commandService,
+VehicleDashboardFactory::VehicleDashboardFactory(domain::DomainEntry* entry,
                                                  const db::VehiclePtr& vehicle):
     IDashboardFactory(),
-    m_telemetryService(telemetryService),
-    m_commandService(commandService),
+    m_entry(entry),
     m_vehicle(vehicle)
 {}
 
 DashboardPresenter* VehicleDashboardFactory::create()
 {
-    domain::Telemetry* node = m_telemetryService->vehicleNode(m_vehicle->id());
+    domain::Telemetry* node = m_entry->telemetryService()->vehicleNode(m_vehicle->id());
     if (!node) return nullptr;
 
     // TODO: vehicle type
@@ -75,12 +75,14 @@ DashboardPresenter* VehicleDashboardFactory::create()
     dashboard->addInstrument("status", new BatteryPresenter(
                                  node->childNode(domain::Telemetry::Battery), dashboard));
     dashboard->addInstrument("status", new CommonCommandPresenter(
-                                 m_commandService, m_vehicle->id(), dashboard));
+                                 m_entry->commandService(), m_vehicle->id(), dashboard));
 
     dashboard->addInstrument("mission", new NavigatorPresenter(
                                  node->childNode(domain::Telemetry::Navigator), dashboard));
     dashboard->addInstrument("mission", new MissionCommandPresenter(
-                                 m_commandService, m_vehicle->id(), dashboard));
+                                 m_entry->commandService(), m_vehicle->id(), dashboard));
+    dashboard->addInstrument("mission", new MissionStatusPresenter(
+                                 m_entry->dbFacade(), m_vehicle->id(), dashboard));
 
     return dashboard;
 }
