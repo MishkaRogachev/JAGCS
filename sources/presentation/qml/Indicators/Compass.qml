@@ -109,8 +109,8 @@ Canvas {
 
     Image {
         anchors.centerIn: parent
-        source: "qrc:/indicators/plane_map_mark.svg" // TODO: specified MAV mark
-        width: parent.width / 2
+        source: "qrc:/indicators/flying_wing_mark.svg" // TODO: specified MAV mark
+        width: parent.width / 1.5
         height: width
         z: 1
     }

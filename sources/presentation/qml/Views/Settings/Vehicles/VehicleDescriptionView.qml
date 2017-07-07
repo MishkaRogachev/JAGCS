@@ -60,7 +60,10 @@ Controls.Frame {
 
         Controls.ComboBox {
             id: typeBox
-            onCurrentIndexChanged: changed = true
+            onCurrentIndexChanged: {
+                type = currentIndex;
+                changed = true;
+            }
             Layout.columnSpan: 2
             Layout.fillWidth: true
         }

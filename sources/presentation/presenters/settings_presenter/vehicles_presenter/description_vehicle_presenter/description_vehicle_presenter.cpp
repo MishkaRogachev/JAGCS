@@ -46,7 +46,7 @@ void DescriptionVehiclePresenter::updateView()
 {
     this->setViewProperty(PROPERTY(name), m_vehicle->name());
     this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
-    this->setViewProperty(PROPERTY(type), m_vehicle->type());
+    this->setViewProperty(PROPERTY(type), ::types.keys().indexOf(m_vehicle->type()));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -55,7 +55,7 @@ void DescriptionVehiclePresenter::save()
 {
     m_vehicle->setName(this->viewProperty(PROPERTY(name)).toString());
     m_vehicle->setMavId(this->viewProperty(PROPERTY(mavId)).toInt());
-    m_vehicle->setType(db::Vehicle::Type(this->viewProperty(PROPERTY(type)).toInt()));
+    m_vehicle->setType(::types.keys().at(this->viewProperty(PROPERTY(type)).toInt()));
 
     if (!m_facade->save(m_vehicle)) return;
 

@@ -35,10 +35,8 @@ VehicleMapItemModel::VehicleMapItemModel(db::DbFacade* dbFacade,
     d->dbFacade = dbFacade;
     d->telemetryService = telemetryService;
 
-    connect(dbFacade, &db::DbFacade::vehicleAdded, this,
-            &VehicleMapItemModel::onVehicleAdded);
-    connect(dbFacade, &db::DbFacade::vehicleRemoved, this,
-            &VehicleMapItemModel::onVehicleRemoved);
+    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &VehicleMapItemModel::onVehicleAdded);
+    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &VehicleMapItemModel::onVehicleRemoved);
 
     for (const db::VehiclePtr& vehicle: dbFacade->vehicles())
     {
@@ -64,7 +62,8 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     int vehicleId = d->vehicleIds.at(index.row());
 
     domain::Telemetry* node = d->telemetryService->vehicleNode(vehicleId);
-    if (!node) return QVariant();
+    db::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
+    if (!node || vehicle.isNull()) return QVariant();
 
     QVariant data;
 
@@ -81,10 +80,26 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         if (!data.isValid()) data = 0;
         break;
     case MarkRole:
-        data = QUrl("qrc:/indicators/plane_map_mark.svg"); // TODO: vehicle type
+        switch (vehicle->type()) {
+        case db::Vehicle::FixedWing:
+            data = QUrl("qrc:/indicators/fixed_wing_mark.svg");
+            break;
+        case db::Vehicle::FlyingWing:
+            data = QUrl("qrc:/indicators/flying_wing_mark.svg");
+            break;
+        case db::Vehicle::Quadcopter:
+        case db::Vehicle::Tricopter:
+        case db::Vehicle::Hexcopter:
+        case db::Vehicle::Octocopter:
+            data = QUrl("qrc:/indicators/quadcopter_mark.svg");
+            break;
+        default:
+            data = QUrl("qrc:/indicators/unknown_mark.svg");
+            break;
+        }
         break;
     case VehicleIdRole:
-        data = d->dbFacade->vehicle(vehicleId)->mavId();
+        data = vehicle->mavId();
         break;
     case TrackRole:
         data = d->tracks[vehicleId];
