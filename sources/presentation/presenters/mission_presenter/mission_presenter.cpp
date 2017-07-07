@@ -65,7 +65,7 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
 
 MissionPresenter::~MissionPresenter()
 {
-    d->map->saveViewPort();
+    if (d->map->view()) d->map->saveViewPort();
 }
 
 void MissionPresenter::selectMission(const db::MissionPtr& mission)
