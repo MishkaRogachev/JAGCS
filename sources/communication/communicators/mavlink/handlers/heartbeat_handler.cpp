@@ -48,7 +48,7 @@ namespace
         case MAV_TYPE_KITE: return db::Vehicle::Kite;
         case MAV_TYPE_FLAPPING_WING: return db::Vehicle::Ornithopter;
         case MAV_TYPE_GENERIC:
-        default: return db::Vehicle::Auto;
+        default: return db::Vehicle::Unknown;
         }
     }
 
@@ -100,7 +100,16 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     db::VehiclePtr vehicle =  m_dbFacade->vehicle(
                                   m_dbFacade->vehicleIdByMavId(message.sysid));
-    // TODO: add vehicle if not exist
+
+    if (!vehicle && settings::Provider::value(settings::communication::autoAdd).toBool())
+    {
+        vehicle = db::VehiclePtr::create();
+        vehicle->setMavId(message.sysid);
+        vehicle->setType(db::Vehicle::Auto);
+        vehicle->setName(tr("Added vehicle"));
+        m_dbFacade->save(vehicle);
+    }
+
     if (vehicle && vehicle->type() == db::Vehicle::Auto)
     {
         vehicle->setType(::decodeType(heartbeat.type));
