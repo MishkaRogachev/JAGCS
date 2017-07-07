@@ -48,7 +48,7 @@ namespace
         case MAV_TYPE_KITE: return db::Vehicle::Kite;
         case MAV_TYPE_FLAPPING_WING: return db::Vehicle::Ornithopter;
         case MAV_TYPE_GENERIC:
-        default: return db::Vehicle::Unknown;
+        default: return db::Vehicle::UnknownType;
         }
     }
 

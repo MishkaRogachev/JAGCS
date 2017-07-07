@@ -1,51 +1,93 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/Controls"
+import "qrc:/Controls"as Controls
 
-Frame {
+Controls.Frame {
     id: root
+
+    property bool online: false
+    property bool changed: false
+    property int type: Vehicle.UnknownType
 
     property alias name: nameField.text
     property alias mavId: idBox.value
+    property alias types: typeBox.model
 
-    signal setName(string name)
-    signal setMavId(int id)
+    signal save()
+    signal restore()
     signal remove()
+
+    onTypeChanged: typeBox.currentIndex = type
 
     GridLayout {
         anchors.fill: parent
-        columns: 6
+        columns: 3
         rowSpacing: palette.spacing
 
-        Label {
+        Controls.Label {
             text: qsTr("Name:")
+            Layout.fillWidth: true
         }
 
-        TextField {
+        Controls.TextField {
             id: nameField
             placeholderText: qsTr("Enter name")
-            onEditingFinished: setName(text)
+            onEditingFinished: changed = true
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
         }
 
-        Label {
-            text: qsTr("Id:")
+        Controls.Label {
+            text: qsTr("MAVLink id:")
+            Layout.fillWidth: true
         }
 
-        SpinBox {
+        Controls.SpinBox {
             id: idBox
             from: 0
             to: 255
-            onValueChanged: setMavId(value)
+            onValueChanged: changed = true
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
         }
 
-        Button {
+        Controls.Label {
+            text: qsTr("Type:")
+            Layout.fillWidth: true
+        }
+
+        Controls.ComboBox {
+            id: typeBox
+            onCurrentIndexChanged: changed = true
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: changed
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
             text: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             onClicked: remove()
-            Layout.alignment: Qt.AlignRight
+            enabled: !online
+            iconColor: palette.negativeColor
+            Layout.fillWidth: true
         }
     }
 }

@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QVariant>
+#include <QCoreApplication>
 #include <QDebug>
 
 // Internal
@@ -12,6 +13,21 @@
 
 using namespace presentation;
 
+namespace
+{
+    const QMap<db::MissionItem::Command, QString> commands =
+    {
+        { db::MissionItem::UnknownCommand, qApp->translate("MissionItemPresenter", "None") },
+        { db::MissionItem::Takeoff, qApp->translate("MissionItemPresenter", "Takeoff") },
+        { db::MissionItem::Waypoint, qApp->translate("MissionItemPresenter", "Waypoint") },
+        { db::MissionItem::LoiterAltitude, qApp->translate("MissionItemPresenter", "LoiterAltitude") },
+        { db::MissionItem::LoiterTurns, qApp->translate("MissionItemPresenter", "LoiterTurns") },
+        { db::MissionItem::Continue, qApp->translate("MissionItemPresenter", "Continue") },
+        { db::MissionItem::Return, qApp->translate("MissionItemPresenter", "Return") },
+        { db::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") }
+    };
+}
+
 class MissionItemPresenter::Impl
 {
 public:
@@ -19,16 +35,6 @@ public:
     db::MissionItemPtr item;
 
     db::DbFacade* dbFacade;
-
-    const QMap<db::MissionItem::Command, QString> commands = {
-        { db::MissionItem::UnknownCommand, tr("None") },
-        { db::MissionItem::Takeoff, tr("Takeoff") },
-        { db::MissionItem::Waypoint, tr("Waypoint") },
-        { db::MissionItem::LoiterAltitude, tr("LoiterAltitude") },
-        { db::MissionItem::LoiterTurns, tr("LoiterTurns") },
-        { db::MissionItem::Continue, tr("Continue") },
-        { db::MissionItem::Return, tr("Return") },
-        { db::MissionItem::Landing, tr("Landing") } };
 };
 
 MissionItemPresenter::MissionItemPresenter(db::DbFacade* dbFacade, QObject* object):
@@ -106,7 +112,7 @@ void MissionItemPresenter::connectView(QObject* view)
     connect(view, SIGNAL(setPeriods(int)), this, SLOT(onSetPeriods(int)));
     connect(view, SIGNAL(setPitch(qreal)), this, SLOT(onSetPitch(qreal)));
 
-    QStringList commands = d->commands.values();
+    QStringList commands = ::commands.values();
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 
     this->updateCount(true);

@@ -24,14 +24,11 @@ namespace presentation
 
     public slots:
         void updateView();
+        void save();
+        void remove();
 
     protected:
         void connectView(QObject* view) override;
-
-    private slots:
-        void onSetName(const QString& name);
-        void onSetMavId(int id);
-        void onRemove();
 
     private:
         db::DbFacade* const m_facade;

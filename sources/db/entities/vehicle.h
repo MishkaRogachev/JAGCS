@@ -17,7 +17,7 @@ namespace db
     public:
         enum Type: quint8
         {
-            Unknown = 0,
+            UnknownType = 0,
             Auto = 1,
 
             FixedWing = 10,

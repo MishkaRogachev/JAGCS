@@ -10,7 +10,7 @@ QMap<Vehicle*, int> Vehicle::m_mavIds;
 Vehicle::Vehicle():
     BaseEntity(),
     m_mavId(-1),
-    m_type(Unknown)
+    m_type(UnknownType)
 {
     m_mavIds[this] = m_mavId;
 }

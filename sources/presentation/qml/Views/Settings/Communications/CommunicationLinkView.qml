@@ -55,6 +55,7 @@ Controls.Frame {
             Controls.Label {
                 text: qsTr("Type:")
                 Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
             Controls.Label {
@@ -65,6 +66,7 @@ Controls.Frame {
                     default: return qsTr("Unknown");
                     }
                 }
+                Layout.fillWidth: true
             }
 
             Controls.Button {
@@ -76,6 +78,7 @@ Controls.Frame {
             Controls.Label {
                 text: qsTr("Name:")
                 Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
             Controls.TextField {
@@ -90,6 +93,7 @@ Controls.Frame {
                 text: qsTr("Port:")
                 visible: type == LinkDescription.Udp
                 Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
             Controls.SpinBox {
@@ -106,6 +110,7 @@ Controls.Frame {
                 text: qsTr("Device:")
                 visible: type == LinkDescription.Serial
                 Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
@@ -123,6 +128,7 @@ Controls.Frame {
                 text: qsTr("Baud rate:")
                 visible: type == LinkDescription.Serial
                 Layout.columnSpan: 2
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {

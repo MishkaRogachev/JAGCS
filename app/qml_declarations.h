@@ -2,12 +2,15 @@
 #define QML_DECLARATIONS_H
 
 // Internal
+#include "vehicle.h"
 #include "link_description.h"
 #include "mission_item.h"
 #include "video_source.h"
 
 void registerQmlTypes()
 {
+    qmlRegisterUncreatableType<db::Vehicle>(
+                "JAGCS", 1, 0, "Vehicle", "Can't create entities in QML");
     qmlRegisterUncreatableType<db::LinkDescription>(
                 "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
     qmlRegisterUncreatableType<db::MissionItem>(
