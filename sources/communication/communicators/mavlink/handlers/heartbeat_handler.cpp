@@ -11,6 +11,9 @@
 // Internal
 #include "settings_provider.h"
 
+#include "db_facade.h"
+#include "vehicle.h"
+
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
 
@@ -22,39 +25,34 @@ using namespace domain;
 
 namespace
 {
-    // TODO:  db-vehicle type
-    /*int decodeType(uint8_t type)
+    db::Vehicle::Type decodeType(uint8_t type)
     {
         switch (type) //TODO: other vehicles
         {
-        case MAV_TYPE_FIXED_WING:
-            return AerialVehicle::FixedWingAircraft;
-        case MAV_TYPE_TRICOPTER:
-        case MAV_TYPE_QUADROTOR:
-        case MAV_TYPE_HEXAROTOR:
-        case MAV_TYPE_OCTOROTOR:
-            return AerialVehicle::Multirotor;
-        case MAV_TYPE_COAXIAL:
-        case MAV_TYPE_HELICOPTER:
-            return AerialVehicle::Helicopter;
-        case MAV_TYPE_AIRSHIP:
-        case MAV_TYPE_FREE_BALLOON:
-            return AerialVehicle::Airship;
+        case MAV_TYPE_FIXED_WING: return db::Vehicle::FixedWing;
+        case MAV_TYPE_TRICOPTER: return db::Vehicle::Tricopter;
+        case MAV_TYPE_QUADROTOR: return db::Vehicle::Quadcopter;
+        case MAV_TYPE_HEXAROTOR: return db::Vehicle::Hexcopter;
+        case MAV_TYPE_OCTOROTOR: return db::Vehicle::Octocopter;
+        case MAV_TYPE_COAXIAL: return db::Vehicle::Coaxial;
+        case MAV_TYPE_HELICOPTER: return db::Vehicle::Helicopter;
         case MAV_TYPE_VTOL_DUOROTOR:
         case MAV_TYPE_VTOL_QUADROTOR:
         case MAV_TYPE_VTOL_TILTROTOR:
         case MAV_TYPE_VTOL_RESERVED2:
         case MAV_TYPE_VTOL_RESERVED3:
         case MAV_TYPE_VTOL_RESERVED4:
-        case MAV_TYPE_VTOL_RESERVED5:
-            return AerialVehicle::Vtol;
+        case MAV_TYPE_VTOL_RESERVED5: return db::Vehicle::Vtol;
+        case MAV_TYPE_AIRSHIP:
+        case MAV_TYPE_FREE_BALLOON: return db::Vehicle::Airship;
+        case MAV_TYPE_KITE: return db::Vehicle::Kite;
+        case MAV_TYPE_FLAPPING_WING: return db::Vehicle::Ornithopter;
         case MAV_TYPE_GENERIC:
-        default:
-            return BaseVehicle::UnknownType;
+        default: return db::Vehicle::Auto;
         }
     }
 
-    BaseVehicle::State decodeState(uint8_t state)
+    /*BaseVehicle::State decodeState(uint8_t state)
     {
         switch (state)
         {
@@ -77,9 +75,10 @@ namespace
     }*/
 }
 
-HeartbeatHandler::HeartbeatHandler(TelemetryService* telemetryService,
+HeartbeatHandler::HeartbeatHandler(db::DbFacade* dbFacade, TelemetryService* telemetryService,
                                    MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
+    m_dbFacade(dbFacade),
     m_telemetryService(telemetryService),
     m_timer(new QTimer(this))
 {
@@ -96,14 +95,20 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
-
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    // TODO: set vehicle type from ::decodeType(heartbeat.type);
+    db::VehiclePtr vehicle =  m_dbFacade->vehicle(
+                                  m_dbFacade->vehicleIdByMavId(message.sysid));
     // TODO: add vehicle if not exist
+    if (vehicle && vehicle->type() == db::Vehicle::Auto)
+    {
+        vehicle->setType(::decodeType(heartbeat.type));
+    }
+
+    Telemetry* node = m_telemetryService->mavNode(message.sysid);
+    if (!node) return;
+
     // TODO: online timer
     node->setParameter({ Telemetry::Status, Telemetry::Online }, true);
     node->setParameter({ Telemetry::Status, Telemetry::Armed },

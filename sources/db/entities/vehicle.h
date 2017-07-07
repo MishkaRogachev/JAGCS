@@ -25,6 +25,7 @@ namespace db
             Quadcopter = 20,
             Tricopter = 21,
             Hexcopter = 22,
+            Octocopter = 23,
 
             Helicopter = 30,
             Coaxial = 31,
@@ -33,7 +34,7 @@ namespace db
 
             Airship = 60,
             Kite = 61,
-            Ornithopter
+            Ornithopter = 62
         };
 
         Vehicle();

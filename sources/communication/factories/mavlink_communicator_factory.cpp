@@ -40,7 +40,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
 
     new PingHandler(communicator);
-    new HeartbeatHandler(m_telemetryService, communicator);
+    new HeartbeatHandler(m_dbFacade, m_telemetryService, communicator);
     new SystemStatusHandler(m_telemetryService, communicator);
     new AttitudeHandler(m_telemetryService, communicator);
     new PressureHandler(m_telemetryService, communicator);

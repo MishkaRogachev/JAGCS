@@ -5,6 +5,11 @@
 
 class QTimer;
 
+namespace db
+{
+    class DbFacade;
+}
+
 namespace domain
 {
     class TelemetryService;
@@ -17,8 +22,8 @@ namespace comm
         Q_OBJECT
 
     public:
-        explicit HeartbeatHandler(domain::TelemetryService* telemetryService,
-                                  MavLinkCommunicator* communicator);
+        HeartbeatHandler(db::DbFacade* dbFacade, domain::TelemetryService* telemetryService,
+                         MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
     public slots:
@@ -27,6 +32,7 @@ namespace comm
         void sendHeartbeat();
 
     private:
+        db::DbFacade* m_dbFacade;
         domain::TelemetryService* m_telemetryService;
         QTimer* m_timer;
     };
