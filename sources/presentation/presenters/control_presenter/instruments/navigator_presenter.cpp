@@ -17,6 +17,6 @@ void NavigatorPresenter::onParametersChanged(const domain::Telemetry::TelemetryM
         this->setViewProperty(PROPERTY(targetDistance), parameters[domain::Telemetry::TargetDistance]);
     if (parameters.contains(domain::Telemetry::TrackError))
         this->setViewProperty(PROPERTY(trackError), parameters[domain::Telemetry::TrackError]);
-    if (parameters.contains(domain::Telemetry::TrackError))
+    if (parameters.contains(domain::Telemetry::CurrentWaypoint))
         this->setViewProperty(PROPERTY(waypoint), parameters[domain::Telemetry::CurrentWaypoint]);
 }

@@ -49,6 +49,8 @@ RowLayout {
     Controls.Button {
         iconSource: "qrc:/icons/pause.svg"
         checkable: true
+        enabled: guided
+        onEnabledChanged: if (!enabled) checked = false;
         onCheckedChanged: pauseContinue(!checked)
     }
 }
