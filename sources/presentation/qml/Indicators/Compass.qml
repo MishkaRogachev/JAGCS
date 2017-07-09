@@ -8,6 +8,7 @@ Canvas {
 
     property color color: palette.textColor
     property color courseColor: palette.missionColor
+    property url mark
     property int tickFactor: 5
     property real scalesRatio: 0.08
     property real minorTickFactor: 0.4
@@ -109,7 +110,7 @@ Canvas {
 
     Image {
         anchors.centerIn: parent
-        source: "qrc:/indicators/flying_wing_mark.svg" // TODO: specified MAV mark
+        source: mark
         width: parent.width / 1.5
         height: width
         z: 1

@@ -5,6 +5,7 @@ ColumnLayout {
     id: root
 
     property var instruments
+    property url vehicleMark
 
     signal instrumentAdded(string name, QtObject view)
 

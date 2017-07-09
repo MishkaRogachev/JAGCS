@@ -13,6 +13,8 @@
 #include "telemetry_service.h"
 #include "telemetry.h"
 
+#include "vehicle_type_mapper.h"
+
 using namespace presentation;
 
 class VehicleMapItemModel::Impl
@@ -80,23 +82,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         if (!data.isValid()) data = 0;
         break;
     case MarkRole:
-        switch (vehicle->type()) {
-        case db::Vehicle::FixedWing:
-            data = QUrl("qrc:/indicators/fixed_wing_mark.svg");
-            break;
-        case db::Vehicle::FlyingWing:
-            data = QUrl("qrc:/indicators/flying_wing_mark.svg");
-            break;
-        case db::Vehicle::Quadcopter:
-        case db::Vehicle::Tricopter:
-        case db::Vehicle::Hexcopter:
-        case db::Vehicle::Octocopter:
-            data = QUrl("qrc:/indicators/quadcopter_mark.svg");
-            break;
-        default:
-            data = QUrl("qrc:/indicators/unknown_mark.svg");
-            break;
-        }
+        data = ::vehicleIcon(vehicle->type());
         break;
     case VehicleIdRole:
         data = vehicle->mavId();

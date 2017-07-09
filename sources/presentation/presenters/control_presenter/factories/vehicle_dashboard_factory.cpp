@@ -1,5 +1,8 @@
 #include "vehicle_dashboard_factory.h"
 
+// Qt
+#include <QVariant>
+
 // Internal
 #include "domain_entry.h"
 #include "telemetry_service.h"

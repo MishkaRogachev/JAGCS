@@ -13,6 +13,7 @@
 
 #include "telemetry_service.h"
 
+#include "vehicle_type_mapper.h"
 #include "location_map_presenter.h"
 #include "video_split_presenter.h"
 #include "vehicle_dashboard_factory.h"
@@ -90,6 +91,8 @@ void ControlPresenter::onSelectVehicle(int index)
         {
             d->dashboard->setParent(this);
             d->dashboard->setView(this->view()->findChild<QObject*>(NAME(dashboard)));
+            d->dashboard->setViewProperty(PROPERTY(vehicleMark),
+                                          ::vehicleIcon(vehicles[index - 1]->type()));
         }
     }
     else

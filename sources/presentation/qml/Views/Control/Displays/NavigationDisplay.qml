@@ -55,6 +55,7 @@ Item {
         id: hsi
         anchors.centerIn: parent
         width: parent.width * 0.6
+        mark: vehicleMark
         color: compassEnabled ? (compassOperational ? palette.textColor :
                                                       palette.negativeColor) :
                                 palette.disabledColor

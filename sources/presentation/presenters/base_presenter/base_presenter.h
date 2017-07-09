@@ -20,23 +20,19 @@ namespace presentation
     public slots:
         void setView(QObject* view);
 
+        void setViewProperty(const char* name, const QVariant& value);
+        void setViewProperty(const QString& child, const char* name, const QVariant& value);
+
+        void invokeViewMethod(const char* name);
+        void invokeViewMethod(const char* name, const QVariant& arg);
+        void invokeViewMethod(const char* name, const QVariant& arg1, const QVariant& arg2);
+
     protected:
         QVariant viewProperty(const char* name) const;
 
         virtual void connectView(QObject* view);
         virtual void disconnectView(QObject* view);
 
-    protected slots:
-        void setViewProperty(const char* name, const QVariant& value);
-        void setViewProperty(const QString& child, const char* name, const QVariant& value);
-
-        void invokeViewMethod(const char* name);
-        void invokeViewMethod(const char* name, const QVariant& arg);
-        void invokeViewMethod(const char* name,
-                              const QVariant& arg1,
-                              const QVariant& arg2);
-
-    protected:
         QPointer<QObject> m_view;
 
     private:

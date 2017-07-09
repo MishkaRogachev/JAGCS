@@ -9,7 +9,7 @@
 
 namespace comm
 {
-    QString decodeApmMode(uint8_t type, uint32_t mode)
+    inline QString decodeApmMode(uint8_t type, uint32_t mode)
     {
         switch (type)
         {
@@ -66,7 +66,7 @@ namespace comm
         return qApp->translate("MAVLINK", "APM NONE");
     }
 
-    QString decodePx4Mode(uint32_t mode)
+    inline QString decodePx4Mode(uint32_t mode)
     {
         uint8_t mainMode = (mode >> 0) & 0xFF;
         uint8_t autoMode = (mode >> 8) & 0xFF;
@@ -95,7 +95,7 @@ namespace comm
         return qApp->translate("MAVLINK", "PX4 NONE");
     }
 
-    QString decodeCustomMode(uint8_t ap, uint8_t type, uint32_t mode)
+    inline QString decodeCustomMode(uint8_t ap, uint8_t type, uint32_t mode)
     {
         switch (ap)
         {
