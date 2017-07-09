@@ -87,28 +87,8 @@ void ControlPresenter::onSelectVehicle(int index)
     {
         db::VehiclePtr vehicle = vehicles[index - 1];
 
-        switch (vehicle->type()) {
-        case db::Vehicle::FixedWing:
-        case db::Vehicle::FlyingWing:
-        case db::Vehicle::Quadcopter:
-        case db::Vehicle::Hexcopter:
-        case db::Vehicle::Octocopter:
-        case db::Vehicle::Helicopter:
-        case db::Vehicle::Coaxial:
-        case db::Vehicle::Vtol:
-        case db::Vehicle::Airship:
-        case db::Vehicle::Kite:
-        case db::Vehicle::Ornithopter: {
-            AerialDashboardFactory factory(d->entry, vehicle);
-            d->dashboard = factory.create();
-            break;
-        }
-        default:  {
-            GenericDashboardFactory factory(d->entry, vehicle);
-            d->dashboard = factory.create();
-            break;
-        }
-        }
+        AerialDashboardFactory factory(d->entry, vehicle);
+        d->dashboard = factory.create();
 
         if (d->dashboard)
         {

@@ -27,7 +27,7 @@ ColumnLayout {
         switch (modelData) {
         case "satellite": return Qt.createComponent("Displays/SatelliteDisplay.qml");
         case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
-        case "nav": return Qt.createComponent("Displays/NavigationDisplay.qml");
+        case "navigator": return Qt.createComponent("Displays/NavigationDisplay.qml");
         case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
         case "mission": return Qt.createComponent("Displays/MissionDisplay.qml");
         default: return null

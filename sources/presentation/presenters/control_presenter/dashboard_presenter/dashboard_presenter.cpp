@@ -14,7 +14,7 @@ using namespace presentation;
 class DashboardPresenter::Impl
 {
 public:
-    QStringList instruments;
+    QMap<int, QString> instruments;
     QMultiMap<QString, BasePresenter*> instrumentPresenters;
 };
 
@@ -28,13 +28,14 @@ DashboardPresenter::~DashboardPresenter()
     this->setViewProperty(PROPERTY(instruments), QStringList());
 }
 
-void DashboardPresenter::addInstrument(const QString& instrument, BasePresenter* presenter)
+void DashboardPresenter::addInstrument(const QString& instrument, int priority)
 {
-    if (!d->instruments.contains(instrument))
-    {
-        d->instruments.append(instrument);
-    }
+    d->instruments[priority] = instrument;
+}
 
+void DashboardPresenter::addInstrumentPresenter(const QString& instrument,
+                                                BasePresenter* presenter)
+{
     d->instrumentPresenters.insertMulti(instrument, presenter);
 }
 
@@ -43,7 +44,8 @@ void DashboardPresenter::connectView(QObject* view)
     connect(view, SIGNAL(instrumentAdded(QString, QObject*)),
             this, SLOT(onInstrumentAdded(QString, QObject*)));
 
-    this->setViewProperty(PROPERTY(instruments), d->instruments);
+    QStringList instruments = d->instruments.values();
+    this->setViewProperty(PROPERTY(instruments), instruments);
 }
 
 void DashboardPresenter::onInstrumentAdded(const QString& key, QObject* view)

@@ -15,7 +15,8 @@ namespace presentation
         ~DashboardPresenter() override;
 
     public slots:
-        void addInstrument(const QString& instrument, BasePresenter* presenter);
+        void addInstrument(const QString& instrument, int priority);
+        void addInstrumentPresenter(const QString& instrument, BasePresenter* presenter);
 
     protected:
         void connectView(QObject* view) override;

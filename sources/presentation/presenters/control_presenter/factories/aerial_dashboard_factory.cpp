@@ -1,6 +1,14 @@
 #include "aerial_dashboard_factory.h"
 
 // Internal
+#include "vehicle.h"
+
+#include "domain_entry.h"
+#include "telemetry_service.h"
+#include "telemetry.h"
+
+#include "dashboard_presenter.h"
+
 #include "status_presenter.h"
 #include "ahrs_presenter.h"
 #include "satellite_presenter.h"
@@ -17,19 +25,23 @@ AerialDashboardFactory::AerialDashboardFactory(domain::DomainEntry* entry,
 
 DashboardPresenter* AerialDashboardFactory::create()
 {
+    domain::Telemetry* node = m_entry->telemetryService()->vehicleNode(m_vehicle->id());
+    if (!node) return nullptr;
+
     DashboardPresenter* dashboard = GenericDashboardFactory::create();
 
-    dashboard->addInstrument("fd", new StatusPresenter(
+    dashboard->addInstrument("fd", 200);
+    dashboard->addInstrumentPresenter("fd", new StatusPresenter(
                                   node->childNode(domain::Telemetry::Status), dashboard));
-    dashboard->addInstrument("fd", new AhrsPresenter(
+    dashboard->addInstrumentPresenter("fd", new AhrsPresenter(
                                  node->childNode(domain::Telemetry::Ahrs), dashboard));
-    dashboard->addInstrument("fd", new SatellitePresenter(
+    dashboard->addInstrumentPresenter("fd", new SatellitePresenter(
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
-    dashboard->addInstrument("fd", new BarometricPresenter(
+    dashboard->addInstrumentPresenter("fd", new BarometricPresenter(
                                  node->childNode(domain::Telemetry::Barometric), dashboard));
-    dashboard->addInstrument("fd", new PitotPresenter(
+    dashboard->addInstrumentPresenter("fd", new PitotPresenter(
                                  node->childNode(domain::Telemetry::Pitot), dashboard));
-    dashboard->addInstrument("fd", new PowerSystemPresenter(
+    dashboard->addInstrumentPresenter("fd", new PowerSystemPresenter(
                                  node->childNode(domain::Telemetry::PowerSystem), dashboard));
 
     return dashboard;

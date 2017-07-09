@@ -19,7 +19,7 @@ namespace presentation
 
         DashboardPresenter* create() override;
 
-    private:
+    protected:
         domain::DomainEntry* m_entry;
         db::VehiclePtr m_vehicle;
     };
