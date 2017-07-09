@@ -1,7 +1,4 @@
-#include "vehicle_dashboard_factory.h"
-
-// Qt
-#include <QVariant>
+#include "generic_dashboard_factory.h"
 
 // Internal
 #include "domain_entry.h"
@@ -12,11 +9,7 @@
 
 #include "dashboard_presenter.h"
 #include "status_presenter.h"
-#include "ahrs_presenter.h"
 #include "satellite_presenter.h"
-#include "barometric_presenter.h"
-#include "pitot_presenter.h"
-#include "power_system_presenter.h"
 #include "compass_presenter.h"
 #include "navigator_presenter.h"
 #include "battery_presenter.h"
@@ -28,36 +21,22 @@
 
 using namespace presentation;
 
-VehicleDashboardFactory::VehicleDashboardFactory(domain::DomainEntry* entry,
+GenericDashboardFactory::GenericDashboardFactory(domain::DomainEntry* entry,
                                                  const db::VehiclePtr& vehicle):
     IDashboardFactory(),
     m_entry(entry),
     m_vehicle(vehicle)
 {}
 
-DashboardPresenter* VehicleDashboardFactory::create()
+DashboardPresenter* GenericDashboardFactory::create()
 {
     domain::Telemetry* node = m_entry->telemetryService()->vehicleNode(m_vehicle->id());
     if (!node) return nullptr;
 
-    // TODO: vehicle type
     DashboardPresenter* dashboard = new DashboardPresenter();
 
     dashboard->addInstrument("satellite", new SatellitePresenter(
                                  node->childNode(domain::Telemetry::Satellite), dashboard));
-
-    dashboard->addInstrument("fd", new StatusPresenter(
-                                  node->childNode(domain::Telemetry::Status), dashboard));
-    dashboard->addInstrument("fd", new AhrsPresenter(
-                                 node->childNode(domain::Telemetry::Ahrs), dashboard));
-    dashboard->addInstrument("fd", new SatellitePresenter(
-                                 node->childNode(domain::Telemetry::Satellite), dashboard));
-    dashboard->addInstrument("fd", new BarometricPresenter(
-                                 node->childNode(domain::Telemetry::Barometric), dashboard));
-    dashboard->addInstrument("fd", new PitotPresenter(
-                                 node->childNode(domain::Telemetry::Pitot), dashboard));
-    dashboard->addInstrument("fd", new PowerSystemPresenter(
-                                 node->childNode(domain::Telemetry::PowerSystem), dashboard));
 
     dashboard->addInstrument("nav", new StatusPresenter(
                                  node->childNode(domain::Telemetry::Status), dashboard));

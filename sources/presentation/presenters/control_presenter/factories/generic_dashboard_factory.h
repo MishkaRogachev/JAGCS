@@ -1,5 +1,5 @@
-#ifndef VEHICLE_DASHBOARD_FACTORY_H
-#define VEHICLE_DASHBOARD_FACTORY_H
+#ifndef GENERIC_VEHICLE_DASHBOARD_FACTORY_H
+#define GENERIC_VEHICLE_DASHBOARD_FACTORY_H
 
 // Internal
 #include "i_dashboard_factory.h"
@@ -10,13 +10,12 @@ namespace domain
     class DomainEntry;
 }
 
-
 namespace presentation
 {
-    class VehicleDashboardFactory: public IDashboardFactory
+    class GenericDashboardFactory: public IDashboardFactory
     {
     public:
-        VehicleDashboardFactory(domain::DomainEntry* entry, const db::VehiclePtr& vehicle);
+        GenericDashboardFactory(domain::DomainEntry* entry, const db::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 
@@ -26,4 +25,4 @@ namespace presentation
     };
 }
 
-#endif // VEHICLE_DASHBOARD_FACTORY_H
+#endif // GENERIC_VEHICLE_DASHBOARD_FACTORY_H

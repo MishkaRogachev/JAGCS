@@ -16,8 +16,9 @@
 #include "vehicle_type_mapper.h"
 #include "location_map_presenter.h"
 #include "video_split_presenter.h"
-#include "vehicle_dashboard_factory.h"
+
 #include "dashboard_presenter.h"
+#include "aerial_dashboard_factory.h"
 
 using namespace presentation;
 
@@ -84,15 +85,36 @@ void ControlPresenter::onSelectVehicle(int index)
 
     if (index > 0 && index <= vehicles.count())
     {
-        VehicleDashboardFactory factory(d->entry, vehicles[index - 1]);
+        db::VehiclePtr vehicle = vehicles[index - 1];
 
-        d->dashboard = factory.create();
+        switch (vehicle->type()) {
+        case db::Vehicle::FixedWing:
+        case db::Vehicle::FlyingWing:
+        case db::Vehicle::Quadcopter:
+        case db::Vehicle::Hexcopter:
+        case db::Vehicle::Octocopter:
+        case db::Vehicle::Helicopter:
+        case db::Vehicle::Coaxial:
+        case db::Vehicle::Vtol:
+        case db::Vehicle::Airship:
+        case db::Vehicle::Kite:
+        case db::Vehicle::Ornithopter: {
+            AerialDashboardFactory factory(d->entry, vehicle);
+            d->dashboard = factory.create();
+            break;
+        }
+        default:  {
+            GenericDashboardFactory factory(d->entry, vehicle);
+            d->dashboard = factory.create();
+            break;
+        }
+        }
+
         if (d->dashboard)
         {
             d->dashboard->setParent(this);
             d->dashboard->setView(this->view()->findChild<QObject*>(NAME(dashboard)));
-            d->dashboard->setViewProperty(PROPERTY(vehicleMark),
-                                          ::vehicleIcon(vehicles[index - 1]->type()));
+            d->dashboard->setViewProperty(PROPERTY(vehicleMark), ::vehicleIcon(vehicle->type()));
         }
     }
     else
