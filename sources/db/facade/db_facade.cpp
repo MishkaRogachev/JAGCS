@@ -404,3 +404,13 @@ void DbFacade::unassign(int missionId)
         emit missionItemChanged(item);
     }
 }
+
+void DbFacade::clearAll()
+{
+    d->missionRepository.clear();
+    d->itemRepository.clear();
+    d->assignmentRepository.clear();
+    d->vehicleRepository.clear();
+    d->linkRepository.clear();
+    d->videoRepository.clear();
+}

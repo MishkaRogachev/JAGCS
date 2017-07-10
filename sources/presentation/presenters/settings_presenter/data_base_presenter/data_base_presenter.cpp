@@ -9,6 +9,7 @@
 
 #include "domain_entry.h"
 #include "db_manager.h"
+#include "db_facade.h"
 
 using namespace presentation;
 
@@ -16,6 +17,7 @@ class DataBasePresenter::Impl
 {
 public:
     db::DbManager* manager;
+    db::DbFacade* facade;
 };
 
 DataBasePresenter::DataBasePresenter(domain::DomainEntry* entry, QObject* parent):
@@ -23,6 +25,7 @@ DataBasePresenter::DataBasePresenter(domain::DomainEntry* entry, QObject* parent
     d(new Impl())
 {
     d->manager = entry->dbManager();
+    d->facade = entry->dbFacade();
 }
 
 DataBasePresenter::~DataBasePresenter()
@@ -52,7 +55,11 @@ void DataBasePresenter::save()
 
 void DataBasePresenter::tryConnect()
 {
-    if (d->manager->isOpen()) d->manager->close();
+    if (d->manager->isOpen())
+    {
+        d->manager->close();
+        d->facade->clearAll();
+    }
     d->manager->open(settings::Provider::value(settings::data_base::name).toString());
 
     this->updateConnected();

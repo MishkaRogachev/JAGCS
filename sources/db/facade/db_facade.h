@@ -61,6 +61,8 @@ namespace db
         void assign(int missionId, int vehicleId);
         void unassign(int missionId);
 
+        void clearAll();
+
     signals:
         void missionAdded(db::MissionPtr mission);
         void missionRemoved(db::MissionPtr mission);

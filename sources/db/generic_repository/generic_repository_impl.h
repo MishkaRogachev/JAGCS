@@ -128,7 +128,7 @@ void GenericRepository<T>::unload(int id)
 template<class T>
 void GenericRepository<T>::clear()
 {
-    m_map.remove(clear);
+    m_map.clear();
 }
 
 template<class T>
