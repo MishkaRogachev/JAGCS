@@ -20,20 +20,26 @@ namespace db
         ~DbManager() override;
 
         bool open(const QString& dbName);
-        bool migrate();
+        bool migrateLastVersion();
         bool drop();
         void close();
+        void clearLog();
 
         bool isOpen() const;
         QDateTime migrationVersion() const;
 
+        QStringList dbLog() const;
+
     private slots:
-        void onVersionChanged(const QDateTime& version);
-        void onDbError(const QString& error);
+        void onMigratorMessage(const QString& error);
+
+    signals:
+        void logChanged(const QStringList& log);
 
     private:
         QSqlDatabase m_db;
         DbMigrator* m_migrator;
+        QStringList m_dbLog;
     };
 }
 

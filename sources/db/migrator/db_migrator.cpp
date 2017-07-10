@@ -21,20 +21,20 @@ bool DbMigrator::migrate(const QDateTime& version)
 {
     for (DbMigration* migration: m_migrations)
     {
-        if (migration->version() < m_version) continue;
+        if (migration->version() <= m_version) continue;
         if (migration->version() > version) return true;
 
         if (!migration->up())
         {
-            emit error(tr("Migrate version: %1, error: %2").arg(
+            emit message(tr("Migrate error: version: %1, error: %2").arg(
                            migration->version().toString(migration->format)).arg(
                            migration->errorSring()));
             return false;
         }
-
         this->setVersion(migration->version());
     }
 
+    emit message(tr("Migration version: %1").arg(m_version.toString(DbMigration::format)));
     return true;
 }
 
@@ -47,7 +47,7 @@ bool DbMigrator::drop()
     {
         if (!migration->down())
         {
-            emit error(tr("Drop migration version: %1, error: %2").arg(
+            emit message(tr("Drop migration error: version: %1, error: %2").arg(
                            migration->version().toString(migration->format)).arg(
                            migration->errorSring()));
             return false;
@@ -59,7 +59,7 @@ bool DbMigrator::drop()
     return true;
 }
 
-bool DbMigrator::readVersion()
+bool DbMigrator::clarifyVersion()
 {
     QSqlQuery query;
     if (query.exec("SELECT version FROM schema_versions ORDER BY version DESC LIMIT 1") &&
@@ -72,16 +72,26 @@ bool DbMigrator::readVersion()
     }
     else
     {
-        emit error(query.lastError().text());
+        emit message(tr("Error: ") + query.lastError().text());
         return false;
     }
     return true;
+}
+
+void DbMigrator::reset()
+{
+    m_version = QDateTime();
+    emit versionChanged(m_version);
+
+    emit message(tr("Reset migrations"));
 }
 
 void DbMigrator::setVersion(const QDateTime& version)
 {
     m_version = version;
     emit versionChanged(version);
+
+    emit message(tr("Migrate to %1").arg(m_version.toString(DbMigration::format)));
 }
 
 QDateTime DbMigrator::version() const

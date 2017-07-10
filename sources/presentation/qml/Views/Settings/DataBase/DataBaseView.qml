@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
@@ -8,12 +9,15 @@ Controls.Frame {
 
     property bool changed: false
     property bool connected: false
+    property var log: []
 
     property alias path: pathField.text
     property alias migration: migrationLabel.text
 
+    signal clearLog()
     signal save()
     signal restore()
+    signal migrate()
     signal tryConnect()
 
     GridLayout {
@@ -55,8 +59,41 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Item {
+        Controls.Pane {
+            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.columnSpan: 2
+
+            Flickable {
+                id: flick
+                anchors.fill: parent
+                contentHeight: journalColumn.height
+                clip: true
+                ScrollBar.vertical: ScrollBar {}
+
+                ColumnLayout {
+                    id: journalColumn
+                    width: parent.width
+
+                    Repeater {
+                        model: log
+                        onModelChanged: flick.contentY = flick.contentHeight - flick.height
+
+                        Controls.Label {
+                            text: modelData
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+                    }
+                }
+            }
+        }
+
+        Controls.Button {
+            text: qsTr("Clear DB log")
+            iconSource: "qrc:/icons/remove.svg"
+            onClicked: clearLog()
+            enabled: log.length > 0
+            Layout.fillWidth: true
             Layout.columnSpan: 2
         }
 
@@ -77,12 +114,18 @@ Controls.Frame {
         }
 
         Controls.Button {
+            text: qsTr("Migrate")
+            iconSource: "qrc:/icons/right.svg"
+            onClicked: migrate()
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
             text: connected ? qsTr("Reconnect") : qsTr("Connect")
             iconSource: "qrc:/icons/connect.svg"
             onClicked: tryConnect()
             enabled: !changed
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
     }
 }

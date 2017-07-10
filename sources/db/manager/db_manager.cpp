@@ -17,8 +17,7 @@ DbManager::DbManager(QObject* parent):
     DbMigrationFactory factory;
     m_migrator = new DbMigrator(&factory, this);
 
-    connect(m_migrator, &DbMigrator::versionChanged, this, &DbManager::onVersionChanged);
-    connect(m_migrator, &DbMigrator::error, this, &DbManager::onDbError);
+    connect(m_migrator, &DbMigrator::message, this, &DbManager::onMigratorMessage);
 }
 
 DbManager::~DbManager()
@@ -34,11 +33,15 @@ bool DbManager::open(const QString& dbName)
     m_db.setDatabaseName(dbName);
     bool ok = m_db.open();
 
-    if (ok && exist) ok = m_migrator->readVersion();
+    if (ok && exist)
+    {
+        qDebug() << "ok&exist";
+        ok = m_migrator->clarifyVersion();
+    }
 
     if (!ok)
     {
-        this->onDbError(m_db.lastError().text());
+        this->onMigratorMessage(m_db.lastError().text());
         return false;
     }
 
@@ -47,19 +50,27 @@ bool DbManager::open(const QString& dbName)
     return true;
 }
 
-bool DbManager::migrate()
+bool DbManager::migrateLastVersion()
 {
     return m_migrator->migrate();
 }
 
 bool DbManager::drop()
 {
+    this->close();
     return m_migrator->drop();
 }
 
 void DbManager::close()
 {
+    m_migrator->reset();
     m_db.close();
+}
+
+void DbManager::clearLog()
+{
+    m_dbLog.clear();
+    emit logChanged(m_dbLog);
 }
 
 bool DbManager::isOpen() const
@@ -72,12 +83,13 @@ QDateTime DbManager::migrationVersion() const
     return m_migrator->version();
 }
 
-void DbManager::onVersionChanged(const QDateTime& version)
+void DbManager::onMigratorMessage(const QString& error)
 {
-    qDebug() << "DB version" << version;
+    m_dbLog << error;
+    emit logChanged(m_dbLog);
 }
 
-void DbManager::onDbError(const QString& error)
+QStringList DbManager::dbLog() const
 {
-    qWarning() << error;
+    return m_dbLog;
 }

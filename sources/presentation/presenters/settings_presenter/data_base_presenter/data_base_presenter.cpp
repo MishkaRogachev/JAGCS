@@ -26,6 +26,8 @@ DataBasePresenter::DataBasePresenter(domain::DomainEntry* entry, QObject* parent
 {
     d->manager = entry->dbManager();
     d->facade = entry->dbFacade();
+
+    connect(d->manager, &db::DbManager::logChanged, this, &DataBasePresenter::updateLog);
 }
 
 DataBasePresenter::~DataBasePresenter()
@@ -45,20 +47,42 @@ void DataBasePresenter::updateConnected()
     this->setViewProperty(PROPERTY(connected), d->manager->isOpen());
 }
 
+void DataBasePresenter::updateLog()
+{
+    this->setViewProperty(PROPERTY(log), d->manager->dbLog());
+}
+
+void DataBasePresenter::clearLog()
+{
+    d->manager->clearLog();
+}
+
 void DataBasePresenter::save()
 {
-    settings::Provider::setValue(settings::data_base::name,
-                                 this->viewProperty(PROPERTY(path)));
+    if (settings::Provider::value(settings::data_base::name) !=
+        this->viewProperty(PROPERTY(path)))
+    {
+        settings::Provider::setValue(settings::data_base::name,
+                                     this->viewProperty(PROPERTY(path)));
+        this->tryConnect();
+    }
 
     this->setViewProperty(PROPERTY(changed), false);
+}
+
+void DataBasePresenter::migrate()
+{
+    d->manager->migrateLastVersion();
+
+    this->updateConnected();
 }
 
 void DataBasePresenter::tryConnect()
 {
     if (d->manager->isOpen())
     {
-        d->manager->close();
         d->facade->clearAll();
+        d->manager->close();
     }
     d->manager->open(settings::Provider::value(settings::data_base::name).toString());
 
@@ -67,10 +91,13 @@ void DataBasePresenter::tryConnect()
 
 void DataBasePresenter::connectView(QObject* view)
 {
+    connect(view, SIGNAL(clearLog()), this, SLOT(clearLog()));
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));
     connect(view, SIGNAL(tryConnect()), this, SLOT(tryConnect()));
+    connect(view, SIGNAL(migrate()), this, SLOT(migrate()));
 
     this->updateView();
     this->updateConnected();
+    this->updateLog();
 }

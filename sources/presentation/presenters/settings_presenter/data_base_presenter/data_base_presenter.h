@@ -23,7 +23,10 @@ namespace presentation
     public slots:
         void updateView();
         void updateConnected();
+        void updateLog();
+        void clearLog();
         void save();
+        void migrate();
         void tryConnect();
 
     protected:
