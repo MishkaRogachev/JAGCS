@@ -11,7 +11,7 @@ git clone --recursive https://github.com/MishkaRogachev/JAGCS.git
 
 ### Dependencies
  
-  * C++14 compiler
+  * C++11 compiler
   * Qt 5.7
   * CMake 2.8.11
 

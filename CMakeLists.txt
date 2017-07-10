@@ -10,7 +10,7 @@ include(cmake/RecurseSubdirs.cmake)
 
 # Versions
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 1)
+set(VERSION_MINOR 2)
 set(VERSION_PATCH 0)
 
 # Get git revision hash
@@ -36,7 +36,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Add compiler flags
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 11)
 
 add_compile_options(-Wall -fPIC)
 
