@@ -5,35 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
    id="svg2"
-   viewBox="0 0 48 48"
-   height="48"
-   width="48"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="unknown_mark.svg">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="729"
-     inkscape:window-height="480"
-     id="namedview9"
-     showgrid="false"
-     inkscape:zoom="4.9166667"
-     inkscape:cx="24"
-     inkscape:cy="24"
-     inkscape:window-x="374"
-     inkscape:window-y="300"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+   version="1.1">
   <defs
      id="defs4" />
   <metadata
@@ -44,30 +20,12 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     id="flowRoot3335"
-     style="font-style:normal;font-weight:normal;font-size:50px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#34495e;fill-opacity:1;stroke:#ecf0f1;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     transform="translate(-0.82324219,-17.542536)">
-    <circle
-       r="22.258064"
-       cy="41.542538"
-       cx="24.823242"
-       id="path3334"
-       style="fill:#30393d;stroke:#f6f5f0;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:41.4352951px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#f6f5f0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
-       x="12.923051"
-       y="55.418617"
-       id="text3336"
-       transform="scale(0.99041036,1.0096825)"><tspan
-         id="tspan3338"
-         x="12.923051"
-         y="55.418617"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#f6f5f0;">?</tspan></text>
-  </g>
+  <path
+     id="rect4191"
+     d="M 64.089013,21.25162 32.060522,106.93059 64.214757,88.997432 95.937581,107.30487 Z"
+     style="opacity:1;fill:#30393d;fill-opacity:1;stroke:#f6f5f0;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 </svg>
