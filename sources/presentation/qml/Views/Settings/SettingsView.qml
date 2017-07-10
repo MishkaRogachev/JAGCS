@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
+import "DataBase"
 import "Communications"
 import "Vehicles"
 import "Video"
@@ -21,9 +22,11 @@ Controls.Pane {
                 id: bar
                 anchors.top: parent.top
                 model: [
+                    qsTr("Data Base"),
                     qsTr("Communications"),
                     qsTr("Vehicles"),
                     qsTr("Video"),
+
                     qsTr("GUI"),
                     qsTr("Networking"),
                     qsTr("About")
@@ -45,6 +48,7 @@ Controls.Pane {
             height: parent.height
             currentIndex: bar.currentIndex
 
+            DataBaseView { objectName: "dataBase" }
             CommunicationSettingsView { objectName: "communications" }
             VehicleSettingsView { objectName: "vehicles" }
             VideoSettingsView { objectName: "video" }

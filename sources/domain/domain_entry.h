@@ -7,6 +7,7 @@
 namespace db
 {
     class DbFacade;
+    class DbManager;
 }
 
 namespace domain
@@ -24,6 +25,7 @@ namespace domain
         ~DomainEntry();
 
         db::DbFacade* dbFacade() const;
+        db::DbManager* dbManager() const;
 
         TelemetryService* telemetryService() const;
         CommandService* commandService() const;

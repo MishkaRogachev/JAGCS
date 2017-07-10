@@ -67,10 +67,11 @@
         <file>Views/Mission/MissionView.qml</file>
         <file>Views/Mission/MissionItemView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
-        <file>Views/Settings/Communications/CommunicationSettingsView.qml</file>
-        <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
+        <file>Views/Settings/DataBase/DataBaseView.qml</file>
         <file>Views/Settings/Vehicles/VehicleSettingsView.qml</file>
         <file>Views/Settings/Vehicles/VehicleDescriptionView.qml</file>
+        <file>Views/Settings/Communications/CommunicationSettingsView.qml</file>
+        <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
         <file>Views/Settings/Video/VideoSettingsView.qml</file>
         <file>Views/Settings/Video/VideoSourceView.qml</file>
         <file>Views/Settings/GuiSettingsView.qml</file>

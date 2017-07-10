@@ -5,9 +5,11 @@
 
 #include "settings_provider.h"
 
-#include "communication_settings_presenter.h"
+#include "data_base_presenter.h"
 #include "vehicles_presenter.h"
+#include "communication_settings_presenter.h"
 #include "video_settings_presenter.h"
+
 #include "network_settings_presenter.h"
 #include "gui_settings_presenter.h"
 #include "about_presenter.h"
@@ -17,6 +19,7 @@ using namespace presentation;
 class SettingsPresenter::Impl
 {
 public:
+    DataBasePresenter* dataBase;
     CommunicationSettingsPresenter* communications;
     VehiclesPresenter* vehicles;
     VideoSettingsPresenter* video;
@@ -30,6 +33,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
     BasePresenter(parent),
     d(new Impl())
 {
+    d->dataBase = new DataBasePresenter(entry, this);
     d->communications = new CommunicationSettingsPresenter(entry, this);
     d->vehicles = new VehiclesPresenter(entry->dbFacade(), this);
     d->video = new VideoSettingsPresenter(entry->dbFacade(), this);
@@ -54,6 +58,7 @@ void SettingsPresenter::hide()
 
 void SettingsPresenter::connectView(QObject* view)
 {
+    d->dataBase->setView(view->findChild<QObject*>(NAME(dataBase)));
     d->communications->setView(view->findChild<QObject*>(NAME(communications)));
     d->vehicles->setView(view->findChild<QObject*>(NAME(vehicles)));
     d->video->setView(view->findChild<QObject*>(NAME(video)));

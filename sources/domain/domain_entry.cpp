@@ -24,7 +24,7 @@ using namespace domain;
 class DomainEntry::Impl
 {
 public:
-    DbManager dataBase;
+    DbManager dbManager;
     DbFacade dbFacade;
     ProxyManager proxyManager;
 
@@ -41,7 +41,7 @@ public:
 DomainEntry::DomainEntry():
     d(new Impl())
 {
-    if (!d->dataBase.open(settings::Provider::value(settings::data_base::name).toString()))
+    if (!d->dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
     {
         qFatal("Unable to estblish DB connection");
         qApp->quit(); // TODO: quit gently
@@ -63,6 +63,11 @@ DomainEntry::~DomainEntry()
 DbFacade* DomainEntry::dbFacade() const
 {
     return &d->dbFacade;
+}
+
+DbManager*DomainEntry::dbManager() const
+{
+    return &d->dbManager;
 }
 
 CommunicationService* DomainEntry::commService() const
