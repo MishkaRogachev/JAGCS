@@ -57,6 +57,21 @@ bool DbManager::drop()
     return m_migrator->drop();
 }
 
+void DbManager::close()
+{
+    m_db.close();
+}
+
+bool DbManager::isOpen() const
+{
+    return m_db.isOpen();
+}
+
+QDateTime DbManager::migrationVersion() const
+{
+    return m_migrator->version();
+}
+
 void DbManager::onVersionChanged(const QDateTime& version)
 {
     qDebug() << "DB version" << version;

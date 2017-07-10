@@ -7,15 +7,20 @@ Controls.Frame {
     id: root
 
     property bool changed: false
+    property bool connected: false
+
     property alias path: pathField.text
+    property alias migration: migrationLabel.text
 
     signal save()
     signal restore()
+    signal tryConnect()
 
     GridLayout {
         anchors.fill: parent
         columns: 2
         rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
 
         Controls.Label {
             text: qsTr("Data base provider:")
@@ -29,7 +34,7 @@ Controls.Frame {
         }
 
         Controls.Label {
-            text: qsTr("SQLite data base file :")
+            text: qsTr("SQLite data base file:")
             Layout.fillWidth: true
         }
 
@@ -37,6 +42,16 @@ Controls.Frame {
             id: pathField
             placeholderText: qsTr("Enter filepath")
             onEditingFinished: changed = true
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: qsTr("Migration:")
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            id: migrationLabel
             Layout.fillWidth: true
         }
 
@@ -59,6 +74,15 @@ Controls.Frame {
             onClicked: save()
             enabled: changed
             Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: connected ? qsTr("Reconnect") : qsTr("Connect")
+            iconSource: "qrc:/icons/connect.svg"
+            onClicked: tryConnect()
+            enabled: !changed
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
         }
     }
 }

@@ -22,6 +22,10 @@ namespace db
         bool open(const QString& dbName);
         bool migrate();
         bool drop();
+        void close();
+
+        bool isOpen() const;
+        QDateTime migrationVersion() const;
 
     private slots:
         void onVersionChanged(const QDateTime& version);

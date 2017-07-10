@@ -21,6 +21,7 @@ namespace db
         bool drop();
         bool readVersion();
 
+        QDateTime version() const;
 
     signals:
         void versionChanged(QDateTime version);

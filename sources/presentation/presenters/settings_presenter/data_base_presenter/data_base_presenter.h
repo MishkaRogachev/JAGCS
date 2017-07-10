@@ -22,7 +22,9 @@ namespace presentation
 
     public slots:
         void updateView();
+        void updateConnected();
         void save();
+        void tryConnect();
 
     protected:
         void connectView(QObject* view) override;

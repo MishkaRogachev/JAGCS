@@ -83,3 +83,8 @@ void DbMigrator::setVersion(const QDateTime& version)
     m_version = version;
     emit versionChanged(version);
 }
+
+QDateTime DbMigrator::version() const
+{
+    return m_version;
+}
