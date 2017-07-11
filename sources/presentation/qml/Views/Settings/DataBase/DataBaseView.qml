@@ -77,7 +77,8 @@ Controls.Frame {
 
                     Repeater {
                         model: log
-                        onModelChanged: flick.contentY = flick.contentHeight - flick.height
+                        onModelChanged: if (flick.contentHeight > flick.height)
+                                            flick.contentY = flick.contentHeight - flick.height
 
                         Controls.Label {
                             text: modelData
