@@ -32,13 +32,13 @@ Item {
     property bool rangefinderOperational: false
     property int rangefinderHeight: 0
 
-    property int minSpeed: -13
-    property int maxSpeed: 13
-    property int speedStep: 5
+    property int minSpeed: -settings.value("Gui/fdSpeedStep") * 2.7
+    property int maxSpeed: settings.value("Gui/fdSpeedStep") * 2.7
+    property int speedStep: settings.value("Gui/fdSpeedStep")
 
-    property int minAltitude: -27
-    property int maxAltitude: 27
-    property int altitudeStep: 10
+    property int minAltitude: -settings.value("Gui/fdAltitudeStep") * 2.7
+    property int maxAltitude: settings.value("Gui/fdAltitudeStep") * 2.7
+    property int altitudeStep: settings.value("Gui/fdAltitudeStep")
 
     implicitHeight: af.height
 
@@ -94,6 +94,7 @@ Item {
         width: parent.width * 0.58
         enabled: ahrsEnabled
         operational: ahrsOperational
+        rollInverted: settings.boolValue("Gui/fdRollInverted")
     }
 
     Indicators.FdLabel {

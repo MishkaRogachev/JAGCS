@@ -29,6 +29,10 @@ void GuiSettingsPresenter::updateView()
                           settings::Provider::value(settings::gui::paletteStyle));
     this->setViewProperty(PROPERTY(fdRollInverted),
                           settings::Provider::value(settings::gui::fdRollInverted));
+    this->setViewProperty(PROPERTY(speedStep),
+                          settings::Provider::value(settings::gui::fdSpeedStep));
+    this->setViewProperty(PROPERTY(altitudeStep),
+                          settings::Provider::value(settings::gui::fdAltitudeStep));
 
 }
 
@@ -56,4 +60,8 @@ void GuiSettingsPresenter::onUpdateSettings()
                                  this->viewProperty(PROPERTY(paletteStyle)));
     settings::Provider::setValue(settings::gui::fdRollInverted,
                                  this->viewProperty(PROPERTY(fdRollInverted)));
+    settings::Provider::setValue(settings::gui::fdSpeedStep,
+                                 this->viewProperty(PROPERTY(speedStep)));
+    settings::Provider::setValue(settings::gui::fdAltitudeStep,
+                                 this->viewProperty(PROPERTY(altitudeStep)));
 }

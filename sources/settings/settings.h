@@ -15,6 +15,8 @@ namespace settings
         const char* const uiSize = "Gui/uiSize";
         const char* const paletteStyle = "Gui/paletteStyle";
         const char* const fdRollInverted = "Gui/fdRollInverted";
+        const char* const fdSpeedStep = "Gui/fdSpeedStep";
+        const char* const fdAltitudeStep = "Gui/fdAltitudeStep";
     }
 
     namespace map

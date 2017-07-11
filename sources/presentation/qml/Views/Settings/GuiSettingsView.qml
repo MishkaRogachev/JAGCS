@@ -13,8 +13,13 @@ Frame {
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
     property alias fdRollInverted: fdRollBar.currentIndex
+    property int speedStep: 0
+    property int altitudeStep: 0
 
     signal updateSettings()
+
+    onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
+    onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
 
     GridLayout {
         anchors.fill: parent
@@ -32,7 +37,7 @@ Frame {
             Layout.columnSpan: 2
             Layout.alignment: Qt.AlignRight
             onCheckedChanged: {
-                root.updateSettings();
+                updateSettings();
                 main.updateUiSettings();
             }
         }
@@ -46,7 +51,7 @@ Frame {
             id: languageBox
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            onCurrentIndexChanged: root.updateSettings();
+            onCurrentIndexChanged: updateSettings()
         }
 
         Label {
@@ -61,7 +66,7 @@ Frame {
             Layout.fillWidth: true
             onPressedChanged: {
                 if (pressed) return;
-                root.updateSettings();
+                updateSettings();
                 main.updateUiSettings();
             }
         }
@@ -87,7 +92,7 @@ Frame {
                 anchors.centerIn: parent
                 width: parent.width
                 onCurrentIndexChanged: {
-                    root.updateSettings();
+                    updateSettings();
                     main.updateUiSettings();
                 }
 
@@ -114,7 +119,7 @@ Frame {
                 id: fdRollBar
                 anchors.centerIn: parent
                 width: parent.width
-                onCurrentIndexChanged: root.updateSettings()
+                onCurrentIndexChanged: updateSettings()
 
                 TabButton {
                     text: qsTr("Western")
@@ -122,6 +127,38 @@ Frame {
                 TabButton {
                     text: qsTr("Russian")
                 }
+            }
+        }
+
+        Label {
+            text: qsTr("Speed scale step")
+            Layout.fillWidth: true
+        }
+
+        ComboBox {
+            id: speedBox
+            model: [5, 10, 25, 50, 100]
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            onCurrentTextChanged: {
+                speedStep = currentText;
+                updateSettings();// changed = true;
+            }
+        }
+
+        Label {
+            text: qsTr("Altitude scale step")
+            Layout.fillWidth: true
+        }
+
+        ComboBox {
+            id: altitudeBox
+            model: [5, 10, 25, 50, 100]
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            onCurrentTextChanged: {
+                altitudeStep = currentText;
+                updateSettings();// changed = true;
             }
         }
 

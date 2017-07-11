@@ -22,17 +22,9 @@ public:
 
         settings.setValue(data_base::name, "jagcs_db");
 
-        settings.setValue(gui::fullscreen, true);
-        settings.setValue(gui::locale, "en");
-        settings.setValue(gui::uiSize, 36);
-        settings.setValue(gui::paletteStyle, 0);
-        settings.setValue(gui::fdRollInverted, 0);
-
         settings.setValue(map::zoomLevel, 16.0);
         settings.setValue(map::centerLatitude, 55.968954);
         settings.setValue(map::centerLongitude, 37.110155);
-
-        settings.setValue(proxy::type, 0);
 
         settings.setValue(communication::systemId, 255);
         settings.setValue(communication::componentId, 0);
@@ -45,6 +37,16 @@ public:
 
         settings.setValue(mission::defaultAcceptanceRadius, 3);
         settings.setValue(mission::defaultTakeoffPitch, 15);
+
+        settings.setValue(gui::fullscreen, true);
+        settings.setValue(gui::locale, "en");
+        settings.setValue(gui::uiSize, 36);
+        settings.setValue(gui::paletteStyle, 0);
+        settings.setValue(gui::fdRollInverted, 0);
+        settings.setValue(gui::fdSpeedStep, 5);
+        settings.setValue(gui::fdAltitudeStep, 10);
+
+        settings.setValue(proxy::type, 0);
     }
 };
 
