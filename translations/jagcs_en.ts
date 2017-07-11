@@ -56,67 +56,77 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="62"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="64"/>
         <source>UDP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="65"/>
         <source>Serial</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="64"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="66"/>
         <source>Unknown</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="79"/>
         <source>Name:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="86"/>
         <source>Enter name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="80"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="93"/>
         <source>Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="110"/>
         <source>Device:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="128"/>
         <source>Baud rate:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="146"/>
+        <source>Restore</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="154"/>
+        <source>Save</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="170"/>
         <source>Remove</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="129"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="163"/>
         <source>Disconnect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="129"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="163"/>
         <source>Connect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="164"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="207"/>
         <source>Bytes sent</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="176"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="219"/>
         <source>Bytes received</source>
         <translation></translation>
     </message>
@@ -147,22 +157,22 @@
 <context>
     <name>Compass</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="66"/>
         <source>N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="66"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="67"/>
         <source>E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="68"/>
         <source>S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="68"/>
+        <location filename="../sources/presentation/qml/Indicators/Compass.qml" line="69"/>
         <source>W</source>
         <translation></translation>
     </message>
@@ -172,6 +182,59 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Control/ControlView.qml" line="33"/>
         <source>Vehicle</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>DataBaseView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="30"/>
+        <source>Data base:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="41"/>
+        <source>SQLite data base file:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="47"/>
+        <source>Enter filepath</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="53"/>
+        <source>Migration:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="94"/>
+        <source>Clear DB log</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="103"/>
+        <source>Restore</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="111"/>
+        <source>Save</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="119"/>
+        <source>Migrate</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="126"/>
+        <source>Reconnect</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="126"/>
+        <source>Connect</source>
         <translation></translation>
     </message>
 </context>
@@ -193,8 +256,76 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="42"/>
+        <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="43"/>
         <source>Default Mission</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>DescriptionVehiclePresenter</name>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="15"/>
+        <source>Unknown</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="16"/>
+        <source>Auto</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="17"/>
+        <source>Fixed Wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="18"/>
+        <source>Flying Wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="19"/>
+        <source>Quadcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="20"/>
+        <source>Tricopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="21"/>
+        <source>Hexcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="22"/>
+        <source>Helicopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="23"/>
+        <source>Coaxial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="24"/>
+        <source>Vtol</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="25"/>
+        <source>Airship</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="26"/>
+        <source>Kite</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="27"/>
+        <source>Ornithopter</source>
         <translation></translation>
     </message>
 </context>
@@ -570,8 +701,51 @@
 <context>
     <name>MissionDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="24"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="21"/>
         <source>WP: </source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>MissionItemPresenter</name>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="20"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="21"/>
+        <source>Takeoff</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="22"/>
+        <source>Waypoint</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="23"/>
+        <source>LoiterAltitude</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="24"/>
+        <source>LoiterTurns</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="25"/>
+        <source>Continue</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="26"/>
+        <source>Return</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="27"/>
+        <source>Landing</source>
         <translation></translation>
     </message>
 </context>
@@ -659,17 +833,17 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="86"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="87"/>
         <source>TRG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="95"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="96"/>
         <source>HDG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="105"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="106"/>
         <source>CRS</source>
         <translation></translation>
     </message>
@@ -772,37 +946,42 @@
 <context>
     <name>SettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="30"/>
         <source>GUI</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="24"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="26"/>
         <source>Communications</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="25"/>
+        <source>Data Base</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="27"/>
         <source>Vehicles</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="26"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="28"/>
         <source>Video</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="31"/>
         <source>Networking</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="29"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="32"/>
         <source>About</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="41"/>
         <source>Make defaults</source>
         <translation></translation>
     </message>
@@ -843,22 +1022,37 @@
 <context>
     <name>VehicleDescriptionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="24"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="30"/>
         <source>Name:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="29"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="36"/>
         <source>Enter name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="34"/>
-        <source>Id:</source>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="43"/>
+        <source>MAVLink id:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="45"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="57"/>
+        <source>Type:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="72"/>
+        <source>Restore</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="80"/>
+        <source>Save</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="88"/>
         <source>Remove</source>
         <translation></translation>
     </message>
@@ -959,15 +1153,48 @@
     </message>
 </context>
 <context>
+    <name>comm::HeartbeatHandler</name>
+    <message>
+        <location filename="../sources/communication/communicators/mavlink/handlers/heartbeat_handler.cpp" line="109"/>
+        <source>Added vehicle</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>db::DbMigrator</name>
     <message>
         <location filename="../sources/db/migrator/db_migrator.cpp" line="29"/>
-        <source>Migrate version: %1, error: %2</source>
+        <source>Migrate error: version: %1, error: %2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/db/migrator/db_migrator.cpp" line="37"/>
+        <source>Migration version: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/db/migrator/db_migrator.cpp" line="50"/>
-        <source>Drop migration version: %1, error: %2</source>
+        <source>Drop migration error: version: %1, error: %2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/db/migrator/db_migrator.cpp" line="77"/>
+        <source>Error: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/db/migrator/db_migrator.cpp" line="88"/>
+        <source>Reset migrations</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/db/migrator/db_migrator.cpp" line="95"/>
+        <source>Establish migration %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/db/migrator/db_migrator.cpp" line="100"/>
+        <source>Migrate from %1 to %2</source>
         <translation></translation>
     </message>
 </context>
@@ -981,49 +1208,6 @@
     <message>
         <location filename="../sources/presentation/presenters/settings_presenter/communication_settings_presenter/communication_settings_presenter.cpp" line="124"/>
         <source>New Serial Link</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>presentation::MissionItemPresenter</name>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="24"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="25"/>
-        <source>Takeoff</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="26"/>
-        <source>Waypoint</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="27"/>
-        <source>LoiterAltitude</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="28"/>
-        <source>LoiterTurns</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="29"/>
-        <source>Continue</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="30"/>
-        <source>Return</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="31"/>
-        <source>Landing</source>
         <translation></translation>
     </message>
 </context>

@@ -15,7 +15,7 @@ namespace
         { db::Vehicle::UnknownType, qApp->translate("DescriptionVehiclePresenter", "Unknown") },
         { db::Vehicle::Auto, qApp->translate("DescriptionVehiclePresenter", "Auto") },
         { db::Vehicle::FixedWing, qApp->translate("DescriptionVehiclePresenter", "Fixed Wing") },
-        { db::Vehicle::FlyingWing, qApp->translate("DescriptionVehiclePresenter", "FlyingWing") },
+        { db::Vehicle::FlyingWing, qApp->translate("DescriptionVehiclePresenter", "Flying Wing") },
         { db::Vehicle::Quadcopter, qApp->translate("DescriptionVehiclePresenter", "Quadcopter") },
         { db::Vehicle::Tricopter, qApp->translate("DescriptionVehiclePresenter", "Tricopter") },
         { db::Vehicle::Hexcopter, qApp->translate("DescriptionVehiclePresenter", "Hexcopter") },

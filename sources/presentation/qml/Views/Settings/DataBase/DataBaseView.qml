@@ -27,7 +27,7 @@ Controls.Frame {
         columnSpacing: palette.spacing
 
         Controls.Label {
-            text: qsTr("Data base provider:")
+            text: qsTr("Data base:")
             Layout.fillWidth: true
         }
 
