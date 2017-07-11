@@ -35,7 +35,6 @@ bool DbManager::open(const QString& dbName)
 
     if (ok && exist)
     {
-        qDebug() << "ok&exist";
         ok = m_migrator->clarifyVersion();
     }
 

@@ -10,7 +10,7 @@ bool InitMigration::up()
     if (!m_query.prepare("PRAGMA FOREIGN_KEYS=ON;") || !m_query.exec()) return false;
 
     if (!m_query.prepare("CREATE TABLE schema_versions ("
-                         "version STRING NOT NULL)") || !m_query.exec()) return false;
+                         "version STRING NOT NULL UNIQUE)") || !m_query.exec()) return false;
 
     if (!m_query.prepare("CREATE TABLE links ("
                          "id INTEGER PRIMARY KEY NOT NULL,"
@@ -61,11 +61,7 @@ bool InitMigration::up()
                          "source STRING)") ||
         !m_query.exec()) return false;
 
-    if (!m_query.prepare("INSERT INTO schema_versions (version) "
-                         "VALUES (\"" + this->version().toString(format) + "\");") ||
-        !m_query.exec()) return false;
-
-    return true;
+    return DbMigration::up();
 }
 
 bool InitMigration::down()
@@ -83,5 +79,5 @@ bool InitMigration::down()
 
 QDateTime InitMigration::version() const
 {
-    return QDateTime::fromString("14:37:15-17.05.2017", format);
+    return QDateTime::fromString("2017.05.17-14:37:15", format);
 }

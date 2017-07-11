@@ -2,10 +2,11 @@
 
 // Qt
 #include <QSqlError>
+#include <QDebug>
 
 using namespace db;
 
-const QString DbMigration::format = "hh:mm:ss-dd.MM.yyyy";
+const QString DbMigration::format = "yyyy.MM.dd-hh:mm:ss";
 
 DbMigration::DbMigration()
 {}
@@ -20,6 +21,10 @@ QString DbMigration::errorSring() const
 
 bool DbMigration::up()
 {
+    if (!m_query.prepare("INSERT INTO schema_versions (version) "
+                         "VALUES (\"" + this->version().toString(format) + "\");") ||
+        !m_query.exec()) return false;
+
     return true;
 }
 

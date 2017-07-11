@@ -81,7 +81,9 @@ Controls.Frame {
 
                         Controls.Label {
                             text: modelData
-                            Layout.alignment: Qt.AlignHCenter
+                            horizontalAlignment: Qt.AlignHCenter
+                            wrapMode: Text.WordWrap
+                            Layout.fillWidth: true
                         }
                     }
                 }

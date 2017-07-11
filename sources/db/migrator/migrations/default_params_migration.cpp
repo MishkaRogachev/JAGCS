@@ -45,7 +45,7 @@ bool DefaultParamsMigration::up()
 
     facade.assign(defaultMission->id(), defaultVehicle->id());
 
-    return true;
+    return DbMigration::up();
 }
 
 bool DefaultParamsMigration::down()
@@ -57,5 +57,5 @@ bool DefaultParamsMigration::down()
 
 QDateTime DefaultParamsMigration::version() const
 {
-    return QDateTime::fromString("14:14:14-18.05.2017", format);
+    return QDateTime::fromString("2017.06.29-22:33:08", format);
 }

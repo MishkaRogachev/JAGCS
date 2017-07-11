@@ -30,7 +30,7 @@ bool DbMigrator::migrate(const QDateTime& version)
                            migration->version().toString(migration->format)).arg(
                            migration->errorSring()));
             return false;
-        }
+        } // TODO: rollback
         this->setVersion(migration->version());
     }
 
@@ -51,7 +51,7 @@ bool DbMigrator::drop()
                            migration->version().toString(migration->format)).arg(
                            migration->errorSring()));
             return false;
-        }
+        } // TODO: rollback
 
         this->setVersion(migration->version());
     }
@@ -68,6 +68,8 @@ bool DbMigrator::clarifyVersion()
         QString versionString = query.value("version").toString();
         if (versionString.isEmpty()) return false;
         QDateTime version = QDateTime::fromString(versionString, DbMigration::format);
+
+        qDebug() << "clarifyVersion" << version;
         this->setVersion(version);
     }
     else
@@ -88,10 +90,20 @@ void DbMigrator::reset()
 
 void DbMigrator::setVersion(const QDateTime& version)
 {
+    if (m_version.isNull())
+    {
+        emit message(tr("Establish migration %1").
+                     arg(version.toString(DbMigration::format)));
+    }
+    else
+    {
+        emit message(tr("Migrate from %1 to %2").
+                     arg(m_version.toString(DbMigration::format)).
+                     arg(version.toString(DbMigration::format)));
+    }
+
     m_version = version;
     emit versionChanged(version);
-
-    emit message(tr("Migrate to %1").arg(m_version.toString(DbMigration::format)));
 }
 
 QDateTime DbMigrator::version() const
