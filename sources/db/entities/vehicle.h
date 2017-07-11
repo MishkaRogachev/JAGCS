@@ -50,12 +50,16 @@ namespace db
         Type type() const;
         void setType(Type type);
 
+        bool isOnline() const;
+        void setOnline(bool isOnline);
+
     private:
         int m_mavId = 0;
         QString m_name;
         Type m_type = Auto;
 
         static QMap<Vehicle*, int> m_mavIds;
+        bool m_online;
 
         Q_ENUM(Type)
     };

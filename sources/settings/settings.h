@@ -39,15 +39,12 @@ namespace settings
     {
         const char* const systemId = "Communication/systemId";
         const char* const componentId = "Communication/componentId";
+        const char* const heartbeat = "Communication/heartbeat";
+        const char* const timeout = "Communication/timeout";
         const char* const autoAdd = "Communication/autoAdd";
         const char* const baudRate = "Communication/baudRate";
         const char* const port = "Communication/port";
         const char* const statisticsCount = "Communication/statisticsCount";
-    }
-
-    namespace telemetry
-    {
-        const char* const timeout = "Telemetry/timeout";
     }
 
     namespace mission

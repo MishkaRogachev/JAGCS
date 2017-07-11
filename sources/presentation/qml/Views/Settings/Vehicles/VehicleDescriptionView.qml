@@ -68,6 +68,17 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
+        Controls.Label {
+            text: qsTr("Status:")
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: online ? qsTr("Online") : qsTr("Offline")
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
+
         Controls.Button {
             text: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"

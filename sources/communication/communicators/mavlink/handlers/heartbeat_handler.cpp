@@ -4,8 +4,9 @@
 #include <mavlink.h>
 
 // Qt
-#include <QDebug>
-#include <QTimer>
+#include <QMap>
+#include <QTimerEvent>
+#include <QBasicTimer>
 #include <QDebug>
 
 // Internal
@@ -75,20 +76,31 @@ namespace
     }*/
 }
 
-HeartbeatHandler::HeartbeatHandler(db::DbFacade* dbFacade, TelemetryService* telemetryService,
+class HeartbeatHandler::Impl
+{
+public:
+    db::DbFacade* dbFacade;
+    domain::TelemetryService* telemetryService;
+    QMap <int, QBasicTimer*> vehicleTimers;
+    int sendTimer;
+};
+
+HeartbeatHandler::HeartbeatHandler(db::DbFacade* dbFacade,
+                                   TelemetryService* telemetryService,
                                    MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_dbFacade(dbFacade),
-    m_telemetryService(telemetryService),
-    m_timer(new QTimer(this))
+    d(new Impl())
 {
-    QObject::connect(m_timer, &QTimer::timeout, this, &HeartbeatHandler::sendHeartbeat);
-    m_timer->start(1000); //TODO: heartbeat emit disabling and freqency selecting
+    d->dbFacade = dbFacade;
+    d->telemetryService = telemetryService;
+
+    d->sendTimer = this->startTimer(settings::Provider::value(
+                                    settings::communication::heartbeat).toInt());
 }
 
 HeartbeatHandler::~HeartbeatHandler()
 {
-    delete m_timer;
+    for (QBasicTimer* timer: d->vehicleTimers.values()) delete timer;
 }
 
 void HeartbeatHandler::processMessage(const mavlink_message_t& message)
@@ -98,8 +110,9 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    db::VehiclePtr vehicle =  m_dbFacade->vehicle(
-                                  m_dbFacade->vehicleIdByMavId(message.sysid));
+    int vehicleId = d->dbFacade->vehicleIdByMavId(message.sysid);
+
+    db::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
 
     if (!vehicle && settings::Provider::value(settings::communication::autoAdd).toBool())
     {
@@ -107,19 +120,30 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         vehicle->setMavId(message.sysid);
         vehicle->setType(db::Vehicle::Auto);
         vehicle->setName(tr("Added vehicle"));
-        m_dbFacade->save(vehicle);
+        d->dbFacade->save(vehicle);
     }
 
-    if (vehicle && vehicle->type() == db::Vehicle::Auto)
+    if (vehicle)
     {
-        vehicle->setType(::decodeType(heartbeat.type));
+        vehicle->setOnline(true);
+        if (!d->vehicleTimers.contains(vehicleId))
+        {
+            d->vehicleTimers[vehicleId] = new QBasicTimer();
+        }
+        d->vehicleTimers[vehicleId]->start(
+                    settings::Provider::value(settings::communication::timeout).toInt(),
+                    this);
+
+        if (vehicle->type() == db::Vehicle::Auto)
+        {
+            vehicle->setType(::decodeType(heartbeat.type));
+        }
+        d->dbFacade->vehicleChanged(vehicle);
     }
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
+    Telemetry* node = d->telemetryService->mavNode(message.sysid);
     if (!node) return;
 
-    // TODO: online timer
-    node->setParameter({ Telemetry::Status, Telemetry::Online }, true);
     node->setParameter({ Telemetry::Status, Telemetry::Armed },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
     node->setParameter({ Telemetry::Status, Telemetry::Auto },
@@ -150,4 +174,24 @@ void HeartbeatHandler::sendHeartbeat()
                                  &message, &heartbeat);
 
     m_communicator->sendMessageAllLinks(message);
+}
+
+void HeartbeatHandler::timerEvent(QTimerEvent* event)
+{
+    if (event->timerId() == d->sendTimer)
+    {
+        this->sendHeartbeat();
+    }
+    else
+    {
+        for (QBasicTimer* timer: d->vehicleTimers.values())
+        {
+            if (timer->timerId() != event->timerId()) continue;
+
+            db::VehiclePtr vehicle = d->dbFacade->vehicle(d->vehicleTimers.key(timer));
+            if (vehicle) vehicle->setOnline(false);
+            d->dbFacade->vehicleChanged(vehicle);
+            timer->stop();
+        }
+    }
 }

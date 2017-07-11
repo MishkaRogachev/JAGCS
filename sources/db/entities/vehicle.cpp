@@ -10,7 +10,8 @@ QMap<Vehicle*, int> Vehicle::m_mavIds;
 Vehicle::Vehicle():
     BaseEntity(),
     m_mavId(-1),
-    m_type(UnknownType)
+    m_type(UnknownType),
+    m_online(false)
 {
     m_mavIds[this] = m_mavId;
 }
@@ -52,4 +53,14 @@ Vehicle::Type Vehicle::type() const
 void Vehicle::setType(Type type)
 {
     m_type = type;
+}
+
+bool Vehicle::isOnline() const
+{
+    return m_online;
+}
+
+void Vehicle::setOnline(bool online)
+{
+    m_online = online;
 }

@@ -24,6 +24,7 @@ namespace presentation
 
     public slots:
         void updateView();
+        void updateStatus();
         void save();
         void remove();
 

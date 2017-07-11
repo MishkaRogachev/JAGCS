@@ -110,7 +110,6 @@ namespace domain
             Root = 1,
 
             Status = 100,
-            Online = 101,
             Armed = 102,
             Auto = 103,
             Guided = 104,

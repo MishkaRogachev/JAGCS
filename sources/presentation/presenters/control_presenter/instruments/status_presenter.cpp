@@ -11,8 +11,6 @@ StatusPresenter::StatusPresenter(domain::Telemetry* node, QObject* parent):
 
 void StatusPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Online))
-        this->setViewProperty(PROPERTY(online), parameters[domain::Telemetry::Online]);
     if (parameters.contains(domain::Telemetry::Armed))
         this->setViewProperty(PROPERTY(armed), parameters[domain::Telemetry::Armed]);
     if (parameters.contains(domain::Telemetry::Auto))

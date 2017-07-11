@@ -35,7 +35,12 @@ DescriptionVehiclePresenter::DescriptionVehiclePresenter(
     BasePresenter(parent),
     m_facade(facade),
     m_vehicle(vehicle)
-{}
+{
+    connect(m_facade, &db::DbFacade::vehicleChanged, this, [this]
+            (const db::VehiclePtr& vehicle) {
+        if (vehicle == m_vehicle) this->updateStatus();
+    });
+}
 
 db::VehiclePtr DescriptionVehiclePresenter::vehicle() const
 {
@@ -49,6 +54,11 @@ void DescriptionVehiclePresenter::updateView()
     this->setViewProperty(PROPERTY(type), ::types.keys().indexOf(m_vehicle->type()));
 
     this->setViewProperty(PROPERTY(changed), false);
+}
+
+void DescriptionVehiclePresenter::updateStatus()
+{
+    this->setViewProperty(PROPERTY(online), m_vehicle->isOnline());
 }
 
 void DescriptionVehiclePresenter::save()
@@ -77,6 +87,7 @@ void DescriptionVehiclePresenter::connectView(QObject* view)
     connect(view, SIGNAL(remove()), this, SLOT(remove()));
 
     this->updateView();
+    this->updateStatus();
 }
 
 

@@ -3,8 +3,6 @@
 
 #include "abstract_mavlink_handler.h"
 
-class QTimer;
-
 namespace db
 {
     class DbFacade;
@@ -31,10 +29,12 @@ namespace comm
 
         void sendHeartbeat();
 
+    protected:
+        void timerEvent(QTimerEvent* event) override;
+
     private:
-        db::DbFacade* m_dbFacade;
-        domain::TelemetryService* m_telemetryService;
-        QTimer* m_timer;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

@@ -7,7 +7,6 @@ import "qrc:/Indicators" as Indicators
 GridLayout {
     id: root
 
-    property bool online: false
     property bool armed: false
     property string mode: qsTr("None")
     property real batteryVoltage: 0
@@ -80,11 +79,6 @@ GridLayout {
         font.pixelSize: palette.fontPixelSize * 0.75
         font.bold: true
         text: mode
-        color: {
-            if (!online) return palette.disabledColor;
-            if (!armed) return palette.negativeColor;
-            return palette.textColor;
-        }
         horizontalAlignment: Qt.AlignHCenter
         Layout.fillWidth: true
         Layout.columnSpan: 4
