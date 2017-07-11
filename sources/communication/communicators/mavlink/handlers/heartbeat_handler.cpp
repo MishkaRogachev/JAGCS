@@ -53,27 +53,27 @@ namespace
         }
     }
 
-    /*BaseVehicle::State decodeState(uint8_t state)
+    Telemetry::State decodeState(uint8_t state)
     {
         switch (state)
         {
         case MAV_STATE_BOOT:
-            return BaseVehicle::Boot;
+            return Telemetry::Boot;
         case MAV_STATE_CALIBRATING:
             return BaseVehicle::Calibrating;
         case MAV_STATE_STANDBY:
-            return BaseVehicle::Standby;
+            return Telemetry::Standby;
         case MAV_STATE_ACTIVE:
-            return BaseVehicle::Active;
+            return Telemetry::Active;
         case MAV_STATE_CRITICAL:
-            return BaseVehicle::Critical;
+            return Telemetry::Critical;
         case MAV_STATE_EMERGENCY:
-            return BaseVehicle::Emergency;
+            return Telemetry::Emergency;
         case MAV_STATE_UNINIT:
         default:
-            return BaseVehicle::UnknownState;
+            return Telemetry::UnknownState;
         }
-    }*/
+    }
 }
 
 class HeartbeatHandler::Impl
@@ -156,9 +156,11 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
 
     node->setParameter({ Telemetry::Status, Telemetry::Mode },
-                       decodeCustomMode(heartbeat.autopilot,
+                       ::decodeCustomMode(heartbeat.autopilot,
                                         heartbeat.type,
                                         heartbeat.custom_mode));
+    node->setParameter({ Telemetry::Status, Telemetry::State },
+                       ::decodeState(heartbeat.system_status));
     node->notify();
 }
 

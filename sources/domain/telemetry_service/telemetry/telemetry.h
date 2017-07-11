@@ -7,9 +7,9 @@
 
 // mav
 //  |-Status
-//  |  |-Online                         bool
 //  |  |-Armed                          bool
 //  |  |-Mode                           string
+//  |  |-State                          state
 //  |-Position
 //  |  |-Coordinate                     coordinate
 //  |  |-Direction                      direction
@@ -116,6 +116,7 @@ namespace domain
             Stabilized = 105,
             Manual = 106,
             Mode = 110,
+            State = 120,
 
             Present = 200,
             Enabled = 201,
@@ -192,6 +193,17 @@ namespace domain
             Fixed = 10006,
 
             Wind = 11000,
+        };
+
+        enum State
+        {
+            UnknownState,
+            Boot,
+            Calibrating,
+            Standby,
+            Active,
+            Critical,
+            Emergency
         };
 
         using TelemetryList = QList<TelemetryId>;
