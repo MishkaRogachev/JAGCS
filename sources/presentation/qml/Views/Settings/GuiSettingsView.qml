@@ -1,11 +1,14 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
-Frame {
+Controls.Frame {
     id: root
+
+    property bool changed: false
+    property int speedStep: 0
+    property int altitudeStep: 0
 
     property alias fullscreen: fullscreenBox.checked
     property alias locales: languageBox.model
@@ -13,71 +16,62 @@ Frame {
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
     property alias fdRollInverted: fdRollBar.currentIndex
-    property int speedStep: 0
-    property int altitudeStep: 0
 
-    signal updateSettings()
+    signal save()
+    signal restore()
 
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
 
     GridLayout {
         anchors.fill: parent
-        anchors.margins: palette.controlBaseSize / 2
-        rowSpacing: palette.controlBaseSize / 2
+        rowSpacing: palette.spacing
         columns: 3
 
-        Label {
+        Controls.Label {
             text: qsTr("Fullscreen")
             Layout.fillWidth: true
         }
 
-        CheckBox {
+        Controls.CheckBox {
             id: fullscreenBox
             Layout.columnSpan: 2
             Layout.alignment: Qt.AlignRight
-            onCheckedChanged: {
-                updateSettings();
-                main.updateUiSettings();
-            }
+            onCheckedChanged: changed = true
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Language")
             Layout.fillWidth: true
         }
 
-        ComboBox {
+        Controls.ComboBox {
             id: languageBox
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            onCurrentIndexChanged: updateSettings()
+            onCurrentIndexChanged: changed = true
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("UI size")
             Layout.fillWidth: true
         }
 
-        Slider {
+        Controls.Slider {
             id: uiSlider
             from: 24
             to: 64
             Layout.fillWidth: true
-            onPressedChanged: {
-                if (pressed) return;
-                updateSettings();
-                main.updateUiSettings();
-            }
+            onPressedChanged:  if (!pressed) changed = true
         }
 
-        Label {
+        Controls.Label {
             Layout.preferredWidth: 86
             horizontalAlignment: Text.AlignHCenter
             text: uiSlider.visualValue.toFixed(0)  // TODO: current value
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Palette")
             Layout.fillWidth: true
         }
@@ -87,25 +81,22 @@ Frame {
             Layout.columnSpan: 2
             height: paletteBar.height
 
-            TabBar {
+            Controls.TabBar {
                 id: paletteBar
                 anchors.centerIn: parent
                 width: parent.width
-                onCurrentIndexChanged: {
-                    updateSettings();
-                    main.updateUiSettings();
-                }
+                onCurrentIndexChanged: changed = true
 
-                TabButton {
+                Controls.TabButton {
                     text: qsTr("Outdoor")
                 }
-                TabButton {
+                Controls.TabButton {
                     text: qsTr("Indoor")
                 }
             }
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Artificial horizon")
             Layout.fillWidth: true
         }
@@ -115,55 +106,74 @@ Frame {
             Layout.columnSpan: 2
             height: fdRollBar.height
 
-            TabBar {
+            Controls.TabBar {
                 id: fdRollBar
                 anchors.centerIn: parent
                 width: parent.width
-                onCurrentIndexChanged: updateSettings()
+                onCurrentIndexChanged: changed = true
 
-                TabButton {
+                Controls.TabButton {
                     text: qsTr("Western")
                 }
-                TabButton {
+                Controls.TabButton {
                     text: qsTr("Russian")
                 }
             }
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Speed scale step")
             Layout.fillWidth: true
         }
 
-        ComboBox {
+        Controls.ComboBox {
             id: speedBox
             model: [5, 10, 25, 50, 100]
             Layout.columnSpan: 2
             Layout.fillWidth: true
             onCurrentTextChanged: {
                 speedStep = currentText;
-                updateSettings();// changed = true;
+                changed = true;
             }
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Altitude scale step")
             Layout.fillWidth: true
         }
 
-        ComboBox {
+        Controls.ComboBox {
             id: altitudeBox
             model: [5, 10, 25, 50, 100]
             Layout.columnSpan: 2
             Layout.fillWidth: true
             onCurrentTextChanged: {
                 altitudeStep = currentText;
-                updateSettings();// changed = true;
+                changed = true;
             }
         }
 
         Item {
             Layout.fillHeight: true
+        }
+
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: {
+                save();
+                main.updateUiSettings();
+            }
+            enabled: changed
+            Layout.fillWidth: true
         }
     }
 }

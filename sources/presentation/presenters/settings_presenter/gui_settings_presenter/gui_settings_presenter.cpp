@@ -34,18 +34,10 @@ void GuiSettingsPresenter::updateView()
     this->setViewProperty(PROPERTY(altitudeStep),
                           settings::Provider::value(settings::gui::fdAltitudeStep));
 
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
-void GuiSettingsPresenter::connectView(QObject* view)
-{
-    this->setViewProperty(PROPERTY(locales), QVariant::fromValue(
-                              domain::TranslationManager::avalibleLocales()));
-    this->updateView();
-
-    connect(view, SIGNAL(updateSettings()), this, SLOT(onUpdateSettings()));
-}
-
-void GuiSettingsPresenter::onUpdateSettings()
+void GuiSettingsPresenter::save()
 {
     settings::Provider::setValue(settings::gui::fullscreen,
                                  this->viewProperty(PROPERTY(fullscreen)).toBool());
@@ -64,4 +56,19 @@ void GuiSettingsPresenter::onUpdateSettings()
                                  this->viewProperty(PROPERTY(speedStep)));
     settings::Provider::setValue(settings::gui::fdAltitudeStep,
                                  this->viewProperty(PROPERTY(altitudeStep)));
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
+
+void GuiSettingsPresenter::connectView(QObject* view)
+{
+    this->setViewProperty(PROPERTY(locales), QVariant::fromValue(
+                              domain::TranslationManager::avalibleLocales()));
+
+    connect(view, SIGNAL(save()), this, SLOT(save()));
+    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
+
+    this->updateView();
+}
+
+
