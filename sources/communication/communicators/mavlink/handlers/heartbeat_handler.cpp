@@ -53,14 +53,14 @@ namespace
         }
     }
 
-    Telemetry::State decodeState(uint8_t state)
+    Telemetry::SystemState decodeState(uint8_t state)
     {
         switch (state)
         {
         case MAV_STATE_BOOT:
             return Telemetry::Boot;
         case MAV_STATE_CALIBRATING:
-            return BaseVehicle::Calibrating;
+            return Telemetry::Calibrating;
         case MAV_STATE_STANDBY:
             return Telemetry::Standby;
         case MAV_STATE_ACTIVE:

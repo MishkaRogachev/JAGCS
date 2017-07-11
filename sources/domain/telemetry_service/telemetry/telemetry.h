@@ -9,7 +9,7 @@
 //  |-Status
 //  |  |-Armed                          bool
 //  |  |-Mode                           string
-//  |  |-State                          state
+//  |  |-State                          SystemState
 //  |-Position
 //  |  |-Coordinate                     coordinate
 //  |  |-Direction                      direction
@@ -195,7 +195,7 @@ namespace domain
             Wind = 11000,
         };
 
-        enum State
+        enum SystemState
         {
             UnknownState,
             Boot,
@@ -246,6 +246,7 @@ namespace domain
         QMap<TelemetryId, Telemetry*> m_childNodes;
 
         Q_ENUM(TelemetryId)
+        Q_ENUM(SystemState)
     };
 }
 
