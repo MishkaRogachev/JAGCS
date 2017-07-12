@@ -58,7 +58,7 @@ ApplicationWindow {
     function createModeView(mode) {
         switch (mode) {
         case "control": return Qt.createComponent("Control/ControlView.qml");
-        case "mission": return Qt.createComponent("Mission/MissionView.qml");
+        case "planning": return Qt.createComponent("Planning/PlanningView.qml");
         case "settings": return Qt.createComponent("Settings/SettingsView.qml");
         }
     }

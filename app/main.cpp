@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     engine.rootContext()->setContextProperty(PROPERTY(settings), settings::Provider::instance());
     presenter.setView(engine.rootObjects().first());
 
-    presenter.setMode("mission");
+    presenter.setMode("planning");
 
     return app.exec();
 }

@@ -17,8 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MissionPresenter(domain::DomainEntry* entry,
-                                  QObject* parent = nullptr);
+        explicit MissionPresenter(domain::DomainEntry* entry, QObject* parent = nullptr);
         ~MissionPresenter() override;
 
     public slots:

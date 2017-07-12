@@ -42,7 +42,7 @@ ToolBar {
             }
 
             StatusModeButton {
-                mode: "mission"
+                mode: "planning"
                 iconSource: "qrc:/icons/map-marker.svg"
                 anchors.verticalCenter: parent.verticalCenter
             }

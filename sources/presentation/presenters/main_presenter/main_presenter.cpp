@@ -9,7 +9,7 @@
 
 #include "statusbar_presenter.h"
 #include "control_presenter.h"
-#include "mission_presenter.h"
+#include "planning_presenter.h"
 #include "settings_presenter.h"
 
 using namespace presentation;
@@ -52,9 +52,9 @@ void MainPresenter::setMode(const QString& mode)
     {
         d->modePresenter = new ControlPresenter(d->entry, this);
     }
-    if (mode == "mission")
+    if (mode == "planning")
     {
-        d->modePresenter = new MissionPresenter(d->entry, this);
+        d->modePresenter = new PlanningPresenter(d->entry, this);
     }
     else if (mode == "settings")
     {

@@ -16,7 +16,6 @@
 #include "command_service.h"
 
 #include "mission_item_presenter.h"
-#include "location_map_presenter.h"
 
 using namespace presentation;
 
@@ -30,13 +29,11 @@ public:
     db::MissionPtrList missions;
 
     MissionItemPresenter* item;
-    AbstractMapPresenter* map;
 };
 
 using namespace presentation;
 
-MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
-                                   QObject* parent):
+MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -60,13 +57,10 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry,
     connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
 
     d->item = new MissionItemPresenter(d->dbFacade, this);
-    d->map = new LocationMapPresenter(entry, this);
 }
 
 MissionPresenter::~MissionPresenter()
-{
-    if (d->map->view()) d->map->saveViewPort();
-}
+{}
 
 void MissionPresenter::selectMission(const db::MissionPtr& mission)
 {
@@ -82,7 +76,6 @@ void MissionPresenter::selectMission(const db::MissionPtr& mission)
 void MissionPresenter::connectView(QObject* view)
 {
     d->item->setView(view->findChild<QObject*>(NAME(missionItem)));
-    d->map->setView(view->findChild<QObject*>(NAME(map)));
 
     this->updateVehiclesBox();
     this->updateMissionsBox();
