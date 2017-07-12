@@ -57,6 +57,7 @@
         <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
         <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/Overlays/HomeMapOverlayView.qml</file>
+        <file>Views/VerticalProfile/VerticalProfileView.qml</file>
         <file>Views/Control/ControlView.qml</file>
         <file>Views/Control/DashboardView.qml</file>
         <file>Views/Control/Displays/SatelliteDisplay.qml</file>
