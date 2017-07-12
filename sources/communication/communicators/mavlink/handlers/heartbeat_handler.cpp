@@ -119,7 +119,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         vehicle = db::VehiclePtr::create();
         vehicle->setMavId(message.sysid);
         vehicle->setType(db::Vehicle::Auto);
-        vehicle->setName(tr("Added vehicle"));
+        vehicle->setName(tr("Added"));
         d->dbFacade->save(vehicle);
     }
 

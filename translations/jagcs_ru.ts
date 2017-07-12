@@ -295,32 +295,32 @@
         <translation>Миграция:</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="94"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="95"/>
         <source>Clear DB log</source>
         <translation>Очистить журнал БД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="103"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="104"/>
         <source>Restore</source>
         <translation>Восстановить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="111"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="112"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="120"/>
         <source>Migrate</source>
         <translation>Мигрировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="127"/>
         <source>Reconnect</source>
         <translation>Переподключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="127"/>
         <source>Connect</source>
         <translation>Подключить</translation>
     </message>
@@ -339,13 +339,21 @@
     </message>
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="38"/>
-        <source>Default Vehicle</source>
-        <translation>Аппарат по-умолчанию</translation>
+        <source>Default</source>
+        <translation>По-умолчанию</translation>
     </message>
     <message>
         <location filename="../sources/db/migrator/migrations/default_params_migration.cpp" line="43"/>
+        <source>Idle</source>
+        <translation>Пустая</translation>
+    </message>
+    <message>
+        <source>Default Vehicle</source>
+        <translation type="vanished">Аппарат по-умолчанию</translation>
+    </message>
+    <message>
         <source>Default Mission</source>
-        <translation>Стандартная Миссия</translation>
+        <translation type="vanished">Стандартная Миссия</translation>
     </message>
 </context>
 <context>
@@ -515,17 +523,17 @@
         <translation>TAS</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="102"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="103"/>
         <source>SAT</source>
         <translation>SAT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="133"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="134"/>
         <source>ALT</source>
         <translation>ALT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="139"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="140"/>
         <source>RF</source>
         <translation>РВ</translation>
     </message>
@@ -533,47 +541,67 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="53"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="56"/>
         <source>UI size</source>
         <translation>Размер интерфейса</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="76"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="75"/>
         <source>Palette</source>
         <translation>Палитра</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="98"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="94"/>
         <source>Indoor</source>
         <translation>Дневная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="100"/>
         <source>Artificial horizon</source>
         <translation>Авиагоризонт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="120"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="116"/>
         <source>Western</source>
         <translation>Западный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="123"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="119"/>
         <source>Russian</source>
         <translation>Отечественный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="95"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="125"/>
+        <source>Speed scale step</source>
+        <translation>Шаг шкалы скорости</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="141"/>
+        <source>Altitude scale step</source>
+        <translation>Шаг шкалы высоты</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="161"/>
+        <source>Restore</source>
+        <translation>Восстановить</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="169"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="91"/>
         <source>Outdoor</source>
         <translation>Ночная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="26"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="32"/>
         <source>Fullscreen</source>
         <translation>Полноэкранный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="41"/>
+        <location filename="../sources/presentation/qml/Views/Settings/GuiSettingsView.qml" line="44"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -1316,32 +1344,32 @@
 <context>
     <name>StatusDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="12"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="11"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="30"/>
         <source> V</source>
         <translation> В</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="58"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
         <source> A</source>
         <translation> А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="64"/>
         <source> mAh</source>
         <translation> мАч</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="69"/>
         <source>DISARM</source>
         <translation>РАЗРЯД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="69"/>
         <source>ARM</source>
         <translation>ЗАРЯД</translation>
     </message>
@@ -1370,16 +1398,31 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="72"/>
+        <source>Status:</source>
+        <translation>Статус:</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="77"/>
+        <source>Online</source>
+        <translation>На связи</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="77"/>
+        <source>Offline</source>
+        <translation>Потеря связи</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="83"/>
         <source>Restore</source>
         <translation>Восстановить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="80"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="91"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="88"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="99"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -1602,9 +1645,13 @@
 <context>
     <name>comm::HeartbeatHandler</name>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/heartbeat_handler.cpp" line="109"/>
         <source>Added vehicle</source>
-        <translation>Добавленный аппарат</translation>
+        <translation type="vanished">Добавленный аппарат</translation>
+    </message>
+    <message>
+        <location filename="../sources/communication/communicators/mavlink/handlers/heartbeat_handler.cpp" line="122"/>
+        <source>Added</source>
+        <translation>Добавленный</translation>
     </message>
 </context>
 <context>
