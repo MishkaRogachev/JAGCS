@@ -45,7 +45,6 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
 
     connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
-    connect(dbFacade, &db::DbFacade::vehicleChanged, this, &ControlPresenter::updateVehiclesList);
 }
 
 ControlPresenter::~ControlPresenter()
@@ -57,13 +56,18 @@ void ControlPresenter::updateVehiclesList()
 {
     QStringList vehicles;
     vehicles.append(QString());
+    int index = 1;
+    int onlineIndex = -1;
 
     for (const db::VehiclePtr& vehicle: d->entry->dbFacade()->vehicles())
     {
         vehicles.append(vehicle->name());
+        if (vehicle->isOnline() && onlineIndex == -1) onlineIndex = index;
+        index++;
     }
 
     this->setViewProperty(PROPERTY(vehicles), vehicles);
+    if (onlineIndex > -1) this->setViewProperty(PROPERTY(selectedVehicle), onlineIndex);
 }
 
 void ControlPresenter::connectView(QObject* view)

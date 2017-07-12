@@ -125,7 +125,14 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     if (vehicle)
     {
-        vehicle->setOnline(true);
+        bool changed  = false;
+
+        if (!vehicle->isOnline())
+        {
+            vehicle->setOnline(true);
+            changed = true;
+        }
+
         if (!d->vehicleTimers.contains(vehicleId))
         {
             d->vehicleTimers[vehicleId] = new QBasicTimer();
@@ -137,8 +144,9 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         if (vehicle->type() == db::Vehicle::Auto)
         {
             vehicle->setType(::decodeType(heartbeat.type));
+            changed = true;
         }
-        d->dbFacade->vehicleChanged(vehicle);
+        if (changed) d->dbFacade->vehicleChanged(vehicle);
     }
 
     Telemetry* node = d->telemetryService->mavNode(message.sysid);

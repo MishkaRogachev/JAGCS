@@ -7,6 +7,7 @@ ComboBox {
     id: control
 
     font.pixelSize: palette.fontPixelSize
+    clip: true
     //enabled: count > 0 TODO: comboBox does not update
 
     delegate: ItemDelegate {
