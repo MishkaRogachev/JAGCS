@@ -15,20 +15,40 @@ using namespace presentation;
 VerticalProfilePresenter::VerticalProfilePresenter(db::DbFacade* dbFacade, QObject* parent):
     BasePresenter(parent),
     m_dbFacade(dbFacade)
-{}
+{
+    connect(m_dbFacade, &db::DbFacade::missionItemAdded, this, [this]
+            (const db::MissionItemPtr& missionItem){
+        if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
+    });
 
-void VerticalProfilePresenter::showMission(const db::MissionPtr& mission)
+    connect(m_dbFacade, &db::DbFacade::missionItemRemoved, this, [this]
+            (const db::MissionItemPtr& missionItem){
+        if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
+    });
+
+    connect(m_dbFacade, &db::DbFacade::missionItemChanged, this, [this]
+            (const db::MissionItemPtr& missionItem){
+        if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
+    });
+}
+
+void VerticalProfilePresenter::selectMission(const db::MissionPtr& mission)
+{
+    if (m_mission == mission) return;
+
+    m_mission = mission;
+    if (this->view()) this->updateMission();
+}
+
+void VerticalProfilePresenter::updateMission()
 {
     this->invokeViewMethod(PROPERTY(clearWaypoints));
 
-    if (mission.isNull()) return;
+    if (m_mission.isNull()) return;
     QGeoCoordinate lastCoordinate;
     int distance = 0;
-    for (const db::MissionItemPtr& item: m_dbFacade->missionItems(mission->id()))
+    for (const db::MissionItemPtr& item: m_dbFacade->missionItems(m_mission->id()))
     {
-        // FIXME: relative altitude
-        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
-
         // TODO: another commands
         if (item->command() == db::MissionItem::Waypoint)
         {
@@ -41,6 +61,9 @@ void VerticalProfilePresenter::showMission(const db::MissionPtr& mission)
             }
             lastCoordinate = coordinate;
         }
+
+        // FIXME: relative altitude
+        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
     }
 }
 
@@ -52,4 +75,6 @@ void VerticalProfilePresenter::clearMission()
 void VerticalProfilePresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
+
+    this->updateMission();
 }

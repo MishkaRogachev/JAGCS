@@ -32,7 +32,7 @@ PlanningPresenter::PlanningPresenter(domain::DomainEntry* entry, QObject* parent
     d->profile = new VerticalProfilePresenter(entry->dbFacade(), this);
 
     connect(d->mission, &MissionPresenter::missionSelected,
-            d->profile, &VerticalProfilePresenter::showMission);
+            d->profile, &VerticalProfilePresenter::selectMission);
 }
 
 void PlanningPresenter::connectView(QObject* view)

@@ -37,7 +37,6 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
         height: profileVisibe ? parent.height / 3 : 0
-        Behavior on height { PropertyAnimation { duration: 150 } }
     }
 
     Controls.Button {

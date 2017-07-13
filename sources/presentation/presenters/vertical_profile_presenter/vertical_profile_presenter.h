@@ -21,7 +21,8 @@ namespace presentation
                                           QObject* parent = nullptr);
 
     public slots:
-        void showMission(const db::MissionPtr& mission);
+        void selectMission(const db::MissionPtr& mission);
+        void updateMission();
         void clearMission();
 
     protected:
@@ -29,6 +30,7 @@ namespace presentation
 
     private:
         db::DbFacade* m_dbFacade;
+        db::MissionPtr m_mission;
     };
 }
 

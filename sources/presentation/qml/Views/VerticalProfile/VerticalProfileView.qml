@@ -15,20 +15,24 @@ Item {
         if (maxDistance < distance) maxDistance = distance;
         if (maxAltitude < altitude) maxAltitude = altitude;
         waypoints.append(distance, altitude);
+        paths.append(distance, altitude);
     }
 
     function insertWaypoint(index, distance, altitude) {
         waypoints.append(index, distance, altitude);
+        paths.append(index, distance, altitude);
     }
 
     function removeWaypoint(index) {
         waypoints.remove(index);
+        paths.remove(index);
     }
 
     function clearWaypoints() {
         maxDistance = 1;
         maxAltitude = 1;
         waypoints.clear();
+        paths.clear();
     }
 
     ChartView {
@@ -50,6 +54,14 @@ Item {
             min: minAltitude
             max: maxAltitude
             labelsColor: palette.textColor
+        }
+
+        LineSeries {
+            id: paths
+            axisX: distanceAxis
+            axisY: altitudeAxis
+            color: palette.missionColor
+            width: 2
         }
 
         ScatterSeries {
