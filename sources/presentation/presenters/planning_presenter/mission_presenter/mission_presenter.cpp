@@ -71,6 +71,8 @@ void MissionPresenter::selectMission(const db::MissionPtr& mission)
                           d->missions.indexOf(d->selectedMission) + 1);
     this->updateAssignment();
     this->updateStatuses();
+
+    emit missionSelected(mission);
 }
 
 void MissionPresenter::connectView(QObject* view)

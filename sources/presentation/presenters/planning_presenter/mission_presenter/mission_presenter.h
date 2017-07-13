@@ -44,6 +44,9 @@ namespace presentation
         void onUploadMission();
         void onDownloadMission();
 
+    signals:
+        void missionSelected(const db::MissionPtr& mission);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

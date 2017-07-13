@@ -16,7 +16,7 @@ Controls.Pane {
         objectName: "mission"
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.bottom: parent.bottom
+        anchors.bottom: profile.top
     }
 
     MapView {
@@ -32,7 +32,7 @@ Controls.Pane {
     VerticalProfileView {
         id: profile
         objectName: "profile"
-        anchors.left: mission.right
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
