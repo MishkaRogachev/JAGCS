@@ -26,24 +26,16 @@ namespace presentation
         void setMission(const db::MissionPtr& mission);
         void setMissionItem(const db::MissionItemPtr& item);
 
-        void removeItem();
+        void remove();
         void selectItem(int index);
+        void save();
+        void updateView();
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
         void updateCount(bool gotoNewItem = false);
-        void updateItem();
-
-        void onSetCommand(int command);
-        void onSetAltitude(qreal altitude);
-        void onSetAltitudeRelative(bool relative);
-        void onSetLatitude(qreal latitude);
-        void onSetLongitude(qreal longitude);
-        void onSetRadius(qreal radius);
-        void onSetPeriods(int periods);
-        void onSetPitch(qreal pitch);
 
     private:
          class Impl;

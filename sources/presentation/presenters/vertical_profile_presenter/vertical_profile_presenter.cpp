@@ -53,10 +53,8 @@ void VerticalProfilePresenter::updateMission()
         if (item->command() == db::MissionItem::Waypoint)
         {
             QGeoCoordinate coordinate(item->latitude(), item->longitude());
-            qDebug() << coordinate;
             if (lastCoordinate.isValid() && coordinate.isValid())
             {
-                qDebug() << lastCoordinate.distanceTo(coordinate);
                 distance += lastCoordinate.distanceTo(coordinate);
             }
             lastCoordinate = coordinate;

@@ -1,17 +1,17 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
 ColumnLayout {
     id: root
 
+    property bool changed: false
     property int sequence: 0
     property int count: 0
 
-    property int command: MissionItem.UnknownCommand
+    property alias command: commandBox.currentIndex
     property alias commands: commandBox.model
 
     property alias altitude: altitudeEdit.realValue
@@ -38,24 +38,15 @@ ColumnLayout {
 
     property alias picking: pickButton.checked
 
+    signal save()
+    signal restore()
+    signal remove()
     signal selectItem(int sequence)
-    signal removeItem()
-
-    signal setCommand(int command);
-    signal setAltitude(real altitude)
-    signal setAltitudeRelative(bool relative)
-    signal setLatitude(real latitude)
-    signal setLongitude(real longitude)
-    signal setRadius(real radius)
-    signal setPeriods(int periods)
-    signal setPitch(real pitch)
-
-    onCommandChanged: commandBox.currentIndex = command;
 
     GridLayout {
         columns: 3
 
-        Label {
+        Controls.Label {
             text: qsTr("Item")
             Layout.fillWidth: true
         }
@@ -63,100 +54,101 @@ ColumnLayout {
         RowLayout {
             Layout.columnSpan: 2
 
-            Button {
+            Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
                 enabled: sequence > 0
-                onClicked: removeItem()
+                onClicked: remove()
             }
 
-            Button {
+            Controls.Button {
                 iconSource: "qrc:/icons/left.svg"
                 enabled: sequence > 1
                 onClicked: selectItem(sequence - 1)
             }
 
-            Label {
+            Controls.Label {
                 Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 horizontalAlignment: Qt.AlignHCenter
                 text: sequence + "/" + count
             }
 
-            Button {
+            Controls.Button {
                 iconSource: "qrc:/icons/right.svg"
                 enabled: sequence < count
                 onClicked: selectItem(sequence + 1)
             }
 
-            Button {
+            Controls.Button {
                 iconSource: "qrc:/icons/add.svg"
                 enabled: sequence == count && selectedMission > 0
                 onClicked: addItem()
             }
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Command")
             visible: sequence !== 0
             Layout.fillWidth: true
         }
 
-        ComboBox {
+        Controls.ComboBox {
             id: commandBox
             visible: sequence !== 0
-            onCurrentIndexChanged: setCommand(currentIndex)
+            currentIndex: MissionItem.UnknownCommand
+            onCurrentIndexChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Spacer { visible: sequence !== 0; }
+        Controls.Spacer { visible: sequence !== 0; }
 
-        Label {
+        Controls.Label {
             text: qsTr("Altitude")
             visible: altitudeVisible
             Layout.fillWidth: true
         }
 
-        RealSpinBox {
+        Controls.RealSpinBox {
             id: altitudeEdit
             visible: altitudeVisible
             realFrom: -500 // 418 m Daed Sea shore
             realTo: 20000 // TODO: constants to config
-            onRealValueChanged: setAltitude(realValue)
+            onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Spacer { visible: altitudeVisible }
+        Controls.Spacer { visible: altitudeVisible }
 
-        Label {
+        Controls.Label {
             text: qsTr("Altitude relative")
             visible: altitudeVisible
             Layout.fillWidth: true
         }
 
-        CheckBox {
+        Controls.CheckBox {
             id: altitudeRelativeEdit
             visible: altitudeVisible
-            onCheckedChanged: setAltitudeRelative(checked)
+            onCheckedChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Spacer { visible: altitudeVisible }
+        Controls.Spacer { visible: altitudeVisible }
 
-        Label {
+        Controls.Label {
             text: qsTr("Latitude")
             visible: positionVisible
             Layout.fillWidth: true
         }
 
-        CoordSpinBox {
+        Controls.CoordSpinBox {
             id: latitudeEdit
             visible: positionVisible
-            onRealValueChanged: setLatitude(realValue)
+            onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        MapPickButton {
+        Controls.MapPickButton {
             id: pickButton
             visible: positionVisible
             Layout.rowSpan: 2
@@ -166,71 +158,90 @@ ColumnLayout {
             }
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Longitude")
             visible: positionVisible
             Layout.fillWidth: true
         }
 
-        CoordSpinBox {
+        Controls.CoordSpinBox {
             id: longitudeEdit
             visible: positionVisible
             isLongitude: true
-            onRealValueChanged: setLongitude(realValue)
+            onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Radius")
             visible: radiusVisible
             Layout.fillWidth: true
         }
 
-        RealSpinBox {
+        Controls.RealSpinBox {
             id: radiusEdit
             visible: radiusVisible
             realTo: 5000 // TODO: constants to config
-            onRealValueChanged: setRadius(realValue)
+            onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Spacer { visible: radiusVisible }
+        Controls.Spacer { visible: radiusVisible }
 
-        Label {
+        Controls.Label {
             text: qsTr("Pitch")
             visible: pitchVisible
             Layout.fillWidth: true
         }
 
-        RealSpinBox {
+        Controls.RealSpinBox {
             id: pitchEdit
             visible: pitchVisible
             realFrom: -90
             realTo: 90 // TODO: constants to config
-            onRealValueChanged: setPitch(realValue)
+            onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Spacer { visible: pitchVisible }
+        Controls.Spacer { visible: pitchVisible }
 
-        Label {
+        Controls.Label {
             text: qsTr("Periods")
             visible: periodsVisible
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignRight
         }
 
-        SpinBox {
+        Controls.SpinBox {
             id: periodsEdit
             visible: periodsVisible
-            onValueChanged: setPeriods(value)
+            onValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Spacer { visible: periodsVisible }
+        Controls.Spacer { visible: periodsVisible }
 
-        Spacer {
+        Controls.Spacer {
             Layout.fillHeight: true
+            Layout.columnSpan: 3
         }
+
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: changed
+            Layout.fillWidth: true
+        }
+
+        Controls.Spacer {}
     }
 }

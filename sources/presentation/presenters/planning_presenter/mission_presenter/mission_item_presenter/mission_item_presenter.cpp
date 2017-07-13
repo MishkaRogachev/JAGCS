@@ -34,26 +34,24 @@ public:
     db::MissionPtr selectedMission;
     db::MissionItemPtr item;
 
-    db::DbFacade* dbFacade;
+    db::DbFacade* facade;
 };
 
 MissionItemPresenter::MissionItemPresenter(db::DbFacade* dbFacade, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->dbFacade = dbFacade;
+    d->facade = dbFacade;
 
-    connect(dbFacade, &db::DbFacade::missionItemAdded,
-            this, &MissionItemPresenter::updateCount);
-    connect(dbFacade, &db::DbFacade::missionItemRemoved,
-            this, &MissionItemPresenter::updateCount);
+    connect(dbFacade, &db::DbFacade::missionItemAdded, this, &MissionItemPresenter::updateCount);
+    connect(dbFacade, &db::DbFacade::missionItemRemoved, this, &MissionItemPresenter::updateCount);
 }
 
 MissionItemPresenter::~MissionItemPresenter()
 {
     if (d->selectedMission)
     {
-        d->dbFacade->saveMissionItems(d->selectedMission->id());
+        d->facade->saveMissionItems(d->selectedMission->id());
     }
 }
 
@@ -66,11 +64,6 @@ void MissionItemPresenter::setMission(const db::MissionPtr& mission)
 {
     if (d->selectedMission == mission) return;
 
-    if (d->selectedMission) // TODO: save only nessesory data
-    {
-        d->dbFacade->saveMissionItems(d->selectedMission->id());
-    }
-
     d->selectedMission = mission;
     this->updateCount(true);
 }
@@ -80,60 +73,42 @@ void MissionItemPresenter::setMissionItem(const db::MissionItemPtr& item)
     if (d->item == item) return;
 
     d->item = item;
-    this->updateItem();
+    this->updateView();
 }
 
-void MissionItemPresenter::removeItem()
+void MissionItemPresenter::remove()
 {
     if (d->item.isNull()) return;
 
-    d->dbFacade->remove(d->item);
+    d->facade->remove(d->item);
 }
 
 void MissionItemPresenter::selectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->item = d->dbFacade->missionItem(d->selectedMission->id(), index);
-    this->updateItem();
+    d->item = d->facade->missionItem(d->selectedMission->id(), index);
+    this->updateView();
 }
 
-void MissionItemPresenter::connectView(QObject* view)
+void MissionItemPresenter::save()
 {
-    connect(view, SIGNAL(removeItem()), this, SLOT(removeItem()));
-    connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
+    d->item->setCommand(static_cast<db::MissionItem::Command>(
+                            this->viewProperty(PROPERTY(command)).toInt()));
+    d->item->setAltitude(this->viewProperty(PROPERTY(altitude)).toFloat());
+    d->item->setAltitudeRelative(this->viewProperty(PROPERTY(relative)).toBool());
+    d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
+    d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
+    d->item->setRadius(this->viewProperty(PROPERTY(radius)).toFloat());
+    d->item->setPeriods(this->viewProperty(PROPERTY(periods)).toInt());
+    d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
 
-    connect(view, SIGNAL(setCommand(int)), this, SLOT(onSetCommand(int)));
-    connect(view, SIGNAL(setAltitude(qreal)), this, SLOT(onSetAltitude(qreal)));
-    connect(view, SIGNAL(setAltitudeRelative(bool)), this, SLOT(onSetAltitudeRelative(bool)));
-    connect(view, SIGNAL(setLatitude(qreal)), this, SLOT(onSetLatitude(qreal)));
-    connect(view, SIGNAL(setLongitude(qreal)), this, SLOT(onSetLongitude(qreal)));
-    connect(view, SIGNAL(setRadius(qreal)), this, SLOT(onSetRadius(qreal)));
-    connect(view, SIGNAL(setPeriods(int)), this, SLOT(onSetPeriods(int)));
-    connect(view, SIGNAL(setPitch(qreal)), this, SLOT(onSetPitch(qreal)));
+    if (!d->facade->save(d->item)) return;
 
-    QStringList commands = ::commands.values();
-    this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
-
-    this->updateCount(true);
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
-void MissionItemPresenter::updateCount(bool gotoNewItem)
-{
-    if (d->selectedMission)
-    {
-        this->setViewProperty(PROPERTY(count), d->selectedMission->count());
-        if (gotoNewItem) this->selectItem(d->selectedMission->count());
-    }
-    else
-    {
-        this->setViewProperty(PROPERTY(count), 0);
-        d->item.clear();
-        this->updateItem();
-    }
-}
-
-void MissionItemPresenter::updateItem()
+void MissionItemPresenter::updateView()
 {
     if (d->item)
     {
@@ -152,69 +127,36 @@ void MissionItemPresenter::updateItem()
         this->setViewProperty(PROPERTY(sequence), 0);
         this->setViewProperty(PROPERTY(command), db::MissionItem::UnknownCommand);
     }
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
-void MissionItemPresenter::onSetCommand(int command)
+void MissionItemPresenter::connectView(QObject* view)
 {
-    if (d->item.isNull()) return;
+    QStringList commands = ::commands.values();
+    this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 
-    d->item->setCommand(db::MissionItem::Command(command));
-    this->updateItem();
-    emit d->dbFacade->missionItemChanged(d->item);
+    connect(view, SIGNAL(remove()), this, SLOT(remove()));
+    connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
+
+    connect(view, SIGNAL(save()), this, SLOT(save()));
+    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
+    connect(view, SIGNAL(remove()), this, SLOT(remove()));
+
+    this->updateCount(true);
 }
 
-void MissionItemPresenter::onSetAltitude(qreal altitude)
+void MissionItemPresenter::updateCount(bool gotoNewItem)
 {
-    if (d->item.isNull()) return;
-
-    d->item->setAltitude(altitude);
-    emit d->dbFacade->missionItemChanged(d->item);
-}
-
-void MissionItemPresenter::onSetAltitudeRelative(bool relative)
-{
-    if (d->item.isNull()) return;
-
-    d->item->setAltitudeRelative(relative);
-    emit d->dbFacade->missionItemChanged(d->item);
-}
-
-void MissionItemPresenter::onSetLatitude(qreal latitude)
-{
-    if (d->item.isNull()) return;
-
-    d->item->setLatitude(latitude);
-    emit d->dbFacade->missionItemChanged(d->item);
-}
-
-void MissionItemPresenter::onSetLongitude(qreal longitude)
-{
-    if (d->item.isNull()) return;
-
-    d->item->setLongitude(longitude);
-    emit d->dbFacade->missionItemChanged(d->item);
-}
-
-void MissionItemPresenter::onSetRadius(qreal radius)
-{
-    if (d->item.isNull()) return;
-
-    d->item->setRadius(radius);
-    emit d->dbFacade->missionItemChanged(d->item);
-}
-
-void MissionItemPresenter::onSetPeriods(int periods)
-{
-    if (d->item.isNull()) return;
-
-    d->item->setPeriods(periods);
-    emit d->dbFacade->missionItemChanged(d->item);
-}
-
-void MissionItemPresenter::onSetPitch(qreal pitch)
-{
-    if (d->item.isNull()) return;
-
-    d->item->setPitch(pitch);
-    emit d->dbFacade->missionItemChanged(d->item);
+    if (d->selectedMission)
+    {
+        this->setViewProperty(PROPERTY(count), d->selectedMission->count());
+        if (gotoNewItem) this->selectItem(d->selectedMission->count());
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(count), 0);
+        d->item.clear();
+        this->updateView();
+    }
 }
