@@ -7,13 +7,15 @@ Item {
     id: root
 
     property real minDistance: 0
-    property real maxDistance: 1
+    property real maxDistance: 0
     property real minAltitude: 0
-    property real maxAltitude: 1
+    property real maxAltitude: 0
 
     function appendWaypoint(distance, altitude) {
-        if (maxDistance < distance) maxDistance = distance;
-        if (maxAltitude < altitude) maxAltitude = altitude;
+        if (minDistance > distance) minDistance = distance * 1.1;
+        if (minAltitude > altitude) minAltitude = altitude * 1.1;
+        if (maxDistance < distance) maxDistance = distance * 1.1;
+        if (maxAltitude < altitude) maxAltitude = altitude * 1.1;
         waypoints.append(distance, altitude);
         paths.append(distance, altitude);
     }
@@ -29,8 +31,10 @@ Item {
     }
 
     function clearWaypoints() {
-        maxDistance = 1;
-        maxAltitude = 1;
+        minDistance = 0;
+        minAltitude = 0;
+        maxDistance = 0;
+        maxAltitude = 0;
         waypoints.clear();
         paths.clear();
     }

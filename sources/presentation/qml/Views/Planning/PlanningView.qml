@@ -36,7 +36,7 @@ Controls.Pane {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
-        height: profileVisibe ? parent.height / 3 : 0
+        height: profileVisibe ? parent.height / 4 : 0
     }
 
     Controls.Button {
