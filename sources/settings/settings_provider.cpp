@@ -22,10 +22,6 @@ public:
 
         settings.setValue(data_base::name, "jagcs_db");
 
-        settings.setValue(map::zoomLevel, 16.0);
-        settings.setValue(map::centerLatitude, 55.968954);
-        settings.setValue(map::centerLongitude, 37.110155);
-
         settings.setValue(communication::systemId, 255);
         settings.setValue(communication::componentId, 0);
         settings.setValue(communication::heartbeat, 1000);
@@ -37,6 +33,11 @@ public:
 
         settings.setValue(mission::defaultAcceptanceRadius, 3);
         settings.setValue(mission::defaultTakeoffPitch, 15);
+
+        settings.setValue(map::zoomLevel, 16.0);
+        settings.setValue(map::centerLatitude, 55.968954);
+        settings.setValue(map::centerLongitude, 37.110155);
+        settings.setValue(map::cacheFolder, "~/.cache/QtLocation/osm");
 
         settings.setValue(gui::fullscreen, true);
         settings.setValue(gui::locale, "en");

@@ -14,14 +14,16 @@ MapSettingsPresenter::MapSettingsPresenter(QObject* parent):
 
 void MapSettingsPresenter::updateView()
 {
-    // TODO: impl
+    this->setViewProperty(PROPERTY(cacheFolder),
+                          settings::Provider::value(settings::map::cacheFolder));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void MapSettingsPresenter::save()
 {
-    // TODO: impl
+    settings::Provider::setValue(settings::map::cacheFolder,
+                                 this->viewProperty(PROPERTY(cacheFolder)));
 
     this->setViewProperty(PROPERTY(changed), false);
 }

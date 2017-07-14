@@ -35,7 +35,7 @@ Map {
 
         PluginParameter {
             name: "osm.mapping.offline.directory";
-            value: "~/.cache/QtLocation/osm"
+            value: settings.value("Map/cacheFolder", "~/.cache/QtLocation/osm");
         }
 
         PluginParameter {

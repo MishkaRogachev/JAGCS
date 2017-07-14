@@ -8,33 +8,6 @@ namespace settings
         const char* const name = "Data_base/name";
     }
 
-    namespace gui
-    {
-        const char* const fullscreen = "Gui/fullscreen";
-        const char* const locale = "Gui/locale";
-        const char* const uiSize = "Gui/uiSize";
-        const char* const paletteStyle = "Gui/paletteStyle";
-        const char* const fdRollInverted = "Gui/fdRollInverted";
-        const char* const fdSpeedStep = "Gui/fdSpeedStep";
-        const char* const fdAltitudeStep = "Gui/fdAltitudeStep";
-    }
-
-    namespace map
-    {
-        const char* const zoomLevel = "Map/zoomLevel";
-        const char* const centerLatitude = "Map/centerLatitude";
-        const char* const centerLongitude = "Map/centerLongitude";
-    }
-
-    namespace proxy
-    {
-        const char* const type = "NetworkProxy/type";
-        const char* const hostName = "NetworkProxy/hostName";
-        const char* const port = "NetworkProxy/port";
-        const char* const user = "NetworkProxy/user";
-        const char* const password = "NetworkProxy/password";
-    }
-
     namespace communication
     {
         const char* const systemId = "Communication/systemId";
@@ -51,6 +24,34 @@ namespace settings
     {
         const char* const defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
         const char* const defaultTakeoffPitch = "Mission/defaultTakeoffPitch";
+    }
+
+    namespace map
+    {
+        const char* const zoomLevel = "Map/zoomLevel";
+        const char* const centerLatitude = "Map/centerLatitude";
+        const char* const centerLongitude = "Map/centerLongitude";
+        const char* const cacheFolder = "Map/cacheFolder";
+    }
+
+    namespace gui
+    {
+        const char* const fullscreen = "Gui/fullscreen";
+        const char* const locale = "Gui/locale";
+        const char* const uiSize = "Gui/uiSize";
+        const char* const paletteStyle = "Gui/paletteStyle";
+        const char* const fdRollInverted = "Gui/fdRollInverted";
+        const char* const fdSpeedStep = "Gui/fdSpeedStep";
+        const char* const fdAltitudeStep = "Gui/fdAltitudeStep";
+    }
+
+    namespace proxy
+    {
+        const char* const type = "NetworkProxy/type";
+        const char* const hostName = "NetworkProxy/hostName";
+        const char* const port = "NetworkProxy/port";
+        const char* const user = "NetworkProxy/user";
+        const char* const password = "NetworkProxy/password";
     }
 }
 
