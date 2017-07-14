@@ -7,6 +7,10 @@ import "DataBase"
 import "Communications"
 import "Vehicles"
 import "Video"
+import "Map"
+import "Gui"
+import "Network"
+import "Help"
 
 Controls.Pane {
     id: root
@@ -26,6 +30,8 @@ Controls.Pane {
                     qsTr("Communications"),
                     qsTr("Vehicles"),
                     qsTr("Video"),
+
+                    qsTr("Map"),
 
                     qsTr("GUI"),
                     qsTr("Networking"),
@@ -52,6 +58,7 @@ Controls.Pane {
             CommunicationSettingsView { objectName: "communications" }
             VehicleSettingsView { objectName: "vehicles" }
             VideoSettingsView { objectName: "video" }
+            MapSettingsView { objectName: "map" }
             GuiSettingsView { objectName: "gui" }
             NetworkSettingsView { objectName: "network" }
             AboutView { objectName: "about" }

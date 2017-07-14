@@ -1,16 +1,16 @@
-#ifndef GUI_SETTINGS_PRESENTER_H
-#define GUI_SETTINGS_PRESENTER_H
+#ifndef MAP_SETTINGS_PRESENTER_H
+#define MAP_SETTINGS_PRESENTER_H
 
 #include "base_presenter.h"
 
 namespace presentation
 {
-    class GuiSettingsPresenter: public BasePresenter
+    class MapSettingsPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit GuiSettingsPresenter(QObject* parent = nullptr);
+        explicit MapSettingsPresenter(QObject* parent);
 
     public slots:
         void updateView();
@@ -21,4 +21,4 @@ namespace presentation
     };
 }
 
-#endif // GUI_SETTINGS_PRESENTER_H
+#endif // MAP_SETTINGS_PRESENTER_H

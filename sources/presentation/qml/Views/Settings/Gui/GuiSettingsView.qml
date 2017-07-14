@@ -15,7 +15,7 @@ Controls.Frame {
     property alias localeIndex: languageBox.currentIndex
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
-    property alias fdRollInverted: fdRollBar.currentIndex
+    property alias fdRollInverted: fdRollBar.currentIndexz
 
     signal save()
     signal restore()

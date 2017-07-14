@@ -76,8 +76,9 @@
         <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
         <file>Views/Settings/Video/VideoSettingsView.qml</file>
         <file>Views/Settings/Video/VideoSourceView.qml</file>
-        <file>Views/Settings/GuiSettingsView.qml</file>
-        <file>Views/Settings/NetworkSettingsView.qml</file>
-        <file>Views/Settings/AboutView.qml</file>
+        <file>Views/Settings/Map/MapSettingsView.qml</file>
+        <file>Views/Settings/Gui/GuiSettingsView.qml</file>
+        <file>Views/Settings/Network/NetworkSettingsView.qml</file>
+        <file>Views/Settings/Help/AboutView.qml</file>
     </qresource>
 </RCC>
