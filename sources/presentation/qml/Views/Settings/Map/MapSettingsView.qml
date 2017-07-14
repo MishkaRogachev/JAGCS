@@ -10,6 +10,7 @@ Controls.Frame {
 
     property alias cacheFolder: cacheField.text
     property alias cacheSize: cacheSizeBox.value
+    property alias tileHost: tileHostField.text
 
     signal save()
     signal restore()
@@ -54,6 +55,18 @@ Controls.Frame {
             to: 2147483647 // TODO: to helper
         }
 
+        Controls.Label {
+            text: qsTr("Tile host")
+            Layout.fillWidth: true
+        }
+
+        Controls.TextField {
+            id: tileHostField
+            placeholderText: qsTr("Enter tile host url")
+            Layout.fillWidth: true
+            onTextChanged: changed = true
+        }
+
         Item {
             Layout.fillHeight: true
             Layout.columnSpan: 2
@@ -70,7 +83,7 @@ Controls.Frame {
         Controls.Button {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
-            onClicked: save();
+            onClicked: save()
             enabled: changed
             Layout.fillWidth: true
         }

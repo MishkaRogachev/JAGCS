@@ -27,11 +27,10 @@ Map {
     plugin: Plugin {
         name: "osm"
 
-//        PluginParameter {
-//            name: "osm.mapping.custom.host";
-//            value: "http://a.tile.openstreetmap.org/"
-//        TODO: tile server to settings
-//        }
+        PluginParameter {
+            name: "osm.mapping.custom.host";
+            value: settings.value("Map/tileHost", "http://a.tile.openstreetmap.org/");
+        }
 
         PluginParameter {
             name: "osm.mapping.offline.directory";
