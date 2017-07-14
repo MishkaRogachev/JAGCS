@@ -32,6 +32,7 @@ namespace settings
         const char* const centerLatitude = "Map/centerLatitude";
         const char* const centerLongitude = "Map/centerLongitude";
         const char* const cacheFolder = "Map/cacheFolder";
+        const char* const cacheSize = "Map/cacheSize";
     }
 
     namespace gui

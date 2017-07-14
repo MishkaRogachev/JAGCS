@@ -39,6 +39,11 @@ Map {
         }
 
         PluginParameter {
+            name: "osm.mapping.cache.disk.size";
+            value: settings.value("Map/cacheSize", 52428800);
+        }
+
+        PluginParameter {
             name: "osm.mapping.providersrepository.disabled";
             value: true
         }

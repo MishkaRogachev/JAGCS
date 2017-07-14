@@ -155,6 +155,7 @@ Controls.Frame {
 
         Item {
             Layout.fillHeight: true
+            Layout.columnSpan: 3
         }
 
         Controls.Button {

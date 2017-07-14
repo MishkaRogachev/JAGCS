@@ -8,7 +8,8 @@ Controls.Frame {
 
     property bool changed: false
 
-    property string cacheFolder
+    property alias cacheFolder: cacheField.text
+    property alias cacheSize: cacheSizeBox.value
 
     signal save()
     signal restore()
@@ -35,13 +36,22 @@ Controls.Frame {
         }
 
         Controls.TextField {
-            text: cacheFolder
+            id: cacheField
             placeholderText: qsTr("Enter map cache folder")
             Layout.fillWidth: true
-            onTextChanged: {
-                cacheFolder = text;
-                changed = true;
-            }
+            onTextChanged: changed = true
+        }
+
+        Controls.Label {
+            text: qsTr("Cache size")
+            Layout.fillWidth: true
+        }
+
+        Controls.SpinBox {
+            id: cacheSizeBox
+            Layout.fillWidth: true
+            onValueChanged: changed = true;
+            to: 2147483647 // TODO: to helper
         }
 
         Item {
