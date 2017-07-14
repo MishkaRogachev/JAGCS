@@ -43,6 +43,4 @@ void PlanningPresenter::connectView(QObject* view)
 }
 
 PlanningPresenter::~PlanningPresenter()
-{
-    if (d->map->view()) d->map->saveViewPort();
-}
+{}

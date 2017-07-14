@@ -48,9 +48,7 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
 }
 
 ControlPresenter::~ControlPresenter()
-{
-    if (d->map->view()) d->map->saveViewPort();
-}
+{}
 
 void ControlPresenter::updateVehiclesList()
 {

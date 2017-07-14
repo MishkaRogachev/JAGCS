@@ -20,11 +20,6 @@ namespace presentation
     public slots:
         virtual void setMapCenter(double latitude, double longitude) = 0;
         virtual void setZoomLevel(float zoomLevel) = 0;
-        void saveViewPort();
-
-    protected:
-        void connectView(QObject* view) override;
-        void disconnectView(QObject *view) override;
     };
 }
 

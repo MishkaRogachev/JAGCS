@@ -103,14 +103,26 @@ Map {
         anchors.fill: parent
         hoverEnabled: true
         onExited: mouseCoordinate = QtPositioning.coordinate()
-        onPositionChanged: mouseCoordinate = map.toCoordinate(Qt.point(mouseX, mouseY))
-        onClicked: map.picked(mouseCoordinate)
+        onPositionChanged: mouseCoordinate = root.toCoordinate(Qt.point(mouseX, mouseY))
+        onClicked: root.picked(mouseCoordinate)
+    }
+
+    Component.onCompleted: {
+        center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),
+                                          settings.value("Map/centerLongitude"));
+        zoomLevel = settings.value("Map/zoomLevel");
+    }
+
+    Component.onDestruction: {
+        settings.setValue("Map/centerLatitude", center.latitude);
+        settings.setValue("Map/centerLongitude", center.longitude);
+        settings.setValue("Map/zoomLevel", zoomLevel);
     }
 
     onCenterChanged: {
         if (!mouseArea.containsMouse) return;
 
-        mouseCoordinate = map.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
+        mouseCoordinate = root.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
     }
 
     function setGesturesEnabled(enabled) {

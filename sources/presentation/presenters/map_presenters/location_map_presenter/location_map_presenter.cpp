@@ -37,15 +37,13 @@ LocationMapPresenter::~LocationMapPresenter()
 
 double LocationMapPresenter::centerLatitude() const
 {
-    QGeoCoordinate center = this->viewProperty(
-                                PROPERTY(center)).value<QGeoCoordinate>();
+    QGeoCoordinate center = this->viewProperty(PROPERTY(center)).value<QGeoCoordinate>();
     return center.latitude();
 }
 
 double LocationMapPresenter::centerLongitude() const
 {
-    QGeoCoordinate center = this->viewProperty(
-                                PROPERTY(center)).value<QGeoCoordinate>();
+    QGeoCoordinate center = this->viewProperty(PROPERTY(center)).value<QGeoCoordinate>();
     return center.longitude();
 }
 
@@ -67,7 +65,7 @@ void LocationMapPresenter::setZoomLevel(float zoomLevel)
 
 void LocationMapPresenter::connectView(QObject* view)
 {
-    AbstractMapPresenter::connectView(view);
+    Q_UNUSED(view)
 
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
     this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
