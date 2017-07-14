@@ -67,9 +67,16 @@ Controls.Frame {
             onTextChanged: changed = true
         }
 
-        Item {
+        Loader {
+            id: mapPreview
+            Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.columnSpan: 2
+            Component.onCompleted: reload()
+            function reload() {
+                source = "";
+                source = "../../Map/MapView.qml";
+            }
         }
 
         Controls.Button {
@@ -83,7 +90,10 @@ Controls.Frame {
         Controls.Button {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
+            onClicked: {
+                save();
+                mapPreview.reload();
+            }
             enabled: changed
             Layout.fillWidth: true
         }
