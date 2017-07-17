@@ -46,6 +46,19 @@ Controls.Frame {
         }
 
         Controls.Label {
+            text: qsTr("Tile host")
+            Layout.fillWidth: true
+        }
+
+        Controls.TextField {
+            id: tileHostField
+            placeholderText: qsTr("Enter tile host url")
+            Layout.fillWidth: true
+            onTextChanged: changed = true
+            enabled: mapTypeBox.currentIndex === mapTypeBox.model.length - 1
+        }
+
+        Controls.Label {
             text: qsTr("Cache folder")
             Layout.fillWidth: true
         }
@@ -67,18 +80,6 @@ Controls.Frame {
             Layout.fillWidth: true
             onValueChanged: changed = true;
             to: 2147483647 // TODO: to helper
-        }
-
-        Controls.Label {
-            text: qsTr("Tile host")
-            Layout.fillWidth: true
-        }
-
-        Controls.TextField {
-            id: tileHostField
-            placeholderText: qsTr("Enter tile host url")
-            Layout.fillWidth: true
-            onTextChanged: changed = true
         }
 
         Component {
