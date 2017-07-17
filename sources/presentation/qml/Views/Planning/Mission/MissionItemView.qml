@@ -121,7 +121,7 @@ ColumnLayout {
         Controls.Spacer { visible: altitudeVisible }
 
         Controls.Label {
-            text: qsTr("Altitude relative")
+            text: qsTr("Rel. altitude")
             visible: altitudeVisible
             Layout.fillWidth: true
         }

@@ -836,7 +836,7 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="124"/>
-        <source>Altitude relative</source>
+        <source>Rel. altitude</source>
         <translation></translation>
     </message>
     <message>
@@ -883,7 +883,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="78"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="79"/>
         <source>Vehicle</source>
         <translation></translation>
     </message>

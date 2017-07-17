@@ -836,8 +836,8 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="124"/>
-        <source>Altitude relative</source>
-        <translation>Высота относительная</translation>
+        <source>Rel. altitude</source>
+        <translation>Отн. высота</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="139"/>
@@ -883,7 +883,7 @@
         <translation>Маршрут</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="78"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="79"/>
         <source>Vehicle</source>
         <translation>Аппарат</translation>
     </message>
