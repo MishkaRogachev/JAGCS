@@ -136,7 +136,6 @@ void MissionItemPresenter::connectView(QObject* view)
     QStringList commands = ::commands.values();
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 
-    connect(view, SIGNAL(remove()), this, SLOT(remove()));
     connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
