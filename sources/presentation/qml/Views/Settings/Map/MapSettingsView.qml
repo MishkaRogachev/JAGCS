@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
+import "../../Map"
 
 Controls.Frame {
     id: root
@@ -11,6 +12,7 @@ Controls.Frame {
     property alias cacheFolder: cacheField.text
     property alias cacheSize: cacheSizeBox.value
     property alias tileHost: tileHostField.text
+    property alias activeMapType: mapTypeBox.currentIndex
 
     signal save()
     signal restore()
@@ -21,13 +23,25 @@ Controls.Frame {
         columns: 2
 
         Controls.Label {
-            text: qsTr("Map type")
+            text: qsTr("Map provider")
             Layout.fillWidth: true
         }
 
         Controls.ComboBox {
             enabled: false
-            model: [ "QtLocation" ] // TODO: map types
+            model: [ "QtLocation" ] // TODO: map providers
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: qsTr("Map type")
+            Layout.fillWidth: true
+        }
+
+        Controls.ComboBox {
+            id: mapTypeBox
+            model: []
+            onCurrentIndexChanged: changed = true
             Layout.fillWidth: true
         }
 
@@ -67,6 +81,21 @@ Controls.Frame {
             onTextChanged: changed = true
         }
 
+        Component {
+            id: mapComponent
+
+            MapView {
+                id: map
+                Component.onCompleted: {
+                    var types = new Array(0);
+                    for (var i = 0; i < supportedMapTypes.length; ++i) {
+                        types.push(supportedMapTypes[i].name);
+                    }
+                    mapTypeBox.model = types;
+                }
+            }
+        }
+
         Loader {
             id: mapPreview
             Layout.fillWidth: true
@@ -74,8 +103,8 @@ Controls.Frame {
             Layout.columnSpan: 2
             Component.onCompleted: reload()
             function reload() {
-                source = "";
-                source = "../../Map/MapView.qml";
+                sourceComponent = null;
+                sourceComponent = mapComponent;
             }
         }
 

@@ -14,6 +14,8 @@ MapSettingsPresenter::MapSettingsPresenter(QObject* parent):
 
 void MapSettingsPresenter::updateView()
 {
+    this->setViewProperty(PROPERTY(activeMapType),
+                          settings::Provider::value(settings::map::activeMapType));
     this->setViewProperty(PROPERTY(cacheFolder),
                           settings::Provider::value(settings::map::cacheFolder));
     this->setViewProperty(PROPERTY(cacheSize),
@@ -26,6 +28,8 @@ void MapSettingsPresenter::updateView()
 
 void MapSettingsPresenter::save()
 {
+    settings::Provider::setValue(settings::map::activeMapType,
+                                 this->viewProperty(PROPERTY(activeMapType)));
     settings::Provider::setValue(settings::map::cacheFolder,
                                  this->viewProperty(PROPERTY(cacheFolder)));
     settings::Provider::setValue(settings::map::cacheSize,

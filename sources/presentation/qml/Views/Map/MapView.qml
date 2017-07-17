@@ -47,6 +47,8 @@ Map {
             value: true
         }
     }
+
+    activeMapType: supportedMapTypes[settings.value("Map/activeMapType", 0)]
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     copyrightsVisible: false
