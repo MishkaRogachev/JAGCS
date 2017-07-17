@@ -37,6 +37,7 @@ ColumnLayout {
             id: missionsBox
             visible: !edit.checked
             onCurrentIndexChanged: selectMission(currentIndex);
+            Layout.fillWidth: true
         }
 
         TextField {
@@ -83,6 +84,7 @@ ColumnLayout {
             enabled: selectedMission > 0
             Layout.columnSpan: 2
             onCurrentIndexChanged: assignVehicle(currentIndex)
+            Layout.fillWidth: true
         }
 
         Button {
@@ -101,26 +103,6 @@ ColumnLayout {
     }
 
     RowLayout {
-
-        Button {
-            iconSource: "qrc:/icons/home.svg"
-            onClicked: flickable.contentX = 0// TODO: go home
-        }
-
-        Button {
-            iconSource: "qrc:/icons/left.svg"
-            autoRepeat: true
-            onClicked: flickable.flick(palette.controlBaseSize * 10, 0)
-            enabled: row.width > flickable.width && flickable.contentX > 0
-        }
-
-        Button {
-            iconSource: "qrc:/icons/right.svg"
-            autoRepeat: true
-            onClicked: flickable.flick(-palette.controlBaseSize * 10, 0)
-            enabled: row.width > flickable.width &&
-                     flickable.contentX < (row.width - flickable.width)
-        }
 
         Flickable {
             id: flickable
@@ -146,6 +128,16 @@ ColumnLayout {
                         Layout.minimumHeight: palette.controlBaseSize
 
                         property bool selected: missionItem.sequence === (index + 1)
+                        onSelectedChanged: {
+                            if (!selected) return;
+
+                            if (x + width > flickable.width + flickable.contentX) {
+                                flickable.contentX = x + width - flickable.width;
+                            }
+                            else if (x < flickable.contentX) {
+                                flickable.contentX = x;
+                            }
+                        }
 
                         Rectangle {
                             anchors.centerIn: parent
@@ -180,12 +172,6 @@ ColumnLayout {
                     }
                 }
             }
-        }
-
-        Button {
-            iconSource: "qrc:/icons/add.svg"
-            enabled: selectedMission > 0
-            onClicked: addItem()
         }
     }
 
