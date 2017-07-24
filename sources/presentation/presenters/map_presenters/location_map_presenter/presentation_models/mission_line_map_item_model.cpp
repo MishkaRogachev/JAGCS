@@ -48,6 +48,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         for (const db::MissionItemPtr& item: m_dbFacade->missionItems(mission->id()))
         {
             if (item->command() == db::MissionItem::Waypoint ||
+                item->command() == db::MissionItem::Takeoff ||
                 item->command() == db::MissionItem::Landing ||
                 item->command() == db::MissionItem::LoiterAltitude ||
                 item->command() == db::MissionItem::LoiterTurns)

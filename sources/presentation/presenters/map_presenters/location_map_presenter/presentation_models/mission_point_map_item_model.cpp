@@ -44,6 +44,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemCoordinateRole:
     {
         if (item->command() == db::MissionItem::Waypoint ||
+            item->command() == db::MissionItem::Takeoff ||
             item->command() == db::MissionItem::Landing ||
             item->command() == db::MissionItem::LoiterAltitude ||
             item->command() == db::MissionItem::LoiterTurns)
@@ -57,7 +58,9 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
     case ItemIconRole:
-        if (item->command() == db::MissionItem::Landing)
+        if (item->command() == db::MissionItem::Takeoff)
+            return "qrc:/icons/takeoff.svg";
+        else if (item->command() == db::MissionItem::Landing)
             return "qrc:/icons/landing.svg";
         return QString("");
     case ItemAcceptanceRadius:
