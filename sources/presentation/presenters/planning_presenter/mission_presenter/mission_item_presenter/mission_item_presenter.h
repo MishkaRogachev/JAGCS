@@ -5,9 +5,9 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class MissionService;
 }
 
 namespace presentation
@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MissionItemPresenter(db::DbFacade* dbFacade, QObject* object = nullptr);
+        explicit MissionItemPresenter(domain::MissionService* service, QObject* object = nullptr);
         ~MissionItemPresenter() override;
 
         dao::MissionPtr selectedMission() const;

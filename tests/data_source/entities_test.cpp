@@ -6,6 +6,7 @@
 // Internal
 #include "db_facade.h"
 
+#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
@@ -17,38 +18,38 @@ using namespace dao;
 
 void EntitiesTest::testMission()
 {
-    db::DbFacade dbFacade;
+    domain::MissionService missionService;
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Some ridiculous name");
 
-    QVERIFY2(dbFacade.save(mission), "Can't insert mission");
+    QVERIFY2(missionService.save(mission), "Can't insert mission");
     int id = mission->id();
     QVERIFY2(id > 0, "Mission id after insert mus be > 0");
 
     mission->setName("Another ridiculous name");
 
-    QVERIFY2(dbFacade.save(mission), "Can't update mission");
+    QVERIFY2(missionService.save(mission), "Can't update mission");
 
-    QCOMPARE(mission, dbFacade.mission(id));
+    QCOMPARE(mission, missionService.mission(id));
 
     mission->setName("Reload will erase this ridiculous name");
 
-    QCOMPARE(mission, dbFacade.mission(id, true)); // But pointer will be the same
+    QCOMPARE(mission, missionService.mission(id, true)); // But pointer will be the same
 
     QCOMPARE(mission->name(), QString("Another ridiculous name"));
 
-    QVERIFY2(dbFacade.remove(mission), "Can't remove mission");
+    QVERIFY2(missionService.remove(mission), "Can't remove mission");
     QCOMPARE(mission->id(), 0); // Mission id must be zero after remove
 }
 
 void EntitiesTest::testMissionItems()
 {
-    db::DbFacade dbFacade;
+    domain::MissionService missionService;
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Items Mission");
-    QVERIFY2(dbFacade.save(mission), "Can't insert mission");
+    QVERIFY2(missionService.save(mission), "Can't insert mission");
 
     MissionItemPtr item = MissionItemPtr::create();
     item->setMissionId(mission->id());
@@ -57,13 +58,13 @@ void EntitiesTest::testMissionItems()
     item->setLongitude(37.4869);
     item->setAltitude(350.75);
 
-    QVERIFY2(dbFacade.save(item), "Can't insert mission item");
+    QVERIFY2(missionService.save(item), "Can't insert mission item");
 
-    QCOMPARE(dbFacade.missionItems(mission->id()).count(), 1);
-    QCOMPARE(dbFacade.missionItems(mission->id()).first(), item);
+    QCOMPARE(missionService.missionItems(mission->id()).count(), 1);
+    QCOMPARE(missionService.missionItems(mission->id()).first(), item);
 
-    QVERIFY2(dbFacade.remove(item), "Can't remove item");
-    QVERIFY2(dbFacade.remove(mission), "Can't remove mission");
+    QVERIFY2(missionService.remove(item), "Can't remove item");
+    QVERIFY2(missionService.remove(mission), "Can't remove mission");
 }
 
 void EntitiesTest::testVehicleDescription()
@@ -92,10 +93,11 @@ void EntitiesTest::testVehicleDescription()
 void EntitiesTest::testMissionAssignment()
 {
     db::DbFacade dbFacade;
+    domain::MissionService missionService;
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Assigned mission");
-    QVERIFY2(dbFacade.save(mission), "Can't insert mission");
+    QVERIFY2(missionService.save(mission), "Can't insert mission");
 
     VehiclePtr vehicle = VehiclePtr::create();
     vehicle->setName("Assigned vehicle");
@@ -104,16 +106,16 @@ void EntitiesTest::testMissionAssignment()
     MissionAssignmentPtr assignment = MissionAssignmentPtr::create();
     assignment->setMissionId(mission->id());
     assignment->setVehicleId(vehicle->id());
-    QVERIFY2(dbFacade.save(assignment), "Can't insert assignment");
+    QVERIFY2(missionService.save(assignment), "Can't insert assignment");
 
-    QCOMPARE(dbFacade.missionAssignment(mission->id()), assignment);
-    QCOMPARE(dbFacade.vehicleAssignment(vehicle->id()), assignment);
+    QCOMPARE(missionService.missionAssignment(mission->id()), assignment);
+    QCOMPARE(missionService.vehicleAssignment(vehicle->id()), assignment);
 
-    QVERIFY2(dbFacade.remove(assignment), "Can't remove assignment");
+    QVERIFY2(missionService.remove(assignment), "Can't remove assignment");
 
-    QVERIFY2(dbFacade.missionAssignment(mission->id()).isNull(), "Unassigned must be null");
+    QVERIFY2(missionService.missionAssignment(mission->id()).isNull(), "Unassigned must be null");
 
-    QVERIFY2(dbFacade.remove(mission), "Can't remove mission");
+    QVERIFY2(missionService.remove(mission), "Can't remove mission");
     QVERIFY2(dbFacade.remove(vehicle), "Can't remove vehicle");
 }
 

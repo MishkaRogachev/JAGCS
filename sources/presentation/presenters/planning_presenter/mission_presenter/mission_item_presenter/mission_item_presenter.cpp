@@ -7,7 +7,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 
@@ -34,24 +34,24 @@ public:
     dao::MissionPtr selectedMission;
     dao::MissionItemPtr item;
 
-    db::DbFacade* facade;
+    domain::MissionService* service;
 };
 
-MissionItemPresenter::MissionItemPresenter(db::DbFacade* dbFacade, QObject* object):
+MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->facade = dbFacade;
+    d->service = service;
 
-    connect(dbFacade, &db::DbFacade::missionItemAdded, this, &MissionItemPresenter::updateCount);
-    connect(dbFacade, &db::DbFacade::missionItemRemoved, this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemAdded, this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemRemoved, this, &MissionItemPresenter::updateCount);
 }
 
 MissionItemPresenter::~MissionItemPresenter()
 {
     if (d->selectedMission)
     {
-        d->facade->saveMissionItems(d->selectedMission->id());
+        d->service->saveMissionItems(d->selectedMission->id());
     }
 }
 
@@ -80,14 +80,14 @@ void MissionItemPresenter::remove()
 {
     if (d->item.isNull()) return;
 
-    d->facade->remove(d->item);
+    d->service->remove(d->item);
 }
 
 void MissionItemPresenter::selectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->item = d->facade->missionItem(d->selectedMission->id(), index);
+    d->item = d->service->missionItem(d->selectedMission->id(), index);
     this->updateView();
 }
 
@@ -103,7 +103,7 @@ void MissionItemPresenter::save()
     d->item->setPeriods(this->viewProperty(PROPERTY(periods)).toInt());
     d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
 
-    if (!d->facade->save(d->item)) return;
+    if (!d->service->save(d->item)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }

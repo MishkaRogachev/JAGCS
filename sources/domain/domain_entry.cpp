@@ -13,6 +13,7 @@
 #include "proxy_manager.h"
 
 #include "command_service.h"
+#include "mission_service.h"
 #include "telemetry_service.h"
 
 #include "communication_service.h"
@@ -29,6 +30,7 @@ public:
     ProxyManager proxyManager;
 
     TelemetryService telemetryService;
+    MissionService missionService;
     CommandService commandService;
 
     QScopedPointer<CommunicationService> commService;
@@ -47,10 +49,7 @@ DomainEntry::DomainEntry():
         qApp->quit(); // TODO: quit gently
     }
 
-    comm::MavLinkCommunicatorFactory comFactory(
-                &d->dbFacade,
-                &d->telemetryService,
-                &d->commandService,
+    comm::MavLinkCommunicatorFactory comFactory(this,
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());
 
@@ -78,6 +77,11 @@ CommunicationService* DomainEntry::commService() const
 TelemetryService* DomainEntry::telemetryService() const
 {
     return &d->telemetryService;
+}
+
+MissionService* DomainEntry::missionService() const
+{
+    return &d->missionService;
 }
 
 CommandService*DomainEntry::commandService() const

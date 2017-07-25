@@ -8,6 +8,7 @@
 #include "settings_provider.h"
 
 #include "db_facade.h"
+#include "mission_service.h"
 #include "link_description.h"
 #include "vehicle.h"
 #include "mission.h"
@@ -40,11 +41,12 @@ bool DefaultParamsMigration::up()
     defaultVehicle->setType(Vehicle::Auto);
     facade.save(defaultVehicle);
 
+    domain::MissionService missionService;
     MissionPtr defaultMission = MissionPtr::create();
     defaultMission->setName(qApp->translate("DefaultParamsMigration", "Idle"));
-    facade.save(defaultMission);
+    missionService.save(defaultMission);
 
-    facade.assign(defaultMission->id(), defaultVehicle->id());
+    missionService.assign(defaultMission->id(), defaultVehicle->id());
 
     return DbMigration::up();
 }

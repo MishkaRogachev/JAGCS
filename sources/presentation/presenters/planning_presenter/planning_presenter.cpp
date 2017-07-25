@@ -29,7 +29,7 @@ PlanningPresenter::PlanningPresenter(domain::DomainEntry* entry, QObject* parent
 {
     d->mission = new MissionPresenter(entry, this);
     d->map = new LocationMapPresenter(entry, this);
-    d->profile = new VerticalProfilePresenter(entry->dbFacade(), this);
+    d->profile = new VerticalProfilePresenter(entry->missionService(), this);
 
     connect(d->mission, &MissionPresenter::missionSelected,
             d->profile, &VerticalProfilePresenter::selectMission);

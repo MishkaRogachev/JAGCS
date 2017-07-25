@@ -6,27 +6,28 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 
 using namespace presentation;
 
-VerticalProfilePresenter::VerticalProfilePresenter(db::DbFacade* dbFacade, QObject* parent):
+VerticalProfilePresenter::VerticalProfilePresenter(domain::MissionService* service,
+                                                   QObject* parent):
     BasePresenter(parent),
-    m_dbFacade(dbFacade)
+    m_service(service)
 {
-    connect(m_dbFacade, &db::DbFacade::missionItemAdded, this, [this]
+    connect(service, &domain::MissionService::missionItemAdded, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &db::DbFacade::missionItemRemoved, this, [this]
+    connect(service, &domain::MissionService::missionItemRemoved, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &db::DbFacade::missionItemChanged, this, [this]
+    connect(service, &domain::MissionService::missionItemChanged, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
@@ -47,7 +48,7 @@ void VerticalProfilePresenter::updateMission()
     if (m_mission.isNull()) return;
     QGeoCoordinate lastCoordinate;
     int distance = 0;
-    for (const dao::MissionItemPtr& item: m_dbFacade->missionItems(m_mission->id()))
+    for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
         // TODO: another commands
         if (item->command() == dao::MissionItem::Waypoint)

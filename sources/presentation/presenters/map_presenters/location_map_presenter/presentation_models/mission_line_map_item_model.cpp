@@ -5,24 +5,25 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 
 using namespace presentation;
 
-MissionLineMapItemModel::MissionLineMapItemModel(db::DbFacade* dbFacade, QObject* parent):
+MissionLineMapItemModel::MissionLineMapItemModel(domain::MissionService* service,
+                                                 QObject* parent):
     QAbstractListModel(parent),
-    m_dbFacade(dbFacade)
+    m_service(service)
 {
-    connect(dbFacade, &db::DbFacade::missionAdded,
+    connect(service, &domain::MissionService::missionAdded,
             this, &MissionLineMapItemModel::onMissionAdded);
-    connect(dbFacade, &db::DbFacade::missionRemoved,
+    connect(service, &domain::MissionService::missionRemoved,
             this, &MissionLineMapItemModel::onMissionRemoved);
-    connect(dbFacade, &db::DbFacade::missionItemChanged,
+    connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionLineMapItemModel::onMissionItemChanged);
 
-    for (const dao::MissionPtr& item: dbFacade->missions())
+    for (const dao::MissionPtr& item: service->missions())
     {
         this->onMissionAdded(item);
     }
@@ -45,7 +46,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
-        for (const dao::MissionItemPtr& item: m_dbFacade->missionItems(mission->id()))
+        for (const dao::MissionItemPtr& item: m_service->missionItems(mission->id()))
         {
             if (item->command() == dao::MissionItem::Waypoint ||
                 item->command() == dao::MissionItem::Takeoff ||
@@ -89,7 +90,7 @@ void MissionLineMapItemModel::onMissionRemoved(const dao::MissionPtr& mission)
 
 void MissionLineMapItemModel::onMissionItemChanged(const dao::MissionItemPtr& item)
 {
-    dao::MissionPtr mission = m_dbFacade->mission(item->missionId());
+    dao::MissionPtr mission = m_service->mission(item->missionId());
     QModelIndex index = this->index(m_missions.indexOf(mission));
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }

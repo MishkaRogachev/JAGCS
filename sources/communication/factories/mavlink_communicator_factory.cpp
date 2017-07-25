@@ -1,7 +1,7 @@
 #include "mavlink_communicator_factory.h"
 
 // Internal
-#include "settings_provider.h"
+#include "domain_entry.h"
 #include "mavlink_communicator.h"
 
 #include "ping_handler.h"
@@ -23,14 +23,10 @@
 
 using namespace comm;
 
-MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(db::DbFacade* dbFacade,
-        domain::TelemetryService* telemetryService,
-        domain::CommandService* commandService,
-        quint8 systemId, quint8 componentId):
+MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(
+        domain::DomainEntry* entry, quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),
-    m_dbFacade(dbFacade),
-    m_telemetryService(telemetryService),
-    m_commandService(commandService),
+    m_entry(entry),
     m_systemId(systemId),
     m_componentId(componentId)
 {}
@@ -40,21 +36,22 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
 
     new PingHandler(communicator);
-    new HeartbeatHandler(m_dbFacade, m_telemetryService, communicator);
-    new SystemStatusHandler(m_telemetryService, communicator);
-    new AttitudeHandler(m_telemetryService, communicator);
-    new PressureHandler(m_telemetryService, communicator);
-    new PositionHandler(m_telemetryService, communicator);
-    new HomePositionHandler(m_telemetryService, communicator);
-    new GpsHandler(m_telemetryService, communicator);
-    new VfrHudHandler(m_telemetryService, communicator);
-    new RangefinderHandler(m_telemetryService, communicator);
-    new WindHandler(m_telemetryService, communicator);
-    new BatteryHandler(m_telemetryService, communicator);
-    new RadioStatusHandler(m_telemetryService, communicator);
-    new NavControllerHandler(m_telemetryService, communicator);
-    new CommandHandler(m_dbFacade, m_commandService, communicator);
-    new MissionHandler(m_dbFacade, m_telemetryService, m_commandService, communicator);
+    new HeartbeatHandler(m_entry->dbFacade(), m_entry->telemetryService(), communicator);
+    new SystemStatusHandler(m_entry->telemetryService(), communicator);
+    new AttitudeHandler(m_entry->telemetryService(), communicator);
+    new PressureHandler(m_entry->telemetryService(), communicator);
+    new PositionHandler(m_entry->telemetryService(), communicator);
+    new HomePositionHandler(m_entry->telemetryService(), communicator);
+    new GpsHandler(m_entry->telemetryService(), communicator);
+    new VfrHudHandler(m_entry->telemetryService(), communicator);
+    new RangefinderHandler(m_entry->telemetryService(), communicator);
+    new WindHandler(m_entry->telemetryService(), communicator);
+    new BatteryHandler(m_entry->telemetryService(), communicator);
+    new RadioStatusHandler(m_entry->telemetryService(), communicator);
+    new NavControllerHandler(m_entry->telemetryService(), communicator);
+    new CommandHandler(m_entry->dbFacade(), m_entry->commandService(), communicator);
+    new MissionHandler(m_entry->dbFacade(), m_entry->telemetryService(),
+                       m_entry->missionService(), m_entry->commandService(), communicator);
 
     return communicator;
 }

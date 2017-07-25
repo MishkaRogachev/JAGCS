@@ -7,9 +7,9 @@
 // Internal
 #include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class MissionService;
 }
 
 namespace presentation
@@ -24,7 +24,8 @@ namespace presentation
             MissionPathRole = Qt::UserRole + 1,
         };
 
-        explicit MissionLineMapItemModel(db::DbFacade* dbFacade, QObject* parent = nullptr);
+        explicit MissionLineMapItemModel(domain::MissionService* service,
+                                         QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
@@ -40,7 +41,7 @@ namespace presentation
         QModelIndex missionIndex(const dao::MissionPtr& mission) const;
 
     private:
-        db::DbFacade* m_dbFacade;
+        domain::MissionService* m_service;
         dao::MissionPtrList m_missions;
     };
 }

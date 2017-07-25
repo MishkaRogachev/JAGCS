@@ -5,23 +5,24 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "mission_service.h"
 #include "mission_item.h"
 
 using namespace presentation;
 
-MissionPointMapItemModel::MissionPointMapItemModel(db::DbFacade* dbFacade, QObject* parent):
+MissionPointMapItemModel::MissionPointMapItemModel(domain::MissionService* service,
+                                                   QObject* parent):
     QAbstractListModel(parent),
-    m_dbFacade(dbFacade)
+    m_service(service)
 {
-    connect(dbFacade, &db::DbFacade::missionItemAdded,
+    connect(service, &domain::MissionService::missionItemAdded,
             this, &MissionPointMapItemModel::onMissionItemAdded);
-    connect(dbFacade, &db::DbFacade::missionItemRemoved,
+    connect(service, &domain::MissionService::missionItemRemoved,
             this, &MissionPointMapItemModel::onMissionItemRemoved);
-    connect(dbFacade, &db::DbFacade::missionItemChanged,
+    connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionPointMapItemModel::onMissionItemChanged);
 
-    for (const dao::MissionItemPtr& item: dbFacade->missionItems())
+    for (const dao::MissionItemPtr& item: service->missionItems())
     {
         this->onMissionItemAdded(item);
     }

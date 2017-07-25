@@ -69,7 +69,7 @@ DashboardPresenter* GenericDashboardFactory::create()
     dashboard->addInstrumentPresenter("mission", new MissionCommandPresenter(
                                  m_entry->commandService(), m_vehicle->id(), dashboard));
     dashboard->addInstrumentPresenter("mission", new MissionStatusPresenter(
-                                 m_entry->dbFacade(), m_vehicle->id(), dashboard));
+                                 m_entry->missionService(), m_vehicle->id(), dashboard));
 
     return dashboard;
 }

@@ -14,6 +14,7 @@ namespace domain
 {
     class VehicleService;
     class TelemetryService;
+    class MissionService;
     class CommandService;
 }
 
@@ -26,6 +27,7 @@ namespace comm
     public:
         MissionHandler(db::DbFacade* dbFacade,
                        domain::TelemetryService* telemetryService,
+                       domain::MissionService* missionService,
                        domain::CommandService* commandService,
                        MavLinkCommunicator* communicator);
 
@@ -51,6 +53,7 @@ namespace comm
    private:
        db::DbFacade* m_dbFacade;
        domain::TelemetryService* m_telemetryService;
+       domain::MissionService* m_missionService;
     };
 }
 
