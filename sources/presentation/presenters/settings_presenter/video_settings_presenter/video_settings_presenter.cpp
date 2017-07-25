@@ -26,9 +26,9 @@ VideoSettingsPresenter::VideoSettingsPresenter(db::DbFacade* facade, QObject* pa
 {
     d->facade = facade;
 
-    connect(d->facade, &dao::DbFacade::videoSourceAdded,
+    connect(d->facade, &db::DbFacade::videoSourceAdded,
             this, &VideoSettingsPresenter::onVideoSourceAdded);
-    connect(d->facade, &dao::DbFacade::videoSourceRemoved,
+    connect(d->facade, &db::DbFacade::videoSourceRemoved,
             this, &VideoSettingsPresenter::onVideoSourceRemoved);
 
     for (const dao::VideoSourcePtr& video: facade->videoSources())

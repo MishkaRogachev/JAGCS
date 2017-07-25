@@ -59,9 +59,9 @@ CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
     for (const dao::LinkDescriptionPtr& description: facade->links())
         this->onLinkAdded(description);
 
-    connect(d->dbFacade, &dao::DbFacade::linkAdded, this, &CommunicationService::onLinkAdded);
-    connect(d->dbFacade, &dao::DbFacade::linkRemoved, this, &CommunicationService::onLinkRemoved);
-    connect(d->dbFacade, &dao::DbFacade::linkChanged, this, &CommunicationService::onLinkChanged);
+    connect(d->dbFacade, &db::DbFacade::linkAdded, this, &CommunicationService::onLinkAdded);
+    connect(d->dbFacade, &db::DbFacade::linkRemoved, this, &CommunicationService::onLinkRemoved);
+    connect(d->dbFacade, &db::DbFacade::linkChanged, this, &CommunicationService::onLinkChanged);
 }
 
 CommunicationService::~CommunicationService()

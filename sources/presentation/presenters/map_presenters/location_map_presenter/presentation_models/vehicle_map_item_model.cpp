@@ -37,8 +37,8 @@ VehicleMapItemModel::VehicleMapItemModel(db::DbFacade* dbFacade,
     d->dbFacade = dbFacade;
     d->telemetryService = telemetryService;
 
-    connect(dbFacade, &dao::DbFacade::vehicleAdded, this, &VehicleMapItemModel::onVehicleAdded);
-    connect(dbFacade, &dao::DbFacade::vehicleRemoved, this, &VehicleMapItemModel::onVehicleRemoved);
+    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &VehicleMapItemModel::onVehicleAdded);
+    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &VehicleMapItemModel::onVehicleRemoved);
 
     for (const dao::VehiclePtr& vehicle: dbFacade->vehicles())
     {

@@ -16,17 +16,17 @@ VerticalProfilePresenter::VerticalProfilePresenter(db::DbFacade* dbFacade, QObje
     BasePresenter(parent),
     m_dbFacade(dbFacade)
 {
-    connect(m_dbFacade, &dao::DbFacade::missionItemAdded, this, [this]
+    connect(m_dbFacade, &db::DbFacade::missionItemAdded, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &dao::DbFacade::missionItemRemoved, this, [this]
+    connect(m_dbFacade, &db::DbFacade::missionItemRemoved, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &dao::DbFacade::missionItemChanged, this, [this]
+    connect(m_dbFacade, &db::DbFacade::missionItemChanged, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });

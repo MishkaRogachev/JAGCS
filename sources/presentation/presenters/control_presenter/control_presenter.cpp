@@ -43,8 +43,8 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     d->map = new LocationMapPresenter(entry, this);
     d->video = new VideoSplitPresenter(dbFacade, this);
 
-    connect(dbFacade, &dao::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
-    connect(dbFacade, &dao::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
+    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
+    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
 }
 
 ControlPresenter::~ControlPresenter()

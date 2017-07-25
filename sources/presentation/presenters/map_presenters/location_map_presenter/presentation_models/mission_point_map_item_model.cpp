@@ -14,11 +14,11 @@ MissionPointMapItemModel::MissionPointMapItemModel(db::DbFacade* dbFacade, QObje
     QAbstractListModel(parent),
     m_dbFacade(dbFacade)
 {
-    connect(dbFacade, &dao::DbFacade::missionItemAdded,
+    connect(dbFacade, &db::DbFacade::missionItemAdded,
             this, &MissionPointMapItemModel::onMissionItemAdded);
-    connect(dbFacade, &dao::DbFacade::missionItemRemoved,
+    connect(dbFacade, &db::DbFacade::missionItemRemoved,
             this, &MissionPointMapItemModel::onMissionItemRemoved);
-    connect(dbFacade, &dao::DbFacade::missionItemChanged,
+    connect(dbFacade, &db::DbFacade::missionItemChanged,
             this, &MissionPointMapItemModel::onMissionItemChanged);
 
     for (const dao::MissionItemPtr& item: dbFacade->missionItems())

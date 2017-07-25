@@ -17,7 +17,7 @@ using namespace dao;
 
 void EntitiesTest::testMission()
 {
-    DbFacade dbFacade;
+    db::DbFacade dbFacade;
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Some ridiculous name");
@@ -44,7 +44,7 @@ void EntitiesTest::testMission()
 
 void EntitiesTest::testMissionItems()
 {
-    DbFacade dbFacade;
+    db::DbFacade dbFacade;
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Items Mission");
@@ -68,7 +68,7 @@ void EntitiesTest::testMissionItems()
 
 void EntitiesTest::testVehicleDescription()
 {
-    DbFacade dbFacade;
+    db::DbFacade dbFacade;
 
     VehiclePtr vehicle = VehiclePtr::create();
 
@@ -91,7 +91,7 @@ void EntitiesTest::testVehicleDescription()
 
 void EntitiesTest::testMissionAssignment()
 {
-    DbFacade dbFacade;
+    db::DbFacade dbFacade;
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Assigned mission");
@@ -109,7 +109,7 @@ void EntitiesTest::testMissionAssignment()
     QCOMPARE(dbFacade.missionAssignment(mission->id()), assignment);
     QCOMPARE(dbFacade.vehicleAssignment(vehicle->id()), assignment);
 
-     QVERIFY2(dbFacade.remove(assignment), "Can't remove assignment");
+    QVERIFY2(dbFacade.remove(assignment), "Can't remove assignment");
 
     QVERIFY2(dbFacade.missionAssignment(mission->id()).isNull(), "Unassigned must be null");
 
@@ -119,7 +119,7 @@ void EntitiesTest::testMissionAssignment()
 
 void EntitiesTest::testLinkDescription()
 {
-    DbFacade dbFacade;
+    db::DbFacade dbFacade;
 
     LinkDescriptionPtr link = LinkDescriptionPtr::create();
     link->setName("UDP link");
@@ -138,7 +138,7 @@ void EntitiesTest::testLinkDescription()
 
 void EntitiesTest::testVideoSource()
 {
-    DbFacade dbFacade;
+    db::DbFacade dbFacade;
 
     VideoSourcePtr video = VideoSourcePtr::create();
     video->setType(VideoSource::Device);

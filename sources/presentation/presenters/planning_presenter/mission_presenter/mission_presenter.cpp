@@ -42,19 +42,19 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
 
     d->missions.append(d->dbFacade->missions());
 
-    connect(d->dbFacade, &dao::DbFacade::missionAdded, this, &MissionPresenter::onMissionAdded);
-    connect(d->dbFacade, &dao::DbFacade::missionRemoved, this, &MissionPresenter::onMissionRemoved);
+    connect(d->dbFacade, &db::DbFacade::missionAdded, this, &MissionPresenter::onMissionAdded);
+    connect(d->dbFacade, &db::DbFacade::missionRemoved, this, &MissionPresenter::onMissionRemoved);
 
-    connect(d->dbFacade, &dao::DbFacade::assignmentAdded, this, &MissionPresenter::updateAssignment);
-    connect(d->dbFacade, &dao::DbFacade::assignmentRemoved, this, &MissionPresenter::updateAssignment);
-    connect(d->dbFacade, &dao::DbFacade::assignmentChanged,  this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentAdded, this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentRemoved, this, &MissionPresenter::updateAssignment);
+    connect(d->dbFacade, &db::DbFacade::assignmentChanged,  this, &MissionPresenter::updateAssignment);
 
-    connect(d->dbFacade, &dao::DbFacade::missionItemAdded, this, &MissionPresenter::updateStatuses);
-    connect(d->dbFacade, &dao::DbFacade::missionItemRemoved, this, &MissionPresenter::updateStatuses);
-    connect(d->dbFacade, &dao::DbFacade::missionItemChanged, this, &MissionPresenter::updateStatuses);
+    connect(d->dbFacade, &db::DbFacade::missionItemAdded, this, &MissionPresenter::updateStatuses);
+    connect(d->dbFacade, &db::DbFacade::missionItemRemoved, this, &MissionPresenter::updateStatuses);
+    connect(d->dbFacade, &db::DbFacade::missionItemChanged, this, &MissionPresenter::updateStatuses);
 
-    connect(d->dbFacade, &dao::DbFacade::vehicleAdded, this, &MissionPresenter::updateVehiclesBox);
-    connect(d->dbFacade, &dao::DbFacade::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
+    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &MissionPresenter::updateVehiclesBox);
+    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
 
     d->item = new MissionItemPresenter(d->dbFacade, this);
 }

@@ -35,11 +35,11 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(domain::DomainEnt
     d->dbFacade = entry->dbFacade();
     d->service = entry->commService();
 
-    connect(d->dbFacade, &dao::DbFacade::linkAdded,
+    connect(d->dbFacade, &db::DbFacade::linkAdded,
             this, &CommunicationSettingsPresenter::onLinkAdded);
-    connect(d->dbFacade, &dao::DbFacade::linkChanged,
+    connect(d->dbFacade, &db::DbFacade::linkChanged,
             this, &CommunicationSettingsPresenter::onLinkChanged);
-    connect(d->dbFacade, &dao::DbFacade::linkRemoved,
+    connect(d->dbFacade, &db::DbFacade::linkRemoved,
             this, &CommunicationSettingsPresenter::onLinkRemoved);
     connect(d->service, &CommunicationService::linkStatisticsChanged,
             this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);

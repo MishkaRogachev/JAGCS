@@ -43,8 +43,8 @@ MissionItemPresenter::MissionItemPresenter(db::DbFacade* dbFacade, QObject* obje
 {
     d->facade = dbFacade;
 
-    connect(dbFacade, &dao::DbFacade::missionItemAdded, this, &MissionItemPresenter::updateCount);
-    connect(dbFacade, &dao::DbFacade::missionItemRemoved, this, &MissionItemPresenter::updateCount);
+    connect(dbFacade, &db::DbFacade::missionItemAdded, this, &MissionItemPresenter::updateCount);
+    connect(dbFacade, &db::DbFacade::missionItemRemoved, this, &MissionItemPresenter::updateCount);
 }
 
 MissionItemPresenter::~MissionItemPresenter()

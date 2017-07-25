@@ -33,7 +33,7 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
     d(new Impl())
 {
     d->facade = facade;
-    connect(d->facade, &dao::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
+    connect(d->facade, &db::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
 }
 
 TelemetryService::~TelemetryService()

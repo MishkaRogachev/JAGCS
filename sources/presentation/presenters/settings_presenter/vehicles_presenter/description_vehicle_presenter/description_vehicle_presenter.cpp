@@ -36,7 +36,7 @@ DescriptionVehiclePresenter::DescriptionVehiclePresenter(
     m_facade(facade),
     m_vehicle(vehicle)
 {
-    connect(m_facade, &dao::DbFacade::vehicleChanged, this, [this]
+    connect(m_facade, &db::DbFacade::vehicleChanged, this, [this]
             (const dao::VehiclePtr& vehicle) {
         if (vehicle == m_vehicle) this->updateStatus();
     });
