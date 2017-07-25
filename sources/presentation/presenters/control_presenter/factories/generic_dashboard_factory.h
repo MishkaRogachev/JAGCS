@@ -3,7 +3,7 @@
 
 // Internal
 #include "i_dashboard_factory.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace domain
 {
@@ -15,13 +15,13 @@ namespace presentation
     class GenericDashboardFactory: public IDashboardFactory
     {
     public:
-        GenericDashboardFactory(domain::DomainEntry* entry, const db::VehiclePtr& vehicle);
+        GenericDashboardFactory(domain::DomainEntry* entry, const dao::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 
     protected:
         domain::DomainEntry* m_entry;
-        db::VehiclePtr m_vehicle;
+        dao::VehiclePtr m_vehicle;
     };
 }
 

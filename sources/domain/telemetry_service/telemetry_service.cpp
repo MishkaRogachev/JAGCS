@@ -33,7 +33,7 @@ TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
     d(new Impl())
 {
     d->facade = facade;
-    connect(d->facade, &db::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
+    connect(d->facade, &dao::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
 }
 
 TelemetryService::~TelemetryService()
@@ -69,7 +69,7 @@ Telemetry*TelemetryService::radioNode() const
     return &d->radioNode;
 }
 
-void TelemetryService::onVehicleRemoved(const db::VehiclePtr& vehicle)
+void TelemetryService::onVehicleRemoved(const dao::VehiclePtr& vehicle)
 {
     delete d->vehicleNodes.take(vehicle->id());
 }

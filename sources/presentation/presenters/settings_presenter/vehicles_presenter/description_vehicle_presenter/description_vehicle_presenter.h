@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -17,10 +17,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        DescriptionVehiclePresenter(db::DbFacade* facade, const db::VehiclePtr& vehicle,
+        DescriptionVehiclePresenter(db::DbFacade* facade, const dao::VehiclePtr& vehicle,
                                     QObject* parent = nullptr);
 
-        db::VehiclePtr vehicle() const;
+        dao::VehiclePtr vehicle() const;
 
     public slots:
         void updateView();
@@ -33,7 +33,7 @@ namespace presentation
 
     private:
         db::DbFacade* const m_facade;
-        db::VehiclePtr m_vehicle;
+        dao::VehiclePtr m_vehicle;
     };
 }
 

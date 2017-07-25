@@ -9,20 +9,20 @@
 
 namespace presentation
 {
-    inline QUrl vehicleIcon(db::Vehicle::Type type)
+    inline QUrl vehicleIcon(dao::Vehicle::Type type)
     {
         switch (type) {
-        case db::Vehicle::FixedWing:
+        case dao::Vehicle::FixedWing:
             return QUrl("qrc:/indicators/fixed_wing_mark.svg");
-        case db::Vehicle::FlyingWing:
+        case dao::Vehicle::FlyingWing:
             return QUrl("qrc:/indicators/flying_wing_mark.svg");
-        case db::Vehicle::Quadcopter:
-        case db::Vehicle::Tricopter:
-        case db::Vehicle::Hexcopter:
-        case db::Vehicle::Octocopter:
+        case dao::Vehicle::Quadcopter:
+        case dao::Vehicle::Tricopter:
+        case dao::Vehicle::Hexcopter:
+        case dao::Vehicle::Octocopter:
             return QUrl("qrc:/indicators/quadcopter_mark.svg");
-        case db::Vehicle::Helicopter:
-        case db::Vehicle::Coaxial:
+        case dao::Vehicle::Helicopter:
+        case dao::Vehicle::Coaxial:
             return QUrl("qrc:/indicators/helicopter_mark.svg");
         default:
             return QUrl("qrc:/indicators/unknown_mark.svg");

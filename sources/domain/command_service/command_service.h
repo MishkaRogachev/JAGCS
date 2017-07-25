@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -33,8 +33,8 @@ namespace domain
     signals:
         void gotCommand();
 
-        void download(db::MissionAssignmentPtr assignment); // TODO: mission seervice
-        void upload(db::MissionAssignmentPtr assignment); // TODO: mission seervice
+        void download(dao::MissionAssignmentPtr assignment); // TODO: mission seervice
+        void upload(dao::MissionAssignmentPtr assignment); // TODO: mission seervice
 
     private:
         class Impl;

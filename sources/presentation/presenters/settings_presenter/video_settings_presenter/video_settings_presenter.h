@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -24,8 +24,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onVideoSourceAdded(const db::VideoSourcePtr& video);
-        void onVideoSourceRemoved(const db::VideoSourcePtr& video);
+        void onVideoSourceAdded(const dao::VideoSourcePtr& video);
+        void onVideoSourceRemoved(const dao::VideoSourcePtr& video);
         void updateVideoSources();
 
         void updateCameraInfo();

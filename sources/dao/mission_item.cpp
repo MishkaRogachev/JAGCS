@@ -6,7 +6,7 @@
 // Internal
 #include "mission.h"
 
-using namespace db;
+using namespace dao;
 
 int MissionItem::missionId() const
 {

@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace domain
 {
@@ -25,10 +25,10 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onLinkAdded(const db::LinkDescriptionPtr& description);
-        void onLinkChanged(const db::LinkDescriptionPtr& description);
-        void onLinkStatisticsChanged(const db::LinkDescriptionPtr& description);
-        void onLinkRemoved(const db::LinkDescriptionPtr& description);
+        void onLinkAdded(const dao::LinkDescriptionPtr& description);
+        void onLinkChanged(const dao::LinkDescriptionPtr& description);
+        void onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description);
+        void onLinkRemoved(const dao::LinkDescriptionPtr& description);
         void updateCommunicationsLinks();
 
         void onAddUdpLink();

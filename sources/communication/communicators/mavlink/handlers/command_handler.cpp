@@ -64,7 +64,7 @@ void CommandHandler::sendCommand(const Command& command)
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
 
-    db::VehiclePtr vehicle = m_dbFacade->vehicle(command.vehicleId());
+    dao::VehiclePtr vehicle = m_dbFacade->vehicle(command.vehicleId());
     if (vehicle.isNull()) return;
 
     mavCommand.target_system = vehicle->mavId();

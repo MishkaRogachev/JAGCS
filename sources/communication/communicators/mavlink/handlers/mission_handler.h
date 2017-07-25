@@ -3,7 +3,7 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -32,8 +32,8 @@ namespace comm
     public slots:
        void processMessage(const mavlink_message_t& message) override;
 
-       void download(const db::MissionAssignmentPtr& assignment);
-       void upload(const db::MissionAssignmentPtr& assignment);
+       void download(const dao::MissionAssignmentPtr& assignment);
+       void upload(const dao::MissionAssignmentPtr& assignment);
 
        void requestMissionItem(uint8_t mavId, uint16_t seq);
 

@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "db_traits.h"
+#include "dao_traits.h"
 #include "telemetry.h"
 
 namespace db
@@ -46,8 +46,8 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void onVehicleAdded(const db::VehiclePtr& vehicle);
-        void onVehicleRemoved(const db::VehiclePtr& vehicle);
+        void onVehicleAdded(const dao::VehiclePtr& vehicle);
+        void onVehicleRemoved(const dao::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

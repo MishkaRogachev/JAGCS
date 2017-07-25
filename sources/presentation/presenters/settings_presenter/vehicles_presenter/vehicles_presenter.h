@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -24,8 +24,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onVehicleAdded(const db::VehiclePtr& vehicle);
-        void onVehicleRemoved(const db::VehiclePtr& vehicle);
+        void onVehicleAdded(const dao::VehiclePtr& vehicle);
+        void onVehicleRemoved(const dao::VehiclePtr& vehicle);
         void updateVehicles();
 
         void onAddVehicle();

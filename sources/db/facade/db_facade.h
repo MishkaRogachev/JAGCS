@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -18,38 +18,38 @@ namespace db
         explicit DbFacade(QObject* parent = nullptr);
         ~DbFacade() override;
 
-        MissionPtr mission(int id, bool reload = false);
-        MissionItemPtr missionItem(int id, bool reload = false);
-        MissionAssignmentPtr assignment(int id, bool reload = false);
-        VehiclePtr vehicle(int id, bool reload = false);
-        LinkDescriptionPtr link(int id, bool reload = false);
-        VideoSourcePtr videoSource(int id, bool reload = false);
+        dao::MissionPtr mission(int id, bool reload = false);
+        dao::MissionItemPtr missionItem(int id, bool reload = false);
+        dao::MissionAssignmentPtr assignment(int id, bool reload = false);
+        dao::VehiclePtr vehicle(int id, bool reload = false);
+        dao::LinkDescriptionPtr link(int id, bool reload = false);
+        dao::VideoSourcePtr videoSource(int id, bool reload = false);
 
-        bool save(const MissionPtr& mission);
-        bool save(const MissionItemPtr& item);
-        bool save(const MissionAssignmentPtr& assignment);
-        bool save(const VehiclePtr& vehicle);
-        bool save(const LinkDescriptionPtr& link);
-        bool save(const VideoSourcePtr& videoSource);
+        bool save(const dao::MissionPtr& mission);
+        bool save(const dao::MissionItemPtr& item);
+        bool save(const dao::MissionAssignmentPtr& assignment);
+        bool save(const dao::VehiclePtr& vehicle);
+        bool save(const dao::LinkDescriptionPtr& link);
+        bool save(const dao::VideoSourcePtr& videoSource);
 
-        bool remove(const MissionPtr& mission);
-        bool remove(const MissionItemPtr& item);
-        bool remove(const MissionAssignmentPtr& assignment);
-        bool remove(const VehiclePtr& vehicle);
-        bool remove(const LinkDescriptionPtr& link);
-        bool remove(const VideoSourcePtr& videoSource);
+        bool remove(const dao::MissionPtr& mission);
+        bool remove(const dao::MissionItemPtr& item);
+        bool remove(const dao::MissionAssignmentPtr& assignment);
+        bool remove(const dao::VehiclePtr& vehicle);
+        bool remove(const dao::LinkDescriptionPtr& link);
+        bool remove(const dao::VideoSourcePtr& videoSource);
 
-        LinkDescriptionPtrList links(const QString& condition = QString(), bool reload  = false);
-        VehiclePtrList vehicles(const QString& condition = QString(), bool reload  = false);
-        MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
-        MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
-        VideoSourcePtrList videoSources(const QString& condition = QString(), bool reload  = false);
+        dao::LinkDescriptionPtrList links(const QString& condition = QString(), bool reload  = false);
+        dao::VehiclePtrList vehicles(const QString& condition = QString(), bool reload  = false);
+        dao::MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
+        dao::MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
+        dao::VideoSourcePtrList videoSources(const QString& condition = QString(), bool reload  = false);
 
-        MissionAssignmentPtr missionAssignment(int missionId);
-        MissionAssignmentPtr vehicleAssignment(int vehicleId);
+        dao::MissionAssignmentPtr missionAssignment(int missionId);
+        dao::MissionAssignmentPtr vehicleAssignment(int vehicleId);
 
-        MissionItemPtrList missionItems(int missionId);
-        MissionItemPtr missionItem(int missionId, int sequence);
+        dao::MissionItemPtrList missionItems(int missionId);
+        dao::MissionItemPtr missionItem(int missionId, int sequence);
 
         int vehicleIdByMavId(int mavId) const;
 
@@ -64,29 +64,29 @@ namespace db
         void clearAll();
 
     signals:
-        void missionAdded(db::MissionPtr mission);
-        void missionRemoved(db::MissionPtr mission);
-        void missionChanged(db::MissionPtr mission);
+        void missionAdded(dao::MissionPtr mission);
+        void missionRemoved(dao::MissionPtr mission);
+        void missionChanged(dao::MissionPtr mission);
 
-        void missionItemAdded(db::MissionItemPtr item);
-        void missionItemRemoved(db::MissionItemPtr item);
-        void missionItemChanged(db::MissionItemPtr item);
+        void missionItemAdded(dao::MissionItemPtr item);
+        void missionItemRemoved(dao::MissionItemPtr item);
+        void missionItemChanged(dao::MissionItemPtr item);
 
-        void assignmentAdded(db::MissionAssignmentPtr assignment);
-        void assignmentRemoved(db::MissionAssignmentPtr assignment);
-        void assignmentChanged(db::MissionAssignmentPtr assignment);
+        void assignmentAdded(dao::MissionAssignmentPtr assignment);
+        void assignmentRemoved(dao::MissionAssignmentPtr assignment);
+        void assignmentChanged(dao::MissionAssignmentPtr assignment);
 
-        void vehicleAdded(db::VehiclePtr vehicle);
-        void vehicleRemoved(db::VehiclePtr vehicle);
-        void vehicleChanged(db::VehiclePtr vehicle);
+        void vehicleAdded(dao::VehiclePtr vehicle);
+        void vehicleRemoved(dao::VehiclePtr vehicle);
+        void vehicleChanged(dao::VehiclePtr vehicle);
 
-        void linkAdded(db::LinkDescriptionPtr link);
-        void linkRemoved(db::LinkDescriptionPtr link);
-        void linkChanged(db::LinkDescriptionPtr link);
+        void linkAdded(dao::LinkDescriptionPtr link);
+        void linkRemoved(dao::LinkDescriptionPtr link);
+        void linkChanged(dao::LinkDescriptionPtr link);
 
-        void videoSourceAdded(db::VideoSourcePtr videoSource);
-        void videoSourceRemoved(db::VideoSourcePtr videoSource);
-        void videoSourceChanged(db::VideoSourcePtr videoSource);
+        void videoSourceAdded(dao::VideoSourcePtr videoSource);
+        void videoSourceRemoved(dao::VideoSourcePtr videoSource);
+        void videoSourceChanged(dao::VideoSourcePtr videoSource);
 
     private:
         class Impl;

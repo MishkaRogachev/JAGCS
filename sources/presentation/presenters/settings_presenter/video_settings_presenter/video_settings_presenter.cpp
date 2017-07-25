@@ -26,12 +26,12 @@ VideoSettingsPresenter::VideoSettingsPresenter(db::DbFacade* facade, QObject* pa
 {
     d->facade = facade;
 
-    connect(d->facade, &db::DbFacade::videoSourceAdded,
+    connect(d->facade, &dao::DbFacade::videoSourceAdded,
             this, &VideoSettingsPresenter::onVideoSourceAdded);
-    connect(d->facade, &db::DbFacade::videoSourceRemoved,
+    connect(d->facade, &dao::DbFacade::videoSourceRemoved,
             this, &VideoSettingsPresenter::onVideoSourceRemoved);
 
-    for (const db::VideoSourcePtr& video: facade->videoSources())
+    for (const dao::VideoSourcePtr& video: facade->videoSources())
     {
         d->videoPresenters.append(new VideoSourcePresenter(facade, video, this));
     }
@@ -51,13 +51,13 @@ void VideoSettingsPresenter::connectView(QObject* view)
     this->updateVideoSources();
 }
 
-void VideoSettingsPresenter::onVideoSourceAdded(const db::VideoSourcePtr& video)
+void VideoSettingsPresenter::onVideoSourceAdded(const dao::VideoSourcePtr& video)
 {
     d->videoPresenters.append(new VideoSourcePresenter(d->facade, video, this));
     this->updateVideoSources();
 }
 
-void VideoSettingsPresenter::onVideoSourceRemoved(const db::VideoSourcePtr& video)
+void VideoSettingsPresenter::onVideoSourceRemoved(const dao::VideoSourcePtr& video)
 {
     for (VideoSourcePresenter* videoPresenter: d->videoPresenters)
     {
@@ -96,15 +96,15 @@ void VideoSettingsPresenter::updateCameraInfo()
 
 void VideoSettingsPresenter::onAddDeviceVideo()
 {
-    db::VideoSourcePtr video = db::VideoSourcePtr::create();
-    video->setType(db::VideoSource::Device);
+    dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
+    video->setType(dao::VideoSource::Device);
     d->facade->save(video);
 }
 
 void VideoSettingsPresenter::onAddStreamVideo()
 {
-    db::VideoSourcePtr video = db::VideoSourcePtr::create();
-    video->setType(db::VideoSource::Stream);
+    dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
+    video->setType(dao::VideoSource::Stream);
     d->facade->save(video);
 }
 

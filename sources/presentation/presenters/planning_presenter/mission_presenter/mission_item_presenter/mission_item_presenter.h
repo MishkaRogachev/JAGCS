@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -20,11 +20,11 @@ namespace presentation
         explicit MissionItemPresenter(db::DbFacade* dbFacade, QObject* object = nullptr);
         ~MissionItemPresenter() override;
 
-        db::MissionPtr selectedMission() const;
+        dao::MissionPtr selectedMission() const;
 
     public slots:
-        void setMission(const db::MissionPtr& mission);
-        void setMissionItem(const db::MissionItemPtr& item);
+        void setMission(const dao::MissionPtr& mission);
+        void setMissionItem(const dao::MissionItemPtr& item);
 
         void remove();
         void selectItem(int index);

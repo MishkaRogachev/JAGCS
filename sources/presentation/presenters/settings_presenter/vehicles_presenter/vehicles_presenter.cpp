@@ -25,10 +25,10 @@ VehiclesPresenter::VehiclesPresenter(db::DbFacade* facade, QObject* parent):
 {
     d->facade = facade;
 
-    connect(facade, &db::DbFacade::vehicleAdded, this, &VehiclesPresenter::onVehicleAdded);
-    connect(facade, &db::DbFacade::vehicleRemoved,  this, &VehiclesPresenter::onVehicleRemoved);
+    connect(facade, &dao::DbFacade::vehicleAdded, this, &VehiclesPresenter::onVehicleAdded);
+    connect(facade, &dao::DbFacade::vehicleRemoved,  this, &VehiclesPresenter::onVehicleRemoved);
 
-    for (const db::VehiclePtr& vehicle: facade->vehicles())
+    for (const dao::VehiclePtr& vehicle: facade->vehicles())
     {
         d->vehiclePresenters.append(new DescriptionVehiclePresenter(facade, vehicle, this));
     }
@@ -44,13 +44,13 @@ void VehiclesPresenter::connectView(QObject* view)
     this->updateVehicles();
 }
 
-void VehiclesPresenter::onVehicleAdded(const db::VehiclePtr& vehicle)
+void VehiclesPresenter::onVehicleAdded(const dao::VehiclePtr& vehicle)
 {
     d->vehiclePresenters.append(new DescriptionVehiclePresenter(d->facade, vehicle, this));
     this->updateVehicles();
 }
 
-void VehiclesPresenter::onVehicleRemoved(const db::VehiclePtr& vehicle)
+void VehiclesPresenter::onVehicleRemoved(const dao::VehiclePtr& vehicle)
 {
     for (DescriptionVehiclePresenter* vehiclePresenter: d->vehiclePresenters)
     {
@@ -76,7 +76,7 @@ void VehiclesPresenter::updateVehicles()
 
 void VehiclesPresenter::onAddVehicle()
 {
-    auto description = db::VehiclePtr::create();
+    auto description = dao::VehiclePtr::create();
 
     description->setName(tr("New Vehicle"));
 

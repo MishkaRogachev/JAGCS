@@ -26,30 +26,30 @@ using namespace domain;
 
 namespace
 {
-    db::Vehicle::Type decodeType(uint8_t type)
+    dao::Vehicle::Type decodeType(uint8_t type)
     {
         switch (type) //TODO: other vehicles
         {
-        case MAV_TYPE_FIXED_WING: return db::Vehicle::FixedWing;
-        case MAV_TYPE_TRICOPTER: return db::Vehicle::Tricopter;
-        case MAV_TYPE_QUADROTOR: return db::Vehicle::Quadcopter;
-        case MAV_TYPE_HEXAROTOR: return db::Vehicle::Hexcopter;
-        case MAV_TYPE_OCTOROTOR: return db::Vehicle::Octocopter;
-        case MAV_TYPE_COAXIAL: return db::Vehicle::Coaxial;
-        case MAV_TYPE_HELICOPTER: return db::Vehicle::Helicopter;
+        case MAV_TYPE_FIXED_WING: return dao::Vehicle::FixedWing;
+        case MAV_TYPE_TRICOPTER: return dao::Vehicle::Tricopter;
+        case MAV_TYPE_QUADROTOR: return dao::Vehicle::Quadcopter;
+        case MAV_TYPE_HEXAROTOR: return dao::Vehicle::Hexcopter;
+        case MAV_TYPE_OCTOROTOR: return dao::Vehicle::Octocopter;
+        case MAV_TYPE_COAXIAL: return dao::Vehicle::Coaxial;
+        case MAV_TYPE_HELICOPTER: return dao::Vehicle::Helicopter;
         case MAV_TYPE_VTOL_DUOROTOR:
         case MAV_TYPE_VTOL_QUADROTOR:
         case MAV_TYPE_VTOL_TILTROTOR:
         case MAV_TYPE_VTOL_RESERVED2:
         case MAV_TYPE_VTOL_RESERVED3:
         case MAV_TYPE_VTOL_RESERVED4:
-        case MAV_TYPE_VTOL_RESERVED5: return db::Vehicle::Vtol;
+        case MAV_TYPE_VTOL_RESERVED5: return dao::Vehicle::Vtol;
         case MAV_TYPE_AIRSHIP:
-        case MAV_TYPE_FREE_BALLOON: return db::Vehicle::Airship;
-        case MAV_TYPE_KITE: return db::Vehicle::Kite;
-        case MAV_TYPE_FLAPPING_WING: return db::Vehicle::Ornithopter;
+        case MAV_TYPE_FREE_BALLOON: return dao::Vehicle::Airship;
+        case MAV_TYPE_KITE: return dao::Vehicle::Kite;
+        case MAV_TYPE_FLAPPING_WING: return dao::Vehicle::Ornithopter;
         case MAV_TYPE_GENERIC:
-        default: return db::Vehicle::UnknownType;
+        default: return dao::Vehicle::UnknownType;
         }
     }
 
@@ -112,13 +112,13 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     int vehicleId = d->dbFacade->vehicleIdByMavId(message.sysid);
 
-    db::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
+    dao::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
 
     if (!vehicle && settings::Provider::value(settings::communication::autoAdd).toBool())
     {
-        vehicle = db::VehiclePtr::create();
+        vehicle = dao::VehiclePtr::create();
         vehicle->setMavId(message.sysid);
-        vehicle->setType(db::Vehicle::Auto);
+        vehicle->setType(dao::Vehicle::Auto);
         vehicle->setName(tr("Added"));
         d->dbFacade->save(vehicle);
     }
@@ -141,7 +141,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
                     settings::Provider::value(settings::communication::timeout).toInt(),
                     this);
 
-        if (vehicle->type() == db::Vehicle::Auto)
+        if (vehicle->type() == dao::Vehicle::Auto)
         {
             vehicle->setType(::decodeType(heartbeat.type));
             changed = true;
@@ -198,7 +198,7 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
         {
             if (timer->timerId() != event->timerId()) continue;
 
-            db::VehiclePtr vehicle = d->dbFacade->vehicle(d->vehicleTimers.key(timer));
+            dao::VehiclePtr vehicle = d->dbFacade->vehicle(d->vehicleTimers.key(timer));
             if (vehicle) vehicle->setOnline(false);
             d->dbFacade->vehicleChanged(vehicle);
             timer->stop();

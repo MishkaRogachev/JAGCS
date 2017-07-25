@@ -16,7 +16,7 @@ using namespace presentation;
 class DataBasePresenter::Impl
 {
 public:
-    db::DbManager* manager;
+    dao::DbManager* manager;
     db::DbFacade* facade;
 };
 
@@ -27,7 +27,7 @@ DataBasePresenter::DataBasePresenter(domain::DomainEntry* entry, QObject* parent
     d->manager = entry->dbManager();
     d->facade = entry->dbFacade();
 
-    connect(d->manager, &db::DbManager::logChanged, this, &DataBasePresenter::updateLog);
+    connect(d->manager, &dao::DbManager::logChanged, this, &DataBasePresenter::updateLog);
 }
 
 DataBasePresenter::~DataBasePresenter()

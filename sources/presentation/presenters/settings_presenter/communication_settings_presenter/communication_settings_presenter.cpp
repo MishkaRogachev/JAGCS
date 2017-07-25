@@ -24,7 +24,7 @@ public:
     db::DbFacade* dbFacade;
     domain::CommunicationService* service;
 
-    QMap<db::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
+    QMap<dao::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
 };
 
 CommunicationSettingsPresenter::CommunicationSettingsPresenter(domain::DomainEntry* entry,
@@ -35,16 +35,16 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(domain::DomainEnt
     d->dbFacade = entry->dbFacade();
     d->service = entry->commService();
 
-    connect(d->dbFacade, &db::DbFacade::linkAdded,
+    connect(d->dbFacade, &dao::DbFacade::linkAdded,
             this, &CommunicationSettingsPresenter::onLinkAdded);
-    connect(d->dbFacade, &db::DbFacade::linkChanged,
+    connect(d->dbFacade, &dao::DbFacade::linkChanged,
             this, &CommunicationSettingsPresenter::onLinkChanged);
-    connect(d->dbFacade, &db::DbFacade::linkRemoved,
+    connect(d->dbFacade, &dao::DbFacade::linkRemoved,
             this, &CommunicationSettingsPresenter::onLinkRemoved);
     connect(d->service, &CommunicationService::linkStatisticsChanged,
             this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
 
-    for (const db::LinkDescriptionPtr& description: d->dbFacade->links())
+    for (const dao::LinkDescriptionPtr& description: d->dbFacade->links())
     {
         d->linkPresenters[description] =
                 new CommunicationLinkPresenter(d->dbFacade, d->service, description, this);
@@ -63,7 +63,7 @@ void CommunicationSettingsPresenter::connectView(QObject* view)
 }
 
 void CommunicationSettingsPresenter::onLinkAdded(
-        const db::LinkDescriptionPtr& description)
+        const dao::LinkDescriptionPtr& description)
 {
     d->linkPresenters[description] =
             new CommunicationLinkPresenter(d->dbFacade, d->service, description, this);
@@ -72,21 +72,21 @@ void CommunicationSettingsPresenter::onLinkAdded(
 }
 
 void CommunicationSettingsPresenter::onLinkChanged(
-        const db::LinkDescriptionPtr& description)
+        const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateView();
 }
 
 void CommunicationSettingsPresenter::onLinkStatisticsChanged(
-        const db::LinkDescriptionPtr& description)
+        const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateStatistics();
 }
 
 void CommunicationSettingsPresenter::onLinkRemoved(
-        const db::LinkDescriptionPtr& description)
+        const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     CommunicationLinkPresenter* linkPresenter = d->linkPresenters.take(description);
@@ -108,10 +108,10 @@ void CommunicationSettingsPresenter::updateCommunicationsLinks()
 
 void CommunicationSettingsPresenter::onAddUdpLink()
 {
-    auto description = db::LinkDescriptionPtr::create();
+    auto description = dao::LinkDescriptionPtr::create();
 
     description->setName(tr("New UDP Link"));
-    description->setType(db::LinkDescription::Udp);
+    description->setType(dao::LinkDescription::Udp);
     description->setPort(settings::Provider::value(settings::communication::port).toInt());
 
     d->dbFacade->save(description);
@@ -119,10 +119,10 @@ void CommunicationSettingsPresenter::onAddUdpLink()
 
 void CommunicationSettingsPresenter::onAddSerialLink()
 {
-    auto description = db::LinkDescriptionPtr::create();
+    auto description = dao::LinkDescriptionPtr::create();
 
     description->setName(tr("New Serial Link"));
-    description->setType(db::LinkDescription::Serial);
+    description->setType(dao::LinkDescription::Serial);
     description->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
 
     d->dbFacade->save(description);

@@ -3,12 +3,12 @@
 // Qt
 #include <QMap>
 
-using namespace db;
+using namespace dao;
 
 QMap<Vehicle*, int> Vehicle::m_mavIds;
 
 Vehicle::Vehicle():
-    BaseEntity(),
+    BaseDao(),
     m_mavId(-1),
     m_type(UnknownType),
     m_online(false)

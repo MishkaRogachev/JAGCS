@@ -1,11 +1,11 @@
 #ifndef VIDEO_SOURCE_H
 #define VIDEO_SOURCE_H
 
-#include "base_entity.h"
+#include "base_dao.h"
 
-namespace db
+namespace dao
 {
-    class VideoSource: public BaseEntity
+    class VideoSource: public BaseDao
     {
         Q_GADGET
 

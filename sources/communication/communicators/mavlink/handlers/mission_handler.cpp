@@ -22,44 +22,44 @@
 
 namespace
 {
-    db::MissionItem::Command decodeCommand(uint16_t command)
+    dao::MissionItem::Command decodeCommand(uint16_t command)
     {
         switch (command) {
         case MAV_CMD_NAV_TAKEOFF:
-            return db::MissionItem::Takeoff;
+            return dao::MissionItem::Takeoff;
         case MAV_CMD_NAV_WAYPOINT:
-            return db::MissionItem::Waypoint;
+            return dao::MissionItem::Waypoint;
         case MAV_CMD_NAV_LOITER_TO_ALT:
-            return db::MissionItem::LoiterAltitude;
+            return dao::MissionItem::LoiterAltitude;
         case MAV_CMD_NAV_LOITER_TURNS:
-            return db::MissionItem::LoiterTurns;
+            return dao::MissionItem::LoiterTurns;
         case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            return db::MissionItem::Continue;
+            return dao::MissionItem::Continue;
         case MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            return db::MissionItem::Return;
+            return dao::MissionItem::Return;
         case MAV_CMD_NAV_LAND:
-            return db::MissionItem::Landing;
+            return dao::MissionItem::Landing;
         default:
-            return db::MissionItem::UnknownCommand;
+            return dao::MissionItem::UnknownCommand;
         }
     }
 
-    uint16_t encodeCommand(db::MissionItem::Command command)
+    uint16_t encodeCommand(dao::MissionItem::Command command)
     {
         switch (command) {
-        case db::MissionItem::Takeoff:
+        case dao::MissionItem::Takeoff:
             return MAV_CMD_NAV_TAKEOFF;
-        case db::MissionItem::Waypoint:
+        case dao::MissionItem::Waypoint:
             return MAV_CMD_NAV_WAYPOINT;
-        case db::MissionItem::LoiterAltitude:
+        case dao::MissionItem::LoiterAltitude:
             return MAV_CMD_NAV_LOITER_TO_ALT;
-        case db::MissionItem::LoiterTurns:
+        case dao::MissionItem::LoiterTurns:
             return MAV_CMD_NAV_LOITER_TURNS;
-        case db::MissionItem::Continue:
+        case dao::MissionItem::Continue:
             return MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-        case db::MissionItem::Return:
+        case dao::MissionItem::Return:
             return MAV_CMD_NAV_RETURN_TO_LAUNCH;
-        case db::MissionItem::Landing:
+        case dao::MissionItem::Landing:
             return MAV_CMD_NAV_LAND;
         default:
             return 0;
@@ -110,14 +110,14 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     }
 }
 
-void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
+void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
 {
-    db::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
+    dao::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    for (const db::MissionItemPtr& item: m_dbFacade->missionItems(assignment->missionId()))
+    for (const dao::MissionItemPtr& item: m_dbFacade->missionItems(assignment->missionId()))
     {
-        item->setStatus(db::MissionItem::NotActual);
+        item->setStatus(dao::MissionItem::NotActual);
         m_dbFacade->missionItemChanged(item);
     }
 
@@ -135,15 +135,15 @@ void MissionHandler::download(const db::MissionAssignmentPtr& assignment)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::upload(const db::MissionAssignmentPtr& assignment)
+void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 {
-    db::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
-    db::MissionPtr mission = m_dbFacade->mission(assignment->missionId());
+    dao::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
+    dao::MissionPtr mission = m_dbFacade->mission(assignment->missionId());
     if (vehicle.isNull() || mission.isNull()) return;
 
-    for (const db::MissionItemPtr& item: m_dbFacade->missionItems(assignment->missionId()))
+    for (const dao::MissionItemPtr& item: m_dbFacade->missionItems(assignment->missionId()))
     {
-        item->setStatus(db::MissionItem::Uploading);
+        item->setStatus(dao::MissionItem::Uploading);
         m_dbFacade->missionItemChanged(item);
     }
 
@@ -180,7 +180,7 @@ void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
 void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
 {
     int vehicleId = m_dbFacade->vehicleIdByMavId(mavId);
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
+    dao::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_message_t message;
@@ -202,7 +202,7 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
     }
     else
     {
-        db::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(), seq);
+        dao::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(), seq);
         if (item.isNull()) return;
 
         msgItem.seq = seq;
@@ -252,7 +252,7 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
         }
 
         // TODO: wait ack
-        item->setStatus(db::MissionItem::Actual);
+        item->setStatus(dao::MissionItem::Actual);
         m_dbFacade->missionItemChanged(item);
     }
 
@@ -280,7 +280,7 @@ void MissionHandler::sendMissionAck(uint8_t mavId)
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
     int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
+    dao::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     // TODO: check, we realy downloading
@@ -289,7 +289,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     mavlink_msg_mission_count_decode(&message, &missionCount);
 
     // Remove superfluous items
-    for (const db::MissionItemPtr& item:
+    for (const dao::MissionItemPtr& item:
          m_dbFacade->missionItems(assignment->missionId()))
     {
         if (item->sequence() > missionCount.count - 1) m_dbFacade->remove(item);
@@ -304,7 +304,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 void MissionHandler::processMissionItem(const mavlink_message_t& message)
 {
     int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
+    dao::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_t msgItem;
@@ -312,11 +312,11 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     if (msgItem.seq == 0) return; // have no interes in home point
 
-    db::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(),
+    dao::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(),
                                                       msgItem.seq);
     if (item.isNull())
     {
-        item = db::MissionItemPtr::create();
+        item = dao::MissionItemPtr::create();
         item->setMissionId(assignment->missionId());
         item->setSequence(msgItem.seq);
     }
@@ -364,7 +364,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         break;
     }
 
-    item->setStatus(db::MissionItem::Actual);
+    item->setStatus(dao::MissionItem::Actual);
     m_dbFacade->save(item);
 }
 
@@ -398,13 +398,13 @@ void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 void MissionHandler::processMissionReached(const mavlink_message_t& message)
 {
     int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
-    db::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
+    dao::MissionAssignmentPtr assignment = m_dbFacade->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_reached_t reached;
     mavlink_msg_mission_item_reached_decode(&message, &reached);
 
-    db::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(), reached.seq);
+    dao::MissionItemPtr item = m_dbFacade->missionItem(assignment->missionId(), reached.seq);
     if (item) item->setReached(true);
     emit m_dbFacade->missionItemChanged(item);
 }

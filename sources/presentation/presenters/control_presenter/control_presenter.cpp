@@ -43,8 +43,8 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     d->map = new LocationMapPresenter(entry, this);
     d->video = new VideoSplitPresenter(dbFacade, this);
 
-    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
-    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
+    connect(dbFacade, &dao::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
+    connect(dbFacade, &dao::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
 }
 
 ControlPresenter::~ControlPresenter()
@@ -57,7 +57,7 @@ void ControlPresenter::updateVehiclesList()
     int index = 1;
     int onlineIndex = -1;
 
-    for (const db::VehiclePtr& vehicle: d->entry->dbFacade()->vehicles())
+    for (const dao::VehiclePtr& vehicle: d->entry->dbFacade()->vehicles())
     {
         vehicles.append(vehicle->name());
         if (vehicle->isOnline() && onlineIndex == -1) onlineIndex = index;
@@ -81,13 +81,13 @@ void ControlPresenter::connectView(QObject* view)
 void ControlPresenter::onSelectVehicle(int index)
 {
     // TODO: check, if vehicle is the same
-    db::VehiclePtrList vehicles  = d->entry->dbFacade()->vehicles();
+    dao::VehiclePtrList vehicles  = d->entry->dbFacade()->vehicles();
 
     if (d->dashboard) delete d->dashboard;
 
     if (index > 0 && index <= vehicles.count())
     {
-        db::VehiclePtr vehicle = vehicles[index - 1];
+        dao::VehiclePtr vehicle = vehicles[index - 1];
 
         AerialDashboardFactory factory(d->entry, vehicle);
         d->dashboard = factory.create();

@@ -18,7 +18,7 @@
 #include "communication_service.h"
 #include "mavlink_communicator_factory.h"
 
-using namespace db;
+using namespace dao;
 using namespace domain;
 
 class DomainEntry::Impl

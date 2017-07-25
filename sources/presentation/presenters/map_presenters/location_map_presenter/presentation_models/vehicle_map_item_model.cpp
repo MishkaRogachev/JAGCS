@@ -37,10 +37,10 @@ VehicleMapItemModel::VehicleMapItemModel(db::DbFacade* dbFacade,
     d->dbFacade = dbFacade;
     d->telemetryService = telemetryService;
 
-    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &VehicleMapItemModel::onVehicleAdded);
-    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &VehicleMapItemModel::onVehicleRemoved);
+    connect(dbFacade, &dao::DbFacade::vehicleAdded, this, &VehicleMapItemModel::onVehicleAdded);
+    connect(dbFacade, &dao::DbFacade::vehicleRemoved, this, &VehicleMapItemModel::onVehicleRemoved);
 
-    for (const db::VehiclePtr& vehicle: dbFacade->vehicles())
+    for (const dao::VehiclePtr& vehicle: dbFacade->vehicles())
     {
         this->onVehicleAdded(vehicle);
     }
@@ -64,7 +64,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     int vehicleId = d->vehicleIds.at(index.row());
 
     domain::Telemetry* node = d->telemetryService->vehicleNode(vehicleId);
-    db::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
+    dao::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
     if (!node || vehicle.isNull()) return QVariant();
 
     QVariant data;
@@ -105,7 +105,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     return data;
 }
 
-void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
+void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
 {
     int vehicleId = vehicle->id();
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
@@ -140,7 +140,7 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     this->endInsertRows();
 }
 
-void VehicleMapItemModel::onVehicleRemoved(const db::VehiclePtr& vehicle)
+void VehicleMapItemModel::onVehicleRemoved(const dao::VehiclePtr& vehicle)
 {
     int row = d->vehicleIds.indexOf(vehicle->id());
     if (row == -1) return;

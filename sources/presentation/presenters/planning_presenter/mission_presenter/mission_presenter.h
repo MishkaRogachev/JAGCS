@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace domain
 {
@@ -21,15 +21,15 @@ namespace presentation
         ~MissionPresenter() override;
 
     public slots:
-        void selectMission(const db::MissionPtr& mission);
+        void selectMission(const dao::MissionPtr& mission);
 
     protected:
         void connectView(QObject* view) override;
         void setViewConnected(bool connected);
 
     private slots:
-        void onMissionAdded(const db::MissionPtr& mission);
-        void onMissionRemoved(const db::MissionPtr& mission);
+        void onMissionAdded(const dao::MissionPtr& mission);
+        void onMissionRemoved(const dao::MissionPtr& mission);
         void updateMissionsBox();
         void updateVehiclesBox();
         void updateAssignment();
@@ -45,7 +45,7 @@ namespace presentation
         void onDownloadMission();
 
     signals:
-        void missionSelected(const db::MissionPtr& mission);
+        void missionSelected(const dao::MissionPtr& mission);
 
     private:
         class Impl;

@@ -25,7 +25,7 @@ namespace domain
         ~DomainEntry();
 
         db::DbFacade* dbFacade() const;
-        db::DbManager* dbManager() const;
+        dao::DbManager* dbManager() const;
 
         TelemetryService* telemetryService() const;
         CommandService* commandService() const;

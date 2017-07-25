@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -21,7 +21,7 @@ namespace presentation
                                           QObject* parent = nullptr);
 
     public slots:
-        void selectMission(const db::MissionPtr& mission);
+        void selectMission(const dao::MissionPtr& mission);
         void updateMission();
         void clearMission();
 
@@ -30,7 +30,7 @@ namespace presentation
 
     private:
         db::DbFacade* m_dbFacade;
-        db::MissionPtr m_mission;
+        dao::MissionPtr m_mission;
     };
 }
 

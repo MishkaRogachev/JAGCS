@@ -1,11 +1,11 @@
-#ifndef DB_TRAITS_H
-#define DB_TRAITS_H
+#ifndef DAO_TRAITS_H
+#define DAO_TRAITS_H
 
 // Qt
 #include <QSharedPointer>
 #include <QList>
 
-namespace db
+namespace dao
 {
     class Mission;
     class MissionItem;
@@ -28,4 +28,4 @@ namespace db
     using VideoSourcePtrList = QList<VideoSourcePtr>;
 }
 
-#endif // DB_TRAITS_H
+#endif // DAO_TRAITS_H

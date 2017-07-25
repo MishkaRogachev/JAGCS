@@ -13,7 +13,7 @@
 using namespace presentation;
 
 VideoSourcePresenter::VideoSourcePresenter(db::DbFacade* facade,
-                                           const db::VideoSourcePtr& video,
+                                           const dao::VideoSourcePtr& video,
                                            QObject* parent):
     BasePresenter(parent),
     m_facade(facade),
@@ -21,7 +21,7 @@ VideoSourcePresenter::VideoSourcePresenter(db::DbFacade* facade,
     m_preview(nullptr)
 {}
 
-db::VideoSourcePtr VideoSourcePresenter::video() const
+dao::VideoSourcePtr VideoSourcePresenter::video() const
 {
     return m_video;
 }

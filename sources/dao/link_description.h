@@ -1,11 +1,11 @@
 #ifndef LINK_DESCRIPTION_H
 #define LINK_DESCRIPTION_H
 
-#include "base_entity.h"
+#include "base_dao.h"
 
-namespace db
+namespace dao
 {
-    class LinkDescription : public BaseEntity
+    class LinkDescription : public BaseDao
     {
         Q_GADGET
 

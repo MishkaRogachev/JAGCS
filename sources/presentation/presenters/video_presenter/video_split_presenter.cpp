@@ -22,7 +22,7 @@ void VideoSplitPresenter::updateSources()
 {
     QStringList videoSources;
 
-    for (const db::VideoSourcePtr& videoSource: m_dbFacade->videoSources())
+    for (const dao::VideoSourcePtr& videoSource: m_dbFacade->videoSources())
     {
         videoSources.append(videoSource->source());
     }

@@ -3,7 +3,7 @@
 // Internal
 #include "mission_item.h"
 
-using namespace db;
+using namespace dao;
 
 QString Mission::name() const
 {

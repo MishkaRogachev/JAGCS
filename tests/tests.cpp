@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
-    db::DbManager manager;
+    dao::DbManager manager;
 
     manager.open("test_db");
 

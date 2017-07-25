@@ -23,9 +23,9 @@ public:
     AbstractCommunicator* communicator;
     db::DbFacade* dbFacade;
 
-    QMap<db::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
+    QMap<dao::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
 
-    AbstractLink* linkFromDescription(const db::LinkDescriptionPtr& description)
+    AbstractLink* linkFromDescription(const dao::LinkDescriptionPtr& description)
     {
         DescriptionLinkFactory factory(description);
         AbstractLink* link = factory.create();
@@ -40,7 +40,7 @@ public:
     }
 
     void updateLinkFromDescription(AbstractLink* link,
-                                   const db::LinkDescriptionPtr& description)
+                                   const dao::LinkDescriptionPtr& description)
     {
         DescriptionLinkFactory factory(description);
         factory.update(link);
@@ -56,24 +56,24 @@ CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
     d->communicator = commFactory->create();
     d->dbFacade = facade;
 
-    for (const db::LinkDescriptionPtr& description: facade->links())
+    for (const dao::LinkDescriptionPtr& description: facade->links())
         this->onLinkAdded(description);
 
-    connect(d->dbFacade, &db::DbFacade::linkAdded, this, &CommunicationService::onLinkAdded);
-    connect(d->dbFacade, &db::DbFacade::linkRemoved, this, &CommunicationService::onLinkRemoved);
-    connect(d->dbFacade, &db::DbFacade::linkChanged, this, &CommunicationService::onLinkChanged);
+    connect(d->dbFacade, &dao::DbFacade::linkAdded, this, &CommunicationService::onLinkAdded);
+    connect(d->dbFacade, &dao::DbFacade::linkRemoved, this, &CommunicationService::onLinkRemoved);
+    connect(d->dbFacade, &dao::DbFacade::linkChanged, this, &CommunicationService::onLinkChanged);
 }
 
 CommunicationService::~CommunicationService()
 {
-    for (const db::LinkDescriptionPtr& link: d->descriptedLinks.keys())
+    for (const dao::LinkDescriptionPtr& link: d->descriptedLinks.keys())
     {
         link->setAutoConnect(link->isConnected());
         d->dbFacade->save(link);
     }
 }
 
-void CommunicationService::setLinkConnected(const db::LinkDescriptionPtr& description,
+void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& description,
                                             bool connected)
 {
     AbstractLink* link = d->descriptedLinks[description];
@@ -83,7 +83,7 @@ void CommunicationService::setLinkConnected(const db::LinkDescriptionPtr& descri
     link->statisticsChanged();
 }
 
-void CommunicationService::onLinkAdded(const db::LinkDescriptionPtr& description)
+void CommunicationService::onLinkAdded(const dao::LinkDescriptionPtr& description)
 {
     AbstractLink* link = d->linkFromDescription(description);
     link->setParent(this);
@@ -92,7 +92,7 @@ void CommunicationService::onLinkAdded(const db::LinkDescriptionPtr& description
     link->statisticsChanged();
 }
 
-void CommunicationService::onLinkChanged(const db::LinkDescriptionPtr& description)
+void CommunicationService::onLinkChanged(const dao::LinkDescriptionPtr& description)
 {
     AbstractLink* link = d->descriptedLinks[description];
     if (!link) return;
@@ -100,7 +100,7 @@ void CommunicationService::onLinkChanged(const db::LinkDescriptionPtr& descripti
     link->statisticsChanged();
 }
 
-void CommunicationService::onLinkRemoved(const db::LinkDescriptionPtr& description)
+void CommunicationService::onLinkRemoved(const dao::LinkDescriptionPtr& description)
 {
     if (!d->descriptedLinks.contains(description)) return;
     AbstractLink* link = d->descriptedLinks.take(description);
@@ -112,7 +112,7 @@ void CommunicationService::onLinkRemoved(const db::LinkDescriptionPtr& descripti
 void CommunicationService::onLinkStatisticsChanged()
 {
     AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
-    db::LinkDescriptionPtr description = d->descriptedLinks.key(link);
+    dao::LinkDescriptionPtr description = d->descriptedLinks.key(link);
     if (description.isNull()) return;
 
     description->setBytesRecvSec(link->bytesReceivedSec());

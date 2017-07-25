@@ -1,22 +1,22 @@
-#ifndef BASE_ENTITY_H
-#define BASE_ENTITY_H
+#ifndef BASE_DAO_H
+#define BASE_DAO_H
 
 // Qt
 #include <QObject>
 
 // Internal
-#include "db_traits.h"
+#include "dao_traits.h"
 
-namespace db
+namespace dao
 {
-    class BaseEntity
+    class BaseDao
     {
         Q_GADGET
 
         Q_PROPERTY(int id READ id WRITE setId)
 
     public:
-        virtual ~BaseEntity();
+        virtual ~BaseDao();
 
         int id() const;
         virtual void setId(int id);
@@ -26,4 +26,4 @@ namespace db
     };
 }
 
-#endif // BASE_ENTITY_H
+#endif // BASE_DAO_H

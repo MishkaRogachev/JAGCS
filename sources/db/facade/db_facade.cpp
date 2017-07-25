@@ -15,6 +15,7 @@
 #include "video_source.h"
 
 using namespace db;
+using namespace dao;
 
 class DbFacade::Impl
 {
@@ -386,7 +387,7 @@ void DbFacade::assign(int missionId, int vehicleId)
 
     this->save(missionAssignment);
 
-    for (const db::MissionItemPtr& item: this->missionItems(missionId))
+    for (const dao::MissionItemPtr& item: this->missionItems(missionId))
     {
         item->setStatus(MissionItem::NotActual);
         emit missionItemChanged(item);
@@ -398,7 +399,7 @@ void DbFacade::unassign(int missionId)
     MissionAssignmentPtr assignment = this->missionAssignment(missionId);
     if (!assignment.isNull()) this->remove(assignment);
 
-    for (const db::MissionItemPtr& item: this->missionItems(missionId))
+    for (const dao::MissionItemPtr& item: this->missionItems(missionId))
     {
         item->setStatus(MissionItem::NotActual);
         emit missionItemChanged(item);

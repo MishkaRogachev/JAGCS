@@ -23,7 +23,7 @@
 using namespace presentation;
 
 GenericDashboardFactory::GenericDashboardFactory(domain::DomainEntry* entry,
-                                                 const db::VehiclePtr& vehicle):
+                                                 const dao::VehiclePtr& vehicle):
     IDashboardFactory(),
     m_entry(entry),
     m_vehicle(vehicle)

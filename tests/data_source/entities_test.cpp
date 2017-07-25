@@ -13,7 +13,7 @@
 #include "link_description.h"
 #include "video_source.h"
 
-using namespace db;
+using namespace dao;
 
 void EntitiesTest::testMission()
 {

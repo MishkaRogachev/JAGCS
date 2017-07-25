@@ -16,23 +16,23 @@ VerticalProfilePresenter::VerticalProfilePresenter(db::DbFacade* dbFacade, QObje
     BasePresenter(parent),
     m_dbFacade(dbFacade)
 {
-    connect(m_dbFacade, &db::DbFacade::missionItemAdded, this, [this]
-            (const db::MissionItemPtr& missionItem){
+    connect(m_dbFacade, &dao::DbFacade::missionItemAdded, this, [this]
+            (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &db::DbFacade::missionItemRemoved, this, [this]
-            (const db::MissionItemPtr& missionItem){
+    connect(m_dbFacade, &dao::DbFacade::missionItemRemoved, this, [this]
+            (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &db::DbFacade::missionItemChanged, this, [this]
-            (const db::MissionItemPtr& missionItem){
+    connect(m_dbFacade, &dao::DbFacade::missionItemChanged, this, [this]
+            (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 }
 
-void VerticalProfilePresenter::selectMission(const db::MissionPtr& mission)
+void VerticalProfilePresenter::selectMission(const dao::MissionPtr& mission)
 {
     if (m_mission == mission) return;
 
@@ -47,10 +47,10 @@ void VerticalProfilePresenter::updateMission()
     if (m_mission.isNull()) return;
     QGeoCoordinate lastCoordinate;
     int distance = 0;
-    for (const db::MissionItemPtr& item: m_dbFacade->missionItems(m_mission->id()))
+    for (const dao::MissionItemPtr& item: m_dbFacade->missionItems(m_mission->id()))
     {
         // TODO: another commands
-        if (item->command() == db::MissionItem::Waypoint)
+        if (item->command() == dao::MissionItem::Waypoint)
         {
             QGeoCoordinate coordinate(item->latitude(), item->longitude());
             if (lastCoordinate.isValid() && coordinate.isValid())

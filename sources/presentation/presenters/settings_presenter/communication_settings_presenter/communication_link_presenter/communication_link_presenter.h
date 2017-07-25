@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -24,10 +24,10 @@ namespace presentation
     public:
         CommunicationLinkPresenter(db::DbFacade* dbFacade,
                                    domain::CommunicationService* service,
-                                   const db::LinkDescriptionPtr& description,
+                                   const dao::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
-        db::LinkDescriptionPtr description() const;
+        dao::LinkDescriptionPtr description() const;
 
     public slots:
         void updateView();
@@ -42,7 +42,7 @@ namespace presentation
     private:
         db::DbFacade* m_dbFacade;
         domain::CommunicationService* m_service;
-        db::LinkDescriptionPtr m_description;
+        dao::LinkDescriptionPtr m_description;
     };
 }
 

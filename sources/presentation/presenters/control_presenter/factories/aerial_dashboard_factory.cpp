@@ -19,7 +19,7 @@
 using namespace presentation;
 
 AerialDashboardFactory::AerialDashboardFactory(domain::DomainEntry* entry,
-                                               const db::VehiclePtr& vehicle):
+                                               const dao::VehiclePtr& vehicle):
     GenericDashboardFactory(entry, vehicle)
 {}
 

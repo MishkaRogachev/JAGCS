@@ -34,10 +34,10 @@ MissionStatusPresenter::~MissionStatusPresenter()
 void MissionStatusPresenter::updateView()
 {
     QStringList waypoints;
-    db::MissionAssignmentPtr assignment = d->facade->vehicleAssignment(d->vehicleId);
+    dao::MissionAssignmentPtr assignment = d->facade->vehicleAssignment(d->vehicleId);
     if (assignment)
     {
-        db::MissionPtr mission = d->facade->mission(assignment->missionId());
+        dao::MissionPtr mission = d->facade->mission(assignment->missionId());
 
         for (int i = 1; i < mission->count(); ++i)
         {

@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace db
 {
@@ -30,16 +30,16 @@ namespace domain
         ~CommunicationService() override;
 
     public slots:
-        void setLinkConnected(const db::LinkDescriptionPtr& description, bool connected);
+        void setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected);
 
     private slots:
-        void onLinkAdded(const db::LinkDescriptionPtr& description);
-        void onLinkChanged(const db::LinkDescriptionPtr& description);
-        void onLinkRemoved(const db::LinkDescriptionPtr& description);
+        void onLinkAdded(const dao::LinkDescriptionPtr& description);
+        void onLinkChanged(const dao::LinkDescriptionPtr& description);
+        void onLinkRemoved(const dao::LinkDescriptionPtr& description);
         void onLinkStatisticsChanged();
 
     signals:
-        void linkStatisticsChanged(const db::LinkDescriptionPtr& description);
+        void linkStatisticsChanged(const dao::LinkDescriptionPtr& description);
 
     private:
         class Impl;

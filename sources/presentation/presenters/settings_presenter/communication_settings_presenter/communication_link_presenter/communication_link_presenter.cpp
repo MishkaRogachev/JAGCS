@@ -19,7 +19,7 @@ using namespace presentation;
 CommunicationLinkPresenter::CommunicationLinkPresenter(
         db::DbFacade* dbFacade,
         domain::CommunicationService* service,
-        const db::LinkDescriptionPtr& description,
+        const dao::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
     m_dbFacade(dbFacade),
@@ -27,7 +27,7 @@ CommunicationLinkPresenter::CommunicationLinkPresenter(
     m_description(description)
 {}
 
-db::LinkDescriptionPtr CommunicationLinkPresenter::description() const
+dao::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 {
     return m_description;
 }
