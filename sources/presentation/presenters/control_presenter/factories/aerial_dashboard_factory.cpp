@@ -14,6 +14,7 @@
 #include "satellite_presenter.h"
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
+#include "rangefinder_presenter.h"
 #include "power_system_presenter.h"
 
 using namespace presentation;
@@ -41,6 +42,8 @@ DashboardPresenter* AerialDashboardFactory::create()
                                  node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrumentPresenter("fd", new PitotPresenter(
                                  node->childNode(domain::Telemetry::Pitot), dashboard));
+    dashboard->addInstrumentPresenter("fd", new RangefinderPresenter(
+                                 node->childNode(domain::Telemetry::Rangefinder), dashboard));
     dashboard->addInstrumentPresenter("fd", new PowerSystemPresenter(
                                  node->childNode(domain::Telemetry::PowerSystem), dashboard));
 
