@@ -96,7 +96,7 @@ void MissionItemPresenter::save()
     d->item->setCommand(static_cast<dao::MissionItem::Command>(
                             this->viewProperty(PROPERTY(command)).toInt()));
     d->item->setAltitude(this->viewProperty(PROPERTY(altitude)).toFloat());
-    d->item->setAltitudeRelative(this->viewProperty(PROPERTY(relative)).toBool());
+    d->item->setAltitudeRelative(this->viewProperty(PROPERTY(isAltitudeRelative)).toBool());
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
     d->item->setRadius(this->viewProperty(PROPERTY(radius)).toFloat());
