@@ -51,7 +51,9 @@ void VerticalProfilePresenter::updateMission()
     for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
         // TODO: another commands
-        if (item->command() == dao::MissionItem::Waypoint)
+        if (item->command() == dao::MissionItem::Takeoff ||
+            item->command() == dao::MissionItem::Waypoint ||
+            item->command() == dao::MissionItem::Landing)
         {
             QGeoCoordinate coordinate(item->latitude(), item->longitude());
             if (lastCoordinate.isValid() && coordinate.isValid())
