@@ -23,7 +23,7 @@ public:
     Impl(domain::DomainEntry* entry):
         pointModel(entry->missionService()),
         lineModel(entry->missionService()),
-        vehicleModel(entry->dbFacade(), entry->telemetryService())
+        vehicleModel(entry->vehicleService(), entry->telemetryService())
     {}
 };
 

@@ -3,11 +3,12 @@
 
 // Internal
 #include "base_presenter.h"
+
 #include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class VehicleService;
 }
 
 namespace presentation
@@ -17,7 +18,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VehiclesPresenter(db::DbFacade* facade, QObject* parent = nullptr);
+        explicit VehiclesPresenter(domain::VehicleService* service, QObject* parent = nullptr);
         ~VehiclesPresenter() override;
 
     protected:

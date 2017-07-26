@@ -5,17 +5,12 @@
 #include "abstract_mavlink_handler.h"
 #include "dao_traits.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
-    class VehicleService;
-    class TelemetryService;
-    class MissionService;
     class CommandService;
+    class TelemetryService;
+    class VehicleService;
+    class MissionService;
 }
 
 namespace comm
@@ -25,7 +20,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        MissionHandler(db::DbFacade* dbFacade,
+        MissionHandler(domain::VehicleService* vehicleService,
                        domain::TelemetryService* telemetryService,
                        domain::MissionService* missionService,
                        domain::CommandService* commandService,
@@ -51,7 +46,7 @@ namespace comm
         void processMissionReached(const mavlink_message_t& message);
 
    private:
-       db::DbFacade* m_dbFacade;
+       domain::VehicleService* m_vehicleService;
        domain::TelemetryService* m_telemetryService;
        domain::MissionService* m_missionService;
     };

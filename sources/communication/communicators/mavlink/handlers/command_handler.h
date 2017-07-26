@@ -4,15 +4,11 @@
 // Internal
 #include "abstract_mavlink_handler.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
     class Command;
     class CommandService;
+    class VehicleService;
 }
 
 namespace comm
@@ -22,7 +18,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        CommandHandler(db::DbFacade* dbFacade,
+        CommandHandler(domain::VehicleService* vehicleService,
                        domain::CommandService* commandService,
                        MavLinkCommunicator* communicator);
 
@@ -35,7 +31,7 @@ namespace comm
 
    private:
        domain::CommandService* m_commandService;
-       db::DbFacade* m_dbFacade;
+       domain::VehicleService* m_vehicleService;
     };
 }
 

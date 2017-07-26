@@ -36,7 +36,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
 
     new PingHandler(communicator);
-    new HeartbeatHandler(m_entry->dbFacade(), m_entry->telemetryService(), communicator);
+    new HeartbeatHandler(m_entry->vehicleService(), m_entry->telemetryService(), communicator);
     new SystemStatusHandler(m_entry->telemetryService(), communicator);
     new AttitudeHandler(m_entry->telemetryService(), communicator);
     new PressureHandler(m_entry->telemetryService(), communicator);
@@ -49,8 +49,8 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new BatteryHandler(m_entry->telemetryService(), communicator);
     new RadioStatusHandler(m_entry->telemetryService(), communicator);
     new NavControllerHandler(m_entry->telemetryService(), communicator);
-    new CommandHandler(m_entry->dbFacade(), m_entry->commandService(), communicator);
-    new MissionHandler(m_entry->dbFacade(), m_entry->telemetryService(),
+    new CommandHandler(m_entry->vehicleService(), m_entry->commandService(), communicator);
+    new MissionHandler(m_entry->vehicleService(), m_entry->telemetryService(),
                        m_entry->missionService(), m_entry->commandService(), communicator);
 
     return communicator;

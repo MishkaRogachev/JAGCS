@@ -7,13 +7,13 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "command_service.h"
+#include "command.h"
+
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "mavlink_communicator.h"
-
-#include "command_service.h"
-#include "command.h"
 
 using namespace comm;
 using namespace domain;
@@ -35,15 +35,14 @@ namespace
     }
 }
 
-CommandHandler::CommandHandler(db::DbFacade* dbFacade,
+CommandHandler::CommandHandler(domain::VehicleService* vehicleService,
                                CommandService* commandService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_commandService(commandService),
-    m_dbFacade(dbFacade)
+    m_vehicleService(vehicleService)
 {
-    connect(commandService, &CommandService::gotCommand,
-            this, &CommandHandler::onGotCommand);
+    connect(commandService, &CommandService::gotCommand, this, &CommandHandler::onGotCommand);
 }
 
 void CommandHandler::processMessage(const mavlink_message_t& message)
@@ -64,7 +63,7 @@ void CommandHandler::sendCommand(const Command& command)
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
 
-    dao::VehiclePtr vehicle = m_dbFacade->vehicle(command.vehicleId());
+    dao::VehiclePtr vehicle = m_vehicleService->vehicle(command.vehicleId());
     if (vehicle.isNull()) return;
 
     mavCommand.target_system = vehicle->mavId();

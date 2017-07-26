@@ -10,6 +10,8 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
+
+#include "vehicle_service.h"
 #include "vehicle.h"
 #include "link_description.h"
 #include "video_source.h"
@@ -69,7 +71,7 @@ void EntitiesTest::testMissionItems()
 
 void EntitiesTest::testVehicleDescription()
 {
-    db::DbFacade dbFacade;
+    domain::VehicleService vehicleService;
 
     VehiclePtr vehicle = VehiclePtr::create();
 
@@ -77,22 +79,22 @@ void EntitiesTest::testVehicleDescription()
     vehicle->setMavId(13);
     vehicle->setType(Vehicle::FixedWing);
 
-    QVERIFY2(dbFacade.save(vehicle), "Can't insert vehicle");
+    QVERIFY2(vehicleService.save(vehicle), "Can't insert vehicle");
     int id = vehicle->id();
     QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
 
-    QVERIFY2(dbFacade.vehicle(id, true), "Can't reload vehicle");
+    QVERIFY2(vehicleService.vehicle(id, true), "Can't reload vehicle");
 
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
     QCOMPARE(vehicle->mavId(), 13);
     QCOMPARE(vehicle->type(), Vehicle::FixedWing);
 
-    QVERIFY2(dbFacade.remove(vehicle), "Can't remove vehicle");
+    QVERIFY2(vehicleService.remove(vehicle), "Can't remove vehicle");
 }
 
 void EntitiesTest::testMissionAssignment()
 {
-    db::DbFacade dbFacade;
+    domain::VehicleService vehicleService;
     domain::MissionService missionService;
 
     MissionPtr mission = MissionPtr::create();
@@ -101,7 +103,7 @@ void EntitiesTest::testMissionAssignment()
 
     VehiclePtr vehicle = VehiclePtr::create();
     vehicle->setName("Assigned vehicle");
-    QVERIFY2(dbFacade.save(vehicle), "Can't insert vehicle");
+    QVERIFY2(vehicleService.save(vehicle), "Can't insert vehicle");
 
     MissionAssignmentPtr assignment = MissionAssignmentPtr::create();
     assignment->setMissionId(mission->id());
@@ -116,7 +118,7 @@ void EntitiesTest::testMissionAssignment()
     QVERIFY2(missionService.missionAssignment(mission->id()).isNull(), "Unassigned must be null");
 
     QVERIFY2(missionService.remove(mission), "Can't remove mission");
-    QVERIFY2(dbFacade.remove(vehicle), "Can't remove vehicle");
+    QVERIFY2(vehicleService.remove(vehicle), "Can't remove vehicle");
 }
 
 void EntitiesTest::testLinkDescription()

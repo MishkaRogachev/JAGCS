@@ -7,7 +7,7 @@
 // Internal
 #include "settings_provider.h"
 
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "telemetry.h"
@@ -18,7 +18,7 @@ using namespace domain;
 class TelemetryService::Impl
 {
 public:
-    db::DbFacade* facade;
+    domain::VehicleService* service;
 
     QMap<int, Telemetry*> vehicleNodes;
     Telemetry radioNode;
@@ -28,12 +28,13 @@ public:
     {}
 };
 
-TelemetryService::TelemetryService(db::DbFacade* facade, QObject* parent):
+TelemetryService::TelemetryService(VehicleService* service, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->facade = facade;
-    connect(d->facade, &db::DbFacade::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
+    d->service = service;
+    connect(d->service, &VehicleService::vehicleRemoved,
+            this, &TelemetryService::onVehicleRemoved);
 }
 
 TelemetryService::~TelemetryService()
@@ -61,10 +62,10 @@ Telemetry* TelemetryService::vehicleNode(int vehicleId) const
 
 Telemetry* TelemetryService::mavNode(int mavId) const
 {
-    return this->vehicleNode(d->facade->vehicleIdByMavId(mavId));
+    return this->vehicleNode(d->service->vehicleIdByMavId(mavId));
 }
 
-Telemetry*TelemetryService::radioNode() const
+Telemetry* TelemetryService::radioNode() const
 {
     return &d->radioNode;
 }

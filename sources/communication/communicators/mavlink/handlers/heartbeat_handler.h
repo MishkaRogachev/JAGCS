@@ -3,13 +3,9 @@
 
 #include "abstract_mavlink_handler.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
+    class VehicleService;
     class TelemetryService;
 }
 
@@ -20,7 +16,8 @@ namespace comm
         Q_OBJECT
 
     public:
-        HeartbeatHandler(db::DbFacade* dbFacade, domain::TelemetryService* telemetryService,
+        HeartbeatHandler(domain::VehicleService* vehicleService,
+                         domain::TelemetryService* telemetryService,
                          MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 

@@ -12,14 +12,14 @@
 // Internal
 #include "settings_provider.h"
 
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
-
-#include "mavlink_communicator.h"
-#include "mavlink_mode_helper.h"
 
 #include "telemetry_service.h"
 #include "telemetry.h"
+
+#include "mavlink_communicator.h"
+#include "mavlink_mode_helper.h"
 
 using namespace comm;
 using namespace domain;
@@ -79,19 +79,19 @@ namespace
 class HeartbeatHandler::Impl
 {
 public:
-    db::DbFacade* dbFacade;
+    VehicleService* vehicleService;
     domain::TelemetryService* telemetryService;
     QMap <int, QBasicTimer*> vehicleTimers;
     int sendTimer;
 };
 
-HeartbeatHandler::HeartbeatHandler(db::DbFacade* dbFacade,
+HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
                                    TelemetryService* telemetryService,
                                    MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
-    d->dbFacade = dbFacade;
+    d->vehicleService = vehicleService;
     d->telemetryService = telemetryService;
 
     d->sendTimer = this->startTimer(settings::Provider::value(
@@ -110,9 +110,9 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    int vehicleId = d->dbFacade->vehicleIdByMavId(message.sysid);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
 
-    dao::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
+    dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
 
     if (!vehicle && settings::Provider::value(settings::communication::autoAdd).toBool())
     {
@@ -120,7 +120,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         vehicle->setMavId(message.sysid);
         vehicle->setType(dao::Vehicle::Auto);
         vehicle->setName(tr("Added"));
-        d->dbFacade->save(vehicle);
+        d->vehicleService->save(vehicle);
     }
 
     if (vehicle)
@@ -146,7 +146,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
             vehicle->setType(::decodeType(heartbeat.type));
             changed = true;
         }
-        if (changed) d->dbFacade->vehicleChanged(vehicle);
+        if (changed) d->vehicleService->vehicleChanged(vehicle);
     }
 
     Telemetry* node = d->telemetryService->mavNode(message.sysid);
@@ -198,9 +198,9 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
         {
             if (timer->timerId() != event->timerId()) continue;
 
-            dao::VehiclePtr vehicle = d->dbFacade->vehicle(d->vehicleTimers.key(timer));
+            dao::VehiclePtr vehicle = d->vehicleService->vehicle(d->vehicleTimers.key(timer));
             if (vehicle) vehicle->setOnline(false);
-            d->dbFacade->vehicleChanged(vehicle);
+            d->vehicleService->vehicleChanged(vehicle);
             timer->stop();
         }
     }

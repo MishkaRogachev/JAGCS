@@ -7,7 +7,6 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
 #include "mission.h"
 #include "mission_item.h"
 #include "vehicle.h"
@@ -16,6 +15,7 @@
 #include "mavlink_communicator.h"
 
 #include "command_service.h"
+#include "vehicle_service.h"
 #include "mission_service.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
@@ -70,13 +70,13 @@ namespace
 using namespace comm;
 using namespace domain;
 
-MissionHandler::MissionHandler(db::DbFacade* dbFacade,
+MissionHandler::MissionHandler(VehicleService* vehicleService,
                                domain::TelemetryService* telemetryService,
                                MissionService* missionService,
                                domain::CommandService* commandService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_dbFacade(dbFacade),
+    m_vehicleService(vehicleService),
     m_telemetryService(telemetryService),
     m_missionService(missionService)
 {
@@ -114,7 +114,7 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
 void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
 {
-    dao::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
+    dao::VehiclePtr vehicle = m_vehicleService->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
     for (const dao::MissionItemPtr& item: m_missionService->missionItems(assignment->missionId()))
@@ -139,7 +139,7 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
 
 void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 {
-    dao::VehiclePtr vehicle = m_dbFacade->vehicle(assignment->vehicleId());
+    dao::VehiclePtr vehicle = m_vehicleService->vehicle(assignment->vehicleId());
     dao::MissionPtr mission = m_missionService->mission(assignment->missionId());
     if (vehicle.isNull() || mission.isNull()) return;
 
@@ -181,7 +181,7 @@ void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
 
 void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
 {
-    int vehicleId = m_dbFacade->vehicleIdByMavId(mavId);
+    int vehicleId = m_vehicleService->vehicleIdByMavId(mavId);
     dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
@@ -281,7 +281,7 @@ void MissionHandler::sendMissionAck(uint8_t mavId)
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
-    int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
+    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
     dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
@@ -305,7 +305,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
 void MissionHandler::processMissionItem(const mavlink_message_t& message)
 {
-    int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
+    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
     dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
@@ -399,7 +399,7 @@ void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 
 void MissionHandler::processMissionReached(const mavlink_message_t& message)
 {
-    int vehicleId = m_dbFacade->vehicleIdByMavId(message.sysid);
+    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
     dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 

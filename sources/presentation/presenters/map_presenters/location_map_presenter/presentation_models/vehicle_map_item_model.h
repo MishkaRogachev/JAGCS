@@ -8,14 +8,10 @@
 #include "dao_traits.h"
 #include "telemetry.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
     class TelemetryService;
+    class VehicleService;
     class Position;
     class Sns;
 }
@@ -38,7 +34,8 @@ namespace presentation
             HomeCoordinateRole
         };
 
-        VehicleMapItemModel(db::DbFacade* dbFacade, domain::TelemetryService* telemetryService,
+        VehicleMapItemModel(domain::VehicleService* vehicleService,
+                            domain::TelemetryService* telemetryService,
                             QObject* parent = nullptr);
         ~VehicleMapItemModel() override;
 

@@ -7,11 +7,12 @@
 // Internal
 #include "domain_entry.h"
 
-#include "db_facade.h"
 #include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
+
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "command_service.h"
@@ -23,7 +24,7 @@ using namespace presentation;
 class MissionPresenter::Impl
 {
 public:
-    db::DbFacade* dbFacade;
+    domain::VehicleService* vehicleService;
     domain::MissionService* missionService;
     domain::CommandService* commandService;
 
@@ -39,7 +40,7 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->dbFacade = entry->dbFacade();
+    d->vehicleService = entry->vehicleService();
     d->missionService = entry->missionService();
     d->commandService = entry->commandService();
 
@@ -64,8 +65,8 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
     connect(d->missionService, &domain::MissionService::missionItemChanged,
             this, &MissionPresenter::updateStatuses);
 
-    connect(d->dbFacade, &db::DbFacade::vehicleAdded, this, &MissionPresenter::updateVehiclesBox);
-    connect(d->dbFacade, &db::DbFacade::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
+    connect(d->vehicleService, &domain::VehicleService::vehicleAdded, this, &MissionPresenter::updateVehiclesBox);
+    connect(d->vehicleService, &domain::VehicleService::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
 
     d->item = new MissionItemPresenter(d->missionService, this);
 }
@@ -149,7 +150,7 @@ void MissionPresenter::updateVehiclesBox()
     QStringList vehicles;
     vehicles.append(QString());
 
-    for (const dao::VehiclePtr& vehicle: d->dbFacade->vehicles())
+    for (const dao::VehiclePtr& vehicle: d->vehicleService->vehicles())
     {
         vehicles.append(vehicle->name());
     }
@@ -169,11 +170,11 @@ void MissionPresenter::updateAssignment()
                 d->missionService->missionAssignment(d->selectedMission->id());
         if (assignment)
         {
-            dao::VehiclePtr vehicle = d->dbFacade->vehicle(assignment->vehicleId());
+            dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
             if (vehicle)
             {
                 this->setViewProperty(PROPERTY(assignedVehicle),
-                                      d->dbFacade->vehicles().indexOf(vehicle) + 1);
+                                      d->vehicleService->vehicles().indexOf(vehicle) + 1);
             }
             this->setViewConnected(true);
             return;
@@ -256,7 +257,7 @@ void MissionPresenter::onAssignVehicle(int index)
     // TODO: fix vehicle assignment
     if (!d->selectedMission) return;
 
-    dao::VehiclePtrList vehicles = d->dbFacade->vehicles();
+    dao::VehiclePtrList vehicles = d->vehicleService->vehicles();
     dao::VehiclePtr vehicle = (index > 0 && index <= vehicles.count()) ?
                                  vehicles.at(index - 1) : dao::VehiclePtr();
 

@@ -8,7 +8,7 @@
 // Internal
 #include "domain_entry.h"
 
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "telemetry_service.h"
@@ -38,13 +38,13 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
 {
     d->entry = entry;
 
-    db::DbFacade* dbFacade = entry->dbFacade();
+    domain::VehicleService* service = entry->vehicleService();
 
     d->map = new LocationMapPresenter(entry, this);
-    d->video = new VideoSplitPresenter(dbFacade, this);
+    d->video = new VideoSplitPresenter(entry->dbFacade(), this);
 
-    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
-    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
+    connect(service, &domain::VehicleService::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
+    connect(service, &domain::VehicleService::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
 }
 
 ControlPresenter::~ControlPresenter()
@@ -57,7 +57,7 @@ void ControlPresenter::updateVehiclesList()
     int index = 1;
     int onlineIndex = -1;
 
-    for (const dao::VehiclePtr& vehicle: d->entry->dbFacade()->vehicles())
+    for (const dao::VehiclePtr& vehicle: d->entry->vehicleService()->vehicles())
     {
         vehicles.append(vehicle->name());
         if (vehicle->isOnline() && onlineIndex == -1) onlineIndex = index;
@@ -81,7 +81,7 @@ void ControlPresenter::connectView(QObject* view)
 void ControlPresenter::onSelectVehicle(int index)
 {
     // TODO: check, if vehicle is the same
-    dao::VehiclePtrList vehicles  = d->entry->dbFacade()->vehicles();
+    dao::VehiclePtrList vehicles  = d->entry->vehicleService()->vehicles();
 
     if (d->dashboard) delete d->dashboard;
 

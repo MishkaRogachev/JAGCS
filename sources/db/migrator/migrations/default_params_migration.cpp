@@ -8,14 +8,18 @@
 #include "settings_provider.h"
 
 #include "db_facade.h"
+
 #include "mission_service.h"
-#include "link_description.h"
-#include "vehicle.h"
 #include "mission.h"
 #include "mission_assignment.h"
 
-using namespace db;
+#include "vehicle_service.h"
+#include "vehicle.h"
+
+#include "link_description.h"
+
 using namespace dao;
+using namespace db;
 
 bool DefaultParamsMigration::up()
 {
@@ -35,11 +39,12 @@ bool DefaultParamsMigration::up()
     defaultSerialLink->setAutoConnect(true);
     facade.save(defaultSerialLink);
 
+    domain::VehicleService vehicleService;
     VehiclePtr defaultVehicle = VehiclePtr::create();
     defaultVehicle->setMavId(1);
     defaultVehicle->setName(qApp->translate("DefaultParamsMigration", "Default"));
     defaultVehicle->setType(Vehicle::Auto);
-    facade.save(defaultVehicle);
+    vehicleService.save(defaultVehicle);
 
     domain::MissionService missionService;
     MissionPtr defaultMission = MissionPtr::create();

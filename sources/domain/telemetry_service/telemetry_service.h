@@ -4,13 +4,9 @@
 // Internal
 #include "dao_traits.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
+    class VehicleService;
     class Telemetry;
 
     class TelemetryService: public QObject
@@ -18,7 +14,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit TelemetryService(db::DbFacade* facade, QObject* parent = nullptr);
+        explicit TelemetryService(domain::VehicleService* service,
+                                  QObject* parent = nullptr);
         ~TelemetryService() override;
 
         QList<Telemetry*> rootNodes() const;

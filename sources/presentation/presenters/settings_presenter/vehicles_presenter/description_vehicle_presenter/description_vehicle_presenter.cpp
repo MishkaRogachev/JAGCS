@@ -5,7 +5,7 @@
 #include <QCoreApplication>
 
 // Internal
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 namespace
@@ -30,13 +30,14 @@ namespace
 
 using namespace presentation;
 
-DescriptionVehiclePresenter::DescriptionVehiclePresenter(
-        db::DbFacade* facade, const dao::VehiclePtr& vehicle, QObject* parent):
+DescriptionVehiclePresenter::DescriptionVehiclePresenter(domain::VehicleService* service,
+                                                         const dao::VehiclePtr& vehicle,
+                                                         QObject* parent):
     BasePresenter(parent),
-    m_facade(facade),
+    m_service(service),
     m_vehicle(vehicle)
 {
-    connect(m_facade, &db::DbFacade::vehicleChanged, this, [this]
+    connect(m_service, &domain::VehicleService::vehicleChanged, this, [this]
             (const dao::VehiclePtr& vehicle) {
         if (vehicle == m_vehicle) this->updateStatus();
     });
@@ -67,14 +68,14 @@ void DescriptionVehiclePresenter::save()
     m_vehicle->setMavId(this->viewProperty(PROPERTY(mavId)).toInt());
     m_vehicle->setType(::types.keys().at(this->viewProperty(PROPERTY(type)).toInt()));
 
-    if (!m_facade->save(m_vehicle)) return;
+    if (!m_service->save(m_vehicle)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void DescriptionVehiclePresenter::remove()
 {
-    m_facade->remove(m_vehicle);
+    m_service->remove(m_vehicle);
 }
 
 void DescriptionVehiclePresenter::connectView(QObject* view)

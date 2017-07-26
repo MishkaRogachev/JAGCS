@@ -4,7 +4,7 @@
 #include <QVariant>
 
 // Internal
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "description_vehicle_presenter.h"
@@ -14,23 +14,23 @@ using namespace presentation;
 class VehiclesPresenter::Impl
 {
 public:
-    db::DbFacade* facade;
+    domain::VehicleService* service;
 
     QList<DescriptionVehiclePresenter*> vehiclePresenters;
 };
 
-VehiclesPresenter::VehiclesPresenter(db::DbFacade* facade, QObject* parent):
+VehiclesPresenter::VehiclesPresenter(domain::VehicleService* service, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->facade = facade;
+    d->service = service;
 
-    connect(facade, &db::DbFacade::vehicleAdded, this, &VehiclesPresenter::onVehicleAdded);
-    connect(facade, &db::DbFacade::vehicleRemoved,  this, &VehiclesPresenter::onVehicleRemoved);
+    connect(service, &domain::VehicleService::vehicleAdded, this, &VehiclesPresenter::onVehicleAdded);
+    connect(service, &domain::VehicleService::vehicleRemoved,  this, &VehiclesPresenter::onVehicleRemoved);
 
-    for (const dao::VehiclePtr& vehicle: facade->vehicles())
+    for (const dao::VehiclePtr& vehicle: service->vehicles())
     {
-        d->vehiclePresenters.append(new DescriptionVehiclePresenter(facade, vehicle, this));
+        d->vehiclePresenters.append(new DescriptionVehiclePresenter(service, vehicle, this));
     }
 }
 
@@ -46,7 +46,7 @@ void VehiclesPresenter::connectView(QObject* view)
 
 void VehiclesPresenter::onVehicleAdded(const dao::VehiclePtr& vehicle)
 {
-    d->vehiclePresenters.append(new DescriptionVehiclePresenter(d->facade, vehicle, this));
+    d->vehiclePresenters.append(new DescriptionVehiclePresenter(d->service, vehicle, this));
     this->updateVehicles();
 }
 
@@ -80,5 +80,5 @@ void VehiclesPresenter::onAddVehicle()
 
     description->setName(tr("New Vehicle"));
 
-    d->facade->save(description);
+    d->service->save(description);
 }
