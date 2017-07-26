@@ -140,6 +140,9 @@ void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& descr
 
     link->setConnected(connected);
     link->statisticsChanged();
+
+    description->setAutoConnect(link->isConnected());
+    this->save(description);
 }
 
 void CommunicationService::onLinkStatisticsChanged()
