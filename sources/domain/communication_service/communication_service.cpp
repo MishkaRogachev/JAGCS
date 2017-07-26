@@ -4,9 +4,12 @@
 #include <QMap>
 #include <QDebug>
 
+
 // Internal
-#include "db_facade.h"
 #include "link_description.h"
+
+#include "generic_repository.h"
+#include "generic_repository_impl.h"
 
 #include "abstract_communicator.h"
 #include "abstract_link.h"
@@ -21,9 +24,13 @@ class CommunicationService::Impl
 {
 public:
     AbstractCommunicator* communicator;
-    db::DbFacade* dbFacade;
+    GenericRepository<dao::LinkDescription> linkRepository;
 
     QMap<dao::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
+
+    Impl():
+        linkRepository("links")
+    {}
 
     AbstractLink* linkFromDescription(const dao::LinkDescriptionPtr& description)
     {
@@ -48,29 +55,81 @@ public:
 };
 
 CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
-                                           db::DbFacade* facade,
                                            QObject* parent):
     QObject(parent),
     d(new Impl())
 {
     d->communicator = commFactory->create();
-    d->dbFacade = facade;
 
-    for (const dao::LinkDescriptionPtr& description: facade->links())
-        this->onLinkAdded(description);
-
-    connect(d->dbFacade, &db::DbFacade::linkAdded, this, &CommunicationService::onLinkAdded);
-    connect(d->dbFacade, &db::DbFacade::linkRemoved, this, &CommunicationService::onLinkRemoved);
-    connect(d->dbFacade, &db::DbFacade::linkChanged, this, &CommunicationService::onLinkChanged);
+    for (const dao::LinkDescriptionPtr& description: this->descriptions())
+    {
+        AbstractLink* link = d->linkFromDescription(description);
+        link->setParent(this);
+        connect(link, &AbstractLink::statisticsChanged,
+                this, &CommunicationService::onLinkStatisticsChanged);
+    }
 }
 
 CommunicationService::~CommunicationService()
+{}
+
+dao::LinkDescriptionPtr CommunicationService::description(int id, bool reload)
 {
-    for (const dao::LinkDescriptionPtr& link: d->descriptedLinks.keys())
+    return d->linkRepository.read(id, reload);
+}
+
+dao::LinkDescriptionPtrList CommunicationService::descriptions(const QString& condition, bool reload)
+{
+    dao::LinkDescriptionPtrList list;
+
+    for (int id: d->linkRepository.selectId(condition))
     {
-        link->setAutoConnect(link->isConnected());
-        d->dbFacade->save(link);
+        list.append(this->description(id, reload));
     }
+
+    return list;
+}
+
+bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
+{
+    bool isNew = description->id() == 0;
+    if (!d->linkRepository.save(description)) return false;
+
+    isNew ? descriptionAdded(description) : descriptionChanged(description);
+
+    if (d->descriptedLinks.contains(description))
+    {
+        AbstractLink* link = d->descriptedLinks[description];
+        d->updateLinkFromDescription(link, description);
+
+        emit link->statisticsChanged();
+    }
+    else
+    {
+        AbstractLink* link = d->linkFromDescription(description);
+        link->setParent(this);
+        connect(link, &AbstractLink::statisticsChanged,
+                this, &CommunicationService::onLinkStatisticsChanged);
+        emit link->statisticsChanged();
+    }
+
+    return true;
+}
+
+bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
+{
+    if (!d->linkRepository.remove(description)) return false;
+
+    if (d->descriptedLinks.contains(description))
+    {
+        AbstractLink* link = d->descriptedLinks.take(description);
+
+        d->communicator->removeLink(link);
+        delete link;
+    }
+
+    emit descriptionRemoved(description);
+    return true;
 }
 
 void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& description,
@@ -81,32 +140,6 @@ void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& descr
 
     link->setConnected(connected);
     link->statisticsChanged();
-}
-
-void CommunicationService::onLinkAdded(const dao::LinkDescriptionPtr& description)
-{
-    AbstractLink* link = d->linkFromDescription(description);
-    link->setParent(this);
-    connect(link, &AbstractLink::statisticsChanged,
-            this, &CommunicationService::onLinkStatisticsChanged);
-    link->statisticsChanged();
-}
-
-void CommunicationService::onLinkChanged(const dao::LinkDescriptionPtr& description)
-{
-    AbstractLink* link = d->descriptedLinks[description];
-    if (!link) return;
-    d->updateLinkFromDescription(link, description);
-    link->statisticsChanged();
-}
-
-void CommunicationService::onLinkRemoved(const dao::LinkDescriptionPtr& description)
-{
-    if (!d->descriptedLinks.contains(description)) return;
-    AbstractLink* link = d->descriptedLinks.take(description);
-
-    d->communicator->removeLink(link);
-    delete link;
 }
 
 void CommunicationService::onLinkStatisticsChanged()

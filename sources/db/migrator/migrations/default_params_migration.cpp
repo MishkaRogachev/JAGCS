@@ -16,6 +16,7 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "communication_service.h"
 #include "link_description.h"
 
 using namespace dao;
@@ -23,21 +24,22 @@ using namespace db;
 
 bool DefaultParamsMigration::up()
 {
-    DbFacade facade;
+    // FIXME: services registry
+    /*domain::CommunicationService commService;
 
     LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
     defaultUdpLink->setType(LinkDescription::Udp);
     defaultUdpLink->setPort(settings::Provider::value(settings::communication::port).toInt());
     defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "Default UDP Link"));
     defaultUdpLink->setAutoConnect(true);
-    facade.save(defaultUdpLink);
+    commService.save(defaultUdpLink);
 
     LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
     defaultSerialLink->setType(LinkDescription::Serial);
     defaultSerialLink->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
     defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Default Serial Link"));
     defaultSerialLink->setAutoConnect(true);
-    facade.save(defaultSerialLink);
+    commService.save(defaultSerialLink);*/
 
     domain::VehicleService vehicleService;
     VehiclePtr defaultVehicle = VehiclePtr::create();

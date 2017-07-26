@@ -7,11 +7,6 @@
 // Internal
 #include "dao_traits.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace comm
 {
     class ICommunicatorFactory;
@@ -25,20 +20,27 @@ namespace domain
 
     public:
         CommunicationService(comm::ICommunicatorFactory* commFactory,
-                             db::DbFacade* facade,
                              QObject* parent = nullptr);
         ~CommunicationService() override;
 
+        dao::LinkDescriptionPtr description(int id, bool reload = false);
+        dao::LinkDescriptionPtrList descriptions(const QString& condition = QString(),
+                                                 bool reload  = false);
+
     public slots:
+        bool save(const dao::LinkDescriptionPtr& description);
+        bool remove(const dao::LinkDescriptionPtr& description);
+
         void setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected);
 
     private slots:
-        void onLinkAdded(const dao::LinkDescriptionPtr& description);
-        void onLinkChanged(const dao::LinkDescriptionPtr& description);
-        void onLinkRemoved(const dao::LinkDescriptionPtr& description);
         void onLinkStatisticsChanged();
 
     signals:
+        void descriptionAdded(dao::LinkDescriptionPtr description);
+        void descriptionRemoved(dao::LinkDescriptionPtr description);
+        void descriptionChanged(dao::LinkDescriptionPtr description);
+
         void linkStatisticsChanged(const dao::LinkDescriptionPtr& description);
 
     private:

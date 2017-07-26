@@ -5,11 +5,6 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
     class CommunicationService;
@@ -22,8 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(db::DbFacade* dbFacade,
-                                   domain::CommunicationService* service,
+        CommunicationLinkPresenter(domain::CommunicationService* service,
                                    const dao::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
@@ -40,7 +34,6 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private:
-        db::DbFacade* m_dbFacade;
         domain::CommunicationService* m_service;
         dao::LinkDescriptionPtr m_description;
     };

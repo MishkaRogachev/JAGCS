@@ -81,7 +81,7 @@ void DataBasePresenter::tryConnect()
 {
     if (d->manager->isOpen())
     {
-        d->facade->clearAll();
+        // FIXME: clear DB cache
         d->manager->close();
     }
     d->manager->open(settings::Provider::value(settings::data_base::name).toString());

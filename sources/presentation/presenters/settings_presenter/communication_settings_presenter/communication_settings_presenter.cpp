@@ -21,7 +21,6 @@ using namespace domain;
 class CommunicationSettingsPresenter::Impl
 {
 public:
-    db::DbFacade* dbFacade;
     domain::CommunicationService* service;
 
     QMap<dao::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
@@ -32,22 +31,21 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(domain::DomainEnt
     BasePresenter(parent),
     d(new Impl())
 {
-    d->dbFacade = entry->dbFacade();
     d->service = entry->commService();
 
-    connect(d->dbFacade, &db::DbFacade::linkAdded,
+    connect(d->service, &CommunicationService::descriptionAdded,
             this, &CommunicationSettingsPresenter::onLinkAdded);
-    connect(d->dbFacade, &db::DbFacade::linkChanged,
+    connect(d->service, &CommunicationService::descriptionChanged,
             this, &CommunicationSettingsPresenter::onLinkChanged);
-    connect(d->dbFacade, &db::DbFacade::linkRemoved,
+    connect(d->service, &CommunicationService::descriptionRemoved,
             this, &CommunicationSettingsPresenter::onLinkRemoved);
     connect(d->service, &CommunicationService::linkStatisticsChanged,
             this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
 
-    for (const dao::LinkDescriptionPtr& description: d->dbFacade->links())
+    for (const dao::LinkDescriptionPtr& description: d->service->descriptions())
     {
-        d->linkPresenters[description] =
-                new CommunicationLinkPresenter(d->dbFacade, d->service, description, this);
+        d->linkPresenters[description] = new CommunicationLinkPresenter(
+                                             d->service, description, this);
     }
 }
 
@@ -65,8 +63,8 @@ void CommunicationSettingsPresenter::connectView(QObject* view)
 void CommunicationSettingsPresenter::onLinkAdded(
         const dao::LinkDescriptionPtr& description)
 {
-    d->linkPresenters[description] =
-            new CommunicationLinkPresenter(d->dbFacade, d->service, description, this);
+    d->linkPresenters[description] = new CommunicationLinkPresenter(
+                                         d->service, description, this);
 
     this->updateCommunicationsLinks();
 }
@@ -114,7 +112,7 @@ void CommunicationSettingsPresenter::onAddUdpLink()
     description->setType(dao::LinkDescription::Udp);
     description->setPort(settings::Provider::value(settings::communication::port).toInt());
 
-    d->dbFacade->save(description);
+    d->service->save(description);
 }
 
 void CommunicationSettingsPresenter::onAddSerialLink()
@@ -125,5 +123,5 @@ void CommunicationSettingsPresenter::onAddSerialLink()
     description->setType(dao::LinkDescription::Serial);
     description->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
 
-    d->dbFacade->save(description);
+    d->service->save(description);
 }

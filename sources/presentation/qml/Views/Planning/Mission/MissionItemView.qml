@@ -22,19 +22,19 @@ ColumnLayout {
     property alias periods: periodsEdit.value
     property alias pitch: pitchEdit.realValue
 
-    property bool altitudeVisible: command == MissionItem.Continue ||
+    property bool altitudeVisible: command === MissionItem.Continue ||
                                    positionVisible
 
-    property bool positionVisible: command == MissionItem.Takeoff ||
-                                   command == MissionItem.Landing ||
+    property bool positionVisible: command === MissionItem.Takeoff ||
+                                   command === MissionItem.Landing ||
                                    radiusVisible
 
-    property bool radiusVisible: command == MissionItem.Waypoint ||
-                                 command == MissionItem.LoiterAltitude ||
-                                 command == MissionItem.LoiterTurns
+    property bool radiusVisible: command === MissionItem.Waypoint ||
+                                 command === MissionItem.LoiterAltitude ||
+                                 command === MissionItem.LoiterTurns
 
-    property bool pitchVisible: command == MissionItem.Takeoff
-    property bool periodsVisible: command == MissionItem.LoiterTurns
+    property bool pitchVisible: command === MissionItem.Takeoff
+    property bool periodsVisible: command === MissionItem.LoiterTurns
 
     property alias picking: pickButton.checked
 
