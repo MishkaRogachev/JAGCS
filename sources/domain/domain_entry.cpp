@@ -6,7 +6,6 @@
 
 // Internal
 #include "db_manager.h"
-#include "db_facade.h"
 
 #include "settings_provider.h"
 
@@ -16,6 +15,7 @@
 #include "telemetry_service.h"
 #include "vehicle_service.h"
 #include "mission_service.h"
+#include "video_service.h"
 
 #include "communication_service.h"
 #include "mavlink_communicator_factory.h"
@@ -27,13 +27,13 @@ class DomainEntry::Impl
 {
 public:
     DbManager dbManager;
-    DbFacade dbFacade;
     ProxyManager proxyManager;
 
     VehicleService vehicleService;
     MissionService missionService;
     TelemetryService telemetryService;
     CommandService commandService;
+    VideoService videoService;
 
     QScopedPointer<CommunicationService> commService;
 
@@ -55,18 +55,13 @@ DomainEntry::DomainEntry():
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());
 
-    d->commService.reset(new CommunicationService(&comFactory, &d->dbFacade));
+    d->commService.reset(new CommunicationService(&comFactory));
 }
 
 DomainEntry::~DomainEntry()
 {}
 
-DbFacade* DomainEntry::dbFacade() const
-{
-    return &d->dbFacade;
-}
-
-DbManager*DomainEntry::dbManager() const
+DbManager* DomainEntry::dbManager() const
 {
     return &d->dbManager;
 }
@@ -74,6 +69,11 @@ DbManager*DomainEntry::dbManager() const
 CommunicationService* DomainEntry::commService() const
 {
     return d->commService.data();
+}
+
+VideoService* DomainEntry::videoService() const
+{
+    return &d->videoService;
 }
 
 TelemetryService* DomainEntry::telemetryService() const
@@ -91,7 +91,7 @@ MissionService* DomainEntry::missionService() const
     return &d->missionService;
 }
 
-CommandService*DomainEntry::commandService() const
+CommandService* DomainEntry::commandService() const
 {
     return &d->commandService;
 }

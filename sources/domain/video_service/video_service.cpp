@@ -1,4 +1,4 @@
-#include "db_facade.h"
+#include "video_service.h"
 
 // Qt
 #include <QDebug>
@@ -9,10 +9,10 @@
 
 #include "video_source.h"
 
-using namespace db;
 using namespace dao;
+using namespace domain;
 
-class DbFacade::Impl
+class VideoService::Impl
 {
 public:
     GenericRepository<VideoSource> videoRepository;
@@ -22,20 +22,20 @@ public:
     {}
 };
 
-DbFacade::DbFacade(QObject* parent):
+VideoService::VideoService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {}
 
-DbFacade::~DbFacade()
+VideoService::~VideoService()
 {}
 
-VideoSourcePtr DbFacade::videoSource(int id, bool reload)
+VideoSourcePtr VideoService::videoSource(int id, bool reload)
 {
     return d->videoRepository.read(id, reload);
 }
 
-bool DbFacade::save(const VideoSourcePtr& videoSource)
+bool VideoService::save(const VideoSourcePtr& videoSource)
 {
     bool isNew = videoSource->id() == 0;
     if (!d->videoRepository.save(videoSource)) return false;
@@ -44,14 +44,14 @@ bool DbFacade::save(const VideoSourcePtr& videoSource)
     return true;
 }
 
-bool DbFacade::remove(const VideoSourcePtr& videoSource)
+bool VideoService::remove(const VideoSourcePtr& videoSource)
 {
     if (!d->videoRepository.remove(videoSource)) return false;
     emit videoSourceRemoved(videoSource);
     return true;
 }
 
-VideoSourcePtrList DbFacade::videoSources(const QString& condition, bool reload)
+VideoSourcePtrList VideoService::videoSources(const QString& condition, bool reload)
 {
     VideoSourcePtrList list;
 

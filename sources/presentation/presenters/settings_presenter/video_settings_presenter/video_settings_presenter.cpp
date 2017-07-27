@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "video_service.h"
 #include "video_source.h"
 
 #include "video_source_presenter.h"
@@ -15,25 +15,25 @@ using namespace presentation;
 class VideoSettingsPresenter::Impl
 {
 public:
-    db::DbFacade* facade;
+    domain::VideoService* service;
 
     QList<VideoSourcePresenter*> videoPresenters;
 };
 
-VideoSettingsPresenter::VideoSettingsPresenter(db::DbFacade* facade, QObject* parent):
+VideoSettingsPresenter::VideoSettingsPresenter(domain::VideoService* service, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->facade = facade;
+    d->service = service;
 
-    connect(d->facade, &db::DbFacade::videoSourceAdded,
+    connect(d->service, &domain::VideoService::videoSourceAdded,
             this, &VideoSettingsPresenter::onVideoSourceAdded);
-    connect(d->facade, &db::DbFacade::videoSourceRemoved,
+    connect(d->service, &domain::VideoService::videoSourceRemoved,
             this, &VideoSettingsPresenter::onVideoSourceRemoved);
 
-    for (const dao::VideoSourcePtr& video: facade->videoSources())
+    for (const dao::VideoSourcePtr& video: service->videoSources())
     {
-        d->videoPresenters.append(new VideoSourcePresenter(facade, video, this));
+        d->videoPresenters.append(new VideoSourcePresenter(service, video, this));
     }
 }
 
@@ -53,7 +53,7 @@ void VideoSettingsPresenter::connectView(QObject* view)
 
 void VideoSettingsPresenter::onVideoSourceAdded(const dao::VideoSourcePtr& video)
 {
-    d->videoPresenters.append(new VideoSourcePresenter(d->facade, video, this));
+    d->videoPresenters.append(new VideoSourcePresenter(d->service, video, this));
     this->updateVideoSources();
 }
 
@@ -98,13 +98,13 @@ void VideoSettingsPresenter::onAddDeviceVideo()
 {
     dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
     video->setType(dao::VideoSource::Device);
-    d->facade->save(video);
+    d->service->save(video);
 }
 
 void VideoSettingsPresenter::onAddStreamVideo()
 {
     dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
     video->setType(dao::VideoSource::Stream);
-    d->facade->save(video);
+    d->service->save(video);
 }
 

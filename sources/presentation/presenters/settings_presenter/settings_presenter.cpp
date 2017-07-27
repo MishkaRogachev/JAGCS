@@ -41,7 +41,7 @@ SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
     d->dataBase = new DataBasePresenter(entry, this);
     d->communications = new CommunicationSettingsPresenter(entry, this);
     d->vehicles = new VehiclesPresenter(entry->vehicleService(), this);
-    d->video = new VideoSettingsPresenter(entry->dbFacade(), this);
+    d->video = new VideoSettingsPresenter(entry->videoService(), this);
 
     d->map = new MapSettingsPresenter(this);
 

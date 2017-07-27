@@ -6,12 +6,10 @@
 
 // Internal
 #include "domain_entry.h"
-
-#include "db_facade.h"
-#include "link_description.h"
-
 #include "settings_provider.h"
+
 #include "communication_service.h"
+#include "link_description.h"
 
 #include "communication_link_presenter.h"
 

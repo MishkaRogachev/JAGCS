@@ -9,10 +9,8 @@
 // Internal
 #include "settings_provider.h"
 
-#include "db_facade.h"
-#include "link_description.h"\
-
 #include "communication_service.h"
+#include "link_description.h"
 
 using namespace presentation;
 

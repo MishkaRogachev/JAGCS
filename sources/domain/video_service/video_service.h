@@ -1,5 +1,5 @@
-#ifndef DB_FACADE_H
-#define DB_FACADE_H
+#ifndef VIDEO_SERVICE_H
+#define VIDEO_SERVICE_H
 
 // Qt
 #include <QObject>
@@ -7,24 +7,23 @@
 // Internal
 #include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    // TODO: work with db in separated thread
-    class DbFacade: public QObject
+    class VideoService: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit DbFacade(QObject* parent = nullptr);
-        ~DbFacade() override;
+        explicit VideoService(QObject* parent = nullptr);
+        ~VideoService() override;
 
         dao::VideoSourcePtr videoSource(int id, bool reload = false);
-
-        bool save(const dao::VideoSourcePtr& videoSource);
-        bool remove(const dao::VideoSourcePtr& videoSource);
-
         dao::VideoSourcePtrList videoSources(const QString& condition = QString(),
                                              bool reload  = false);
+
+    public slots:
+        bool save(const dao::VideoSourcePtr& videoSource);
+        bool remove(const dao::VideoSourcePtr& videoSource);
 
     signals:
         void videoSourceAdded(dao::VideoSourcePtr videoSource);
@@ -37,4 +36,4 @@ namespace db
     };
 }
 
-#endif // DB_FACADE_H
+#endif // VIDEO_SERVICE_H

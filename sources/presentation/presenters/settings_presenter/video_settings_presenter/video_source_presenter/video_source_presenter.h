@@ -5,9 +5,9 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class VideoService;
 }
 
 namespace presentation
@@ -19,7 +19,8 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VideoSourcePresenter(db::DbFacade* facade, const dao::VideoSourcePtr& video,
+        VideoSourcePresenter(domain::VideoService* service,
+                             const dao::VideoSourcePtr& video,
                              QObject* parent = nullptr);
 
         dao::VideoSourcePtr video() const;
@@ -36,7 +37,7 @@ namespace presentation
         void setupPreview(QObject* preview);
 
     private:
-        db::DbFacade* const m_facade;
+        domain::VideoService* const m_service;
         dao::VideoSourcePtr m_video;
         VideoPresenter* m_preview;
     };

@@ -7,11 +7,6 @@
 // Internal
 #include "dao_traits.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
 namespace domain
 {
     class Command;
@@ -33,8 +28,8 @@ namespace domain
     signals:
         void gotCommand();
 
-        void download(dao::MissionAssignmentPtr assignment); // TODO: mission seervice
-        void upload(dao::MissionAssignmentPtr assignment); // TODO: mission seervice
+        void download(dao::MissionAssignmentPtr assignment); // FIXME: mission service
+        void upload(dao::MissionAssignmentPtr assignment); // FIXME: mission service
 
     private:
         class Impl;

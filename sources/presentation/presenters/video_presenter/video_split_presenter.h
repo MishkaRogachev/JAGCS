@@ -3,9 +3,9 @@
 
 #include "base_presenter.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class VideoService;
 }
 
 namespace presentation
@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VideoSplitPresenter(db::DbFacade* dbFacade, QObject* parent = nullptr);
+        VideoSplitPresenter(domain::VideoService* videoService, QObject* parent = nullptr);
 
     public slots:
         void updateSources();
@@ -29,7 +29,7 @@ namespace presentation
         void onSelectVideoSource(int index);
 
     private:
-        db::DbFacade* m_dbFacade;
+        domain::VideoService* m_videoService;
         VideoPresenter* m_video;
     };
 }

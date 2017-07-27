@@ -41,7 +41,7 @@ ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
     domain::VehicleService* service = entry->vehicleService();
 
     d->map = new LocationMapPresenter(entry, this);
-    d->video = new VideoSplitPresenter(entry->dbFacade(), this);
+    d->video = new VideoSplitPresenter(entry->videoService(), this);
 
     connect(service, &domain::VehicleService::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(service, &domain::VehicleService::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);

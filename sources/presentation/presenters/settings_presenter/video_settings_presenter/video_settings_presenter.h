@@ -5,9 +5,9 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class VideoService;
 }
 
 namespace presentation
@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoSettingsPresenter(db::DbFacade* facade, QObject* parent);
+        explicit VideoSettingsPresenter(domain::VideoService* service, QObject* parent);
         ~VideoSettingsPresenter() override;
 
     protected:

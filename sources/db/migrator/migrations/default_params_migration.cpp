@@ -7,8 +7,6 @@
 // Internal
 #include "settings_provider.h"
 
-#include "db_facade.h"
-
 #include "mission_service.h"
 #include "mission.h"
 #include "mission_assignment.h"

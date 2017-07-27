@@ -6,7 +6,6 @@
 
 namespace db
 {
-    class DbFacade;
     class DbManager;
 }
 
@@ -17,6 +16,7 @@ namespace domain
     class MissionService;
     class CommandService;
     class CommunicationService;
+    class VideoService;
 
     class ProxyManager;
 
@@ -26,15 +26,14 @@ namespace domain
         DomainEntry();
         ~DomainEntry();
 
-        db::DbFacade* dbFacade() const;
         db::DbManager* dbManager() const;
 
         TelemetryService* telemetryService() const;
         VehicleService* vehicleService() const;
         MissionService* missionService() const;
         CommandService* commandService() const;
-
         CommunicationService* commService() const;
+        VideoService* videoService() const;
 
         ProxyManager* proxyManager() const;
 

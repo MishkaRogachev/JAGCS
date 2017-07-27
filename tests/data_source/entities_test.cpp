@@ -4,8 +4,6 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
-
 #include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
@@ -14,6 +12,8 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 #include "link_description.h"
+
+#include "video_service.h"
 #include "video_source.h"
 
 using namespace dao;
@@ -142,16 +142,16 @@ void EntitiesTest::testLinkDescription()
 
 void EntitiesTest::testVideoSource()
 {
-    db::DbFacade dbFacade;
+    domain::VideoService service;
 
     VideoSourcePtr video = VideoSourcePtr::create();
     video->setType(VideoSource::Device);
     video->setSource("/dev/video1");
 
-    QVERIFY2(dbFacade.save(video), "Can't insert video source");
+    QVERIFY2(service.save(video), "Can't insert video source");
 
     QCOMPARE(video->type(), VideoSource::Device);
     QVERIFY2(video->source() == "/dev/video1", "Video sources are different");
 
-    QVERIFY2(dbFacade.remove(video), "Can't remove video source");
+    QVERIFY2(service.remove(video), "Can't remove video source");
 }
