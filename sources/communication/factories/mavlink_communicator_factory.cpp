@@ -51,7 +51,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new NavControllerHandler(m_entry->telemetryService(), communicator);
     new CommandHandler(m_entry->vehicleService(), m_entry->commandService(), communicator);
     new MissionHandler(m_entry->vehicleService(), m_entry->telemetryService(),
-                       m_entry->missionService(), m_entry->commandService(), communicator);
+                       m_entry->missionService(), communicator);
 
     return communicator;
 }

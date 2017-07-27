@@ -73,17 +73,14 @@ using namespace domain;
 MissionHandler::MissionHandler(VehicleService* vehicleService,
                                domain::TelemetryService* telemetryService,
                                MissionService* missionService,
-                               domain::CommandService* commandService,
                                MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_vehicleService(vehicleService),
     m_telemetryService(telemetryService),
     m_missionService(missionService)
 {
-    connect(commandService, &domain::CommandService::download,
-            this, &MissionHandler::download);
-    connect(commandService, &domain::CommandService::upload,
-            this, &MissionHandler::upload);
+    connect(missionService, &domain::MissionService::download, this, &MissionHandler::download);
+    connect(missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
 }
 
 void MissionHandler::processMessage(const mavlink_message_t& message)

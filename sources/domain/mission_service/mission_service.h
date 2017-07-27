@@ -59,6 +59,9 @@ namespace domain
         void assignmentRemoved(dao::MissionAssignmentPtr assignment);
         void assignmentChanged(dao::MissionAssignmentPtr assignment);
 
+        void download(dao::MissionAssignmentPtr assignment);
+        void upload(dao::MissionAssignmentPtr assignment);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

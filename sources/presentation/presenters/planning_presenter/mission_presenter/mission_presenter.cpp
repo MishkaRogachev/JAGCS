@@ -26,7 +26,6 @@ class MissionPresenter::Impl
 public:
     domain::VehicleService* vehicleService;
     domain::MissionService* missionService;
-    domain::CommandService* commandService;
 
     dao::MissionPtr selectedMission;
     dao::MissionPtrList missions;
@@ -42,7 +41,6 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
 {
     d->vehicleService = entry->vehicleService();
     d->missionService = entry->missionService();
-    d->commandService = entry->commandService();
 
     d->missions.append(d->missionService->missions());
 
@@ -277,7 +275,7 @@ void MissionPresenter::onUploadMission()
     dao::MissionAssignmentPtr assignment = d->missionService->missionAssignment(d->selectedMission->id());
     if (assignment.isNull()) return;
 
-    d->commandService->upload(assignment);
+    d->missionService->upload(assignment);
 }
 
 void MissionPresenter::onDownloadMission()
@@ -286,5 +284,5 @@ void MissionPresenter::onDownloadMission()
     dao::MissionAssignmentPtr assignment = d->missionService->missionAssignment(d->selectedMission->id());
     if (assignment.isNull()) return;
 
-    d->commandService->download(assignment);
+    d->missionService->download(assignment);
 }

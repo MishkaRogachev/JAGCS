@@ -28,9 +28,6 @@ namespace domain
     signals:
         void gotCommand();
 
-        void download(dao::MissionAssignmentPtr assignment); // FIXME: mission service
-        void upload(dao::MissionAssignmentPtr assignment); // FIXME: mission service
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;
