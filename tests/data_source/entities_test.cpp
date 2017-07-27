@@ -122,7 +122,8 @@ void EntitiesTest::testMissionAssignment()
 }
 
 void EntitiesTest::testLinkDescription()
-{/*
+{
+    /*FIXME: services registry
     db::DbFacade dbFacade;
 
     LinkDescriptionPtr link = LinkDescriptionPtr::create();

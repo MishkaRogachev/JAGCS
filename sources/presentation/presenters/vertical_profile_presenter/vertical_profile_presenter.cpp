@@ -63,7 +63,7 @@ void VerticalProfilePresenter::updateMission()
             lastCoordinate = coordinate;
         }
 
-        // FIXME: relative altitude
+        // TODO: relative altitude
         this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
     }
 }

@@ -22,6 +22,10 @@ MissionLineMapItemModel::MissionLineMapItemModel(domain::MissionService* service
             this, &MissionLineMapItemModel::onMissionRemoved);
     connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionLineMapItemModel::onMissionItemChanged);
+    connect(service, &domain::MissionService::missionItemAdded,
+            this, &MissionLineMapItemModel::onMissionItemChanged);
+    connect(service, &domain::MissionService::missionItemRemoved,
+            this, &MissionLineMapItemModel::onMissionItemChanged);
 
     for (const dao::MissionPtr& item: service->missions())
     {
