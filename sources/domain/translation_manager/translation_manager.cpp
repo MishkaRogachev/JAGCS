@@ -21,49 +21,48 @@ public:
 
 TranslationManager::TranslationManager():
     d(new Impl())
-{}
+{
+    this->loadLocales();
+}
 
 TranslationManager::~TranslationManager()
 {}
 
-TranslationManager* TranslationManager::instance()
-{
-    static TranslationManager manager;
-    return &manager;
-}
-
 QStringList TranslationManager::avalibleLocales()
 {
-    return instance()->d->localeTranslators.keys();
+    return d->localeTranslators.keys();
 }
 
 QString TranslationManager::currentLocale()
 {
-    return instance()->d->locale;
+    return d->locale;
 }
 
 void TranslationManager::setCurrentLocale(const QString& locale)
 {
-    if (instance()->d->locale == locale) return;
+    if (d->locale == locale) return;
 
-    if (!instance()->d->locale.isEmpty())
+    if (!d->locale.isEmpty())
     {
-        qApp->removeTranslator(instance()->d->localeTranslators.value(
-                                   instance()->d->locale, nullptr));
+        qApp->removeTranslator(d->localeTranslators.value(d->locale, nullptr));
     }
 
     if (!locale.isEmpty())
     {
-        qApp->installTranslator(instance()->d->localeTranslators.value(
-                                    locale, nullptr));
+        qApp->installTranslator(d->localeTranslators.value(locale, nullptr));
     }
 
     settings::Provider::setValue(settings::gui::locale, locale);
-    instance()->d->locale = locale;
+    d->locale = locale;
 }
 
-void TranslationManager::init()
+void TranslationManager::loadLocales()
 {
+    while (!d->localeTranslators.isEmpty())
+    {
+        delete d->localeTranslators.take(d->localeTranslators.firstKey());
+    }
+
     QDir dir(":/");
     for (const QString& fileName: dir.entryList(QStringList("jagcs_*.qm")))
     {
@@ -71,11 +70,13 @@ void TranslationManager::init()
         locale.remove(0, locale.indexOf('_') + 1);
         locale.chop(3);
 
-        instance()->d->localeTranslators[locale] = new QTranslator(qApp);
-        instance()->d->localeTranslators[locale]->load(fileName, ":/");
+        d->localeTranslators[locale] = new QTranslator(qApp);
+        d->localeTranslators[locale]->load(fileName, ":/");
     }
+}
 
-    instance()->d->locale = settings::Provider::value(settings::gui::locale).toString();
-    qApp->installTranslator(instance()->d->localeTranslators.value(
-                                instance()->d->locale, nullptr));
+void TranslationManager::updateLocale()
+{
+    d->locale = settings::Provider::value(settings::gui::locale).toString();
+    qApp->installTranslator(d->localeTranslators.value(d->locale, nullptr));
 }

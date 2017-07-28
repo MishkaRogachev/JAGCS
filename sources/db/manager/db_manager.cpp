@@ -8,11 +8,18 @@
 // Internal
 #include "db_migrator.h"
 
+namespace
+{
+    const QString connectionName = "defaultConnection";
+}
+
 using namespace db;
 
 DbManager::DbManager(QObject* parent):
     QObject(parent),
-    m_db(QSqlDatabase::addDatabase("QSQLITE"))
+    m_db(QSqlDatabase::contains(::connectionName) ?
+             QSqlDatabase::database(::connectionName) :
+             QSqlDatabase::addDatabase(::connectionName))
 {
     DbMigrationFactory factory;
     m_migrator = new DbMigrator(&factory, this);

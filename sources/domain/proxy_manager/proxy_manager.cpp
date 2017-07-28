@@ -10,14 +10,10 @@ using namespace domain;
 
 ProxyManager::ProxyManager(QObject* parent):
     QObject(parent)
-{
-    this->load();
-}
+{}
 
 ProxyManager::~ProxyManager()
-{
-    this->save();
-}
+{}
 
 QNetworkProxy ProxyManager::proxy() const
 {
