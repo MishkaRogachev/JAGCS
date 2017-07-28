@@ -14,6 +14,8 @@
 #include "proxy_manager.h"
 #include "db_manager.h"
 
+#include "service_registry.h"
+
 #include "main_presenter.h"
 
 #include "link_description.h"
@@ -32,6 +34,8 @@ void init()
         qFatal("Unable to establish DB connection");
         qApp->quit();
     }
+
+    domain::ServiceRegistry::init();
 }
 
 int main(int argc, char* argv[])

@@ -1,5 +1,8 @@
 #include "service_registry.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "settings_provider.h"
 
@@ -25,13 +28,7 @@ public:
 
     Impl():
         telemetryService(&vehicleService)
-    {
-        comm::MavLinkCommunicatorFactory comFactory(
-                    settings::Provider::value(settings::communication::systemId).toInt(),
-                    settings::Provider::value(settings::communication::componentId).toInt());
-
-        communicationService = new CommunicationService(&comFactory);
-    }
+    {}
 };
 
 ServiceRegistry::ServiceRegistry():
@@ -47,6 +44,15 @@ ServiceRegistry* ServiceRegistry::instance()
 {
     static ServiceRegistry registry;
     return &registry;
+}
+
+void ServiceRegistry::init()
+{
+    comm::MavLinkCommunicatorFactory comFactory(
+                settings::Provider::value(settings::communication::systemId).toInt(),
+                settings::Provider::value(settings::communication::componentId).toInt());
+
+    instance()->d->communicationService = new CommunicationService(&comFactory);
 }
 
 MissionService* ServiceRegistry::missionService()

@@ -21,6 +21,8 @@ namespace domain
 
         static ServiceRegistry* instance();
 
+        static void init();
+
         static MissionService* missionService();
         static VehicleService* vehicleService();
         static TelemetryService* telemetryService();
