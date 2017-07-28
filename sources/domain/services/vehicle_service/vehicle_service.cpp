@@ -9,6 +9,8 @@
 #include "generic_repository.h"
 #include "generic_repository_impl.h"
 
+#include "mission_service.h"
+
 using namespace dao;
 using namespace domain;
 
@@ -16,16 +18,19 @@ class VehicleService::Impl
 {
 public:
     GenericRepository<Vehicle> vehicleRepository;
+    MissionService* missionService;
 
     Impl():
         vehicleRepository("vehicles")
     {}
 };
 
-VehicleService::VehicleService(QObject* parent):
+VehicleService::VehicleService(MissionService* missionService, QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    d->missionService = missionService;
+}
 
 VehicleService::~VehicleService()
 {}
@@ -65,9 +70,8 @@ bool VehicleService::save(const VehiclePtr& vehicle)
 
 bool VehicleService::remove(const VehiclePtr& vehicle)
 {
-    // FIXME: remove assignment on vehicle remove
-    //MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
-    //if (assignment && !this->remove(assignment)) return false;
+    MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicle->id());
+    if (assignment && !d->missionService->remove(assignment)) return false;
 
     if (!d->vehicleRepository.remove(vehicle)) return false;
     emit vehicleRemoved(vehicle);

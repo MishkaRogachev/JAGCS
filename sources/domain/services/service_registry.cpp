@@ -27,6 +27,7 @@ public:
     CommunicationService* communicationService;
 
     Impl():
+        vehicleService(&missionService),
         telemetryService(&vehicleService)
     {}
 };

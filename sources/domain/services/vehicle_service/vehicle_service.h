@@ -9,12 +9,14 @@
 
 namespace domain
 {
+    class MissionService;
+
     class VehicleService: public QObject
     {
         Q_OBJECT
 
     public:
-        VehicleService(QObject* parent = nullptr);
+        explicit VehicleService(MissionService* missionService, QObject* parent = nullptr);
         ~VehicleService() override;
 
         dao::VehiclePtr vehicle(int id, bool reload = false);

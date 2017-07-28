@@ -14,51 +14,48 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "service_registry.h"
 #include "communication_service.h"
 #include "link_description.h"
 
 using namespace dao;
 using namespace db;
+using namespace domain;
 
 bool DefaultParamsMigration::up()
 {
-    // FIXME: services registry
-    /*domain::CommunicationService commService;
-
     LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
     defaultUdpLink->setType(LinkDescription::Udp);
     defaultUdpLink->setPort(settings::Provider::value(settings::communication::port).toInt());
     defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "Default UDP Link"));
     defaultUdpLink->setAutoConnect(true);
-    commService.save(defaultUdpLink);
+    ServiceRegistry::communicationService()->save(defaultUdpLink);
 
     LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
     defaultSerialLink->setType(LinkDescription::Serial);
     defaultSerialLink->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
     defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Default Serial Link"));
     defaultSerialLink->setAutoConnect(true);
-    commService.save(defaultSerialLink);*/
+    ServiceRegistry::communicationService()->save(defaultSerialLink);
 
-    domain::VehicleService vehicleService;
     VehiclePtr defaultVehicle = VehiclePtr::create();
     defaultVehicle->setMavId(1);
     defaultVehicle->setName(qApp->translate("DefaultParamsMigration", "Default"));
     defaultVehicle->setType(Vehicle::Auto);
-    vehicleService.save(defaultVehicle);
+    ServiceRegistry::vehicleService()->save(defaultVehicle);
 
-    domain::MissionService missionService;
     MissionPtr defaultMission = MissionPtr::create();
     defaultMission->setName(qApp->translate("DefaultParamsMigration", "Idle"));
-    missionService.save(defaultMission);
+    ServiceRegistry::missionService()->save(defaultMission);
 
-    missionService.assign(defaultMission->id(), defaultVehicle->id());
+    ServiceRegistry::missionService()->assign(defaultMission->id(), defaultVehicle->id());
 
     return DbMigration::up();
 }
 
 bool DefaultParamsMigration::down()
 {
-    // Delete default values
+    // No need to drop default values
 
     return true;
 }
