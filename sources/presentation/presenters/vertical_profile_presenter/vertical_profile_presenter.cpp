@@ -6,28 +6,28 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 
 using namespace presentation;
 
-VerticalProfilePresenter::VerticalProfilePresenter(domain::MissionService* service,
-                                                   QObject* parent):
+VerticalProfilePresenter::VerticalProfilePresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(service)
+    m_service(domain::ServiceRegistry::missionService())
 {
-    connect(service, &domain::MissionService::missionItemAdded, this, [this]
+    connect(m_service, &domain::MissionService::missionItemAdded, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(service, &domain::MissionService::missionItemRemoved, this, [this]
+    connect(m_service, &domain::MissionService::missionItemRemoved, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(service, &domain::MissionService::missionItemChanged, this, [this]
+    connect(m_service, &domain::MissionService::missionItemChanged, this, [this]
             (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });

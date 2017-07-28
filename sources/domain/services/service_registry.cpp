@@ -13,25 +13,68 @@
 
 using namespace domain;
 
-ServiceRegistry::ServiceRegistry():
-    missionService(new MissionService()),
-    vehicleService(new VehicleService()),
-    telemetryService(new TelemetryService(vehicleService.data())),
-    videoService(new VideoService()),
-    commandService(new CommandService())
+class ServiceRegistry::Impl
 {
-    comm::MavLinkCommunicatorFactory comFactory(this,
-                settings::Provider::value(settings::communication::systemId).toInt(),
-                settings::Provider::value(settings::communication::componentId).toInt());
+public:
+    MissionService missionService;
+    VehicleService vehicleService;
+    TelemetryService telemetryService;
+    VideoService videoService;
+    CommandService commandService;
+    CommunicationService* communicationService;
 
-    communicationService.reset(&comFactory);
-}
+    Impl():
+        telemetryService(&vehicleService)
+    {
+        comm::MavLinkCommunicatorFactory comFactory(
+                    settings::Provider::value(settings::communication::systemId).toInt(),
+                    settings::Provider::value(settings::communication::componentId).toInt());
+
+        communicationService = new CommunicationService(&comFactory);
+    }
+};
+
+ServiceRegistry::ServiceRegistry():
+    d(new Impl())
+{}
 
 ServiceRegistry::~ServiceRegistry()
-{}
+{
+    delete d->communicationService;
+}
 
 ServiceRegistry* ServiceRegistry::instance()
 {
     static ServiceRegistry registry;
     return &registry;
+}
+
+MissionService* ServiceRegistry::missionService()
+{
+    return &instance()->d->missionService;
+}
+
+VehicleService* ServiceRegistry::vehicleService()
+{
+    return &instance()->d->vehicleService;
+}
+
+TelemetryService* ServiceRegistry::telemetryService()
+{
+    return &instance()->d->telemetryService;
+}
+
+VideoService* ServiceRegistry::videoService()
+{
+    return &instance()->d->videoService;
+}
+
+CommandService* ServiceRegistry::commandService()
+{
+    return &instance()->d->commandService;
+}
+
+CommunicationService* ServiceRegistry::communicationService()
+{
+    return instance()->d->communicationService;
 }

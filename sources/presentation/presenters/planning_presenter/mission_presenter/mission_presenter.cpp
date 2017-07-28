@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "domain_entry.h"
+#include "service_registry.h"
 
 #include "mission_service.h"
 #include "mission.h"
@@ -35,12 +35,12 @@ public:
 
 using namespace presentation;
 
-MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
+MissionPresenter::MissionPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->vehicleService = entry->vehicleService();
-    d->missionService = entry->missionService();
+    d->vehicleService = domain::ServiceRegistry::vehicleService();
+    d->missionService = domain::ServiceRegistry::missionService();
 
     d->missions.append(d->missionService->missions());
 
@@ -63,8 +63,10 @@ MissionPresenter::MissionPresenter(domain::DomainEntry* entry, QObject* parent):
     connect(d->missionService, &domain::MissionService::missionItemChanged,
             this, &MissionPresenter::updateStatuses);
 
-    connect(d->vehicleService, &domain::VehicleService::vehicleAdded, this, &MissionPresenter::updateVehiclesBox);
-    connect(d->vehicleService, &domain::VehicleService::vehicleRemoved, this, &MissionPresenter::updateVehiclesBox);
+    connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
+            this, &MissionPresenter::updateVehiclesBox);
+    connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
+            this, &MissionPresenter::updateVehiclesBox);
 
     d->item = new MissionItemPresenter(d->missionService, this);
 }

@@ -5,6 +5,7 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "mission_service.h"
 #include "mission_assignment.h"
 #include "mission.h"
@@ -19,12 +20,12 @@ public:
     int vehicleId;
 };
 
-MissionStatusPresenter::MissionStatusPresenter(domain::MissionService* service, int vehicleId,
+MissionStatusPresenter::MissionStatusPresenter(int vehicleId,
                                                QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = service;
+    d->service = domain::ServiceRegistry::missionService();
     d->vehicleId = vehicleId;
 }
 

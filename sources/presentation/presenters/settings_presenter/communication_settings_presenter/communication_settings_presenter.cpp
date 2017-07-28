@@ -5,8 +5,9 @@
 #include <QDebug>
 
 // Internal
-#include "domain_entry.h"
 #include "settings_provider.h"
+
+#include "service_registry.h"
 
 #include "communication_service.h"
 #include "link_description.h"
@@ -24,12 +25,11 @@ public:
     QMap<dao::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
 };
 
-CommunicationSettingsPresenter::CommunicationSettingsPresenter(domain::DomainEntry* entry,
-                                                               QObject* parent):
+CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = entry->commService();
+    d->service = ServiceRegistry::communicationService();
 
     connect(d->service, &CommunicationService::descriptionAdded,
             this, &CommunicationSettingsPresenter::onLinkAdded);

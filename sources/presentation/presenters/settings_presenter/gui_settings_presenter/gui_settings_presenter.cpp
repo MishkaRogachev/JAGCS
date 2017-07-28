@@ -10,8 +10,18 @@
 
 using namespace presentation;
 
+class GuiSettingsPresenter::Impl
+{
+public:
+    domain::TranslationManager manager;
+};
+
 GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
-    BasePresenter(parent)
+    BasePresenter(parent),
+    d(new Impl())
+{}
+
+GuiSettingsPresenter::~GuiSettingsPresenter()
 {}
 
 void GuiSettingsPresenter::updateView()
@@ -19,8 +29,8 @@ void GuiSettingsPresenter::updateView()
     this->setViewProperty(PROPERTY(fullscreen),
                           settings::Provider::value(settings::gui::fullscreen));
 
-    const QStringList& locales = domain::TranslationManager::avalibleLocales();
-    int index = locales.indexOf(domain::TranslationManager::currentLocale());
+    const QStringList& locales = d->manager.avalibleLocales();
+    int index = locales.indexOf(d->manager.currentLocale());
     this->setViewProperty(PROPERTY(localeIndex), index);
 
     this->setViewProperty(PROPERTY(uiSize),
@@ -42,9 +52,9 @@ void GuiSettingsPresenter::save()
     settings::Provider::setValue(settings::gui::fullscreen,
                                  this->viewProperty(PROPERTY(fullscreen)).toBool());
 
-    const QStringList& locales = domain::TranslationManager::avalibleLocales();
+    const QStringList& locales = d->manager.avalibleLocales();
     QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
-    domain::TranslationManager::setCurrentLocale(locale);
+    d->manager.setCurrentLocale(locale);
 
     settings::Provider::setValue(settings::gui::uiSize,
                                  this->viewProperty(PROPERTY(uiSize)).toInt());
@@ -63,7 +73,7 @@ void GuiSettingsPresenter::save()
 void GuiSettingsPresenter::connectView(QObject* view)
 {
     this->setViewProperty(PROPERTY(locales), QVariant::fromValue(
-                              domain::TranslationManager::avalibleLocales()));
+                              d->manager.avalibleLocales()));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));

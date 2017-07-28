@@ -4,11 +4,6 @@
 // Internal
 #include "abstract_map_presenter.h"
 
-namespace domain
-{
-    class DomainEntry;
-}
-
 namespace presentation
 {
     class LocationMapPresenter: public AbstractMapPresenter
@@ -16,7 +11,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit LocationMapPresenter(domain::DomainEntry* entry, QObject* object = nullptr);
+        explicit LocationMapPresenter(QObject* object = nullptr);
         ~LocationMapPresenter() override;
 
         double centerLatitude() const override;

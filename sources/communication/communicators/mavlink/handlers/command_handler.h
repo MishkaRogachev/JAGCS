@@ -6,9 +6,9 @@
 
 namespace domain
 {
-    class Command;
-    class CommandService;
     class VehicleService;
+    class CommandService;
+    class Command;
 }
 
 namespace comm
@@ -18,9 +18,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        CommandHandler(domain::VehicleService* vehicleService,
-                       domain::CommandService* commandService,
-                       MavLinkCommunicator* communicator);
+        CommandHandler(MavLinkCommunicator* communicator);
 
     public slots:
        void processMessage(const mavlink_message_t& message) override;

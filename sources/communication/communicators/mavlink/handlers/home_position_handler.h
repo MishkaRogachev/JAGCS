@@ -20,8 +20,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        HomePositionHandler(domain::TelemetryService* telemetryService,
-                            MavLinkCommunicator* communicator);
+        HomePositionHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

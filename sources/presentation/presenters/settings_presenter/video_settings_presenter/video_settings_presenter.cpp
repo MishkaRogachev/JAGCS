@@ -5,6 +5,7 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "video_service.h"
 #include "video_source.h"
 
@@ -20,20 +21,20 @@ public:
     QList<VideoSourcePresenter*> videoPresenters;
 };
 
-VideoSettingsPresenter::VideoSettingsPresenter(domain::VideoService* service, QObject* parent):
+VideoSettingsPresenter::VideoSettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = service;
+    d->service = domain::ServiceRegistry::videoService();
 
     connect(d->service, &domain::VideoService::videoSourceAdded,
             this, &VideoSettingsPresenter::onVideoSourceAdded);
     connect(d->service, &domain::VideoService::videoSourceRemoved,
             this, &VideoSettingsPresenter::onVideoSourceRemoved);
 
-    for (const dao::VideoSourcePtr& video: service->videoSources())
+    for (const dao::VideoSourcePtr& video: d->service->videoSources())
     {
-        d->videoPresenters.append(new VideoSourcePresenter(service, video, this));
+        d->videoPresenters.append(new VideoSourcePresenter(d->service, video, this));
     }
 }
 

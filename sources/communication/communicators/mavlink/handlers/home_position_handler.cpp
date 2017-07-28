@@ -12,16 +12,16 @@
 #include "mavlink_communicator.h"
 #include "mavlink_protocol_helpers.h"
 
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-HomePositionHandler::HomePositionHandler(TelemetryService* telemetryService,
-                                         MavLinkCommunicator* communicator):
+HomePositionHandler::HomePositionHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {
     // TODO: requestig timer for home position
 }

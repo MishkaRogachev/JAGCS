@@ -5,8 +5,6 @@
 #include <QVariant>
 
 // Internal
-#include "domain_entry.h"
-
 #include "statusbar_presenter.h"
 #include "control_presenter.h"
 #include "planning_presenter.h"
@@ -17,19 +15,15 @@ using namespace presentation;
 class MainPresenter::Impl
 {
 public:
-    domain::DomainEntry* entry;
-
     StatusbarPresenter* statusbar;
     BasePresenter* modePresenter = nullptr;
 };
 
-MainPresenter::MainPresenter(domain::DomainEntry* entry, QObject* parent):
+MainPresenter::MainPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->entry = entry;
-
-    d->statusbar = new StatusbarPresenter(entry, this);
+    d->statusbar = new StatusbarPresenter(this);
     connect(d->statusbar, &StatusbarPresenter::setMode, this, &MainPresenter::setMode);
 }
 
@@ -50,15 +44,15 @@ void MainPresenter::setMode(const QString& mode)
 
     if (mode == "control") // TODO: MainPresenter mode enum
     {
-        d->modePresenter = new ControlPresenter(d->entry, this);
+        d->modePresenter = new ControlPresenter(this);
     }
     if (mode == "planning")
     {
-        d->modePresenter = new PlanningPresenter(d->entry, this);
+        d->modePresenter = new PlanningPresenter(this);
     }
     else if (mode == "settings")
     {
-        d->modePresenter = new SettingsPresenter(d->entry, this);
+        d->modePresenter = new SettingsPresenter(this);
     }
 
     if (d->modePresenter)

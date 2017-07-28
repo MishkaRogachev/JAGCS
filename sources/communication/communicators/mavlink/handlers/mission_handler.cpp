@@ -14,6 +14,7 @@
 
 #include "mavlink_communicator.h"
 
+#include "service_registry.h"
 #include "command_service.h"
 #include "vehicle_service.h"
 #include "mission_service.h"
@@ -70,17 +71,14 @@ namespace
 using namespace comm;
 using namespace domain;
 
-MissionHandler::MissionHandler(VehicleService* vehicleService,
-                               domain::TelemetryService* telemetryService,
-                               MissionService* missionService,
-                               MavLinkCommunicator* communicator):
+MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(vehicleService),
-    m_telemetryService(telemetryService),
-    m_missionService(missionService)
+    m_vehicleService(ServiceRegistry::vehicleService()),
+    m_telemetryService(ServiceRegistry::telemetryService()),
+    m_missionService(ServiceRegistry::missionService())
 {
-    connect(missionService, &domain::MissionService::download, this, &MissionHandler::download);
-    connect(missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
+    connect(m_missionService, &domain::MissionService::download, this, &MissionHandler::download);
+    connect(m_missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
 }
 
 void MissionHandler::processMessage(const mavlink_message_t& message)

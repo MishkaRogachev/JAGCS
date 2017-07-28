@@ -3,12 +3,6 @@
 
 #include "abstract_mavlink_handler.h"
 
-namespace domain
-{
-    class VehicleService;
-    class TelemetryService;
-}
-
 namespace comm
 {
     class HeartbeatHandler: public AbstractMavLinkHandler
@@ -16,9 +10,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        HeartbeatHandler(domain::VehicleService* vehicleService,
-                         domain::TelemetryService* telemetryService,
-                         MavLinkCommunicator* communicator);
+        HeartbeatHandler(MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
     public slots:

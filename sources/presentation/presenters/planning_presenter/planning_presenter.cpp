@@ -1,7 +1,7 @@
 #include "planning_presenter.h"
 
 // Internal
-#include "domain_entry.h"
+#include "service_registry.h"
 
 #include "mission_presenter.h"
 #include "location_map_presenter.h"
@@ -23,13 +23,13 @@ public:
 
 using namespace presentation;
 
-PlanningPresenter::PlanningPresenter(domain::DomainEntry* entry, QObject* parent):
+PlanningPresenter::PlanningPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->mission = new MissionPresenter(entry, this);
-    d->map = new LocationMapPresenter(entry, this);
-    d->profile = new VerticalProfilePresenter(entry->missionService(), this);
+    d->mission = new MissionPresenter(this);
+    d->map = new LocationMapPresenter(this);
+    d->profile = new VerticalProfilePresenter(this);
 
     connect(d->mission, &MissionPresenter::missionSelected,
             d->profile, &VerticalProfilePresenter::selectMission);

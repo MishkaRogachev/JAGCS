@@ -21,14 +21,17 @@ namespace domain
 
         static ServiceRegistry* instance();
 
-        QScopedPointer<MissionService> missionService;
-        QScopedPointer<VehicleService> vehicleService;
-        QScopedPointer<TelemetryService> telemetryService;
-        QScopedPointer<VideoService> videoService;
-        QScopedPointer<CommandService> commandService;
-        QScopedPointer<CommunicationService> communicationService;
+        static MissionService* missionService();
+        static VehicleService* vehicleService();
+        static TelemetryService* telemetryService();
+        static VideoService* videoService();
+        static CommandService* commandService();
+        static CommunicationService* communicationService();
 
     private:
+        class Impl;
+        QScopedPointer<Impl> const d;
+
         Q_DISABLE_COPY(ServiceRegistry)
     };
 }

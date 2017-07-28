@@ -7,6 +7,8 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
+
 #include "command_service.h"
 #include "command.h"
 
@@ -35,14 +37,12 @@ namespace
     }
 }
 
-CommandHandler::CommandHandler(domain::VehicleService* vehicleService,
-                               CommandService* commandService,
-                               MavLinkCommunicator* communicator):
+CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_commandService(commandService),
-    m_vehicleService(vehicleService)
+    m_commandService(ServiceRegistry::commandService()),
+    m_vehicleService(ServiceRegistry::vehicleService())
 {
-    connect(commandService, &CommandService::gotCommand, this, &CommandHandler::onGotCommand);
+    connect(m_commandService, &CommandService::gotCommand, this, &CommandHandler::onGotCommand);
 }
 
 void CommandHandler::processMessage(const mavlink_message_t& message)

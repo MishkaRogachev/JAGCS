@@ -5,7 +5,7 @@
 #include <QGeoCoordinate>
 
 // Internal
-#include "domain_entry.h"
+#include "service_registry.h"
 
 #include "mission_point_map_item_model.h"
 #include "mission_line_map_item_model.h"
@@ -20,16 +20,17 @@ public:
     MissionLineMapItemModel lineModel;
     VehicleMapItemModel vehicleModel;
 
-    Impl(domain::DomainEntry* entry):
-        pointModel(entry->missionService()),
-        lineModel(entry->missionService()),
-        vehicleModel(entry->vehicleService(), entry->telemetryService())
+    Impl():
+        pointModel(domain::ServiceRegistry::missionService()),
+        lineModel(domain::ServiceRegistry::missionService()),
+        vehicleModel(domain::ServiceRegistry::vehicleService(),
+                     domain::ServiceRegistry::telemetryService())
     {}
 };
 
-LocationMapPresenter::LocationMapPresenter(domain::DomainEntry* entry, QObject* object):
+LocationMapPresenter::LocationMapPresenter(QObject* object):
     AbstractMapPresenter(object),
-    d(new Impl(entry))
+    d(new Impl())
 {}
 
 LocationMapPresenter::~LocationMapPresenter()

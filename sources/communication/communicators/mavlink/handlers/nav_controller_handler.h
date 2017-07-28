@@ -13,8 +13,7 @@ namespace comm
     class NavControllerHandler: public AbstractMavLinkHandler
     {
     public:
-        NavControllerHandler(domain::TelemetryService* telemetryService,
-                             MavLinkCommunicator* communicator);
+        NavControllerHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

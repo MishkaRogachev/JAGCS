@@ -11,6 +11,7 @@ namespace presentation
 
     public:
         explicit GuiSettingsPresenter(QObject* parent = nullptr);
+        ~GuiSettingsPresenter() override;
 
     public slots:
         void updateView();
@@ -18,6 +19,10 @@ namespace presentation
 
     protected:
         void connectView(QObject* view) override;
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

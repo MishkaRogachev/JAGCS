@@ -5,11 +5,6 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace domain
-{
-    class DomainEntry;
-}
-
 namespace presentation
 {
     class CommunicationSettingsPresenter: public BasePresenter
@@ -17,8 +12,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit CommunicationSettingsPresenter(domain::DomainEntry* entry,
-                                                QObject* parent = nullptr);
+        explicit CommunicationSettingsPresenter(QObject* parent = nullptr);
         ~CommunicationSettingsPresenter() override;
 
     protected:

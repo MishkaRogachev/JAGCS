@@ -15,8 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        MissionStatusPresenter(domain::MissionService* service, int vehicleId,
-                               QObject* parent = nullptr);
+        MissionStatusPresenter(int vehicleId, QObject* parent = nullptr);
         ~MissionStatusPresenter() override;
 
     public slots:

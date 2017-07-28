@@ -17,8 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VerticalProfilePresenter(domain::MissionService* service,
-                                          QObject* parent = nullptr);
+        explicit VerticalProfilePresenter(QObject* parent = nullptr);
 
     public slots:
         void selectMission(const dao::MissionPtr& mission);

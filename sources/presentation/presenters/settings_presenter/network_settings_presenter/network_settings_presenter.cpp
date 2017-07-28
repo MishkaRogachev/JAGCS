@@ -14,17 +14,14 @@ using namespace domain;
 class NetworkSettingsPresenter::Impl
 {
 public:
-    domain::ProxyManager* manager;
+    domain::ProxyManager manager;
     QMap<QNetworkProxy::ProxyType, QString> typeModelMap;
 };
 
-NetworkSettingsPresenter::NetworkSettingsPresenter(domain::ProxyManager* manager,
-                                                   QObject* parent):
+NetworkSettingsPresenter::NetworkSettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->manager = manager;
-
     d->typeModelMap.insert(QNetworkProxy::NoProxy, tr("No Proxy"));
     d->typeModelMap.insert(QNetworkProxy::DefaultProxy, tr("Default"));
     d->typeModelMap.insert(QNetworkProxy::Socks5Proxy, tr("SOCKS 5"));
@@ -34,9 +31,7 @@ NetworkSettingsPresenter::NetworkSettingsPresenter(domain::ProxyManager* manager
 }
 
 NetworkSettingsPresenter::~NetworkSettingsPresenter()
-{
-    delete d;
-}
+{}
 
 void NetworkSettingsPresenter::connectView(QObject* view)
 {
@@ -59,12 +54,12 @@ void NetworkSettingsPresenter::onApply()
     proxy.setUser(this->viewProperty(PROPERTY(user)).toString());
     proxy.setPassword(this->viewProperty(PROPERTY(password)).toString());
 
-    d->manager->setProxy(proxy);
+    d->manager.setProxy(proxy);
 }
 
 void NetworkSettingsPresenter::onRestore()
 {
-    QNetworkProxy proxy = d->manager->proxy();
+    QNetworkProxy proxy = d->manager.proxy();
 
     QString type = d->typeModelMap.value(proxy.type());
     this->invokeViewMethod(PROPERTY(setProxyType), type);

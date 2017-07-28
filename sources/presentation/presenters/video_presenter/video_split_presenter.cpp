@@ -5,6 +5,7 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "video_service.h"
 #include "video_source.h"
 
@@ -12,9 +13,9 @@
 
 using namespace presentation;
 
-VideoSplitPresenter::VideoSplitPresenter(domain::VideoService* videoService, QObject* parent):
+VideoSplitPresenter::VideoSplitPresenter(QObject* parent):
     BasePresenter(parent),
-    m_videoService(videoService),
+    m_videoService(domain::ServiceRegistry::videoService()),
     m_video(new VideoPresenter(this))
 {}
 

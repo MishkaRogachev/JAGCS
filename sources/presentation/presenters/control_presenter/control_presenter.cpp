@@ -6,8 +6,7 @@
 #include <QDebug>
 
 // Internal
-#include "domain_entry.h"
-
+#include "service_registry.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
 
@@ -25,23 +24,19 @@ using namespace presentation;
 class ControlPresenter::Impl
 {
 public:
-    domain::DomainEntry* entry;
-
     AbstractMapPresenter* map;
     VideoSplitPresenter* video;
     DashboardPresenter* dashboard = nullptr;
 };
 
-ControlPresenter::ControlPresenter(domain::DomainEntry* entry, QObject* parent):
+ControlPresenter::ControlPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->entry = entry;
+    domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
 
-    domain::VehicleService* service = entry->vehicleService();
-
-    d->map = new LocationMapPresenter(entry, this);
-    d->video = new VideoSplitPresenter(entry->videoService(), this);
+    d->map = new LocationMapPresenter(this);
+    d->video = new VideoSplitPresenter(this);
 
     connect(service, &domain::VehicleService::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(service, &domain::VehicleService::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
@@ -57,7 +52,7 @@ void ControlPresenter::updateVehiclesList()
     int index = 1;
     int onlineIndex = -1;
 
-    for (const dao::VehiclePtr& vehicle: d->entry->vehicleService()->vehicles())
+    for (const dao::VehiclePtr& vehicle: domain::ServiceRegistry::vehicleService()->vehicles())
     {
         vehicles.append(vehicle->name());
         if (vehicle->isOnline() && onlineIndex == -1) onlineIndex = index;
@@ -81,7 +76,7 @@ void ControlPresenter::connectView(QObject* view)
 void ControlPresenter::onSelectVehicle(int index)
 {
     // TODO: check, if vehicle is the same
-    dao::VehiclePtrList vehicles  = d->entry->vehicleService()->vehicles();
+    dao::VehiclePtrList vehicles  = domain::ServiceRegistry::vehicleService()->vehicles();
 
     if (d->dashboard) delete d->dashboard;
 
@@ -89,7 +84,7 @@ void ControlPresenter::onSelectVehicle(int index)
     {
         dao::VehiclePtr vehicle = vehicles[index - 1];
 
-        AerialDashboardFactory factory(d->entry, vehicle);
+        AerialDashboardFactory factory(vehicle);
         d->dashboard = factory.create();
 
         if (d->dashboard)

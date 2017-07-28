@@ -9,16 +9,16 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-AttitudeHandler::AttitudeHandler(TelemetryService* telemetryService,
-                                 MavLinkCommunicator* communicator):
+AttitudeHandler::AttitudeHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {}
 
 void AttitudeHandler::processMessage(const mavlink_message_t& message)

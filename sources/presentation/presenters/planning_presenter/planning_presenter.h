@@ -5,11 +5,6 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace domain
-{
-    class DomainEntry;
-}
-
 namespace presentation
 {
     class PlanningPresenter: public BasePresenter
@@ -17,7 +12,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit PlanningPresenter(domain::DomainEntry* entry, QObject* parent = nullptr);
+        explicit PlanningPresenter(QObject* parent = nullptr);
         ~PlanningPresenter() override;
 
     protected:

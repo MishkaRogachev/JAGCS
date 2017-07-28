@@ -4,6 +4,7 @@
 #include <QVariant>
 
 // Internal
+#include "service_registry.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
 
@@ -19,18 +20,20 @@ public:
     QList<DescriptionVehiclePresenter*> vehiclePresenters;
 };
 
-VehiclesPresenter::VehiclesPresenter(domain::VehicleService* service, QObject* parent):
+VehiclesPresenter::VehiclesPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = service;
+    d->service = domain::ServiceRegistry::vehicleService();
 
-    connect(service, &domain::VehicleService::vehicleAdded, this, &VehiclesPresenter::onVehicleAdded);
-    connect(service, &domain::VehicleService::vehicleRemoved,  this, &VehiclesPresenter::onVehicleRemoved);
+    connect(d->service, &domain::VehicleService::vehicleAdded,
+            this, &VehiclesPresenter::onVehicleAdded);
+    connect(d->service, &domain::VehicleService::vehicleRemoved,
+            this, &VehiclesPresenter::onVehicleRemoved);
 
-    for (const dao::VehiclePtr& vehicle: service->vehicles())
+    for (const dao::VehiclePtr& vehicle: d->service->vehicles())
     {
-        d->vehiclePresenters.append(new DescriptionVehiclePresenter(service, vehicle, this));
+        d->vehiclePresenters.append(new DescriptionVehiclePresenter(d->service, vehicle, this));
     }
 }
 

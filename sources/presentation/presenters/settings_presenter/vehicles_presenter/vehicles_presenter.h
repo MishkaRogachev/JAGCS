@@ -18,7 +18,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VehiclesPresenter(domain::VehicleService* service, QObject* parent = nullptr);
+        explicit VehiclesPresenter(QObject* parent = nullptr);
         ~VehiclesPresenter() override;
 
     protected:

@@ -11,16 +11,16 @@
 // Internal
 #include "mavlink_protocol_helpers.h"
 
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-PositionHandler::PositionHandler(TelemetryService* telemetryService,
-                                 MavLinkCommunicator* communicator):
+PositionHandler::PositionHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {}
 
 void PositionHandler::processMessage(const mavlink_message_t& message)

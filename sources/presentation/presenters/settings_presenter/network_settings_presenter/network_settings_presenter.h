@@ -3,11 +3,6 @@
 
 #include "base_presenter.h"
 
-namespace domain
-{
-    class ProxyManager;
-}
-
 namespace presentation
 {
     class NetworkSettingsPresenter: public BasePresenter
@@ -15,8 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit NetworkSettingsPresenter(domain::ProxyManager* manager,
-                                          QObject* parent);
+        explicit NetworkSettingsPresenter(QObject* parent);
         ~NetworkSettingsPresenter() override;
 
     protected:
@@ -28,7 +22,7 @@ namespace presentation
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 

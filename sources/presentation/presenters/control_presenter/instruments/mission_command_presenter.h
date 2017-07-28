@@ -15,8 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        MissionCommandPresenter(domain::CommandService* service, int vehicleId,
-                                QObject* parent = nullptr);
+        MissionCommandPresenter(int vehicleId, QObject* parent = nullptr);
         ~MissionCommandPresenter() override;
 
     protected:

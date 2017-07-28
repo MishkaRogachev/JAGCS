@@ -19,10 +19,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        MissionHandler(domain::VehicleService* vehicleService,
-                       domain::TelemetryService* telemetryService,
-                       domain::MissionService* missionService,
-                       MavLinkCommunicator* communicator);
+        MissionHandler(MavLinkCommunicator* communicator);
 
     public slots:
        void processMessage(const mavlink_message_t& message) override;

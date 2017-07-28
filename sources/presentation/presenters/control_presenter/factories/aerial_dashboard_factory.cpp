@@ -3,7 +3,7 @@
 // Internal
 #include "vehicle.h"
 
-#include "domain_entry.h"
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
@@ -19,14 +19,14 @@
 
 using namespace presentation;
 
-AerialDashboardFactory::AerialDashboardFactory(domain::DomainEntry* entry,
-                                               const dao::VehiclePtr& vehicle):
-    GenericDashboardFactory(entry, vehicle)
+AerialDashboardFactory::AerialDashboardFactory(const dao::VehiclePtr& vehicle):
+    GenericDashboardFactory(vehicle)
 {}
 
 DashboardPresenter* AerialDashboardFactory::create()
 {
-    domain::Telemetry* node = m_entry->telemetryService()->vehicleNode(m_vehicle->id());
+    domain::Telemetry* node = domain::ServiceRegistry::telemetryService()->vehicleNode(
+                                  m_vehicle->id());
     if (!node) return nullptr;
 
     DashboardPresenter* dashboard = GenericDashboardFactory::create();

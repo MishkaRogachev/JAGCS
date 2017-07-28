@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VideoSplitPresenter(domain::VideoService* videoService, QObject* parent = nullptr);
+        VideoSplitPresenter(QObject* parent = nullptr);
 
     public slots:
         void updateSources();

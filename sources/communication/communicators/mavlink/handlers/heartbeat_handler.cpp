@@ -12,6 +12,8 @@
 // Internal
 #include "settings_provider.h"
 
+#include "service_registry.h"
+
 #include "vehicle_service.h"
 #include "vehicle.h"
 
@@ -85,14 +87,12 @@ public:
     int sendTimer;
 };
 
-HeartbeatHandler::HeartbeatHandler(VehicleService* vehicleService,
-                                   TelemetryService* telemetryService,
-                                   MavLinkCommunicator* communicator):
+HeartbeatHandler::HeartbeatHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
-    d->vehicleService = vehicleService;
-    d->telemetryService = telemetryService;
+    d->vehicleService = ServiceRegistry::vehicleService();
+    d->telemetryService = ServiceRegistry::telemetryService();
 
     d->sendTimer = this->startTimer(settings::Provider::value(
                                     settings::communication::heartbeat).toInt());
