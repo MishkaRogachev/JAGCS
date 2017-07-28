@@ -23,6 +23,8 @@ TranslationManager::TranslationManager():
     d(new Impl())
 {
     this->loadLocales();
+
+    d->locale = settings::Provider::value(settings::gui::locale).toString();
 }
 
 TranslationManager::~TranslationManager()
@@ -75,8 +77,7 @@ void TranslationManager::loadLocales()
     }
 }
 
-void TranslationManager::updateLocale()
+void TranslationManager::initLocales()
 {
-    d->locale = settings::Provider::value(settings::gui::locale).toString();
     qApp->installTranslator(d->localeTranslators.value(d->locale, nullptr));
 }

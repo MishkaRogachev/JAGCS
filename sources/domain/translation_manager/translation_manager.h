@@ -19,7 +19,7 @@ namespace domain
         void setCurrentLocale(const QString& locale);
 
         void loadLocales();
-        void updateLocale();
+        void initLocales();
 
     private:
         class Impl;

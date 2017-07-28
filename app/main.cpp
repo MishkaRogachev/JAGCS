@@ -23,7 +23,7 @@
 void init()
 {
     domain::TranslationManager translations;
-    translations.updateLocale();
+    translations.initLocales();
 
     domain::ProxyManager proxy;
     proxy.load();
