@@ -64,6 +64,11 @@ bool DbManager::drop()
     return m_migrator->drop();
 }
 
+void DbManager::clarify()
+{
+    m_migrator->clarifyVersion();
+}
+
 void DbManager::close()
 {
     m_migrator->reset();

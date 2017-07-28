@@ -21,6 +21,7 @@ DataBasePresenter::DataBasePresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
+    d->manager.clarify();
 
     connect(&d->manager, &db::DbManager::logChanged, this, &DataBasePresenter::updateLog);
 }

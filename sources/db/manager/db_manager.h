@@ -22,6 +22,7 @@ namespace db
         bool open(const QString& dbName);
         bool migrateLastVersion();
         bool drop();
+        void clarify();
         void close();
         void clearLog();
 
