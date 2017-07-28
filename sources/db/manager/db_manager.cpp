@@ -10,16 +10,15 @@
 
 namespace
 {
-    const QString connectionName = "defaultConnection";
+    const QString connectionType = "QSQLITE";
 }
 
 using namespace db;
 
 DbManager::DbManager(QObject* parent):
     QObject(parent),
-    m_db(QSqlDatabase::contains(::connectionName) ?
-             QSqlDatabase::database(::connectionName) :
-             QSqlDatabase::addDatabase(::connectionName))
+    m_db(QSqlDatabase::contains() ? QSqlDatabase::database() :
+                                    QSqlDatabase::addDatabase(::connectionType))
 {
     DbMigrationFactory factory;
     m_migrator = new DbMigrator(&factory, this);
@@ -28,9 +27,7 @@ DbManager::DbManager(QObject* parent):
 }
 
 DbManager::~DbManager()
-{
-    m_db.close();
-}
+{}
 
 bool DbManager::open(const QString& dbName)
 {
