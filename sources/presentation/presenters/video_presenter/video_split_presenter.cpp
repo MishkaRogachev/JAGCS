@@ -5,16 +5,17 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "service_registry.h"
+#include "video_service.h"
 #include "video_source.h"
 
 #include "video_presenter.h"
 
 using namespace presentation;
 
-VideoSplitPresenter::VideoSplitPresenter(db::DbFacade* dbFacade, QObject* parent):
+VideoSplitPresenter::VideoSplitPresenter(QObject* parent):
     BasePresenter(parent),
-    m_dbFacade(dbFacade),
+    m_videoService(domain::ServiceRegistry::videoService()),
     m_video(new VideoPresenter(this))
 {}
 
@@ -22,7 +23,7 @@ void VideoSplitPresenter::updateSources()
 {
     QStringList videoSources;
 
-    for (const db::VideoSourcePtr& videoSource: m_dbFacade->videoSources())
+    for (const dao::VideoSourcePtr& videoSource: m_videoService->videoSources())
     {
         videoSources.append(videoSource->source());
     }
@@ -41,5 +42,5 @@ void VideoSplitPresenter::connectView(QObject* view)
 
 void VideoSplitPresenter::onSelectVideoSource(int index)
 {
-    m_video->setVideo(m_dbFacade->videoSources().at(index));
+    m_video->setVideo(m_videoService->videoSources().at(index));
 }

@@ -3,24 +3,24 @@
 
 // Internal
 #include "i_link_factory.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
 namespace comm
 {
     class DescriptionLinkFactory: public ILinkFactory
     {
     public:
-        DescriptionLinkFactory(const db::LinkDescriptionPtr& description =
-                db::LinkDescriptionPtr());
+        DescriptionLinkFactory(const dao::LinkDescriptionPtr& description =
+                dao::LinkDescriptionPtr());
 
         AbstractLink* create() override;
         void update(AbstractLink* link) override;
 
-        db::LinkDescriptionPtr description() const;
-        void setDescription(const db::LinkDescriptionPtr& description);
+        dao::LinkDescriptionPtr description() const;
+        void setDescription(const dao::LinkDescriptionPtr& description);
 
     private:
-        db::LinkDescriptionPtr m_description;
+        dao::LinkDescriptionPtr m_description;
     };
 }
 

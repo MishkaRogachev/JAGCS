@@ -15,8 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        WindHandler(domain::TelemetryService* telemetryService,
-                    MavLinkCommunicator* communicator);
+        WindHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

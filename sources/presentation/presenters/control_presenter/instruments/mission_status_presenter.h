@@ -3,9 +3,9 @@
 
 #include "base_presenter.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class MissionService;
 }
 
 namespace presentation
@@ -15,8 +15,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        MissionStatusPresenter(db::DbFacade* facade, int vehicleId,
-                               QObject* parent = nullptr);
+        MissionStatusPresenter(int vehicleId, QObject* parent = nullptr);
         ~MissionStatusPresenter() override;
 
     public slots:

@@ -5,7 +5,8 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "service_registry.h"
+#include "mission_service.h"
 #include "mission_assignment.h"
 #include "mission.h"
 
@@ -14,17 +15,17 @@ using namespace presentation;
 class MissionStatusPresenter::Impl
 {
 public:
-    db::DbFacade* facade;
+    domain::MissionService* service;
 
     int vehicleId;
 };
 
-MissionStatusPresenter::MissionStatusPresenter(db::DbFacade* facade, int vehicleId,
+MissionStatusPresenter::MissionStatusPresenter(int vehicleId,
                                                QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->facade = facade;
+    d->service = domain::ServiceRegistry::missionService();
     d->vehicleId = vehicleId;
 }
 
@@ -34,10 +35,10 @@ MissionStatusPresenter::~MissionStatusPresenter()
 void MissionStatusPresenter::updateView()
 {
     QStringList waypoints;
-    db::MissionAssignmentPtr assignment = d->facade->vehicleAssignment(d->vehicleId);
+    dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
     if (assignment)
     {
-        db::MissionPtr mission = d->facade->mission(assignment->missionId());
+        dao::MissionPtr mission = d->service->mission(assignment->missionId());
 
         for (int i = 1; i < mission->count(); ++i)
         {

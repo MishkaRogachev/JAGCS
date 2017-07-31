@@ -3,11 +3,6 @@
 
 #include "base_presenter.h"
 
-namespace domain
-{
-    class DomainEntry;
-}
-
 namespace presentation
 {
     class StatusbarPresenter: public BasePresenter
@@ -15,7 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit StatusbarPresenter(domain::DomainEntry* entry, QObject* parent = nullptr);
+        explicit StatusbarPresenter(QObject* parent = nullptr);
         ~StatusbarPresenter() override;
 
     signals:

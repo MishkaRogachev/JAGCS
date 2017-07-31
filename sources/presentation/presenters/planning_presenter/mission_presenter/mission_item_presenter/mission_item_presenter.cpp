@@ -7,7 +7,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 
@@ -15,52 +15,52 @@ using namespace presentation;
 
 namespace
 {
-    const QMap<db::MissionItem::Command, QString> commands =
+    const QMap<dao::MissionItem::Command, QString> commands =
     {
-        { db::MissionItem::UnknownCommand, qApp->translate("MissionItemPresenter", "None") },
-        { db::MissionItem::Takeoff, qApp->translate("MissionItemPresenter", "Takeoff") },
-        { db::MissionItem::Waypoint, qApp->translate("MissionItemPresenter", "Waypoint") },
-        { db::MissionItem::LoiterAltitude, qApp->translate("MissionItemPresenter", "LoiterAltitude") },
-        { db::MissionItem::LoiterTurns, qApp->translate("MissionItemPresenter", "LoiterTurns") },
-        { db::MissionItem::Continue, qApp->translate("MissionItemPresenter", "Continue") },
-        { db::MissionItem::Return, qApp->translate("MissionItemPresenter", "Return") },
-        { db::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") }
+        { dao::MissionItem::UnknownCommand, qApp->translate("MissionItemPresenter", "None") },
+        { dao::MissionItem::Takeoff, qApp->translate("MissionItemPresenter", "Takeoff") },
+        { dao::MissionItem::Waypoint, qApp->translate("MissionItemPresenter", "Waypoint") },
+        { dao::MissionItem::LoiterAltitude, qApp->translate("MissionItemPresenter", "LoiterAltitude") },
+        { dao::MissionItem::LoiterTurns, qApp->translate("MissionItemPresenter", "LoiterTurns") },
+        { dao::MissionItem::Continue, qApp->translate("MissionItemPresenter", "Continue") },
+        { dao::MissionItem::Return, qApp->translate("MissionItemPresenter", "Return") },
+        { dao::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") }
     };
 }
 
 class MissionItemPresenter::Impl
 {
 public:
-    db::MissionPtr selectedMission;
-    db::MissionItemPtr item;
+    dao::MissionPtr selectedMission;
+    dao::MissionItemPtr item;
 
-    db::DbFacade* facade;
+    domain::MissionService* service;
 };
 
-MissionItemPresenter::MissionItemPresenter(db::DbFacade* dbFacade, QObject* object):
+MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->facade = dbFacade;
+    d->service = service;
 
-    connect(dbFacade, &db::DbFacade::missionItemAdded, this, &MissionItemPresenter::updateCount);
-    connect(dbFacade, &db::DbFacade::missionItemRemoved, this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemAdded, this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemRemoved, this, &MissionItemPresenter::updateCount);
 }
 
 MissionItemPresenter::~MissionItemPresenter()
 {
     if (d->selectedMission)
     {
-        d->facade->saveMissionItems(d->selectedMission->id());
+        d->service->saveMissionItems(d->selectedMission->id());
     }
 }
 
-db::MissionPtr MissionItemPresenter::selectedMission() const
+dao::MissionPtr MissionItemPresenter::selectedMission() const
 {
     return d->selectedMission;
 }
 
-void MissionItemPresenter::setMission(const db::MissionPtr& mission)
+void MissionItemPresenter::setMission(const dao::MissionPtr& mission)
 {
     if (d->selectedMission == mission) return;
 
@@ -68,7 +68,7 @@ void MissionItemPresenter::setMission(const db::MissionPtr& mission)
     this->updateCount(true);
 }
 
-void MissionItemPresenter::setMissionItem(const db::MissionItemPtr& item)
+void MissionItemPresenter::setMissionItem(const dao::MissionItemPtr& item)
 {
     if (d->item == item) return;
 
@@ -80,30 +80,30 @@ void MissionItemPresenter::remove()
 {
     if (d->item.isNull()) return;
 
-    d->facade->remove(d->item);
+    d->service->remove(d->item);
 }
 
 void MissionItemPresenter::selectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->item = d->facade->missionItem(d->selectedMission->id(), index);
+    d->item = d->service->missionItem(d->selectedMission->id(), index);
     this->updateView();
 }
 
 void MissionItemPresenter::save()
 {
-    d->item->setCommand(static_cast<db::MissionItem::Command>(
+    d->item->setCommand(static_cast<dao::MissionItem::Command>(
                             this->viewProperty(PROPERTY(command)).toInt()));
     d->item->setAltitude(this->viewProperty(PROPERTY(altitude)).toFloat());
-    d->item->setAltitudeRelative(this->viewProperty(PROPERTY(relative)).toBool());
+    d->item->setAltitudeRelative(this->viewProperty(PROPERTY(isAltitudeRelative)).toBool());
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
     d->item->setRadius(this->viewProperty(PROPERTY(radius)).toFloat());
     d->item->setPeriods(this->viewProperty(PROPERTY(periods)).toInt());
     d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
 
-    if (!d->facade->save(d->item)) return;
+    if (!d->service->save(d->item)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -125,7 +125,7 @@ void MissionItemPresenter::updateView()
     else
     {
         this->setViewProperty(PROPERTY(sequence), 0);
-        this->setViewProperty(PROPERTY(command), db::MissionItem::UnknownCommand);
+        this->setViewProperty(PROPERTY(command), dao::MissionItem::UnknownCommand);
     }
 
     this->setViewProperty(PROPERTY(changed), false);

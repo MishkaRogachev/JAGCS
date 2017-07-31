@@ -3,12 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
-
-namespace domain
-{
-    class DomainEntry;
-}
+#include "dao_traits.h"
 
 namespace presentation
 {
@@ -17,18 +12,17 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit CommunicationSettingsPresenter(domain::DomainEntry* entry,
-                                                QObject* parent = nullptr);
+        explicit CommunicationSettingsPresenter(QObject* parent = nullptr);
         ~CommunicationSettingsPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void onLinkAdded(const db::LinkDescriptionPtr& description);
-        void onLinkChanged(const db::LinkDescriptionPtr& description);
-        void onLinkStatisticsChanged(const db::LinkDescriptionPtr& description);
-        void onLinkRemoved(const db::LinkDescriptionPtr& description);
+        void onLinkAdded(const dao::LinkDescriptionPtr& description);
+        void onLinkChanged(const dao::LinkDescriptionPtr& description);
+        void onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description);
+        void onLinkRemoved(const dao::LinkDescriptionPtr& description);
         void updateCommunicationsLinks();
 
         void onAddUdpLink();

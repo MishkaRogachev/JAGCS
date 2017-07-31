@@ -1,8 +1,6 @@
 #include "settings_presenter.h"
 
 // Internal
-#include "domain_entry.h"
-
 #include "settings_provider.h"
 
 #include "data_base_presenter.h"
@@ -33,19 +31,18 @@ public:
     AboutPresenter* about;
 };
 
-SettingsPresenter::SettingsPresenter(domain::DomainEntry* entry,
-                                     QObject* parent):
+SettingsPresenter::SettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->dataBase = new DataBasePresenter(entry, this);
-    d->communications = new CommunicationSettingsPresenter(entry, this);
-    d->vehicles = new VehiclesPresenter(entry->dbFacade(), this);
-    d->video = new VideoSettingsPresenter(entry->dbFacade(), this);
+    d->dataBase = new DataBasePresenter(this);
+    d->communications = new CommunicationSettingsPresenter(this);
+    d->vehicles = new VehiclesPresenter(this);
+    d->video = new VideoSettingsPresenter(this);
 
     d->map = new MapSettingsPresenter(this);
 
-    d->network = new NetworkSettingsPresenter(entry->proxyManager(), this);
+    d->network = new NetworkSettingsPresenter(this);
     d->gui = new GuiSettingsPresenter(this);
     d->about = new AboutPresenter(this);
 }

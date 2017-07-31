@@ -9,13 +9,13 @@
 
 void registerQmlTypes()
 {
-    qmlRegisterUncreatableType<db::Vehicle>(
+    qmlRegisterUncreatableType<dao::Vehicle>(
                 "JAGCS", 1, 0, "Vehicle", "Can't create entities in QML");
-    qmlRegisterUncreatableType<db::LinkDescription>(
+    qmlRegisterUncreatableType<dao::LinkDescription>(
                 "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
-    qmlRegisterUncreatableType<db::MissionItem>(
+    qmlRegisterUncreatableType<dao::MissionItem>(
                 "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
-    qmlRegisterUncreatableType<db::VideoSource>(
+    qmlRegisterUncreatableType<dao::VideoSource>(
                 "JAGCS", 1, 0, "VideoSource", "Can't create entities in QML");
 }
 

@@ -1,7 +1,6 @@
 #include "mavlink_communicator_factory.h"
 
 // Internal
-#include "settings_provider.h"
 #include "mavlink_communicator.h"
 
 #include "ping_handler.h"
@@ -23,14 +22,8 @@
 
 using namespace comm;
 
-MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(db::DbFacade* dbFacade,
-        domain::TelemetryService* telemetryService,
-        domain::CommandService* commandService,
-        quint8 systemId, quint8 componentId):
+MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),
-    m_dbFacade(dbFacade),
-    m_telemetryService(telemetryService),
-    m_commandService(commandService),
     m_systemId(systemId),
     m_componentId(componentId)
 {}
@@ -40,21 +33,21 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
 
     new PingHandler(communicator);
-    new HeartbeatHandler(m_dbFacade, m_telemetryService, communicator);
-    new SystemStatusHandler(m_telemetryService, communicator);
-    new AttitudeHandler(m_telemetryService, communicator);
-    new PressureHandler(m_telemetryService, communicator);
-    new PositionHandler(m_telemetryService, communicator);
-    new HomePositionHandler(m_telemetryService, communicator);
-    new GpsHandler(m_telemetryService, communicator);
-    new VfrHudHandler(m_telemetryService, communicator);
-    new RangefinderHandler(m_telemetryService, communicator);
-    new WindHandler(m_telemetryService, communicator);
-    new BatteryHandler(m_telemetryService, communicator);
-    new RadioStatusHandler(m_telemetryService, communicator);
-    new NavControllerHandler(m_telemetryService, communicator);
-    new CommandHandler(m_dbFacade, m_commandService, communicator);
-    new MissionHandler(m_dbFacade, m_telemetryService, m_commandService, communicator);
+    new HeartbeatHandler(communicator);
+    new SystemStatusHandler(communicator);
+    new AttitudeHandler(communicator);
+    new PressureHandler(communicator);
+    new PositionHandler(communicator);
+    new HomePositionHandler(communicator);
+    new GpsHandler(communicator);
+    new VfrHudHandler(communicator);
+    new RangefinderHandler(communicator);
+    new WindHandler(communicator);
+    new BatteryHandler(communicator);
+    new RadioStatusHandler(communicator);
+    new NavControllerHandler(communicator);
+    new CommandHandler(communicator);
+    new MissionHandler(communicator);
 
     return communicator;
 }

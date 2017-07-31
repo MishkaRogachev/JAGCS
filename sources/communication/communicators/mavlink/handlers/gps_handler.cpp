@@ -11,16 +11,16 @@
 // Internal
 #include "mavlink_protocol_helpers.h"
 
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-GpsHandler::GpsHandler(TelemetryService* telemetryService,
-                       MavLinkCommunicator* communicator):
+GpsHandler::GpsHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {} // TODO: handle GPS_STATUS
 
 void GpsHandler::processMessage(const mavlink_message_t& message)

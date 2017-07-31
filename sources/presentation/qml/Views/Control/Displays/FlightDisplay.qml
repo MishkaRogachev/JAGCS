@@ -30,7 +30,7 @@ Item {
 
     property bool rangefinderEnabled: false
     property bool rangefinderOperational: false
-    property int rangefinderHeight: 0
+    property real rangefinderHeight: 0
 
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * 2.7
     property int maxSpeed: settings.value("Gui/fdSpeedStep") * 2.7
@@ -139,6 +139,7 @@ Item {
         anchors.right: parent.right
         prefix: qsTr("RF")
         value: rangefinderHeight
+        digits: 2
         enabled: rangefinderEnabled
         operational: rangefinderOperational
         width: altitudeLadder.width

@@ -8,11 +8,17 @@
 // Internal
 #include "db_migrator.h"
 
+namespace
+{
+    const QString connectionType = "QSQLITE";
+}
+
 using namespace db;
 
 DbManager::DbManager(QObject* parent):
     QObject(parent),
-    m_db(QSqlDatabase::addDatabase("QSQLITE"))
+    m_db(QSqlDatabase::contains() ? QSqlDatabase::database() :
+                                    QSqlDatabase::addDatabase(::connectionType))
 {
     DbMigrationFactory factory;
     m_migrator = new DbMigrator(&factory, this);
@@ -21,9 +27,7 @@ DbManager::DbManager(QObject* parent):
 }
 
 DbManager::~DbManager()
-{
-    m_db.close();
-}
+{}
 
 bool DbManager::open(const QString& dbName)
 {
@@ -58,6 +62,11 @@ bool DbManager::drop()
 {
     this->close();
     return m_migrator->drop();
+}
+
+void DbManager::clarify()
+{
+    m_migrator->clarifyVersion();
 }
 
 void DbManager::close()

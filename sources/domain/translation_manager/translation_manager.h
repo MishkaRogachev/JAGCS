@@ -10,19 +10,18 @@ namespace domain
     class TranslationManager
     {
     public:
+        TranslationManager();
         ~TranslationManager();
-        static TranslationManager* instance();
 
-        static QStringList avalibleLocales();
-        static QString currentLocale();
+        QStringList avalibleLocales();
+        QString currentLocale();
 
-        static void setCurrentLocale(const QString& locale);
+        void setCurrentLocale(const QString& locale);
 
-        static void init();
+        void loadLocales();
+        void initLocales();
 
     private:
-        TranslationManager();
-
         class Impl;
         QScopedPointer<Impl> const d;
     };

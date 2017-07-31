@@ -7,16 +7,16 @@
 #include <mavlink.h>
 
 // Internal
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-VfrHudHandler::VfrHudHandler(TelemetryService* telemetryService,
-                             MavLinkCommunicator* communicator):
+VfrHudHandler::VfrHudHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {}
 
 void VfrHudHandler::processMessage(const mavlink_message_t& message)

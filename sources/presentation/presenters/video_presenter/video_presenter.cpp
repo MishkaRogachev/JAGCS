@@ -16,7 +16,7 @@ using namespace presentation;
 class VideoPresenter::Impl
 {
 public:
-    db::VideoSourcePtr video;
+    dao::VideoSourcePtr video;
     VideoProvider provider;
     QMediaObject* media = nullptr;
 };
@@ -29,7 +29,7 @@ VideoPresenter::VideoPresenter(QObject* parent):
 VideoPresenter::~VideoPresenter()
 {}
 
-db::VideoSourcePtr VideoPresenter::video() const
+dao::VideoSourcePtr VideoPresenter::video() const
 {
     return d->video;
 }
@@ -45,7 +45,7 @@ void VideoPresenter::updateSource()
     if (!d->provider.videoSurface() || d->video.isNull()) return;
 
     switch (d->video->type()) { // TODO: media factory
-    case db::VideoSource::Device:
+    case dao::VideoSource::Device:
     {
         QCameraInfo info(d->video->source().toUtf8());
         if (!info.isNull())
@@ -57,7 +57,7 @@ void VideoPresenter::updateSource()
         }
         break;
     }
-    case db::VideoSource::Stream:
+    case dao::VideoSource::Stream:
     {
         QMediaPlayer* player = new QMediaPlayer(this);
         player->setMedia(QUrl(d->video->source()));
@@ -78,7 +78,7 @@ void VideoPresenter::updateSource()
     }
 }
 
-void VideoPresenter::setVideo(const db::VideoSourcePtr& video)
+void VideoPresenter::setVideo(const dao::VideoSourcePtr& video)
 {
     d->video = video;
 

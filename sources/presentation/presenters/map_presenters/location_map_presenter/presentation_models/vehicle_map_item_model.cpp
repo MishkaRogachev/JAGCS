@@ -7,7 +7,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "telemetry_service.h"
@@ -20,7 +20,7 @@ using namespace presentation;
 class VehicleMapItemModel::Impl
 {
 public:
-    db::DbFacade* dbFacade;
+    domain::VehicleService* vehicleService;
     domain::TelemetryService* telemetryService;
 
     QList<int> vehicleIds;
@@ -28,19 +28,21 @@ public:
     // TODO: Rammer-Duglas-Pecker polyline simplification, track from telemetry
 };
 
-VehicleMapItemModel::VehicleMapItemModel(db::DbFacade* dbFacade,
+VehicleMapItemModel::VehicleMapItemModel(domain::VehicleService* vehicleService,
                                          domain::TelemetryService* telemetryService,
                                          QObject* parent):
     QAbstractListModel(parent),
     d(new Impl())
 {
-    d->dbFacade = dbFacade;
+    d->vehicleService = vehicleService;
     d->telemetryService = telemetryService;
 
-    connect(dbFacade, &db::DbFacade::vehicleAdded, this, &VehicleMapItemModel::onVehicleAdded);
-    connect(dbFacade, &db::DbFacade::vehicleRemoved, this, &VehicleMapItemModel::onVehicleRemoved);
+    connect(vehicleService, &domain::VehicleService::vehicleAdded,
+            this, &VehicleMapItemModel::onVehicleAdded);
+    connect(vehicleService, &domain::VehicleService::vehicleRemoved,
+            this, &VehicleMapItemModel::onVehicleRemoved);
 
-    for (const db::VehiclePtr& vehicle: dbFacade->vehicles())
+    for (const dao::VehiclePtr& vehicle: vehicleService->vehicles())
     {
         this->onVehicleAdded(vehicle);
     }
@@ -64,7 +66,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     int vehicleId = d->vehicleIds.at(index.row());
 
     domain::Telemetry* node = d->telemetryService->vehicleNode(vehicleId);
-    db::VehiclePtr vehicle = d->dbFacade->vehicle(vehicleId);
+    dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
     if (!node || vehicle.isNull()) return QVariant();
 
     QVariant data;
@@ -105,7 +107,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     return data;
 }
 
-void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
+void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
 {
     int vehicleId = vehicle->id();
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
@@ -140,7 +142,7 @@ void VehicleMapItemModel::onVehicleAdded(const db::VehiclePtr& vehicle)
     this->endInsertRows();
 }
 
-void VehicleMapItemModel::onVehicleRemoved(const db::VehiclePtr& vehicle)
+void VehicleMapItemModel::onVehicleRemoved(const dao::VehiclePtr& vehicle)
 {
     int row = d->vehicleIds.indexOf(vehicle->id());
     if (row == -1) return;

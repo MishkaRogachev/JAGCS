@@ -3,11 +3,11 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class MissionService;
 }
 
 namespace presentation
@@ -17,11 +17,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VerticalProfilePresenter(db::DbFacade* dbFacade,
-                                          QObject* parent = nullptr);
+        explicit VerticalProfilePresenter(QObject* parent = nullptr);
 
     public slots:
-        void selectMission(const db::MissionPtr& mission);
+        void selectMission(const dao::MissionPtr& mission);
         void updateMission();
         void clearMission();
 
@@ -29,8 +28,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private:
-        db::DbFacade* m_dbFacade;
-        db::MissionPtr m_mission;
+        domain::MissionService* m_service;
+        dao::MissionPtr m_mission;
     };
 }
 

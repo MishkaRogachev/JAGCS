@@ -9,25 +9,21 @@
 // Internal
 #include "settings_provider.h"
 
-#include "db_facade.h"
-#include "link_description.h"\
-
 #include "communication_service.h"
+#include "link_description.h"
 
 using namespace presentation;
 
 CommunicationLinkPresenter::CommunicationLinkPresenter(
-        db::DbFacade* dbFacade,
         domain::CommunicationService* service,
-        const db::LinkDescriptionPtr& description,
+        const dao::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
-    m_dbFacade(dbFacade),
     m_service(service),
     m_description(description)
 {}
 
-db::LinkDescriptionPtr CommunicationLinkPresenter::description() const
+dao::LinkDescriptionPtr CommunicationLinkPresenter::description() const
 {
     return m_description;
 }
@@ -63,14 +59,14 @@ void CommunicationLinkPresenter::save()
     m_description->setDevice(this->viewProperty(PROPERTY(device)).toString());
     m_description->setBaudRate(this->viewProperty(PROPERTY(baudRate)).toInt());
 
-    if (!m_dbFacade->save(m_description)) return;
+    if (!m_service->save(m_description)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void CommunicationLinkPresenter::remove()
 {
-    m_dbFacade->remove(m_description);
+    m_service->remove(m_description);
 }
 
 void CommunicationLinkPresenter::connectView(QObject* view)

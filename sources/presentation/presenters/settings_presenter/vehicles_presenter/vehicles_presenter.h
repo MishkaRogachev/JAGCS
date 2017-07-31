@@ -3,11 +3,12 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
 
-namespace db
+#include "dao_traits.h"
+
+namespace domain
 {
-    class DbFacade;
+    class VehicleService;
 }
 
 namespace presentation
@@ -17,15 +18,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VehiclesPresenter(db::DbFacade* facade, QObject* parent = nullptr);
+        explicit VehiclesPresenter(QObject* parent = nullptr);
         ~VehiclesPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void onVehicleAdded(const db::VehiclePtr& vehicle);
-        void onVehicleRemoved(const db::VehiclePtr& vehicle);
+        void onVehicleAdded(const dao::VehiclePtr& vehicle);
+        void onVehicleRemoved(const dao::VehiclePtr& vehicle);
         void updateVehicles();
 
         void onAddVehicle();

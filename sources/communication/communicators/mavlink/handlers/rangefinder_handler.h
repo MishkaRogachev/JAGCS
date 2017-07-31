@@ -15,8 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        RangefinderHandler(domain::TelemetryService* telemetryService,
-                           MavLinkCommunicator* communicator);
+        RangefinderHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

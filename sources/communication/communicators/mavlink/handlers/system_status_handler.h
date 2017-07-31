@@ -15,8 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        SystemStatusHandler(domain::TelemetryService* telemetryService,
-                            MavLinkCommunicator* communicator);
+        SystemStatusHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

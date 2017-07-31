@@ -3,16 +3,6 @@
 
 #include "abstract_mavlink_handler.h"
 
-namespace db
-{
-    class DbFacade;
-}
-
-namespace domain
-{
-    class TelemetryService;
-}
-
 namespace comm
 {
     class HeartbeatHandler: public AbstractMavLinkHandler
@@ -20,8 +10,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        HeartbeatHandler(db::DbFacade* dbFacade, domain::TelemetryService* telemetryService,
-                         MavLinkCommunicator* communicator);
+        HeartbeatHandler(MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
     public slots:

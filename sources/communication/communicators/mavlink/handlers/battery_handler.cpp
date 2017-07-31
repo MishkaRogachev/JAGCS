@@ -9,16 +9,16 @@
 // Internal
 #include "mavlink_protocol_helpers.h"
 
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-BatteryHandler::BatteryHandler(TelemetryService* telemetryService,
-                               MavLinkCommunicator* communicator):
+BatteryHandler::BatteryHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {}
 
 void BatteryHandler::processMessage(const mavlink_message_t& message)

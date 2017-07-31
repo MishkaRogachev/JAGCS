@@ -3,12 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
-
-namespace db
-{
-    class DbFacade;
-}
+#include "dao_traits.h"
 
 namespace domain
 {
@@ -22,12 +17,11 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(db::DbFacade* dbFacade,
-                                   domain::CommunicationService* service,
-                                   const db::LinkDescriptionPtr& description,
+        CommunicationLinkPresenter(domain::CommunicationService* service,
+                                   const dao::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
-        db::LinkDescriptionPtr description() const;
+        dao::LinkDescriptionPtr description() const;
 
     public slots:
         void updateView();
@@ -40,9 +34,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private:
-        db::DbFacade* m_dbFacade;
         domain::CommunicationService* m_service;
-        db::LinkDescriptionPtr m_description;
+        dao::LinkDescriptionPtr m_description;
     };
 }
 

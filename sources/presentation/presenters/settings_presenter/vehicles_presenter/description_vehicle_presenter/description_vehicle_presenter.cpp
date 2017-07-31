@@ -5,44 +5,45 @@
 #include <QCoreApplication>
 
 // Internal
-#include "db_facade.h"
+#include "vehicle_service.h"
 #include "vehicle.h"
 
 namespace
 {
-    const QMap<db::Vehicle::Type, QString> types =
+    const QMap<dao::Vehicle::Type, QString> types =
     {
-        { db::Vehicle::UnknownType, qApp->translate("DescriptionVehiclePresenter", "Unknown") },
-        { db::Vehicle::Auto, qApp->translate("DescriptionVehiclePresenter", "Auto") },
-        { db::Vehicle::FixedWing, qApp->translate("DescriptionVehiclePresenter", "Fixed Wing") },
-        { db::Vehicle::FlyingWing, qApp->translate("DescriptionVehiclePresenter", "Flying Wing") },
-        { db::Vehicle::Quadcopter, qApp->translate("DescriptionVehiclePresenter", "Quadcopter") },
-        { db::Vehicle::Tricopter, qApp->translate("DescriptionVehiclePresenter", "Tricopter") },
-        { db::Vehicle::Hexcopter, qApp->translate("DescriptionVehiclePresenter", "Hexcopter") },
-        { db::Vehicle::Helicopter, qApp->translate("DescriptionVehiclePresenter", "Helicopter") },
-        { db::Vehicle::Coaxial, qApp->translate("DescriptionVehiclePresenter", "Coaxial") },
-        { db::Vehicle::Vtol, qApp->translate("DescriptionVehiclePresenter", "Vtol") },
-        { db::Vehicle::Airship, qApp->translate("DescriptionVehiclePresenter", "Airship") },
-        { db::Vehicle::Kite, qApp->translate("DescriptionVehiclePresenter", "Kite") },
-        { db::Vehicle::Ornithopter, qApp->translate("DescriptionVehiclePresenter", "Ornithopter") }
+        { dao::Vehicle::UnknownType, qApp->translate("DescriptionVehiclePresenter", "Unknown") },
+        { dao::Vehicle::Auto, qApp->translate("DescriptionVehiclePresenter", "Auto") },
+        { dao::Vehicle::FixedWing, qApp->translate("DescriptionVehiclePresenter", "Fixed Wing") },
+        { dao::Vehicle::FlyingWing, qApp->translate("DescriptionVehiclePresenter", "Flying Wing") },
+        { dao::Vehicle::Quadcopter, qApp->translate("DescriptionVehiclePresenter", "Quadcopter") },
+        { dao::Vehicle::Tricopter, qApp->translate("DescriptionVehiclePresenter", "Tricopter") },
+        { dao::Vehicle::Hexcopter, qApp->translate("DescriptionVehiclePresenter", "Hexcopter") },
+        { dao::Vehicle::Helicopter, qApp->translate("DescriptionVehiclePresenter", "Helicopter") },
+        { dao::Vehicle::Coaxial, qApp->translate("DescriptionVehiclePresenter", "Coaxial") },
+        { dao::Vehicle::Vtol, qApp->translate("DescriptionVehiclePresenter", "Vtol") },
+        { dao::Vehicle::Airship, qApp->translate("DescriptionVehiclePresenter", "Airship") },
+        { dao::Vehicle::Kite, qApp->translate("DescriptionVehiclePresenter", "Kite") },
+        { dao::Vehicle::Ornithopter, qApp->translate("DescriptionVehiclePresenter", "Ornithopter") }
     };
 }
 
 using namespace presentation;
 
-DescriptionVehiclePresenter::DescriptionVehiclePresenter(
-        db::DbFacade* facade, const db::VehiclePtr& vehicle, QObject* parent):
+DescriptionVehiclePresenter::DescriptionVehiclePresenter(domain::VehicleService* service,
+                                                         const dao::VehiclePtr& vehicle,
+                                                         QObject* parent):
     BasePresenter(parent),
-    m_facade(facade),
+    m_service(service),
     m_vehicle(vehicle)
 {
-    connect(m_facade, &db::DbFacade::vehicleChanged, this, [this]
-            (const db::VehiclePtr& vehicle) {
+    connect(m_service, &domain::VehicleService::vehicleChanged, this, [this]
+            (const dao::VehiclePtr& vehicle) {
         if (vehicle == m_vehicle) this->updateStatus();
     });
 }
 
-db::VehiclePtr DescriptionVehiclePresenter::vehicle() const
+dao::VehiclePtr DescriptionVehiclePresenter::vehicle() const
 {
     return m_vehicle;
 }
@@ -67,14 +68,14 @@ void DescriptionVehiclePresenter::save()
     m_vehicle->setMavId(this->viewProperty(PROPERTY(mavId)).toInt());
     m_vehicle->setType(::types.keys().at(this->viewProperty(PROPERTY(type)).toInt()));
 
-    if (!m_facade->save(m_vehicle)) return;
+    if (!m_service->save(m_vehicle)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void DescriptionVehiclePresenter::remove()
 {
-    m_facade->remove(m_vehicle);
+    m_service->remove(m_vehicle);
 }
 
 void DescriptionVehiclePresenter::connectView(QObject* view)

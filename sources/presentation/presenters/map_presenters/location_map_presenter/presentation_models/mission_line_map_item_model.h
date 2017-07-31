@@ -5,11 +5,11 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "db_traits.h"
+#include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class MissionService;
 }
 
 namespace presentation
@@ -24,24 +24,25 @@ namespace presentation
             MissionPathRole = Qt::UserRole + 1,
         };
 
-        explicit MissionLineMapItemModel(db::DbFacade* dbFacade, QObject* parent = nullptr);
+        explicit MissionLineMapItemModel(domain::MissionService* service,
+                                         QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void onMissionAdded(const db::MissionPtr& mission);
-        void onMissionRemoved(const db::MissionPtr& mission);
-        void onMissionItemChanged(const db::MissionItemPtr& item);
+        void onMissionAdded(const dao::MissionPtr& mission);
+        void onMissionRemoved(const dao::MissionPtr& mission);
+        void onMissionItemChanged(const dao::MissionItemPtr& item);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
-        QModelIndex missionIndex(const db::MissionPtr& mission) const;
+        QModelIndex missionIndex(const dao::MissionPtr& mission) const;
 
     private:
-        db::DbFacade* m_dbFacade;
-        db::MissionPtrList m_missions;
+        domain::MissionService* m_service;
+        dao::MissionPtrList m_missions;
     };
 }
 

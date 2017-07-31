@@ -7,27 +7,23 @@
 // Internal
 #include "settings_provider.h"
 
-#include "domain_entry.h"
 #include "db_manager.h"
-#include "db_facade.h"
 
 using namespace presentation;
 
 class DataBasePresenter::Impl
 {
 public:
-    db::DbManager* manager;
-    db::DbFacade* facade;
+    db::DbManager manager;
 };
 
-DataBasePresenter::DataBasePresenter(domain::DomainEntry* entry, QObject* parent):
+DataBasePresenter::DataBasePresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->manager = entry->dbManager();
-    d->facade = entry->dbFacade();
+    d->manager.clarify();
 
-    connect(d->manager, &db::DbManager::logChanged, this, &DataBasePresenter::updateLog);
+    connect(&d->manager, &db::DbManager::logChanged, this, &DataBasePresenter::updateLog);
 }
 
 DataBasePresenter::~DataBasePresenter()
@@ -43,18 +39,18 @@ void DataBasePresenter::updateView()
 
 void DataBasePresenter::updateConnected()
 {
-    this->setViewProperty(PROPERTY(migration), d->manager->migrationVersion());
-    this->setViewProperty(PROPERTY(connected), d->manager->isOpen());
+    this->setViewProperty(PROPERTY(migration), d->manager.migrationVersion());
+    this->setViewProperty(PROPERTY(connected), d->manager.isOpen());
 }
 
 void DataBasePresenter::updateLog()
 {
-    this->setViewProperty(PROPERTY(log), d->manager->dbLog());
+    this->setViewProperty(PROPERTY(log), d->manager.dbLog());
 }
 
 void DataBasePresenter::clearLog()
 {
-    d->manager->clearLog();
+    d->manager.clearLog();
 }
 
 void DataBasePresenter::save()
@@ -72,19 +68,19 @@ void DataBasePresenter::save()
 
 void DataBasePresenter::migrate()
 {
-    d->manager->migrateLastVersion();
+    d->manager.migrateLastVersion();
 
     this->updateConnected();
 }
 
 void DataBasePresenter::tryConnect()
 {
-    if (d->manager->isOpen())
+    if (d->manager.isOpen())
     {
-        d->facade->clearAll();
-        d->manager->close();
+        // FIXME: clear DB cache
+        d->manager.close();
     }
-    d->manager->open(settings::Provider::value(settings::data_base::name).toString());
+    d->manager.open(settings::Provider::value(settings::data_base::name).toString());
 
     this->updateConnected();
 }

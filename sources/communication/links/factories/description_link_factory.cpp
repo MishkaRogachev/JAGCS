@@ -6,7 +6,7 @@
 #include "udp_link.h"
 #include "serial_link.h"
 
-using namespace db;
+using namespace dao;
 using namespace comm;
 
 DescriptionLinkFactory::DescriptionLinkFactory(

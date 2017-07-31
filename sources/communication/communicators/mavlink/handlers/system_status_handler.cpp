@@ -10,16 +10,16 @@
 // Internal
 #include "mavlink_protocol_helpers.h"
 
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
 using namespace comm;
 using namespace domain;
 
-SystemStatusHandler::SystemStatusHandler(TelemetryService* telemetryService,
-                                         MavLinkCommunicator* communicator):
+SystemStatusHandler::SystemStatusHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(telemetryService)
+    m_telemetryService(ServiceRegistry::telemetryService())
 {}
 
 void SystemStatusHandler::processMessage(const mavlink_message_t& message)

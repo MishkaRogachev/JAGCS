@@ -3,18 +3,13 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
-#include "db_traits.h"
-
-namespace db
-{
-    class DbFacade;
-}
+#include "dao_traits.h"
 
 namespace domain
 {
-    class VehicleService;
     class TelemetryService;
-    class CommandService;
+    class VehicleService;
+    class MissionService;
 }
 
 namespace comm
@@ -24,16 +19,13 @@ namespace comm
         Q_OBJECT
 
     public:
-        MissionHandler(db::DbFacade* dbFacade,
-                       domain::TelemetryService* telemetryService,
-                       domain::CommandService* commandService,
-                       MavLinkCommunicator* communicator);
+        MissionHandler(MavLinkCommunicator* communicator);
 
     public slots:
        void processMessage(const mavlink_message_t& message) override;
 
-       void download(const db::MissionAssignmentPtr& assignment);
-       void upload(const db::MissionAssignmentPtr& assignment);
+       void download(const dao::MissionAssignmentPtr& assignment);
+       void upload(const dao::MissionAssignmentPtr& assignment);
 
        void requestMissionItem(uint8_t mavId, uint16_t seq);
 
@@ -49,8 +41,9 @@ namespace comm
         void processMissionReached(const mavlink_message_t& message);
 
    private:
-       db::DbFacade* m_dbFacade;
+       domain::VehicleService* m_vehicleService;
        domain::TelemetryService* m_telemetryService;
+       domain::MissionService* m_missionService;
     };
 }
 

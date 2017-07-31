@@ -3,11 +3,11 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class VehicleService;
 }
 
 namespace presentation
@@ -17,10 +17,11 @@ namespace presentation
         Q_OBJECT
 
     public:
-        DescriptionVehiclePresenter(db::DbFacade* facade, const db::VehiclePtr& vehicle,
+        DescriptionVehiclePresenter(domain::VehicleService* service,
+                                    const dao::VehiclePtr& vehicle,
                                     QObject* parent = nullptr);
 
-        db::VehiclePtr vehicle() const;
+        dao::VehiclePtr vehicle() const;
 
     public slots:
         void updateView();
@@ -32,8 +33,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private:
-        db::DbFacade* const m_facade;
-        db::VehiclePtr m_vehicle;
+        domain::VehicleService* const m_service;
+        dao::VehiclePtr m_vehicle;
     };
 }
 

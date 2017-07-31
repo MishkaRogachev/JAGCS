@@ -4,6 +4,7 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "command_service.h"
 #include "command.h"
 
@@ -17,13 +18,11 @@ public:
     int vehicleId;
 };
 
-CommonCommandPresenter::CommonCommandPresenter(domain::CommandService* service,
-                                               int vehicleId,
-                                               QObject* parent):
+CommonCommandPresenter::CommonCommandPresenter(int vehicleId, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = service;
+    d->service = domain::ServiceRegistry::commandService();
     d->vehicleId = vehicleId;
 }
 

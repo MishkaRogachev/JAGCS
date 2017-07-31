@@ -3,11 +3,6 @@
 
 #include "base_presenter.h"
 
-namespace domain
-{
-    class DomainEntry;
-}
-
 namespace presentation
 {
     class SettingsPresenter: public BasePresenter
@@ -15,7 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        SettingsPresenter(domain::DomainEntry* entry, QObject* parent);
+        explicit SettingsPresenter(QObject* parent = nullptr);
         ~SettingsPresenter() override;
 
     public slots:

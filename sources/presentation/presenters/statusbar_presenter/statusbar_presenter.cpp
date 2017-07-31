@@ -4,7 +4,7 @@
 #include <QGuiApplication>
 
 // Internal
-#include "domain_entry.h"
+#include "service_registry.h"
 #include "telemetry_service.h"
 
 #include "radio_presenter.h"
@@ -17,11 +17,12 @@ public:
     RadioPresenter* radio;
 };
 
-StatusbarPresenter::StatusbarPresenter(domain::DomainEntry* entry, QObject* parent):
+StatusbarPresenter::StatusbarPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->radio = new RadioPresenter(entry->telemetryService()->radioNode(), this);
+    d->radio = new RadioPresenter(domain::ServiceRegistry::telemetryService()->radioNode(),
+                                  this);
 }
 
 StatusbarPresenter::~StatusbarPresenter()

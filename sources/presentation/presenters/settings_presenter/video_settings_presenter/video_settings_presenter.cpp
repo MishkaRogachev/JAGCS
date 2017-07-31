@@ -5,7 +5,8 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "service_registry.h"
+#include "video_service.h"
 #include "video_source.h"
 
 #include "video_source_presenter.h"
@@ -15,25 +16,25 @@ using namespace presentation;
 class VideoSettingsPresenter::Impl
 {
 public:
-    db::DbFacade* facade;
+    domain::VideoService* service;
 
     QList<VideoSourcePresenter*> videoPresenters;
 };
 
-VideoSettingsPresenter::VideoSettingsPresenter(db::DbFacade* facade, QObject* parent):
+VideoSettingsPresenter::VideoSettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->facade = facade;
+    d->service = domain::ServiceRegistry::videoService();
 
-    connect(d->facade, &db::DbFacade::videoSourceAdded,
+    connect(d->service, &domain::VideoService::videoSourceAdded,
             this, &VideoSettingsPresenter::onVideoSourceAdded);
-    connect(d->facade, &db::DbFacade::videoSourceRemoved,
+    connect(d->service, &domain::VideoService::videoSourceRemoved,
             this, &VideoSettingsPresenter::onVideoSourceRemoved);
 
-    for (const db::VideoSourcePtr& video: facade->videoSources())
+    for (const dao::VideoSourcePtr& video: d->service->videoSources())
     {
-        d->videoPresenters.append(new VideoSourcePresenter(facade, video, this));
+        d->videoPresenters.append(new VideoSourcePresenter(d->service, video, this));
     }
 }
 
@@ -51,13 +52,13 @@ void VideoSettingsPresenter::connectView(QObject* view)
     this->updateVideoSources();
 }
 
-void VideoSettingsPresenter::onVideoSourceAdded(const db::VideoSourcePtr& video)
+void VideoSettingsPresenter::onVideoSourceAdded(const dao::VideoSourcePtr& video)
 {
-    d->videoPresenters.append(new VideoSourcePresenter(d->facade, video, this));
+    d->videoPresenters.append(new VideoSourcePresenter(d->service, video, this));
     this->updateVideoSources();
 }
 
-void VideoSettingsPresenter::onVideoSourceRemoved(const db::VideoSourcePtr& video)
+void VideoSettingsPresenter::onVideoSourceRemoved(const dao::VideoSourcePtr& video)
 {
     for (VideoSourcePresenter* videoPresenter: d->videoPresenters)
     {
@@ -96,15 +97,15 @@ void VideoSettingsPresenter::updateCameraInfo()
 
 void VideoSettingsPresenter::onAddDeviceVideo()
 {
-    db::VideoSourcePtr video = db::VideoSourcePtr::create();
-    video->setType(db::VideoSource::Device);
-    d->facade->save(video);
+    dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
+    video->setType(dao::VideoSource::Device);
+    d->service->save(video);
 }
 
 void VideoSettingsPresenter::onAddStreamVideo()
 {
-    db::VideoSourcePtr video = db::VideoSourcePtr::create();
-    video->setType(db::VideoSource::Stream);
-    d->facade->save(video);
+    dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
+    video->setType(dao::VideoSource::Stream);
+    d->service->save(video);
 }
 

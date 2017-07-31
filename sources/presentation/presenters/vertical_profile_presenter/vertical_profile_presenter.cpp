@@ -6,33 +6,34 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "service_registry.h"
+#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 
 using namespace presentation;
 
-VerticalProfilePresenter::VerticalProfilePresenter(db::DbFacade* dbFacade, QObject* parent):
+VerticalProfilePresenter::VerticalProfilePresenter(QObject* parent):
     BasePresenter(parent),
-    m_dbFacade(dbFacade)
+    m_service(domain::ServiceRegistry::missionService())
 {
-    connect(m_dbFacade, &db::DbFacade::missionItemAdded, this, [this]
-            (const db::MissionItemPtr& missionItem){
+    connect(m_service, &domain::MissionService::missionItemAdded, this, [this]
+            (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &db::DbFacade::missionItemRemoved, this, [this]
-            (const db::MissionItemPtr& missionItem){
+    connect(m_service, &domain::MissionService::missionItemRemoved, this, [this]
+            (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
-    connect(m_dbFacade, &db::DbFacade::missionItemChanged, this, [this]
-            (const db::MissionItemPtr& missionItem){
+    connect(m_service, &domain::MissionService::missionItemChanged, this, [this]
+            (const dao::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 }
 
-void VerticalProfilePresenter::selectMission(const db::MissionPtr& mission)
+void VerticalProfilePresenter::selectMission(const dao::MissionPtr& mission)
 {
     if (m_mission == mission) return;
 
@@ -47,10 +48,12 @@ void VerticalProfilePresenter::updateMission()
     if (m_mission.isNull()) return;
     QGeoCoordinate lastCoordinate;
     int distance = 0;
-    for (const db::MissionItemPtr& item: m_dbFacade->missionItems(m_mission->id()))
+    for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
         // TODO: another commands
-        if (item->command() == db::MissionItem::Waypoint)
+        if (item->command() == dao::MissionItem::Takeoff ||
+            item->command() == dao::MissionItem::Waypoint ||
+            item->command() == dao::MissionItem::Landing)
         {
             QGeoCoordinate coordinate(item->latitude(), item->longitude());
             if (lastCoordinate.isValid() && coordinate.isValid())
@@ -60,7 +63,7 @@ void VerticalProfilePresenter::updateMission()
             lastCoordinate = coordinate;
         }
 
-        // FIXME: relative altitude
+        // TODO: relative altitude
         this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
     }
 }

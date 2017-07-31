@@ -3,12 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
-
-namespace domain
-{
-    class DomainEntry;
-}
+#include "dao_traits.h"
 
 namespace presentation
 {
@@ -17,7 +12,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit ControlPresenter(domain::DomainEntry* entry, QObject* parent = nullptr);
+        explicit ControlPresenter(QObject* parent = nullptr);
         ~ControlPresenter() override;
 
     public slots:

@@ -5,23 +5,23 @@
 #include <QDebug>
 
 // Internal
-#include "db_facade.h"
+#include "video_service.h"
 #include "video_source.h"
 
 #include "video_presenter.h"
 
 using namespace presentation;
 
-VideoSourcePresenter::VideoSourcePresenter(db::DbFacade* facade,
-                                           const db::VideoSourcePtr& video,
+VideoSourcePresenter::VideoSourcePresenter(domain::VideoService* service,
+                                           const dao::VideoSourcePtr& video,
                                            QObject* parent):
     BasePresenter(parent),
-    m_facade(facade),
+    m_service(service),
     m_video(video),
     m_preview(nullptr)
 {}
 
-db::VideoSourcePtr VideoSourcePresenter::video() const
+dao::VideoSourcePtr VideoSourcePresenter::video() const
 {
     return m_video;
 }
@@ -39,7 +39,7 @@ void VideoSourcePresenter::save()
 {
     m_video->setSource(this->viewProperty(PROPERTY(source)).toString());
 
-    if (!m_facade->save(m_video)) return;
+    if (!m_service->save(m_video)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
     if (m_preview) m_preview->updateSource();
@@ -47,7 +47,7 @@ void VideoSourcePresenter::save()
 
 void VideoSourcePresenter::remove()
 {
-    m_facade->remove(m_video);
+    m_service->remove(m_video);
 }
 
 void VideoSourcePresenter::connectView(QObject* view)

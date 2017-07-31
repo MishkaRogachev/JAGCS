@@ -1,7 +1,7 @@
 #include "generic_dashboard_factory.h"
 
 // Internal
-#include "domain_entry.h"
+#include "service_registry.h"
 #include "telemetry_service.h"
 #include "telemetry.h"
 
@@ -22,16 +22,15 @@
 
 using namespace presentation;
 
-GenericDashboardFactory::GenericDashboardFactory(domain::DomainEntry* entry,
-                                                 const db::VehiclePtr& vehicle):
+GenericDashboardFactory::GenericDashboardFactory(const dao::VehiclePtr& vehicle):
     IDashboardFactory(),
-    m_entry(entry),
     m_vehicle(vehicle)
 {}
 
 DashboardPresenter* GenericDashboardFactory::create()
 {
-    domain::Telemetry* node = m_entry->telemetryService()->vehicleNode(m_vehicle->id());
+    domain::Telemetry* node = domain::ServiceRegistry::telemetryService()->vehicleNode(
+                                  m_vehicle->id());
     if (!node) return nullptr;
 
     DashboardPresenter* dashboard = new DashboardPresenter();
@@ -59,17 +58,17 @@ DashboardPresenter* GenericDashboardFactory::create()
     dashboard->addInstrumentPresenter("status", new StatusPresenter(
                                  node->childNode(domain::Telemetry::Status), dashboard));
     dashboard->addInstrumentPresenter("status", new BatteryPresenter(
-                                 node->childNode(domain::Telemetry::Battery), dashboard));
+                                          node->childNode(domain::Telemetry::Battery), dashboard));
     dashboard->addInstrumentPresenter("status", new CommonCommandPresenter(
-                                 m_entry->commandService(), m_vehicle->id(), dashboard));
+                                          m_vehicle->id(), dashboard));
 
     dashboard->addInstrument("mission", 500);
     dashboard->addInstrumentPresenter("mission", new NavigatorPresenter(
-                                 node->childNode(domain::Telemetry::Navigator), dashboard));
+                                          node->childNode(domain::Telemetry::Navigator), dashboard));
     dashboard->addInstrumentPresenter("mission", new MissionCommandPresenter(
-                                 m_entry->commandService(), m_vehicle->id(), dashboard));
+                                          m_vehicle->id(), dashboard));
     dashboard->addInstrumentPresenter("mission", new MissionStatusPresenter(
-                                 m_entry->dbFacade(), m_vehicle->id(), dashboard));
+                                          m_vehicle->id(), dashboard));
 
     return dashboard;
 }

@@ -5,11 +5,6 @@
 #include "base_presenter.h"
 #include "telemetry.h"
 
-namespace domain
-{
-    class DomainEntry;
-}
-
 namespace presentation
 {
     class RadioPresenter: public BasePresenter

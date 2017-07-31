@@ -3,11 +3,11 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_traits.h"
+#include "dao_traits.h"
 
-namespace db
+namespace domain
 {
-    class DbFacade;
+    class VideoService;
 }
 
 namespace presentation
@@ -17,15 +17,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoSettingsPresenter(db::DbFacade* facade, QObject* parent);
+        explicit VideoSettingsPresenter(QObject* parent);
         ~VideoSettingsPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
 
     private slots:
-        void onVideoSourceAdded(const db::VideoSourcePtr& video);
-        void onVideoSourceRemoved(const db::VideoSourcePtr& video);
+        void onVideoSourceAdded(const dao::VideoSourcePtr& video);
+        void onVideoSourceRemoved(const dao::VideoSourcePtr& video);
         void updateVideoSources();
 
         void updateCameraInfo();
