@@ -190,15 +190,9 @@ void MissionService::addNewMissionItem(int missionId)
         item->setCommand(MissionItem::Waypoint);
 
         MissionItemPtr lastItem = this->missionItem(missionId, mission->count());
-        if (lastItem->isAltitudeRelative())
-        {
-            item->setAltitude(0);
-            item->setAltitudeRelative(true);
-        }
-        else
-        {
-            item->setAltitude(lastItem->altitude());
-        }
+
+        item->setAltitudeRelative(lastItem->isAltitudeRelative());
+        item->setAltitude(lastItem->altitude());
         item->setRadius(0);
     }
     else
