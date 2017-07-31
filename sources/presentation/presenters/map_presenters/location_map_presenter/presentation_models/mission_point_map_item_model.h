@@ -26,7 +26,8 @@ namespace presentation
             ItemIconRole,
             ItemAcceptanceRadius,
             ItemRadius,
-            ItemReached
+            ItemReached,
+            ItemCurrent
         };
 
         explicit MissionPointMapItemModel(domain::MissionService* service,

@@ -127,3 +127,13 @@ void MissionItem::setReached(bool reached)
 {
     m_reached = reached;
 }
+
+bool MissionItem::isCurrent() const
+{
+    return m_current;
+}
+
+void MissionItem::setCurrent(bool current)
+{
+    m_current = current;
+}

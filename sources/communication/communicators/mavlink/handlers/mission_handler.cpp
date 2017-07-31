@@ -83,7 +83,8 @@ MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
 {
-    switch (message.msgid) {
+    switch (message.msgid)
+    {
     case MAVLINK_MSG_ID_MISSION_COUNT:
         this->processMissionCount(message);
         break;
@@ -390,6 +391,16 @@ void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
     if (!node) return;
 
     node->setParameter({ Telemetry::Navigator, Telemetry::CurrentWaypoint }, current.seq);
+    node->notify();
+
+
+    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
+    if (assignment.isNull()) return;
+
+    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), current.seq);
+    if (item) item->setCurrent(true);
+    emit m_missionService->missionItemChanged(item);
 }
 
 void MissionHandler::processMissionReached(const mavlink_message_t& message)

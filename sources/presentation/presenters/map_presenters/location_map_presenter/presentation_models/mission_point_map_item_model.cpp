@@ -10,8 +10,7 @@
 
 using namespace presentation;
 
-MissionPointMapItemModel::MissionPointMapItemModel(domain::MissionService* service,
-                                                   QObject* parent):
+MissionPointMapItemModel::MissionPointMapItemModel(domain::MissionService* service, QObject* parent):
     QAbstractListModel(parent),
     m_service(service)
 {
@@ -79,6 +78,9 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
     case ItemReached:
         return item->isReached();
+    case ItemCurrent: {
+        return item->isCurrent();
+    }
     default:
         return QVariant();
     }
@@ -123,6 +125,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
     roles[ItemReached] = "itemReached";
+    roles[ItemCurrent] = "itemCurrent";
 
     return roles;
 }
