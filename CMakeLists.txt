@@ -54,7 +54,6 @@ find_package(Qt5 COMPONENTS
     Location
     Charts
     QuickControls2
-    Gamepad
 REQUIRED)
 
 set(LIBRARIES
