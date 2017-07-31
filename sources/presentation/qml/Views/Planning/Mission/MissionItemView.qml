@@ -36,7 +36,7 @@ ColumnLayout {
     property bool pitchVisible: command === MissionItem.Takeoff
     property bool periodsVisible: command === MissionItem.LoiterTurns
 
-    property alias picking: pickButton.checked
+    property alias picking: pickButton.picking
 
     signal save()
     signal restore()

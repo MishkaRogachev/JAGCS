@@ -6,19 +6,22 @@ import "./"
 Button {
     id: root
 
-    signal picked(var coordinate)
+    property alias picking: root.checked
 
-    function pick() { checked = true; }
+    signal picked(var coordinate)
 
     iconSource: "qrc:/icons/map-marker.svg"
     checkable: true
+    onPickingChanged: map.picking = picking
 
     Connections {
         target: map
         onPicked: {
             if (!root.checked) return;
+
             root.checked = false;
-            picked(coordinate)
+            map.picking = false;
+            picked(coordinate);
         }
     }
 }

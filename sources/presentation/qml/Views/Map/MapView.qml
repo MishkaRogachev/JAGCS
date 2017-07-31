@@ -18,6 +18,8 @@ Map {
     property bool hdopVisible: true
     property bool homeVisible: true
 
+    property bool picking: false
+
     property var mouseCoordinate: QtPositioning.coordinate()
 
     signal picked(var coordinate)
@@ -107,6 +109,7 @@ Map {
         onExited: mouseCoordinate = QtPositioning.coordinate()
         onPositionChanged: mouseCoordinate = root.toCoordinate(Qt.point(mouseX, mouseY))
         onClicked: root.picked(mouseCoordinate)
+        cursorShape: picking ? Qt.CrossCursor : Qt.ArrowCursor
     }
 
     Component.onCompleted: {
