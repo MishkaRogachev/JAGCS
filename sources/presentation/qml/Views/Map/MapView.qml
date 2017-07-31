@@ -94,6 +94,20 @@ Map {
         model: hdopVisible ? vehicleModel : 0
     }
 
+    MapQuickItem {
+        id: pickHighlight
+        anchorPoint.x: sourceItem.width / 2
+        anchorPoint.y: sourceItem.height / 2
+        z: 10
+
+        sourceItem: Rectangle {
+            width: palette.controlBaseSize / 4
+            height: width
+            radius: width / 2
+            color: palette.activeMissionColor
+        }
+    }
+
 //    MapStatusBar {
 //        id: bar
 //        anchors.bottom: parent.bottom
@@ -108,7 +122,11 @@ Map {
         hoverEnabled: true
         onExited: mouseCoordinate = QtPositioning.coordinate()
         onPositionChanged: mouseCoordinate = root.toCoordinate(Qt.point(mouseX, mouseY))
-        onClicked: root.picked(mouseCoordinate)
+        onClicked: {
+            pickHighlight.coordinate = mouseCoordinate;
+            pickHighlight.visible = true;
+            root.picked(mouseCoordinate);
+        }
         cursorShape: picking ? Qt.CrossCursor : Qt.ArrowCursor
     }
 
@@ -136,5 +154,9 @@ Map {
                      MapGestureArea.PanGesture |
                      MapGestureArea.FlickGesture) :
                     MapGestureArea.PinchGesture
+    }
+
+    function dropHighlight() {
+        pickHighlight.visible = false;
     }
 }

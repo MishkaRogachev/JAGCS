@@ -43,6 +43,8 @@ ColumnLayout {
     signal remove()
     signal selectItem(int sequence)
 
+    onChangedChanged: if (!changed) map.dropHighlight()
+
     GridLayout {
         columns: 3
 
