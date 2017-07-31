@@ -392,9 +392,14 @@ void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
     mavlink_msg_mission_current_decode(&message, &current);
 
 
-    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), current.seq);
-    if (item) item->setCurrent(true);
-    emit m_missionService->missionItemChanged(item);
+    for (const dao::MissionItemPtr& item: m_missionService->missionItems(assignment->missionId()))
+    {
+        if (item->isCurrent() != (item->sequence() == current.seq))
+        {
+            item->setCurrent(item->sequence() == current.seq);
+            m_missionService->missionItemChanged(item);
+        }
+    }
 }
 
 void MissionHandler::processMissionReached(const mavlink_message_t& message)
@@ -407,6 +412,9 @@ void MissionHandler::processMissionReached(const mavlink_message_t& message)
     mavlink_msg_mission_item_reached_decode(&message, &reached);
 
     dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), reached.seq);
-    if (item) item->setReached(true);
-    emit m_missionService->missionItemChanged(item);
+    if (item)
+    {
+        item->setReached(true);
+        emit m_missionService->missionItemChanged(item);
+    }
 }
