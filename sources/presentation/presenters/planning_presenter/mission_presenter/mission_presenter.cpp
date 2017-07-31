@@ -229,6 +229,7 @@ void MissionPresenter::onAddItem()
 
     d->missionService->addNewMissionItem(d->selectedMission->id());
     d->item->selectItem(d->selectedMission->count());
+    d->item->setPicking(true);
 }
 
 void MissionPresenter::onRemoveMission()

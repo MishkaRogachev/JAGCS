@@ -76,6 +76,11 @@ void MissionItemPresenter::setMissionItem(const dao::MissionItemPtr& item)
     this->updateView();
 }
 
+void MissionItemPresenter::setPicking(bool picking)
+{
+    this->setViewProperty(PROPERTY(picking), true);
+}
+
 void MissionItemPresenter::remove()
 {
     if (d->item.isNull()) return;
