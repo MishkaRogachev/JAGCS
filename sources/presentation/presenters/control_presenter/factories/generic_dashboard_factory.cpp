@@ -63,8 +63,6 @@ DashboardPresenter* GenericDashboardFactory::create()
                                           m_vehicle->id(), dashboard));
 
     dashboard->addInstrument("mission", 500);
-    dashboard->addInstrumentPresenter("mission", new NavigatorPresenter(
-                                          node->childNode(domain::Telemetry::Navigator), dashboard));
     dashboard->addInstrumentPresenter("mission", new MissionCommandPresenter(
                                           m_vehicle->id(), dashboard));
     dashboard->addInstrumentPresenter("mission", new MissionStatusPresenter(

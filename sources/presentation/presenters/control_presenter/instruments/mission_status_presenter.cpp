@@ -7,8 +7,9 @@
 // Internal
 #include "service_registry.h"
 #include "mission_service.h"
-#include "mission_assignment.h"
 #include "mission.h"
+#include "mission_assignment.h"
+#include "mission_item.h"
 
 using namespace presentation;
 
@@ -17,7 +18,8 @@ class MissionStatusPresenter::Impl
 public:
     domain::MissionService* service;
 
-    int vehicleId;
+    int vehicleId = -1;
+    int currentWaypoint = 0;
 };
 
 MissionStatusPresenter::MissionStatusPresenter(int vehicleId,
@@ -27,12 +29,23 @@ MissionStatusPresenter::MissionStatusPresenter(int vehicleId,
 {
     d->service = domain::ServiceRegistry::missionService();
     d->vehicleId = vehicleId;
+
+    connect(d->service, &domain::MissionService::missionItemChanged,
+            this, [this](const dao::MissionItemPtr& item) {
+        if (!item->isCurrent()) return;
+        dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
+        if (assignment && item->missionId() == assignment->missionId())
+        {
+            d->currentWaypoint = item->sequence();
+            this->updateCurrentWaypoint();
+        }
+    });
 }
 
 MissionStatusPresenter::~MissionStatusPresenter()
 {}
 
-void MissionStatusPresenter::updateView()
+void MissionStatusPresenter::updateWaypoints()
 {
     QStringList waypoints;
     dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
@@ -46,12 +59,18 @@ void MissionStatusPresenter::updateView()
         }
     }
 
-     this->setViewProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
+    this->setViewProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
+}
+
+void MissionStatusPresenter::updateCurrentWaypoint()
+{
+    this->setViewProperty(PROPERTY(waypoint), d->currentWaypoint);
 }
 
 void MissionStatusPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
 
-    this->updateView();
+    this->updateWaypoints();
+    this->updateCurrentWaypoint();
 }

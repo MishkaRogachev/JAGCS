@@ -79,7 +79,6 @@
 //  |  |-DesiredPitch                   real
 //  |  |-DesiredRoll                    real
 //  |  |-DesiredHeading                 real
-//  |  |-CurrentWaypoint                real
 //  |-PowerSystem
 //  |  |-Throttle                       int
 //  |-Battery
@@ -177,7 +176,6 @@ namespace domain
             DesiredPitch = 7005,
             DesiredRoll = 7006,
             DesiredHeading = 7007,
-            CurrentWaypoint = 7008,
 
             PowerSystem = 8000,
             Throttle = 8001,

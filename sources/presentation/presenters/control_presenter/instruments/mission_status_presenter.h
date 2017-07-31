@@ -19,7 +19,8 @@ namespace presentation
         ~MissionStatusPresenter() override;
 
     public slots:
-        void updateView();
+        void updateWaypoints();
+        void updateCurrentWaypoint();
 
     protected:
         void connectView(QObject* view) override;
