@@ -30,6 +30,7 @@ namespace presentation
         void updateVehicles();
 
         void onAddVehicle();
+        void onSetAutoAdd(bool add);
 
     private:
         class Impl;

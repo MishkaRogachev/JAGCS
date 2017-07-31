@@ -4,6 +4,8 @@
 #include <QVariant>
 
 // Internal
+#include "settings_provider.h"
+
 #include "service_registry.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
@@ -43,8 +45,12 @@ VehiclesPresenter::~VehiclesPresenter()
 void VehiclesPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(addVehicle()), this, SLOT(onAddVehicle()));
+    connect(view, SIGNAL(setAutoAdd(bool)), this, SLOT(onSetAutoAdd(bool)));
 
     this->updateVehicles();
+
+    this->setViewProperty(PROPERTY(autoAdd),
+                          settings::Provider::value(settings::communication::autoAdd));
 }
 
 void VehiclesPresenter::onVehicleAdded(const dao::VehiclePtr& vehicle)
@@ -84,4 +90,9 @@ void VehiclesPresenter::onAddVehicle()
     description->setName(tr("New Vehicle"));
 
     d->service->save(description);
+}
+
+void VehiclesPresenter::onSetAutoAdd(bool add)
+{
+    settings::Provider::setValue(settings::communication::autoAdd, QVariant(add));
 }
