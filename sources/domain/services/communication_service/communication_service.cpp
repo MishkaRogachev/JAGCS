@@ -23,7 +23,7 @@ using namespace domain;
 class CommunicationService::Impl
 {
 public:
-    AbstractCommunicator* communicator;
+    AbstractCommunicator* communicator = nullptr;
     GenericRepository<dao::LinkDescription> linkRepository;
 
     QMap<dao::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
@@ -39,7 +39,7 @@ public:
         if (!link) return nullptr;
 
         descriptedLinks[description] = link;
-        communicator->addLink(link);
+        if (communicator) communicator->addLink(link);
 
         if (description->isAutoConnect()) link->connectLink();
 
@@ -54,13 +54,10 @@ public:
     }
 };
 
-CommunicationService::CommunicationService(ICommunicatorFactory* commFactory,
-                                           QObject* parent):
+CommunicationService::CommunicationService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->communicator = commFactory->create();
-
     for (const dao::LinkDescriptionPtr& description: this->descriptions())
     {
         AbstractLink* link = d->linkFromDescription(description);
@@ -88,6 +85,16 @@ dao::LinkDescriptionPtrList CommunicationService::descriptions(const QString& co
     }
 
     return list;
+}
+
+void CommunicationService::init(ICommunicatorFactory *commFactory)
+{
+    d->communicator = commFactory->create();
+
+    for (AbstractLink* link: d->descriptedLinks.values())
+    {
+        d->communicator->addLink(link);
+    }
 }
 
 bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
@@ -124,7 +131,7 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
     {
         AbstractLink* link = d->descriptedLinks.take(description);
 
-        d->communicator->removeLink(link);
+        if (d->communicator) d->communicator->removeLink(link);
         delete link;
     }
 

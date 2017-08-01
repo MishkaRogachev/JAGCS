@@ -21,8 +21,6 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
-    domain::ServiceRegistry::init();
-
     db::DbManager manager;
 
     manager.open("test_db");

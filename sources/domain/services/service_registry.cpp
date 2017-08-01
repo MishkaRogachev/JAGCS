@@ -24,7 +24,7 @@ public:
     TelemetryService telemetryService;
     VideoService videoService;
     CommandService commandService;
-    CommunicationService* communicationService;
+    CommunicationService communicationService;
 
     Impl():
         vehicleService(&missionService),
@@ -37,9 +37,7 @@ ServiceRegistry::ServiceRegistry():
 {}
 
 ServiceRegistry::~ServiceRegistry()
-{
-    delete d->communicationService;
-}
+{}
 
 ServiceRegistry* ServiceRegistry::instance()
 {
@@ -47,14 +45,14 @@ ServiceRegistry* ServiceRegistry::instance()
     return &registry;
 }
 
-void ServiceRegistry::init()
+void ServiceRegistry::initCommunicator()
 {
-    // FIXME: No database connection at init!
+    // TODO: architecture change - different link protocols
     comm::MavLinkCommunicatorFactory comFactory(
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());
 
-    instance()->d->communicationService = new CommunicationService(&comFactory);
+    instance()->d->communicationService.init(&comFactory);
 }
 
 MissionService* ServiceRegistry::missionService()
@@ -84,5 +82,5 @@ CommandService* ServiceRegistry::commandService()
 
 CommunicationService* ServiceRegistry::communicationService()
 {
-    return instance()->d->communicationService;
+    return &instance()->d->communicationService;
 }

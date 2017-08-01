@@ -35,7 +35,7 @@ void init()
         qApp->quit();
     }
 
-    domain::ServiceRegistry::init();
+    domain::ServiceRegistry::initCommunicator();
 }
 
 int main(int argc, char* argv[])

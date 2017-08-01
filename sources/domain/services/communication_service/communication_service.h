@@ -19,13 +19,14 @@ namespace domain
         Q_OBJECT
 
     public:
-        CommunicationService(comm::ICommunicatorFactory* commFactory,
-                             QObject* parent = nullptr);
+        explicit CommunicationService(QObject* parent = nullptr);
         ~CommunicationService() override;
 
         dao::LinkDescriptionPtr description(int id, bool reload = false);
         dao::LinkDescriptionPtrList descriptions(const QString& condition = QString(),
                                                  bool reload  = false);
+
+        void init(comm::ICommunicatorFactory* commFactory);
 
     public slots:
         bool save(const dao::LinkDescriptionPtr& description);
