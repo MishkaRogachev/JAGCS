@@ -22,7 +22,8 @@ namespace domain
         dao::VehiclePtr vehicle(int id, bool reload = false);
         dao::VehiclePtrList vehicles(const QString& condition = QString(), bool reload  = false);
 
-        int vehicleIdByMavId(int mavId) const;
+        int vehicleIdByMavId(int mavId);
+        int mavIdByVehicleId(int id);
 
     public slots:
         bool save(const dao::VehiclePtr& vehicle);

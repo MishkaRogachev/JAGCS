@@ -31,18 +31,11 @@ MissionCommandPresenter::~MissionCommandPresenter()
 
 void MissionCommandPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
     connect(view, SIGNAL(commandReturn()), this, SLOT(onCommandReturn()));
     connect(view, SIGNAL(commandStart()), this, SLOT(onCommandStart()));
     connect(view, SIGNAL(pauseContinue(bool)), this, SLOT(onPauseContinue(bool)));
 }
 
-void MissionCommandPresenter::onCommandSetWaypoint(int item)
-{
-    domain::Command command(domain::Command::SetWaypoint, d->vehicleId);
-    command.addArgument(item);
-    d->service->executeCommand(command);
-}
 
 void MissionCommandPresenter::onCommandReturn()
 {

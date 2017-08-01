@@ -25,6 +25,9 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onCommandSetWaypoint(int item);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

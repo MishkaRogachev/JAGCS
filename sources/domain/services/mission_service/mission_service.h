@@ -62,6 +62,8 @@ namespace domain
         void download(dao::MissionAssignmentPtr assignment);
         void upload(dao::MissionAssignmentPtr assignment);
 
+        void setCurrent(int vehicleId, int item);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

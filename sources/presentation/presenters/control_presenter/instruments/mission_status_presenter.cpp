@@ -68,8 +68,14 @@ void MissionStatusPresenter::updateCurrentWaypoint()
 
 void MissionStatusPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
+    connect(view, SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
 
     this->updateWaypoints();
     this->updateCurrentWaypoint();
 }
+
+void MissionStatusPresenter::onCommandSetWaypoint(int item)
+{
+    d->service->setCurrent(d->vehicleId, item);
+}
+

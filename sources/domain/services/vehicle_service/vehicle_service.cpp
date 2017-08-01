@@ -52,11 +52,18 @@ VehiclePtrList VehicleService::vehicles(const QString& condition, bool reload)
     return list;
 }
 
-int VehicleService::vehicleIdByMavId(int mavId) const
+int VehicleService::vehicleIdByMavId(int mavId)
 {
     for (int id: d->vehicleRepository.selectId(QString("mavId = %1").arg(mavId)))
         return id;
     return 0;
+}
+
+int VehicleService::mavIdByVehicleId(int id)
+{
+    VehiclePtr vehicle = this->vehicle(id);
+    if (vehicle) return vehicle->mavId();
+    return -1;
 }
 
 bool VehicleService::save(const VehiclePtr& vehicle)
