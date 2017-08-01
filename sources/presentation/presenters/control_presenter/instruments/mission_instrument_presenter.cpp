@@ -1,4 +1,4 @@
-#include "mission_status_presenter.h"
+#include "mission_instrument_presenter.h"
 
 // Qt
 #include <QVariant>
@@ -13,7 +13,7 @@
 
 using namespace presentation;
 
-class MissionStatusPresenter::Impl
+class MissionInstrumentPresenter::Impl
 {
 public:
     domain::MissionService* service;
@@ -22,7 +22,7 @@ public:
     int currentWaypoint = 0;
 };
 
-MissionStatusPresenter::MissionStatusPresenter(int vehicleId, QObject* parent):
+MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -41,10 +41,10 @@ MissionStatusPresenter::MissionStatusPresenter(int vehicleId, QObject* parent):
     });
 }
 
-MissionStatusPresenter::~MissionStatusPresenter()
+MissionInstrumentPresenter::~MissionInstrumentPresenter()
 {}
 
-void MissionStatusPresenter::updateWaypoints()
+void MissionInstrumentPresenter::updateWaypoints()
 {
     QStringList waypoints;
     dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
@@ -61,12 +61,12 @@ void MissionStatusPresenter::updateWaypoints()
     this->setViewProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
 }
 
-void MissionStatusPresenter::updateCurrentWaypoint()
+void MissionInstrumentPresenter::updateCurrentWaypoint()
 {
     this->setViewProperty(PROPERTY(waypoint), d->currentWaypoint);
 }
 
-void MissionStatusPresenter::connectView(QObject* view)
+void MissionInstrumentPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
 
@@ -74,7 +74,7 @@ void MissionStatusPresenter::connectView(QObject* view)
     this->updateCurrentWaypoint();
 }
 
-void MissionStatusPresenter::onCommandSetWaypoint(int item)
+void MissionInstrumentPresenter::onCommandSetWaypoint(int item)
 {
     d->service->setCurrent(d->vehicleId, item);
 }

@@ -17,8 +17,8 @@
 #include "home_presenter.h"
 #include "wind_presenter.h"
 #include "common_command_presenter.h"
-#include "mission_command_presenter.h"
-#include "mission_status_presenter.h"
+#include "command_instrument_presenter.h"
+#include "mission_instrument_presenter.h"
 
 using namespace presentation;
 
@@ -65,9 +65,9 @@ DashboardPresenter* GenericDashboardFactory::create()
     dashboard->addInstrument("mission", 500);
     dashboard->addInstrumentPresenter("mission", new StatusPresenter(
                                  node->childNode(domain::Telemetry::Status), dashboard));
-    dashboard->addInstrumentPresenter("mission", new MissionCommandPresenter(
+    dashboard->addInstrumentPresenter("mission", new CommandInstrumentPresenter(
                                           m_vehicle->id(), dashboard));
-    dashboard->addInstrumentPresenter("mission", new MissionStatusPresenter(
+    dashboard->addInstrumentPresenter("mission", new MissionInstrumentPresenter(
                                           m_vehicle->id(), dashboard));
 
     return dashboard;

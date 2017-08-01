@@ -1,5 +1,5 @@
-#ifndef MISSION_STATUS_PRESENTER_H
-#define MISSION_STATUS_PRESENTER_H
+#ifndef MISSION_INSTRUMENT_PRESENTER_H
+#define MISSION_INSTRUMENT_PRESENTER_H
 
 #include "base_presenter.h"
 
@@ -10,13 +10,13 @@ namespace domain
 
 namespace presentation
 {
-    class MissionStatusPresenter: public BasePresenter
+    class MissionInstrumentPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        MissionStatusPresenter(int vehicleId, QObject* parent = nullptr);
-        ~MissionStatusPresenter() override;
+        MissionInstrumentPresenter(int vehicleId, QObject* parent = nullptr);
+        ~MissionInstrumentPresenter() override;
 
     public slots:
         void updateWaypoints();
@@ -34,4 +34,4 @@ namespace presentation
     };
 }
 
-#endif // MISSION_STATUS_PRESENTER_H
+#endif // MISSION_INSTRUMENT_PRESENTER_H

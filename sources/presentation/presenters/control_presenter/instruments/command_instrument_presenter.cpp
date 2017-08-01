@@ -1,4 +1,4 @@
-#include "mission_command_presenter.h"
+#include "command_instrument_presenter.h"
 
 // Qt
 #include <QDebug>
@@ -10,7 +10,7 @@
 
 using namespace presentation;
 
-class MissionCommandPresenter::Impl
+class CommandInstrumentPresenter::Impl
 {
 public:
     domain::CommandService* service = nullptr;
@@ -18,7 +18,7 @@ public:
     int vehicleId;
 };
 
-MissionCommandPresenter::MissionCommandPresenter(int vehicleId, QObject* parent):
+CommandInstrumentPresenter::CommandInstrumentPresenter(int vehicleId, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -26,10 +26,10 @@ MissionCommandPresenter::MissionCommandPresenter(int vehicleId, QObject* parent)
     d->vehicleId = vehicleId;
 }
 
-MissionCommandPresenter::~MissionCommandPresenter()
+CommandInstrumentPresenter::~CommandInstrumentPresenter()
 {}
 
-void MissionCommandPresenter::connectView(QObject* view)
+void CommandInstrumentPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(commandReturn()), this, SLOT(onCommandReturn()));
     connect(view, SIGNAL(commandStart()), this, SLOT(onCommandStart()));
@@ -37,19 +37,19 @@ void MissionCommandPresenter::connectView(QObject* view)
 }
 
 
-void MissionCommandPresenter::onCommandReturn()
+void CommandInstrumentPresenter::onCommandReturn()
 {
     domain::Command command(domain::Command::Return, d->vehicleId);
     d->service->executeCommand(command);
 }
 
-void MissionCommandPresenter::onCommandStart()
+void CommandInstrumentPresenter::onCommandStart()
 {
     domain::Command command(domain::Command::Start, d->vehicleId);
     d->service->executeCommand(command);
 }
 
-void MissionCommandPresenter::onPauseContinue(bool unpause)
+void CommandInstrumentPresenter::onPauseContinue(bool unpause)
 {
     domain::Command command(domain::Command::PauseContinue, d->vehicleId);
     command.addArgument(unpause);

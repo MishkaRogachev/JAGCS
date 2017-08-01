@@ -1,5 +1,5 @@
-#ifndef MISSION_COMMAND_PRESENTER_H
-#define MISSION_COMMAND_PRESENTER_H
+#ifndef COMMAND_INSTRUMENT_PRESENTER_H
+#define COMMAND_INSTRUMENT_PRESENTER_H
 
 #include "base_presenter.h"
 
@@ -10,13 +10,13 @@ namespace domain
 
 namespace presentation
 {
-    class MissionCommandPresenter: public BasePresenter
+    class CommandInstrumentPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        MissionCommandPresenter(int vehicleId, QObject* parent = nullptr);
-        ~MissionCommandPresenter() override;
+        CommandInstrumentPresenter(int vehicleId, QObject* parent = nullptr);
+        ~CommandInstrumentPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
@@ -32,4 +32,4 @@ namespace presentation
     };
 }
 
-#endif // MISSION_COMMAND_PRESENTER_H
+#endif // COMMAND_INSTRUMENT_PRESENTER_H
