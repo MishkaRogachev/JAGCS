@@ -8,6 +8,10 @@
 // mav
 //  |-Status
 //  |  |-Armed                          bool
+//  |  |-Auto                           bool
+//  |  |-Guided                         bool
+//  |  |-Stabilized                     bool
+//  |  |-Manual                         bool
 //  |  |-Mode                           string
 //  |  |-State                          SystemState
 //  |-Position

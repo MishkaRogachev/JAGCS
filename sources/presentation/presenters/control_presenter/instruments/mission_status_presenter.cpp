@@ -22,8 +22,7 @@ public:
     int currentWaypoint = 0;
 };
 
-MissionStatusPresenter::MissionStatusPresenter(int vehicleId,
-                                               QObject* parent):
+MissionStatusPresenter::MissionStatusPresenter(int vehicleId, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
