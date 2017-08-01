@@ -123,6 +123,7 @@ Map {
         onExited: mouseCoordinate = QtPositioning.coordinate()
         onPositionChanged: mouseCoordinate = root.toCoordinate(Qt.point(mouseX, mouseY))
         onClicked: {
+            if (!picking) return;
             pickHighlight.coordinate = mouseCoordinate;
             pickHighlight.visible = true;
             root.picked(mouseCoordinate);
@@ -156,7 +157,8 @@ Map {
                     MapGestureArea.PinchGesture
     }
 
-    function dropHighlight() {
+    function dropPicker() {
+        map.picking = false
         pickHighlight.visible = false;
     }
 }
