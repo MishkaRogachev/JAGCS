@@ -48,6 +48,16 @@ void MissionItem::setAltitude(float altitude)
     m_altitude = altitude;
 }
 
+float MissionItem::abortAltitude() const
+{
+    return m_abortAltitude;
+}
+
+void MissionItem::setAbortAltitude(float abortAltitude)
+{
+    m_abortAltitude = abortAltitude;
+}
+
 bool MissionItem::isAltitudeRelative() const
 {
     return m_altitudeRelative;
@@ -78,6 +88,26 @@ void MissionItem::setLongitude(double longitude)
     m_longitude = longitude;
 }
 
+float MissionItem::distance() const
+{
+    return m_distance;
+}
+
+void MissionItem::setDistance(float distance)
+{
+    m_distance = distance;
+}
+
+float MissionItem::speed() const
+{
+    return m_speed;
+}
+
+void MissionItem::setSpeed(float speed)
+{
+    m_speed = speed;
+}
+
 float MissionItem::radius() const
 {
     return m_radius;
@@ -98,14 +128,54 @@ void MissionItem::setPitch(float pitch)
     m_pitch = pitch;
 }
 
-int MissionItem::periods() const
+float MissionItem::roll() const
 {
-    return m_periods;
+    return m_roll;
 }
 
-void MissionItem::setPeriods(int periods)
+void MissionItem::setRoll(float roll)
 {
-    m_periods = periods;
+    m_roll = roll;
+}
+
+float MissionItem::yaw() const
+{
+    return m_yaw;
+}
+
+void MissionItem::setYaw(float yaw)
+{
+    m_yaw = yaw;
+}
+
+int MissionItem::repeats() const
+{
+    return m_repeats;
+}
+
+void MissionItem::setRepeats(int periods)
+{
+    m_repeats = periods;
+}
+
+int MissionItem::delay() const
+{
+    return m_delay;
+}
+
+void MissionItem::setDelay(int delay)
+{
+    m_delay = delay;
+}
+
+bool MissionItem::isEnabled() const
+{
+    return m_enabled;
+}
+
+void MissionItem::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
 }
 
 MissionItem::Status MissionItem::status() const

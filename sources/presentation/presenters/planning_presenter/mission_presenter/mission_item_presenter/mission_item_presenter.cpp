@@ -105,7 +105,7 @@ void MissionItemPresenter::save()
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
     d->item->setRadius(this->viewProperty(PROPERTY(radius)).toFloat());
-    d->item->setPeriods(this->viewProperty(PROPERTY(periods)).toInt());
+    d->item->setRepeats(this->viewProperty(PROPERTY(periods)).toInt());
     d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
 
     if (!d->service->save(d->item)) return;
@@ -125,7 +125,7 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
         this->setViewProperty(PROPERTY(radius), d->item->radius());
         this->setViewProperty(PROPERTY(pitch), d->item->pitch());
-        this->setViewProperty(PROPERTY(periods), d->item->periods());
+        this->setViewProperty(PROPERTY(periods), d->item->repeats());
     }
     else
     {

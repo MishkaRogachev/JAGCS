@@ -248,7 +248,7 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
             msgItem.param2 = item->radius();
             break;
         case MAV_CMD_NAV_LOITER_TURNS:
-            msgItem.param1 = item->periods();
+            msgItem.param1 = item->repeats();
             msgItem.param3 = item->radius();
             break;
         default:
@@ -376,7 +376,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setRadius(msgItem.param2);
         break;
     case MAV_CMD_NAV_LOITER_TURNS:
-        item->setPeriods(msgItem.param1);
+        item->setRepeats(msgItem.param1);
         item->setRadius(msgItem.param3);
         break;
     default:

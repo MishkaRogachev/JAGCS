@@ -14,24 +14,48 @@ namespace dao
         Q_PROPERTY(int sequence READ sequence WRITE setSequence)
         Q_PROPERTY(Command command READ command WRITE setCommand)
         Q_PROPERTY(float altitude READ altitude WRITE setAltitude)
+        Q_PROPERTY(float abortAltitude READ abortAltitude WRITE setAbortAltitude)
         Q_PROPERTY(bool altitudeRelative READ isAltitudeRelative WRITE setAltitudeRelative)
         Q_PROPERTY(double latitude READ latitude WRITE setLatitude)
         Q_PROPERTY(double longitude READ longitude WRITE setLongitude)
+        Q_PROPERTY(float distance READ distance WRITE setDistance)
+        Q_PROPERTY(float speed READ speed WRITE setSpeed)
         Q_PROPERTY(float radius READ radius WRITE setRadius)
         Q_PROPERTY(float pitch READ pitch WRITE setPitch)
-        Q_PROPERTY(int periods READ periods WRITE setPeriods)
+        Q_PROPERTY(float roll READ roll WRITE setRoll)
+        Q_PROPERTY(float yaw READ yaw WRITE setYaw)
+        Q_PROPERTY(int repeats READ repeats WRITE setRepeats)
+        Q_PROPERTY(float delay READ delay WRITE setDelay)
+        Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled)
 
     public:
         enum Command: quint8
         {
             UnknownCommand = 0,
+
+            Home,
             Takeoff,
             Waypoint,
+            LoiterUnlim,
             LoiterAltitude,
             LoiterTurns,
+            LoiterTime,
             Continue,
             Return,
             Landing,
+            ChangeSpeed,
+
+            SetServo,
+            SetRelay,
+            RepeatServo,
+            RepeatRelay,
+
+            SetRoi,
+            MountControl,
+            SetCameraTriggerDistance,
+            CameraControl
+
+            //TODO: condirion commands
         };
 
         enum Status: quint8
@@ -54,6 +78,9 @@ namespace dao
         float altitude() const;
         void setAltitude(float altitude);
 
+        float abortAltitude() const;
+        void setAbortAltitude(float abortAltitude);
+
         bool isAltitudeRelative() const;
         void setAltitudeRelative(bool altitudeRelative);
 
@@ -63,14 +90,32 @@ namespace dao
         double longitude() const;
         void setLongitude(double longitude);
 
+        float distance() const;
+        void setDistance(float distance);
+
+        float speed() const;
+        void setSpeed(float speed);
+
         float radius() const;
         void setRadius(float radius);
 
         float pitch() const;
         void setPitch(float pitch);
 
-        int periods() const;
-        void setPeriods(int periods);
+        float roll() const;
+        void setRoll(float roll);
+
+        float yaw() const;
+        void setYaw(float yaw);
+
+        int repeats() const;
+        void setRepeats(int repeats);
+
+        int delay() const;
+        void setDelay(int delay);
+
+        bool isEnabled() const;
+        void setEnabled(bool enabled);
 
         Status status() const;
         void setStatus(Status status);
@@ -86,12 +131,19 @@ namespace dao
         int m_sequence = -1;
         Command m_command = UnknownCommand;
         float m_altitude = qQNaN();
+        float m_abortAltitude = qQNaN();
         bool m_altitudeRelative = false;
         double m_latitude = qQNaN();
         double m_longitude = qQNaN();
+        float m_distance = qQNaN();
+        float m_speed = qQNaN();
         float m_radius = qQNaN();
         float m_pitch = qQNaN();
-        int m_periods = 0;
+        float m_roll = qQNaN();
+        float m_yaw = qQNaN();
+        int m_repeats = 0;
+        float m_delay = 0.0;
+        bool m_enabled = false;
 
         Status m_status = NotActual;
         bool m_reached = false;
