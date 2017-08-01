@@ -49,6 +49,7 @@ ServiceRegistry* ServiceRegistry::instance()
 
 void ServiceRegistry::init()
 {
+    // FIXME: No database connection at init!
     comm::MavLinkCommunicatorFactory comFactory(
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());

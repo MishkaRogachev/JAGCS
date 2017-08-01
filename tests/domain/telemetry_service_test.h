@@ -3,7 +3,7 @@
 
 #include <QTest>
 
-class TelemetryTest: public QObject
+class TelemetryServiceTest: public QObject
 {
     Q_OBJECT
 

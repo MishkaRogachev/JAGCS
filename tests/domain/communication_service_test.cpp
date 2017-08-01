@@ -1,4 +1,4 @@
-#include "links_test.h"
+#include "communication_service_test.h"
 
 // Qt
 #include <QSignalSpy>
@@ -9,9 +9,15 @@
 #include "udp_link.h"
 #include "serial_link.h"
 
-using namespace comm;
+#include "service_registry.h"
+#include "communication_service.h"
+#include "link_description.h"
 
-void LinksTest::testUdpLink()
+using namespace dao; // TODO: dao tests
+using namespace comm;
+using namespace domain;
+
+void CommunicationServiceTest::testUdpLink()
 {
     UdpLink link1(60000);
     QSignalSpy spy1(&link1, SIGNAL(dataReceived(QByteArray)));
@@ -46,4 +52,23 @@ void LinksTest::testUdpLink()
     arguments = spy2.last();
     QCOMPARE(arguments.count(), 1);
     QCOMPARE(arguments.first(), QVariant("TEST 2"));
+}
+
+void CommunicationServiceTest::testLinkDescription()
+{
+     CommunicationService* service = ServiceRegistry::communicationService();
+
+     LinkDescriptionPtr description = LinkDescriptionPtr::create();
+     description->setName("UDP link");
+     description->setType(LinkDescription::Udp);
+     description->setPort(8080);
+
+     QVERIFY2(service->save(description), "Can't insert link");
+     service->description(description->id(), true);
+
+     QVERIFY2(description->name() == "UDP link", "Link name are different");
+     QCOMPARE(description->type(), LinkDescription::Udp);
+     QCOMPARE(description->port(), 8080);
+
+     QVERIFY2(service->remove(description), "Can't remove link");
 }

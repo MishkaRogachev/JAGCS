@@ -3,12 +3,14 @@
 #include <QFile>
 
 // Internal
+#include "service_registry.h"
+
 #include "db_manager.h"
 
 // Tests
-#include "entities_test.h"
-#include "links_test.h"
-#include "telemetry_test.h"
+#include "communication_service_test.h"
+#include "telemetry_service_test.h"
+#include "mission_service_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -19,18 +21,20 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
+    domain::ServiceRegistry::init();
+
     db::DbManager manager;
 
     manager.open("test_db");
 
-    EntitiesTest entitiesTest;
-    QTest::qExec(&entitiesTest);
+    CommunicationServiceTest commTest;
+    QTest::qExec(&commTest);
 
-    LinksTest linksTest;
-    QTest::qExec(&linksTest);
-
-    TelemetryTest telemetryTest;
+    TelemetryServiceTest telemetryTest;
     QTest::qExec(&telemetryTest);
+
+    MissionServiceTest missionTest;
+    QTest::qExec(&missionTest);
 
     manager.drop();
 

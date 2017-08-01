@@ -1,9 +1,9 @@
-#ifndef ENTITIES_TEST_H
-#define ENTITIES_TEST_H
+#ifndef TELEMETRY_SERVICE_TEST_H
+#define TELEMETRY_SERVICE_TEST_H
 
 #include <QTest>
 
-class EntitiesTest: public QObject
+class MissionServiceTest: public QObject
 {
     Q_OBJECT
 
@@ -12,8 +12,6 @@ private slots:
     void testMissionItems();
     void testVehicleDescription();
     void testMissionAssignment();
-    void testLinkDescription();
-    void testVideoSource();
 };
 
-#endif // ENTITIES_TEST_H
+#endif // TELEMETRY_SERVICE_TEST_H
