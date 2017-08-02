@@ -25,3 +25,13 @@ void Mission::setCount(int count)
     m_count = count;
 }
 
+bool Mission::isVisible() const
+{
+    return m_visible;
+}
+
+void Mission::setVisible(bool visible)
+{
+    m_visible = visible;
+}
+

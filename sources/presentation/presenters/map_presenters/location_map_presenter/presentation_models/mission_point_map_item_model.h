@@ -41,6 +41,7 @@ namespace presentation
         void onMissionItemAdded(const dao::MissionItemPtr& item);
         void onMissionItemRemoved(const dao::MissionItemPtr& item);
         void onMissionItemChanged(const dao::MissionItemPtr& item);
+        void onMissionChanged(const dao::MissionPtr& mission);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

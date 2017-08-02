@@ -14,12 +14,15 @@ ColumnLayout {
     property alias assignedVehicle: vehiclesBox.currentIndex
     property var statuses: []
 
+    property bool missionVisible: false
+
     signal selectMission(int index)
     signal addMission()
     signal addItem()
     signal removeMission()
     signal renameMission(string name)
     signal assignVehicle(int index)
+    signal setMissionVisible(bool visible)
     signal uploadMission()
     signal downloadMission()
 
@@ -82,9 +85,14 @@ ColumnLayout {
         ComboBox {
             id: vehiclesBox
             enabled: selectedMission > 0
-            Layout.columnSpan: 2
             onCurrentIndexChanged: assignVehicle(currentIndex)
             Layout.fillWidth: true
+        }
+
+        Button {
+            iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            enabled: selectedMission > 0
+            onClicked: setMissionVisible(!missionVisible)
         }
 
         Button {

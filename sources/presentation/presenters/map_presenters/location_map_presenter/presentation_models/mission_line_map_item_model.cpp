@@ -20,6 +20,8 @@ MissionLineMapItemModel::MissionLineMapItemModel(domain::MissionService* service
             this, &MissionLineMapItemModel::onMissionAdded);
     connect(service, &domain::MissionService::missionRemoved,
             this, &MissionLineMapItemModel::onMissionRemoved);
+    connect(service, &domain::MissionService::missionChanged,
+            this, &MissionLineMapItemModel::onMissionChanged);
     connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionLineMapItemModel::onMissionItemChanged);
     connect(service, &domain::MissionService::missionItemAdded,
@@ -50,6 +52,12 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
+        if (!mission->isVisible())
+        {
+            line.append(QVariant::fromValue(QGeoCoordinate(0, 0)));
+            return line;
+        }
+
         for (const dao::MissionItemPtr& item: m_service->missionItems(mission->id()))
         {
             if (item->command() == dao::MissionItem::Home ||
@@ -93,6 +101,12 @@ void MissionLineMapItemModel::onMissionRemoved(const dao::MissionPtr& mission)
     this->beginRemoveRows(QModelIndex(), row, row);
     m_missions.removeOne(mission);
     this->endRemoveRows();
+}
+
+void MissionLineMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
+{
+    QModelIndex index = this->index(m_missions.indexOf(mission));
+    if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }
 
 void MissionLineMapItemModel::onMissionItemChanged(const dao::MissionItemPtr& item)

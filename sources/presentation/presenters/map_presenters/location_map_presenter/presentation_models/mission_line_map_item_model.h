@@ -33,6 +33,7 @@ namespace presentation
     public slots:
         void onMissionAdded(const dao::MissionPtr& mission);
         void onMissionRemoved(const dao::MissionPtr& mission);
+        void onMissionChanged(const dao::MissionPtr& mission);
         void onMissionItemChanged(const dao::MissionItemPtr& item);
 
     protected:

@@ -36,6 +36,7 @@ namespace presentation
         void onRemoveMission();
         void onRenameMission(const QString& name);
         void onAssignVehicle(int index);
+        void onSetMissionVisible(bool visible);
         void onUploadMission();
         void onDownloadMission();
 

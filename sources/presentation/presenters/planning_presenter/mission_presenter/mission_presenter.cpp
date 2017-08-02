@@ -80,6 +80,10 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
     d->item->setMission(d->selectedMission);
 
     this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
+
+    if (mission) this->setViewProperty(PROPERTY(missionVisible), mission->isVisible());
+    else this->setViewProperty(PROPERTY(missionVisible), false);
+
     this->updateAssignment();
     this->updateStatuses();
 
@@ -104,6 +108,7 @@ void MissionPresenter::setViewConnected(bool connected)
         connect(this->view(), SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
         connect(this->view(), SIGNAL(renameMission(QString)), this, SLOT(onRenameMission(QString)));
         connect(this->view(), SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
+        connect(this->view(), SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
         connect(this->view(), SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
         connect(this->view(), SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     }
@@ -268,6 +273,16 @@ void MissionPresenter::onAssignVehicle(int index)
     {
         d->missionService->unassign(d->selectedMission->id());
     }
+}
+
+void MissionPresenter::onSetMissionVisible(bool visible)
+{
+    if (!d->selectedMission) return;
+
+    d->selectedMission->setVisible(visible);
+    this->setViewProperty(PROPERTY(missionVisible), d->selectedMission->isVisible());
+
+    d->missionService->missionChanged(d->selectedMission);
 }
 
 void MissionPresenter::onUploadMission()

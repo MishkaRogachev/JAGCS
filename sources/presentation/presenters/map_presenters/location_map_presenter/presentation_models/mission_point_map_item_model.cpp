@@ -6,6 +6,7 @@
 
 // Internal
 #include "mission_service.h"
+#include "mission.h"
 #include "mission_item.h"
 
 using namespace presentation;
@@ -20,6 +21,8 @@ MissionPointMapItemModel::MissionPointMapItemModel(domain::MissionService* servi
             this, &MissionPointMapItemModel::onMissionItemRemoved);
     connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionPointMapItemModel::onMissionItemChanged);
+    connect(service, &domain::MissionService::missionChanged,
+            this, &MissionPointMapItemModel::onMissionChanged);
 
     for (const dao::MissionItemPtr& item: service->missionItems())
     {
@@ -38,19 +41,21 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     if (index.row() < 0 || index.row() >= m_items.count()) return QVariant();
 
     const dao::MissionItemPtr& item = m_items.at(index.row());
+    const dao::MissionPtr& mission = m_service->mission(item->missionId());
 
     switch (role)
     {
     case ItemCoordinateRole:
     {
-        if (item->command() == dao::MissionItem::Home ||
-            item->command() == dao::MissionItem::Waypoint ||
-            item->command() == dao::MissionItem::Takeoff ||
-            item->command() == dao::MissionItem::Landing ||
-            item->command() == dao::MissionItem::LoiterUnlim ||
-            item->command() == dao::MissionItem::LoiterAltitude ||
-            item->command() == dao::MissionItem::LoiterTurns ||
-            item->command() == dao::MissionItem::LoiterTime)
+        if (mission->isVisible() &&
+            (item->command() == dao::MissionItem::Home ||
+             item->command() == dao::MissionItem::Waypoint ||
+             item->command() == dao::MissionItem::Takeoff ||
+             item->command() == dao::MissionItem::Landing ||
+             item->command() == dao::MissionItem::LoiterUnlim ||
+             item->command() == dao::MissionItem::LoiterAltitude ||
+             item->command() == dao::MissionItem::LoiterTurns ||
+             item->command() == dao::MissionItem::LoiterTime))
         {
             QGeoCoordinate coordinate(item->latitude(), item->longitude());
             if (coordinate.isValid()) return QVariant::fromValue(coordinate);
@@ -118,6 +123,17 @@ void MissionPointMapItemModel::onMissionItemChanged(
     QModelIndex index = this->itemIndex(item);
     if (!index.isValid()) return;
     emit dataChanged(index, index);
+}
+
+void MissionPointMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
+{
+    for (const dao::MissionItemPtr& item: m_items)
+    {
+        if (item->missionId() != mission->id()) continue;
+
+        QModelIndex index = this->itemIndex(item);
+        if (index.isValid()) emit dataChanged(index, index);
+    }
 }
 
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
