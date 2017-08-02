@@ -23,17 +23,21 @@
 
 namespace
 {
-    dao::MissionItem::Command decodeCommand(uint16_t command)
+    dao::MissionItem::Command decodeCommand(uint16_t command, quint8 seq)
     {
         switch (command) {
         case MAV_CMD_NAV_TAKEOFF:
             return dao::MissionItem::Takeoff;
         case MAV_CMD_NAV_WAYPOINT:
-            return dao::MissionItem::Waypoint;
+            return seq > 0 ? dao::MissionItem::Waypoint : dao::MissionItem::Home;
+        case MAV_CMD_NAV_LOITER_UNLIM:
+            return dao::MissionItem::LoiterUnlim;
         case MAV_CMD_NAV_LOITER_TO_ALT:
             return dao::MissionItem::LoiterAltitude;
         case MAV_CMD_NAV_LOITER_TURNS:
             return dao::MissionItem::LoiterTurns;
+        case MAV_CMD_NAV_LOITER_TIME:
+            return dao::MissionItem::LoiterTime;
         case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
             return dao::MissionItem::Continue;
         case MAV_CMD_NAV_RETURN_TO_LAUNCH:
@@ -50,12 +54,17 @@ namespace
         switch (command) {
         case dao::MissionItem::Takeoff:
             return MAV_CMD_NAV_TAKEOFF;
+        case dao::MissionItem::Home:
         case dao::MissionItem::Waypoint:
             return MAV_CMD_NAV_WAYPOINT;
+        case dao::MissionItem::LoiterUnlim:
+            return MAV_CMD_NAV_LOITER_UNLIM;
         case dao::MissionItem::LoiterAltitude:
             return MAV_CMD_NAV_LOITER_TO_ALT;
         case dao::MissionItem::LoiterTurns:
             return MAV_CMD_NAV_LOITER_TURNS;
+        case dao::MissionItem::LoiterTime:
+            return MAV_CMD_NAV_LOITER_TIME;
         case dao::MissionItem::Continue:
             return MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
         case dao::MissionItem::Return:
@@ -153,7 +162,7 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 
     count.target_system = vehicle->mavId();
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = mission->count() + 1;
+    count.count = mission->count();
 
     mavlink_msg_mission_count_encode(m_communicator->systemId(),
                                      m_communicator->componentId(),
@@ -193,72 +202,67 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
     msgItem.target_system = mavId;
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
-    if (seq == 0) // fake home point
+    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), seq);
+    if (item.isNull()) return;
+
+    msgItem.seq = seq;
+    msgItem.autocontinue = seq < m_missionService->mission(assignment->missionId())->count() - 1;
+
+    msgItem.command = ::encodeCommand(item->command());
+
+    if (!qIsNaN(item->altitude()))
     {
-        msgItem.seq = 0;
-        msgItem.autocontinue = true;
-        msgItem.command = MAV_CMD_NAV_WAYPOINT;
-        msgItem.frame = MAV_FRAME_GLOBAL;
-
-        msgItem.x = 0;
-        msgItem.y = 0;
-        msgItem.z = 0;
+        msgItem.frame = item->isAltitudeRelative() ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
+        msgItem.z = item->altitude();
     }
-    else
+
+    if (!qIsNaN(item->latitude()))
     {
-        dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), seq);
-        if (item.isNull()) return;
-
-        msgItem.seq = seq;
-        msgItem.autocontinue = seq < m_missionService->mission(assignment->missionId())->count();
-
-        msgItem.command = ::encodeCommand(item->command());
-
-        if (!qIsNaN(item->altitude()))
-        {
-            msgItem.frame = item->isAltitudeRelative() ?
-                                MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
-            msgItem.z = item->altitude();
-        }
-
-        if (!qIsNaN(item->latitude()))
-        {
-            msgItem.x = item->latitude();
-        }
-
-        if (!qIsNaN(item->longitude()))
-        {
-            msgItem.y = item->longitude();
-        }
-
-        switch (msgItem.command)
-        {
-        case MAV_CMD_NAV_TAKEOFF:
-            msgItem.param1 = item->pitch();
-        case MAV_CMD_NAV_LAND:// TODO: abort altitude
-            // TODO: yaw
-            //msgItem.param4 = takeoffItem->yaw();
-            break;
-        case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            // TODO: climb
-            //msgItem.param1 = item->climb() > 1 ? 1 : altitudeItem->climb() < 0 ? -1 : 0;
-            break;
-        case MAV_CMD_NAV_WAYPOINT:
-        case MAV_CMD_NAV_LOITER_TO_ALT:
-            msgItem.param2 = item->radius();
-            break;
-        case MAV_CMD_NAV_LOITER_TURNS:
-            msgItem.param1 = item->repeats();
-            msgItem.param3 = item->radius();
-            break;
-        default:
-            break;
-        }
-
-        // TODO: wait ack
-        item->setStatus(dao::MissionItem::Actual);
-        m_missionService->missionItemChanged(item);
+        msgItem.x = item->latitude();
     }
+
+    if (!qIsNaN(item->longitude()))
+    {
+        msgItem.y = item->longitude();
+    }
+
+    switch (msgItem.command)
+    {
+    case MAV_CMD_NAV_TAKEOFF:
+        msgItem.param1 = item->pitch();
+    case MAV_CMD_NAV_LAND:
+        msgItem.param1 = item->abortAltitude();
+        msgItem.param4 = item->yaw();
+        break;
+    case MAV_CMD_NAV_WAYPOINT:
+        msgItem.param2 = item->radius();
+        break;
+    case MAV_CMD_NAV_LOITER_UNLIM:
+        msgItem.param3 = item->radius();
+        break;
+    case MAV_CMD_NAV_LOITER_TO_ALT:
+        // TODO: heading required param1;
+        msgItem.param2 = item->radius();
+        break;
+    case MAV_CMD_NAV_LOITER_TURNS:
+        msgItem.param1 = item->repeats();
+        msgItem.param3 = item->radius();
+        break;
+    case MAV_CMD_NAV_LOITER_TIME:
+        msgItem.param1 = item->delay();
+        msgItem.param3 = item->radius();
+        break;
+    case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+        // FIXME: climb
+        //msgItem.param1 = item->climb() > 1 ? 1 : altitudeItem->climb() < 0 ? -1 : 0;
+        break;
+    default:
+        break;
+    }
+
+    // TODO: wait ack
+    item->setStatus(dao::MissionItem::Actual);
+    m_missionService->missionItemChanged(item);
 
     mavlink_msg_mission_item_encode(m_communicator->systemId(),
                                     m_communicator->componentId(),
@@ -329,8 +333,6 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
-    if (msgItem.seq == 0) return; // have no interes in home point
-
     dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(),
                                                              msgItem.seq);
     if (item.isNull())
@@ -340,7 +342,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setSequence(msgItem.seq);
     }
 
-    item->setCommand(::decodeCommand(msgItem.command));
+    item->setCommand(::decodeCommand(msgItem.command, msgItem.seq));
 
     switch (msgItem.frame)
     {
@@ -371,14 +373,30 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     case MAV_CMD_NAV_TAKEOFF:
         item->setPitch(msgItem.param1);
         break;
+    case MAV_CMD_NAV_LAND:
+        item->setAbortAltitude(msgItem.param1);
+        item->setYaw(msgItem.param4);
+        break;
     case MAV_CMD_NAV_WAYPOINT:
+        item->setRadius(msgItem.param2);
+        break;
+    case MAV_CMD_NAV_LOITER_UNLIM:
+        msgItem.param3 = item->radius();
+        break;
     case MAV_CMD_NAV_LOITER_TO_ALT:
+        // TODO: heading required param1;
         item->setRadius(msgItem.param2);
         break;
     case MAV_CMD_NAV_LOITER_TURNS:
         item->setRepeats(msgItem.param1);
         item->setRadius(msgItem.param3);
         break;
+    case MAV_CMD_NAV_LOITER_TIME:
+        item->setDelay(msgItem.param1);
+        item->setRadius(msgItem.param3);
+        break;
+    case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
+        // ignore climb
     default:
         break;
     }
