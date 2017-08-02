@@ -104,6 +104,7 @@ ColumnLayout {
         Controls.ComboBox {
             id: commandBox
             visible: sequence > -1
+            enabled: sequence > 0
             currentIndex: MissionItem.UnknownCommand
             onCurrentIndexChanged: changed = true
             Layout.alignment: Qt.AlignRight
@@ -137,6 +138,7 @@ ColumnLayout {
         Controls.CheckBox {
             id: altitudeRelativeEdit
             visible: altitudeVisible
+            enabled: sequence > 0
             onCheckedChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }

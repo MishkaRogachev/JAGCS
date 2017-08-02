@@ -45,7 +45,9 @@ void VerticalProfilePresenter::updateMission()
 {
     this->invokeViewMethod(PROPERTY(clearWaypoints));
 
-    if (m_mission.isNull()) return;
+    if (m_mission.isNull() || m_mission->count() < 1) return;
+    const dao::MissionItemPtr& home = m_service->missionItem(m_mission->id(), 0);
+
     QGeoCoordinate lastCoordinate;
     int distance = 0;
     for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
@@ -69,8 +71,11 @@ void VerticalProfilePresenter::updateMission()
             lastCoordinate = coordinate;
         }
 
-        // TODO: relative altitude
-        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
+        // TODO: relative altitude to item
+        float altitude = item->altitude();
+        if (item->isAltitudeRelative()) altitude += home->altitude();
+
+        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, altitude);
     }
 }
 
