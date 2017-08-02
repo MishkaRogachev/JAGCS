@@ -15,7 +15,7 @@ MapItemView {
             width: palette.controlBaseSize
             height: width
             radius: width / 2
-            color: palette.backgroundColor
+            color: itemSelected ? palette.selectionColor : palette.backgroundColor
             border.color: {
                 if (itemCurrent) return palette.activeMissionColor;
                 if (itemReached) return palette.positiveColor;

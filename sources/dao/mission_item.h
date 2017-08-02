@@ -128,6 +128,9 @@ namespace dao
         bool isCurrent() const;
         void setCurrent(bool current);
 
+        bool isSelected() const;
+        void setSelected(bool selected);
+
     private:
         int m_missionId = 0;
         int m_sequence = -1;
@@ -150,6 +153,7 @@ namespace dao
         Status m_status = NotActual;
         bool m_reached = false;
         bool m_current = false;
+        bool m_selected = false;
 
         Q_ENUM(Command)
         Q_ENUM(Status)

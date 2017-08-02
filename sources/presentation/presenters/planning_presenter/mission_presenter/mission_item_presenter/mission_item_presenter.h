@@ -24,7 +24,6 @@ namespace presentation
 
     public slots:
         void setMission(const dao::MissionPtr& mission);
-        void setMissionItem(const dao::MissionItemPtr& item);
         void setPicking(bool picking);
 
         void remove();
