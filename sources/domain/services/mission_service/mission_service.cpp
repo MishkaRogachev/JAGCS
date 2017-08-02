@@ -100,8 +100,7 @@ MissionItemPtrList MissionService::missionItems(int missionId)
 MissionItemPtr MissionService::missionItem(int missionId, int sequence)
 {
     for (int id: d->itemRepository.selectId(
-             QString("missionId = %1 AND sequence = %2").arg(
-                 missionId).arg(sequence)))
+             QString("missionId = %1 AND sequence = %2").arg(missionId).arg(sequence)))
     {
         return this->missionItem(id);
     }
@@ -185,25 +184,31 @@ void MissionService::addNewMissionItem(int missionId)
     MissionItemPtr item = MissionItemPtr::create();
     item->setMissionId(missionId);
 
-    if (mission->count()) // TODO: default parms to settings
+    if (mission->count() > 1) // TODO: default parms to settings
     {
         item->setCommand(MissionItem::Waypoint);
 
-        MissionItemPtr lastItem = this->missionItem(missionId, mission->count());
+        MissionItemPtr lastItem = this->missionItem(missionId, mission->count() - 1);
 
         item->setAltitudeRelative(lastItem->isAltitudeRelative());
         item->setAltitude(lastItem->altitude());
         item->setRadius(0);
     }
-    else
+    else if (mission->count() == 1)
     {
         item->setCommand(MissionItem::Takeoff);
-        item->setAltitude(0);
+        item->setAltitude(30);
         item->setAltitudeRelative(true);
         item->setPitch(15);
     }
+    else
+    {
+        item->setCommand(MissionItem::Home);
+        item->setAltitude(0);
+        item->setAltitudeRelative(false);
+    }
 
-    item->setSequence(mission->count() + 1);
+    item->setSequence(mission->count());
 
     this->save(item);
 }
@@ -221,12 +226,12 @@ void MissionService::fixMissionItemOrder(int missionId)
     int counter = 0;
     for (const MissionItemPtr& item : this->missionItems(missionId))
     {
-        counter++;
         if (item->sequence() != counter)
         {
             item->setSequence(counter);
             this->save(item);
         }
+        counter++;
     }
 
     MissionPtr mission = this->mission(missionId);

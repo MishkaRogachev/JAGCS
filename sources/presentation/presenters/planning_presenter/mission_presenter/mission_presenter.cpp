@@ -79,8 +79,7 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
     d->selectedMission = mission;
     d->item->setMission(d->selectedMission);
 
-    this->setViewProperty(PROPERTY(selectedMission),
-                          d->missions.indexOf(d->selectedMission) + 1);
+    this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
     this->updateAssignment();
     this->updateStatuses();
 
@@ -138,8 +137,7 @@ void MissionPresenter::updateMissionsBox()
         missions.append(mission->name());
     }
     this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
-    this->setViewProperty(PROPERTY(selectedMission),
-                          d->missions.indexOf(d->selectedMission) + 1);
+    this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
     this->setViewConnected(true);
 }
 
@@ -228,8 +226,8 @@ void MissionPresenter::onAddItem()
     if (d->selectedMission.isNull()) return;
 
     d->missionService->addNewMissionItem(d->selectedMission->id());
-    d->item->selectItem(d->selectedMission->count());
-    d->item->setPicking(true);
+    d->item->selectItem(d->selectedMission->count() - 1);
+    d->item->setPicking(true); // TODO: check coordinate usefull
 }
 
 void MissionPresenter::onRemoveMission()

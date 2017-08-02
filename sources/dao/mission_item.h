@@ -45,6 +45,8 @@ namespace dao
             Landing,
             ChangeSpeed,
 
+            JumpTo,
+
             SetServo,
             SetRelay,
             RepeatServo,

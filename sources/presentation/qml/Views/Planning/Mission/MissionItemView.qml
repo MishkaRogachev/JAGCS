@@ -8,7 +8,7 @@ ColumnLayout {
     id: root
 
     property bool changed: false
-    property int sequence: 0
+    property int sequence: -1
     property int count: 0
 
     property alias command: commandBox.currentIndex
@@ -20,18 +20,24 @@ ColumnLayout {
     property alias longitude: longitudeEdit.realValue
     property alias radius: radiusEdit.realValue
     property alias periods: periodsEdit.value
+    property alias delay: delayEdit.realValue
     property alias pitch: pitchEdit.realValue
 
     property bool altitudeVisible: command === MissionItem.Continue ||
                                    positionVisible
 
-    property bool positionVisible: command === MissionItem.Takeoff ||
+    property bool positionVisible: command === MissionItem.Home ||
+                                   command === MissionItem.Takeoff ||
                                    command === MissionItem.Landing ||
                                    radiusVisible
 
     property bool radiusVisible: command === MissionItem.Waypoint ||
+                                 command === MissionItem.LoiterUnlim ||
                                  command === MissionItem.LoiterAltitude ||
-                                 command === MissionItem.LoiterTurns
+                                 command === MissionItem.LoiterTurns ||
+                                 command === MissionItem.LoiterTime
+
+    property bool delayVisible: command === MissionItem.LoiterTime
 
     property bool pitchVisible: command === MissionItem.Takeoff
     property bool periodsVisible: command === MissionItem.LoiterTurns
@@ -59,13 +65,13 @@ ColumnLayout {
             Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
-                enabled: sequence > 0
+                enabled: sequence > -1
                 onClicked: remove()
             }
 
             Controls.Button {
                 iconSource: "qrc:/icons/left.svg"
-                enabled: sequence > 1
+                enabled: sequence > 0
                 onClicked: selectItem(sequence - 1)
             }
 
@@ -73,37 +79,37 @@ ColumnLayout {
                 Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 horizontalAlignment: Qt.AlignHCenter
-                text: sequence + "/" + count
+                text: (sequence + 1) + "/" + count
             }
 
             Controls.Button {
                 iconSource: "qrc:/icons/right.svg"
-                enabled: sequence < count
+                enabled: sequence + 1 < count
                 onClicked: selectItem(sequence + 1)
             }
 
             Controls.Button {
                 iconSource: "qrc:/icons/add.svg"
-                enabled: sequence == count && selectedMission > 0
+                enabled: /*sequence == count - 1 &&*/ selectedMission > 0
                 onClicked: addItem()
             }
         }
 
         Controls.Label {
             text: qsTr("Command")
-            visible: sequence !== 0
+            visible: sequence > -1
             Layout.fillWidth: true
         }
 
         Controls.ComboBox {
             id: commandBox
-            visible: sequence !== 0
+            visible: sequence > -1
             currentIndex: MissionItem.UnknownCommand
             onCurrentIndexChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Controls.Spacer { visible: sequence !== 0; }
+        Controls.Spacer { visible: sequence > -1 }
 
         Controls.Label {
             text: qsTr("Altitude")
@@ -218,6 +224,20 @@ ColumnLayout {
             id: periodsEdit
             visible: periodsVisible
             onValueChanged: changed = true
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.Label {
+            text: qsTr("Delay")
+            visible: delayVisible
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.RealSpinBox {
+            id: delayEdit
+            visible: delayVisible
+            onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 

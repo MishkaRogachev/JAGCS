@@ -127,7 +127,7 @@ ColumnLayout {
                         Layout.minimumWidth: palette.controlBaseSize
                         Layout.minimumHeight: palette.controlBaseSize
 
-                        property bool selected: missionItem.sequence === (index + 1)
+                        property bool selected: missionItem.sequence == index
                         onSelectedChanged: {
                             if (!selected) return;
 
@@ -158,7 +158,7 @@ ColumnLayout {
                             border.width: 4
 
                             Label { // TODO: mode icon
-                                text: index + 1
+                                text: index
                                 color: selected ? palette.selectedTextColor : palette.textColor
                                 anchors.centerIn: parent
                                 font.bold: true
@@ -166,7 +166,7 @@ ColumnLayout {
 
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: missionItem.selectItem(index + 1)
+                                onClicked: missionItem.selectItem(index)
                             }
                         }
                     }

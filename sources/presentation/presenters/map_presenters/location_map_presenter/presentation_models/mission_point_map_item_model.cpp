@@ -43,11 +43,14 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
     case ItemCoordinateRole:
     {
-        if (item->command() == dao::MissionItem::Waypoint ||
+        if (item->command() == dao::MissionItem::Home ||
+            item->command() == dao::MissionItem::Waypoint ||
             item->command() == dao::MissionItem::Takeoff ||
             item->command() == dao::MissionItem::Landing ||
+            item->command() == dao::MissionItem::LoiterUnlim ||
             item->command() == dao::MissionItem::LoiterAltitude ||
-            item->command() == dao::MissionItem::LoiterTurns)
+            item->command() == dao::MissionItem::LoiterTurns ||
+            item->command() == dao::MissionItem::LoiterTime)
         {
             QGeoCoordinate coordinate(item->latitude(), item->longitude());
             if (coordinate.isValid()) return QVariant::fromValue(coordinate);
@@ -58,7 +61,9 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());
     case ItemIconRole:
-        if (item->command() == dao::MissionItem::Takeoff)
+        if (item->command() == dao::MissionItem::Home)
+            return "qrc:/icons/home.svg";
+        else if (item->command() == dao::MissionItem::Takeoff)
             return "qrc:/icons/takeoff.svg";
         else if (item->command() == dao::MissionItem::Landing)
             return "qrc:/icons/landing.svg";
@@ -71,31 +76,30 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
     case ItemRadius:
     {
-        if (item->command() == dao::MissionItem::LoiterAltitude ||
-            item->command() == dao::MissionItem::LoiterTurns)
+        if (item->command() == dao::MissionItem::LoiterUnlim ||
+            item->command() == dao::MissionItem::LoiterAltitude ||
+            item->command() == dao::MissionItem::LoiterTurns ||
+            item->command() == dao::MissionItem::LoiterTime)
             return item->radius();
         else return 0;
     }
     case ItemReached:
         return item->isReached();
-    case ItemCurrent: {
+    case ItemCurrent:
         return item->isCurrent();
-    }
     default:
         return QVariant();
     }
 }
 
-void MissionPointMapItemModel::onMissionItemAdded(
-        const dao::MissionItemPtr& item)
+void MissionPointMapItemModel::onMissionItemAdded(const dao::MissionItemPtr& item)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     m_items.append(item);
     this->endInsertRows();
 }
 
-void MissionPointMapItemModel::onMissionItemRemoved(
-        const dao::MissionItemPtr& item)
+void MissionPointMapItemModel::onMissionItemRemoved(const dao::MissionItemPtr& item)
 {
     int row = m_items.indexOf(item);
 
@@ -103,8 +107,7 @@ void MissionPointMapItemModel::onMissionItemRemoved(
     m_items.removeOne(item);
     this->endRemoveRows();
 
-    emit dataChanged(this->index(row),
-                     this->index(m_items.count() - 1), { ItemSequenceRole });
+    emit dataChanged(this->index(row), this->index(m_items.count() - 1), { ItemSequenceRole });
 }
 
 void MissionPointMapItemModel::onMissionItemChanged(
@@ -130,8 +133,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     return roles;
 }
 
-QModelIndex MissionPointMapItemModel::itemIndex(
-        const dao::MissionItemPtr& item) const
+QModelIndex MissionPointMapItemModel::itemIndex(const dao::MissionItemPtr& item) const
 {
     return this->index(m_items.indexOf(item));
 }

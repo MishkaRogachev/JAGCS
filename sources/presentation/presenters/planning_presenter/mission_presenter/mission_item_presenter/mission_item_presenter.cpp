@@ -18,10 +18,13 @@ namespace
     const QMap<dao::MissionItem::Command, QString> commands =
     {
         { dao::MissionItem::UnknownCommand, qApp->translate("MissionItemPresenter", "None") },
+        { dao::MissionItem::Home, qApp->translate("MissionItemPresenter", "Home") },
         { dao::MissionItem::Takeoff, qApp->translate("MissionItemPresenter", "Takeoff") },
         { dao::MissionItem::Waypoint, qApp->translate("MissionItemPresenter", "Waypoint") },
-        { dao::MissionItem::LoiterAltitude, qApp->translate("MissionItemPresenter", "LoiterAltitude") },
-        { dao::MissionItem::LoiterTurns, qApp->translate("MissionItemPresenter", "LoiterTurns") },
+        { dao::MissionItem::LoiterUnlim, qApp->translate("MissionItemPresenter", "Loiter unlim") },
+        { dao::MissionItem::LoiterAltitude, qApp->translate("MissionItemPresenter", "Loiter altitude") },
+        { dao::MissionItem::LoiterTurns, qApp->translate("MissionItemPresenter", "Loiter turns") },
+        { dao::MissionItem::LoiterTime, qApp->translate("MissionItemPresenter", "Loiter time") },
         { dao::MissionItem::Continue, qApp->translate("MissionItemPresenter", "Continue") },
         { dao::MissionItem::Return, qApp->translate("MissionItemPresenter", "Return") },
         { dao::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") }
@@ -106,6 +109,7 @@ void MissionItemPresenter::save()
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
     d->item->setRadius(this->viewProperty(PROPERTY(radius)).toFloat());
     d->item->setRepeats(this->viewProperty(PROPERTY(periods)).toInt());
+    d->item->setDelay(this->viewProperty(PROPERTY(delay)).toFloat());
     d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
 
     if (!d->service->save(d->item)) return;
@@ -126,10 +130,11 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(radius), d->item->radius());
         this->setViewProperty(PROPERTY(pitch), d->item->pitch());
         this->setViewProperty(PROPERTY(periods), d->item->repeats());
+        this->setViewProperty(PROPERTY(delay), d->item->delay());
     }
     else
     {
-        this->setViewProperty(PROPERTY(sequence), 0);
+        this->setViewProperty(PROPERTY(sequence), -1);
         this->setViewProperty(PROPERTY(command), dao::MissionItem::UnknownCommand);
     }
 
@@ -150,12 +155,12 @@ void MissionItemPresenter::connectView(QObject* view)
     this->updateCount(true);
 }
 
-void MissionItemPresenter::updateCount(bool gotoNewItem)
+void MissionItemPresenter::updateCount(bool gotoLastItem)
 {
     if (d->selectedMission)
     {
         this->setViewProperty(PROPERTY(count), d->selectedMission->count());
-        if (gotoNewItem) this->selectItem(d->selectedMission->count());
+        if (gotoLastItem) this->selectItem(d->selectedMission->count() - 1);
     }
     else
     {
