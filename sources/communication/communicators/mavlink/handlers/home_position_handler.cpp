@@ -44,6 +44,8 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                        QVariant::fromValue(coordinate));
     node->setParameter({ Telemetry::HomePosition, Telemetry::Direction },
                        QVariant::fromValue(direction));
+    node->setParameter({ Telemetry::HomePosition, Telemetry::Altitude },
+                       home.altitude);
 
     node->notify();
 }

@@ -31,6 +31,7 @@ void HomePresenter::onHomePositionChanged(const domain::Telemetry::TelemetryMap&
     if (!parameters.contains(domain::Telemetry::Coordinate)) return;
 
     m_homePosition = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
+
     this->updateView();
 }
 

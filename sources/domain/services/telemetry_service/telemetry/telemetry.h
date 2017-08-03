@@ -20,6 +20,7 @@
 //  |-HomePosition
 //  |  |-Coordinate                     coordinate
 //  |  |-Direction                      direction
+//  |  |-Altitude                       altitude
 //  |-Ahrs
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool

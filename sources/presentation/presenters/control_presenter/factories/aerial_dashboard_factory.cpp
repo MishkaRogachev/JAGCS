@@ -16,6 +16,7 @@
 #include "pitot_presenter.h"
 #include "rangefinder_presenter.h"
 #include "power_system_presenter.h"
+#include "home_altitude_presenter.h"
 
 using namespace presentation;
 
@@ -33,19 +34,21 @@ DashboardPresenter* AerialDashboardFactory::create()
 
     dashboard->addInstrument("fd", 200);
     dashboard->addInstrumentPresenter("fd", new StatusPresenter(
-                                  node->childNode(domain::Telemetry::Status), dashboard));
+                                          node->childNode(domain::Telemetry::Status), dashboard));
     dashboard->addInstrumentPresenter("fd", new AhrsPresenter(
-                                 node->childNode(domain::Telemetry::Ahrs), dashboard));
+                                          node->childNode(domain::Telemetry::Ahrs), dashboard));
     dashboard->addInstrumentPresenter("fd", new SatellitePresenter(
-                                 node->childNode(domain::Telemetry::Satellite), dashboard));
+                                          node->childNode(domain::Telemetry::Satellite), dashboard));
     dashboard->addInstrumentPresenter("fd", new BarometricPresenter(
-                                 node->childNode(domain::Telemetry::Barometric), dashboard));
+                                          node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrumentPresenter("fd", new PitotPresenter(
-                                 node->childNode(domain::Telemetry::Pitot), dashboard));
+                                          node->childNode(domain::Telemetry::Pitot), dashboard));
     dashboard->addInstrumentPresenter("fd", new RangefinderPresenter(
-                                 node->childNode(domain::Telemetry::Rangefinder), dashboard));
+                                          node->childNode(domain::Telemetry::Rangefinder), dashboard));
     dashboard->addInstrumentPresenter("fd", new PowerSystemPresenter(
-                                 node->childNode(domain::Telemetry::PowerSystem), dashboard));
+                                          node->childNode(domain::Telemetry::PowerSystem), dashboard));
+    dashboard->addInstrumentPresenter("fd", new HomeAltitudePresenter(
+                                          node->childNode(domain::Telemetry::HomePosition), dashboard));
 
     return dashboard;
 

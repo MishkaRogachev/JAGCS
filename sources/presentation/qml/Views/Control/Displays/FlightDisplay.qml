@@ -40,6 +40,8 @@ Item {
     property int maxAltitude: settings.value("Gui/fdAltitudeStep") * 2.7
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
 
+    property int homeAltitude: 0
+
     implicitHeight: af.height
 
     Indicators.FdLabel {
@@ -124,9 +126,9 @@ Item {
         anchors.right: parent.right
         width: parent.width * 0.2
         height: parent.height * 0.7
-        value: barometricAltitude
-        minValue: barometricAltitude + minAltitude
-        maxValue: barometricAltitude + maxAltitude
+        value: barometricAltitude - homeAltitude
+        minValue: barometricAltitude - homeAltitude + minAltitude
+        maxValue: barometricAltitude - homeAltitude + maxAltitude
         valueStep: altitudeStep
         enabled: barometricEnabled
         operational: barometricOperational
