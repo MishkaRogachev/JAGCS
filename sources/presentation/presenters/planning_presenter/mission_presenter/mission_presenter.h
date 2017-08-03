@@ -17,6 +17,7 @@ namespace presentation
 
     public slots:
         void selectMission(const dao::MissionPtr& mission);
+        void selectMissionItem(const dao::MissionItemPtr& item);
 
     protected:
         void connectView(QObject* view) override;

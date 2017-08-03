@@ -67,7 +67,7 @@ namespace domain
         void download(dao::MissionAssignmentPtr assignment);
         void upload(dao::MissionAssignmentPtr assignment);
 
-        void orderCurrentItem(int vehicleId, int item);
+        void selectCurrentItem(int vehicleId, int item);
 
     private:
         class Impl;

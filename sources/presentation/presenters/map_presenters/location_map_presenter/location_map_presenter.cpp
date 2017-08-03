@@ -6,6 +6,7 @@
 
 // Internal
 #include "service_registry.h"
+#include "mission_item.h"
 
 #include "mission_point_map_item_model.h"
 #include "mission_line_map_item_model.h"
@@ -31,7 +32,10 @@ public:
 LocationMapPresenter::LocationMapPresenter(QObject* object):
     AbstractMapPresenter(object),
     d(new Impl())
-{}
+{
+    connect(&d->pointModel, &MissionPointMapItemModel::selectMissionItem,
+            this, &LocationMapPresenter::selectMissionItem);
+}
 
 LocationMapPresenter::~LocationMapPresenter()
 {}
@@ -64,7 +68,7 @@ void LocationMapPresenter::setZoomLevel(float zoomLevel)
     this->setViewProperty(PROPERTY(zoomLevel), zoomLevel);
 }
 
-void LocationMapPresenter::selectMissionItem(const dao::MissionItemPtr& item)
+void LocationMapPresenter::setSelectedMissionItem(const dao::MissionItemPtr& item)
 {
     d->pointModel.setSelectedItem(item);
 }

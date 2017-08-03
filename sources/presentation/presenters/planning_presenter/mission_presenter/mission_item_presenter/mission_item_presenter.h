@@ -38,7 +38,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void updateCount(bool gotoLastItem = false);
+        void updateCount();
 
     private:
          class Impl;

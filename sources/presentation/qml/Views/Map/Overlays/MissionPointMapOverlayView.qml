@@ -40,6 +40,11 @@ MapItemView {
                 anchors.centerIn: parent
                 font.bold: true
             }
+
+            MouseArea {
+                anchors.fill: parent
+                onPressed: pointModel.setSelectedMissionItem(itemIndex)
+            }
         }
     }
 }

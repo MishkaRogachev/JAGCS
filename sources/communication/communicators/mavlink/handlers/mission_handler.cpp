@@ -88,7 +88,8 @@ MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
 {
     connect(m_missionService, &domain::MissionService::download, this, &MissionHandler::download);
     connect(m_missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
-    connect(m_missionService, &domain::MissionService::orderCurrentItem, this, &MissionHandler::setCurrent);
+    connect(m_missionService, &domain::MissionService::selectCurrentItem,
+            this, &MissionHandler::selectCurrent);
 }
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
@@ -170,7 +171,7 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     m_communicator->sendMessageAllLinks(message);
 }
 
-void MissionHandler::setCurrent(int vehicleId, uint16_t seq)
+void MissionHandler::selectCurrent(int vehicleId, uint16_t seq)
 {
     this->sendCurrentItem(m_vehicleService->mavIdByVehicleId(vehicleId), seq);
 }

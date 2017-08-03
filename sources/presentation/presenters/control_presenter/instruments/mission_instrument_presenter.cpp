@@ -68,6 +68,6 @@ void MissionInstrumentPresenter::connectView(QObject* view)
 
 void MissionInstrumentPresenter::onCommandSetWaypoint(int item)
 {
-    d->service->orderCurrentItem(d->vehicleId, item);
+    d->service->selectCurrentItem(d->vehicleId, item);
 }
 

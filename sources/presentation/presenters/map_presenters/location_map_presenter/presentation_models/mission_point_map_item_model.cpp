@@ -94,6 +94,8 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
         return m_service->isItemCurrent(item);
     case ItemSelected:
         return item == m_selectedItem;
+    case ItemIndex:
+        return index.row();
     default:
         return QVariant();
     }
@@ -156,6 +158,13 @@ void MissionPointMapItemModel::setSelectedItem(const dao::MissionItemPtr& item)
     }
 }
 
+void MissionPointMapItemModel::setSelectedMissionItem(int index)
+{
+    if (index < 0 || index >= m_items.count()) return;
+
+    emit selectMissionItem(m_items.at(index));
+}
+
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -168,6 +177,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemReached] = "itemReached";
     roles[ItemCurrent] = "itemCurrent";
     roles[ItemSelected] = "itemSelected";
+    roles[ItemIndex] = "itemIndex";
 
     return roles;
 }

@@ -70,7 +70,7 @@ void MissionItemPresenter::setMission(const dao::MissionPtr& mission)
     emit itemSelected(dao::MissionItemPtr());
 
     d->selectedMission = mission;
-    this->updateCount(true);
+    this->updateCount();
 }
 
 void MissionItemPresenter::setPicking(bool picking)
@@ -151,15 +151,15 @@ void MissionItemPresenter::connectView(QObject* view)
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));
     connect(view, SIGNAL(remove()), this, SLOT(remove()));
 
-    this->updateCount(true);
+    this->updateCount();
 }
 
-void MissionItemPresenter::updateCount(bool gotoLastItem)
+void MissionItemPresenter::updateCount()
 {
     if (d->selectedMission)
     {
         this->setViewProperty(PROPERTY(count), d->selectedMission->count());
-        if (gotoLastItem) this->selectItem(d->selectedMission->count() - 1);
+        this->selectItem(d->selectedMission->count() - 1);
     }
     else
     {

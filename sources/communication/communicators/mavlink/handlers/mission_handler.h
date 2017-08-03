@@ -26,7 +26,7 @@ namespace comm
 
        void download(const dao::MissionAssignmentPtr& assignment);
        void upload(const dao::MissionAssignmentPtr& assignment);
-       void setCurrent(int vehicleId, uint16_t seq);
+       void selectCurrent(int vehicleId, uint16_t seq);
 
        void requestMissionItem(uint8_t mavId, uint16_t seq);
 

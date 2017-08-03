@@ -35,7 +35,9 @@ PlanningPresenter::PlanningPresenter(QObject* parent):
     connect(d->mission, &MissionPresenter::missionSelected,
             d->profile, &VerticalProfilePresenter::selectMission);
     connect(d->mission, &MissionPresenter::missionItemSelected,
-            d->map, &AbstractMapPresenter::selectMissionItem);
+            d->map, &AbstractMapPresenter::setSelectedMissionItem);
+    connect(d->map, &AbstractMapPresenter::selectMissionItem,
+            d->mission, &MissionPresenter::selectMissionItem);
 }
 
 void PlanningPresenter::connectView(QObject* view)

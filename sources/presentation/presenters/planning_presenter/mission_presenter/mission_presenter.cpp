@@ -93,6 +93,14 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
     emit missionSelected(mission);
 }
 
+void MissionPresenter::selectMissionItem(const dao::MissionItemPtr& item)
+{
+    if (!item) return;
+
+    this->selectMission(d->missionService->mission(item->missionId()));
+    d->item->selectItem(item->sequence());
+}
+
 void MissionPresenter::connectView(QObject* view)
 {
     d->item->setView(view->findChild<QObject*>(NAME(missionItem)));

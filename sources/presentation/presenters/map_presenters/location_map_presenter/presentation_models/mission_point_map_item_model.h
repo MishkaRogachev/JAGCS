@@ -28,7 +28,8 @@ namespace presentation
             ItemRadius,
             ItemReached,
             ItemCurrent,
-            ItemSelected
+            ItemSelected,
+            ItemIndex
         };
 
         explicit MissionPointMapItemModel(domain::MissionService* service,
@@ -44,6 +45,10 @@ namespace presentation
         void onMissionChanged(const dao::MissionPtr& mission);
 
         void setSelectedItem(const dao::MissionItemPtr& item);
+        void setSelectedMissionItem(int index);
+
+    signals:
+        void selectMissionItem(const dao::MissionItemPtr& item);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
