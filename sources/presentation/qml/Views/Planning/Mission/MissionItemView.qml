@@ -49,7 +49,7 @@ ColumnLayout {
     signal remove()
     signal selectItem(int sequence)
 
-    onChangedChanged: if (!changed) map.dropPicker()
+    onChangedChanged:  if (!changed) pickButton.picking = false;
 
     GridLayout {
         columns: 3

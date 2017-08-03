@@ -42,6 +42,7 @@ MapItemView {
             }
 
             MouseArea {
+                visible: !picking
                 anchors.fill: parent
                 onPressed: pointModel.setSelectedMissionItem(itemIndex)
             }
