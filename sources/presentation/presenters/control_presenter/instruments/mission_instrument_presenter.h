@@ -25,6 +25,8 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+        void setViewConnected(bool connected);
+
     private slots:
         void onCommandSetWaypoint(int item);
 

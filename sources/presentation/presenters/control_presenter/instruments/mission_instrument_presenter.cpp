@@ -30,6 +30,10 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
 
     connect(d->service, &domain::MissionService::missionItemChanged,
             this, &MissionInstrumentPresenter::updateCurrentWaypoint);
+    connect(d->service, &domain::MissionService::missionItemAdded,
+            this, &MissionInstrumentPresenter::updateWaypoints);
+    connect(d->service, &domain::MissionService::missionItemRemoved,
+            this, &MissionInstrumentPresenter::updateWaypoints);
 }
 
 MissionInstrumentPresenter::~MissionInstrumentPresenter()
@@ -37,33 +41,52 @@ MissionInstrumentPresenter::~MissionInstrumentPresenter()
 
 void MissionInstrumentPresenter::updateWaypoints()
 {
+    this->setViewConnected(false);
+
     QStringList waypoints;
     dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
     if (assignment)
     {
+
         dao::MissionPtr mission = d->service->mission(assignment->missionId());
 
-        for (int i = 1; i < mission->count(); ++i)
+        for (int i = 0; i < mission->count(); ++i)
         {
             waypoints.append(QString::number(i));
         }
     }
 
     this->setViewProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
+    this->setViewConnected(true);
 }
 
 void MissionInstrumentPresenter::updateCurrentWaypoint()
 {
+    this->setViewConnected(false);
+
     dao::MissionItemPtr item = d->service->currentWaypoint(d->vehicleId);
     this->setViewProperty(PROPERTY(waypoint), item ? item->sequence() : -1);
+    this->setViewConnected(true);
 }
 
 void MissionInstrumentPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
+    Q_UNUSED(view)
 
     this->updateWaypoints();
     this->updateCurrentWaypoint();
+}
+
+void MissionInstrumentPresenter::setViewConnected(bool connected)
+{
+    if (connected)
+    {
+        connect(this->view(), SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
+    }
+    else
+    {
+        disconnect(this->view(), 0, this, 0);
+    }
 }
 
 void MissionInstrumentPresenter::onCommandSetWaypoint(int item)
