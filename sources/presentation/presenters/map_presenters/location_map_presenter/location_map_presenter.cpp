@@ -64,6 +64,11 @@ void LocationMapPresenter::setZoomLevel(float zoomLevel)
     this->setViewProperty(PROPERTY(zoomLevel), zoomLevel);
 }
 
+void LocationMapPresenter::selectMissionItem(const dao::MissionItemPtr& item)
+{
+    d->pointModel.setSelectedItem(item);
+}
+
 void LocationMapPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)

@@ -31,6 +31,9 @@ namespace presentation
         void save();
         void updateView();
 
+    signals:
+        void itemSelected(const dao::MissionItemPtr& item);
+
     protected:
         void connectView(QObject* view) override;
 

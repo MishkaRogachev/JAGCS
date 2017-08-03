@@ -69,6 +69,9 @@ MissionPresenter::MissionPresenter(QObject* parent):
             this, &MissionPresenter::updateVehiclesBox);
 
     d->item = new MissionItemPresenter(d->missionService, this);
+
+    connect(d->item, &MissionItemPresenter::itemSelected,
+            this, &MissionPresenter::missionItemSelected);
 }
 
 MissionPresenter::~MissionPresenter()

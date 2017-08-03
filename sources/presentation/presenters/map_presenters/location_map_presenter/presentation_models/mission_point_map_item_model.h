@@ -43,6 +43,8 @@ namespace presentation
         void onMissionItemChanged(const dao::MissionItemPtr& item);
         void onMissionChanged(const dao::MissionPtr& mission);
 
+        void setSelectedItem(const dao::MissionItemPtr& item);
+
     protected:
         QHash<int, QByteArray> roleNames() const override;
         QModelIndex itemIndex(const dao::MissionItemPtr& item) const;
@@ -50,6 +52,7 @@ namespace presentation
     private:
         domain::MissionService* m_service;
         dao::MissionItemPtrList m_items;
+        dao::MissionItemPtr m_selectedItem;
     };
 }
 

@@ -283,6 +283,8 @@ void MissionService::unassign(int missionId)
         item->setStatus(MissionItem::NotActual);
         emit missionItemChanged(item);
     }
+
+    //  TODO: clear currend and passed statuses
 }
 
 

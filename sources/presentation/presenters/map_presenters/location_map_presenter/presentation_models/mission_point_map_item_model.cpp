@@ -93,7 +93,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemCurrent:
         return item->isCurrent();
     case ItemSelected:
-        return item->isSelected();
+        return item == m_selectedItem;
     default:
         return QVariant();
     }
@@ -133,6 +133,26 @@ void MissionPointMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
 
         QModelIndex index = this->itemIndex(item);
         if (index.isValid()) emit dataChanged(index, index);
+    }
+}
+
+void MissionPointMapItemModel::setSelectedItem(const dao::MissionItemPtr& item)
+{
+    if (m_selectedItem == item) return;
+
+    dao::MissionItemPtr oldItem = m_selectedItem;
+    m_selectedItem = item;
+
+    if (oldItem)
+    {
+        QModelIndex index = this->itemIndex(oldItem);
+        if (index.isValid()) emit dataChanged(index, index, { ItemSelected });
+    }
+
+    if (item)
+    {
+        QModelIndex index = this->itemIndex(item);
+        if (index.isValid()) emit dataChanged(index, index, { ItemSelected });
     }
 }
 

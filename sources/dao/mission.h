@@ -27,7 +27,7 @@ namespace dao
         QString m_name;
         int m_count = 0;
 
-        bool m_visible = true;
+        bool m_visible = true; // TODO: mission visibility to presenter
     };
 }
 

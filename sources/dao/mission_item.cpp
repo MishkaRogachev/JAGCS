@@ -207,13 +207,3 @@ void MissionItem::setCurrent(bool current)
 {
     m_current = current;
 }
-
-bool MissionItem::isSelected() const
-{
-    return m_selected;
-}
-
-void MissionItem::setSelected(bool selected)
-{
-    m_selected = selected;
-}

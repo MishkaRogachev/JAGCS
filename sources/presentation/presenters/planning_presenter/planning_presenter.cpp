@@ -8,6 +8,7 @@
 #include "vertical_profile_presenter.h"
 
 #include "mission.h"
+#include "mission_item.h"
 
 using namespace presentation;
 
@@ -33,6 +34,8 @@ PlanningPresenter::PlanningPresenter(QObject* parent):
 
     connect(d->mission, &MissionPresenter::missionSelected,
             d->profile, &VerticalProfilePresenter::selectMission);
+    connect(d->mission, &MissionPresenter::missionItemSelected,
+            d->map, &AbstractMapPresenter::selectMissionItem);
 }
 
 void PlanningPresenter::connectView(QObject* view)

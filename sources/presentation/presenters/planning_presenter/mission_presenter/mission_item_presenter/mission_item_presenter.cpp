@@ -67,11 +67,7 @@ void MissionItemPresenter::setMission(const dao::MissionPtr& mission)
 {
     if (d->selectedMission == mission) return;
 
-    if (d->item)
-    {
-        d->item->setSelected(false);
-        d->service->missionItemChanged(d->item);
-    }
+    emit itemSelected(dao::MissionItemPtr());
 
     d->selectedMission = mission;
     this->updateCount(true);
@@ -93,20 +89,13 @@ void MissionItemPresenter::selectItem(int index)
 {
     if (d->selectedMission.isNull()) return;
 
-    if (d->item)
-    {
-        d->item->setSelected(false);
-        d->service->missionItemChanged(d->item);
-    }
+    dao::MissionItemPtr item = d->service->missionItem(d->selectedMission->id(), index);
+    if (d->item == item) return;
 
-    d->item = d->service->missionItem(d->selectedMission->id(), index);
+    d->item = item;
     this->updateView();
 
-    if (d->item)
-    {
-        d->item->setSelected(true);
-        d->service->missionItemChanged(d->item);
-    }
+    emit itemSelected(item);
 }
 
 void MissionItemPresenter::save()

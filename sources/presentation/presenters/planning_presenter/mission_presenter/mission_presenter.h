@@ -42,6 +42,7 @@ namespace presentation
 
     signals:
         void missionSelected(const dao::MissionPtr& mission);
+        void missionItemSelected(const dao::MissionItemPtr& item);
 
     private:
         class Impl;

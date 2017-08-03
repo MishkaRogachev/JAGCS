@@ -3,6 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
+#include "dao_traits.h"
 
 namespace presentation
 {
@@ -20,6 +21,8 @@ namespace presentation
     public slots:
         virtual void setMapCenter(double latitude, double longitude) = 0;
         virtual void setZoomLevel(float zoomLevel) = 0;
+
+        virtual void selectMissionItem(const dao::MissionItemPtr& item) = 0;
     };
 }
 
