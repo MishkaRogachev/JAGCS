@@ -91,7 +91,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemReached:
         return item->isReached();
     case ItemCurrent:
-        return item->isCurrent();
+        return m_service->isItemCurrent(item);
     case ItemSelected:
         return item == m_selectedItem;
     default:

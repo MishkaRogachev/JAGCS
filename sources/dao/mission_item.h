@@ -125,9 +125,6 @@ namespace dao
         bool isReached() const;
         void setReached(bool reached);
 
-        bool isCurrent() const;
-        void setCurrent(bool current);
-
     private:
         int m_missionId = 0;
         int m_sequence = -1;
@@ -149,7 +146,6 @@ namespace dao
 
         Status m_status = NotActual;
         bool m_reached = false;
-        bool m_current = false;
 
         Q_ENUM(Command)
         Q_ENUM(Status)

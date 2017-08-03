@@ -88,7 +88,7 @@ MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
 {
     connect(m_missionService, &domain::MissionService::download, this, &MissionHandler::download);
     connect(m_missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
-    connect(m_missionService, &domain::MissionService::setCurrent, this, &MissionHandler::setCurrent);
+    connect(m_missionService, &domain::MissionService::orderCurrentItem, this, &MissionHandler::setCurrent);
 }
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
@@ -430,14 +430,8 @@ void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
     mavlink_mission_current_t current;
     mavlink_msg_mission_current_decode(&message, &current);
 
-    for (const dao::MissionItemPtr& item: m_missionService->missionItems(assignment->missionId()))
-    {
-        if (item->isCurrent() != (item->sequence() == current.seq))
-        {
-            item->setCurrent(item->sequence() == current.seq);
-            m_missionService->missionItemChanged(item);
-        }
-    }
+    m_missionService->setCurrentItem(
+                vehicleId, m_missionService->missionItem(assignment->missionId(), current.seq));
 }
 
 void MissionHandler::processMissionReached(const mavlink_message_t& message)

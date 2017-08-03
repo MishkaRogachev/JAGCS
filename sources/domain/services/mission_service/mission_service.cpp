@@ -1,5 +1,8 @@
 #include "mission_service.h"
 
+// Qt
+#include <QMap>
+
 // Internal
 #include "mission.h"
 #include "mission_item.h"
@@ -17,6 +20,8 @@ public:
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> itemRepository;
     GenericRepository<MissionAssignment> assignmentRepository;
+
+    QMap <int, MissionItemPtr> vehicleCurrentItems;
 
     Impl():
         missionRepository("missions"),
@@ -69,6 +74,16 @@ MissionItemPtrList MissionService::missionItems(const QString& condition, bool r
         list.append(this->missionItem(id, reload));
     }
     return list;
+}
+
+MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
+{
+    return d->vehicleCurrentItems.value(vehicleId);
+}
+
+bool MissionService::isItemCurrent(const MissionItemPtr& item) const
+{
+    return d->vehicleCurrentItems.values().contains(item);
 }
 
 MissionAssignmentPtr MissionService::missionAssignment(int missionId)
@@ -161,6 +176,7 @@ bool MissionService::remove(const MissionPtr& mission)
 
 bool MissionService::remove(const MissionItemPtr& item)
 {
+    // TODO: remove from current
     if (!d->itemRepository.remove(item)) return false;
 
     this->fixMissionItemOrder(item->missionId());
@@ -283,9 +299,17 @@ void MissionService::unassign(int missionId)
         item->setStatus(MissionItem::NotActual);
         emit missionItemChanged(item);
     }
-
-    //  TODO: clear currend and passed statuses
 }
 
+void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& item)
+{
+    MissionItemPtr oldCurrent;
 
+    oldCurrent = d->vehicleCurrentItems.value(vehicleId);
+    d->vehicleCurrentItems[vehicleId] = item;
+
+    if (oldCurrent) emit missionItemChanged(oldCurrent);
+    if (item ) emit missionItemChanged(item);
+    // TODO: drop current on vehicle's removing
+}
 

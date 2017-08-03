@@ -30,6 +30,9 @@ namespace domain
         dao::MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
         dao::MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
 
+        dao::MissionItemPtr currentWaypoint(int vehicleId) const;
+        bool isItemCurrent(const dao::MissionItemPtr& item) const;
+
     public slots:
         bool save(const dao::MissionPtr& mission);
         bool save(const dao::MissionItemPtr& item);
@@ -45,6 +48,8 @@ namespace domain
 
         void assign(int missionId, int vehicleId);
         void unassign(int missionId);
+
+        void setCurrentItem(int vehicleId, const dao::MissionItemPtr& item);
 
     signals:
         void missionAdded(dao::MissionPtr mission);
@@ -62,7 +67,7 @@ namespace domain
         void download(dao::MissionAssignmentPtr assignment);
         void upload(dao::MissionAssignmentPtr assignment);
 
-        void setCurrent(int vehicleId, int item);
+        void orderCurrentItem(int vehicleId, int item);
 
     private:
         class Impl;

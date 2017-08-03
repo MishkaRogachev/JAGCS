@@ -19,7 +19,6 @@ public:
     domain::MissionService* service;
 
     int vehicleId = -1;
-    int currentWaypoint = 0;
 };
 
 MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* parent):
@@ -30,15 +29,7 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
     d->vehicleId = vehicleId;
 
     connect(d->service, &domain::MissionService::missionItemChanged,
-            this, [this](const dao::MissionItemPtr& item) {
-        if (!item->isCurrent()) return;
-        dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
-        if (assignment && item->missionId() == assignment->missionId())
-        {
-            d->currentWaypoint = item->sequence();
-            this->updateCurrentWaypoint();
-        }
-    });
+            this, &MissionInstrumentPresenter::updateCurrentWaypoint);
 }
 
 MissionInstrumentPresenter::~MissionInstrumentPresenter()
@@ -63,7 +54,8 @@ void MissionInstrumentPresenter::updateWaypoints()
 
 void MissionInstrumentPresenter::updateCurrentWaypoint()
 {
-    this->setViewProperty(PROPERTY(waypoint), d->currentWaypoint);
+    dao::MissionItemPtr item = d->service->currentWaypoint(d->vehicleId);
+    this->setViewProperty(PROPERTY(waypoint), item ? item->sequence() : -1);
 }
 
 void MissionInstrumentPresenter::connectView(QObject* view)
@@ -76,6 +68,6 @@ void MissionInstrumentPresenter::connectView(QObject* view)
 
 void MissionInstrumentPresenter::onCommandSetWaypoint(int item)
 {
-    d->service->setCurrent(d->vehicleId, item);
+    d->service->orderCurrentItem(d->vehicleId, item);
 }
 
