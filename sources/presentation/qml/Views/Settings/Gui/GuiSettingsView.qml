@@ -16,6 +16,7 @@ Controls.Frame {
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
     property alias fdRollInverted: fdRollBar.currentIndex
+    property alias relativeAltitude: relativeAltitudeBox.checked
 
     signal save()
     signal restore()
@@ -151,6 +152,18 @@ Controls.Frame {
                 altitudeStep = currentText;
                 changed = true;
             }
+        }
+
+        Controls.Label {
+            text: qsTr("Relative altitude")
+            Layout.fillWidth: true
+        }
+
+        Controls.CheckBox {
+            id: relativeAltitudeBox
+            Layout.columnSpan: 2
+            Layout.alignment: Qt.AlignRight
+            onCheckedChanged: changed = true
         }
 
         Item {

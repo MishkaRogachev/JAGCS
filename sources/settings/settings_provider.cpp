@@ -49,6 +49,7 @@ public:
         settings.setValue(gui::fdRollInverted, 0);
         settings.setValue(gui::fdSpeedStep, 5);
         settings.setValue(gui::fdAltitudeStep, 10);
+        settings.setValue(gui::fdRelativeAltitude, true);
 
         settings.setValue(proxy::type, 0);
     }

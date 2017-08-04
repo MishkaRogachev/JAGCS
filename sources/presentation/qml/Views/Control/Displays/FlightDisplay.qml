@@ -32,6 +32,8 @@ Item {
     property bool rangefinderOperational: false
     property real rangefinderHeight: 0
 
+    property int homeAltitude: 0
+
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * 2.7
     property int maxSpeed: settings.value("Gui/fdSpeedStep") * 2.7
     property int speedStep: settings.value("Gui/fdSpeedStep")
@@ -39,8 +41,9 @@ Item {
     property int minAltitude: -settings.value("Gui/fdAltitudeStep") * 2.7
     property int maxAltitude: settings.value("Gui/fdAltitudeStep") * 2.7
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
+    property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
-    property int homeAltitude: 0
+    property int mainAltitude: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
 
     implicitHeight: af.height
 
@@ -126,9 +129,9 @@ Item {
         anchors.right: parent.right
         width: parent.width * 0.2
         height: parent.height * 0.7
-        value: barometricAltitude - homeAltitude
-        minValue: barometricAltitude - homeAltitude + minAltitude
-        maxValue: barometricAltitude - homeAltitude + maxAltitude
+        value: mainAltitude
+        minValue: mainAltitude + minAltitude
+        maxValue: mainAltitude + maxAltitude
         valueStep: altitudeStep
         enabled: barometricEnabled
         operational: barometricOperational

@@ -46,6 +46,7 @@ namespace settings
         const char* const fdRollInverted = "Gui/fdRollInverted";
         const char* const fdSpeedStep = "Gui/fdSpeedStep";
         const char* const fdAltitudeStep = "Gui/fdAltitudeStep";
+        const char* const fdRelativeAltitude = "Gui/fdRelativeAltitude";
     }
 
     namespace proxy

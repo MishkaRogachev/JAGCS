@@ -43,6 +43,8 @@ void GuiSettingsPresenter::updateView()
                           settings::Provider::value(settings::gui::fdSpeedStep));
     this->setViewProperty(PROPERTY(altitudeStep),
                           settings::Provider::value(settings::gui::fdAltitudeStep));
+    this->setViewProperty(PROPERTY(relativeAltitude),
+                          settings::Provider::value(settings::gui::fdRelativeAltitude));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -66,6 +68,8 @@ void GuiSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(speedStep)));
     settings::Provider::setValue(settings::gui::fdAltitudeStep,
                                  this->viewProperty(PROPERTY(altitudeStep)));
+    settings::Provider::setValue(settings::gui::fdRelativeAltitude,
+                                 this->viewProperty(PROPERTY(relativeAltitude)));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
