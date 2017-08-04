@@ -15,7 +15,8 @@ Controls.Frame {
     property alias localeIndex: languageBox.currentIndex
     property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBar.currentIndex
-    property alias fdRollInverted: fdRollBar.currentIndex
+    property alias rollInverted: rollBar.currentIndex
+    property alias speedUnits: speedUnitsBox.currentIndex
     property alias relativeAltitude: relativeAltitudeBox.checked
 
     signal save()
@@ -105,10 +106,10 @@ Controls.Frame {
         Item {
             Layout.fillWidth: true
             Layout.columnSpan: 2
-            height: fdRollBar.height
+            height: rollBar.height
 
             Controls.TabBar {
-                id: fdRollBar
+                id: rollBar
                 anchors.centerIn: parent
                 width: parent.width
                 onCurrentIndexChanged: changed = true
@@ -136,6 +137,19 @@ Controls.Frame {
                 speedStep = currentText;
                 changed = true;
             }
+        }
+
+        Controls.Label {
+            text: qsTr("Speed units")
+            Layout.fillWidth: true
+        }
+
+        Controls.ComboBox {
+            id: speedUnitsBox
+            model: [ qsTr("mps"), qsTr("kph") ]
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            onCurrentIndexChanged: changed = true;
         }
 
         Controls.Label {

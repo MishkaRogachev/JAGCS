@@ -1,5 +1,6 @@
 import QtQuick 2.6
 
+import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
 
 Item {
@@ -38,13 +39,12 @@ Item {
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * scalingFactor
     property int maxSpeed: settings.value("Gui/fdSpeedStep") * scalingFactor
     property int speedStep: settings.value("Gui/fdSpeedStep")
+    property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
     property int minAltitude: -settings.value("Gui/fdAltitudeStep") * scalingFactor
     property int maxAltitude: settings.value("Gui/fdAltitudeStep") * scalingFactor
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
-
-    property int mainAltitude: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
 
     implicitHeight: af.height
 
@@ -53,7 +53,13 @@ Item {
         anchors.left: parent.left
         prefix: qsTr("GS")
         digits: 1
-        value: groundspeed
+        value: {
+            switch (speedUnits) {
+            default:
+            case 0: return groundspeed;
+            case 1: return Helper.mpsToKph(groundspeed);
+            }
+        }
         enabled: satelliteEnabled
         operational: satelliteOperational
         width: speedLadder.width
@@ -73,9 +79,15 @@ Item {
         anchors.left: parent.left
         width: parent.width * 0.2
         height: parent.height * 0.7
-        value: indicatedAirspeed
-        minValue: indicatedAirspeed + minSpeed
-        maxValue: indicatedAirspeed + maxSpeed
+        value: {
+            switch (speedUnits) {
+            default:
+            case 0: return indicatedAirspeed;
+            case 1: return Helper.mpsToKph(indicatedAirspeed);
+            }
+        }
+        minValue: value + minSpeed
+        maxValue: value + maxSpeed
         valueStep: speedStep
         enabled: pitotEnabled
         operational: pitotOperational
@@ -87,7 +99,13 @@ Item {
         anchors.left: parent.left
         prefix: qsTr("TAS")
         digits: 1
-        value: trueAirspeed
+        value: {
+            switch (speedUnits) {
+            default:
+            case 0: return trueAirspeed;
+            case 1: return Helper.mpsToKph(trueAirspeed);
+            }
+        }
         enabled: pitotEnabled
         operational: pitotOperational
         width: speedLadder.width
@@ -129,9 +147,9 @@ Item {
         anchors.right: parent.right
         width: parent.width * 0.2
         height: parent.height * 0.7
-        value: mainAltitude
-        minValue: mainAltitude + minAltitude
-        maxValue: mainAltitude + maxAltitude
+        value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
+        minValue: value + minAltitude
+        maxValue: value + maxAltitude
         valueStep: altitudeStep
         enabled: barometricEnabled
         operational: barometricOperational

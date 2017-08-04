@@ -48,6 +48,7 @@ public:
         settings.setValue(gui::paletteStyle, 0);
         settings.setValue(gui::fdRollInverted, 0);
         settings.setValue(gui::fdSpeedStep, 5);
+        settings.setValue(gui::fdSpeedUnits, 0);
         settings.setValue(gui::fdAltitudeStep, 10);
         settings.setValue(gui::fdRelativeAltitude, true);
 

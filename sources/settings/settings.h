@@ -45,6 +45,7 @@ namespace settings
         const char* const paletteStyle = "Gui/paletteStyle";
         const char* const fdRollInverted = "Gui/fdRollInverted";
         const char* const fdSpeedStep = "Gui/fdSpeedStep";
+        const char* const fdSpeedUnits = "Gui/fdSpeedUnits";
         const char* const fdAltitudeStep = "Gui/fdAltitudeStep";
         const char* const fdRelativeAltitude = "Gui/fdRelativeAltitude";
     }
