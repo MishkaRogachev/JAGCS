@@ -34,12 +34,13 @@ Item {
 
     property int homeAltitude: 0
 
-    property int minSpeed: -settings.value("Gui/fdSpeedStep") * 2.7
-    property int maxSpeed: settings.value("Gui/fdSpeedStep") * 2.7
+    property real scalingFactor: 2.7
+    property int minSpeed: -settings.value("Gui/fdSpeedStep") * scalingFactor
+    property int maxSpeed: settings.value("Gui/fdSpeedStep") * scalingFactor
     property int speedStep: settings.value("Gui/fdSpeedStep")
 
-    property int minAltitude: -settings.value("Gui/fdAltitudeStep") * 2.7
-    property int maxAltitude: settings.value("Gui/fdAltitudeStep") * 2.7
+    property int minAltitude: -settings.value("Gui/fdAltitudeStep") * scalingFactor
+    property int maxAltitude: settings.value("Gui/fdAltitudeStep") * scalingFactor
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
@@ -78,7 +79,6 @@ Item {
         valueStep: speedStep
         enabled: pitotEnabled
         operational: pitotOperational
-        canvasRotation: 90
         prefix: qsTr("IAS")
     }
 
@@ -135,7 +135,7 @@ Item {
         valueStep: altitudeStep
         enabled: barometricEnabled
         operational: barometricOperational
-        canvasRotation: -90
+        mirrored: true
         prefix: qsTr("ALT")
     }
 
