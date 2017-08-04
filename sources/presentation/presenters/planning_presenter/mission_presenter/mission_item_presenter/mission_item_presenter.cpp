@@ -110,6 +110,7 @@ void MissionItemPresenter::save()
     d->item->setRepeats(this->viewProperty(PROPERTY(periods)).toInt());
     d->item->setDelay(this->viewProperty(PROPERTY(delay)).toFloat());
     d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
+    d->item->setStatus(dao::MissionItem::NotActual);
 
     if (!d->service->save(d->item)) return;
 
