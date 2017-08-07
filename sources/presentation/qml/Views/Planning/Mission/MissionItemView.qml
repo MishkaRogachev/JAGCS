@@ -19,8 +19,8 @@ ColumnLayout {
     property alias latitude: latitudeEdit.realValue
     property alias longitude: longitudeEdit.realValue
     property alias radius: radiusEdit.realValue
-    property alias periods: periodsEdit.value
-    property alias delay: delayEdit.realValue
+    property alias repeats: repeatsEdit.value
+    property alias time: timeEdit.realValue
     property alias pitch: pitchEdit.realValue
 
     property bool altitudeVisible: command === MissionItem.Continue ||
@@ -37,10 +37,10 @@ ColumnLayout {
                                  command === MissionItem.LoiterTurns ||
                                  command === MissionItem.LoiterTime
 
-    property bool delayVisible: command === MissionItem.LoiterTime
+    property bool timeVisible: command === MissionItem.LoiterTime
 
     property bool pitchVisible: command === MissionItem.Takeoff
-    property bool periodsVisible: command === MissionItem.LoiterTurns
+    property bool repeatsVisible: command === MissionItem.LoiterTurns
 
     property alias picking: pickButton.picking
 
@@ -221,34 +221,34 @@ ColumnLayout {
         Controls.Spacer { visible: pitchVisible }
 
         Controls.Label {
-            text: qsTr("Periods")
-            visible: periodsVisible
+            text: qsTr("Repeats")
+            visible: repeatsVisible
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignRight
         }
 
         Controls.SpinBox {
-            id: periodsEdit
-            visible: periodsVisible
+            id: repeatsEdit
+            visible: repeatsVisible
             onValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
         Controls.Label {
-            text: qsTr("Delay")
-            visible: delayVisible
+            text: qsTr("Time")
+            visible: timeVisible
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignRight
         }
 
         Controls.RealSpinBox {
-            id: delayEdit
-            visible: delayVisible
+            id: timeEdit
+            visible: timeVisible
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
 
-        Controls.Spacer { visible: periodsVisible }
+        Controls.Spacer { visible: repeatsVisible }
 
         Controls.Spacer {
             Layout.fillHeight: true

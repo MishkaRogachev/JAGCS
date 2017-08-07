@@ -106,10 +106,10 @@ void MissionItemPresenter::save()
     d->item->setAltitudeRelative(this->viewProperty(PROPERTY(isAltitudeRelative)).toBool());
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
-    d->item->setRadius(this->viewProperty(PROPERTY(radius)).toFloat());
-    d->item->setRepeats(this->viewProperty(PROPERTY(periods)).toInt());
-    d->item->setDelay(this->viewProperty(PROPERTY(delay)).toFloat());
-    d->item->setPitch(this->viewProperty(PROPERTY(pitch)).toFloat());
+    d->item->setParameter(dao::MissionItem::Radius, this->viewProperty(PROPERTY(radius)));
+    d->item->setParameter(dao::MissionItem::Repeats, this->viewProperty(PROPERTY(repeats)));
+    d->item->setParameter(dao::MissionItem::Time, this->viewProperty(PROPERTY(time)));
+    d->item->setParameter(dao::MissionItem::Pitch, this->viewProperty(PROPERTY(pitch)));
     d->item->setStatus(dao::MissionItem::NotActual);
 
     if (!d->service->save(d->item)) return;
@@ -127,10 +127,10 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
-        this->setViewProperty(PROPERTY(radius), d->item->radius());
-        this->setViewProperty(PROPERTY(pitch), d->item->pitch());
-        this->setViewProperty(PROPERTY(periods), d->item->repeats());
-        this->setViewProperty(PROPERTY(delay), d->item->delay());
+        this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
+        this->setViewProperty(PROPERTY(pitch), d->item->parameter(dao::MissionItem::Pitch));
+        this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));
+        this->setViewProperty(PROPERTY(time), d->item->parameter(dao::MissionItem::Time));
     }
     else
     {

@@ -76,7 +76,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemAcceptanceRadius:
     {
         if (item->command() == dao::MissionItem::Waypoint)
-            return item->radius();
+            return item->parameter(dao::MissionItem::Radius);
         else return 0;
     }
     case ItemRadius:
@@ -85,7 +85,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
             item->command() == dao::MissionItem::LoiterAltitude ||
             item->command() == dao::MissionItem::LoiterTurns ||
             item->command() == dao::MissionItem::LoiterTime)
-            return item->radius();
+            return item->parameter(dao::MissionItem::Radius);
         else return 0;
     }
     case ItemReached:
