@@ -72,7 +72,7 @@ ColumnLayout {
             Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
-                enabled: sequence > -1
+                enabled: sequence > -1 && editEnabled
                 onClicked: remove()
             }
 
@@ -97,7 +97,7 @@ ColumnLayout {
 
             Controls.Button {
                 iconSource: "qrc:/icons/add.svg"
-                enabled: /*sequence == count - 1 &&*/ selectedMission > 0
+                enabled: selectedMission > 0
                 onClicked: addItem()
             }
         }

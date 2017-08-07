@@ -74,7 +74,8 @@ ColumnLayout {
 
         Button {
             iconSource: "qrc:/icons/remove.svg"
-            enabled: selectedMission > 0
+            iconColor: palette.negativeColor
+            enabled: selectedMission > 0 && assignedVehicle == 0
             onClicked: removeMission()
         }
 
