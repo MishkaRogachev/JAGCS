@@ -48,6 +48,8 @@ MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObj
 
     connect(service, &domain::MissionService::missionItemAdded, this, &MissionItemPresenter::updateCount);
     connect(service, &domain::MissionService::missionItemRemoved, this, &MissionItemPresenter::updateCount);
+    connect(service, &domain::MissionService::missionItemChanged,
+            this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateView(); });
 }
 
 MissionItemPresenter::~MissionItemPresenter()
@@ -116,8 +118,6 @@ void MissionItemPresenter::save()
     d->item->setStatus(dao::MissionItem::NotActual);
 
     if (!d->service->save(d->item)) return;
-
-    this->setViewProperty(PROPERTY(changed), false);
 }
 
 void MissionItemPresenter::updateView()
