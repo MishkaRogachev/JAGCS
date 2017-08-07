@@ -152,6 +152,8 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 
     for (const dao::MissionItemPtr& item: m_missionService->missionItems(assignment->missionId()))
     {
+        if (item->status() == dao::MissionItem::Actual) continue;
+
         item->setStatus(dao::MissionItem::Uploading);
         m_missionService->missionItemChanged(item);
     }
