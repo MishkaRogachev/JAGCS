@@ -14,32 +14,33 @@ ColumnLayout {
     property alias command: commandBox.currentIndex
     property alias commands: commandBox.model
 
-    property alias altitude: altitudeEdit.realValue
-    property alias isAltitudeRelative: altitudeRelativeEdit.checked
-    property alias latitude: latitudeEdit.realValue
-    property alias longitude: longitudeEdit.realValue
-    property alias radius: radiusEdit.realValue
-    property alias repeats: repeatsEdit.value
-    property alias time: timeEdit.realValue
-    property alias pitch: pitchEdit.realValue
+    property alias altitude: altitudeBox.realValue
+    property alias isAltitudeRelative: altitudeRelativeBox.checked
+    property alias latitude: latitudeBox.realValue
+    property alias longitude: longitudeBox.realValue
+    property alias radius: radiusBox.realValue
+    property alias repeats: repeatsBox.value
+    property alias time: timeBox.realValue
+    property alias pitch: pitchBox.realValue
+    property alias yaw: yawBox.realValue
+    property alias clockwise: clockwiseBox.checked
 
-    property bool altitudeVisible: command === MissionItem.Continue ||
-                                   positionVisible
+    property bool pitchVisible: command === MissionItem.Takeoff
+    property bool altitudeVisible: command === MissionItem.Continue || positionVisible
 
     property bool positionVisible: command === MissionItem.Home ||
                                    command === MissionItem.Takeoff ||
                                    command === MissionItem.Landing ||
                                    radiusVisible
 
-    property bool radiusVisible: command === MissionItem.Waypoint ||
-                                 command === MissionItem.LoiterUnlim ||
-                                 command === MissionItem.LoiterAltitude ||
-                                 command === MissionItem.LoiterTurns ||
-                                 command === MissionItem.LoiterTime
+    property bool radiusVisible: command === MissionItem.Waypoint || clockwiseVisible
 
     property bool timeVisible: command === MissionItem.LoiterTime
+    property bool clockwiseVisible: yawVisible || command === MissionItem.LoiterAltitude
+    property bool yawVisible: command === MissionItem.LoiterUnlim ||
+                              command === MissionItem.LoiterTurns ||
+                              command === MissionItem.LoiterTime
 
-    property bool pitchVisible: command === MissionItem.Takeoff
     property bool repeatsVisible: command === MissionItem.LoiterTurns
 
     property alias picking: pickButton.picking
@@ -124,7 +125,7 @@ ColumnLayout {
         }
 
         Controls.RealSpinBox {
-            id: altitudeEdit
+            id: altitudeBox
             visible: altitudeVisible
             realFrom: -500 // 418 m Daed Sea shore
             realTo: 20000 // TODO: constants to config
@@ -141,7 +142,7 @@ ColumnLayout {
         }
 
         Controls.CheckBox {
-            id: altitudeRelativeEdit
+            id: altitudeRelativeBox
             visible: altitudeVisible
             enabled: sequence > 0
             onCheckedChanged: changed = true
@@ -157,7 +158,7 @@ ColumnLayout {
         }
 
         Controls.CoordSpinBox {
-            id: latitudeEdit
+            id: latitudeBox
             visible: positionVisible
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
@@ -168,8 +169,8 @@ ColumnLayout {
             visible: positionVisible
             Layout.rowSpan: 2
             onPicked: {
-                latitudeEdit.realValue = coordinate.latitude;
-                longitudeEdit.realValue = coordinate.longitude;
+                latitudeBox.realValue = coordinate.latitude;
+                longitudeBox.realValue = coordinate.longitude;
             }
         }
 
@@ -180,7 +181,7 @@ ColumnLayout {
         }
 
         Controls.CoordSpinBox {
-            id: longitudeEdit
+            id: longitudeBox
             visible: positionVisible
             isLongitude: true
             onRealValueChanged: changed = true
@@ -194,7 +195,7 @@ ColumnLayout {
         }
 
         Controls.RealSpinBox {
-            id: radiusEdit
+            id: radiusBox
             visible: radiusVisible
             realTo: 5000 // TODO: constants to config
             onRealValueChanged: changed = true
@@ -210,7 +211,7 @@ ColumnLayout {
         }
 
         Controls.RealSpinBox {
-            id: pitchEdit
+            id: pitchBox
             visible: pitchVisible
             realFrom: -90
             realTo: 90 // TODO: constants to config
@@ -221,6 +222,38 @@ ColumnLayout {
         Controls.Spacer { visible: pitchVisible }
 
         Controls.Label {
+            text: qsTr("Yaw")
+            visible: yawVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.RealSpinBox {
+            id: yawBox
+            visible: yawVisible
+            realFrom: -180
+            realTo: 360 // TODO: constants to config
+            onRealValueChanged: changed = true
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.Spacer { visible: yawVisible }
+
+        Controls.Label {
+            text: qsTr("Clockwise")
+            visible: clockwiseVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.CheckBox {
+            id: clockwiseBox
+            visible: clockwiseVisible
+            onCheckedChanged: changed = true
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.Spacer { visible: clockwiseVisible }
+
+        Controls.Label {
             text: qsTr("Repeats")
             visible: repeatsVisible
             Layout.fillWidth: true
@@ -228,7 +261,7 @@ ColumnLayout {
         }
 
         Controls.SpinBox {
-            id: repeatsEdit
+            id: repeatsBox
             visible: repeatsVisible
             onValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
@@ -242,7 +275,7 @@ ColumnLayout {
         }
 
         Controls.RealSpinBox {
-            id: timeEdit
+            id: timeBox
             visible: timeVisible
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
