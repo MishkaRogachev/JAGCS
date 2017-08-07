@@ -347,8 +347,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
-    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(),
-                                                             msgItem.seq);
+    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), msgItem.seq);
     if (item.isNull())
     {
         item = dao::MissionItemPtr::create();

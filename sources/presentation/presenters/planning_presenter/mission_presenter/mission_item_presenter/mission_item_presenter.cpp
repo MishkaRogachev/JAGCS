@@ -124,6 +124,7 @@ void MissionItemPresenter::updateView()
 {
     if (d->item)
     {
+        this->setViewProperty(PROPERTY(editEnabled), !d->service->isItemCurrent(d->item));
         this->setViewProperty(PROPERTY(sequence), d->item->sequence());
         this->setViewProperty(PROPERTY(command), d->item->command());
         this->setViewProperty(PROPERTY(altitude), d->item->altitude());

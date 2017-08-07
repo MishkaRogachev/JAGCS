@@ -21,7 +21,7 @@ public:
     GenericRepository<MissionItem> itemRepository;
     GenericRepository<MissionAssignment> assignmentRepository;
 
-    QMap <int, MissionItemPtr> vehicleCurrentItems;
+    QMap <int, MissionItemPtr> currentItems;
 
     Impl():
         missionRepository("missions"),
@@ -78,12 +78,12 @@ MissionItemPtrList MissionService::missionItems(const QString& condition, bool r
 
 MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
 {
-    return d->vehicleCurrentItems.value(vehicleId);
+    return d->currentItems.value(vehicleId);
 }
 
 bool MissionService::isItemCurrent(const MissionItemPtr& item) const
 {
-    return d->vehicleCurrentItems.values().contains(item);
+    return d->currentItems.values().contains(item);
 }
 
 MissionAssignmentPtr MissionService::missionAssignment(int missionId)
@@ -186,6 +186,20 @@ bool MissionService::remove(const MissionItemPtr& item)
 
 bool MissionService::remove(const MissionAssignmentPtr& assignment)
 {
+    for (const dao::MissionItemPtr& item: this->missionItems(assignment->missionId()))
+    {
+        item->setStatus(MissionItem::NotActual);
+        emit missionItemChanged(item);
+    }
+
+    for (const dao::MissionItemPtr& item: d->currentItems.values())
+    {
+        if (item->missionId() != assignment->missionId()) continue;
+
+        d->currentItems.remove(d->currentItems.key(item));
+        emit missionItemChanged(item);
+    }
+
     if (!d->assignmentRepository.remove(assignment)) return false;
 
     emit assignmentRemoved(assignment);
@@ -307,23 +321,17 @@ void MissionService::unassign(int missionId)
 {
     MissionAssignmentPtr assignment = this->missionAssignment(missionId);
     if (!assignment.isNull()) this->remove(assignment);
-
-    for (const dao::MissionItemPtr& item: this->missionItems(missionId))
-    {
-        item->setStatus(MissionItem::NotActual);
-        emit missionItemChanged(item);
-    }
 }
 
 void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& item)
 {
     MissionItemPtr oldCurrent;
 
-    oldCurrent = d->vehicleCurrentItems.value(vehicleId);
-    d->vehicleCurrentItems[vehicleId] = item;
+    oldCurrent = d->currentItems.value(vehicleId);
+    d->currentItems[vehicleId] = item;
 
     if (oldCurrent) emit missionItemChanged(oldCurrent);
-    if (item ) emit missionItemChanged(item);
+    if (item) emit missionItemChanged(item);
     // TODO: drop current on vehicle's removing
 }
 

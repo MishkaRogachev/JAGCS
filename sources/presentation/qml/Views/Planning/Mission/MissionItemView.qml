@@ -7,6 +7,7 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    property bool editEnabled: false
     property bool changed: false
     property int sequence: -1
     property int count: 0
@@ -110,7 +111,7 @@ ColumnLayout {
         Controls.ComboBox {
             id: commandBox
             visible: sequence > -1
-            enabled: sequence > 0
+            enabled: editEnabled && sequence > 0
             currentIndex: MissionItem.UnknownCommand
             onCurrentIndexChanged: changed = true
             Layout.alignment: Qt.AlignRight
@@ -127,6 +128,7 @@ ColumnLayout {
         Controls.RealSpinBox {
             id: altitudeBox
             visible: altitudeVisible
+            enabled: editEnabled
             realFrom: -500 // 418 m Daed Sea shore
             realTo: 20000 // TODO: constants to config
             onRealValueChanged: changed = true
@@ -144,7 +146,7 @@ ColumnLayout {
         Controls.CheckBox {
             id: altitudeRelativeBox
             visible: altitudeVisible
-            enabled: sequence > 0
+            enabled: editEnabled && sequence > 0
             onCheckedChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
@@ -160,6 +162,7 @@ ColumnLayout {
         Controls.CoordSpinBox {
             id: latitudeBox
             visible: positionVisible
+            enabled: editEnabled
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
@@ -167,6 +170,7 @@ ColumnLayout {
         Controls.MapPickButton {
             id: pickButton
             visible: positionVisible
+            enabled: editEnabled
             Layout.rowSpan: 2
             onPicked: {
                 latitudeBox.realValue = coordinate.latitude;
@@ -183,6 +187,7 @@ ColumnLayout {
         Controls.CoordSpinBox {
             id: longitudeBox
             visible: positionVisible
+            enabled: editEnabled
             isLongitude: true
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
@@ -197,6 +202,7 @@ ColumnLayout {
         Controls.RealSpinBox {
             id: radiusBox
             visible: radiusVisible
+            enabled: editEnabled
             realTo: 5000 // TODO: constants to config
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
@@ -213,6 +219,7 @@ ColumnLayout {
         Controls.RealSpinBox {
             id: pitchBox
             visible: pitchVisible
+            enabled: editEnabled
             realFrom: -90
             realTo: 90 // TODO: constants to config
             onRealValueChanged: changed = true
@@ -230,6 +237,7 @@ ColumnLayout {
         Controls.RealSpinBox {
             id: yawBox
             visible: yawVisible
+            enabled: editEnabled
             realFrom: -180
             realTo: 360 // TODO: constants to config
             onRealValueChanged: changed = true
@@ -247,6 +255,7 @@ ColumnLayout {
         Controls.CheckBox {
             id: clockwiseBox
             visible: clockwiseVisible
+            enabled: editEnabled
             onCheckedChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
@@ -277,6 +286,7 @@ ColumnLayout {
         Controls.RealSpinBox {
             id: timeBox
             visible: timeVisible
+            enabled: editEnabled
             onRealValueChanged: changed = true
             Layout.alignment: Qt.AlignRight
         }
@@ -300,7 +310,7 @@ ColumnLayout {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             onClicked: save()
-            enabled: changed
+            enabled: editEnabled && changed
             Layout.fillWidth: true
         }
 

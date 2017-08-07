@@ -33,8 +33,7 @@ TelemetryService::TelemetryService(VehicleService* service, QObject* parent):
     d(new Impl())
 {
     d->service = service;
-    connect(d->service, &VehicleService::vehicleRemoved,
-            this, &TelemetryService::onVehicleRemoved);
+    connect(d->service, &VehicleService::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
 }
 
 TelemetryService::~TelemetryService()
