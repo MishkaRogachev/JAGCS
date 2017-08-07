@@ -1,6 +1,7 @@
 #include "mission_item.h"
 
 // Qt
+#include <QMetaEnum>
 #include <QDebug>
 
 // Internal
@@ -48,16 +49,6 @@ void MissionItem::setAltitude(float altitude)
     m_altitude = altitude;
 }
 
-float MissionItem::abortAltitude() const
-{
-    return m_abortAltitude;
-}
-
-void MissionItem::setAbortAltitude(float abortAltitude)
-{
-    m_abortAltitude = abortAltitude;
-}
-
 bool MissionItem::isAltitudeRelative() const
 {
     return m_altitudeRelative;
@@ -88,96 +79,6 @@ void MissionItem::setLongitude(double longitude)
     m_longitude = longitude;
 }
 
-float MissionItem::distance() const
-{
-    return m_distance;
-}
-
-void MissionItem::setDistance(float distance)
-{
-    m_distance = distance;
-}
-
-float MissionItem::speed() const
-{
-    return m_speed;
-}
-
-void MissionItem::setSpeed(float speed)
-{
-    m_speed = speed;
-}
-
-float MissionItem::radius() const
-{
-    return m_radius;
-}
-
-void MissionItem::setRadius(float radius)
-{
-    m_radius = radius;
-}
-
-float MissionItem::pitch() const
-{
-    return m_pitch;
-}
-
-void MissionItem::setPitch(float pitch)
-{
-    m_pitch = pitch;
-}
-
-float MissionItem::roll() const
-{
-    return m_roll;
-}
-
-void MissionItem::setRoll(float roll)
-{
-    m_roll = roll;
-}
-
-float MissionItem::yaw() const
-{
-    return m_yaw;
-}
-
-void MissionItem::setYaw(float yaw)
-{
-    m_yaw = yaw;
-}
-
-int MissionItem::repeats() const
-{
-    return m_repeats;
-}
-
-void MissionItem::setRepeats(int periods)
-{
-    m_repeats = periods;
-}
-
-int MissionItem::delay() const
-{
-    return m_delay;
-}
-
-void MissionItem::setDelay(int delay)
-{
-    m_delay = delay;
-}
-
-bool MissionItem::isEnabled() const
-{
-    return m_enabled;
-}
-
-void MissionItem::setEnabled(bool enabled)
-{
-    m_enabled = enabled;
-}
-
 MissionItem::Status MissionItem::status() const
 {
     return m_status;
@@ -196,4 +97,44 @@ bool MissionItem::isReached() const
 void MissionItem::setReached(bool reached)
 {
     m_reached = reached;
+}
+
+QString MissionItem::parameters() const
+{
+    QStringList list;
+    int enumIndex = MissionItem::staticMetaObject.indexOfEnumerator("Parameter");
+    QMetaEnum enumerator = MissionItem::staticMetaObject.enumerator(enumIndex);
+
+    for (Parameter parameter: m_parameters.keys())
+    {
+        list.append(QString(enumerator.valueToKey(parameter)) + ":" + m_parameters.value(parameter).toString());
+    }
+
+    return list.join(";");
+}
+
+void MissionItem::setParameters(const QString& arguments)
+{
+    int enumIndex = MissionItem::staticMetaObject.indexOfEnumerator("Parameter");
+    QMetaEnum enumerator = MissionItem::staticMetaObject.enumerator(enumIndex);
+
+    m_parameters.clear();
+    for (const QString& pairs: arguments.split(";"))
+    {
+        QStringList pairList = pairs.split(":");
+        if (pairList.count() < 2) continue;
+
+        Parameter param = static_cast<Parameter>(enumerator.keyToValue(qPrintable(pairList.at(0))));
+        if (param != UnknownParameter) m_parameters[param] = pairList.at(1);
+    }
+}
+
+QVariant MissionItem::parameter(Parameter key)
+{
+    return m_parameters.value(key);
+}
+
+void MissionItem::setParameter(MissionItem::Parameter key, const QVariant& parameter)
+{
+    m_parameters[key] = parameter;
 }

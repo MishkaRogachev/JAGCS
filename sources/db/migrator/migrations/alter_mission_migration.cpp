@@ -15,19 +15,10 @@ bool AlterMissionMigration::up()
                          "sequence INTEGER,"
                          "command SMALLINT,"
                          "altitude REAL,"
-                         "abortAltitude REAL,"
                          "altitudeRelative BOOLEAN,"
                          "latitude DOUBLE,"
                          "longitude DOUBLE,"
-                         "distance REAL,"
-                         "speed REAL,"
-                         "radius REAL,"
-                         "pitch REAL,"
-                         "roll REAL,"
-                         "yaw REAL,"
-                         "repeats INTEGER,"
-                         "delay REAL,"
-                         "enabled BOOLEAN,"
+                         "parameters TEXT,"
                          "FOREIGN KEY(missionId) REFERENCES missions(id))") ||
             !m_query.exec()) return false;
 

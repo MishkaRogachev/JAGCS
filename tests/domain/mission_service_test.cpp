@@ -19,77 +19,90 @@ using namespace domain;
 
 void MissionServiceTest::testMission()
 {
-     domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
 
-     MissionPtr mission = MissionPtr::create();
-     mission->setName("Some ridiculous name");
+    MissionPtr mission = MissionPtr::create();
+    mission->setName("Some ridiculous name");
 
-     QVERIFY2(missionService->save(mission), "Can't insert mission");
-     int id = mission->id();
-     QVERIFY2(id > 0, "Mission id after insert mus be > 0");
+    QVERIFY2(missionService->save(mission), "Can't insert mission");
+    int id = mission->id();
+    QVERIFY2(id > 0, "Mission id after insert mus be > 0");
 
-     mission->setName("Another ridiculous name");
+    mission->setName("Another ridiculous name");
 
-     QVERIFY2(missionService->save(mission), "Can't update mission");
+    QVERIFY2(missionService->save(mission), "Can't update mission");
 
-     QCOMPARE(mission, missionService->mission(id));
+    QCOMPARE(mission, missionService->mission(id));
 
-     mission->setName("Reload will erase this ridiculous name");
+    mission->setName("Reload will erase this ridiculous name");
 
-     QCOMPARE(mission, missionService->mission(id, true)); // But pointer will be the same
+    QCOMPARE(mission, missionService->mission(id, true)); // But pointer will be the same
 
-     QCOMPARE(mission->name(), QString("Another ridiculous name"));
+    QCOMPARE(mission->name(), QString("Another ridiculous name"));
 
-     QVERIFY2(missionService->remove(mission), "Can't remove mission");
-     QCOMPARE(mission->id(), 0); // Mission id must be zero after remove
+    QVERIFY2(missionService->remove(mission), "Can't remove mission");
+    QCOMPARE(mission->id(), 0); // Mission id must be zero after remove
 }
 
 void MissionServiceTest::testMissionItems()
 {
-     domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
 
-     MissionPtr mission = MissionPtr::create();
-     mission->setName("Items Mission");
-     QVERIFY2(missionService->save(mission), "Can't insert mission");
+    MissionPtr mission = MissionPtr::create();
+    mission->setName("Items Mission");
+    QVERIFY2(missionService->save(mission), "Can't insert mission");
 
-     MissionItemPtr item = MissionItemPtr::create();
-     item->setMissionId(mission->id());
-     item->setCommand(MissionItem::Takeoff);
-     item->setLatitude(45.6711);
-     item->setLongitude(37.4869);
-     item->setAltitude(350.75);
+    int id = 0;
+    {
+        MissionItemPtr item = MissionItemPtr::create();
+        item->setMissionId(mission->id());
+        item->setCommand(MissionItem::Takeoff);
+        item->setLatitude(45.6711);
+        item->setLongitude(37.4869);
+        item->setAltitude(350.75);
+        item->setParameter(MissionItem::Pitch, 25);
+        item->setParameter(MissionItem::Yaw, 180.56);
 
-     QVERIFY2(missionService->save(item), "Can't insert mission item");
+        QVERIFY2(missionService->save(item), "Can't insert mission item");
+        id = item->id();
+        QVERIFY2(id > 0, "Saved id must be > 0");
 
-     QCOMPARE(missionService->missionItems(mission->id()).count(), 1);
-     QCOMPARE(missionService->missionItems(mission->id()).first(), item);
+        QCOMPARE(missionService->missionItems(mission->id()).count(), 1);
+        QCOMPARE(missionService->missionItems(mission->id()).first(), item);
 
-     QVERIFY2(missionService->remove(item), "Can't remove item");
-     QVERIFY2(missionService->remove(mission), "Can't remove mission");
+        missionService->unload(item);
+    }
+    MissionItemPtr item = missionService->missionItem(id, true);
+
+    QCOMPARE(item->parameter(MissionItem::Pitch).toInt(), 25);
+    QVERIFY(qFuzzyCompare(item->parameter(MissionItem::Yaw).toDouble(), 180.56));
+
+    QVERIFY2(missionService->remove(item), "Can't remove item");
+    QVERIFY2(missionService->remove(mission), "Can't remove mission");
 }
 
 // TODO: dao tests
 void MissionServiceTest::testVehicleDescription()
 {
-     domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
 
-     VehiclePtr vehicle = VehiclePtr::create();
+    VehiclePtr vehicle = VehiclePtr::create();
 
-     vehicle->setName("Ridiculous vehicle");
-     vehicle->setMavId(13);
-     vehicle->setType(Vehicle::FixedWing);
+    vehicle->setName("Ridiculous vehicle");
+    vehicle->setMavId(13);
+    vehicle->setType(Vehicle::FixedWing);
 
-     QVERIFY2(vehicleService->save(vehicle), "Can't insert vehicle");
-     int id = vehicle->id();
-     QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
+    QVERIFY2(vehicleService->save(vehicle), "Can't insert vehicle");
+    int id = vehicle->id();
+    QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
 
-     QVERIFY2(vehicleService->vehicle(id, true), "Can't reload vehicle");
+    QVERIFY2(vehicleService->vehicle(id, true), "Can't reload vehicle");
 
-     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
-     QCOMPARE(vehicle->mavId(), 13);
-     QCOMPARE(vehicle->type(), Vehicle::FixedWing);
+    QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
+    QCOMPARE(vehicle->mavId(), 13);
+    QCOMPARE(vehicle->type(), Vehicle::FixedWing);
 
-     QVERIFY2(vehicleService->remove(vehicle), "Can't remove vehicle");
+    QVERIFY2(vehicleService->remove(vehicle), "Can't remove vehicle");
 }
 
 void MissionServiceTest::testMissionAssignment()
