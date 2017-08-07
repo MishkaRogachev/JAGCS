@@ -65,10 +65,11 @@ namespace dao
             Yaw,
             Distance,
             Speed,
+            Radius,
             HeadingRequired,
             Clockwise,
             Repeats,
-            Delay,
+            Time,
             Enabled
         };
 

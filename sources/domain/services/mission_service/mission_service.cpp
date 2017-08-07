@@ -192,6 +192,21 @@ bool MissionService::remove(const MissionAssignmentPtr& assignment)
     return true;
 }
 
+void MissionService::unload(const MissionPtr& mission)
+{
+    d->missionRepository.unload(mission->id());
+}
+
+void MissionService::unload(const MissionItemPtr& item)
+{
+    d->itemRepository.unload(item->id());
+}
+
+void MissionService::unload(const MissionAssignmentPtr& assignment)
+{
+    d->assignmentRepository.unload(assignment->id());
+}
+
 void MissionService::addNewMissionItem(int missionId)
 {
     MissionPtr mission = this->mission(missionId);
@@ -208,14 +223,13 @@ void MissionService::addNewMissionItem(int missionId)
 
         item->setAltitudeRelative(lastItem->isAltitudeRelative());
         item->setAltitude(lastItem->altitude());
-        item->setRadius(0);
     }
     else if (mission->count() == 1)
     {
         item->setCommand(MissionItem::Takeoff);
         item->setAltitude(30);
         item->setAltitudeRelative(true);
-        item->setPitch(15);
+        item->setParameter(MissionItem::Pitch, 15);
     }
     else
     {

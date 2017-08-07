@@ -42,6 +42,10 @@ namespace domain
         bool remove(const dao::MissionItemPtr& item);
         bool remove(const dao::MissionAssignmentPtr& assignment);
 
+        void unload(const dao::MissionPtr& mission);
+        void unload(const dao::MissionItemPtr& item);
+        void unload(const dao::MissionAssignmentPtr& assignment);
+
         void addNewMissionItem(int missionId);
         void saveMissionItems(int missionId);
         void fixMissionItemOrder(int missionId);

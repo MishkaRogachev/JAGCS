@@ -227,39 +227,50 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
         msgItem.y = item->longitude();
     }
 
-    switch (msgItem.command)
+    if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
-    case MAV_CMD_NAV_TAKEOFF:
-        msgItem.param1 = item->pitch();
-    case MAV_CMD_NAV_LAND:
-        msgItem.param1 = item->abortAltitude();
-        msgItem.param4 = item->yaw();
-        break;
-    case MAV_CMD_NAV_WAYPOINT:
-        msgItem.param2 = item->radius();
-        break;
-    case MAV_CMD_NAV_LOITER_UNLIM:
-        msgItem.param3 = item->radius();
-        break;
-    case MAV_CMD_NAV_LOITER_TO_ALT:
-        // TODO: heading required param1;
-        msgItem.param2 = item->radius();
-        break;
-    case MAV_CMD_NAV_LOITER_TURNS:
-        msgItem.param1 = item->repeats();
-        msgItem.param3 = item->radius();
-        break;
-    case MAV_CMD_NAV_LOITER_TIME:
-        msgItem.param1 = item->delay();
-        msgItem.param3 = item->radius();
-        break;
-    case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-        // FIXME: climb
-        //msgItem.param1 = item->climb() > 1 ? 1 : altitudeItem->climb() < 0 ? -1 : 0;
-        break;
-    default:
-        break;
+        msgItem.param1 = item->parameter(dao::MissionItem::Pitch).toFloat();
     }
+    else if (msgItem.command == MAV_CMD_NAV_LAND)
+    {
+        msgItem.param1 = item->parameter(dao::MissionItem::AbortAltitude).toFloat();
+        msgItem.param4 = item->parameter(dao::MissionItem::Yaw).toFloat();
+    }
+    else if (msgItem.command == MAV_CMD_NAV_WAYPOINT)
+    {
+        msgItem.param2 = item->parameter(dao::MissionItem::Radius).toFloat();
+    }
+    else if (msgItem.command == MAV_CMD_NAV_LOITER_UNLIM ||
+             msgItem.command == MAV_CMD_NAV_LOITER_TURNS ||
+             msgItem.command == MAV_CMD_NAV_LOITER_TIME)
+    {
+        msgItem.param3 = item->parameter(dao::MissionItem::Clockwise).toBool() ?
+                             item->parameter(dao::MissionItem::Radius).toFloat() :
+                             -1 * item->parameter(dao::MissionItem::Radius).toFloat();
+        msgItem.param4 = item->parameter(dao::MissionItem::Yaw).toFloat();
+    }
+    else if (msgItem.command == MAV_CMD_NAV_LOITER_TO_ALT)
+    {
+        msgItem.param1 = item->parameter(dao::MissionItem::HeadingRequired).toBool();
+        msgItem.param2 = item->parameter(dao::MissionItem::Clockwise).toBool() ?
+                             item->parameter(dao::MissionItem::Radius).toFloat() :
+                             -1 * item->parameter(dao::MissionItem::Radius).toFloat();
+    }
+
+    if (msgItem.command == MAV_CMD_NAV_LOITER_TURNS)
+    {
+        msgItem.param1 = item->parameter(dao::MissionItem::Repeats).toInt();
+    }
+    else if (msgItem.command == MAV_CMD_NAV_LOITER_TIME)
+    {
+        msgItem.param1 = item->parameter(dao::MissionItem::Time).toFloat();
+    }
+
+//    if (msgItem.command == MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT)
+//    {
+//  TODO: In Plane 3.4 (and later) the param1 value sets how close the vehicle
+//        altitude must be to target altitude for command completion.
+//    }
 
     // TODO: wait ack
     item->setStatus(dao::MissionItem::Actual);
@@ -369,38 +380,48 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setLongitude(msgItem.y);
     }
 
-    switch (msgItem.command)
+    if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
-    case MAV_CMD_NAV_TAKEOFF:
-        item->setPitch(msgItem.param1);
-        break;
-    case MAV_CMD_NAV_LAND:
-        item->setAbortAltitude(msgItem.param1);
-        item->setYaw(msgItem.param4);
-        break;
-    case MAV_CMD_NAV_WAYPOINT:
-        item->setRadius(msgItem.param2);
-        break;
-    case MAV_CMD_NAV_LOITER_UNLIM:
-        msgItem.param3 = item->radius();
-        break;
-    case MAV_CMD_NAV_LOITER_TO_ALT:
-        // TODO: heading required param1;
-        item->setRadius(msgItem.param2);
-        break;
-    case MAV_CMD_NAV_LOITER_TURNS:
-        item->setRepeats(msgItem.param1);
-        item->setRadius(msgItem.param3);
-        break;
-    case MAV_CMD_NAV_LOITER_TIME:
-        item->setDelay(msgItem.param1);
-        item->setRadius(msgItem.param3);
-        break;
-    case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-        // ignore climb
-    default:
-        break;
+        item->setParameter(dao::MissionItem::Pitch, msgItem.param1);
     }
+    else if (msgItem.command == MAV_CMD_NAV_LAND)
+    {
+        item->setParameter(dao::MissionItem::AbortAltitude, msgItem.param1);
+        item->setParameter(dao::MissionItem::Yaw, msgItem.param4);
+    }
+    else if (msgItem.command == MAV_CMD_NAV_WAYPOINT)
+    {
+        item->setParameter(dao::MissionItem::Radius, msgItem.param2);
+    }
+    else if (msgItem.command == MAV_CMD_NAV_LOITER_UNLIM ||
+             msgItem.command == MAV_CMD_NAV_LOITER_TURNS ||
+             msgItem.command == MAV_CMD_NAV_LOITER_TIME)
+    {
+        item->setParameter(dao::MissionItem::Radius, qAbs(msgItem.param3));
+        item->setParameter(dao::MissionItem::Clockwise, bool(msgItem.param3 > 0));
+        item->setParameter(dao::MissionItem::Yaw, msgItem.param4);
+    }
+    else if (msgItem.command == MAV_CMD_NAV_LOITER_TO_ALT)
+    {
+        item->setParameter(dao::MissionItem::HeadingRequired, bool(msgItem.param1));
+        item->setParameter(dao::MissionItem::Radius, qAbs(msgItem.param2));
+        item->setParameter(dao::MissionItem::Clockwise, bool(msgItem.param2 > 0));
+    }
+
+    if (msgItem.command == MAV_CMD_NAV_LOITER_TURNS)
+    {
+        item->setParameter(dao::MissionItem::Repeats, int(msgItem.param1));
+    }
+    else if (msgItem.command == MAV_CMD_NAV_LOITER_TIME)
+    {
+        item->setParameter(dao::MissionItem::Time, msgItem.param1);
+    }
+
+//    if (msgItem.command == MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT)
+//    {
+//  TODO: In Plane 3.4 (and later) the param1 value sets how close the vehicle
+//        altitude must be to target altitude for command completion.
+//    }
 
     item->setStatus(dao::MissionItem::Actual);
     m_missionService->save(item);
