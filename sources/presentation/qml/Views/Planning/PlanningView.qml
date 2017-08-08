@@ -22,11 +22,9 @@ Controls.Pane {
     MapView {
         id: map
         objectName: "map"
-        anchors.left: mission.right
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.bottom: profile.top
-        anchors.leftMargin: palette.margins
+        anchors.fill: parent
+        anchors.leftMargin: mission.width + palette.margins
+        anchors.bottomMargin: profile.height
     }
 
     VerticalProfileView {

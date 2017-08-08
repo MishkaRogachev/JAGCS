@@ -79,6 +79,8 @@ MissionPresenter::~MissionPresenter()
 
 void MissionPresenter::selectMission(const dao::MissionPtr& mission)
 {
+    if (d->selectedMission == mission) return;
+
     d->selectedMission = mission;
     d->item->setMission(d->selectedMission);
 

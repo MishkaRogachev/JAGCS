@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout {
+Item {
     id: root
 
     property bool editEnabled: false
@@ -61,6 +61,7 @@ ColumnLayout {
     }
 
     GridLayout {
+        anchors.fill: parent
         columns: 3
 
         Controls.Label {
@@ -318,22 +319,24 @@ ColumnLayout {
             Layout.columnSpan: 3
         }
 
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
-            enabled: changed
-            Layout.fillWidth: true
-        }
+        RowLayout {
+            Layout.columnSpan: 3
 
-        Controls.Button {
-            text: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
-            enabled: editEnabled && changed
-            Layout.fillWidth: true
-        }
+            Controls.Button {
+                text: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+                enabled: changed
+                Layout.fillWidth: true
+            }
 
-        Controls.Spacer {}
+            Controls.Button {
+                text: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+                enabled: editEnabled && changed
+                Layout.fillWidth: true
+            }
+        }
     }
 }

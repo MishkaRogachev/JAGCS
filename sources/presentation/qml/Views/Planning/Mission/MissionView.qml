@@ -28,6 +28,7 @@ ColumnLayout {
 
     Layout.margins: palette.margins
     spacing: palette.spacing
+    width: palette.controlBaseSize * 11
 
     GridLayout {
         columns: 5
@@ -118,6 +119,7 @@ ColumnLayout {
             Layout.fillWidth: true
             implicitHeight: row.height
             contentWidth: row.width
+            boundsBehavior: Flickable.StopAtBounds
             clip: true
 
             RowLayout {
@@ -127,10 +129,6 @@ ColumnLayout {
                 Repeater {
                     id: repeater
                     model: statuses
-                    onModelChanged: {
-                        if (row.width > flickable.width)
-                            flickable.contentX = row.width - flickable.width;
-                    }
 
                     Item {
                         Layout.minimumWidth: palette.controlBaseSize
@@ -187,5 +185,7 @@ ColumnLayout {
     MissionItemView {
         id: missionItem
         objectName: "missionItem"
+        Layout.fillWidth: true
+        Layout.fillHeight: true
     }
 }
