@@ -26,6 +26,9 @@ Item {
     property alias pitch: pitchBox.realValue
     property alias yaw: yawBox.realValue
     property alias clockwise: clockwiseBox.checked
+    property alias isGroundSpeed: isGroundSpeedBox.currentIndex
+    property alias speed: speedBox.realValue
+    property alias throttle: throttleBox.value
 
     property bool pitchVisible: command === MissionItem.Takeoff
     property bool abortAltitudeVisible: command === MissionItem.Landing
@@ -45,6 +48,7 @@ Item {
                               command === MissionItem.LoiterTime
 
     property bool repeatsVisible: command === MissionItem.LoiterTurns
+    property bool speedVisible: command === MissionItem.SetSpeed
 
     property alias picking: pickButton.picking
 
@@ -314,9 +318,38 @@ Item {
 
         Controls.Spacer { visible: repeatsVisible }
 
+        Controls.ComboBox {
+            id: isGroundSpeedBox
+            model: [ qsTr("Ground speed"), qsTr("Air speed") ]
+            visible: speedVisible
+            onCurrentIndexChanged: changed = true
+        }
+
+        Controls.RealSpinBox {
+            id: speedBox
+            visible: speedVisible
+            enabled: editEnabled
+            onRealValueChanged: changed = true
+            Layout.columnSpan: 2
+        }
+
         Controls.Spacer {
             Layout.fillHeight: true
             Layout.columnSpan: 3
+        }
+
+        Controls.Label {
+            text: qsTr("Throttle")
+            visible: speedVisible
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.SpinBox {
+            id: throttleBox
+            visible: speedVisible
+            onValueChanged: changed = true
+            Layout.columnSpan: 2
         }
 
         RowLayout {

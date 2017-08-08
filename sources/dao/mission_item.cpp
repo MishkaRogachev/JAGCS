@@ -129,9 +129,9 @@ void MissionItem::setParameters(const QString& arguments)
     }
 }
 
-QVariant MissionItem::parameter(Parameter key)
+QVariant MissionItem::parameter(Parameter key, const QVariant& parameter)
 {
-    return m_parameters.value(key);
+    return m_parameters.value(key, parameter);
 }
 
 void MissionItem::setParameter(MissionItem::Parameter key, const QVariant& parameter)

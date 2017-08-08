@@ -38,7 +38,7 @@ namespace dao
             Continue,
             Return,
             Landing,
-            ChangeSpeed,
+            SetSpeed,
 
             JumpTo,
 
@@ -65,6 +65,8 @@ namespace dao
             Yaw,
             Distance,
             Speed,
+            IsGroundSpeed,
+            Throttle,
             Radius,
             HeadingRequired,
             Clockwise,
@@ -110,7 +112,7 @@ namespace dao
 
         QString parameters() const;
         void setParameters(const QString& parameters);
-        QVariant parameter(Parameter key);
+        QVariant parameter(Parameter key, const QVariant& parameter = QVariant());
         void setParameter(Parameter key, const QVariant& parameter);
 
     private:

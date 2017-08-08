@@ -27,7 +27,8 @@ namespace
         { dao::MissionItem::LoiterTime, qApp->translate("MissionItemPresenter", "Loiter time") },
         { dao::MissionItem::Continue, qApp->translate("MissionItemPresenter", "Continue") },
         { dao::MissionItem::Return, qApp->translate("MissionItemPresenter", "Return") },
-        { dao::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") }
+        { dao::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") },
+        { dao::MissionItem::SetSpeed, qApp->translate("MissionItemPresenter", "SetSpeed") }
     };
 }
 
@@ -116,6 +117,10 @@ void MissionItemPresenter::save()
     d->item->setParameter(dao::MissionItem::Pitch, this->viewProperty(PROPERTY(pitch)));
     d->item->setParameter(dao::MissionItem::Yaw, this->viewProperty(PROPERTY(yaw)));
     d->item->setParameter(dao::MissionItem::Clockwise, this->viewProperty(PROPERTY(clockwise)));
+    d->item->setParameter(dao::MissionItem::IsGroundSpeed, this->viewProperty(PROPERTY(isGroundSpeed)));
+    d->item->setParameter(dao::MissionItem::Speed, this->viewProperty(PROPERTY(speed)));
+    d->item->setParameter(dao::MissionItem::Throttle, this->viewProperty(PROPERTY(throttle)));
+
     d->item->setStatus(dao::MissionItem::NotActual);
 
     if (!d->service->save(d->item)) return;
@@ -140,6 +145,9 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(pitch), d->item->parameter(dao::MissionItem::Pitch));
         this->setViewProperty(PROPERTY(yaw), d->item->parameter(dao::MissionItem::Yaw));
         this->setViewProperty(PROPERTY(clockwise), d->item->parameter(dao::MissionItem::Clockwise));
+        this->setViewProperty(PROPERTY(isGroundSpeed), d->item->parameter(dao::MissionItem::IsGroundSpeed));
+        this->setViewProperty(PROPERTY(speed), d->item->parameter(dao::MissionItem::Speed));
+        this->setViewProperty(PROPERTY(throttle), d->item->parameter(dao::MissionItem::Throttle));
     }
     else
     {

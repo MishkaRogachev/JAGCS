@@ -44,6 +44,9 @@ namespace
             return dao::MissionItem::Return;
         case MAV_CMD_NAV_LAND:
             return dao::MissionItem::Landing;
+
+        case MAV_CMD_DO_CHANGE_SPEED:
+            return dao::MissionItem::SetSpeed;
         default:
             return dao::MissionItem::UnknownCommand;
         }
@@ -71,6 +74,9 @@ namespace
             return MAV_CMD_NAV_RETURN_TO_LAUNCH;
         case dao::MissionItem::Landing:
             return MAV_CMD_NAV_LAND;
+
+        case dao::MissionItem::SetSpeed:
+            return MAV_CMD_DO_CHANGE_SPEED;
         default:
             return 0;
         }
@@ -258,6 +264,12 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
                              item->parameter(dao::MissionItem::Radius).toFloat() :
                              -1 * item->parameter(dao::MissionItem::Radius).toFloat();
     }
+    else if (msgItem.command == MAV_CMD_DO_CHANGE_SPEED)
+    {
+        msgItem.param1 = item->parameter(dao::MissionItem::IsGroundSpeed).toBool();
+        msgItem.param2 = item->parameter(dao::MissionItem::Speed, -1).toFloat();
+        msgItem.param3 = item->parameter(dao::MissionItem::Throttle, -1).toInt();
+    }
 
     if (msgItem.command == MAV_CMD_NAV_LOITER_TURNS)
     {
@@ -407,6 +419,12 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setParameter(dao::MissionItem::HeadingRequired, bool(msgItem.param1));
         item->setParameter(dao::MissionItem::Radius, qAbs(msgItem.param2));
         item->setParameter(dao::MissionItem::Clockwise, bool(msgItem.param2 > 0));
+    }
+    else if (msgItem.command == MAV_CMD_DO_CHANGE_SPEED)
+    {
+        item->setParameter(dao::MissionItem::IsGroundSpeed, bool(msgItem.param1));
+        if (msgItem.param2 != -1) item->setParameter(dao::MissionItem::Speed, msgItem.param2);
+        if (msgItem.param3 != -1) item->setParameter(dao::MissionItem::Throttle, int(msgItem.param3));
     }
 
     if (msgItem.command == MAV_CMD_NAV_LOITER_TURNS)
