@@ -109,7 +109,7 @@ void MissionItemPresenter::save()
     d->item->setAltitudeRelative(this->viewProperty(PROPERTY(isAltitudeRelative)).toBool());
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
-    // TODO: check parameter
+
     d->item->setParameter(dao::MissionItem::AbortAltitude, this->viewProperty(PROPERTY(abortAltitude)));
     d->item->setParameter(dao::MissionItem::Radius, this->viewProperty(PROPERTY(radius)));
     d->item->setParameter(dao::MissionItem::Repeats, this->viewProperty(PROPERTY(repeats)));
@@ -118,8 +118,10 @@ void MissionItemPresenter::save()
     d->item->setParameter(dao::MissionItem::Yaw, this->viewProperty(PROPERTY(yaw)));
     d->item->setParameter(dao::MissionItem::Clockwise, this->viewProperty(PROPERTY(clockwise)));
     d->item->setParameter(dao::MissionItem::IsGroundSpeed, this->viewProperty(PROPERTY(isGroundSpeed)));
-    d->item->setParameter(dao::MissionItem::Speed, this->viewProperty(PROPERTY(speed)));
-    d->item->setParameter(dao::MissionItem::Throttle, this->viewProperty(PROPERTY(throttle)));
+    d->item->setParameter(dao::MissionItem::Speed, this->viewProperty(PROPERTY(speedEnabled)).toBool() ?
+                              this->viewProperty(PROPERTY(speed)) : QVariant());
+    d->item->setParameter(dao::MissionItem::Throttle, this->viewProperty(PROPERTY(throttleEnabled)).toBool() ?
+                              this->viewProperty(PROPERTY(throttle)) : QVariant());
 
     d->item->setStatus(dao::MissionItem::NotActual);
 
@@ -137,7 +139,7 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
-        // TODO: check parameter
+
         this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
         this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
         this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));
@@ -147,7 +149,9 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(clockwise), d->item->parameter(dao::MissionItem::Clockwise));
         this->setViewProperty(PROPERTY(isGroundSpeed), d->item->parameter(dao::MissionItem::IsGroundSpeed));
         this->setViewProperty(PROPERTY(speed), d->item->parameter(dao::MissionItem::Speed));
+        this->setViewProperty(PROPERTY(speedEnabled), d->item->parameter(dao::MissionItem::Speed).isValid());
         this->setViewProperty(PROPERTY(throttle), d->item->parameter(dao::MissionItem::Throttle));
+        this->setViewProperty(PROPERTY(throttleEnabled), d->item->parameter(dao::MissionItem::Throttle).isValid());
     }
     else
     {

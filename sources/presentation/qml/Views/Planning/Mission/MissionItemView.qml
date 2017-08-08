@@ -26,9 +26,12 @@ Item {
     property alias pitch: pitchBox.realValue
     property alias yaw: yawBox.realValue
     property alias clockwise: clockwiseBox.checked
+
     property alias isGroundSpeed: isGroundSpeedBox.currentIndex
     property alias speed: speedBox.realValue
     property alias throttle: throttleBox.value
+    property alias speedEnabled: speedEnabledBox.checked
+    property alias throttleEnabled: throttleEnabledBox.checked
 
     property bool pitchVisible: command === MissionItem.Takeoff
     property bool abortAltitudeVisible: command === MissionItem.Landing
@@ -297,6 +300,7 @@ Item {
         Controls.ComboBox {
             id: isGroundSpeedBox
             model: [ qsTr("Ground speed"), qsTr("Air speed") ]
+            enabled: editEnabled && speedEnabled
             visible: speedVisible
             onCurrentIndexChanged: changed = true
         }
@@ -304,10 +308,16 @@ Item {
         Controls.RealSpinBox {
             id: speedBox
             visible: speedVisible
-            enabled: editEnabled
+            enabled: editEnabled && speedEnabled
             onRealValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
+        }
+
+        Controls.CheckBox {
+            id: speedEnabledBox
+            visible: speedVisible
+            enabled: editEnabled
+            onCheckedChanged: changed = true
         }
 
         Controls.Label {
@@ -319,9 +329,16 @@ Item {
         Controls.SpinBox {
             id: throttleBox
             visible: speedVisible
+            enabled: editEnabled && throttleEnabled
             onValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
+        }
+
+        Controls.CheckBox {
+            id: throttleEnabledBox
+            visible: speedVisible
+            enabled: editEnabled
+            onCheckedChanged: changed = true
         }
 
         Item {

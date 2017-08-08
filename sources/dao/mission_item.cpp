@@ -164,7 +164,7 @@ void MissionItem::clearSuperfluousParameters()
 {
     for (Parameter parameter: m_parameters.keys())
     {
-        if (::commandParameters[command].contains(parameter)) continue;
+        if (::commandParameters[m_command].contains(parameter)) continue;
 
         m_parameters.remove(parameter);
     }
