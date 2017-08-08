@@ -9,6 +9,7 @@ CheckBox {
 
     font.pixelSize: palette.fontPixelSize
     height: palette.controlBaseSize
+    leftPadding: 0
 
     indicator: Rectangle {
         implicitWidth: palette.controlBaseSize

@@ -121,10 +121,9 @@ Item {
             enabled: editEnabled && sequence > 0
             currentIndex: MissionItem.UnknownCommand
             onCurrentIndexChanged: changed = true
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
-
-        Controls.Spacer { visible: sequence > -1 }
 
         Controls.Label {
             text: qsTr("Altitude")
@@ -139,13 +138,19 @@ Item {
             realFrom: -500 // 418 m Daed Sea shore
             realTo: 20000 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.fillWidth: true
         }
 
-        Controls.Spacer { visible: altitudeVisible }
+        Controls.CheckBox {
+            id: altitudeRelativeBox
+            text: qsTr("Rel.")
+            visible: altitudeVisible
+            enabled: editEnabled && sequence > 0
+            onCheckedChanged: changed = true
+        }
 
         Controls.Label {
-            text: qsTr("Abort altitude")
+            text: qsTr("Abort alt.")
             visible: abortAltitudeVisible
             Layout.fillWidth: true
         }
@@ -157,26 +162,9 @@ Item {
             realFrom: -500 // 418 m Daed Sea shore
             realTo: 20000 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Spacer { visible: abortAltitudeVisible }
-
-        Controls.Label {
-            text: qsTr("Rel. altitude")
-            visible: altitudeVisible
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
-
-        Controls.CheckBox {
-            id: altitudeRelativeBox
-            visible: altitudeVisible
-            enabled: editEnabled && sequence > 0
-            onCheckedChanged: changed = true
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Spacer { visible: altitudeVisible }
 
         Controls.Label {
             text: qsTr("Latitude")
@@ -189,7 +177,7 @@ Item {
             visible: positionVisible
             enabled: editEnabled
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.fillWidth: true
         }
 
         Controls.MapPickButton {
@@ -215,7 +203,7 @@ Item {
             enabled: editEnabled
             isLongitude: true
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.fillWidth: true
         }
 
         Controls.Label {
@@ -230,10 +218,18 @@ Item {
             enabled: editEnabled
             realTo: 5000 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.columnSpan: clockwiseVisible ? 1 : 2
+            Layout.fillWidth: true
         }
 
-        Controls.Spacer { visible: radiusVisible }
+        Controls.CheckBox {
+            id: clockwiseBox
+            text: qsTr("CW")
+            visible: clockwiseVisible
+            enabled: editEnabled
+            onCheckedChanged: changed = true
+            Layout.alignment: Qt.AlignRight
+        }
 
         Controls.Label {
             text: qsTr("Pitch")
@@ -248,10 +244,9 @@ Item {
             realFrom: -90
             realTo: 90 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
         }
-
-        Controls.Spacer { visible: pitchVisible }
 
         Controls.Label {
             text: qsTr("Yaw")
@@ -266,46 +261,28 @@ Item {
             realFrom: -180
             realTo: 360 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Spacer { visible: yawVisible }
-
-        Controls.Label {
-            text: qsTr("Clockwise")
-            visible: clockwiseVisible
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
-
-        Controls.CheckBox {
-            id: clockwiseBox
-            visible: clockwiseVisible
-            enabled: editEnabled
-            onCheckedChanged: changed = true
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Controls.Spacer { visible: clockwiseVisible }
 
         Controls.Label {
             text: qsTr("Repeats")
             visible: repeatsVisible
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignRight
         }
 
         Controls.SpinBox {
             id: repeatsBox
             visible: repeatsVisible
             onValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
         }
 
         Controls.Label {
             text: qsTr("Time")
             visible: timeVisible
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignRight
         }
 
         Controls.RealSpinBox {
@@ -313,10 +290,9 @@ Item {
             visible: timeVisible
             enabled: editEnabled
             onRealValueChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
         }
-
-        Controls.Spacer { visible: repeatsVisible }
 
         Controls.ComboBox {
             id: isGroundSpeedBox
@@ -331,18 +307,13 @@ Item {
             enabled: editEnabled
             onRealValueChanged: changed = true
             Layout.columnSpan: 2
-        }
-
-        Controls.Spacer {
-            Layout.fillHeight: true
-            Layout.columnSpan: 3
+            Layout.fillWidth: true
         }
 
         Controls.Label {
             text: qsTr("Throttle")
             visible: speedVisible
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignRight
         }
 
         Controls.SpinBox {
@@ -350,6 +321,12 @@ Item {
             visible: speedVisible
             onValueChanged: changed = true
             Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
+
+        Item {
+            Layout.fillHeight: true
+            Layout.columnSpan: 3
         }
 
         RowLayout {
