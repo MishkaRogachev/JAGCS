@@ -114,6 +114,8 @@ namespace dao
         void setParameters(const QString& parameters);
         QVariant parameter(Parameter key, const QVariant& parameter = QVariant());
         void setParameter(Parameter key, const QVariant& parameter);
+        void clearParameters();
+        void clearSuperfluousParameters();
 
     private:
         int m_missionId = 0;

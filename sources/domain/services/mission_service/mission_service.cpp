@@ -134,6 +134,7 @@ bool MissionService::save(const MissionPtr& mission)
 bool MissionService::save(const MissionItemPtr& item)
 {
     bool isNew = item->id() == 0;
+    item->clearSuperfluousParameters();
     if (!d->itemRepository.save(item)) return false;
 
     if (isNew)

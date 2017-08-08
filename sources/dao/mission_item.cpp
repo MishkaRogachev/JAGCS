@@ -2,12 +2,28 @@
 
 // Qt
 #include <QMetaEnum>
+#include <QMap>
 #include <QDebug>
 
 // Internal
 #include "mission.h"
 
 using namespace dao;
+
+namespace
+{
+    static QMap <MissionItem::Command, QList<MissionItem::Parameter> > commandParameters =
+    {
+        { MissionItem::Takeoff, { MissionItem::Pitch } },
+        { MissionItem::Landing, { MissionItem::AbortAltitude, MissionItem::Yaw } },
+        { MissionItem::Waypoint, { MissionItem::Radius } },
+        { MissionItem::LoiterUnlim, {  MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw } },
+        { MissionItem::LoiterTime, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw, MissionItem::Time } },
+        { MissionItem::LoiterTurns, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw, MissionItem::Repeats } },
+        { MissionItem::LoiterAltitude, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::HeadingRequired } },
+        { MissionItem::SetSpeed, { MissionItem::Speed, MissionItem::IsGroundSpeed, MissionItem::Throttle } }
+    };
+}
 
 int MissionItem::missionId() const
 {
@@ -136,5 +152,20 @@ QVariant MissionItem::parameter(Parameter key, const QVariant& parameter)
 
 void MissionItem::setParameter(MissionItem::Parameter key, const QVariant& parameter)
 {
-    m_parameters[key] = parameter;
+    if (::commandParameters[m_command].contains(key)) m_parameters[key] = parameter;
+}
+
+void MissionItem::clearParameters()
+{
+    m_parameters.clear();
+}
+
+void MissionItem::clearSuperfluousParameters()
+{
+    for (Parameter parameter: m_parameters.keys())
+    {
+        if (::commandParameters[command].contains(parameter)) continue;
+
+        m_parameters.remove(parameter);
+    }
 }
