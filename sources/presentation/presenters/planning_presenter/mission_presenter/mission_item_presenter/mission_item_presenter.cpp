@@ -109,6 +109,7 @@ void MissionItemPresenter::save()
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
     d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
     // TODO: check parameter
+    d->item->setParameter(dao::MissionItem::AbortAltitude, this->viewProperty(PROPERTY(abortAltitude)));
     d->item->setParameter(dao::MissionItem::Radius, this->viewProperty(PROPERTY(radius)));
     d->item->setParameter(dao::MissionItem::Repeats, this->viewProperty(PROPERTY(repeats)));
     d->item->setParameter(dao::MissionItem::Time, this->viewProperty(PROPERTY(time)));
@@ -132,6 +133,7 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
         // TODO: check parameter
+        this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
         this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
         this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));
         this->setViewProperty(PROPERTY(time), d->item->parameter(dao::MissionItem::Time));

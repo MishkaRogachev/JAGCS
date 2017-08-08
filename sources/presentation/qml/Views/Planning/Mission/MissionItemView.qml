@@ -16,6 +16,7 @@ ColumnLayout {
     property alias commands: commandBox.model
 
     property alias altitude: altitudeBox.realValue
+    property alias abortAltitude: abortAltitudeBox.realValue
     property alias isAltitudeRelative: altitudeRelativeBox.checked
     property alias latitude: latitudeBox.realValue
     property alias longitude: longitudeBox.realValue
@@ -27,6 +28,7 @@ ColumnLayout {
     property alias clockwise: clockwiseBox.checked
 
     property bool pitchVisible: command === MissionItem.Takeoff
+    property bool abortAltitudeVisible: command === MissionItem.Landing
     property bool altitudeVisible: command === MissionItem.Continue || positionVisible
 
     property bool positionVisible: command === MissionItem.Home ||
@@ -114,7 +116,7 @@ ColumnLayout {
             enabled: editEnabled && sequence > 0
             currentIndex: MissionItem.UnknownCommand
             onCurrentIndexChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Layout.fillWidth: true
         }
 
         Controls.Spacer { visible: sequence > -1 }
@@ -136,6 +138,24 @@ ColumnLayout {
         }
 
         Controls.Spacer { visible: altitudeVisible }
+
+        Controls.Label {
+            text: qsTr("Abort altitude")
+            visible: abortAltitudeVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.RealSpinBox {
+            id: abortAltitudeBox
+            visible: abortAltitudeVisible
+            enabled: editEnabled
+            realFrom: -500 // 418 m Daed Sea shore
+            realTo: 20000 // TODO: constants to config
+            onRealValueChanged: changed = true
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Controls.Spacer { visible: abortAltitudeVisible }
 
         Controls.Label {
             text: qsTr("Rel. altitude")
