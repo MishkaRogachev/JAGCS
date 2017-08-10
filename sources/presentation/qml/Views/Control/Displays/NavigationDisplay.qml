@@ -21,6 +21,8 @@ Item {
     property real windDirection: 0
     property real windSpeed: 0
 
+    property int speedUnits: settings.value("Gui/fdSpeedUnits")
+
     implicitHeight: hsi.height
 
     Indicators.DistanceLabel {
@@ -46,8 +48,13 @@ Item {
         anchors.left: parent.left
         width: parent.width * 0.2
         prefix: qsTr("WIND")
-        value: windSpeed
-        suffix: qsTr("m/s")
+        value: {
+            switch (speedUnits) {
+            default:
+            case 0: return windSpeed;
+            case 1: return Helper.mpsToKph(windSpeed);
+            }
+        }
         enabled: windSpeed > 0 // TODO: wind avability
     }
 
