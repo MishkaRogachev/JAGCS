@@ -13,7 +13,7 @@
 
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -27,8 +27,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
@@ -37,10 +36,8 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(position.alt));
     QVector3D direction(position.vx, position.vy, position.vz);
 
-    node->setParameter({ Telemetry::Position, Telemetry::Coordinate },
+    port.setParameter({ Telemetry::Position, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ Telemetry::Position, Telemetry::Direction },
+    port.setParameter({ Telemetry::Position, Telemetry::Direction },
                        QVariant::fromValue(direction));
-
-    node->notify();
 }

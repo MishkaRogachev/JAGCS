@@ -13,7 +13,7 @@
 
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -27,8 +27,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);
@@ -36,21 +35,19 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     QGeoCoordinate coordinate(decodeLatLon(gps.lat), decodeLatLon(gps.lon),
                               decodeAltitude(gps.alt));
 
-    node->setParameter({ Telemetry::Satellite, Telemetry::Fix }, gps.fix_type);
-    node->setParameter({ Telemetry::Satellite, Telemetry::Coordinate },
+    port.setParameter({ Telemetry::Satellite, Telemetry::Fix }, gps.fix_type);
+    port.setParameter({ Telemetry::Satellite, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ Telemetry::Satellite, Telemetry::Groundspeed },
+    port.setParameter({ Telemetry::Satellite, Telemetry::Groundspeed },
                        decodeGroundSpeed(gps.vel));
-    node->setParameter({ Telemetry::Satellite, Telemetry::Course },
+    port.setParameter({ Telemetry::Satellite, Telemetry::Course },
                        decodeCourse(gps.cog));
-    node->setParameter({ Telemetry::Satellite, Telemetry::Altitude },
+    port.setParameter({ Telemetry::Satellite, Telemetry::Altitude },
                        decodeAltitude(gps.alt));
-    node->setParameter({ Telemetry::Satellite, Telemetry::Eph }, gps.eph);
-    node->setParameter({ Telemetry::Satellite, Telemetry::Epv }, gps.epv);
-    node->setParameter({ Telemetry::Satellite, Telemetry::Time },
+    port.setParameter({ Telemetry::Satellite, Telemetry::Eph }, gps.eph);
+    port.setParameter({ Telemetry::Satellite, Telemetry::Epv }, gps.epv);
+    port.setParameter({ Telemetry::Satellite, Telemetry::Time },
                        QDateTime::fromMSecsSinceEpoch(gps.time_usec));
-    node->setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
+    port.setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
                        gps.satellites_visible);
-
-    node->notify();
 }

@@ -74,6 +74,9 @@
 //  |  |-TrueAirspeed                   real
 //  |  |-IndicatedAirspeed              real
 //  |-Rangefinder
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
 //  |  |-Elevation                      real
 //  |  |-Voltage                        real
 //  |-Navigator
@@ -87,6 +90,9 @@
 //  |-PowerSystem
 //  |  |-Throttle                       int
 //  |-Battery
+//  |  |-Present                        bool
+//  |  |-Enabled                        bool
+//  |  |-Operational                    bool
 //  |  |-Voltage                        real
 //  |  |-Current                        real
 //  |  |-Percentage                     int

@@ -19,7 +19,7 @@
 #include "vehicle_service.h"
 #include "mission_service.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 namespace
 {

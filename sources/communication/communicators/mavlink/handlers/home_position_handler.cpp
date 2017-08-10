@@ -14,7 +14,7 @@
 
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -30,8 +30,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);
@@ -40,20 +39,18 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(home.altitude));
     QVector3D direction(home.approach_x, home.approach_y, home.approach_z);
 
-    node->setParameter({ Telemetry::HomePosition, Telemetry::Coordinate },
+    port.setParameter({ Telemetry::HomePosition, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    node->setParameter({ Telemetry::HomePosition, Telemetry::Direction },
+    port.setParameter({ Telemetry::HomePosition, Telemetry::Direction },
                        QVariant::fromValue(direction));
-    node->setParameter({ Telemetry::HomePosition, Telemetry::Altitude },
+    port.setParameter({ Telemetry::HomePosition, Telemetry::Altitude },
                        coordinate.altitude());
-
-    node->notify();
 }
 
 void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)
 {
     mavlink_message_t message;
-     mavlink_command_long_t command;
+    mavlink_command_long_t command;
 
      command.target_system = mavId;
      command.target_component = 0;

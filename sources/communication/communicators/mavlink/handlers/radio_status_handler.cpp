@@ -11,7 +11,7 @@
 
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -25,18 +25,15 @@ void RadioStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_RADIO_STATUS) return;
 
-    Telemetry* node = m_telemetryService->radioNode();
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->radioNode());
 
     mavlink_radio_status_t radio;
     mavlink_msg_radio_status_decode(&message, &radio);
 
-    node->setParameter({ Telemetry::Rssi }, decodeRssi(radio.rssi));
-    node->setParameter({ Telemetry::Noise }, radio.noise);
-    node->setParameter({ Telemetry::RemoteRssi }, decodeRssi(radio.remrssi));
-    node->setParameter({ Telemetry::RemoteNoise }, radio.remnoise);
-    node->setParameter({ Telemetry::Errors }, radio.rxerrors);
-    node->setParameter({ Telemetry::Fixed }, radio.fixed);
-
-    node->notify();
+    port.setParameter({ Telemetry::Rssi }, decodeRssi(radio.rssi));
+    port.setParameter({ Telemetry::Noise }, radio.noise);
+    port.setParameter({ Telemetry::RemoteRssi }, decodeRssi(radio.remrssi));
+    port.setParameter({ Telemetry::RemoteNoise }, radio.remnoise);
+    port.setParameter({ Telemetry::Errors }, radio.rxerrors);
+    port.setParameter({ Telemetry::Fixed }, radio.fixed);
 }

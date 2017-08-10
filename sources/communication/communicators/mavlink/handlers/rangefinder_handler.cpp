@@ -11,7 +11,7 @@
 
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -25,16 +25,13 @@ void RangefinderHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_RANGEFINDER) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
     mavlink_rangefinder_t rangefinder;
     mavlink_msg_rangefinder_decode(&message, &rangefinder);
 
-    node->setParameter({ Telemetry::Rangefinder, Telemetry::Height },
+    port.setParameter({ Telemetry::Rangefinder, Telemetry::Height },
                        rangefinder.distance);
-    node->setParameter({ Telemetry::Rangefinder, Telemetry::Voltage },
+    port.setParameter({ Telemetry::Rangefinder, Telemetry::Voltage },
                        rangefinder.voltage);
-
-    node->notify();
 }

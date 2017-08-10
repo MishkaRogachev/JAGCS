@@ -11,6 +11,7 @@
 #include "vehicle.h"
 
 #include "telemetry.h"
+#include "telemetry_portion.h"
 #include "vehicle_telemetry_factory.h"
 
 using namespace domain;

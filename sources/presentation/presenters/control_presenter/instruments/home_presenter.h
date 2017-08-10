@@ -7,7 +7,7 @@
 #include <QGeoCoordinate>
 
 // Internal
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 namespace presentation
 {

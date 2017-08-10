@@ -18,7 +18,7 @@
 #include "vehicle.h"
 
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
@@ -149,27 +149,25 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         if (changed) d->vehicleService->vehicleChanged(vehicle);
     }
 
-    Telemetry* node = d->telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(d->telemetryService->mavNode(message.sysid));
 
-    node->setParameter({ Telemetry::Status, Telemetry::Armed },
+    port.setParameter({ Telemetry::Status, Telemetry::Armed },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-    node->setParameter({ Telemetry::Status, Telemetry::Auto },
+    port.setParameter({ Telemetry::Status, Telemetry::Auto },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
-    node->setParameter({ Telemetry::Status, Telemetry::Guided },
+    port.setParameter({ Telemetry::Status, Telemetry::Guided },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
-    node->setParameter({ Telemetry::Status, Telemetry::Stabilized },
+    port.setParameter({ Telemetry::Status, Telemetry::Stabilized },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
-    node->setParameter({ Telemetry::Status, Telemetry::Manual },
+    port.setParameter({ Telemetry::Status, Telemetry::Manual },
                        heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
 
-    node->setParameter({ Telemetry::Status, Telemetry::Mode },
+    port.setParameter({ Telemetry::Status, Telemetry::Mode },
                        ::decodeCustomMode(heartbeat.autopilot,
                                         heartbeat.type,
                                         heartbeat.custom_mode));
-    node->setParameter({ Telemetry::Status, Telemetry::State },
+    port.setParameter({ Telemetry::Status, Telemetry::State },
                        ::decodeState(heartbeat.system_status));
-    node->notify();
 }
 
 void HeartbeatHandler::sendHeartbeat()

@@ -11,7 +11,7 @@
 
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -25,18 +25,15 @@ void PressureHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SCALED_PRESSURE) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
     mavlink_scaled_pressure_t pressure;
     mavlink_msg_scaled_pressure_decode(&message, &pressure);
 
-    node->setParameter({ Telemetry::Barometric, Telemetry::AbsPressure },
+    port.setParameter({ Telemetry::Barometric, Telemetry::AbsPressure },
                        pressure.press_abs);
-    node->setParameter({ Telemetry::Barometric, Telemetry::DiffPressure },
+    port.setParameter({ Telemetry::Barometric, Telemetry::DiffPressure },
                        pressure.press_diff);
-    node->setParameter({ Telemetry::Barometric, Telemetry::Temperature },
+    port.setParameter({ Telemetry::Barometric, Telemetry::Temperature },
                        decodeTemperature(pressure.temperature));
-
-    node->notify();
 }

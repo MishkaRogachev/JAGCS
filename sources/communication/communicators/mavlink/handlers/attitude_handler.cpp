@@ -11,7 +11,7 @@
 // Internal
 #include "service_registry.h"
 #include "telemetry_service.h"
-#include "telemetry.h"
+#include "telemetry_portion.h"
 
 using namespace comm;
 using namespace domain;
@@ -25,18 +25,15 @@ void AttitudeHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_ATTITUDE) return;
 
-    Telemetry* node = m_telemetryService->mavNode(message.sysid);
-    if (!node) return;
+    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
     mavlink_attitude_t attitude;
     mavlink_msg_attitude_decode(&message, &attitude);
 
-    node->setParameter({ Telemetry::Ahrs, Telemetry::Pitch }, qRadiansToDegrees(attitude.pitch));
-    node->setParameter({ Telemetry::Ahrs, Telemetry::Roll }, qRadiansToDegrees(attitude.roll));
-    node->setParameter({ Telemetry::Ahrs, Telemetry::Yaw }, qRadiansToDegrees(attitude.yaw));
-    node->setParameter({ Telemetry::Ahrs, Telemetry::PitchSpeed }, qRadiansToDegrees(attitude.pitchspeed));
-    node->setParameter({ Telemetry::Ahrs, Telemetry::RollSpeed }, qRadiansToDegrees(attitude.rollspeed));
-    node->setParameter({ Telemetry::Ahrs, Telemetry::YawSpeed }, qRadiansToDegrees(attitude.yawspeed));
-
-    node->notify();
+    port.setParameter({ Telemetry::Ahrs, Telemetry::Pitch }, qRadiansToDegrees(attitude.pitch));
+    port.setParameter({ Telemetry::Ahrs, Telemetry::Roll }, qRadiansToDegrees(attitude.roll));
+    port.setParameter({ Telemetry::Ahrs, Telemetry::Yaw }, qRadiansToDegrees(attitude.yaw));
+    port.setParameter({ Telemetry::Ahrs, Telemetry::PitchSpeed }, qRadiansToDegrees(attitude.pitchspeed));
+    port.setParameter({ Telemetry::Ahrs, Telemetry::RollSpeed }, qRadiansToDegrees(attitude.rollspeed));
+    port.setParameter({ Telemetry::Ahrs, Telemetry::YawSpeed }, qRadiansToDegrees(attitude.yawspeed));
 }
