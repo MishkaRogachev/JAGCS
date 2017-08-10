@@ -56,7 +56,7 @@ GridLayout {
         text: batteryCurrent.toFixed(2) + qsTr(" A")
     }
 
-    Controls.Switch {
+    Controls.Switch { // FIXME: dangerous switch
         text: armed ? qsTr("DISARM") : qsTr("ARM")
         inputChecked: armed
         onCheckedChanged: commandArmDisarm(checked)

@@ -7,7 +7,7 @@ RowLayout {
     id: root
 
     property int waypoint: 0
-    property var waypoints: []
+    property alias waypoints: waypointBox.model
     property bool guided: false
 
     signal commandSetWaypoint(int item)
@@ -15,7 +15,7 @@ RowLayout {
     signal commandStart()
     signal pauseContinue(bool unpause)
 
-    onWaypointChanged: waypointBox.currentIndex = waypoints.indexOf(waypoint)
+    onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
 
     Controls.Label {
         text: qsTr("WP: ")
@@ -25,7 +25,6 @@ RowLayout {
 
     Controls.ComboBox {
         id: waypointBox
-        model: waypoints
         onCurrentTextChanged: commandSetWaypoint(currentText)
         implicitWidth: palette.controlBaseSize * 2
         enabled: guided
