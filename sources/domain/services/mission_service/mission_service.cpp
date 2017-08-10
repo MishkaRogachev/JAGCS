@@ -2,6 +2,7 @@
 
 // Qt
 #include <QMap>
+#include <QMutexLocker>
 
 // Internal
 #include "mission.h"
@@ -17,6 +18,7 @@ using namespace domain;
 class MissionService::Impl
 {
 public:
+    QMutex mutex;
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> itemRepository;
     GenericRepository<MissionAssignment> assignmentRepository;
@@ -24,6 +26,7 @@ public:
     QMap <int, MissionItemPtr> currentItems;
 
     Impl():
+        mutex(QMutex::Recursive),
         missionRepository("missions"),
         itemRepository("mission_items"),
         assignmentRepository("mission_assignments")
@@ -44,23 +47,30 @@ MissionService::~MissionService()
 
 MissionPtr MissionService::mission(int id, bool reload)
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->missionRepository.read(id, reload);
 }
 
 MissionItemPtr MissionService::missionItem(int id, bool reload)
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->itemRepository.read(id, reload);
 }
 
 MissionAssignmentPtr MissionService::assignment(int id, bool reload)
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->assignmentRepository.read(id, reload);
 }
 
 MissionPtrList MissionService::missions(const QString& condition, bool reload)
 {
-    MissionPtrList list;
+    QMutexLocker locker(&d->mutex);
 
+    MissionPtrList list;
     for (int id: d->missionRepository.selectId(condition))
     {
         list.append(this->mission(id, reload));
@@ -71,8 +81,9 @@ MissionPtrList MissionService::missions(const QString& condition, bool reload)
 
 MissionItemPtrList MissionService::missionItems(const QString& condition, bool reload)
 {
-    MissionItemPtrList list;
+    QMutexLocker locker(&d->mutex);
 
+    MissionItemPtrList list;
     for (int id: d->itemRepository.selectId(condition))
     {
         list.append(this->missionItem(id, reload));
@@ -82,16 +93,22 @@ MissionItemPtrList MissionService::missionItems(const QString& condition, bool r
 
 MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->currentItems.value(vehicleId);
 }
 
 bool MissionService::isItemCurrent(const MissionItemPtr& item) const
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->currentItems.values().contains(item);
 }
 
 MissionAssignmentPtr MissionService::missionAssignment(int missionId)
 {
+    QMutexLocker locker(&d->mutex);
+
     for (int id: d->assignmentRepository.selectId(
              QString("missionId = %1").arg(missionId)))
     {
@@ -102,6 +119,8 @@ MissionAssignmentPtr MissionService::missionAssignment(int missionId)
 
 MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId)
 {
+    QMutexLocker locker(&d->mutex);
+
     for (int id: d->assignmentRepository.selectId(
              QString("vehicleId = %1").arg(vehicleId)))
     {
@@ -112,12 +131,16 @@ MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId)
 
 MissionItemPtrList MissionService::missionItems(int missionId)
 {
+    QMutexLocker locker(&d->mutex);
+
     return this->missionItems(QString("missionId = %1 ORDER BY sequence").arg(
                                missionId));
 }
 
 MissionItemPtr MissionService::missionItem(int missionId, int sequence)
 {
+    QMutexLocker locker(&d->mutex);
+
     for (int id: d->itemRepository.selectId(
              QString("missionId = %1 AND sequence = %2").arg(missionId).arg(sequence)))
     {
@@ -128,6 +151,8 @@ MissionItemPtr MissionService::missionItem(int missionId, int sequence)
 
 bool MissionService::save(const MissionPtr& mission)
 {
+    QMutexLocker locker(&d->mutex);
+
     bool isNew = mission->id() == 0;
     if (!d->missionRepository.save(mission)) return false;
 
@@ -137,6 +162,8 @@ bool MissionService::save(const MissionPtr& mission)
 
 bool MissionService::save(const MissionItemPtr& item)
 {
+    QMutexLocker locker(&d->mutex);
+
     bool isNew = item->id() == 0;
     item->clearSuperfluousParameters();
     if (!d->itemRepository.save(item)) return false;
@@ -156,6 +183,8 @@ bool MissionService::save(const MissionItemPtr& item)
 
 bool MissionService::save(const MissionAssignmentPtr& assignment)
 {
+    QMutexLocker locker(&d->mutex);
+
     bool isNew = assignment->id() == 0;
     if (!d->assignmentRepository.save(assignment)) return false;
 
@@ -165,6 +194,8 @@ bool MissionService::save(const MissionAssignmentPtr& assignment)
 
 bool MissionService::remove(const MissionPtr& mission)
 {
+    QMutexLocker locker(&d->mutex);
+
     MissionAssignmentPtr assignment = this->missionAssignment(mission->id());
     if (assignment && !this->remove(assignment)) return false;
 
@@ -181,6 +212,8 @@ bool MissionService::remove(const MissionPtr& mission)
 
 bool MissionService::remove(const MissionItemPtr& item)
 {
+    QMutexLocker locker(&d->mutex);
+
     // TODO: remove from current
     if (!d->itemRepository.remove(item)) return false;
 
@@ -191,6 +224,8 @@ bool MissionService::remove(const MissionItemPtr& item)
 
 bool MissionService::remove(const MissionAssignmentPtr& assignment)
 {
+    QMutexLocker locker(&d->mutex);
+
     for (const dao::MissionItemPtr& item: this->missionItems(assignment->missionId()))
     {
         item->setStatus(MissionItem::NotActual);
@@ -213,21 +248,29 @@ bool MissionService::remove(const MissionAssignmentPtr& assignment)
 
 void MissionService::unload(const MissionPtr& mission)
 {
+    QMutexLocker locker(&d->mutex);
+
     d->missionRepository.unload(mission->id());
 }
 
 void MissionService::unload(const MissionItemPtr& item)
 {
+    QMutexLocker locker(&d->mutex);
+
     d->itemRepository.unload(item->id());
 }
 
 void MissionService::unload(const MissionAssignmentPtr& assignment)
 {
+    QMutexLocker locker(&d->mutex);
+
     d->assignmentRepository.unload(assignment->id());
 }
 
 void MissionService::addNewMissionItem(int missionId)
 {
+    QMutexLocker locker(&d->mutex);
+
     MissionPtr mission = this->mission(missionId);
     if (mission.isNull()) return;
 
@@ -264,6 +307,8 @@ void MissionService::addNewMissionItem(int missionId)
 
 void MissionService::saveMissionItems(int missionId)
 {
+    QMutexLocker locker(&d->mutex);
+
     for (const MissionItemPtr& item: this->missionItems(missionId))
     {
         this->save(item);
@@ -272,6 +317,8 @@ void MissionService::saveMissionItems(int missionId)
 
 void MissionService::fixMissionItemOrder(int missionId)
 {
+    QMutexLocker locker(&d->mutex);
+
     int counter = 0;
     for (const MissionItemPtr& item : this->missionItems(missionId))
     {
@@ -293,6 +340,8 @@ void MissionService::fixMissionItemOrder(int missionId)
 
 void MissionService::assign(int missionId, int vehicleId)
 {
+    QMutexLocker locker(&d->mutex);
+
     // Unassign current vehicle's assignment
     MissionAssignmentPtr vehicleAssignment = this->vehicleAssignment(vehicleId);
     if (vehicleAssignment)
@@ -324,15 +373,17 @@ void MissionService::assign(int missionId, int vehicleId)
 
 void MissionService::unassign(int missionId)
 {
+    QMutexLocker locker(&d->mutex);
+
     MissionAssignmentPtr assignment = this->missionAssignment(missionId);
     if (!assignment.isNull()) this->remove(assignment);
 }
 
 void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& item)
 {
-    MissionItemPtr oldCurrent;
+    QMutexLocker locker(&d->mutex);
 
-    oldCurrent = d->currentItems.value(vehicleId);
+    MissionItemPtr oldCurrent = d->currentItems.value(vehicleId);
     d->currentItems[vehicleId] = item;
 
     if (oldCurrent) emit missionItemChanged(oldCurrent);
