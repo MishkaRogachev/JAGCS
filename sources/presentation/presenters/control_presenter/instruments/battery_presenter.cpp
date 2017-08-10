@@ -17,6 +17,4 @@ void BatteryPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap
         this->setViewProperty(PROPERTY(batteryCurrent), parameters[domain::Telemetry::Current]);
     if (parameters.contains(domain::Telemetry::Percentage))
         this->setViewProperty(PROPERTY(batteryPercentage), parameters[domain::Telemetry::Percentage]);
-    if (parameters.contains(domain::Telemetry::ConsumedCharge))
-        this->setViewProperty(PROPERTY(consumedCharge), parameters[domain::Telemetry::ConsumedCharge]);
 }

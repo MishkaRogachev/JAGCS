@@ -14,7 +14,6 @@
 #include "rangefinder_handler.h"
 #include "vfr_hud_handler.h"
 #include "wind_handler.h"
-#include "battery_handler.h"
 #include "radio_status_handler.h"
 #include "nav_controller_handler.h"
 #include "command_handler.h"
@@ -43,7 +42,6 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new VfrHudHandler(communicator);
     new RangefinderHandler(communicator);
     new WindHandler(communicator);
-    new BatteryHandler(communicator);
     new RadioStatusHandler(communicator);
     new NavControllerHandler(communicator);
     new CommandHandler(communicator);

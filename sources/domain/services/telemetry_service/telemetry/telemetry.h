@@ -192,7 +192,6 @@ namespace domain
             Throttle = 8001,
 
             Battery = 9000,
-            ConsumedCharge = 9001,
 
             Rssi = 10001,
             Noise = 10002,
