@@ -29,6 +29,8 @@ VehicleService::VehicleService(MissionService* missionService, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
+    qRegisterMetaType<dao::VehiclePtr>("dao::VehiclePtr");
+
     d->missionService = missionService;
 }
 

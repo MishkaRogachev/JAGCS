@@ -10,6 +10,7 @@
 namespace comm
 {
     class AbstractCommunicator;
+    class ICommunicatorFactory;
     class AbstractLink;
 }
 
@@ -31,7 +32,7 @@ namespace domain
                                    bool connected);
 
     public slots:
-        void setCommunicator(comm::AbstractCommunicator* value);
+        void initCommunicator(comm::ICommunicatorFactory* commFactory);
         void updateLinkFromDescription(const dao::LinkDescriptionPtr& description);
         void removeLinkByDescription(const dao::LinkDescriptionPtr& description);
         void setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected);

@@ -4,15 +4,12 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-
 #include "mission_service.h"
 #include "vehicle_service.h"
 #include "telemetry_service.h"
 #include "video_service.h"
 #include "command_service.h"
 #include "communication_service.h"
-#include "mavlink_communicator_factory.h"
 
 using namespace domain;
 
@@ -47,12 +44,7 @@ ServiceRegistry* ServiceRegistry::instance()
 
 void ServiceRegistry::initCommunicator()
 {
-    // TODO: architecture change - different link protocols
-    comm::MavLinkCommunicatorFactory comFactory(
-                settings::Provider::value(settings::communication::systemId).toInt(),
-                settings::Provider::value(settings::communication::componentId).toInt());
-
-    instance()->d->communicationService.init(&comFactory);
+    instance()->d->communicationService.init();
 }
 
 MissionService* ServiceRegistry::missionService()

@@ -7,6 +7,7 @@
 #include "link_description.h"
 
 #include "abstract_communicator.h"
+#include "i_communicator_factory.h"
 
 #include "abstract_link.h"
 #include "description_link_factory.h"
@@ -23,7 +24,7 @@ comm::AbstractCommunicator* CommunicatorWorker::communicator() const
     return m_communicator;
 }
 
-void CommunicatorWorker::setCommunicator(comm::AbstractCommunicator* value)
+void CommunicatorWorker::initCommunicator(comm::ICommunicatorFactory* commFactory)
 {
     if (m_communicator)
     {
@@ -32,11 +33,16 @@ void CommunicatorWorker::setCommunicator(comm::AbstractCommunicator* value)
             m_communicator->removeLink(link);
         }
     }
-    m_communicator = value;
 
-    for (AbstractLink* link: m_descriptedLinks.values())
+    m_communicator = commFactory->create();
+
+    if (m_communicator)
     {
-        m_communicator->addLink(link);
+        m_communicator->setParent(this);
+        for (AbstractLink* link: m_descriptedLinks.values())
+        {
+            m_communicator->addLink(link);
+        }
     }
 }
 

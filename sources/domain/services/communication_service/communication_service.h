@@ -26,7 +26,7 @@ namespace domain
         dao::LinkDescriptionPtrList descriptions(const QString& condition = QString(),
                                                  bool reload  = false);
 
-        void init(comm::ICommunicatorFactory* commFactory);
+        void init();
 
     public slots:
         bool save(const dao::LinkDescriptionPtr& description);

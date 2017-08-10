@@ -5,11 +5,13 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
 #include "link_description.h"
 #include "generic_repository.h"
 #include "generic_repository_impl.h"
 
-#include "i_communicator_factory.h"
+#include "mavlink_communicator_factory.h"
 #include "communicator_worker.h"
 
 using namespace domain;
@@ -17,8 +19,8 @@ using namespace domain;
 class CommunicationService::Impl
 {
 public:
-    QThread commThread;
-    CommunicatorWorker commWorker;
+    QThread* commThread;
+    CommunicatorWorker* commWorker;
 
     GenericRepository<dao::LinkDescription> linkRepository;
 
@@ -32,16 +34,21 @@ CommunicationService::CommunicationService(QObject* parent):
     d(new Impl())
 {
     qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
-    d->commThread.setObjectName("Communication thread");
 
-    connect(&d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
+    d->commThread = new QThread(this);
+    d->commThread->setObjectName("Communication thread");
+
+    d->commWorker = new CommunicatorWorker();
+
+    connect(d->commThread, &QThread::finished, d->commWorker, &QObject::deleteLater);
+    connect(d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
             this, &CommunicationService::onLinkStatisticsChanged);
 }
 
 CommunicationService::~CommunicationService()
 {
-    d->commThread.quit();
-    d->commThread.wait();
+    d->commThread->quit();
+    d->commThread->wait();
 }
 
 dao::LinkDescriptionPtr CommunicationService::description(int id, bool reload)
@@ -61,15 +68,20 @@ dao::LinkDescriptionPtrList CommunicationService::descriptions(const QString& co
     return list;
 }
 
-void CommunicationService::init(comm::ICommunicatorFactory *commFactory)
+void CommunicationService::init()
 {
-    d->commWorker.setCommunicator(commFactory->create());
-    d->commWorker.moveToThread(&d->commThread);
-    d->commThread.start();
+    // TODO: different link protocols
+    comm::MavLinkCommunicatorFactory commFactory(
+                settings::Provider::value(settings::communication::systemId).toInt(),
+                settings::Provider::value(settings::communication::componentId).toInt());
+
+    d->commWorker->initCommunicator(&commFactory);
+    d->commWorker->moveToThread(d->commThread);
+    d->commThread->start();
 
     for (const dao::LinkDescriptionPtr& description: this->descriptions())
     {
-        QMetaObject::invokeMethod(&d->commWorker, "updateLinkFromDescription",
+        QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
                                   Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
     }
 }
@@ -80,7 +92,7 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     if (!d->linkRepository.save(description)) return false;
 
     isNew ? descriptionAdded(description) : descriptionChanged(description);
-    QMetaObject::invokeMethod(&d->commWorker, "updateLinkFromDescription",
+    QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
                               Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
 
     return true;
@@ -90,7 +102,7 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkRepository.remove(description)) return false;
 
-    QMetaObject::invokeMethod(&d->commWorker, "removeLinkByDescription",
+    QMetaObject::invokeMethod(d->commWorker, "removeLinkByDescription",
                               Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
     emit descriptionRemoved(description);
 
@@ -100,7 +112,7 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
 void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& description,
                                             bool connected)
 {
-    QMetaObject::invokeMethod(&d->commWorker, "setLinkConnected",
+    QMetaObject::invokeMethod(d->commWorker, "setLinkConnected",
                               Qt::QueuedConnection,
                               Q_ARG(dao::LinkDescriptionPtr, description),
                               Q_ARG(bool, connected));

@@ -32,6 +32,9 @@ TelemetryService::TelemetryService(VehicleService* service, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
+    qRegisterMetaType<Telemetry::TelemetryList>("TelemetryList");
+    qRegisterMetaType<Telemetry::TelemetryMap>("TelemetryMap");
+
     d->service = service;
     connect(d->service, &VehicleService::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
 }
