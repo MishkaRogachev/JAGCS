@@ -54,12 +54,7 @@ MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObj
 }
 
 MissionItemPresenter::~MissionItemPresenter()
-{
-    if (d->selectedMission)
-    {
-        d->service->saveMissionItems(d->selectedMission->id());
-    }
-}
+{}
 
 dao::MissionPtr MissionItemPresenter::selectedMission() const
 {

@@ -133,6 +133,8 @@ Map {
     }
 
     Component.onDestruction: {
+        if (!visible || width == 0 || height == 0) return;
+
         settings.setValue("Map/centerLatitude", center.latitude);
         settings.setValue("Map/centerLongitude", center.longitude);
         settings.setValue("Map/zoomLevel", zoomLevel);
