@@ -16,12 +16,13 @@ namespace domain
     class ServiceRegistry
     {
         ServiceRegistry();
+
     public:
         ~ServiceRegistry();
 
         static ServiceRegistry* instance();
 
-        static void initCommunicator();
+        void init();
 
         static MissionService* missionService();
         static VehicleService* vehicleService();

@@ -47,6 +47,12 @@ CommunicationService::CommunicationService(QObject* parent):
 
 CommunicationService::~CommunicationService()
 {
+    for (const dao::LinkDescriptionPtr& description: this->descriptions())
+    {
+        description->setAutoConnect(description->isConnected());
+        this->save(description);
+    }
+
     d->commThread->quit();
     d->commThread->wait();
 }
@@ -116,8 +122,6 @@ void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& descr
                               Qt::QueuedConnection,
                               Q_ARG(dao::LinkDescriptionPtr, description),
                               Q_ARG(bool, connected));
-
-    description->setAutoConnect(connected);
 }
 
 void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,

@@ -12,31 +12,12 @@
 #include "translation_manager.h"
 #include "qml_declarations.h"
 #include "proxy_manager.h"
-#include "db_manager.h"
 
 #include "service_registry.h"
 
 #include "main_presenter.h"
 
 #include "link_description.h"
-
-void init()
-{
-    domain::TranslationManager translations;
-    translations.initLocales();
-
-    domain::ProxyManager proxy;
-    proxy.load();
-
-    db::DbManager dbManager;
-    if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
-    {
-        qFatal("Unable to establish DB connection");
-        qApp->quit();
-    }
-
-    domain::ServiceRegistry::initCommunicator();
-}
 
 int main(int argc, char* argv[])
 {
@@ -52,7 +33,13 @@ int main(int argc, char* argv[])
     app.setFont(QFont("OpenSans"));
     app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
-    init();
+    domain::TranslationManager translations;
+    translations.initLocales();
+
+    domain::ProxyManager proxy;
+    proxy.load();
+
+    domain::ServiceRegistry::instance()->init();
 
     presentation::MainPresenter presenter;
 

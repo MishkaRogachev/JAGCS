@@ -33,7 +33,11 @@ public:
 MissionService::MissionService(QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    qRegisterMetaType<dao::MissionPtr>("dao::MissionPtr");
+    qRegisterMetaType<dao::MissionItemPtr>("dao::MissionItemPtr");
+    qRegisterMetaType<dao::MissionAssignmentPtr>("dao::MissionAssignmentPtr");
+}
 
 MissionService::~MissionService()
 {}

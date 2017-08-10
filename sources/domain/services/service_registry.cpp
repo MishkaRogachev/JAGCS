@@ -1,9 +1,13 @@
 #include "service_registry.h"
 
 // Qt
+#include <QCoreApplication>
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
+#include "db_manager.h"
 #include "mission_service.h"
 #include "vehicle_service.h"
 #include "telemetry_service.h"
@@ -16,17 +20,12 @@ using namespace domain;
 class ServiceRegistry::Impl
 {
 public:
-    MissionService missionService;
-    VehicleService vehicleService;
-    TelemetryService telemetryService;
-    VideoService videoService;
-    CommandService commandService;
-    CommunicationService communicationService;
-
-    Impl():
-        vehicleService(&missionService),
-        telemetryService(&vehicleService)
-    {}
+    MissionService* missionService;
+    VehicleService* vehicleService;
+    TelemetryService* telemetryService;
+    VideoService* videoService;
+    CommandService* commandService;
+    CommunicationService* communicationService;
 };
 
 ServiceRegistry::ServiceRegistry():
@@ -42,37 +41,60 @@ ServiceRegistry* ServiceRegistry::instance()
     return &registry;
 }
 
-void ServiceRegistry::initCommunicator()
+void ServiceRegistry::init()
 {
-    instance()->d->communicationService.init();
+    db::DbManager dbManager;
+    if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
+    {
+        qFatal("Unable to establish DB connection");
+        qApp->quit();
+    }
+
+    d->missionService = new MissionService(qApp);
+    d->vehicleService = new VehicleService(d->missionService, qApp);
+    d->telemetryService = new TelemetryService(d->vehicleService, qApp);
+    d->videoService = new VideoService(qApp);
+    d->commandService = new CommandService(qApp);
+    d->communicationService = new CommunicationService(qApp);
+
+    d->communicationService->init();
+
+    QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() {
+        delete d->communicationService;
+        delete d->commandService;
+        delete d->videoService;
+        delete d->telemetryService;
+        delete d->vehicleService;
+        delete d->missionService;
+    });
 }
 
 MissionService* ServiceRegistry::missionService()
 {
-    return &instance()->d->missionService;
+    return instance()->d->missionService;
 }
 
 VehicleService* ServiceRegistry::vehicleService()
 {
-    return &instance()->d->vehicleService;
+    return instance()->d->vehicleService;
 }
 
 TelemetryService* ServiceRegistry::telemetryService()
 {
-    return &instance()->d->telemetryService;
+    return instance()->d->telemetryService;
 }
 
 VideoService* ServiceRegistry::videoService()
 {
-    return &instance()->d->videoService;
+    return instance()->d->videoService;
 }
 
 CommandService* ServiceRegistry::commandService()
 {
-    return &instance()->d->commandService;
+    return instance()->d->commandService;
 }
 
 CommunicationService* ServiceRegistry::communicationService()
 {
-    return &instance()->d->communicationService;
+    return instance()->d->communicationService;
 }
