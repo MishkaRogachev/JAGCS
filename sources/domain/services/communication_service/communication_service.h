@@ -34,15 +34,18 @@ namespace domain
 
         void setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected);
 
-    private slots:
-        void onLinkStatisticsChanged();
-
     signals:
         void descriptionAdded(dao::LinkDescriptionPtr description);
         void descriptionRemoved(dao::LinkDescriptionPtr description);
         void descriptionChanged(dao::LinkDescriptionPtr description);
 
         void linkStatisticsChanged(const dao::LinkDescriptionPtr& description);
+
+    private slots:
+        void onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
+                                     int bytesReceivedSec,
+                                     int bytesSentSec,
+                                     bool connected);
 
     private:
         class Impl;

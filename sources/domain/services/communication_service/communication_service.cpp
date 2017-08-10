@@ -1,74 +1,48 @@
 #include "communication_service.h"
 
 // Qt
-#include <QMap>
+#include <QThread>
 #include <QDebug>
-
 
 // Internal
 #include "link_description.h"
-
 #include "generic_repository.h"
 #include "generic_repository_impl.h"
 
-#include "abstract_communicator.h"
-#include "abstract_link.h"
-#include "description_link_factory.h"
-
 #include "i_communicator_factory.h"
+#include "communicator_worker.h"
 
-using namespace comm;
 using namespace domain;
 
 class CommunicationService::Impl
 {
 public:
-    AbstractCommunicator* communicator = nullptr;
-    GenericRepository<dao::LinkDescription> linkRepository;
+    QThread commThread;
+    CommunicatorWorker commWorker;
 
-    QMap<dao::LinkDescriptionPtr, AbstractLink*> descriptedLinks;
+    GenericRepository<dao::LinkDescription> linkRepository;
 
     Impl():
         linkRepository("links")
     {}
-
-    AbstractLink* linkFromDescription(const dao::LinkDescriptionPtr& description)
-    {
-        DescriptionLinkFactory factory(description);
-        AbstractLink* link = factory.create();
-        if (!link) return nullptr;
-
-        descriptedLinks[description] = link;
-        if (communicator) communicator->addLink(link);
-
-        if (description->isAutoConnect()) link->connectLink();
-
-        return link;
-    }
-
-    void updateLinkFromDescription(AbstractLink* link,
-                                   const dao::LinkDescriptionPtr& description)
-    {
-        DescriptionLinkFactory factory(description);
-        factory.update(link);
-    }
 };
 
 CommunicationService::CommunicationService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    for (const dao::LinkDescriptionPtr& description: this->descriptions())
-    {
-        AbstractLink* link = d->linkFromDescription(description);
-        link->setParent(this);
-        connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicationService::onLinkStatisticsChanged);
-    }
+    qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
+    d->commThread.setObjectName("Communication thread");
+
+    connect(&d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
+            this, &CommunicationService::onLinkStatisticsChanged);
 }
 
 CommunicationService::~CommunicationService()
-{}
+{
+    d->commThread.quit();
+    d->commThread.wait();
+}
 
 dao::LinkDescriptionPtr CommunicationService::description(int id, bool reload)
 {
@@ -87,13 +61,16 @@ dao::LinkDescriptionPtrList CommunicationService::descriptions(const QString& co
     return list;
 }
 
-void CommunicationService::init(ICommunicatorFactory *commFactory)
+void CommunicationService::init(comm::ICommunicatorFactory *commFactory)
 {
-    d->communicator = commFactory->create();
+    d->commWorker.setCommunicator(commFactory->create());
+    d->commWorker.moveToThread(&d->commThread);
+    d->commThread.start();
 
-    for (AbstractLink* link: d->descriptedLinks.values())
+    for (const dao::LinkDescriptionPtr& description: this->descriptions())
     {
-        d->communicator->addLink(link);
+        QMetaObject::invokeMethod(&d->commWorker, "updateLinkFromDescription",
+                                  Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
     }
 }
 
@@ -103,22 +80,8 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     if (!d->linkRepository.save(description)) return false;
 
     isNew ? descriptionAdded(description) : descriptionChanged(description);
-
-    if (d->descriptedLinks.contains(description))
-    {
-        AbstractLink* link = d->descriptedLinks[description];
-        d->updateLinkFromDescription(link, description);
-
-        emit link->statisticsChanged();
-    }
-    else
-    {
-        AbstractLink* link = d->linkFromDescription(description);
-        link->setParent(this);
-        connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicationService::onLinkStatisticsChanged);
-        emit link->statisticsChanged();
-    }
+    QMetaObject::invokeMethod(&d->commWorker, "updateLinkFromDescription",
+                              Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
 
     return true;
 }
@@ -127,40 +90,32 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkRepository.remove(description)) return false;
 
-    if (d->descriptedLinks.contains(description))
-    {
-        AbstractLink* link = d->descriptedLinks.take(description);
-
-        if (d->communicator) d->communicator->removeLink(link);
-        delete link;
-    }
-
+    QMetaObject::invokeMethod(&d->commWorker, "removeLinkByDescription",
+                              Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
     emit descriptionRemoved(description);
+
     return true;
 }
 
 void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& description,
                                             bool connected)
 {
-    AbstractLink* link = d->descriptedLinks[description];
-    if (!link) return;
+    QMetaObject::invokeMethod(&d->commWorker, "setLinkConnected",
+                              Qt::QueuedConnection,
+                              Q_ARG(dao::LinkDescriptionPtr, description),
+                              Q_ARG(bool, connected));
 
-    link->setConnected(connected);
-    link->statisticsChanged();
-
-    description->setAutoConnect(link->isConnected());
-    this->save(description);
+    description->setAutoConnect(connected);
 }
 
-void CommunicationService::onLinkStatisticsChanged()
+void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
+                                                   int bytesReceivedSec,
+                                                   int bytesSentSec,
+                                                   bool connected)
 {
-    AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
-    dao::LinkDescriptionPtr description = d->descriptedLinks.key(link);
-    if (description.isNull()) return;
-
-    description->setBytesRecvSec(link->bytesReceivedSec());
-    description->setBytesSentSec(link->bytesSentSec());
-    description->setConnected(link->isConnected());
+    description->setBytesRecvSec(bytesReceivedSec);
+    description->setBytesSentSec(bytesSentSec);
+    description->setConnected(connected);
 
     emit linkStatisticsChanged(description);
 }
