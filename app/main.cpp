@@ -39,7 +39,8 @@ int main(int argc, char* argv[])
     domain::ProxyManager proxy;
     proxy.load();
 
-    domain::ServiceRegistry::instance()->init();
+    domain::ServiceRegistry::instance()->init(
+                settings::Provider::value(settings::data_base::name).toString());
 
     presentation::MainPresenter presenter;
 

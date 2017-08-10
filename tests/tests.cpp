@@ -5,8 +5,6 @@
 // Internal
 #include "service_registry.h"
 
-#include "db_manager.h"
-
 // Tests
 #include "communication_service_test.h"
 #include "telemetry_service_test.h"
@@ -21,9 +19,7 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
-    db::DbManager manager;
-
-    manager.open("test_db");
+    domain::ServiceRegistry::instance()->init(QString("test_db"));
 
     CommunicationServiceTest commTest;
     QTest::qExec(&commTest);
@@ -33,8 +29,6 @@ int main(int argc, char* argv[])
 
     MissionServiceTest missionTest;
     QTest::qExec(&missionTest);
-
-    manager.drop();
 
     return 0;
 }

@@ -22,7 +22,7 @@ namespace domain
 
         static ServiceRegistry* instance();
 
-        void init();
+        void init(const QString& dataBaseName);
 
         static MissionService* missionService();
         static VehicleService* vehicleService();

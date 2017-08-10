@@ -56,11 +56,11 @@ void MissionServiceTest::testMissionItems()
     {
         MissionItemPtr item = MissionItemPtr::create();
         item->setMissionId(mission->id());
-        item->setCommand(MissionItem::Takeoff);
+        item->setCommand(MissionItem::Landing);
         item->setLatitude(45.6711);
         item->setLongitude(37.4869);
         item->setAltitude(350.75);
-        item->setParameter(MissionItem::Pitch, 25);
+        item->setParameter(MissionItem::AbortAltitude, 25);
         item->setParameter(MissionItem::Yaw, 180.56);
 
         QVERIFY2(missionService->save(item), "Can't insert mission item");
@@ -74,8 +74,9 @@ void MissionServiceTest::testMissionItems()
     }
     MissionItemPtr item = missionService->missionItem(id, true);
 
-    QCOMPARE(item->parameter(MissionItem::Pitch).toInt(), 25);
-    QVERIFY(qFuzzyCompare(item->parameter(MissionItem::Yaw).toDouble(), 180.56));
+    QCOMPARE(item->command(), MissionItem::Landing);
+    QCOMPARE(item->parameter(MissionItem::AbortAltitude).toInt(), 25);
+    QVERIFY(qFuzzyCompare(item->parameter(MissionItem::Yaw).toFloat(), float(180.56)));
 
     QVERIFY2(missionService->remove(item), "Can't remove item");
     QVERIFY2(missionService->remove(mission), "Can't remove mission");

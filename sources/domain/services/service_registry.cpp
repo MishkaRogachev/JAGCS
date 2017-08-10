@@ -5,8 +5,6 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-
 #include "db_manager.h"
 #include "mission_service.h"
 #include "vehicle_service.h"
@@ -41,10 +39,10 @@ ServiceRegistry* ServiceRegistry::instance()
     return &registry;
 }
 
-void ServiceRegistry::init()
+void ServiceRegistry::init(const QString& dataBaseName)
 {
     db::DbManager dbManager;
-    if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
+    if (!dbManager.open(dataBaseName))
     {
         qFatal("Unable to establish DB connection");
         qApp->quit();
