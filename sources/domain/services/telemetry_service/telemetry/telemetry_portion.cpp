@@ -16,5 +16,8 @@ TelemetryPortion::TelemetryPortion(Telemetry* node):
 
 TelemetryPortion::~TelemetryPortion()
 {
-    if (m_node) m_node->notify();
+    if (m_node)
+    {
+        QMetaObject::invokeMethod(m_node, "notify", Qt::QueuedConnection);
+    }
 }
