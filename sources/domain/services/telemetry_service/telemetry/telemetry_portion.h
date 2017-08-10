@@ -15,7 +15,7 @@ namespace domain
         ~TelemetryPortion() override;
 
     signals:
-        void setParameter(const QList<Telemetry::TelemetryId>& path, const QVariant& value);
+        void setParameter(const Telemetry::TelemetryList& path, const QVariant& value);
 
     private:
         Telemetry* m_node;

@@ -236,11 +236,11 @@ namespace domain
 
     public slots:
         void setParameter(TelemetryId id, const QVariant& value);
-        void setParameter(const QList<TelemetryId>& path, const QVariant& value);
+        void setParameter(const TelemetryList& path, const QVariant& value);
         void notify();
 
     signals:
-        void parametersChanged(TelemetryMap parameters);
+        void parametersChanged(Telemetry::TelemetryMap parameters);
 
     protected:
         void addChildNode(Telemetry* childNode);

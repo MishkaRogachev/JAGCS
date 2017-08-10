@@ -92,7 +92,7 @@ void Telemetry::setParameter(TelemetryId key, const QVariant& value)
     m_changedParameters.append(key);
 }
 
-void Telemetry::setParameter(const QList<TelemetryId>& path, const QVariant& value)
+void Telemetry::setParameter(const TelemetryList& path, const QVariant& value)
 {
     if (path.count() > 1)
     {
