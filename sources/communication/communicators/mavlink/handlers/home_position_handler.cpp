@@ -58,10 +58,14 @@ void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)
 
      command.command = MAV_CMD_GET_HOME_POSITION;
 
-     mavlink_msg_command_long_encode(m_communicator->systemId(),
-                                     m_communicator->componentId(),
-                                     &message, &command);
-     m_communicator->sendMessageAllLinks(message);
+     AbstractLink* link = m_communicator->mavSystemLink(mavId);
+     if (!link) return;
+
+     mavlink_msg_command_long_encode_chan(m_communicator->systemId(),
+                                          m_communicator->componentId(),
+                                          m_communicator->linkChannel(link),
+                                          &message, &command);
+     m_communicator->sendMessage(message, link);
 }
 
 /*

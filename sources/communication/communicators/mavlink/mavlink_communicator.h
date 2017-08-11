@@ -22,7 +22,10 @@ namespace comm
         uint8_t systemId() const;
         uint8_t componentId() const;
 
-        AbstractLink* receivedLink() const;
+        uint8_t linkChannel(AbstractLink* link) const;
+
+        AbstractLink* lastReceivedLink() const;
+        AbstractLink* mavSystemLink(uint8_t systemId);
 
     public slots:
         void addLink(AbstractLink* link) override;
@@ -32,8 +35,6 @@ namespace comm
         void setComponentId(uint8_t componentId);
 
         void sendMessage(mavlink_message_t& message, AbstractLink* link);
-        void sendMessageLastReceivedLink(mavlink_message_t& message);
-        void sendMessageAllLinks(mavlink_message_t& message);
 
     signals:
         void messageReceived(const mavlink_message_t& message);
@@ -42,6 +43,9 @@ namespace comm
 
     protected slots:
         void onDataReceived(const QByteArray& data) override;
+
+    protected:
+        virtual void finalizeMessage(mavlink_message_t& message);
 
     private:
         class Impl;

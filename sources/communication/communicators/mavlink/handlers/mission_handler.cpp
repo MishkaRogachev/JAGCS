@@ -144,10 +144,14 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
     request.target_system = vehicle->mavId();
     request.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
-    mavlink_msg_mission_request_list_encode(m_communicator->systemId(),
-                                            m_communicator->componentId(),
-                                            &message, &request);
-    m_communicator->sendMessageAllLinks(message);
+    AbstractLink* link = m_communicator->mavSystemLink(vehicle->mavId());
+    if (!link) return;
+
+    mavlink_msg_mission_request_list_encode_chan(m_communicator->systemId(),
+                                                 m_communicator->componentId(),
+                                                 m_communicator->linkChannel(link),
+                                                 &message, &request);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
@@ -173,10 +177,14 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     count.target_component = MAV_COMP_ID_MISSIONPLANNER;
     count.count = mission->count();
 
-    mavlink_msg_mission_count_encode(m_communicator->systemId(),
-                                     m_communicator->componentId(),
-                                     &message, &count);
-    m_communicator->sendMessageAllLinks(message);
+    AbstractLink* link = m_communicator->mavSystemLink(vehicle->mavId());
+    if (!link) return;
+
+    mavlink_msg_mission_count_encode_chan(m_communicator->systemId(),
+                                          m_communicator->componentId(),
+                                          m_communicator->linkChannel(link),
+                                          &message, &count);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::selectCurrent(int vehicleId, uint16_t seq)
@@ -193,10 +201,14 @@ void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
     missionRequest.target_component = MAV_COMP_ID_MISSIONPLANNER;
     missionRequest.seq = seq;
 
-    mavlink_msg_mission_request_encode(m_communicator->systemId(),
-                                       m_communicator->componentId(),
-                                       &message, &missionRequest);
-    m_communicator->sendMessageAllLinks(message);
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_request_encode_chan(m_communicator->systemId(),
+                                            m_communicator->componentId(),
+                                            m_communicator->linkChannel(link),
+                                            &message, &missionRequest);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
@@ -290,10 +302,14 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
     item->setStatus(dao::MissionItem::Actual);
     m_missionService->missionItemChanged(item);
 
-    mavlink_msg_mission_item_encode(m_communicator->systemId(),
-                                    m_communicator->componentId(),
-                                    &message, &msgItem);
-    m_communicator->sendMessageAllLinks(message);
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_item_encode_chan(m_communicator->systemId(),
+                                         m_communicator->componentId(),
+                                         m_communicator->linkChannel(link),
+                                         &message, &msgItem);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::sendMissionAck(uint8_t mavId)
@@ -305,10 +321,14 @@ void MissionHandler::sendMissionAck(uint8_t mavId)
     ackItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
     ackItem.type = MAV_MISSION_ACCEPTED;
 
-    mavlink_msg_mission_ack_encode(m_communicator->systemId(),
-                                   m_communicator->componentId(),
-                                   &message, &ackItem);
-    m_communicator->sendMessageAllLinks(message);
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_ack_encode_chan(m_communicator->systemId(),
+                                        m_communicator->componentId(),
+                                        m_communicator->linkChannel(link),
+                                        &message, &ackItem);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::sendCurrentItem(uint8_t mavId, uint16_t seq)
@@ -320,10 +340,14 @@ void MissionHandler::sendCurrentItem(uint8_t mavId, uint16_t seq)
     current.target_component = MAV_COMP_ID_MISSIONPLANNER;
     current.seq = seq;
 
-    mavlink_msg_mission_set_current_encode(m_communicator->systemId(),
-                                           m_communicator->componentId(),
-                                           &message, &current);
-    m_communicator->sendMessageAllLinks(message);
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_set_current_encode_chan(m_communicator->systemId(),
+                                                m_communicator->componentId(),
+                                                m_communicator->linkChannel(link),
+                                                &message, &current);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)

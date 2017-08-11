@@ -23,12 +23,12 @@ public:
     uint8_t componentId;
 
     QMap<AbstractLink*, uint8_t> linkChannels;
+    QMap<uint8_t, AbstractLink*> mavSystemLinks;
     QList<uint8_t> avalibleChannels;
     AbstractLink* receivedLink = nullptr;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId,
-                                         QObject* parent):
+MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId, QObject* parent):
     AbstractCommunicator(parent),
     d(new Impl())
 {
@@ -54,9 +54,19 @@ uint8_t MavLinkCommunicator::componentId() const
     return d->componentId;
 }
 
-AbstractLink* MavLinkCommunicator::receivedLink() const
+uint8_t MavLinkCommunicator::linkChannel(AbstractLink* link) const
+{
+    return d->linkChannels.value(link, 0);
+}
+
+AbstractLink* MavLinkCommunicator::lastReceivedLink() const
 {
     return d->receivedLink;
+}
+
+AbstractLink* MavLinkCommunicator::mavSystemLink(uint8_t systemId)
+{
+    return d->mavSystemLinks.value(systemId, nullptr);
 }
 
 uint8_t MavLinkCommunicator::systemId() const
@@ -107,19 +117,11 @@ void MavLinkCommunicator::setComponentId(uint8_t componentId)
     emit componentIdChanged(componentId);
 }
 
-void MavLinkCommunicator::sendMessage(mavlink_message_t& message,
-                                      AbstractLink* link)
+void MavLinkCommunicator::sendMessage(mavlink_message_t& message, AbstractLink* link)
 {
     if (!link || !link->isConnected()) return;
 
-    static const uint8_t messageKeys[256] = MAVLINK_MESSAGE_CRCS;
-    mavlink_finalize_message_chan(&message,
-                                  d->systemId,
-                                  d->componentId,
-                                  d->linkChannels.value(link, 0),
-                                  message.len,
-                                  message.len,
-                                  messageKeys[message.msgid]);
+    this->finalizeMessage(message);
 
     uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
     int lenght = mavlink_msg_to_send_buffer(buffer, &message);
@@ -128,35 +130,30 @@ void MavLinkCommunicator::sendMessage(mavlink_message_t& message,
     link->sendData(QByteArray((const char*)buffer, lenght));
 }
 
-void MavLinkCommunicator::sendMessageLastReceivedLink(mavlink_message_t& message)
-{
-    this->sendMessage(message, d->receivedLink);
-}
-
-void MavLinkCommunicator::sendMessageAllLinks(mavlink_message_t& message)
-{
-    for (AbstractLink* link: d->linkChannels.keys())
-        this->sendMessage(message, link);
-}
-
 void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 {
-    mavlink_message_t message;
-    mavlink_status_t status;
-
     d->receivedLink = qobject_cast<AbstractLink*>(this->sender());
     if (!d->receivedLink) return;
 
-    uint8_t channel = d->linkChannels.value(d->receivedLink);
+    mavlink_message_t message;
+    mavlink_status_t status;
+
+    uint8_t channel = this->linkChannel(d->receivedLink);
     for (int pos = 0; pos < data.length(); ++pos)
     {
         if (!mavlink_parse_char(channel, (uint8_t)data[pos],
                                 &message, &status))
             continue;
 
+        d->mavSystemLinks[message.sysid] = d->receivedLink;
         emit messageReceived(message);
     }
 
     d->receivedLink->setPacketsReceived(status.packet_rx_success_count);
     d->receivedLink->setPacketsDrops(status.packet_rx_drop_count);
+}
+
+void MavLinkCommunicator::finalizeMessage(mavlink_message_t& message)
+{
+    Q_UNUSED(message)
 }

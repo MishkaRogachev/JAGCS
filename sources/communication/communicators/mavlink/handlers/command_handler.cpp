@@ -79,8 +79,12 @@ void CommandHandler::sendCommand(const Command& command)
     if (args.count() > 5) mavCommand.param6 = args.at(5).toFloat();
     if (args.count() > 6) mavCommand.param7 = args.at(6).toFloat();
 
-    mavlink_msg_command_long_encode(m_communicator->systemId(),
+    AbstractLink* link = m_communicator->mavSystemLink(vehicle->mavId());
+    if (!link) return;
+
+    mavlink_msg_command_long_encode_chan(m_communicator->systemId(),
                                     m_communicator->componentId(),
+                                    m_communicator->linkChannel(link),
                                     &message, &mavCommand);
-    m_communicator->sendMessageAllLinks(message);
+    m_communicator->sendMessage(message, link);
 }
