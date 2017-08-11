@@ -82,6 +82,9 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
     if (d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(false);
 
+    // By default, use MAVLink v1
+    mavlink_get_channel_status(d->linkChannels[link])->flags |= MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
+
     AbstractCommunicator::addLink(link);
 }
 
@@ -141,9 +144,16 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     uint8_t channel = this->linkChannel(d->receivedLink);
     for (int pos = 0; pos < data.length(); ++pos)
     {
-        if (!mavlink_parse_char(channel, (uint8_t)data[pos],
-                                &message, &status))
+        if (!mavlink_parse_char(channel, (uint8_t)data[pos],  &message, &status))
             continue;
+
+        // From https://mavlink.io/en/mavlink-2.html
+        mavlink_status_t* chan_state = mavlink_get_channel_status(channel);
+        if (!(chan_state->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1))
+        {
+            // this will only switch to proto version 2
+            chan_state->flags &= ~(MAVLINK_STATUS_FLAG_OUT_MAVLINK1);
+        }
 
         d->mavSystemLinks[message.sysid] = d->receivedLink;
         emit messageReceived(message);
