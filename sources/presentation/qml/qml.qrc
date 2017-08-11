@@ -32,6 +32,7 @@
         <file>Indicators/BarIndicator.qml</file>
         <file>Indicators/Horizon.qml</file>
         <file>Indicators/PlaneMark.qml</file>
+        <file>Indicators/TurnIndicator.qml</file>
         <file>Indicators/Ladder.qml</file>
         <file>Indicators/PitchScale.qml</file>
         <file>Indicators/RollScale.qml</file>

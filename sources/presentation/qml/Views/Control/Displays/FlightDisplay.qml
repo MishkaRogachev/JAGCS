@@ -10,6 +10,7 @@ Item {
     property bool ahrsOperational: false
     property alias pitch: af.pitch
     property alias roll: af.roll
+    property alias yawspeed: af.yawspeed
     property alias armed: af.armed
 
     property int throttle: 0

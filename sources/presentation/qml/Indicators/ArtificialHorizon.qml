@@ -11,6 +11,7 @@ Item {
 
     property real pitch: 0.0
     property real roll: 0.0
+    property real yawspeed: 0.0
 
     property real minPitch: -23
     property real maxPitch: 23
@@ -68,6 +69,12 @@ Item {
             pitch: pitchInverted ? 0 : -root.pitch
             roll: rollInverted ? -root.roll : 0
             markColor: armed ? palette.selectedTextColor : palette.negativeColor
+        }
+
+        TurnIndicator {
+            id: turn
+            anchors.fill: parent
+            value: yawspeed
         }
 
         Controls.Label {
