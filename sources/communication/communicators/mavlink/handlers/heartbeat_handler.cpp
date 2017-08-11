@@ -177,11 +177,15 @@ void HeartbeatHandler::sendHeartbeat()
 
     heartbeat.type = MAV_TYPE_GCS;
 
-    mavlink_msg_heartbeat_encode(m_communicator->systemId(),
-                                 m_communicator->componentId(),
-                                 &message, &heartbeat);
+    for (AbstractLink* link: m_communicator->links())
+    {
+        mavlink_msg_heartbeat_encode_chan(m_communicator->systemId(),
+                                          m_communicator->componentId(),
+                                          m_communicator->linkChannel(link),
+                                          &message, &heartbeat);
 
-    m_communicator->sendMessageAllLinks(message);
+        m_communicator->sendMessage(message, link);
+    }
 }
 
 void HeartbeatHandler::timerEvent(QTimerEvent* event)
