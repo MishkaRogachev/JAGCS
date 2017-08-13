@@ -6,6 +6,7 @@
 #include "ping_handler.h"
 #include "heartbeat_handler.h"
 #include "system_status_handler.h"
+#include "autopilot_version_handler.h"
 #include "attitude_handler.h"
 #include "pressure_handler.h"
 #include "position_handler.h"
@@ -34,6 +35,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new PingHandler(communicator);
     new HeartbeatHandler(communicator);
     new SystemStatusHandler(communicator);
+    new AutopilotVersionHandler(communicator);
     new AttitudeHandler(communicator);
     new PressureHandler(communicator);
     new PositionHandler(communicator);
