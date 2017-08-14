@@ -111,3 +111,13 @@ void LinkDescription::setPacketDropsSec(int packetDropsSec)
 {
     m_packetDropsSec = packetDropsSec;
 }
+
+LinkDescription::Protocol LinkDescription::protocol() const
+{
+    return m_protocol;
+}
+
+void LinkDescription::setProtocol(Protocol protocol)
+{
+    m_protocol = protocol;
+}

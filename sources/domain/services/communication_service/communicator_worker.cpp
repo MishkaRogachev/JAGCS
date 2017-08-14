@@ -12,6 +12,19 @@
 #include "abstract_link.h"
 #include "description_link_factory.h"
 
+namespace
+{
+    dao::LinkDescription::Protocol toDaoProtocol(comm::AbstractCommunicator::Protocol protocol)
+    {
+        switch (protocol) {
+        case comm::AbstractCommunicator::MavLink1: return dao::LinkDescription::MavLink1;
+        case comm::AbstractCommunicator::MavLink2: return dao::LinkDescription::MavLink2;
+        default:
+        case comm::AbstractCommunicator::Unknown: return dao::LinkDescription::UnknownProtocol;
+        }
+    }
+}
+
 using namespace comm;
 using namespace domain;
 
@@ -117,11 +130,11 @@ void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link, int pack
     emit mavLinkStatisticsChanged(description, packetsReceived, packetsDrops);
 }
 
-void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link, comm::Protocol protocol)
+void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link, AbstractCommunicator::Protocol protocol)
 {
     dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
     if (description.isNull()) return;
 
-    emit mavLinkProtocolChanged(description, protocol);
+    emit mavLinkProtocolChanged(description, ::toDaoProtocol(protocol));
 }
 

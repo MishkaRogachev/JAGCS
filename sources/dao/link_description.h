@@ -5,7 +5,7 @@
 
 namespace dao
 {
-    class LinkDescription : public BaseDao
+    class LinkDescription: public BaseDao
     {
         Q_GADGET
 
@@ -22,6 +22,13 @@ namespace dao
             UnknownType = 0,
             Serial,
             Udp
+        };
+
+        enum Protocol: quint8
+        {
+            UnknownProtocol = 0,
+            MavLink1,
+            MavLink2
         };
 
         QString name() const;
@@ -57,6 +64,9 @@ namespace dao
         int packetDropsSec() const;
         void setPacketDropsSec(int packetDropsSec);
 
+        Protocol protocol() const;
+        void setProtocol(Protocol protocol);
+
     private:
         QString m_name;
         Type m_type = UnknownType;
@@ -65,6 +75,7 @@ namespace dao
         int m_baudRate = -1;
         bool m_autoConnect = false;
 
+        Protocol m_protocol;
         bool m_connected = false;
         int m_bytesSentSec = 0;
         int m_bytesRecvSec = 0;
@@ -72,6 +83,7 @@ namespace dao
         int m_packetDropsSec = 0;
 
         Q_ENUM(Type)
+        Q_ENUM(Protocol)
     };
 }
 

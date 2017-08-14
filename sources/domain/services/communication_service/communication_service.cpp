@@ -34,7 +34,8 @@ CommunicationService::CommunicationService(QObject* parent):
     d(new Impl())
 {
     qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
-    qRegisterMetaType<comm::Protocol>("comm::Protocol");
+    qRegisterMetaType<dao::LinkDescription::Protocol>("dao::LinkDescription::Protocol");
+    qRegisterMetaType<comm::AbstractCommunicator::Protocol>("comm::AbstractCommunicator::Protocol");
 
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
@@ -44,6 +45,10 @@ CommunicationService::CommunicationService(QObject* parent):
     connect(d->commThread, &QThread::finished, d->commWorker, &QObject::deleteLater);
     connect(d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
             this, &CommunicationService::onLinkStatisticsChanged);
+    connect(d->commWorker, &CommunicatorWorker::mavLinkStatisticsChanged,
+            this, &CommunicationService::onMavLinkStatisticsChanged);
+    connect(d->commWorker, &CommunicatorWorker::mavLinkProtocolChanged,
+            this, &CommunicationService::onMavlinkProtocolChanged);
 }
 
 CommunicationService::~CommunicationService()
@@ -147,7 +152,9 @@ void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescription
 }
 
 void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
-                                                    comm::Protocol protocol)
+                                                    dao::LinkDescription::Protocol protocol)
 {
+    description->setProtocol(protocol);
+
     emit descriptionChanged(description);
 }

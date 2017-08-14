@@ -21,7 +21,6 @@ namespace presentation
     private slots:
         void onLinkAdded(const dao::LinkDescriptionPtr& description);
         void onLinkChanged(const dao::LinkDescriptionPtr& description);
-        void onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description);
         void onLinkRemoved(const dao::LinkDescriptionPtr& description);
         void updateCommunicationsLinks();
 

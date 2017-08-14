@@ -85,7 +85,7 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
 
     // By default, use MAVLink v1
     mavlink_get_channel_status(d->linkChannels[link])->flags |= MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
-    emit mavLinkProtocolChanged(link, Protocol::Mavlink1);
+    emit mavLinkProtocolChanged(link, MavLink1);
 
     AbstractCommunicator::addLink(link);
 }
@@ -155,7 +155,7 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
             (channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1))
         {
             channelStatus->flags &= ~MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
-            emit mavLinkProtocolChanged(d->receivedLink, Protocol::Mavlink2);
+            emit mavLinkProtocolChanged(d->receivedLink, MavLink2);
         }
 
         d->mavSystemLinks[message.sysid] = d->receivedLink;

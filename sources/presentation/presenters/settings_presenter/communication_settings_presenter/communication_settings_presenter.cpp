@@ -37,8 +37,6 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
             this, &CommunicationSettingsPresenter::onLinkChanged);
     connect(d->service, &CommunicationService::descriptionRemoved,
             this, &CommunicationSettingsPresenter::onLinkRemoved);
-    connect(d->service, &CommunicationService::descriptionChanged,
-            this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
 
     for (const dao::LinkDescriptionPtr& description: d->service->descriptions())
     {
@@ -58,31 +56,20 @@ void CommunicationSettingsPresenter::connectView(QObject* view)
     this->updateCommunicationsLinks();
 }
 
-void CommunicationSettingsPresenter::onLinkAdded(
-        const dao::LinkDescriptionPtr& description)
+void CommunicationSettingsPresenter::onLinkAdded(const dao::LinkDescriptionPtr& description)
 {
-    d->linkPresenters[description] = new CommunicationLinkPresenter(
-                                         d->service, description, this);
+    d->linkPresenters[description] = new CommunicationLinkPresenter(d->service, description, this);
 
     this->updateCommunicationsLinks();
 }
 
-void CommunicationSettingsPresenter::onLinkChanged(
-        const dao::LinkDescriptionPtr& description)
+void CommunicationSettingsPresenter::onLinkChanged(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateView();
 }
 
-void CommunicationSettingsPresenter::onLinkStatisticsChanged(
-        const dao::LinkDescriptionPtr& description)
-{
-    if (!d->linkPresenters.contains(description)) return;
-    d->linkPresenters[description]->updateStatistics();
-}
-
-void CommunicationSettingsPresenter::onLinkRemoved(
-        const dao::LinkDescriptionPtr& description)
+void CommunicationSettingsPresenter::onLinkRemoved(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     CommunicationLinkPresenter* linkPresenter = d->linkPresenters.take(description);

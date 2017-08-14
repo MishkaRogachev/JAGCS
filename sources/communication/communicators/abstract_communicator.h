@@ -1,11 +1,7 @@
 #ifndef ABSTRACT_COMMUNICATOR_H
 #define ABSTRACT_COMMUNICATOR_H
 
-// Qt
 #include <QObject>
-
-// Internal
-#include "communication_traits.h"
 
 namespace comm
 {
@@ -16,6 +12,13 @@ namespace comm
         Q_OBJECT
 
     public:
+        enum Protocol
+        {
+            Unknown,
+            MavLink1,
+            MavLink2
+        };
+
         AbstractCommunicator(QObject* parent);
 
         QList<AbstractLink*> links() const;
@@ -47,6 +50,8 @@ namespace comm
     private:
         QList<AbstractLink*> m_links;
         int m_statisticsTimer = 0;
+
+        Q_ENUM(Protocol)
     };
 }
 

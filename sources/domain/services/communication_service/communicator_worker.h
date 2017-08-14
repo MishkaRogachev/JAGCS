@@ -6,11 +6,11 @@
 
 // Internal
 #include "dao_traits.h"
-#include "communication_traits.h"
+#include "link_description.h"
+#include "abstract_communicator.h"
 
 namespace comm
 {
-    class AbstractCommunicator;
     class ICommunicatorFactory;
     class AbstractLink;
 }
@@ -33,7 +33,7 @@ namespace domain
         void mavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
                                       int packetsReceived, int packetsDrops);
         void mavLinkProtocolChanged(const dao::LinkDescriptionPtr& description,
-                                    comm::Protocol protocol);
+                                    dao::LinkDescription::Protocol protocol);
 
     public slots:
         void initCommunicator(comm::ICommunicatorFactory* commFactory);
@@ -44,7 +44,7 @@ namespace domain
     private slots:
         void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived, int bytesSent);
         void onMavLinkStatisticsChanged(comm::AbstractLink* link, int packetsReceived, int packetsDrops);
-        void onMavLinkProtocolChanged(comm::AbstractLink* link, comm::Protocol protocol);
+        void onMavLinkProtocolChanged(comm::AbstractLink* link, comm::AbstractCommunicator::Protocol protocol);
 
     private:
         comm::AbstractCommunicator* m_communicator = nullptr;

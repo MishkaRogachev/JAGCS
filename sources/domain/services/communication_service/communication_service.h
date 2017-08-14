@@ -6,7 +6,7 @@
 
 // Internal
 #include "dao_traits.h"
-#include "communication_traits.h"
+#include "link_description.h"
 
 namespace comm
 {
@@ -46,7 +46,7 @@ namespace domain
         void onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
                                         int packetsReceived, int packetsDrops);
         void onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
-                                      comm::Protocol protocol);
+                                      dao::LinkDescription::Protocol protocol);
 
     private:
         class Impl;

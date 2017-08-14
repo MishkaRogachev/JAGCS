@@ -12,6 +12,7 @@ Controls.Frame {
     property int type: LinkDescription.UnknownType
     property alias name: nameField.text
     property alias port: portBox.value
+    property int protocol: LinkDescription.UnknownProtocol
     property string device
     property alias devices: deviceBox.model
     property int baudRate
@@ -63,6 +64,24 @@ Controls.Frame {
                     switch (type) {
                     case LinkDescription.Udp: return qsTr("UDP");
                     case LinkDescription.Serial: return qsTr("Serial");
+                    default: return qsTr("Unknown");
+                    }
+                }
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Protocol:")
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: {
+                    switch (protocol) {
+                    case LinkDescription.MavLink1: return "MAVLink v1";
+                    case LinkDescription.MavLink2: return "MAVLink v2";
+                    case LinkDescription.UnknownProtocol: return qsTr("Unknown");
                     default: return qsTr("Unknown");
                     }
                 }

@@ -35,16 +35,12 @@ void CommunicationLinkPresenter::updateView()
     this->setViewProperty(PROPERTY(port), m_description->port());
     this->setViewProperty(PROPERTY(device), m_description->device());
     this->setViewProperty(PROPERTY(baudRate), m_description->baudRate());
+    this->setViewProperty(PROPERTY(connected), m_description->isConnected());
+    this->setViewProperty(PROPERTY(protocol), m_description->protocol());
+    this->invokeViewMethod(PROPERTY(updateStatistics), m_description->bytesSentSec(),
+                           m_description->bytesRecvSec());
 
     this->setViewProperty(PROPERTY(changed), false);
-}
-
-void CommunicationLinkPresenter::updateStatistics()
-{
-    this->setViewProperty(PROPERTY(connected), m_description->isConnected());
-    this->invokeViewMethod(PROPERTY(updateStatistics),
-                           m_description->bytesSentSec(),
-                           m_description->bytesRecvSec());
 }
 
 void CommunicationLinkPresenter::setConnected(bool connected)
@@ -78,8 +74,7 @@ void CommunicationLinkPresenter::connectView(QObject* view)
     this->setViewProperty(PROPERTY(devices), devices);
 
     QVariantList baudRates;
-    for (qint32 rate: QSerialPortInfo::standardBaudRates())
-        baudRates.append(rate);
+    for (qint32 rate: QSerialPortInfo::standardBaudRates()) baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
 
     this->setViewProperty(PROPERTY(statisticsCount), settings::Provider::value(
