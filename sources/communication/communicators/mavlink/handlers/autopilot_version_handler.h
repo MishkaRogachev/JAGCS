@@ -22,6 +22,7 @@ namespace comm
         void processMessage(const mavlink_message_t& message) override;
 
         void requestVersion(uint8_t mavId);
+        void sendAck(uint8_t mavId);
 
     protected:
         void timerEvent(QTimerEvent* event) override;

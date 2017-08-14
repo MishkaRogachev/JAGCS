@@ -43,12 +43,11 @@ void AutopilotVersionHandler::processMessage(const mavlink_message_t& message)
         {
             this->killTimer(d->mavTimers.take(message.sysid));
         }
-       // TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
 
         mavlink_autopilot_version_t version;
         mavlink_msg_autopilot_version_decode(&message, &version);
 
-        qDebug() << "MAVLINK2" << (version.capabilities & MAV_PROTOCOL_CAPABILITY_MAVLINK2);
+        if (version.capabilities & MAV_PROTOCOL_CAPABILITY_MAVLINK2) this->sendAck(message.sysid);
     }
     else if (!d->obtainedMavs.value(message.sysid, false) &&
              !d->mavTimers.contains(message.sysid))
@@ -74,6 +73,25 @@ void AutopilotVersionHandler::requestVersion(uint8_t mavId)
                                          m_communicator->componentId(),
                                          m_communicator->linkChannel(link),
                                          &message, &mavCommand);
+    m_communicator->sendMessage(message, link);
+}
+
+void AutopilotVersionHandler::sendAck(uint8_t mavId)
+{
+    mavlink_message_t message;
+    mavlink_mission_ack_t ackItem;
+
+    ackItem.target_system = mavId;
+    ackItem.target_component = 0;
+    ackItem.type = MAV_MISSION_ACCEPTED;
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_ack_encode_chan(m_communicator->systemId(),
+                                        m_communicator->componentId(),
+                                        m_communicator->linkChannel(link),
+                                        &message, &ackItem);
     m_communicator->sendMessage(message, link);
 }
 
