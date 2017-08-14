@@ -16,12 +16,19 @@ namespace comm
 
     public:
         AutopilotVersionHandler(MavLinkCommunicator* communicator);
+        ~AutopilotVersionHandler() override;
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
+        void requestVersion(uint8_t mavId);
+
+    protected:
+        void timerEvent(QTimerEvent* event) override;
+
     private:
-        domain::TelemetryService* m_telemetryService;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
