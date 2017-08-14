@@ -32,6 +32,10 @@ void CommunicatorWorker::initCommunicator(comm::ICommunicatorFactory* commFactor
         {
             m_communicator->removeLink(link);
         }
+
+        disconnect(m_communicator, 0, this, 0);
+
+        delete m_communicator;
     }
 
     m_communicator = commFactory->create();
@@ -39,6 +43,14 @@ void CommunicatorWorker::initCommunicator(comm::ICommunicatorFactory* commFactor
     if (m_communicator)
     {
         m_communicator->setParent(this);
+
+        connect(m_communicator, &AbstractCommunicator::linkStatisticsChanged,
+                this, &CommunicatorWorker::onLinkStatisticsChanged);
+        connect(m_communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
+                this, &CommunicatorWorker::onMavLinkStatisticsChanged);
+        connect(m_communicator, &AbstractCommunicator::mavLinkProtocolChanged,
+                this, &CommunicatorWorker::onMavLinkProtocolChanged);
+
         for (AbstractLink* link: m_descriptedLinks.values())
         {
             m_communicator->addLink(link);
@@ -60,18 +72,13 @@ void CommunicatorWorker::updateLinkFromDescription(const dao::LinkDescriptionPtr
     {
         link = factory.create();
         if (!link) return;
+        link->setParent(this);
 
         m_descriptedLinks[description] = link;
         if (m_communicator) m_communicator->addLink(link);
 
         if (description->isAutoConnect()) link->connectLink();
-
-        link->setParent(this);
-        connect(link, &AbstractLink::statisticsChanged,
-                this, &CommunicatorWorker::onLinkStatisticsChanged);
     }
-
-    emit link->statisticsChanged();
 }
 
 void CommunicatorWorker::removeLinkByDescription(const dao::LinkDescriptionPtr& description)
@@ -91,18 +98,30 @@ void CommunicatorWorker::setLinkConnected(const dao::LinkDescriptionPtr& descrip
     if (!link) return;
 
     link->setConnected(connected);
-    link->statisticsChanged();
+    emit linkStatisticsChanged(description, 0, 0, link->isConnected());
 }
 
-void CommunicatorWorker::onLinkStatisticsChanged()
+void CommunicatorWorker::onLinkStatisticsChanged(AbstractLink* link, int bytesReceived, int bytesSent)
 {
-    AbstractLink* link = qobject_cast<AbstractLink*>(this->sender());
     dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
     if (description.isNull()) return;
 
-    emit linkStatisticsChanged(description,
-                               link->bytesReceivedSec(),
-                               link->bytesSentSec(),
-                               link->isConnected());
+    emit linkStatisticsChanged(description, bytesReceived, bytesSent, link->isConnected());
+}
+
+void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link, int packetsReceived, int packetsDrops)
+{
+    dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
+    if (description.isNull()) return;
+
+    emit mavLinkStatisticsChanged(description, packetsReceived, packetsDrops);
+}
+
+void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link, comm::Protocol protocol)
+{
+    dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
+    if (description.isNull()) return;
+
+    emit mavLinkProtocolChanged(description, protocol);
 }
 

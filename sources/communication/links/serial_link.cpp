@@ -44,7 +44,6 @@ void SerialLink::connectLink()
     }
     else
     {
-        AbstractLink::connectLink();
         emit upChanged(true);
     }
 }
@@ -54,7 +53,6 @@ void SerialLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_port->close();
-    AbstractLink::disconnectLink();
     emit upChanged(false);
 }
 

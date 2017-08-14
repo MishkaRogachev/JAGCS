@@ -37,7 +37,7 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
             this, &CommunicationSettingsPresenter::onLinkChanged);
     connect(d->service, &CommunicationService::descriptionRemoved,
             this, &CommunicationSettingsPresenter::onLinkRemoved);
-    connect(d->service, &CommunicationService::linkStatisticsChanged,
+    connect(d->service, &CommunicationService::descriptionChanged,
             this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
 
     for (const dao::LinkDescriptionPtr& description: d->service->descriptions())

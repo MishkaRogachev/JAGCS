@@ -97,5 +97,6 @@ void AutopilotVersionHandler::sendAck(uint8_t mavId)
 
 void AutopilotVersionHandler::timerEvent(QTimerEvent* event)
 {
-    this->requestVersion(d->mavTimers.key(event->timerId()));
+    uint8_t mavId = d->mavTimers.key(event->timerId(), 0);
+    if (mavId > 0) this->requestVersion(mavId);
 }

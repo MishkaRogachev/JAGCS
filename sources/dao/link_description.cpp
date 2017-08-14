@@ -91,3 +91,23 @@ void LinkDescription::setBytesRecvSec(int bytesRecvSec)
 {
     m_bytesRecvSec = bytesRecvSec;
 }
+
+int LinkDescription::packetsRecvSec() const
+{
+    return m_packetsRecvSec;
+}
+
+void LinkDescription::setPacketsRecvSec(int packetsRecvSec)
+{
+    m_packetsRecvSec = packetsRecvSec;
+}
+
+int LinkDescription::packetDropsSec() const
+{
+    return m_packetDropsSec;
+}
+
+void LinkDescription::setPacketDropsSec(int packetDropsSec)
+{
+    m_packetDropsSec = packetDropsSec;
+}

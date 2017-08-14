@@ -13,8 +13,7 @@ namespace comm
         Q_OBJECT
 
     public:
-         MavLinkCommunicator(uint8_t systemId, uint8_t componentId,
-                             QObject* parent = nullptr);
+         MavLinkCommunicator(uint8_t systemId, uint8_t componentId, QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         bool isAddLinkEnabled() override;
@@ -38,6 +37,7 @@ namespace comm
 
     signals:
         void messageReceived(const mavlink_message_t& message);
+
         void systemIdChanged(uint8_t systemId);
         void componentIdChanged(uint8_t componentId);
 

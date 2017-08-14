@@ -51,6 +51,12 @@ namespace dao
         int bytesRecvSec() const;
         void setBytesRecvSec(int bytesRecvSec);
 
+        int packetsRecvSec() const;
+        void setPacketsRecvSec(int packetsRecvSec);
+
+        int packetDropsSec() const;
+        void setPacketDropsSec(int packetDropsSec);
+
     private:
         QString m_name;
         Type m_type = UnknownType;
@@ -62,6 +68,8 @@ namespace dao
         bool m_connected = false;
         int m_bytesSentSec = 0;
         int m_bytesRecvSec = 0;
+        int m_packetsRecvSec = 0;
+        int m_packetDropsSec = 0;
 
         Q_ENUM(Type)
     };

@@ -34,6 +34,7 @@ CommunicationService::CommunicationService(QObject* parent):
     d(new Impl())
 {
     qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
+    qRegisterMetaType<comm::Protocol>("comm::Protocol");
 
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
@@ -133,5 +134,20 @@ void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr
     description->setBytesSentSec(bytesSentSec);
     description->setConnected(connected);
 
-    emit linkStatisticsChanged(description);
+    emit descriptionChanged(description);
+}
+
+void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
+                                                      int packetsReceived, int packetsDrops)
+{
+    description->setPacketsRecvSec(packetsReceived);
+    description->setPacketDropsSec(packetsDrops);
+
+    emit descriptionChanged(description);
+}
+
+void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
+                                                    comm::Protocol protocol)
+{
+    emit descriptionChanged(description);
 }

@@ -58,7 +58,6 @@ void UdpLink::connectLink()
     }
     else
     {
-        AbstractLink::connectLink();
         emit upChanged(true);
     }
 }
@@ -68,7 +67,6 @@ void UdpLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_socket->close();
-    AbstractLink::disconnectLink();
     emit upChanged(false);
 }
 

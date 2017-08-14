@@ -1,7 +1,11 @@
 #ifndef ABSTRACT_COMMUNICATOR_H
 #define ABSTRACT_COMMUNICATOR_H
 
+// Qt
 #include <QObject>
+
+// Internal
+#include "communication_traits.h"
 
 namespace comm
 {
@@ -26,13 +30,23 @@ namespace comm
 
     signals:
         void addLinkEnabledChanged(bool addLinkEnabled);
-        void linksChanged();
+        void linkAdded(AbstractLink* link);
+        void linkRemoved(AbstractLink* link);
+
+        void linkStatisticsChanged(AbstractLink* link, int bytesReceived, int bytesSent);
+        // TODO: to MavLinkCommunicator
+        void mavLinkStatisticsChanged(AbstractLink* link, int packetsReceived, int packetsDrops);
+        void mavLinkProtocolChanged(AbstractLink* link, Protocol protocol);
 
     protected slots:
         virtual void onDataReceived(const QByteArray& data) = 0;
 
     protected:
+        void timerEvent(QTimerEvent* event) override;
+
+    private:
         QList<AbstractLink*> m_links;
+        int m_statisticsTimer = 0;
     };
 }
 
