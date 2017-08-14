@@ -12,14 +12,7 @@ namespace
 using namespace comm;
 
 AbstractLink::AbstractLink(QObject* parent):
-    QObject(parent),
-    m_bytesReceivedSec(0),
-    m_bytesReceived(0),
-    m_bytesSentSec(0),
-    m_bytesSent(0),
-    m_packetsReceived(0),
-    m_packetsDrops(0),
-    m_statisticsTimer(0)
+    QObject(parent)
 {}
 
 int AbstractLink::bytesReceivedSec() const
@@ -100,4 +93,17 @@ void AbstractLink::receiveData(const QByteArray& data)
 {
     m_bytesReceived += data.size();
     emit dataReceived(data);
+}
+
+AbstractLink::Protocol AbstractLink::protocol() const
+{
+    return m_protocol;
+}
+
+void AbstractLink::setProtocol(Protocol protocol)
+{
+    if (m_protocol == protocol) return;
+
+    m_protocol = protocol;
+    emit protocolChanged(protocol);
 }

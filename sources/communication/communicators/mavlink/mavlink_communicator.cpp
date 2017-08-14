@@ -38,7 +38,9 @@ MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId, 
     d->componentId = componentId;
 
     for (uint8_t channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
+    {
         d->avalibleChannels.append(channel);
+    }
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
@@ -76,14 +78,14 @@ uint8_t MavLinkCommunicator::systemId() const
 
 void MavLinkCommunicator::addLink(AbstractLink* link)
 {
-    if (d->linkChannels.contains(link) || d->avalibleChannels.isEmpty())
-        return;
+    if (d->linkChannels.contains(link) || d->avalibleChannels.isEmpty()) return;
 
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
     if (d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(false);
 
     // By default, use MAVLink v1
     mavlink_get_channel_status(d->linkChannels[link])->flags |= MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
+    link->setProtocol(AbstractLink::Mavlink1);
 
     AbstractCommunicator::addLink(link);
 }
@@ -144,15 +146,16 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     uint8_t channel = this->linkChannel(d->receivedLink);
     for (int pos = 0; pos < data.length(); ++pos)
     {
-        if (!mavlink_parse_char(channel, (uint8_t)data[pos],  &message, &status))
-            continue;
+        if (!mavlink_parse_char(channel, (uint8_t)data[pos], &message, &status)) continue;
+
+        mavlink_status_t* channelStatus = mavlink_get_channel_status(channel);
 
         // From https://mavlink.io/en/mavlink-2.html
-        mavlink_status_t* chan_state = mavlink_get_channel_status(channel);
-        if (!(chan_state->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1))
+        if (!(channelStatus->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1) &&
+            (channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1))
         {
-            // this will only switch to proto version 2
-            chan_state->flags &= ~(MAVLINK_STATUS_FLAG_OUT_MAVLINK1);
+            channelStatus->flags &= ~MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
+            d->receivedLink->setProtocol(AbstractLink::Mavlink2);
         }
 
         d->mavSystemLinks[message.sysid] = d->receivedLink;

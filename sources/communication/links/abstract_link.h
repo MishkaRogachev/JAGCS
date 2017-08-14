@@ -11,6 +11,13 @@ namespace comm
         Q_OBJECT
 
     public:
+        enum Protocol
+        {
+            UnknownProtocol,
+            Mavlink1,
+            Mavlink2
+        };
+
         explicit AbstractLink(QObject* parent = nullptr);
 
         virtual bool isConnected() const = 0;
@@ -20,6 +27,8 @@ namespace comm
 
         int packetsReceived() const;
         int packetsDrops() const;
+
+        Protocol protocol() const;
 
     public slots:
         void setConnected(bool connected);
@@ -31,6 +40,8 @@ namespace comm
         void setPacketsReceived(int packetsReceived);
         void setPacketsDrops(int packetsDrops);
 
+        void setProtocol(Protocol protocol);
+
     signals:
         void upChanged(bool isConnected);
         void dataReceived(const QByteArray& data);
@@ -39,6 +50,8 @@ namespace comm
 
         void packetsReceivedChanged(int packetsReceived);
         void packetsDropsChanged(int packetsDrops);
+
+        void protocolChanged(Protocol protocol);
 
     protected:
         virtual void sendDataImpl(const QByteArray& data) = 0;
@@ -49,13 +62,16 @@ namespace comm
         void receiveData(const QByteArray& data);
 
     private:
-        int m_bytesReceivedSec;
-        int m_bytesReceived;
-        int m_bytesSentSec;
-        int m_bytesSent;
-        int m_packetsReceived;
-        int m_packetsDrops;
-        int m_statisticsTimer;
+        int m_bytesReceivedSec = 0;
+        int m_bytesReceived = 0;
+        int m_bytesSentSec = 0;
+        int m_bytesSent = 0;
+        int m_packetsReceived = 0;
+        int m_packetsDrops = 0;
+        int m_statisticsTimer = 0;
+
+        Protocol m_protocol = UnknownProtocol;
+        Q_ENUM(Protocol)
     };
 }
 
