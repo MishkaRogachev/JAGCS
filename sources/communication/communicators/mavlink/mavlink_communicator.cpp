@@ -83,9 +83,7 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
     if (d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(false);
 
-    // By default, use MAVLink v1
-    mavlink_get_channel_status(d->linkChannels[link])->flags |= MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
-    emit mavLinkProtocolChanged(link, MavLink1);
+    this->switchLinkProtocol(link, MavLink1); // By default, use MavLink v1
 
     AbstractCommunicator::addLink(link);
 }
@@ -97,13 +95,30 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     uint8_t channel = d->linkChannels.value(link);
     d->linkChannels.remove(link);
     d->avalibleChannels.prepend(channel);
-    mavlink_reset_channel_status(channel);
 
     if (link == d->receivedLink) d->receivedLink = nullptr;
 
     if (!d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(true);
 
     AbstractCommunicator::removeLink(link);
+}
+
+void MavLinkCommunicator::switchLinkProtocol(AbstractLink* link, AbstractCommunicator::Protocol protocol)
+{
+    mavlink_status_t* channelStatus = mavlink_get_channel_status(this->linkChannel(link));
+    bool outMavlink1 = channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
+
+    if (protocol == AbstractCommunicator::MavLink1 && !outMavlink1)
+    {
+        channelStatus->flags |= MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
+    }
+    else if (protocol == AbstractCommunicator::MavLink2 && outMavlink1)
+    {
+        channelStatus->flags &= ~MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
+    }
+
+    emit mavLinkProtocolChanged(link, channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1 ?
+                                    MavLink1 : MavLink2);
 }
 
 void MavLinkCommunicator::setSystemId(uint8_t systemId)
@@ -150,12 +165,10 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 
         mavlink_status_t* channelStatus = mavlink_get_channel_status(channel);
 
-        // From https://mavlink.io/en/mavlink-2.html
-        if (!(channelStatus->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1) &&
-            (channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1))
+        // if we got MavLink v2, switch to on it!
+        if (!(channelStatus->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1))
         {
-            channelStatus->flags &= ~MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
-            emit mavLinkProtocolChanged(d->receivedLink, MavLink2);
+            this->switchLinkProtocol(d->receivedLink, MavLink2);
         }
 
         d->mavSystemLinks[message.sysid] = d->receivedLink;

@@ -36,7 +36,20 @@ AutopilotVersionHandler::~AutopilotVersionHandler()
 
 void AutopilotVersionHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid == MAVLINK_MSG_ID_AUTOPILOT_VERSION)
+    // TODO: all commands and confirmations through CommandService
+    if (message.msgid == MAVLINK_MSG_ID_COMMAND_ACK)
+    {
+        mavlink_command_ack_t ack;
+        mavlink_msg_command_ack_decode(&message, &ack);
+
+        if (ack.command != MAV_CMD_REQUEST_PROTOCOL_VERSION) return;
+
+        if (ack.result == MAV_RESULT_DENIED || ack.result == MAV_RESULT_UNSUPPORTED)
+        {
+             d->obtainedMavs[message.sysid] = false;
+        }
+    }
+    else if (message.msgid == MAVLINK_MSG_ID_AUTOPILOT_VERSION)
     {
         d->obtainedMavs[message.sysid] = true;
         if (d->mavTimers.contains(message.sysid))
@@ -47,10 +60,13 @@ void AutopilotVersionHandler::processMessage(const mavlink_message_t& message)
         mavlink_autopilot_version_t version;
         mavlink_msg_autopilot_version_decode(&message, &version);
 
-        if (version.capabilities & MAV_PROTOCOL_CAPABILITY_MAVLINK2) this->sendAck(message.sysid);
+        if (version.capabilities & MAV_PROTOCOL_CAPABILITY_MAVLINK2)
+        {
+            m_communicator->switchLinkProtocol(m_communicator->lastReceivedLink(),
+                                               MavLinkCommunicator::MavLink2);
+        }
     }
-    else if (!d->obtainedMavs.value(message.sysid, false) &&
-             !d->mavTimers.contains(message.sysid))
+    else if (!d->obtainedMavs.contains(message.sysid) && !d->mavTimers.contains(message.sysid))
     {
         d->mavTimers[message.sysid] = this->startTimer(::interval);
     }
@@ -73,25 +89,6 @@ void AutopilotVersionHandler::requestVersion(uint8_t mavId)
                                          m_communicator->componentId(),
                                          m_communicator->linkChannel(link),
                                          &message, &mavCommand);
-    m_communicator->sendMessage(message, link);
-}
-
-void AutopilotVersionHandler::sendAck(uint8_t mavId)
-{
-    mavlink_message_t message;
-    mavlink_mission_ack_t ackItem;
-
-    ackItem.target_system = mavId;
-    ackItem.target_component = 0;
-    ackItem.type = MAV_MISSION_ACCEPTED;
-
-    AbstractLink* link = m_communicator->mavSystemLink(mavId);
-    if (!link) return;
-
-    mavlink_msg_mission_ack_encode_chan(m_communicator->systemId(),
-                                        m_communicator->componentId(),
-                                        m_communicator->linkChannel(link),
-                                        &message, &ackItem);
     m_communicator->sendMessage(message, link);
 }
 

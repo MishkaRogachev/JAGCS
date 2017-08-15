@@ -30,6 +30,8 @@ namespace comm
         void addLink(AbstractLink* link) override;
         void removeLink(AbstractLink* link) override;
 
+        void switchLinkProtocol(AbstractLink* link, Protocol protocol);
+
         void setSystemId(uint8_t systemId);
         void setComponentId(uint8_t componentId);
 
