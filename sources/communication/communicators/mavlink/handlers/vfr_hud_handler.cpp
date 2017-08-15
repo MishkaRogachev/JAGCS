@@ -23,19 +23,19 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_VFR_HUD) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_vfr_hud_t vfrHud;
     mavlink_msg_vfr_hud_decode(&message, &vfrHud);
 
-    port.setParameter({ Telemetry::Pitot, Telemetry::IndicatedAirspeed }, vfrHud.airspeed);
-    port.setParameter({ Telemetry::Pitot, Telemetry::TrueAirspeed },
-                       vfrHud.airspeed + (vfrHud.airspeed * 0.02 * vfrHud.alt / 1000));
+    portion.setParameter({ Telemetry::Pitot, Telemetry::IndicatedAirspeed }, vfrHud.airspeed);
+    portion.setParameter({ Telemetry::Pitot, Telemetry::TrueAirspeed },
+                         vfrHud.airspeed + (vfrHud.airspeed * 0.02 * vfrHud.alt / 1000));
 
-    port.setParameter({ Telemetry::Compass, Telemetry::Heading }, vfrHud.heading);
+    portion.setParameter({ Telemetry::Compass, Telemetry::Heading }, vfrHud.heading);
 
-    port.setParameter({ Telemetry::Barometric, Telemetry::Altitude }, vfrHud.alt);
-    port.setParameter({ Telemetry::Barometric, Telemetry::Climb }, vfrHud.climb);
+    portion.setParameter({ Telemetry::Barometric, Telemetry::Altitude }, vfrHud.alt);
+    portion.setParameter({ Telemetry::Barometric, Telemetry::Climb }, vfrHud.climb);
 
-    port.setParameter({ Telemetry::PowerSystem, Telemetry::Throttle }, vfrHud.throttle);
+    portion.setParameter({ Telemetry::PowerSystem, Telemetry::Throttle }, vfrHud.throttle);
 }

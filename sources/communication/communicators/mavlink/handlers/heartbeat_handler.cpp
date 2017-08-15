@@ -149,25 +149,25 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         if (changed) d->vehicleService->vehicleChanged(vehicle);
     }
 
-    TelemetryPortion port(d->telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(d->telemetryService->mavNode(message.sysid));
 
-    port.setParameter({ Telemetry::Status, Telemetry::Armed },
-                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-    port.setParameter({ Telemetry::Status, Telemetry::Auto },
-                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
-    port.setParameter({ Telemetry::Status, Telemetry::Guided },
-                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
-    port.setParameter({ Telemetry::Status, Telemetry::Stabilized },
-                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
-    port.setParameter({ Telemetry::Status, Telemetry::Manual },
-                       heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
+    portion.setParameter({ Telemetry::Status, Telemetry::Armed },
+                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+    portion.setParameter({ Telemetry::Status, Telemetry::Auto },
+                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
+    portion.setParameter({ Telemetry::Status, Telemetry::Guided },
+                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
+    portion.setParameter({ Telemetry::Status, Telemetry::Stabilized },
+                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
+    portion.setParameter({ Telemetry::Status, Telemetry::Manual },
+                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
 
-    port.setParameter({ Telemetry::Status, Telemetry::Mode },
-                       ::decodeCustomMode(heartbeat.autopilot,
-                                        heartbeat.type,
-                                        heartbeat.custom_mode));
-    port.setParameter({ Telemetry::Status, Telemetry::State },
-                       ::decodeState(heartbeat.system_status));
+    portion.setParameter({ Telemetry::Status, Telemetry::Mode },
+                         ::decodeCustomMode(heartbeat.autopilot,
+                                            heartbeat.type,
+                                            heartbeat.custom_mode));
+    portion.setParameter({ Telemetry::Status, Telemetry::State },
+                         ::decodeState(heartbeat.system_status));
 }
 
 void HeartbeatHandler::sendHeartbeat()

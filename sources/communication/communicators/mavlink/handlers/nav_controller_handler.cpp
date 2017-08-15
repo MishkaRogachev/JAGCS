@@ -25,17 +25,17 @@ void NavControllerHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_nav_controller_output_t output;
     mavlink_msg_nav_controller_output_decode(&message, &output);
 
-    port.setParameter({ Telemetry::Navigator, Telemetry::TargetBearing }, output.target_bearing);
-    port.setParameter({ Telemetry::Navigator, Telemetry::TargetDistance }, output.wp_dist);
-    port.setParameter({ Telemetry::Navigator, Telemetry::TrackError }, output.xtrack_error);
-    port.setParameter({ Telemetry::Navigator, Telemetry::AltitudeError }, output.alt_error);
-    port.setParameter({ Telemetry::Navigator, Telemetry::DesiredPitch }, output.nav_pitch);
-    port.setParameter({ Telemetry::Navigator, Telemetry::DesiredRoll }, output.nav_roll);
-    port.setParameter({ Telemetry::Navigator, Telemetry::DesiredHeading }, output.nav_bearing);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::TargetBearing }, output.target_bearing);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::TargetDistance }, output.wp_dist);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::TrackError }, output.xtrack_error);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::AltitudeError }, output.alt_error);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::DesiredPitch }, output.nav_pitch);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::DesiredRoll }, output.nav_roll);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::DesiredHeading }, output.nav_bearing);
 }
 

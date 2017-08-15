@@ -27,7 +27,7 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_gps_raw_int_t gps;
     mavlink_msg_gps_raw_int_decode(&message, &gps);
@@ -35,19 +35,19 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
     QGeoCoordinate coordinate(decodeLatLon(gps.lat), decodeLatLon(gps.lon),
                               decodeAltitude(gps.alt));
 
-    port.setParameter({ Telemetry::Satellite, Telemetry::Fix }, gps.fix_type);
-    port.setParameter({ Telemetry::Satellite, Telemetry::Coordinate },
-                       QVariant::fromValue(coordinate));
-    port.setParameter({ Telemetry::Satellite, Telemetry::Groundspeed },
-                       decodeGroundSpeed(gps.vel));
-    port.setParameter({ Telemetry::Satellite, Telemetry::Course },
-                       decodeCourse(gps.cog));
-    port.setParameter({ Telemetry::Satellite, Telemetry::Altitude },
-                       decodeAltitude(gps.alt));
-    port.setParameter({ Telemetry::Satellite, Telemetry::Eph }, gps.eph);
-    port.setParameter({ Telemetry::Satellite, Telemetry::Epv }, gps.epv);
-    port.setParameter({ Telemetry::Satellite, Telemetry::Time },
-                       QDateTime::fromMSecsSinceEpoch(gps.time_usec));
-    port.setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
-                       gps.satellites_visible);
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Fix }, gps.fix_type);
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Coordinate },
+                         QVariant::fromValue(coordinate));
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Groundspeed },
+                         decodeGroundSpeed(gps.vel));
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Course },
+                         decodeCourse(gps.cog));
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Altitude },
+                         decodeAltitude(gps.alt));
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Eph }, gps.eph);
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Epv }, gps.epv);
+    portion.setParameter({ Telemetry::Satellite, Telemetry::Time },
+                         QDateTime::fromMSecsSinceEpoch(gps.time_usec));
+    portion.setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
+                         gps.satellites_visible);
 }

@@ -25,15 +25,15 @@ void PressureHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_SCALED_PRESSURE) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_scaled_pressure_t pressure;
     mavlink_msg_scaled_pressure_decode(&message, &pressure);
 
-    port.setParameter({ Telemetry::Barometric, Telemetry::AbsPressure },
+    portion.setParameter({ Telemetry::Barometric, Telemetry::AbsPressure },
                        pressure.press_abs);
-    port.setParameter({ Telemetry::Barometric, Telemetry::DiffPressure },
+    portion.setParameter({ Telemetry::Barometric, Telemetry::DiffPressure },
                        pressure.press_diff);
-    port.setParameter({ Telemetry::Barometric, Telemetry::Temperature },
+    portion.setParameter({ Telemetry::Barometric, Telemetry::Temperature },
                        decodeTemperature(pressure.temperature));
 }

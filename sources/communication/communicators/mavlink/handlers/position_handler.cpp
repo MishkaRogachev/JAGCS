@@ -27,7 +27,7 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POSITION_INT) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
@@ -36,8 +36,8 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(position.alt));
     QVector3D direction(position.vx, position.vy, position.vz);
 
-    port.setParameter({ Telemetry::Position, Telemetry::Coordinate },
+    portion.setParameter({ Telemetry::Position, Telemetry::Coordinate },
                        QVariant::fromValue(coordinate));
-    port.setParameter({ Telemetry::Position, Telemetry::Direction },
+    portion.setParameter({ Telemetry::Position, Telemetry::Direction },
                        QVariant::fromValue(direction));
 }

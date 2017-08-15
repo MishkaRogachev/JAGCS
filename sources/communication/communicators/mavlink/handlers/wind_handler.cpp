@@ -23,12 +23,12 @@ void WindHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_WIND) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_wind_t wind;
     mavlink_msg_wind_decode(&message, &wind);
 
-    port.setParameter({ Telemetry::Wind, Telemetry::Yaw }, wind.direction);
-    port.setParameter({ Telemetry::Wind, Telemetry::Speed }, wind.speed);
-    port.setParameter({ Telemetry::Wind, Telemetry::Climb }, wind.speed_z);
+    portion.setParameter({ Telemetry::Wind, Telemetry::Yaw }, wind.direction);
+    portion.setParameter({ Telemetry::Wind, Telemetry::Speed }, wind.speed);
+    portion.setParameter({ Telemetry::Wind, Telemetry::Climb }, wind.speed_z);
 }

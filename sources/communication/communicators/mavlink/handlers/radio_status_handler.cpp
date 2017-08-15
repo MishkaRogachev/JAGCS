@@ -25,15 +25,15 @@ void RadioStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_RADIO_STATUS) return;
 
-    TelemetryPortion port(m_telemetryService->radioNode());
+    TelemetryPortion portion(m_telemetryService->radioNode());
 
     mavlink_radio_status_t radio;
     mavlink_msg_radio_status_decode(&message, &radio);
 
-    port.setParameter({ Telemetry::Rssi }, decodeRssi(radio.rssi));
-    port.setParameter({ Telemetry::Noise }, radio.noise);
-    port.setParameter({ Telemetry::RemoteRssi }, decodeRssi(radio.remrssi));
-    port.setParameter({ Telemetry::RemoteNoise }, radio.remnoise);
-    port.setParameter({ Telemetry::Errors }, radio.rxerrors);
-    port.setParameter({ Telemetry::Fixed }, radio.fixed);
+    portion.setParameter({ Telemetry::Rssi }, decodeRssi(radio.rssi));
+    portion.setParameter({ Telemetry::Noise }, radio.noise);
+    portion.setParameter({ Telemetry::RemoteRssi }, decodeRssi(radio.remrssi));
+    portion.setParameter({ Telemetry::RemoteNoise }, radio.remnoise);
+    portion.setParameter({ Telemetry::Errors }, radio.rxerrors);
+    portion.setParameter({ Telemetry::Fixed }, radio.fixed);
 }
