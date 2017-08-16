@@ -24,6 +24,9 @@ namespace domain
         void executeCommand(const Command& command);
         void rejectCommand(Command::CommandType& type);
 
+    signals:
+        void commandStatusChanged(Command::CommandType type, Command::CommandStatus status);
+
     private:
         CommandSender* m_sender;
     };

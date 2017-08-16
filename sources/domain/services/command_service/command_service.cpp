@@ -13,6 +13,9 @@ CommandService::CommandService(QObject* parent):
     m_sender(new CommandSender(this))
 {
     qRegisterMetaType<Command>("Command");
+
+    connect(m_sender, &CommandSender::commandStatusChanged,
+            this, &CommandService::commandStatusChanged);
 }
 
 CommandSender* CommandService::sender() const
@@ -28,4 +31,6 @@ void CommandService::executeCommand(const Command& command)
 void CommandService::rejectCommand(Command::CommandType& type)
 {
     m_sender->removeCommand(type);
+
+    emit commandStatusChanged(type, Command::Canceled);
 }

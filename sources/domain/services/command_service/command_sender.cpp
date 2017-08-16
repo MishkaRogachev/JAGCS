@@ -36,8 +36,8 @@ void CommandSender::addCommand(const Command& command)
     d->typeAttemps[command.type()] = 0;
 
     emit sendCommand(command, d->typeAttemps[command.type()]);
-
     d->typeTimers[command.type()] = this->startTimer(::interval);
+    emit commandStatusChanged(command.type(), Command::Sending);
 }
 
 void CommandSender::removeCommand(Command::CommandType type)
@@ -48,18 +48,11 @@ void CommandSender::removeCommand(Command::CommandType type)
     if (d->typeTimers.contains(type)) this->killTimer(d->typeTimers.take(type));
 }
 
-void CommandSender::rejectCommand(Command::CommandType type)
+void CommandSender::setCommandStatus(Command::CommandType type, Command::CommandStatus status)
 {
     this->removeCommand(type);
 
-    emit commandRejected(type);
-}
-
-void CommandSender::confirmCommand(Command::CommandType type)
-{
-    this->removeCommand(type);
-
-    emit commandCompleted(type);
+    emit commandStatusChanged(type, status);
 }
 
 void CommandSender::timerEvent(QTimerEvent* event)
@@ -68,6 +61,6 @@ void CommandSender::timerEvent(QTimerEvent* event)
     Command::CommandType type = d->typeTimers.key(event->timerId());
 
     emit sendCommand(d->typeCommands[type], ++d->typeAttemps[type]);
-    if (d->typeAttemps[type] >= maxAttemps) this->rejectCommand(type);
+    if (d->typeAttemps[type] >= maxAttemps) this->setCommandStatus(type, Command::Rejected);
 }
 

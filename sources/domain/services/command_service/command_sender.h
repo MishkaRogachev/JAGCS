@@ -18,14 +18,11 @@ namespace domain
         void addCommand(const Command& command);
         void removeCommand(Command::CommandType type);
 
-        void rejectCommand(Command::CommandType type);
-        void confirmCommand(Command::CommandType type);
+        void setCommandStatus(Command::CommandType type, Command::CommandStatus status);
 
     signals:
         void sendCommand(const Command& command, int attempt);
-
-        void commandCompleted(Command::CommandType type);
-        void commandRejected(Command::CommandType type);
+        void commandStatusChanged(Command::CommandType type, Command::CommandStatus status);
 
     protected:
         void timerEvent(QTimerEvent* event) override;

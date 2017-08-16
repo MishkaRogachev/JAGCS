@@ -25,6 +25,16 @@ namespace domain
             Parachute
         };
 
+        enum CommandStatus
+        {
+            UnknownStatus,
+            Rejected,
+            Canceled,
+            Sending,
+            InProgress,
+            Completed,
+        };
+
         Command(CommandType type = UnknownCommand, int vehicleId = 0);
         Command(const Command& command);
 

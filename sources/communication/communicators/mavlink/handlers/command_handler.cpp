@@ -30,6 +30,16 @@ namespace
         { MAV_CMD_DO_PAUSE_CONTINUE, Command::PauseContinue },
         { MAV_CMD_DO_PARACHUTE, Command::Parachute }
     };
+
+    const QMultiMap<quint8, Command::CommandStatus> mavStatusMap =
+    {
+        { MAV_RESULT_DENIED, Command::Rejected },
+        { MAV_RESULT_TEMPORARILY_REJECTED, Command::Rejected },
+        { MAV_RESULT_UNSUPPORTED, Command::Rejected },
+        { MAV_RESULT_FAILED, Command::Rejected },
+        { MAV_RESULT_IN_PROGRESS, Command::InProgress },
+        { MAV_RESULT_ACCEPTED, Command::Completed }
+    };
 }
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
@@ -51,27 +61,15 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
     Command::CommandType type = ::mavCommandMap.value(ack.command, Command::UnknownCommand);
     if (type == Command::UnknownCommand) return;
 
-    // TODO: confirm Status
-    switch (ack.result)
-    {
-    case MAV_RESULT_DENIED:
-    case MAV_RESULT_TEMPORARILY_REJECTED:
-    case MAV_RESULT_UNSUPPORTED:
-    case MAV_RESULT_FAILED:
-        QMetaObject::invokeMethod(m_commandService->sender(), "rejectCommand", Qt::QueuedConnection,
-                                  Q_ARG(Command::CommandType, type));
-        break;
-    case MAV_RESULT_ACCEPTED:
-        QMetaObject::invokeMethod(m_commandService->sender(), "confirmCommand", Qt::QueuedConnection,
-                                  Q_ARG(Command::CommandType, type));
-        break;
-    default:
-        break;
-    }
+    Command::CommandStatus status = ::mavStatusMap.value(ack.result, Command::UnknownStatus);
+
+    QMetaObject::invokeMethod(m_commandService->sender(), "setCommandStatus", Qt::QueuedConnection,
+                              Q_ARG(Command::CommandType, type), Q_ARG(Command::CommandStatus, status));
 }
 
 void CommandHandler::onSendCommand(const Command& command, int attempt)
 {
+    qDebug() << command.type() << attempt;
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
 
@@ -96,8 +94,8 @@ void CommandHandler::onSendCommand(const Command& command, int attempt)
     if (!link) return;
 
     mavlink_msg_command_long_encode_chan(m_communicator->systemId(),
-                                    m_communicator->componentId(),
-                                    m_communicator->linkChannel(link),
-                                    &message, &mavCommand);
+                                         m_communicator->componentId(),
+                                         m_communicator->linkChannel(link),
+                                         &message, &mavCommand);
     m_communicator->sendMessage(message, link);
 }
