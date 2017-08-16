@@ -14,7 +14,7 @@ namespace domain
     public:
         enum CommandType
         {
-            Idle,
+            UnknownCommand,
 
             ArmDisarm,
 
@@ -25,7 +25,8 @@ namespace domain
             Parachute
         };
 
-        Command(CommandType type, int vehicleId);
+        Command(CommandType type = UnknownCommand, int vehicleId = 0);
+        Command(const Command& command);
 
         CommandType type() const;
         void setType(CommandType type);

@@ -5,11 +5,11 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "command.h"
 
 namespace domain
 {
-    class Command;
+    class CommandSender;
 
     class CommandService: public QObject
     {
@@ -17,20 +17,15 @@ namespace domain
 
     public:
         explicit CommandService(QObject* parent = nullptr);
-        ~CommandService() override;
 
-        Command headCommand();
-        bool hasCommand() const;
+        CommandSender* sender() const;
 
     public slots:
         void executeCommand(const Command& command);
-
-    signals:
-        void gotCommand();
+        void rejectCommand(Command::CommandType& type);
 
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        CommandSender* m_sender;
     };
 }
 

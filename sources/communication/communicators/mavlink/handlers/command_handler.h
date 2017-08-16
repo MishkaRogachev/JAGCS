@@ -24,8 +24,7 @@ namespace comm
        void processMessage(const mavlink_message_t& message) override;
 
     private slots:
-       void onGotCommand();
-       void sendCommand(const domain::Command& command);
+       void onSendCommand(const domain::Command& command, int attempt = 0);
 
    private:
        domain::CommandService* m_commandService;

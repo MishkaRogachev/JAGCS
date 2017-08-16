@@ -7,6 +7,12 @@ Command::Command(CommandType type, int vehicleId):
     m_vehicleId(vehicleId)
 {}
 
+Command::Command(const Command& command):
+    m_type(command.type()),
+    m_arguments(command.arguments()),
+    m_vehicleId(command.vehicleId())
+{}
+
 Command::CommandType Command::type() const
 {
     return m_type;

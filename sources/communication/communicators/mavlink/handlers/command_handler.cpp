@@ -10,7 +10,7 @@
 #include "service_registry.h"
 
 #include "command_service.h"
-#include "command.h"
+#include "command_sender.h"
 
 #include "vehicle_service.h"
 #include "vehicle.h"
@@ -37,23 +37,40 @@ CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
     m_commandService(ServiceRegistry::commandService()),
     m_vehicleService(ServiceRegistry::vehicleService())
 {
-    connect(m_commandService, &CommandService::gotCommand, this, &CommandHandler::onGotCommand);
+    connect(m_commandService->sender(), &CommandSender::sendCommand,
+            this, &CommandHandler::onSendCommand);
 }
 
 void CommandHandler::processMessage(const mavlink_message_t& message)
 {
-    Q_UNUSED(message) // TODO: handle command quitantion
-}
+    if (message.msgid != MAVLINK_MSG_ID_COMMAND_ACK) return;
 
-void CommandHandler::onGotCommand()
-{
-    while (m_commandService->hasCommand())
+    mavlink_command_ack_t ack;
+    mavlink_msg_command_ack_decode(&message, &ack);
+
+    Command::CommandType type = ::mavCommandMap.value(ack.command, Command::UnknownCommand);
+    if (type == Command::UnknownCommand) return;
+
+    // TODO: confirm Status
+    switch (ack.result)
     {
-        this->sendCommand(m_commandService->headCommand());
+    case MAV_RESULT_DENIED:
+    case MAV_RESULT_TEMPORARILY_REJECTED:
+    case MAV_RESULT_UNSUPPORTED:
+    case MAV_RESULT_FAILED:
+        QMetaObject::invokeMethod(m_commandService->sender(), "rejectCommand", Qt::QueuedConnection,
+                                  Q_ARG(Command::CommandType, type));
+        break;
+    case MAV_RESULT_ACCEPTED:
+        QMetaObject::invokeMethod(m_commandService->sender(), "confirmCommand", Qt::QueuedConnection,
+                                  Q_ARG(Command::CommandType, type));
+        break;
+    default:
+        break;
     }
 }
 
-void CommandHandler::sendCommand(const Command& command)
+void CommandHandler::onSendCommand(const Command& command, int attempt)
 {
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
@@ -63,7 +80,7 @@ void CommandHandler::sendCommand(const Command& command)
 
     mavCommand.target_system = vehicle->mavId();
     mavCommand.target_component = 0;
-    mavCommand.confirmation = 0;
+    mavCommand.confirmation = attempt;
     mavCommand.command = ::mavCommandMap.key(command.type());
 
     QVariantList args = command.arguments();
