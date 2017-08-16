@@ -36,7 +36,6 @@ AutopilotVersionHandler::~AutopilotVersionHandler()
 
 void AutopilotVersionHandler::processMessage(const mavlink_message_t& message)
 {
-    // TODO: all commands and confirmations through CommandService
     if (message.msgid == MAVLINK_MSG_ID_COMMAND_ACK)
     {
         mavlink_command_ack_t ack;
