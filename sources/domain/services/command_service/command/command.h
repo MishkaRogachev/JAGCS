@@ -21,7 +21,6 @@ namespace domain
             Return,
             Start,
             PauseContinue,
-            SetCurrentWaypoint,
 
             Parachute
         };

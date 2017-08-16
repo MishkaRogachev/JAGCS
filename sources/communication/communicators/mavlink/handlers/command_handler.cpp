@@ -22,18 +22,14 @@ using namespace domain;
 
 namespace
 {
-    uint16_t toMavlinkCommand(Command::CommandType type)
+    const QMap<quint16, Command::CommandType> mavCommandMap =
     {
-        switch (type) {
-        case Command::ArmDisarm: return MAV_CMD_COMPONENT_ARM_DISARM;
-        case Command::Return: return MAV_CMD_NAV_RETURN_TO_LAUNCH;
-        case Command::Start: return MAV_CMD_MISSION_START;
-        case Command::PauseContinue: return MAV_CMD_DO_PAUSE_CONTINUE;
-        case Command::Parachute: return MAV_CMD_DO_PARACHUTE;
-        case Command::Idle:
-        default: return 0;
-        }
-    }
+        { MAV_CMD_COMPONENT_ARM_DISARM, Command::ArmDisarm },
+        { MAV_CMD_NAV_RETURN_TO_LAUNCH, Command::Return },
+        { MAV_CMD_MISSION_START, Command::Start },
+        { MAV_CMD_DO_PAUSE_CONTINUE, Command::PauseContinue },
+        { MAV_CMD_DO_PARACHUTE, Command::Parachute }
+    };
 }
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
@@ -68,7 +64,7 @@ void CommandHandler::sendCommand(const Command& command)
     mavCommand.target_system = vehicle->mavId();
     mavCommand.target_component = 0;
     mavCommand.confirmation = 0;
-    mavCommand.command = ::toMavlinkCommand(command.type());
+    mavCommand.command = ::mavCommandMap.key(command.type());
 
     QVariantList args = command.arguments();
     if (args.count() > 0) mavCommand.param1 = args.at(0).toFloat();
