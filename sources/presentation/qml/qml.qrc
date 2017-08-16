@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>JS/helper.js</file>
         <file>Controls/Button.qml</file>
+        <file>Controls/CommandButton.qml</file>
         <file>Controls/ButtonBar.qml</file>
         <file>Controls/TabButton.qml</file>
         <file>Controls/TabBar.qml</file>

@@ -1,7 +1,9 @@
 #ifndef COMMAND_INSTRUMENT_PRESENTER_H
 #define COMMAND_INSTRUMENT_PRESENTER_H
 
+// Internal
 #include "base_presenter.h"
+#include "command.h"
 
 namespace domain
 {
@@ -22,9 +24,12 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onCommandReturn();
-        void onCommandStart();
-        void onPauseContinue(bool unpause);
+        void onExecuteCommand(int commandType);
+        void onExecuteBoolCommand(int commandType, bool check);
+        void onRejectCommand(int commandType);
+
+        void onCommandStatusChanged(domain::Command::CommandType type,
+                                    domain::Command::CommandStatus status);
 
     private:
         class Impl;

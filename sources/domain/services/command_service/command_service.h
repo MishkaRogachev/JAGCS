@@ -22,7 +22,7 @@ namespace domain
 
     public slots:
         void executeCommand(const Command& command);
-        void rejectCommand(Command::CommandType& type);
+        void rejectCommand(Command::CommandType type);
 
     signals:
         void commandStatusChanged(Command::CommandType type, Command::CommandStatus status);

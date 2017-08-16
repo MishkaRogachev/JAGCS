@@ -6,6 +6,7 @@
 #include "link_description.h"
 #include "mission_item.h"
 #include "video_source.h"
+#include "command.h"
 
 void registerQmlTypes()
 {
@@ -17,6 +18,8 @@ void registerQmlTypes()
                 "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
     qmlRegisterUncreatableType<dao::VideoSource>(
                 "JAGCS", 1, 0, "VideoSource", "Can't create entities in QML");
+    qmlRegisterUncreatableType<domain::Command>(
+                "JAGCS", 1, 0, "Command", "Can't create commands in QML");
 }
 
 #endif // QML_DECLARATIONS_H

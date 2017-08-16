@@ -61,7 +61,7 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
     Command::CommandType type = ::mavCommandMap.value(ack.command, Command::UnknownCommand);
     if (type == Command::UnknownCommand) return;
 
-    Command::CommandStatus status = ::mavStatusMap.value(ack.result, Command::UnknownStatus);
+    Command::CommandStatus status = ::mavStatusMap.value(ack.result, Command::Idle);
 
     QMetaObject::invokeMethod(m_commandService->sender(), "setCommandStatus", Qt::QueuedConnection,
                               Q_ARG(Command::CommandType, type), Q_ARG(Command::CommandStatus, status));

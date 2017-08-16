@@ -27,7 +27,7 @@ namespace domain
 
         enum CommandStatus
         {
-            UnknownStatus,
+            Idle,
             Rejected,
             Canceled,
             Sending,
@@ -54,6 +54,7 @@ namespace domain
         int m_vehicleId;
 
         Q_ENUM(CommandType)
+        Q_ENUM(CommandStatus)
     };
 }
 

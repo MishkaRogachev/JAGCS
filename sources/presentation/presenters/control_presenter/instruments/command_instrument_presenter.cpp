@@ -8,22 +8,27 @@
 #include "command_service.h"
 #include "command.h"
 
+using namespace domain;
 using namespace presentation;
 
 class CommandInstrumentPresenter::Impl
 {
 public:
-    domain::CommandService* service = nullptr;
+    CommandService* service = nullptr;
 
     int vehicleId;
 };
 
+// FIXME: CommandInstrument -> BaseInstrument
 CommandInstrumentPresenter::CommandInstrumentPresenter(int vehicleId, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = domain::ServiceRegistry::commandService();
+    d->service = ServiceRegistry::commandService();
     d->vehicleId = vehicleId;
+
+    connect(d->service, &CommandService::commandStatusChanged,
+            this, &CommandInstrumentPresenter::onCommandStatusChanged);
 }
 
 CommandInstrumentPresenter::~CommandInstrumentPresenter()
@@ -31,27 +36,31 @@ CommandInstrumentPresenter::~CommandInstrumentPresenter()
 
 void CommandInstrumentPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(commandReturn()), this, SLOT(onCommandReturn()));
-    connect(view, SIGNAL(commandStart()), this, SLOT(onCommandStart()));
-    connect(view, SIGNAL(pauseContinue(bool)), this, SLOT(onPauseContinue(bool)));
+    connect(view, SIGNAL(executeCommand(int)), this, SLOT(onExecuteCommand(int)));
+    connect(view, SIGNAL(executeBoolCommand(int, bool)), this, SLOT(onExecuteBoolCommand(int, bool)));
+    connect(view, SIGNAL(rejectCommand(int)), this, SLOT(onRejectCommand(int)));
 }
 
-
-void CommandInstrumentPresenter::onCommandReturn()
+void CommandInstrumentPresenter::onExecuteCommand(int commandType)
 {
-    domain::Command command(domain::Command::Return, d->vehicleId);
+    Command command(Command::CommandType(commandType), d->vehicleId);
     d->service->executeCommand(command);
 }
 
-void CommandInstrumentPresenter::onCommandStart()
+void CommandInstrumentPresenter::onExecuteBoolCommand(int commandType, bool check)
 {
-    domain::Command command(domain::Command::Start, d->vehicleId);
+    Command command(Command::CommandType(commandType), d->vehicleId);
+    command.addArgument(check);
     d->service->executeCommand(command);
 }
 
-void CommandInstrumentPresenter::onPauseContinue(bool unpause)
+void CommandInstrumentPresenter::onRejectCommand(int commandType)
 {
-    domain::Command command(domain::Command::PauseContinue, d->vehicleId);
-    command.addArgument(unpause);
-    d->service->executeCommand(command);
+    d->service->rejectCommand(Command::CommandType(commandType));
+}
+
+void CommandInstrumentPresenter::onCommandStatusChanged(Command::CommandType type,
+                                                        Command::CommandStatus status)
+{
+    this->invokeViewMethod("commandStatusChanged", type, status);
 }

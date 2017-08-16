@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
@@ -13,7 +14,10 @@ GridLayout {
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
 
-    signal commandArmDisarm(bool arm)
+    signal commandStatusChanged(var command, var type)
+    signal executeCommand(int command)
+    signal executeBoolCommand(int command, bool check)
+    signal rejectCommand(int command)
 
     columns: 4
 
@@ -56,13 +60,11 @@ GridLayout {
         text: batteryCurrent.toFixed(2) + qsTr(" A")
     }
 
-    Controls.Switch { // FIXME: dangerous switch
+    Controls.CommandButton { // FIXME: dangerous button
+        command: Command.ArmDisarm
         text: armed ? qsTr("DISARM") : qsTr("ARM")
-        inputChecked: armed
-        onCheckedChanged: commandArmDisarm(checked)
-        font.pixelSize: palette.fontPixelSize * 0.75
-        font.bold: true
-        Layout.fillWidth: true
+        checked: armed
+        boolCommand: true
         Layout.columnSpan: 2
     }
 

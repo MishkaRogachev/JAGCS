@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
@@ -11,9 +12,11 @@ RowLayout {
     property bool guided: false
 
     signal commandSetWaypoint(int item)
-    signal commandReturn()
-    signal commandStart()
-    signal pauseContinue(bool unpause)
+
+    signal commandStatusChanged(var command, var status)
+    signal executeCommand(int command)
+    signal executeBoolCommand(int command, bool check)
+    signal rejectCommand(int command)
 
     onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
 
@@ -34,21 +37,22 @@ RowLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Button {
+    Controls.CommandButton {
+        command: Command.Return
         iconSource: "qrc:/icons/home.svg"
-        onClicked: commandReturn()
     }
 
-    Controls.Button {
+    Controls.CommandButton {
+        command: Command.Start
         iconSource: "qrc:/icons/play.svg"
-        onClicked: commandStart()
     }
 
-    Controls.Button {
+    Controls.CommandButton {
+        command: Command.PauseContinue
         iconSource: "qrc:/icons/pause.svg"
         checkable: true
+        boolCommand: true
         enabled: guided
         onEnabledChanged: if (!enabled) checked = false;
-        onCheckedChanged: pauseContinue(!checked)
     }
 }

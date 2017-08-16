@@ -28,7 +28,7 @@ void CommandService::executeCommand(const Command& command)
     m_sender->addCommand(command);
 }
 
-void CommandService::rejectCommand(Command::CommandType& type)
+void CommandService::rejectCommand(Command::CommandType type)
 {
     m_sender->removeCommand(type);
 

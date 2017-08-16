@@ -33,14 +33,14 @@ void DashboardPresenter::addInstrument(const QString& instrument, int priority)
     d->instruments[priority] = instrument;
 }
 
-void DashboardPresenter::addInstrumentPresenter(const QString& instrument,
-                                                BasePresenter* presenter)
+void DashboardPresenter::addInstrumentPresenter(const QString& instrument, BasePresenter* presenter)
 {
     d->instrumentPresenters.insertMulti(instrument, presenter);
 }
 
 void DashboardPresenter::connectView(QObject* view)
 {
+    // TODO: many-to-many
     connect(view, SIGNAL(instrumentAdded(QString, QObject*)),
             this, SLOT(onInstrumentAdded(QString, QObject*)));
 
