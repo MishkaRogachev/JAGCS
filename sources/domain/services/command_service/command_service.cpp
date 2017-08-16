@@ -13,6 +13,8 @@ CommandService::CommandService(QObject* parent):
     m_sender(new CommandSender(this))
 {
     qRegisterMetaType<Command>("Command");
+    qRegisterMetaType<Command::CommandType>("Command::CommandType");
+    qRegisterMetaType<Command::CommandStatus>("Command::CommandStatus");
 
     connect(m_sender, &CommandSender::commandStatusChanged,
             this, &CommandService::commandStatusChanged);
