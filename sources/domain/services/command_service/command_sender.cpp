@@ -7,6 +7,7 @@
 namespace
 {
     const int interval = 500;
+    const int maxAttemps = 5;
 }
 
 using namespace domain;
@@ -66,6 +67,7 @@ void CommandSender::timerEvent(QTimerEvent* event)
     if (!d->typeTimers.values().contains(event->timerId())) return QObject::timerEvent(event);
     Command::CommandType type = d->typeTimers.key(event->timerId());
 
-    emit sendCommand(d->typeCommands[type], d->typeAttemps[type]++);
+    emit sendCommand(d->typeCommands[type], ++d->typeAttemps[type]);
+    if (d->typeAttemps[type] >= maxAttemps) this->rejectCommand(type);
 }
 

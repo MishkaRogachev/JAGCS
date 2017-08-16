@@ -8,11 +8,12 @@
 
 using namespace domain;
 
-
 CommandService::CommandService(QObject* parent):
     QObject(parent),
     m_sender(new CommandSender(this))
-{}
+{
+    qRegisterMetaType<Command>("Command");
+}
 
 CommandSender* CommandService::sender() const
 {
