@@ -38,6 +38,7 @@ namespace dao
             Continue,
             Return,
             Landing,
+
             SetSpeed,
 
             JumpTo,

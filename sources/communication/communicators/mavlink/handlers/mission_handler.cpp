@@ -4,6 +4,7 @@
 #include <mavlink.h>
 
 // Qt
+#include <QMap>
 #include <QDebug>
 
 // Internal
@@ -23,64 +24,32 @@
 
 namespace
 {
-    dao::MissionItem::Command decodeCommand(uint16_t command, quint8 seq)
+    const QMap<quint16, dao::MissionItem::Command> mavCommandMap =
     {
-        switch (command) {
-        case MAV_CMD_NAV_TAKEOFF:
-            return dao::MissionItem::Takeoff;
-        case MAV_CMD_NAV_WAYPOINT:
-            return seq > 0 ? dao::MissionItem::Waypoint : dao::MissionItem::Home;
-        case MAV_CMD_NAV_LOITER_UNLIM:
-            return dao::MissionItem::LoiterUnlim;
-        case MAV_CMD_NAV_LOITER_TO_ALT:
-            return dao::MissionItem::LoiterAltitude;
-        case MAV_CMD_NAV_LOITER_TURNS:
-            return dao::MissionItem::LoiterTurns;
-        case MAV_CMD_NAV_LOITER_TIME:
-            return dao::MissionItem::LoiterTime;
-        case MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT:
-            return dao::MissionItem::Continue;
-        case MAV_CMD_NAV_RETURN_TO_LAUNCH:
-            return dao::MissionItem::Return;
-        case MAV_CMD_NAV_LAND:
-            return dao::MissionItem::Landing;
+        { MAV_CMD_NAV_TAKEOFF, dao::MissionItem::Takeoff },
+        { MAV_CMD_NAV_LAND, dao::MissionItem::Landing },
+        { MAV_CMD_NAV_WAYPOINT, dao::MissionItem::Waypoint },
+        { MAV_CMD_NAV_LOITER_UNLIM, dao::MissionItem::LoiterUnlim },
+        { MAV_CMD_NAV_LOITER_TO_ALT, dao::MissionItem::LoiterAltitude },
+        { MAV_CMD_NAV_LOITER_TURNS, dao::MissionItem::LoiterTurns },
+        { MAV_CMD_NAV_LOITER_TIME, dao::MissionItem::LoiterTime },
+        { MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT, dao::MissionItem::Continue },
+        { MAV_CMD_NAV_RETURN_TO_LAUNCH, dao::MissionItem::Return },
 
-        case MAV_CMD_DO_CHANGE_SPEED:
-            return dao::MissionItem::SetSpeed;
-        default:
-            return dao::MissionItem::UnknownCommand;
-        }
-    }
+        { MAV_CMD_DO_CHANGE_SPEED, dao::MissionItem::SetSpeed },
 
-    uint16_t encodeCommand(dao::MissionItem::Command command)
-    {
-        switch (command) {
-        case dao::MissionItem::Takeoff:
-            return MAV_CMD_NAV_TAKEOFF;
-        case dao::MissionItem::Home:
-        case dao::MissionItem::Waypoint:
-            return MAV_CMD_NAV_WAYPOINT;
-        case dao::MissionItem::LoiterUnlim:
-            return MAV_CMD_NAV_LOITER_UNLIM;
-        case dao::MissionItem::LoiterAltitude:
-            return MAV_CMD_NAV_LOITER_TO_ALT;
-        case dao::MissionItem::LoiterTurns:
-            return MAV_CMD_NAV_LOITER_TURNS;
-        case dao::MissionItem::LoiterTime:
-            return MAV_CMD_NAV_LOITER_TIME;
-        case dao::MissionItem::Continue:
-            return MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
-        case dao::MissionItem::Return:
-            return MAV_CMD_NAV_RETURN_TO_LAUNCH;
-        case dao::MissionItem::Landing:
-            return MAV_CMD_NAV_LAND;
+        { MAV_CMD_DO_JUMP, dao::MissionItem::JumpTo },
 
-        case dao::MissionItem::SetSpeed:
-            return MAV_CMD_DO_CHANGE_SPEED;
-        default:
-            return 0;
-        }
-    }
+        { MAV_CMD_DO_SET_SERVO, dao::MissionItem::SetServo },
+        { MAV_CMD_DO_SET_RELAY, dao::MissionItem::SetRelay },
+        { MAV_CMD_DO_REPEAT_SERVO, dao::MissionItem::RepeatServo },
+        { MAV_CMD_DO_REPEAT_RELAY, dao::MissionItem::RepeatRelay },
+
+        { MAV_CMD_DO_SET_ROI, dao::MissionItem::SetRoi },
+        { MAV_CMD_DO_MOUNT_CONTROL, dao::MissionItem::MountControl },
+        { MAV_CMD_DO_SET_CAM_TRIGG_DIST, dao::MissionItem::SetCameraTriggerDistance },
+        { MAV_CMD_DO_DIGICAM_CONTROL, dao::MissionItem::CameraControl }
+    };
 }
 
 using namespace comm;
@@ -229,7 +198,8 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
     msgItem.seq = seq;
     msgItem.autocontinue = seq < m_missionService->mission(assignment->missionId())->count() - 1;
 
-    msgItem.command = ::encodeCommand(item->command());
+    if (seq) msgItem.command = ::mavCommandMap.key(item->command(), 0);
+    else msgItem.command = MAV_CMD_NAV_WAYPOINT; // Home is waypoint
 
     if (!qIsNaN(item->altitude()))
     {
@@ -391,7 +361,14 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setSequence(msgItem.seq);
     }
 
-    item->setCommand(::decodeCommand(msgItem.command, msgItem.seq));
+    if (msgItem.seq > 0)
+    {
+        item->setCommand(::mavCommandMap.value(msgItem.command, dao::MissionItem::UnknownCommand));
+    }
+    else
+    {
+        item->setCommand(dao::MissionItem::Home);
+    }
 
     switch (msgItem.frame)
     {
