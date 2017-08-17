@@ -61,8 +61,8 @@ set(LIBRARIES
 )
 
 # Includes
-include_directories("3dparty/mavlink_v2")
-include_directories("3dparty/mavlink_v2/ardupilotmega")
+include_directories("3rdparty/mavlink_v2")
+include_directories("3rdparty/mavlink_v2/ardupilotmega")
 
 # Internal sources and headers
 file(GLOB_RECURSE HEADERS "sources/*.h")
