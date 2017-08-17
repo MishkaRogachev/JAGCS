@@ -1,7 +1,7 @@
 #ifndef MISSION_INSTRUMENT_PRESENTER_H
 #define MISSION_INSTRUMENT_PRESENTER_H
 
-#include "base_presenter.h"
+#include "base_instrument_presenter.h"
 
 namespace domain
 {
@@ -10,7 +10,7 @@ namespace domain
 
 namespace presentation
 {
-    class MissionInstrumentPresenter: public BasePresenter
+    class MissionInstrumentPresenter: public BaseInstrumentPresenter
     {
         Q_OBJECT
 
@@ -24,8 +24,6 @@ namespace presentation
 
     protected:
         void connectView(QObject* view) override;
-
-        void setViewConnected(bool connected);
 
     private slots:
         void onCommandSetWaypoint(int item);

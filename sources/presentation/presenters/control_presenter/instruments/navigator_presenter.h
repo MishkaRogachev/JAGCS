@@ -1,11 +1,11 @@
 #ifndef NAVIGATOR_PRESENTER_H
 #define NAVIGATOR_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class NavigatorPresenter: public AbstractInstrumentPresenter
+    class NavigatorPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

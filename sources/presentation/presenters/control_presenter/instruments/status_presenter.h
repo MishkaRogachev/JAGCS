@@ -1,11 +1,11 @@
 #ifndef STATUS_PRESENTER_H
 #define STATUS_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class StatusPresenter: public AbstractInstrumentPresenter
+    class StatusPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

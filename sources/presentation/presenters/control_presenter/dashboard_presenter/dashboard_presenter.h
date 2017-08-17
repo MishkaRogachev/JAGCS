@@ -3,6 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
+#include "base_instrument_presenter.h"
 
 namespace presentation
 {
@@ -16,7 +17,7 @@ namespace presentation
 
     public slots:
         void addInstrument(const QString& instrument, int priority);
-        void addInstrumentPresenter(const QString& instrument, BasePresenter* presenter);
+        void addInstrumentPresenter(const QString& instrument, BaseInstrumentPresenter* presenter);
 
     protected:
         void connectView(QObject* view) override;

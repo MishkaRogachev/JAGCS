@@ -8,7 +8,7 @@ using namespace presentation;
 HomePresenter::HomePresenter(domain::Telemetry* positionNode,
                              domain::Telemetry* homePositionNode,
                              QObject* parent):
-    BasePresenter(parent),
+    BaseInstrumentPresenter(parent),
     m_positionNode(positionNode),
     m_homePositionNode(homePositionNode)
 {
@@ -23,7 +23,7 @@ void HomePresenter::onPositionChanged(const domain::Telemetry::TelemetryMap& par
     if (!parameters.contains(domain::Telemetry::Coordinate)) return;
 
     m_position = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
-    this->updateView();
+    this->updateViews();
 }
 
 void HomePresenter::onHomePositionChanged(const domain::Telemetry::TelemetryMap& parameters)
@@ -32,20 +32,20 @@ void HomePresenter::onHomePositionChanged(const domain::Telemetry::TelemetryMap&
 
     m_homePosition = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
 
-    this->updateView();
+    this->updateViews();
 }
 
-void HomePresenter::updateView()
+void HomePresenter::updateViews()
 {
     if (m_position.isValid() && m_homePosition.isValid())
     {
-        this->setViewProperty(PROPERTY(homeDistance), m_position.distanceTo(m_homePosition));
-        this->setViewProperty(PROPERTY(homeDirection), m_position.azimuthTo(m_homePosition));
+        this->setViewsProperty(PROPERTY(homeDistance), m_position.distanceTo(m_homePosition));
+        this->setViewsProperty(PROPERTY(homeDirection), m_position.azimuthTo(m_homePosition));
     }
     else
     {
-        this->setViewProperty(PROPERTY(homeDistance), 0);
-        this->setViewProperty(PROPERTY(homeDirection), 0);
+        this->setViewsProperty(PROPERTY(homeDistance), 0);
+        this->setViewsProperty(PROPERTY(homeDirection), 0);
     }
 }
 

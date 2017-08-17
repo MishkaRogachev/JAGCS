@@ -6,13 +6,13 @@
 using namespace presentation;
 
 WindPresenter::WindPresenter(domain::Telemetry* node, QObject* parent):
-    AbstractInstrumentPresenter(node, parent)
+    AbstractTelemetryPresenter(node, parent)
 {}
 
 void WindPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
     if (parameters.contains(domain::Telemetry::Yaw))
-        this->setViewProperty(PROPERTY(windDirection), parameters[domain::Telemetry::Yaw]);
+        this->setViewsProperty(PROPERTY(windDirection), parameters[domain::Telemetry::Yaw]);
     if (parameters.contains(domain::Telemetry::Speed))
-        this->setViewProperty(PROPERTY(windSpeed), parameters[domain::Telemetry::Speed]);
+        this->setViewsProperty(PROPERTY(windSpeed), parameters[domain::Telemetry::Speed]);
 }

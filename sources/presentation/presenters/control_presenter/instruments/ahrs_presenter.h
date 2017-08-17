@@ -1,11 +1,11 @@
 #ifndef AHRS_PRESENTER_H
 #define AHRS_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class AhrsPresenter: public AbstractInstrumentPresenter
+    class AhrsPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

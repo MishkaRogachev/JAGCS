@@ -9,9 +9,7 @@
 
 #include "dashboard_presenter.h"
 
-#include "status_presenter.h"
 #include "ahrs_presenter.h"
-#include "satellite_presenter.h"
 #include "barometric_presenter.h"
 #include "pitot_presenter.h"
 #include "rangefinder_presenter.h"
@@ -33,12 +31,10 @@ DashboardPresenter* AerialDashboardFactory::create()
     DashboardPresenter* dashboard = GenericDashboardFactory::create();
 
     dashboard->addInstrument("fd", 200);
-    dashboard->addInstrumentPresenter("fd", new StatusPresenter(
-                                          node->childNode(domain::Telemetry::Status), dashboard));
+    dashboard->addInstrumentPresenter("fd", m_status);
     dashboard->addInstrumentPresenter("fd", new AhrsPresenter(
                                           node->childNode(domain::Telemetry::Ahrs), dashboard));
-    dashboard->addInstrumentPresenter("fd", new SatellitePresenter(
-                                          node->childNode(domain::Telemetry::Satellite), dashboard));
+    dashboard->addInstrumentPresenter("fd", m_satellite);
     dashboard->addInstrumentPresenter("fd", new BarometricPresenter(
                                           node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrumentPresenter("fd", new PitotPresenter(

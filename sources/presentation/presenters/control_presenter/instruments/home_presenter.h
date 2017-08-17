@@ -1,7 +1,7 @@
 #ifndef HOME_PRESENTER_H
 #define HOME_PRESENTER_H
 
-#include "base_presenter.h"
+#include "base_instrument_presenter.h"
 
 // Qt
 #include <QGeoCoordinate>
@@ -11,20 +11,19 @@
 
 namespace presentation
 {
-    class HomePresenter: public BasePresenter
+    class HomePresenter: public BaseInstrumentPresenter
     {
         Q_OBJECT
 
     public:
-        explicit HomePresenter(domain::Telemetry* positionNode,
-                               domain::Telemetry* homePositionNode,
+        explicit HomePresenter(domain::Telemetry* positionNode, domain::Telemetry* homePositionNode,
                                QObject* parent = nullptr);
 
     public slots:
         void onPositionChanged(const domain::Telemetry::TelemetryMap& parameters);
         void onHomePositionChanged(const domain::Telemetry::TelemetryMap& parameters);
 
-        void updateView();
+        void updateViews();
 
     protected:
         void connectView(QObject* view) override;

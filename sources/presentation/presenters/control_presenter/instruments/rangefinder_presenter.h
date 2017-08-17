@@ -1,11 +1,11 @@
 #ifndef RANGEFINDER_PRESENTER_H
 #define RANGEFINDER_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class RangefinderPresenter: public AbstractInstrumentPresenter
+    class RangefinderPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

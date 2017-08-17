@@ -4,6 +4,7 @@
 // Internal
 #include "i_dashboard_factory.h"
 #include "dao_traits.h"
+#include "base_instrument_presenter.h"
 
 namespace presentation
 {
@@ -16,6 +17,11 @@ namespace presentation
 
     protected:
         dao::VehiclePtr m_vehicle;
+        BaseInstrumentPresenter* m_satellite;
+        BaseInstrumentPresenter* m_status;
+        BaseInstrumentPresenter* m_compass;
+        BaseInstrumentPresenter* m_navigator;
+        BaseInstrumentPresenter* m_commander;
     };
 }
 

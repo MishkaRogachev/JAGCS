@@ -1,11 +1,11 @@
 #ifndef BATTERY_PRESENTER_H
 #define BATTERY_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class BatteryPresenter: public AbstractInstrumentPresenter
+    class BatteryPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

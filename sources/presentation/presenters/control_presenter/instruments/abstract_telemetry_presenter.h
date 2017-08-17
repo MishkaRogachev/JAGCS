@@ -1,18 +1,18 @@
-#ifndef ABSTRACT_INSTRUMENT_PRESENTER_H
-#define ABSTRACT_INSTRUMENT_PRESENTER_H
+#ifndef ABSTRACT_TELEMETRY_PRESENTER_H
+#define ABSTRACT_TELEMETRY_PRESENTER_H
 
 // Internal
-#include "base_presenter.h"
+#include "base_instrument_presenter.h"
 #include "telemetry.h"
 
 namespace presentation
 {
-    class AbstractInstrumentPresenter: public BasePresenter
+    class AbstractTelemetryPresenter: public BaseInstrumentPresenter
     {
         Q_OBJECT
 
     public:
-        AbstractInstrumentPresenter(domain::Telemetry* node, QObject* parent);
+        AbstractTelemetryPresenter(domain::Telemetry* node, QObject* parent);
 
     public slots:
         virtual void onParametersChanged(const domain::Telemetry::TelemetryMap& parameters) = 0;
@@ -24,4 +24,4 @@ namespace presentation
     };
 }
 
-#endif // ABSTRACT_INSTRUMENT_PRESENTER_H
+#endif // ABSTRACT_TELEMETRY_PRESENTER_H

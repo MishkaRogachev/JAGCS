@@ -21,7 +21,7 @@ public:
 
 // FIXME: CommandInstrument -> BaseInstrument
 CommandInstrumentPresenter::CommandInstrumentPresenter(int vehicleId, QObject* parent):
-    BasePresenter(parent),
+    BaseInstrumentPresenter(parent),
     d(new Impl())
 {
     d->service = ServiceRegistry::commandService();
@@ -62,5 +62,9 @@ void CommandInstrumentPresenter::onRejectCommand(int commandType)
 void CommandInstrumentPresenter::onCommandStatusChanged(Command::CommandType type,
                                                         Command::CommandStatus status)
 {
-    this->invokeViewMethod("commandStatusChanged", type, status);
+    for (QObject* view: m_views)
+    {
+        QMetaObject::invokeMethod(view, "commandStatusChanged",
+                                  Q_ARG(QVariant, type), Q_ARG(QVariant, status));
+    }
 }

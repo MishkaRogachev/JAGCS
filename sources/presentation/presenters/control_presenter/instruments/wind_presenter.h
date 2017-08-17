@@ -1,11 +1,11 @@
 #ifndef WIND_PRESENTER_H
 #define WIND_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class WindPresenter: public AbstractInstrumentPresenter
+    class WindPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

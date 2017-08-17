@@ -33,20 +33,20 @@ DashboardPresenter* GenericDashboardFactory::create()
     if (!node) return nullptr;
 
     DashboardPresenter* dashboard = new DashboardPresenter();
+    m_satellite = new SatellitePresenter(node->childNode(domain::Telemetry::Satellite), dashboard);
+    m_status = new StatusPresenter(node->childNode(domain::Telemetry::Status), dashboard);
+    m_compass = new CompassPresenter(node->childNode(domain::Telemetry::Compass), dashboard);
+    m_navigator = new NavigatorPresenter(node->childNode(domain::Telemetry::Navigator), dashboard);
+    m_commander = new CommandInstrumentPresenter(m_vehicle->id(), dashboard);
 
     dashboard->addInstrument("satellite", 100);
-    dashboard->addInstrumentPresenter("satellite", new SatellitePresenter(
-                                 node->childNode(domain::Telemetry::Satellite), dashboard));
+    dashboard->addInstrumentPresenter("satellite", m_satellite);
 
     dashboard->addInstrument("navigator", 300);
-    dashboard->addInstrumentPresenter("navigator", new StatusPresenter(
-                                          node->childNode(domain::Telemetry::Status), dashboard));
-    dashboard->addInstrumentPresenter("navigator", new CompassPresenter(
-                                          node->childNode(domain::Telemetry::Compass), dashboard));
-    dashboard->addInstrumentPresenter("navigator", new SatellitePresenter(
-                                          node->childNode(domain::Telemetry::Satellite), dashboard));
-    dashboard->addInstrumentPresenter("navigator", new NavigatorPresenter(
-                                          node->childNode(domain::Telemetry::Navigator), dashboard));
+    dashboard->addInstrumentPresenter("navigator", m_status);
+    dashboard->addInstrumentPresenter("navigator", m_compass);
+    dashboard->addInstrumentPresenter("navigator", m_satellite);
+    dashboard->addInstrumentPresenter("navigator", m_navigator);
     dashboard->addInstrumentPresenter("navigator", new HomePresenter(
                                           node->childNode(domain::Telemetry::Position),
                                           node->childNode(domain::Telemetry::HomePosition), dashboard));
@@ -54,18 +54,14 @@ DashboardPresenter* GenericDashboardFactory::create()
                                           node->childNode(domain::Telemetry::Wind), dashboard));
 
     dashboard->addInstrument("status", 400);
-    dashboard->addInstrumentPresenter("status", new StatusPresenter(
-                                          node->childNode(domain::Telemetry::Status), dashboard));
+    dashboard->addInstrumentPresenter("status", m_status);
     dashboard->addInstrumentPresenter("status", new BatteryPresenter(
                                           node->childNode(domain::Telemetry::Battery), dashboard));
-    dashboard->addInstrumentPresenter("status", new CommandInstrumentPresenter(
-                                          m_vehicle->id(), dashboard));
+    dashboard->addInstrumentPresenter("status", m_commander);
 
     dashboard->addInstrument("mission", 500);
-    dashboard->addInstrumentPresenter("mission", new StatusPresenter(
-                                          node->childNode(domain::Telemetry::Status), dashboard));
-    dashboard->addInstrumentPresenter("mission", new CommandInstrumentPresenter(
-                                          m_vehicle->id(), dashboard));
+    dashboard->addInstrumentPresenter("mission", m_status);
+    dashboard->addInstrumentPresenter("mission", m_commander);
     dashboard->addInstrumentPresenter("mission", new MissionInstrumentPresenter(
                                           m_vehicle->id(), dashboard));
 

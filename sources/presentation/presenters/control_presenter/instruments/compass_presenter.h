@@ -1,11 +1,11 @@
 #ifndef COMPASS_PRESENTER_H
 #define COMPASS_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class CompassPresenter: public AbstractInstrumentPresenter
+    class CompassPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

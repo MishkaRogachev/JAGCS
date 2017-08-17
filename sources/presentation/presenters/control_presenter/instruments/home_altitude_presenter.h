@@ -1,7 +1,7 @@
 #ifndef HOME_ALTITUDE_PRESENTER_H
 #define HOME_ALTITUDE_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 // Qt
 #include <QGeoCoordinate>
@@ -11,7 +11,7 @@
 
 namespace presentation
 {
-    class HomeAltitudePresenter: public AbstractInstrumentPresenter
+    class HomeAltitudePresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

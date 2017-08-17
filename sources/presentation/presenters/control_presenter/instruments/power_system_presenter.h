@@ -1,11 +1,11 @@
 #ifndef POWER_SYSTEM_PRESENTER_H
 #define POWER_SYSTEM_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class PowerSystemPresenter: public AbstractInstrumentPresenter
+    class PowerSystemPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

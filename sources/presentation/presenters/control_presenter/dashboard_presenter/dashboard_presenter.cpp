@@ -7,15 +7,13 @@
 // Internal
 #include "telemetry.h"
 
-#include "base_presenter.h"
-
 using namespace presentation;
 
 class DashboardPresenter::Impl
 {
 public:
     QMap<int, QString> instruments;
-    QMultiMap<QString, BasePresenter*> instrumentPresenters;
+    QMultiMap<QString, BaseInstrumentPresenter*> instrumentPresenters;
 };
 
 DashboardPresenter::DashboardPresenter(QObject* parent):
@@ -33,14 +31,13 @@ void DashboardPresenter::addInstrument(const QString& instrument, int priority)
     d->instruments[priority] = instrument;
 }
 
-void DashboardPresenter::addInstrumentPresenter(const QString& instrument, BasePresenter* presenter)
+void DashboardPresenter::addInstrumentPresenter(const QString& instrument, BaseInstrumentPresenter* presenter)
 {
     d->instrumentPresenters.insertMulti(instrument, presenter);
 }
 
 void DashboardPresenter::connectView(QObject* view)
 {
-    // TODO: many-to-many
     connect(view, SIGNAL(instrumentAdded(QString, QObject*)),
             this, SLOT(onInstrumentAdded(QString, QObject*)));
 
@@ -50,8 +47,8 @@ void DashboardPresenter::connectView(QObject* view)
 
 void DashboardPresenter::onInstrumentAdded(const QString& key, QObject* view)
 {
-    for (BasePresenter* instrument: d->instrumentPresenters.values(key))
+    for (BaseInstrumentPresenter* instrument: d->instrumentPresenters.values(key))
     {
-        instrument->setView(view);
+        instrument->addInstrumentView(view);
     }
 }

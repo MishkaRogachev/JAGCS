@@ -2,7 +2,7 @@
 #define COMMAND_INSTRUMENT_PRESENTER_H
 
 // Internal
-#include "base_presenter.h"
+#include "base_instrument_presenter.h"
 #include "command.h"
 
 namespace domain
@@ -12,7 +12,7 @@ namespace domain
 
 namespace presentation
 {
-    class CommandInstrumentPresenter: public BasePresenter
+    class CommandInstrumentPresenter: public BaseInstrumentPresenter
     {
         Q_OBJECT
 

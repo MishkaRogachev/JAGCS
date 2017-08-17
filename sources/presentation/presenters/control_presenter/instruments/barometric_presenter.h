@@ -1,11 +1,11 @@
 #ifndef BAROMETRIC_PRESENTER_H
 #define BAROMETRIC_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class BarometricPresenter: public AbstractInstrumentPresenter
+    class BarometricPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

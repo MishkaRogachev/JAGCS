@@ -1,11 +1,11 @@
 #ifndef SATELLITE_PRESENTER_H
 #define SATELLITE_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class SatellitePresenter: public AbstractInstrumentPresenter
+    class SatellitePresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

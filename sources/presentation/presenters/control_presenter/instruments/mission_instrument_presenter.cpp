@@ -19,10 +19,11 @@ public:
     domain::MissionService* service;
 
     int vehicleId = -1;
+    bool updating = false;
 };
 
 MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* parent):
-    BasePresenter(parent),
+    BaseInstrumentPresenter(parent),
     d(new Impl())
 {
     d->service = domain::ServiceRegistry::missionService();
@@ -41,7 +42,7 @@ MissionInstrumentPresenter::~MissionInstrumentPresenter()
 
 void MissionInstrumentPresenter::updateWaypoints()
 {
-    this->setViewConnected(false);
+    d->updating = true;
 
     QStringList waypoints;
     dao::MissionAssignmentPtr assignment = d->service->vehicleAssignment(d->vehicleId);
@@ -56,41 +57,31 @@ void MissionInstrumentPresenter::updateWaypoints()
         }
     }
 
-    this->setViewProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
-    this->setViewConnected(true);
+    this->setViewsProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
+    d->updating = false;
 }
 
 void MissionInstrumentPresenter::updateCurrentWaypoint()
 {
-    this->setViewConnected(false);
+    d->updating = true;
 
     dao::MissionItemPtr item = d->service->currentWaypoint(d->vehicleId);
-    this->setViewProperty(PROPERTY(waypoint), item ? item->sequence() : -1);
-    this->setViewConnected(true);
+    this->setViewsProperty(PROPERTY(waypoint), item ? item->sequence() : -1);
+    d->updating = false;
 }
 
 void MissionInstrumentPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
+    connect(view, SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
 
     this->updateWaypoints();
     this->updateCurrentWaypoint();
 }
 
-void MissionInstrumentPresenter::setViewConnected(bool connected)
-{
-    if (connected)
-    {
-        connect(this->view(), SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
-    }
-    else
-    {
-        disconnect(this->view(), 0, this, 0);
-    }
-}
-
 void MissionInstrumentPresenter::onCommandSetWaypoint(int item)
 {
+    if (d->updating) return;
+
     d->service->selectCurrentItem(d->vehicleId, item);
 }
 

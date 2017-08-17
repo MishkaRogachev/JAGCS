@@ -28,6 +28,7 @@ RowLayout {
 
     Controls.ComboBox {
         id: waypointBox
+        model: []
         onCurrentTextChanged: commandSetWaypoint(currentText)
         implicitWidth: palette.controlBaseSize * 2
         enabled: guided

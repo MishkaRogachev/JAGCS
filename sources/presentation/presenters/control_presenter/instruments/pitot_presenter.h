@@ -1,11 +1,11 @@
 #ifndef PITOT_PRESENTER_H
 #define PITOT_PRESENTER_H
 
-#include "abstract_instrument_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class PitotPresenter: public AbstractInstrumentPresenter
+    class PitotPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 
