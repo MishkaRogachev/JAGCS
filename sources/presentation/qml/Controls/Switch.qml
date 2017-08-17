@@ -8,12 +8,14 @@ Switch {
 
     property bool inputChecked: checked
     property alias textColor: text.color
+    property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
 
     onInputCheckedChanged: if (checked != inputChecked) checked = inputChecked
 
     indicator: Rectangle {
+        id: backgroundItem
         implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize / 4
         x: control.leftPadding

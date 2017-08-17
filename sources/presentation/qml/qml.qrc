@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>JS/helper.js</file>
         <file>Controls/Button.qml</file>
-        <file>Controls/CommandButton.qml</file>
         <file>Controls/ButtonBar.qml</file>
         <file>Controls/TabButton.qml</file>
         <file>Controls/TabBar.qml</file>
@@ -28,6 +27,8 @@
         <file>Controls/RealSpinBox.qml</file>
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
+        <file>Controls/CommandButton.qml</file>
+        <file>Controls/CommandSwitch.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
         <file>Indicators/BarIndicator.qml</file>

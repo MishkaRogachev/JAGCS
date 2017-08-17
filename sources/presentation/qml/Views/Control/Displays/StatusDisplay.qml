@@ -14,7 +14,7 @@ GridLayout {
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
 
-    signal commandStatusChanged(var command, var type)
+    signal commandStatusChanged(var command, var status)
     signal executeCommand(int command)
     signal executeBoolCommand(int command, bool check)
     signal rejectCommand(int command)
@@ -60,11 +60,10 @@ GridLayout {
         text: batteryCurrent.toFixed(2) + qsTr(" A")
     }
 
-    Controls.CommandButton { // FIXME: dangerous button
+    Controls.CommandSwitch { // FIXME: dangerous button
         command: Command.ArmDisarm
         text: armed ? qsTr("DISARM") : qsTr("ARM")
-        checked: armed
-        boolCommand: true
+        inputChecked: armed
         Layout.columnSpan: 2
     }
 

@@ -69,7 +69,7 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
 
 void CommandHandler::onSendCommand(const Command& command, int attempt)
 {
-    qDebug() << command.type() << attempt;
+    qDebug() << command.type() << command.arguments() << attempt;
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
 

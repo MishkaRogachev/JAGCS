@@ -47,13 +47,4 @@ RowLayout {
         command: Command.Start
         iconSource: "qrc:/icons/play.svg"
     }
-
-    Controls.CommandButton {
-        command: Command.PauseContinue
-        iconSource: "qrc:/icons/pause.svg"
-        checkable: true
-        boolCommand: true
-        enabled: guided
-        onEnabledChanged: if (!enabled) checked = false;
-    }
 }

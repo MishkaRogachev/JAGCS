@@ -3,7 +3,7 @@ import JAGCS 1.0
 
 import "./" as Custum
 
-Custum.Button {
+Custum.Switch {
     id: control
 
     property int command: Command.UnknownCommand
@@ -14,7 +14,11 @@ Custum.Button {
         onCommandStatusChanged: if (command == control.command) control.status = status
     }
 
-    onClicked: status == Command.Sending ? rejectCommand(command) : executeCommand(command)
+    onCheckedChanged: {
+        if (status == Command.Sending) rejectCommand(command);
+        else if (inputChecked != checked) executeBoolCommand(command, checked);
+    }
+
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
 
     Timer {
@@ -26,12 +30,8 @@ Custum.Button {
         if (status == Command.Rejected) return palette.negativeColor
         if (status == Command.Sending) return palette.neutralColor
         if (status == Command.Completed) return palette.positiveColor
+        if (control.inputChecked) return palette.selectionColor;
         if (!enabled) return palette.disabledColor;
-        if (control.pressed) return palette.highlightColor;
-        return control.flat ? "transparent" : palette.buttonColor;
+        return palette.sunkenColor ;
     }
-
-    iconColor: control.pressed || status == Command.Rejected ||
-               status == Command.Sending || status == Command.Completed ?
-                   palette.selectedTextColor: palette.textColor
 }
