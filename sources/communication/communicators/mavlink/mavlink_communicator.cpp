@@ -26,6 +26,9 @@ public:
     QMap<uint8_t, AbstractLink*> mavSystemLinks;
     QList<uint8_t> avalibleChannels;
     AbstractLink* receivedLink = nullptr;
+
+    int oldPacketsReceived = 0;
+    int oldPacketsDrops = 0;
 };
 
 MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId, QObject* parent):
@@ -175,8 +178,16 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         emit messageReceived(message);
     }
 
-    emit mavLinkStatisticsChanged(d->receivedLink,
-                                  status.packet_rx_success_count, status.packet_rx_drop_count);
+    if (d->oldPacketsReceived != status.packet_rx_success_count ||
+        d->oldPacketsDrops != status.packet_rx_drop_count)
+    {
+        emit mavLinkStatisticsChanged(d->receivedLink,
+                                      status.packet_rx_success_count,
+                                      status.packet_rx_drop_count);
+
+        d->oldPacketsReceived = status.packet_rx_success_count;
+        d->oldPacketsDrops = status.packet_rx_drop_count;
+    }
 }
 
 void MavLinkCommunicator::finalizeMessage(mavlink_message_t& message)
