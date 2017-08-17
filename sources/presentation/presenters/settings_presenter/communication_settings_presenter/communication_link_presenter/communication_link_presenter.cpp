@@ -7,8 +7,6 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-
 #include "communication_service.h"
 #include "link_description.h"
 
@@ -37,8 +35,8 @@ void CommunicationLinkPresenter::updateView()
     this->setViewProperty(PROPERTY(baudRate), m_description->baudRate());
     this->setViewProperty(PROPERTY(connected), m_description->isConnected());
     this->setViewProperty(PROPERTY(protocol), m_description->protocol());
-    this->invokeViewMethod(PROPERTY(updateStatistics), m_description->bytesSentSec(),
-                           m_description->bytesRecvSec());
+    this->setViewProperty(PROPERTY(bytesSent), QVariant::fromValue(m_description->bytesSent()));
+    this->setViewProperty(PROPERTY(bytesRecv), QVariant::fromValue(m_description->bytesRecv()));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -76,9 +74,6 @@ void CommunicationLinkPresenter::connectView(QObject* view)
     QVariantList baudRates;
     for (qint32 rate: QSerialPortInfo::standardBaudRates()) baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
-
-    this->setViewProperty(PROPERTY(statisticsCount), settings::Provider::value(
-                              settings::communication::statisticsCount));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));

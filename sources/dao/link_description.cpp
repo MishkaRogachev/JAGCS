@@ -1,6 +1,14 @@
 #include "link_description.h"
 
+// Internal
+#include "settings_provider.h"
+
 using namespace dao;
+
+LinkDescription::LinkDescription():
+    BaseDao(),
+    m_statistcsCount(settings::Provider::value(settings::communication::statisticsCount).toUInt())
+{}
 
 QString LinkDescription::name() const
 {
@@ -72,44 +80,48 @@ void LinkDescription::setConnected(bool connected)
     m_connected = connected;
 }
 
-int LinkDescription::bytesSentSec() const
+const QList<int>& LinkDescription::bytesSent() const
 {
-    return m_bytesSentSec;
+    return m_bytesSent;
 }
 
-void LinkDescription::setBytesSentSec(int bytesSentSec)
+void LinkDescription::addBytesSent(int bytesSent)
 {
-    m_bytesSentSec = bytesSentSec;
+    m_bytesSent.append(bytesSent);
+    while (m_bytesSent.count() > m_statistcsCount) m_bytesSent.removeFirst();
 }
 
-int LinkDescription::bytesRecvSec() const
+const QList<int>& LinkDescription::bytesRecv() const
 {
-    return m_bytesRecvSec;
+    return m_bytesRecv;
 }
 
-void LinkDescription::setBytesRecvSec(int bytesRecvSec)
+void LinkDescription::addBytesRecv(int bytesRecv)
 {
-    m_bytesRecvSec = bytesRecvSec;
+    m_bytesRecv.append(bytesRecv);
+    while (m_bytesRecv.count() > m_statistcsCount) m_bytesRecv.removeFirst();
 }
 
-int LinkDescription::packetsRecvSec() const
+const QList<int>& LinkDescription::packetsRecv() const
 {
-    return m_packetsRecvSec;
+    return m_packetsRecv;
 }
 
-void LinkDescription::setPacketsRecvSec(int packetsRecvSec)
+void LinkDescription::addPacketsRecv(int packetsRecv)
 {
-    m_packetsRecvSec = packetsRecvSec;
+    m_packetsRecv.append(packetsRecv);
+    while (m_packetsRecv.count() > m_statistcsCount) m_packetsRecv.removeFirst();
 }
 
-int LinkDescription::packetDropsSec() const
+const QList<int>& LinkDescription::packetDrops() const
 {
-    return m_packetDropsSec;
+    return m_packetDrops;
 }
 
-void LinkDescription::setPacketDropsSec(int packetDropsSec)
+void LinkDescription::addPacketDrops(int packetDrops)
 {
-    m_packetDropsSec = packetDropsSec;
+    m_packetDrops.append(packetDrops);
+    while (m_packetDrops.count() > m_statistcsCount) m_packetDrops.removeFirst();
 }
 
 LinkDescription::Protocol LinkDescription::protocol() const

@@ -135,8 +135,8 @@ void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr
                                                    int bytesSentSec,
                                                    bool connected)
 {
-    description->setBytesRecvSec(bytesReceivedSec);
-    description->setBytesSentSec(bytesSentSec);
+    description->addBytesRecv(bytesReceivedSec);
+    description->addBytesSent(bytesSentSec);
     description->setConnected(connected);
 
     emit descriptionChanged(description);
@@ -145,8 +145,8 @@ void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr
 void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
                                                       int packetsReceived, int packetsDrops)
 {
-    description->setPacketsRecvSec(packetsReceived);
-    description->setPacketDropsSec(packetsDrops);
+    description->addPacketsRecv(packetsReceived);
+    description->addPacketDrops(packetsDrops);
 
     emit descriptionChanged(description);
 }

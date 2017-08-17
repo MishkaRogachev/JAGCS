@@ -17,6 +17,8 @@ namespace dao
         Q_PROPERTY(bool autoConnect READ isAutoConnect WRITE setAutoConnect)
 
     public:
+        LinkDescription();
+
         enum Type: quint8
         {
             UnknownType = 0,
@@ -52,17 +54,17 @@ namespace dao
         bool isConnected() const;
         void setConnected(bool isConnected);
 
-        int bytesSentSec() const;
-        void setBytesSentSec(int bytesSentSec);
+        const QList<int>& bytesSent() const;
+        void addBytesSent(int bytesSent);
 
-        int bytesRecvSec() const;
-        void setBytesRecvSec(int bytesRecvSec);
+        const QList<int>& bytesRecv() const;
+        void addBytesRecv(int bytesRecv);
 
-        int packetsRecvSec() const;
-        void setPacketsRecvSec(int packetsRecvSec);
+        const QList<int>& packetsRecv() const;
+        void addPacketsRecv(int packetsRecv);
 
-        int packetDropsSec() const;
-        void setPacketDropsSec(int packetDropsSec);
+        const QList<int>& packetDrops() const;
+        void addPacketDrops(int packetDrops);
 
         Protocol protocol() const;
         void setProtocol(Protocol protocol);
@@ -77,10 +79,12 @@ namespace dao
 
         Protocol m_protocol;
         bool m_connected = false;
-        int m_bytesSentSec = 0;
-        int m_bytesRecvSec = 0;
-        int m_packetsRecvSec = 0;
-        int m_packetDropsSec = 0;
+
+        int m_statistcsCount;
+        QList<int> m_bytesSent;
+        QList<int> m_bytesRecv;
+        QList<int> m_packetsRecv;
+        QList<int> m_packetDrops;
 
         Q_ENUM(Type)
         Q_ENUM(Protocol)

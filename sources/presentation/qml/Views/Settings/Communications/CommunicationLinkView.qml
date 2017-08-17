@@ -18,29 +18,36 @@ Controls.Frame {
     property int baudRate
     property alias baudRates: baudBox.model
     property bool changed: false
+    property var bytesSent: []
+    property var bytesRecv: []
 
     signal save()
     signal restore()
     signal remove()
     signal setConnected(bool connected)
 
-    property int statisticsCount: 0
-    property int counter: 0
+    onBytesSentChanged: {
+        sentSeries.clear();
 
-    function updateStatistics(sentBytes, recvBytes) {
-        if (sentSeries.count > statisticsCount) sentSeries.remove(0);
-        if (recvSeries.count > statisticsCount) recvSeries.remove(0);
+        if (timeAxis.max < bytesSent.length - 1) timeAxis.max = bytesSent.length - 1;
 
-        sentSeries.append(counter, sentBytes);
-        recvSeries.append(counter, recvBytes);
-
-        valueAxis.max = Math.max(valueAxis.max, recvBytes);
-        valueAxis.max = Math.max(valueAxis.max, sentBytes);
-
-        counter++;
+        for (var i = 0; i < bytesSent.length; ++i) {
+            if (bytesSent[i] > valueAxis.max) valueAxis.max = bytesSent[i];
+            sentSeries.append(i, bytesSent[i]);
+        }
     }
 
-    onConnectedChanged: if (!connected) updateStatistics(0, 0)
+    onBytesRecvChanged: {
+        recvSeries.clear();
+
+        if (timeAxis.max < bytesRecv.length - 1) timeAxis.max = bytesRecv.length - 1;
+
+        for (var i = 0; i < bytesRecv.length; ++i) {
+            if (bytesRecv[i] > valueAxis.max) valueAxis.max = bytesRecv[i];
+            recvSeries.append(i, bytesRecv[i]);
+        }
+    }
+
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
@@ -210,15 +217,12 @@ Controls.Frame {
 
             ValueAxis {
                 id: timeAxis
-                min: Math.max(0, counter - statisticsCount)
-                max: counter - 1
                 labelsColor: palette.textColor
+                visible: false
             }
 
             ValueAxis {
                 id: valueAxis
-                min: 0
-                max: 0
                 labelsColor: palette.textColor
             }
 
