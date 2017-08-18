@@ -20,6 +20,9 @@ namespace domain
 
             Return,
             Start,
+            Takeoff,
+            Land,
+            GoAround,
             PauseContinue,
 
             Parachute

@@ -38,13 +38,34 @@ RowLayout {
         Layout.fillWidth: true
     }
 
-    Controls.CommandButton {
-        command: Command.Return
-        iconSource: "qrc:/icons/home.svg"
-    }
+    GridLayout {
+        columns: 3
 
-    Controls.CommandButton {
-        command: Command.Start
-        iconSource: "qrc:/icons/play.svg"
+        Controls.CommandButton {
+            command: Command.Takeoff
+            iconSource: "qrc:/icons/takeoff.svg"
+        }
+
+        Controls.CommandButton {
+            command: Command.Land
+            iconSource: "qrc:/icons/landing.svg"
+        }
+
+        Controls.CommandButton {
+            command: Command.GoAround
+            iconSource: "qrc:/icons/go_around.svg"
+        }
+
+        Controls.CommandButton {
+            command: Command.Return
+            iconSource: "qrc:/icons/home.svg"
+        }
+
+        Controls.CommandButton {
+            command: Command.Start
+            iconSource: "qrc:/icons/play.svg"
+        }
+
+
     }
 }

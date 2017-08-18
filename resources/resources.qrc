@@ -51,6 +51,7 @@
         <file>icons/download.svg</file>
         <file>icons/upload.svg</file>
         <file>icons/landing.svg</file>
+        <file>icons/go_around.svg</file>
         <file>icons/takeoff.svg</file>
     </qresource>
 </RCC>
