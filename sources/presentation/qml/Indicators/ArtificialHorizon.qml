@@ -53,10 +53,9 @@ Item {
             anchors.centerIn: parent
             width: parent.width
             height: parent.height - palette.controlBaseSize * 2
-            pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll
-            minPitch: root.pitch + root.minPitch
-            maxPitch: root.pitch + root.maxPitch
+            minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
+            maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
             pitchStep: root.pitchStep
             color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
                              palette.disabledColor
