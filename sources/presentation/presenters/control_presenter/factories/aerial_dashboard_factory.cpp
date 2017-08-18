@@ -35,6 +35,7 @@ DashboardPresenter* AerialDashboardFactory::create()
     dashboard->addInstrumentPresenter("fd", new AhrsPresenter(
                                           node->childNode(domain::Telemetry::Ahrs), dashboard));
     dashboard->addInstrumentPresenter("fd", m_satellite);
+     dashboard->addInstrumentPresenter("fd", m_navigator);
     dashboard->addInstrumentPresenter("fd", new BarometricPresenter(
                                           node->childNode(domain::Telemetry::Barometric), dashboard));
     dashboard->addInstrumentPresenter("fd", new PitotPresenter(

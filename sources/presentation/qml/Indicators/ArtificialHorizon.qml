@@ -8,10 +8,13 @@ Item {
 
     property bool operational: false
     property bool armed: false
+    property bool guided: false
 
     property real pitch: 0.0
     property real roll: 0.0
     property real yawspeed: 0.0
+    property real desiredPitch: 0.0
+    property real desiredRoll: 0.0
 
     property real minPitch: -23
     property real maxPitch: 23
@@ -43,8 +46,6 @@ Item {
             effectiveHeight: pitchScale.height
             pitch: pitchInverted ? root.pitch : 0
             roll: rollInverted ? 0 : root.roll
-            minPitch: root.minPitch
-            maxPitch: root.maxPitch
         }
 
         PitchScale {
@@ -61,11 +62,19 @@ Item {
                              palette.disabledColor
         }
 
+        DesiredAnglesMark {
+            id: desiredMark
+            anchors.fill: parent
+            effectiveHeight: pitchScale.height
+            visible: guided
+            pitch: pitchInverted ? root.pitch - desiredPitch : -desiredPitch
+            roll: rollInverted ? -desiredRoll : root.roll - desiredRoll
+        }
+
         PlaneMark {
             id: mark
-            anchors.centerIn: parent
-            width: parent.width * 0.6
-            height: parent.height
+            anchors.fill: parent
+            effectiveHeight: pitchScale.height
             pitch: pitchInverted ? 0 : -root.pitch
             roll: rollInverted ? -root.roll : 0
             markColor: armed ? palette.selectedTextColor : palette.negativeColor

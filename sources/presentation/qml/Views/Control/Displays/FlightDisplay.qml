@@ -10,8 +10,11 @@ Item {
     property bool ahrsOperational: false
     property alias pitch: af.pitch
     property alias roll: af.roll
+    property alias desiredPitch: af.desiredPitch
+    property alias desiredRoll: af.desiredRoll
     property alias yawspeed: af.yawspeed
     property alias armed: af.armed
+    property alias guided: af.guided
 
     property int throttle: 0
 
@@ -37,6 +40,7 @@ Item {
     property int homeAltitude: 0
 
     property real scalingFactor: 2.7
+    property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * scalingFactor
     property int maxSpeed: settings.value("Gui/fdSpeedStep") * scalingFactor
     property int speedStep: settings.value("Gui/fdSpeedStep")
@@ -118,7 +122,7 @@ Item {
         width: parent.width * 0.58
         enabled: ahrsEnabled
         operational: ahrsOperational
-        rollInverted: settings.boolValue("Gui/fdRollInverted")
+        rollInverted: root.rollInverted
     }
 
     Indicators.FdLabel {

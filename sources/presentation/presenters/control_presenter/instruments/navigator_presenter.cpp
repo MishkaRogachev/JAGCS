@@ -17,4 +17,8 @@ void NavigatorPresenter::onParametersChanged(const domain::Telemetry::TelemetryM
         this->setViewsProperty(PROPERTY(targetDistance), parameters[domain::Telemetry::TargetDistance]);
     if (parameters.contains(domain::Telemetry::TrackError))
         this->setViewsProperty(PROPERTY(trackError), parameters[domain::Telemetry::TrackError]);
+    if (parameters.contains(domain::Telemetry::DesiredPitch))
+        this->setViewsProperty(PROPERTY(desiredPitch), parameters[domain::Telemetry::DesiredPitch]);
+    if (parameters.contains(domain::Telemetry::DesiredRoll))
+        this->setViewsProperty(PROPERTY(desiredRoll), parameters[domain::Telemetry::DesiredRoll]);
 }
