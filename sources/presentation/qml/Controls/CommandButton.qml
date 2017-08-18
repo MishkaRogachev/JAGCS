@@ -10,7 +10,7 @@ Custum.Button {
     property int status: Command.Idle
 
     Connections {
-        target: parent
+        target: root
         onCommandStatusChanged: if (command == control.command) control.status = status
     }
 

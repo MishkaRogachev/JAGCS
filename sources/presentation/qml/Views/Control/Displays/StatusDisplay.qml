@@ -8,16 +8,10 @@ import "qrc:/Indicators" as Indicators
 GridLayout {
     id: root
 
-    property bool armed: false
     property string mode: qsTr("None")
     property real batteryVoltage: 0
     property real batteryCurrent: 0
     property alias batteryPercentage: battery.percentage
-
-    signal commandStatusChanged(var command, var status)
-    signal executeCommand(int command)
-    signal executeBoolCommand(int command, bool check)
-    signal rejectCommand(int command)
 
     columns: 4
 
@@ -60,19 +54,12 @@ GridLayout {
         text: batteryCurrent.toFixed(2) + qsTr(" A")
     }
 
-    Controls.CommandSwitch { // FIXME: dangerous button
-        command: Command.ArmDisarm
-        text: armed ? qsTr("DISARM") : qsTr("ARM")
-        inputChecked: armed
-        Layout.columnSpan: 2
-    }
-
     Controls.Label {
         font.pixelSize: palette.fontPixelSize * 0.75
         font.bold: true
         text: mode
         horizontalAlignment: Qt.AlignHCenter
         Layout.fillWidth: true
-        Layout.columnSpan: 2
+        Layout.columnSpan: 4
     }
 }

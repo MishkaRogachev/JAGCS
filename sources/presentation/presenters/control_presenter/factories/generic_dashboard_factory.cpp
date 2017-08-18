@@ -57,7 +57,6 @@ DashboardPresenter* GenericDashboardFactory::create()
     dashboard->addInstrumentPresenter("status", m_status);
     dashboard->addInstrumentPresenter("status", new BatteryPresenter(
                                           node->childNode(domain::Telemetry::Battery), dashboard));
-    dashboard->addInstrumentPresenter("status", m_commander);
 
     dashboard->addInstrument("mission", 500);
     dashboard->addInstrumentPresenter("mission", m_status);

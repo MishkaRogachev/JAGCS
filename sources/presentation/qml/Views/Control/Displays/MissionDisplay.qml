@@ -4,11 +4,12 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-RowLayout {
+GridLayout {
     id: root
 
     property int waypoint: 0
     property alias waypoints: waypointBox.model
+    property bool armed: false
     property bool guided: false
 
     signal commandSetWaypoint(int item)
@@ -19,6 +20,30 @@ RowLayout {
     signal rejectCommand(int command)
 
     onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
+    columns: 5
+
+    Controls.CommandSwitch { // FIXME: dangerous button
+        command: Command.ArmDisarm
+        text: armed ? qsTr("DISARM") : qsTr("ARM")
+        inputChecked: armed
+        Layout.columnSpan: 2
+        Layout.fillWidth: true
+    }
+
+    Controls.CommandButton {
+        command: Command.Takeoff
+        iconSource: "qrc:/icons/takeoff.svg"
+    }
+
+    Controls.CommandButton {
+        command: Command.Land
+        iconSource: "qrc:/icons/landing.svg"
+    }
+
+    Controls.CommandButton {
+        command: Command.GoAround
+        iconSource: "qrc:/icons/go_around.svg"
+    }
 
     Controls.Label {
         text: qsTr("WP: ")
@@ -32,40 +57,16 @@ RowLayout {
         onCurrentTextChanged: commandSetWaypoint(currentText)
         implicitWidth: palette.controlBaseSize * 2
         enabled: guided
-    }
-
-    Item {
         Layout.fillWidth: true
     }
 
-    GridLayout {
-        columns: 3
+    Controls.CommandButton {
+        command: Command.Return
+        iconSource: "qrc:/icons/home.svg"
+    }
 
-        Controls.CommandButton {
-            command: Command.Takeoff
-            iconSource: "qrc:/icons/takeoff.svg"
-        }
-
-        Controls.CommandButton {
-            command: Command.Land
-            iconSource: "qrc:/icons/landing.svg"
-        }
-
-        Controls.CommandButton {
-            command: Command.GoAround
-            iconSource: "qrc:/icons/go_around.svg"
-        }
-
-        Controls.CommandButton {
-            command: Command.Return
-            iconSource: "qrc:/icons/home.svg"
-        }
-
-        Controls.CommandButton {
-            command: Command.Start
-            iconSource: "qrc:/icons/play.svg"
-        }
-
-
+    Controls.CommandButton {
+        command: Command.Start
+        iconSource: "qrc:/icons/play.svg"
     }
 }
