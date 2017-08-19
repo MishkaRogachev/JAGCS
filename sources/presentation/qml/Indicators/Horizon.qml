@@ -10,6 +10,8 @@ Item {
 
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
@@ -22,6 +24,7 @@ Item {
 
             var size = 10000;
             var offset = Helper.mapToRange(pitch, minPitch, maxPitch, effectiveHeight);
+
             ctx.save();
 
             ctx.translate(width / 2, height / 2);

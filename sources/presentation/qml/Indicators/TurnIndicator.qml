@@ -9,6 +9,8 @@ Item {
 
     onValueChanged: canvas.requestPaint()
     onBorderChanged: canvas.requestPaint()
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
