@@ -23,7 +23,8 @@ namespace comm
         {
             Idle,
             WaitingCount,
-            WaitingItem
+            WaitingItem,
+            WaitingRequest
         };
 
         MissionHandler(MavLinkCommunicator* communicator);
@@ -39,6 +40,7 @@ namespace comm
        void requestMissionCount(quint8 mavId);
        void requestMissionItem(quint8 mavId, quint16 seq);
 
+       void sendMissionCount(quint8 mavId);
        void sendMissionItem(quint8 mavId, quint16 seq);
        void sendMissionAck(quint8 mavId);
        void sendCurrentItem(quint8 mavId, quint16 seq);
@@ -51,7 +53,7 @@ namespace comm
         void processMissionCurrent(const mavlink_message_t& message);
         void processMissionReached(const mavlink_message_t& message);
 
-        void startStage(Stage stage, quint8 mavId);
+        void enterStage(Stage stage, quint8 mavId);
         void timerEvent(QTimerEvent* event);
 
     private:

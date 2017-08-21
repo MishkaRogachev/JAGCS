@@ -120,41 +120,34 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
         d->missionService->missionItemChanged(item);
     }
 
-    this->startStage(Stage::WaitingCount, vehicle->mavId());
+    this->enterStage(Stage::WaitingCount, vehicle->mavId());
     this->requestMissionCount(vehicle->mavId());
 }
 
 void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 {
     dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
-    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
-    if (vehicle.isNull() || mission.isNull()) return;
+    if (vehicle.isNull()) return;
 
+    d->mavSequencer[vehicle->mavId()].clear();
     for (const dao::MissionItemPtr& item: d->missionService->missionItems(assignment->missionId()))
     {
         if (item->status() == dao::MissionItem::Actual) continue;
 
+        d->mavSequencer[vehicle->mavId()].append(item->sequence());
         item->setStatus(dao::MissionItem::Uploading);
         d->missionService->missionItemChanged(item);
     }
 
-    // TODO: upload Timer
-
-    mavlink_message_t message;
-    mavlink_mission_count_t count;
-
-    count.target_system = vehicle->mavId();
-    count.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    count.count = mission->count();
-
-    AbstractLink* link = m_communicator->mavSystemLink(vehicle->mavId());
-    if (!link) return;
-
-    mavlink_msg_mission_count_encode_chan(m_communicator->systemId(),
-                                          m_communicator->componentId(),
-                                          m_communicator->linkChannel(link),
-                                          &message, &count);
-    m_communicator->sendMessage(message, link);
+    if (d->mavSequencer.isEmpty())
+    {
+        this->enterStage(Stage::Idle, vehicle->mavId());
+    }
+    else
+    {
+        this->enterStage(Stage::WaitingRequest, vehicle->mavId());
+        this->sendMissionCount(vehicle->mavId());
+    }
 }
 
 void MissionHandler::selectCurrent(int vehicleId, quint16 seq)
@@ -199,6 +192,31 @@ void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
     m_communicator->sendMessage(message, link);
 }
 
+void MissionHandler::sendMissionCount(quint8 mavId)
+{
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(
+                                               d->vehicleService->vehicleIdByMavId(mavId));
+    if (assignment.isNull()) return;
+
+    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+
+    mavlink_message_t message;
+    mavlink_mission_count_t countMessage;
+
+    countMessage.target_system = mavId;
+    countMessage.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    countMessage.count = mission->count();
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_count_encode_chan(m_communicator->systemId(),
+                                          m_communicator->componentId(),
+                                          m_communicator->linkChannel(link),
+                                          &message, &countMessage);
+    m_communicator->sendMessage(message, link);
+}
+
 void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(mavId);
@@ -226,15 +244,9 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
         msgItem.z = item->altitude();
     }
 
-    if (!qIsNaN(item->latitude()))
-    {
-        msgItem.x = item->latitude();
-    }
+    if (!qIsNaN(item->latitude())) msgItem.x = item->latitude();
 
-    if (!qIsNaN(item->longitude()))
-    {
-        msgItem.y = item->longitude();
-    }
+    if (!qIsNaN(item->longitude())) msgItem.y = item->longitude();
 
     if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
@@ -362,7 +374,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 
     d->mavSequencer[message.sysid].clear();
 
-    this->startStage(Stage::WaitingItem, message.sysid);
+    this->enterStage(Stage::WaitingItem, message.sysid);
     this->requestMissionItem(message.sysid, 0);
 }
 
@@ -387,14 +399,9 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         item->setSequence(msgItem.seq);
     }
 
-    if (msgItem.seq > 0)
-    {
-        item->setCommand(::mavCommandMap.value(msgItem.command, dao::MissionItem::UnknownCommand));
-    }
-    else
-    {
-        item->setCommand(dao::MissionItem::Home);
-    }
+    item->setCommand(msgItem.seq > 0 ?
+                         ::mavCommandMap.value(msgItem.command, dao::MissionItem::UnknownCommand) :
+                         dao::MissionItem::Home);
 
     switch (msgItem.frame)
     {
@@ -478,7 +485,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
-            this->startStage(Stage::Idle, message.sysid);
+            this->enterStage(Stage::Idle, message.sysid);
         }
         else
         {
@@ -493,6 +500,13 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
     mavlink_msg_mission_request_decode(&message, &request);
 
     this->sendMissionItem(message.sysid, request.seq);
+
+    if (d->mavStages[message.sysid] == Stage::WaitingRequest)
+    {
+        d->mavSequencer[message.sysid].removeOne(request.seq);
+
+        if (d->mavSequencer[message.sysid].isEmpty()) this->enterStage(Stage::Idle, message.sysid);
+    }
 }
 
 void MissionHandler::processMissionAck(const mavlink_message_t& message)
@@ -533,7 +547,7 @@ void MissionHandler::processMissionReached(const mavlink_message_t& message)
     }
 }
 
-void MissionHandler::startStage(Stage stage, quint8 mavId)
+void MissionHandler::enterStage(Stage stage, quint8 mavId)
 {
     if (d->mavTimers.contains(mavId))
     {
@@ -541,7 +555,7 @@ void MissionHandler::startStage(Stage stage, quint8 mavId)
     }
 
     d->mavStages[mavId] = stage;
-    if (stage == Stage::WaitingCount || stage == Stage::WaitingItem)
+    if (stage != Stage::Idle)
     {
         d->mavTimers[mavId] = this->startTimer(::interval);
     }
@@ -560,9 +574,12 @@ void MissionHandler::timerEvent(QTimerEvent* event)
     case Stage::WaitingItem:
     {
         const QList<int>& list = d->mavSequencer[mavId];
-        if (!list.isEmpty()) this->requestMissionItem(mavId, list.first());
+        if (list.isEmpty()) this->enterStage(Stage::Idle, mavId);
+        else this->requestMissionItem(mavId, list.first());
         break;
     }
+    case Stage::WaitingRequest:
+        this->sendMissionCount(mavId);
     case Stage::Idle:
     default:
         break;
