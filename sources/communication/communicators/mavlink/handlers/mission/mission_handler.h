@@ -19,7 +19,15 @@ namespace comm
         Q_OBJECT
 
     public:
+        enum class Stage
+        {
+            Idle,
+            WaitingCount,
+            WaitingItem
+        };
+
         MissionHandler(MavLinkCommunicator* communicator);
+        ~MissionHandler() override;
 
     public slots:
        void processMessage(const mavlink_message_t& message) override;
@@ -28,6 +36,7 @@ namespace comm
        void upload(const dao::MissionAssignmentPtr& assignment);
        void selectCurrent(int vehicleId, uint16_t seq);
 
+       void requestMissionCount(uint8_t mavId);
        void requestMissionItem(uint8_t mavId, uint16_t seq);
 
        void sendMissionItem(uint8_t mavId, uint16_t seq);
@@ -42,10 +51,12 @@ namespace comm
         void processMissionCurrent(const mavlink_message_t& message);
         void processMissionReached(const mavlink_message_t& message);
 
-   private:
-       domain::VehicleService* m_vehicleService;
-       domain::TelemetryService* m_telemetryService;
-       domain::MissionService* m_missionService;
+        void startStage(Stage stage, quint8 mavId);
+        void timerEvent(QTimerEvent* event);
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

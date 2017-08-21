@@ -5,6 +5,7 @@
 
 // Qt
 #include <QMap>
+#include <QTimerEvent>
 #include <QDebug>
 
 // Internal
@@ -24,6 +25,8 @@
 
 namespace
 {
+    const int interval = 500;
+
     const QMap<quint16, dao::MissionItem::Command> mavCommandMap =
     {
         { MAV_CMD_NAV_TAKEOFF, dao::MissionItem::Takeoff },
@@ -55,17 +58,29 @@ namespace
 using namespace comm;
 using namespace domain;
 
+class MissionHandler::Impl
+{
+public:
+    domain::VehicleService* vehicleService = ServiceRegistry::vehicleService();
+    domain::TelemetryService* telemetryService = ServiceRegistry::telemetryService();
+    domain::MissionService* missionService = ServiceRegistry::missionService();
+
+    QMap <quint8, MissionHandler::Stage> mavStages;
+    QMap <quint8, int> mavTimers;
+    QMap <quint8, QList<int> > mavSequencer;
+};
+
 MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(ServiceRegistry::vehicleService()),
-    m_telemetryService(ServiceRegistry::telemetryService()),
-    m_missionService(ServiceRegistry::missionService())
+    d(new Impl())
 {
-    connect(m_missionService, &domain::MissionService::download, this, &MissionHandler::download);
-    connect(m_missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
-    connect(m_missionService, &domain::MissionService::selectCurrentItem,
-            this, &MissionHandler::selectCurrent);
+    connect(d->missionService, &domain::MissionService::download, this, &MissionHandler::download);
+    connect(d->missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
+    connect(d->missionService, &domain::MissionService::selectCurrentItem, this, &MissionHandler::selectCurrent);
 }
+
+MissionHandler::~MissionHandler()
+{}
 
 void MissionHandler::processMessage(const mavlink_message_t& message)
 {
@@ -96,45 +111,31 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
 
 void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
 {
-    dao::VehiclePtr vehicle = m_vehicleService->vehicle(assignment->vehicleId());
+    dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    for (const dao::MissionItemPtr& item: m_missionService->missionItems(assignment->missionId()))
+    for (const dao::MissionItemPtr& item: d->missionService->missionItems(assignment->missionId()))
     {
         item->setStatus(dao::MissionItem::NotActual);
-        m_missionService->missionItemChanged(item);
+        d->missionService->missionItemChanged(item);
     }
 
-    // TODO: request Timer
-
-    mavlink_message_t message;
-    mavlink_mission_request_list_t request;
-
-    request.target_system = vehicle->mavId();
-    request.target_component = MAV_COMP_ID_MISSIONPLANNER;
-
-    AbstractLink* link = m_communicator->mavSystemLink(vehicle->mavId());
-    if (!link) return;
-
-    mavlink_msg_mission_request_list_encode_chan(m_communicator->systemId(),
-                                                 m_communicator->componentId(),
-                                                 m_communicator->linkChannel(link),
-                                                 &message, &request);
-    m_communicator->sendMessage(message, link);
+    this->startStage(Stage::WaitingCount, vehicle->mavId());
+    this->requestMissionCount(vehicle->mavId());
 }
 
 void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 {
-    dao::VehiclePtr vehicle = m_vehicleService->vehicle(assignment->vehicleId());
-    dao::MissionPtr mission = m_missionService->mission(assignment->missionId());
+    dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
+    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
     if (vehicle.isNull() || mission.isNull()) return;
 
-    for (const dao::MissionItemPtr& item: m_missionService->missionItems(assignment->missionId()))
+    for (const dao::MissionItemPtr& item: d->missionService->missionItems(assignment->missionId()))
     {
         if (item->status() == dao::MissionItem::Actual) continue;
 
         item->setStatus(dao::MissionItem::Uploading);
-        m_missionService->missionItemChanged(item);
+        d->missionService->missionItemChanged(item);
     }
 
     // TODO: upload Timer
@@ -158,7 +159,25 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
 
 void MissionHandler::selectCurrent(int vehicleId, uint16_t seq)
 {
-    this->sendCurrentItem(m_vehicleService->mavIdByVehicleId(vehicleId), seq);
+    this->sendCurrentItem(d->vehicleService->mavIdByVehicleId(vehicleId), seq);
+}
+
+void MissionHandler::requestMissionCount(uint8_t mavId)
+{
+    mavlink_message_t message;
+    mavlink_mission_request_list_t request;
+
+    request.target_system = mavId;
+    request.target_component = MAV_COMP_ID_MISSIONPLANNER;
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_request_list_encode_chan(m_communicator->systemId(),
+                                                 m_communicator->componentId(),
+                                                 m_communicator->linkChannel(link),
+                                                 &message, &request);
+    m_communicator->sendMessage(message, link);
 }
 
 void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
@@ -182,8 +201,8 @@ void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
 
 void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
 {
-    int vehicleId = m_vehicleService->vehicleIdByMavId(mavId);
-    dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(mavId);
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_message_t message;
@@ -192,11 +211,11 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
     msgItem.target_system = mavId;
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
-    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), seq);
+    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), seq);
     if (item.isNull()) return;
 
     msgItem.seq = seq;
-    msgItem.autocontinue = seq < m_missionService->mission(assignment->missionId())->count() - 1;
+    msgItem.autocontinue = seq < d->missionService->mission(assignment->missionId())->count() - 1;
 
     if (seq) msgItem.command = ::mavCommandMap.key(item->command(), 0);
     else msgItem.command = MAV_CMD_NAV_WAYPOINT; // Home is waypoint
@@ -270,7 +289,7 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
 
     // TODO: wait ack
     item->setStatus(dao::MissionItem::Actual);
-    m_missionService->missionItemChanged(item);
+    d->missionService->missionItemChanged(item);
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
@@ -322,38 +341,45 @@ void MissionHandler::sendCurrentItem(uint8_t mavId, uint16_t seq)
 
 void MissionHandler::processMissionCount(const mavlink_message_t& message)
 {
-    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
-    if (assignment.isNull()) return;
+    // Ignore mission_count, if we are not downloading mission
+    if (d->mavStages.value(message.sysid, Stage::Idle) != Stage::WaitingCount) return;
 
-    // TODO: check, we realy downloading
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    if (assignment.isNull()) return;
 
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
 
     // Remove superfluous items
     for (const dao::MissionItemPtr& item:
-         m_missionService->missionItems(assignment->missionId()))
+         d->missionService->missionItems(assignment->missionId()))
     {
-        if (item->sequence() > missionCount.count - 1) m_missionService->remove(item);
+        if (item->sequence() > missionCount.count - 1) d->missionService->remove(item);
     }
 
-    for (uint16_t seq = 0; seq < missionCount.count; ++seq)
-    {
-        this->requestMissionItem(message.sysid, seq);
-    }
+    // TODO: append fake items
+
+    d->mavSequencer[message.sysid].clear();
+
+    this->startStage(Stage::WaitingItem, message.sysid);
+    this->requestMissionItem(message.sysid, 0);
 }
 
 void MissionHandler::processMissionItem(const mavlink_message_t& message)
 {
-    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
-    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), msgItem.seq);
+    // Don't allow mav to change items while not in downloading stage(except home)
+    if (d->mavStages.value(message.sysid, Stage::Idle) != Stage::WaitingItem &&
+        msgItem.seq != 0) return;
+
+    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), msgItem.seq);
     if (item.isNull())
     {
         item = dao::MissionItemPtr::create();
@@ -444,7 +470,21 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 //    }
 
     item->setStatus(dao::MissionItem::Actual);
-    m_missionService->save(item);
+    d->missionService->save(item);
+
+    if (d->mavSequencer[message.sysid].contains(msgItem.seq))
+    {
+        d->mavSequencer[message.sysid].removeOne(msgItem.seq);
+
+        if (d->mavSequencer[message.sysid].isEmpty())
+        {
+            this->startStage(Stage::Idle, message.sysid);
+        }
+        else
+        {
+            this->requestMissionItem(message.sysid, d->mavSequencer[message.sysid].first());
+        }
+    }
 }
 
 void MissionHandler::processMissionRequest(const mavlink_message_t& message)
@@ -465,30 +505,66 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
 void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 {
-    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_current_t current;
     mavlink_msg_mission_current_decode(&message, &current);
 
-    m_missionService->setCurrentItem(
-                vehicleId, m_missionService->missionItem(assignment->missionId(), current.seq));
+    d->missionService->setCurrentItem(
+                vehicleId, d->missionService->missionItem(assignment->missionId(), current.seq));
 }
 
 void MissionHandler::processMissionReached(const mavlink_message_t& message)
 {
-    int vehicleId = m_vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = m_missionService->vehicleAssignment(vehicleId);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_reached_t reached;
     mavlink_msg_mission_item_reached_decode(&message, &reached);
 
-    dao::MissionItemPtr item = m_missionService->missionItem(assignment->missionId(), reached.seq);
+    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), reached.seq);
     if (item)
     {
         item->setReached(true);
-        emit m_missionService->missionItemChanged(item);
+        emit d->missionService->missionItemChanged(item);
+    }
+}
+
+void MissionHandler::startStage(Stage stage, quint8 mavId)
+{
+    if (d->mavTimers.contains(mavId))
+    {
+        this->killTimer(d->mavTimers.take(mavId));
+    }
+
+    d->mavStages[mavId] = stage;
+    if (stage == Stage::WaitingCount || stage == Stage::WaitingItem)
+    {
+        d->mavTimers[mavId] = this->startTimer(::interval);
+    }
+}
+
+void MissionHandler::timerEvent(QTimerEvent* event)
+{
+    quint8 mavId = d->mavTimers.key(event->timerId(), 0);
+    if (!mavId) AbstractMavLinkHandler::timerEvent(event);
+
+    switch (d->mavStages.value(mavId, Stage::Idle))
+    {
+    case Stage::WaitingCount:
+        this->requestMissionCount(mavId);
+        break;
+    case Stage::WaitingItem:
+    {
+        const QList<int>& list = d->mavSequencer[mavId];
+        if (!list.isEmpty()) this->requestMissionItem(mavId, list.first());
+        break;
+    }
+    case Stage::Idle:
+    default:
+        break;
     }
 }
