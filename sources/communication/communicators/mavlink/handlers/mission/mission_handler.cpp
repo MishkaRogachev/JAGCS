@@ -68,6 +68,7 @@ public:
     QMap <quint8, MissionHandler::Stage> mavStages;
     QMap <quint8, int> mavTimers;
     QMap <quint8, QList<int> > mavSequencer;
+    int lastSendedSequence = -1;
 };
 
 MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
@@ -135,7 +136,7 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
         if (item->status() == dao::MissionItem::Actual) continue;
 
         d->mavSequencer[vehicle->mavId()].append(item->sequence());
-        item->setStatus(dao::MissionItem::Uploading);
+        item->setStatus(dao::MissionItem::NotActual);
         d->missionService->missionItemChanged(item);
     }
 
@@ -175,6 +176,10 @@ void MissionHandler::requestMissionCount(quint8 mavId)
 
 void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
 {
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(
+                                               d->vehicleService->vehicleIdByMavId(mavId));
+    if (assignment.isNull()) return;
+
     mavlink_message_t message;
     mavlink_mission_request_t missionRequest;
 
@@ -190,6 +195,10 @@ void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
                                             m_communicator->linkChannel(link),
                                             &message, &missionRequest);
     m_communicator->sendMessage(message, link);
+
+    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), seq);
+    item->setStatus(dao::MissionItem::Downloading);
+    d->missionService->missionItemChanged(item);
 }
 
 void MissionHandler::sendMissionCount(quint8 mavId)
@@ -299,10 +308,6 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
 //        altitude must be to target altitude for command completion.
 //    }
 
-    // TODO: wait ack
-    item->setStatus(dao::MissionItem::Actual);
-    d->missionService->missionItemChanged(item);
-
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
 
@@ -311,6 +316,10 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
                                          m_communicator->linkChannel(link),
                                          &message, &msgItem);
     m_communicator->sendMessage(message, link);
+
+    item->setStatus(dao::MissionItem::Uploading);
+    d->lastSendedSequence = seq;
+    d->missionService->missionItemChanged(item);
 }
 
 void MissionHandler::sendMissionAck(quint8 mavId)
@@ -320,6 +329,7 @@ void MissionHandler::sendMissionAck(quint8 mavId)
 
     ackItem.target_system = mavId;
     ackItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    ackItem.mission_type = MAV_MISSION_TYPE_MISSION;
     ackItem.type = MAV_MISSION_ACCEPTED;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
@@ -479,12 +489,14 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     item->setStatus(dao::MissionItem::Actual);
     d->missionService->save(item);
 
-    if (d->mavSequencer[message.sysid].contains(msgItem.seq))
+    if (d->mavSequencer[message.sysid].contains(msgItem.seq) &&
+        d->mavStages.value(message.sysid, Stage::Idle) == Stage::WaitingItem)
     {
         d->mavSequencer[message.sysid].removeOne(msgItem.seq);
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
+            this->sendMissionAck(message.sysid);
             this->enterStage(Stage::Idle, message.sysid);
         }
         else
@@ -500,21 +512,41 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
     mavlink_msg_mission_request_decode(&message, &request);
 
     this->sendMissionItem(message.sysid, request.seq);
-
-    if (d->mavStages[message.sysid] == Stage::WaitingRequest)
-    {
-        d->mavSequencer[message.sysid].removeOne(request.seq);
-
-        if (d->mavSequencer[message.sysid].isEmpty()) this->enterStage(Stage::Idle, message.sysid);
-    }
 }
 
 void MissionHandler::processMissionAck(const mavlink_message_t& message)
 {
-    mavlink_mission_ack_t missionAck;
-    mavlink_msg_mission_ack_decode(&message, &missionAck);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    if (assignment.isNull()) return;
 
-    // TODO: handle missionAck.type
+    mavlink_mission_ack_t ack;
+    mavlink_msg_mission_ack_decode(&message, &ack);
+
+    if (ack.mission_type != MAV_MISSION_TYPE_MISSION) return;
+
+    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(),
+                                                              d->lastSendedSequence);
+    if (item.isNull()) return;
+
+    if (ack.type == MAV_MISSION_ACCEPTED)
+    {
+        item->setStatus(dao::MissionItem::Actual);
+    }
+    else
+    {
+        // TODO: show error, why not actual
+        item->setStatus(dao::MissionItem::NotActual);
+    }
+
+    d->missionService->missionItemChanged(item);
+
+    if (d->mavStages[message.sysid] == Stage::WaitingRequest)
+    {
+        d->mavSequencer[message.sysid].removeOne(d->lastSendedSequence);
+
+        if (d->mavSequencer[message.sysid].isEmpty()) this->enterStage(Stage::Idle, message.sysid);
+    }
 }
 
 void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
