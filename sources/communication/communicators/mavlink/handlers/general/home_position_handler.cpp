@@ -47,7 +47,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                        coordinate.altitude());
 }
 
-void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)
+void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
 {
     mavlink_message_t message;
     mavlink_command_long_t command;
@@ -69,7 +69,7 @@ void HomePositionHandler::sendHomePositionRequest(uint8_t mavId)
 }
 
 /*
-void HomePositionHandler::sendHomePositionSetting(uint8_t mavId, const Position& position)
+void HomePositionHandler::sendHomePositionSetting(quint8 mavId, const Position& position)
 {
     mavlink_message_t message;
     mavlink_set_home_position_t home;

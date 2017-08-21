@@ -25,8 +25,8 @@ namespace comm
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void sendHomePositionRequest(uint8_t mavId);
-        // TODO: void sendHomePositionSetting(uint8_t mavId, const domain::Position& position);
+        void sendHomePositionRequest(quint8 mavId);
+        // TODO: void sendHomePositionSetting(quint8 mavId, const domain::Position& position);
 
     private:
         domain::TelemetryService* const m_telemetryService;

@@ -21,7 +21,7 @@ namespace comm
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void requestVersion(uint8_t mavId);
+        void requestVersion(quint8 mavId);
 
     protected:
         void timerEvent(QTimerEvent* event) override;

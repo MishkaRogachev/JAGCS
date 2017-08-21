@@ -157,12 +157,12 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     m_communicator->sendMessage(message, link);
 }
 
-void MissionHandler::selectCurrent(int vehicleId, uint16_t seq)
+void MissionHandler::selectCurrent(int vehicleId, quint16 seq)
 {
     this->sendCurrentItem(d->vehicleService->mavIdByVehicleId(vehicleId), seq);
 }
 
-void MissionHandler::requestMissionCount(uint8_t mavId)
+void MissionHandler::requestMissionCount(quint8 mavId)
 {
     mavlink_message_t message;
     mavlink_mission_request_list_t request;
@@ -180,7 +180,7 @@ void MissionHandler::requestMissionCount(uint8_t mavId)
     m_communicator->sendMessage(message, link);
 }
 
-void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
+void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
 {
     mavlink_message_t message;
     mavlink_mission_request_t missionRequest;
@@ -199,7 +199,7 @@ void MissionHandler::requestMissionItem(uint8_t mavId, uint16_t seq)
     m_communicator->sendMessage(message, link);
 }
 
-void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
+void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(mavId);
     dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
@@ -301,7 +301,7 @@ void MissionHandler::sendMissionItem(uint8_t mavId, uint16_t seq)
     m_communicator->sendMessage(message, link);
 }
 
-void MissionHandler::sendMissionAck(uint8_t mavId)
+void MissionHandler::sendMissionAck(quint8 mavId)
 {
     mavlink_message_t message;
     mavlink_mission_ack_t ackItem;
@@ -320,7 +320,7 @@ void MissionHandler::sendMissionAck(uint8_t mavId)
     m_communicator->sendMessage(message, link);
 }
 
-void MissionHandler::sendCurrentItem(uint8_t mavId, uint16_t seq)
+void MissionHandler::sendCurrentItem(quint8 mavId, quint16 seq)
 {
     mavlink_message_t message;
     mavlink_mission_set_current_t current;

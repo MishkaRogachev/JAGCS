@@ -28,7 +28,7 @@ using namespace domain;
 
 namespace
 {
-    dao::Vehicle::Type decodeType(uint8_t type)
+    dao::Vehicle::Type decodeType(quint8 type)
     {
         switch (type) //TODO: other vehicles
         {
@@ -55,7 +55,7 @@ namespace
         }
     }
 
-    Telemetry::SystemState decodeState(uint8_t state)
+    Telemetry::SystemState decodeState(quint8 state)
     {
         switch (state)
         {

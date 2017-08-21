@@ -13,18 +13,18 @@ namespace comm
         Q_OBJECT
 
     public:
-         MavLinkCommunicator(uint8_t systemId, uint8_t componentId, QObject* parent = nullptr);
+         MavLinkCommunicator(quint8 systemId, quint8 componentId, QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         bool isAddLinkEnabled() override;
 
-        uint8_t systemId() const;
-        uint8_t componentId() const;
+        quint8 systemId() const;
+        quint8 componentId() const;
 
-        uint8_t linkChannel(AbstractLink* link) const;
+        quint8 linkChannel(AbstractLink* link) const;
 
         AbstractLink* lastReceivedLink() const;
-        AbstractLink* mavSystemLink(uint8_t systemId);
+        AbstractLink* mavSystemLink(quint8 systemId);
 
     public slots:
         void addLink(AbstractLink* link) override;
@@ -32,16 +32,16 @@ namespace comm
 
         void switchLinkProtocol(AbstractLink* link, Protocol protocol);
 
-        void setSystemId(uint8_t systemId);
-        void setComponentId(uint8_t componentId);
+        void setSystemId(quint8 systemId);
+        void setComponentId(quint8 componentId);
 
         void sendMessage(mavlink_message_t& message, AbstractLink* link);
 
     signals:
         void messageReceived(const mavlink_message_t& message);
 
-        void systemIdChanged(uint8_t systemId);
-        void componentIdChanged(uint8_t componentId);
+        void systemIdChanged(quint8 systemId);
+        void componentIdChanged(quint8 componentId);
 
     protected slots:
         void onDataReceived(const QByteArray& data) override;

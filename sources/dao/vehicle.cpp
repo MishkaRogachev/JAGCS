@@ -21,12 +21,12 @@ Vehicle::~Vehicle()
     m_mavIds.remove(this);
 }
 
-int Vehicle::mavId() const
+quint8 Vehicle::mavId() const
 {
     return m_mavId;
 }
 
-bool Vehicle::setMavId(int mavId)
+bool Vehicle::setMavId(quint8 mavId)
 {
     if (m_mavIds.values().contains(mavId)) return false;
 

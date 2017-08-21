@@ -19,19 +19,19 @@ using namespace comm;
 class MavLinkCommunicator::Impl
 {
 public:
-    uint8_t systemId;
-    uint8_t componentId;
+    quint8 systemId;
+    quint8 componentId;
 
-    QMap<AbstractLink*, uint8_t> linkChannels;
-    QMap<uint8_t, AbstractLink*> mavSystemLinks;
-    QList<uint8_t> avalibleChannels;
+    QMap<AbstractLink*, quint8> linkChannels;
+    QMap<quint8, AbstractLink*> mavSystemLinks;
+    QList<quint8> avalibleChannels;
     AbstractLink* receivedLink = nullptr;
 
     int oldPacketsReceived = 0;
     int oldPacketsDrops = 0;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId, QObject* parent):
+MavLinkCommunicator::MavLinkCommunicator(quint8 systemId, quint8 componentId, QObject* parent):
     AbstractCommunicator(parent),
     d(new Impl())
 {
@@ -40,7 +40,7 @@ MavLinkCommunicator::MavLinkCommunicator(uint8_t systemId, uint8_t componentId, 
     d->systemId = systemId;
     d->componentId = componentId;
 
-    for (uint8_t channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
+    for (quint8 channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
     {
         d->avalibleChannels.append(channel);
     }
@@ -54,12 +54,17 @@ bool MavLinkCommunicator::isAddLinkEnabled()
     return !d->avalibleChannels.isEmpty();
 }
 
-uint8_t MavLinkCommunicator::componentId() const
+quint8 MavLinkCommunicator::systemId() const
+{
+    return d->systemId;
+}
+
+quint8 MavLinkCommunicator::componentId() const
 {
     return d->componentId;
 }
 
-uint8_t MavLinkCommunicator::linkChannel(AbstractLink* link) const
+quint8 MavLinkCommunicator::linkChannel(AbstractLink* link) const
 {
     return d->linkChannels.value(link, 0);
 }
@@ -69,14 +74,9 @@ AbstractLink* MavLinkCommunicator::lastReceivedLink() const
     return d->receivedLink;
 }
 
-AbstractLink* MavLinkCommunicator::mavSystemLink(uint8_t systemId)
+AbstractLink* MavLinkCommunicator::mavSystemLink(quint8 systemId)
 {
     return d->mavSystemLinks.value(systemId, nullptr);
-}
-
-uint8_t MavLinkCommunicator::systemId() const
-{
-    return d->systemId;
 }
 
 void MavLinkCommunicator::addLink(AbstractLink* link)
@@ -95,7 +95,7 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
 {
     if (!d->linkChannels.contains(link)) return;
 
-    uint8_t channel = d->linkChannels.value(link);
+    quint8 channel = d->linkChannels.value(link);
     d->linkChannels.remove(link);
     d->avalibleChannels.prepend(channel);
 
@@ -124,7 +124,7 @@ void MavLinkCommunicator::switchLinkProtocol(AbstractLink* link, AbstractCommuni
                                     MavLink1 : MavLink2);
 }
 
-void MavLinkCommunicator::setSystemId(uint8_t systemId)
+void MavLinkCommunicator::setSystemId(quint8 systemId)
 {
     if (d->systemId == systemId) return;
 
@@ -132,7 +132,7 @@ void MavLinkCommunicator::setSystemId(uint8_t systemId)
     emit systemIdChanged(systemId);
 }
 
-void MavLinkCommunicator::setComponentId(uint8_t componentId)
+void MavLinkCommunicator::setComponentId(quint8 componentId)
 {
     if (d->componentId == componentId) return;
 
@@ -146,7 +146,7 @@ void MavLinkCommunicator::sendMessage(mavlink_message_t& message, AbstractLink* 
 
     this->finalizeMessage(message);
 
-    uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+    quint8 buffer[MAVLINK_MAX_PACKET_LEN];
     int lenght = mavlink_msg_to_send_buffer(buffer, &message);
 
     if (!lenght) return;
@@ -161,10 +161,10 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     mavlink_message_t message;
     mavlink_status_t status;
 
-    uint8_t channel = this->linkChannel(d->receivedLink);
+    quint8 channel = this->linkChannel(d->receivedLink);
     for (int pos = 0; pos < data.length(); ++pos)
     {
-        if (!mavlink_parse_char(channel, (uint8_t)data[pos], &message, &status)) continue;
+        if (!mavlink_parse_char(channel, (quint8)data[pos], &message, &status)) continue;
 
         mavlink_status_t* channelStatus = mavlink_get_channel_status(channel);
 

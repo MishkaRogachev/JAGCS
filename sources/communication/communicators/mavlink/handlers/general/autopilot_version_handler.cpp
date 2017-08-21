@@ -22,8 +22,8 @@ using namespace domain;
 class AutopilotVersionHandler::Impl
 {
 public:
-    QMap<uint8_t, int> mavTimers;
-    QMap<uint8_t, bool> obtainedMavs;
+    QMap<quint8, int> mavTimers;
+    QMap<quint8, bool> obtainedMavs;
 };
 
 AutopilotVersionHandler::AutopilotVersionHandler(MavLinkCommunicator* communicator):
@@ -71,7 +71,7 @@ void AutopilotVersionHandler::processMessage(const mavlink_message_t& message)
     }
 }
 
-void AutopilotVersionHandler::requestVersion(uint8_t mavId)
+void AutopilotVersionHandler::requestVersion(quint8 mavId)
 {
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
@@ -93,6 +93,6 @@ void AutopilotVersionHandler::requestVersion(uint8_t mavId)
 
 void AutopilotVersionHandler::timerEvent(QTimerEvent* event)
 {
-    uint8_t mavId = d->mavTimers.key(event->timerId(), 0);
+    quint8 mavId = d->mavTimers.key(event->timerId(), 0);
     if (mavId > 0) this->requestVersion(mavId);
 }

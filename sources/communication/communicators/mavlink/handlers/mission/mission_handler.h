@@ -34,14 +34,14 @@ namespace comm
 
        void download(const dao::MissionAssignmentPtr& assignment);
        void upload(const dao::MissionAssignmentPtr& assignment);
-       void selectCurrent(int vehicleId, uint16_t seq);
+       void selectCurrent(int vehicleId, quint16 seq);
 
-       void requestMissionCount(uint8_t mavId);
-       void requestMissionItem(uint8_t mavId, uint16_t seq);
+       void requestMissionCount(quint8 mavId);
+       void requestMissionItem(quint8 mavId, quint16 seq);
 
-       void sendMissionItem(uint8_t mavId, uint16_t seq);
-       void sendMissionAck(uint8_t mavId);
-       void sendCurrentItem(uint8_t mavId, uint16_t seq);
+       void sendMissionItem(quint8 mavId, quint16 seq);
+       void sendMissionAck(quint8 mavId);
+       void sendCurrentItem(quint8 mavId, quint16 seq);
 
     protected:
         void processMissionCount(const mavlink_message_t& message);
