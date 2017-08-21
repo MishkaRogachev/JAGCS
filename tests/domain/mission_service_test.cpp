@@ -100,7 +100,7 @@ void MissionServiceTest::testVehicleDescription()
     QVERIFY2(vehicleService->vehicle(id, true), "Can't reload vehicle");
 
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
-    QCOMPARE(vehicle->mavId(), 13);
+    QCOMPARE(vehicle->mavId(), quint8(13));
     QCOMPARE(vehicle->type(), Vehicle::FixedWing);
 
     QVERIFY2(vehicleService->remove(vehicle), "Can't remove vehicle");
