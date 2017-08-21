@@ -25,7 +25,7 @@
 
 namespace
 {
-    const int interval = 500;
+    const int interval = 1000;
 
     const QMap<quint16, dao::MissionItem::Command> mavCommandMap =
     {
@@ -115,12 +115,6 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
     dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    for (const dao::MissionItemPtr& item: d->missionService->missionItems(assignment->missionId()))
-    {
-        item->setStatus(dao::MissionItem::NotActual);
-        d->missionService->missionItemChanged(item);
-    }
-
     dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
     mission->setStatus(dao::Mission::Downloading);
     d->missionService->missionChanged(mission);
@@ -154,7 +148,8 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
         mission->setStatus(dao::Mission::Uploading);
         d->missionService->missionChanged(mission);
 
-        this->enterStage(Stage::WaitingRequest, vehicle->mavId());
+        d->lastSendedSequence = -1;
+        this->enterStage(Stage::SendingCount, vehicle->mavId());
         this->sendMissionCount(vehicle->mavId());
     }
 }
@@ -391,6 +386,10 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     // TODO: append fake items
 
     d->mavSequencer[message.sysid].clear();
+    for (int seq = 0; seq < missionCount.count; ++seq)
+    {
+        d->mavSequencer[message.sysid].append(seq);
+    }
 
     this->enterStage(Stage::WaitingItem, message.sysid);
     this->requestMissionItem(message.sysid, 0);
@@ -513,6 +512,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         }
         else
         {
+            this->enterStage(Stage::WaitingItem, message.sysid);
             this->requestMissionItem(message.sysid, d->mavSequencer[message.sysid].first());
         }
     }
@@ -522,6 +522,29 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
 {
     mavlink_mission_request_t request;
     mavlink_msg_mission_request_decode(&message, &request);
+
+    if (d->mavStages.value(message.sysid, Stage::Idle) == Stage::SendingCount)
+    {
+        this->enterStage(Stage::SendingItem, message.sysid);
+    }
+
+    if (d->lastSendedSequence != -1 && d->lastSendedSequence != request.seq)
+    {
+        d->mavSequencer[message.sysid].removeOne(d->lastSendedSequence);
+
+        int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+        dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+        if (assignment)
+        {
+            dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(),
+                                                                      d->lastSendedSequence);
+            if (item)
+            {
+                item->setStatus(dao::MissionItem::Actual);
+                d->missionService->missionItemChanged(item);
+            }
+        }
+    }
 
     this->sendMissionItem(message.sysid, request.seq);
 }
@@ -534,6 +557,7 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
     mavlink_mission_ack_t ack;
     mavlink_msg_mission_ack_decode(&message, &ack);
+
 
     if (ack.mission_type != MAV_MISSION_TYPE_MISSION) return;
 
@@ -553,7 +577,7 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
     d->missionService->missionItemChanged(item);
 
-    if (d->mavStages[message.sysid] == Stage::WaitingRequest)
+    if (d->mavStages[message.sysid] == Stage::SendingItem)
     {
         d->mavSequencer[message.sysid].removeOne(d->lastSendedSequence);
 
@@ -606,7 +630,8 @@ void MissionHandler::enterStage(Stage stage, quint8 mavId)
     }
 
     d->mavStages[mavId] = stage;
-    if (stage != Stage::Idle)
+    if (stage != Stage::Idle &&
+        stage != Stage::SendingItem)
     {
         d->mavTimers[mavId] = this->startTimer(::interval);
     }
@@ -629,7 +654,7 @@ void MissionHandler::timerEvent(QTimerEvent* event)
         else this->requestMissionItem(mavId, list.first());
         break;
     }
-    case Stage::WaitingRequest:
+    case Stage::SendingCount:
         this->sendMissionCount(mavId);
     case Stage::Idle:
     default:

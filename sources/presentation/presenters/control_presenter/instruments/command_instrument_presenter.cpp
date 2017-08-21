@@ -19,7 +19,6 @@ public:
     int vehicleId;
 };
 
-// FIXME: CommandInstrument -> BaseInstrument
 CommandInstrumentPresenter::CommandInstrumentPresenter(int vehicleId, QObject* parent):
     BaseInstrumentPresenter(parent),
     d(new Impl())

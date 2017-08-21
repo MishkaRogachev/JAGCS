@@ -24,7 +24,8 @@ namespace comm
             Idle,
             WaitingCount,
             WaitingItem,
-            WaitingRequest
+            SendingCount,
+            SendingItem
         };
 
         MissionHandler(MavLinkCommunicator* communicator);
