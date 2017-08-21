@@ -26,10 +26,12 @@ namespace presentation
     private slots:
         void onMissionAdded(const dao::MissionPtr& mission);
         void onMissionRemoved(const dao::MissionPtr& mission);
+        void onMissionChanged(const dao::MissionPtr& mission);
         void updateMissionsBox();
         void updateVehiclesBox();
         void updateAssignment();
-        void updateStatuses();
+        void updateItemsStatus();
+        void updateStatus();
 
         void onSelectMission(int index);
         void onAddMission();

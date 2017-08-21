@@ -3,15 +3,25 @@ import QtQuick.Controls 2.0 // TODO:QtQuick.Templates
 
 import "./" as Custum
 
-Button {
+Control {
     id: control
 
+    property bool checkable: false
+    property bool checked: false
+    property string text
+
+    property alias pressed: area.pressed
     property alias iconSource: icon.source
     property alias iconColor: icon.color
     property alias textColor: label.color
     property alias backgroundColor: backgroundItem.color
 
+    signal clicked()
+    signal released()
+
     font.pixelSize: palette.fontPixelSize
+    implicitWidth: Math.max(backgroundItem.implicitWidth, content.implicitWidth)
+    implicitHeight: Math.max(backgroundItem.implicitHeight, content.implicitHeight)
 
     background: Rectangle {
         id: backgroundItem
@@ -27,6 +37,7 @@ Button {
     }
 
     contentItem: Item { // TODO: common content item
+        id: content
         implicitWidth: row.width
         implicitHeight: row.height
 
@@ -53,6 +64,16 @@ Button {
                            palette.selectedTextColor: palette.textColor
                 anchors.verticalCenter: parent.verticalCenter
             }
+        }
+
+        MouseArea {
+            id: area
+            anchors.fill: parent
+            onClicked: {
+                control.clicked();
+                if (checkable) checked = !checked;
+            }
+            onReleased: control.released()
         }
     }
 }

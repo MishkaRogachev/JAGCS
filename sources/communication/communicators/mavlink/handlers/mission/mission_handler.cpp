@@ -121,6 +121,10 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
         d->missionService->missionItemChanged(item);
     }
 
+    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+    mission->setStatus(dao::Mission::Downloading);
+    d->missionService->missionChanged(mission);
+
     this->enterStage(Stage::WaitingCount, vehicle->mavId());
     this->requestMissionCount(vehicle->mavId());
 }
@@ -146,6 +150,10 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     }
     else
     {
+        dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+        mission->setStatus(dao::Mission::Uploading);
+        d->missionService->missionChanged(mission);
+
         this->enterStage(Stage::WaitingRequest, vehicle->mavId());
         this->sendMissionCount(vehicle->mavId());
     }
@@ -496,6 +504,10 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
+            dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+            mission->setStatus(dao::Mission::Actual);
+            d->missionService->missionChanged(mission);
+
             this->sendMissionAck(message.sysid);
             this->enterStage(Stage::Idle, message.sysid);
         }
@@ -545,7 +557,14 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     {
         d->mavSequencer[message.sysid].removeOne(d->lastSendedSequence);
 
-        if (d->mavSequencer[message.sysid].isEmpty()) this->enterStage(Stage::Idle, message.sysid);
+        if (d->mavSequencer[message.sysid].isEmpty())
+        {
+            dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+            mission->setStatus(dao::Mission::Actual);
+            d->missionService->missionChanged(mission);
+
+            this->enterStage(Stage::Idle, message.sysid);
+        }
     }
 }
 

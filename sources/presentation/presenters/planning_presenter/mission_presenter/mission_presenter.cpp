@@ -48,6 +48,8 @@ MissionPresenter::MissionPresenter(QObject* parent):
             this, &MissionPresenter::onMissionAdded);
     connect(d->missionService, &domain::MissionService::missionRemoved,
             this, &MissionPresenter::onMissionRemoved);
+    connect(d->missionService, &domain::MissionService::missionChanged,
+            this, &MissionPresenter::onMissionChanged);
 
     connect(d->missionService, &domain::MissionService::assignmentAdded,
             this, &MissionPresenter::updateAssignment);
@@ -57,11 +59,11 @@ MissionPresenter::MissionPresenter(QObject* parent):
             this, &MissionPresenter::updateAssignment);
 
     connect(d->missionService, &domain::MissionService::missionItemAdded,
-            this, &MissionPresenter::updateStatuses);
+            this, &MissionPresenter::updateItemsStatus);
     connect(d->missionService, &domain::MissionService::missionItemRemoved,
-            this, &MissionPresenter::updateStatuses);
+            this, &MissionPresenter::updateItemsStatus);
     connect(d->missionService, &domain::MissionService::missionItemChanged,
-            this, &MissionPresenter::updateStatuses);
+            this, &MissionPresenter::updateItemsStatus);
 
     connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::updateVehiclesBox);
@@ -90,7 +92,8 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
     else this->setViewProperty(PROPERTY(missionVisible), false);
 
     this->updateAssignment();
-    this->updateStatuses();
+    this->updateItemsStatus();
+    this->updateStatus();
 
     emit missionSelected(mission);
 }
@@ -141,6 +144,13 @@ void MissionPresenter::onMissionRemoved(const dao::MissionPtr& mission)
 {
     d->missions.removeOne(mission);
     this->updateMissionsBox();
+}
+
+void MissionPresenter::onMissionChanged(const dao::MissionPtr& mission)
+{
+    this->updateMissionsBox();
+
+    if (d->selectedMission == mission) this->updateStatus();
 }
 
 void MissionPresenter::updateMissionsBox()
@@ -201,7 +211,7 @@ void MissionPresenter::updateAssignment()
     this->setViewConnected(true);
 }
 
-void MissionPresenter::updateStatuses()
+void MissionPresenter::updateItemsStatus()
 {
     QStringList statuses;
 
@@ -215,6 +225,12 @@ void MissionPresenter::updateStatuses()
     }
 
     this->setViewProperty(PROPERTY(statuses), statuses);
+}
+
+void MissionPresenter::updateStatus()
+{
+    this->setViewProperty(PROPERTY(status), d->selectedMission.isNull() ?
+                              dao::Mission::NotActual : d->selectedMission->status());
 }
 
 void MissionPresenter::onSelectMission(int index)

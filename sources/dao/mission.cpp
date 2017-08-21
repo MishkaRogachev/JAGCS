@@ -35,3 +35,13 @@ void Mission::setVisible(bool visible)
     m_visible = visible;
 }
 
+Mission::Status Mission::status() const
+{
+    return m_status;
+}
+
+void Mission::setStatus(Status status)
+{
+    m_status = status;
+}
+

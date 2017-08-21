@@ -1,9 +1,8 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
 ColumnLayout {
     id: root
@@ -12,6 +11,7 @@ ColumnLayout {
     property alias vehicles: vehiclesBox.model
     property alias selectedMission: missionsBox.currentIndex
     property alias assignedVehicle: vehiclesBox.currentIndex
+    property int status: Mission.NotActual
     property var statuses: []
 
     property bool missionVisible: false
@@ -33,23 +33,23 @@ ColumnLayout {
     GridLayout {
         columns: 5
 
-        Label {
+        Controls.Label {
             text: qsTr("Mission")
         }
 
-        ComboBox {
+        Controls.ComboBox {
             id: missionsBox
             visible: !edit.checked
             onCurrentIndexChanged: selectMission(currentIndex);
             Layout.fillWidth: true
         }
 
-        TextField {
+        Controls.TextField {
             id: nameEdit
             visible: edit.checked
         }
 
-        Button {
+        Controls.Button {
             id: edit
             iconSource: "qrc:/icons/edit.svg"
             checkable: true
@@ -68,47 +68,47 @@ ColumnLayout {
             }
         }
 
-        Button {
+        Controls.Button {
             iconSource: "qrc:/icons/add.svg"
             onClicked: addMission()
         }
 
-        Button {
+        Controls.Button {
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.negativeColor
             enabled: selectedMission > 0 && assignedVehicle == 0
             onClicked: removeMission()
         }
 
-        Label {
+        Controls.Label {
             text: qsTr("Vehicle")
         }
 
-        ComboBox {
+        Controls.ComboBox {
             id: vehiclesBox
             enabled: selectedMission > 0
             onCurrentIndexChanged: assignVehicle(currentIndex)
             Layout.fillWidth: true
         }
 
-        Button {
+        Controls.Button {
             iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
             enabled: selectedMission > 0
             onClicked: setMissionVisible(!missionVisible)
         }
 
-        Button {
+        Controls.Button {
             iconSource: "qrc:/icons/download.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
-            //checked: assignedStatus == MissionAssignment.Downloading
-            onClicked: downloadMission()
+            checked: status === Mission.Downloading
+            onClicked: downloadMission() // TODO: cancel download process
         }
 
-        Button {
+        Controls.Button {
             iconSource: "qrc:/icons/upload.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
-            //checked: assignedStatus == MissionAssignment.Uploading
-            onClicked: uploadMission()
+            checked: status === Mission.Uploading
+            onClicked: uploadMission() // TODO: cancel upload process
         }
     }
 
@@ -164,7 +164,7 @@ ColumnLayout {
                             }
                             border.width: 4
 
-                            Label { // TODO: mode icon
+                            Controls.Label { // TODO: mode icon
                                 text: index
                                 color: selected ? palette.selectedTextColor : palette.textColor
                                 anchors.centerIn: parent
