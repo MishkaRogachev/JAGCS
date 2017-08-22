@@ -115,9 +115,8 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
     dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
-    mission->setStatus(dao::Mission::Downloading);
-    d->missionService->missionChanged(mission);
+    assignment->setStatus(dao::MissionAssignment::Downloading);
+    d->missionService->assignmentChanged(assignment);
 
     this->enterStage(Stage::WaitingCount, vehicle->mavId());
     this->requestMissionCount(vehicle->mavId());
@@ -144,9 +143,8 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     }
     else
     {
-        dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
-        mission->setStatus(dao::Mission::Uploading);
-        d->missionService->missionChanged(mission);
+        assignment->setStatus(dao::MissionAssignment::Uploading);
+        d->missionService->assignmentChanged(assignment);
 
         d->lastSendedSequence = -1;
         this->enterStage(Stage::SendingCount, vehicle->mavId());
@@ -503,9 +501,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
-            dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
-            mission->setStatus(dao::Mission::Actual);
-            d->missionService->missionChanged(mission);
+            assignment->setStatus(dao::MissionAssignment::Actual);
+            d->missionService->assignmentChanged(assignment);
 
             this->sendMissionAck(message.sysid);
             this->enterStage(Stage::Idle, message.sysid);
@@ -583,9 +580,8 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
-            dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
-            mission->setStatus(dao::Mission::Actual);
-            d->missionService->missionChanged(mission);
+            assignment->setStatus(dao::MissionAssignment::Actual);
+            d->missionService->assignmentChanged(assignment);
 
             this->enterStage(Stage::Idle, message.sysid);
         }

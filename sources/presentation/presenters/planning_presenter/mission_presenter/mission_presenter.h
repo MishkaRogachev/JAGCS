@@ -31,7 +31,6 @@ namespace presentation
         void updateVehiclesBox();
         void updateAssignment();
         void updateItemsStatus();
-        void updateStatus();
 
         void onSelectMission(int index);
         void onAddMission();

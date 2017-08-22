@@ -11,7 +11,7 @@ ColumnLayout {
     property alias vehicles: vehiclesBox.model
     property alias selectedMission: missionsBox.currentIndex
     property alias assignedVehicle: vehiclesBox.currentIndex
-    property int status: Mission.NotActual
+    property int status: MissionAssignment.NotActual
     property var statuses: []
 
     property bool missionVisible: false
@@ -100,14 +100,14 @@ ColumnLayout {
         Controls.Button {
             iconSource: "qrc:/icons/download.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
-            checked: status === Mission.Downloading
+            checked: status === MissionAssignment.Downloading
             onClicked: downloadMission() // TODO: cancel download process
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/upload.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
-            checked: status === Mission.Uploading
+            checked: status === MissionAssignment.Uploading
             onClicked: uploadMission() // TODO: cancel upload process
         }
     }

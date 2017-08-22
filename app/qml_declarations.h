@@ -5,6 +5,7 @@
 #include "vehicle.h"
 #include "link_description.h"
 #include "mission.h"
+#include "mission_assignment.h"
 #include "mission_item.h"
 #include "video_source.h"
 #include "command.h"
@@ -17,6 +18,8 @@ void registerQmlTypes()
                 "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
     qmlRegisterUncreatableType<dao::Mission>(
                 "JAGCS", 1, 0, "Mission", "Can't create entities in QML");
+    qmlRegisterUncreatableType<dao::MissionAssignment>(
+                "JAGCS", 1, 0, "MissionAssignment", "Can't create entities in QML");
     qmlRegisterUncreatableType<dao::MissionItem>(
                 "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
     qmlRegisterUncreatableType<dao::VideoSource>(

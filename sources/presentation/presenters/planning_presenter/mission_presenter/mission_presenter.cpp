@@ -93,7 +93,6 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
 
     this->updateAssignment();
     this->updateItemsStatus();
-    this->updateStatus();
 
     emit missionSelected(mission);
 }
@@ -148,9 +147,9 @@ void MissionPresenter::onMissionRemoved(const dao::MissionPtr& mission)
 
 void MissionPresenter::onMissionChanged(const dao::MissionPtr& mission)
 {
-    this->updateMissionsBox();
+    Q_UNUSED(mission)
 
-    if (d->selectedMission == mission) this->updateStatus();
+    this->updateMissionsBox();
 }
 
 void MissionPresenter::updateMissionsBox()
@@ -202,11 +201,15 @@ void MissionPresenter::updateAssignment()
                 this->setViewProperty(PROPERTY(assignedVehicle),
                                       d->vehicleService->vehicles().indexOf(vehicle) + 1);
             }
+
+            this->setViewProperty(PROPERTY(status), assignment->status());
             this->setViewConnected(true);
             return;
         }
     }
     this->setViewProperty(PROPERTY(assignedVehicle), 0);
+
+    this->setViewProperty(PROPERTY(status), dao::MissionAssignment::NotActual);
 
     this->setViewConnected(true);
 }
@@ -225,12 +228,6 @@ void MissionPresenter::updateItemsStatus()
     }
 
     this->setViewProperty(PROPERTY(statuses), statuses);
-}
-
-void MissionPresenter::updateStatus()
-{
-    this->setViewProperty(PROPERTY(status), d->selectedMission.isNull() ?
-                              dao::Mission::NotActual : d->selectedMission->status());
 }
 
 void MissionPresenter::onSelectMission(int index)
