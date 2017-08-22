@@ -7,6 +7,7 @@
 // Internal
 #include "mission_service.h"
 #include "mission.h"
+#include "mission_assignment.h"
 #include "mission_item.h"
 
 using namespace presentation;
@@ -22,6 +23,14 @@ MissionLineMapItemModel::MissionLineMapItemModel(domain::MissionService* service
             this, &MissionLineMapItemModel::onMissionRemoved);
     connect(service, &domain::MissionService::missionChanged,
             this, &MissionLineMapItemModel::onMissionChanged);
+
+    connect(service, &domain::MissionService::assignmentAdded,
+            this, &MissionLineMapItemModel::onAssignmentChanged);
+    connect(service, &domain::MissionService::assignmentRemoved,
+            this, &MissionLineMapItemModel::onAssignmentChanged);
+    connect(service, &domain::MissionService::assignmentChanged,
+            this, &MissionLineMapItemModel::onAssignmentChanged);
+
     connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionLineMapItemModel::onMissionItemChanged);
     connect(service, &domain::MissionService::missionItemAdded,
@@ -46,7 +55,6 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     if (index.row() < 0 || index.row() >= m_missions.count()) return QVariant();
 
     const dao::MissionPtr& mission = m_missions.at(index.row());
-
     switch (role)
     {
     case MissionPathRole:
@@ -82,6 +90,13 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         }
         return line;
     }
+    case MissionStatusRole:
+    {
+        dao::MissionAssignmentPtr assignment  = m_service->missionAssignment(mission->id());
+        if (assignment.isNull()) return -1;
+
+        return assignment->status();
+    }
     default:
         return QVariant();
     }
@@ -109,6 +124,18 @@ void MissionLineMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }
 
+void MissionLineMapItemModel::onAssignmentChanged(const dao::MissionAssignmentPtr& assignment)
+{
+    for (int row = 0 ; row < m_missions.count(); ++row)
+    {
+        if (m_missions[row]->id() != assignment->missionId()) continue;
+
+        QModelIndex index = this->index(row);
+        if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
+        return;
+    }
+}
+
 void MissionLineMapItemModel::onMissionItemChanged(const dao::MissionItemPtr& item)
 {
     dao::MissionPtr mission = m_service->mission(item->missionId());
@@ -121,6 +148,7 @@ QHash<int, QByteArray> MissionLineMapItemModel::roleNames() const
     QHash<int, QByteArray> roles;
 
     roles[MissionPathRole] = "missionPath";
+    roles[MissionStatusRole] = "missionStatus";
 
     return roles;
 }

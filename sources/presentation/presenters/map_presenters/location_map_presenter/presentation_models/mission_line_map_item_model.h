@@ -22,6 +22,7 @@ namespace presentation
         enum MissionLineMapItemRoles
         {
             MissionPathRole = Qt::UserRole + 1,
+            MissionStatusRole
         };
 
         explicit MissionLineMapItemModel(domain::MissionService* service,
@@ -34,6 +35,7 @@ namespace presentation
         void onMissionAdded(const dao::MissionPtr& mission);
         void onMissionRemoved(const dao::MissionPtr& mission);
         void onMissionChanged(const dao::MissionPtr& mission);
+        void onAssignmentChanged(const dao::MissionAssignmentPtr& assignment);
         void onMissionItemChanged(const dao::MissionItemPtr& item);
 
     protected:
