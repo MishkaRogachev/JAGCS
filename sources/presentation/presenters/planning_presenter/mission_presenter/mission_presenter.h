@@ -41,6 +41,7 @@ namespace presentation
         void onSetMissionVisible(bool visible);
         void onUploadMission();
         void onDownloadMission();
+        void onCancelSyncMission();
 
     signals:
         void missionSelected(const dao::MissionPtr& mission);

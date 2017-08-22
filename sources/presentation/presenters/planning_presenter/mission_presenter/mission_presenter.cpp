@@ -126,6 +126,7 @@ void MissionPresenter::setViewConnected(bool connected)
         connect(this->view(), SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
         connect(this->view(), SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
         connect(this->view(), SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
+        connect(this->view(), SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
     }
     else
     {
@@ -327,4 +328,13 @@ void MissionPresenter::onDownloadMission()
     if (assignment.isNull()) return;
 
     d->missionService->download(assignment);
+}
+
+void MissionPresenter::onCancelSyncMission()
+{
+    if (!d->selectedMission) return;
+    dao::MissionAssignmentPtr assignment = d->missionService->missionAssignment(d->selectedMission->id());
+    if (assignment.isNull()) return;
+
+    d->missionService->cancelSync(assignment);
 }

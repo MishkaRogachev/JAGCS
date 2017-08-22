@@ -61,9 +61,9 @@ using namespace domain;
 class MissionHandler::Impl
 {
 public:
-    domain::VehicleService* vehicleService = ServiceRegistry::vehicleService();
-    domain::TelemetryService* telemetryService = ServiceRegistry::telemetryService();
-    domain::MissionService* missionService = ServiceRegistry::missionService();
+    VehicleService* vehicleService = ServiceRegistry::vehicleService();
+    TelemetryService* telemetryService = ServiceRegistry::telemetryService();
+    MissionService* missionService = ServiceRegistry::missionService();
 
     QMap <quint8, MissionHandler::Stage> mavStages;
     QMap <quint8, int> mavTimers;
@@ -75,9 +75,10 @@ MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
-    connect(d->missionService, &domain::MissionService::download, this, &MissionHandler::download);
-    connect(d->missionService, &domain::MissionService::upload, this, &MissionHandler::upload);
-    connect(d->missionService, &domain::MissionService::selectCurrentItem, this, &MissionHandler::selectCurrent);
+    connect(d->missionService, &MissionService::download, this, &MissionHandler::download);
+    connect(d->missionService, &MissionService::upload, this, &MissionHandler::upload);
+    connect(d->missionService, &MissionService::cancelSync, this, &MissionHandler::cancelSync);
+    connect(d->missionService, &MissionService::selectCurrentItem, this, &MissionHandler::selectCurrent);
 }
 
 MissionHandler::~MissionHandler()
@@ -150,6 +151,14 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
         this->enterStage(Stage::SendingCount, vehicle->mavId());
         this->sendMissionCount(vehicle->mavId());
     }
+}
+
+void MissionHandler::cancelSync(const dao::MissionAssignmentPtr& assignment)
+{
+    this->enterStage(Stage::Idle, d->vehicleService->mavIdByVehicleId(assignment->vehicleId()));
+
+    assignment->setStatus(dao::MissionAssignment::NotActual);
+    d->missionService->assignmentChanged(assignment);
 }
 
 void MissionHandler::selectCurrent(int vehicleId, quint16 seq)

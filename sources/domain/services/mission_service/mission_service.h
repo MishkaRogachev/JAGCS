@@ -70,6 +70,7 @@ namespace domain
 
         void download(dao::MissionAssignmentPtr assignment);
         void upload(dao::MissionAssignmentPtr assignment);
+        void cancelSync(dao::MissionAssignmentPtr assignment);
 
         void selectCurrentItem(int vehicleId, int item);
 

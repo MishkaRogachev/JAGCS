@@ -36,6 +36,7 @@ namespace comm
 
        void download(const dao::MissionAssignmentPtr& assignment);
        void upload(const dao::MissionAssignmentPtr& assignment);
+       void cancelSync(const dao::MissionAssignmentPtr& assignment);
        void selectCurrent(int vehicleId, quint16 seq);
 
        void requestMissionCount(quint8 mavId);

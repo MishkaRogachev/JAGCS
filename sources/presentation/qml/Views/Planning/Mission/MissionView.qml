@@ -25,6 +25,7 @@ ColumnLayout {
     signal setMissionVisible(bool visible)
     signal uploadMission()
     signal downloadMission()
+    signal cancelSyncMission()
 
     Layout.margins: palette.margins
     spacing: palette.spacing
@@ -76,7 +77,7 @@ ColumnLayout {
         Controls.Button {
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.negativeColor
-            enabled: selectedMission > 0 && assignedVehicle == 0
+            enabled: selectedMission > 0 && assignedVehicle === 0
             onClicked: removeMission()
         }
 
@@ -101,14 +102,14 @@ ColumnLayout {
             iconSource: "qrc:/icons/download.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
             checked: status === MissionAssignment.Downloading
-            onClicked: downloadMission() // TODO: cancel download process
+            onClicked: checked ? cancelSyncMission() : downloadMission()
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/upload.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
             checked: status === MissionAssignment.Uploading
-            onClicked: uploadMission() // TODO: cancel upload process
+            onClicked: checked ? cancelSyncMission() : uploadMission()
         }
     }
 
