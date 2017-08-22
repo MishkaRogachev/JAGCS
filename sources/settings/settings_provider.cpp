@@ -88,6 +88,11 @@ void Provider::setValue(const QString& key, const QVariant& value)
     instance()->d->settings.setValue(key, value);
 }
 
+void Provider::remove(const QString& key)
+{
+    instance()->d->settings.remove(key);
+}
+
 void Provider::makeDefaults()
 {
     instance()->d->makeDefaults();

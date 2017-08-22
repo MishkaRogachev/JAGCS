@@ -1,62 +1,65 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QString>
+
 namespace settings
 {
     namespace data_base
     {
-        const char* const name = "Data_base/name";
+        const QString name = "Data_base/name";
     }
 
     namespace communication
     {
-        const char* const systemId = "Communication/systemId";
-        const char* const componentId = "Communication/componentId";
-        const char* const heartbeat = "Communication/heartbeat";
-        const char* const timeout = "Communication/timeout";
-        const char* const autoAdd = "Communication/autoAdd";
-        const char* const baudRate = "Communication/baudRate";
-        const char* const port = "Communication/port";
-        const char* const statisticsCount = "Communication/statisticsCount";
+        const QString systemId = "Communication/systemId";
+        const QString componentId = "Communication/componentId";
+        const QString heartbeat = "Communication/heartbeat";
+        const QString timeout = "Communication/timeout";
+        const QString autoAdd = "Communication/autoAdd";
+        const QString baudRate = "Communication/baudRate";
+        const QString port = "Communication/port";
+        const QString statisticsCount = "Communication/statisticsCount";
     }
 
     namespace mission
     {
-        const char* const defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
-        const char* const defaultTakeoffPitch = "Mission/defaultTakeoffPitch";
+        const QString defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
+        const QString defaultTakeoffPitch = "Mission/defaultTakeoffPitch";
+        const QString visibility = "Mission/visibility";
     }
 
     namespace map
     {
-        const char* const zoomLevel = "Map/zoomLevel";
-        const char* const centerLatitude = "Map/centerLatitude";
-        const char* const centerLongitude = "Map/centerLongitude";
-        const char* const activeMapType = "Map/activeMapType";
-        const char* const tileHost = "Map/tileHost";
-        const char* const cacheFolder = "Map/cacheFolder";
-        const char* const cacheSize = "Map/cacheSize";
+        const QString zoomLevel = "Map/zoomLevel";
+        const QString centerLatitude = "Map/centerLatitude";
+        const QString centerLongitude = "Map/centerLongitude";
+        const QString activeMapType = "Map/activeMapType";
+        const QString tileHost = "Map/tileHost";
+        const QString cacheFolder = "Map/cacheFolder";
+        const QString cacheSize = "Map/cacheSize";
     }
 
     namespace gui
     {
-        const char* const fullscreen = "Gui/fullscreen";
-        const char* const locale = "Gui/locale";
-        const char* const uiSize = "Gui/uiSize";
-        const char* const paletteStyle = "Gui/paletteStyle";
-        const char* const fdRollInverted = "Gui/fdRollInverted";
-        const char* const fdSpeedStep = "Gui/fdSpeedStep";
-        const char* const fdSpeedUnits = "Gui/fdSpeedUnits";
-        const char* const fdAltitudeStep = "Gui/fdAltitudeStep";
-        const char* const fdRelativeAltitude = "Gui/fdRelativeAltitude";
+        const QString fullscreen = "Gui/fullscreen";
+        const QString locale = "Gui/locale";
+        const QString uiSize = "Gui/uiSize";
+        const QString paletteStyle = "Gui/paletteStyle";
+        const QString fdRollInverted = "Gui/fdRollInverted";
+        const QString fdSpeedStep = "Gui/fdSpeedStep";
+        const QString fdSpeedUnits = "Gui/fdSpeedUnits";
+        const QString fdAltitudeStep = "Gui/fdAltitudeStep";
+        const QString fdRelativeAltitude = "Gui/fdRelativeAltitude";
     }
 
     namespace proxy
     {
-        const char* const type = "NetworkProxy/type";
-        const char* const hostName = "NetworkProxy/hostName";
-        const char* const port = "NetworkProxy/port";
-        const char* const user = "NetworkProxy/user";
-        const char* const password = "NetworkProxy/password";
+        const QString type = "NetworkProxy/type";
+        const QString hostName = "NetworkProxy/hostName";
+        const QString port = "NetworkProxy/port";
+        const QString user = "NetworkProxy/user";
+        const QString password = "NetworkProxy/password";
     }
 }
 

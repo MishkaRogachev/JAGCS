@@ -5,6 +5,7 @@
 #include <QMutexLocker>
 
 // Internal
+#include "settings_provider.h"
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
@@ -109,8 +110,7 @@ MissionAssignmentPtr MissionService::missionAssignment(int missionId)
 {
     QMutexLocker locker(&d->mutex);
 
-    for (int id: d->assignmentRepository.selectId(
-             QString("missionId = %1").arg(missionId)))
+    for (int id: d->assignmentRepository.selectId(QString("missionId = %1").arg(missionId)))
     {
         return this->assignment(id);
     }
@@ -121,8 +121,7 @@ MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId)
 {
     QMutexLocker locker(&d->mutex);
 
-    for (int id: d->assignmentRepository.selectId(
-             QString("vehicleId = %1").arg(vehicleId)))
+    for (int id: d->assignmentRepository.selectId(QString("vehicleId = %1").arg(vehicleId)))
     {
         return this->assignment(id);
     }
@@ -133,8 +132,7 @@ MissionItemPtrList MissionService::missionItems(int missionId)
 {
     QMutexLocker locker(&d->mutex);
 
-    return this->missionItems(QString("missionId = %1 ORDER BY sequence").arg(
-                               missionId));
+    return this->missionItems(QString("missionId = %1 ORDER BY sequence").arg(missionId));
 }
 
 MissionItemPtr MissionService::missionItem(int missionId, int sequence)
@@ -155,6 +153,11 @@ bool MissionService::save(const MissionPtr& mission)
 
     bool isNew = mission->id() == 0;
     if (!d->missionRepository.save(mission)) return false;
+
+    if (isNew)
+    {
+        settings::Provider::setValue(settings::mission::visibility + "/" + mission->id(), true);
+    }
 
     emit (isNew ? missionAdded(mission) : missionChanged(mission));
     return true;
@@ -204,6 +207,7 @@ bool MissionService::remove(const MissionPtr& mission)
         if (!this->remove(item)) return false;
     }
 
+    settings::Provider::remove(settings::mission::visibility + "/" + mission->id());
     if (!d->missionRepository.remove(mission)) return false;
 
     emit missionRemoved(mission);

@@ -5,10 +5,13 @@
 #include <QDebug>
 
 // Internal
-#include "mission_service.h"
+#include "settings_provider.h"
+
 #include "mission.h"
-#include "mission_assignment.h"
 #include "mission_item.h"
+
+#include "mission_service.h"
+#include "mission_assignment.h"
 
 using namespace presentation;
 
@@ -60,7 +63,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
-        if (!mission->isVisible())
+        if (!settings::Provider::value(settings::mission::visibility + "/" + mission->id()).toBool())
         {
             line.append(QVariant::fromValue(QGeoCoordinate(0, 0)));
             return line;

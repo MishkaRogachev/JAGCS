@@ -21,14 +21,9 @@ namespace dao
         int count() const;
         void setCount(int count);
 
-        bool isVisible() const;
-        void setVisible(bool visible);
-
     private:
         QString m_name;
         int m_count = 0;
-
-        bool m_visible = true; // TODO: mission visibility to settings
     };
 }
 

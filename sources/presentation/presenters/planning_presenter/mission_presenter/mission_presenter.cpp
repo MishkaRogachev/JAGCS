@@ -5,16 +5,16 @@
 #include <QDebug>
 
 // Internal
-#include "service_registry.h"
+#include "settings_provider.h"
 
-#include "mission_service.h"
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
-
-#include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "service_registry.h"
+#include "mission_service.h"
+#include "vehicle_service.h"
 #include "command_service.h"
 
 #include "mission_item_presenter.h"
@@ -88,7 +88,11 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
 
     this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
 
-    if (mission) this->setViewProperty(PROPERTY(missionVisible), mission->isVisible());
+    if (mission)
+    {
+        this->setViewProperty(PROPERTY(missionVisible),
+                              settings::Provider::value(settings::mission::visibility + "/" + mission->id()));
+    }
     else this->setViewProperty(PROPERTY(missionVisible), false);
 
     this->updateAssignment();
@@ -306,8 +310,9 @@ void MissionPresenter::onSetMissionVisible(bool visible)
 {
     if (!d->selectedMission) return;
 
-    d->selectedMission->setVisible(visible);
-    this->setViewProperty(PROPERTY(missionVisible), d->selectedMission->isVisible());
+    settings::Provider::setValue(settings::mission::visibility + "/" +
+                                 d->selectedMission->id(), visible);
+    this->setViewProperty(PROPERTY(missionVisible), visible);
 
     d->missionService->missionChanged(d->selectedMission);
 }

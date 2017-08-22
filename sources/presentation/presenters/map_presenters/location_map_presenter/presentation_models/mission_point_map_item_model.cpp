@@ -5,9 +5,12 @@
 #include <QDebug>
 
 // Internal
-#include "mission_service.h"
+#include "settings_provider.h"
+
 #include "mission.h"
+
 #include "mission_item.h"
+#include "mission_service.h"
 
 using namespace presentation;
 
@@ -47,7 +50,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
     case ItemCoordinateRole:
     {
-        if (mission->isVisible() &&
+        if (settings::Provider::value(settings::mission::visibility + "/" + mission->id()).toBool() &&
             (item->command() == dao::MissionItem::Home ||
              item->command() == dao::MissionItem::Waypoint ||
              item->command() == dao::MissionItem::Takeoff ||
