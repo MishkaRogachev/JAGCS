@@ -155,6 +155,8 @@ Item {
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         minValue: value + minAltitude
         maxValue: value + maxAltitude
+        warningValue: altitudeRelative ? 0 : homeAltitude
+        warningColor: palette.groundColor
         valueStep: altitudeStep
         enabled: barometricEnabled
         operational: barometricOperational

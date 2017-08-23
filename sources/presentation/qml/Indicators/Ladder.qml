@@ -1,10 +1,12 @@
 import QtQuick 2.0
 import "qrc:/JS/helper.js" as Helper
+import "../Controls" as Controls
 
 Item {
     id: root
 
     property int value: 0
+    property int warningValue: minValue
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
@@ -19,10 +21,19 @@ Item {
     property string prefix
     property color color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
                                     palette.disabledColor
+    property alias warningColor: hatch.color
 
     clip: true
     onColorChanged: canvas.requestPaint()
     onValueChanged: canvas.requestPaint()
+
+    Controls.Hatch {
+        id: hatch
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
+    }
 
     Canvas {
         id: canvas
