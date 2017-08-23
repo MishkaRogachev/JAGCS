@@ -4,13 +4,18 @@ ShaderEffect {
     id: shader
 
     property color color: palette.negativeColor
+    property real xFactor: 35
+    property real yFactor: xFactor * width / height
 
     fragmentShader:"
-    varying highp vec2 qt_TexCoord0;
+    varying vec2 qt_TexCoord0;
+    uniform float xFactor;
+    uniform float yFactor;
     uniform vec4 color;
 
     void main(void)
     {
-        gl_FragColor = mix(vec4(0.0, 0.0, 0.0, 0.0), color, sin((qt_TexCoord0.x + qt_TexCoord0.y) / 0.02));
+        gl_FragColor = mix(vec4(0.0, 0.0, 0.0, 0.0), color,
+                        sin(qt_TexCoord0.x * yFactor + qt_TexCoord0.y * xFactor));
     }"
 }

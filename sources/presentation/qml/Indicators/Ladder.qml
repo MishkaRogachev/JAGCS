@@ -33,9 +33,10 @@ Item {
         anchors.leftMargin: mirrored ? 8 : 0
         anchors.right: parent.right
         anchors.rightMargin: mirrored ? 0 : 8
-        anchors.top: parent.top
-        anchors.topMargin: height - Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
-        height: parent.height
+        anchors.bottom: parent.bottom
+        height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
+        xFactor: yFactor * height / width
+        yFactor: 35
     }
 
     Canvas {
