@@ -8,5 +8,6 @@ Pane {
 
     background: Rectangle {
         color: palette.backgroundColor
+        radius: 3
     }
 }

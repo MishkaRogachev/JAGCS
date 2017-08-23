@@ -10,5 +10,6 @@ ScrollBar {
         implicitWidth: palette.controlBaseSize / 8
         color: control.active ? palette.selectionColor : "transparent"
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        radius: width / 2
     }
 }

@@ -14,6 +14,7 @@ SpinBox {
     background: Rectangle {
         implicitWidth: palette.controlBaseSize * 6
         implicitHeight: palette.controlBaseSize
+        radius: 3
         color: {
             if (!control.enabled) return palette.disabledColor;
             if (!isValid) return palette.negativeColor;
@@ -42,6 +43,7 @@ SpinBox {
         x: control.mirrored ? up.indicator.width : control.width - width - up.indicator.width
         implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize
+        radius: 3
         color: down.pressed ? palette.highlightColor : "transparent"
 
         Custom.ColoredIcon {
@@ -57,6 +59,7 @@ SpinBox {
         x: control.mirrored ? 0 : control.width - width
         implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize
+        radius: 3
         color: up.pressed ? palette.highlightColor : "transparent"
         visible: enabled
 
