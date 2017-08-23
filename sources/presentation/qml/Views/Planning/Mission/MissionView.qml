@@ -101,15 +101,15 @@ ColumnLayout {
         Controls.Button {
             iconSource: "qrc:/icons/download.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
-            checked: status === MissionAssignment.Downloading
-            onClicked: checked ? cancelSyncMission() : downloadMission()
+            highlighted: status === MissionAssignment.Downloading
+            onClicked: highlighted ? cancelSyncMission() : downloadMission()
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/upload.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
-            checked: status === MissionAssignment.Uploading
-            onClicked: checked ? cancelSyncMission() : uploadMission()
+            highlighted: status === MissionAssignment.Uploading
+            onClicked: highlighted ? cancelSyncMission() : uploadMission()
         }
     }
 

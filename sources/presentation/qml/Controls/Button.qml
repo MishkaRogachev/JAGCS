@@ -1,23 +1,13 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0 // TODO:QtQuick.Templates
+import QtQuick.Templates 2.0 as T
 
-import "./" as Custum
-
-Control {
+T.Button {
     id: control
 
-    property bool checkable: false
-    property bool checked: false
-    property string text
-
-    property alias pressed: area.pressed
     property alias iconSource: icon.source
-    property alias iconColor: icon.color
-    property alias textColor: label.color
+    property color iconColor: textColor
+    property color textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
     property alias backgroundColor: backgroundItem.color
-
-    signal clicked()
-    signal released()
 
     font.pixelSize: palette.fontPixelSize
     implicitWidth: Math.max(backgroundItem.implicitWidth, content.implicitWidth)
@@ -28,15 +18,21 @@ Control {
         implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        radius: 3
         color: {
-            if (control.checked) return palette.selectionColor;
-            if (!enabled) return palette.disabledColor;
+            if (control.checked || control.highlighted) return palette.selectionColor;
             if (control.pressed) return palette.highlightColor;
             return control.flat ? "transparent" : palette.buttonColor;
         }
+
+        Hatch {
+            anchors.fill: parent
+            color: palette.sunkenColor
+            visible: !control.enabled
+        }
     }
 
-    contentItem: Item { // TODO: common content item
+    contentItem: Item {
         id: content
         implicitWidth: row.width
         implicitHeight: row.height
@@ -49,7 +45,7 @@ Control {
 
             ColoredIcon {
                 id: icon
-                color: label.color
+                color: enabled ? iconColor : palette.sunkenColor
                 anchors.verticalCenter: parent.verticalCenter
                 height: control.height * 0.6
                 width: height
@@ -60,20 +56,9 @@ Control {
                 id: label
                 font: control.font
                 text: control.text
-                color: control.pressed || control.checked ?
-                           palette.selectedTextColor: palette.textColor
+                color: enabled ? textColor : palette.sunkenColor
                 anchors.verticalCenter: parent.verticalCenter
             }
-        }
-
-        MouseArea {
-            id: area
-            anchors.fill: parent
-            onClicked: {
-                control.clicked();
-                if (checkable) checked = !checked;
-            }
-            onReleased: control.released()
         }
     }
 }
