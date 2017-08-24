@@ -99,6 +99,9 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     d->linkChannels.remove(link);
     d->avalibleChannels.prepend(channel);
 
+    quint8 mavId = d->mavSystemLinks.key(link, 0);
+    if (mavId) d->mavSystemLinks.remove(mavId);
+
     if (link == d->receivedLink) d->receivedLink = nullptr;
 
     if (!d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(true);
