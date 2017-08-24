@@ -207,6 +207,8 @@ void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
     m_communicator->sendMessage(message, link);
 
     dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), seq);
+    if (item.isNull()) return;
+
     item->setStatus(dao::MissionItem::Downloading);
     d->missionService->missionItemChanged(item);
 }
