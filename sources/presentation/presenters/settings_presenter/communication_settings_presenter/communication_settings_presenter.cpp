@@ -35,6 +35,8 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
             this, &CommunicationSettingsPresenter::onLinkAdded);
     connect(d->service, &CommunicationService::descriptionChanged,
             this, &CommunicationSettingsPresenter::onLinkChanged);
+    connect(d->service, &CommunicationService::linkStatisticsChanged,
+            this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
     connect(d->service, &CommunicationService::descriptionRemoved,
             this, &CommunicationSettingsPresenter::onLinkRemoved);
 
@@ -67,6 +69,12 @@ void CommunicationSettingsPresenter::onLinkChanged(const dao::LinkDescriptionPtr
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateView();
+}
+
+void CommunicationSettingsPresenter::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description)
+{
+    if (!d->linkPresenters.contains(description)) return;
+    d->linkPresenters[description]->updateStatistics();
 }
 
 void CommunicationSettingsPresenter::onLinkRemoved(const dao::LinkDescriptionPtr& description)

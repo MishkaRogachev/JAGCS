@@ -39,6 +39,7 @@ namespace domain
         void descriptionAdded(dao::LinkDescriptionPtr description);
         void descriptionRemoved(dao::LinkDescriptionPtr description);
         void descriptionChanged(dao::LinkDescriptionPtr description);
+        void linkStatisticsChanged(dao::LinkDescriptionPtr description);
 
     private slots:
         void onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,

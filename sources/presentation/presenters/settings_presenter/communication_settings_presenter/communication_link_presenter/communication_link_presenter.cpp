@@ -33,12 +33,16 @@ void CommunicationLinkPresenter::updateView()
     this->setViewProperty(PROPERTY(port), m_description->port());
     this->setViewProperty(PROPERTY(device), m_description->device());
     this->setViewProperty(PROPERTY(baudRate), m_description->baudRate());
+
+    this->setViewProperty(PROPERTY(changed), false);
+}
+
+void CommunicationLinkPresenter::updateStatistics()
+{
     this->setViewProperty(PROPERTY(connected), m_description->isConnected());
     this->setViewProperty(PROPERTY(protocol), m_description->protocol());
     this->setViewProperty(PROPERTY(bytesSent), QVariant::fromValue(m_description->bytesSent()));
     this->setViewProperty(PROPERTY(bytesRecv), QVariant::fromValue(m_description->bytesRecv()));
-
-    this->setViewProperty(PROPERTY(changed), false);
 }
 
 void CommunicationLinkPresenter::setConnected(bool connected)

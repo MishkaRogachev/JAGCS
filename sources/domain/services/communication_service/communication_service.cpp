@@ -139,7 +139,7 @@ void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr
     description->addBytesSent(bytesSentSec);
     description->setConnected(connected);
 
-    emit descriptionChanged(description);
+    emit linkStatisticsChanged(description);
 }
 
 void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
@@ -148,7 +148,7 @@ void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescription
     description->addPacketsRecv(packetsReceived);
     description->addPacketDrops(packetsDrops);
 
-    emit descriptionChanged(description);
+    emit linkStatisticsChanged(description);
 }
 
 void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
@@ -156,5 +156,5 @@ void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPt
 {
     description->setProtocol(protocol);
 
-    emit descriptionChanged(description);
+    emit linkStatisticsChanged(description);
 }
