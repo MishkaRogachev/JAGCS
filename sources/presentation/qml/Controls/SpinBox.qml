@@ -1,32 +1,33 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Templates 2.0 as T
 
-import "./" as Custom
-
-SpinBox {
+T.SpinBox {
     id: control
 
     property bool isValid: value >= from && value <= to
 
     font.pixelSize: palette.fontPixelSize
     editable: true
+    implicitWidth: palette.controlBaseSize * 4
+    implicitHeight: palette.controlBaseSize
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize * 6
-        implicitHeight: palette.controlBaseSize
+        anchors.fill: parent
         radius: 3
-        color: {
-            if (!control.enabled) return palette.disabledColor;
-            if (!isValid) return palette.negativeColor;
-            return palette.sunkenColor;
-        }
+        color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        opacity: enabled ? 1 : 0.33
+
+        Hatch {
+            anchors.fill: parent
+            color: palette.sunkenColor
+            visible: !control.enabled
+        }
     }
 
     contentItem: TextInput {
         anchors.centerIn: parent
-        anchors.horizontalCenterOffset: -(up.indicator.width +
-                                          down.indicator.width) / 2
+        anchors.horizontalCenterOffset: -(up.indicator.width + down.indicator.width) / 2
         text: isValid ? control.textFromValue(control.value, control.locale) : "NaN"
         font: control.font
         readOnly: !control.editable
@@ -37,6 +38,7 @@ SpinBox {
         selectByMouse: true
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
+        opacity: enabled ? 1 : 0.33
     }
 
     down.indicator: Rectangle {
@@ -45,11 +47,12 @@ SpinBox {
         implicitHeight: palette.controlBaseSize
         radius: 3
         color: down.pressed ? palette.highlightColor : "transparent"
+        visible: enabled
 
-        Custom.ColoredIcon {
+        ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/minus.svg"
-            color: enabled ? palette.textColor : palette.disabledColor
+            color: palette.textColor
             height: parent.height * 0.6
             width: height
         }
@@ -63,12 +66,12 @@ SpinBox {
         color: up.pressed ? palette.highlightColor : "transparent"
         visible: enabled
 
-        Custom.ColoredIcon {
+        ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/plus.svg"
             height: parent.height * 0.6
             width: height
-            color: enabled ? palette.textColor : palette.disabledColor
+            color: palette.textColor
         }
     }
 }

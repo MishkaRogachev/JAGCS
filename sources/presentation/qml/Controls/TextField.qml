@@ -16,7 +16,13 @@ TextField {
         implicitWidth: palette.controlBaseSize * 4
         implicitHeight: palette.controlBaseSize
         radius: 3
-        color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
+
+        Hatch {
+            anchors.fill: parent
+            color: palette.sunkenColor
+            visible: !control.enabled
+        }
     }
 }

@@ -17,7 +17,7 @@ CheckBox {
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: 3
-        color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 
         ColoredIcon {
@@ -27,6 +27,12 @@ CheckBox {
             width: height
             color: control.down ? palette.highlightColor : palette.textColor
             visible: control.checked || control.down
+        }
+
+        Hatch {
+            anchors.fill: parent
+            color: palette.sunkenColor
+            visible: !control.enabled
         }
     }
 

@@ -190,6 +190,7 @@ Controls.Frame {
                 iconSource: connected ? "qrc:/icons/disconnect.svg" :
                                         "qrc:/icons/connect.svg"
                 onClicked: setConnected(!connected)
+                Layout.fillWidth: true
             }
 
             Controls.Button {
