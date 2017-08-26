@@ -1,15 +1,15 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Templates 2.0 as T
 import QtQuick.Layouts 1.3
 
-import "./"
-
-CheckBox {
+T.CheckBox {
     id: control
 
     font.pixelSize: palette.fontPixelSize
     height: palette.controlBaseSize
     leftPadding: 0
+    spacing: palette.spacing
+    implicitWidth: text.length > 0 ? contentItem.implicitWidth + spacing : indicator.implicitWidth
 
     indicator: Rectangle {
         implicitWidth: palette.controlBaseSize
@@ -39,9 +39,7 @@ CheckBox {
     contentItem: Label {
         text: control.text
         font: control.font
+        leftPadding: indicator.width + spacing
         verticalAlignment: Text.AlignVCenter
-        leftPadding: control.indicator.width + (text.length > 0 ?
-                                                    control.spacing :
-                                                    -control.spacing)
     }
 }

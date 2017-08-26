@@ -1,33 +1,21 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Templates 2.0 as T
 import QtQuick.Layouts 1.3
-
-import "./"
 
 ColumnLayout {
     id: control
 
     property alias model: repeater.model
-    property int currentIndex: -1
-
-    ButtonGroup {
-        id: group
-    }
+    property int currentIndex: 0
 
     Repeater {
         id: repeater
 
         Button {
-            checkable: true
             Layout.preferredWidth: palette.controlBaseSize * 7
             text: modelData
-            Component.onCompleted: {
-                group.addButton(this)
-                if (index == 0) checked =  true;
-            }
-            onCheckedChanged: {
-                if (checked) currentIndex = index;
-            }
+            onClicked: if (!highlighted) currentIndex = index
+            highlighted: currentIndex == index
         }
     }
 }

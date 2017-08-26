@@ -8,7 +8,10 @@ T.Switch {
     property alias textColor: text.color
     property alias backgroundColor: backgroundItem.color
 
+    spacing: palette.spacing
     font.pixelSize: palette.fontPixelSize
+    implicitWidth: indicator.implicitWidth + text.implicitWidth + spacing
+    implicitHeight: palette.controlBaseSize
 
     onInputCheckedChanged: if (checked != inputChecked) checked = inputChecked
 
@@ -41,12 +44,13 @@ T.Switch {
     }
 
     contentItem: Text {
+        anchors.right: parent.right
+        horizontalAlignment: Qt.AlignLeft
+        verticalAlignment: Text.AlignVCenter
         id: text
         text: control.text
         font: control.font
         color: palette.textColor
-        horizontalAlignment: Qt.AlignLeft
-        verticalAlignment: Text.AlignVCenter
-        leftPadding: control.indicator.width + control.spacing
+        leftPadding: indicator.width + control.spacing
     }
 }
