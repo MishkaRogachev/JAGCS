@@ -1,9 +1,7 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Templates 2.0 as T
 
-import "./"
-
-Slider {
+T.Slider {
     id: control
 
     property real visualValue: from + position * (to - from)

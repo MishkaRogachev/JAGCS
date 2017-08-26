@@ -1,10 +1,8 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 
-import "./" as Custom
 import "qrc:/JS/helper.js" as Helper
 
-Custom.SpinBox {
+SpinBox {
     id: control
 
     property real realValue: NaN

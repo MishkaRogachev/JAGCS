@@ -1,8 +1,6 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 
 import "qrc:/JS/helper.js" as Helper
-import "./"
 
 RealSpinBox {
     id: control

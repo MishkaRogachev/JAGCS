@@ -1,9 +1,7 @@
 import QtQuick 2.6
 import JAGCS 1.0
 
-import "./" as Custum
-
-Custum.Button {
+Button {
     id: control
 
     property int command: Command.UnknownCommand
