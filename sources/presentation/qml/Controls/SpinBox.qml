@@ -10,13 +10,13 @@ T.SpinBox {
     editable: true
     implicitWidth: palette.controlBaseSize * 4
     implicitHeight: palette.controlBaseSize
+    opacity: enabled ? 1 : 0.33
 
     background: Rectangle {
         anchors.fill: parent
         radius: 3
         color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
-        opacity: enabled ? 1 : 0.33
 
         Hatch {
             anchors.fill: parent
@@ -38,7 +38,6 @@ T.SpinBox {
         selectByMouse: true
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-        opacity: enabled ? 1 : 0.33
     }
 
     down.indicator: Rectangle {

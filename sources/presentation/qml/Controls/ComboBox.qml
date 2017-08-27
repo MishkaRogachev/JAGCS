@@ -1,14 +1,13 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Templates 2.0 as T
 
-import "./"
-
-ComboBox {
+T.ComboBox {
     id: control
 
     font.pixelSize: palette.fontPixelSize
     clip: true
-    //enabled: count > 0 TODO: comboBox does not update
+    implicitWidth: palette.controlBaseSize * 4
+    implicitHeight: palette.controlBaseSize
 
     delegate: ItemDelegate {
         width: control.width
@@ -17,8 +16,7 @@ ComboBox {
     }
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize * 4
-        implicitHeight: palette.controlBaseSize
+        anchors.fill: parent
         radius: 3
         color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
@@ -42,8 +40,25 @@ ComboBox {
 
     contentItem: Text {
         text: control.displayText
+        padding: palette.margins
         verticalAlignment: Text.AlignVCenter
         font: control.font
         color: palette.textColor
+    }
+
+    popup: Popup {
+        y: control.height - 1
+        width: control.width
+        implicitHeight: contentItem.implicitHeight
+        padding: 1
+
+        contentItem: ListView {
+            clip: true
+            implicitHeight: contentHeight
+            model: control.popup.visible ? control.delegateModel : null
+            currentIndex: control.highlightedIndex
+            boundsBehavior: Flickable.StopAtBounds
+            ScrollBar.vertical: ScrollBar { }
+        }
     }
 }
