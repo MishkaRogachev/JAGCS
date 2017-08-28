@@ -9,6 +9,8 @@ T.TabButton {
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
+    implicitWidth: Math.max(backgroundItem.implicitWidth, content.implicitWidth)
+    implicitHeight: Math.max(backgroundItem.implicitHeight, content.implicitHeight)
 
     background: Rectangle {
         id: backgroundItem
@@ -23,7 +25,9 @@ T.TabButton {
         }
     }
 
-    contentItem: Item { // TODO: common content item
+    contentItem: Item {
+        id: content
+        // TODO: common content item
         implicitWidth: row.width
         implicitHeight: row.height
 
