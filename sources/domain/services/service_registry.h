@@ -11,6 +11,7 @@ namespace domain
     class TelemetryService;
     class VideoService;
     class CommandService;
+    class SerialPortService;
     class CommunicationService;
 
     class ServiceRegistry
@@ -29,6 +30,7 @@ namespace domain
         static TelemetryService* telemetryService();
         static VideoService* videoService();
         static CommandService* commandService();
+        static SerialPortService* serialPortService();
         static CommunicationService* communicationService();
 
     private:

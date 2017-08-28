@@ -7,6 +7,7 @@
 
 namespace domain
 {
+    class SerialPortService;
     class CommunicationService;
 }
 
@@ -17,8 +18,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(domain::CommunicationService* service,
-                                   const dao::LinkDescriptionPtr& description,
+        CommunicationLinkPresenter(const dao::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
         dao::LinkDescriptionPtr description() const;
@@ -26,6 +26,7 @@ namespace presentation
     public slots:
         void updateView();
         void updateStatistics();
+        void updatePorts();
         void setConnected(bool connected);
         void save();
         void remove();
@@ -34,7 +35,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private:
-        domain::CommunicationService* m_service;
+        domain::SerialPortService* m_serialPortsService;
+        domain::CommunicationService* m_commService;
         dao::LinkDescriptionPtr m_description;
     };
 }

@@ -11,6 +11,7 @@
 #include "telemetry_service.h"
 #include "video_service.h"
 #include "command_service.h"
+#include "serial_ports_service.h"
 #include "communication_service.h"
 
 using namespace domain;
@@ -23,6 +24,7 @@ public:
     TelemetryService* telemetryService;
     VideoService* videoService;
     CommandService* commandService;
+    SerialPortService serialPortService;
     CommunicationService* communicationService;
 };
 
@@ -95,4 +97,9 @@ CommandService* ServiceRegistry::commandService()
 CommunicationService* ServiceRegistry::communicationService()
 {
     return instance()->d->communicationService;
+}
+
+SerialPortService* ServiceRegistry::serialPortService()
+{
+    return &instance()->d->serialPortService;
 }

@@ -20,7 +20,7 @@ using namespace domain;
 class CommunicationSettingsPresenter::Impl
 {
 public:
-    domain::CommunicationService* service;
+    domain::CommunicationService* service = ServiceRegistry::communicationService();
 
     QMap<dao::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
 };
@@ -29,8 +29,6 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->service = ServiceRegistry::communicationService();
-
     connect(d->service, &CommunicationService::descriptionAdded,
             this, &CommunicationSettingsPresenter::onLinkAdded);
     connect(d->service, &CommunicationService::descriptionChanged,
@@ -42,8 +40,7 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
 
     for (const dao::LinkDescriptionPtr& description: d->service->descriptions())
     {
-        d->linkPresenters[description] = new CommunicationLinkPresenter(
-                                             d->service, description, this);
+        d->linkPresenters[description] = new CommunicationLinkPresenter(description, this);
     }
 }
 
@@ -60,7 +57,7 @@ void CommunicationSettingsPresenter::connectView(QObject* view)
 
 void CommunicationSettingsPresenter::onLinkAdded(const dao::LinkDescriptionPtr& description)
 {
-    d->linkPresenters[description] = new CommunicationLinkPresenter(d->service, description, this);
+    d->linkPresenters[description] = new CommunicationLinkPresenter(description, this);
 
     this->updateCommunicationsLinks();
 }

@@ -3,21 +3,21 @@
 // Qt
 #include <QMap>
 #include <QVariant>
-#include <QSerialPortInfo>
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
+#include "serial_ports_service.h"
 #include "communication_service.h"
 #include "link_description.h"
 
 using namespace presentation;
 
-CommunicationLinkPresenter::CommunicationLinkPresenter(
-        domain::CommunicationService* service,
-        const dao::LinkDescriptionPtr& description,
+CommunicationLinkPresenter::CommunicationLinkPresenter(const dao::LinkDescriptionPtr& description,
         QObject* parent):
     BasePresenter(parent),
-    m_service(service),
+    m_serialPortsService(domain::ServiceRegistry::serialPortService()),
+    m_commService(domain::ServiceRegistry::communicationService()),
     m_description(description)
 {}
 
@@ -45,9 +45,18 @@ void CommunicationLinkPresenter::updateStatistics()
     this->setViewProperty(PROPERTY(bytesRecv), QVariant::fromValue(m_description->bytesRecv()));
 }
 
+void CommunicationLinkPresenter::updatePorts()
+{
+    QStringList ports;
+    ports.append(QString());
+    for (const QString& port: m_serialPortsService->availablePorts()) ports.append(port);
+
+    this->setViewProperty(PROPERTY(ports), ports);
+}
+
 void CommunicationLinkPresenter::setConnected(bool connected)
 {
-    m_service->setLinkConnected(m_description, connected);
+    m_commService->setLinkConnected(m_description, connected);
 }
 
 void CommunicationLinkPresenter::save()
@@ -57,33 +66,30 @@ void CommunicationLinkPresenter::save()
     m_description->setDevice(this->viewProperty(PROPERTY(device)).toString());
     m_description->setBaudRate(this->viewProperty(PROPERTY(baudRate)).toInt());
 
-    if (!m_service->save(m_description)) return;
+    if (!m_commService->save(m_description)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void CommunicationLinkPresenter::remove()
 {
-    m_service->remove(m_description);
+    m_commService->remove(m_description);
 }
 
 void CommunicationLinkPresenter::connectView(QObject* view)
 {
-    QStringList devices;
-    devices.append(QString());
-    for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
-        devices.append(info.portName());
-    this->setViewProperty(PROPERTY(devices), devices);
-
     QVariantList baudRates;
-    for (qint32 rate: QSerialPortInfo::standardBaudRates()) baudRates.append(rate);
+    for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
 
+    this->updatePorts();
+    this->updateView();
+
+    connect(m_serialPortsService, &domain::SerialPortService::availablePortsChanged,
+            this, &CommunicationLinkPresenter::updatePorts);
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));
     connect(view, SIGNAL(remove()), this, SLOT(remove()));
     connect(view, SIGNAL(setConnected(bool)), this, SLOT(setConnected(bool)));
-
-    this->updateView();
 }
 

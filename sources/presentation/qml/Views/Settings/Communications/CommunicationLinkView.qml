@@ -142,6 +142,7 @@ Controls.Frame {
             Controls.ComboBox {
                 id: deviceBox
                 visible: type == LinkDescription.Serial
+                model: []
                 onCurrentTextChanged: {
                     device = currentText;
                     changed = true;
@@ -160,6 +161,7 @@ Controls.Frame {
             Controls.ComboBox {
                 id: baudBox
                 visible: type == LinkDescription.Serial
+                model: []
                 onCurrentTextChanged: {
                     baudRate = currentText;
                     changed = true;
