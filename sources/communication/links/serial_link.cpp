@@ -87,6 +87,5 @@ void SerialLink::readSerialData()
 
 void SerialLink::onError()
 {
-    if (m_port->error() == QSerialPort::ResourceError &&
-        this->isConnected()) this->disconnectLink();
+    if (m_port->error() == QSerialPort::ResourceError && this->isConnected()) this->disconnectLink();
 }

@@ -50,7 +50,7 @@ namespace domain
                                         int packetsReceived, int packetsDrops);
         void onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
                                       dao::LinkDescription::Protocol protocol);
-        void onAvailableDevicesChanged();
+        void onDevicesChanged();
 
     private:
         class Impl;

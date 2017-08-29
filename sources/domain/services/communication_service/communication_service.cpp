@@ -44,8 +44,8 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     qRegisterMetaType<comm::AbstractCommunicator::Protocol>("comm::AbstractCommunicator::Protocol");
 
     d->serialPortService = serialPortService;
-    connect(serialPortService, &SerialPortService::availableDevicesChanged,
-            this, &CommunicationService::onAvailableDevicesChanged);
+    connect(serialPortService, &SerialPortService::devicesChanged,
+            this, &CommunicationService::onDevicesChanged);
 
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
@@ -202,14 +202,14 @@ void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPt
     emit linkStatisticsChanged(description);
 }
 
-void CommunicationService::onAvailableDevicesChanged()
+void CommunicationService::onDevicesChanged()
 {
-    QStringList availableDevices = d->serialPortService->availableDevices();
+    QStringList devices = d->serialPortService->devices();
 
     for (const dao::LinkDescriptionPtr& description: d->descriptionDevices.keys())
     {
         if (!description->isConnected() && description->isAutoConnect() &&
-            availableDevices.contains(d->descriptionDevices[description]))
+            devices.contains(description->device()))
         {
             this->setLinkConnected(description, true);
         }

@@ -4,6 +4,7 @@
 #include <QTimerEvent>
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QDebug>
 
 namespace
 {
@@ -73,6 +74,7 @@ void SerialPortService::updateDevices()
     QStringList devices;
     for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
     {
+        if (info.description().isNull() || info.isBusy()) continue;
         devices.append(info.portName());
     }
 
