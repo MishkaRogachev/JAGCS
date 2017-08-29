@@ -16,15 +16,19 @@ class SerialPortService::Impl
 {
 public:
     int timerId;
-    QStringList availablePorts;
+    QStringList devices;
+    QStringList busyDevices;
 };
 
 SerialPortService::SerialPortService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    this->updateAvailablePorts(); // TODO: serialPorts pool
+    this->updateDevices();
     d->timerId = this->startTimer(::interval);
+
+    connect(this, &SerialPortService::devicesChanged,
+            this, &SerialPortService::availableDevicesChanged);
 }
 
 SerialPortService::~SerialPortService()
@@ -40,28 +44,63 @@ QList<qint32> SerialPortService::availableBaudRates()
              QSerialPort::Baud115200 };
 }
 
-QStringList SerialPortService::availablePorts() const
+QStringList SerialPortService::devices() const
 {
-    return d->availablePorts;
+    return d->devices;
 }
 
-void SerialPortService::updateAvailablePorts()
+QStringList SerialPortService::busyDevices() const
 {
-    QStringList availablePorts;
-    for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
+    return d->busyDevices;
+}
+
+QStringList SerialPortService::availableDevices() const
+{
+    QStringList availableDevices;
+
+    for (const QString& device: d->devices)
     {
-        availablePorts.append(info.portName());
+        if (d->busyDevices.contains(device)) continue;
+
+        availableDevices.append(device);
     }
 
-    if (d->availablePorts == availablePorts) return;
+    return availableDevices;
+}
 
-    d->availablePorts = availablePorts;
-    emit availablePortsChanged(availablePorts);
+void SerialPortService::updateDevices()
+{
+    QStringList devices;
+    for (const QSerialPortInfo& info: QSerialPortInfo::availablePorts())
+    {
+        devices.append(info.portName());
+    }
+
+    if (d->devices == devices) return;
+
+    d->devices = devices;
+    emit devicesChanged();
+}
+
+void SerialPortService::holdDevice(const QString& port)
+{
+    if (d->busyDevices.contains(port)) return;
+
+    d->busyDevices.append(port);
+    emit availableDevicesChanged();
+}
+
+void SerialPortService::releaseDevice(const QString& port)
+{
+    if (!d->busyDevices.contains(port)) return;
+
+    d->busyDevices.removeOne(port);
+    emit availableDevicesChanged();
 }
 
 void SerialPortService::timerEvent(QTimerEvent* event)
 {
     if (event->timerId() != d->timerId) return QObject::timerEvent(event);
 
-    this->updateAvailablePorts();
+    this->updateDevices();
 }

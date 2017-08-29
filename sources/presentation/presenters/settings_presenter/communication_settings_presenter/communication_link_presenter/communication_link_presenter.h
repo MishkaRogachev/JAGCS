@@ -26,7 +26,7 @@ namespace presentation
     public slots:
         void updateView();
         void updateStatistics();
-        void updatePorts();
+        void updateDevices();
         void setConnected(bool connected);
         void save();
         void remove();

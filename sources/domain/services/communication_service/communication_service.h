@@ -15,12 +15,14 @@ namespace comm
 
 namespace domain
 {
+    class SerialPortService;
+
     class CommunicationService: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit CommunicationService(QObject* parent = nullptr);
+        CommunicationService(SerialPortService* serialPortService, QObject* parent = nullptr);
         ~CommunicationService() override;
 
         dao::LinkDescriptionPtr description(int id, bool reload = false);

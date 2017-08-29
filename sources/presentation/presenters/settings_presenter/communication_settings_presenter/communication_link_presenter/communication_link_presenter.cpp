@@ -45,11 +45,11 @@ void CommunicationLinkPresenter::updateStatistics()
     this->setViewProperty(PROPERTY(bytesRecv), QVariant::fromValue(m_description->bytesRecv()));
 }
 
-void CommunicationLinkPresenter::updatePorts()
+void CommunicationLinkPresenter::updateDevices()
 {
     QStringList devices;
     devices.append(QString());
-    for (const QString& port: m_serialPortsService->availablePorts()) devices.append(port);
+    for (const QString& device: m_serialPortsService->availableDevices()) devices.append(device);
     if (!devices.contains(m_description->device())) devices.append(m_description->device());
 
     this->setViewProperty(PROPERTY(devices), devices);
@@ -83,11 +83,11 @@ void CommunicationLinkPresenter::connectView(QObject* view)
     for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
 
-    this->updatePorts();
+    this->updateDevices();
     this->updateView();
 
-    connect(m_serialPortsService, &domain::SerialPortService::availablePortsChanged,
-            this, &CommunicationLinkPresenter::updatePorts);
+    connect(m_serialPortsService, &domain::SerialPortService::availableDevicesChanged,
+            this, &CommunicationLinkPresenter::updateDevices);
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));
     connect(view, SIGNAL(remove()), this, SLOT(remove()));

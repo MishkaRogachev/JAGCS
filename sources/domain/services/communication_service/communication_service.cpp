@@ -2,6 +2,7 @@
 
 // Qt
 #include <QThread>
+#include <QMap>
 #include <QDebug>
 
 // Internal
@@ -11,6 +12,8 @@
 #include "generic_repository.h"
 #include "generic_repository_impl.h"
 
+#include "serial_ports_service.h"
+
 #include "mavlink_communicator_factory.h"
 #include "communicator_worker.h"
 
@@ -19,6 +22,9 @@ using namespace domain;
 class CommunicationService::Impl
 {
 public:
+    SerialPortService* serialPortService;
+    QMap<dao::LinkDescriptionPtr, QString> descriptionDevices;
+
     QThread* commThread;
     CommunicatorWorker* commWorker;
 
@@ -29,13 +35,15 @@ public:
     {}
 };
 
-CommunicationService::CommunicationService(QObject* parent):
+CommunicationService::CommunicationService(SerialPortService* serialPortService, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
     qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
     qRegisterMetaType<dao::LinkDescription::Protocol>("dao::LinkDescription::Protocol");
     qRegisterMetaType<comm::AbstractCommunicator::Protocol>("comm::AbstractCommunicator::Protocol");
+
+    d->serialPortService = serialPortService;
 
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
@@ -57,6 +65,11 @@ CommunicationService::~CommunicationService()
     {
         description->setAutoConnect(description->isConnected());
         this->save(description);
+
+        if (d->descriptionDevices.contains(description))
+        {
+            d->serialPortService->releaseDevice(d->descriptionDevices.take(description));
+        }
     }
 
     d->commThread->quit();
@@ -95,6 +108,13 @@ void CommunicationService::init()
     {
         QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
                                   Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
+
+        if (description->type() == dao::LinkDescription::Serial &&
+            !description->device().isEmpty())
+        {
+            d->serialPortService->holdDevice(description->device());
+            d->descriptionDevices[description] = description->device();
+        }
     }
 }
 
@@ -103,9 +123,23 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     bool isNew = description->id() == 0;
     if (!d->linkRepository.save(description)) return false;
 
-    isNew ? descriptionAdded(description) : descriptionChanged(description);
     QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
                               Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
+
+    if (d->descriptionDevices.contains(description) &&
+        description->device() != d->descriptionDevices[description])
+    {
+        d->serialPortService->releaseDevice(d->descriptionDevices.take(description));
+    }
+
+    isNew ? descriptionAdded(description) : descriptionChanged(description);
+
+    if (description->type() == dao::LinkDescription::Serial &&
+        !description->device().isEmpty() && !d->descriptionDevices.contains(description))
+    {
+        d->serialPortService->holdDevice(description->device());
+        d->descriptionDevices[description] = description->device();
+    }
 
     return true;
 }
@@ -116,6 +150,12 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
 
     QMetaObject::invokeMethod(d->commWorker, "removeLinkByDescription",
                               Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
+
+    if (d->descriptionDevices.contains(description))
+    {
+        d->serialPortService->releaseDevice(d->descriptionDevices.take(description));
+    }
+
     emit descriptionRemoved(description);
 
     return true;

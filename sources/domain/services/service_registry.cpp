@@ -55,7 +55,7 @@ void ServiceRegistry::init(const QString& dataBaseName)
     d->telemetryService = new TelemetryService(d->vehicleService, qApp);
     d->videoService = new VideoService(qApp);
     d->commandService = new CommandService(qApp);
-    d->communicationService = new CommunicationService(qApp);
+    d->communicationService = new CommunicationService(&d->serialPortService, qApp);
 
     d->communicationService->init();
 

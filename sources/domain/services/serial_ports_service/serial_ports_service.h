@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    // TODO: serial device service
     class SerialPortService : public QObject
     {
         Q_OBJECT
@@ -14,13 +15,20 @@ namespace domain
         ~SerialPortService() override;
 
         static QList<qint32> availableBaudRates();
-        QStringList availablePorts() const;
+
+        QStringList devices() const;
+        QStringList busyDevices() const;
+        QStringList availableDevices() const;
 
     public slots:
-        void updateAvailablePorts();
+        void updateDevices();
+
+        void holdDevice(const QString& port);
+        void releaseDevice(const QString& port);
 
     signals:
-        void availablePortsChanged(QStringList availablePorts);
+        void devicesChanged();
+        void availableDevicesChanged();
 
     protected:
         void timerEvent(QTimerEvent* event);
