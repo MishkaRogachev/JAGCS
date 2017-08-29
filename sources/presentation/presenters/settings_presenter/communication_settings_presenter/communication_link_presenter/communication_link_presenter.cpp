@@ -47,11 +47,12 @@ void CommunicationLinkPresenter::updateStatistics()
 
 void CommunicationLinkPresenter::updatePorts()
 {
-    QStringList ports;
-    ports.append(QString());
-    for (const QString& port: m_serialPortsService->availablePorts()) ports.append(port);
+    QStringList devices;
+    devices.append(QString());
+    for (const QString& port: m_serialPortsService->availablePorts()) devices.append(port);
+    if (!devices.contains(m_description->device())) devices.append(m_description->device());
 
-    this->setViewProperty(PROPERTY(ports), ports);
+    this->setViewProperty(PROPERTY(devices), devices);
 }
 
 void CommunicationLinkPresenter::setConnected(bool connected)

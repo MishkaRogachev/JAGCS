@@ -11,6 +11,7 @@ namespace domain
 
     public:
         explicit SerialPortService(QObject* parent = nullptr);
+        ~SerialPortService() override;
 
         static QList<qint32> availableBaudRates();
         QStringList availablePorts() const;
@@ -25,8 +26,8 @@ namespace domain
         void timerEvent(QTimerEvent* event);
 
     private:
-        int m_timerId;
-        QStringList m_availablePorts;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

@@ -3,6 +3,7 @@
 // Qt
 #include <QTimerEvent>
 #include <QSerialPortInfo>
+#include <QSerialPort>
 
 namespace
 {
@@ -11,22 +12,37 @@ namespace
 
 using namespace domain;
 
+class SerialPortService::Impl
+{
+public:
+    int timerId;
+    QStringList availablePorts;
+};
+
 SerialPortService::SerialPortService(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    d(new Impl())
 {
     this->updateAvailablePorts(); // TODO: serialPorts pool
-    m_timerId = this->startTimer(::interval);
+    d->timerId = this->startTimer(::interval);
 }
+
+SerialPortService::~SerialPortService()
+{}
 
 QList<qint32> SerialPortService::availableBaudRates()
 {
     // return QSerialPortInfo::standardBaudRates(), if we need all
-    return { 9600, 19200, 38400, 57600, 115200};
+    return { QSerialPort::Baud9600,
+             QSerialPort::Baud19200,
+             QSerialPort::Baud38400,
+             QSerialPort::Baud57600,
+             QSerialPort::Baud115200 };
 }
 
 QStringList SerialPortService::availablePorts() const
 {
-    return m_availablePorts;
+    return d->availablePorts;
 }
 
 void SerialPortService::updateAvailablePorts()
@@ -37,15 +53,15 @@ void SerialPortService::updateAvailablePorts()
         availablePorts.append(info.portName());
     }
 
-    if (m_availablePorts == availablePorts) return;
+    if (d->availablePorts == availablePorts) return;
 
-    m_availablePorts = availablePorts;
+    d->availablePorts = availablePorts;
     emit availablePortsChanged(availablePorts);
 }
 
 void SerialPortService::timerEvent(QTimerEvent* event)
 {
-    if (event->timerId() != m_timerId) return QObject::timerEvent(event);
+    if (event->timerId() != d->timerId) return QObject::timerEvent(event);
 
     this->updateAvailablePorts();
 }
