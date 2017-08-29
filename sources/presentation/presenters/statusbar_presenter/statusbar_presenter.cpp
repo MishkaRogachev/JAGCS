@@ -8,6 +8,7 @@
 #include "telemetry_service.h"
 
 #include "radio_presenter.h"
+#include "logbook_presenter.h"
 
 using namespace presentation;
 
@@ -15,14 +16,15 @@ class StatusbarPresenter::Impl
 {
 public:
     RadioPresenter* radio;
+    LogbookPresenter* logbook;
 };
 
 StatusbarPresenter::StatusbarPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->radio = new RadioPresenter(domain::ServiceRegistry::telemetryService()->radioNode(),
-                                  this);
+    d->radio = new RadioPresenter(domain::ServiceRegistry::telemetryService()->radioNode(), this);
+    d->logbook = new LogbookPresenter(this);
 }
 
 StatusbarPresenter::~StatusbarPresenter()
@@ -31,6 +33,7 @@ StatusbarPresenter::~StatusbarPresenter()
 void StatusbarPresenter::connectView(QObject* view)
 {
     d->radio->setView(view->findChild<QObject*>(NAME(radio)));
+    d->logbook->setView(view->findChild<QObject*>(NAME(logbook)));
 
     connect(view, SIGNAL(setMode(QString)), this, SIGNAL(setMode(QString)));
 

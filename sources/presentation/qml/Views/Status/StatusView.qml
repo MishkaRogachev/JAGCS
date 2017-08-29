@@ -1,10 +1,10 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
+import "../Logbook"
 
-ToolBar {
+Controls.ToolBar {
     id: root
 
     signal setMode(string mode)
@@ -21,7 +21,7 @@ ToolBar {
             sourceSize.height: palette.controlBaseSize
         }
 
-        Label {
+        Controls.Label {
             text: "JAGCS"
         }
 
@@ -30,7 +30,11 @@ ToolBar {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Item { Layout.fillWidth: true }
+        LogbookView {
+            objectName: "logbook"
+            Layout.fillWidth: true
+            implicitHeight: root.height
+        }
 
         RowLayout {
             spacing: 1
@@ -53,7 +57,7 @@ ToolBar {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            Button {
+            Controls.Button {
                 iconSource: "qrc:/icons/quit.svg"
                 iconColor: palette.negativeColor
                 anchors.verticalCenter: parent.verticalCenter
