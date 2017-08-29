@@ -44,6 +44,8 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     qRegisterMetaType<comm::AbstractCommunicator::Protocol>("comm::AbstractCommunicator::Protocol");
 
     d->serialPortService = serialPortService;
+    connect(serialPortService, &SerialPortService::availableDevicesChanged,
+            this, &CommunicationService::onAvailableDevicesChanged);
 
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
@@ -168,6 +170,7 @@ void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& descr
                               Qt::QueuedConnection,
                               Q_ARG(dao::LinkDescriptionPtr, description),
                               Q_ARG(bool, connected));
+    description->setAutoConnect(connected);
 }
 
 void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
@@ -197,4 +200,18 @@ void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPt
     description->setProtocol(protocol);
 
     emit linkStatisticsChanged(description);
+}
+
+void CommunicationService::onAvailableDevicesChanged()
+{
+    QStringList availableDevices = d->serialPortService->availableDevices();
+
+    for (const dao::LinkDescriptionPtr& description: d->descriptionDevices.keys())
+    {
+        if (!description->isConnected() && description->isAutoConnect() &&
+            availableDevices.contains(d->descriptionDevices[description]))
+        {
+            this->setLinkConnected(description, true);
+        }
+    }
 }
