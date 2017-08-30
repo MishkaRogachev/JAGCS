@@ -19,7 +19,7 @@ Controls.Frame {
         contentHeight: column.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: Controls.ScrollBar {}
 
         ColumnLayout {
             id: column

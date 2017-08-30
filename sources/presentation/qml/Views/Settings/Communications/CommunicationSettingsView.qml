@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
 ColumnLayout {
     id: root
@@ -18,14 +18,14 @@ ColumnLayout {
         contentHeight: column.height
         clip: true
 
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: Controls.ScrollBar {}
 
         Frame {
             visible: repeater.count == 0
             width: parent.width
             height: label.height + palette.margins * 2
 
-            Label {
+            Controls.Label {
                 id: label
                 text: qsTr("No links present")
                 width: parent.width
@@ -52,7 +52,7 @@ ColumnLayout {
         }
     }
 
-    Button {
+    Controls.Button {
         id: addButton
         Layout.fillWidth: true
         text: qsTr("Add Link")
@@ -60,18 +60,18 @@ ColumnLayout {
         anchors.right: parent.right
         onClicked: if (!addMenu.visible) addMenu.open()
 
-        Menu {
+        Controls.Menu {
             id: addMenu
             implicitWidth: parent.width
             y: parent.height
 
-            MenuItem {
+            Controls.MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
                 onTriggered: addUdpLink()
             }
 
-            MenuItem {
+            Controls.MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
                 onTriggered: addSerialLink()

@@ -8,6 +8,7 @@ Frame {
 
     background: Rectangle {
         color: palette.raisedColor
+        border.color: palette.sunkenColor
         radius: 3
     }
 }

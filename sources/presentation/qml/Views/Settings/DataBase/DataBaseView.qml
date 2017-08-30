@@ -69,7 +69,7 @@ Controls.Frame {
                 anchors.fill: parent
                 contentHeight: journalColumn.height
                 clip: true
-                ScrollBar.vertical: ScrollBar {}
+                ScrollBar.vertical: Controls.ScrollBar {}
 
                 ColumnLayout {
                     id: journalColumn

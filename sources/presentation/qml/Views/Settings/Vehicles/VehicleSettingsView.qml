@@ -19,7 +19,7 @@ ColumnLayout {
         contentHeight: column.height
         clip: true
 
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: Controls.ScrollBar {}
 
         Controls.Frame {
             visible: repeater.count == 0
