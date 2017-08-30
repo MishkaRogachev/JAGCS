@@ -4,6 +4,9 @@
 // Internal
 #include "log_message.h"
 
+// Qt
+#include <QMutex>
+
 namespace domain
 {
     class LogBus: public QObject
@@ -25,6 +28,7 @@ namespace domain
         LogBus();
 
         QList<LogMessage> m_messages;
+        QMutex m_mutex;
     };
 }
 
