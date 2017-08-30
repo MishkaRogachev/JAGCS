@@ -18,6 +18,12 @@ function pad(num, size) {
     return str;
 }
 
+function formatTime(time) {
+    return pad(time.getHours(), 2) + ":" +
+            pad(time.getMinutes(), 2) + ":" +
+            pad(time.getSeconds(), 2);
+}
+
 function degreesToDms(degrees, lng) {
     var sign = degrees < 0 ? -1 : 1
     var abs = Math.abs(degrees);

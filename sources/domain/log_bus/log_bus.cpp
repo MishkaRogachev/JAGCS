@@ -5,30 +5,26 @@
 
 using namespace domain;
 
-class LogBus::Impl
-{
-public:
-    QList<LogMessage> m_messages;
-};
-
-LogBus::~LogBus()
-{}
-
 LogBus* LogBus::instance()
 {
     static LogBus bus;
     return &bus;
 }
 
-QList<LogMessage> LogBus::messages()
+QList<LogMessage> LogBus::logs()
 {
-    return instance()->d->m_messages;
+    return instance()->m_messages;
 }
 
-void LogBus::addLogMessage(const LogMessage& message)
+void LogBus::log(const LogMessage& message)
 {
-    instance()->d->m_messages.append(message);
-    emit instance()->newMessage(message);
+    instance()->m_messages.append(message);
+    emit instance()->logAdded(message);
+}
+
+void LogBus::log(const QString& message, LogMessage::LogType type)
+{
+    LogBus::log(LogMessage(QTime::currentTime(), message, type));
 }
 
 LogBus::LogBus()

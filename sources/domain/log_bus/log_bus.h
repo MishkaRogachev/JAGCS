@@ -11,22 +11,20 @@ namespace domain
         Q_OBJECT
 
     public:
-        ~LogBus() override;
         static LogBus* instance();
 
-        static QList<LogMessage> messages();
+        static QList<LogMessage> logs();
 
-        static void addLogMessage(const LogMessage& message);
+        static void log(const LogMessage& message);
+        static void log(const QString& message, LogMessage::LogType type = LogMessage::Common);
 
     signals:
-        void newMessage(LogMessage message);
+        void logAdded(LogMessage message);
 
     private:
         LogBus();
 
-        class Impl;
-        QScopedPointer<Impl> const d;
-        Q_DISABLE_COPY(LogBus)
+        QList<LogMessage> m_messages;
     };
 }
 

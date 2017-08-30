@@ -9,6 +9,7 @@
 #include "mission_item.h"
 #include "video_source.h"
 #include "command.h"
+#include "log_message.h"
 
 void registerQmlTypes()
 {
@@ -26,6 +27,8 @@ void registerQmlTypes()
                 "JAGCS", 1, 0, "VideoSource", "Can't create entities in QML");
     qmlRegisterUncreatableType<domain::Command>(
                 "JAGCS", 1, 0, "Command", "Can't create commands in QML");
+    qmlRegisterUncreatableType<domain::LogMessage>(
+                "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
 }
 
 #endif // QML_DECLARATIONS_H

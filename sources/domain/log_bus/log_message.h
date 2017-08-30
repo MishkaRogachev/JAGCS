@@ -23,13 +23,15 @@ namespace domain
             Critical
         };
 
-        LogMessage();
+        LogMessage(const QTime& timestamp = QTime(),
+                   const QString& message = QString(),
+                   LogType type = Common);
 
         QTime timestamp() const;
         void setTimestamp(const QTime& timestamp);
 
         QString message() const;
-        void setMessage(QString message);
+        void setMessage(const QString& message);
 
         LogType type() const;
         void setType(LogType type);
@@ -42,5 +44,7 @@ namespace domain
         Q_ENUM(LogType)
     };
 }
+
+Q_DECLARE_METATYPE(domain::LogMessage)
 
 #endif // LOG_MESSAGE_H

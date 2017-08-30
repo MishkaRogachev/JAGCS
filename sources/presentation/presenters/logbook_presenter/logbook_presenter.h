@@ -11,14 +11,12 @@ namespace presentation
 
     public:
         explicit LogbookPresenter(QObject* parent = nullptr);
-        ~LogbookPresenter() override;
+
+    public slots:
+        void updateLog();
 
     protected:
         void connectView(QObject* view) override;
-
-    private:
-        class Impl;
-        QScopedPointer<Impl> const d;
     };
 }
 

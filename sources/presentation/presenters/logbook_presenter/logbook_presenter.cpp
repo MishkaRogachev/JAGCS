@@ -1,26 +1,36 @@
 #include "logbook_presenter.h"
 
 // Qt
+#include <QVariant>
 #include <QDebug>
 
 // Internal
-#include "service_registry.h"
+#include "log_bus.h"
 
 using namespace presentation;
 
-class LogbookPresenter::Impl
-{
-public:
-
-};
-
 LogbookPresenter::LogbookPresenter(QObject* parent):
-    BasePresenter(parent),
-    d(new Impl())
+    BasePresenter(parent)
 {}
 
-LogbookPresenter::~LogbookPresenter()
-{}
+void LogbookPresenter::updateLog()
+{
+    QVariantList logs;
+
+    for (const domain::LogMessage& message: domain::LogBus::logs())
+    {
+        logs.append(QVariant::fromValue(message));
+    }
+
+    this->setViewProperty(PROPERTY(logs), logs);
+}
 
 void LogbookPresenter::connectView(QObject* view)
-{}
+{
+    Q_UNUSED(view)
+
+    this->updateLog();
+
+    connect(domain::LogBus::instance(), &domain::LogBus::logAdded,
+            this, &LogbookPresenter::updateLog);
+}

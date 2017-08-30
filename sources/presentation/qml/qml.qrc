@@ -50,6 +50,8 @@
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/RadioStatusView.qml</file>
         <file>Views/Logbook/LogbookView.qml</file>
+        <file>Views/Logbook/LogList.qml</file>
+        <file>Views/Logbook/LogEntry.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/VideoSplitView.qml</file>
         <file>Views/Map/MapView.qml</file>

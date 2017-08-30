@@ -8,14 +8,16 @@ Item {
 
     property bool maximized: false
     property real logHeightFactor: 0.5
+    property var logs: []
 
-    Rectangle {
+    LogList {
         anchors.left: parent.left
         anchors.right: button.left
         anchors.top: parent.top
         height: maximized ? main.height * logHeightFactor : root.height
+        Behavior on height { PropertyAnimation { duration: 200 } }
     }
- 
+
     Controls.Button {
         id: button
         anchors.right: parent.right

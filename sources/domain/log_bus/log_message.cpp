@@ -2,7 +2,10 @@
 
 using namespace domain;
 
-LogMessage::LogMessage()
+LogMessage::LogMessage(const QTime& timestamp, const QString& message, LogMessage::LogType type):
+    m_timestamp(timestamp),
+    m_message(message),
+    m_type(type)
 {}
 
 QTime LogMessage::timestamp() const
@@ -20,7 +23,7 @@ QString LogMessage::message() const
     return m_message;
 }
 
-void LogMessage::setMessage(QString message)
+void LogMessage::setMessage(const QString& message)
 {
     m_message = message;
 }
