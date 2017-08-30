@@ -17,6 +17,8 @@
 #include "mavlink_communicator_factory.h"
 #include "communicator_worker.h"
 
+#include "log_bus.h"
+
 using namespace domain;
 
 class CommunicationService::Impl
@@ -180,7 +182,14 @@ void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr
 {
     description->addBytesRecv(bytesReceivedSec);
     description->addBytesSent(bytesSentSec);
-    description->setConnected(connected);
+
+    if (description->isConnected() != connected)
+    {
+        LogBus::log(tr("Link") + " " + description->name() + " " +
+                       (connected ? tr("connected") : tr("disconnected")),
+                       connected ? LogMessage::Positive : LogMessage::Warning);
+        description->setConnected(connected);
+    }
 
     emit linkStatisticsChanged(description);
 }
@@ -197,6 +206,13 @@ void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescription
 void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
                                                     dao::LinkDescription::Protocol protocol)
 {
+    if (description->protocol() == protocol) return;
+
+    QString msg;
+    if (protocol == dao::LinkDescription::MavLink1) msg = tr("switched on MAVLINK v.1");
+    if (protocol == dao::LinkDescription::MavLink2) msg = tr("switched on MAVLINK v.2");
+
+    LogBus::log(tr("Link") + " " + description->name() + " " + msg);
     description->setProtocol(protocol);
 
     emit linkStatisticsChanged(description);
