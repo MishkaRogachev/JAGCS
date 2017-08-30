@@ -77,7 +77,7 @@ namespace dao
         int m_baudRate = -1;
         bool m_autoConnect = false;
 
-        Protocol m_protocol;
+        Protocol m_protocol = UnknownProtocol;
         bool m_connected = false;
 
         int m_statistcsCount;

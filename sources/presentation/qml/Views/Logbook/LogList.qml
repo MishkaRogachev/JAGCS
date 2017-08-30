@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
@@ -6,15 +7,30 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
-    ColumnLayout {
+    padding: palette.margins / 2
+
+    function flickToEnd() {
+        flickable.contentY = column.height - flickable.height;
+    }
+
+    Flickable {
+        id: flickable
         anchors.fill: parent
+        contentHeight: column.height
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
+        ScrollBar.vertical: ScrollBar {}
 
-        Repeater {
-            model: logs
+        ColumnLayout {
+            id: column
 
-            LogEntry {
-                log: modelData
-                Layout.fillWidth: true
+            Repeater {
+                model: logs
+
+                LogEntry {
+                    log: modelData
+                    Layout.fillWidth: true
+                }
             }
         }
     }

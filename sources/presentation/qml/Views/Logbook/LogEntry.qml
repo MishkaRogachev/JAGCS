@@ -10,8 +10,10 @@ Controls.Label {
 
     property var log
 
-    text: "[" + Helper.formatTime(log.timestamp) + "] " + log.message
+    text: log ? "[" + Helper.formatTime(log.timestamp) + "] " + log.message : ""
     color: {
+        if (!log) return palette.backgroundColor;
+
         switch (log.type) {
         case LogMessage.Common: return palette.textColor;
         case LogMessage.Positive: return palette.positiveColor;
