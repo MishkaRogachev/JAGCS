@@ -23,6 +23,8 @@
 #include "mavlink_communicator.h"
 #include "mavlink_mode_helper.h"
 
+#include "log_bus.h"
+
 using namespace comm;
 using namespace domain;
 
@@ -131,6 +133,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         {
             vehicle->setOnline(true);
             changed = true;
+            LogBus::log(tr("Vehicle %1 online").arg(vehicle->name()), LogMessage::Positive);
         }
 
         if (!d->vehicleTimers.contains(vehicleId))
@@ -204,6 +207,8 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
             if (vehicle) vehicle->setOnline(false);
             d->vehicleService->vehicleChanged(vehicle);
             timer->stop();
+
+            LogBus::log(tr("Vehicle %1 gone offline").arg(vehicle->name()), LogMessage::Warning);
         }
     }
 }
