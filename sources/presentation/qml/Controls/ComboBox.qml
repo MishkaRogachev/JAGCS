@@ -8,6 +8,7 @@ T.ComboBox {
     clip: true
     implicitWidth: palette.controlBaseSize * 4
     implicitHeight: palette.controlBaseSize
+    opacity: enabled ? 1 : 0.33
 
     delegate: ItemDelegate {
         width: control.width

@@ -8,7 +8,7 @@ T.SpinBox {
 
     font.pixelSize: palette.fontPixelSize
     editable: true
-    implicitWidth: palette.controlBaseSize * 4
+    implicitWidth: palette.controlBaseSize * 5
     implicitHeight: palette.controlBaseSize
     opacity: enabled ? 1 : 0.33
 

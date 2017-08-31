@@ -48,6 +48,7 @@ ColumnLayout {
         Controls.TextField {
             id: nameEdit
             visible: edit.checked
+            Layout.fillWidth: true
         }
 
         Controls.Button {

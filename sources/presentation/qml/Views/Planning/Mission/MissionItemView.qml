@@ -69,7 +69,7 @@ Item {
 
     GridLayout {
         anchors.fill: parent
-        columns: 3
+        columns: 2
 
         Controls.Label {
             text: qsTr("Item")
@@ -77,8 +77,6 @@ Item {
         }
 
         RowLayout {
-            Layout.columnSpan: 2
-
             Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.negativeColor
@@ -124,7 +122,6 @@ Item {
             enabled: editEnabled && sequence > 0
             currentIndex: MissionItem.UnknownCommand
             onCurrentIndexChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -134,22 +131,24 @@ Item {
             Layout.fillWidth: true
         }
 
-        Controls.RealSpinBox {
-            id: altitudeBox
+        RowLayout {
             visible: altitudeVisible
-            enabled: editEnabled
-            realFrom: -500 // 418 m Daed Sea shore
-            realTo: 20000 // TODO: constants to config
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
 
-        Controls.CheckBox {
-            id: altitudeRelativeBox
-            text: qsTr("Rel.")
-            visible: altitudeVisible
-            enabled: editEnabled && sequence > 0
-            onCheckedChanged: changed = true
+            Controls.RealSpinBox {
+                id: altitudeBox
+                enabled: editEnabled
+                realFrom: -500 // 418 m Daed Sea shore
+                realTo: 20000 // TODO: constants to config
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.CheckBox {
+                id: altitudeRelativeBox
+                text: qsTr("Rel.")
+                enabled: editEnabled && sequence > 0
+                onCheckedChanged: changed = true
+            }
         }
 
         Controls.Label {
@@ -165,7 +164,6 @@ Item {
             realFrom: -500 // 418 m Daed Sea shore
             realTo: 20000 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -175,22 +173,34 @@ Item {
             Layout.fillWidth: true
         }
 
-        Controls.CoordSpinBox {
-            id: latitudeBox
-            visible: positionVisible
-            enabled: editEnabled
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.MapPickButton {
-            id: pickButton
-            visible: positionVisible
-            enabled: editEnabled
+        GridLayout {
+            columns: 2
             Layout.rowSpan: 2
-            onPicked: {
-                latitudeBox.realValue = coordinate.latitude;
-                longitudeBox.realValue = coordinate.longitude;
+            visible: positionVisible
+
+            Controls.CoordSpinBox {
+                id: latitudeBox
+                enabled: editEnabled
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.MapPickButton {
+                id: pickButton
+                enabled: editEnabled
+                Layout.rowSpan: 2
+                onPicked: {
+                    latitudeBox.realValue = coordinate.latitude;
+                    longitudeBox.realValue = coordinate.longitude;
+                }
+            }
+
+            Controls.CoordSpinBox {
+                id: longitudeBox
+                enabled: editEnabled
+                isLongitude: true
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
             }
         }
 
@@ -200,38 +210,31 @@ Item {
             Layout.fillWidth: true
         }
 
-        Controls.CoordSpinBox {
-            id: longitudeBox
-            visible: positionVisible
-            enabled: editEnabled
-            isLongitude: true
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
         Controls.Label {
             text: qsTr("Radius")
             visible: radiusVisible
             Layout.fillWidth: true
         }
 
-        Controls.RealSpinBox {
-            id: radiusBox
+        RowLayout {
             visible: radiusVisible
-            enabled: editEnabled
-            realTo: 5000 // TODO: constants to config
-            onRealValueChanged: changed = true
-            Layout.columnSpan: clockwiseVisible ? 1 : 2
-            Layout.fillWidth: true
-        }
 
-        Controls.CheckBox {
-            id: clockwiseBox
-            text: qsTr("CW")
-            visible: clockwiseVisible
-            enabled: editEnabled
-            onCheckedChanged: changed = true
-            Layout.alignment: Qt.AlignRight
+            Controls.RealSpinBox {
+                id: radiusBox
+                enabled: editEnabled
+                realTo: 5000 // TODO: constants to config
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.CheckBox {
+                id: clockwiseBox
+                text: qsTr("CW")
+                visible: clockwiseVisible
+                enabled: editEnabled
+                onCheckedChanged: changed = true
+                Layout.alignment: Qt.AlignRight
+            }
         }
 
         Controls.Label {
@@ -247,7 +250,6 @@ Item {
             realFrom: -90
             realTo: 90 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -264,7 +266,6 @@ Item {
             realFrom: -180
             realTo: 360 // TODO: constants to config
             onRealValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -278,7 +279,6 @@ Item {
             id: repeatsBox
             visible: repeatsVisible
             onValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -293,7 +293,6 @@ Item {
             visible: timeVisible
             enabled: editEnabled
             onRealValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -343,27 +342,23 @@ Item {
 
         Item {
             Layout.fillHeight: true
-            Layout.columnSpan: 3
+            Layout.columnSpan: 2
         }
 
-        RowLayout {
-            Layout.columnSpan: 3
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+            Layout.fillWidth: true
+        }
 
-            Controls.Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-                enabled: changed
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-                enabled: editEnabled && changed
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: editEnabled && changed
+            Layout.fillWidth: true
         }
     }
 }
