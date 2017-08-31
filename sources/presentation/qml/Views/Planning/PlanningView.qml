@@ -11,19 +11,22 @@ Controls.Pane {
 
     property bool profileVisibe: false
 
+    padding: 0
+
     MissionView {
         id: mission
         objectName: "mission"
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: profile.top
+        anchors.margins: palette.margins
     }
 
     MapView {
         id: map
         objectName: "map"
         anchors.fill: parent
-        anchors.leftMargin: mission.width + palette.margins
+        anchors.leftMargin: mission.width + palette.margins * 2
         anchors.bottomMargin: profile.height
     }
 

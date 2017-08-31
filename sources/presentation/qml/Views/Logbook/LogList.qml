@@ -8,6 +8,7 @@ Controls.Frame {
     id: root
 
     padding: palette.margins / 2
+    backgroundColor: palette.sunkenColor
 
     function flickToEnd() {
         flickable.contentY = column.height - flickable.height;
@@ -23,6 +24,7 @@ Controls.Frame {
 
         ColumnLayout {
             id: column
+            width: root.width
 
             Repeater {
                 model: logs

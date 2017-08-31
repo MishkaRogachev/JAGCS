@@ -59,7 +59,8 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Controls.Pane {
+        Controls.Frame {
+            backgroundColor: palette.sunkenColor
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.columnSpan: 2

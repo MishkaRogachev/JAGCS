@@ -6,9 +6,11 @@ import "./"
 Frame {
     id: control
 
+    property color backgroundColor: palette.raisedColor
+
     background: Rectangle {
-        color: palette.raisedColor
-        border.color: palette.sunkenColor
+        color: backgroundColor
+        border.color: palette.backgroundColor
         radius: 3
     }
 }
