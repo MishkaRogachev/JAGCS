@@ -3,7 +3,6 @@
 // Qt
 #include <QMap>
 #include <QVariant>
-#include <QCoreApplication>
 #include <QDebug>
 
 // Internal
@@ -11,34 +10,29 @@
 #include "mission.h"
 #include "mission_item.h"
 
+#include "translation_helper.h"
+
 using namespace presentation;
 
 namespace
 {
-    const QMap<dao::MissionItem::Command, QString> commands =
-    {
-        { dao::MissionItem::UnknownCommand, qApp->translate("MissionItemPresenter", "None") },
-        { dao::MissionItem::Home, qApp->translate("MissionItemPresenter", "Home") },
-        { dao::MissionItem::Takeoff, qApp->translate("MissionItemPresenter", "Takeoff") },
-        { dao::MissionItem::Waypoint, qApp->translate("MissionItemPresenter", "Waypoint") },
-        { dao::MissionItem::LoiterUnlim, qApp->translate("MissionItemPresenter", "Loiter unlim") },
-        { dao::MissionItem::LoiterAltitude, qApp->translate("MissionItemPresenter", "Loiter altitude") },
-        { dao::MissionItem::LoiterTurns, qApp->translate("MissionItemPresenter", "Loiter turns") },
-        { dao::MissionItem::LoiterTime, qApp->translate("MissionItemPresenter", "Loiter time") },
-        { dao::MissionItem::Continue, qApp->translate("MissionItemPresenter", "Continue") },
-        { dao::MissionItem::Return, qApp->translate("MissionItemPresenter", "Return") },
-        { dao::MissionItem::Landing, qApp->translate("MissionItemPresenter", "Landing") },
-        { dao::MissionItem::SetSpeed, qApp->translate("MissionItemPresenter", "SetSpeed") }
+    const QList<dao::MissionItem::Command> availableCommands = {
+        dao::MissionItem::UnknownCommand, dao::MissionItem::Home, dao::MissionItem::Takeoff,
+        dao::MissionItem::Waypoint, dao::MissionItem::LoiterUnlim, dao::MissionItem::LoiterAltitude,
+        dao::MissionItem::LoiterTurns, dao::MissionItem::LoiterTime, dao::MissionItem::Continue,
+        dao::MissionItem::Return, dao::MissionItem::Landing, dao::MissionItem::SetSpeed
     };
 }
 
 class MissionItemPresenter::Impl
 {
 public:
+    domain::MissionService* service;
+
     dao::MissionPtr selectedMission;
     dao::MissionItemPtr item;
 
-    domain::MissionService* service;
+    TranslationHelper helper;
 };
 
 MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObject* object):
@@ -159,7 +153,11 @@ void MissionItemPresenter::updateView()
 
 void MissionItemPresenter::connectView(QObject* view)
 {
-    QStringList commands = ::commands.values();
+    QStringList commands;
+    for (dao::MissionItem::Command command: ::availableCommands)
+    {
+        commands.append(d->helper.translateCommand(command));
+    }
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 
     connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));

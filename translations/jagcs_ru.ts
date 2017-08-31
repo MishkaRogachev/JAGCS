@@ -270,69 +270,56 @@
 <context>
     <name>DescriptionVehiclePresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="15"/>
         <source>Unknown</source>
-        <translation>Неизвестно</translation>
+        <translation type="vanished">Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="16"/>
         <source>Auto</source>
-        <translation>Авто</translation>
+        <translation type="vanished">Авто</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="17"/>
         <source>Fixed Wing</source>
-        <translation>Самолёт</translation>
+        <translation type="vanished">Самолёт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="18"/>
         <source>Flying Wing</source>
-        <translation>Летающее крыло</translation>
+        <translation type="vanished">Летающее крыло</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="19"/>
         <source>Quadcopter</source>
-        <translation>Квадрокоптер</translation>
+        <translation type="vanished">Квадрокоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="20"/>
         <source>Tricopter</source>
-        <translation>Трикоптер</translation>
+        <translation type="vanished">Трикоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="21"/>
         <source>Hexcopter</source>
-        <translation>Гексакоптер</translation>
+        <translation type="vanished">Гексакоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="22"/>
         <source>Helicopter</source>
-        <translation>Вертолёт</translation>
+        <translation type="vanished">Вертолёт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="23"/>
         <source>Coaxial</source>
-        <translation>Соосный вертолет</translation>
+        <translation type="vanished">Соосный вертолет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="24"/>
         <source>Vtol</source>
-        <translation>СВВП</translation>
+        <translation type="vanished">СВВП</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="25"/>
         <source>Airship</source>
-        <translation>Дирижабль</translation>
+        <translation type="vanished">Дирижабль</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="26"/>
         <source>Kite</source>
-        <translation>Воздушный змей</translation>
+        <translation type="vanished">Воздушный змей</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="27"/>
         <source>Ornithopter</source>
-        <translation>Орнитоптер</translation>
+        <translation type="vanished">Орнитоптер</translation>
     </message>
 </context>
 <context>
@@ -813,49 +800,52 @@
 <context>
     <name>MissionItemPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="20"/>
         <source>None</source>
-        <translation>Нет</translation>
+        <translation type="vanished">Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="21"/>
         <source>Home</source>
-        <translation>Дом</translation>
+        <translation type="vanished">Дом</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="22"/>
         <source>Takeoff</source>
-        <translation>Взлёт</translation>
+        <translation type="vanished">Взлёт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="23"/>
         <source>Waypoint</source>
-        <translation>Поворотный пункт маршрута</translation>
+        <translation type="vanished">Путевая точка</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="24"/>
+        <source>Loiter unlim.</source>
+        <translation type="vanished">Круг безлим.</translation>
+    </message>
+    <message>
+        <source>Loiter alt.</source>
+        <translation type="vanished">Круг до выс.</translation>
+    </message>
+    <message>
+        <source>Set speed</source>
+        <translation type="vanished">Зад. скорость</translation>
+    </message>
+    <message>
         <source>Loiter unlim</source>
-        <translation>Круг безлим</translation>
+        <translation type="vanished">Круг безлим</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="25"/>
         <source>Loiter altitude</source>
-        <translation>Круг до высоты</translation>
+        <translation type="vanished">Круг до высоты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="26"/>
         <source>Loiter turns</source>
-        <translation>Круг оборотов</translation>
+        <translation type="vanished">Круг оборотов</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="27"/>
         <source>Loiter time</source>
-        <translation>Круг по времени</translation>
+        <translation type="vanished">Круг по времени</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="31"/>
         <source>SetSpeed</source>
-        <translation>Установить скорость</translation>
+        <translation type="vanished">Установить скорость</translation>
     </message>
     <message>
         <source>LoiterAltitude</source>
@@ -866,19 +856,16 @@
         <translation type="vanished">Круг оборотов</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="28"/>
         <source>Continue</source>
-        <translation>Продление</translation>
+        <translation type="vanished">Продление</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="29"/>
         <source>Return</source>
-        <translation>Возврат</translation>
+        <translation type="vanished">Возврат</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="30"/>
         <source>Landing</source>
-        <translation>Посадка</translation>
+        <translation type="vanished">Посадка</translation>
     </message>
 </context>
 <context>
@@ -994,7 +981,7 @@
         <translation>Маршрут</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="85"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="86"/>
         <source>Vehicle</source>
         <translation>Аппарат</translation>
     </message>
@@ -1207,6 +1194,129 @@
     <message>
         <source>ARM</source>
         <translation type="vanished">ЗАРЯД</translation>
+    </message>
+</context>
+<context>
+    <name>TranslationHelper</name>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="16"/>
+        <source>Home</source>
+        <translation>Дом</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="17"/>
+        <source>Takeoff</source>
+        <translation>Взлёт</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="18"/>
+        <source>Waypoint</source>
+        <translation>Путевая точка</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="19"/>
+        <source>Loiter unlim.</source>
+        <translation>Круг безлим.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="20"/>
+        <source>Loiter alt.</source>
+        <translation>Круг до выс.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="21"/>
+        <source>Loiter turns</source>
+        <translation>Круг оборотов</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="22"/>
+        <source>Loiter time</source>
+        <translation>Круг времени</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="23"/>
+        <source>Continue</source>
+        <translation>Продление</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="24"/>
+        <source>Return</source>
+        <translation>Возврат</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="25"/>
+        <source>Landing</source>
+        <translation>Посадка</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="26"/>
+        <source>Set speed</source>
+        <translation>Зад. скорость</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="28"/>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="36"/>
+        <source>Auto</source>
+        <translation>Авто</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="37"/>
+        <source>Fixed wing</source>
+        <translation>Самолёт</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="38"/>
+        <source>Flying wing</source>
+        <translation>Летающее крыло</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="39"/>
+        <source>Quadcopter</source>
+        <translation>Квадрокоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="40"/>
+        <source>Tricopter</source>
+        <translation>Трикоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="41"/>
+        <source>Hexcopter</source>
+        <translation>Гексакоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="42"/>
+        <source>Coaxial</source>
+        <translation>Соосный вертолет</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="43"/>
+        <source>Vtol</source>
+        <translation>СВВП</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="44"/>
+        <source>Airship</source>
+        <translation>Дирижабль</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="45"/>
+        <source>Kite</source>
+        <translation>Воздушный змей</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="46"/>
+        <source>Ornithopter</source>
+        <translation>Орнитоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="48"/>
+        <source>Unknown</source>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>

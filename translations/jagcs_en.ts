@@ -264,74 +264,6 @@
     </message>
 </context>
 <context>
-    <name>DescriptionVehiclePresenter</name>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="15"/>
-        <source>Unknown</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="16"/>
-        <source>Auto</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="17"/>
-        <source>Fixed Wing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="18"/>
-        <source>Flying Wing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="19"/>
-        <source>Quadcopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="20"/>
-        <source>Tricopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="21"/>
-        <source>Hexcopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="22"/>
-        <source>Helicopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="23"/>
-        <source>Coaxial</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="24"/>
-        <source>Vtol</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="25"/>
-        <source>Airship</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="26"/>
-        <source>Kite</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/settings_presenter/vehicles_presenter/description_vehicle_presenter/description_vehicle_presenter.cpp" line="27"/>
-        <source>Ornithopter</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>DistanceLabel</name>
     <message>
         <location filename="../sources/presentation/qml/Indicators/DistanceLabel.qml" line="10"/>
@@ -807,69 +739,6 @@
     </message>
 </context>
 <context>
-    <name>MissionItemPresenter</name>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="20"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="21"/>
-        <source>Home</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="22"/>
-        <source>Takeoff</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="23"/>
-        <source>Waypoint</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="24"/>
-        <source>Loiter unlim</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="25"/>
-        <source>Loiter altitude</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="26"/>
-        <source>Loiter turns</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="27"/>
-        <source>Loiter time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="28"/>
-        <source>Continue</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="29"/>
-        <source>Return</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="30"/>
-        <source>Landing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_item_presenter/mission_item_presenter.cpp" line="31"/>
-        <source>SetSpeed</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>MissionItemView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="75"/>
@@ -970,7 +839,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="85"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="86"/>
         <source>Vehicle</source>
         <translation></translation>
     </message>
@@ -1166,6 +1035,129 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="54"/>
         <source> A</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>TranslationHelper</name>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="16"/>
+        <source>Home</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="17"/>
+        <source>Takeoff</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="18"/>
+        <source>Waypoint</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="19"/>
+        <source>Loiter unlim.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="20"/>
+        <source>Loiter alt.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="21"/>
+        <source>Loiter turns</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="22"/>
+        <source>Loiter time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="23"/>
+        <source>Continue</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="24"/>
+        <source>Return</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="25"/>
+        <source>Landing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="26"/>
+        <source>Set speed</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="28"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="36"/>
+        <source>Auto</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="37"/>
+        <source>Fixed wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="38"/>
+        <source>Flying wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="39"/>
+        <source>Quadcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="40"/>
+        <source>Tricopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="41"/>
+        <source>Hexcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="42"/>
+        <source>Coaxial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="43"/>
+        <source>Vtol</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="44"/>
+        <source>Airship</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="45"/>
+        <source>Kite</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="46"/>
+        <source>Ornithopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_helper/translation_helper.cpp" line="48"/>
+        <source>Unknown</source>
         <translation></translation>
     </message>
 </context>

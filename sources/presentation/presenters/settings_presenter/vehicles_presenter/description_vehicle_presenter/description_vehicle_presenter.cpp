@@ -2,30 +2,24 @@
 
 // Qt
 #include <QVariant>
-#include <QCoreApplication>
 
 // Internal
 #include "vehicle_service.h"
 #include "vehicle.h"
 
+#include "translation_helper.h"
+
 namespace
 {
-    const QMap<dao::Vehicle::Type, QString> types =
+    namespace
     {
-        { dao::Vehicle::UnknownType, qApp->translate("DescriptionVehiclePresenter", "Unknown") },
-        { dao::Vehicle::Auto, qApp->translate("DescriptionVehiclePresenter", "Auto") },
-        { dao::Vehicle::FixedWing, qApp->translate("DescriptionVehiclePresenter", "Fixed Wing") },
-        { dao::Vehicle::FlyingWing, qApp->translate("DescriptionVehiclePresenter", "Flying Wing") },
-        { dao::Vehicle::Quadcopter, qApp->translate("DescriptionVehiclePresenter", "Quadcopter") },
-        { dao::Vehicle::Tricopter, qApp->translate("DescriptionVehiclePresenter", "Tricopter") },
-        { dao::Vehicle::Hexcopter, qApp->translate("DescriptionVehiclePresenter", "Hexcopter") },
-        { dao::Vehicle::Helicopter, qApp->translate("DescriptionVehiclePresenter", "Helicopter") },
-        { dao::Vehicle::Coaxial, qApp->translate("DescriptionVehiclePresenter", "Coaxial") },
-        { dao::Vehicle::Vtol, qApp->translate("DescriptionVehiclePresenter", "Vtol") },
-        { dao::Vehicle::Airship, qApp->translate("DescriptionVehiclePresenter", "Airship") },
-        { dao::Vehicle::Kite, qApp->translate("DescriptionVehiclePresenter", "Kite") },
-        { dao::Vehicle::Ornithopter, qApp->translate("DescriptionVehiclePresenter", "Ornithopter") }
-    };
+        const QList<dao::Vehicle::Type> availableTypes = {
+            dao::Vehicle::Auto, dao::Vehicle::FixedWing, dao::Vehicle::FlyingWing,
+            dao::Vehicle::Quadcopter, dao::Vehicle::Tricopter, dao::Vehicle::Hexcopter,
+            dao::Vehicle::Octocopter, dao::Vehicle::Helicopter, dao::Vehicle::Coaxial,
+            dao::Vehicle::Vtol, dao::Vehicle::Airship, dao::Vehicle::Kite, dao::Vehicle::Ornithopter
+        };
+    }
 }
 
 using namespace presentation;
@@ -38,9 +32,7 @@ DescriptionVehiclePresenter::DescriptionVehiclePresenter(domain::VehicleService*
     m_vehicle(vehicle)
 {
     connect(m_service, &domain::VehicleService::vehicleChanged, this, [this]
-            (const dao::VehiclePtr& vehicle) {
-        if (vehicle == m_vehicle) this->updateStatus();
-    });
+            (const dao::VehiclePtr& vehicle) { if (vehicle == m_vehicle) this->updateStatus(); });
 }
 
 dao::VehiclePtr DescriptionVehiclePresenter::vehicle() const
@@ -52,7 +44,7 @@ void DescriptionVehiclePresenter::updateView()
 {
     this->setViewProperty(PROPERTY(name), m_vehicle->name());
     this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
-    this->setViewProperty(PROPERTY(type), ::types.keys().indexOf(m_vehicle->type()));
+    this->setViewProperty(PROPERTY(type), ::availableTypes.indexOf(m_vehicle->type()));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -66,7 +58,7 @@ void DescriptionVehiclePresenter::save()
 {
     m_vehicle->setName(this->viewProperty(PROPERTY(name)).toString());
     m_vehicle->setMavId(this->viewProperty(PROPERTY(mavId)).toInt());
-    m_vehicle->setType(::types.keys().at(this->viewProperty(PROPERTY(type)).toInt()));
+    m_vehicle->setType(::availableTypes.at(this->viewProperty(PROPERTY(type)).toInt()));
 
     if (!m_service->save(m_vehicle)) return;
 
@@ -80,7 +72,12 @@ void DescriptionVehiclePresenter::remove()
 
 void DescriptionVehiclePresenter::connectView(QObject* view)
 {
-    QStringList types = ::types.values();
+    QStringList types;
+    TranslationHelper helper;
+    for (dao::Vehicle::Type type: ::availableTypes)
+    {
+        types.append(helper.translateVehicleType(type));
+    }
     this->setViewProperty(PROPERTY(types), QVariant::fromValue(types));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
