@@ -14,24 +14,29 @@ Controls.Frame {
         flickable.contentY = column.height - flickable.height;
     }
 
-    Flickable {
-        id: flickable
+    ColumnLayout {
         anchors.fill: parent
-        contentHeight: column.height
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
-        ScrollBar.vertical: Controls.ScrollBar {}
 
-        ColumnLayout {
-            id: column
-            width: root.width
+        Flickable {
+            id: flickable
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            contentHeight: column.height
+            clip: true
 
-            Repeater {
-                model: logs
+            ScrollBar.vertical: Controls.ScrollBar { width: 8 } // TODO: common c++ palette item
 
-                LogEntry {
-                    log: modelData
-                    Layout.fillWidth: true
+            ColumnLayout {
+                id: column
+                width: flickable.width
+
+                Repeater {
+                    model: logs
+
+                    LogEntry {
+                        log: modelData
+                        Layout.fillWidth: true
+                    }
                 }
             }
         }
