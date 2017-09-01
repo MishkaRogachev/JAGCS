@@ -13,6 +13,7 @@ Controls.Frame {
     property alias cacheSize: cacheSizeBox.value
     property alias tileHost: tileHostField.text
     property alias activeMapType: mapTypeBox.currentIndex
+    property alias trackLength: trackLengthSlider.value
 
     signal save()
     signal restore()
@@ -80,6 +81,27 @@ Controls.Frame {
             Layout.fillWidth: true
             onValueChanged: changed = true;
             to: 2147483647 // TODO: to helper
+        }
+
+        Controls.Label {
+            text: qsTr("Track length")
+            Layout.fillWidth: true
+        }
+
+        RowLayout {
+            Controls.Slider {
+                id: trackLengthSlider
+                from: 0
+                to: 1000
+                Layout.fillWidth: true
+                onPressedChanged:  if (!pressed) changed = true
+            }
+
+            Controls.Label {
+                Layout.preferredWidth: 86
+                horizontalAlignment: Text.AlignHCenter
+                text: trackLengthSlider.visualValue.toFixed(0)
+            }
         }
 
         Component {

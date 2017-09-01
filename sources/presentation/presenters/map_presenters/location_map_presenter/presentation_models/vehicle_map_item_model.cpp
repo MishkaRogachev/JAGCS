@@ -7,6 +7,8 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
 #include "vehicle_service.h"
 #include "vehicle.h"
 
@@ -25,7 +27,7 @@ public:
 
     QList<int> vehicleIds;
     QMap<int, QVariantList> tracks;
-    // TODO: Rammer-Duglas-Pecker polyline simplification, track from telemetry
+    int trackLength = settings::Provider::value(settings::map::trackLength).toInt();
 };
 
 VehicleMapItemModel::VehicleMapItemModel(domain::VehicleService* vehicleService,
@@ -186,6 +188,7 @@ void VehicleMapItemModel::onPositionParametersChanged(
     if (parameters.contains(domain::Telemetry::Coordinate))
     {
         d->tracks[vehicleId].append(parameters[domain::Telemetry::Coordinate]);
+        if (d->tracks[vehicleId].length() > d->trackLength) d->tracks[vehicleId].removeFirst();
     }
 
     emit dataChanged(index, index, { CoordinateRole });

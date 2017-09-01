@@ -70,7 +70,7 @@ Controls.Frame {
         Controls.Label {
             Layout.preferredWidth: 86
             horizontalAlignment: Text.AlignHCenter
-            text: uiSlider.visualValue.toFixed(0)  // TODO: current value
+            text: uiSlider.visualValue.toFixed(0)
         }
 
         Controls.Label {

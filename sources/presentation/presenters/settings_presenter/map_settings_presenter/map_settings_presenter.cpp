@@ -22,6 +22,8 @@ void MapSettingsPresenter::updateView()
                           settings::Provider::value(settings::map::cacheFolder));
     this->setViewProperty(PROPERTY(cacheSize),
                           settings::Provider::value(settings::map::cacheSize));
+    this->setViewProperty(PROPERTY(trackLength),
+                          settings::Provider::value(settings::map::trackLength));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -36,6 +38,8 @@ void MapSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(cacheFolder)));
     settings::Provider::setValue(settings::map::cacheSize,
                                  this->viewProperty(PROPERTY(cacheSize)));
+    settings::Provider::setValue(settings::map::trackLength,
+                                 this->viewProperty(PROPERTY(trackLength)));
 
     this->setViewProperty(PROPERTY(changed), false);
 }

@@ -38,6 +38,7 @@ namespace settings
         const QString tileHost = "Map/tileHost";
         const QString cacheFolder = "Map/cacheFolder";
         const QString cacheSize = "Map/cacheSize";
+        const QString trackLength = "Map/trackLength";
     }
 
     namespace gui

@@ -41,6 +41,7 @@ public:
         settings.setValue(map::tileHost, "http://a.tile.openstreetmap.org/");
         settings.setValue(map::cacheFolder, "~/.cache/QtLocation/osm");
         settings.setValue(map::cacheSize, 52428800);
+        settings.setValue(map::trackLength, 100);
 
         settings.setValue(gui::fullscreen, true);
         settings.setValue(gui::locale, "en");
