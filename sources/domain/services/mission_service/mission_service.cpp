@@ -329,6 +329,7 @@ void MissionService::fixMissionItemOrder(int missionId)
         if (item->sequence() != counter)
         {
             item->setSequence(counter);
+            item->setStatus(MissionItem::NotActual);
             this->save(item);
         }
         counter++;
