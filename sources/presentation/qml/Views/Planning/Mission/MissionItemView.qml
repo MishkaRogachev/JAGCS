@@ -345,20 +345,25 @@ Item {
             Layout.columnSpan: 2
         }
 
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
+        RowLayout {
+            Layout.columnSpan: 2
             enabled: changed
-            Layout.fillWidth: true
-        }
 
-        Controls.Button {
-            text: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
-            enabled: editEnabled && changed
-            Layout.fillWidth: true
+            Controls.Button {
+                text: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+
+                Layout.fillWidth: true
+            }
+
+            Controls.Button {
+                text: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+                enabled: editEnabled
+                Layout.fillWidth: true
+            }
         }
     }
 }
