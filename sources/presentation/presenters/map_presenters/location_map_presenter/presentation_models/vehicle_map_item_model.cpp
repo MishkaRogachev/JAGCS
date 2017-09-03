@@ -76,13 +76,11 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case CoordinateRole:
-        data = node->childNode(domain::Telemetry::Position)->parameter(
-                   domain::Telemetry::Coordinate);
+        data = node->childNode(domain::Telemetry::Position)->parameter(domain::Telemetry::Coordinate);
         if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
         break;
     case DirectionRole:
-        data = node->childNode(domain::Telemetry::Compass)->parameter(
-                   domain::Telemetry::Heading);
+        data = node->childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
         if (!data.isValid()) data = 0;
         break;
     case MarkRole:
@@ -95,13 +93,11 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         data = d->tracks[vehicleId];
         break;
     case HdopRadius:
-        data = node->childNode(domain::Telemetry::Satellite)->parameter(
-                   domain::Telemetry::Eph);
+        data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Eph);
         if (!data.isValid()) data = 0;
         break;
     case HomeCoordinateRole:
-        data = node->childNode(domain::Telemetry::HomePosition)->parameter(
-                   domain::Telemetry::Coordinate);
+        data = node->childNode(domain::Telemetry::HomePosition)->parameter(domain::Telemetry::Coordinate);
         if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
         break;
     }
@@ -188,7 +184,8 @@ void VehicleMapItemModel::onPositionParametersChanged(
     if (parameters.contains(domain::Telemetry::Coordinate))
     {
         d->tracks[vehicleId].append(parameters[domain::Telemetry::Coordinate]);
-        if (d->tracks[vehicleId].length() > d->trackLength) d->tracks[vehicleId].removeFirst();
+        if (d->trackLength > -1 &&
+            d->tracks[vehicleId].length() > d->trackLength) d->tracks[vehicleId].removeFirst();
     }
 
     emit dataChanged(index, index, { CoordinateRole });

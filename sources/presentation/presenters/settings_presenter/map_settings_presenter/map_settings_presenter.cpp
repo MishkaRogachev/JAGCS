@@ -39,7 +39,7 @@ void MapSettingsPresenter::save()
     settings::Provider::setValue(settings::map::cacheSize,
                                  this->viewProperty(PROPERTY(cacheSize)));
     settings::Provider::setValue(settings::map::trackLength,
-                                 this->viewProperty(PROPERTY(trackLength)));
+                                 this->viewProperty(PROPERTY(trackLength)).toInt());
 
     this->setViewProperty(PROPERTY(changed), false);
 }

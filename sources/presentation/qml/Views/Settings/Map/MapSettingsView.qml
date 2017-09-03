@@ -91,7 +91,7 @@ Controls.Frame {
         RowLayout {
             Controls.Slider {
                 id: trackLengthSlider
-                from: 0
+                from: -1
                 to: 1000
                 Layout.fillWidth: true
                 onPressedChanged:  if (!pressed) changed = true
