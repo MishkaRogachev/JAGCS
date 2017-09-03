@@ -40,5 +40,14 @@ Controls.Frame {
                 }
             }
         }
+
+        Controls.Button {
+            id: button
+            flat: true
+            Layout.fillWidth: true
+            anchors.bottom: parent.bottom
+            iconSource: "qrc:/ui/up.svg"
+            onClicked: maximized = false
+        }
     }
 }

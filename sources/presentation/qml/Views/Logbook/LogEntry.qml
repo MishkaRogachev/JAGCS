@@ -1,16 +1,20 @@
 import QtQuick 2.6
-import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
-RowLayout {
+Item {
     id: root
 
     property var log
 
+    implicitHeight: Math.max(timestamp.height, container.height)
+
     Controls.Label {
+        id: timestamp
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
         text: log ? "[" + Helper.formatTime(log.timestamp) + "]" : ""
         font.pixelSize: palette.fontPixelSize * 0.6
         font.bold: true
@@ -19,8 +23,10 @@ RowLayout {
 
     Item {
         id: container
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        width: root.width - timestamp.width - palette.spacing
+        height: label.height
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
         clip: true
 
         Controls.Label {

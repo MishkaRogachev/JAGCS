@@ -12,30 +12,24 @@ Item {
     property var logs: []
 
     LogList {
-        anchors.left: parent.left
-        anchors.right: button.left
+        width: parent.width
         anchors.top: parent.top
+        anchors.topMargin: palette.margins
         height: maximized ? main.height * logHeightFactor : root.height
         visible: maximized
-        onVisibleChanged: if (visible) flickToEnd();
+        onVisibleChanged: if (visible) flickToEnd()
         Behavior on height { PropertyAnimation { duration: 100 } }
     }
 
     LogEntry {
-        anchors.left: parent.left
-        anchors.right: button.left
+        width: parent.width
         anchors.verticalCenter: parent.verticalCenter
         log: logs.length > 0 ? logs[logs.length - 1] : null
         visible: !maximized
-        clip: true
-    }
 
-    Controls.Button {
-        id: button
-        flat: true
-        anchors.right: parent.right
-        anchors.top: parent.top
-        iconSource: maximized ? "qrc:/ui/up.svg" : "qrc:/ui/down.svg"
-        onClicked: maximized = !maximized
+        MouseArea {
+            anchors.fill: parent
+            onClicked: maximized = true
+        }
     }
 }
