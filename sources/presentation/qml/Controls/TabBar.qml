@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import QtQuick.Templates 2.0 as T
+import QtQuick.Controls 2.0 as T
 
 T.TabBar {
     id: control
