@@ -11,7 +11,7 @@ Controls.Frame {
     backgroundColor: palette.sunkenColor
 
     function flickToEnd() {
-        flickable.contentY = column.height - flickable.height;
+        if (column.height > flickable.height) flickable.contentY = column.height - flickable.height;
     }
 
     ColumnLayout {
@@ -32,6 +32,7 @@ Controls.Frame {
 
                 Repeater {
                     model: logs
+                    onModelChanged: flickToEnd()
 
                     LogEntry {
                         log: modelData
