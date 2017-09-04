@@ -27,7 +27,7 @@ Item {
                 width: root.width / repeater.count - row.spacing
                 height: (repeater.count - index) * root.height / (repeater.count + 1)
                 color: rssi >= Helper.mapToRange(index, 0, 5, minRssiValue) ?
-                           palette.selectionColor : palette.disabledColor
+                           palette.selectionColor : palette.sunkenColor
             }
         }
     }

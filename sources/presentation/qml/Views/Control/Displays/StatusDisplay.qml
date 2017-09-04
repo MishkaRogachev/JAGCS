@@ -38,11 +38,11 @@ GridLayout {
             if (batteryCurrent > 0.0)
                 return palette.textColor;
             if (batteryCurrent > 5.0)
-                return palette.neutralColor;
+                return palette.cautionColor;
             if (batteryCurrent > 10.0)
-                return palette.negativeColor; // TODO: settings
+                return palette.dangerColor; // TODO: settings
 
-            return palette.disabledColor;
+            return palette.sunkenColor;
         }
         Layout.alignment: Qt.AlignRight
     }

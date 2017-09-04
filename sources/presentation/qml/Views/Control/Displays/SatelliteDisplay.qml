@@ -31,8 +31,8 @@ Item {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.negativeColor :
-                                                                 palette.disabledColor
+                                                                 palette.dangerColor :
+                                                                 palette.sunkenColor
                 text: qsTr("Lat.: ") + Helper.degreesToDmsString(coordinate.latitude, false)
             }
 
@@ -40,8 +40,8 @@ Item {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.negativeColor :
-                                                                 palette.disabledColor
+                                                                 palette.dangerColor :
+                                                                 palette.sunkenColor
                 text: qsTr("Lon.: ") + Helper.degreesToDmsString(coordinate.longitude, true)
             }
         }
@@ -54,9 +54,9 @@ Item {
             color: {
                 switch (fix) {
                 case -1:
-                case 0: return palette.disabledColor;
-                case 1: return palette.negativeColor;
-                case 2: return palette.neutralColor;
+                case 0: return palette.sunkenColor;
+                case 1: return palette.dangerColor;
+                case 2: return palette.cautionColor;
                 case 3:
                 default: return palette.positiveColor;
                 }
@@ -83,8 +83,8 @@ Item {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.negativeColor :
-                                                                 palette.disabledColor
+                                                                 palette.dangerColor :
+                                                                 palette.sunkenColor
                 text: qsTr("HDOP: ") + eph
             }
 
@@ -92,8 +92,8 @@ Item {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
                 color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.negativeColor :
-                                                                 palette.disabledColor
+                                                                 palette.dangerColor :
+                                                                 palette.sunkenColor
                 text: qsTr("VDOP: ") + epv
             }
         }

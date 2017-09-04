@@ -21,10 +21,9 @@ Button {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return palette.negativeColor
-        if (status == Command.Sending) return palette.neutralColor
+        if (status == Command.Rejected) return palette.dangerColor
+        if (status == Command.Sending) return palette.cautionColor
         if (status == Command.Completed) return palette.positiveColor
-        if (!enabled) return palette.disabledColor;
         if (control.pressed) return palette.highlightColor;
         return control.flat ? "transparent" : palette.buttonColor;
     }

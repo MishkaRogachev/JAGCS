@@ -32,16 +32,14 @@ ApplicationWindow {
         raisedColor: paletteStyle ? "#e1e5ee" : "#384348"
         buttonColor: paletteStyle ? "#f6f5f0" : "#54646b"
 
-        disabledColor: paletteStyle ? "#9E9E9E" : "#212121"
-
         textColor: paletteStyle ? "#30393d" : "#f6f5f0"
         selectedTextColor: "#070707"
 
         highlightColor: "#1effb4"
         selectionColor: "#1ce9a5"
 
-        negativeColor: "#e53535"
-        neutralColor: "#ff9800"
+        dangerColor: "#e53535"
+        cautionColor: "#ff9800"
         positiveColor: "#86c34a"
     }
 

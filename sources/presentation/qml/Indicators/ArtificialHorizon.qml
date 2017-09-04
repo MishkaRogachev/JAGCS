@@ -57,8 +57,8 @@ Item {
             minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
             maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
             pitchStep: root.pitchStep
-            color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
-                             palette.disabledColor
+            color: enabled ? (operational ? palette.textColor : palette.dangerColor) :
+                             palette.sunkenColor
         }
 
         DesiredAnglesMark {
@@ -76,7 +76,7 @@ Item {
             effectiveHeight: pitchScale.height
             pitch: pitchInverted ? 0 : -root.pitch
             roll: rollInverted ? -root.roll : 0
-            markColor: armed ? palette.selectedTextColor : palette.negativeColor
+            markColor: armed ? palette.selectedTextColor : palette.dangerColor
         }
 
         TurnIndicator {
@@ -91,7 +91,7 @@ Item {
             text: qsTr("DISARMED")
             font.pixelSize: root.height * 0.1
             font.bold: true
-            color: armed ? "transparent" : palette.negativeColor
+            color: armed ? "transparent" : palette.dangerColor
         }
     }
 
@@ -115,7 +115,7 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
-        color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
-                         palette.disabledColor
+        color: enabled ? (operational ? palette.textColor : palette.dangerColor) :
+                         palette.sunkenColor
     }
 }

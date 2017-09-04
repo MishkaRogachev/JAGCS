@@ -15,11 +15,11 @@ Controls.ColoredIcon {
         if (percentage > 50)
             return palette.positiveColor;
         if (percentage > 15)
-            return palette.neutralColor;
+            return palette.cautionColor;
         if (percentage > 0)
-            return palette.negativeColor;
+            return palette.dangerColor;
 
-        return palette.disabledColor;
+        return palette.sunkenColor;
     }
 
     Text {

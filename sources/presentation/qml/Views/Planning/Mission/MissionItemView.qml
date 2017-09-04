@@ -79,7 +79,7 @@ Item {
         RowLayout {
             Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
-                iconColor: palette.negativeColor
+                iconColor: palette.dangerColor
                 enabled: sequence > -1 && editEnabled
                 onClicked: remove()
             }

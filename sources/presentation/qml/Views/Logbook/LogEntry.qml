@@ -39,8 +39,8 @@ Item {
                 switch (log.type) {
                 case LogMessage.Common: return palette.textColor;
                 case LogMessage.Positive: return palette.positiveColor;
-                case LogMessage.Warning: return palette.neutralColor;
-                case LogMessage.Critical: return palette.negativeColor;
+                case LogMessage.Warning: return palette.cautionColor;
+                case LogMessage.Critical: return palette.dangerColor;
                 }
             }
 

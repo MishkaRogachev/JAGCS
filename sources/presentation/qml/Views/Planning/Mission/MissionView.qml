@@ -77,7 +77,7 @@ ColumnLayout {
 
         Controls.Button {
             iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.negativeColor
+            iconColor: palette.dangerColor
             enabled: selectedMission > 0 && assignedVehicle === 0
             onClicked: removeMission()
         }
@@ -159,9 +159,9 @@ ColumnLayout {
                                 case MissionItem.Actual: return palette.positiveColor;
                                 case MissionItem.StatusNone: return palette.sunkenColor;
                                 case MissionItem.Downloading:
-                                case MissionItem.Uploading: return palette.neutralColor;
+                                case MissionItem.Uploading: return palette.cautionColor;
                                 case MissionItem.NotActual:
-                                default: return palette.negativeColor;
+                                default: return palette.dangerColor;
                                 }
                             }
                             border.width: 4

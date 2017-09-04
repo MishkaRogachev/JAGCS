@@ -29,7 +29,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST")
-        color: guided ? palette.activeMissionColor : palette.disabledColor
+        color: guided ? palette.activeMissionColor : palette.sunkenColor
         distance: targetDistance
         width: parent.width * 0.2
     }
@@ -64,11 +64,11 @@ Item {
         width: parent.width * 0.6
         mark: vehicleMark
         color: compassEnabled ? (compassOperational ? palette.textColor :
-                                                      palette.negativeColor) :
-                                palette.disabledColor
+                                                      palette.dangerColor) :
+                                palette.sunkenColor
         courseColor: satelliteEnabled ? (satelliteOperational ? palette.missionColor :
-                                                                palette.negativeColor) :
-                                        palette.disabledColor
+                                                                palette.dangerColor) :
+                                        palette.sunkenColor
 
         Item {
             anchors.fill: parent
@@ -92,7 +92,7 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("TRG")
-        color: guided ? palette.activeMissionColor : palette.disabledColor
+        color: guided ? palette.activeMissionColor : palette.sunkenColor
         value: targetBearing
         width: parent.width * 0.2
     }

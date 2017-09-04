@@ -19,8 +19,8 @@ Item {
 
     property bool operational: false
     property string prefix
-    property color color: enabled ? (operational ? palette.textColor : palette.negativeColor) :
-                                    palette.disabledColor
+    property color color: enabled ? (operational ? palette.textColor : palette.dangerColor) :
+                                    palette.sunkenColor
     property alias warningColor: hatch.color
 
     clip: true

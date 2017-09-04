@@ -9,7 +9,7 @@ T.ProgressBar {
           implicitWidth: palette.controlBaseSize * 6
           implicitHeight: palette.controlBaseSize / 4
           radius: height / 2
-          color: control.enabled ? palette.sunkenColor : palette.disabledColor
+          color: palette.sunkenColor
       }
 
       contentItem: Item {

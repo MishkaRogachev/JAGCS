@@ -14,15 +14,13 @@ QtObject {
     property color raisedColor
     property color buttonColor
 
-    property color disabledColor
-
     property color textColor
     property color selectedTextColor
 
     property color highlightColor
     property color selectionColor
 
-    property color negativeColor
-    property color neutralColor
+    property color dangerColor
+    property color cautionColor
     property color positiveColor
 }

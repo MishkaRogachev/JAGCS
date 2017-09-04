@@ -59,7 +59,7 @@ Controls.ToolBar {
 
             Controls.Button {
                 iconSource: "qrc:/icons/quit.svg"
-                iconColor: palette.negativeColor
+                iconColor: palette.dangerColor
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: quit()
             }

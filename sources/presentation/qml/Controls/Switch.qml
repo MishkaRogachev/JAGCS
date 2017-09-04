@@ -23,11 +23,7 @@ T.Switch {
         y: parent.height / 2 - height / 2
         radius: height / 2
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
-        color: {
-            if (control.inputChecked) return palette.selectionColor;
-            if (!enabled) return palette.disabledColor;
-            return palette.sunkenColor ;
-        }
+        color: control.inputChecked ? palette.selectionColor : palette.sunkenColor;
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
@@ -35,11 +31,7 @@ T.Switch {
             width: palette.controlBaseSize / 1.5
             height: palette.controlBaseSize / 1.5
             radius: height / 2
-            color: {
-                if (!enabled) return palette.disabledColor;
-                if (control.pressed) return palette.highlightColor;
-                return palette.buttonColor;
-            }
+            color: control.pressed ? palette.highlightColor : palette.buttonColor;
         }
     }
 

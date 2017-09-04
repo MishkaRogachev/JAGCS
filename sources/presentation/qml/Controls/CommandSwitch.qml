@@ -25,11 +25,10 @@ Switch {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return palette.negativeColor
-        if (status == Command.Sending) return palette.neutralColor
+        if (status == Command.Rejected) return palette.dangerColor
+        if (status == Command.Sending) return palette.cautionColor
         if (status == Command.Completed) return palette.positiveColor
         if (control.inputChecked) return palette.selectionColor;
-        if (!enabled) return palette.disabledColor;
         return palette.sunkenColor ;
     }
 }

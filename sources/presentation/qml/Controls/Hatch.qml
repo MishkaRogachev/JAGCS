@@ -3,7 +3,7 @@ import QtQuick 2.6
 ShaderEffect {
     id: shader
 
-    property color color: palette.negativeColor
+    property color color: palette.dangerColor
     property real xFactor: 35
     property real yFactor: xFactor * width / height
 

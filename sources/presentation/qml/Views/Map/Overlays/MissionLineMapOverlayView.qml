@@ -12,9 +12,9 @@ MapItemView {
                 return palette.missionColor;
             case MissionAssignment.Downloading:
             case MissionAssignment.Uploading:
-                return palette.neutralColor;
+                return palette.cautionColor;
             case MissionAssignment.NotActual:
-                return palette.negativeColor;
+                return palette.dangerColor;
             default:
                 return palette.backgroundColor;
             }

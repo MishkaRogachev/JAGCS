@@ -100,7 +100,7 @@ Controls.Frame {
             iconSource: "qrc:/icons/remove.svg"
             onClicked: remove()
             enabled: !online
-            iconColor: palette.negativeColor
+            iconColor: palette.dangerColor
             Layout.fillWidth: true
         }
     }

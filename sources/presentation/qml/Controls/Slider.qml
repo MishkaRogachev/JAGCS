@@ -16,13 +16,13 @@ T.Slider {
         width: control.availableWidth
         height: implicitHeight
         radius: height / 2
-        color: control.enabled ? palette.sunkenColor : palette.disabledColor
+        color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 
         Rectangle {
             width: control.visualPosition * parent.width
             height: parent.height
-            color: control.enabled ? palette.selectionColor : palette.disabledColor
+            color: palette.selectionColor
             radius: height / 2
         }
     }
@@ -33,7 +33,7 @@ T.Slider {
         implicitWidth: palette.controlBaseSize / 1.5
         implicitHeight: implicitWidth
         radius: width / 2
-        color: control.enabled ? palette.highlightColor : palette.disabledColor
+        color: palette.highlightColor
 
         Rectangle {
             anchors.centerIn: parent

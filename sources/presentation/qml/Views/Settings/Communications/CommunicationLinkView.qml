@@ -199,7 +199,7 @@ Controls.Frame {
                 text: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
                 onClicked: remove()
-                iconColor: palette.negativeColor
+                iconColor: palette.dangerColor
                 Layout.fillWidth: true
             }
         }
