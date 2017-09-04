@@ -132,13 +132,8 @@ Map {
         zoomLevel = settings.value("Map/zoomLevel");
     }
 
-    Component.onDestruction: {
-        if (!visible || width == 0 || height == 0) return;
-
-        settings.setValue("Map/centerLatitude", center.latitude);
-        settings.setValue("Map/centerLongitude", center.longitude);
-        settings.setValue("Map/zoomLevel", zoomLevel);
-    }
+    Component.onDestruction: if (visible) saveViewport()
+    onVisibleChanged: if (!visible) saveViewport()
 
     onCenterChanged: {
         if (!mouseArea.containsMouse) return;
@@ -146,12 +141,18 @@ Map {
         mouseCoordinate = root.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
     }
 
+    function saveViewport() {
+        if (width == 0 || height == 0) return;
+
+        settings.setValue("Map/centerLatitude", center.latitude);
+        settings.setValue("Map/centerLongitude", center.longitude);
+        settings.setValue("Map/zoomLevel", zoomLevel);
+    }
+
     function setGesturesEnabled(enabled) {
         gesture.acceptedGestures = enabled ?
-                    (MapGestureArea.PinchGesture |
-                     MapGestureArea.PanGesture |
-                     MapGestureArea.FlickGesture) :
-                    MapGestureArea.PinchGesture
+                    (MapGestureArea.PinchGesture | MapGestureArea.PanGesture |
+                     MapGestureArea.FlickGesture) : MapGestureArea.PinchGesture
     }
 
     function dropPicker() {
