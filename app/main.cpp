@@ -1,5 +1,6 @@
 // Qt
 #include <QApplication>
+#include <QLockFile>
 #include <QFontDatabase>
 #include <QIcon>
 #include <QQmlApplicationEngine>
@@ -25,6 +26,12 @@ int main(int argc, char* argv[])
 
     app.setApplicationName("JAGCS");
     app.setOrganizationName("JAGCS");
+
+    QLockFile lock("JAGCS");
+    if (!lock.tryLock())
+    {
+        qFatal("Application JAGCS is locked");
+    }
 
     QFontDatabase::addApplicationFont(":/fonts/OpenSans-Bold.ttf");
     QFontDatabase::addApplicationFont(":/fonts/OpenSans-Italic.ttf");
