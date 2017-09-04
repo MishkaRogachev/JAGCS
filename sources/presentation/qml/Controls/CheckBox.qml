@@ -10,6 +10,7 @@ T.CheckBox {
     leftPadding: 0
     spacing: palette.spacing
     implicitWidth: text.length > 0 ? contentItem.implicitWidth + spacing : indicator.implicitWidth
+    opacity: enabled ? 1 : 0.33
 
     indicator: Rectangle {
         implicitWidth: palette.controlBaseSize
@@ -21,10 +22,9 @@ T.CheckBox {
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 
         ColoredIcon {
-            anchors.centerIn: parent
+            anchors.fill: parent
+            anchors.margins: parent.width * 0.1
             source: "qrc:/ui/ok.svg"
-            height: control.height * 0.6
-            width: height
             color: control.down ? palette.highlightColor : palette.textColor
             visible: control.checked || control.down
         }

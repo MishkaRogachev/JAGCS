@@ -12,5 +12,7 @@ Frame {
         color: backgroundColor
         border.color: palette.backgroundColor
         radius: 3
+
+        // TODO: hatch
     }
 }

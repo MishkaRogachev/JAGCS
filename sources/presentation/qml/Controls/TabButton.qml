@@ -5,7 +5,8 @@ T.TabButton {
     id: control
 
     property alias iconSource: icon.source
-    property color iconColor: label.color
+    property color iconColor: textColor
+    property color textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
@@ -14,19 +15,25 @@ T.TabButton {
 
     background: Rectangle {
         id: backgroundItem
-        implicitWidth: palette.controlBaseSize * 4
+        implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        radius: 3
         color: {
-            if (control.checked) return palette.selectionColor;
+            if (control.checked || control.highlighted) return palette.selectionColor;
             if (control.pressed) return palette.highlightColor;
             return control.flat ? "transparent" : palette.buttonColor;
+        }
+
+        Hatch {
+            anchors.fill: parent
+            color: palette.sunkenColor
+            visible: !control.enabled
         }
     }
 
     contentItem: Item {
         id: content
-        // TODO: common content item
         implicitWidth: row.width
         implicitHeight: row.height
 
@@ -34,11 +41,11 @@ T.TabButton {
             id: row
             anchors.centerIn: parent
             height: parent.availableHeight
-            spacing: 5
+            spacing: palette.spacing
 
             ColoredIcon {
                 id: icon
-                color: iconColor
+                color: enabled ? iconColor : palette.sunkenColor
                 anchors.verticalCenter: parent.verticalCenter
                 height: control.height * 0.6
                 width: height
@@ -49,8 +56,7 @@ T.TabButton {
                 id: label
                 font: control.font
                 text: control.text
-                color: control.pressed || control.checked ?
-                           palette.selectedTextColor: palette.textColor
+                color: enabled ? textColor : palette.sunkenColor
                 anchors.verticalCenter: parent.verticalCenter
             }
         }

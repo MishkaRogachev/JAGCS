@@ -7,6 +7,7 @@ T.Slider {
     property real visualValue: from + position * (to - from)
 
     height: palette.controlBaseSize
+    opacity: enabled ? 1 : 0.33
 
     background: Rectangle {
         x: control.leftPadding
@@ -25,6 +26,8 @@ T.Slider {
             color: palette.selectionColor
             radius: height / 2
         }
+
+        // TODO: hatch
     }
 
     handle: Rectangle {
@@ -34,6 +37,7 @@ T.Slider {
         implicitHeight: implicitWidth
         radius: width / 2
         color: palette.highlightColor
+        visible: enabled
 
         Rectangle {
             anchors.centerIn: parent

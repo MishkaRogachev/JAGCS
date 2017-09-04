@@ -94,13 +94,14 @@ Controls.Frame {
                 from: -1
                 to: 1000
                 Layout.fillWidth: true
-                onPressedChanged:  if (!pressed) changed = true
+                onPressedChanged: if (!pressed) changed = true
             }
 
             Controls.Label {
                 Layout.preferredWidth: 86
                 horizontalAlignment: Text.AlignHCenter
-                text: trackLengthSlider.visualValue.toFixed(0)
+                text: trackLengthSlider.visualValue > -1 ? trackLengthSlider.visualValue.toFixed(0)
+                                                         : qsTr("Infinite")
             }
         }
 
