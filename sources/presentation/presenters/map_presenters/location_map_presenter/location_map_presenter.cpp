@@ -33,8 +33,8 @@ LocationMapPresenter::LocationMapPresenter(QObject* object):
     AbstractMapPresenter(object),
     d(new Impl())
 {
-    connect(&d->pointModel, &MissionPointMapItemModel::selectMissionItem,
-            this, &LocationMapPresenter::selectMissionItem);
+    connect(&d->pointModel, &MissionPointMapItemModel::missionItemSelected,
+            this, &LocationMapPresenter::missionItemSelected);
 }
 
 LocationMapPresenter::~LocationMapPresenter()
@@ -68,9 +68,14 @@ void LocationMapPresenter::setZoomLevel(float zoomLevel)
     this->setViewProperty(PROPERTY(zoomLevel), zoomLevel);
 }
 
-void LocationMapPresenter::setSelectedMissionItem(const dao::MissionItemPtr& item)
+void LocationMapPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 {
     d->pointModel.setSelectedItem(item);
+}
+
+void LocationMapPresenter::selectVehicle(const dao::VehiclePtr& vehicle)
+{
+    d->vehicleModel.setSelectedVehicle(vehicle);
 }
 
 void LocationMapPresenter::connectView(QObject* view)

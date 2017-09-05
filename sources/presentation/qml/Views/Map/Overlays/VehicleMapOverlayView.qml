@@ -13,6 +13,12 @@ MapItemView {
             CoordinateAnimation { duration: 200 }
         }
 
+        Connections {
+            target: map
+            onTrackingVehicleChanged: tryCenterVehicle()
+        }
+
+        onCoordinateChanged: tryCenterVehicle()
         sourceItem: Item {
 
             Image {
@@ -30,6 +36,10 @@ MapItemView {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
+        }
+
+        function tryCenterVehicle() {
+            if (map.trackingVehicle && isSelected && coordinate) map.center = coordinate
         }
     }
 }

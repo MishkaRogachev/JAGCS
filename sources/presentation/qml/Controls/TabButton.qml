@@ -6,7 +6,7 @@ T.TabButton {
 
     property alias iconSource: icon.source
     property color iconColor: textColor
-    property color textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
+    property color textColor: pressed || checked ? palette.selectedTextColor: palette.textColor
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize

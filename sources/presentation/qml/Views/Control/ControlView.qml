@@ -29,8 +29,10 @@ Controls.Pane {
 
         RowLayout {
 
-            Controls.Label {
-                text: qsTr("Vehicle")
+            Controls.Button {
+                iconSource: "qrc:/icons/center.svg"
+                checkable: true
+                onCheckedChanged: map.trackingVehicle = checked
             }
 
             Controls.ComboBox {

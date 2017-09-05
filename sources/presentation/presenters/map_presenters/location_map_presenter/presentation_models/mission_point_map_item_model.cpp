@@ -165,7 +165,7 @@ void MissionPointMapItemModel::setSelectedMissionItem(int index)
 {
     if (index < 0 || index >= m_items.count()) return;
 
-    emit selectMissionItem(m_items.at(index));
+    emit missionItemSelected(m_items.at(index));
 }
 
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const

@@ -18,6 +18,7 @@ Map {
     property bool hdopVisible: true
 
     property bool picking: false
+    property bool trackingVehicle: false
 
     property var mouseCoordinate: QtPositioning.coordinate()
 
@@ -53,13 +54,6 @@ Map {
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     copyrightsVisible: false
-
-    Behavior on center {
-        CoordinateAnimation {
-            duration: 200
-            easing.type: Easing.InOutQuad
-        }
-    }
 
     MissionLineMapOverlayView {
         model: missionLinesVisible ? lineModel : 0
@@ -140,6 +134,8 @@ Map {
 
         mouseCoordinate = root.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
     }
+
+    onTrackingVehicleChanged: setGesturesEnabled(!trackingVehicle)
 
     function saveViewport() {
         if (width == 0 || height == 0) return;

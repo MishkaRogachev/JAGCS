@@ -83,6 +83,7 @@ void ControlPresenter::onSelectVehicle(int index)
     if (index > 0 && index <= vehicles.count())
     {
         dao::VehiclePtr vehicle = vehicles[index - 1];
+        d->map->selectVehicle(vehicle);
 
         AerialDashboardFactory factory(vehicle);
         d->dashboard = factory.create();
@@ -97,6 +98,7 @@ void ControlPresenter::onSelectVehicle(int index)
     else
     {
         d->dashboard = nullptr;
+        d->map->selectVehicle(dao::VehiclePtr());
     }
 }
 

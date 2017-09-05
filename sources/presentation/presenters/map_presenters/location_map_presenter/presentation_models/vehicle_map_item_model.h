@@ -30,6 +30,7 @@ namespace presentation
             MarkRole,
             VehicleIdRole,
             TrackRole,
+            SelectedRole,
             HdopRadius,
             HomeCoordinateRole
         };
@@ -45,6 +46,8 @@ namespace presentation
     public slots:
         void onVehicleAdded(const dao::VehiclePtr& vehicle);
         void onVehicleRemoved(const dao::VehiclePtr& vehicle);
+
+        void setSelectedVehicle(const dao::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
