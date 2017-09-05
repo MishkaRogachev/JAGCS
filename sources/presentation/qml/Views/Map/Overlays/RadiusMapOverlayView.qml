@@ -10,5 +10,6 @@ MapItemView {
         border.width: 4
         border.color: palette.missionColor
         visible: itemCoordinate.isValid && itemRadius > 0
+        z: 75
     }
 }

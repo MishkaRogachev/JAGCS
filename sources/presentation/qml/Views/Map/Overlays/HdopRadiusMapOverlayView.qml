@@ -12,6 +12,7 @@ MapItemView {
         border.width: 4
         border.color: palette.textColor
         opacity: 0.3
+        z: 250
 
         Behavior on center {
             CoordinateAnimation { duration: 200 }

@@ -8,5 +8,6 @@ MapItemView {
         line.color: palette.trackColor
         path: track
         smooth: true
+        z: 100
     }
 }

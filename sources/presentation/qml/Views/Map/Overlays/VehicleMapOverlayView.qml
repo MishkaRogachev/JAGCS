@@ -7,7 +7,7 @@ import "qrc:/Controls"
 MapItemView {
     delegate: MapQuickItem {
         coordinate: position
-        z: 2
+        z: 1000
 
         Behavior on coordinate {
             CoordinateAnimation { duration: 200 }

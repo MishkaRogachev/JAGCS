@@ -9,7 +9,7 @@ MapItemView {
         coordinate: itemCoordinate
         anchorPoint.x: sourceItem.width / 2
         anchorPoint.y: sourceItem.height / 2
-        z: 1
+        z: 500
 
         sourceItem: Rectangle {
             width: palette.controlBaseSize
