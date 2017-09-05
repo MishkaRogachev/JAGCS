@@ -296,12 +296,22 @@ Item {
             Layout.fillWidth: true
         }
 
-        Controls.ComboBox {
-            id: isGroundSpeedBox
-            model: [ qsTr("Ground speed"), qsTr("Air speed") ]
-            enabled: editEnabled && speedEnabled
-            visible: speedVisible
-            onCurrentIndexChanged: changed = true
+        RowLayout {
+            Controls.CheckBox {
+                id: speedEnabledBox
+                visible: speedVisible
+                enabled: editEnabled
+                onCheckedChanged: changed = true
+            }
+
+            Controls.ComboBox {
+                id: isGroundSpeedBox
+                model: [ qsTr("Ground speed"), qsTr("Air speed") ]
+                enabled: editEnabled && speedEnabled
+                visible: speedVisible
+                onCurrentIndexChanged: changed = true
+                Layout.fillWidth: true
+            }
         }
 
         Controls.RealSpinBox {
@@ -312,17 +322,19 @@ Item {
             Layout.fillWidth: true
         }
 
-        Controls.CheckBox {
-            id: speedEnabledBox
-            visible: speedVisible
-            enabled: editEnabled
-            onCheckedChanged: changed = true
-        }
+        RowLayout {
+            Controls.CheckBox {
+                id: throttleEnabledBox
+                visible: speedVisible
+                enabled: editEnabled
+                onCheckedChanged: changed = true
+            }
 
-        Controls.Label {
-            text: qsTr("Throttle")
-            visible: speedVisible
-            Layout.fillWidth: true
+            Controls.Label {
+                text: qsTr("Throttle")
+                visible: speedVisible
+                Layout.fillWidth: true
+            }
         }
 
         Controls.SpinBox {
@@ -331,13 +343,6 @@ Item {
             enabled: editEnabled && throttleEnabled
             onValueChanged: changed = true
             Layout.fillWidth: true
-        }
-
-        Controls.CheckBox {
-            id: throttleEnabledBox
-            visible: speedVisible
-            enabled: editEnabled
-            onCheckedChanged: changed = true
         }
 
         Item {

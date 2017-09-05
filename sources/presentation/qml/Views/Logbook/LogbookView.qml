@@ -29,7 +29,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: maximized = true
+            onPressed: maximized = true
         }
     }
 }
