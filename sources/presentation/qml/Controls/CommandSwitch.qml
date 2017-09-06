@@ -17,7 +17,10 @@ Switch {
         else if (inputChecked != checked) executeBoolCommand(command, checked);
     }
 
-    onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
+    onStatusChanged: {
+        if (status == Command.Rejected) checked = inputChecked;
+        if (status == Command.Completed || status == Command.Rejected) timer.start();
+    }
 
     Timer {
         id: timer
