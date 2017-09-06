@@ -6,19 +6,25 @@ RealSpinBox {
     id: control
 
     property bool isLongitude: false
+    property bool dmsFormat: true
+
     from: isLongitude ? (-180 / precision) : (-90 / precision)
     to: isLongitude ? (180 / precision) : (90 / precision)
-    precision: 0.00001
+    precision: dmsFormat ? Helper.dmsToDegree(1, 0, 0, 0.01) : 0.000001
 
     validator: RegExpValidator {
-        regExp: /[0-9]{1,3}[°][0-9]{1,2}['][0-9]{1,2}[.][0-9]{1,2}"[N,S,W,E]/
+        regExp: dmsFormat ?
+                    /[0-9]{1,3}[°][0-9]{1,2}['][0-9]{1,2}[.][0-9]{1,2}"[N,S,W,E]/ :
+                    /^[0-9]+(\\.[0-9]+)?$/
     }
 
     textFromValue: function(value, locale) {
-        return Helper.degreesToDmsString(value * precision, isLongitude);
+        return dmsFormat ? Helper.degreesToDmsString(value * precision, isLongitude) :
+                           Helper.degreesToString(value * precision, 6);
     }
 
     valueFromText: function(text, locale) {
-        return Helper.dmsStringToDegree(text, isLongitude) / precision;
+        return dmsFormat ? Helper.dmsStringToDegree(text, isLongitude) / precision :
+                           Helper.stringToDegree(text / precision);
     }
 }

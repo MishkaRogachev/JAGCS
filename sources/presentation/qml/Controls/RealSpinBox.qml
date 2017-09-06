@@ -16,7 +16,7 @@ SpinBox {
     onRealValueChanged: {
         if (!isNaN(realValue)) {
             isValid = true;
-            value = realValue / precision;
+            value = Math.round(realValue / precision);
         }
         else isValid = false;
     }

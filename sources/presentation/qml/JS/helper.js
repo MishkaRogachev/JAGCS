@@ -75,3 +75,10 @@ function isDmsString(string) {
     return 0 < string.indexOf("\u00B0") < string.indexOf("\'") < string.indexOf("\"");
 }
 
+function degreesToString(degree, precision) {
+    return degree.toFixed(precision);
+}
+
+function stringToDegree(string) {
+    return parseFloat(string)
+}
