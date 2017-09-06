@@ -112,6 +112,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
+    if (message.sysid == m_communicator->systemId() || message.sysid == 0) return;
+
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
 
     dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
