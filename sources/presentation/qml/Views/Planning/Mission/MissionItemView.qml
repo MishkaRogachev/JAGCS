@@ -27,7 +27,7 @@ Item {
     property alias yaw: yawBox.realValue
     property alias clockwise: clockwiseBox.checked
 
-    property alias isGroundSpeed: isGroundSpeedBox.currentIndex
+    property alias isGroundSpeed: isGroundSpeedBar.currentIndex
     property alias speed: speedBox.realValue
     property alias throttle: throttleBox.value
     property alias speedEnabled: speedEnabledBox.checked
@@ -74,6 +74,7 @@ Item {
         Controls.Label {
             text: qsTr("Item")
             Layout.fillWidth: true
+            Layout.minimumWidth: palette.controlBaseSize * 3
         }
 
         RowLayout {
@@ -296,22 +297,12 @@ Item {
             Layout.fillWidth: true
         }
 
-        RowLayout {
-            Controls.CheckBox {
-                id: speedEnabledBox
-                visible: speedVisible
-                enabled: editEnabled
-                onCheckedChanged: changed = true
-            }
-
-            Controls.ComboBox {
-                id: isGroundSpeedBox
-                model: [ qsTr("Ground speed"), qsTr("Air speed") ]
-                enabled: editEnabled && speedEnabled
-                visible: speedVisible
-                onCurrentIndexChanged: changed = true
-                Layout.fillWidth: true
-            }
+        Controls.CheckBox {
+            id: speedEnabledBox
+            visible: speedVisible
+            enabled: editEnabled
+            onCheckedChanged: changed = true
+            text: qsTr("Speed")
         }
 
         Controls.RealSpinBox {
@@ -322,19 +313,29 @@ Item {
             Layout.fillWidth: true
         }
 
-        RowLayout {
-            Controls.CheckBox {
-                id: throttleEnabledBox
-                visible: speedVisible
-                enabled: editEnabled
-                onCheckedChanged: changed = true
+        Controls.TabBar {
+            id: isGroundSpeedBar
+
+            Controls.TabButton {
+                text: qsTr("Ground speed")
+            }
+            Controls.TabButton {
+                text: qsTr("Air speed")
             }
 
-            Controls.Label {
-                text: qsTr("Throttle")
-                visible: speedVisible
-                Layout.fillWidth: true
-            }
+            enabled: editEnabled && speedEnabled
+            visible: speedVisible
+            onCurrentIndexChanged: changed = true
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
+
+        Controls.CheckBox {
+            id: throttleEnabledBox
+            visible: speedVisible
+            enabled: editEnabled
+            onCheckedChanged: changed = true
+            text: qsTr("Throttle")
         }
 
         Controls.SpinBox {

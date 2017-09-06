@@ -32,8 +32,7 @@ SpinBox {
     }
 
     textFromValue: function(value, locale) {
-        return Number(value * precision).toLocaleString(
-                    locale, 'f', Helper.decimals(precision))
+        return Number(value * precision).toLocaleString(locale, 'f', Helper.decimals(precision))
     }
 
     valueFromText: function(text, locale) {
