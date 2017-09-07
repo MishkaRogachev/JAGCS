@@ -18,6 +18,7 @@ Controls.Frame {
     property alias rollInverted: rollBar.currentIndex
     property alias speedUnits: speedUnitsBox.currentIndex
     property alias relativeAltitude: relativeAltitudeBox.checked
+    property alias coordinatesDms: coordinatesDmsBox.checked
 
     signal save()
     signal restore()
@@ -175,6 +176,18 @@ Controls.Frame {
 
         Controls.CheckBox {
             id: relativeAltitudeBox
+            Layout.columnSpan: 2
+            Layout.alignment: Qt.AlignRight
+            onCheckedChanged: changed = true
+        }
+
+        Controls.Label {
+            text: qsTr("Coordinates in DMS")
+            Layout.fillWidth: true
+        }
+
+        Controls.CheckBox {
+            id: coordinatesDmsBox
             Layout.columnSpan: 2
             Layout.alignment: Qt.AlignRight
             onCheckedChanged: changed = true

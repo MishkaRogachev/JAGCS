@@ -6,7 +6,7 @@ RealSpinBox {
     id: control
 
     property bool isLongitude: false
-    property bool dmsFormat: true
+    property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
 
     from: isLongitude ? (-180 / precision) : (-90 / precision)
     to: isLongitude ? (180 / precision) : (90 / precision)

@@ -52,6 +52,7 @@ namespace settings
         const QString fdSpeedUnits = "Gui/fdSpeedUnits";
         const QString fdAltitudeStep = "Gui/fdAltitudeStep";
         const QString fdRelativeAltitude = "Gui/fdRelativeAltitude";
+        const QString coordinatesDms = "Gui/coordinatesDms";
     }
 
     namespace proxy

@@ -13,7 +13,7 @@ LogbookPresenter::LogbookPresenter(QObject* parent):
     BasePresenter(parent)
 {}
 
-void LogbookPresenter::updateLog()
+void LogbookPresenter::updateLog() // TODO: to QAbstractListModel
 {
     QVariantList logs;
 

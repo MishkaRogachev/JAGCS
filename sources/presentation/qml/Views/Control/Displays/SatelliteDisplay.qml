@@ -16,6 +16,8 @@ Item {
     property int satellitesVisible: 0
     property var coordinate: QtPositioning.coordinate()
 
+    property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
+
     implicitHeight: row.height
 
     RowLayout {
@@ -32,8 +34,10 @@ Item {
                 font.bold: true
                 color: satelliteEnabled ? satelliteOperational ? palette.textColor :
                                                                  palette.dangerColor :
-                                                                 palette.sunkenColor
-                text: qsTr("Lat.: ") + Helper.degreesToDmsString(coordinate.latitude, false)
+                palette.sunkenColor
+                text: qsTr("Lat.: ") + (dmsFormat ?
+                                            Helper.degreesToDmsString(coordinate.latitude, false) :
+                                            Helper.degreesToString(coordinate.latitude, 6))
             }
 
             Controls.Label {
@@ -41,8 +45,10 @@ Item {
                 font.bold: true
                 color: satelliteEnabled ? satelliteOperational ? palette.textColor :
                                                                  palette.dangerColor :
-                                                                 palette.sunkenColor
-                text: qsTr("Lon.: ") + Helper.degreesToDmsString(coordinate.longitude, true)
+                palette.sunkenColor
+                text: qsTr("Lon.: ") + (dmsFormat ?
+                                            Helper.degreesToDmsString(coordinate.longitude, true) :
+                                            Helper.degreesToString(coordinate.longitude, 6))
             }
         }
 

@@ -47,6 +47,8 @@ void GuiSettingsPresenter::updateView()
                           settings::Provider::value(settings::gui::fdAltitudeStep));
     this->setViewProperty(PROPERTY(relativeAltitude),
                           settings::Provider::value(settings::gui::fdRelativeAltitude));
+    this->setViewProperty(PROPERTY(coordinatesDms),
+                          settings::Provider::value(settings::gui::coordinatesDms));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -74,6 +76,8 @@ void GuiSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(altitudeStep)));
     settings::Provider::setValue(settings::gui::fdRelativeAltitude,
                                  this->viewProperty(PROPERTY(relativeAltitude)));
+    settings::Provider::setValue(settings::gui::coordinatesDms,
+                                 this->viewProperty(PROPERTY(coordinatesDms)));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
