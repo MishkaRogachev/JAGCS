@@ -9,11 +9,10 @@
 // Internal
 #include "settings_provider.h"
 
-#include "translation_manager.h"
-#include "qml_declarations.h"
-#include "proxy_manager.h"
-
 #include "service_registry.h"
+
+#include "translation_manager.h"
+#include "proxy_manager.h"
 
 #include "presentation_context.h"
 #include "main_presenter.h"
@@ -51,10 +50,9 @@ int main(int argc, char* argv[])
 
     presentation::MainPresenter presenter;
 
-    registerQmlTypes();
-
     presentation::PresentationContext::rootContext()->setContextProperty(
                 PROPERTY(settings), settings::Provider::instance());
+
     presenter.setView(presentation::PresentationContext::rootView());
 
     presenter.setMode("planning");
