@@ -36,7 +36,7 @@ PresentationContext::PresentationContext()
     qmlRegisterUncreatableType<domain::LogMessage>(
                 "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
 
-    m_engine = new QQmlApplicationEngine(QUrl("qrc:/Views/MainView.qml"), qApp);
+    m_engine = new QQmlApplicationEngine(qApp);
 }
 
 PresentationContext* PresentationContext::instance()
@@ -53,4 +53,10 @@ QObject* PresentationContext::rootView()
 QQmlContext* PresentationContext::rootContext()
 {
     return instance()->m_engine->rootContext();
+}
+
+void PresentationContext::load()
+{
+    instance()->m_engine->load(QUrl("qrc:/Views/MainView.qml"));
+    // TODO: wait objectCreated
 }

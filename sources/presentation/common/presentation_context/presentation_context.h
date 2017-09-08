@@ -19,6 +19,8 @@ namespace presentation
         static QObject* rootView();
         static QQmlContext* rootContext();
 
+        static void load();
+
     private:
         QQmlApplicationEngine* m_engine;
 

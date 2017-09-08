@@ -11,12 +11,12 @@ ApplicationWindow {
 
     property string mode
 
-    property alias uiSize: palette.controlBaseSize
-    property int paletteStyle: 0
+//    property alias uiSize: palette.controlBaseSize
+//    property int paletteStyle: 0
 
     minimumWidth: 1024
     minimumHeight: 768
-
+/*
     Palette {
         id: palette
 
@@ -41,7 +41,7 @@ ApplicationWindow {
         dangerColor: "#e53535"
         cautionColor: "#ff9800"
         positiveColor: "#86c34a"
-    }
+    }*/
 
     header: StatusView {
         objectName: "statusbar"
@@ -63,7 +63,7 @@ ApplicationWindow {
 
     function updateUiSettings() {
         visibility = settings.boolValue("Gui/fullscreen") ? "FullScreen" : "Windowed"
-        uiSize = settings.value("Gui/uiSize");
-        paletteStyle = settings.value("Gui/paletteStyle");
+//        uiSize = settings.value("Gui/uiSize");
+//        paletteStyle = settings.value("Gui/paletteStyle");
     }
 }

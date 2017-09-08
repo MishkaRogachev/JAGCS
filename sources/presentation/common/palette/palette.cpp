@@ -132,24 +132,24 @@ void Palette::setSelectionColor(QColor selectionColor)
     m_selectionColor = selectionColor;
 }
 
-QColor Palette::negativeColor() const
+QColor Palette::dangerColor() const
 {
-    return m_negativeColor;
+    return m_dangerColor;
 }
 
-void Palette::setNegativeColor(QColor negativeColor)
+void Palette::setDangerColor(QColor dangerColor)
 {
-    m_negativeColor = negativeColor;
+    m_dangerColor = dangerColor;
 }
 
-QColor Palette::neutralColor() const
+QColor Palette::cautionColor() const
 {
-    return m_neutralColor;
+    return m_cautionColor;
 }
 
-void Palette::setNeutralColor(QColor neutralColor)
+void Palette::setCautionColor(QColor cautionColor)
 {
-    m_neutralColor = neutralColor;
+    m_cautionColor = cautionColor;
 }
 
 QColor Palette::positiveColor() const

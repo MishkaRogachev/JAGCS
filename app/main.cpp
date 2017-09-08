@@ -10,11 +10,11 @@
 #include "settings_provider.h"
 
 #include "service_registry.h"
-
-#include "translation_manager.h"
 #include "proxy_manager.h"
 
 #include "presentation_context.h"
+#include "translation_manager.h"
+#include "palette_manager.h"
 #include "main_presenter.h"
 
 #include "link_description.h"
@@ -48,11 +48,15 @@ int main(int argc, char* argv[])
     presentation::TranslationManager translations;
     translations.initLocales();
 
+    presentation::PaletteManager palettes;
+    palettes.setPalette(presentation::Palette());
+
     presentation::MainPresenter presenter;
 
     presentation::PresentationContext::rootContext()->setContextProperty(
                 PROPERTY(settings), settings::Provider::instance());
 
+    presentation::PresentationContext::load();
     presenter.setView(presentation::PresentationContext::rootView());
 
     presenter.setMode("planning");
