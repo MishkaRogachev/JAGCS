@@ -15,6 +15,7 @@ T.TabButton {
 
     background: Rectangle {
         id: backgroundItem
+        anchors.fill: parent
         implicitWidth: palette.controlBaseSize
         implicitHeight: palette.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
