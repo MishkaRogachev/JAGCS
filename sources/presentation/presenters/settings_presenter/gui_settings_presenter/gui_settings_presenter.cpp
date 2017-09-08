@@ -13,7 +13,7 @@ using namespace presentation;
 class GuiSettingsPresenter::Impl
 {
 public:
-    domain::TranslationManager manager;
+    TranslationManager manager;
 };
 
 GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):

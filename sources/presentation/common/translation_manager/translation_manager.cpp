@@ -10,7 +10,7 @@
 #include "settings.h"
 #include "settings_provider.h"
 
-using namespace domain;
+using namespace presentation;
 
 class TranslationManager::Impl
 {

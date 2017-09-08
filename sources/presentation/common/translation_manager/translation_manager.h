@@ -5,7 +5,7 @@
 #include <QString>
 #include <QScopedPointer>
 
-namespace domain
+namespace presentation
 {
     class TranslationManager
     {

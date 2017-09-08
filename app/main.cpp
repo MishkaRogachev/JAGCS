@@ -39,14 +39,14 @@ int main(int argc, char* argv[])
     app.setFont(QFont("OpenSans"));
     app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
-    domain::TranslationManager translations;
-    translations.initLocales();
-
     domain::ProxyManager proxy;
     proxy.load();
 
     domain::ServiceRegistry::instance()->init(
                 settings::Provider::value(settings::data_base::name).toString());
+
+    presentation::TranslationManager translations;
+    translations.initLocales();
 
     presentation::MainPresenter presenter;
 
