@@ -11,37 +11,8 @@ ApplicationWindow {
 
     property string mode
 
-//    property alias uiSize: palette.controlBaseSize
-//    property int paletteStyle: 0
-
     minimumWidth: 1024
     minimumHeight: 768
-/*
-    Palette {
-        id: palette
-
-        property color trackColor: "#ff173c"
-        property color missionColor: "#1ce9a5"
-        property color activeMissionColor: "#fd00fd"
-
-        property color skyColor: paletteStyle ? "#61ffff" : "#00d4ff"
-        property color groundColor: paletteStyle ? "#4bda63" : "#7b4837"
-
-        backgroundColor: paletteStyle ? "#ced1da" : "#30393d"
-        sunkenColor: paletteStyle ? "#c3c6ce" : "#262e31"
-        raisedColor: paletteStyle ? "#e1e5ee" : "#384348"
-        buttonColor: paletteStyle ? "#f6f5f0" : "#54646b"
-
-        textColor: paletteStyle ? "#30393d" : "#f6f5f0"
-        selectedTextColor: "#070707"
-
-        highlightColor: "#1effb4"
-        selectionColor: "#1ce9a5"
-
-        dangerColor: "#e53535"
-        cautionColor: "#ff9800"
-        positiveColor: "#86c34a"
-    }*/
 
     header: StatusView {
         objectName: "statusbar"
@@ -63,7 +34,5 @@ ApplicationWindow {
 
     function updateUiSettings() {
         visibility = settings.boolValue("Gui/fullscreen") ? "FullScreen" : "Windowed"
-//        uiSize = settings.value("Gui/uiSize");
-//        paletteStyle = settings.value("Gui/paletteStyle");
     }
 }

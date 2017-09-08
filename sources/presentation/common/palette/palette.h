@@ -101,28 +101,28 @@ namespace presentation
         void setGroundColor(QColor groundColor);
 
     private:
-        int m_controlBaseSize = 36;
-        int m_fontPixelSize = 18;
-        int m_spacing = 9;
-        int m_margins = 9;
-        int m_padding = 5;
+        int m_controlBaseSize;
+        int m_fontPixelSize;
+        int m_spacing;
+        int m_margins;
+        int m_padding;
 
-        QColor m_backgroundColor = "#30393d";
-        QColor m_sunkenColor = "#262e31";
-        QColor m_raisedColor = "#384348";
-        QColor m_buttonColor = "#54646b";
-        QColor m_textColor = "#f6f5f0";
-        QColor m_selectedTextColor = "#070707";
-        QColor m_highlightColor = "#1effb4";
-        QColor m_selectionColor = "#1ce9a5";
-        QColor m_dangerColor = "#e53535";
-        QColor m_cautionColor = "#ff9800";
-        QColor m_positiveColor = "#86c34a";
-        QColor m_trackColor = "#ff173c";
-        QColor m_missionColor = "#1ce9a5";
-        QColor m_activeMissionColor = "#fd00fd";
-        QColor m_skyColor = "#00d4ff";
-        QColor m_groundColor = "#7b4837";
+        QColor m_backgroundColor;
+        QColor m_sunkenColor;
+        QColor m_raisedColor;
+        QColor m_buttonColor;
+        QColor m_textColor;
+        QColor m_selectedTextColor;
+        QColor m_highlightColor;
+        QColor m_selectionColor;
+        QColor m_dangerColor;
+        QColor m_cautionColor;
+        QColor m_positiveColor;
+        QColor m_trackColor;
+        QColor m_missionColor;
+        QColor m_activeMissionColor;
+        QColor m_skyColor;
+        QColor m_groundColor;
     };
 }
 

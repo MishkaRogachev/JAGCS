@@ -48,8 +48,8 @@ int main(int argc, char* argv[])
     presentation::TranslationManager translations;
     translations.initLocales();
 
-    presentation::PaletteManager palettes;
-    palettes.setPalette(presentation::Palette());
+    presentation::PaletteManager paletteManager;
+    paletteManager.reloadPalette();
 
     presentation::MainPresenter presenter;
 

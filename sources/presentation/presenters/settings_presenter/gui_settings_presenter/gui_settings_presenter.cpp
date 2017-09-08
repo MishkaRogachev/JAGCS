@@ -7,13 +7,15 @@
 #include "settings_provider.h"
 
 #include "translation_manager.h"
+#include "palette_manager.h"
 
 using namespace presentation;
 
 class GuiSettingsPresenter::Impl
 {
 public:
-    TranslationManager manager;
+    TranslationManager translationManager;
+    PaletteManager paletteManager;
 };
 
 GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
@@ -29,8 +31,8 @@ void GuiSettingsPresenter::updateView()
     this->setViewProperty(PROPERTY(fullscreen),
                           settings::Provider::value(settings::gui::fullscreen));
 
-    const QStringList& locales = d->manager.avalibleLocales();
-    int index = locales.indexOf(d->manager.currentLocale());
+    const QStringList& locales = d->translationManager.avalibleLocales();
+    int index = locales.indexOf(d->translationManager.currentLocale());
     this->setViewProperty(PROPERTY(localeIndex), index);
 
     this->setViewProperty(PROPERTY(uiSize),
@@ -57,11 +59,6 @@ void GuiSettingsPresenter::save()
 {
     settings::Provider::setValue(settings::gui::fullscreen,
                                  this->viewProperty(PROPERTY(fullscreen)).toBool());
-
-    const QStringList& locales = d->manager.avalibleLocales();
-    QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
-    d->manager.setCurrentLocale(locale);
-
     settings::Provider::setValue(settings::gui::uiSize,
                                  this->viewProperty(PROPERTY(uiSize)).toInt());
     settings::Provider::setValue(settings::gui::paletteStyle,
@@ -80,12 +77,18 @@ void GuiSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(coordinatesDms)));
 
     this->setViewProperty(PROPERTY(changed), false);
+
+    const QStringList& locales = d->translationManager.avalibleLocales();
+    QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
+    d->translationManager.setCurrentLocale(locale);
+
+    d->paletteManager.reloadPalette();
 }
 
 void GuiSettingsPresenter::connectView(QObject* view)
 {
     this->setViewProperty(PROPERTY(locales), QVariant::fromValue(
-                              d->manager.avalibleLocales()));
+                              d->translationManager.avalibleLocales()));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));

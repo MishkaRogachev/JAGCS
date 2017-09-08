@@ -16,6 +16,8 @@ namespace presentation
     public slots:
         void setPalette(const Palette& palette);
 
+        void reloadPalette();
+
     };
 }
 
