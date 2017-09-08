@@ -11,6 +11,9 @@
 #include "command.h"
 #include "log_message.h"
 
+// Qt
+#include <QQmlEngine>
+
 void registerQmlTypes()
 {
     qmlRegisterUncreatableType<dao::Vehicle>(

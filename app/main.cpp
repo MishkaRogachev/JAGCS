@@ -3,7 +3,6 @@
 #include <QLockFile>
 #include <QFontDatabase>
 #include <QIcon>
-#include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QDebug>
 
@@ -16,6 +15,7 @@
 
 #include "service_registry.h"
 
+#include "presentation_context.h"
 #include "main_presenter.h"
 
 #include "link_description.h"
@@ -52,9 +52,10 @@ int main(int argc, char* argv[])
     presentation::MainPresenter presenter;
 
     registerQmlTypes();
-    QQmlApplicationEngine engine(QUrl("qrc:/Views/MainView.qml"));
-    engine.rootContext()->setContextProperty(PROPERTY(settings), settings::Provider::instance());
-    presenter.setView(engine.rootObjects().first());
+
+    presentation::PresentationContext::rootContext()->setContextProperty(
+                PROPERTY(settings), settings::Provider::instance());
+    presenter.setView(presentation::PresentationContext::rootView());
 
     presenter.setMode("planning");
 
