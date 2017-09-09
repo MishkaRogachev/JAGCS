@@ -24,8 +24,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onExecuteCommand(int commandType);
-        void onExecuteBoolCommand(int commandType, bool check);
+        void onExecuteCommand(int commandType, const QVariant& args);
         void onRejectCommand(int commandType);
 
         void onCommandStatusChanged(domain::Command::CommandType type,

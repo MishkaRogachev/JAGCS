@@ -14,7 +14,7 @@ Switch {
 
     onCheckedChanged: {
         if (status == Command.Sending) rejectCommand(command);
-        else if (inputChecked != checked) executeBoolCommand(command, checked);
+        else if (inputChecked != checked) executeCommand(command, [checked]);
     }
 
     onStatusChanged: {

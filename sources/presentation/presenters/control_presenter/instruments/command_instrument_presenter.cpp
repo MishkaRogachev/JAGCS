@@ -35,21 +35,14 @@ CommandInstrumentPresenter::~CommandInstrumentPresenter()
 
 void CommandInstrumentPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(executeCommand(int)), this, SLOT(onExecuteCommand(int)));
-    connect(view, SIGNAL(executeBoolCommand(int, bool)), this, SLOT(onExecuteBoolCommand(int, bool)));
+    connect(view, SIGNAL(executeCommand(int, QVariant)), this, SLOT(onExecuteCommand(int, QVariant)));
     connect(view, SIGNAL(rejectCommand(int)), this, SLOT(onRejectCommand(int)));
 }
 
-void CommandInstrumentPresenter::onExecuteCommand(int commandType)
+void CommandInstrumentPresenter::onExecuteCommand(int commandType, const QVariant& args)
 {
     Command command(Command::CommandType(commandType), d->vehicleId);
-    d->service->executeCommand(command);
-}
-
-void CommandInstrumentPresenter::onExecuteBoolCommand(int commandType, bool check)
-{
-    Command command(Command::CommandType(commandType), d->vehicleId);
-    command.addArgument(check);
+    command.setArguments(args.toList());
     d->service->executeCommand(command);
 }
 

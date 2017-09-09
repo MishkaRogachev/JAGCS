@@ -71,7 +71,7 @@
         <file>Views/Control/Displays/FlightDisplay.qml</file>
         <file>Views/Control/Displays/NavigationDisplay.qml</file>
         <file>Views/Control/Displays/StatusDisplay.qml</file>
-        <file>Views/Control/Displays/MissionDisplay.qml</file>
+        <file>Views/Control/Displays/AircraftControlDisplay.qml</file>
         <file>Views/Planning/PlanningView.qml</file>
         <file>Views/Planning/Mission/MissionView.qml</file>
         <file>Views/Planning/Mission/MissionItemView.qml</file>

@@ -12,27 +12,29 @@ GridLayout {
     property bool armed: false
     property bool guided: false
 
+    property int barometricAltitude: 0
+    property int indicatedAirspeed: 0
+
     signal commandSetWaypoint(int item)
 
     signal commandStatusChanged(var command, var status)
-    signal executeCommand(int command)
-    signal executeBoolCommand(int command, bool check)
+    signal executeCommand(int command, var arguments)
     signal rejectCommand(int command)
 
     onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
-    columns: 5
+    columns: 4
 
-    Controls.CommandSwitch { // FIXME: dangerous button
+    Controls.CommandSwitch { // FIXME: dangerous switch
         command: Command.ArmDisarm
         text: armed ? qsTr("DISARM") : qsTr("ARM")
         inputChecked: armed
-        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
     Controls.CommandButton {
         command: Command.Takeoff
         iconSource: "qrc:/icons/takeoff.svg"
+        Layout.alignment: Qt.AlignRight
     }
 
     Controls.CommandButton {
@@ -46,7 +48,7 @@ GridLayout {
     }
 
     Controls.Label {
-        text: qsTr("WP: ")
+        text: qsTr("Waypoint:")
         font.pixelSize: palette.fontPixelSize * 0.75
         font.bold: true
     }
@@ -55,7 +57,6 @@ GridLayout {
         id: waypointBox
         model: []
         onCurrentTextChanged: commandSetWaypoint(currentText)
-        implicitWidth: palette.controlBaseSize * 2
         enabled: guided
         Layout.fillWidth: true
     }
@@ -68,5 +69,50 @@ GridLayout {
     Controls.CommandButton {
         command: Command.Start
         iconSource: "qrc:/icons/play.svg"
+    }
+
+    Controls.Label {
+        text: qsTr("Speed:")
+        font.pixelSize: palette.fontPixelSize * 0.75
+        font.bold: true
+    }
+
+    Controls.SpinBox {
+        id: speedBox
+        Layout.fillWidth: true
+    }
+
+    Controls.Button {
+        iconSource: "qrc:/icons/restore.svg"
+        onClicked: speedBox.value = indicatedAirspeed
+    }
+
+    Controls.CommandButton {
+        command: Command.SetSpeed
+        iconSource: "qrc:/icons/right.svg"
+        args: [0, speedBox.value, -1, 0] // TODO: groundspeed
+    }
+
+    Controls.Label {
+        text: qsTr("Altitude:")
+        font.pixelSize: palette.fontPixelSize * 0.75
+        font.bold: true
+    }
+
+    Controls.SpinBox {
+        id: altitudeBox
+        Layout.fillWidth: true
+        to: 20000
+    }
+
+    Controls.Button {
+        iconSource: "qrc:/icons/restore.svg"
+        onClicked: altitudeBox.value = barometricAltitude
+    }
+
+    Controls.CommandButton {
+        command: Command.SetAltitude
+        iconSource: "qrc:/icons/right.svg"
+        args: [altitudeBox.value, 0]
     }
 }

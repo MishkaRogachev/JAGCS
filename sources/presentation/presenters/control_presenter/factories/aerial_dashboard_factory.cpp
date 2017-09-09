@@ -15,6 +15,7 @@
 #include "rangefinder_presenter.h"
 #include "power_system_presenter.h"
 #include "home_altitude_presenter.h"
+#include "mission_instrument_presenter.h"
 
 using namespace presentation;
 
@@ -30,22 +31,34 @@ DashboardPresenter* AerialDashboardFactory::create()
 
     DashboardPresenter* dashboard = GenericDashboardFactory::create();
 
+    BaseInstrumentPresenter* pitot = new PitotPresenter(
+                                         node->childNode(domain::Telemetry::Pitot), dashboard);
+    BaseInstrumentPresenter* barometric = new BarometricPresenter(
+                                              node->childNode(domain::Telemetry::Barometric), dashboard);
+
     dashboard->addInstrument("fd", 200);
     dashboard->addInstrumentPresenter("fd", m_status);
     dashboard->addInstrumentPresenter("fd", new AhrsPresenter(
                                           node->childNode(domain::Telemetry::Ahrs), dashboard));
     dashboard->addInstrumentPresenter("fd", m_satellite);
      dashboard->addInstrumentPresenter("fd", m_navigator);
-    dashboard->addInstrumentPresenter("fd", new BarometricPresenter(
-                                          node->childNode(domain::Telemetry::Barometric), dashboard));
-    dashboard->addInstrumentPresenter("fd", new PitotPresenter(
-                                          node->childNode(domain::Telemetry::Pitot), dashboard));
+    dashboard->addInstrumentPresenter("fd", barometric);
+    dashboard->addInstrumentPresenter("fd", pitot);
     dashboard->addInstrumentPresenter("fd", new RangefinderPresenter(
                                           node->childNode(domain::Telemetry::Rangefinder), dashboard));
     dashboard->addInstrumentPresenter("fd", new PowerSystemPresenter(
                                           node->childNode(domain::Telemetry::PowerSystem), dashboard));
     dashboard->addInstrumentPresenter("fd", new HomeAltitudePresenter(
                                           node->childNode(domain::Telemetry::HomePosition), dashboard));
+
+    dashboard->addInstrument("aircraftControl", 500);
+    dashboard->addInstrumentPresenter("aircraftControl", m_status);
+    dashboard->addInstrumentPresenter("aircraftControl", m_satellite);
+    dashboard->addInstrumentPresenter("aircraftControl", pitot);
+    dashboard->addInstrumentPresenter("aircraftControl", barometric);
+    dashboard->addInstrumentPresenter("aircraftControl", m_commander);
+    dashboard->addInstrumentPresenter("aircraftControl", new MissionInstrumentPresenter(
+                                          m_vehicle->id(), dashboard));
 
     return dashboard;
 

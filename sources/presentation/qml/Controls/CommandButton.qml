@@ -6,13 +6,14 @@ Button {
 
     property int command: Command.UnknownCommand
     property int status: Command.Idle
+    property var args: []
 
     Connections {
         target: root
         onCommandStatusChanged: if (command == control.command) control.status = status
     }
 
-    onClicked: status == Command.Sending ? rejectCommand(command) : executeCommand(command)
+    onClicked: status == Command.Sending ? rejectCommand(command) : executeCommand(command, args)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
 
     Timer {
