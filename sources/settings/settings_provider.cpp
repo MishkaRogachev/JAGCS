@@ -15,6 +15,10 @@ class Provider::Impl
 public:
     QSettings settings;
 
+    Impl():
+        settings(QSettings::NativeFormat, QSettings::UserScope, "JAGCS", "JAGCS")
+    {}
+
     void makeDefaults()
     {
         using namespace settings;
