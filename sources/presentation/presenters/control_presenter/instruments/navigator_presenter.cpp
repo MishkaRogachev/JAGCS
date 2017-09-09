@@ -13,6 +13,8 @@ void NavigatorPresenter::onParametersChanged(const domain::Telemetry::TelemetryM
 {
     if (parameters.contains(domain::Telemetry::TargetBearing))
         this->setViewsProperty(PROPERTY(targetBearing), parameters[domain::Telemetry::TargetBearing]);
+    if (parameters.contains(domain::Telemetry::DesiredHeading))
+        this->setViewsProperty(PROPERTY(desiredHeading), parameters[domain::Telemetry::DesiredHeading]);
     if (parameters.contains(domain::Telemetry::TargetDistance))
         this->setViewsProperty(PROPERTY(targetDistance), parameters[domain::Telemetry::TargetDistance]);
     if (parameters.contains(domain::Telemetry::TrackError))

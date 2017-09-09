@@ -9,6 +9,7 @@ Item {
     property alias heading: hsi.heading
     property alias course: hsi.course
     property alias targetBearing: hsi.targetBearing
+    property alias desiredHeading: hsi.desiredHeading
     property alias trackError: hsi.trackError
 
     property bool compassEnabled: false
