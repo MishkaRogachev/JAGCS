@@ -55,7 +55,6 @@ DashboardPresenter* AerialDashboardFactory::create()
     dashboard->addInstrumentPresenter("aircraftControl", m_status);
     dashboard->addInstrumentPresenter("aircraftControl", m_satellite);
     dashboard->addInstrumentPresenter("aircraftControl", pitot);
-    dashboard->addInstrumentPresenter("aircraftControl", barometric);
     dashboard->addInstrumentPresenter("aircraftControl", m_commander);
     dashboard->addInstrumentPresenter("aircraftControl", new MissionInstrumentPresenter(
                                           m_vehicle->id(), dashboard));

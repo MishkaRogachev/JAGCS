@@ -12,6 +12,7 @@ T.ItemDelegate {
         text: control.text
         padding: palette.margins
         verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font: control.font
         color: control.highlighted ? palette.selectedTextColor : palette.textColor
     }

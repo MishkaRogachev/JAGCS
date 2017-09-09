@@ -12,7 +12,7 @@ GridLayout {
     property bool armed: false
     property bool guided: false
 
-    property int barometricAltitude: 0
+    property int groundspeed: 0
     property int indicatedAirspeed: 0
 
     signal commandSetWaypoint(int item)
@@ -28,14 +28,17 @@ GridLayout {
         command: Command.ArmDisarm
         text: armed ? qsTr("DISARM") : qsTr("ARM")
         inputChecked: armed
+        font.pixelSize: palette.fontPixelSize * 0.75
+        font.bold: true
         Layout.fillWidth: true
+        Layout.columnSpan: 2
     }
 
-    Controls.CommandButton {
-        command: Command.Takeoff
-        iconSource: "qrc:/icons/takeoff.svg"
-        Layout.alignment: Qt.AlignRight
-    }
+//    Controls.CommandButton {
+//        command: Command.Takeoff
+//        iconSource: "qrc:/icons/takeoff.svg"
+//        Layout.alignment: Qt.AlignRight
+//    }
 
     Controls.CommandButton {
         command: Command.Land
@@ -91,28 +94,6 @@ GridLayout {
         command: Command.SetSpeed
         iconSource: "qrc:/icons/right.svg"
         args: [0, speedBox.value, -1, 0] // TODO: groundspeed
-    }
-
-    Controls.Label {
-        text: qsTr("Altitude:")
-        font.pixelSize: palette.fontPixelSize * 0.75
-        font.bold: true
-    }
-
-    Controls.SpinBox {
-        id: altitudeBox
-        Layout.fillWidth: true
-        to: 20000
-    }
-
-    Controls.Button {
-        iconSource: "qrc:/icons/restore.svg"
-        onClicked: altitudeBox.value = barometricAltitude
-    }
-
-    Controls.CommandButton {
-        command: Command.SetAltitude
-        iconSource: "qrc:/icons/right.svg"
-        args: [altitudeBox.value, 0]
+        enabled: guided
     }
 }

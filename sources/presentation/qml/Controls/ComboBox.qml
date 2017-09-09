@@ -43,6 +43,7 @@ T.ComboBox {
         text: control.displayText
         padding: palette.margins
         verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font: control.font
         color: palette.textColor
     }
