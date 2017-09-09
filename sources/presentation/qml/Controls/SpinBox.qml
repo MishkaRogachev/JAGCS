@@ -15,7 +15,7 @@ T.SpinBox {
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: palette.sunkenColor
+        color: isValid ? palette.sunkenColor : palette.dangerColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 
         Hatch {
