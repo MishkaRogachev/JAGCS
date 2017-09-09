@@ -31,7 +31,9 @@ namespace
         { MAV_CMD_DO_LAND_START, Command::Land },
         { MAV_CMD_DO_GO_AROUND, Command::GoAround },
         { MAV_CMD_DO_PAUSE_CONTINUE, Command::PauseContinue },
-        { MAV_CMD_DO_PARACHUTE, Command::Parachute }
+        { MAV_CMD_DO_PARACHUTE, Command::Parachute },
+        { MAV_CMD_DO_CHANGE_SPEED, Command::SetSpeed },
+        { MAV_CMD_DO_CHANGE_ALTITUDE, Command::SetAltitude },
     };
 
     const QMultiMap<quint8, Command::CommandStatus> mavStatusMap =

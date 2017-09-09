@@ -25,7 +25,10 @@ namespace domain
             GoAround,
             PauseContinue,
 
-            Parachute
+            Parachute,
+
+            SetSpeed,
+            SetAltitude
         };
 
         enum CommandStatus
