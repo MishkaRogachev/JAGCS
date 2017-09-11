@@ -28,6 +28,7 @@ T.SpinBox {
     contentItem: TextInput {
         anchors.left: parent.left
         anchors.leftMargin: palette.padding
+        anchors.right: down.indicator.left
         anchors.verticalCenter: parent.verticalCenter
         text: isValid ? control.textFromValue(control.value, control.locale) : "NaN"
         font: control.font
