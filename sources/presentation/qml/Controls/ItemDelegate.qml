@@ -4,15 +4,17 @@ import QtQuick.Templates 2.0 as T
 T.ItemDelegate {
     id: control
 
+    property alias horizontalAlignment: text.horizontalAlignment
+
     font.pixelSize: palette.fontPixelSize
     implicitWidth: palette.controlBaseSize * 4
     implicitHeight: palette.controlBaseSize
 
     contentItem: Text {
+        id: text
         text: control.text
         padding: palette.margins
         verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
         font: control.font
         color: control.highlighted ? palette.selectedTextColor : palette.textColor
     }

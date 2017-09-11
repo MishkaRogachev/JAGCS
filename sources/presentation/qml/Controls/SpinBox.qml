@@ -26,8 +26,9 @@ T.SpinBox {
     }
 
     contentItem: TextInput {
-        anchors.centerIn: parent
-        anchors.horizontalCenterOffset: -(up.indicator.width + down.indicator.width) / 2
+        anchors.left: parent.left
+        anchors.leftMargin: palette.padding
+        anchors.verticalCenter: parent.verticalCenter
         text: isValid ? control.textFromValue(control.value, control.locale) : "NaN"
         font: control.font
         readOnly: !control.editable
@@ -36,7 +37,6 @@ T.SpinBox {
         selectionColor: palette.selectionColor
         selectedTextColor: palette.selectedTextColor
         selectByMouse: true
-        horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
     }
 

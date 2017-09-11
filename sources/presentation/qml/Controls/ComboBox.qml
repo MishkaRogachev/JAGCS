@@ -4,6 +4,8 @@ import QtQuick.Templates 2.0 as T
 T.ComboBox {
     id: control
 
+    property alias horizontalAlignment: text.horizontalAlignment
+
     font.pixelSize: palette.fontPixelSize
     clip: true
     implicitWidth: palette.controlBaseSize * 4
@@ -14,6 +16,7 @@ T.ComboBox {
         width: control.width
         text: modelData
         highlighted: control.highlightedIndex === index
+        horizontalAlignment: control.horizontalAlignment
     }
 
     background: Rectangle {
@@ -40,10 +43,10 @@ T.ComboBox {
     }
 
     contentItem: Text {
+        id: text
         text: control.displayText
         padding: palette.margins
         verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
         font: control.font
         color: palette.textColor
     }

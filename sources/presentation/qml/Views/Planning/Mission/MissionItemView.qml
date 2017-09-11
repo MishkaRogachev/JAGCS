@@ -132,8 +132,10 @@ Item {
             Layout.fillWidth: true
         }
 
-        RowLayout {
+        GridLayout {
             visible: altitudeVisible
+            columns: 2
+            Layout.rowSpan: abortAltitudeVisible ? 2 : 1
 
             Controls.RealSpinBox {
                 id: altitudeBox
@@ -149,22 +151,23 @@ Item {
                 text: qsTr("Rel.")
                 enabled: editEnabled && sequence > 0
                 onCheckedChanged: changed = true
+                Layout.rowSpan: 2
+            }
+
+            Controls.RealSpinBox {
+                id: abortAltitudeBox
+                visible: abortAltitudeVisible
+                enabled: editEnabled
+                realFrom: -500 // 418 m Daed Sea shore
+                realTo: 20000 // TODO: constants to config
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
             }
         }
 
         Controls.Label {
             text: qsTr("Abort alt.")
             visible: abortAltitudeVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: abortAltitudeBox
-            visible: abortAltitudeVisible
-            enabled: editEnabled
-            realFrom: -500 // 418 m Daed Sea shore
-            realTo: 20000 // TODO: constants to config
-            onRealValueChanged: changed = true
             Layout.fillWidth: true
         }
 
