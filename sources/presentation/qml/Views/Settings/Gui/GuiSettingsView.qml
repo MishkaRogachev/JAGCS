@@ -39,7 +39,6 @@ Controls.Frame {
         Controls.CheckBox {
             id: fullscreenBox
             Layout.columnSpan: 2
-            Layout.alignment: Qt.AlignRight
             onCheckedChanged: changed = true
         }
 
@@ -177,7 +176,6 @@ Controls.Frame {
         Controls.CheckBox {
             id: relativeAltitudeBox
             Layout.columnSpan: 2
-            Layout.alignment: Qt.AlignRight
             onCheckedChanged: changed = true
         }
 
@@ -189,7 +187,6 @@ Controls.Frame {
         Controls.CheckBox {
             id: coordinatesDmsBox
             Layout.columnSpan: 2
-            Layout.alignment: Qt.AlignRight
             onCheckedChanged: changed = true
         }
 

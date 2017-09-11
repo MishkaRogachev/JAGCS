@@ -18,10 +18,10 @@ void MapSettingsPresenter::updateView()
                           settings::Provider::value(settings::map::activeMapType));
     this->setViewProperty(PROPERTY(tileHost),
                           settings::Provider::value(settings::map::tileHost));
-    this->setViewProperty(PROPERTY(cacheFolder),
-                          settings::Provider::value(settings::map::cacheFolder));
     this->setViewProperty(PROPERTY(cacheSize),
                           settings::Provider::value(settings::map::cacheSize));
+    this->setViewProperty(PROPERTY(highdpiTiles),
+                          settings::Provider::value(settings::map::highdpiTiles));
     this->setViewProperty(PROPERTY(trackLength),
                           settings::Provider::value(settings::map::trackLength));
 
@@ -34,10 +34,10 @@ void MapSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(activeMapType)));
     settings::Provider::setValue(settings::map::tileHost,
                                  this->viewProperty(PROPERTY(tileHost)));
-    settings::Provider::setValue(settings::map::cacheFolder,
-                                 this->viewProperty(PROPERTY(cacheFolder)));
     settings::Provider::setValue(settings::map::cacheSize,
                                  this->viewProperty(PROPERTY(cacheSize)));
+    settings::Provider::setValue(settings::map::highdpiTiles,
+                                 this->viewProperty(PROPERTY(highdpiTiles)));
     settings::Provider::setValue(settings::map::trackLength,
                                  this->viewProperty(PROPERTY(trackLength)).toInt());
 

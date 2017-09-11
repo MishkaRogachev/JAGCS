@@ -36,8 +36,8 @@ namespace settings
         const QString centerLongitude = "Map/centerLongitude";
         const QString activeMapType = "Map/activeMapType";
         const QString tileHost = "Map/tileHost";
-        const QString cacheFolder = "Map/cacheFolder";
         const QString cacheSize = "Map/cacheSize";
+        const QString highdpiTiles = "Map/highdpiTiles";
         const QString trackLength = "Map/trackLength";
     }
 

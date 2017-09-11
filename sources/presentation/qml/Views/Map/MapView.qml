@@ -29,25 +29,10 @@ Map {
     plugin: Plugin {
         name: "osm"
 
-        PluginParameter {
-            name: "osm.mapping.custom.host";
-            value: settings.value("Map/tileHost", "http://a.tile.openstreetmap.org/");
-        }
-
-        PluginParameter {
-            name: "osm.mapping.offline.directory";
-            value: settings.value("Map/cacheFolder", "~/.cache/QtLocation/osm");
-        }
-
-        PluginParameter {
-            name: "osm.mapping.cache.disk.size";
-            value: settings.value("Map/cacheSize", 52428800);
-        }
-
-        PluginParameter {
-            name: "osm.mapping.providersrepository.disabled";
-            value: true
-        }
+        PluginParameter { name: "osm.useragent"; value: "JAGCS" }
+        PluginParameter { name: "osm.mapping.custom.host"; value: "http://a.tile.openstreetmap.org/" }
+        PluginParameter { name: "osm.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
+        PluginParameter { name: "osm.mapping.highdpi_tiles"; value: settings.boolValue("Map/highdpiTiles", true) }
     }
 
     activeMapType: supportedMapTypes[settings.value("Map/activeMapType", 0)]

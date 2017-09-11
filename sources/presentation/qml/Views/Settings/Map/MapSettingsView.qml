@@ -9,10 +9,10 @@ Controls.Frame {
 
     property bool changed: false
 
-    property alias cacheFolder: cacheField.text
     property alias cacheSize: cacheSizeBox.value
     property alias tileHost: tileHostField.text
     property alias activeMapType: mapTypeBox.currentIndex
+    property alias highdpiTiles: highdpiTilesBox.checked
     property alias trackLength: trackLengthSlider.value
 
     signal save()
@@ -60,18 +60,6 @@ Controls.Frame {
         }
 
         Controls.Label {
-            text: qsTr("Cache folder")
-            Layout.fillWidth: true
-        }
-
-        Controls.TextField {
-            id: cacheField
-            placeholderText: qsTr("Enter map cache folder")
-            Layout.fillWidth: true
-            onTextChanged: changed = true
-        }
-
-        Controls.Label {
             text: qsTr("Cache size")
             Layout.fillWidth: true
         }
@@ -81,6 +69,16 @@ Controls.Frame {
             Layout.fillWidth: true
             onValueChanged: changed = true;
             to: 2147483647 // TODO: to helper
+        }
+
+        Controls.Label {
+            text: qsTr("High DPI tiles")
+            Layout.fillWidth: true
+        }
+
+        Controls.CheckBox {
+            id: highdpiTilesBox
+            onCheckedChanged: changed = true
         }
 
         Controls.Label {
