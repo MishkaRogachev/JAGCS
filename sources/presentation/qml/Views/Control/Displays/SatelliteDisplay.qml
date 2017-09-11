@@ -32,9 +32,8 @@ Item {
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.dangerColor :
-                palette.sunkenColor
+                opacity: enabled ? 1 : 0.33
+                color: satelliteOperational ? palette.textColor : palette.dangerColor
                 text: qsTr("Lat.: ") + (dmsFormat ?
                                             Helper.degreesToDmsString(coordinate.latitude, false) :
                                             Helper.degreesToString(coordinate.latitude, 6))
@@ -43,9 +42,8 @@ Item {
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.dangerColor :
-                palette.sunkenColor
+                opacity: enabled ? 1 : 0.33
+                color: satelliteOperational ? palette.textColor : palette.dangerColor
                 text: qsTr("Lon.: ") + (dmsFormat ?
                                             Helper.degreesToDmsString(coordinate.longitude, true) :
                                             Helper.degreesToString(coordinate.longitude, 6))
@@ -88,18 +86,16 @@ Item {
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.dangerColor :
-                                                                 palette.sunkenColor
+                opacity: enabled ? 1 : 0.33
+                color: satelliteOperational ? palette.textColor : palette.dangerColor
                 text: qsTr("HDOP: ") + eph
             }
 
             Controls.Label {
                 font.pixelSize: root.width * 0.044
                 font.bold: true
-                color: satelliteEnabled ? satelliteOperational ? palette.textColor :
-                                                                 palette.dangerColor :
-                                                                 palette.sunkenColor
+                opacity: enabled ? 1 : 0.33
+                color: satelliteOperational ? palette.textColor : palette.dangerColor
                 text: qsTr("VDOP: ") + epv
             }
         }

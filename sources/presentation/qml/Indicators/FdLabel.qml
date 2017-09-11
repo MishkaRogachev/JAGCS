@@ -9,7 +9,8 @@ Text {
     property real value: 0
     property bool operational: true
 
-    color: enabled ? (operational ? palette.textColor : palette.dangerColor) : palette.sunkenColor
+    opacity: enabled ? 1 : 0.33
+    color: operational ? palette.textColor : palette.dangerColor
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
     font.pixelSize: root.width * 0.23

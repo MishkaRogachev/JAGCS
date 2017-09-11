@@ -47,7 +47,7 @@ T.SpinBox {
         implicitHeight: palette.controlBaseSize
         radius: 3
         color: down.pressed ? palette.highlightColor : "transparent"
-        opacity: enabled ? 1 : 0.5
+        opacity: enabled ? 1 : 0.33
 
         ColoredIcon {
             anchors.centerIn: parent
@@ -64,7 +64,7 @@ T.SpinBox {
         implicitHeight: palette.controlBaseSize
         radius: 3
         color: up.pressed ? palette.highlightColor : "transparent"
-        opacity: enabled ? 1 : 0.5
+        opacity: enabled ? 1 : 0.33
 
         ColoredIcon {
             anchors.centerIn: parent

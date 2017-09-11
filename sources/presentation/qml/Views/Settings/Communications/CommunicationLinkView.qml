@@ -235,7 +235,7 @@ Controls.Frame {
                 axisY: valueAxis
                 borderWidth: 3
                 color: palette.positiveColor
-                opacity: 0.5
+                opacity: 0.33
                 borderColor: palette.positiveColor
 
                 upperSeries: LineSeries { id: sentSeries }
@@ -247,7 +247,7 @@ Controls.Frame {
                 axisY: valueAxis
                 borderWidth: 3
                 color: palette.skyColor
-                opacity: 0.5
+                opacity: 0.33
                 borderColor: palette.skyColor
 
                 upperSeries: LineSeries { id: recvSeries }

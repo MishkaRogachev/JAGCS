@@ -57,8 +57,8 @@ Item {
             minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
             maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
             pitchStep: root.pitchStep
-            color: enabled ? (operational ? palette.textColor : palette.dangerColor) :
-                             palette.sunkenColor
+            opacity: enabled ? 1 : 0.33
+            color: operational ? palette.textColor : palette.dangerColor
         }
 
         DesiredAnglesMark {
@@ -115,7 +115,7 @@ Item {
         minRoll: root.minRoll
         maxRoll: root.maxRoll
         rollStep: root.rollStep
-        color: enabled ? (operational ? palette.textColor : palette.dangerColor) :
-                         palette.sunkenColor
+        opacity: enabled ? 1 : 0.33
+        color: operational ? palette.textColor : palette.dangerColor
     }
 }

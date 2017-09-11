@@ -56,7 +56,7 @@ Item {
             case 1: return Helper.mpsToKph(windSpeed);
             }
         }
-        enabled: windSpeed > 0 // TODO: wind avability
+        enabled: windSpeed > 0
     }
 
     Indicators.SituationIndicator {
@@ -64,12 +64,11 @@ Item {
         anchors.centerIn: parent
         width: parent.width * 0.6
         mark: vehicleMark
-        color: compassEnabled ? (compassOperational ? palette.textColor :
-                                                      palette.dangerColor) :
-                                palette.sunkenColor
+        opacity: compassEnabled ? 1 : 0.33
+        color: compassOperational ? palette.textColor : palette.dangerColor
         courseColor: satelliteEnabled ? (satelliteOperational ? palette.missionColor :
                                                                 palette.dangerColor) :
-                                        palette.sunkenColor
+                                        "transparent"
 
         Item {
             anchors.fill: parent
