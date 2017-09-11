@@ -1,10 +1,9 @@
 import QtQuick 2.6
 import QtQuick.Templates 2.0 as T
+import QtQuick.Layouts 1.3
 
 T.ComboBox {
     id: control
-
-    property alias horizontalAlignment: text.horizontalAlignment
 
     font.pixelSize: palette.fontPixelSize
     clip: true
@@ -16,7 +15,6 @@ T.ComboBox {
         width: control.width
         text: modelData
         highlighted: control.highlightedIndex === index
-        horizontalAlignment: control.horizontalAlignment
     }
 
     background: Rectangle {
@@ -42,17 +40,20 @@ T.ComboBox {
         color: control.down ? palette.highlightColor : palette.selectionColor
     }
 
-    contentItem: Text {
-        id: text
-        text: control.displayText
-        padding: palette.margins
-        verticalAlignment: Text.AlignVCenter
-        font: control.font
-        color: palette.textColor
+    contentItem: RowLayout {
+        ContentItem {
+            text: control.displayText
+            font: control.font
+            Layout.margins: palette.padding
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
     }
 
     popup: Popup {
-        y: control.height - 1
+        y: control.height
         width: control.width
         implicitHeight: contentItem.implicitHeight
         padding: 1
@@ -63,7 +64,7 @@ T.ComboBox {
             model: control.popup.visible ? control.delegateModel : null
             currentIndex: control.highlightedIndex
             boundsBehavior: Flickable.StopAtBounds
-            ScrollBar.vertical: ScrollBar { }
+            ScrollBar.vertical: ScrollBar {}
         }
     }
 }

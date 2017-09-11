@@ -37,6 +37,7 @@ T.Button {
     contentItem: ContentItem {
         id: content
         text: control.text
+        font: control.font
         textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
     }
 }

@@ -1,22 +1,25 @@
 import QtQuick 2.6
 import QtQuick.Templates 2.0 as T
+import QtQuick.Layouts 1.3
 
 T.ItemDelegate {
     id: control
 
-    property alias horizontalAlignment: text.horizontalAlignment
-
     font.pixelSize: palette.fontPixelSize
-    implicitWidth: palette.controlBaseSize * 4
     implicitHeight: palette.controlBaseSize
 
-    contentItem: Text {
-        id: text
-        text: control.text
-        padding: palette.margins
-        verticalAlignment: Text.AlignVCenter
-        font: control.font
-        color: control.highlighted ? palette.selectedTextColor : palette.textColor
+    contentItem: RowLayout {
+        ContentItem {
+            id: content
+            font: control.font
+            text: control.text
+            textColor: control.highlighted ? palette.selectedTextColor : palette.textColor
+            Layout.margins: palette.padding
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
     }
 
     background: Rectangle {

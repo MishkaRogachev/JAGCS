@@ -8,9 +8,10 @@ Item {
     property color iconColor: palette.textColor
     property color textColor: palette.textColor
 
+    property alias iconSource: icon.source
     property alias font: label.font
     property alias text: label.text
-    property alias iconSource: icon.source
+    property alias horizontalAlignment: label.horizontalAlignment
 
     Row {
         id: row

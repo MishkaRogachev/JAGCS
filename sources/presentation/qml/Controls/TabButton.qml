@@ -4,14 +4,15 @@ import QtQuick.Templates 2.0 as T
 T.TabButton {
     id: control
 
-    property alias iconSource: icon.source
-    property color iconColor: textColor
-    property color textColor: pressed || checked ? palette.selectedTextColor: palette.textColor
+    property alias iconSource: content.iconSource
+    property alias iconColor: content.iconColor
+    property alias textColor: content.textColor
     property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: palette.fontPixelSize
     implicitWidth: Math.max(backgroundItem.implicitWidth, content.implicitWidth)
     implicitHeight: Math.max(backgroundItem.implicitHeight, content.implicitHeight)
+    clip: true
 
     background: Rectangle {
         id: backgroundItem
@@ -33,33 +34,11 @@ T.TabButton {
         }
     }
 
-    contentItem: Item {
+    contentItem: ContentItem {
         id: content
-        implicitWidth: row.width
-        implicitHeight: row.height
-
-        Row {
-            id: row
-            anchors.centerIn: parent
-            height: parent.availableHeight
-            spacing: palette.spacing
-
-            ColoredIcon {
-                id: icon
-                color: enabled ? iconColor : palette.sunkenColor
-                anchors.verticalCenter: parent.verticalCenter
-                height: control.height * 0.6
-                width: height
-                visible: source != ""
-            }
-
-            Label {
-                id: label
-                font: control.font
-                text: control.text
-                color: enabled ? textColor : palette.sunkenColor
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
+        text: control.text
+        font: control.font
+        textColor: pressed || checked ? palette.selectedTextColor: palette.textColor
     }
 }
+
