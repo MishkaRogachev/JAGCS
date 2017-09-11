@@ -11,8 +11,9 @@ Item {
     property bool changed: false
     property int sequence: -1
     property int count: 0
+    property int command: MissionItem.UnknownCommand
 
-    property alias command: commandBox.currentIndex
+    property alias commandIndex: commandBox.currentIndex
     property alias commands: commandBox.model
 
     property alias altitude: altitudeBox.realValue
@@ -120,8 +121,8 @@ Item {
         Controls.ComboBox {
             id: commandBox
             visible: sequence > -1
-            enabled: editEnabled && sequence > 0
-            currentIndex: MissionItem.UnknownCommand
+            enabled: editEnabled
+            currentIndex: 0
             onCurrentIndexChanged: changed = true
             Layout.fillWidth: true
         }

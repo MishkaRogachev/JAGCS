@@ -14,16 +14,6 @@
 
 using namespace presentation;
 
-namespace
-{
-    const QList<dao::MissionItem::Command> availableCommands = {
-        dao::MissionItem::UnknownCommand, dao::MissionItem::Home, dao::MissionItem::Takeoff,
-        dao::MissionItem::Waypoint, dao::MissionItem::LoiterUnlim, dao::MissionItem::LoiterAltitude,
-        dao::MissionItem::LoiterTurns, dao::MissionItem::LoiterTime, dao::MissionItem::Continue,
-        dao::MissionItem::Return, dao::MissionItem::Landing, dao::MissionItem::SetSpeed
-    };
-}
-
 class MissionItemPresenter::Impl
 {
 public:
@@ -33,6 +23,28 @@ public:
     dao::MissionItemPtr item;
 
     TranslationHelper helper;
+
+    QList<dao::MissionItem::Command> availableCommands;
+
+    void updateAvailableCommands()
+    {
+        availableCommands.clear();
+
+        if (item.isNull()) return;
+
+        if (item->sequence() == 0)
+        {
+            availableCommands.append(dao::MissionItem::Home);
+        }
+        else
+        {
+            availableCommands.append(
+            { dao::MissionItem::Takeoff, dao::MissionItem::Waypoint, dao::MissionItem::LoiterUnlim,
+              dao::MissionItem::LoiterAltitude, dao::MissionItem::LoiterTurns, dao::MissionItem::LoiterTime,
+              dao::MissionItem::Continue, dao::MissionItem::Return, dao::MissionItem::Landing,
+              dao::MissionItem::SetSpeed });
+        }
+    }
 };
 
 MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObject* object):
@@ -85,6 +97,7 @@ void MissionItemPresenter::selectItem(int index)
     if (d->item == item) return;
 
     d->item = item;
+    this->updateAvailableCommands();
     this->updateView();
 
     emit itemSelected(item);
@@ -92,8 +105,11 @@ void MissionItemPresenter::selectItem(int index)
 
 void MissionItemPresenter::save()
 {
-    d->item->setCommand(static_cast<dao::MissionItem::Command>(
-                            this->viewProperty(PROPERTY(command)).toInt()));
+    int commandIndex = this->viewProperty(PROPERTY(commandIndex)).toInt();
+    if (commandIndex < d->availableCommands.count())
+    {
+        d->item->setCommand(d->availableCommands.at(commandIndex));
+    }
     d->item->setAltitude(this->viewProperty(PROPERTY(altitude)).toFloat());
     d->item->setAltitudeRelative(this->viewProperty(PROPERTY(isAltitudeRelative)).toBool());
     d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
@@ -124,6 +140,7 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(editEnabled), !d->service->isItemCurrent(d->item));
         this->setViewProperty(PROPERTY(sequence), d->item->sequence());
         this->setViewProperty(PROPERTY(command), d->item->command());
+        this->setViewProperty(PROPERTY(commandIndex), d->availableCommands.indexOf(d->item->command()));
         this->setViewProperty(PROPERTY(altitude), d->item->altitude());
         this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
@@ -153,12 +170,7 @@ void MissionItemPresenter::updateView()
 
 void MissionItemPresenter::connectView(QObject* view)
 {
-    QStringList commands;
-    for (dao::MissionItem::Command command: ::availableCommands)
-    {
-        commands.append(d->helper.translateCommand(command));
-    }
-    this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
+    this->updateAvailableCommands();
 
     connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
 
@@ -182,4 +194,16 @@ void MissionItemPresenter::updateCount()
         d->item.clear();
         this->updateView();
     }
+}
+
+void MissionItemPresenter::updateAvailableCommands()
+{
+    d->updateAvailableCommands();
+
+    QStringList commands;
+    for (dao::MissionItem::Command command: d->availableCommands)
+    {
+        commands.append(d->helper.translateCommand(command));
+    }
+    this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 }
