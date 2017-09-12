@@ -14,6 +14,7 @@ GridLayout {
 
     property int groundspeed: 0
     property int indicatedAirspeed: 0
+    property int command: commandBox.currentItem ? commandBox.currentItem.command : Command.UnknownCommand
 
     signal commandSetWaypoint(int item)
 
@@ -54,23 +55,24 @@ GridLayout {
             { icon: armed ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg",
               text: armed ? qsTr("Disarm") : qsTr("Arm"), command: Command.ArmDisarm },
             { icon: "qrc:/icons/home.svg", text: qsTr("Return"), command: Command.Return },
-            { icon: "qrc:/icons/play.svg", text: qsTr("Start"), command: Command.Start },
+            { icon: "qrc:/icons/play.svg", text: qsTr("Start mission"), command: Command.Start },
             { icon: "qrc:/icons/takeoff.svg", text: qsTr("Takeoff"), command: Command.Takeoff },
             { icon: "qrc:/icons/landing.svg", text: qsTr("Land"), command: Command.Land },
             { icon: "qrc:/icons/go_around.svg", text: qsTr("Go around"), command: Command.GoAround },
-            { icon: "qrc:/icons/flight.svg", text: qsTr("Set speed"), command: Command.SetSpeed },
+            { icon: "qrc:/icons/speed.svg", text: qsTr("Airspeed"), command: Command.SetSpeed, type: 0 },
+            { icon: "qrc:/icons/speed.svg", text: qsTr("Groundspeed"), command: Command.SetSpeed, type: 1 },
         ]
         Layout.fillWidth: true
     }
 
     Controls.CommandButton {
-        command: commandBox.currentItem ? commandBox.currentItem.command : Command.UnknownCommand
+        command: root.command
         iconSource: "qrc:/icons/right.svg"
         enabled: commandBox.currentIndex > 0
         args: {
             switch (command) {
             case Command.ArmDisarm: return [!armed];
-            case Command.SetSpeed: return [0, speedBox.value, -1, 0]; // TODO: groundspeed
+            case Command.SetSpeed: return [commandBox.currentItem.type, speedBox.value, -1, 0];
             default: return [];
             }
         }
@@ -80,18 +82,18 @@ GridLayout {
         text: qsTr("Speed:")
         font.pixelSize: palette.fontPixelSize * 0.75
         font.bold: true
-        visible: commandBox.currentItem.command === Command.SetSpeed
+        visible: command === Command.SetSpeed
     }
 
     Controls.SpinBox {
         id: speedBox
-        visible: commandBox.currentItem.command === Command.SetSpeed
+        visible: command === Command.SetSpeed
         Layout.fillWidth: true
     }
 
     Controls.Button {
         iconSource: "qrc:/icons/restore.svg"
-        onClicked: speedBox.value = indicatedAirspeed
-        visible: commandBox.currentItem.command === Command.SetSpeed
+        onClicked: speedBox.value = commandBox.currentItem.type ? groundspeed : indicatedAirspeed
+        visible: command === Command.SetSpeed
     }
 }
