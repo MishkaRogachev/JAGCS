@@ -15,6 +15,10 @@ Button {
 
     onClicked: status == Command.Sending ? rejectCommand(command) : executeCommand(command, args)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
+    onCommandChanged: {
+        if (timer.running) timer.stop();
+        status = Command.Idle;
+    }
 
     Timer {
         id: timer

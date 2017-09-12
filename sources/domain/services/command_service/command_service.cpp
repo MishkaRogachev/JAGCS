@@ -27,6 +27,12 @@ CommandSender* CommandService::sender() const
 
 void CommandService::executeCommand(const Command& command)
 {
+    if (command.type() == Command::UnknownCommand)
+    {
+        emit commandStatusChanged(Command::UnknownCommand, Command::Rejected);
+        return;
+    }
+
     m_sender->addCommand(command);
 }
 
