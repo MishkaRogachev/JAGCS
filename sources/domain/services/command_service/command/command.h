@@ -20,7 +20,6 @@ namespace domain
 
             Return,
             Start,
-            Takeoff,
             Land,
             GoAround,
             PauseContinue,
@@ -28,7 +27,8 @@ namespace domain
             Parachute,
 
             SetSpeed,
-            SetAltitude
+            SetAltitude,
+            SetHome
         };
 
         enum CommandStatus

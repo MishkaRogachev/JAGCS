@@ -27,13 +27,13 @@ namespace
         { MAV_CMD_COMPONENT_ARM_DISARM, Command::ArmDisarm },
         { MAV_CMD_NAV_RETURN_TO_LAUNCH, Command::Return },
         { MAV_CMD_MISSION_START, Command::Start },
-        { MAV_CMD_NAV_TAKEOFF, Command::Takeoff },
         { MAV_CMD_DO_LAND_START, Command::Land },
         { MAV_CMD_DO_GO_AROUND, Command::GoAround },
         { MAV_CMD_DO_PAUSE_CONTINUE, Command::PauseContinue },
         { MAV_CMD_DO_PARACHUTE, Command::Parachute },
         { MAV_CMD_DO_CHANGE_SPEED, Command::SetSpeed },
         { MAV_CMD_DO_CHANGE_ALTITUDE, Command::SetAltitude },
+        { MAV_CMD_DO_SET_HOME, Command::SetHome }
     };
 
     const QMultiMap<quint8, Command::CommandStatus> mavStatusMap =

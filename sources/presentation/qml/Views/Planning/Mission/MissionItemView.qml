@@ -141,7 +141,7 @@ Item {
             Controls.RealSpinBox {
                 id: altitudeBox
                 enabled: editEnabled
-                realFrom: -500 // 418 m Daed Sea shore
+                realFrom: -500 // 418 m Dead Sea shore
                 realTo: 20000 // TODO: constants to config
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
