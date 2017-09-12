@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.3
 T.ComboBox {
     id: control
 
+    property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
+
     font.pixelSize: palette.fontPixelSize
     clip: true
     implicitWidth: palette.controlBaseSize * 4
@@ -13,7 +15,8 @@ T.ComboBox {
 
     delegate: ItemDelegate {
         width: control.width
-        text: modelData
+        text: modelData.text !== undefined ? modelData.text : modelData
+        iconSource: modelData.icon !== undefined ? modelData.icon : ""
         highlighted: control.highlightedIndex === index
     }
 
@@ -42,7 +45,8 @@ T.ComboBox {
 
     contentItem: RowLayout {
         ContentItem {
-            text: control.displayText
+            text: currentItem ? (currentItem.text !== undefined  ? currentItem.text : currentItem) : ""
+            iconSource: currentItem && currentItem.icon !== undefined ? currentItem.icon : ""
             font: control.font
             Layout.margins: palette.padding
         }
