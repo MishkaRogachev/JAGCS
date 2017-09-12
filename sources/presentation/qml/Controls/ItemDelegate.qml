@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.3
 T.ItemDelegate {
     id: control
 
+    property alias iconSource: content.iconSource
+
     font.pixelSize: palette.fontPixelSize
     implicitHeight: palette.controlBaseSize
 
@@ -17,9 +19,7 @@ T.ItemDelegate {
             Layout.margins: palette.padding
         }
 
-        Item {
-            Layout.fillWidth: true
-        }
+        Item { Layout.fillWidth: true }
     }
 
     background: Rectangle {

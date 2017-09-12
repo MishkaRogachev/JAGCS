@@ -51,9 +51,7 @@ T.ComboBox {
             Layout.margins: palette.padding
         }
 
-        Item {
-            Layout.fillWidth: true
-        }
+        Item { Layout.fillWidth: true }
     }
 
     popup: Popup {
