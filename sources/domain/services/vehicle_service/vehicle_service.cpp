@@ -14,7 +14,7 @@
 using namespace dao;
 using namespace domain;
 
-class VehicleService::Impl
+class VehicleService::Impl // FIXME : make service sync db on create, destroy and by request
 {
 public:
     GenericRepository<Vehicle> vehicleRepository;

@@ -287,7 +287,7 @@ void MissionPresenter::onRenameMission(const QString& name)
     this->updateMissionsBox();
 }
 
-void MissionPresenter::onAssignVehicle(int index)
+void MissionPresenter::onAssignVehicle(int index) // TODO: AssignmentPresenter and View
 {
     // TODO: fix vehicle assignment
     if (!d->selectedMission) return;

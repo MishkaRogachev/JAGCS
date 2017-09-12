@@ -9,14 +9,18 @@ GridLayout {
 
     property int waypoint: 0
     property alias waypoints: waypointBox.model
+
     property bool armed: false
     property bool guided: false
+    property bool downloading: false
 
     property int groundspeed: 0
     property int indicatedAirspeed: 0
     property int command: commandBox.currentItem ? commandBox.currentItem.command : Command.UnknownCommand
 
     signal commandSetWaypoint(int item)
+    signal downloadMission()
+    signal cancelSyncMission()
 
     signal commandStatusChanged(var command, var status)
     signal executeCommand(int command, var arguments)
@@ -38,8 +42,13 @@ GridLayout {
         model: []
         onCurrentTextChanged: commandSetWaypoint(currentText)
         enabled: guided
-        Layout.columnSpan: 2
         Layout.fillWidth: true
+    }
+
+    Controls.Button {
+        iconSource: "qrc:/icons/download.svg"
+        highlighted: downloading
+        onClicked: highlighted ? cancelSyncMission() : downloadMission()
     }
 
     Controls.Label {

@@ -21,6 +21,8 @@ namespace presentation
     public slots:
         void updateWaypoints();
         void updateCurrentWaypoint();
+        void onDownloadMission();
+        void onCancelSyncMission();
 
     protected:
         void connectView(QObject* view) override;
