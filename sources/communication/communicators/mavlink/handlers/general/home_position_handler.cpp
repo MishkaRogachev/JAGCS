@@ -9,10 +9,15 @@
 #include <QDebug>
 
 // Internal
+#include "mission_assignment.h"
+#include "mission_item.h"
+
 #include "mavlink_communicator.h"
 #include "mavlink_protocol_helpers.h"
 
 #include "service_registry.h"
+#include "vehicle_service.h"
+#include "mission_service.h"
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
@@ -20,17 +25,14 @@ using namespace comm;
 using namespace domain;
 
 HomePositionHandler::HomePositionHandler(MavLinkCommunicator* communicator):
-    AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
-{
-    // TODO: requestig timer for home position
-}
+    AbstractMavLinkHandler(communicator)
+{}
 
 void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    TelemetryPortion port(m_telemetryService->mavNode(message.sysid));
+    TelemetryPortion port(ServiceRegistry::telemetryService()->mavNode(message.sysid));
 
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);
@@ -45,6 +47,21 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
                        QVariant::fromValue(direction));
     port.setParameter({ Telemetry::HomePosition, Telemetry::Altitude },
                        coordinate.altitude());
+
+    int vehicleId = ServiceRegistry::vehicleService()->vehicleIdByMavId(message.sysid);
+    dao::MissionAssignmentPtr assignment = ServiceRegistry::missionService()->vehicleAssignment(vehicleId);
+    if (assignment.isNull()) return;
+
+    dao::MissionItemPtr item = ServiceRegistry::missionService()->missionItem(assignment->missionId(), 0);
+    if (item.isNull()) return;
+
+    item->setLatitude(coordinate.latitude());
+    item->setLongitude(coordinate.longitude());
+    item->setAltitude(coordinate.altitude());
+    item->setStatus(dao::MissionItem::Actual);
+
+    ServiceRegistry::missionService()->missionItemChanged(item);
+
 }
 
 void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
@@ -67,27 +84,3 @@ void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
                                           &message, &command);
      m_communicator->sendMessage(message, link);
 }
-
-/*
-void HomePositionHandler::sendHomePositionSetting(quint8 mavId, const Position& position)
-{
-    mavlink_message_t message;
-    mavlink_set_home_position_t home;
-
-    home.target_system = mavId;
-
-    home.latitude = encodeLatLon(position.coordinate().latitude());
-    home.longitude = encodeLatLon(position.coordinate().longitude());
-    home.altitude = encodeAltitude(position.coordinate().altitude());
-
-    home.approach_x = position.vector().x();
-    home.approach_y = position.vector().y();
-    home.approach_z = position.vector().z();
-
-    mavlink_msg_set_home_position_encode(m_communicator->systemId(),
-                                         m_communicator->componentId(),
-                                         &message, &home);
-
-    m_communicator->sendMessageAllLinks(message);
-}
-*/
