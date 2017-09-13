@@ -10,7 +10,7 @@ namespace dao
     {
         Q_GADGET
 
-        Q_PROPERTY(quint8 mavId READ mavId WRITE setMavId)
+        Q_PROPERTY(int mavId READ mavId WRITE setMavId)
         Q_PROPERTY(QString name READ name WRITE setName)
         Q_PROPERTY(Type type READ type WRITE setType)
 
@@ -41,8 +41,8 @@ namespace dao
         Vehicle();
         ~Vehicle() override;
 
-        quint8 mavId() const;
-        bool setMavId(quint8 mavId);
+        int mavId() const;
+        bool setMavId(int mavId);
 
         QString name() const;
         void setName(const QString& name);
@@ -54,7 +54,7 @@ namespace dao
         void setOnline(bool isOnline);
 
     private:
-        quint8 m_mavId = 0;
+        int m_mavId = 0;
         QString m_name;
         Type m_type = Auto;
 
