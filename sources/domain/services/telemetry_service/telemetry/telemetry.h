@@ -108,6 +108,8 @@
 //  |-Errors                            int
 //  |-Fixed                             int
 
+// TODO: Present-Enabled-Operational bools replace with enum
+
 namespace domain
 {
     class Telemetry: public QObject

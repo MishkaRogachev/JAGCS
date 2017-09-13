@@ -12,11 +12,23 @@ namespace comm
 
     public:
         HomePositionHandler(MavLinkCommunicator* communicator);
+        ~HomePositionHandler();
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
         void sendHomePositionRequest(quint8 mavId);
+
+    protected:
+        void timerEvent(QTimerEvent* event);
+
+    private slots:
+        void addVehicleTimer(int vehicleId);
+        void removeVehicleTimer(int vehicleId);
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

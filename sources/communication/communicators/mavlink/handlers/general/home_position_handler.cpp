@@ -4,13 +4,16 @@
 #include <mavlink.h>
 
 // Qt
-#include <QVector3D>
+#include <QMap>
 #include <QVariant>
+#include <QVector3D>
+#include <QTimerEvent>
 #include <QDebug>
 
 // Internal
 #include "mission_assignment.h"
 #include "mission_item.h"
+#include "vehicle.h"
 
 #include "mavlink_communicator.h"
 #include "mavlink_protocol_helpers.h"
@@ -21,11 +24,49 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
+namespace
+{
+    const int interval = 5000;
+}
+
 using namespace comm;
 using namespace domain;
 
+class HomePositionHandler::Impl
+{
+public:
+    domain::VehicleService* vehicleService = ServiceRegistry::vehicleService();
+    domain::MissionService* missionService = ServiceRegistry::missionService();
+
+    QList<int> obtainedVehicles;
+    QMap<int, int> vehiclesTimers;
+};
+
 HomePositionHandler::HomePositionHandler(MavLinkCommunicator* communicator):
-    AbstractMavLinkHandler(communicator)
+    AbstractMavLinkHandler(communicator),
+    d(new Impl())
+{
+    connect(d->vehicleService, &VehicleService::vehicleAdded,
+            this, [this](const dao::VehiclePtr& vehicle) {
+        this->sendHomePositionRequest(vehicle->mavId());
+        this->addVehicleTimer(vehicle->id());
+    });
+
+    connect(d->vehicleService, &VehicleService::vehicleRemoved,
+            this, [this](const dao::VehiclePtr& vehicle) {
+        d->obtainedVehicles.removeOne(vehicle->id());
+        this->removeVehicleTimer(vehicle->id());
+    });
+
+    connect(d->vehicleService, &VehicleService::vehicleChanged,
+            this, [this](const dao::VehiclePtr& vehicle) {
+        if (!vehicle->isOnline() || d->obtainedVehicles.contains(vehicle->id())) return;
+        this->sendHomePositionRequest(vehicle->mavId());
+        this->addVehicleTimer(vehicle->id());
+    });
+}
+
+HomePositionHandler::~HomePositionHandler()
 {}
 
 void HomePositionHandler::processMessage(const mavlink_message_t& message)
@@ -48,11 +89,15 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
     port.setParameter({ Telemetry::HomePosition, Telemetry::Altitude },
                        coordinate.altitude());
 
-    int vehicleId = ServiceRegistry::vehicleService()->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = ServiceRegistry::missionService()->vehicleAssignment(vehicleId);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+
+    this->removeVehicleTimer(vehicleId);
+    d->obtainedVehicles.append(vehicleId);
+
+    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
-    dao::MissionItemPtr item = ServiceRegistry::missionService()->missionItem(assignment->missionId(), 0);
+    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), 0);
     if (item.isNull()) return;
 
     item->setLatitude(coordinate.latitude());
@@ -60,8 +105,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
     item->setAltitude(coordinate.altitude());
     item->setStatus(dao::MissionItem::Actual);
 
-    ServiceRegistry::missionService()->missionItemChanged(item);
-
+    d->missionService->missionItemChanged(item);
 }
 
 void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
@@ -83,4 +127,24 @@ void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
                                           m_communicator->linkChannel(link),
                                           &message, &command);
      m_communicator->sendMessage(message, link);
+}
+
+void HomePositionHandler::timerEvent(QTimerEvent* event)
+{
+    dao::VehiclePtr vehicle = d->vehicleService->vehicle(
+                                  d->vehiclesTimers.key(event->timerId(), -1));
+    if (vehicle.isNull()) return AbstractMavLinkHandler::timerEvent(event);
+
+    this->sendHomePositionRequest(vehicle->mavId());
+}
+
+void HomePositionHandler::addVehicleTimer(int vehicleId)
+{
+    if (d->vehiclesTimers.contains(vehicleId)) this->removeVehicleTimer(vehicleId);
+    d->vehiclesTimers[vehicleId] = this->startTimer(::interval);
+}
+
+void HomePositionHandler::removeVehicleTimer(int vehicleId)
+{
+    if (d->vehiclesTimers.contains(vehicleId)) this->killTimer(d->vehiclesTimers.take(vehicleId));
 }

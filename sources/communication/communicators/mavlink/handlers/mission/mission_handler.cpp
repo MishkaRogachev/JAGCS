@@ -40,6 +40,7 @@ namespace
         { MAV_CMD_NAV_RETURN_TO_LAUNCH, dao::MissionItem::Return },
 
         { MAV_CMD_DO_CHANGE_SPEED, dao::MissionItem::SetSpeed },
+        // TODO: MAV_CMD_DO_LAND_START
 
         { MAV_CMD_DO_JUMP, dao::MissionItem::JumpTo },
 
