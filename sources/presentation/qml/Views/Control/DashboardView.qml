@@ -5,7 +5,9 @@ ColumnLayout {
     id: root
 
     property var instruments
+
     property url vehicleMark
+    property bool online: false
 
     signal instrumentAdded(string name, QtObject view)
 
@@ -18,6 +20,7 @@ ColumnLayout {
             Layout.fillWidth: true
             sourceComponent: createIndicator(modelData)
             onItemChanged: if (item) instrumentAdded(modelData, item)
+            enabled: online
         }
     }
 

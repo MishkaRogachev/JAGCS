@@ -32,6 +32,8 @@ Controls.Pane {
             Controls.Button {
                 iconSource: "qrc:/icons/center.svg"
                 checkable: true
+                enabled: dashboard.online
+                onEnabledChanged: checked = false
                 onCheckedChanged: map.trackingVehicle = checked
             }
 
@@ -43,6 +45,7 @@ Controls.Pane {
         }
 
         DashboardView {
+            id: dashboard
             objectName: "dashboard"
             Layout.fillWidth: true
             Layout.fillHeight: true

@@ -12,7 +12,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        DashboardPresenter(QObject* parent = nullptr);
+        DashboardPresenter(int vehicleId, QObject* parent = nullptr);
         ~DashboardPresenter() override;
 
     public slots:
@@ -24,6 +24,8 @@ namespace presentation
 
     private slots:
         void onInstrumentAdded(const QString& key, QObject* view);
+
+        void updateVehicleIsOnline();
 
     private:
         class Impl;

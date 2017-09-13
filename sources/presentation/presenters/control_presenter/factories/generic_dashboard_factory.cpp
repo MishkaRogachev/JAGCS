@@ -31,7 +31,7 @@ DashboardPresenter* GenericDashboardFactory::create()
                                   m_vehicle->id());
     if (!node) return nullptr;
 
-    DashboardPresenter* dashboard = new DashboardPresenter();
+    DashboardPresenter* dashboard = new DashboardPresenter(m_vehicle->id());
     m_satellite = new SatellitePresenter(node->childNode(domain::Telemetry::Satellite), dashboard);
     m_status = new StatusPresenter(node->childNode(domain::Telemetry::Status), dashboard);
     m_compass = new CompassPresenter(node->childNode(domain::Telemetry::Compass), dashboard);
