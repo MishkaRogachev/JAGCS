@@ -30,7 +30,8 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST")
-        color: guided ? palette.activeMissionColor : palette.sunkenColor
+        color: guided ? palette.activeMissionColor : palette.textColor
+        opacity: guided ? 1 : 0.33
         distance: targetDistance
         width: parent.width * 0.2
     }
@@ -74,6 +75,7 @@ Item {
             anchors.fill: parent
             rotation: homeDirection - heading
             visible: homeDistance > 0
+            z: -1
 
             Image {
                 width: parent.width * 0.12
@@ -92,7 +94,8 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("TRG")
-        color: guided ? palette.activeMissionColor : palette.sunkenColor
+        color: guided ? palette.activeMissionColor : palette.textColor
+        opacity: guided ? 1 : 0.33
         value: targetBearing
         width: parent.width * 0.2
     }
