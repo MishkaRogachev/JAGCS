@@ -97,8 +97,6 @@ void MissionServiceTest::testVehicleDescription()
     int id = vehicle->id();
     QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
 
-    QVERIFY2(vehicleService->vehicle(id, true), "Can't reload vehicle");
-
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
     QCOMPARE(vehicle->mavId(), quint8(13));
     QCOMPARE(vehicle->type(), Vehicle::FixedWing);

@@ -25,7 +25,7 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.margins: palette.margins
         spacing: palette.spacing
-        width: height * 0.43
+        width: height * 0.4 // TODO: dynamic height fit
 
         RowLayout {
 

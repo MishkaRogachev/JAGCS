@@ -27,16 +27,15 @@ namespace db
 
         QList<int> selectId(const QString& condition = QString());
 
+        QList<int > loadedIds() const;
+        QList< QSharedPointer<T> > loadedEntities() const;
+
     protected:
         bool runQuerry();
         QStringList propertyNames(const QMetaObject& meta);
 
-        void bindQuery(QSqlQuery& query,
-                       const QMetaObject& meta,
-                       T* entity);
-        void updateFromQuery(const QSqlQuery& query,
-                             const QMetaObject& meta,
-                             T* entity);
+        void bindQuery(QSqlQuery& query, const QMetaObject& meta, T* entity);
+        void updateFromQuery(const QSqlQuery& query, const QMetaObject& meta, T* entity);
 
     private:
         QSqlQuery m_query;

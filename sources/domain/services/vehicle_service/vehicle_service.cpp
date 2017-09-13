@@ -23,6 +23,11 @@ public:
     Impl():
         vehicleRepository("vehicles")
     {}
+
+    void load(const QString& condition = QString())
+    {
+        for (int id: vehicleRepository.selectId(condition)) vehicleRepository.read(id);
+    }
 };
 
 VehicleService::VehicleService(MissionService* missionService, QObject* parent):
@@ -32,32 +37,29 @@ VehicleService::VehicleService(MissionService* missionService, QObject* parent):
     qRegisterMetaType<dao::VehiclePtr>("dao::VehiclePtr");
 
     d->missionService = missionService;
+    d->load();
 }
 
 VehicleService::~VehicleService()
 {}
 
-VehiclePtr VehicleService::vehicle(int id, bool reload)
+VehiclePtr VehicleService::vehicle(int id)
 {
-    return d->vehicleRepository.read(id, reload);
+    return d->vehicleRepository.read(id, false);
 }
 
-VehiclePtrList VehicleService::vehicles(const QString& condition, bool reload)
+VehiclePtrList VehicleService::vehicles()
 {
-    VehiclePtrList list;
-
-    for (int id: d->vehicleRepository.selectId(condition))
-    {
-        list.append(this->vehicle(id, reload));
-    }
-
-    return list;
+    return d->vehicleRepository.loadedEntities();
 }
 
 int VehicleService::vehicleIdByMavId(int mavId)
 {
-    for (int id: d->vehicleRepository.selectId(QString("mavId = %1").arg(mavId)))
-        return id;
+    for (const VehiclePtr& vehicle: d->vehicleRepository.loadedEntities())
+    {
+        if (vehicle->mavId() == mavId) return vehicle->id();
+    }
+
     return 0;
 }
 

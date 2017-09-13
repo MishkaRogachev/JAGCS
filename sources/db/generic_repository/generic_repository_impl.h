@@ -148,6 +148,18 @@ QList<int> GenericRepository<T>::selectId(const QString& condition)
 }
 
 template<class T>
+QList<int> GenericRepository<T>::loadedIds() const
+{
+    return m_map.keys();
+}
+
+template<class T>
+QList<QSharedPointer<T> > GenericRepository<T>::loadedEntities() const
+{
+    return m_map.values();
+}
+
+template<class T>
 bool GenericRepository<T>::runQuerry()
 {
     if (m_query.exec()) return true;
@@ -169,9 +181,7 @@ QStringList GenericRepository<T>::propertyNames(const QMetaObject& meta)
 }
 
 template<class T>
-void GenericRepository<T>::bindQuery(QSqlQuery& query,
-                                     const QMetaObject& meta,
-                                     T* entity)
+void GenericRepository<T>::bindQuery(QSqlQuery& query, const QMetaObject& meta, T* entity)
 {
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
@@ -181,9 +191,7 @@ void GenericRepository<T>::bindQuery(QSqlQuery& query,
 }
 
 template<class T>
-void GenericRepository<T>::updateFromQuery(const QSqlQuery& query,
-                                           const QMetaObject& meta,
-                                           T* entity)
+void GenericRepository<T>::updateFromQuery(const QSqlQuery& query, const QMetaObject& meta, T* entity)
 {
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
