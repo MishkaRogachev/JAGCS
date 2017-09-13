@@ -206,7 +206,14 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
             if (timer->timerId() != event->timerId()) continue;
 
             dao::VehiclePtr vehicle = d->vehicleService->vehicle(d->vehicleTimers.key(timer));
-            if (vehicle) vehicle->setOnline(false);
+            if (vehicle.isNull())
+            {
+                delete timer;
+                d->vehicleTimers.remove(d->vehicleTimers.key(timer));
+                return;
+            }
+
+            vehicle->setOnline(false);
             d->vehicleService->vehicleChanged(vehicle);
             timer->stop();
 
