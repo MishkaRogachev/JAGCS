@@ -23,6 +23,7 @@ namespace dao
 
     using MissionPtrList = QList<MissionPtr>;
     using MissionItemPtrList = QList<MissionItemPtr>;
+    using MissionAssignmentPtrList = QList<MissionAssignmentPtr>;
     using VehiclePtrList = QList<VehiclePtr>;
     using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
     using VideoSourcePtrList = QList<VideoSourcePtr>;

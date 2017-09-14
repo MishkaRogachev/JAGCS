@@ -47,21 +47,21 @@ VehicleService::VehicleService(MissionService* missionService, QObject* parent):
 VehicleService::~VehicleService()
 {}
 
-VehiclePtr VehicleService::vehicle(int id)
+VehiclePtr VehicleService::vehicle(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->vehicleRepository.read(id, false);
 }
 
-VehiclePtrList VehicleService::vehicles()
+VehiclePtrList VehicleService::vehicles() const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->vehicleRepository.loadedEntities();
 }
 
-int VehicleService::vehicleIdByMavId(int mavId)
+int VehicleService::vehicleIdByMavId(int mavId) const
 {
     QMutexLocker locker(&d->mutex);
 
@@ -69,11 +69,10 @@ int VehicleService::vehicleIdByMavId(int mavId)
     {
         if (vehicle->mavId() == mavId) return vehicle->id();
     }
-
     return 0;
 }
 
-int VehicleService::mavIdByVehicleId(int id)
+int VehicleService::mavIdByVehicleId(int id) const
 {
     QMutexLocker locker(&d->mutex);
 

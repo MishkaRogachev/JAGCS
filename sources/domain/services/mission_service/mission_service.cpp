@@ -58,47 +58,54 @@ MissionService::MissionService(QObject* parent):
     qRegisterMetaType<dao::MissionItemPtr>("dao::MissionItemPtr");
     qRegisterMetaType<dao::MissionAssignmentPtr>("dao::MissionAssignmentPtr");
 
-    d->loadMissions();
-    d->loadMissionItems();
+    d->loadMissions("ORDER BY name");
+    d->loadMissionItems("ORDER BY sequence");
     d->loadMissionAssignments();
 }
 
 MissionService::~MissionService()
 {}
 
-MissionPtr MissionService::mission(int id)
+MissionPtr MissionService::mission(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->missionRepository.read(id, false);
 }
 
-MissionItemPtr MissionService::missionItem(int id)
+MissionItemPtr MissionService::missionItem(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->itemRepository.read(id, false);
 }
 
-MissionAssignmentPtr MissionService::assignment(int id)
+MissionAssignmentPtr MissionService::assignment(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->assignmentRepository.read(id, false);
 }
 
-MissionPtrList MissionService::missions(const QString& condition, bool reload)
+MissionPtrList MissionService::missions() const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->missionRepository.loadedEntities();
 }
 
-MissionItemPtrList MissionService::missionItems(const QString& condition, bool reload)
+MissionItemPtrList MissionService::missionItems() const
 {
     QMutexLocker locker(&d->mutex);
 
     return d->itemRepository.loadedEntities();
+}
+
+MissionAssignmentPtrList MissionService::missionAssignments() const
+{
+    QMutexLocker locker(&d->mutex);
+
+    return d->assignmentRepository.loadedEntities();
 }
 
 MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
@@ -115,7 +122,7 @@ bool MissionService::isItemCurrent(const MissionItemPtr& item) const
     return d->currentItems.values().contains(item);
 }
 
-MissionAssignmentPtr MissionService::missionAssignment(int missionId)
+MissionAssignmentPtr MissionService::missionAssignment(int missionId) const
 {
     QMutexLocker locker(&d->mutex);
 
@@ -127,7 +134,7 @@ MissionAssignmentPtr MissionService::missionAssignment(int missionId)
     return MissionAssignmentPtr();
 }
 
-MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId)
+MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId) const
 {
     QMutexLocker locker(&d->mutex);
 
@@ -139,7 +146,7 @@ MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId)
     return MissionAssignmentPtr();
 }
 
-MissionItemPtrList MissionService::missionItems(int missionId)
+MissionItemPtrList MissionService::missionItems(int missionId) const
 {
     QMutexLocker locker(&d->mutex);
 
@@ -152,7 +159,7 @@ MissionItemPtrList MissionService::missionItems(int missionId)
     return list;
 }
 
-MissionItemPtr MissionService::missionItem(int missionId, int sequence)
+MissionItemPtr MissionService::missionItem(int missionId, int sequence) const
 {
     QMutexLocker locker(&d->mutex);
 

@@ -137,7 +137,7 @@ QList<int> GenericRepository<T>::selectId(const QString& condition)
     QList<int> idList;
 
     QString string("SELECT id FROM " + m_tableName);
-    if (!condition.isEmpty()) string += (" WHERE " + condition);
+    if (!condition.isEmpty()) string += (" " + condition);
     m_query.prepare(string);
 
     if (!this->runQuerry()) return idList;

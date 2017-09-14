@@ -17,18 +17,19 @@ namespace domain
         explicit MissionService(QObject* parent = nullptr);
         ~MissionService() override;
 
-        dao::MissionPtr mission(int id);
-        dao::MissionItemPtr missionItem(int id);
-        dao::MissionAssignmentPtr assignment(int id);
+        dao::MissionPtr mission(int id) const;
+        dao::MissionItemPtr missionItem(int id) const;
+        dao::MissionAssignmentPtr assignment(int id) const;
 
-        dao::MissionAssignmentPtr missionAssignment(int missionId);
-        dao::MissionAssignmentPtr vehicleAssignment(int vehicleId);
+        dao::MissionAssignmentPtr missionAssignment(int missionId) const;
+        dao::MissionAssignmentPtr vehicleAssignment(int vehicleId) const;
 
-        dao::MissionItemPtrList missionItems(int missionId);
-        dao::MissionItemPtr missionItem(int missionId, int sequence);
+        dao::MissionItemPtrList missionItems(int missionId) const;
+        dao::MissionItemPtr missionItem(int missionId, int sequence) const;
 
-        dao::MissionPtrList missions(const QString& condition = QString(), bool reload  = false);
-        dao::MissionItemPtrList missionItems(const QString& condition = QString(), bool reload  = false);
+        dao::MissionPtrList missions() const;
+        dao::MissionItemPtrList missionItems() const;
+        dao::MissionAssignmentPtrList missionAssignments() const;
 
         dao::MissionItemPtr currentWaypoint(int vehicleId) const;
         bool isItemCurrent(const dao::MissionItemPtr& item) const;
