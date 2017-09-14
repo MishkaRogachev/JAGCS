@@ -61,6 +61,8 @@ GridLayout {
         id: commandBox
         model: [
             { icon: "", text: "", command: Command.UnknownCommand },
+            { icon: "qrc:/icons/calibrate.svg", text: qsTr("Preflight"),
+                command: Command.PreflightCalibration},
             { icon: armed ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg",
               text: armed ? qsTr("Disarm") : qsTr("Arm"), command: Command.ArmDisarm },
             { icon: "qrc:/icons/home.svg", text: qsTr("Return"), command: Command.Return },
@@ -80,6 +82,7 @@ GridLayout {
         enabled: commandBox.currentIndex > 0
         args: {
             switch (command) {
+            case Command.PreflightCalibration: return calibrationBox.currentItem.args;
             case Command.ArmDisarm: return [!armed];
             case Command.SetSpeed: return [commandBox.currentItem.type, speedBox.value, -1, 0];
             case Command.SetHome: return [2, 0, 0, 0, latitudeBox.realValue,
@@ -161,5 +164,27 @@ GridLayout {
         iconSource: "qrc:/icons/restore.svg"
         onClicked: speedBox.value = commandBox.currentItem.type ? groundspeed : indicatedAirspeed
         visible: command === Command.SetSpeed
+    }
+
+    Controls.Label {
+        text: qsTr("Calibration:")
+        font.pixelSize: palette.fontPixelSize * 0.75
+        font.bold: true
+        visible: command === Command.PreflightCalibration
+    }
+
+    Controls.ComboBox {
+        id: calibrationBox
+        visible: command === Command.PreflightCalibration
+        model: [
+            { text: qsTr("Accelerometer"), args: [0, 0, 0, 0, 1, 0, 0 ] },
+            { text: qsTr("Board level"), args: [0, 0, 0, 0, 2, 0, 0 ] },
+            { text: qsTr("Gyroscope"), args: [1, 0, 0, 0, 0, 0, 0 ] },
+            { text: qsTr("Magnetometer"), args: [0, 1, 0, 0, 0, 0, 0 ] },
+            { text: qsTr("Static pressure"), args: [0, 0, 1, 0, 0, 0, 0 ] },
+            { text: qsTr("Temperature"), args: [3, 0, 0, 0, 3, 0, 3 ] },
+        ]
+        Layout.fillWidth: true
+        Layout.columnSpan: 2
     }
 }

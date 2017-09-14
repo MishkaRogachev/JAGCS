@@ -33,8 +33,9 @@ namespace
         { MAV_CMD_DO_PARACHUTE, Command::Parachute },
         { MAV_CMD_DO_CHANGE_SPEED, Command::SetSpeed },
         { MAV_CMD_DO_CHANGE_ALTITUDE, Command::SetAltitude },
-        { MAV_CMD_DO_SET_HOME, Command::SetHome }
-        // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
+        { MAV_CMD_DO_SET_HOME, Command::SetHome },
+        { MAV_CMD_PREFLIGHT_CALIBRATION, Command::PreflightCalibration }
+        // TODO: MAV_CMD_NAV_GUIDED_ENABLE, MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
 
     const QMultiMap<quint8, Command::CommandStatus> mavStatusMap =

@@ -28,7 +28,9 @@ namespace domain
 
             SetSpeed,
             SetAltitude,
-            SetHome
+            SetHome,
+
+            PreflightCalibration
         };
 
         enum CommandStatus
