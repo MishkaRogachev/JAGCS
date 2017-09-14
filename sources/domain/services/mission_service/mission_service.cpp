@@ -58,8 +58,8 @@ MissionService::MissionService(QObject* parent):
     qRegisterMetaType<dao::MissionItemPtr>("dao::MissionItemPtr");
     qRegisterMetaType<dao::MissionAssignmentPtr>("dao::MissionAssignmentPtr");
 
-    d->loadMissions("ORDER BY name");
-    d->loadMissionItems("ORDER BY sequence");
+    d->loadMissions();
+    d->loadMissionItems();
     d->loadMissionAssignments();
 }
 
@@ -70,21 +70,21 @@ MissionPtr MissionService::mission(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->missionRepository.read(id, false);
+    return d->missionRepository.read(id);
 }
 
 MissionItemPtr MissionService::missionItem(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->itemRepository.read(id, false);
+    return d->itemRepository.read(id);
 }
 
 MissionAssignmentPtr MissionService::assignment(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->assignmentRepository.read(id, false);
+    return d->assignmentRepository.read(id);
 }
 
 MissionPtrList MissionService::missions() const
@@ -150,13 +150,12 @@ MissionItemPtrList MissionService::missionItems(int missionId) const
 {
     QMutexLocker locker(&d->mutex);
 
-    MissionItemPtrList list;
+    QMap<int, MissionItemPtr> items;
     for (const MissionItemPtr& item: d->itemRepository.loadedEntities())
     {
-        if (item->missionId() == missionId) list.insert(item->sequence(), item);
+        if (item->missionId() == missionId) items[item->sequence()] = item;
     }
-
-    return list;
+    return items.values();
 }
 
 MissionItemPtr MissionService::missionItem(int missionId, int sequence) const

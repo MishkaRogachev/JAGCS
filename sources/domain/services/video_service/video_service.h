@@ -17,9 +17,8 @@ namespace domain
         explicit VideoService(QObject* parent = nullptr);
         ~VideoService() override;
 
-        dao::VideoSourcePtr videoSource(int id, bool reload = false);
-        dao::VideoSourcePtrList videoSources(const QString& condition = QString(),
-                                             bool reload  = false);
+        dao::VideoSourcePtr videoSource(int id) const;
+        dao::VideoSourcePtrList videoSources() const;
 
     public slots:
         bool save(const dao::VideoSourcePtr& videoSource);

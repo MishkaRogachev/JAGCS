@@ -35,6 +35,11 @@ public:
     Impl():
         linkRepository("links")
     {}
+
+    void loadDescriptions(const QString& condition = QString())
+    {
+        for (int id: linkRepository.selectId(condition)) linkRepository.read(id);
+    }
 };
 
 CommunicationService::CommunicationService(SerialPortService* serialPortService, QObject* parent):
@@ -61,6 +66,8 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
             this, &CommunicationService::onMavLinkStatisticsChanged);
     connect(d->commWorker, &CommunicatorWorker::mavLinkProtocolChanged,
             this, &CommunicationService::onMavlinkProtocolChanged);
+
+    d->loadDescriptions();
 }
 
 CommunicationService::~CommunicationService()
@@ -80,21 +87,14 @@ CommunicationService::~CommunicationService()
     d->commThread->wait();
 }
 
-dao::LinkDescriptionPtr CommunicationService::description(int id, bool reload)
+dao::LinkDescriptionPtr CommunicationService::description(int id) const
 {
-    return d->linkRepository.read(id, reload);
+    return d->linkRepository.read(id);
 }
 
-dao::LinkDescriptionPtrList CommunicationService::descriptions(const QString& condition, bool reload)
+dao::LinkDescriptionPtrList CommunicationService::descriptions()
 {
-    dao::LinkDescriptionPtrList list;
-
-    for (int id: d->linkRepository.selectId(condition))
-    {
-        list.append(this->description(id, reload));
-    }
-
-    return list;
+    return d->linkRepository.loadedEntities();
 }
 
 void CommunicationService::init()

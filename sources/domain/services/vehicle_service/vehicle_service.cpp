@@ -51,7 +51,7 @@ VehiclePtr VehicleService::vehicle(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->vehicleRepository.read(id, false);
+    return d->vehicleRepository.read(id);
 }
 
 VehiclePtrList VehicleService::vehicles() const

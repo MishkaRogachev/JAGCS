@@ -20,20 +20,35 @@ public:
     Impl():
         videoRepository("video_sources")
     {}
+
+    void loadVideoSources(const QString& condition = QString())
+    {
+        for (int id: videoRepository.selectId(condition)) videoRepository.read(id);
+    }
 };
 
 VideoService::VideoService(QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    qRegisterMetaType<dao::VideoSourcePtr>("dao::VideoSourcePtr");
+
+    d->loadVideoSources();
+}
 
 VideoService::~VideoService()
 {}
 
-VideoSourcePtr VideoService::videoSource(int id, bool reload)
+VideoSourcePtr VideoService::videoSource(int id) const
 {
-    return d->videoRepository.read(id, reload);
+    return d->videoRepository.read(id);
 }
+
+VideoSourcePtrList VideoService::videoSources() const
+{
+    return d->videoRepository.loadedEntities();
+}
+
 
 bool VideoService::save(const VideoSourcePtr& videoSource)
 {
@@ -49,15 +64,4 @@ bool VideoService::remove(const VideoSourcePtr& videoSource)
     if (!d->videoRepository.remove(videoSource)) return false;
     emit videoSourceRemoved(videoSource);
     return true;
-}
-
-VideoSourcePtrList VideoService::videoSources(const QString& condition, bool reload)
-{
-    VideoSourcePtrList list;
-
-    for (int id: d->videoRepository.selectId(condition))
-    {
-        list.append(this->videoSource(id, reload));
-    }
-    return list;
 }

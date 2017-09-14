@@ -25,9 +25,8 @@ namespace domain
         CommunicationService(SerialPortService* serialPortService, QObject* parent = nullptr);
         ~CommunicationService() override;
 
-        dao::LinkDescriptionPtr description(int id, bool reload = false);
-        dao::LinkDescriptionPtrList descriptions(const QString& condition = QString(),
-                                                 bool reload  = false);
+        dao::LinkDescriptionPtr description(int id) const;
+        dao::LinkDescriptionPtrList descriptions();
 
         void init();
 
