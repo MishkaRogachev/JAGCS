@@ -1,6 +1,7 @@
 #include "vehicle_service.h"
 
 // Qt
+#include <QMutexLocker>
 #include <QDebug>
 
 // Internal
@@ -17,14 +18,16 @@ using namespace domain;
 class VehicleService::Impl
 {
 public:
+    QMutex mutex;
     GenericRepository<Vehicle> vehicleRepository;
     MissionService* missionService;
 
     Impl():
+        mutex(QMutex::Recursive),
         vehicleRepository("vehicles")
     {}
 
-    void load(const QString& condition = QString())
+    void loadVehicles(const QString& condition = QString())
     {
         for (int id: vehicleRepository.selectId(condition)) vehicleRepository.read(id);
     }
@@ -37,7 +40,8 @@ VehicleService::VehicleService(MissionService* missionService, QObject* parent):
     qRegisterMetaType<dao::VehiclePtr>("dao::VehiclePtr");
 
     d->missionService = missionService;
-    d->load();
+
+    d->loadVehicles();
 }
 
 VehicleService::~VehicleService()
@@ -45,16 +49,22 @@ VehicleService::~VehicleService()
 
 VehiclePtr VehicleService::vehicle(int id)
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->vehicleRepository.read(id, false);
 }
 
 VehiclePtrList VehicleService::vehicles()
 {
+    QMutexLocker locker(&d->mutex);
+
     return d->vehicleRepository.loadedEntities();
 }
 
 int VehicleService::vehicleIdByMavId(int mavId)
 {
+    QMutexLocker locker(&d->mutex);
+
     for (const VehiclePtr& vehicle: d->vehicleRepository.loadedEntities())
     {
         if (vehicle->mavId() == mavId) return vehicle->id();
@@ -65,6 +75,8 @@ int VehicleService::vehicleIdByMavId(int mavId)
 
 int VehicleService::mavIdByVehicleId(int id)
 {
+    QMutexLocker locker(&d->mutex);
+
     VehiclePtr vehicle = this->vehicle(id);
     if (vehicle) return vehicle->mavId();
     return -1;
@@ -72,6 +84,8 @@ int VehicleService::mavIdByVehicleId(int id)
 
 bool VehicleService::save(const VehiclePtr& vehicle)
 {
+    QMutexLocker locker(&d->mutex);
+
     bool isNew = vehicle->id() == 0;
     if (!d->vehicleRepository.save(vehicle)) return false;
 
@@ -81,6 +95,8 @@ bool VehicleService::save(const VehiclePtr& vehicle)
 
 bool VehicleService::remove(const VehiclePtr& vehicle)
 {
+    QMutexLocker locker(&d->mutex);
+    // FIXME: crash on removing active vehicle
     MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicle->id());
     if (assignment && !d->missionService->remove(assignment)) return false;
 
