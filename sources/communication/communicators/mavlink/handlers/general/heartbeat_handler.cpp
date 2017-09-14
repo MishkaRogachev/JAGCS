@@ -123,7 +123,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         vehicle = dao::VehiclePtr::create();
         vehicle->setMavId(message.sysid);
         vehicle->setType(dao::Vehicle::Auto);
-        vehicle->setName(tr("Added"));
+        vehicle->setName(tr("MAV %1").arg(message.sysid));
         d->vehicleService->save(vehicle);
     }
 
