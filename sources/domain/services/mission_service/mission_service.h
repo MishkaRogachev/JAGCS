@@ -17,9 +17,9 @@ namespace domain
         explicit MissionService(QObject* parent = nullptr);
         ~MissionService() override;
 
-        dao::MissionPtr mission(int id, bool reload = false);
-        dao::MissionItemPtr missionItem(int id, bool reload = false);
-        dao::MissionAssignmentPtr assignment(int id, bool reload = false);
+        dao::MissionPtr mission(int id);
+        dao::MissionItemPtr missionItem(int id);
+        dao::MissionAssignmentPtr assignment(int id);
 
         dao::MissionAssignmentPtr missionAssignment(int missionId);
         dao::MissionAssignmentPtr vehicleAssignment(int vehicleId);

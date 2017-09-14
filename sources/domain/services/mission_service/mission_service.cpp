@@ -20,6 +20,7 @@ class MissionService::Impl
 {
 public:
     QMutex mutex;
+
     GenericRepository<Mission> missionRepository;
     GenericRepository<MissionItem> itemRepository;
     GenericRepository<MissionAssignment> assignmentRepository;
@@ -32,6 +33,21 @@ public:
         itemRepository("mission_items"),
         assignmentRepository("mission_assignments")
     {}
+
+    void loadMissions(const QString& condition = QString())
+    {
+        for (int id: missionRepository.selectId(condition)) missionRepository.read(id);
+    }
+
+    void loadMissionItems(const QString& condition = QString())
+    {
+        for (int id: itemRepository.selectId(condition)) itemRepository.read(id);
+    }
+
+    void loadMissionAssignments(const QString& condition = QString())
+    {
+        for (int id: assignmentRepository.selectId(condition)) assignmentRepository.read(id);
+    }
 };
 
 MissionService::MissionService(QObject* parent):
@@ -41,55 +57,48 @@ MissionService::MissionService(QObject* parent):
     qRegisterMetaType<dao::MissionPtr>("dao::MissionPtr");
     qRegisterMetaType<dao::MissionItemPtr>("dao::MissionItemPtr");
     qRegisterMetaType<dao::MissionAssignmentPtr>("dao::MissionAssignmentPtr");
+
+    d->loadMissions();
+    d->loadMissionItems();
+    d->loadMissionAssignments();
 }
 
 MissionService::~MissionService()
 {}
 
-MissionPtr MissionService::mission(int id, bool reload)
+MissionPtr MissionService::mission(int id)
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->missionRepository.read(id, reload);
+    return d->missionRepository.read(id, false);
 }
 
-MissionItemPtr MissionService::missionItem(int id, bool reload)
+MissionItemPtr MissionService::missionItem(int id)
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->itemRepository.read(id, reload);
+    return d->itemRepository.read(id, false);
 }
 
-MissionAssignmentPtr MissionService::assignment(int id, bool reload)
+MissionAssignmentPtr MissionService::assignment(int id)
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->assignmentRepository.read(id, reload);
+    return d->assignmentRepository.read(id, false);
 }
 
 MissionPtrList MissionService::missions(const QString& condition, bool reload)
 {
     QMutexLocker locker(&d->mutex);
 
-    MissionPtrList list;
-    for (int id: d->missionRepository.selectId(condition))
-    {
-        list.append(this->mission(id, reload));
-    }
-
-    return list;
+    return d->missionRepository.loadedEntities();
 }
 
 MissionItemPtrList MissionService::missionItems(const QString& condition, bool reload)
 {
     QMutexLocker locker(&d->mutex);
 
-    MissionItemPtrList list;
-    for (int id: d->itemRepository.selectId(condition))
-    {
-        list.append(this->missionItem(id, reload));
-    }
-    return list;
+    return d->itemRepository.loadedEntities();
 }
 
 MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
@@ -110,10 +119,11 @@ MissionAssignmentPtr MissionService::missionAssignment(int missionId)
 {
     QMutexLocker locker(&d->mutex);
 
-    for (int id: d->assignmentRepository.selectId(QString("missionId = %1").arg(missionId)))
+    for (const MissionAssignmentPtr& assignment: d->assignmentRepository.loadedEntities())
     {
-        return this->assignment(id);
+        if (assignment->missionId() == missionId) return assignment;
     }
+
     return MissionAssignmentPtr();
 }
 
@@ -121,10 +131,11 @@ MissionAssignmentPtr MissionService::vehicleAssignment(int vehicleId)
 {
     QMutexLocker locker(&d->mutex);
 
-    for (int id: d->assignmentRepository.selectId(QString("vehicleId = %1").arg(vehicleId)))
+    for (const MissionAssignmentPtr& assignment: d->assignmentRepository.loadedEntities())
     {
-        return this->assignment(id);
+        if (assignment->vehicleId() == vehicleId) return assignment;
     }
+
     return MissionAssignmentPtr();
 }
 
@@ -132,17 +143,22 @@ MissionItemPtrList MissionService::missionItems(int missionId)
 {
     QMutexLocker locker(&d->mutex);
 
-    return this->missionItems(QString("missionId = %1 ORDER BY sequence").arg(missionId));
+    MissionItemPtrList list;
+    for (const MissionItemPtr& item: d->itemRepository.loadedEntities())
+    {
+        if (item->missionId() == missionId) list.insert(item->sequence(), item);
+    }
+
+    return list;
 }
 
 MissionItemPtr MissionService::missionItem(int missionId, int sequence)
 {
     QMutexLocker locker(&d->mutex);
 
-    for (int id: d->itemRepository.selectId(
-             QString("missionId = %1 AND sequence = %2").arg(missionId).arg(sequence)))
+    for (const MissionItemPtr& item: d->itemRepository.loadedEntities())
     {
-        return this->missionItem(id);
+        if (item->missionId() == missionId && item->sequence() == sequence) return item;
     }
     return MissionItemPtr();
 }
