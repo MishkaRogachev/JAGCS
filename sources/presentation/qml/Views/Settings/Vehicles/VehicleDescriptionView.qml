@@ -46,6 +46,7 @@ Controls.Frame {
 
         Controls.SpinBox {
             id: idBox
+            enabled: !online
             from: 0
             to: 255
             onValueChanged: changed = true
