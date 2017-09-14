@@ -46,6 +46,7 @@ namespace comm
        void sendMissionItem(quint8 mavId, quint16 seq);
        void sendMissionAck(quint8 mavId);
        void sendCurrentItem(quint8 mavId, quint16 seq);
+       // TODO: send item for guided mode
 
     protected:
         void processMissionCount(const mavlink_message_t& message);

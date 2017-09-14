@@ -11,6 +11,8 @@ namespace domain
 {
     class CommandSender;
 
+    // TODO: separate command on local, and mavlink specified to make one interface for all
+    //       direct channel actions. Make commands arguments static, not QVariant
     class CommandService: public QObject
     {
         Q_OBJECT
