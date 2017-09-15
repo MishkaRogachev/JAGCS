@@ -13,7 +13,7 @@ Text {
     color: operational ? palette.textColor : palette.dangerColor
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
-    font.pixelSize: root.width * 0.23
+    font.pixelSize: palette.fontPixelSize * 0.65
     text: (prefix.length > 0 ? prefix + "\n" : "") +
           (enabled ? value.toFixed(digits) + " " + suffix : "-")
 }

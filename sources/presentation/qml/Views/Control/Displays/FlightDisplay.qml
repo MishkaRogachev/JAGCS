@@ -84,7 +84,7 @@ BaseDisplay {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: af.left
-        width: parent.width * 0.2
+        width: (root.width - af.width) / 2
         height: parent.height * 0.7
         value: {
             switch (speedUnits) {
@@ -153,7 +153,7 @@ BaseDisplay {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: af.right
-        width: parent.width * 0.2
+        width: (root.width - af.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         minValue: value + minAltitude
