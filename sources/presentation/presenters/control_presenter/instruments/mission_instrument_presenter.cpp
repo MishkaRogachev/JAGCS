@@ -35,12 +35,12 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
             this, &MissionInstrumentPresenter::updateWaypoints);
     connect(d->service, &domain::MissionService::missionItemRemoved,
             this, &MissionInstrumentPresenter::updateWaypoints);
-    connect(d->service, &domain::MissionService::missionChanged,
-            this, [this](const dao::MissionPtr& mission) {
-        if (d->assignment.isNull() || d->assignment->missionId() != mission->id()) return;
+    connect(d->service, &domain::MissionService::assignmentChanged,
+            this, [this](const dao::MissionAssignmentPtr& assignment) {
+        if (d->assignment.isNull() || d->assignment != assignment) return;
 
-        this->setViewsProperty(PROPERTY(downloading), d->assignment->status() ==
-                               dao::MissionAssignment::Downloading);
+        this->setViewsProperty(PROPERTY(downloading), bool(d->assignment->status() ==
+                               dao::MissionAssignment::Downloading));
     });
 }
 
@@ -83,7 +83,7 @@ void MissionInstrumentPresenter::onDownloadMission()
 
 void MissionInstrumentPresenter::onCancelSyncMission()
 {
-    if (d->assignment) d->service->download(d->assignment);
+    if (d->assignment) d->service->cancelSync(d->assignment);
 }
 
 void MissionInstrumentPresenter::connectView(QObject* view)

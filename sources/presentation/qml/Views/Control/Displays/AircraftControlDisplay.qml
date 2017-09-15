@@ -56,7 +56,7 @@ BaseDisplay {
         Controls.Button {
             iconSource: "qrc:/icons/download.svg"
             highlighted: downloading
-            onClicked: highlighted ? cancelSyncMission() : downloadMission()
+            onClicked: downloading ? cancelSyncMission() : downloadMission()
         }
 
         Controls.Label {

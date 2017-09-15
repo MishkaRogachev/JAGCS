@@ -5,4 +5,6 @@ Item {
 
     property int minimumHeight: implicitHeight
     property int maximumHeight: implicitHeight
+
+    clip: true
 }
