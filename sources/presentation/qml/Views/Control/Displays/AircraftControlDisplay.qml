@@ -28,12 +28,14 @@ BaseDisplay {
 
     onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
 
-    implicitHeight: palette.controlBaseSize * 6
-    implicitWidth: grid.width
+    minimumHeight: palette.controlBaseSize * 12
+    maximumHeight: Math.max(grid.height, palette.controlBaseSize * 4)
+    implicitWidth: grid.implicitWidth
 
     GridLayout {
         id: grid
         anchors.top: parent.top
+        width: root.width
         columns: 3
 
         Controls.Label {

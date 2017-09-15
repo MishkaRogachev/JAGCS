@@ -45,6 +45,7 @@ Controls.Pane {
         DashboardView {
             id: dashboard
             objectName: "dashboard"
+            Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             Layout.fillHeight: true
         }

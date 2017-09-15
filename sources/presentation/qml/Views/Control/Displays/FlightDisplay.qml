@@ -52,7 +52,7 @@ BaseDisplay {
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
     implicitWidth: af.width / 0.58
-    minimumHeight: palette.controlBaseSize * 2
+    minimumHeight: palette.controlBaseSize * 4
     maximumHeight: palette.controlBaseSize * 8
 
     Indicators.FdLabel {
@@ -83,7 +83,7 @@ BaseDisplay {
     Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
+        anchors.right: af.left
         width: parent.width * 0.2
         height: parent.height * 0.7
         value: {
@@ -152,7 +152,7 @@ BaseDisplay {
     Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
+        anchors.left: af.right
         width: parent.width * 0.2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude

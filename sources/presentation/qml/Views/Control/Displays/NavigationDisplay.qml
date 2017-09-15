@@ -24,8 +24,7 @@ BaseDisplay {
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
-    implicitWidth: hsi.width / 0.6
-    minimumHeight: palette.controlBaseSize * 2
+    minimumHeight: palette.controlBaseSize * 3
     maximumHeight: palette.controlBaseSize * 6
 
     Indicators.DistanceLabel {
@@ -65,7 +64,7 @@ BaseDisplay {
     Indicators.SituationIndicator {
         id: hsi
         anchors.centerIn: parent
-        height: parent.height - palette.padding
+        height: Math.min(parent.height, parent.width * 0.6) - palette.padding
         width: height
         mark: vehicleMark
         opacity: compassEnabled ? 1 : 0.33

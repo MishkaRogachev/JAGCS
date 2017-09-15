@@ -20,8 +20,10 @@ ColumnLayout {
             sourceComponent: createIndicator(modelData)
             onItemChanged: if (item) instrumentAdded(modelData, item)
             enabled: online
+            Layout.alignment: Qt.AlignTop
             Layout.minimumHeight: item ? item.minimumHeight : 0
             Layout.maximumHeight: item ? item.maximumHeight : 0
+            Layout.preferredWidth: (Layout.minimumHeight + Layout.maximumHeight) / 2
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
