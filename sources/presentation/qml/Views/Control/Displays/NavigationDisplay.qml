@@ -2,7 +2,7 @@ import QtQuick 2.6
 
 import "qrc:/Indicators" as Indicators
 
-Item {
+BaseDisplay {
     id: root
 
     property alias guided: hsi.guided
@@ -24,7 +24,9 @@ Item {
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
-    implicitHeight: hsi.height
+    implicitWidth: hsi.width / 0.6
+    minimumHeight: palette.controlBaseSize * 2
+    maximumHeight: palette.controlBaseSize * 6
 
     Indicators.DistanceLabel {
         anchors.top: parent.top
@@ -63,7 +65,8 @@ Item {
     Indicators.SituationIndicator {
         id: hsi
         anchors.centerIn: parent
-        width: parent.width * 0.6
+        height: parent.height - palette.padding
+        width: height
         mark: vehicleMark
         opacity: compassEnabled ? 1 : 0.33
         color: compassOperational ? palette.textColor : palette.dangerColor

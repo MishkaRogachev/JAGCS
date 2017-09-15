@@ -3,7 +3,7 @@ import QtQuick 2.6
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
 
-Item {
+BaseDisplay {
     id: root
 
     property bool ahrsEnabled: false
@@ -51,7 +51,9 @@ Item {
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
-    implicitHeight: af.height
+    implicitWidth: af.width / 0.58
+    minimumHeight: palette.controlBaseSize * 2
+    maximumHeight: palette.controlBaseSize * 8
 
     Indicators.FdLabel {
         anchors.top: parent.top
@@ -73,7 +75,7 @@ Item {
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
-        width: speedLadder.majorTickSize
+        width: speedLadder.majorTickSize + 1
         height: parent.height * 0.7
         value: throttle
     }
@@ -119,7 +121,8 @@ Item {
     Indicators.ArtificialHorizon {
         id: af
         anchors.centerIn: parent
-        width: parent.width * 0.58
+        height: parent.height - palette.padding
+        width: height / ratio
         enabled: ahrsEnabled
         operational: ahrsOperational
         rollInverted: root.rollInverted
@@ -138,7 +141,7 @@ Item {
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: altitudeLadder.left
-        width: altitudeLadder.majorTickSize
+        width: altitudeLadder.majorTickSize + 1
         height: parent.height * 0.7
         value: barometricClimb
         fillColor: barometricClimb > 0 ? palette.skyColor : palette.groundColor

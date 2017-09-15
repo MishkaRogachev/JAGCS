@@ -25,10 +25,8 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.margins: palette.margins
         spacing: palette.spacing
-        width: height * 0.4 // TODO: dynamic height fit
 
         RowLayout {
-
             Controls.Button {
                 iconSource: "qrc:/icons/center.svg"
                 checkable: true
@@ -84,8 +82,7 @@ Controls.Pane {
 
     Controls.Button {
         onClicked: cornerMap = !cornerMap
-        iconSource: cornerMap ? "qrc:/icons/map-marker.svg" :
-                                "qrc:/icons/video.svg"
+        iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
         anchors.bottom: parent.bottom
         anchors.right: cornerVisible ? corner.left : maxMinButton.left
     }

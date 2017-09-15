@@ -17,14 +17,15 @@ ColumnLayout {
         model: instruments
 
         Loader {
-            Layout.fillWidth: true
             sourceComponent: createIndicator(modelData)
             onItemChanged: if (item) instrumentAdded(modelData, item)
             enabled: online
+            Layout.minimumHeight: item ? item.minimumHeight : 0
+            Layout.maximumHeight: item ? item.maximumHeight : 0
+            Layout.fillWidth: true
+            Layout.fillHeight: true
         }
     }
-
-    Item { Layout.fillHeight: true }
 
     function createIndicator(modelData) {
         switch (modelData) {

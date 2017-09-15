@@ -30,9 +30,9 @@ Item {
     Controls.Hatch {
         id: hatch
         anchors.left: parent.left
-        anchors.leftMargin: mirrored ? 8 : 0
+        anchors.leftMargin: mirrored ? 10 : 0
         anchors.right: parent.right
-        anchors.rightMargin: mirrored ? 0 : 8
+        anchors.rightMargin: mirrored ? 0 : 10
         anchors.bottom: parent.bottom
         height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
         xFactor: yFactor * height / width

@@ -68,6 +68,7 @@
         <file>Views/VerticalProfile/VerticalProfileView.qml</file>
         <file>Views/Control/ControlView.qml</file>
         <file>Views/Control/DashboardView.qml</file>
+        <file>Views/Control/Displays/BaseDisplay.qml</file>
         <file>Views/Control/Displays/SatelliteDisplay.qml</file>
         <file>Views/Control/Displays/FlightDisplay.qml</file>
         <file>Views/Control/Displays/NavigationDisplay.qml</file>

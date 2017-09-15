@@ -5,7 +5,7 @@ import QtPositioning 5.6
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
-Item {
+BaseDisplay {
     id: root
 
     property bool satelliteEnabled: false
@@ -55,6 +55,7 @@ Item {
         }
 
         Controls.ColoredIcon {
+            opacity: enabled ? 1 : 0.33
             color: {
                 switch (fix) {
                 case -1:
