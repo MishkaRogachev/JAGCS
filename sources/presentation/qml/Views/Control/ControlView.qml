@@ -25,6 +25,7 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.margins: palette.margins
         spacing: palette.spacing
+        width: palette.controlBaseSize * 9
 
         RowLayout {
             Controls.Button {

@@ -97,22 +97,22 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="71"/>
         <source>Go around</source>
-        <translation>Прервать посадку</translation>
+        <translation>Прерв. посадку</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="72"/>
         <source>Set airspeed</source>
-        <translation>Уст. возд. скорость</translation>
+        <translation>Уст. возд. ск-сть</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="73"/>
         <source>Set groundspeed</source>
-        <translation>Уст. пут. скорость</translation>
+        <translation>Уст. пут. ск-сть</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="74"/>
         <source>Set home</source>
-        <translation>Уст. точк. возврата</translation>
+        <translation>Уст. возврат</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="111"/>

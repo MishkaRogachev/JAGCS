@@ -36,7 +36,10 @@ Item {
 
     property bool pitchVisible: command === MissionItem.Takeoff
     property bool abortAltitudeVisible: command === MissionItem.Landing
-    property bool altitudeVisible: command === MissionItem.Continue || positionVisible
+    property bool altitudeVisible: command === MissionItem.Continue ||
+                                   command === MissionItem.Home ||
+                                   command === MissionItem.Takeoff ||
+                                   command === MissionItem.Landing
 
     property bool positionVisible: command === MissionItem.Home ||
                                    command === MissionItem.Takeoff ||

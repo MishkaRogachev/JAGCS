@@ -40,8 +40,6 @@ namespace
         { MAV_CMD_NAV_RETURN_TO_LAUNCH, dao::MissionItem::Return },
 
         { MAV_CMD_DO_CHANGE_SPEED, dao::MissionItem::SetSpeed },
-        // TODO: MAV_CMD_DO_LAND_START
-
         { MAV_CMD_DO_JUMP, dao::MissionItem::JumpTo },
 
         { MAV_CMD_DO_SET_SERVO, dao::MissionItem::SetServo },
@@ -251,6 +249,7 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
     msgItem.target_system = mavId;
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
+    // TODO: mission item to message convertor class
     dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), seq);
     if (item.isNull()) return;
 
