@@ -20,8 +20,6 @@ Map {
     property bool picking: false
     property bool trackingVehicle: false
 
-    property var mouseCoordinate: QtPositioning.coordinate()
-
     signal picked(var coordinate)
 
     implicitHeight: width
@@ -38,6 +36,7 @@ Map {
     activeMapType: supportedMapTypes[settings.value("Map/activeMapType", 0)]
     gesture.flickDeceleration: 3000
     gesture.enabled: true
+    gesture.preventStealing: true
     copyrightsVisible: false
 
     MissionLineMapOverlayView {
@@ -82,25 +81,15 @@ Map {
         }
     }
 
-//    MapStatusBar {
-//        id: bar
-//        anchors.bottom: parent.bottom
-//        coordinate: root.mouseCoordinate
-//        width: parent.width
-//        z: 3
-//    }
-
     MouseArea {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onExited: mouseCoordinate = QtPositioning.coordinate()
-        onPositionChanged: mouseCoordinate = root.toCoordinate(Qt.point(mouseX, mouseY))
+        enabled: picking
         onClicked: {
-            if (!picking) return;
-            pickHighlight.coordinate = mouseCoordinate;
+            pickHighlight.coordinate = root.toCoordinate(Qt.point(mouseX, mouseY));
             pickHighlight.visible = true;
-            root.picked(mouseCoordinate);
+            root.picked(pickHighlight.coordinate);
         }
         cursorShape: picking ? Qt.CrossCursor : Qt.ArrowCursor
     }
@@ -114,13 +103,6 @@ Map {
     Component.onDestruction: if (visible) saveViewport()
 
     onVisibleChanged: if (!visible) saveViewport()
-
-    onCenterChanged: {
-        if (!mouseArea.containsMouse) return;
-
-        mouseCoordinate = root.toCoordinate(Qt.point(mouseArea.mouseX, mouseArea.mouseY))
-    }
-
     onTrackingVehicleChanged: setGesturesEnabled(!trackingVehicle)
 
     function saveViewport() {
