@@ -72,7 +72,7 @@ Map {
         id: pickHighlight
         anchorPoint.x: sourceItem.width / 2
         anchorPoint.y: sourceItem.height / 2
-        z: 10
+        z: 10000
 
         sourceItem: Rectangle {
             width: palette.controlBaseSize / 4
