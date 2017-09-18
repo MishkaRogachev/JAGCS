@@ -1,6 +1,8 @@
 import QtQuick 2.6
 import QtQuick.Templates 2.0 as T
 
+import "../Shaders" as Shaders
+
 T.Button {
     id: control
 
@@ -27,7 +29,7 @@ T.Button {
             return control.flat ? "transparent" : palette.buttonColor;
         }
 
-        Hatch {
+        Shaders.Hatch {
             anchors.fill: parent
             color: palette.sunkenColor
             visible: !control.enabled

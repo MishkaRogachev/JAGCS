@@ -2,6 +2,8 @@ import QtQuick 2.6
 import QtQuick.Templates 2.0 as T
 import QtQuick.Layouts 1.3
 
+import "../Shaders" as Shaders
+
 T.CheckBox {
     id: control
 
@@ -29,7 +31,7 @@ T.CheckBox {
             visible: control.checked || control.down
         }
 
-        Hatch {
+        Shaders.Hatch {
             anchors.fill: parent
             color: palette.sunkenColor
             visible: !control.enabled

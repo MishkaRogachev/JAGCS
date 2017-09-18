@@ -1,8 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 
-import "./"
-
 Frame {
     id: control
 
@@ -13,6 +11,6 @@ Frame {
         border.color: palette.backgroundColor
         radius: 3
 
-        // TODO: hatch
+        // TODO: Shaders.Hatch
     }
 }

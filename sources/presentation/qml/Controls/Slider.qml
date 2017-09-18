@@ -27,7 +27,7 @@ T.Slider {
             radius: height / 2
         }
 
-        // TODO: hatch
+        // TODO: Shaders.Hatch
     }
 
     handle: Rectangle {

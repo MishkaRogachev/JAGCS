@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import "qrc:/JS/helper.js" as Helper
+
 import "../Controls" as Controls
+import "../Shaders" as Shaders
 
 Item {
     id: root
@@ -27,7 +29,7 @@ Item {
     onColorChanged: canvas.requestPaint()
     onValueChanged: canvas.requestPaint()
 
-    Controls.Hatch {
+    Shaders.Hatch {
         id: hatch
         anchors.left: parent.left
         anchors.leftMargin: mirrored ? 10 : 0
