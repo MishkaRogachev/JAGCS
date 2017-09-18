@@ -41,6 +41,11 @@ Item {
         yFactor: 35
     }
 
+    Shaders.OpacityBorder {
+        anchors.fill: parent
+        sourceItem: canvas
+    }
+
     Canvas {
         id: canvas
         anchors.fill: parent

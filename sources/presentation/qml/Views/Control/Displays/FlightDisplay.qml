@@ -55,23 +55,6 @@ BaseDisplay {
     minimumHeight: palette.controlBaseSize * 4
     maximumHeight: palette.controlBaseSize * 8
 
-    Indicators.FdLabel {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        prefix: qsTr("GS")
-        digits: 1
-        value: {
-            switch (speedUnits) {
-            default:
-            case 0: return groundspeed;
-            case 1: return Helper.mpsToKph(groundspeed);
-            }
-        }
-        enabled: satelliteEnabled
-        operational: satelliteOperational
-        width: speedLadder.width
-    }
-
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
@@ -102,6 +85,23 @@ BaseDisplay {
     }
 
     Indicators.FdLabel {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        prefix: qsTr("GS")
+        digits: 1
+        value: {
+            switch (speedUnits) {
+            default:
+            case 0: return groundspeed;
+            case 1: return Helper.mpsToKph(groundspeed);
+            }
+        }
+        enabled: satelliteEnabled
+        operational: satelliteOperational
+        width: speedLadder.width
+    }
+
+    Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         prefix: qsTr("TAS")
@@ -126,16 +126,6 @@ BaseDisplay {
         enabled: ahrsEnabled
         operational: ahrsOperational
         rollInverted: root.rollInverted
-    }
-
-    Indicators.FdLabel {
-        anchors.top: parent.top
-        anchors.right: parent.right
-        prefix: qsTr("SAT")
-        value: satelliteAltitude
-        enabled: satelliteEnabled
-        operational: satelliteOperational
-        width: altitudeLadder.width
     }
 
     Indicators.BarIndicator {
@@ -165,6 +155,16 @@ BaseDisplay {
         operational: barometricOperational
         mirrored: true
         prefix: qsTr("ALT")
+    }
+
+    Indicators.FdLabel {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        prefix: qsTr("SAT")
+        value: satelliteAltitude
+        enabled: satelliteEnabled
+        operational: satelliteOperational
+        width: altitudeLadder.width
     }
 
     Indicators.FdLabel {

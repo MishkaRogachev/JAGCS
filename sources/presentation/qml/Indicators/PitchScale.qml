@@ -1,6 +1,8 @@
 import QtQuick 2.6
 import "qrc:/JS/helper.js" as Helper
 
+import "../Shaders" as Shaders
+
 Item {
     id: pitchScale
 
@@ -17,10 +19,15 @@ Item {
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
 
+    Shaders.OpacityBorder {
+        anchors.fill: parent
+        sourceItem: canvas
+        rotation: -roll
+    }
+
     Canvas {
         id: canvas
         anchors.fill: parent
-        rotation: -roll
         onPaint: {
             var ctx = canvas.getContext('2d');
 

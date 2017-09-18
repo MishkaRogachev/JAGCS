@@ -112,6 +112,7 @@ Map {
     }
 
     Component.onDestruction: if (visible) saveViewport()
+
     onVisibleChanged: if (!visible) saveViewport()
 
     onCenterChanged: {
