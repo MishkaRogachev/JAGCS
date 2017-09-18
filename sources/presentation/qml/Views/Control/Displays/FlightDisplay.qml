@@ -121,8 +121,8 @@ BaseDisplay {
     Indicators.ArtificialHorizon {
         id: af
         anchors.centerIn: parent
-        height: parent.height - palette.padding
-        width: height / ratio
+        height: root.height - palette.padding
+        width: root.width * 0.6
         enabled: ahrsEnabled
         operational: ahrsOperational
         rollInverted: root.rollInverted

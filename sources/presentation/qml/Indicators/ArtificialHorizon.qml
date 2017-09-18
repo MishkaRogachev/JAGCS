@@ -28,15 +28,15 @@ Item {
     property alias pitchScaleEnabled: pitchScale.visible
 
     property alias markWidth: mark.markWidth
-    property real ratio: 1.4
+    property real ratio: height / width
 
-    implicitHeight: width * ratio
     clip: true
+    implicitHeight: width
 
     Item {
         id: contents
         anchors.centerIn: parent
-        width: parent.width * ratio
+        width: parent.height
         height: width
         visible: false
 
