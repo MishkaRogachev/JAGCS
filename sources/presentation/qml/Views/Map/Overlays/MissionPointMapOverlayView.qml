@@ -7,6 +7,7 @@ import "qrc:/Controls"
 MapItemView {
     delegate: MapQuickItem {
         coordinate: itemCoordinate
+        visible: itemVisible
         anchorPoint.x: sourceItem.width / 2
         anchorPoint.y: sourceItem.height / 2
         z: 500
