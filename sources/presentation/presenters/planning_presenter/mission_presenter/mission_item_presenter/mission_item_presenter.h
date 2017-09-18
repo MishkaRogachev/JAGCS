@@ -40,6 +40,7 @@ namespace presentation
     private slots:
         void updateCount();
         void updateAvailableCommands();
+        void onUpdateCommand(int commandIndex);
 
     private:
          class Impl;

@@ -60,6 +60,7 @@ Item {
     signal restore()
     signal remove()
     signal selectItem(int sequence)
+    signal updateCommand(int commandIndex)
 
     onChangedChanged: {
         if (changed) return;
@@ -123,7 +124,10 @@ Item {
             visible: sequence > -1
             enabled: editEnabled
             currentIndex: 0
-            onCurrentIndexChanged: changed = true
+            onCurrentIndexChanged: {
+                updateCommand(currentIndex);
+                changed = true;
+            }
             Layout.fillWidth: true
         }
 

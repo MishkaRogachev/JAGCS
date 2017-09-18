@@ -173,6 +173,7 @@ void MissionItemPresenter::connectView(QObject* view)
     this->updateAvailableCommands();
 
     connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
+    connect(view, SIGNAL(updateCommand(int)), this, SLOT(onUpdateCommand(int)));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
     connect(view, SIGNAL(restore()), this, SLOT(updateView()));
@@ -206,4 +207,12 @@ void MissionItemPresenter::updateAvailableCommands()
         commands.append(d->helper.translateCommand(command));
     }
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
+}
+
+void MissionItemPresenter::onUpdateCommand(int commandIndex)
+{
+    if (commandIndex > 0 && commandIndex < d->availableCommands.count())
+    {
+        this->setViewProperty(PROPERTY(command), d->availableCommands.at(commandIndex));
+    }
 }
