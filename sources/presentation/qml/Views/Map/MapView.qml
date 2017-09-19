@@ -98,6 +98,7 @@ Map {
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),
                                           settings.value("Map/centerLongitude"));
         zoomLevel = settings.value("Map/zoomLevel");
+        bearing = settings.value("Map/bearing");
     }
 
     Component.onDestruction: if (visible) saveViewport()
@@ -111,6 +112,7 @@ Map {
         settings.setValue("Map/centerLatitude", center.latitude);
         settings.setValue("Map/centerLongitude", center.longitude);
         settings.setValue("Map/zoomLevel", zoomLevel);
+        settings.setValue("Map/bearing", bearing);
     }
 
     function setGesturesEnabled(enabled) {

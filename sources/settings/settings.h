@@ -34,6 +34,7 @@ namespace settings
         const QString zoomLevel = "Map/zoomLevel";
         const QString centerLatitude = "Map/centerLatitude";
         const QString centerLongitude = "Map/centerLongitude";
+        const QString bearing = "Map/bearing";
         const QString activeMapType = "Map/activeMapType";
         const QString tileHost = "Map/tileHost";
         const QString cacheSize = "Map/cacheSize";
