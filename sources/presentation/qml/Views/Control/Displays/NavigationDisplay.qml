@@ -58,6 +58,7 @@ BaseDisplay {
             case 1: return Helper.mpsToKph(windSpeed);
             }
         }
+        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
         enabled: windSpeed > 0
     }
 
@@ -95,30 +96,33 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.right: parent.right
-        prefix: qsTr("TRG")
         color: guided ? palette.activeMissionColor : palette.textColor
         opacity: guided ? 1 : 0.33
         value: targetBearing
         width: parent.width * 0.2
+        prefix: qsTr("TRG")
+        suffix: "\u00B0"
     }
 
     Indicators.FdLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        prefix: qsTr("HDG")
         value: heading
         width: parent.width * 0.2
         enabled: compassEnabled
         operational: compassOperational
+        prefix: qsTr("HDG")
+        suffix: "\u00B0"
     }
 
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        prefix: qsTr("CRS")
         value: course
         width: parent.width * 0.2
         enabled: compassEnabled
         operational: compassOperational
+        prefix: qsTr("CRS")
+        suffix: "\u00B0"
     }
 }

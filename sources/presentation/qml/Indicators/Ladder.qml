@@ -21,6 +21,7 @@ Item {
 
     property bool operational: false
     property string prefix
+    property string suffix
     opacity: enabled ? 1 : 0.33
     property color color: operational ? palette.textColor : palette.dangerColor
     property alias warningColor: hatch.color
@@ -110,11 +111,12 @@ Item {
     Text {
         id: label
         anchors.centerIn: parent
+        anchors.horizontalCenterOffset: mirrored ? majorTickSize : -majorTickSize
         width: parent.width
         color: root.color
         horizontalAlignment: Text.AlignHCenter
         font.bold: true
         font.pixelSize: fontPixelSize * 1.15
-        text: prefix + "\n" + value
+        text: prefix + "\n" + value + " " + suffix
     }
 }

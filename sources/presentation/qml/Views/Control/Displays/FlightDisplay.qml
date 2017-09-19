@@ -82,12 +82,12 @@ BaseDisplay {
         enabled: pitotEnabled
         operational: pitotOperational
         prefix: qsTr("IAS")
+        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
     }
 
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.left: parent.left
-        prefix: qsTr("GS")
         digits: 1
         value: {
             switch (speedUnits) {
@@ -99,12 +99,13 @@ BaseDisplay {
         enabled: satelliteEnabled
         operational: satelliteOperational
         width: speedLadder.width
+        prefix: qsTr("GS")
+        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
     }
 
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        prefix: qsTr("TAS")
         digits: 1
         value: {
             switch (speedUnits) {
@@ -116,6 +117,8 @@ BaseDisplay {
         enabled: pitotEnabled
         operational: pitotOperational
         width: speedLadder.width
+        prefix: qsTr("TAS")
+        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
     }
 
     Indicators.ArtificialHorizon {
@@ -155,26 +158,29 @@ BaseDisplay {
         operational: barometricOperational
         mirrored: true
         prefix: qsTr("ALT")
+        suffix: qsTr("m")
     }
 
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.right: parent.right
-        prefix: qsTr("SAT")
         value: satelliteAltitude
         enabled: satelliteEnabled
         operational: satelliteOperational
         width: altitudeLadder.width
+        prefix: qsTr("SAT")
+        suffix: qsTr("m")
     }
 
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        prefix: qsTr("RF")
         value: rangefinderHeight
         digits: 2
         enabled: rangefinderEnabled
         operational: rangefinderOperational
         width: altitudeLadder.width
+        prefix: qsTr("RF")
+        suffix: qsTr("m")
     }
 }

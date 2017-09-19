@@ -12,6 +12,10 @@ function mpsToKph(mps) {
     return mps * 3.6;
 }
 
+function kphToMps(kph) {
+    return kph / 3.6;
+}
+
 function pad(num, size) {
     var str = num.toString();
     while (str.length < size) str = "0" + str;

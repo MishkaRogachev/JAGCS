@@ -18,6 +18,8 @@ BaseDisplay {
     property int indicatedAirspeed: 0
     property int command: commandBox.currentItem ? commandBox.currentItem.command : Command.UnknownCommand
 
+    property int speedUnits: settings.value("Gui/fdSpeedUnits")
+
     signal commandSetWaypoint(int item)
     signal downloadMission()
     signal cancelSyncMission()
@@ -92,7 +94,9 @@ BaseDisplay {
                 switch (command) {
                 case Command.PreflightCalibration: return calibrationBox.currentItem.args;
                 case Command.ArmDisarm: return [!armed];
-                case Command.SetSpeed: return [commandBox.currentItem.type, speedBox.value, -1, 0];
+                case Command.SetSpeed: return [commandBox.currentItem.type,
+                                               speedUnits ? Helper.kphToMps(speedBox.value) : speedBox.value,
+                                                            -1, 0];
                 case Command.SetHome: return [2, 0, 0, 0, latitudeBox.realValue,
                                               longitudeBox.realValue, altitudeBox.value]; // TODO: current
                 default: return [];
@@ -170,6 +174,7 @@ BaseDisplay {
             visible: command === Command.SetSpeed
             to: 999 // TODO: borderValues
             Layout.fillWidth: true
+            // TODO: suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
         }
 
         Controls.Button {
