@@ -51,7 +51,7 @@ BaseDisplay {
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
-    implicitWidth: af.width / 0.58
+    implicitWidth: af.width / 0.55
     minimumHeight: palette.controlBaseSize * 4
     maximumHeight: palette.controlBaseSize * 7
 
@@ -125,7 +125,7 @@ BaseDisplay {
         id: af
         anchors.centerIn: parent
         height: root.height - palette.padding
-        width: root.width * 0.6
+        width: root.width * 0.55
         enabled: ahrsEnabled
         operational: ahrsOperational
         rollInverted: root.rollInverted

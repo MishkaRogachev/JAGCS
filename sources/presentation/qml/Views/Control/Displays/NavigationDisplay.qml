@@ -1,5 +1,6 @@
 import QtQuick 2.6
 
+import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
 
 BaseDisplay {

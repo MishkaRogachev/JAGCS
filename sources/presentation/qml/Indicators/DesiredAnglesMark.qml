@@ -11,6 +11,8 @@ Item {
     property color markColor: palette.activeMissionColor
     property int markWidth: 6
 
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
 
