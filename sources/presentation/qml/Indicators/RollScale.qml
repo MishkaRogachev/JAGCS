@@ -9,7 +9,7 @@ Item {
     property int maxRoll: 25
     property int rollStep: 5
     property color color: palette.textColor
-    property int fontPixelSize: width * 0.1
+    property int fontPixelSize: height > 0 ? height * 0.12 : 1
 
     onRollChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()
@@ -52,13 +52,12 @@ Item {
 
             ctx.moveTo(-palette.controlBaseSize / 4,
                        -height / 2 + palette.controlBaseSize / 4);
-            ctx.lineTo(0, -height / 2);
+            ctx.lineTo(0, 2 - height / 2);
             ctx.lineTo(palette.controlBaseSize / 4,
                        -height / 2 + palette.controlBaseSize / 4);
 
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
-            ctx.fillText(Math.abs(roll), 0, -height / 2 +
-                         palette.controlBaseSize / 1.5);
+            ctx.fillText(Math.abs(roll), 0, -height / 2 + fontPixelSize);
 
             ctx.restore();
 

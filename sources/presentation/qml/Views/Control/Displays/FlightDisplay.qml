@@ -8,13 +8,13 @@ BaseDisplay {
 
     property bool ahrsEnabled: false
     property bool ahrsOperational: false
-    property alias pitch: af.pitch
-    property alias roll: af.roll
-    property alias desiredPitch: af.desiredPitch
-    property alias desiredRoll: af.desiredRoll
-    property alias yawspeed: af.yawspeed
-    property alias armed: af.armed
-    property alias guided: af.guided
+    property alias pitch: ai.pitch
+    property alias roll: ai.roll
+    property alias desiredPitch: ai.desiredPitch
+    property alias desiredRoll: ai.desiredRoll
+    property alias yawspeed: ai.yawspeed
+    property alias armed: ai.armed
+    property alias guided: ai.guided
 
     property int throttle: 0
 
@@ -51,7 +51,7 @@ BaseDisplay {
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
-    implicitWidth: af.width / 0.55
+    implicitWidth: ai.width / 0.55
     minimumHeight: palette.controlBaseSize * 4
     maximumHeight: palette.controlBaseSize * 7
 
@@ -66,8 +66,8 @@ BaseDisplay {
     Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: af.left
-        width: (root.width - af.width) / 2
+        anchors.right: ai.left
+        width: (root.width - ai.width) / 2
         height: parent.height * 0.7
         value: {
             switch (speedUnits) {
@@ -122,7 +122,7 @@ BaseDisplay {
     }
 
     Indicators.ArtificialHorizon {
-        id: af
+        id: ai
         anchors.centerIn: parent
         height: root.height - palette.padding
         width: root.width * 0.55
@@ -145,8 +145,8 @@ BaseDisplay {
     Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: af.right
-        width: (root.width - af.width) / 2
+        anchors.left: ai.right
+        width: (root.width - ai.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         minValue: value + minAltitude

@@ -33,79 +33,41 @@ Item {
     clip: true
     implicitHeight: width
 
-    Item {
-        id: contents
+    Horizon {
+        id: horizon
         anchors.centerIn: parent
         width: parent.height
         height: width
         visible: false
-
-        Horizon {
-            id: horizon
-            anchors.fill: parent
-            effectiveHeight: pitchScale.height
-            pitch: pitchInverted ? root.pitch : 0
-            roll: rollInverted ? 0 : root.roll
-        }
-
-        PitchScale {
-            id: pitchScale
-            anchors.centerIn: parent
-            width: parent.width
-            height: parent.height - palette.controlBaseSize * 2
-            roll: rollInverted ? 0 : root.roll
-            minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
-            maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
-            pitchStep: root.pitchStep
-            opacity: enabled ? 1 : 0.33
-            color: operational ? palette.textColor : palette.dangerColor
-        }
-
-        DesiredAnglesMark {
-            id: desiredMark
-            anchors.fill: parent
-            effectiveHeight: pitchScale.height
-            visible: guided
-            pitch: pitchInverted ? root.pitch - desiredPitch : -desiredPitch
-            roll: rollInverted ? -desiredRoll : root.roll - desiredRoll
-        }
-
-        PlaneMark {
-            id: mark
-            anchors.fill: parent
-            effectiveHeight: pitchScale.height
-            pitch: pitchInverted ? 0 : -root.pitch
-            roll: rollInverted ? -root.roll : 0
-            markColor: armed ? palette.selectedTextColor : palette.dangerColor
-        }
-
-        TurnIndicator {
-            id: turn
-            anchors.fill: parent
-            value: yawspeed
-        }
-
-        Controls.Label {
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: -height
-            text: qsTr("DISARMED")
-            font.pixelSize: root.height * 0.1
-            font.bold: true
-            color: armed ? "transparent" : palette.dangerColor
-        }
+        effectiveHeight: pitchScale.height
+        pitch: pitchInverted ? root.pitch : 0
+        roll: rollInverted ? 0 : root.roll
     }
 
     Rectangle {
         id: mask
-        anchors.fill: contents
+        anchors.fill: horizon
         anchors.margins: 1
         radius: width / 2
     }
 
     OpacityMask {
-        anchors.fill: contents
-        source: contents
+        anchors.fill: horizon
+        source: horizon
         maskSource: mask
+    }
+
+    PitchScale {
+        id: pitchScale
+        anchors.centerIn: parent
+        width: parent.width
+        height: parent.height - palette.controlBaseSize * 2
+        roll: rollInverted ? 0 : root.roll
+        minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
+        maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
+        pitchStep: root.pitchStep
+        opacity: enabled ? 1 : 0.33
+        color: operational ? palette.textColor : palette.dangerColor
     }
 
     RollScale {
@@ -117,5 +79,38 @@ Item {
         rollStep: root.rollStep
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
+    }
+
+    TurnIndicator {
+        id: turn
+        anchors.fill: parent
+        value: yawspeed
+    }
+
+    DesiredAnglesMark {
+        id: desiredMark
+        anchors.fill: parent
+        effectiveHeight: pitchScale.height
+        visible: guided
+        pitch: pitchInverted ? root.pitch - desiredPitch : -desiredPitch
+        roll: rollInverted ? -desiredRoll : root.roll - desiredRoll
+    }
+
+    PlaneMark {
+        id: mark
+        anchors.fill: parent
+        effectiveHeight: pitchScale.height
+        pitch: pitchInverted ? 0 : -root.pitch
+        roll: rollInverted ? -root.roll : 0
+        markColor: armed ? palette.selectedTextColor : palette.dangerColor
+    }
+
+    Controls.Label {
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: -height
+        text: qsTr("DISARMED")
+        font.pixelSize: root.height * 0.1
+        font.bold: true
+        color: armed ? "transparent" : palette.dangerColor
     }
 }
