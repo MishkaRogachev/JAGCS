@@ -118,7 +118,8 @@ Map {
     function setGesturesEnabled(enabled) {
         gesture.acceptedGestures = enabled ?
                     (MapGestureArea.PinchGesture | MapGestureArea.PanGesture |
-                     MapGestureArea.FlickGesture) : MapGestureArea.PinchGesture
+                     MapGestureArea.FlickGesture | MapGestureArea.RotationGesture) :
+                    MapGestureArea.PinchGesture
     }
 
     function dropPicker() {

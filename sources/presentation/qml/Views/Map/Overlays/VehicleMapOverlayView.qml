@@ -6,11 +6,21 @@ import "qrc:/Controls"
 
 MapItemView {
     delegate: MapQuickItem {
+
+        property real directionAnimated: direction
+
         coordinate: position
         z: 1000
 
         Behavior on coordinate {
             CoordinateAnimation { duration: 200 }
+        }
+
+        Behavior on directionAnimated {
+            RotationAnimation {
+                duration: 200
+                direction: RotationAnimation.Shortest
+            }
         }
 
         Connections {
@@ -23,7 +33,7 @@ MapItemView {
 
             Image {
                 anchors.centerIn: parent
-                rotation: direction
+                rotation: directionAnimated - map.bearing
                 source: mark
                 width: palette.controlBaseSize * 3
                 height: width
@@ -39,7 +49,10 @@ MapItemView {
         }
 
         function tryCenterVehicle() {
-            if (map.trackingVehicle && isSelected && coordinate) map.center = coordinate
+            if (!map.trackingVehicle || !isSelected) return;
+
+            if (coordinate) map.center = coordinate;
+            if (direction) map.bearing = directionAnimated;
         }
     }
 }
