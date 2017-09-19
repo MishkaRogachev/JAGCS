@@ -25,9 +25,11 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.margins: palette.margins
         spacing: palette.spacing
-        width: palette.controlBaseSize * 9
+        width: palette.controlBaseSize * 8
 
         RowLayout {
+            Layout.alignment: Qt.AlignTop
+
             Controls.Button {
                 iconSource: "qrc:/icons/center.svg"
                 checkable: true
@@ -46,9 +48,6 @@ Controls.Pane {
         DashboardView {
             id: dashboard
             objectName: "dashboard"
-            Layout.alignment: Qt.AlignTop
-            Layout.fillWidth: true
-            Layout.fillHeight: true
         }
     }
 

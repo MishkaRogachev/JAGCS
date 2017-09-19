@@ -43,118 +43,118 @@
 <context>
     <name>AircraftControlDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="42"/>
         <source>WP:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="55"/>
-        <source>Command:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="64"/>
-        <source>Preflight</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="67"/>
-        <source>Disarm</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="67"/>
-        <source>Arm</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="68"/>
-        <source>Return</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="69"/>
-        <source>Start mission</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="70"/>
-        <source>Land</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="71"/>
-        <source>Go around</source>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="63"/>
+        <source>Com.</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="72"/>
+        <source>Preflight</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="75"/>
+        <source>Disarm</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="75"/>
+        <source>Arm</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="76"/>
+        <source>Return</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="77"/>
+        <source>Start mission</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="78"/>
+        <source>Land</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="79"/>
+        <source>Go around</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="80"/>
         <source>Set airspeed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="81"/>
         <source>Set groundspeed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="74"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="82"/>
         <source>Set home</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="111"/>
-        <source>Latitude</source>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="104"/>
+        <source>Alt.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="137"/>
-        <source>Longitude</source>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="119"/>
+        <source>Lat.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="150"/>
-        <source>Speed:</source>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="147"/>
+        <source>Lon.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="170"/>
-        <source>Calibration:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="180"/>
-        <source>Accelerometer</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="181"/>
-        <source>Board level</source>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="162"/>
+        <source>Spd.</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="182"/>
+        <source>Cal.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="192"/>
+        <source>Accelerometer</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="193"/>
+        <source>Board level</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="194"/>
         <source>Gyroscope</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="183"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="195"/>
         <source>Magnetometer</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="184"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="196"/>
         <source>Static pressure</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="185"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="197"/>
         <source>Temperature</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="96"/>
-        <source>Altitude:</source>
         <translation></translation>
     </message>
 </context>
@@ -389,32 +389,32 @@
 <context>
     <name>FlightDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="59"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="90"/>
         <source>GS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="99"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="84"/>
         <source>IAS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="105"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="107"/>
         <source>TAS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="131"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="163"/>
         <source>SAT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="164"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="157"/>
         <source>ALT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/FlightDisplay.qml" line="173"/>
         <source>RF</source>
         <translation></translation>
     </message>
@@ -843,97 +843,97 @@
 <context>
     <name>MissionItemView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="76"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="81"/>
         <source>Item</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="116"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="121"/>
         <source>Command</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="131"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="139"/>
         <source>Altitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="152"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="160"/>
         <source>Rel.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="178"/>
         <source>Abort alt.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="176"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="184"/>
         <source>Latitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="213"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="221"/>
         <source>Longitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="219"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="227"/>
         <source>Radius</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="237"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="245"/>
         <source>CW</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="246"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="254"/>
         <source>Pitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="262"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="270"/>
         <source>Yaw</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="278"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="286"/>
         <source>Repeats</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="291"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="299"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="309"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="317"/>
         <source>Speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="324"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="332"/>
         <source>Ground speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="327"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="335"/>
         <source>Air speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="342"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="350"/>
         <source>Throttle</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="363"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="371"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="371"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="379"/>
         <source>Save</source>
         <translation></translation>
     </message>
@@ -954,32 +954,32 @@
 <context>
     <name>NavigationDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="32"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="33"/>
         <source>DIST</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="42"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="43"/>
         <source>HOME</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="52"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="53"/>
         <source>WIND</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="96"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="98"/>
         <source>TRG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="106"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="108"/>
         <source>HDG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="116"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/NavigationDisplay.qml" line="118"/>
         <source>CRS</source>
         <translation></translation>
     </message>
@@ -1069,12 +1069,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="91"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="92"/>
         <source>HDOP: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="99"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="100"/>
         <source>VDOP: </source>
         <translation></translation>
     </message>
@@ -1130,17 +1130,17 @@
 <context>
     <name>StatusDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="12"/>
         <source>None</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="44"/>
         <source> V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="54"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="62"/>
         <source> A</source>
         <translation></translation>
     </message>

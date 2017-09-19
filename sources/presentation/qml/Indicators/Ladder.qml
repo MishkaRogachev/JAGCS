@@ -13,7 +13,7 @@ Item {
     property int maxValue: 100
     property int valueStep: 20
 
-    property int fontPixelSize: palette.fontPixelSize * 0.65
+    property int fontPixelSize: palette.fontPixelSize * 0.7
     property int minorTickSize: fontPixelSize * 0.4
     property int majorTickSize: fontPixelSize * 0.6
     property int textOrigin: fontPixelSize * 0.8

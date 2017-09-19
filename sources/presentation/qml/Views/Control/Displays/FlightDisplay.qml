@@ -53,7 +53,7 @@ BaseDisplay {
 
     implicitWidth: af.width / 0.58
     minimumHeight: palette.controlBaseSize * 4
-    maximumHeight: palette.controlBaseSize * 8
+    maximumHeight: palette.controlBaseSize * 7
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter

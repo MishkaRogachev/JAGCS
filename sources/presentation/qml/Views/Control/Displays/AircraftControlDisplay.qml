@@ -29,7 +29,7 @@ BaseDisplay {
     onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
 
     minimumHeight: palette.controlBaseSize * 12
-    maximumHeight: Math.max(grid.height, palette.controlBaseSize * 4)
+    maximumHeight: Math.max(grid.height, (palette.controlBaseSize  + palette.spacing) * 5)
     implicitWidth: grid.implicitWidth
 
     GridLayout {
@@ -40,7 +40,7 @@ BaseDisplay {
 
         Controls.Label {
             text: qsTr("WP:")
-            font.pixelSize: palette.fontPixelSize * 0.75
+            font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
             Layout.fillWidth: true
         }
@@ -60,8 +60,8 @@ BaseDisplay {
         }
 
         Controls.Label {
-            text: qsTr("Command:")
-            font.pixelSize: palette.fontPixelSize * 0.75
+            text: qsTr("Com.")
+            font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
         }
 
@@ -101,8 +101,8 @@ BaseDisplay {
         }
 
         Controls.Label {
-            text: qsTr("Altitude:")
-            font.pixelSize: palette.fontPixelSize * 0.75
+            text: qsTr("Alt.")
+            font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.SetHome
         }
@@ -116,7 +116,9 @@ BaseDisplay {
         }
 
         Controls.Label {
-            text: qsTr("Latitude")
+            text: qsTr("Lat.")
+            font.pixelSize: palette.fontPixelSize * 0.7
+            font.bold: true
             visible: command === Command.SetHome
             Layout.fillWidth: true
         }
@@ -142,7 +144,9 @@ BaseDisplay {
         }
 
         Controls.Label {
-            text: qsTr("Longitude")
+            text: qsTr("Lon.")
+            font.pixelSize: palette.fontPixelSize * 0.7
+            font.bold: true
             visible: command === Command.SetHome
             Layout.fillWidth: true
         }
@@ -155,8 +159,8 @@ BaseDisplay {
         }
 
         Controls.Label {
-            text: qsTr("Speed:")
-            font.pixelSize: palette.fontPixelSize * 0.75
+            text: qsTr("Spd.")
+            font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.SetSpeed
         }
@@ -175,8 +179,8 @@ BaseDisplay {
         }
 
         Controls.Label {
-            text: qsTr("Calibration:")
-            font.pixelSize: palette.fontPixelSize * 0.75
+            text: qsTr("Cal.")
+            font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.PreflightCalibration
         }
