@@ -16,11 +16,11 @@ Item {
     property real desiredPitch: 0.0
     property real desiredRoll: 0.0
 
-    property real minPitch: -23
+    property real minPitch: -maxPitch
     property real maxPitch: 23
     property real pitchStep: 10
-    property real minRoll: -45
-    property real maxRoll: 45
+    property real minRoll: -maxRoll
+    property real maxRoll: width > height ? 90 : 90 - (180 * Math.acos(width / height) / Math.PI)
     property real rollStep: 10
 
     property bool pitchInverted: true
