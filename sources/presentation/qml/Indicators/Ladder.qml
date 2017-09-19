@@ -29,18 +29,6 @@ Item {
     onColorChanged: canvas.requestPaint()
     onValueChanged: canvas.requestPaint()
 
-    Shaders.Hatch {
-        id: hatch
-        anchors.left: parent.left
-        anchors.leftMargin: mirrored ? 10 : 0
-        anchors.right: parent.right
-        anchors.rightMargin: mirrored ? 0 : 10
-        anchors.bottom: parent.bottom
-        height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
-        xFactor: yFactor * height / width
-        yFactor: 35
-    }
-
     Shaders.OpacityBorder {
         anchors.fill: parent
         sourceItem: canvas
@@ -103,6 +91,19 @@ Item {
 
             ctx.stroke();
             ctx.restore();
+        }
+
+        Shaders.Hatch {
+            id: hatch
+            anchors.left: parent.left
+            anchors.leftMargin: mirrored ? 10 : 0
+            anchors.right: parent.right
+            anchors.rightMargin: mirrored ? 0 : 10
+            anchors.bottom: parent.bottom
+            height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
+            xFactor: yFactor * height / width
+            yFactor: 35
+            z: -1
         }
     }
 

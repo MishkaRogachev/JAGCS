@@ -38,6 +38,7 @@ Item {
     property bool abortAltitudeVisible: command === MissionItem.Landing
     property bool altitudeVisible: command === MissionItem.Continue ||
                                    command === MissionItem.Home ||
+                                   command === MissionItem.Waypoint ||
                                    command === MissionItem.Takeoff ||
                                    command === MissionItem.Landing
 

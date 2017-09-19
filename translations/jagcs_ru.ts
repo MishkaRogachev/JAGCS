@@ -157,7 +157,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="184"/>
         <source>Static pressure</source>
-        <translation>Давление ур. от.</translation>
+        <translation>Давление отсчёта</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Control/Displays/AircraftControlDisplay.qml" line="185"/>
