@@ -42,6 +42,16 @@ namespace settings
         const QString trackLength = "Map/trackLength";
     }
 
+    namespace joystick
+    {
+        const QString joystickEnabled = "Joystick/joystickEnabled";
+
+        const QString pitchAxis = "Joystick/pitchAxis";
+        const QString rollAxis = "Joystick/rollAxis";
+        const QString yawAxis = "Joystick/yawAxis";
+        const QString throttleAxis = "Joystick/throttleAxis";
+    }
+
     namespace gui
     {
         const QString fullscreen = "Gui/fullscreen";

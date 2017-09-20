@@ -48,6 +48,13 @@ public:
         settings.setValue(map::highdpiTiles, true);
         settings.setValue(map::trackLength, 100);
 
+        settings.setValue(joystick::joystickEnabled, false);
+
+        settings.setValue(joystick::pitchAxis, 1);
+        settings.setValue(joystick::rollAxis, 2);
+        settings.setValue(joystick::yawAxis, 3);
+        settings.setValue(joystick::throttleAxis, 4);
+
         settings.setValue(gui::fullscreen, true);
         settings.setValue(gui::locale, "en");
         settings.setValue(gui::uiSize, 36);

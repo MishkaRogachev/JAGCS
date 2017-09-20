@@ -87,6 +87,7 @@
         <file>Views/Settings/Video/VideoSettingsView.qml</file>
         <file>Views/Settings/Video/VideoSourceView.qml</file>
         <file>Views/Settings/Map/MapSettingsView.qml</file>
+        <file>Views/Settings/Joystick/JoystickSettingsView.qml</file>
         <file>Views/Settings/Gui/GuiSettingsView.qml</file>
         <file>Views/Settings/Network/NetworkSettingsView.qml</file>
         <file>Views/Settings/Help/AboutView.qml</file>

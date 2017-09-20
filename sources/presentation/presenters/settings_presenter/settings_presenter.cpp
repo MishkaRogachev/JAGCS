@@ -9,9 +9,9 @@
 #include "video_settings_presenter.h"
 
 #include "map_settings_presenter.h"
-
-#include "network_settings_presenter.h"
+#include "joystick_settings_presenter.h"
 #include "gui_settings_presenter.h"
+#include "network_settings_presenter.h"
 #include "about_presenter.h"
 
 using namespace presentation;
@@ -25,9 +25,9 @@ public:
     VideoSettingsPresenter* video;
 
     MapSettingsPresenter* map;
-
-    NetworkSettingsPresenter* network;
+    JoystickSettingsPresenter* joystick;
     GuiSettingsPresenter* gui;
+    NetworkSettingsPresenter* network;
     AboutPresenter* about;
 };
 
@@ -41,9 +41,9 @@ SettingsPresenter::SettingsPresenter(QObject* parent):
     d->video = new VideoSettingsPresenter(this);
 
     d->map = new MapSettingsPresenter(this);
-
-    d->network = new NetworkSettingsPresenter(this);
+    d->joystick = new JoystickSettingsPresenter(this);
     d->gui = new GuiSettingsPresenter(this);
+    d->network = new NetworkSettingsPresenter(this);
     d->about = new AboutPresenter(this);
 }
 
@@ -68,9 +68,9 @@ void SettingsPresenter::connectView(QObject* view)
     d->video->setView(view->findChild<QObject*>(NAME(video)));
 
     d->map->setView(view->findChild<QObject*>(NAME(map)));
-
-    d->network->setView(view->findChild<QObject*>(NAME(network)));
+    d->joystick->setView(view->findChild<QObject*>(NAME(joystick)));
     d->gui->setView(view->findChild<QObject*>(NAME(gui)));
+    d->network->setView(view->findChild<QObject*>(NAME(network)));
     d->about->setView(view->findChild<QObject*>(NAME(about)));
 
     connect(view, SIGNAL(makeDefaults()), this, SLOT(onMakeDefaults()));

@@ -8,6 +8,7 @@ import "Communications"
 import "Vehicles"
 import "Video"
 import "Map"
+import "Joystick"
 import "Gui"
 import "Network"
 import "Help"
@@ -32,16 +33,14 @@ Controls.Pane {
                     qsTr("Video"),
 
                     qsTr("Map"),
-
+                    qsTr("Joystick"),
                     qsTr("GUI"),
                     qsTr("Networking"),
                     qsTr("About")
                 ]
             }
 
-            Item {
-                Layout.fillHeight: true
-            }
+            Item { Layout.fillHeight: true }
 
             Controls.Button {
                 text: qsTr("Make defaults")
@@ -59,6 +58,7 @@ Controls.Pane {
             VehicleSettingsView { objectName: "vehicles" }
             VideoSettingsView { objectName: "video" }
             MapSettingsView { objectName: "map" }
+            JoystickSettingsView{ objectName: "joystick" }
             GuiSettingsView { objectName: "gui" }
             NetworkSettingsView { objectName: "network" }
             AboutView { objectName: "about" }
