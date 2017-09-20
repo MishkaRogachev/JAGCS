@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QTranslator>
+#include <QDebug>
 
 // Internal
 #include "settings.h"
@@ -15,15 +16,16 @@ using namespace presentation;
 class TranslationManager::Impl
 {
 public:
-    QMap<QString, QTranslator*> localeTranslators;
+    static QMap<QString, QTranslator*> localeTranslators;
+
     QString locale;
 };
+
+QMap<QString, QTranslator*> TranslationManager::Impl::localeTranslators = {};
 
 TranslationManager::TranslationManager():
     d(new Impl())
 {
-    this->loadLocales();
-
     d->locale = settings::Provider::value(settings::gui::locale).toString();
 }
 
@@ -79,5 +81,7 @@ void TranslationManager::loadLocales()
 
 void TranslationManager::initLocales()
 {
+    this->loadLocales();
+
     qApp->installTranslator(d->localeTranslators.value(d->locale, nullptr));
 }
