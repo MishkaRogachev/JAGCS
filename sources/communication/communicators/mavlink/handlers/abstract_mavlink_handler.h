@@ -11,7 +11,7 @@ namespace comm
 {
     class MavLinkCommunicator;
 
-    class AbstractMavLinkHandler: public QObject
+    class AbstractMavLinkHandler: public QObject // TODO: separate hander on handler & sender with no QObject inheritance
     {
         Q_OBJECT
 

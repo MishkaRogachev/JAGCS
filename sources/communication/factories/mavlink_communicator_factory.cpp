@@ -19,6 +19,7 @@
 #include "nav_controller_handler.h"
 #include "command_handler.h"
 #include "mission_handler.h"
+#include "manual_control_handler.h"
 
 using namespace comm;
 
@@ -48,6 +49,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new NavControllerHandler(communicator);
     new CommandHandler(communicator);
     new MissionHandler(communicator);
+    new ManualControlHandler(communicator);
 
     return communicator;
 }
