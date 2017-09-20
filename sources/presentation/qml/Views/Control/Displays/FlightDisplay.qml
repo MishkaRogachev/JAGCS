@@ -53,7 +53,7 @@ BaseDisplay {
 
     implicitWidth: ai.width / 0.55
     minimumHeight: palette.controlBaseSize * 4
-    maximumHeight: palette.controlBaseSize * 7
+    maximumHeight: palette.controlBaseSize * 8
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
