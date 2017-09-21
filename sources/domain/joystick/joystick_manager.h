@@ -18,6 +18,7 @@ namespace domain
     public slots:
         void overrideValue(int axis, float value);
         void setControlVehicle(int vehicleId);
+        void sendCurrentDeviation();
 
     signals:
         void valueChanged(int axis, float value);

@@ -20,17 +20,17 @@ JoystickController::JoystickController(int device, QObject* parent):
         m_gamepad = new QGamepad(0, this);
     }
 
-    connect(m_gamepad, &QGamepad::axisLeftXChanged, [this](double value) {
-            emit valueChanged(0, value);
-    });
-    connect(m_gamepad, &QGamepad::axisLeftYChanged, [this](double value) {
+    connect(m_gamepad, &QGamepad::axisLeftXChanged, this, [this](double value) {
             emit valueChanged(1, value);
     });
-    connect(m_gamepad, &QGamepad::axisRightXChanged, [this](double value) {
+    connect(m_gamepad, &QGamepad::axisLeftYChanged, this, [this](double value) {
             emit valueChanged(2, value);
     });
-    connect(m_gamepad, &QGamepad::axisRightYChanged, [this](double value) {
+    connect(m_gamepad, &QGamepad::axisRightXChanged, this, [this](double value) {
             emit valueChanged(3, value);
+    });
+    connect(m_gamepad, &QGamepad::axisRightYChanged, this, [this](double value) {
+            emit valueChanged(4, value);
     });
 }
 
@@ -38,10 +38,10 @@ float JoystickController::value(int axis) const
 {
     switch (axis)
     {
-    case 0: return m_gamepad->axisLeftX();
-    case 1: return m_gamepad->axisLeftY();
-    case 2: return m_gamepad->axisRightX();
-    case 3: return m_gamepad->axisRightY();
+    case 1: return m_gamepad->axisLeftX();
+    case 2: return m_gamepad->axisLeftY();
+    case 3: return m_gamepad->axisRightX();
+    case 4: return m_gamepad->axisRightY();
     default: return NAN;
     }
 }

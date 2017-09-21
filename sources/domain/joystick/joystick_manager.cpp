@@ -30,8 +30,7 @@ JoystickManager::JoystickManager(QObject* parent):
 {
     d->controller = new JoystickController(settings::Provider::value(settings::joystick::device).toInt(),
                                            this);
-    connect(d->controller, &JoystickController::valueChanged,
-            this, &JoystickManager::overrideValue);
+    connect(d->controller, &JoystickController::valueChanged, this, &JoystickManager::overrideValue);
 }
 
 JoystickManager::~JoystickManager()
@@ -45,12 +44,7 @@ float JoystickManager::value(int axis) const
 void JoystickManager::overrideValue(int axis, float value)
 {
     d->axes[axis] = value;
-
-    if (d->vehicleId)
-    {
-        d->vehicleService->sendManualControl(d->vehicleId, this->value(0), this->value(1),
-                                             this->value(1), this->value(2));
-    }
+    if (d->vehicleId) this->sendCurrentDeviation();
 
     emit valueChanged(axis, value);
 }
@@ -58,4 +52,14 @@ void JoystickManager::overrideValue(int axis, float value)
 void JoystickManager::setControlVehicle(int vehicleId)
 {
     d->vehicleId = vehicleId;
+}
+
+void JoystickManager::sendCurrentDeviation()
+{
+    float pitch = this->value(settings::Provider::value(settings::joystick::pitchAxis, 0).toInt());
+    float roll = this->value(settings::Provider::value(settings::joystick::rollAxis, 0).toInt());
+    float throttle = this->value(settings::Provider::value(settings::joystick::throttleAxis, 0).toInt());
+    float yaw = this->value(settings::Provider::value(settings::joystick::yawAxis, 0).toInt());
+
+    d->vehicleService->sendManualControl(d->vehicleId, pitch, roll, throttle, yaw);
 }

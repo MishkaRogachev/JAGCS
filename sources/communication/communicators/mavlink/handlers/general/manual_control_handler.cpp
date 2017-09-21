@@ -46,17 +46,19 @@ void ManualControlHandler::processMessage(const mavlink_message_t& message)
     Q_UNUSED(message) // TODO: handle feedback
 }
 
-void ManualControlHandler::sendManualControl(int vehicledId, float x, float y, float z, float r)
+void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float roll, float thrust, float yaw)
 {
     mavlink_manual_control_t mavlink_manual_control;
 
     int mavId = d->vehicleService->mavIdByVehicleId(vehicledId);
     mavlink_manual_control.target = mavId;
 
-    mavlink_manual_control.x = ::normalize(x);
-    mavlink_manual_control.y = ::normalize(y);
-    mavlink_manual_control.z = ::normalize(z);
-    mavlink_manual_control.r = ::normalize(r);
+    mavlink_manual_control.x = ::normalize(pitch);
+    mavlink_manual_control.y = ::normalize(roll);
+    mavlink_manual_control.z = ::normalize(thrust);
+    mavlink_manual_control.r = ::normalize(yaw);
+
+    qDebug() << "pitch" << mavlink_manual_control.x << "roll" << mavlink_manual_control.y;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;

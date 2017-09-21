@@ -34,7 +34,7 @@ namespace domain
         void vehicleRemoved(dao::VehiclePtr vehicle);
         void vehicleChanged(dao::VehiclePtr vehicle);
 
-        void sendManualControl(int vehicleId, float x, float y, float z, float r);
+        void sendManualControl(int vehicleId, float pitch, float roll, float thrust, float yaw);
 
     private:
         class Impl;
