@@ -26,6 +26,7 @@ namespace
     {
         { MAV_CMD_COMPONENT_ARM_DISARM, Command::ArmDisarm },
         { MAV_CMD_NAV_RETURN_TO_LAUNCH, Command::Return },
+        { MAV_CMD_NAV_GUIDED_ENABLE, Command::EnableGuided },
         { MAV_CMD_MISSION_START, Command::Start },
         { MAV_CMD_DO_LAND_START, Command::Land },
         { MAV_CMD_DO_GO_AROUND, Command::GoAround },
@@ -35,7 +36,7 @@ namespace
         { MAV_CMD_DO_CHANGE_ALTITUDE, Command::SetAltitude },
         { MAV_CMD_DO_SET_HOME, Command::SetHome },
         { MAV_CMD_PREFLIGHT_CALIBRATION, Command::PreflightCalibration }
-        // TODO: MAV_CMD_NAV_GUIDED_ENABLE, MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
+        // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
 
     const QMultiMap<quint8, Command::CommandStatus> mavStatusMap =

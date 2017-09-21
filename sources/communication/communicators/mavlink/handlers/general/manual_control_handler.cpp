@@ -56,8 +56,6 @@ void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float 
     mavlink_manual_control.z = ::normalize(thrust);
     mavlink_manual_control.r = ::normalize(yaw);
 
-    qDebug() << "pitch" << mavlink_manual_control.x << "roll" << mavlink_manual_control.y;
-
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
 

@@ -46,10 +46,6 @@ void AttitudeTargetHandler::sendAttitude(int vehicledId, float pitch, float roll
 
     float attitudeQuaternion[4];
     mavlink_euler_to_quaternion(roll, pitch, yaw, attitudeQuaternion);
-
-    qDebug() << roll << pitch << yaw;
-    qDebug() << attitudeQuaternion[0] << attitudeQuaternion[1] << attitudeQuaternion[2] << attitudeQuaternion[3];
-
     mavlink_msg_set_attitude_target_pack_chan(m_communicator->systemId(),
                                               m_communicator->componentId(),
                                               m_communicator->linkChannel(link),
