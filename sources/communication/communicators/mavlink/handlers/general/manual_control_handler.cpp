@@ -33,9 +33,7 @@ ManualControlHandler::ManualControlHandler(MavLinkCommunicator* communicator):
     d(new Impl())
 {
     connect(d->vehicleService, &domain::VehicleService::sendManualControl,
-            this, [this](int vehicleId, float x, float y, float z, float r) {
-        this->sendManualControl(d->vehicleService->mavIdByVehicleId(vehicleId), x, y, z, r);
-    });
+            this, &ManualControlHandler::sendManualControl);
 }
 
 ManualControlHandler::~ManualControlHandler()

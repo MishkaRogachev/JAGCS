@@ -42,6 +42,6 @@ float JoystickController::value(int axis) const
     case 2: return m_gamepad->axisLeftY();
     case 3: return m_gamepad->axisRightX();
     case 4: return m_gamepad->axisRightY();
-    default: return NAN;
+    default: return 0;
     }
 }

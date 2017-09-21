@@ -45,6 +45,7 @@ Controls.Frame {
         Controls.SpinBox {
             id: deviceBox
             onValueChanged: changed = true
+            Layout.fillWidth: true
         }
 
 //        Controls.Label { TODO: software joystick

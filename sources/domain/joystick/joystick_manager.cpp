@@ -38,7 +38,7 @@ JoystickManager::~JoystickManager()
 
 float JoystickManager::value(int axis) const
 {
-    return d->axes.value(axis, NAN);
+    return d->axes.value(axis, 0);
 }
 
 void JoystickManager::overrideValue(int axis, float value)
