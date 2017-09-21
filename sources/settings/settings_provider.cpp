@@ -48,8 +48,8 @@ public:
         settings.setValue(map::highdpiTiles, true);
         settings.setValue(map::trackLength, 100);
 
-        settings.setValue(joystick::joystickEnabled, false);
-
+        settings.setValue(joystick::enabled, false);
+        settings.setValue(joystick::device, 0);
         settings.setValue(joystick::pitchAxis, 1);
         settings.setValue(joystick::rollAxis, 2);
         settings.setValue(joystick::yawAxis, 3);

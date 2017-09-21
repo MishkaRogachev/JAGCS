@@ -12,18 +12,31 @@
 
 #include "mavlink_communicator.h"
 
+namespace
+{
+    int normalize(float value)
+    {
+        return value * 1000;
+    }
+}
+
 using namespace comm;
 
 class ManualControlHandler::Impl
 {
 public:
-    const domain::VehicleService* vehicleSrevice = domain::ServiceRegistry::vehicleService();
+    const domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
 };
 
 ManualControlHandler::ManualControlHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
-{}
+{
+    connect(d->vehicleService, &domain::VehicleService::sendManualControl,
+            this, [this](int vehicleId, float x, float y, float z, float r) {
+        this->sendManualControl(d->vehicleService->mavIdByVehicleId(vehicleId), x, y, z, r);
+    });
+}
 
 ManualControlHandler::~ManualControlHandler()
 {}
@@ -33,14 +46,17 @@ void ManualControlHandler::processMessage(const mavlink_message_t& message)
     Q_UNUSED(message) // TODO: handle feedback
 }
 
-void ManualControlHandler::sendManualControl(int vehicledId)
+void ManualControlHandler::sendManualControl(int vehicledId, float x, float y, float z, float r)
 {
     mavlink_manual_control_t mavlink_manual_control;
 
-    int mavId = d->vehicleSrevice->mavIdByVehicleId(vehicledId);
+    int mavId = d->vehicleService->mavIdByVehicleId(vehicledId);
     mavlink_manual_control.target = mavId;
 
-    // TODO: set target channels
+    mavlink_manual_control.x = ::normalize(x);
+    mavlink_manual_control.y = ::normalize(y);
+    mavlink_manual_control.z = ::normalize(z);
+    mavlink_manual_control.r = ::normalize(r);
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;

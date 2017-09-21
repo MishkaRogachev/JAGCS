@@ -12,8 +12,8 @@ Controls.Frame {
         qsTr("Axis right X"), qsTr("Axis right Y") ]
 
     property alias joystickEnabled: joystickEnabledBox.checked
+    property alias device: deviceBox.value
     // property alias softwareJoystick: softwareJoystickBox.checked
-
     property alias pitchAxis: pitchAxisBox.currentIndex
     property alias rollAxis: rollAxisBox.currentIndex
     property alias yawAxis: yawAxisBox.currentIndex
@@ -28,13 +28,23 @@ Controls.Frame {
         columns: 2
 
         Controls.Label {
-            text: qsTr("Joystick enabled")
+            text: qsTr("Enabled")
             Layout.fillWidth: true
         }
 
         Controls.CheckBox {
             id: joystickEnabledBox
             onCheckedChanged: changed = true
+        }
+
+        Controls.Label {
+            text: qsTr("Device")
+            Layout.fillWidth: true
+        }
+
+        Controls.SpinBox {
+            id: deviceBox
+            onValueChanged: changed = true
         }
 
 //        Controls.Label { TODO: software joystick

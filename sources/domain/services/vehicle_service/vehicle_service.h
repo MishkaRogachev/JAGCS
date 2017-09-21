@@ -19,11 +19,11 @@ namespace domain
         explicit VehicleService(MissionService* missionService, QObject* parent = nullptr);
         ~VehicleService() override;
 
-        dao::VehiclePtr vehicle(int id) const;
+        dao::VehiclePtr vehicle(int vehicleId) const;
         dao::VehiclePtrList vehicles() const;
 
         int vehicleIdByMavId(int mavId) const;
-        int mavIdByVehicleId(int id) const;
+        int mavIdByVehicleId(int vehicleId) const;
 
     public slots:
         bool save(const dao::VehiclePtr& vehicle);
@@ -33,6 +33,8 @@ namespace domain
         void vehicleAdded(dao::VehiclePtr vehicle);
         void vehicleRemoved(dao::VehiclePtr vehicle);
         void vehicleChanged(dao::VehiclePtr vehicle);
+
+        void sendManualControl(int vehicleId, float x, float y, float z, float r);
 
     private:
         class Impl;

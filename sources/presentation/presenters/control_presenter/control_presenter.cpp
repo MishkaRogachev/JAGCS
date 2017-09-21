@@ -6,11 +6,15 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
 #include "service_registry.h"
 #include "vehicle_service.h"
 #include "vehicle.h"
 
 #include "telemetry_service.h"
+
+#include "joystick_manager.h"
 
 #include "vehicle_type_mapper.h"
 #include "location_map_presenter.h"
@@ -24,6 +28,8 @@ using namespace presentation;
 class ControlPresenter::Impl
 {
 public:
+    domain::JoystickManager* joystick = nullptr;
+
     AbstractMapPresenter* map;
     VideoSplitPresenter* video;
     DashboardPresenter* dashboard = nullptr;
@@ -33,6 +39,11 @@ ControlPresenter::ControlPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
+    if (settings::Provider::value(settings::joystick::enabled).toBool())
+    {
+        d->joystick = new domain::JoystickManager(this);
+    }
+
     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
 
     d->map = new LocationMapPresenter(this);
@@ -94,11 +105,15 @@ void ControlPresenter::onSelectVehicle(int index)
             d->dashboard->setView(this->view()->findChild<QObject*>(NAME(dashboard)));
             d->dashboard->setViewProperty(PROPERTY(vehicleMark), ::vehicleIcon(vehicle->type()));
         }
+
+        if (d->joystick) d->joystick->setControlVehicle(vehicle->id());
     }
     else
     {
         d->dashboard = nullptr;
         d->map->selectVehicle(dao::VehiclePtr());
+
+        if (d->joystick) d->joystick->setControlVehicle(0);
     }
 }
 

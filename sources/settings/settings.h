@@ -44,8 +44,8 @@ namespace settings
 
     namespace joystick
     {
-        const QString joystickEnabled = "Joystick/joystickEnabled";
-
+        const QString enabled = "Joystick/joystickEnabled";
+        const QString device = "Joystick/device";
         const QString pitchAxis = "Joystick/pitchAxis";
         const QString rollAxis = "Joystick/rollAxis";
         const QString yawAxis = "Joystick/yawAxis";

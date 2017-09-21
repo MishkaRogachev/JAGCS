@@ -54,6 +54,7 @@ find_package(Qt5 COMPONENTS
     Location
     Charts
     QuickControls2
+    Gamepad
 REQUIRED)
 
 set(LIBRARIES
@@ -120,6 +121,7 @@ qt5_use_modules(${PROJECT}
     Location
     Charts
     QuickControls2
+    Gamepad
 )
 
 # Install instructions

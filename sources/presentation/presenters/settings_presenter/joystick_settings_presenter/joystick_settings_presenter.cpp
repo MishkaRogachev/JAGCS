@@ -25,8 +25,9 @@ JoystickSettingsPresenter::~JoystickSettingsPresenter()
 void JoystickSettingsPresenter::updateView()
 {
     this->setViewProperty(PROPERTY(joystickEnabled),
-                          settings::Provider::value(settings::joystick::joystickEnabled));
-
+                          settings::Provider::value(settings::joystick::enabled));
+    this->setViewProperty(PROPERTY(device),
+                          settings::Provider::value(settings::joystick::device));
     this->setViewProperty(PROPERTY(pitchAxis),
                           settings::Provider::value(settings::joystick::pitchAxis));
     this->setViewProperty(PROPERTY(rollAxis),
@@ -41,9 +42,10 @@ void JoystickSettingsPresenter::updateView()
 
 void JoystickSettingsPresenter::save()
 {
-    settings::Provider::setValue(settings::joystick::joystickEnabled,
+    settings::Provider::setValue(settings::joystick::enabled,
                                  this->viewProperty(PROPERTY(joystickEnabled)).toBool());
-
+    settings::Provider::setValue(settings::joystick::device,
+                                 this->viewProperty(PROPERTY(device)).toInt());
     settings::Provider::setValue(settings::joystick::pitchAxis,
                                  this->viewProperty(PROPERTY(pitchAxis)).toInt());
     settings::Provider::setValue(settings::joystick::rollAxis,

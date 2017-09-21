@@ -16,7 +16,7 @@ namespace comm
     public slots:
         void processMessage(const mavlink_message_t& message) override;
 
-        void sendManualControl(int vehicledId);
+        void sendManualControl(int vehicledId, float x, float y, float z, float r);
 
     private:
         class Impl;
