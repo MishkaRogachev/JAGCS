@@ -42,6 +42,24 @@ Item {
         effectiveHeight: pitchScale.height
         pitch: pitchInverted ? root.pitch : 0
         roll: rollInverted ? 0 : root.roll
+
+        DesiredAnglesMark {
+            id: desiredMark
+            anchors.fill: parent
+            effectiveHeight: pitchScale.height
+            visible: guided
+            pitch: pitchInverted ? root.pitch - desiredPitch : -desiredPitch
+            roll: rollInverted ? -desiredRoll : root.roll - desiredRoll
+        }
+
+        PlaneMark {
+            id: mark
+            anchors.fill: parent
+            effectiveHeight: pitchScale.height
+            pitch: pitchInverted ? 0 : -root.pitch
+            roll: rollInverted ? -root.roll : 0
+            markColor: armed ? palette.selectedTextColor : palette.dangerColor
+        }
     }
 
     Rectangle {
@@ -85,24 +103,6 @@ Item {
         id: turn
         anchors.fill: parent
         value: yawspeed
-    }
-
-    DesiredAnglesMark {
-        id: desiredMark
-        anchors.fill: parent
-        effectiveHeight: pitchScale.height
-        visible: guided
-        pitch: pitchInverted ? root.pitch - desiredPitch : -desiredPitch
-        roll: rollInverted ? -desiredRoll : root.roll - desiredRoll
-    }
-
-    PlaneMark {
-        id: mark
-        anchors.fill: parent
-        effectiveHeight: pitchScale.height
-        pitch: pitchInverted ? 0 : -root.pitch
-        roll: rollInverted ? -root.roll : 0
-        markColor: armed ? palette.selectedTextColor : palette.dangerColor
     }
 
     Controls.Label {
