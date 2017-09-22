@@ -8,7 +8,7 @@ install:
   - sudo apt-get -y install -qq mesa-common-dev qt59-meta-full qt59charts-no-lgpl
 
 script:
-  - source /opt/qt57/bin/qt59-env.sh
+  - source /opt/qt59/bin/qt59-env.sh 
   - mkdir build
   - cd build
   - cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_DEBIAN=ON
