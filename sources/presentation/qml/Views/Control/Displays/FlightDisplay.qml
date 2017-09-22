@@ -53,7 +53,7 @@ BaseDisplay {
 
     implicitWidth: ai.width / 0.55
     minimumHeight: palette.controlBaseSize * 4
-    maximumHeight: palette.controlBaseSize * 8
+    maximumHeight: palette.controlBaseSize * 12
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
@@ -88,6 +88,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.left: parent.left
+        font.pixelSize: speedLadder.fontPixelSize
         digits: 1
         value: {
             switch (speedUnits) {
@@ -106,6 +107,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+        font.pixelSize: speedLadder.fontPixelSize
         digits: 1
         value: {
             switch (speedUnits) {
@@ -164,6 +166,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.right: parent.right
+        font.pixelSize: altitudeLadder.fontPixelSize
         value: satelliteAltitude
         enabled: satelliteEnabled
         operational: satelliteOperational
@@ -175,6 +178,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
+        font.pixelSize: altitudeLadder.fontPixelSize
         value: rangefinderHeight
         digits: 2
         enabled: rangefinderEnabled

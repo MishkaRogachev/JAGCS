@@ -38,13 +38,13 @@ Item {
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
 
-            ctx.moveTo(-width / 3, 0);
-            ctx.lineTo(-width / 6, 0);
-            ctx.lineTo(-width / 12, width / 12);
+            ctx.moveTo(-width / 2, 0);
+            ctx.lineTo(-width / 4, 0);
+            ctx.lineTo(-width / 8, width / 8);
             ctx.lineTo(0, 0);
-            ctx.lineTo(width / 12, width / 12);
-            ctx.lineTo(width / 6, 0);
-            ctx.lineTo(width / 3, 0);
+            ctx.lineTo(width / 8, width / 8);
+            ctx.lineTo(width / 4, 0);
+            ctx.lineTo(width / 2, 0);
 
             ctx.moveTo(0, 0);
             ctx.arc(0, 0, markWidth, 0, 2 * Math.PI, false);

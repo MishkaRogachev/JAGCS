@@ -39,7 +39,7 @@ Item {
                 ctx.save();
                 ctx.rotate(i * Math.PI / 180);
                 ctx.moveTo(0, -height / 2);
-                ctx.lineTo(0, -height / 2 + palette.controlBaseSize / 6);
+                ctx.lineTo(0, -height / 2 + fontPixelSize / 4);
                 ctx.restore();
             }
 
@@ -50,11 +50,11 @@ Item {
             var rotation = Math.max(Math.min(-roll, maxRoll), minRoll);
             ctx.rotate(rotation * Math.PI / 180);
 
-            ctx.moveTo(-palette.controlBaseSize / 4,
-                       -height / 2 + palette.controlBaseSize / 4);
+            ctx.moveTo(-fontPixelSize / 2,
+                       -height / 2 + fontPixelSize / 2);
             ctx.lineTo(0, 2 - height / 2);
-            ctx.lineTo(palette.controlBaseSize / 4,
-                       -height / 2 + palette.controlBaseSize / 4);
+            ctx.lineTo(fontPixelSize / 2,
+                       -height / 2 + fontPixelSize / 2);
 
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.fillText(Math.abs(roll), 0, -height / 2 + fontPixelSize);

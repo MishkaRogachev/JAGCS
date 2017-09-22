@@ -26,11 +26,12 @@ BaseDisplay {
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
     minimumHeight: palette.controlBaseSize * 3
-    maximumHeight: palette.controlBaseSize * 6
+    maximumHeight: palette.controlBaseSize * 9
 
     Indicators.DistanceLabel {
         anchors.top: parent.top
         anchors.left: parent.left
+        font.pixelSize: Math.max(hsi.height * 0.08, palette.fontPixelSize * 0.5)
         prefix: qsTr("DIST")
         color: guided ? palette.activeMissionColor : palette.textColor
         opacity: guided ? 1 : 0.33
@@ -41,6 +42,7 @@ BaseDisplay {
     Indicators.DistanceLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
+        font.pixelSize: Math.max(hsi.height * 0.08, palette.fontPixelSize * 0.5)
         prefix: qsTr("HOME")
         distance: homeDistance
         width: parent.width * 0.2
@@ -51,6 +53,7 @@ BaseDisplay {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
+        font.pixelSize: Math.max(hsi.height * 0.08, palette.fontPixelSize * 0.5)
         prefix: qsTr("WIND")
         value: {
             switch (speedUnits) {
@@ -101,6 +104,7 @@ BaseDisplay {
         opacity: guided ? 1 : 0.33
         value: targetBearing
         width: parent.width * 0.2
+        font.pixelSize: Math.max(hsi.height * 0.08, palette.fontPixelSize * 0.5)
         prefix: qsTr("TRG")
         suffix: "\u00B0"
     }
@@ -112,6 +116,7 @@ BaseDisplay {
         width: parent.width * 0.2
         enabled: compassEnabled
         operational: compassOperational
+        font.pixelSize: Math.max(hsi.height * 0.08, palette.fontPixelSize * 0.5)
         prefix: qsTr("HDG")
         suffix: "\u00B0"
     }
@@ -123,6 +128,7 @@ BaseDisplay {
         width: parent.width * 0.2
         enabled: compassEnabled
         operational: compassOperational
+        font.pixelSize: Math.max(hsi.height * 0.08, palette.fontPixelSize * 0.5)
         prefix: qsTr("CRS")
         suffix: "\u00B0"
     }

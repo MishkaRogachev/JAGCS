@@ -37,11 +37,11 @@ Item {
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
 
-            ctx.moveTo(-width / 3, 0);
-            ctx.lineTo(-width / 6, 0);
+            ctx.moveTo(-width / 2, 0);
+            ctx.lineTo(-width / 4, 0);
 
-            ctx.moveTo(width / 6, 0);
-            ctx.lineTo(width / 3, 0);
+            ctx.moveTo(width / 4, 0);
+            ctx.lineTo(width / 2, 0);
 
             ctx.stroke();
             ctx.restore();

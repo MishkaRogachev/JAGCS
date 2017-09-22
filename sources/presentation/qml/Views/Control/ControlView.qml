@@ -25,7 +25,7 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.margins: palette.margins
         spacing: palette.spacing
-        width: Math.max(palette.controlBaseSize * 8, height / 2.5)
+        width: Math.max(palette.controlBaseSize * 8, height / 2)
 
         RowLayout {
             Layout.alignment: Qt.AlignTop
