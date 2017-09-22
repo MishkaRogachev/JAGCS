@@ -46,6 +46,7 @@ Controls.Frame {
             id: deviceBox
             onValueChanged: changed = true
             Layout.fillWidth: true
+            enabled: joystickEnabled
         }
 
 //        Controls.Label { TODO: software joystick
@@ -56,6 +57,7 @@ Controls.Frame {
 //        Controls.CheckBox {
 //            id: softwareJoystickBox
 //            onCheckedChanged: changed = true
+//            enabled: joystickEnabled
 //        }
 
         Controls.Label {

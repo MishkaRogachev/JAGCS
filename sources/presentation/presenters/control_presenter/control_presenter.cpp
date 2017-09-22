@@ -22,6 +22,7 @@
 
 #include "dashboard_presenter.h"
 #include "aerial_dashboard_factory.h"
+#include "command_presenter.h"
 
 using namespace presentation;
 
@@ -32,6 +33,7 @@ public:
 
     AbstractMapPresenter* map;
     VideoSplitPresenter* video;
+    CommandPresenter* command;
     DashboardPresenter* dashboard = nullptr;
 };
 
@@ -44,11 +46,11 @@ ControlPresenter::ControlPresenter(QObject* parent):
         d->joystick = new domain::JoystickManager(this);
     }
 
-    domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
-
     d->map = new LocationMapPresenter(this);
     d->video = new VideoSplitPresenter(this);
+    d->command = new CommandPresenter(this);
 
+    domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
     connect(service, &domain::VehicleService::vehicleAdded, this, &ControlPresenter::updateVehiclesList);
     connect(service, &domain::VehicleService::vehicleRemoved, this, &ControlPresenter::updateVehiclesList);
 }
@@ -76,6 +78,7 @@ void ControlPresenter::updateVehiclesList()
 
 void ControlPresenter::connectView(QObject* view)
 {
+    d->command->setView(view->findChild<QObject*>(NAME(command)));
     d->map->setView(view->findChild<QObject*>(NAME(map)));
     d->video->setView(view->findChild<QObject*>(NAME(video)));
 
@@ -94,7 +97,9 @@ void ControlPresenter::onSelectVehicle(int index)
     if (index > 0 && index <= vehicles.count())
     {
         dao::VehiclePtr vehicle = vehicles[index - 1];
+
         d->map->selectVehicle(vehicle);
+        d->command->setControlVehicle(vehicle->id());
 
         AerialDashboardFactory factory(vehicle);
         d->dashboard = factory.create();
@@ -112,6 +117,8 @@ void ControlPresenter::onSelectVehicle(int index)
     {
         d->dashboard = nullptr;
         d->map->selectVehicle(dao::VehiclePtr());
+
+        d->command->setControlVehicle(0);
 
         if (d->joystick) d->joystick->setControlVehicle(0);
     }

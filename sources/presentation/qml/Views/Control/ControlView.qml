@@ -34,7 +34,7 @@ Controls.Pane {
                 iconSource: "qrc:/icons/center.svg"
                 checkable: true
                 enabled: dashboard.online
-                onEnabledChanged: checked = false
+                onEnabledChanged: if (!enabled) checked = false
                 onCheckedChanged: map.trackingVehicle = checked
             }
 
@@ -43,12 +43,30 @@ Controls.Pane {
                 onCurrentIndexChanged: selectVehicle(currentIndex)
                 Layout.fillWidth: true
             }
+
+            Controls.Button {
+                id: commandButton
+                iconSource: command.visible ? "qrc:/icons/left.svg" : "qrc:/icons/right.svg"
+                enabled: dashboard.online
+                onEnabledChanged: command.visible = false
+                onClicked: command.visible = !command.visible
+            }
         }
 
         DashboardView {
             id: dashboard
             objectName: "dashboard"
         }
+    }
+
+    CommandView {
+        id: command
+        objectName: "command"
+        anchors.top: parent.top
+        anchors.left: background.left
+        anchors.margins: palette.margins
+        visible: commandButton.checked
+        z: 10
     }
 
     Item {

@@ -43,6 +43,19 @@ Item {
         pitch: pitchInverted ? root.pitch : 0
         roll: rollInverted ? 0 : root.roll
 
+        PitchScale {
+            id: pitchScale
+            anchors.centerIn: parent
+            width: parent.width
+            height: parent.height - palette.controlBaseSize * 2
+            roll: rollInverted ? 0 : root.roll
+            minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
+            maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
+            pitchStep: root.pitchStep
+            opacity: enabled ? 1 : 0.33
+            color: operational ? palette.textColor : palette.dangerColor
+        }
+
         DesiredAnglesMark {
             id: desiredMark
             anchors.fill: parent
@@ -73,19 +86,6 @@ Item {
         anchors.fill: horizon
         source: horizon
         maskSource: mask
-    }
-
-    PitchScale {
-        id: pitchScale
-        anchors.centerIn: parent
-        width: parent.width
-        height: parent.height - palette.controlBaseSize * 2
-        roll: rollInverted ? 0 : root.roll
-        minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
-        maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
-        pitchStep: root.pitchStep
-        opacity: enabled ? 1 : 0.33
-        color: operational ? palette.textColor : palette.dangerColor
     }
 
     RollScale {
