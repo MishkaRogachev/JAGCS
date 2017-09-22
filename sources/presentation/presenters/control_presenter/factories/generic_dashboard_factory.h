@@ -21,7 +21,6 @@ namespace presentation
         BaseInstrumentPresenter* m_status;
         BaseInstrumentPresenter* m_compass;
         BaseInstrumentPresenter* m_navigator;
-        BaseInstrumentPresenter* m_commander;
     };
 }
 

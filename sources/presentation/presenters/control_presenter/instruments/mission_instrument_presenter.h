@@ -28,7 +28,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onCommandSetWaypoint(int item);
+        void onSetWaypoint(int item);
 
     private:
         class Impl;

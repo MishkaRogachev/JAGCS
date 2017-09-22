@@ -30,7 +30,7 @@ Repeater {
             case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
             case "navigator": return Qt.createComponent("Displays/NavigationDisplay.qml");
             case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
-            case "aircraftControl": return Qt.createComponent("Displays/AircraftControlDisplay.qml");
+            case "mission": return Qt.createComponent("Displays/MissionDisplay.qml");
             default: return null
             }
         }

@@ -88,7 +88,7 @@ void MissionInstrumentPresenter::onCancelSyncMission()
 
 void MissionInstrumentPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(commandSetWaypoint(int)), this, SLOT(onCommandSetWaypoint(int)));
+    connect(view, SIGNAL(setWaypoint(int)), this, SLOT(onSetWaypoint(int)));
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
 
@@ -96,7 +96,7 @@ void MissionInstrumentPresenter::connectView(QObject* view)
     this->updateCurrentWaypoint();
 }
 
-void MissionInstrumentPresenter::onCommandSetWaypoint(int item)
+void MissionInstrumentPresenter::onSetWaypoint(int item)
 {
     if (d->updating || d->assignment.isNull()) return;
 
