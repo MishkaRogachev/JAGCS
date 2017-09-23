@@ -20,17 +20,37 @@ Map {
     property bool picking: false
     property bool trackingVehicle: false
 
+    property int mapPlugin: settings.value("Map/plugin")
+
     signal picked(var coordinate)
 
     implicitHeight: width
 
-    plugin: Plugin {
+    plugin: {
+        switch (mapPlugin) {
+        case 1:
+            return mapbox;
+        case 0:
+         default:
+            return osmPlugin;
+        }
+    }
+
+    Plugin {
+        id: osmPlugin
         name: "osm"
 
         PluginParameter { name: "osm.useragent"; value: "JAGCS" }
         PluginParameter { name: "osm.mapping.custom.host"; value: "http://a.tile.openstreetmap.org/" }
         PluginParameter { name: "osm.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
         PluginParameter { name: "osm.mapping.highdpi_tiles"; value: settings.boolValue("Map/highdpiTiles", true) }
+    }
+
+    Plugin {
+        id: mapbox
+        name: "mapboxgl"
+
+        PluginParameter { name: "mapboxgl.mapping.cache.size"; value: settings.value("Map/cacheSize", 0) }
     }
 
     activeMapType: supportedMapTypes[settings.value("Map/activeMapType", 0)]

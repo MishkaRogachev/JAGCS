@@ -9,6 +9,7 @@ Controls.Frame {
 
     property bool changed: false
 
+    property alias plugin: pluginBox.currentIndex
     property alias cacheSize: cacheSizeBox.value
     property alias tileHost: tileHostField.text
     property alias activeMapType: mapTypeBox.currentIndex
@@ -29,8 +30,9 @@ Controls.Frame {
         }
 
         Controls.ComboBox {
-            enabled: false
-            model: [ "QtLocation" ] // TODO: map providers
+            id: pluginBox
+            model: [ "OSM", "Map Box" ]
+            onCurrentIndexChanged: changed = true
             Layout.fillWidth: true
         }
 

@@ -14,6 +14,8 @@ MapSettingsPresenter::MapSettingsPresenter(QObject* parent):
 
 void MapSettingsPresenter::updateView()
 {
+    this->setViewProperty(PROPERTY(plugin),
+                          settings::Provider::value(settings::map::plugin));
     this->setViewProperty(PROPERTY(activeMapType),
                           settings::Provider::value(settings::map::activeMapType));
     this->setViewProperty(PROPERTY(tileHost),
@@ -30,6 +32,8 @@ void MapSettingsPresenter::updateView()
 
 void MapSettingsPresenter::save()
 {
+    settings::Provider::setValue(settings::map::plugin,
+                                 this->viewProperty(PROPERTY(plugin)));
     settings::Provider::setValue(settings::map::activeMapType,
                                  this->viewProperty(PROPERTY(activeMapType)));
     settings::Provider::setValue(settings::map::tileHost,
