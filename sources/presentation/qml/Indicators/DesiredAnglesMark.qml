@@ -9,7 +9,7 @@ Item {
     property int effectiveHeight: height
 
     property color markColor: palette.activeMissionColor
-    property int markWidth: 6
+    property int markWidth: height * 0.017 + 2
 
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()

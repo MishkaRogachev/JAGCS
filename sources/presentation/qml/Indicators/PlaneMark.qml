@@ -9,7 +9,7 @@ Item {
     property int effectiveHeight: height
 
     property color markColor
-    property int markWidth: 4
+    property int markWidth: height * 0.017
 
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
