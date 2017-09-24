@@ -56,5 +56,6 @@
         <file>icons/go_around.svg</file>
         <file>icons/takeoff.svg</file>
         <file>icons/joystick.svg</file>
+        <file>icons/compas.svg</file>
     </qresource>
 </RCC>

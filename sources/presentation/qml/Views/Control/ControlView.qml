@@ -82,6 +82,7 @@ Controls.Pane {
         id: corner
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.margins: palette.margins
         width: cornerVisible ? background.width / 3 : 0
         height: cornerVisible ? cornerMap ? map.implicitHeight : video.implicitHeight : 0
     }
@@ -99,19 +100,21 @@ Controls.Pane {
         anchors.fill: cornerMap ? background : corner
     }
 
-    Controls.Button {
-        onClicked: cornerMap = !cornerMap
-        iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
+    MapControl {
+        id: control
         anchors.bottom: parent.bottom
-        anchors.right: cornerVisible ? corner.left : maxMinButton.left
-    }
+        anchors.right: parent.right
+        anchors.margins: palette.margins
 
-    Controls.Button {
-        id: maxMinButton
-        onClicked: cornerVisible = !cornerVisible
-        iconSource: cornerVisible ? "qrc:/icons/minimize.svg" : "qrc:/icons/maximize.svg"
-        anchors.bottom: parent.bottom
-        anchors.right: corner.right
-        z: 2
+        Controls.Button {
+            onClicked: cornerMap = !cornerMap
+            iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
+        }
+
+        Controls.Button {
+            id: maxMinButton
+            onClicked: cornerVisible = !cornerVisible
+            iconSource: cornerVisible ? "qrc:/icons/minimize.svg" : "qrc:/icons/maximize.svg"
+        }
     }
 }

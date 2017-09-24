@@ -28,6 +28,18 @@ Controls.Pane {
         anchors.fill: parent
         anchors.leftMargin: mission.width + palette.margins * 2
         anchors.bottomMargin: profile.height
+
+        MapControl {
+            id: control
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.margins: palette.margins
+
+            Controls.Button {
+                iconSource: profileVisibe ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"
+                onClicked: profileVisibe = !profileVisibe
+            }
+        }
     }
 
     VerticalProfileView {
@@ -38,12 +50,5 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.leftMargin: palette.margins
         height: profileVisibe ? parent.height / 4 : 0
-    }
-
-    Controls.Button {
-        iconSource: profileVisibe ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"
-        onClicked: profileVisibe = !profileVisibe
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
     }
 }
