@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QVariant>
+#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -19,7 +20,7 @@ class MissionItemPresenter::Impl
 public:
     domain::MissionService* service;
 
-    dao::MissionPtr selectedMission;
+    dao::MissionPtr mission;
     dao::MissionItemPtr item;
 
     TranslationHelper helper;
@@ -64,16 +65,16 @@ MissionItemPresenter::~MissionItemPresenter()
 
 dao::MissionPtr MissionItemPresenter::selectedMission() const
 {
-    return d->selectedMission;
+    return d->mission;
 }
 
 void MissionItemPresenter::setMission(const dao::MissionPtr& mission)
 {
-    if (d->selectedMission == mission) return;
+    if (d->mission == mission) return;
 
     emit itemSelected(dao::MissionItemPtr());
 
-    d->selectedMission = mission;
+    d->mission = mission;
     this->updateCount();
 }
 
@@ -91,9 +92,9 @@ void MissionItemPresenter::remove()
 
 void MissionItemPresenter::selectItem(int index)
 {
-    if (d->selectedMission.isNull()) return;
+    if (d->mission.isNull()) return;
 
-    dao::MissionItemPtr item = d->service->missionItem(d->selectedMission->id(), index);
+    dao::MissionItemPtr item = d->service->missionItem(d->mission->id(), index);
     if (d->item == item) return;
 
     d->item = item;
@@ -146,6 +147,27 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
 
+        dao::MissionItemPtr fromItem = d->service->missionItem(d->item->missionId(),
+                                                               d->item->sequence() - 1);
+
+        int distance = 0;
+        float azimuth = 0;
+        if (fromItem)
+        {
+            // TODO: to domain mission stats calculator
+            QGeoCoordinate from(fromItem->latitude(), fromItem->longitude());
+            QGeoCoordinate to(d->item->latitude(), d->item->longitude());
+
+            if (to.isValid() && from.isValid())
+            {
+                distance = from.distanceTo(to);
+                azimuth = from.azimuthTo(to);
+            }
+        }
+
+            this->setViewProperty(PROPERTY(distance), distance);
+            this->setViewProperty(PROPERTY(azimuth), azimuth);
+
         this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
         this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
         this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));
@@ -184,10 +206,10 @@ void MissionItemPresenter::connectView(QObject* view)
 
 void MissionItemPresenter::updateCount()
 {
-    if (d->selectedMission)
+    if (d->mission)
     {
-        this->setViewProperty(PROPERTY(count), d->selectedMission->count());
-        this->selectItem(d->selectedMission->count() - 1);
+        this->setViewProperty(PROPERTY(count), d->mission->count());
+        this->selectItem(d->mission->count() - 1);
     }
     else
     {

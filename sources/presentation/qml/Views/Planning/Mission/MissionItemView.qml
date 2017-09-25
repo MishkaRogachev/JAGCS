@@ -21,6 +21,8 @@ Item {
     property alias isAltitudeRelative: altitudeRelativeBox.checked
     property alias latitude: latitudeBox.realValue
     property alias longitude: longitudeBox.realValue
+    property alias distance: distanceBox.value
+    property alias azimuth: azimuthBox.realValue
     property alias radius: radiusBox.realValue
     property alias repeats: repeatsBox.value
     property alias time: timeBox.realValue
@@ -40,9 +42,11 @@ Item {
                                    positionVisible
 
     property bool positionVisible: command === MissionItem.Home ||
-                                   command === MissionItem.Takeoff ||
-                                   command === MissionItem.Landing ||
-                                   radiusVisible
+                                   azimuthVisible
+    property bool distanceVisible: azimuthVisible
+    property bool azimuthVisible: command === MissionItem.Takeoff ||
+                                  command === MissionItem.Landing ||
+                                  radiusVisible
 
     property bool radiusVisible: command === MissionItem.Waypoint || clockwiseVisible
 
@@ -217,6 +221,34 @@ Item {
         Controls.Label {
             text: qsTr("Longitude")
             visible: positionVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: qsTr("Distance")
+            visible: distanceVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.SpinBox {
+            id: distanceBox
+            visible: distanceVisible
+            editable: false
+            to: 200000 // TODO: constants to config
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: qsTr("Azimuth")
+            visible: azimuthVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.RealSpinBox {
+            id: azimuthBox
+            visible: azimuthVisible
+            editable: false
+            realTo: 360
             Layout.fillWidth: true
         }
 
