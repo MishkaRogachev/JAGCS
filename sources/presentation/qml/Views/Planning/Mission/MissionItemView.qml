@@ -19,6 +19,7 @@ Item {
     property alias altitude: altitudeBox.realValue
     property alias abortAltitude: abortAltitudeBox.realValue
     property alias isAltitudeRelative: altitudeRelativeBox.checked
+    property alias climb: climbBox.realValue
     property alias latitude: latitudeBox.realValue
     property alias longitude: longitudeBox.realValue
     property alias distance: distanceBox.value
@@ -182,6 +183,21 @@ Item {
         }
 
         Controls.Label {
+            text: qsTr("Climb")
+            visible: altitudeVisible
+            Layout.fillWidth: true
+        }
+
+        Controls.RealSpinBox {
+            id: climbBox
+            visible: altitudeVisible
+            enabled: false
+            realFrom: -20000
+            realTo: 20000 // TODO: constants to config
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
             text: qsTr("Latitude")
             visible: positionVisible
             Layout.fillWidth: true
@@ -233,7 +249,7 @@ Item {
         Controls.SpinBox {
             id: distanceBox
             visible: distanceVisible
-            editable: false
+            enabled: false
             to: 200000 // TODO: constants to config
             Layout.fillWidth: true
         }
@@ -247,7 +263,7 @@ Item {
         Controls.RealSpinBox {
             id: azimuthBox
             visible: azimuthVisible
-            editable: false
+            enabled: false
             realTo: 360
             Layout.fillWidth: true
         }

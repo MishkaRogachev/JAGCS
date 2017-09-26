@@ -367,17 +367,30 @@ void MissionService::updateMissionItemsStats(int missionId, int startSeq)
 {
     QMutexLocker locker(&d->mutex);
 
-    if (!d->missionRepository.contains(missionId)) return;
+    dao::MissionPtr mission = this->mission(missionId);
+    if (mission.isNull() || mission->count() < 1) return;
+
+    float homeAltitude = this->missionItem(missionId, 0)->altitude();
+    float lastGlobalAltitude = homeAltitude;
 
     QGeoCoordinate lastPosition;
-
-    for (int seq = startSeq; seq < this->mission(missionId)->count(); ++seq)
+    for (int seq = startSeq; seq < mission->count(); ++seq)
     {
         MissionItemPtr current = this->missionItem(missionId, seq);
         if (!current) continue;
 
         int distance = 0;
         float azimuth = 0;
+        float climb = 0;
+
+        if (current->isAltitudedItem())
+        {
+            float globalAltitude = current->altitude();
+            if (current->isAltitudeRelative()) globalAltitude += homeAltitude;
+
+            climb = globalAltitude - lastGlobalAltitude;
+            lastGlobalAltitude = globalAltitude;
+        }
 
         if (current->isPositionatedItem())
         {
@@ -396,6 +409,7 @@ void MissionService::updateMissionItemsStats(int missionId, int startSeq)
 
         current->setDistance(distance);
         current->setAzimuth(azimuth);
+        current->setClimb(climb);
         emit missionItemChanged(current);
     }
 }

@@ -120,6 +120,16 @@ void MissionItem::setAzimuth(float azimuth)
     m_azimuth = azimuth;
 }
 
+float MissionItem::climb() const
+{
+    return m_climb;
+}
+
+void MissionItem::setClimb(float climb)
+{
+    m_climb = climb;
+}
+
 QString MissionItem::parameters() const
 {
     QStringList list;
@@ -173,6 +183,11 @@ void MissionItem::clearSuperfluousParameters()
 
         m_parameters.remove(parameter);
     }
+}
+
+bool MissionItem::isAltitudedItem() const
+{
+    return this->isPositionatedItem() || m_command == Continue;
 }
 
 bool MissionItem::isPositionatedItem() const

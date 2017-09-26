@@ -143,6 +143,7 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(commandIndex), d->availableCommands.indexOf(d->item->command()));
         this->setViewProperty(PROPERTY(altitude), d->item->altitude());
         this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
+        this->setViewProperty(PROPERTY(climb), d->item->climb());
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
         this->setViewProperty(PROPERTY(distance), d->item->distance());

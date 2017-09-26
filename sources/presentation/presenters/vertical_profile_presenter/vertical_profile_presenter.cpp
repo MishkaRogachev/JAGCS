@@ -46,34 +46,15 @@ void VerticalProfilePresenter::updateMission()
     this->invokeViewMethod(PROPERTY(clearWaypoints));
 
     if (m_mission.isNull() || m_mission->count() < 1) return;
-    const dao::MissionItemPtr& home = m_service->missionItem(m_mission->id(), 0);
 
-    QGeoCoordinate lastCoordinate;
     int distance = 0;
+    int altitude = m_service->missionItem(m_mission->id(), 0)->altitude();
     for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
-        // TODO: has altitude
-        if (item->command() == dao::MissionItem::Home ||
-            item->command() == dao::MissionItem::Waypoint ||
-            item->command() == dao::MissionItem::Takeoff ||
-            item->command() == dao::MissionItem::Landing ||
-            item->command() == dao::MissionItem::LoiterUnlim ||
-            item->command() == dao::MissionItem::LoiterAltitude ||
-            item->command() == dao::MissionItem::LoiterTurns ||
-            item->command() == dao::MissionItem::LoiterTime)
-        {
-            QGeoCoordinate coordinate(item->latitude(), item->longitude());
-            if (lastCoordinate.isValid() && coordinate.isValid())
-            {
-                distance += lastCoordinate.distanceTo(coordinate);
-                // TODO: fix distance for loiters, continue
-            }
-            lastCoordinate = coordinate;
-        }
+        if (item->distance() == 0 && qFuzzyIsNull(item->climb())) continue;
 
-        // TODO: relative altitude to item
-        float altitude = item->altitude();
-        if (item->isAltitudeRelative()) altitude += home->altitude();
+        distance += item->distance();
+        altitude += item->climb();
 
         this->invokeViewMethod(PROPERTY(appendWaypoint), distance, altitude);
     }

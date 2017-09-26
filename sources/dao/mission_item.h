@@ -113,6 +113,7 @@ namespace dao
         void clearParameters();
         void clearSuperfluousParameters();
 
+        bool isAltitudedItem() const;
         bool isPositionatedItem() const;
 
         Status status() const;
@@ -127,6 +128,9 @@ namespace dao
         float azimuth() const;
         void setAzimuth(float azimuth);
 
+        float climb() const;
+        void setClimb(float climb);
+
     private:
         int m_missionId = 0;
         int m_sequence = -1;
@@ -139,8 +143,10 @@ namespace dao
 
         Status m_status = NotActual;
         bool m_reached = false;
+
         int m_distance = 0;
         float m_azimuth = 0;
+        float m_climb = 0;
 
         Q_ENUM(Command)
         Q_ENUM(Parameter)
