@@ -48,8 +48,8 @@ namespace domain
         void unload(const dao::MissionAssignmentPtr& assignment);
 
         void addNewMissionItem(int missionId);
-        void saveMissionItems(int missionId);
         void fixMissionItemOrder(int missionId);
+        void updateMissionItemsStats(int missionId, int startSeq);
 
         void assign(int missionId, int vehicleId);
         void unassign(int missionId);

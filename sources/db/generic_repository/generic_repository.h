@@ -27,7 +27,7 @@ namespace db
 
         QList<int> selectId(const QString& condition = QString());
 
-        QList<int > loadedIds() const;
+        QList<int> loadedIds() const;
         QList< QSharedPointer<T> > loadedEntities() const;
 
     protected:

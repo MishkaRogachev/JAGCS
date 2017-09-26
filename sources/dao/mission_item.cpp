@@ -95,24 +95,29 @@ void MissionItem::setLongitude(double longitude)
     m_longitude = longitude;
 }
 
-MissionItem::Status MissionItem::status() const
-{
-    return m_status;
-}
-
-void MissionItem::setStatus(Status status)
-{
-    m_status = status;
-}
-
-bool MissionItem::isReached() const
-{
-    return m_reached;
-}
-
 void MissionItem::setReached(bool reached)
 {
     m_reached = reached;
+}
+
+int MissionItem::distance() const
+{
+    return m_distance;
+}
+
+void MissionItem::setDistance(int distance)
+{
+    m_distance = distance;
+}
+
+float MissionItem::azimuth() const
+{
+    return m_azimuth;
+}
+
+void MissionItem::setAzimuth(float azimuth)
+{
+    m_azimuth = azimuth;
 }
 
 QString MissionItem::parameters() const
@@ -168,4 +173,31 @@ void MissionItem::clearSuperfluousParameters()
 
         m_parameters.remove(parameter);
     }
+}
+
+bool MissionItem::isPositionatedItem() const
+{
+    return m_command == Home ||
+            m_command == Waypoint ||
+            m_command == Takeoff ||
+            m_command == Landing ||
+            m_command == LoiterUnlim ||
+            m_command == LoiterAltitude ||
+            m_command == LoiterTurns ||
+            m_command == LoiterTime;
+}
+
+MissionItem::Status MissionItem::status() const
+{
+    return m_status;
+}
+
+void MissionItem::setStatus(Status status)
+{
+    m_status = status;
+}
+
+bool MissionItem::isReached() const
+{
+    return m_reached;
 }

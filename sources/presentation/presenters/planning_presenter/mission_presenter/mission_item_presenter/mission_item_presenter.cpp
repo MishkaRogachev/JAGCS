@@ -3,7 +3,6 @@
 // Qt
 #include <QMap>
 #include <QVariant>
-#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -146,28 +145,8 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(isAltitudeRelative), d->item->isAltitudeRelative());
         this->setViewProperty(PROPERTY(latitude), d->item->latitude());
         this->setViewProperty(PROPERTY(longitude), d->item->longitude());
-
-        dao::MissionItemPtr fromItem = d->service->missionItem(d->item->missionId(),
-                                                               d->item->sequence() - 1);
-
-        int distance = 0;
-        float azimuth = 0;
-        if (fromItem)
-        {
-            // TODO: to domain mission stats calculator
-            QGeoCoordinate from(fromItem->latitude(), fromItem->longitude());
-            QGeoCoordinate to(d->item->latitude(), d->item->longitude());
-
-            if (to.isValid() && from.isValid())
-            {
-                distance = from.distanceTo(to);
-                azimuth = from.azimuthTo(to);
-            }
-        }
-
-            this->setViewProperty(PROPERTY(distance), distance);
-            this->setViewProperty(PROPERTY(azimuth), azimuth);
-
+        this->setViewProperty(PROPERTY(distance), d->item->distance());
+        this->setViewProperty(PROPERTY(azimuth), d->item->azimuth());
         this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
         this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
         this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));

@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QMutexLocker>
+#include <QGeoCoordinate>
 
 // Internal
 #include "settings_provider.h"
@@ -61,6 +62,11 @@ MissionService::MissionService(QObject* parent):
     d->loadMissions();
     d->loadMissionItems();
     d->loadMissionAssignments();
+
+    for (int missionId: d->missionRepository.loadedIds())
+    {
+        this->updateMissionItemsStats(missionId, 0);
+    }
 }
 
 MissionService::~MissionService()
@@ -203,6 +209,8 @@ bool MissionService::save(const MissionItemPtr& item)
         emit missionItemChanged(item);  // TODO: check changed flag
     }
 
+    this->updateMissionItemsStats(item->missionId(), item->sequence());
+
     return true;
 }
 
@@ -331,16 +339,6 @@ void MissionService::addNewMissionItem(int missionId)
     this->save(item);
 }
 
-void MissionService::saveMissionItems(int missionId)
-{
-    QMutexLocker locker(&d->mutex);
-
-    for (const MissionItemPtr& item: this->missionItems(missionId))
-    {
-        this->save(item);
-    }
-}
-
 void MissionService::fixMissionItemOrder(int missionId)
 {
     QMutexLocker locker(&d->mutex);
@@ -362,6 +360,43 @@ void MissionService::fixMissionItemOrder(int missionId)
     {
         mission->setCount(counter);
         this->save(mission);
+    }
+}
+
+void MissionService::updateMissionItemsStats(int missionId, int startSeq)
+{
+    QMutexLocker locker(&d->mutex);
+
+    if (!d->missionRepository.contains(missionId)) return;
+
+    QGeoCoordinate lastPosition;
+
+    for (int seq = startSeq; seq < this->mission(missionId)->count(); ++seq)
+    {
+        MissionItemPtr current = this->missionItem(missionId, seq);
+        if (!current) continue;
+
+        int distance = 0;
+        float azimuth = 0;
+
+        if (current->isPositionatedItem())
+        {
+            QGeoCoordinate position(current->latitude(), current->longitude());
+
+            if (position.isValid())
+            {
+                if (lastPosition.isValid())
+                {
+                    distance = lastPosition.distanceTo(position);
+                    azimuth = lastPosition.azimuthTo(position);
+                }
+                lastPosition = position;
+            }
+        }
+
+        current->setDistance(distance);
+        current->setAzimuth(azimuth);
+        emit missionItemChanged(current);
     }
 }
 

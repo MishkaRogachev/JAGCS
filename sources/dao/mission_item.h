@@ -21,6 +21,7 @@ namespace dao
         Q_PROPERTY(bool altitudeRelative READ isAltitudeRelative WRITE setAltitudeRelative)
         Q_PROPERTY(double latitude READ latitude WRITE setLatitude)
         Q_PROPERTY(double longitude READ longitude WRITE setLongitude)
+        // TODO: replace parameters with command arguments
         Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
 
     public:
@@ -105,18 +106,26 @@ namespace dao
         double longitude() const;
         void setLongitude(double longitude);
 
-        Status status() const;
-        void setStatus(Status status);
-
-        bool isReached() const;
-        void setReached(bool reached);
-
         QString parameters() const;
         void setParameters(const QString& parameters);
         QVariant parameter(Parameter key, const QVariant& parameter = QVariant());
         void setParameter(Parameter key, const QVariant& parameter);
         void clearParameters();
         void clearSuperfluousParameters();
+
+        bool isPositionatedItem() const;
+
+        Status status() const;
+        void setStatus(Status status);
+
+        bool isReached() const;
+        void setReached(bool reached);
+
+        int distance() const;
+        void setDistance(int distance);
+
+        float azimuth() const;
+        void setAzimuth(float azimuth);
 
     private:
         int m_missionId = 0;
@@ -130,6 +139,8 @@ namespace dao
 
         Status m_status = NotActual;
         bool m_reached = false;
+        int m_distance = 0;
+        float m_azimuth = 0;
 
         Q_ENUM(Command)
         Q_ENUM(Parameter)
