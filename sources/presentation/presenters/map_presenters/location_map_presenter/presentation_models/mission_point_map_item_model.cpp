@@ -50,21 +50,17 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
     case ItemCoordinateRole:
     {
-        QGeoCoordinate coordinate(item->latitude(), item->longitude());
-        if (coordinate.isValid()) return QVariant::fromValue(coordinate);
+        if (item->isPositionatedItem())
+        {
+            QGeoCoordinate coordinate(item->latitude(), item->longitude());
+            if (coordinate.isValid()) return QVariant::fromValue(coordinate);
+        }
         return QVariant::fromValue(QGeoCoordinate());
     }
     case ItemVisibleRole:
     {
-        return settings::Provider::value(settings::mission::visibility + "/" + mission->id()).toBool() &&
-                (item->command() == dao::MissionItem::Home ||
-                 item->command() == dao::MissionItem::Waypoint ||
-                 item->command() == dao::MissionItem::Takeoff ||
-                 item->command() == dao::MissionItem::Landing ||
-                 item->command() == dao::MissionItem::LoiterUnlim ||
-                 item->command() == dao::MissionItem::LoiterAltitude ||
-                 item->command() == dao::MissionItem::LoiterTurns ||
-                 item->command() == dao::MissionItem::LoiterTime);
+        return settings::Provider::value(settings::mission::visibility + "/" + mission->id()).toBool()
+                && (item->isPositionatedItem());
     }
     case ItemSequenceRole:
         return QVariant::fromValue(item->sequence());

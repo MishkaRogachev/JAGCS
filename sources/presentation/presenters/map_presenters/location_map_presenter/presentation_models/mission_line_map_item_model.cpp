@@ -71,14 +71,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
 
         for (const dao::MissionItemPtr& item: m_service->missionItems(mission->id()))
         {
-            if (item->command() == dao::MissionItem::Home ||
-                item->command() == dao::MissionItem::Waypoint ||
-                item->command() == dao::MissionItem::Takeoff ||
-                item->command() == dao::MissionItem::Landing ||
-                item->command() == dao::MissionItem::LoiterUnlim ||
-                item->command() == dao::MissionItem::LoiterAltitude ||
-                item->command() == dao::MissionItem::LoiterTurns ||
-                item->command() == dao::MissionItem::LoiterTime) // FIXME: bool hasCoordinate
+            if (item->isPositionatedItem())
             {
                 QGeoCoordinate coordinate(item->latitude(), item->longitude());
                 if (coordinate.isValid())
