@@ -57,12 +57,12 @@ void MissionItem::setCommand(Command command)
 
 float MissionItem::altitude() const
 {
-    return m_altitude;
+    return m_coordinate.altitude();
 }
 
 void MissionItem::setAltitude(float altitude)
 {
-    m_altitude = altitude;
+    m_coordinate.setAltitude(altitude);
 }
 
 bool MissionItem::useAltitudeRelative() const
@@ -77,27 +77,32 @@ void MissionItem::setAltitudeRelative(bool altitudeRelative)
 
 double MissionItem::latitude() const
 {
-    return m_latitude;
+    return m_coordinate.latitude();
 }
 
 void MissionItem::setLatitude(double latitude)
 {
-    m_latitude = latitude;
+    m_coordinate.setLatitude(latitude);
 }
 
 double MissionItem::longitude() const
 {
-    return m_longitude;
+    return m_coordinate.longitude();
 }
 
 void MissionItem::setLongitude(double longitude)
 {
-    m_longitude = longitude;
+    m_coordinate.setLongitude(longitude);
 }
 
 void MissionItem::setReached(bool reached)
 {
     m_reached = reached;
+}
+
+QGeoCoordinate MissionItem::coordinate() const
+{
+    return m_coordinate;
 }
 
 QString MissionItem::parameters() const

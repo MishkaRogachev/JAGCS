@@ -1,7 +1,6 @@
 #include "vertical_profile_presenter.h"
 
 // Qt
-#include <QGeoCoordinate>
 #include <QVariant>
 #include <QDebug>
 
@@ -56,13 +55,11 @@ void VerticalProfilePresenter::updateMission()
 
         if (item->isPositionatedItem())
         {
-            QGeoCoordinate position(item->latitude(), item->longitude()); // TODO: item->toCoordinate();
-
-            if (position.isValid() && lastPosition.isValid())
+            if (item->coordinate().isValid() && lastPosition.isValid())
             {
-                distance += lastPosition.distanceTo(position);
+                distance += lastPosition.distanceTo(item->coordinate());
             }
-            lastPosition = position;
+            lastPosition = item->coordinate();
         }
         this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
     }

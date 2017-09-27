@@ -1,7 +1,6 @@
 #include "mission_point_map_item_model.h"
 
 // Qt
-#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -52,8 +51,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
         if (item->isPositionatedItem())
         {
-            QGeoCoordinate coordinate(item->latitude(), item->longitude(), item->altitude());
-            if (coordinate.isValid()) return QVariant::fromValue(coordinate);
+            if (item->coordinate().isValid()) return QVariant::fromValue(item->coordinate());
         }
         return QVariant::fromValue(QGeoCoordinate());
     }

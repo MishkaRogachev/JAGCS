@@ -3,7 +3,6 @@
 // Qt
 #include <QMap>
 #include <QVariant>
-#include <QGeoCoordinate>
 #include <QDebug>
 
 // Internal
@@ -163,10 +162,10 @@ void MissionItemPresenter::updateView()
                 previousAltitude = previous->altitude();
                 updateAltitude = false;
             }
+
             if (previous->isPositionatedItem())
             {
-                previousPosition = QGeoCoordinate(previous->latitude(), previous->longitude(),
-                                                  previous->altitude());
+                previousPosition = previous->coordinate();
                 updatePosition = false;
             }
             if (!updateAltitude && !updatePosition) break;

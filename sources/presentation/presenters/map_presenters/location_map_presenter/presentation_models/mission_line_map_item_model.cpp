@@ -73,10 +73,9 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         {
             if (item->isPositionatedItem())
             {
-                QGeoCoordinate coordinate(item->latitude(), item->longitude(), item->altitude());
-                if (coordinate.isValid())
+                if (item->coordinate().isValid())
                 {
-                    line.append(QVariant::fromValue(coordinate));
+                    line.append(QVariant::fromValue(item->coordinate()));
                 }
             }
             else if (item->command() == dao::MissionItem::Return && !line.isEmpty())

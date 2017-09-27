@@ -2,8 +2,8 @@
 
 // Qt
 #include <QMap>
-#include <QUrl>
 #include <QGeoCoordinate>
+#include <QUrl>
 #include <QDebug>
 
 // Internal

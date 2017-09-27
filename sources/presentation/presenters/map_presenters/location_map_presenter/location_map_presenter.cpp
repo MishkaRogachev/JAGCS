@@ -2,7 +2,6 @@
 
 // Qt
 #include <QVariant>
-#include <QGeoCoordinate>
 
 // Internal
 #include "service_registry.h"

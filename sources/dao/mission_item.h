@@ -6,6 +6,7 @@
 
 // Qt
 #include <QVariant>
+#include <QGeoCoordinate>
 #include <QMap>
 
 namespace dao
@@ -122,14 +123,14 @@ namespace dao
         bool isReached() const;
         void setReached(bool reached);
 
+        QGeoCoordinate coordinate() const;
+
     private:
         int m_missionId = 0;
         int m_sequence = -1;
         Command m_command = UnknownCommand;
-        float m_altitude = qQNaN();
+        QGeoCoordinate m_coordinate;
         bool m_altitudeRelative = false;
-        double m_latitude = qQNaN();
-        double m_longitude = qQNaN();
         QMap<Parameter, QVariant> m_parameters;
 
         Status m_status = NotActual;
