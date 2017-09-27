@@ -73,7 +73,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
         {
             if (item->isPositionatedItem())
             {
-                QGeoCoordinate coordinate(item->latitude(), item->longitude());
+                QGeoCoordinate coordinate(item->latitude(), item->longitude(), item->altitude());
                 if (coordinate.isValid())
                 {
                     line.append(QVariant::fromValue(coordinate));

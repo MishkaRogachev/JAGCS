@@ -42,7 +42,14 @@ public:
 
     void loadMissionItems(const QString& condition = QString())
     {
-        for (int id: itemRepository.selectId(condition)) itemRepository.read(id);
+        for (int id: itemRepository.selectId(condition))
+        {
+            dao::MissionItemPtr item = itemRepository.read(id);
+
+            if (item->sequence() != 0 || item->missionId() == 0) continue;
+
+            missionRepository.read(item->missionId())->setHomeAltitude(item->altitude());
+        }
     }
 
     void loadMissionAssignments(const QString& condition = QString())
@@ -62,11 +69,6 @@ MissionService::MissionService(QObject* parent):
     d->loadMissions();
     d->loadMissionItems();
     d->loadMissionAssignments();
-
-    for (int missionId: d->missionRepository.loadedIds())
-    {
-        this->updateMissionItemsStats(missionId, 0);
-    }
 }
 
 MissionService::~MissionService()
@@ -209,7 +211,10 @@ bool MissionService::save(const MissionItemPtr& item)
         emit missionItemChanged(item);  // TODO: check changed flag
     }
 
-    this->updateMissionItemsStats(item->missionId(), item->sequence());
+    if (item->sequence() == 0 && item->missionId() != 0)
+    {
+        this->mission(item->missionId())->setHomeAltitude(item->altitude());
+    }
 
     return true;
 }
@@ -309,22 +314,27 @@ void MissionService::addNewMissionItem(int missionId)
     if (mission.isNull()) return;
 
     MissionItemPtr item = MissionItemPtr::create();
+    MissionItemPtr lastItem = this->missionItem(missionId, mission->count() - 1);
     item->setMissionId(missionId);
 
     if (mission->count() > 1) // TODO: default parms to settings
     {
         item->setCommand(MissionItem::Waypoint);
 
-        MissionItemPtr lastItem = this->missionItem(missionId, mission->count() - 1);
-
-        item->setAltitudeRelative(lastItem->isAltitudeRelative());
-        item->setAltitude(lastItem->altitude());
+        if (lastItem)
+        {
+            item->setAltitudeRelative(lastItem->useAltitudeRelative());
+            item->setAltitude(lastItem->altitude());
+        }
     }
     else if (mission->count() == 1)
     {
         item->setCommand(MissionItem::Takeoff);
-        item->setAltitude(30);
-        item->setAltitudeRelative(true);
+        if (lastItem)
+        {
+            item->setAltitude(lastItem->altitude() + 50); // TODO: default parms to settings
+            item->setAltitudeRelative(true);
+        }
         item->setParameter(MissionItem::Pitch, 15);
     }
     else
@@ -360,57 +370,6 @@ void MissionService::fixMissionItemOrder(int missionId)
     {
         mission->setCount(counter);
         this->save(mission);
-    }
-}
-
-void MissionService::updateMissionItemsStats(int missionId, int startSeq)
-{
-    QMutexLocker locker(&d->mutex);
-
-    dao::MissionPtr mission = this->mission(missionId);
-    if (mission.isNull() || mission->count() < 1) return;
-
-    float homeAltitude = this->missionItem(missionId, 0)->altitude();
-    float lastGlobalAltitude = homeAltitude;
-
-    QGeoCoordinate lastPosition;
-    for (int seq = startSeq; seq < mission->count(); ++seq)
-    {
-        MissionItemPtr current = this->missionItem(missionId, seq);
-        if (!current) continue;
-
-        int distance = 0;
-        float azimuth = 0;
-        float climb = 0;
-
-        if (current->isAltitudedItem())
-        {
-            float globalAltitude = current->altitude();
-            if (current->isAltitudeRelative()) globalAltitude += homeAltitude;
-
-            climb = globalAltitude - lastGlobalAltitude;
-            lastGlobalAltitude = globalAltitude;
-        }
-
-        if (current->isPositionatedItem())
-        {
-            QGeoCoordinate position(current->latitude(), current->longitude());
-
-            if (position.isValid())
-            {
-                if (lastPosition.isValid())
-                {
-                    distance = lastPosition.distanceTo(position);
-                    azimuth = lastPosition.azimuthTo(position);
-                }
-                lastPosition = position;
-            }
-        }
-
-        current->setDistance(distance);
-        current->setAzimuth(azimuth);
-        current->setClimb(climb);
-        emit missionItemChanged(current);
     }
 }
 

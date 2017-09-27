@@ -243,6 +243,8 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
     dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
+    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+
     mavlink_message_t message;
     mavlink_mission_item_t msgItem;
 
@@ -259,15 +261,25 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
     if (seq) msgItem.command = ::mavCommandMap.key(item->command(), 0);
     else msgItem.command = MAV_CMD_NAV_WAYPOINT; // Home is waypoint
 
-    if (!qIsNaN(item->altitude()))
+    if (item->isAltitudedItem())
     {
-        msgItem.frame = item->isAltitudeRelative() ? MAV_FRAME_GLOBAL_RELATIVE_ALT : MAV_FRAME_GLOBAL;
-        msgItem.z = item->altitude();
+        if (item->useAltitudeRelative())
+        {
+             msgItem.frame = MAV_FRAME_GLOBAL_RELATIVE_ALT;
+             msgItem.z = item->altitude() - mission->homeAltitude();
+        }
+        else
+        {
+             msgItem.frame = MAV_FRAME_GLOBAL;
+             msgItem.z = item->altitude();
+        }
     }
 
-    if (!qIsNaN(item->latitude())) msgItem.x = item->latitude();
-
-    if (!qIsNaN(item->longitude())) msgItem.y = item->longitude();
+    if (item->isPositionatedItem())
+    {
+        msgItem.x = item->latitude();
+        msgItem.y = item->longitude();
+    }
 
     if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
@@ -275,7 +287,10 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
     }
     else if (msgItem.command == MAV_CMD_NAV_LAND)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::AbortAltitude).toFloat();
+        msgItem.param1 = item->useAltitudeRelative() ?
+                             item->parameter(dao::MissionItem::AbortAltitude).toFloat() -
+                             mission->homeAltitude() :
+                             item->parameter(dao::MissionItem::AbortAltitude).toFloat();
         msgItem.param4 = item->parameter(dao::MissionItem::Yaw).toFloat();
     }
     else if (msgItem.command == MAV_CMD_NAV_WAYPOINT)
@@ -410,6 +425,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
+    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+
     mavlink_mission_item_t msgItem;
     mavlink_msg_mission_item_decode(&message, &msgItem);
 
@@ -429,25 +446,23 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
                          ::mavCommandMap.value(msgItem.command, dao::MissionItem::UnknownCommand) :
                          dao::MissionItem::Home);
 
-    switch (msgItem.frame)
+    if (item->isAltitudedItem())
     {
-    case MAV_FRAME_GLOBAL_RELATIVE_ALT:
-        item->setAltitudeRelative(true);
-        break;
-    case MAV_FRAME_GLOBAL:
-    default:
-        item->setAltitudeRelative(false);
-        break;
+        switch (msgItem.frame)
+        {
+        case MAV_FRAME_GLOBAL_RELATIVE_ALT:
+            item->setAltitudeRelative(true);
+            item->setAltitude(msgItem.z + mission->homeAltitude());
+            break;
+        case MAV_FRAME_GLOBAL:
+        default:
+            item->setAltitudeRelative(false);
+            item->setAltitude(msgItem.z);
+            break;
+        }
     }
 
-    item->setAltitude(msgItem.z);
-
-    if (qFuzzyIsNull(msgItem.x) && qFuzzyIsNull(msgItem.y))
-    {
-        item->setLatitude(qQNaN());
-        item->setLongitude(qQNaN());
-    }
-    else
+    if (item->isPositionatedItem())
     {
         item->setLatitude(msgItem.x);
         item->setLongitude(msgItem.y);
@@ -459,7 +474,9 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     }
     else if (msgItem.command == MAV_CMD_NAV_LAND)
     {
-        item->setParameter(dao::MissionItem::AbortAltitude, msgItem.param1);
+        item->setParameter(dao::MissionItem::AbortAltitude,
+                           item->useAltitudeRelative() ? msgItem.param1 + mission->homeAltitude():
+                                                         msgItem.param1);
         item->setParameter(dao::MissionItem::Yaw, msgItem.param4);
     }
     else if (msgItem.command == MAV_CMD_NAV_WAYPOINT)

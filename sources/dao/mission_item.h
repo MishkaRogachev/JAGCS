@@ -18,7 +18,7 @@ namespace dao
         Q_PROPERTY(int sequence READ sequence WRITE setSequence)
         Q_PROPERTY(Command command READ command WRITE setCommand)
         Q_PROPERTY(float altitude READ altitude WRITE setAltitude)
-        Q_PROPERTY(bool altitudeRelative READ isAltitudeRelative WRITE setAltitudeRelative)
+        Q_PROPERTY(bool altitudeRelative READ useAltitudeRelative WRITE setAltitudeRelative)
         Q_PROPERTY(double latitude READ latitude WRITE setLatitude)
         Q_PROPERTY(double longitude READ longitude WRITE setLongitude)
         // TODO: replace parameters with command arguments
@@ -97,7 +97,7 @@ namespace dao
         float altitude() const;
         void setAltitude(float altitude);
 
-        bool isAltitudeRelative() const;
+        bool useAltitudeRelative() const;
         void setAltitudeRelative(bool altitudeRelative);
 
         double latitude() const;
@@ -122,15 +122,6 @@ namespace dao
         bool isReached() const;
         void setReached(bool reached);
 
-        int distance() const;
-        void setDistance(int distance);
-
-        float azimuth() const;
-        void setAzimuth(float azimuth);
-
-        float climb() const;
-        void setClimb(float climb);
-
     private:
         int m_missionId = 0;
         int m_sequence = -1;
@@ -143,10 +134,6 @@ namespace dao
 
         Status m_status = NotActual;
         bool m_reached = false;
-
-        int m_distance = 0;
-        float m_azimuth = 0;
-        float m_climb = 0;
 
         Q_ENUM(Command)
         Q_ENUM(Parameter)

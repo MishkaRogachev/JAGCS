@@ -49,7 +49,6 @@ namespace domain
 
         void addNewMissionItem(int missionId);
         void fixMissionItemOrder(int missionId);
-        void updateMissionItemsStats(int missionId, int startSeq);
 
         void assign(int missionId, int vehicleId);
         void unassign(int missionId);

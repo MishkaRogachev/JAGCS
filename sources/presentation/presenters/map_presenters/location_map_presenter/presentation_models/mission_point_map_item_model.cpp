@@ -52,7 +52,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     {
         if (item->isPositionatedItem())
         {
-            QGeoCoordinate coordinate(item->latitude(), item->longitude());
+            QGeoCoordinate coordinate(item->latitude(), item->longitude(), item->altitude());
             if (coordinate.isValid()) return QVariant::fromValue(coordinate);
         }
         return QVariant::fromValue(QGeoCoordinate());

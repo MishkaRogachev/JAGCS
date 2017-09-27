@@ -25,3 +25,13 @@ void Mission::setCount(int count)
     m_count = count;
 }
 
+float Mission::homeAltitude() const
+{
+    return m_homeAltitude;
+}
+
+void Mission::setHomeAltitude(float homeAltitude)
+{
+    m_homeAltitude = homeAltitude;
+}
+

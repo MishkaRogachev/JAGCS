@@ -65,7 +65,7 @@ void MissionItem::setAltitude(float altitude)
     m_altitude = altitude;
 }
 
-bool MissionItem::isAltitudeRelative() const
+bool MissionItem::useAltitudeRelative() const
 {
     return m_altitudeRelative;
 }
@@ -98,36 +98,6 @@ void MissionItem::setLongitude(double longitude)
 void MissionItem::setReached(bool reached)
 {
     m_reached = reached;
-}
-
-int MissionItem::distance() const
-{
-    return m_distance;
-}
-
-void MissionItem::setDistance(int distance)
-{
-    m_distance = distance;
-}
-
-float MissionItem::azimuth() const
-{
-    return m_azimuth;
-}
-
-void MissionItem::setAzimuth(float azimuth)
-{
-    m_azimuth = azimuth;
-}
-
-float MissionItem::climb() const
-{
-    return m_climb;
-}
-
-void MissionItem::setClimb(float climb)
-{
-    m_climb = climb;
 }
 
 QString MissionItem::parameters() const

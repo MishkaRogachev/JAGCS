@@ -47,16 +47,24 @@ void VerticalProfilePresenter::updateMission()
 
     if (m_mission.isNull() || m_mission->count() < 1) return;
 
+    QGeoCoordinate lastPosition;
     int distance = 0;
-    int altitude = m_service->missionItem(m_mission->id(), 0)->altitude();
+
     for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
-        if (item->distance() == 0 && qFuzzyIsNull(item->climb())) continue;
+        if (!item->isAltitudedItem()) continue;
 
-        distance += item->distance();
-        altitude += item->climb();
+        if (item->isPositionatedItem())
+        {
+            QGeoCoordinate position(item->latitude(), item->longitude()); // TODO: item->toCoordinate();
 
-        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, altitude);
+            if (position.isValid() && lastPosition.isValid())
+            {
+                distance += lastPosition.distanceTo(position);
+            }
+            lastPosition = position;
+        }
+        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
     }
 }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
@@ -16,14 +17,16 @@ Item {
     property alias commandIndex: commandBox.currentIndex
     property alias commands: commandBox.model
 
-    property alias altitude: altitudeBox.realValue
-    property alias abortAltitude: abortAltitudeBox.realValue
-    property alias isAltitudeRelative: altitudeRelativeBox.checked
-    property alias climb: climbBox.realValue
+    property int previousAltitude: 0
+    property int homeAltitude: 0
+    property int altitude: 0
+    property int abortAltitude: 0
+    property alias useAltitudeRelative: altitudeRelativeBox.checked
+
+    property var previousPosition: QtPositioning.coordinate()
     property alias latitude: latitudeBox.realValue
     property alias longitude: longitudeBox.realValue
-    property alias distance: distanceBox.value
-    property alias azimuth: azimuthBox.realValue
+
     property alias radius: radiusBox.realValue
     property alias repeats: repeatsBox.value
     property alias time: timeBox.realValue
@@ -73,6 +76,35 @@ Item {
 
         map.dropPicker()
         pickButton.picking = false;
+    }
+
+    onAltitudeChanged: {
+        updateAltitude();
+        updateClimb();
+    }
+    onPreviousAltitudeChanged: updateClimb()
+    onAbortAltitudeChanged: updateAbortAltitude()
+    onUseAltitudeRelativeChanged: {
+        updateAltitude();
+        updateAbortAltitude();
+    }
+    onHomeAltitudeChanged: {
+        if (!useAltitudeRelative) return;
+
+        updateAltitude();
+        updateAbortAltitude();
+    }
+
+    function updateAltitude() {
+        altitudeBox.realValue = useAltitudeRelative ? altitude - homeAltitude : altitude;
+    }
+
+    function updateClimb() {
+        climbBox.realValue = altitude - previousAltitude;
+    }
+
+    function updateAbortAltitude() {
+        abortAltitudeBox.realValue = useAltitudeRelative ? abortAltitude - homeAltitude : abortAltitude;
     }
 
     GridLayout {
@@ -153,7 +185,10 @@ Item {
                 enabled: editEnabled
                 realFrom: -500 // 418 m Dead Sea shore
                 realTo: 20000 // TODO: constants to config
-                onRealValueChanged: changed = true
+                onRealValueChanged: {
+                    altitude = useAltitudeRelative ? realValue + homeAltitude : realValue;
+                    changed = true;
+                }
                 Layout.fillWidth: true
             }
 
@@ -171,7 +206,10 @@ Item {
                 enabled: editEnabled
                 realFrom: -500 // 418 m Daed Sea shore
                 realTo: 20000 // TODO: constants to config
-                onRealValueChanged: changed = true
+                onRealValueChanged: {
+                    abortAltitude = useAltitudeRelative ? realValue + homeAltitude : realValue;
+                    changed = true;
+                }
                 Layout.fillWidth: true
             }
         }
@@ -191,9 +229,9 @@ Item {
         Controls.RealSpinBox {
             id: climbBox
             visible: altitudeVisible
-            enabled: false
             realFrom: -20000
             realTo: 20000 // TODO: constants to config
+            onRealValueChanged: altitude = previousAltitude + realValue
             Layout.fillWidth: true
         }
 
