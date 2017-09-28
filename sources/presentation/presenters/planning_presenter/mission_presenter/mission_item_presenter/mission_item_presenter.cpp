@@ -114,10 +114,8 @@ void MissionItemPresenter::save()
     {
         d->item->setCommand(d->availableCommands.at(commandIndex));
     }
-    d->item->setAltitude(this->viewProperty(PROPERTY(altitude)).toFloat());
     d->item->setAltitudeRelative(this->viewProperty(PROPERTY(useAltitudeRelative)).toBool());
-    d->item->setLatitude(this->viewProperty(PROPERTY(latitude)).toDouble());
-    d->item->setLongitude(this->viewProperty(PROPERTY(longitude)).toDouble());
+    d->item->setCoordinate(this->viewProperty(PROPERTY(position)).value<QGeoCoordinate>());
 
     d->item->setParameter(dao::MissionItem::AbortAltitude, this->viewProperty(PROPERTY(abortAltitude)));
     d->item->setParameter(dao::MissionItem::Radius, this->viewProperty(PROPERTY(radius)));
@@ -177,10 +175,8 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(sequence), d->item->sequence());
         this->setViewProperty(PROPERTY(command), d->item->command());
         this->setViewProperty(PROPERTY(commandIndex), d->availableCommands.indexOf(d->item->command()));
-        this->setViewProperty(PROPERTY(altitude), d->item->altitude());
         this->setViewProperty(PROPERTY(useAltitudeRelative), d->item->useAltitudeRelative());
-        this->setViewProperty(PROPERTY(latitude), d->item->latitude());
-        this->setViewProperty(PROPERTY(longitude), d->item->longitude());
+        this->setViewProperty(PROPERTY(position), QVariant::fromValue(d->item->coordinate()));
         this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
         this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
         this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));

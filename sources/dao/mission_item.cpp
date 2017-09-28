@@ -105,6 +105,11 @@ QGeoCoordinate MissionItem::coordinate() const
     return m_coordinate;
 }
 
+void MissionItem::setCoordinate(const QGeoCoordinate& coordinate)
+{
+    m_coordinate = coordinate;
+}
+
 QString MissionItem::parameters() const
 {
     QStringList list;

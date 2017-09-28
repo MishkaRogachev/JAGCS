@@ -19,13 +19,11 @@ Item {
 
     property int previousAltitude: 0
     property int homeAltitude: 0
-    property int altitude: 0
     property int abortAltitude: 0
     property alias useAltitudeRelative: altitudeRelativeBox.checked
 
     property var previousPosition: QtPositioning.coordinate()
-    property alias latitude: latitudeBox.realValue
-    property alias longitude: longitudeBox.realValue
+    property var position: QtPositioning.coordinate();
 
     property alias radius: radiusBox.realValue
     property alias repeats: repeatsBox.value
@@ -78,9 +76,12 @@ Item {
         pickButton.picking = false;
     }
 
-    onAltitudeChanged: {
+    onPreviousPositionChanged: updateDistAndAzimuth()
+    onPositionChanged: {
         updateAltitude();
         updateClimb();
+        updateLatLon();
+        updateDistAndAzimuth();
     }
     onPreviousAltitudeChanged: updateClimb()
     onAbortAltitudeChanged: updateAbortAltitude()
@@ -95,16 +96,43 @@ Item {
         updateAbortAltitude();
     }
 
+    property bool lock: false
     function updateAltitude() {
-        altitudeBox.realValue = useAltitudeRelative ? altitude - homeAltitude : altitude;
+        if (lock) return;
+
+        lock = true;
+        altitudeBox.realValue = useAltitudeRelative ? position.altitude - homeAltitude : position.altitude;
+        lock = false;
     }
 
     function updateClimb() {
-        climbBox.realValue = altitude - previousAltitude;
+        climbBox.realValue = position.altitude - previousAltitude;
     }
 
     function updateAbortAltitude() {
         abortAltitudeBox.realValue = useAltitudeRelative ? abortAltitude - homeAltitude : abortAltitude;
+    }
+
+    function updateLatLon() {
+        latitudeBox.realValue = position.latitude;
+        longitudeBox.realValue = position.longitude;
+    }
+
+    function updateDistAndAzimuth() {
+        if (!previousPosition.isValid || !position.isValid) return;
+
+        distanceBox.value = previousPosition.distanceTo(position);
+        azimuthBox.realValue = previousPosition.azimuthTo(position);
+
+//        console.log("position", position);
+//        console.log("previousPosition", previousPosition);
+//        console.log("azimuthTo", previousPosition.azimuthTo(position));
+    }
+
+    function updateFromDistAndAzimuth() {
+        //console.log("updateFromDistAndAzimuth", distanceBox.value, azimuthBox.realValue)
+        //position = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
+        //updateDistAndAzimuth();
     }
 
     GridLayout {
@@ -183,10 +211,11 @@ Item {
             Controls.RealSpinBox {
                 id: altitudeBox
                 enabled: editEnabled
-                realFrom: -500 // 418 m Dead Sea shore
+                realFrom: -20000 // 418 m Dead Sea shore
                 realTo: 20000 // TODO: constants to config
                 onRealValueChanged: {
-                    altitude = useAltitudeRelative ? realValue + homeAltitude : realValue;
+                    position.altitude = useAltitudeRelative ? realValue + homeAltitude : realValue;
+                    updateClimb();
                     changed = true;
                 }
                 Layout.fillWidth: true
@@ -231,7 +260,10 @@ Item {
             visible: altitudeVisible
             realFrom: -20000
             realTo: 20000 // TODO: constants to config
-            onRealValueChanged: altitude = previousAltitude + realValue
+            onRealValueChanged: {
+                position.altitude = previousAltitude + realValue;
+                updateAltitude();
+            }
             Layout.fillWidth: true
         }
 
@@ -249,7 +281,11 @@ Item {
             Controls.CoordSpinBox {
                 id: latitudeBox
                 enabled: editEnabled
-                onRealValueChanged: changed = true
+                onRealValueChanged: {
+                    position.latitude = realValue;
+                    updateDistAndAzimuth();
+                    changed = true;
+                }
                 Layout.fillWidth: true
             }
 
@@ -267,7 +303,11 @@ Item {
                 id: longitudeBox
                 enabled: editEnabled
                 isLongitude: true
-                onRealValueChanged: changed = true
+                onRealValueChanged: {
+                    position.longitude = realValue;
+                    updateDistAndAzimuth();
+                    changed = true;
+                }
                 Layout.fillWidth: true
             }
         }
@@ -287,7 +327,7 @@ Item {
         Controls.SpinBox {
             id: distanceBox
             visible: distanceVisible
-            enabled: false
+            onValueChanged: updateFromDistAndAzimuth()
             to: 200000 // TODO: constants to config
             Layout.fillWidth: true
         }
@@ -302,6 +342,7 @@ Item {
             id: azimuthBox
             visible: azimuthVisible
             enabled: false
+            //onRealValueChanged: updateFromDistAndAzimuth()
             realTo: 360
             Layout.fillWidth: true
         }

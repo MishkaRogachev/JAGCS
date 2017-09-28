@@ -124,6 +124,7 @@ namespace dao
         void setReached(bool reached);
 
         QGeoCoordinate coordinate() const;
+        void setCoordinate(const QGeoCoordinate& coordinate);
 
     private:
         int m_missionId = 0;
