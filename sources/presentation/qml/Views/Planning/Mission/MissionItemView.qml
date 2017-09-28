@@ -131,7 +131,10 @@ Item {
     function updateFromDistAndAzimuth() {
         if (lockDistAndAzimuth) return;
 
-        position = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
+        var newPosition = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
+        position.latitude = newPosition.latitude;
+        position.longitude = newPosition.longitude;
+        updateLatLon();
     }
 
     GridLayout {
