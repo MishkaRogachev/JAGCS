@@ -58,7 +58,8 @@ MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObj
     connect(service, &domain::MissionService::missionItemChanged,
             this, [this](dao::MissionItemPtr item) {
         if (item == d->item) this->updateView();
-        if (item->sequence() == 0 && item->missionId() == d->mission->id()) this->updateHomeAltitude();
+        if (item->sequence() == 0 && d->mission && item->missionId() ==
+            d->mission->id()) this->updateHomeAltitude();
     });
 }
 
