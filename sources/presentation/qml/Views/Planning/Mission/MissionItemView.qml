@@ -96,13 +96,13 @@ Item {
         updateAbortAltitude();
     }
 
-    property bool lock: false
+    property bool lockAltitude: false
     function updateAltitude() {
-        if (lock) return;
+        if (lockAltitude) return;
 
-        lock = true;
+        lockAltitude = true;
         altitudeBox.realValue = useAltitudeRelative ? position.altitude - homeAltitude : position.altitude;
-        lock = false;
+        lockAltitude = false;
     }
 
     function updateClimb() {
@@ -118,21 +118,20 @@ Item {
         longitudeBox.realValue = position.longitude;
     }
 
+    property bool lockDistAndAzimuth: false
     function updateDistAndAzimuth() {
-        if (!previousPosition.isValid || !position.isValid) return;
+        if (!previousPosition.isValid || !position.isValid || lockDistAndAzimuth) return;
 
+        lockDistAndAzimuth = true;
         distanceBox.value = previousPosition.distanceTo(position);
         azimuthBox.realValue = previousPosition.azimuthTo(position);
-
-//        console.log("position", position);
-//        console.log("previousPosition", previousPosition);
-//        console.log("azimuthTo", previousPosition.azimuthTo(position));
+        lockDistAndAzimuth = false;
     }
 
     function updateFromDistAndAzimuth() {
-        //console.log("updateFromDistAndAzimuth", distanceBox.value, azimuthBox.realValue)
-        //position = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
-        //updateDistAndAzimuth();
+        if (lockDistAndAzimuth) return;
+
+        position = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
     }
 
     GridLayout {
@@ -341,8 +340,7 @@ Item {
         Controls.RealSpinBox {
             id: azimuthBox
             visible: azimuthVisible
-            enabled: false
-            //onRealValueChanged: updateFromDistAndAzimuth()
+            onRealValueChanged: updateFromDistAndAzimuth()
             realTo: 360
             Layout.fillWidth: true
         }
