@@ -12,10 +12,6 @@ Item {
     property real maxAltitude: 0
 
     function appendWaypoint(distance, altitude) {
-        if (minDistance > distance) minDistance = distance * 1.1;
-        if (minAltitude > altitude) minAltitude = altitude * 1.1;
-        if (maxDistance < distance) maxDistance = distance * 1.1;
-        if (maxAltitude < altitude) maxAltitude = altitude * 1.1;
         waypoints.append(distance, altitude);
         paths.append(distance, altitude);
     }
@@ -31,10 +27,6 @@ Item {
     }
 
     function clearWaypoints() {
-        minDistance = 0;
-        minAltitude = 0;
-        maxDistance = 0;
-        maxAltitude = 0;
         waypoints.clear();
         paths.clear();
     }
@@ -48,15 +40,15 @@ Item {
 
         ValueAxis {
             id: distanceAxis
-            min: minDistance
-            max: maxDistance
+            min: minDistance - (maxDistance - minDistance) * 0.01
+            max: maxDistance + (maxDistance - minDistance) * 0.01
             labelsColor: palette.textColor
         }
 
         ValueAxis {
             id: altitudeAxis
-            min: minAltitude
-            max: maxAltitude
+            min: minAltitude - (maxAltitude - minAltitude) * 0.1
+            max: maxAltitude + (maxAltitude - minAltitude) * 0.1
             labelsColor: palette.textColor
         }
 

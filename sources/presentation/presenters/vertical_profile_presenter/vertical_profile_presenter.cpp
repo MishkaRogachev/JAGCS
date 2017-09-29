@@ -48,10 +48,15 @@ void VerticalProfilePresenter::updateMission()
 
     QGeoCoordinate lastPosition;
     int distance = 0;
+    int homeAltitude = 0;
+    int minAltitude = INT_MAX;
+    int maxAltitude = INT_MIN;
 
     for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
         if (!item->isAltitudedItem()) continue;
+
+        if (item->sequence() == 0) homeAltitude = item->altitude();
 
         if (item->isPositionatedItem())
         {
@@ -61,8 +66,19 @@ void VerticalProfilePresenter::updateMission()
             }
             lastPosition = item->coordinate();
         }
-        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, item->altitude());
+
+        int altitude = item->isAltitudeRelative() ? homeAltitude + item->altitude() : item->altitude();
+
+        if (altitude < minAltitude) minAltitude = altitude;
+        if (altitude > maxAltitude) maxAltitude = altitude;
+
+        this->invokeViewMethod(PROPERTY(appendWaypoint), distance, altitude);
     }
+
+    this->setViewProperty(PROPERTY(minDistance), 0);
+    this->setViewProperty(PROPERTY(maxDistance), distance);
+    this->setViewProperty(PROPERTY(minAltitude), minAltitude);
+    this->setViewProperty(PROPERTY(maxAltitude), maxAltitude);
 }
 
 void VerticalProfilePresenter::clearMission()
