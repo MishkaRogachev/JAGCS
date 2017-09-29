@@ -33,6 +33,7 @@ void NavControllerHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Navigator, Telemetry::TargetBearing }, output.target_bearing);
     portion.setParameter({ Telemetry::Navigator, Telemetry::TargetDistance }, output.wp_dist);
     portion.setParameter({ Telemetry::Navigator, Telemetry::TrackError }, output.xtrack_error);
+    portion.setParameter({ Telemetry::Navigator, Telemetry::AirspeedError }, output.aspd_error);
     portion.setParameter({ Telemetry::Navigator, Telemetry::AltitudeError }, output.alt_error);
     portion.setParameter({ Telemetry::Navigator, Telemetry::DesiredPitch }, output.nav_pitch);
     portion.setParameter({ Telemetry::Navigator, Telemetry::DesiredRoll }, output.nav_roll);

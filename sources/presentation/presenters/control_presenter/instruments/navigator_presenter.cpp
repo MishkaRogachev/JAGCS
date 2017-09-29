@@ -23,4 +23,8 @@ void NavigatorPresenter::onParametersChanged(const domain::Telemetry::TelemetryM
         this->setViewsProperty(PROPERTY(desiredPitch), parameters[domain::Telemetry::DesiredPitch]);
     if (parameters.contains(domain::Telemetry::DesiredRoll))
         this->setViewsProperty(PROPERTY(desiredRoll), parameters[domain::Telemetry::DesiredRoll]);
+    if (parameters.contains(domain::Telemetry::AirspeedError))
+        this->setViewsProperty(PROPERTY(airspeedError), parameters[domain::Telemetry::AirspeedError]);
+    if (parameters.contains(domain::Telemetry::AltitudeError))
+        this->setViewsProperty(PROPERTY(altitudeError), parameters[domain::Telemetry::AltitudeError]);
 }

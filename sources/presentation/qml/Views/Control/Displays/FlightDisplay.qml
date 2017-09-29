@@ -27,11 +27,13 @@ BaseDisplay {
     property bool pitotOperational: false
     property real indicatedAirspeed: 0
     property real trueAirspeed: 0
+    property real airspeedError: 0
 
     property bool barometricEnabled: false
     property bool barometricOperational: false
     property int barometricAltitude: 0
     property real barometricClimb: 0
+    property real altitudeError: 0
 
     property bool rangefinderEnabled: false
     property bool rangefinderOperational: false
@@ -74,6 +76,13 @@ BaseDisplay {
             default:
             case 0: return indicatedAirspeed;
             case 1: return Helper.mpsToKph(indicatedAirspeed);
+            }
+        }
+        error: {
+            switch (speedUnits) {
+            default:
+            case 0: return airspeedError;
+            case 1: return Helper.mpsToKph(airspeedError);
             }
         }
         minValue: value + minSpeed
@@ -151,6 +160,7 @@ BaseDisplay {
         width: (root.width - ai.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
+        error: altitudeError
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ? 0 : homeAltitude
