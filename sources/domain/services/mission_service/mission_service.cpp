@@ -42,14 +42,7 @@ public:
 
     void loadMissionItems(const QString& condition = QString())
     {
-        for (int id: itemRepository.selectId(condition))
-        {
-            dao::MissionItemPtr item = itemRepository.read(id);
-
-            if (item->sequence() != 0 || item->missionId() == 0) continue;
-
-            missionRepository.read(item->missionId())->setHomeAltitude(item->altitude());
-        }
+        for (int id: itemRepository.selectId(condition)) itemRepository.read(id);
     }
 
     void loadMissionAssignments(const QString& condition = QString())
@@ -211,11 +204,6 @@ bool MissionService::save(const MissionItemPtr& item)
         emit missionItemChanged(item);  // TODO: check changed flag
     }
 
-    if (item->sequence() == 0 && item->missionId() != 0)
-    {
-        this->mission(item->missionId())->setHomeAltitude(item->altitude());
-    }
-
     return true;
 }
 
@@ -323,7 +311,7 @@ void MissionService::addNewMissionItem(int missionId)
 
         if (lastItem)
         {
-            item->setAltitudeRelative(lastItem->useAltitudeRelative());
+            item->setAltitudeRelative(lastItem->isAltitudeRelative());
             item->setAltitude(lastItem->altitude());
         }
     }
@@ -332,7 +320,7 @@ void MissionService::addNewMissionItem(int missionId)
         item->setCommand(MissionItem::Takeoff);
         if (lastItem)
         {
-            item->setAltitude(lastItem->altitude() + 50); // TODO: default parms to settings
+            item->setAltitude(50); // TODO: default parms to settings
             item->setAltitudeRelative(true);
         }
         item->setParameter(MissionItem::Pitch, 15);

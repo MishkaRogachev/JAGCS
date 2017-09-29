@@ -29,7 +29,6 @@ namespace presentation
         void remove();
         void selectItem(int index);
         void save();
-        void updateHomeAltitude();
         void updateView();
 
     signals:

@@ -20,14 +20,9 @@ namespace dao
         int count() const;
         void setCount(int count);
 
-        float homeAltitude() const;
-        void setHomeAltitude(float homeAltitude);
-
     private:
         QString m_name;
         int m_count = 0;
-
-        float m_homeAltitude = 0;
     };
 }
 

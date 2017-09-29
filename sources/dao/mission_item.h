@@ -19,7 +19,7 @@ namespace dao
         Q_PROPERTY(int sequence READ sequence WRITE setSequence)
         Q_PROPERTY(Command command READ command WRITE setCommand)
         Q_PROPERTY(float altitude READ altitude WRITE setAltitude)
-        Q_PROPERTY(bool altitudeRelative READ useAltitudeRelative WRITE setAltitudeRelative)
+        Q_PROPERTY(bool altitudeRelative READ isAltitudeRelative WRITE setAltitudeRelative)
         Q_PROPERTY(double latitude READ latitude WRITE setLatitude)
         Q_PROPERTY(double longitude READ longitude WRITE setLongitude)
         // TODO: replace parameters with command arguments
@@ -98,7 +98,7 @@ namespace dao
         float altitude() const;
         void setAltitude(float altitude);
 
-        bool useAltitudeRelative() const;
+        bool isAltitudeRelative() const;
         void setAltitudeRelative(bool altitudeRelative);
 
         double latitude() const;
@@ -131,6 +131,7 @@ namespace dao
         int m_sequence = -1;
         Command m_command = UnknownCommand;
         QGeoCoordinate m_coordinate;
+        float m_altitude = 0;
         bool m_altitudeRelative = false;
         QMap<Parameter, QVariant> m_parameters;
 

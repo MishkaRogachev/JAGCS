@@ -57,15 +57,15 @@ void MissionItem::setCommand(Command command)
 
 float MissionItem::altitude() const
 {
-    return m_coordinate.altitude();
+    return m_altitude;
 }
 
 void MissionItem::setAltitude(float altitude)
 {
-    m_coordinate.setAltitude(altitude);
+    m_altitude = altitude;
 }
 
-bool MissionItem::useAltitudeRelative() const
+bool MissionItem::isAltitudeRelative() const
 {
     return m_altitudeRelative;
 }

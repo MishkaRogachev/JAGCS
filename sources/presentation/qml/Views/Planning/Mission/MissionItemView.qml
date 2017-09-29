@@ -17,10 +17,12 @@ Item {
     property alias commandIndex: commandBox.currentIndex
     property alias commands: commandBox.model
 
-    property int previousAltitude: 0
-    property int homeAltitude: 0
-    property int abortAltitude: 0
-    property alias useAltitudeRelative: altitudeRelativeBox.checked
+    property real homeAltitude: 0
+    property real previousGlobalAltitude: 0
+    property alias altitude: altitudeBox.realValue
+    property alias climb: climbBox.realValue
+    property alias abortAltitude: abortAltitudeBox.realValue
+    property alias altitudeRelative: altitudeRelativeBox.checked
 
     property var previousPosition: QtPositioning.coordinate()
     property var position: QtPositioning.coordinate();
@@ -43,8 +45,7 @@ Item {
     property bool altitudeVisible: command === MissionItem.Continue ||
                                    positionVisible
 
-    property bool positionVisible: command === MissionItem.Home ||
-                                   azimuthVisible
+    property bool positionVisible: command === MissionItem.Home || azimuthVisible
     property bool distanceVisible: azimuthVisible
     property bool azimuthVisible: command === MissionItem.Takeoff ||
                                   command === MissionItem.Landing ||
@@ -76,41 +77,32 @@ Item {
         pickButton.picking = false;
     }
 
-    onPreviousPositionChanged: updateDistAndAzimuth()
+    onPreviousPositionChanged: updateDistAndAzimuthFromPos()
     onPositionChanged: {
-        updateAltitude();
-        updateClimb();
         updateLatLon();
-        updateDistAndAzimuth();
+        updateDistAndAzimuthFromPos();
     }
-    onPreviousAltitudeChanged: updateClimb()
-    onAbortAltitudeChanged: updateAbortAltitude()
-    onUseAltitudeRelativeChanged: {
-        updateAltitude();
-        updateAbortAltitude();
-    }
-    onHomeAltitudeChanged: {
-        if (!useAltitudeRelative) return;
 
-        updateAltitude();
-        updateAbortAltitude();
-    }
+    onPreviousGlobalAltitudeChanged: updateAltitudeFromClimb()
+    onClimbChanged: updateAltitudeFromClimb()
+    onAltitudeChanged: updateClimbFromAltitude()
+    onAltitudeRelativeChanged: updateClimbFromAltitude()
 
     property bool lockAltitude: false
-    function updateAltitude() {
+    function updateAltitudeFromClimb() {
         if (lockAltitude) return;
 
         lockAltitude = true;
-        altitudeBox.realValue = useAltitudeRelative ? position.altitude - homeAltitude : position.altitude;
+        altitude = previousGlobalAltitude + climb - (altitudeRelative ? homeAltitude : 0)
         lockAltitude = false;
     }
 
-    function updateClimb() {
-        climbBox.realValue = position.altitude - previousAltitude;
-    }
+    function updateClimbFromAltitude() {
+        if (lockAltitude) return;
 
-    function updateAbortAltitude() {
-        abortAltitudeBox.realValue = useAltitudeRelative ? abortAltitude - homeAltitude : abortAltitude;
+        lockAltitude = true;
+        climb = (altitudeRelative ? homeAltitude + altitude : altitude) - previousGlobalAltitude;
+        lockAltitude = false;
     }
 
     function updateLatLon() {
@@ -119,7 +111,7 @@ Item {
     }
 
     property bool lockDistAndAzimuth: false
-    function updateDistAndAzimuth() {
+    function updateDistAndAzimuthFromPos() {
         if (!previousPosition.isValid || !position.isValid || lockDistAndAzimuth) return;
 
         lockDistAndAzimuth = true;
@@ -128,7 +120,7 @@ Item {
         lockDistAndAzimuth = false;
     }
 
-    function updateFromDistAndAzimuth() {
+    function updatePosFromDistAndAzimuth() {
         if (lockDistAndAzimuth) return;
 
         var newPosition = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
@@ -215,11 +207,7 @@ Item {
                 enabled: editEnabled
                 realFrom: -20000 // 418 m Dead Sea shore
                 realTo: 20000 // TODO: constants to config
-                onRealValueChanged: {
-                    position.altitude = useAltitudeRelative ? realValue + homeAltitude : realValue;
-                    updateClimb();
-                    changed = true;
-                }
+                onRealValueChanged: changed = true;
                 Layout.fillWidth: true
             }
 
@@ -235,12 +223,9 @@ Item {
                 id: abortAltitudeBox
                 visible: abortAltitudeVisible
                 enabled: editEnabled
-                realFrom: -500 // 418 m Daed Sea shore
+                realFrom: -20000 // 418 m Daed Sea shore
                 realTo: 20000 // TODO: constants to config
-                onRealValueChanged: {
-                    abortAltitude = useAltitudeRelative ? realValue + homeAltitude : realValue;
-                    changed = true;
-                }
+                onRealValueChanged: changed = true;
                 Layout.fillWidth: true
             }
         }
@@ -261,11 +246,8 @@ Item {
             id: climbBox
             visible: altitudeVisible
             realFrom: -20000
+            realValue: 0
             realTo: 20000 // TODO: constants to config
-            onRealValueChanged: {
-                position.altitude = previousAltitude + realValue;
-                updateAltitude();
-            }
             Layout.fillWidth: true
         }
 
@@ -285,7 +267,7 @@ Item {
                 enabled: editEnabled
                 onRealValueChanged: {
                     position.latitude = realValue;
-                    updateDistAndAzimuth();
+                    updateDistAndAzimuthFromPos();
                     changed = true;
                 }
                 Layout.fillWidth: true
@@ -307,7 +289,7 @@ Item {
                 isLongitude: true
                 onRealValueChanged: {
                     position.longitude = realValue;
-                    updateDistAndAzimuth();
+                    updateDistAndAzimuthFromPos();
                     changed = true;
                 }
                 Layout.fillWidth: true
@@ -329,7 +311,7 @@ Item {
         Controls.SpinBox {
             id: distanceBox
             visible: distanceVisible
-            onValueChanged: updateFromDistAndAzimuth()
+            onValueChanged: updatePosFromDistAndAzimuth()
             to: 200000 // TODO: constants to config
             Layout.fillWidth: true
         }
@@ -343,7 +325,7 @@ Item {
         Controls.RealSpinBox {
             id: azimuthBox
             visible: azimuthVisible
-            onRealValueChanged: updateFromDistAndAzimuth()
+            onRealValueChanged: updatePosFromDistAndAzimuth()
             realTo: 360
             Layout.fillWidth: true
         }
