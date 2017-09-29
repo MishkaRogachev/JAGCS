@@ -8,10 +8,10 @@ ShaderEffect {
     property real yFactor: xFactor * width / height
 
     fragmentShader:"
-    varying vec2 qt_TexCoord0;
-    uniform float xFactor;
-    uniform float yFactor;
-    uniform vec4 color;
+    varying highp vec2 qt_TexCoord0;
+    uniform highp float xFactor;
+    uniform highp float yFactor;
+    uniform highp vec4 color;
 
     void main(void)
     {
