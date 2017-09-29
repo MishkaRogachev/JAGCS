@@ -12,6 +12,7 @@ Item {
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
+    property int error: 0
 
     property int fontPixelSize: Math.max(height * 0.075, palette.fontPixelSize * 0.5)
     property int minorTickSize: fontPixelSize * 0.4
@@ -85,12 +86,24 @@ Item {
                           mirrored ? width : -width, markHeight);
 
             ctx.lineWidth = 2;
+
             ctx.beginPath();
             ctx.moveTo(mirrored ? majorTickSize : -majorTickSize, height / 2 - markHeight / 2);
             ctx.lineTo(mirrored ? 2 : -2, height / 2);
             ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
-
             ctx.stroke();
+
+            if (error) {
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = palette.activeMissionColor;
+                var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
+
+                ctx.beginPath();
+                ctx.moveTo(0, errorPos);
+                ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, errorPos);
+                ctx.stroke();
+            }
+
             ctx.restore();
         }
 
