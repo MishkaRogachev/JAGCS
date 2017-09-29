@@ -38,13 +38,14 @@ Controls.Pane {
                 { icon: "qrc:/icons/calibrate.svg", text: qsTr("Preflight"), command: Command.PreflightCalibration},
                 { icon: "qrc:/icons/lock.svg", text: qsTr("Arm"), command: Command.ArmDisarm, arm: true },
                 { icon: "qrc:/icons/unlock.svg", text: qsTr("Disarm"), command: Command.ArmDisarm, arm: false },
-                { icon: "qrc:/icons/home.svg", text: qsTr("Return"), command: Command.Return },
                 { icon: "qrc:/icons/play.svg", text: qsTr("Start mission"), command: Command.Start },
+                { icon: "qrc:/icons/home.svg", text: qsTr("Return"), command: Command.Return },
                 { icon: "qrc:/icons/landing.svg", text: qsTr("Land"), command: Command.Land },
                 { icon: "qrc:/icons/go_around.svg", text: qsTr("Go around"), command: Command.GoAround },
                 { icon: "qrc:/icons/joystick.svg", text: qsTr("Guided"), command: Command.EnableGuided },
                 { icon: "qrc:/icons/speed.svg", text: qsTr("Set airspeed"), command: Command.SetSpeed, type: 0 },
                 { icon: "qrc:/icons/speed.svg", text: qsTr("Set groundspeed"), command: Command.SetSpeed, type: 1 },
+                { icon: "qrc:/icons/up.svg", text: qsTr("Set altitude"), command: Command.SetAltitude },
                 { icon: "qrc:/icons/home.svg", text: qsTr("Set home"), command: Command.SetHome },
             ]
             Layout.fillWidth: true
@@ -62,6 +63,7 @@ Controls.Pane {
                 case Command.SetSpeed: return [commandBox.currentItem.type,
                                                speedUnits ? Helper.kphToMps(speedBox.value) : speedBox.value,
                                                             -1, 0];
+                case Command.SetAltitude: return [altitudeBox.value, 0];
                 case Command.SetHome: return [2, 0, 0, 0, latitudeBox.realValue,
                                               longitudeBox.realValue, altitudeBox.value]; // TODO: current
                 default: return [];
@@ -83,12 +85,12 @@ Controls.Pane {
             text: qsTr("Alt.")
             font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.SetAltitude
         }
 
         Controls.SpinBox {
             id: altitudeBox
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.SetAltitude
             to: 20000 // TODO: borderValues
             Layout.fillWidth: true
             Layout.columnSpan: 2
