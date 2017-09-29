@@ -6,10 +6,20 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    RotationAnimation {
+        id: bearingAnimation
+        target: map
+        properties: "bearing"
+        to: 0
+        duration: 200
+        direction: RotationAnimation.Shortest
+    }
+
     z: 10000
 
     Controls.Button {
         iconSource: "qrc:/icons/compas.svg"
-        onClicked: map.bearing = 0
+        onClicked: bearingAnimation.start()
+        enabled: !map.trackingVehicle
     }
 }
