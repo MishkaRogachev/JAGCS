@@ -117,7 +117,7 @@ Item {
         if (!previousPosition.isValid || !position.isValid || lockDistAndAzimuth) return;
 
         lockDistAndAzimuth = true;
-        distanceBox.value = previousPosition.distanceTo(position);
+        distanceBox.realValue = previousPosition.distanceTo(position);
         azimuthBox.realValue = previousPosition.azimuthTo(position);
         lockDistAndAzimuth = false;
     }
@@ -125,7 +125,8 @@ Item {
     function updatePosFromDistAndAzimuth() {
         if (lockDistAndAzimuth) return;
 
-        var newPosition = previousPosition.atDistanceAndAzimuth(distanceBox.value, azimuthBox.realValue);
+        var newPosition = previousPosition.atDistanceAndAzimuth(distanceBox.realValue,
+                                                                azimuthBox.realValue);
         position.latitude = newPosition.latitude;
         position.longitude = newPosition.longitude;
         updateLatLon();
@@ -250,6 +251,7 @@ Item {
         Controls.Label {
             text: qsTr("Climb")
             visible: altitudeVisible
+            enabled: editEnabled
             Layout.fillWidth: true
         }
 
@@ -323,10 +325,11 @@ Item {
             Layout.fillWidth: true
         }
 
-        Controls.SpinBox {
+        Controls.RealSpinBox {
             id: distanceBox
             visible: distanceVisible
-            onValueChanged: updatePosFromDistAndAzimuth()
+            enabled: editEnabled
+            onRealValueChanged: updatePosFromDistAndAzimuth()
             to: 200000 // TODO: constants to config
             Layout.fillWidth: true
         }
@@ -340,6 +343,7 @@ Item {
         Controls.RealSpinBox {
             id: azimuthBox
             visible: azimuthVisible
+            enabled: editEnabled
             onRealValueChanged: updatePosFromDistAndAzimuth()
             realTo: 360
             Layout.fillWidth: true

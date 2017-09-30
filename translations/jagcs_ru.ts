@@ -1277,7 +1277,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="306"/>
         <source>Distance</source>
-        <translation>Дист.</translation>
+        <translation>Дистанция</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="320"/>
