@@ -10,8 +10,8 @@ Button {
     iconSource: "qrc:/icons/map-marker.svg"
     checkable: true
     onPickingChanged: map.picking = picking
-    Component.onDestruction: map.dropPicker();
-    onVisibleChanged: if (!visible) map.dropPicker();
+    Component.onDestruction: map.picking = false
+    onVisibleChanged: if (!visible) map.picking = false
 
     Connections {
         target: map

@@ -58,6 +58,7 @@
         <file>Views/Video/VideoSplitView.qml</file>
         <file>Views/Map/MapView.qml</file>
         <file>Views/Map/MapControl.qml</file>
+        <file>Views/Map/MapPicker.qml</file>
         <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
         <file>Views/Map/Overlays/MissionLineMapOverlayView.qml</file>
         <file>Views/Map/Overlays/MissionPointMapOverlayView.qml</file>

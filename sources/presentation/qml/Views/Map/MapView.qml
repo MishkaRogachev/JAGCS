@@ -18,6 +18,7 @@ Map {
     property bool hdopVisible: true
 
     property bool picking: false
+    property alias pickerCoordinate: picker.coordinate
     property bool trackingVehicle: false
 
     property int mapPlugin: settings.value("Map/plugin")
@@ -87,18 +88,9 @@ Map {
         model: hdopVisible ? vehicleModel : 0
     }
 
-    MapQuickItem {
-        id: pickHighlight
-        anchorPoint.x: sourceItem.width / 2
-        anchorPoint.y: sourceItem.height / 2
+    MapPicker {
+        id: picker
         z: 10000
-
-        sourceItem: Rectangle {
-            width: palette.controlBaseSize / 4
-            height: width
-            radius: width / 2
-            color: palette.activeMissionColor
-        }
     }
 
     MouseArea {
@@ -106,11 +98,7 @@ Map {
         anchors.fill: parent
         hoverEnabled: true
         enabled: picking
-        onClicked: {
-            pickHighlight.coordinate = root.toCoordinate(Qt.point(mouseX, mouseY));
-            pickHighlight.visible = true;
-            root.picked(pickHighlight.coordinate);
-        }
+        onClicked: root.picked(root.toCoordinate(Qt.point(mouseX, mouseY)));
         cursorShape: picking ? Qt.CrossCursor : Qt.ArrowCursor
     }
 
@@ -140,10 +128,5 @@ Map {
                     (MapGestureArea.PinchGesture | MapGestureArea.PanGesture |
                      MapGestureArea.FlickGesture | MapGestureArea.RotationGesture) :
                     MapGestureArea.PinchGesture
-    }
-
-    function dropPicker() {
-        map.picking = false
-        pickHighlight.visible = false;
     }
 }
