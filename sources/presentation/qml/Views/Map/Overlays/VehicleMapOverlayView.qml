@@ -26,6 +26,7 @@ MapItemView {
         Connections {
             target: map
             onTrackingVehicleChanged: tryCenterVehicle()
+            onCenterChanged: tryCenterVehicle()
         }
 
         onCoordinateChanged: tryCenterVehicle()
