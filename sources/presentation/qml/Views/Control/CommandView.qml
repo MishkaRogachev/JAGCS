@@ -117,9 +117,11 @@ Controls.Pane {
             onPicked: {
                 latitudeBox.realValue = coordinate.latitude;
                 longitudeBox.realValue = coordinate.longitude;
+
+                map.pickerCoordinate = coordinate;
             }
             onVisibleChanged: {
-                map.dropPicker()
+                map.pickerVisible = visible;
                 picking = false;
             }
         }

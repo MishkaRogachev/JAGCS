@@ -25,6 +25,7 @@ Item {
     property alias altitudeRelative: altitudeRelativeBox.checked
 
     property var previousPosition: QtPositioning.coordinate()
+    property var savedPosition: QtPositioning.coordinate();
     property var position: QtPositioning.coordinate();
 
     property alias radius: radiusBox.realValue
@@ -73,7 +74,7 @@ Item {
     onChangedChanged: {
         if (changed) return;
 
-        map.dropPicker()
+        updatePicker();
         pickButton.picking = false;
     }
 
@@ -87,6 +88,7 @@ Item {
     onClimbChanged: updateAltitudeFromClimb()
     onAltitudeChanged: updateClimbFromAltitude()
     onAltitudeRelativeChanged: updateClimbFromAltitude()
+    onCommandChanged: updatePicker()
 
     property bool lockAltitude: false
     function updateAltitudeFromClimb() {
@@ -127,6 +129,15 @@ Item {
         position.latitude = newPosition.latitude;
         position.longitude = newPosition.longitude;
         updateLatLon();
+    }
+
+    function updatePicker() {
+        map.pickerVisible = positionVisible &&
+                (Math.abs(savedPosition.latitude - position.latitude) > 0.0000015 ||
+                 Math.abs(savedPosition.longitude - position.longitude) > 0.0000015)
+        if (!map.pickerVisible) return;
+
+        map.pickerCoordinate = position;
     }
 
     GridLayout {
@@ -268,6 +279,8 @@ Item {
                 onRealValueChanged: {
                     position.latitude = realValue;
                     updateDistAndAzimuthFromPos();
+                    updatePicker();
+
                     changed = true;
                 }
                 Layout.fillWidth: true
@@ -290,6 +303,8 @@ Item {
                 onRealValueChanged: {
                     position.longitude = realValue;
                     updateDistAndAzimuthFromPos();
+                    updatePicker();
+
                     changed = true;
                 }
                 Layout.fillWidth: true

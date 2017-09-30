@@ -19,6 +19,8 @@ Map {
 
     property bool picking: false
     property alias pickerCoordinate: picker.coordinate
+    property alias pickerVisible: picker.visible
+
     property bool trackingVehicle: false
 
     property int mapPlugin: settings.value("Map/plugin")

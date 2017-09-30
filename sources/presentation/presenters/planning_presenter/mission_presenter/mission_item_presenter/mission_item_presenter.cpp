@@ -179,6 +179,7 @@ void MissionItemPresenter::updateView()
         this->setViewProperty(PROPERTY(command), d->item->command());
         this->setViewProperty(PROPERTY(commandIndex), d->availableCommands.indexOf(d->item->command()));
         this->setViewProperty(PROPERTY(altitudeRelative), d->item->isAltitudeRelative());
+        this->setViewProperty(PROPERTY(savedPosition), QVariant::fromValue(d->item->coordinate()));
         this->setViewProperty(PROPERTY(position), QVariant::fromValue(d->item->coordinate()));
         this->setViewProperty(PROPERTY(altitude), d->item->altitude());
         this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
