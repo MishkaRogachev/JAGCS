@@ -23,7 +23,7 @@ Flickable {
 
         Controls.Label {
             visible: items.length == 0
-            text: qsTr("No mission")
+            text: qsTr("No waypoints")
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: root.width
         }

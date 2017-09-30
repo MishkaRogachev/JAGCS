@@ -133,8 +133,9 @@ Item {
     }
 
     function updatePicker() {
-        map.pickerVisible = positionVisible &&
-                (Math.abs(savedPosition.latitude - position.latitude) > 0.0000015 ||
+        map.pickerVisible = positionVisible && position.isValid &&
+                (!savedPosition.isValid ||
+                 Math.abs(savedPosition.latitude - position.latitude) > 0.0000015 ||
                  Math.abs(savedPosition.longitude - position.longitude) > 0.0000015)
         if (!map.pickerVisible) return;
 
