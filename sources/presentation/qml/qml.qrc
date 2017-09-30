@@ -79,7 +79,8 @@
         <file>Views/Control/Displays/MissionDisplay.qml</file>
         <file>Views/Planning/PlanningView.qml</file>
         <file>Views/Planning/Mission/MissionView.qml</file>
-        <file>Views/Planning/Mission/MissionItemView.qml</file>
+        <file>Views/Planning/Mission/MissionItemsStatusView.qml</file>
+        <file>Views/Planning/Mission/MissionItemEditView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/DataBase/DataBaseView.qml</file>
         <file>Views/Settings/Vehicles/VehicleSettingsView.qml</file>

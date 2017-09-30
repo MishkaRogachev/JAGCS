@@ -114,77 +114,15 @@ ColumnLayout {
         }
     }
 
-    RowLayout {
-
-        Flickable {
-            id: flickable
-            Layout.fillWidth: true
-            implicitHeight: row.height
-            contentWidth: row.width
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-
-            RowLayout {
-                id: row
-                spacing: 1
-
-                Repeater {
-                    id: repeater
-                    model: statuses
-
-                    Item {
-                        Layout.minimumWidth: palette.controlBaseSize
-                        Layout.minimumHeight: palette.controlBaseSize
-
-                        property bool selected: missionItem.sequence == index
-                        onSelectedChanged: {
-                            if (!selected) return;
-
-                            if (x + width > flickable.width + flickable.contentX) {
-                                flickable.contentX = x + width - flickable.width;
-                            }
-                            else if (x < flickable.contentX) {
-                                flickable.contentX = x;
-                            }
-                        }
-
-                        Rectangle {
-                            anchors.centerIn: parent
-                            width: parent.height
-                            height: width
-                            radius: width / 2
-                            color: selected ? palette.selectionColor : palette.raisedColor
-                            border.color: {
-                                switch (parseInt(modelData)) {
-                                case MissionItem.Actual: return palette.positiveColor;
-                                case MissionItem.StatusNone: return palette.sunkenColor;
-                                case MissionItem.Downloading:
-                                case MissionItem.Uploading: return palette.cautionColor;
-                                case MissionItem.NotActual:
-                                default: return palette.dangerColor;
-                                }
-                            }
-                            border.width: 4
-
-                            Controls.Label { // TODO: mode icon
-                                text: index
-                                color: selected ? palette.selectedTextColor : palette.textColor
-                                anchors.centerIn: parent
-                                font.bold: true
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: missionItem.selectItem(index)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    MissionItemsStatusView {
+        id: itemsStatusView
+        Layout.fillWidth: true
+        items: statuses
+        selectedItem: missionItem.sequence
+        onSelectItem: missionItem.selectItem(sequence)
     }
 
-    MissionItemView {
+    MissionItemEditView {
         id: missionItem
         objectName: "missionItem"
         Layout.fillWidth: true
