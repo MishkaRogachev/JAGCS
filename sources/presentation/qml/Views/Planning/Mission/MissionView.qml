@@ -12,7 +12,6 @@ ColumnLayout {
     property alias selectedMission: missionsBox.currentIndex
     property alias assignedVehicle: vehiclesBox.currentIndex
     property int status: MissionAssignment.NotActual
-    property var statuses: []
 
     property bool missionVisible: false
 
@@ -115,16 +114,14 @@ ColumnLayout {
     }
 
     MissionItemsStatusView {
-        id: itemsStatusView
+        id: itemsStatus
+        objectName: "itemsStatus"
         Layout.fillWidth: true
-        items: statuses
-        selectedItem: missionItem.sequence
-        onSelectItem: missionItem.selectItem(sequence)
     }
 
     MissionItemEditView {
-        id: missionItem
-        objectName: "missionItem"
+        id: itemEdit
+        objectName: "itemEdit"
         Layout.fillWidth: true
         Layout.fillHeight: true
     }

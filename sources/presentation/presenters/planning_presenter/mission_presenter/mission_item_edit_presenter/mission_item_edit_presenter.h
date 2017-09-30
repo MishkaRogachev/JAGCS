@@ -1,29 +1,24 @@
-#ifndef MISSION_ITEM_PRESENTER_H
-#define MISSION_ITEM_PRESENTER_H
+#ifndef MISSION_ITEM_EDIT_PRESENTER_H
+#define MISSION_ITEM_EDIT_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
 #include "dao_traits.h"
 
-namespace domain
-{
-    class MissionService;
-}
-
 namespace presentation
 {
-    class MissionItemPresenter: public BasePresenter
+    class MissionItemEditPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionItemPresenter(domain::MissionService* service, QObject* object = nullptr);
-        ~MissionItemPresenter() override;
+        explicit MissionItemEditPresenter(QObject* object = nullptr);
+        ~MissionItemEditPresenter() override;
 
         dao::MissionPtr selectedMission() const;
 
     public slots:
-        void setMission(const dao::MissionPtr& mission);
+        void selectMission(const dao::MissionPtr& mission);
         void setPicking(bool picking);
 
         void remove();
@@ -48,4 +43,4 @@ namespace presentation
     };
 }
 
-#endif // MISSION_ITEM_PRESENTER_H
+#endif // MISSION_ITEM_EDIT_PRESENTER_H

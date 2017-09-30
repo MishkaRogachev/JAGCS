@@ -1,4 +1,4 @@
-#include "mission_item_presenter.h"
+#include "mission_item_edit_presenter.h"
 
 // Qt
 #include <QMap>
@@ -6,7 +6,9 @@
 #include <QDebug>
 
 // Internal
+#include "service_registry.h"
 #include "mission_service.h"
+
 #include "mission.h"
 #include "mission_item.h"
 
@@ -14,10 +16,10 @@
 
 using namespace presentation;
 
-class MissionItemPresenter::Impl
+class MissionItemEditPresenter::Impl
 {
 public:
-    domain::MissionService* service;
+    domain::MissionService* service = domain::ServiceRegistry::missionService();
 
     dao::MissionPtr mission;
     dao::MissionItemPtr item;
@@ -47,27 +49,25 @@ public:
     }
 };
 
-MissionItemPresenter::MissionItemPresenter(domain::MissionService* service, QObject* object):
+MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
-    d->service = service;
-
-    connect(service, &domain::MissionService::missionItemAdded, this, &MissionItemPresenter::updateCount);
-    connect(service, &domain::MissionService::missionItemRemoved, this, &MissionItemPresenter::updateCount);
-    connect(service, &domain::MissionService::missionItemChanged,
+    connect(d->service, &domain::MissionService::missionItemAdded, this, &MissionItemEditPresenter::updateCount);
+    connect(d->service, &domain::MissionService::missionItemRemoved, this, &MissionItemEditPresenter::updateCount);
+    connect(d->service, &domain::MissionService::missionItemChanged,
             this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateView(); });
 }
 
-MissionItemPresenter::~MissionItemPresenter()
+MissionItemEditPresenter::~MissionItemEditPresenter()
 {}
 
-dao::MissionPtr MissionItemPresenter::selectedMission() const
+dao::MissionPtr MissionItemEditPresenter::selectedMission() const
 {
     return d->mission;
 }
 
-void MissionItemPresenter::setMission(const dao::MissionPtr& mission)
+void MissionItemEditPresenter::selectMission(const dao::MissionPtr& mission)
 {
     if (d->mission == mission) return;
 
@@ -77,19 +77,19 @@ void MissionItemPresenter::setMission(const dao::MissionPtr& mission)
     this->updateCount();
 }
 
-void MissionItemPresenter::setPicking(bool picking)
+void MissionItemEditPresenter::setPicking(bool picking)
 {
     this->setViewProperty(PROPERTY(picking), true);
 }
 
-void MissionItemPresenter::remove()
+void MissionItemEditPresenter::remove()
 {
     if (d->item.isNull()) return;
 
     d->service->remove(d->item);
 }
 
-void MissionItemPresenter::selectItem(int index)
+void MissionItemEditPresenter::selectItem(int index)
 {
     if (d->mission.isNull()) return;
 
@@ -103,7 +103,7 @@ void MissionItemPresenter::selectItem(int index)
     emit itemSelected(item);
 }
 
-void MissionItemPresenter::save()
+void MissionItemEditPresenter::save()
 {
     int commandIndex = this->viewProperty(PROPERTY(commandIndex)).toInt();
     if (commandIndex < d->availableCommands.count())
@@ -132,7 +132,7 @@ void MissionItemPresenter::save()
     if (!d->service->save(d->item)) return;
 }
 
-void MissionItemPresenter::updateView()
+void MissionItemEditPresenter::updateView()
 {
     if (d->mission && d->item)
     {
@@ -204,7 +204,7 @@ void MissionItemPresenter::updateView()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void MissionItemPresenter::connectView(QObject* view)
+void MissionItemEditPresenter::connectView(QObject* view)
 {
     this->updateAvailableCommands();
 
@@ -218,7 +218,7 @@ void MissionItemPresenter::connectView(QObject* view)
     this->updateCount();
 }
 
-void MissionItemPresenter::updateCount()
+void MissionItemEditPresenter::updateCount()
 {
     if (d->mission)
     {
@@ -233,7 +233,7 @@ void MissionItemPresenter::updateCount()
     }
 }
 
-void MissionItemPresenter::updateAvailableCommands()
+void MissionItemEditPresenter::updateAvailableCommands()
 {
     d->updateAvailableCommands();
 
@@ -245,7 +245,7 @@ void MissionItemPresenter::updateAvailableCommands()
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 }
 
-void MissionItemPresenter::onUpdateCommand(int commandIndex)
+void MissionItemEditPresenter::onUpdateCommand(int commandIndex)
 {
     if (commandIndex > 0 && commandIndex < d->availableCommands.count())
     {

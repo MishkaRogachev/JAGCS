@@ -17,20 +17,22 @@
 #include "vehicle_service.h"
 #include "command_service.h"
 
-#include "mission_item_presenter.h"
+#include "mission_items_status_presenter.h"
+#include "mission_item_edit_presenter.h"
 
 using namespace presentation;
 
 class MissionPresenter::Impl
 {
 public:
-    domain::VehicleService* vehicleService;
-    domain::MissionService* missionService;
+    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
 
     dao::MissionPtr selectedMission;
     dao::MissionPtrList missions;
 
-    MissionItemPresenter* item;
+    MissionItemsStatusPresenter* itemsStatus;
+    MissionItemEditPresenter* itemEdit;
 };
 
 using namespace presentation;
@@ -39,8 +41,15 @@ MissionPresenter::MissionPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->vehicleService = domain::ServiceRegistry::vehicleService();
-    d->missionService = domain::ServiceRegistry::missionService();
+    d->itemsStatus = new MissionItemsStatusPresenter(this);
+    d->itemEdit = new MissionItemEditPresenter(this);
+
+    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
+            this, &MissionPresenter::missionItemSelected);
+    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
+            d->itemsStatus, &MissionItemsStatusPresenter::selectMissionItem);
+    connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
+            d->itemEdit, &MissionItemEditPresenter::selectItem);
 
     d->missions.append(d->missionService->missions());
 
@@ -58,22 +67,10 @@ MissionPresenter::MissionPresenter(QObject* parent):
     connect(d->missionService, &domain::MissionService::assignmentChanged,
             this, &MissionPresenter::updateAssignment);
 
-    connect(d->missionService, &domain::MissionService::missionItemAdded,
-            this, &MissionPresenter::updateItemsStatus);
-    connect(d->missionService, &domain::MissionService::missionItemRemoved,
-            this, &MissionPresenter::updateItemsStatus);
-    connect(d->missionService, &domain::MissionService::missionItemChanged,
-            this, &MissionPresenter::updateItemsStatus);
-
     connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
             this, &MissionPresenter::updateVehiclesBox);
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehiclesBox);
-
-    d->item = new MissionItemPresenter(d->missionService, this);
-
-    connect(d->item, &MissionItemPresenter::itemSelected,
-            this, &MissionPresenter::missionItemSelected);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -84,7 +81,9 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
     if (d->selectedMission == mission) return;
 
     d->selectedMission = mission;
-    d->item->setMission(d->selectedMission);
+
+    d->itemsStatus->selectMission(mission);
+    d->itemEdit->selectMission(mission);
 
     this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
 
@@ -96,7 +95,6 @@ void MissionPresenter::selectMission(const dao::MissionPtr& mission)
     else this->setViewProperty(PROPERTY(missionVisible), false);
 
     this->updateAssignment();
-    this->updateItemsStatus();
 
     emit missionSelected(mission);
 }
@@ -106,12 +104,14 @@ void MissionPresenter::selectMissionItem(const dao::MissionItemPtr& item)
     if (!item) return;
 
     this->selectMission(d->missionService->mission(item->missionId()));
-    d->item->selectItem(item->sequence());
+
+    d->itemEdit->selectItem(item->sequence());
 }
 
 void MissionPresenter::connectView(QObject* view)
 {
-    d->item->setView(view->findChild<QObject*>(NAME(missionItem)));
+    d->itemsStatus->setView(view->findChild<QObject*>(NAME(itemsStatus)));
+    d->itemEdit->setView(view->findChild<QObject*>(NAME(itemEdit)));
 
     this->updateVehiclesBox();
     this->updateMissionsBox();
@@ -219,22 +219,6 @@ void MissionPresenter::updateAssignment()
     this->setViewConnected(true);
 }
 
-void MissionPresenter::updateItemsStatus()
-{
-    QStringList statuses;
-
-    if (d->selectedMission)
-    {
-        for (const dao::MissionItemPtr& item:
-             d->missionService->missionItems(d->selectedMission->id()))
-        {
-            statuses.append(QString::number(item->status()));
-        }
-    }
-
-    this->setViewProperty(PROPERTY(statuses), statuses);
-}
-
 void MissionPresenter::onSelectMission(int index)
 {
     if (index > 0 && index < d->missions.count() + 1)
@@ -262,8 +246,8 @@ void MissionPresenter::onAddItem()
     if (d->selectedMission.isNull()) return;
 
     d->missionService->addNewMissionItem(d->selectedMission->id());
-    d->item->selectItem(d->selectedMission->count() - 1);
-    d->item->setPicking(true); // TODO: check coordinate usefull
+    d->itemEdit->selectItem(d->selectedMission->count() - 1);
+    d->itemEdit->setPicking(true); // TODO: check coordinate usefull
 }
 
 void MissionPresenter::onRemoveMission()
@@ -274,7 +258,7 @@ void MissionPresenter::onRemoveMission()
     d->selectedMission.clear();
     this->setViewProperty(PROPERTY(selectedMission), 0);
 
-    d->item->setMission(dao::MissionPtr());
+    d->itemEdit->selectMission(dao::MissionPtr());
 }
 
 void MissionPresenter::onRenameMission(const QString& name)

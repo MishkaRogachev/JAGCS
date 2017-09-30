@@ -21,8 +21,14 @@ Flickable {
         id: row
         spacing: 1
 
+        Controls.Label {
+            visible: items.length == 0
+            text: qsTr("No mission")
+            horizontalAlignment: Text.AlignHCenter
+            Layout.preferredWidth: root.width
+        }
+
         Repeater {
-            id: repeater
             model: items
 
             Item {
