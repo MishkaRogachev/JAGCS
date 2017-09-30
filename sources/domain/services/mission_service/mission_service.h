@@ -54,6 +54,7 @@ namespace domain
         void unassign(int missionId);
 
         void setCurrentItem(int vehicleId, const dao::MissionItemPtr& item);
+        void swapItems(const dao::MissionItemPtr& first, const dao::MissionItemPtr& second);
 
     signals:
         void missionAdded(dao::MissionPtr mission);

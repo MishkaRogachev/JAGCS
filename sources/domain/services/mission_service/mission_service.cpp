@@ -414,3 +414,18 @@ void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& item)
     // TODO: drop current on vehicle's removing
 }
 
+void MissionService::swapItems(const MissionItemPtr& first, const MissionItemPtr& second)
+{
+    QMutexLocker locker(&d->mutex);
+
+    int seq = first->sequence();
+    first->setSequence(second->sequence());
+    second->setSequence(seq);
+
+    if (!d->itemRepository.save(first)) return;
+    if (!d->itemRepository.save(second)) return;
+
+    emit missionItemChanged(first);
+    emit missionItemChanged(second);
+}
+

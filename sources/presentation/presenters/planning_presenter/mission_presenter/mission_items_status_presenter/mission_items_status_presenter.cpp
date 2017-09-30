@@ -19,6 +19,7 @@ public:
     domain::MissionService* service = domain::ServiceRegistry::missionService();
 
     dao::MissionPtr mission;
+    dao::MissionItemPtr item;
 };
 
 MissionItemsStatusPresenter::MissionItemsStatusPresenter(QObject* object):
@@ -45,7 +46,9 @@ void MissionItemsStatusPresenter::selectMission(const dao::MissionPtr& mission)
 
 void MissionItemsStatusPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 {
-    this->setViewProperty(PROPERTY(selectedItem), item ? item->sequence() : -1);
+    d->item = item;
+
+    this->updateSelectedItem();
 }
 
 void MissionItemsStatusPresenter::connectView(QObject* view)
@@ -68,4 +71,10 @@ void MissionItemsStatusPresenter::updateItemsStatus()
     }
 
     this->setViewProperty(PROPERTY(items), items);
+    this->updateSelectedItem();
+}
+
+void MissionItemsStatusPresenter::updateSelectedItem()
+{
+    this->setViewProperty(PROPERTY(selectedItem), d->item ? d->item->sequence() : -1);
 }

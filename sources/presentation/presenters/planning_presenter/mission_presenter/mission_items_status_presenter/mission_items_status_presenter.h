@@ -23,6 +23,7 @@ namespace presentation
 
     private slots:
         void updateItemsStatus();
+        void updateSelectedItem();
 
     signals:
         void selectItem(int index);

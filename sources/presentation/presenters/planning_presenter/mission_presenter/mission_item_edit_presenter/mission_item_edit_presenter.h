@@ -37,6 +37,8 @@ namespace presentation
         void updateAvailableCommands();
         void onUpdateCommand(int commandIndex);
 
+        void onChangeSequence(int sequence);
+
     private:
          class Impl;
          QScopedPointer<Impl> const d;

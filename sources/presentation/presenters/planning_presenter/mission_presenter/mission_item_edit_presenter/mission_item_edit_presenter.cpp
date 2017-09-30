@@ -209,6 +209,7 @@ void MissionItemEditPresenter::connectView(QObject* view)
     this->updateAvailableCommands();
 
     connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
+    connect(view, SIGNAL(changeSequence(int)), this, SLOT(onChangeSequence(int)));
     connect(view, SIGNAL(updateCommand(int)), this, SLOT(onUpdateCommand(int)));
 
     connect(view, SIGNAL(save()), this, SLOT(save()));
@@ -251,4 +252,14 @@ void MissionItemEditPresenter::onUpdateCommand(int commandIndex)
     {
         this->setViewProperty(PROPERTY(command), d->availableCommands.at(commandIndex));
     }
+}
+
+void MissionItemEditPresenter::onChangeSequence(int sequence)
+{
+    if (d->item.isNull()) return;
+
+    dao::MissionItemPtr other = d->service->missionItem(d->mission->id(), sequence);
+    if (other.isNull()) return;
+
+    d->service->swapItems(d->item, other);
 }

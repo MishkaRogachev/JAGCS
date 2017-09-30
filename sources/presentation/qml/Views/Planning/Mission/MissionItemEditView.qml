@@ -69,6 +69,7 @@ Item {
     signal restore()
     signal remove()
     signal selectItem(int sequence)
+    signal changeSequence(int sequence)
     signal updateCommand(int commandIndex)
 
     onChangedChanged: {
@@ -90,6 +91,7 @@ Item {
     onAltitudeRelativeChanged: updateClimbFromAltitude()
     onCommandChanged: updatePicker()
 
+    // TODO: refactor mission item params view and presenter
     property bool lockAltitude: false
     function updateAltitudeFromClimb() {
         if (lockAltitude) return;
@@ -153,24 +155,17 @@ Item {
         }
 
         RowLayout {
-            Controls.Button {
-                iconSource: "qrc:/icons/remove.svg"
-                iconColor: palette.dangerColor
-                enabled: sequence > -1 && editEnabled
-                onClicked: remove()
+            Controls.Label {
+                text: (sequence + 1) + "/" + count
+                horizontalAlignment: Qt.AlignHCenter
+                Layout.alignment: Qt.AlignVCenter
+                Layout.fillWidth: true
             }
 
             Controls.Button {
                 iconSource: "qrc:/icons/left.svg"
                 enabled: sequence > 0
                 onClicked: selectItem(sequence - 1)
-            }
-
-            Controls.Label {
-                Layout.alignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-                horizontalAlignment: Qt.AlignHCenter
-                text: (sequence + 1) + "/" + count
             }
 
             Controls.Button {
@@ -188,20 +183,39 @@ Item {
 
         Controls.Label {
             text: qsTr("Command")
-            visible: sequence > -1
             Layout.fillWidth: true
         }
 
-        Controls.ComboBox {
-            id: commandBox
-            visible: sequence > -1
-            enabled: editEnabled
-            currentIndex: 0
-            onCurrentIndexChanged: {
-                updateCommand(currentIndex);
-                changed = true;
+        RowLayout {
+            Controls.ComboBox {
+                id: commandBox
+                enabled: editEnabled && sequence > -1
+                currentIndex: 0
+                onCurrentIndexChanged: {
+                    updateCommand(currentIndex);
+                    changed = true;
+                }
+                Layout.fillWidth: true
             }
-            Layout.fillWidth: true
+
+            Controls.Button {
+                iconSource: "qrc:/icons/left_left.svg"
+                enabled: sequence > 1
+                onClicked: changeSequence(sequence - 1)
+            }
+
+            Controls.Button {
+                iconSource: "qrc:/icons/right_right.svg"
+                enabled: sequence > 0 && sequence + 1 < count
+                onClicked: changeSequence(sequence + 1)
+            }
+
+            Controls.Button {
+                iconSource: "qrc:/icons/remove.svg"
+                iconColor: palette.dangerColor
+                enabled: sequence > -1 && editEnabled
+                onClicked: remove()
+            }
         }
 
         Controls.Label {
@@ -490,25 +504,20 @@ Item {
             Layout.columnSpan: 2
         }
 
-        RowLayout {
-            Layout.columnSpan: 2
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
             enabled: changed
+            onClicked: restore()
+            Layout.fillWidth: true
+        }
 
-            Controls.Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-                enabled: editEnabled
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            enabled: changed && editEnabled
+            onClicked: save()
+            Layout.fillWidth: true
         }
     }
 }
