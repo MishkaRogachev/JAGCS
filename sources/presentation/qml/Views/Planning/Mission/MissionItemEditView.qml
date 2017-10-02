@@ -155,6 +155,20 @@ Item {
         }
 
         RowLayout {
+            Controls.Button {
+                iconSource: "qrc:/icons/remove.svg"
+                iconColor: palette.dangerColor
+                enabled: sequence > -1 && editEnabled
+                onClicked: remove()
+            }
+
+            Controls.Button {
+                iconSource: "qrc:/icons/left.svg"
+                enabled: sequence > 0
+                onClicked: selectItem(sequence - 1)
+                onPressAndHold: selectItem(0)
+            }
+
             Controls.Label {
                 text: (sequence + 1) + "/" + count
                 horizontalAlignment: Qt.AlignHCenter
@@ -163,15 +177,10 @@ Item {
             }
 
             Controls.Button {
-                iconSource: "qrc:/icons/left.svg"
-                enabled: sequence > 0
-                onClicked: selectItem(sequence - 1)
-            }
-
-            Controls.Button {
                 iconSource: "qrc:/icons/right.svg"
-                enabled: sequence + 1 < count
+                enabled: sequence < count - 1
                 onClicked: selectItem(sequence + 1)
+                onPressAndHold: selectItem(count - 1)
             }
 
             Controls.Button {
@@ -182,21 +191,12 @@ Item {
         }
 
         Controls.Label {
-            text: qsTr("Command")
+            text: qsTr("Move")
             Layout.fillWidth: true
         }
 
         RowLayout {
-            Controls.ComboBox {
-                id: commandBox
-                enabled: editEnabled && sequence > -1
-                currentIndex: 0
-                onCurrentIndexChanged: {
-                    updateCommand(currentIndex);
-                    changed = true;
-                }
-                Layout.fillWidth: true
-            }
+            Layout.alignment: Qt.AlignRight
 
             Controls.Button {
                 iconSource: "qrc:/icons/left_left.svg"
@@ -209,13 +209,22 @@ Item {
                 enabled: sequence > 0 && sequence + 1 < count
                 onClicked: changeSequence(sequence + 1)
             }
+        }
 
-            Controls.Button {
-                iconSource: "qrc:/icons/remove.svg"
-                iconColor: palette.dangerColor
-                enabled: sequence > -1 && editEnabled
-                onClicked: remove()
+        Controls.Label {
+            text: qsTr("Command")
+            Layout.fillWidth: true
+        }
+
+        Controls.ComboBox {
+            id: commandBox
+            enabled: editEnabled && sequence > -1
+            currentIndex: 0
+            onCurrentIndexChanged: {
+                updateCommand(currentIndex);
+                changed = true;
             }
+            Layout.fillWidth: true
         }
 
         Controls.Label {
