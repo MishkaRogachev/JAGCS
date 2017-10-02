@@ -262,47 +262,47 @@
         <translation>Шир.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="128"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="130"/>
         <source>Lon.</source>
         <translation>Дол.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="143"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="145"/>
         <source>Spd.</source>
         <translation>Скр.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="164"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="166"/>
         <source>Cal.</source>
         <translation>Кал.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="174"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="176"/>
         <source>Accelerometer</source>
         <translation>Акселерометр</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="175"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="177"/>
         <source>Board level</source>
         <translation>Уровень горизонта</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="176"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="178"/>
         <source>Gyroscope</source>
         <translation>Гироскоп</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="177"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="179"/>
         <source>Magnetometer</source>
         <translation>Магнетометр</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="178"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="180"/>
         <source>Static pressure</source>
         <translation>Давление отсчёта</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="179"/>
+        <location filename="../sources/presentation/qml/Views/Control/CommandView.qml" line="181"/>
         <source>Temperature</source>
         <translation>Температура</translation>
     </message>
@@ -1158,6 +1158,124 @@
     </message>
 </context>
 <context>
+    <name>MissionItemEditView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="152"/>
+        <source>Item</source>
+        <translation>ПМ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="194"/>
+        <source>Move</source>
+        <translation>Сместить</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="215"/>
+        <source>Command</source>
+        <translation>Команда</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="231"/>
+        <source>Altitude</source>
+        <translation>Высота</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="252"/>
+        <source>Rel.</source>
+        <translation>Отн.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="270"/>
+        <source>Abort alt.</source>
+        <translation>Прерв. выс.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="276"/>
+        <source>Climb</source>
+        <translation>Подъём</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="292"/>
+        <source>Latitude</source>
+        <translation>Широта</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="341"/>
+        <source>Longitude</source>
+        <translation>Долгота</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="347"/>
+        <source>Distance</source>
+        <translation>Дистанция</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="362"/>
+        <source>Azimuth</source>
+        <translation>Азимут</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="377"/>
+        <source>Radius</source>
+        <translation>Радиус</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="395"/>
+        <source>CW</source>
+        <translation>ПЧС</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="404"/>
+        <source>Pitch</source>
+        <translation>Тангаж</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="420"/>
+        <source>Yaw</source>
+        <translation>Курс</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="436"/>
+        <source>Repeats</source>
+        <translation>Повторов</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="449"/>
+        <source>Time</source>
+        <translation>Время</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="467"/>
+        <source>Speed</source>
+        <translation>Скорость</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="482"/>
+        <source>Ground speed</source>
+        <translation>Путевая скорость</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="485"/>
+        <source>Air speed</source>
+        <translation>Воздушная скорость</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="500"/>
+        <source>Throttle</source>
+        <translation>Газ</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="517"/>
+        <source>Restore</source>
+        <translation>Восстановить</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="525"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+</context>
+<context>
     <name>MissionItemPresenter</name>
     <message>
         <source>None</source>
@@ -1231,17 +1349,14 @@
 <context>
     <name>MissionItemView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="137"/>
         <source>Item</source>
         <translation>ПМ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="177"/>
         <source>Command</source>
         <translation>Команда</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="195"/>
         <source>Altitude</source>
         <translation>Высота</translation>
     </message>
@@ -1250,87 +1365,70 @@
         <translation>Отн. высота</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="216"/>
         <source>Rel.</source>
         <translation>Отн.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="234"/>
         <source>Abort alt.</source>
         <translation>Прерв. выс.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="240"/>
         <source>Climb</source>
         <translation>Подъём</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="255"/>
         <source>Latitude</source>
         <translation>Широта</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="300"/>
         <source>Longitude</source>
         <translation>Долгота</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="306"/>
         <source>Distance</source>
         <translation>Дистанция</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="320"/>
         <source>Azimuth</source>
         <translation>Азимут</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="334"/>
         <source>Radius</source>
         <translation>Радиус</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="352"/>
         <source>CW</source>
         <translation>ПЧС</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="361"/>
         <source>Pitch</source>
         <translation>Тангаж</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="377"/>
         <source>Yaw</source>
         <translation>Курс</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="393"/>
         <source>Repeats</source>
         <translation>Повторов</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="406"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="424"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="439"/>
         <source>Ground speed</source>
         <translation>Путевая скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="442"/>
         <source>Air speed</source>
         <translation>Воздушная скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="457"/>
         <source>Throttle</source>
         <translation>Газ</translation>
     </message>
@@ -1343,25 +1441,31 @@
         <translation>Задержка</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="478"/>
         <source>Restore</source>
         <translation>Восстановить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemView.qml" line="486"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
 </context>
 <context>
+    <name>MissionItemsStatusView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemsStatusView.qml" line="26"/>
+        <source>No waypoints</source>
+        <translation>Нет путевых точек</translation>
+    </message>
+</context>
+<context>
     <name>MissionView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="37"/>
         <source>Mission</source>
         <translation>Маршрут</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="86"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionView.qml" line="85"/>
         <source>Vehicle</source>
         <translation>Аппарат</translation>
     </message>
@@ -1968,7 +2072,7 @@
 <context>
     <name>presentation::MissionPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_presenter.cpp" line="254"/>
+        <location filename="../sources/presentation/presenters/planning_presenter/mission_presenter/mission_presenter.cpp" line="238"/>
         <source>New Mission %1</source>
         <translation>Новый маршрут %1</translation>
     </message>
