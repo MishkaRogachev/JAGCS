@@ -32,11 +32,9 @@ Flickable {
         Repeater {
             model: items // TODO: current and passed indication
 
-            Item {
-                Layout.minimumWidth: palette.controlBaseSize
-                Layout.minimumHeight: palette.controlBaseSize
-
-                property bool selected: selectedItem === modelData.sequence
+            MissionItemView {
+                item: modelData
+                selected: selectedItem === item.sequence
                 onSelectedChanged: {
                     if (!selected) return;
 
@@ -47,37 +45,7 @@ Flickable {
                         root.contentX = x;
                     }
                 }
-
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: parent.height
-                    height: width
-                    radius: width / 2
-                    color: selected ? palette.selectionColor : palette.raisedColor
-                    border.color: {
-                        switch (modelData.status) {
-                        case MissionItem.Actual: return palette.positiveColor;
-                        case MissionItem.StatusNone: return palette.sunkenColor;
-                        case MissionItem.Downloading:
-                        case MissionItem.Uploading: return palette.cautionColor;
-                        case MissionItem.NotActual:
-                        default: return palette.dangerColor;
-                        }
-                    }
-                    border.width: 4
-
-                    Controls.Label { // TODO: mode icon
-                        text: modelData.sequence
-                        color: selected ? palette.selectedTextColor : palette.textColor
-                        anchors.centerIn: parent
-                        font.bold: true
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: selectItem(index)
-                    }
-                }
+                onSelectionRequest: selectItem(item.sequence)
             }
         }
     }

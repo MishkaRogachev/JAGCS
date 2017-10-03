@@ -49,6 +49,7 @@
         <file>Indicators/DistanceLabel.qml</file>
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
+        <file>Views/Common/MissionItemView.qml</file>
         <file>Views/Common/MissionItemsStatusView.qml</file>
         <file>Views/Common/VerticalProfileView.qml</file>
         <file>Views/MainView.qml</file>
