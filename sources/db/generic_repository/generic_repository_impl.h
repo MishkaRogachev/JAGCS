@@ -31,6 +31,7 @@ bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
     for (const QString& name: names)
     {
         if (m_columnNames.contains(name)) values.append(":" + name);
+        else names.removeOne(name);
     }
 
     m_query.prepare("INSERT INTO " + m_tableName + " (" +
