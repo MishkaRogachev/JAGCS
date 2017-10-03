@@ -49,6 +49,8 @@
         <file>Indicators/DistanceLabel.qml</file>
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
+        <file>Views/Common/MissionItemsStatusView.qml</file>
+        <file>Views/Common/VerticalProfileView.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
@@ -69,7 +71,6 @@
         <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
         <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/Overlays/HomeMapOverlayView.qml</file>
-        <file>Views/VerticalProfile/VerticalProfileView.qml</file>
         <file>Views/Control/ControlView.qml</file>
         <file>Views/Control/DashboardView.qml</file>
         <file>Views/Control/CommandView.qml</file>
@@ -81,7 +82,6 @@
         <file>Views/Control/Displays/MissionDisplay.qml</file>
         <file>Views/Planning/PlanningView.qml</file>
         <file>Views/Planning/Mission/MissionView.qml</file>
-        <file>Views/Planning/Mission/MissionItemsStatusView.qml</file>
         <file>Views/Planning/Mission/MissionItemEditView.qml</file>
         <file>Views/Settings/SettingsView.qml</file>
         <file>Views/Settings/DataBase/DataBaseView.qml</file>

@@ -25,6 +25,7 @@ namespace dao
         // TODO: replace parameters with command arguments
         Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
         Q_PROPERTY(Status status READ status WRITE setStatus)
+        Q_PROPERTY(bool reached READ isReached WRITE setReached)
 
     public:
         enum Command
@@ -135,7 +136,6 @@ namespace dao
         float m_altitude = 0;
         bool m_altitudeRelative = false;
         QMap<Parameter, QVariant> m_parameters;
-
         Status m_status = NotActual;
         bool m_reached = false;
 

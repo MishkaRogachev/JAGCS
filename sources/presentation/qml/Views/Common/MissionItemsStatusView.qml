@@ -9,6 +9,7 @@ Flickable {
 
     property var items: []
     property int selectedItem: -1
+    property int currentItem: -1
 
     signal selectItem(int sequence)
 
@@ -29,7 +30,7 @@ Flickable {
         }
 
         Repeater {
-            model: items
+            model: items // TODO: current and passed indication
 
             Item {
                 Layout.minimumWidth: palette.controlBaseSize

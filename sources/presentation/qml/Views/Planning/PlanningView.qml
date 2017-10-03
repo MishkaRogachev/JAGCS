@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 import "../Map"
-import "../VerticalProfile"
+import "../Common"
 import "Mission"
 
 Controls.Pane {
