@@ -16,7 +16,7 @@ Button {
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         radius: 3
         clip: true
-        color:  control.flat ? "transparent" : palette.buttonColor;
+        color: control.flat ? "transparent" : palette.buttonColor
 
         Shaders.Pie {
             anchors.centerIn: parent

@@ -60,13 +60,13 @@ void MissionItemsStatusPresenter::connectView(QObject* view)
 
 void MissionItemsStatusPresenter::updateItemsStatus()
 {
-    QStringList items;
+    QVariantList items;
 
     if (d->mission)
     {
         for (const dao::MissionItemPtr& item: d->service->missionItems(d->mission->id()))
         {
-            items.append(QString::number(item->status()));
+            items.append(QVariant::fromValue(*item.data()));
         }
     }
 

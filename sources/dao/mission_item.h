@@ -24,9 +24,10 @@ namespace dao
         Q_PROPERTY(double longitude READ longitude WRITE setLongitude)
         // TODO: replace parameters with command arguments
         Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
+        Q_PROPERTY(Status status READ status WRITE setStatus)
 
     public:
-        enum Command: quint8
+        enum Command
         {
             UnknownCommand = 0,
 
@@ -58,7 +59,7 @@ namespace dao
             //TODO: condition commands
         };
 
-        enum Parameter: quint8
+        enum Parameter
         {
             UnknownParameter = 0,
 
@@ -78,7 +79,7 @@ namespace dao
             Enabled
         };
 
-        enum Status: quint8
+        enum Status
         {
             NotActual = 0,
             Downloading,

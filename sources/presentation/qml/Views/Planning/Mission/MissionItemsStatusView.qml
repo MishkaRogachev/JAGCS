@@ -35,7 +35,7 @@ Flickable {
                 Layout.minimumWidth: palette.controlBaseSize
                 Layout.minimumHeight: palette.controlBaseSize
 
-                property bool selected: selectedItem == index
+                property bool selected: selectedItem === modelData.sequence
                 onSelectedChanged: {
                     if (!selected) return;
 
@@ -54,7 +54,7 @@ Flickable {
                     radius: width / 2
                     color: selected ? palette.selectionColor : palette.raisedColor
                     border.color: {
-                        switch (parseInt(modelData)) {
+                        switch (modelData.status) {
                         case MissionItem.Actual: return palette.positiveColor;
                         case MissionItem.StatusNone: return palette.sunkenColor;
                         case MissionItem.Downloading:
@@ -66,7 +66,7 @@ Flickable {
                     border.width: 4
 
                     Controls.Label { // TODO: mode icon
-                        text: index
+                        text: modelData.sequence
                         color: selected ? palette.selectedTextColor : palette.textColor
                         anchors.centerIn: parent
                         font.bold: true
