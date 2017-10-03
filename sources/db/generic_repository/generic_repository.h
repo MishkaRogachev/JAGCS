@@ -40,6 +40,7 @@ namespace db
     private:
         QSqlQuery m_query;
         const QString m_tableName;
+        QStringList m_columnNames;
         QHash<int, QSharedPointer<T> > m_map;
     };
 }

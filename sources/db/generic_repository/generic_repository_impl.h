@@ -13,7 +13,10 @@ using namespace db;
 template<class T>
 GenericRepository<T>::GenericRepository(const QString& tableName):
     m_tableName(tableName)
-{}
+{
+    m_query.exec("PRAGMA table_info(" + m_tableName + ")");
+    while (m_query.next()) m_columnNames.append(m_query.value(1).toString());
+}
 
 template<class T>
 GenericRepository<T>::~GenericRepository()
@@ -27,7 +30,7 @@ bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
 
     for (const QString& name: names)
     {
-        values.append(":" + name);
+        if (m_columnNames.contains(name)) values.append(":" + name);
     }
 
     m_query.prepare("INSERT INTO " + m_tableName + " (" +
@@ -74,7 +77,7 @@ bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
 
     for (const QString& name: this->propertyNames(T::staticMetaObject))
     {
-        placeholders.append(name + " = :" + name);
+        if (m_columnNames.contains(name)) placeholders.append(name + " = :" + name);
     }
 
     m_query.prepare("UPDATE " + m_tableName + " SET " +
@@ -185,8 +188,10 @@ void GenericRepository<T>::bindQuery(QSqlQuery& query, const QMetaObject& meta, 
 {
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
-        query.bindValue(QString(":") + QString(meta.property(i).name()),
-                        meta.property(i).readOnGadget(entity));
+        QString name = meta.property(i).name();
+        if (!m_columnNames.contains(name)) continue;
+
+        query.bindValue(QString(":") + name, meta.property(i).readOnGadget(entity));
     }
 }
 
@@ -195,6 +200,9 @@ void GenericRepository<T>::updateFromQuery(const QSqlQuery& query, const QMetaOb
 {
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
+        QString name = meta.property(i).name();
+        if (!m_columnNames.contains(name)) continue;
+
         QVariant value = query.value(meta.property(i).name());
 
         // workaround for enums
