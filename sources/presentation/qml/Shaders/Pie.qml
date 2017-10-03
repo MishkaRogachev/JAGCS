@@ -3,7 +3,7 @@ import QtQuick 2.6
 ShaderEffect {
     id: shader
 
-    property color color: palette.selectionColor
+    property color color: palette.highlightColor
     property real angle: 0
     property real pi: Math.PI
 
@@ -20,7 +20,7 @@ ShaderEffect {
 
     void main(void)
     {
-        gl_FragColor = atan2(qt_TexCoord0.y - 0.5, qt_TexCoord0.x - 0.5) > angle ?
+        gl_FragColor = atan2(qt_TexCoord0.y - 0.5, qt_TexCoord0.x - 0.5) + pi > angle ?
                              vec4(0.0, 0.0, 0.0, 0.0) : color;
     }"
 }

@@ -107,10 +107,10 @@ Controls.Frame {
                 Layout.fillWidth: true
             }
 
-            Controls.Button {
+            Controls.DelayButton {
                 text: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
-                onClicked: remove()
+                onActivated: remove()
                 iconColor: palette.dangerColor
                 Layout.fillWidth: true
             }

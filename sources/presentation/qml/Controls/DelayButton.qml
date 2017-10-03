@@ -11,11 +11,26 @@ Button {
 
     signal activated()
 
-    Shaders.Pie {
-        anchors.fill: background
-        rotation: 90
-        angle: progress * Math.PI * 2 - Math.PI
-        z: -1
+    background: Rectangle {
+        anchors.fill: parent
+        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        radius: 3
+        clip: true
+        color:  control.flat ? "transparent" : palette.buttonColor;
+
+        Shaders.Pie {
+            anchors.centerIn: parent
+            width: parent.height
+            height: parent.width
+            rotation: 90
+            angle: progress * Math.PI * 2
+        }
+
+        Shaders.Hatch {
+            anchors.fill: parent
+            color: palette.sunkenColor
+            visible: !control.enabled
+        }
     }
 
     Timer {
@@ -30,18 +45,24 @@ Button {
             else
             {
                 progress = 0;
-                counter.stop();
-                activated();
+                control.stop();
+                control.activated();
             }
         }
     }
 
-    onPressed: counter.start()
-    onCanceled: {
+    onPressed: start()
+    onCanceled: stop()
+    onReleased: stop()
+    onVisibleChanged: if (!visible) stop()
+    onEnabledChanged: if (!enabled) stop()
+
+    function start() {
         progress = 0;
-        counter.stop();
+        counter.start();
     }
-    onReleased: {
+
+    function stop() {
         progress = 0;
         counter.stop();
     }
