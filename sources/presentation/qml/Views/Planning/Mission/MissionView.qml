@@ -74,11 +74,11 @@ ColumnLayout {
             onClicked: addMission()
         }
 
-        Controls.Button {
+        Controls.DelayButton {
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.dangerColor
             enabled: selectedMission > 0 && assignedVehicle === 0
-            onClicked: removeMission()
+            onActivated: removeMission()
         }
 
         Controls.Label {

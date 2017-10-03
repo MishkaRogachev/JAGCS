@@ -155,11 +155,11 @@ Item {
         }
 
         RowLayout {
-            Controls.Button {
+            Controls.DelayButton {
                 iconSource: "qrc:/icons/remove.svg"
                 iconColor: palette.dangerColor
                 enabled: sequence > -1 && editEnabled
-                onClicked: remove()
+                onActivated: remove()
             }
 
             Controls.Button {

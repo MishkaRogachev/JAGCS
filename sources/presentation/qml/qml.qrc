@@ -3,8 +3,10 @@
         <file>JS/helper.js</file>
         <file>Shaders/Hatch.qml</file>
         <file>Shaders/OpacityBorder.qml</file>
+        <file>Shaders/Pie.qml</file>
         <file>Controls/ContentItem.qml</file>
         <file>Controls/Button.qml</file>
+        <file>Controls/DelayButton.qml</file>
         <file>Controls/ButtonBar.qml</file>
         <file>Controls/TabButton.qml</file>
         <file>Controls/TabBar.qml</file>
