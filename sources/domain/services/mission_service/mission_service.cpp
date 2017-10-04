@@ -416,6 +416,8 @@ void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& item)
     QMutexLocker locker(&d->mutex);
 
     MissionItemPtr oldCurrent = d->currentItems.take(vehicleId);
+    if (item == oldCurrent) return;
+
     if (item) d->currentItems[vehicleId] = item;
 
     if (oldCurrent) emit missionItemChanged(oldCurrent);

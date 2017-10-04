@@ -170,7 +170,7 @@ Item {
             }
 
             Controls.Label {
-                text: (sequence + 1) + "/" + count
+                text: (sequence) + "/" + count
                 horizontalAlignment: Qt.AlignHCenter
                 Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true

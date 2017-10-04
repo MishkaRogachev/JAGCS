@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Flickable {
+Flickable { // FIXME:
     id: root
 
     property var items: []
