@@ -6,7 +6,7 @@ import "../Shaders" as Shaders
 Button {
     id: control
 
-    property int delay: 1500
+    property int delay: 1000
     property real progress: 0.0
 
     signal activated()

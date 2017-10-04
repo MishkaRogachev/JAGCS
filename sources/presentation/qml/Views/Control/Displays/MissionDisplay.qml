@@ -34,8 +34,9 @@ BaseDisplay {
             Layout.columnSpan: 3
         }
 
-        Item {
+        Controls.Label { // TODO: Waypoint short & mode
             Layout.fillWidth: true
+            text: qsTr("WP:") + " " + itemsStatus.selectedItem
         }
 
         Controls.Button {
