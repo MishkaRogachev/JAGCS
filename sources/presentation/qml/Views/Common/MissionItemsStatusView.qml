@@ -35,6 +35,7 @@ Flickable {
             MissionItemView {
                 item: modelData
                 selected: selectedItem === item.sequence
+                current: currentItem === item.sequence
                 onSelectedChanged: {
                     if (!selected) return;
 

@@ -32,6 +32,7 @@ MissionItemsStatusPresenter::MissionItemsStatusPresenter(QObject* object):
             this, &MissionItemsStatusPresenter::updateItemsStatus);
     connect(d->service, &domain::MissionService::missionItemChanged,
             this, &MissionItemsStatusPresenter::updateItemsStatus);
+
 }
 
 MissionItemsStatusPresenter::~MissionItemsStatusPresenter()
@@ -68,6 +69,13 @@ void MissionItemsStatusPresenter::updateItemsStatus()
         {
             items.append(QVariant::fromValue(*item.data()));
         }
+
+        this->setViewProperty(PROPERTY(currentItem),
+                              d->service->currentSequenceForMission(d->mission->id()));
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(currentItem), -1);
     }
 
     this->setViewProperty(PROPERTY(items), items);

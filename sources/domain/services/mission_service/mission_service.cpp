@@ -123,6 +123,15 @@ bool MissionService::isItemCurrent(const MissionItemPtr& item) const
     return d->currentItems.values().contains(item);
 }
 
+int MissionService::currentSequenceForMission(int missionId) const
+{
+    for (const MissionItemPtr& item: d->currentItems.values())
+    {
+        if (item->missionId() == missionId) return item->sequence();
+    }
+    return -1;
+}
+
 MissionAssignmentPtr MissionService::missionAssignment(int missionId) const
 {
     QMutexLocker locker(&d->mutex);
