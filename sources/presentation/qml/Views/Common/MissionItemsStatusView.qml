@@ -30,7 +30,7 @@ Flickable {
         }
 
         Repeater {
-            model: items // TODO: current and passed indication
+            model: items
 
             MissionItemView {
                 item: modelData

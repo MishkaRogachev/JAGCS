@@ -57,6 +57,7 @@ void MissionItemsStatusPresenter::connectView(QObject* view)
     connect(view, SIGNAL(selectItem(int)), this, SIGNAL(selectItem(int)));
 
     this->updateItemsStatus();
+    this->updateSelectedItem();
 }
 
 void MissionItemsStatusPresenter::updateItemsStatus()

@@ -19,8 +19,6 @@ namespace presentation
         ~MissionInstrumentPresenter() override;
 
     public slots:
-        void updateWaypoints();
-        void updateCurrentWaypoint();
         void onDownloadMission();
         void onCancelSyncMission();
 

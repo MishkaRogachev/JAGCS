@@ -5,11 +5,10 @@ import JAGCS 1.0
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
+import "../../Common"
+
 BaseDisplay {
     id: root
-
-    property int waypoint: 0
-    property alias waypoints: waypointBox.model
 
     property bool armed: false
     property bool guided: false
@@ -18,8 +17,6 @@ BaseDisplay {
     signal setWaypoint(int item)
     signal downloadMission()
     signal cancelSyncMission()
-
-    onWaypointChanged: waypointBox.currentIndex = waypointBox.model.indexOf(waypoint.toString())
 
     implicitHeight: grid.height
     implicitWidth: grid.implicitWidth
@@ -30,19 +27,20 @@ BaseDisplay {
         width: root.width
         columns: 3
 
-        Controls.Label {
-            text: qsTr("WP:")
-            font.pixelSize: palette.fontPixelSize * 0.7
-            font.bold: true
+        MissionItemsStatusView {
+            id: itemsStatus
+            objectName: "itemsStatus"
+            Layout.fillWidth: true
+            Layout.columnSpan: 3
+        }
+
+        Item {
             Layout.fillWidth: true
         }
 
-        Controls.ComboBox {
-            id: waypointBox
-            model: []
-            onCurrentTextChanged: setWaypoint(currentText)
-            enabled: guided
-            Layout.fillWidth: true
+        Controls.Button {
+            iconSource: "qrc:/icons/right.svg"
+            onClicked: setWaypoint(itemsStatus.selectedItem)
         }
 
         Controls.Button {

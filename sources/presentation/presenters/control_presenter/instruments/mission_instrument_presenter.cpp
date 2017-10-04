@@ -7,9 +7,9 @@
 // Internal
 #include "service_registry.h"
 #include "mission_service.h"
-#include "mission.h"
 #include "mission_assignment.h"
-#include "mission_item.h"
+
+#include "mission_items_status_presenter.h"
 
 using namespace presentation;
 
@@ -19,7 +19,8 @@ public:
     domain::MissionService* service;
 
     dao::MissionAssignmentPtr assignment;
-    bool updating = false;
+
+    MissionItemsStatusPresenter* itemsStatus;
 };
 
 MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* parent):
@@ -29,12 +30,17 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
     d->service = domain::ServiceRegistry::missionService();
     d->assignment = d->service->vehicleAssignment(vehicleId);
 
-    connect(d->service, &domain::MissionService::missionItemChanged,
-            this, &MissionInstrumentPresenter::updateCurrentWaypoint);
-    connect(d->service, &domain::MissionService::missionItemAdded,
-            this, &MissionInstrumentPresenter::updateWaypoints);
-    connect(d->service, &domain::MissionService::missionItemRemoved,
-            this, &MissionInstrumentPresenter::updateWaypoints);
+    d->itemsStatus = new MissionItemsStatusPresenter(this);
+    if (d->assignment)
+    {
+        d->itemsStatus->selectMission(d->service->mission(d->assignment->missionId()));
+        connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
+                this, [this](int sequence) {
+            d->itemsStatus->selectMissionItem(
+                        d->service->missionItem(d->assignment->missionId(), sequence));
+        });
+    }
+
     connect(d->service, &domain::MissionService::assignmentChanged,
             this, [this](const dao::MissionAssignmentPtr& assignment) {
         if (d->assignment.isNull() || d->assignment != assignment) return;
@@ -46,35 +52,6 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
 
 MissionInstrumentPresenter::~MissionInstrumentPresenter()
 {}
-
-void MissionInstrumentPresenter::updateWaypoints()
-{
-    d->updating = true;
-
-    QStringList waypoints;
-    if (d->assignment)
-    {
-        dao::MissionPtr mission = d->service->mission(d->assignment->missionId());
-
-        for (int i = 0; i < mission->count(); ++i)
-        {
-            waypoints.append(QString::number(i));
-        }
-    }
-
-    this->setViewsProperty(PROPERTY(waypoints), QVariant::fromValue(waypoints));
-    d->updating = false;
-}
-
-void MissionInstrumentPresenter::updateCurrentWaypoint()
-{
-    if (d->assignment.isNull()) return;
-    d->updating = true;
-
-    dao::MissionItemPtr item = d->service->currentWaypoint(d->assignment->vehicleId());
-    this->setViewsProperty(PROPERTY(waypoint), item ? item->sequence() : -1);
-    d->updating = false;
-}
 
 void MissionInstrumentPresenter::onDownloadMission()
 {
@@ -88,18 +65,17 @@ void MissionInstrumentPresenter::onCancelSyncMission()
 
 void MissionInstrumentPresenter::connectView(QObject* view)
 {
+    QObject* statusView = view->findChild<QObject*>(NAME(itemsStatus));
+    if (statusView) d->itemsStatus->setView(statusView);
+
     connect(view, SIGNAL(setWaypoint(int)), this, SLOT(onSetWaypoint(int)));
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
-
-    this->updateWaypoints();
-    this->updateCurrentWaypoint();
 }
 
 void MissionInstrumentPresenter::onSetWaypoint(int item)
 {
-    if (d->updating || d->assignment.isNull()) return;
-
+    if (d->assignment.isNull()) return;
     d->service->selectCurrentItem(d->assignment->vehicleId(), item);
 }
 
