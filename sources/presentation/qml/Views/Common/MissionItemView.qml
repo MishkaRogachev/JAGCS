@@ -10,6 +10,8 @@ Rectangle {
     property bool current: false
     property var item
 
+    property alias selectionAvalible: area.visible
+
     signal selectionRequest()
 
     implicitWidth: palette.controlBaseSize
@@ -61,6 +63,7 @@ Rectangle {
     }
 
     MouseArea {
+        id: area
         anchors.fill: parent
         onPressed: selectionRequest()
     }

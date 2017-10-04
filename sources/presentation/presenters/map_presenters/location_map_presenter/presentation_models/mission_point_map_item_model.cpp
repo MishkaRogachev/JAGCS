@@ -43,10 +43,14 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     if (index.row() < 0 || index.row() >= m_items.count()) return QVariant();
 
     const dao::MissionItemPtr& item = m_items.at(index.row());
+    if (item.isNull()) return QVariant();
+
     const dao::MissionPtr& mission = m_service->mission(item->missionId());
 
     switch (role)
     {
+    case ItemRole:
+        return QVariant::fromValue(*item.data());
     case ItemCoordinateRole:
     {
         if (item->isPositionatedItem())
@@ -60,16 +64,6 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
         return settings::Provider::value(settings::mission::visibility + "/" + mission->id()).toBool()
                 && (item->isPositionatedItem());
     }
-    case ItemSequenceRole:
-        return QVariant::fromValue(item->sequence());
-    case ItemIconRole:
-        if (item->command() == dao::MissionItem::Home)
-            return "qrc:/icons/home.svg";
-        else if (item->command() == dao::MissionItem::Takeoff)
-            return "qrc:/icons/takeoff.svg";
-        else if (item->command() == dao::MissionItem::Landing)
-            return "qrc:/icons/landing.svg";
-        return QString("");
     case ItemAcceptanceRadius:
     {
         if (item->command() == dao::MissionItem::Waypoint)
@@ -113,7 +107,7 @@ void MissionPointMapItemModel::onMissionItemRemoved(const dao::MissionItemPtr& i
     m_items.removeOne(item);
     this->endRemoveRows();
 
-    emit dataChanged(this->index(row), this->index(m_items.count() - 1), { ItemSequenceRole });
+    emit dataChanged(this->index(row), this->index(m_items.count() - 1), { ItemRole });
 }
 
 void MissionPointMapItemModel::onMissionItemChanged(const dao::MissionItemPtr& item)
@@ -144,13 +138,13 @@ void MissionPointMapItemModel::setSelectedItem(const dao::MissionItemPtr& item)
     if (oldItem)
     {
         QModelIndex index = this->itemIndex(oldItem);
-        if (index.isValid()) emit dataChanged(index, index, { ItemSelected });
+        if (index.isValid()) emit dataChanged(index, index, { ItemRole, ItemSelected });
     }
 
     if (item)
     {
         QModelIndex index = this->itemIndex(item);
-        if (index.isValid()) emit dataChanged(index, index, { ItemSelected });
+        if (index.isValid()) emit dataChanged(index, index, { ItemRole, ItemSelected });
     }
 }
 
@@ -165,10 +159,9 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
+    roles[ItemRole] = "itemPtr";
     roles[ItemCoordinateRole] = "itemCoordinate";
     roles[ItemVisibleRole] = "itemVisible";
-    roles[ItemSequenceRole] = "itemSeq";
-    roles[ItemIconRole] = "itemIcon";
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
     roles[ItemReached] = "itemReached";

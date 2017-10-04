@@ -21,10 +21,9 @@ namespace presentation
     public:
         enum MissionPointMapItemRoles
         {
-            ItemCoordinateRole = Qt::UserRole + 1,
+            ItemRole = Qt::UserRole + 1,
+            ItemCoordinateRole,
             ItemVisibleRole,
-            ItemSequenceRole,
-            ItemIconRole,
             ItemAcceptanceRadius,
             ItemRadius,
             ItemReached,
