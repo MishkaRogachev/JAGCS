@@ -77,7 +77,6 @@ Item {
                 ctx.stroke();
 
                 if (major) ctx.fillText(i, mirrored ? 2 + textOrigin : -2 - textOrigin, pos);
-                    //ctx.translate(textOrigin, pos);
             }
 
             var markHeight = label.height;
@@ -92,7 +91,7 @@ Item {
             ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
             ctx.stroke();
 
-            if (error) {
+            if (targetValue != value) {
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = palette.activeMissionColor;
                 var errorPos = height - Helper.mapToRange(targetValue, minValue, maxValue, height);

@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
@@ -85,6 +86,9 @@ BaseDisplay {
             case 1: return value + Helper.mpsToKph(airspeedError);
             }
         }
+        onSetValue: command.executeCommand(Command.SetSpeed,
+                                           [ 0, speedUnits ? Helper.kphToMps(newValue) : newValue,
+                                                             -1, 0])
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -161,6 +165,7 @@ BaseDisplay {
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         targetValue: value + altitudeError
+        onSetValue: command.executeCommand(Command.SetAltitude, [newValue, 0])
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ? 0 : homeAltitude
