@@ -23,6 +23,7 @@ namespace presentation
 
     private slots:
         void updateItemsStatus();
+        void updateMissionItem(const dao::MissionItemPtr& item);
         void updateSelectedItem();
 
     signals:

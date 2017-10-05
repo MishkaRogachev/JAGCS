@@ -8,7 +8,10 @@ Rectangle {
 
     property bool selected: false
     property bool current: false
-    property var item
+    property bool reached: false
+    property int status: MissionItem.NotActual
+    property int command: MissionItem.UnknownCommand
+    property int sequence: -1
 
     property alias selectionAvalible: area.visible
 
@@ -20,11 +23,11 @@ Rectangle {
     border.width: width / 10
     color: selected ? palette.selectionColor : palette.raisedColor
     border.color: {
-        switch (item.status) {
-        case MissionItem.Actual:
-            if (current) return palette.activeMissionColor;
-            if (item.reached) return palette.positiveColor;
-            return palette.missionColor;
+        if (current) return palette.activeMissionColor;
+        if (reached) return palette.positiveColor;
+
+        switch (status) {
+        case MissionItem.Actual: return palette.missionColor;
         case MissionItem.StatusNone: return palette.sunkenColor;
         case MissionItem.Downloading:
         case MissionItem.Uploading: return palette.cautionColor;
@@ -37,7 +40,7 @@ Rectangle {
         id: icon
         anchors.centerIn: parent
         source: {
-            switch (item.command) {
+            switch (command) {
             case MissionItem.Home:
                 return "qrc:/icons/home.svg";
             case MissionItem.Takeoff:
@@ -56,7 +59,7 @@ Rectangle {
 
     Controls.Label {
         visible: !icon.visible
-        text: item.sequence
+        text: sequence
         color: palette.textColor
         anchors.centerIn: parent
         font.bold: true

@@ -32,8 +32,6 @@ namespace domain
         dao::MissionAssignmentPtrList missionAssignments() const;
 
         dao::MissionItemPtr currentWaypoint(int vehicleId) const;
-        bool isItemCurrent(const dao::MissionItemPtr& item) const;
-        int currentSequenceForMission(int missionId) const;
 
     public slots:
         bool save(const dao::MissionPtr& mission);
@@ -54,7 +52,7 @@ namespace domain
         void assign(int missionId, int vehicleId);
         void unassign(int missionId);
 
-        void setCurrentItem(int vehicleId, const dao::MissionItemPtr& item);
+        void setCurrentItem(int vehicleId, const dao::MissionItemPtr& current);
         void swapItems(const dao::MissionItemPtr& first, const dao::MissionItemPtr& second);
 
     signals:

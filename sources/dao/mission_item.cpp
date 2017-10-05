@@ -95,11 +95,6 @@ void MissionItem::setLongitude(double longitude)
     m_coordinate.setLongitude(longitude);
 }
 
-void MissionItem::setReached(bool reached)
-{
-    m_reached = reached;
-}
-
 QGeoCoordinate MissionItem::coordinate() const
 {
     return m_coordinate;
@@ -190,6 +185,21 @@ MissionItem::Status MissionItem::status() const
 void MissionItem::setStatus(Status status)
 {
     m_status = status;
+}
+
+void MissionItem::setCurrent(bool current)
+{
+    m_current = current;
+}
+
+bool MissionItem::isCurrent() const
+{
+    return m_current;
+}
+
+void MissionItem::setReached(bool reached)
+{
+    m_reached = reached;
 }
 
 bool MissionItem::isReached() const

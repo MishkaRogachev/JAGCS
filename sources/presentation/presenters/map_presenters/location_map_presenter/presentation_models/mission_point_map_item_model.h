@@ -26,8 +26,6 @@ namespace presentation
             ItemVisibleRole,
             ItemAcceptanceRadius,
             ItemRadius,
-            ItemReached,
-            ItemCurrent,
             ItemSelected,
             ItemIndex
         };

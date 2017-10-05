@@ -31,8 +31,7 @@ MissionItemsStatusPresenter::MissionItemsStatusPresenter(QObject* object):
     connect(d->service, &domain::MissionService::missionItemRemoved,
             this, &MissionItemsStatusPresenter::updateItemsStatus);
     connect(d->service, &domain::MissionService::missionItemChanged,
-            this, &MissionItemsStatusPresenter::updateItemsStatus);
-
+            this, &MissionItemsStatusPresenter::updateMissionItem);
 }
 
 MissionItemsStatusPresenter::~MissionItemsStatusPresenter()
@@ -70,17 +69,17 @@ void MissionItemsStatusPresenter::updateItemsStatus()
         {
             items.append(QVariant::fromValue(*item.data()));
         }
-
-        this->setViewProperty(PROPERTY(currentItem),
-                              d->service->currentSequenceForMission(d->mission->id()));
-    }
-    else
-    {
-        this->setViewProperty(PROPERTY(currentItem), -1);
     }
 
     this->setViewProperty(PROPERTY(items), items);
     this->updateSelectedItem();
+}
+
+void MissionItemsStatusPresenter::updateMissionItem(const dao::MissionItemPtr& item)
+{
+    if (d->mission.isNull() || item->missionId() != d->mission->id()) return;
+
+    this->invokeViewMethod("updateItem", QVariant::fromValue(*item));
 }
 
 void MissionItemsStatusPresenter::updateSelectedItem()

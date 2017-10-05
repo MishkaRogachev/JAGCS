@@ -79,10 +79,6 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
             return item->parameter(dao::MissionItem::Radius, 0);
         else return 0;
     }
-    case ItemReached:
-        return item->isReached();
-    case ItemCurrent:
-        return m_service->isItemCurrent(item);
     case ItemSelected:
         return item == m_selectedItem;
     case ItemIndex:
@@ -164,8 +160,6 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemVisibleRole] = "itemVisible";
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
-    roles[ItemReached] = "itemReached";
-    roles[ItemCurrent] = "itemCurrent";
     roles[ItemSelected] = "itemSelected";
     roles[ItemIndex] = "itemIndex";
 

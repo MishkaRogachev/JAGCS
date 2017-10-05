@@ -116,22 +116,6 @@ MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
     return d->currentItems.value(vehicleId);
 }
 
-bool MissionService::isItemCurrent(const MissionItemPtr& item) const
-{
-    QMutexLocker locker(&d->mutex);
-
-    return d->currentItems.values().contains(item);
-}
-
-int MissionService::currentSequenceForMission(int missionId) const
-{
-    for (const MissionItemPtr& item: d->currentItems.values())
-    {
-        if (item->missionId() == missionId) return item->sequence();
-    }
-    return -1;
-}
-
 MissionAssignmentPtr MissionService::missionAssignment(int missionId) const
 {
     QMutexLocker locker(&d->mutex);
@@ -411,18 +395,26 @@ void MissionService::unassign(int missionId)
     if (!assignment.isNull()) this->remove(assignment);
 }
 
-void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& item)
+void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& current)
 {
     QMutexLocker locker(&d->mutex);
 
-    MissionItemPtr oldCurrent = d->currentItems.take(vehicleId);
-    if (item == oldCurrent) return;
+    MissionItemPtr oldCurrent = d->currentItems.value(vehicleId);
+    if (oldCurrent == current) return;
 
-    if (item) d->currentItems[vehicleId] = item;
+    if (oldCurrent)
+    {
+        oldCurrent->setCurrent(false);
+        emit missionItemChanged(oldCurrent);
+    }
 
-    if (oldCurrent) emit missionItemChanged(oldCurrent);
-    if (item) emit missionItemChanged(item);
-    // TODO: drop current on vehicle's removing
+    if (current)
+    {
+        current->setCurrent(true);
+        d->currentItems[vehicleId] = current;
+        emit missionItemChanged(current);
+    }
+    else if (oldCurrent) d->currentItems.remove(vehicleId);
 }
 
 void MissionService::swapItems(const MissionItemPtr& first, const MissionItemPtr& second)

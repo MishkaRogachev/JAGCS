@@ -1,17 +1,26 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Flickable { // FIXME:
+Flickable {
     id: root
 
-    property var items: []
     property int selectedItem: -1
-    property int currentItem: -1
+
+    property alias items: repeater.model
 
     signal selectItem(int sequence)
+
+    function updateItem(item) {
+        var view = repeater.itemAt(item.sequence);
+        if (!view) return;
+
+        view.current = item.current;
+        view.reached = item.reached;
+        view.status = item.status;
+        view.command = item.command;
+    }
 
     implicitHeight: row.height
     contentWidth: row.width
@@ -23,19 +32,23 @@ Flickable { // FIXME:
         spacing: 1
 
         Controls.Label {
-            visible: items.length == 0
+            visible: items.length === 0
             text: qsTr("No waypoints")
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: root.width
         }
 
         Repeater {
-            model: items
+            id: repeater
+            model: []
 
             MissionItemView {
-                item: modelData
-                selected: selectedItem === item.sequence
-                current: currentItem === item.sequence
+                selected: selectedItem === sequence
+                current: modelData.current
+                reached: modelData.reached
+                status: modelData.status
+                command: modelData.command
+                sequence: modelData.sequence
                 onSelectedChanged: {
                     if (!selected) return;
 
@@ -46,7 +59,7 @@ Flickable { // FIXME:
                         root.contentX = x;
                     }
                 }
-                onSelectionRequest: selectItem(item.sequence)
+                onSelectionRequest: selectItem(sequence)
             }
         }
     }

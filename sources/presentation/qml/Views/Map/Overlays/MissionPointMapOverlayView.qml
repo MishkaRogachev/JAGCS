@@ -13,9 +13,12 @@ MapItemView {
         z: 500
 
         sourceItem: MissionItemView {
-            item: itemPtr
             selected: itemSelected
-            current: itemCurrent
+            current: itemPtr.current
+            reached: itemPtr.reached
+            status: itemPtr.status
+            command: itemPtr.command
+            sequence: itemPtr.sequence
             selectionAvalible: !picking
             onSelectionRequest: pointModel.setSelectedMissionItem(itemIndex)
         }

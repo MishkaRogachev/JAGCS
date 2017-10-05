@@ -25,7 +25,8 @@ namespace dao
         // TODO: replace parameters with command arguments
         Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
         Q_PROPERTY(Status status READ status WRITE setStatus)
-        Q_PROPERTY(bool reached READ isReached WRITE setReached)
+        Q_PROPERTY(bool current READ isCurrent WRITE setCurrent)
+        Q_PROPERTY(bool reached READ isCurrent WRITE setReached)
 
     public:
         enum Command
@@ -109,6 +110,9 @@ namespace dao
         double longitude() const;
         void setLongitude(double longitude);
 
+        QGeoCoordinate coordinate() const;
+        void setCoordinate(const QGeoCoordinate& coordinate);
+
         QString parameters() const;
         void setParameters(const QString& parameters);
         QVariant parameter(Parameter key, const QVariant& parameter = QVariant());
@@ -122,11 +126,11 @@ namespace dao
         Status status() const;
         void setStatus(Status status);
 
+        bool isCurrent() const;
+        void setCurrent(bool current);
+
         bool isReached() const;
         void setReached(bool reached);
-
-        QGeoCoordinate coordinate() const;
-        void setCoordinate(const QGeoCoordinate& coordinate);
 
     private:
         int m_missionId = 0;
@@ -137,6 +141,7 @@ namespace dao
         bool m_altitudeRelative = false;
         QMap<Parameter, QVariant> m_parameters;
         Status m_status = NotActual;
+        bool m_current = false;
         bool m_reached = false;
 
         Q_ENUM(Command)
