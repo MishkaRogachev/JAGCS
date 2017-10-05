@@ -65,7 +65,7 @@ BaseDisplay {
         value: throttle
     }
 
-    Indicators.Ladder {
+    Indicators.CommandLadder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: ai.left
@@ -78,11 +78,11 @@ BaseDisplay {
             case 1: return Helper.mpsToKph(indicatedAirspeed);
             }
         }
-        error: {
+        targetValue: {
             switch (speedUnits) {
             default:
-            case 0: return airspeedError;
-            case 1: return Helper.mpsToKph(airspeedError);
+            case 0: return value + airspeedError;
+            case 1: return value + Helper.mpsToKph(airspeedError);
             }
         }
         minValue: value + minSpeed
@@ -153,14 +153,14 @@ BaseDisplay {
         maxValue: 10
     }
 
-    Indicators.Ladder {
+    Indicators.CommandLadder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: ai.right
         width: (root.width - ai.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
-        error: altitudeError
+        targetValue: value + altitudeError
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ? 0 : homeAltitude

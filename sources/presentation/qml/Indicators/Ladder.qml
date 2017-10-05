@@ -1,18 +1,17 @@
-import QtQuick 2.0
+import QtQuick 2.6
 import "qrc:/JS/helper.js" as Helper
 
-import "../Controls" as Controls
 import "../Shaders" as Shaders
 
 Item {
     id: root
 
     property int value: 0
+    property int targetValue: 0
     property int warningValue: minValue
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
-    property int error: 0
 
     property int fontPixelSize: Math.max(height * 0.075, palette.fontPixelSize * 0.5)
     property int minorTickSize: fontPixelSize * 0.4
@@ -96,7 +95,7 @@ Item {
             if (error) {
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = palette.activeMissionColor;
-                var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
+                var errorPos = height - Helper.mapToRange(targetValue, minValue, maxValue, height);
 
                 ctx.beginPath();
                 ctx.moveTo(0, errorPos);
