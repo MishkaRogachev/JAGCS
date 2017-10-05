@@ -7,7 +7,7 @@ Item {
     id: root
 
     property int value: 0
-    property int targetValue: 0
+    property int error: 0
     property int warningValue: minValue
     property int minValue: 0
     property int maxValue: 100
@@ -91,10 +91,10 @@ Item {
             ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
             ctx.stroke();
 
-            if (targetValue != value) {
+            if (error) {
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = palette.activeMissionColor;
-                var errorPos = height - Helper.mapToRange(targetValue, minValue, maxValue, height);
+                var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
 
                 ctx.beginPath();
                 ctx.moveTo(0, errorPos);

@@ -16,7 +16,7 @@ Ladder {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -parent.height / 3
         visible: controlEnabled
-        onClicked: setValue(targetValue + 1)
+        onClicked: setValue(value + 1)
     }
 
     Controls.Button {
@@ -26,6 +26,6 @@ Ladder {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: parent.height / 3
         visible: controlEnabled
-        onClicked: setValue(targetValue - 1)
+        onClicked: setValue(value - 1)
     }
 }

@@ -72,20 +72,8 @@ BaseDisplay {
         anchors.right: ai.left
         width: (root.width - ai.width) / 2
         height: parent.height * 0.7
-        value: {
-            switch (speedUnits) {
-            default:
-            case 0: return indicatedAirspeed;
-            case 1: return Helper.mpsToKph(indicatedAirspeed);
-            }
-        }
-        targetValue: {
-            switch (speedUnits) {
-            default:
-            case 0: return value + airspeedError;
-            case 1: return value + Helper.mpsToKph(airspeedError);
-            }
-        }
+        value: speedUnits ? Helper.mpsToKph(indicatedAirspeed) : indicatedAirspeed
+        error: speedUnits ? Helper.mpsToKph(airspeedError) : airspeedError
         onSetValue: command.executeCommand(Command.SetSpeed,
                                            [ 0, speedUnits ? Helper.kphToMps(newValue) : newValue,
                                                              -1, 0])
@@ -164,7 +152,7 @@ BaseDisplay {
         width: (root.width - ai.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
-        targetValue: value + altitudeError
+        error: altitudeError
         onSetValue: command.executeCommand(Command.SetAltitude, [newValue, 0])
         minValue: value + minAltitude
         maxValue: value + maxAltitude
