@@ -13,7 +13,7 @@ T.TextField {
     selectByMouse: true
     implicitWidth: palette.controlBaseSize * 4
     implicitHeight: palette.controlBaseSize
-    padding: palette.margins
+    leftPadding: palette.padding
     verticalAlignment: Text.AlignVCenter
     opacity: enabled ? 1 : 0.33
 

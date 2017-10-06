@@ -32,6 +32,7 @@ Item {
             font.pixelSize: palette.fontPixelSize
             color: enabled ? textColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
+            verticalAlignment: Text.AlignVCenter
         }
     }
 }
