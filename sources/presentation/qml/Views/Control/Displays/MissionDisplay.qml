@@ -25,7 +25,7 @@ BaseDisplay {
         id: grid
         anchors.top: parent.top
         width: root.width
-        columns: 3
+        columns: 4
 
         MissionItemsStatusView {
             id: itemsStatus
@@ -34,20 +34,31 @@ BaseDisplay {
             Layout.columnSpan: 3
         }
 
+        Controls.Button {
+            iconSource: "qrc:/icons/download.svg"
+            highlighted: downloading
+            onClicked: downloading ? cancelSyncMission() : downloadMission()
+        }
+
         Controls.Label { // TODO: Waypoint short & mode
             Layout.fillWidth: true
-            text: qsTr("WP:") + " " + itemsStatus.selectedItem
+            text: qsTr("WP:") + " " + (itemsStatus.selectedItem > -1 ? itemsStatus.selectedItem : "-")
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/right.svg"
             onClicked: setWaypoint(itemsStatus.selectedItem)
+            enabled: itemsStatus.selectedItem > -1
         }
 
         Controls.Button {
-            iconSource: "qrc:/icons/download.svg"
-            highlighted: downloading
-            onClicked: downloading ? cancelSyncMission() : downloadMission()
+            iconSource: "qrc:/icons/play.svg"
+            onClicked: commander.executeCommand(Command.Start, [])
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/home.svg"
+            onClicked: commander.executeCommand(Command.Return, [])
         }
     }
 }

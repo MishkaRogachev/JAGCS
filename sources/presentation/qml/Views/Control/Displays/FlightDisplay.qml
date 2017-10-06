@@ -74,7 +74,7 @@ BaseDisplay {
         height: parent.height * 0.7
         value: speedUnits ? Helper.mpsToKph(indicatedAirspeed) : indicatedAirspeed
         error: speedUnits ? Helper.mpsToKph(airspeedError) : airspeedError
-        onSetValue: command.executeCommand(Command.SetSpeed,
+        onSetValue: commander.executeCommand(Command.SetSpeed,
                                            [ 0, speedUnits ? Helper.kphToMps(newValue) : newValue,
                                                              -1, 0])
         minValue: value + minSpeed
@@ -153,7 +153,7 @@ BaseDisplay {
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         error: altitudeError
-        onSetValue: command.executeCommand(Command.SetAltitude, [newValue, 0])
+        onSetValue: commander.executeCommand(Command.SetAltitude, [newValue, 0])
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ? 0 : homeAltitude

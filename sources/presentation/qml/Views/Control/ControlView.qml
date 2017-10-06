@@ -46,10 +46,10 @@ Controls.Pane {
 
             Controls.Button {
                 id: commandButton
-                iconSource: command.visible ? "qrc:/icons/left.svg" : "qrc:/icons/right.svg"
+                iconSource: commander.visible ? "qrc:/icons/left.svg" : "qrc:/icons/right.svg"
                 enabled: dashboard.online
-                onEnabledChanged: command.visible = false
-                onClicked: command.visible = !command.visible
+                onEnabledChanged: commander.visible = false
+                onClicked: commander.visible = !commander.visible
             }
         }
 
@@ -60,7 +60,7 @@ Controls.Pane {
     }
 
     CommandView {
-        id: command
+        id: commander
         objectName: "command"
         anchors.top: parent.top
         anchors.left: background.left
