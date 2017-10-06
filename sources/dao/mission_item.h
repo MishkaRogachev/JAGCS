@@ -26,7 +26,7 @@ namespace dao
         Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
         Q_PROPERTY(Status status READ status WRITE setStatus)
         Q_PROPERTY(bool current READ isCurrent WRITE setCurrent)
-        Q_PROPERTY(bool reached READ isCurrent WRITE setReached)
+        Q_PROPERTY(bool reached READ isReached WRITE setReached)
 
     public:
         enum Command

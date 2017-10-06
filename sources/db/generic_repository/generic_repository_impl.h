@@ -25,13 +25,15 @@ GenericRepository<T>::~GenericRepository()
 template<class T>
 bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
 {
-    QStringList names = this->propertyNames(T::staticMetaObject);
+    QStringList names;
     QStringList values;
 
-    for (const QString& name: names)
+    for (const QString& name: this->propertyNames(T::staticMetaObject))
     {
-        if (m_columnNames.contains(name)) values.append(":" + name);
-        else names.removeOne(name);
+        if (!m_columnNames.contains(name)) continue;
+
+        names.append(name);
+        values.append(":" + name);
     }
 
     m_query.prepare("INSERT INTO " + m_tableName + " (" +
