@@ -170,7 +170,7 @@ Item {
             }
 
             Controls.Label {
-                text: (sequence) + "/" + count
+                text: sequence > -1 ? (sequence + "/" + count) : "-"
                 horizontalAlignment: Qt.AlignHCenter
                 Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true
@@ -193,10 +193,12 @@ Item {
         Controls.Label {
             text: qsTr("Move")
             Layout.fillWidth: true
+            visible: sequence > -1
         }
 
         RowLayout {
             Layout.alignment: Qt.AlignRight
+            visible: sequence > -1
 
             Controls.Button {
                 iconSource: "qrc:/icons/left_left.svg"
@@ -214,11 +216,13 @@ Item {
         Controls.Label {
             text: qsTr("Command")
             Layout.fillWidth: true
+            visible: sequence > -1
         }
 
         Controls.ComboBox {
             id: commandBox
-            enabled: editEnabled && sequence > -1
+            visible: sequence > -1
+            enabled: editEnabled
             currentIndex: 0
             onCurrentIndexChanged: {
                 updateCommand(currentIndex);
