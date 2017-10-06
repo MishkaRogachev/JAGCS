@@ -16,10 +16,10 @@ void MapSettingsPresenter::updateView()
 {
     this->setViewProperty(PROPERTY(plugin),
                           settings::Provider::value(settings::map::plugin));
-    this->setViewProperty(PROPERTY(activeMapType),
-                          settings::Provider::value(settings::map::activeMapType));
-    this->setViewProperty(PROPERTY(tileHost),
-                          settings::Provider::value(settings::map::tileHost));
+    this->setViewProperty(PROPERTY(osmActiveMapType),
+                          settings::Provider::value(settings::map::osmActiveMapType));
+    this->setViewProperty(PROPERTY(mapBoxGlActiveMapType),
+                          settings::Provider::value(settings::map::mapBoxGlActiveMapType));
     this->setViewProperty(PROPERTY(cacheSize),
                           settings::Provider::value(settings::map::cacheSize));
     this->setViewProperty(PROPERTY(highdpiTiles),
@@ -34,10 +34,10 @@ void MapSettingsPresenter::save()
 {
     settings::Provider::setValue(settings::map::plugin,
                                  this->viewProperty(PROPERTY(plugin)));
-    settings::Provider::setValue(settings::map::activeMapType,
-                                 this->viewProperty(PROPERTY(activeMapType)));
-    settings::Provider::setValue(settings::map::tileHost,
-                                 this->viewProperty(PROPERTY(tileHost)));
+    settings::Provider::setValue(settings::map::osmActiveMapType,
+                                 this->viewProperty(PROPERTY(osmActiveMapType)));
+    settings::Provider::setValue(settings::map::mapBoxGlActiveMapType,
+                                 this->viewProperty(PROPERTY(mapBoxGlActiveMapType)));
     settings::Provider::setValue(settings::map::cacheSize,
                                  this->viewProperty(PROPERTY(cacheSize)));
     settings::Provider::setValue(settings::map::highdpiTiles,

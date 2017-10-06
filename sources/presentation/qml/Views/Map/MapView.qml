@@ -27,20 +27,8 @@ Map {
 
     signal picked(var coordinate)
 
-    implicitHeight: width
-
-    plugin: {
-        switch (mapPlugin) {
-        case 1:
-            return mapbox;
-        case 0:
-         default:
-            return osmPlugin;
-        }
-    }
-
     Plugin {
-        id: osmPlugin
+        id: osm
         name: "osm"
 
         PluginParameter { name: "osm.useragent"; value: "JAGCS" }
@@ -50,12 +38,14 @@ Map {
     }
 
     Plugin {
-        id: mapbox
+        id: mapBoxGl
         name: "mapboxgl"
 
         PluginParameter { name: "mapboxgl.mapping.cache.size"; value: settings.value("Map/cacheSize", 0) }
     }
 
+    plugin: mapPlugin ? mapBoxGl : osm // TODO: different map views for map type
+    implicitHeight: width
     activeMapType: supportedMapTypes[settings.value("Map/activeMapType", 0)]
     gesture.flickDeceleration: 3000
     gesture.enabled: true
@@ -112,7 +102,6 @@ Map {
     }
 
     Component.onDestruction: if (visible) saveViewport()
-
     onVisibleChanged: if (!visible) saveViewport()
     onTrackingVehicleChanged: setGesturesEnabled(!trackingVehicle)
 

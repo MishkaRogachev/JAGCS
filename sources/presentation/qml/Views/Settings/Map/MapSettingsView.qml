@@ -11,8 +11,8 @@ Controls.Frame {
 
     property alias plugin: pluginBox.currentIndex
     property alias cacheSize: cacheSizeBox.value
-    property alias tileHost: tileHostField.text
-    property alias activeMapType: mapTypeBox.currentIndex
+    property alias osmActiveMapType: osmActiveMapTypeBox.currentIndex
+    property alias mapBoxGlActiveMapType: mapBoxGlActiveMapTypeBox.currentIndex
     property alias highdpiTiles: highdpiTilesBox.checked
     property alias trackLength: trackLengthSlider.value
 
@@ -42,24 +42,34 @@ Controls.Frame {
         }
 
         Controls.ComboBox {
-            id: mapTypeBox
+            id: osmActiveMapTypeBox
             model: []
             onCurrentIndexChanged: changed = true
             Layout.fillWidth: true
+            visible: plugin === 0
         }
 
-        Controls.Label {
-            text: qsTr("Tile host")
+        Controls.ComboBox {
+            id: mapBoxGlActiveMapTypeBox
+            model: []
+            onCurrentIndexChanged: changed = true
             Layout.fillWidth: true
+            visible: plugin === 1
         }
 
-        Controls.TextField {
-            id: tileHostField
-            placeholderText: qsTr("Enter tile host url")
-            Layout.fillWidth: true
-            onTextChanged: changed = true
-            enabled: mapTypeBox.currentIndex === mapTypeBox.model.length - 1
-        }
+// TODO: customize OSM tile host
+//        Controls.Label {
+//            text: qsTr("Tile host")
+//            Layout.fillWidth: true
+//        }
+
+//        Controls.TextField {
+//            id: tileHostField
+//            placeholderText: qsTr("Enter tile host url")
+//            Layout.fillWidth: true
+//            onTextChanged: changed = true
+//            enabled: mapTypeBox.currentIndex === mapTypeBox.model.length - 1
+//        }
 
         Controls.Label {
             text: qsTr("Cache size")
@@ -115,7 +125,15 @@ Controls.Frame {
                     for (var i = 0; i < supportedMapTypes.length; ++i) {
                         types.push(supportedMapTypes[i].name);
                     }
-                    mapTypeBox.model = types;
+
+                    switch(mapPlugin) {
+                    case 0:
+                        osmActiveMapTypeBox.model = types;
+                        break;
+                    case 1:
+                        mapBoxGlActiveMapTypeBox.model = types;
+                        break;
+                    }
                 }
             }
         }
