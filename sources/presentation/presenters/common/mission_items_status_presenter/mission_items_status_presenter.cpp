@@ -46,6 +46,7 @@ void MissionItemsStatusPresenter::selectMission(const dao::MissionPtr& mission)
 
 void MissionItemsStatusPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 {
+    // don't check, cause sequence could changed
     d->item = item;
 
     this->updateSelectedItem();

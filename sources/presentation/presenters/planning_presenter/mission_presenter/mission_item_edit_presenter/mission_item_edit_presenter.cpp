@@ -263,4 +263,6 @@ void MissionItemEditPresenter::onChangeSequence(int sequence)
     if (other.isNull()) return;
 
     d->service->swapItems(d->item, other);
+
+    emit itemSelected(d->item);
 }
