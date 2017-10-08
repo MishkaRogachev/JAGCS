@@ -196,7 +196,7 @@ Item {
             visible: sequence > -1
         }
 
-        RowLayout {
+        RowLayout { // FIXME: update status items view
             Layout.alignment: Qt.AlignRight
             visible: sequence > -1
 
@@ -279,13 +279,13 @@ Item {
         Controls.Label {
             text: qsTr("Climb")
             visible: altitudeVisible
-            enabled: editEnabled
             Layout.fillWidth: true
         }
 
         Controls.RealSpinBox {
             id: climbBox
             visible: altitudeVisible
+            enabled: editEnabled
             realFrom: -20000
             realValue: 0
             realTo: 20000 // TODO: constants to config
