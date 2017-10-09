@@ -1,31 +1,39 @@
 import QtQuick 2.6
+import JAGCS 1.0
 
-import "../Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
-Ladder {
+Indicators.Ladder {
     id: root
+
+    property int command: Command.UnknownCommand
+
+    property int newValue: value
+    property var args: [newValue]
 
     property bool controlEnabled: true
 
-    signal setValue(real newValue)
-
-    Controls.Button {
+    CommandButton {
         iconSource: "qrc:/icons/up.svg"
         flat: true
         x: root.mirrored ? root.width - width : 0
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -parent.height / 3
         visible: controlEnabled
-        onClicked: setValue(value + 1)
+        command: root.command
+        args: root.args
+        onBeforeSended: newValue = value + 1
     }
 
-    Controls.Button {
+    CommandButton {
         iconSource: "qrc:/icons/down.svg"
         flat: true
         x: root.mirrored ? root.width - width : 0
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: parent.height / 3
         visible: controlEnabled
-        onClicked: setValue(value - 1)
+        command: root.command
+        args: root.args
+        onBeforeSended: newValue = value - 1
     }
 }

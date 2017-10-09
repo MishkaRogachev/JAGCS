@@ -10,13 +10,24 @@ Controls.Button {
     property int status: Command.Idle
     property var args: []
 
+    signal beforeSended()
+
     Connections {
         target: commander
         onCommandStatusChanged: if (type == command) control.status = status
     }
 
-    onClicked: status == Command.Sending ? commander.rejectCommand(command) :
-                                           commander.executeCommand(command, args)
+    onClicked: {
+        if (status == Command.Sending)
+        {
+            commander.rejectCommand(command);
+        }
+        else
+        {
+            beforeSended();
+            commander.executeCommand(command, args);
+        }
+    }
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
     onCommandChanged: {
         if (timer.running) timer.stop();

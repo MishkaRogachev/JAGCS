@@ -39,7 +39,6 @@
         <file>Indicators/DesiredAnglesMark.qml</file>
         <file>Indicators/TurnIndicator.qml</file>
         <file>Indicators/Ladder.qml</file>
-        <file>Indicators/CommandLadder.qml</file>
         <file>Indicators/PitchScale.qml</file>
         <file>Indicators/RollScale.qml</file>
         <file>Indicators/ArtificialHorizon.qml</file>
@@ -74,6 +73,7 @@
         <file>Views/Control/DashboardView.qml</file>
         <file>Views/Control/Command/CommandButton.qml</file>
         <file>Views/Control/Command/CommandSwitch.qml</file>
+        <file>Views/Control/Command/CommandLadder.qml</file>
         <file>Views/Control/Command/CommandListView.qml</file>
         <file>Views/Control/Displays/BaseDisplay.qml</file>
         <file>Views/Control/Displays/SatelliteDisplay.qml</file>

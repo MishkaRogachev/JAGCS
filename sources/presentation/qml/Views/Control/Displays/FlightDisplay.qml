@@ -3,6 +3,7 @@ import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
+import "../Command"
 
 BaseDisplay {
     id: root
@@ -66,7 +67,7 @@ BaseDisplay {
         value: throttle
     }
 
-    Indicators.CommandLadder {
+    CommandLadder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: ai.left
@@ -74,9 +75,8 @@ BaseDisplay {
         height: parent.height * 0.7
         value: speedUnits ? Helper.mpsToKph(indicatedAirspeed) : indicatedAirspeed
         error: speedUnits ? Helper.mpsToKph(airspeedError) : airspeedError
-        onSetValue: commander.executeCommand(Command.SetSpeed,
-                                           [ 0, speedUnits ? Helper.kphToMps(newValue) : newValue,
-                                                             -1, 0])
+        command: Command.SetSpeed
+        args: [ 0, speedUnits ? Helper.kphToMps(newValue) : newValue, -1, 0]
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -145,7 +145,7 @@ BaseDisplay {
         maxValue: 10
     }
 
-    Indicators.CommandLadder {
+    CommandLadder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: ai.right
@@ -153,7 +153,8 @@ BaseDisplay {
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         error: altitudeError
-        onSetValue: commander.executeCommand(Command.SetAltitude, [newValue, 0])
+        command: Command.SetAltitude
+        args: [newValue, 0]
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ? 0 : homeAltitude
