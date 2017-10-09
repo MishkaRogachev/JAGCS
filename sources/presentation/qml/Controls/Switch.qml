@@ -10,7 +10,7 @@ T.Switch {
 
     spacing: palette.spacing
     font.pixelSize: palette.fontPixelSize
-    implicitWidth: indicator.implicitWidth + text.implicitWidth + spacing
+    implicitWidth: contentItem.implicitWidth
     implicitHeight: palette.controlBaseSize
 
     onInputCheckedChanged: if (checked != inputChecked) checked = inputChecked
@@ -36,10 +36,9 @@ T.Switch {
     }
 
     contentItem: Text {
-        anchors.right: parent.right
+        id: text
         horizontalAlignment: Qt.AlignLeft
         verticalAlignment: Text.AlignVCenter
-        id: text
         text: control.text
         font: control.font
         color: palette.textColor

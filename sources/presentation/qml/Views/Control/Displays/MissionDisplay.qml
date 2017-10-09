@@ -11,7 +11,6 @@ import "../Command"
 BaseDisplay {
     id: root
 
-    property bool armed: false
     property bool guided: false
     property bool downloading: false
 

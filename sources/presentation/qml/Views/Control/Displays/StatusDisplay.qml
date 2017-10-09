@@ -4,15 +4,16 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
-
+import "../Command"
 
 BaseDisplay {
     id: root
 
     property string mode: qsTr("None")
+    property bool armed: false
     property real batteryVoltage: 0
     property real batteryCurrent: 0
-    property alias batteryPercentage: battery.percentage
+    property int batteryPercentage: 0
 
     implicitHeight: row.height
 
@@ -21,26 +22,19 @@ BaseDisplay {
         anchors.centerIn: parent
         width: parent.width
 
-        Controls.Label {
-            font.pixelSize: palette.fontPixelSize * 0.75
-            font.bold: true
-            text: mode
-            horizontalAlignment: Qt.AlignHCenter
-            Layout.fillWidth: true
-        }
-
         Indicators.BatteryIndicator {
             id: battery
-            Layout.alignment: Qt.AlignRight
+            percentage: batteryPercentage
+            Layout.alignment: Qt.AlignLeft
         }
 
         ColumnLayout {
-            Layout.alignment: Qt.AlignRight
+            Layout.alignment: Qt.AlignLeft
 
             Controls.Label {
                 font.pixelSize: palette.fontPixelSize * 0.6
                 font.bold: true
-                color: battery.color
+                color: batteryVoltage > 0.01 ? palette.textColor : palette.sunkenColor
                 text: batteryVoltage.toFixed(2) + qsTr(" V")
             }
 
@@ -61,6 +55,22 @@ BaseDisplay {
                 }
                 text: batteryCurrent.toFixed(2) + qsTr(" A")
             }
+        }
+
+        Controls.Label {
+            font.pixelSize: palette.fontPixelSize * 0.75
+            font.bold: true
+            text: mode
+            horizontalAlignment: Qt.AlignHCenter
+            Layout.fillWidth: true
+        }
+
+        CommandSwitch {
+            text: armed ? qsTr("DISARM") : qsTr("ARM")
+            font.pixelSize: palette.fontPixelSize * 0.75
+            font.bold: true
+            command: Command.ArmDisarm
+            inputChecked: armed
         }
     }
 }
