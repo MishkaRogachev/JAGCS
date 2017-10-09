@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class Command
+    class Command // TODO: to base comand with virtual toVariant() serialization
     {
         Q_GADGET
 
@@ -15,6 +15,8 @@ namespace domain
         enum CommandType
         {
             UnknownCommand,
+
+            SetMode,
 
             ArmDisarm,
 
@@ -27,7 +29,7 @@ namespace domain
 
             Parachute,
 
-            SetSpeed,
+            SetSpeed, //TODO: separate throttle, airspeed and groundspeed commands
             SetAltitude,
             SetHome,
 
