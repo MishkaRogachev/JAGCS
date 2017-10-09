@@ -6,6 +6,7 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
 import "../../Common"
+import "../Command"
 
 BaseDisplay {
     id: root
@@ -51,14 +52,14 @@ BaseDisplay {
             enabled: itemsStatus.selectedItem > -1
         }
 
-        Controls.Button {
+        CommandButton {
             iconSource: "qrc:/icons/play.svg"
-            onClicked: commander.executeCommand(Command.Start, [])
+            command: Command.Start
         }
 
-        Controls.Button {
+        CommandButton {
             iconSource: "qrc:/icons/home.svg"
-            onClicked: commander.executeCommand(Command.Return, [])
+            command: Command.Return
         }
     }
 }

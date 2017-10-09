@@ -12,7 +12,7 @@ Controls.Button {
 
     Connections {
         target: commander
-        onCommandStatusChanged: if (command == control.command) control.status = status
+        onCommandStatusChanged: if (type == command) control.status = status
     }
 
     onClicked: status == Command.Sending ? commander.rejectCommand(command) :
