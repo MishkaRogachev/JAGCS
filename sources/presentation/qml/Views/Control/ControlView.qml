@@ -4,9 +4,12 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 import "../Map"
 import "../Video"
+import "Command"
 
 Controls.Pane {
     id: root
+
+    property QtObject commander
 
     property bool cornerMap: false
     property bool cornerVisible: false
@@ -46,10 +49,10 @@ Controls.Pane {
 
             Controls.Button {
                 id: commandButton
-                iconSource: commander.visible ? "qrc:/icons/left.svg" : "qrc:/icons/right.svg"
+                iconSource: commandList.visible ? "qrc:/icons/left.svg" : "qrc:/icons/right.svg"
                 enabled: dashboard.online
-                onEnabledChanged: commander.visible = false
-                onClicked: commander.visible = !commander.visible
+                onEnabledChanged: commandList.visible = false
+                onClicked: commandList.visible = !commandList.visible
             }
         }
 
@@ -59,9 +62,8 @@ Controls.Pane {
         }
     }
 
-    CommandView {
-        id: commander
-        objectName: "command"
+    CommandListView {
+        id: commandList
         anchors.top: parent.top
         anchors.left: background.left
         anchors.margins: palette.margins

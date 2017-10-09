@@ -1,20 +1,22 @@
 import QtQuick 2.6
 import JAGCS 1.0
 
-Switch {
+import "qrc:/Controls" as Controls
+
+Controls.Switch {
     id: control
 
     property int command: Command.UnknownCommand
     property int status: Command.Idle
 
     Connections {
-        target: parent
+        target: commander
         onCommandStatusChanged: if (command == control.command) control.status = status
     }
 
     onCheckedChanged: {
-        if (status == Command.Sending) rejectCommand(command);
-        else if (inputChecked != checked) executeCommand(command, [checked]);
+        if (status == Command.Sending) commander.rejectCommand(command);
+        else if (inputChecked != checked) commander.executeCommand(command, [checked]);
     }
 
     onStatusChanged: {

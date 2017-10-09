@@ -12,10 +12,6 @@ Controls.Pane {
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
-    signal commandStatusChanged(var command, var status)
-    signal executeCommand(int command, var arguments)
-    signal rejectCommand(int command)
-
     width: grid.width + palette.margins * 2
     height: grid.height + palette.margins * 2
 
@@ -51,7 +47,7 @@ Controls.Pane {
             Layout.fillWidth: true
         }
 
-        Controls.CommandButton {
+        CommandButton {
             command: root.command
             iconSource: "qrc:/icons/right.svg"
             enabled: commandBox.currentIndex > 0

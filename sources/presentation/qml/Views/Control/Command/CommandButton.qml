@@ -1,7 +1,9 @@
 import QtQuick 2.6
 import JAGCS 1.0
 
-Button {
+import "qrc:/Controls" as Controls
+
+Controls.Button {
     id: control
 
     property int command: Command.UnknownCommand
@@ -9,11 +11,12 @@ Button {
     property var args: []
 
     Connections {
-        target: root
+        target: commander
         onCommandStatusChanged: if (command == control.command) control.status = status
     }
 
-    onClicked: status == Command.Sending ? rejectCommand(command) : executeCommand(command, args)
+    onClicked: status == Command.Sending ? commander.rejectCommand(command) :
+                                           commander.executeCommand(command, args)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
     onCommandChanged: {
         if (timer.running) timer.stop();

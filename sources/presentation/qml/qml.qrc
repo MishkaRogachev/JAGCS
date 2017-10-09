@@ -31,8 +31,6 @@
         <file>Controls/RealSpinBox.qml</file>
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
-        <file>Controls/CommandButton.qml</file>
-        <file>Controls/CommandSwitch.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
         <file>Indicators/BarIndicator.qml</file>
@@ -74,7 +72,9 @@
         <file>Views/Map/Overlays/HomeMapOverlayView.qml</file>
         <file>Views/Control/ControlView.qml</file>
         <file>Views/Control/DashboardView.qml</file>
-        <file>Views/Control/CommandView.qml</file>
+        <file>Views/Control/Command/CommandButton.qml</file>
+        <file>Views/Control/Command/CommandSwitch.qml</file>
+        <file>Views/Control/Command/CommandListView.qml</file>
         <file>Views/Control/Displays/BaseDisplay.qml</file>
         <file>Views/Control/Displays/SatelliteDisplay.qml</file>
         <file>Views/Control/Displays/FlightDisplay.qml</file>
