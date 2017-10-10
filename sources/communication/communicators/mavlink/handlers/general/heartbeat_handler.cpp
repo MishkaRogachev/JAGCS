@@ -167,10 +167,11 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Status, Telemetry::Manual },
                          heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
 
-    portion.setParameter({ Telemetry::Status, Telemetry::Mode },
-                         ::decodeCustomMode(heartbeat.autopilot,
-                                            heartbeat.type,
-                                            heartbeat.custom_mode));
+    domain::Mode mode = ::decodeCustomMode(heartbeat.autopilot,
+                                                  heartbeat.type,
+                                                  heartbeat.custom_mode);
+    portion.setParameter({ Telemetry::Status, Telemetry::Mode }, QVariant::fromValue(mode));
+
     portion.setParameter({ Telemetry::Status, Telemetry::State },
                          ::decodeState(heartbeat.system_status));
 }

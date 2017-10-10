@@ -12,7 +12,7 @@
 //  |  |-Guided                         bool
 //  |  |-Stabilized                     bool
 //  |  |-Manual                         bool
-//  |  |-Mode                           string
+//  |  |-Mode                           Mode
 //  |  |-State                          SystemState
 //  |-Position
 //  |  |-Coordinate                     coordinate

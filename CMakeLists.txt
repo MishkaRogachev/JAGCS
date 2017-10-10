@@ -101,6 +101,10 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
+# NOTE: temporary solution for Q_NAMESPACE
+#qt5_generate_moc(sources/domain/types/modes.h ${MOC_SOURCES})
+qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
+
 # Executable target
 add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
     ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})

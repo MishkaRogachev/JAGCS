@@ -7,6 +7,7 @@
 #include "mission_assignment.h"
 #include "mission_item.h"
 #include "video_source.h"
+#include "modes.h"
 #include "command.h"
 #include "log_message.h"
 
@@ -35,6 +36,9 @@ PresentationContext::PresentationContext()
                 "JAGCS", 1, 0, "Command", "Can't create commands in QML");
     qmlRegisterUncreatableType<domain::LogMessage>(
                 "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
+
+    qmlRegisterUncreatableMetaObject(domain::staticMetaObject, "JAGCS", 1, 0, "domain",
+                                     "Can't create enums in QML");
 
     m_engine = new QQmlApplicationEngine(qApp);
 }

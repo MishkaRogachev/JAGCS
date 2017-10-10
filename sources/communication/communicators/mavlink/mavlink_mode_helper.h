@@ -4,98 +4,86 @@
 // MAVLink
 #include <mavlink.h>
 
-// Qt
-#include <QCoreApplication>
+// Internal
+#include "modes.h"
 
 namespace comm
 {
-    inline QString decodeApmMode(uint8_t type, uint32_t mode)
+    inline domain::Mode decodeApmMode(uint8_t type, uint32_t mode)
     {
         switch (type)
         {
         case MAV_TYPE_FIXED_WING:
-            if (mode == 0) return qApp->translate("MAVLINK", "MANUAL");
-            if (mode == 1) return qApp->translate("MAVLINK", "CIRCLE");
-            if (mode == 2) return qApp->translate("MAVLINK", "STABILIZE");
-            if (mode == 3) return qApp->translate("MAVLINK", "TRAINING");
-            if (mode == 4) return qApp->translate("MAVLINK", "ACRO");
-            if (mode == 5) return qApp->translate("MAVLINK", "FBWA");
-            if (mode == 6) return qApp->translate("MAVLINK", "FBWB");
-            if (mode == 7) return qApp->translate("MAVLINK", "CRUISE");
-            if (mode == 8) return qApp->translate("MAVLINK", "AUTOTUNE");
-            if (mode == 10) return qApp->translate("MAVLINK", "AUTO");
-            if (mode == 11) return qApp->translate("MAVLINK", "RETURN");
-            if (mode == 12) return qApp->translate("MAVLINK", "LOITER");
-            if (mode == 14) return qApp->translate("MAVLINK", "AVOID ADSB");
-            if (mode == 15) return qApp->translate("MAVLINK", "GUIDED");
-            if (mode == 16) return qApp->translate("MAVLINK", "INITIALISE");
-            if (mode == 17) return qApp->translate("MAVLINK", "QSTABILIZE");
-            if (mode == 18) return qApp->translate("MAVLINK", "QHOVER");
-            if (mode == 19) return qApp->translate("MAVLINK", "QLOITER");
-            if (mode == 20) return qApp->translate("MAVLINK", "QLAND");
-            if (mode == 21) return qApp->translate("MAVLINK", "QRETURN");
-            return qApp->translate("MAVLINK", "APM PLANE NONE");
+            if (mode == 0) return domain::Mode::Manual;
+            if (mode == 1) return domain::Mode::Circle;
+            if (mode == 2) return domain::Mode::Stabilize;
+            if (mode == 4) return domain::Mode::Acro;
+            if (mode == 5) return domain::Mode::CtrlByAttitude;
+            if (mode == 6) return domain::Mode::CtrlByAltitude;
+            if (mode == 7) return domain::Mode::Cruise;
+            if (mode == 8) return domain::Mode::Autotune;
+            if (mode == 10) return domain::Mode::Mission;
+            if (mode == 11) return domain::Mode::Return;
+            if (mode == 12) return domain::Mode::Loiter;
+            if (mode == 14) return domain::Mode::Avoid;
+            if (mode == 15) return domain::Mode::Guided;
+            if (mode == 16) return domain::Mode::Init;
+            break;
         case MAV_TYPE_TRICOPTER:
         case MAV_TYPE_QUADROTOR:
         case MAV_TYPE_HEXAROTOR:
         case MAV_TYPE_OCTOROTOR:
         case MAV_TYPE_COAXIAL:
         case MAV_TYPE_HELICOPTER:
-            if (mode == 0) return qApp->translate("MAVLINK", "STABILIZE");
-            if (mode == 1) return qApp->translate("MAVLINK", "ACRO");
-            if (mode == 2) return qApp->translate("MAVLINK", "ALT HOLD");
-            if (mode == 3) return qApp->translate("MAVLINK", "AUTO");
-            if (mode == 4) return qApp->translate("MAVLINK", "GUIDED");
-            if (mode == 5) return qApp->translate("MAVLINK", "LOITER");
-            if (mode == 6) return qApp->translate("MAVLINK", "RETURN");
-            if (mode == 7) return qApp->translate("MAVLINK", "CIRCLE");
-            if (mode == 9) return qApp->translate("MAVLINK", "LAND");
-            if (mode == 11) return qApp->translate("MAVLINK", "DRIFT");
-            if (mode == 13) return qApp->translate("MAVLINK", "SPORT");
-            if (mode == 14) return qApp->translate("MAVLINK", "FLIP");
-            if (mode == 15) return qApp->translate("MAVLINK", "AUTOTUNE");
-            if (mode == 16) return qApp->translate("MAVLINK", "POS HOLD");
-            if (mode == 17) return qApp->translate("MAVLINK", "BRAKE");
-            if (mode == 18) return qApp->translate("MAVLINK", "THROW");
-            if (mode == 19) return qApp->translate("MAVLINK", "AVOID ADSB");
-            if (mode == 20) return qApp->translate("MAVLINK", "GUIDED NO SNS");
+            if (mode == 0) return domain::Mode::Stabilize;
+            if (mode == 1) return domain::Mode::Acro;
+            if (mode == 2) return domain::Mode::CtrlByAltitude;
+            if (mode == 3) return domain::Mode::Mission;
+            if (mode == 4) return domain::Mode::Guided;
+            if (mode == 5) return domain::Mode::Loiter;
+            if (mode == 6) return domain::Mode::Return;
+            if (mode == 7) return domain::Mode::Circle;
+            if (mode == 9) return domain::Mode::Landing;
+            if (mode == 15) return domain::Mode::Autotune;
+            if (mode == 16) return domain::Mode::HoldPosition;
+            if (mode == 18) return domain::Mode::Throw;
+            if (mode == 19) return domain::Mode::Avoid;
+            break;
         default:
             break;
         }
 
-        return qApp->translate("MAVLINK", "APM NONE");
+        return domain::Mode::None;
     }
 
-    inline QString decodePx4Mode(uint32_t mode)
+    inline domain::Mode decodePx4Mode(uint32_t mode)
     {
         uint8_t mainMode = (mode >> 0) & 0xFF;
         uint8_t autoMode = (mode >> 8) & 0xFF;
 
         switch (mainMode)
         {
-        case 1: return qApp->translate("MAVLINK", "MANUAL");
-        case 2: return qApp->translate("MAVLINK", "ALT CTL");
-        case 3: return qApp->translate("MAVLINK", "POS CTL");
+        case 1: return domain::Mode::Manual;
+        case 2: return domain::Mode::CtrlByAltitude;
+        case 3: return domain::Mode::HoldPosition;
         case 4:
-            if (autoMode == 1) return qApp->translate("MAVLINK", "READY");
-            if (autoMode == 2) return qApp->translate("MAVLINK", "TAKEOFF");
-            if (autoMode == 3) return qApp->translate("MAVLINK", "LOITER");
-            if (autoMode == 4) return qApp->translate("MAVLINK", "MISSION");
-            if (autoMode == 5) return qApp->translate("MAVLINK", "RETURN");
-            if (autoMode == 6) return qApp->translate("MAVLINK", "LAND");
-            if (autoMode == 7) return qApp->translate("MAVLINK", "RTGS");
-            if (autoMode == 8) return qApp->translate("MAVLINK", "FOLLOW");
-            return qApp->translate("MAVLINK", "PX4 AUTO NONE");
-        case 5: return qApp->translate("MAVLINK", "ACRO");
-        case 6: return qApp->translate("MAVLINK", "OFFBOARD");
-        case 7: return qApp->translate("MAVLINK", "STABILIZED");
-        case 8: return qApp->translate("MAVLINK", "RATTITUDE");
+            if (autoMode == 2) return domain::Mode::Takeoff;
+            if (autoMode == 3) return domain::Mode::Loiter;
+            if (autoMode == 4) return domain::Mode::Mission;
+            if (autoMode == 5) return domain::Mode::Return;
+            if (autoMode == 6) return domain::Mode::Landing;
+            if (autoMode == 7) return domain::Mode::Return;
+            if (autoMode == 8) return domain::Mode::Follow;;
+            break;
+        case 7: return domain::Mode::Stabilize;
+        default:
+            break;
         }
 
-        return qApp->translate("MAVLINK", "PX4 NONE");
+        return domain::Mode::None;
     }
 
-    inline QString decodeCustomMode(uint8_t ap, uint8_t type, uint32_t mode)
+    inline domain::Mode decodeCustomMode(uint8_t ap, uint8_t type, uint32_t mode)
     {
         switch (ap)
         {
@@ -104,10 +92,8 @@ namespace comm
         case MAV_AUTOPILOT_PX4:
             return decodePx4Mode(mode);
         default:
-            break;
+            return domain::Mode::None;
         }
-
-        return qApp->translate("MAVLINK", "NONE");
     }
 }
 
