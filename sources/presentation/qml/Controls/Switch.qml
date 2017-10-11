@@ -1,6 +1,8 @@
 import QtQuick 2.6
 import QtQuick.Templates 2.0 as T
 
+import "../Shaders" as Shaders
+
 T.Switch {
     id: control
 
@@ -32,6 +34,12 @@ T.Switch {
             height: palette.controlBaseSize / 1.5
             radius: height / 2
             color: control.pressed ? palette.highlightColor : palette.buttonColor;
+
+            Shaders.Hatch {
+                anchors.fill: parent
+                color: palette.sunkenColor
+                visible: !control.enabled
+            }
         }
     }
 

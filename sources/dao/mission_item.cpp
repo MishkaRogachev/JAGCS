@@ -185,6 +185,8 @@ MissionItem::Status MissionItem::status() const
 void MissionItem::setStatus(Status status)
 {
     m_status = status;
+    
+    if (status == NotActual) this->setReached(false);
 }
 
 void MissionItem::setCurrent(bool current)
