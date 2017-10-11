@@ -172,6 +172,9 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     {
         ModeHelperFactory f;
         d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
+
+        portion.setParameter({ Telemetry::Status, Telemetry::AvailableModes },
+                             qVariantFromValue(d->modeHelper->availableModes()));
     }
 
     if (d->modeHelper)

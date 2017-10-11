@@ -10,17 +10,6 @@ Controls.ComboBox {
     property int mode: Domain.None
     onActivated: commander.executeCommand(Command.SetMode, [ model[index] ])
 
-    model: [
-        Domain.Manual,
-        Domain.Stabilize,
-        Domain.Guided,
-        Domain.Loiter,
-        Domain.Circle,
-        Domain.Return,
-        Domain.Takeoff,
-        Domain.Landing,
-        Domain.Mission ] // TODO: available modes for vehicle
-
     delegate: Controls.ItemDelegate {
         width: control.width
         text: translator.translateMode(modelData)

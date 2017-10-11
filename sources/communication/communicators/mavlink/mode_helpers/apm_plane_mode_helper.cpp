@@ -39,3 +39,21 @@ domain::Mode ApmPlaneModeHelper::customModeToMode(quint32 mode)
 {
     return ::modeMap.value(mode, domain::Mode::None);
 }
+
+QList<domain::Mode> ApmPlaneModeHelper::availableModes() const
+{
+    return {
+        domain::Mode::Manual,
+        domain::Mode::Stabilize,
+        domain::Mode::CtrlByAttitude,
+        domain::Mode::CtrlByAltitude,
+        domain::Mode::Autotune,
+        domain::Mode::Acro,
+        domain::Mode::Cruise,
+        domain::Mode::Mission,
+        domain::Mode::Return,
+        domain::Mode::Loiter,
+        domain::Mode::Circle,
+        domain::Mode::Guided
+    };
+}

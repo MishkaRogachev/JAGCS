@@ -38,3 +38,18 @@ domain::Mode ApmCopterModeHelper::customModeToMode(quint32 mode)
 {
     return ::modeMap.value(mode, domain::Mode::None);
 }
+
+QList<domain::Mode> ApmCopterModeHelper::availableModes() const
+{
+    return {
+        domain::Mode::Stabilize,
+        domain::Mode::HoldPosition,
+        domain::Mode::CtrlByAltitude,
+        domain::Mode::Loiter,
+        domain::Mode::Mission,
+        domain::Mode::Throw,
+        domain::Mode::Circle,
+        domain::Mode::Follow,
+        domain::Mode::Landing
+    };
+}

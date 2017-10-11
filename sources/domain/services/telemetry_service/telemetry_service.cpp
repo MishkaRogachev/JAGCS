@@ -14,6 +14,8 @@
 #include "telemetry_portion.h"
 #include "vehicle_telemetry_factory.h"
 
+#include "modes.h"
+
 using namespace domain;
 
 class TelemetryService::Impl

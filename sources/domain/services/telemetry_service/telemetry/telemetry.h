@@ -13,6 +13,7 @@
 //  |  |-Stabilized                     bool
 //  |  |-Manual                         bool
 //  |  |-Mode                           Mode
+//  |  |-AvailableModes                 QList<Modes>
 //  |  |-State                          SystemState
 //  |-Position
 //  |  |-Coordinate                     coordinate
@@ -128,7 +129,8 @@ namespace domain
             Stabilized = 105,
             Manual = 106,
             Mode = 110,
-            State = 120,
+            AvailableModes = 120,
+            State = 130,
 
             Present = 200,
             Enabled = 201,

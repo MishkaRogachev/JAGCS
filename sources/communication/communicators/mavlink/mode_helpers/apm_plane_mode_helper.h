@@ -12,6 +12,8 @@ namespace comm
 
         quint32 modeToCustomMode(domain::Mode mode) override;
         domain::Mode customModeToMode(quint32 mode) override;
+
+        virtual QList<domain::Mode> availableModes() const override;
     };
 }
 

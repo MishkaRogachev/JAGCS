@@ -1,5 +1,8 @@
 #include "status_presenter.h"
 
+//Internal
+#include "modes.h"
+
 // Qt
 #include <QDebug>
 
@@ -22,6 +25,15 @@ void StatusPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap&
     if (parameters.contains(domain::Telemetry::Manual))
         this->setViewsProperty(PROPERTY(manual), parameters[domain::Telemetry::Manual]);
 
+    if (parameters.contains(domain::Telemetry::AvailableModes))
+    {
+        QVariantList list;
+        for (auto item: parameters[domain::Telemetry::AvailableModes].value< QList<domain::Mode> >())
+        {
+            list.append(QVariant::fromValue(item));
+        }
+        this->setViewsProperty(PROPERTY(availableModes), list);
+    }
     if (parameters.contains(domain::Telemetry::Mode))
         this->setViewsProperty(PROPERTY(mode), parameters[domain::Telemetry::Mode]);
 }

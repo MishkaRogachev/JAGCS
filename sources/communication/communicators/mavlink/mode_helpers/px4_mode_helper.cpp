@@ -37,3 +37,8 @@ domain::Mode Px4ModeHelper::customModeToMode(quint32 mode)
 {
     return ::modeMap.value(mode, domain::Mode::None);
 }
+
+QList<domain::Mode> Px4ModeHelper::availableModes() const
+{
+    return ::modeMap.values();
+}

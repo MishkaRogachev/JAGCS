@@ -10,6 +10,7 @@ BaseDisplay {
     id: root
 
     property int mode: Domain.None
+    property var availableModes: []
     property bool armed: false
     property real batteryVoltage: 0
     property real batteryCurrent: 0
@@ -59,6 +60,7 @@ BaseDisplay {
 
         CommandModeBox {
             mode: root.mode
+            model: availableModes
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
             Layout.fillWidth: true

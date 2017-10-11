@@ -5,13 +5,15 @@
 
 namespace comm
 {
-    class Px4ModeHelper: public IModeHelper
+    class Px4ModeHelper: public IModeHelper // TODO: separate copter and plane modes
     {
     public:
         Px4ModeHelper();
 
         quint32 modeToCustomMode(domain::Mode mode) override;
         domain::Mode customModeToMode(quint32 mode) override;
+
+        virtual QList<domain::Mode> availableModes() const override;
     };
 }
 
