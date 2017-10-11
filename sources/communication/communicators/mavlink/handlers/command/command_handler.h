@@ -23,6 +23,9 @@ namespace comm
     public slots:
        void processMessage(const mavlink_message_t& message) override;
 
+       void processCommandAck(const mavlink_message_t& message);
+       void processHeartbeat(const mavlink_message_t& message);
+
     private slots:
        void onSendCommand(const domain::Command& command, int attempt = 0);
 

@@ -1,0 +1,19 @@
+#ifndef I_MODE_HELPER_H
+#define I_MODE_HELPER_H
+
+#include "modes.h"
+
+namespace comm
+{
+    class IModeHelper
+    {
+    public:
+        IModeHelper() {}
+        virtual ~IModeHelper() {}
+
+        virtual quint32 modeToCustomMode(domain::Mode mode) = 0;
+        virtual domain::Mode customModeToMode(quint32 mode) = 0;
+    };
+}
+
+#endif // I_MODE_HELPER_H

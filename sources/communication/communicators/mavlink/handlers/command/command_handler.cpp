@@ -16,7 +16,7 @@
 #include "vehicle.h"
 
 #include "mavlink_communicator.h"
-#include "mavlink_mode_helper.h"
+#include "mode_helper_factory.h"
 
 using namespace comm;
 using namespace domain;
@@ -56,6 +56,9 @@ class CommandHandler::Impl
 public:
     VehicleService* vehicleService = ServiceRegistry::vehicleService();
     CommandService* commandService = ServiceRegistry::commandService();
+
+    QScopedPointer<IModeHelper> modeHelper;
+    uint8_t baseMode = 0;
 };
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
@@ -71,8 +74,12 @@ CommandHandler::~CommandHandler()
 
 void CommandHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_COMMAND_ACK) return;
+    if (message.msgid == MAVLINK_MSG_ID_COMMAND_ACK) this->processCommandAck(message);
+    else if (message.msgid == MAVLINK_MSG_ID_HEARTBEAT) this->processHeartbeat(message);
+}
 
+void CommandHandler::processCommandAck(const mavlink_message_t& message)
+{
     mavlink_command_ack_t ack;
     mavlink_msg_command_ack_decode(&message, &ack);
 
@@ -81,8 +88,24 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
 
     Command::CommandStatus status = ::mavStatusMap.value(ack.result, Command::Idle);
 
-    QMetaObject::invokeMethod(d->commandService->sender(), "setCommandStatus", Qt::QueuedConnection,
-                              Q_ARG(Command::CommandType, type), Q_ARG(Command::CommandStatus, status));
+    QMetaObject::invokeMethod(d->commandService->sender(), "setCommandStatus",
+                              Qt::QueuedConnection,
+                              Q_ARG(Command::CommandType, type),
+                              Q_ARG(Command::CommandStatus, status));
+}
+
+void CommandHandler::processHeartbeat(const mavlink_message_t& message)
+{
+    mavlink_heartbeat_t heartbeat;
+    mavlink_msg_heartbeat_decode(&message, &heartbeat);
+
+    d->baseMode = heartbeat.base_mode;
+
+    if (d->modeHelper.isNull())
+    {
+        ModeHelperFactory f;
+        d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
+    }
 }
 
 void CommandHandler::onSendCommand(const Command& command, int attempt)
@@ -108,8 +131,6 @@ void CommandHandler::onSendCommand(const Command& command, int attempt)
 void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
                                      const QVariantList& args, int attempt)
 {
-    qDebug() << "command long";
-
     mavlink_message_t message;
     mavlink_command_long_t mavCommand;
 
@@ -138,14 +159,14 @@ void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
 
 void CommandHandler::sendSetMode(quint8 mavId, Mode mode)
 {
-    qDebug() << "set mode" << mode;
+    if (d->modeHelper.isNull()) return;
 
     mavlink_message_t message;
     mavlink_set_mode_t setMode;
 
     setMode.target_system = mavId;
-    setMode.base_mode = ::encodeBaseMode(mode);
-    setMode.custom_mode = ::encodeCustomMode(mode);
+    setMode.base_mode = d->baseMode;
+    setMode.custom_mode = d->modeHelper->modeToCustomMode(mode);
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
