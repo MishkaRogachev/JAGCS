@@ -10,7 +10,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        PingHandler(MavLinkCommunicator* communicator); // TODO: send ping
+        explicit PingHandler(MavLinkCommunicator* communicator); // TODO: send ping
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

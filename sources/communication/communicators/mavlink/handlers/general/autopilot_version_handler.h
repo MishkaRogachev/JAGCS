@@ -15,7 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        AutopilotVersionHandler(MavLinkCommunicator* communicator);
+        explicit AutopilotVersionHandler(MavLinkCommunicator* communicator);
         ~AutopilotVersionHandler() override;
 
     public slots:

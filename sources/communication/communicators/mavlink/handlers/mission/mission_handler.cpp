@@ -27,7 +27,7 @@ namespace
 {
     const int interval = 1000;
 
-    const QMap<quint16, dao::MissionItem::Command> mavCommandMap =
+    const QMap<quint16, dao::MissionItem::Command> mavCommandLongMap =
     {
         { MAV_CMD_NAV_TAKEOFF, dao::MissionItem::Takeoff },
         { MAV_CMD_NAV_LAND, dao::MissionItem::Landing },
@@ -256,7 +256,7 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
     msgItem.seq = seq;
     msgItem.autocontinue = seq < d->missionService->mission(assignment->missionId())->count() - 1;
 
-    if (seq) msgItem.command = ::mavCommandMap.key(item->command(), 0);
+    if (seq) msgItem.command = ::mavCommandLongMap.key(item->command(), 0);
     else msgItem.command = MAV_CMD_NAV_WAYPOINT; // Home is waypoint
 
     if (item->isAltitudedItem())
@@ -429,7 +429,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     }
 
     item->setCommand(msgItem.seq > 0 ?
-                         ::mavCommandMap.value(msgItem.command, dao::MissionItem::UnknownCommand) :
+                         ::mavCommandLongMap.value(msgItem.command, dao::MissionItem::UnknownCommand) :
                          dao::MissionItem::Home);
 
     if (item->isAltitudedItem())

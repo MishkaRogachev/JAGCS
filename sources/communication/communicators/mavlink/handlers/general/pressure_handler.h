@@ -15,7 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        PressureHandler(MavLinkCommunicator* communicator);
+        explicit PressureHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

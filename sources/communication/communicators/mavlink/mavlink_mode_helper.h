@@ -95,6 +95,16 @@ namespace comm
             return domain::Mode::None;
         }
     }
+
+    inline uint32_t encodeBaseMode(domain::Mode mode)
+    {
+        return 0;
+    }
+
+    inline uint32_t encodeCustomMode(domain::Mode mode)
+    {
+        return 0;
+    }
 }
 
 #endif // MAVLINK_MODE_HELPER_H

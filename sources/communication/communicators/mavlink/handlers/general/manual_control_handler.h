@@ -10,7 +10,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        ManualControlHandler(MavLinkCommunicator* communicator);
+        explicit ManualControlHandler(MavLinkCommunicator* communicator);
         ~ManualControlHandler() override;
 
     public slots:

@@ -15,7 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        WindHandler(MavLinkCommunicator* communicator);
+        explicit WindHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

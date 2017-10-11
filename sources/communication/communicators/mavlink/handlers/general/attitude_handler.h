@@ -15,7 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        AttitudeHandler(MavLinkCommunicator* communicator);
+        explicit AttitudeHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

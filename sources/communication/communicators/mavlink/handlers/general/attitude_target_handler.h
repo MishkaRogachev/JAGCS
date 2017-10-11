@@ -15,7 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        AttitudeTargetHandler(MavLinkCommunicator* communicator);
+        explicit AttitudeTargetHandler(MavLinkCommunicator* communicator);
         ~AttitudeTargetHandler() override;
 
     public slots:

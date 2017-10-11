@@ -28,7 +28,7 @@ namespace comm
             SendingItem
         };
 
-        MissionHandler(MavLinkCommunicator* communicator);
+        explicit MissionHandler(MavLinkCommunicator* communicator);
         ~MissionHandler() override;
 
     public slots:

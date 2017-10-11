@@ -10,7 +10,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        HeartbeatHandler(MavLinkCommunicator* communicator);
+        explicit HeartbeatHandler(MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
     public slots:

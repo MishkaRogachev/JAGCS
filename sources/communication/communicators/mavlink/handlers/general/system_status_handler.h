@@ -15,7 +15,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        SystemStatusHandler(MavLinkCommunicator* communicator);
+        explicit SystemStatusHandler(MavLinkCommunicator* communicator);
 
     public slots:
         void processMessage(const mavlink_message_t& message) override;

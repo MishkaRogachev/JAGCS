@@ -16,7 +16,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        AbstractMavLinkHandler(MavLinkCommunicator* communicator);
+        explicit AbstractMavLinkHandler(MavLinkCommunicator* communicator);
         ~AbstractMavLinkHandler() override;
 
     public slots:

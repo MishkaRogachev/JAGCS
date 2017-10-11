@@ -11,7 +11,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        HomePositionHandler(MavLinkCommunicator* communicator);
+        explicit HomePositionHandler(MavLinkCommunicator* communicator);
         ~HomePositionHandler();
 
     public slots:
