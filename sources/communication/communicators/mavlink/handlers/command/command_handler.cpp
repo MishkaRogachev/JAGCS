@@ -78,11 +78,12 @@ void CommandHandler::processMessage(const mavlink_message_t& message)
 void CommandHandler::onSendCommand(const Command& command, int attempt)
 {
     qDebug() << command.type() << command.arguments() << attempt;
-    mavlink_message_t message;
-    mavlink_command_long_t mavCommand;
 
     dao::VehiclePtr vehicle = m_vehicleService->vehicle(command.vehicleId());
     if (vehicle.isNull()) return;
+
+    mavlink_message_t message;
+    mavlink_command_long_t mavCommand;
 
     mavCommand.target_system = vehicle->mavId();
     mavCommand.target_component = 0;

@@ -7,7 +7,7 @@
 
 namespace domain
 {
-    class Command // TODO: to base comand with virtual toVariant() serialization
+    class Command
     {
         Q_GADGET
 

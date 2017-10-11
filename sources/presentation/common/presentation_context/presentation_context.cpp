@@ -43,7 +43,6 @@ PresentationContext::PresentationContext()
                                      "Can't create enums in QML");
 
     m_engine = new QQmlApplicationEngine(qApp);
-
     m_engine->rootContext()->setContextProperty("translator",
                                                 QVariant::fromValue(new TranslationHelper(qApp)));
 }
