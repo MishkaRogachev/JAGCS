@@ -57,11 +57,10 @@ BaseDisplay {
             }
         }
 
-        Controls.Label {
+        CommandModeBox {
+            mode: root.mode
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
-            text: translator.translateMode(mode)
-            horizontalAlignment: Qt.AlignHCenter
             Layout.fillWidth: true
         }
 

@@ -74,6 +74,7 @@
         <file>Views/Control/Command/CommandButton.qml</file>
         <file>Views/Control/Command/CommandSwitch.qml</file>
         <file>Views/Control/Command/CommandLadder.qml</file>
+        <file>Views/Control/Command/CommandModeBox.qml</file>
         <file>Views/Control/Command/CommandListView.qml</file>
         <file>Views/Control/Displays/BaseDisplay.qml</file>
         <file>Views/Control/Displays/SatelliteDisplay.qml</file>
