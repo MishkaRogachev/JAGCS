@@ -9,7 +9,7 @@ import "../Command"
 BaseDisplay {
     id: root
 
-    property string mode: qsTr("None")
+    property int mode: Domain.None
     property bool armed: false
     property real batteryVoltage: 0
     property real batteryCurrent: 0
@@ -60,7 +60,7 @@ BaseDisplay {
         Controls.Label {
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
-            text: mode
+            text: translator.translateMode(mode)
             horizontalAlignment: Qt.AlignHCenter
             Layout.fillWidth: true
         }
