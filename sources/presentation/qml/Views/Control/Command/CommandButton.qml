@@ -40,9 +40,9 @@ Controls.Button {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return palette.dangerColor
-        if (status == Command.Sending) return palette.cautionColor
-        if (status == Command.Completed) return palette.positiveColor
+        if (status == Command.Rejected) return palette.dangerColor;
+        if (status == Command.Sending) return palette.cautionColor;
+        if (status == Command.Completed) return palette.positiveColor;
         if (control.pressed) return palette.highlightColor;
         return control.flat ? "transparent" : palette.buttonColor;
     }

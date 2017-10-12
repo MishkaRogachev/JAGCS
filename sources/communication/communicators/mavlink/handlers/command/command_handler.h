@@ -12,7 +12,7 @@ namespace domain
 
 namespace comm
 {
-    class CommandHandler: public AbstractMavLinkHandler
+    class CommandHandler: public AbstractMavLinkHandler // TODO: separate command handlers
     {
         Q_OBJECT
 

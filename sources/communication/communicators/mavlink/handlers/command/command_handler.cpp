@@ -59,7 +59,16 @@ public:
 
     QScopedPointer<IModeHelper> modeHelper;
     quint8 baseMode = 0;
-    quint32 customMode = 0;
+    int customMode = -1;
+    int requestedCustomMode = -1;
+
+    void ackCommand(Command::CommandType type, Command::CommandStatus status)
+    {
+        QMetaObject::invokeMethod(commandService->sender(), "setCommandStatus",
+                                  Qt::QueuedConnection,
+                                  Q_ARG(Command::CommandType, type),
+                                  Q_ARG(Command::CommandStatus, status));
+    }
 };
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
@@ -87,12 +96,7 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
     Command::CommandType type = ::mavCommandLongMap.value(ack.command, Command::UnknownCommand);
     if (type == Command::UnknownCommand) return;
 
-    Command::CommandStatus status = ::mavStatusMap.value(ack.result, Command::Idle);
-
-    QMetaObject::invokeMethod(d->commandService->sender(), "setCommandStatus",
-                              Qt::QueuedConnection,
-                              Q_ARG(Command::CommandType, type),
-                              Q_ARG(Command::CommandStatus, status));
+    d->ackCommand(type, ::mavStatusMap.value(ack.result, Command::Idle));
 }
 
 void CommandHandler::processHeartbeat(const mavlink_message_t& message)
@@ -100,13 +104,19 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    d->baseMode = heartbeat.base_mode;
-    d->customMode = heartbeat.custom_mode;
-
     if (d->modeHelper.isNull())
     {
         ModeHelperFactory f;
         d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
+    }
+
+    d->baseMode = heartbeat.base_mode;
+    d->customMode = heartbeat.custom_mode;
+
+    if (d->requestedCustomMode > -1 && d->requestedCustomMode == d->customMode)
+    {
+        d->ackCommand(Command::SetMode, Command::Completed);
+        d->requestedCustomMode = -1;
     }
 }
 
@@ -176,8 +186,10 @@ void CommandHandler::sendSetMode(quint8 mavId, Mode mode)
     setMode.target_system = mavId;
     setMode.base_mode = d->baseMode;
 
-    int customMode = d->modeHelper->modeToCustomMode(mode);
-    setMode.custom_mode = customMode > -1 ? customMode : d->customMode;
+    d->requestedCustomMode = d->modeHelper->modeToCustomMode(mode);
+    if (d->requestedCustomMode < 0) return;
+
+    setMode.custom_mode = d->requestedCustomMode;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
@@ -206,4 +218,6 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
                                                 m_communicator->linkChannel(link),
                                                 &message, &current);
     m_communicator->sendMessage(message, link);
+
+    d->ackCommand(Command::SetCurrentItem, Command::Completed); // TODO: wait current item
 }
