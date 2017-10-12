@@ -37,7 +37,6 @@ namespace comm
        void download(const dao::MissionAssignmentPtr& assignment);
        void upload(const dao::MissionAssignmentPtr& assignment);
        void cancelSync(const dao::MissionAssignmentPtr& assignment);
-       void selectCurrent(int vehicleId, quint16 seq);
 
        void requestMissionCount(quint8 mavId);
        void requestMissionItem(quint8 mavId, quint16 seq);
@@ -45,8 +44,6 @@ namespace comm
        void sendMissionCount(quint8 mavId);
        void sendMissionItem(quint8 mavId, quint16 seq);
        void sendMissionAck(quint8 mavId);
-       void sendCurrentItem(quint8 mavId, quint16 seq);
-       // TODO: send item for guided mode
 
     protected:
         void processMissionCount(const mavlink_message_t& message);

@@ -17,6 +17,7 @@ namespace domain
             UnknownCommand,
 
             SetMode,
+            SetCurrentItem,
 
             ArmDisarm,
 

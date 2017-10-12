@@ -87,7 +87,6 @@ void MissionInstrumentPresenter::connectView(QObject* view)
     QObject* statusView = view->findChild<QObject*>(NAME(itemsStatus));
     if (statusView) d->itemsStatus->setView(statusView);
 
-    connect(view, SIGNAL(setWaypoint(int)), this, SLOT(onSetWaypoint(int)));
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
 }
@@ -98,11 +97,3 @@ void MissionInstrumentPresenter::onSelectItem(int item)
 
     emit missionItemSelected(d->service->missionItem(d->assignment->missionId(), item));
 }
-
-void MissionInstrumentPresenter::onSetWaypoint(int item)
-{
-    if (d->assignment.isNull()) return;
-
-    d->service->selectCurrentItem(d->assignment->vehicleId(), item);
-}
-

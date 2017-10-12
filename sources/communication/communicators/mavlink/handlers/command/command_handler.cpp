@@ -122,11 +122,18 @@ void CommandHandler::onSendCommand(const Command& command, int attempt)
         this->sendCommandLong(vehicle->mavId(),
                               ::mavCommandLongMap.key(command.type()),
                               command.arguments(), attempt);
+        return;
     }
-    else if (command.type() == Command::SetMode &&
-             command.arguments().count() > 0) // TODO: special command map
+
+    if (command.arguments().count() < 1) return;
+
+    if (command.type() == Command::SetMode) // TODO: special command map
     {
         this->sendSetMode(vehicle->mavId(), command.arguments().first().value<Mode>());
+    }
+    else if (command.type() == Command::SetCurrentItem) // TODO: special command map
+    {
+        this->sendCurrentItem(vehicle->mavId(), command.arguments().first().toInt());
     }
 }
 
@@ -179,5 +186,24 @@ void CommandHandler::sendSetMode(quint8 mavId, Mode mode)
                                      m_communicator->componentId(),
                                      m_communicator->linkChannel(link),
                                      &message, &setMode);
+    m_communicator->sendMessage(message, link);
+}
+
+void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
+{
+    mavlink_message_t message;
+    mavlink_mission_set_current_t current;
+
+    current.target_system = mavId;
+    current.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    current.seq = seq;
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_set_current_encode_chan(m_communicator->systemId(),
+                                                m_communicator->componentId(),
+                                                m_communicator->linkChannel(link),
+                                                &message, &current);
     m_communicator->sendMessage(message, link);
 }

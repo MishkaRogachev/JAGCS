@@ -30,7 +30,6 @@ namespace presentation
 
     private slots:
         void onSelectItem(int item);
-        void onSetWaypoint(int item);
 
     signals:
         void missionItemSelected(const dao::MissionItemPtr& item);

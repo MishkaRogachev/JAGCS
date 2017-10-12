@@ -72,8 +72,6 @@ namespace domain
         void upload(dao::MissionAssignmentPtr assignment);
         void cancelSync(dao::MissionAssignmentPtr assignment);
 
-        void selectCurrentItem(int vehicleId, int item);
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;

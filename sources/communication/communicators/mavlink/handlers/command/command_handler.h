@@ -31,6 +31,8 @@ namespace comm
 
        void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);
        void sendSetMode(quint8 mavId, domain::Mode mode);
+       void sendCurrentItem(quint8 mavId, quint16 seq);
+       // TODO: send item for guided mode
 
     private:
         class Impl;

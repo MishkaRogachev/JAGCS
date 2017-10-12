@@ -14,7 +14,6 @@ BaseDisplay {
     property bool guided: false
     property bool downloading: false
 
-    signal setWaypoint(int item)
     signal downloadMission()
     signal cancelSyncMission()
 
@@ -45,9 +44,10 @@ BaseDisplay {
             text: qsTr("WP:") + " " + (itemsStatus.selectedItem > -1 ? itemsStatus.selectedItem : "-")
         }
 
-        Controls.Button {
+        CommandButton {
             iconSource: "qrc:/icons/right.svg"
-            onClicked: setWaypoint(itemsStatus.selectedItem)
+            command: Command.SetCurrentItem
+            args: [ itemsStatus.selectedItem ]
             enabled: itemsStatus.selectedItem > -1
         }
 

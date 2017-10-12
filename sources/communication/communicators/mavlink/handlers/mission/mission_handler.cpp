@@ -77,7 +77,6 @@ MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
     connect(d->missionService, &MissionService::download, this, &MissionHandler::download);
     connect(d->missionService, &MissionService::upload, this, &MissionHandler::upload);
     connect(d->missionService, &MissionService::cancelSync, this, &MissionHandler::cancelSync);
-    connect(d->missionService, &MissionService::selectCurrentItem, this, &MissionHandler::selectCurrent);
 }
 
 MissionHandler::~MissionHandler()
@@ -158,11 +157,6 @@ void MissionHandler::cancelSync(const dao::MissionAssignmentPtr& assignment)
 
     assignment->setStatus(dao::MissionAssignment::NotActual);
     d->missionService->assignmentChanged(assignment);
-}
-
-void MissionHandler::selectCurrent(int vehicleId, quint16 seq)
-{
-    this->sendCurrentItem(d->vehicleService->mavIdByVehicleId(vehicleId), seq);
 }
 
 void MissionHandler::requestMissionCount(quint8 mavId)
@@ -354,25 +348,6 @@ void MissionHandler::sendMissionAck(quint8 mavId)
                                         m_communicator->componentId(),
                                         m_communicator->linkChannel(link),
                                         &message, &ackItem);
-    m_communicator->sendMessage(message, link);
-}
-
-void MissionHandler::sendCurrentItem(quint8 mavId, quint16 seq)
-{
-    mavlink_message_t message;
-    mavlink_mission_set_current_t current;
-
-    current.target_system = mavId;
-    current.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    current.seq = seq;
-
-    AbstractLink* link = m_communicator->mavSystemLink(mavId);
-    if (!link) return;
-
-    mavlink_msg_mission_set_current_encode_chan(m_communicator->systemId(),
-                                                m_communicator->componentId(),
-                                                m_communicator->linkChannel(link),
-                                                &message, &current);
     m_communicator->sendMessage(message, link);
 }
 
