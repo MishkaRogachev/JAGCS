@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US" sourcelanguage="en_US">
+<TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
     <name>AboutView</name>
     <message>
@@ -612,243 +612,6 @@
     </message>
 </context>
 <context>
-    <name>MAVLINK</name>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="17"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="76"/>
-        <source>MANUAL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="18"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="51"/>
-        <source>CIRCLE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="19"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="44"/>
-        <source>STABILIZE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="20"/>
-        <source>TRAINING</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="21"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="45"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="89"/>
-        <source>ACRO</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="22"/>
-        <source>FBWA</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="23"/>
-        <source>FBWB</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="24"/>
-        <source>CRUISE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="25"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="56"/>
-        <source>AUTOTUNE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="26"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="47"/>
-        <source>AUTO</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="27"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="50"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="84"/>
-        <source>RETURN</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="28"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="49"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="82"/>
-        <source>LOITER</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="29"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="60"/>
-        <source>AVOID ADSB</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="30"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="48"/>
-        <source>GUIDED</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="31"/>
-        <source>INITIALISE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="32"/>
-        <source>QSTABILIZE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="33"/>
-        <source>QHOVER</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="34"/>
-        <source>QLOITER</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="35"/>
-        <source>QLAND</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="36"/>
-        <source>QRETURN</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="37"/>
-        <source>APM PLANE NONE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="46"/>
-        <source>ALT HOLD</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="52"/>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="85"/>
-        <source>LAND</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="53"/>
-        <source>DRIFT</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="54"/>
-        <source>SPORT</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="55"/>
-        <source>FLIP</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="57"/>
-        <source>POS HOLD</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="58"/>
-        <source>BRAKE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="59"/>
-        <source>THROW</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="61"/>
-        <source>GUIDED NO SNS</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="66"/>
-        <source>APM NONE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="77"/>
-        <source>ALT CTL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="78"/>
-        <source>POS CTL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="80"/>
-        <source>READY</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="81"/>
-        <source>TAKEOFF</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="83"/>
-        <source>MISSION</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="86"/>
-        <source>RTGS</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="87"/>
-        <source>FOLLOW</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="88"/>
-        <source>PX4 AUTO NONE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="90"/>
-        <source>OFFBOARD</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="91"/>
-        <source>STABILIZED</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="92"/>
-        <source>RATTITUDE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="95"/>
-        <source>PX4 NONE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/communication/communicators/mavlink/mavlink_mode_helper.h" line="110"/>
-        <source>NONE</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>MapSettingsView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="28"/>
@@ -1232,151 +995,23 @@
 <context>
     <name>StatusDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="12"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="39"/>
         <source> V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
         <source> A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="69"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="70"/>
         <source>DISARM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="69"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="70"/>
         <source>ARM</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>TranslationHelper</name>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="16"/>
-        <source>Home</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="17"/>
-        <source>Takeoff</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="18"/>
-        <source>Waypoint</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="19"/>
-        <source>Loiter unlim.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="20"/>
-        <source>Loiter alt.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="21"/>
-        <source>Loiter turns</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="22"/>
-        <source>Loiter time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="23"/>
-        <source>Continue</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="24"/>
-        <source>Return</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="25"/>
-        <source>Landing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="26"/>
-        <source>Set speed</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="28"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="36"/>
-        <source>Auto</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="37"/>
-        <source>Fixed wing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="38"/>
-        <source>Flying wing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="39"/>
-        <source>Quadcopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="40"/>
-        <source>Tricopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="41"/>
-        <source>Hexcopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="42"/>
-        <source>Coaxial</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="43"/>
-        <source>Vtol</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="44"/>
-        <source>Airship</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="45"/>
-        <source>Kite</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="46"/>
-        <source>Ornithopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="48"/>
-        <source>Unknown</source>
         <translation></translation>
     </message>
 </context>
@@ -1536,17 +1171,17 @@
 <context>
     <name>comm::HeartbeatHandler</name>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/general/heartbeat_handler.cpp" line="126"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/general/heartbeat_handler.cpp" line="127"/>
         <source>MAV %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/general/heartbeat_handler.cpp" line="138"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/general/heartbeat_handler.cpp" line="139"/>
         <source>Vehicle %1 online</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/general/heartbeat_handler.cpp" line="220"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/general/heartbeat_handler.cpp" line="232"/>
         <source>Vehicle %1 gone offline</source>
         <translation></translation>
     </message>
@@ -1669,6 +1304,225 @@
     <message>
         <location filename="../sources/presentation/presenters/settings_presenter/network_settings_presenter/network_settings_presenter.cpp" line="30"/>
         <source>Caching FTP</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>presentation::TranslationHelper</name>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="16"/>
+        <source>Home</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="17"/>
+        <source>Takeoff</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="18"/>
+        <source>Waypoint</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="19"/>
+        <source>Loiter unlim.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="20"/>
+        <source>Loiter alt.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="21"/>
+        <source>Loiter turns</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="22"/>
+        <source>Loiter time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="23"/>
+        <source>Continue</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="24"/>
+        <source>Return</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="25"/>
+        <source>Landing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="26"/>
+        <source>Set speed</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="28"/>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="76"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="36"/>
+        <source>Auto</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="37"/>
+        <source>Fixed wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="38"/>
+        <source>Flying wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="39"/>
+        <source>Quadcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="40"/>
+        <source>Tricopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="41"/>
+        <source>Hexcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="42"/>
+        <source>Coaxial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="43"/>
+        <source>Vtol</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="44"/>
+        <source>Airship</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="45"/>
+        <source>Kite</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="46"/>
+        <source>Ornithopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="48"/>
+        <source>Unknown</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="56"/>
+        <source>ACRO</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="57"/>
+        <source>AUTOTUN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="58"/>
+        <source>AVOID</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="59"/>
+        <source>CIRCLE</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="60"/>
+        <source>CRUISE</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="61"/>
+        <source>CTRL BY ALT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="62"/>
+        <source>CTRL BY ATT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="63"/>
+        <source>FOLLOW</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="64"/>
+        <source>GUIDED</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="65"/>
+        <source>HOLD</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="66"/>
+        <source>INIT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="67"/>
+        <source>LAND</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="68"/>
+        <source>LOITER</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="69"/>
+        <source>MANUAL</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="70"/>
+        <source>MISSION</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="71"/>
+        <source>RETURN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="72"/>
+        <source>STAB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="73"/>
+        <source>TAKEOFF</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="74"/>
+        <source>THROW</source>
         <translation></translation>
     </message>
 </context>
