@@ -3,20 +3,25 @@
 
 // Internal
 #include "i_dashboard_factory.h"
+
 #include "dao_traits.h"
 #include "base_instrument_presenter.h"
 
 namespace presentation
 {
+    class AbstractMapPresenter;
+
     class GenericDashboardFactory: public IDashboardFactory
     {
     public:
-        GenericDashboardFactory(const dao::VehiclePtr& vehicle);
+        GenericDashboardFactory(AbstractMapPresenter* map, const dao::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 
     protected:
+        AbstractMapPresenter* m_map;
         dao::VehiclePtr m_vehicle;
+
         BaseInstrumentPresenter* m_satellite;
         BaseInstrumentPresenter* m_status;
         BaseInstrumentPresenter* m_compass;

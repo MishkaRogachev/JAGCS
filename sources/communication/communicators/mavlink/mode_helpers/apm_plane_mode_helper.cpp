@@ -49,7 +49,7 @@ QList<domain::Mode> ApmPlaneModeHelper::availableModes() const
 //        domain::Mode::CtrlByAltitude,
 //        domain::Mode::Acro,
 //        domain::Mode::Autotune,
-        domain::Mode::Cruise,
+//        domain::Mode::Cruise,
         domain::Mode::Mission,
         domain::Mode::Return,
         domain::Mode::Loiter,

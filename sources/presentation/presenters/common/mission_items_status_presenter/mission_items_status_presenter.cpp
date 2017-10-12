@@ -37,6 +37,16 @@ MissionItemsStatusPresenter::MissionItemsStatusPresenter(QObject* object):
 MissionItemsStatusPresenter::~MissionItemsStatusPresenter()
 {}
 
+dao::MissionPtr MissionItemsStatusPresenter::mission() const
+{
+    return d->mission;
+}
+
+dao::MissionItemPtr MissionItemsStatusPresenter::missionItem() const
+{
+    return d->item;
+}
+
 void MissionItemsStatusPresenter::selectMission(const dao::MissionPtr& mission)
 {
     d->mission = mission;

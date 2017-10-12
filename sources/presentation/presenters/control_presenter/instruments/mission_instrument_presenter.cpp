@@ -7,6 +7,8 @@
 // Internal
 #include "service_registry.h"
 #include "mission_service.h"
+
+#include "mission_item.h"
 #include "mission_assignment.h"
 
 #include "mission_items_status_presenter.h"
@@ -31,6 +33,9 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
     d->assignment = d->service->vehicleAssignment(vehicleId);
 
     d->itemsStatus = new MissionItemsStatusPresenter(this);
+    connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
+            this, &MissionInstrumentPresenter::onSelectItem);
+
     if (d->assignment)
     {
         d->itemsStatus->selectMission(d->service->mission(d->assignment->missionId()));
@@ -63,6 +68,20 @@ void MissionInstrumentPresenter::onCancelSyncMission()
     if (d->assignment) d->service->cancelSync(d->assignment);
 }
 
+void MissionInstrumentPresenter::selectMissionItem(const dao::MissionItemPtr& item)
+{
+    if (item && item->missionId() == d->assignment->missionId())
+    {
+        d->itemsStatus->selectMissionItem(item);
+    }
+    else
+    {
+        d->itemsStatus->selectMissionItem(dao::MissionItemPtr());
+    }
+
+    emit missionItemSelected(d->itemsStatus->missionItem());
+}
+
 void MissionInstrumentPresenter::connectView(QObject* view)
 {
     QObject* statusView = view->findChild<QObject*>(NAME(itemsStatus));
@@ -73,9 +92,17 @@ void MissionInstrumentPresenter::connectView(QObject* view)
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
 }
 
+void MissionInstrumentPresenter::onSelectItem(int item)
+{
+    if (d->assignment.isNull()) return;
+
+    emit missionItemSelected(d->service->missionItem(d->assignment->missionId(), item));
+}
+
 void MissionInstrumentPresenter::onSetWaypoint(int item)
 {
     if (d->assignment.isNull()) return;
+
     d->service->selectCurrentItem(d->assignment->vehicleId(), item);
 }
 

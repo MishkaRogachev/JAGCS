@@ -14,6 +14,9 @@ namespace presentation
         explicit MissionItemsStatusPresenter(QObject* object = nullptr);
         ~MissionItemsStatusPresenter() override;
 
+        dao::MissionPtr mission() const;
+        dao::MissionItemPtr missionItem() const;
+
     public slots:
         void selectMission(const dao::MissionPtr& mission);
         void selectMissionItem(const dao::MissionItemPtr& item);

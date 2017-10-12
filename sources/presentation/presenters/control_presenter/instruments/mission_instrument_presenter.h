@@ -2,6 +2,7 @@
 #define MISSION_INSTRUMENT_PRESENTER_H
 
 #include "base_instrument_presenter.h"
+#include "dao_traits.h"
 
 namespace domain
 {
@@ -22,11 +23,17 @@ namespace presentation
         void onDownloadMission();
         void onCancelSyncMission();
 
+        void selectMissionItem(const dao::MissionItemPtr& item);
+
     protected:
         void connectView(QObject* view) override;
 
     private slots:
+        void onSelectItem(int item);
         void onSetWaypoint(int item);
+
+    signals:
+        void missionItemSelected(const dao::MissionItemPtr& item);
 
     private:
         class Impl;

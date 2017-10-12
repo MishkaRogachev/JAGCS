@@ -8,7 +8,7 @@ namespace presentation
     class AerialDashboardFactory: public GenericDashboardFactory
     {
     public:
-        AerialDashboardFactory(const dao::VehiclePtr& vehicle);
+        AerialDashboardFactory(AbstractMapPresenter* map, const dao::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
     };
