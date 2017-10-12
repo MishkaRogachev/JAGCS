@@ -28,9 +28,9 @@ Px4ModeHelper::Px4ModeHelper():
     IModeHelper()
 {}
 
-quint32 Px4ModeHelper::modeToCustomMode(domain::Mode mode)
+int Px4ModeHelper::modeToCustomMode(domain::Mode mode)
 {
-    return ::modeMap.key(mode, 0);
+    return ::modeMap.key(mode, -1);
 }
 
 domain::Mode Px4ModeHelper::customModeToMode(quint32 mode)

@@ -11,7 +11,7 @@ namespace comm
         IModeHelper() {}
         virtual ~IModeHelper() {}
 
-        virtual quint32 modeToCustomMode(domain::Mode mode) = 0;
+        virtual int modeToCustomMode(domain::Mode mode) = 0;
         virtual domain::Mode customModeToMode(quint32 mode) = 0;
 
         virtual QList<domain::Mode> availableModes() const = 0;

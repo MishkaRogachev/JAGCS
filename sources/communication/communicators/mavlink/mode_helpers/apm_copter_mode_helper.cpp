@@ -29,9 +29,9 @@ ApmCopterModeHelper::ApmCopterModeHelper():
     IModeHelper()
 {}
 
-quint32 ApmCopterModeHelper::modeToCustomMode(domain::Mode mode)
+int ApmCopterModeHelper::modeToCustomMode(domain::Mode mode)
 {
-    return ::modeMap.key(mode, 0);
+    return ::modeMap.key(mode, -1);
 }
 
 domain::Mode ApmCopterModeHelper::customModeToMode(quint32 mode)

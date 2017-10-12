@@ -10,7 +10,7 @@ namespace comm
     public:
         ApmCopterModeHelper();
 
-        quint32 modeToCustomMode(domain::Mode mode) override;
+        int modeToCustomMode(domain::Mode mode) override;
         domain::Mode customModeToMode(quint32 mode) override;
 
         virtual QList<domain::Mode> availableModes() const override;

@@ -58,7 +58,8 @@ public:
     CommandService* commandService = ServiceRegistry::commandService();
 
     QScopedPointer<IModeHelper> modeHelper;
-    uint8_t baseMode = 0;
+    quint8 baseMode = 0;
+    quint32 customMode = 0;
 };
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
@@ -100,6 +101,7 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
     d->baseMode = heartbeat.base_mode;
+    d->customMode = heartbeat.custom_mode;
 
     if (d->modeHelper.isNull())
     {
@@ -166,7 +168,9 @@ void CommandHandler::sendSetMode(quint8 mavId, Mode mode)
 
     setMode.target_system = mavId;
     setMode.base_mode = d->baseMode;
-    setMode.custom_mode = d->modeHelper->modeToCustomMode(mode);
+
+    int customMode = d->modeHelper->modeToCustomMode(mode);
+    setMode.custom_mode = customMode > -1 ? customMode : d->customMode;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
