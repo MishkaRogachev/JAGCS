@@ -35,6 +35,7 @@ BaseDisplay {
 
         Controls.Button {
             iconSource: "qrc:/icons/download.svg"
+            enabled: online
             highlighted: downloading
             onClicked: downloading ? cancelSyncMission() : downloadMission()
         }
@@ -46,18 +47,20 @@ BaseDisplay {
 
         CommandButton {
             iconSource: "qrc:/icons/right.svg"
+            enabled: online && itemsStatus.selectedItem > -1
             command: Command.SetCurrentItem
             args: [ itemsStatus.selectedItem ]
-            enabled: itemsStatus.selectedItem > -1
         }
 
         CommandButton {
             iconSource: "qrc:/icons/play.svg"
+            enabled: online
             command: Command.Start
         }
 
         CommandButton {
             iconSource: "qrc:/icons/home.svg"
+            enabled: online
             command: Command.Return
         }
     }

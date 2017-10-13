@@ -61,6 +61,7 @@ BaseDisplay {
         CommandModeBox {
             mode: root.mode
             model: availableModes
+            enabled: online
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
             Layout.fillWidth: true
@@ -68,6 +69,7 @@ BaseDisplay {
 
         CommandSwitch {
             text: armed ? qsTr("DISARM") : qsTr("ARM")
+            enabled: online
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
             command: Command.ArmDisarm

@@ -16,7 +16,6 @@ Repeater {
     Loader {
         sourceComponent: createIndicator(modelData)
         onItemChanged: if (item) instrumentAdded(modelData, item)
-        enabled: online
         Layout.alignment: Qt.AlignTop
         Layout.minimumHeight: item ? item.minimumHeight : 0
         Layout.maximumHeight: item ? item.maximumHeight : 0
