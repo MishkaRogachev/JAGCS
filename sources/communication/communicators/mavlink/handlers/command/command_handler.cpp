@@ -27,7 +27,6 @@ namespace
     {
         { MAV_CMD_COMPONENT_ARM_DISARM, Command::ArmDisarm },
         { MAV_CMD_NAV_RETURN_TO_LAUNCH, Command::Return },
-        { MAV_CMD_NAV_GUIDED_ENABLE, Command::EnableGuided },
         { MAV_CMD_MISSION_START, Command::Start },
         { MAV_CMD_DO_LAND_START, Command::Land },
         { MAV_CMD_DO_GO_AROUND, Command::GoAround },
@@ -248,10 +247,6 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
     item.x = latitude;
     item.y = longitude;
     item.z = altitude;
-//    float param1 = 0; // Loiter time
-//    float param2 = 1; // Acceptable range from target - radius in meters
-//    float param3 = 0; // Pass through waypoint
-//    float param4 = 0; // Desired yaw angle
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;

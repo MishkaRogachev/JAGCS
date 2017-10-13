@@ -23,7 +23,6 @@ namespace domain
             ArmDisarm,
 
             Return,
-            EnableGuided,
             Start,
             Land,
             GoAround,

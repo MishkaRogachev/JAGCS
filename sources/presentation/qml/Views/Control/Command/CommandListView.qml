@@ -39,7 +39,6 @@ Controls.Pane {
                 { icon: "qrc:/icons/landing.svg", text: qsTr("Land"), command: Command.Land },
                 { icon: "qrc:/icons/go_around.svg", text: qsTr("Go around"), command: Command.GoAround },
                 { icon: "qrc:/icons/center.svg", text: qsTr("Nav to"), command: Command.NavTo },
-                { icon: "qrc:/icons/joystick.svg", text: qsTr("Guided"), command: Command.EnableGuided },
                 { icon: "qrc:/icons/speed.svg", text: qsTr("Set airspeed"), command: Command.SetSpeed, type: 0 },
                 { icon: "qrc:/icons/speed.svg", text: qsTr("Set groundspeed"), command: Command.SetSpeed, type: 1 },
                 { icon: "qrc:/icons/up.svg", text: qsTr("Set altitude"), command: Command.SetAltitude },
@@ -57,7 +56,6 @@ Controls.Pane {
                 case Command.PreflightCalibration: return calibrationBox.currentItem.args;
                 case Command.ArmDisarm: return [ commandBox.currentItem.arm ];
                 case Command.NavTo: return [ latitudeBox.realValue, longitudeBox.realValue, altitudeBox.value];
-                case Command.EnableGuided: return [ guidedSwitch.checked ];
                 case Command.SetSpeed: return [commandBox.currentItem.type,
                                                speedUnits ? Helper.kphToMps(speedBox.value) : speedBox.value,
                                                             -1, 0];
@@ -67,16 +65,6 @@ Controls.Pane {
                 default: return [];
                 }
             }
-        }
-
-        Controls.Switch {
-            id: guidedSwitch
-            text: qsTr("Enable guided")
-            font.pixelSize: palette.fontPixelSize * 0.7
-            font.bold: true
-            visible: command === Command.EnableGuided
-            Layout.fillWidth: true
-            Layout.columnSpan: 3
         }
 
         Controls.Label {
