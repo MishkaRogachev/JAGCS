@@ -141,9 +141,20 @@ void CommandHandler::onSendCommand(const Command& command, int attempt)
     {
         this->sendSetMode(vehicle->mavId(), command.arguments().first().value<Mode>());
     }
-    else if (command.type() == Command::SetCurrentItem) // TODO: special command map
+    else if (command.type() == Command::SetCurrentItem)
     {
         this->sendCurrentItem(vehicle->mavId(), command.arguments().first().toInt());
+    }
+    else if (command.type() == Command::NavTo)
+    {
+        QVariantList args = command.arguments();
+        if (args.count() > 2)
+        {
+            this->sentNavTo(vehicle->mavId(),
+                            args.at(0).toDouble(),
+                            args.at(1).toDouble(),
+                            args.at(2).toFloat());
+        }
     }
 }
 
@@ -220,4 +231,36 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
     m_communicator->sendMessage(message, link);
 
     d->ackCommand(Command::SetCurrentItem, Command::Completed); // TODO: wait current item
+}
+
+void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)
+{
+    mavlink_message_t message;
+    mavlink_mission_item_t item;
+
+    item.target_system = mavId;
+    item.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    item.frame = MAV_FRAME_GLOBAL_RELATIVE_ALT;
+    item.command = MAV_CMD_NAV_WAYPOINT;
+    item.current = 2; // guided
+    item.seq = 0;
+    item.autocontinue = false;
+    item.x = latitude;
+    item.y = longitude;
+    item.z = altitude;
+//    float param1 = 0; // Loiter time
+//    float param2 = 1; // Acceptable range from target - radius in meters
+//    float param3 = 0; // Pass through waypoint
+//    float param4 = 0; // Desired yaw angle
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_item_encode_chan(m_communicator->systemId(),
+                                         m_communicator->componentId(),
+                                         m_communicator->linkChannel(link),
+                                         &message, &item);
+    m_communicator->sendMessage(message, link);
+
+    d->ackCommand(Command::NavTo, Command::Completed); // TODO: wait nav to
 }

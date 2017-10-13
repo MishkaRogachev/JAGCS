@@ -18,6 +18,7 @@ namespace domain
 
             SetMode,
             SetCurrentItem,
+            NavTo,
 
             ArmDisarm,
 

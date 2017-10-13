@@ -38,6 +38,7 @@ Controls.Pane {
                 { icon: "qrc:/icons/home.svg", text: qsTr("Return"), command: Command.Return },
                 { icon: "qrc:/icons/landing.svg", text: qsTr("Land"), command: Command.Land },
                 { icon: "qrc:/icons/go_around.svg", text: qsTr("Go around"), command: Command.GoAround },
+                { icon: "qrc:/icons/center.svg", text: qsTr("Nav to"), command: Command.NavTo },
                 { icon: "qrc:/icons/joystick.svg", text: qsTr("Guided"), command: Command.EnableGuided },
                 { icon: "qrc:/icons/speed.svg", text: qsTr("Set airspeed"), command: Command.SetSpeed, type: 0 },
                 { icon: "qrc:/icons/speed.svg", text: qsTr("Set groundspeed"), command: Command.SetSpeed, type: 1 },
@@ -55,6 +56,7 @@ Controls.Pane {
                 switch (command) {
                 case Command.PreflightCalibration: return calibrationBox.currentItem.args;
                 case Command.ArmDisarm: return [ commandBox.currentItem.arm ];
+                case Command.NavTo: return [ latitudeBox.realValue, longitudeBox.realValue, altitudeBox.value];
                 case Command.EnableGuided: return [ guidedSwitch.checked ];
                 case Command.SetSpeed: return [commandBox.currentItem.type,
                                                speedUnits ? Helper.kphToMps(speedBox.value) : speedBox.value,
@@ -81,12 +83,16 @@ Controls.Pane {
             text: qsTr("Alt.")
             font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
-            visible: command === Command.SetHome || command === Command.SetAltitude
+            visible: command === Command.SetHome ||
+                     command === Command.SetAltitude ||
+                     command === Command.NavTo
         }
 
         Controls.SpinBox {
             id: altitudeBox
-            visible: command === Command.SetHome || command === Command.SetAltitude
+            visible: command === Command.SetHome ||
+                     command === Command.SetAltitude ||
+                     command === Command.NavTo
             to: 20000 // TODO: borderValues
             Layout.fillWidth: true
             Layout.columnSpan: 2
@@ -96,19 +102,19 @@ Controls.Pane {
             text: qsTr("Lat.")
             font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.NavTo
             Layout.fillWidth: true
         }
 
         Controls.CoordSpinBox {
             id: latitudeBox
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.NavTo
             Layout.fillWidth: true
         }
 
         Controls.MapPickButton {
             id: pickButton
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.NavTo
             Layout.rowSpan: 2
             onPicked: {
                 latitudeBox.realValue = coordinate.latitude;
@@ -126,13 +132,13 @@ Controls.Pane {
             text: qsTr("Lon.")
             font.pixelSize: palette.fontPixelSize * 0.7
             font.bold: true
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.NavTo
             Layout.fillWidth: true
         }
 
         Controls.CoordSpinBox {
             id: longitudeBox
-            visible: command === Command.SetHome
+            visible: command === Command.SetHome || command === Command.NavTo
             isLongitude: true
             Layout.fillWidth: true
         }
