@@ -7,6 +7,7 @@
 // Internal
 #include "service_registry.h"
 #include "mission_service.h"
+#include "command_service.h"
 
 #include "mission_item.h"
 #include "mission_assignment.h"
@@ -18,7 +19,8 @@ using namespace presentation;
 class MissionInstrumentPresenter::Impl
 {
 public:
-    domain::MissionService* service;
+    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    domain::CommandService* commandService = domain::ServiceRegistry::commandService();
 
     dao::MissionAssignmentPtr assignment;
 
@@ -29,8 +31,7 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
     BaseInstrumentPresenter(parent),
     d(new Impl())
 {
-    d->service = domain::ServiceRegistry::missionService();
-    d->assignment = d->service->vehicleAssignment(vehicleId);
+    d->assignment = d->missionService->vehicleAssignment(vehicleId);
 
     d->itemsStatus = new MissionItemsStatusPresenter(this);
     connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
@@ -38,15 +39,15 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
 
     if (d->assignment)
     {
-        d->itemsStatus->selectMission(d->service->mission(d->assignment->missionId()));
+        d->itemsStatus->selectMission(d->missionService->mission(d->assignment->missionId()));
         connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
                 this, [this](int sequence) {
             d->itemsStatus->selectMissionItem(
-                        d->service->missionItem(d->assignment->missionId(), sequence));
+                        d->missionService->missionItem(d->assignment->missionId(), sequence));
         });
     }
 
-    connect(d->service, &domain::MissionService::assignmentChanged,
+    connect(d->missionService, &domain::MissionService::assignmentChanged,
             this, [this](const dao::MissionAssignmentPtr& assignment) {
         if (d->assignment.isNull() || d->assignment != assignment) return;
 
@@ -60,12 +61,12 @@ MissionInstrumentPresenter::~MissionInstrumentPresenter()
 
 void MissionInstrumentPresenter::onDownloadMission()
 {
-    if (d->assignment) d->service->download(d->assignment);
+    if (d->assignment) d->missionService->download(d->assignment);
 }
 
 void MissionInstrumentPresenter::onCancelSyncMission()
 {
-    if (d->assignment) d->service->cancelSync(d->assignment);
+    if (d->assignment) d->missionService->cancelSync(d->assignment);
 }
 
 void MissionInstrumentPresenter::selectMissionItem(const dao::MissionItemPtr& item)
@@ -89,11 +90,22 @@ void MissionInstrumentPresenter::connectView(QObject* view)
 
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
+
+    connect(this, SIGNAL(activateItem()), view, SLOT());
 }
 
 void MissionInstrumentPresenter::onSelectItem(int item)
 {
     if (d->assignment.isNull()) return;
 
-    emit missionItemSelected(d->service->missionItem(d->assignment->missionId(), item));
+    emit missionItemSelected(d->missionService->missionItem(d->assignment->missionId(), item));
+}
+
+void MissionInstrumentPresenter::activateItem()
+{
+    if (d->assignment.isNull() || d->itemsStatus->missionItem().isNull()) return;
+
+    domain::Command command(domain::Command::SetCurrentItem, d->assignment->vehicleId());
+    command.addArgument(d->itemsStatus->missionItem()->sequence());
+    d->commandService->executeCommand(command);
 }

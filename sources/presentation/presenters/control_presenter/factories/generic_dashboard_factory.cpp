@@ -61,10 +61,13 @@ DashboardPresenter* GenericDashboardFactory::create()
                                           node->childNode(domain::Telemetry::Battery), dashboard));
 
     MissionInstrumentPresenter* mission = new MissionInstrumentPresenter(m_vehicle->id(), dashboard);
+
     QObject::connect(mission, &MissionInstrumentPresenter::missionItemSelected,
             m_map, &AbstractMapPresenter::selectMissionItem);
     QObject::connect(m_map, &AbstractMapPresenter::missionItemSelected,
             mission, &MissionInstrumentPresenter::selectMissionItem);
+    QObject::connect(m_map, &AbstractMapPresenter::holded,
+            mission, &MissionInstrumentPresenter::activateItem);
 
     dashboard->addInstrument("mission", 500);
     dashboard->addInstrumentPresenter("mission", m_status);
