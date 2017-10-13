@@ -34,6 +34,7 @@ LocationMapPresenter::LocationMapPresenter(QObject* object):
 {
     connect(&d->pointModel, &MissionPointMapItemModel::missionItemSelected,
             this, &LocationMapPresenter::missionItemSelected);
+    connect(&d->pointModel, &MissionPointMapItemModel::holded, this, &LocationMapPresenter::holded);
 }
 
 LocationMapPresenter::~LocationMapPresenter()

@@ -47,6 +47,7 @@ namespace presentation
 
     signals:
         void missionItemSelected(const dao::MissionItemPtr& item);
+        void holded();
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

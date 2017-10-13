@@ -27,6 +27,7 @@ namespace presentation
 
     signals:
         void missionItemSelected(const dao::MissionItemPtr& item);
+        void holded();
     };
 }
 

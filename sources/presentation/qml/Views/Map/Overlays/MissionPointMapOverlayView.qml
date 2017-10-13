@@ -21,6 +21,7 @@ MapItemView {
             sequence: itemPtr.sequence
             selectionAvalible: !picking
             onSelectionRequest: pointModel.setSelectedMissionItem(itemIndex)
+            onHolded: pointModel.holded()
         }
     }
 }

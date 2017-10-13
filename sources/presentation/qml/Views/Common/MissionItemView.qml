@@ -16,6 +16,7 @@ Rectangle {
     property alias selectionAvalible: area.visible
 
     signal selectionRequest()
+    signal holded()
 
     implicitWidth: palette.controlBaseSize
     implicitHeight: palette.controlBaseSize
@@ -69,5 +70,6 @@ Rectangle {
         id: area
         anchors.fill: parent
         onPressed: selectionRequest()
+        onPressAndHold: holded()
     }
 }

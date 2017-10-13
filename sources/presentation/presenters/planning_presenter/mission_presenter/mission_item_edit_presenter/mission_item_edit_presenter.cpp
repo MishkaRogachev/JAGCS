@@ -79,7 +79,9 @@ void MissionItemEditPresenter::selectMission(const dao::MissionPtr& mission)
 
 void MissionItemEditPresenter::setPicking(bool picking)
 {
-    this->setViewProperty(PROPERTY(picking), true);
+    if (d->item.isNull() || !d->item->isPositionatedItem()) return;
+
+    this->setViewProperty(PROPERTY(picking), picking);
 }
 
 void MissionItemEditPresenter::remove()

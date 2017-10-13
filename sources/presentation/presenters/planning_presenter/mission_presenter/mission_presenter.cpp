@@ -108,6 +108,11 @@ void MissionPresenter::selectMissionItem(const dao::MissionItemPtr& item)
     d->itemEdit->selectItem(item->sequence());
 }
 
+void MissionPresenter::enablePicker()
+{
+    d->itemEdit->setPicking(true);
+}
+
 void MissionPresenter::connectView(QObject* view)
 {
     d->itemsStatus->setView(view->findChild<QObject*>(NAME(itemsStatus)));
