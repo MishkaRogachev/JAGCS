@@ -17,6 +17,7 @@ BaseDisplay {
     property bool compassOperational: false
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
+    property real groundspeed: 0
     property int targetDistance: 0
     property int homeDistance: 0
     property real homeDirection: 0
@@ -74,6 +75,7 @@ BaseDisplay {
         mark: vehicleMark
         opacity: compassEnabled ? 1 : 0.33
         color: compassOperational ? palette.textColor : palette.dangerColor
+        courseEnabled: groundspeed > 0.1
         courseColor: satelliteEnabled ? (satelliteOperational ? palette.missionColor :
                                                                 palette.dangerColor) :
                                         "transparent"

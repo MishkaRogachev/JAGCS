@@ -8,6 +8,7 @@ Canvas {
 
     property color color: palette.textColor
     property color courseColor: palette.missionColor
+    property bool courseEnabled: true
     property url mark
     property int tickFactor: 5
     property real scalesRatio: 0.08
@@ -86,16 +87,18 @@ Canvas {
         ctx.restore();
 
         // Course Mark
-        ctx.strokeStyle = courseColor;
-        ctx.save();
-        ctx.rotate((course - heading) * Math.PI / 180);
-        ctx.beginPath();
-        ctx.lineWidth = 4;
-        ctx.moveTo(-scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
-        ctx.lineTo(0, (ctx.lineWidth - height) / 2);
-        ctx.lineTo(scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
-        ctx.stroke();
-        ctx.restore();
+        if (courseEnabled) {
+            ctx.strokeStyle = courseColor;
+            ctx.save();
+            ctx.rotate((course - heading) * Math.PI / 180);
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.moveTo(-scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
+            ctx.lineTo(0, (ctx.lineWidth - height) / 2);
+            ctx.lineTo(scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
+            ctx.stroke();
+            ctx.restore();
+        }
 
         // Tick
         ctx.strokeStyle = color;
