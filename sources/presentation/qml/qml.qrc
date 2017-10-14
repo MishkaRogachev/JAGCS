@@ -44,6 +44,7 @@
         <file>Indicators/ArtificialHorizon.qml</file>
         <file>Indicators/FdLabel.qml</file>
         <file>Indicators/DistanceLabel.qml</file>
+        <file>Indicators/SpeedArrow.qml</file>
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
         <file>Views/Common/MissionItemView.qml</file>

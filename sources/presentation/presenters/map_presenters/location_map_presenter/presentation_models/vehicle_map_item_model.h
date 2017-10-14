@@ -26,7 +26,9 @@ namespace presentation
         enum VehicleMapItemRoles
         {
             CoordinateRole = Qt::UserRole + 1,
-            DirectionRole,
+            HeadingRole,
+            CourseRole,
+            SnsFixRole,
             MarkRole,
             VehicleIdRole,
             TrackRole,

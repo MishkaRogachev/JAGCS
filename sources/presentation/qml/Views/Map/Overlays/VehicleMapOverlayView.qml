@@ -2,12 +2,13 @@ import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 MapItemView {
     delegate: MapQuickItem {
 
-        property real directionAnimated: direction
+        property real headingAnimated: heading
 
         coordinate: position
         z: 1000
@@ -16,7 +17,7 @@ MapItemView {
             CoordinateAnimation { duration: 200 }
         }
 
-        Behavior on directionAnimated {
+        Behavior on headingAnimated {
             RotationAnimation {
                 duration: 200
                 direction: RotationAnimation.Shortest
@@ -32,15 +33,24 @@ MapItemView {
         onCoordinateChanged: tryCenterVehicle()
         sourceItem: Item {
 
+            Indicators.SpeedArrow {
+                anchors.centerIn: parent
+                fix: snsFix
+                rotation: course - map.bearing
+                visible: course > 0.1
+                width: palette.controlBaseSize * 4
+                height: width
+            }
+
             Image {
                 anchors.centerIn: parent
-                rotation: directionAnimated - map.bearing
+                rotation: headingAnimated - map.bearing
                 source: mark
                 width: palette.controlBaseSize * 3
                 height: width
             }
 
-            Label {
+            Controls.Label {
                 text: vehicleId
                 anchors.centerIn: parent
                 font.bold: true
@@ -53,7 +63,7 @@ MapItemView {
             if (!map.trackingVehicle || !isSelected) return;
 
             if (coordinate) map.center = coordinate;
-            if (direction) map.bearing = directionAnimated;
+            map.bearing = headingAnimated;
         }
     }
 }

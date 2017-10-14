@@ -81,9 +81,17 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         data = node->childNode(domain::Telemetry::Position)->parameter(domain::Telemetry::Coordinate);
         if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
         break;
-    case DirectionRole:
+    case HeadingRole:
         data = node->childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
         if (!data.isValid()) data = 0;
+        break;
+    case CourseRole:
+        data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Course);
+        if (!data.isValid()) data = 0;
+        break;
+    case SnsFixRole:
+        data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Fix);
+        if (!data.isValid()) data = -1;
         break;
     case MarkRole:
         data = ::vehicleIcon(vehicle->type());
@@ -180,7 +188,9 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     QHash<int, QByteArray> roles;
 
     roles[CoordinateRole] = "position";
-    roles[DirectionRole] = "direction";
+    roles[CourseRole] = "course";
+    roles[HeadingRole] = "heading";
+    roles[SnsFixRole] = "snsFix";
     roles[MarkRole] = "mark";
     roles[VehicleIdRole] = "vehicleId";
     roles[TrackRole] = "track";
@@ -220,7 +230,7 @@ void VehicleMapItemModel::onCompassParametersChanged(
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
-    emit dataChanged(index, index, { DirectionRole });
+    emit dataChanged(index, index, { HeadingRole });
 }
 
 void VehicleMapItemModel::onSatelliteParametersChanged(
@@ -231,7 +241,7 @@ void VehicleMapItemModel::onSatelliteParametersChanged(
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
-    emit dataChanged(index, index, { HdopRadius });
+    emit dataChanged(index, index, { CourseRole, SnsFixRole, HdopRadius });
 }
 
 void VehicleMapItemModel::onHomeParametersChanged(
