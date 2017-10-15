@@ -9,6 +9,7 @@ MapItemView {
     delegate: MapQuickItem {
 
         property real headingAnimated: heading
+        property real courseAnimated: course
 
         coordinate: position
         z: 1000
@@ -18,6 +19,13 @@ MapItemView {
         }
 
         Behavior on headingAnimated {
+            RotationAnimation {
+                duration: 200
+                direction: RotationAnimation.Shortest
+            }
+        }
+
+        Behavior on courseAnimated {
             RotationAnimation {
                 duration: 200
                 direction: RotationAnimation.Shortest
@@ -36,8 +44,9 @@ MapItemView {
             Indicators.SpeedArrow {
                 anchors.centerIn: parent
                 fix: snsFix
-                rotation: course - map.bearing
-                visible: course > 0.1
+                rotation: courseAnimated - map.bearing
+                speed: groundspeed
+                visible: groundspeed > 0.1
                 width: palette.controlBaseSize * 4
                 height: width
             }

@@ -28,6 +28,7 @@ namespace presentation
             CoordinateRole = Qt::UserRole + 1,
             HeadingRole,
             CourseRole,
+            GroundspeedRole,
             SnsFixRole,
             MarkRole,
             VehicleIdRole,

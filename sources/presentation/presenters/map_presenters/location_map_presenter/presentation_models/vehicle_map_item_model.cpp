@@ -89,6 +89,10 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Course);
         if (!data.isValid()) data = 0;
         break;
+    case GroundspeedRole:
+        data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Groundspeed);
+        if (!data.isValid()) data = 0;
+        break;
     case SnsFixRole:
         data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Fix);
         if (!data.isValid()) data = -1;
@@ -190,6 +194,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[CoordinateRole] = "position";
     roles[CourseRole] = "course";
     roles[HeadingRole] = "heading";
+    roles[GroundspeedRole] = "groundspeed";
     roles[SnsFixRole] = "snsFix";
     roles[MarkRole] = "mark";
     roles[VehicleIdRole] = "vehicleId";
@@ -241,7 +246,7 @@ void VehicleMapItemModel::onSatelliteParametersChanged(
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
-    emit dataChanged(index, index, { CourseRole, SnsFixRole, HdopRadius });
+    emit dataChanged(index, index, { CourseRole, SnsFixRole, GroundspeedRole, HdopRadius });
 }
 
 void VehicleMapItemModel::onHomeParametersChanged(

@@ -4,7 +4,9 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: root
 
-    property int fix: -1
+    property real speed: 0
+    property real maxSpeed: 30 // TODO: in settings
+    property int fix: -11
     property color color: {
         switch (fix) {
         case -1:
@@ -16,6 +18,7 @@ Item {
         }
     }
 
+    onSpeedChanged: canvas.requestPaint()
     onFixChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
@@ -31,17 +34,26 @@ Item {
             ctx.save();
             ctx.translate(width / 2, height / 2);
 
-            ctx.lineWidth = 1;
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
 
+            var offset = Math.min(speed, maxSpeed) / maxSpeed * height / 2;
+
             ctx.beginPath();
-            ctx.moveTo(0, -height / 2);
-            ctx.lineTo(width * 0.05, height * 0.15 - height / 2);
-            ctx.lineTo(0, height * 0.1 - height / 2);
-            ctx.lineTo(-width * 0.05, height * 0.15 - height / 2);
+            ctx.lineWidth = 6;
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, height * 0.1 - offset);
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.moveTo(0, -offset);
+            ctx.lineTo(width * 0.05, height * 0.15 - offset);
+            ctx.lineTo(0, height * 0.1 - offset);
+            ctx.lineTo(-width * 0.05, height * 0.15 - offset);
             ctx.closePath();
             ctx.fill();
 

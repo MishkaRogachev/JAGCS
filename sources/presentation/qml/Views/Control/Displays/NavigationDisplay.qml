@@ -76,7 +76,7 @@ BaseDisplay {
         opacity: compassEnabled ? 1 : 0.33
         color: compassOperational ? palette.textColor : palette.dangerColor
         courseEnabled: groundspeed > 0.1
-        courseColor: satelliteEnabled ? (satelliteOperational ? palette.missionColor :
+        courseColor: satelliteEnabled ? (satelliteOperational ? palette.positiveColor :
                                                                 palette.dangerColor) :
                                         "transparent"
 

@@ -7,7 +7,7 @@ Canvas {
     property real course: 0
 
     property color color: palette.textColor
-    property color courseColor: palette.missionColor
+    property color courseColor: palette.positiveColor
     property bool courseEnabled: true
     property url mark
     property int tickFactor: 5
