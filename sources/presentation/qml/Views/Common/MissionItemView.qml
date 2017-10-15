@@ -24,7 +24,7 @@ Rectangle {
     border.width: width / 10
     color: selected ? palette.selectionColor : palette.raisedColor
     border.color: {
-        if (current) return palette.activeMissionColor;
+        if (current) return palette.activeMissionColor; // TODO: highlight current only in mission
         if (reached) return palette.positiveColor;
 
         switch (status) {
