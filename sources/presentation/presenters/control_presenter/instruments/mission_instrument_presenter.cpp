@@ -90,8 +90,6 @@ void MissionInstrumentPresenter::connectView(QObject* view)
 
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
-
-    connect(this, SIGNAL(activateItem()), view, SLOT());
 }
 
 void MissionInstrumentPresenter::onSelectItem(int item)
