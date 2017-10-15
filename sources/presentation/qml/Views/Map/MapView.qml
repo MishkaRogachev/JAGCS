@@ -68,6 +68,10 @@ Map {
         model: missionPointsVisible ? pointModel : 0
     }
 
+    TargetPointOverlayView {
+        model: vehicleVisible ? vehicleModel : 0
+    }
+
     VehicleMapOverlayView {
         model: vehicleVisible ? vehicleModel : 0
     }

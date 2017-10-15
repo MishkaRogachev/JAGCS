@@ -2,13 +2,13 @@ import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Control
 
 MapItemView {
     id: root
 
     delegate: MapQuickItem {
-        coordinate: homePosition
+        coordinate: targetPosition
         z: 2
 
         Behavior on coordinate {
@@ -17,15 +17,16 @@ MapItemView {
 
         sourceItem: Item {
 
-            Image {
+            Control.ColoredIcon {
                 id: image
                 anchors.centerIn: parent
-                source: "qrc:/indicators/home_map_mark.svg"
+                source: "qrc:/indicators/pick_aim.svg"
+                color: palette.highlightColor
                 width: palette.controlBaseSize
                 height: width
             }
 
-            Label {
+            Control.Label {
                 text: vehicleId
                 anchors.centerIn: parent
                 font.pixelSize: image.width * 0.3

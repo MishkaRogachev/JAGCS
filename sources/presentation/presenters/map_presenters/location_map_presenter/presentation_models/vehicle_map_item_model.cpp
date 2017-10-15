@@ -113,8 +113,8 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Eph);
         if (!data.isValid()) data = 0;
         break;
-    case HomeCoordinateRole:
-        data = node->childNode(domain::Telemetry::HomePosition)->parameter(domain::Telemetry::Coordinate);
+    case TargetCoordinateRole:
+        data = node->childNode(domain::Telemetry::Navigator)->parameter(domain::Telemetry::Coordinate);
         if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
         break;
     }
@@ -148,10 +148,10 @@ void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
         this->onSatelliteParametersChanged(vehicleId, parameters);
     });
 
-    connect(node->childNode(domain::Telemetry::HomePosition),
+    connect(node->childNode(domain::Telemetry::Navigator),
             &domain::Telemetry::parametersChanged,
             this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
-        this->onHomeParametersChanged(vehicleId, parameters);
+        this->onTargetParametersChanged(vehicleId, parameters);
     });
 
     this->endInsertRows();
@@ -201,7 +201,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[TrackRole] = "track";
     roles[SelectedRole] = "isSelected";
     roles[HdopRadius] = "hdopRadius";
-    roles[HomeCoordinateRole] = "homePosition";
+    roles[TargetCoordinateRole] = "targetPosition";
 
     return roles;
 }
@@ -249,7 +249,7 @@ void VehicleMapItemModel::onSatelliteParametersChanged(
     emit dataChanged(index, index, { CourseRole, SnsFixRole, GroundspeedRole, HdopRadius });
 }
 
-void VehicleMapItemModel::onHomeParametersChanged(
+void VehicleMapItemModel::onTargetParametersChanged(
         int vehicleId, const domain::Telemetry::TelemetryMap& parameters)
 {
     Q_UNUSED(parameters)
@@ -257,5 +257,5 @@ void VehicleMapItemModel::onHomeParametersChanged(
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
-    emit dataChanged(index, index, { HomeCoordinateRole });
+    emit dataChanged(index, index, { CoordinateRole });
 }

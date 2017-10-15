@@ -35,7 +35,7 @@ namespace presentation
             TrackRole,
             SelectedRole,
             HdopRadius,
-            HomeCoordinateRole
+            TargetCoordinateRole
         };
 
         VehicleMapItemModel(domain::VehicleService* vehicleService,
@@ -64,7 +64,7 @@ namespace presentation
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
         void onSatelliteParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
-        void onHomeParametersChanged(
+        void onTargetParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
 
     private:

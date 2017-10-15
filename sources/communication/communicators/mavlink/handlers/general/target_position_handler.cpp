@@ -35,5 +35,5 @@ void TargetPositionHandler::processMessage(const mavlink_message_t& message)
                               decodeAltitude(position.alt));
 
     portion.setParameter({ Telemetry::Navigator, Telemetry::Coordinate },
-                       QVariant::fromValue(coordinate));
+                         QVariant::fromValue(coordinate));
 }
