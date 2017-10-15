@@ -49,10 +49,11 @@ Controls.Pane {
 
             Controls.Button {
                 id: commandButton
-                iconSource: commandList.visible ? "qrc:/icons/left.svg" : "qrc:/icons/right.svg"
+                iconSource: "qrc:/icons/command.svg"
+                checkable: true
                 enabled: dashboard.online
-                onEnabledChanged: commandList.visible = false
-                onClicked: commandList.visible = !commandList.visible
+                onEnabledChanged: if (!enabled) checked = false
+                onCheckedChanged: commandList.visible = checked
             }
         }
 
