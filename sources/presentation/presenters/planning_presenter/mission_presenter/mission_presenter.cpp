@@ -48,8 +48,11 @@ MissionPresenter::MissionPresenter(QObject* parent):
             this, &MissionPresenter::missionItemSelected);
     connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
             d->itemsStatus, &MissionItemsStatusPresenter::selectMissionItem);
+
     connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
             d->itemEdit, &MissionItemEditPresenter::selectItem);
+    connect(d->itemsStatus, &MissionItemsStatusPresenter::holded,
+            d->itemEdit, &MissionItemEditPresenter::enablePicker);
 
     d->missions.append(d->missionService->missions());
 
@@ -110,7 +113,7 @@ void MissionPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 
 void MissionPresenter::enablePicker()
 {
-    d->itemEdit->setPicking(true);
+    d->itemEdit->enablePicker();
 }
 
 void MissionPresenter::connectView(QObject* view)
@@ -252,7 +255,7 @@ void MissionPresenter::onAddItem()
 
     d->missionService->addNewMissionItem(d->selectedMission->id());
     d->itemEdit->selectItem(d->selectedMission->count() - 1);
-    d->itemEdit->setPicking(true); // TODO: check coordinate usefull
+    d->itemEdit->enablePicker();
 }
 
 void MissionPresenter::onRemoveMission()

@@ -19,7 +19,7 @@ namespace presentation
 
     public slots:
         void selectMission(const dao::MissionPtr& mission);
-        void setPicking(bool picking);
+        void enablePicker();
 
         void remove();
         void selectItem(int index);

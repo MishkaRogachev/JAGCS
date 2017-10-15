@@ -36,6 +36,8 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
     d->itemsStatus = new MissionItemsStatusPresenter(this);
     connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
             this, &MissionInstrumentPresenter::onSelectItem);
+    connect(d->itemsStatus, &MissionItemsStatusPresenter::holded,
+            this, &MissionInstrumentPresenter::goToItem);
 
     if (d->assignment)
     {
@@ -99,11 +101,11 @@ void MissionInstrumentPresenter::onSelectItem(int item)
     emit missionItemSelected(d->missionService->missionItem(d->assignment->missionId(), item));
 }
 
-void MissionInstrumentPresenter::activateItem()
+void MissionInstrumentPresenter::goToItem()
 {
     if (d->assignment.isNull() || d->itemsStatus->missionItem().isNull()) return;
 
-    domain::Command command(domain::Command::SetCurrentItem, d->assignment->vehicleId());
+    domain::Command command(domain::Command::GoToItem, d->assignment->vehicleId());
     command.addArgument(d->itemsStatus->missionItem()->sequence());
     d->commandService->executeCommand(command);
 }

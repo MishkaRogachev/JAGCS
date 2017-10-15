@@ -140,7 +140,7 @@ void CommandHandler::onSendCommand(const Command& command, int attempt)
     {
         this->sendSetMode(vehicle->mavId(), command.arguments().first().value<Mode>());
     }
-    else if (command.type() == Command::SetCurrentItem)
+    else if (command.type() == Command::GoToItem)
     {
         this->sendCurrentItem(vehicle->mavId(), command.arguments().first().toInt());
     }
@@ -229,7 +229,7 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
                                                 &message, &current);
     m_communicator->sendMessage(message, link);
 
-    d->ackCommand(Command::SetCurrentItem, Command::Completed); // TODO: wait current item
+    d->ackCommand(Command::GoToItem, Command::Completed); // TODO: wait current item
 }
 
 void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)

@@ -24,7 +24,7 @@ namespace presentation
         void onCancelSyncMission();
 
         void selectMissionItem(const dao::MissionItemPtr& item);
-        void activateItem();
+        void goToItem();
 
     protected:
         void connectView(QObject* view) override;

@@ -65,6 +65,7 @@ void MissionItemsStatusPresenter::selectMissionItem(const dao::MissionItemPtr& i
 void MissionItemsStatusPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(selectItem(int)), this, SIGNAL(selectItem(int)));
+    connect(view, SIGNAL(holded()), this, SIGNAL(holded()));
 
     this->updateItemsStatus();
     this->updateSelectedItem();

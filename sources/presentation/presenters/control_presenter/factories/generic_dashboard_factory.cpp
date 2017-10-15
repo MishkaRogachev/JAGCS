@@ -67,7 +67,7 @@ DashboardPresenter* GenericDashboardFactory::create()
     QObject::connect(m_map, &AbstractMapPresenter::missionItemSelected,
             mission, &MissionInstrumentPresenter::selectMissionItem);
     QObject::connect(m_map, &AbstractMapPresenter::holded,
-            mission, &MissionInstrumentPresenter::activateItem);
+            mission, &MissionInstrumentPresenter::goToItem);
 
     dashboard->addInstrument("mission", 500);
     dashboard->addInstrumentPresenter("mission", m_status);

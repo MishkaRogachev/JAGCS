@@ -24,13 +24,13 @@ BaseDisplay {
         id: grid
         anchors.top: parent.top
         width: root.width
-        columns: 4
+        columns: 3
 
         MissionItemsStatusView {
             id: itemsStatus
             objectName: "itemsStatus"
             Layout.fillWidth: true
-            Layout.columnSpan: 3
+            Layout.columnSpan: 2
         }
 
         Controls.Button {
@@ -43,13 +43,6 @@ BaseDisplay {
         Controls.Label { // TODO: Waypoint short & mode
             Layout.fillWidth: true
             text: qsTr("WP:") + " " + (itemsStatus.selectedItem > -1 ? itemsStatus.selectedItem : "-")
-        }
-
-        CommandButton {
-            iconSource: "qrc:/icons/right.svg"
-            enabled: online && itemsStatus.selectedItem > -1
-            command: Command.SetCurrentItem
-            args: [ itemsStatus.selectedItem ]
         }
 
         CommandButton {

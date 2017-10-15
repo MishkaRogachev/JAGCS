@@ -12,6 +12,7 @@ Flickable {
     property alias items: repeater.model
 
     signal selectItem(int sequence)
+    signal holded()
 
     function updateItem(item) {
         var view = repeater.itemAt(item.sequence);
@@ -61,6 +62,7 @@ Flickable {
                     }
                 }
                 onSelectionRequest: selectItem(sequence)
+                onHolded: root.holded()
             }
         }
     }

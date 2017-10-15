@@ -31,6 +31,7 @@ namespace presentation
 
     signals:
         void selectItem(int index);
+        void holded();
 
     private:
         class Impl;

@@ -77,13 +77,11 @@ void MissionItemEditPresenter::selectMission(const dao::MissionPtr& mission)
     this->updateCount();
 }
 
-void MissionItemEditPresenter::setPicking(bool picking)
+void MissionItemEditPresenter::enablePicker()
 {
-    if (d->item.isNull() ||
-        !d->item->isPositionatedItem() ||
-        d->item->isCurrent()) return;
+    if (d->item.isNull() || !d->item->isPositionatedItem() || d->item->isCurrent()) return;
 
-    this->setViewProperty(PROPERTY(picking), picking);
+    this->setViewProperty(PROPERTY(picking), true);
 }
 
 void MissionItemEditPresenter::remove()
