@@ -373,6 +373,7 @@ Item {
             visible: azimuthVisible
             enabled: editEnabled
             onRealValueChanged: updatePosFromDistAndAzimuth()
+            realFrom: -180
             realTo: 360
             Layout.fillWidth: true
         }
