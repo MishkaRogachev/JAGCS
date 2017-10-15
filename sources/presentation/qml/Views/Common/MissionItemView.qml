@@ -48,6 +48,8 @@ Rectangle {
                 return "qrc:/icons/takeoff.svg";
             case MissionItem.Landing:
                 return "qrc:/icons/landing.svg";
+            case MissionItem.TargetPoint:
+                return "qrc:/icons/aim.svg";
             default:
                 return "";
             }

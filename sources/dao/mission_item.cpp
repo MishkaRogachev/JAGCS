@@ -21,7 +21,8 @@ namespace
         { MissionItem::LoiterTime, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw, MissionItem::Time } },
         { MissionItem::LoiterTurns, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw, MissionItem::Repeats } },
         { MissionItem::LoiterAltitude, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::HeadingRequired } },
-        { MissionItem::SetSpeed, { MissionItem::Speed, MissionItem::IsGroundSpeed, MissionItem::Throttle } }
+        { MissionItem::SetSpeed, { MissionItem::Speed, MissionItem::IsGroundSpeed, MissionItem::Throttle } },
+        { MissionItem::TargetPoint, { MissionItem::Radius } },
     };
 }
 
@@ -174,7 +175,8 @@ bool MissionItem::isPositionatedItem() const
             m_command == LoiterUnlim ||
             m_command == LoiterAltitude ||
             m_command == LoiterTurns ||
-            m_command == LoiterTime;
+            m_command == LoiterTime ||
+            m_command == TargetPoint;
 }
 
 MissionItem::Status MissionItem::status() const

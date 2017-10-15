@@ -56,9 +56,11 @@ namespace dao
             SetRoi,
             MountControl,
             SetCameraTriggerDistance,
-            CameraControl
+            CameraControl,
 
             //TODO: condition commands
+
+            TargetPoint
         };
 
         enum Parameter
