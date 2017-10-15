@@ -88,6 +88,7 @@
 //  |  |-DesiredPitch                   real
 //  |  |-DesiredRoll                    real
 //  |  |-DesiredHeading                 real
+//  |  |-Coordinate                     coordinate
 //  |-PowerSystem
 //  |  |-Throttle                       int
 //  |-Battery

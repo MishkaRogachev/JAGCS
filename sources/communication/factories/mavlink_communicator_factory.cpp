@@ -17,6 +17,7 @@
 #include "wind_handler.h"
 #include "radio_status_handler.h"
 #include "nav_controller_handler.h"
+#include "target_position_handler.h"
 #include "command_handler.h"
 #include "mission_handler.h"
 #include "attitude_target_handler.h"
@@ -47,6 +48,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     new WindHandler(communicator);
     new RadioStatusHandler(communicator);
     new NavControllerHandler(communicator);
+    new TargetPositionHandler(communicator);
     new CommandHandler(communicator);
     new MissionHandler(communicator);
     new AttitudeTargetHandler(communicator);
