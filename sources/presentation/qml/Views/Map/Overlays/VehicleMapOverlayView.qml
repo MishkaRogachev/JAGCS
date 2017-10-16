@@ -40,11 +40,12 @@ MapItemView {
 
         onCoordinateChanged: tryCenterVehicle()
         sourceItem: Item {
+            rotation: -map.bearing
 
             Indicators.SpeedArrow {
                 anchors.centerIn: parent
                 fix: snsFix
-                rotation: courseAnimated - map.bearing
+                rotation: courseAnimated
                 speed: groundspeed
                 visible: groundspeed > 0.1
                 width: palette.controlBaseSize * 4
@@ -53,7 +54,7 @@ MapItemView {
 
             Image {
                 anchors.centerIn: parent
-                rotation: headingAnimated - map.bearing
+                rotation: headingAnimated
                 source: mark
                 width: palette.controlBaseSize * 3
                 height: width
@@ -62,6 +63,8 @@ MapItemView {
             Controls.Label {
                 text: vehicleId
                 anchors.centerIn: parent
+                rotation: map.bearing
+                font.pixelSize: palette.fontPixelSize * 0.75
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
