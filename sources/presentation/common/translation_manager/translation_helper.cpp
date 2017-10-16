@@ -1,13 +1,14 @@
 #include "translation_helper.h"
 
-// Qt
-#include <QCoreApplication>
-
 using namespace presentation;
 
 TranslationHelper::TranslationHelper(QObject* parent):
     QObject(parent)
-{}
+{
+    qRegisterMetaType<dao::MissionItem::Command>("dao::MissionItem::Command");
+    qRegisterMetaType<dao::Vehicle::Type>("dao::Vehicle::Type");
+    qRegisterMetaType<domain::Mode>("domain::Mode");
+}
 
 QString TranslationHelper::translateCommand(dao::MissionItem::Command command)
 {

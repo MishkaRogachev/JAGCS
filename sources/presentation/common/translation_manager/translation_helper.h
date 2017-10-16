@@ -16,7 +16,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit TranslationHelper(QObject *parent = nullptr);
+        explicit TranslationHelper(QObject* parent = nullptr);
 
         Q_INVOKABLE QString translateCommand(dao::MissionItem::Command command);
         Q_INVOKABLE QString translateVehicleType(dao::Vehicle::Type type);

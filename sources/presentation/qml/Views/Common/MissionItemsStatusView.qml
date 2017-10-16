@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Shaders" as Shaders
@@ -8,6 +9,7 @@ Flickable {
     id: root
 
     property int selectedItem: -1
+    property int selectedCommand: MissionItem.UnknownCommand
 
     property alias items: repeater.model
 
@@ -60,6 +62,8 @@ Flickable {
                     else if (x < root.contentX) {
                         root.contentX = x;
                     }
+
+                    selectedCommand = command;
                 }
                 onSelectionRequest: selectItem(sequence)
                 onHolded: root.holded()

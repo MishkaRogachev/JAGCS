@@ -73,7 +73,7 @@ void MissionInstrumentPresenter::onCancelSyncMission()
 
 void MissionInstrumentPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 {
-    if (item && item->missionId() == d->assignment->missionId())
+    if (d->assignment && item && item->missionId() == d->assignment->missionId())
     {
         d->itemsStatus->selectMissionItem(item);
     }

@@ -40,9 +40,10 @@ BaseDisplay {
             onClicked: downloading ? cancelSyncMission() : downloadMission()
         }
 
-        Controls.Label { // TODO: Waypoint short & mode
+        Controls.Label {
             Layout.fillWidth: true
-            text: qsTr("WP:") + " " + (itemsStatus.selectedItem > -1 ? itemsStatus.selectedItem : "-")
+            text: itemsStatus.selectedCommand === MissionItem.UnknownCommand ?
+                      qsTr("No waypoint") : translator.translateCommand(itemsStatus.selectedCommand)
         }
 
         CommandButton {
