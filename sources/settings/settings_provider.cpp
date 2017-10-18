@@ -42,7 +42,7 @@ public:
         settings.setValue(map::centerLatitude, 55.968954);
         settings.setValue(map::centerLongitude, 37.110155);
         settings.setValue(map::bearing, 0);
-        settings.setValue(map::plugin, 1);
+        settings.setValue(map::plugin, 0);
         settings.setValue(map::osmActiveMapType, 0);
         settings.setValue(map::mapBoxGlActiveMapType, 5);
         settings.setValue(map::tileHost, "http://a.tile.openstreetmap.org/");

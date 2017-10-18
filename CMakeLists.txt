@@ -58,6 +58,7 @@ find_package(Qt5 COMPONENTS
 REQUIRED)
 
 set(LIBRARIES
+    opengl32
 # Libraries
 )
 

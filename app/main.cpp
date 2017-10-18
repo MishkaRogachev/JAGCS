@@ -21,6 +21,10 @@
 
 int main(int argc, char* argv[])
 {
+    #ifdef Q_OS_WIN32
+    QApplication::setAttribute(Qt::AA_UseOpenGLES);
+    #endif
+
     QApplication app(argc, argv);
 
     app.setApplicationName("JAGCS");

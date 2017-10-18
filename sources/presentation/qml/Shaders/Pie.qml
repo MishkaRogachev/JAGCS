@@ -13,7 +13,7 @@ ShaderEffect {
     uniform highp float angle;
     uniform highp float pi;
 
-    float atan2(in float y, in float x)
+    highp float atan2(in highp float y, in highp float x)
     {
         return x == 0.0 ? sign(y) * pi / 2.0 : atan(y, x) * 1.0;
     }
