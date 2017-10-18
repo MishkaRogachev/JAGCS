@@ -1,6 +1,8 @@
 #include "presentation_context.h"
 
 // Internal
+#include "settings_provider.h"
+
 #include "vehicle.h"
 #include "link_description.h"
 #include "mission.h"
@@ -15,7 +17,8 @@
 
 // Qt
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QQuickItem>
 #include <QQmlContext>
 
 using namespace presentation;
@@ -42,9 +45,9 @@ PresentationContext::PresentationContext()
     qmlRegisterUncreatableMetaObject(domain::staticMetaObject, "JAGCS", 1, 0, "Domain",
                                      "Can't create enums in QML");
 
-    m_engine = new QQmlApplicationEngine(qApp);
-    m_engine->rootContext()->setContextProperty("translator",
-                                                QVariant::fromValue(new TranslationHelper(qApp)));
+    m_view = new QQuickView();
+    m_view->rootContext()->setContextProperty("translator",
+                                              QVariant::fromValue(new TranslationHelper(qApp)));
 }
 
 PresentationContext* PresentationContext::instance()
@@ -55,16 +58,23 @@ PresentationContext* PresentationContext::instance()
 
 QObject* PresentationContext::rootView()
 {
-    return instance()->m_engine->rootObjects().first();
+    return instance()->m_view->rootObject();
 }
 
 QQmlContext* PresentationContext::rootContext()
 {
-    return instance()->m_engine->rootContext();
+    return instance()->m_view->rootContext();
 }
 
 void PresentationContext::load()
 {
-    instance()->m_engine->load(QUrl("qrc:/Views/MainView.qml"));
+    instance()->m_view->setSource(QUrl("qrc:/Views/MainView.qml"));
+
     // TODO: wait objectCreated
+}
+
+void PresentationContext::show()
+{
+    settings::Provider::boolValue(settings::gui::fullscreen) ?
+                instance()->m_view->showFullScreen() : instance()->m_view->showMaximized();
 }

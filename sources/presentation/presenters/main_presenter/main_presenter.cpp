@@ -64,6 +64,4 @@ void MainPresenter::setMode(const QString& mode)
 void MainPresenter::connectView(QObject* view)
 {
     d->statusbar->setView(view->findChild<QObject*>(NAME(statusbar)));
-
-    this->invokeViewMethod(PROPERTY(updateUiSettings));
 }

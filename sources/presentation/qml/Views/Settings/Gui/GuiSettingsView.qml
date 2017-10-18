@@ -206,10 +206,7 @@ Controls.Frame {
         Controls.Button {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
-            onClicked: {
-                save();
-                main.updateUiSettings();
-            }
+            onClicked: save()
             enabled: changed
             Layout.fillWidth: true
         }

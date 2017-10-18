@@ -5,7 +5,7 @@
 #include "base_presenter.h"
 
 class QQmlContext;
-class QQmlApplicationEngine;
+class QQuickView;
 
 namespace presentation
 {
@@ -20,9 +20,10 @@ namespace presentation
         static QQmlContext* rootContext();
 
         static void load();
+        static void show();
 
     private:
-        QQmlApplicationEngine* m_engine;
+        QQuickView* m_view;
 
         Q_DISABLE_COPY(PresentationContext)
     };

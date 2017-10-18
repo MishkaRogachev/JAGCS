@@ -1,25 +1,28 @@
 import QtQuick 2.6
-import QtQuick.Window 2.0
-import QtQuick.Controls 2.0
 
-import "../Controls"
+import "../Controls" as Controls
 
 import "Status"
 
-ApplicationWindow {
+Item {
     id: main
 
     property string mode
 
-    minimumWidth: 1024
-    minimumHeight: 768
+    anchors.fill: parent
 
-    header: StatusView {
+    StatusView {
+        id: status
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         objectName: "statusbar"
+        z: 1000
     }
 
     Loader {
         anchors.fill: parent
+        anchors.topMargin: status.height
         sourceComponent: createModeView(mode)
         onItemChanged: if (item) item.objectName = mode
     }
@@ -30,9 +33,5 @@ ApplicationWindow {
         case "planning": return Qt.createComponent("Planning/PlanningView.qml");
         case "settings": return Qt.createComponent("Settings/SettingsView.qml");
         }
-    }
-
-    function updateUiSettings() {
-        visibility = settings.boolValue("Gui/fullscreen") ? "FullScreen" : "Windowed"
     }
 }

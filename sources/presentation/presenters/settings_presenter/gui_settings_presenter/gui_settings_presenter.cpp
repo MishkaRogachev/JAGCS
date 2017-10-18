@@ -6,6 +6,7 @@
 // Internal
 #include "settings_provider.h"
 
+#include "presentation_context.h"
 #include "translation_manager.h"
 #include "palette_manager.h"
 
@@ -83,6 +84,8 @@ void GuiSettingsPresenter::save()
     d->translationManager.setCurrentLocale(locale);
 
     d->paletteManager.reloadPalette();
+
+    PresentationContext::show();
 }
 
 void GuiSettingsPresenter::connectView(QObject* view)
