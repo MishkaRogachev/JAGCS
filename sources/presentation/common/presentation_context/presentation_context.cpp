@@ -13,6 +13,7 @@
 #include "command.h"
 #include "log_message.h"
 
+#include "main_presenter.h"
 #include "translation_helper.h"
 
 // Qt
@@ -42,6 +43,9 @@ PresentationContext::PresentationContext()
                 "JAGCS", 1, 0, "Command", "Can't create commands in QML");
     qmlRegisterUncreatableType<domain::LogMessage>(
                 "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
+
+    qmlRegisterUncreatableType<presentation::MainPresenter>(
+                "JAGCS", 1, 0, "MainPresenter", "Can't create presenters in QML");
 
     qmlRegisterUncreatableMetaObject(domain::staticMetaObject, "JAGCS", 1, 0, "Domain",
                                      "Can't create enums in QML");

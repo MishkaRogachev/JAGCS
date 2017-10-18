@@ -1,13 +1,17 @@
 import QtQuick 2.6
+import JAGCS 1.0
 
 import "../Controls" as Controls
 
 import "Status"
+import "Control"
+import "Planning"
+import "Settings"
 
 Item {
     id: main
 
-    property string mode
+    property int mode: MainPresenter.NoMode
 
     anchors.fill: parent
 
@@ -23,15 +27,31 @@ Item {
     Loader {
         anchors.fill: parent
         anchors.topMargin: status.height
-        sourceComponent: createModeView(mode)
-        onItemChanged: if (item) item.objectName = mode
+        sourceComponent: {
+            switch (mode) {
+            case MainPresenter.Control: return controlComponent;
+            case MainPresenter.Planning: return planningComponent;
+            case MainPresenter.Settings: return settingsComponent;
+            }
+        }
     }
 
-    function createModeView(mode) {
-        switch (mode) {
-        case "control": return Qt.createComponent("Control/ControlView.qml");
-        case "planning": return Qt.createComponent("Planning/PlanningView.qml");
-        case "settings": return Qt.createComponent("Settings/SettingsView.qml");
-        }
+
+    Component{
+        id: controlComponent
+
+        ControlView { objectName: "control" }
+    }
+
+    Component{
+        id: planningComponent
+
+        PlanningView { objectName: "planning" }
+    }
+
+    Component{
+        id: settingsComponent
+
+        SettingsView { objectName: "settings" }
     }
 }

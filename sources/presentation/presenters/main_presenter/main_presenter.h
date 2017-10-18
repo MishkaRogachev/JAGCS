@@ -10,11 +10,22 @@ namespace presentation
         Q_OBJECT
 
     public:
+        enum Mode
+        {
+            NoMode,
+
+            Control,
+            Planning,
+            Settings
+        };
+
         explicit MainPresenter(QObject* parent = nullptr);
         ~MainPresenter() override;
 
+        Mode mode() const;
+
     public slots:
-        void setMode(const QString& mode);
+        void setMode(int mode);
 
     protected:
         void connectView(QObject* view) override;
@@ -22,6 +33,8 @@ namespace presentation
     private:
         class Impl;
         QScopedPointer<Impl> const d;
+
+        Q_ENUM(Mode)
     };
 }
 

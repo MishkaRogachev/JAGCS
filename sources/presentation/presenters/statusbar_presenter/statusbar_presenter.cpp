@@ -35,7 +35,6 @@ void StatusbarPresenter::connectView(QObject* view)
     d->radio->setView(view->findChild<QObject*>(NAME(radio)));
     d->logbook->setView(view->findChild<QObject*>(NAME(logbook)));
 
-    connect(view, SIGNAL(setMode(QString)), this, SIGNAL(setMode(QString)));
-
+    connect(view, SIGNAL(setMode(int)), this, SIGNAL(setMode(int)));
     connect(view, SIGNAL(quit()), qApp, SLOT(quit()));
 }

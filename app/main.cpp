@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     presentation::PresentationContext::load();
     presenter.setView(presentation::PresentationContext::rootView());
 
-    presenter.setMode("planning");
+    presenter.setMode(presentation::MainPresenter::Planning);
     presentation::PresentationContext::show();
 
     return app.exec();

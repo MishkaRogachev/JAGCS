@@ -14,7 +14,7 @@ namespace presentation
         ~StatusbarPresenter() override;
 
     signals:
-        void setMode(const QString& mode);
+        void setMode(int mode);
 
     protected:
         void connectView(QObject* view) override;

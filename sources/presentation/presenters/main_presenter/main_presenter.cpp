@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "statusbar_presenter.h"
@@ -15,6 +16,8 @@ using namespace presentation;
 class MainPresenter::Impl
 {
 public:
+    MainPresenter::Mode mode = MainPresenter::NoMode;
+
     StatusbarPresenter* statusbar;
     BasePresenter* modePresenter = nullptr;
 };
@@ -30,9 +33,16 @@ MainPresenter::MainPresenter(QObject* parent):
 MainPresenter::~MainPresenter()
 {}
 
-void MainPresenter::setMode(const QString& mode)
+MainPresenter::Mode MainPresenter::mode() const
 {
-    if (mode == this->viewProperty(PROPERTY(mode))) return;
+    return d->mode;
+}
+
+void MainPresenter::setMode(int iMode)
+{
+    Mode mode = static_cast<Mode>(iMode);
+    if (mode == d->mode) return;
+    d->mode = mode;
 
     if (d->modePresenter)
     {
@@ -40,24 +50,23 @@ void MainPresenter::setMode(const QString& mode)
         d->modePresenter = nullptr;
     }
 
-    this->setViewProperty(PROPERTY(mode), mode);
+    this->setViewProperty(PROPERTY(mode), d->mode);
 
-    if (mode == "control") // TODO: MainPresenter mode enum
-    {
+    switch (d->mode) {
+    case Control:
         d->modePresenter = new ControlPresenter(this);
-    }
-    if (mode == "planning")
-    {
+        d->modePresenter->setView(m_view->findChild<QObject*>("control"));
+        break;
+    case Planning:
         d->modePresenter = new PlanningPresenter(this);
-    }
-    else if (mode == "settings")
-    {
+        d->modePresenter->setView(m_view->findChild<QObject*>("planning"));
+        break;
+    case Settings:
         d->modePresenter = new SettingsPresenter(this);
-    }
-
-    if (d->modePresenter)
-    {
-        d->modePresenter->setView(m_view->findChild<QObject*>(mode));
+        d->modePresenter->setView(m_view->findChild<QObject*>("settings"));
+        break;
+    default:
+        break;
     }
 }
 

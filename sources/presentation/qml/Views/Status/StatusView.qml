@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "../Logbook"
@@ -7,7 +8,7 @@ import "../Logbook"
 Controls.ToolBar {
     id: root
 
-    signal setMode(string mode)
+    signal setMode(int mode)
     signal quit()
 
     RowLayout {
@@ -40,19 +41,19 @@ Controls.ToolBar {
             spacing: 1
 
             StatusModeButton {
-                mode: "control"
+                mode: MainPresenter.Control
                 iconSource: "qrc:/icons/flight.svg"
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             StatusModeButton {
-                mode: "planning"
+                mode: MainPresenter.Planning
                 iconSource: "qrc:/icons/map-marker.svg"
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             StatusModeButton {
-                mode: "settings"
+                mode: MainPresenter.Settings
                 iconSource: "qrc:/icons/settings.svg"
                 anchors.verticalCenter: parent.verticalCenter
             }
