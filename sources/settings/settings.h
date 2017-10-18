@@ -56,6 +56,7 @@ namespace settings
 
     namespace gui
     {
+        const QString geometry = "Gui/geometry";
         const QString fullscreen = "Gui/fullscreen";
         const QString locale = "Gui/locale";
         const QString uiSize = "Gui/uiSize";

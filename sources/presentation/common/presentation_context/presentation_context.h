@@ -14,6 +14,7 @@ namespace presentation
         PresentationContext();
 
     public:
+        ~PresentationContext();
         static PresentationContext* instance();
 
         static QObject* rootView();
@@ -21,6 +22,7 @@ namespace presentation
 
         static void load();
         static void show();
+        static void saveGeometry();
 
     private:
         QQuickView* m_view;

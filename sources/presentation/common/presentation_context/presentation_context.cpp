@@ -20,6 +20,7 @@
 #include <QQuickView>
 #include <QQuickItem>
 #include <QQmlContext>
+#include <QDebug>
 
 using namespace presentation;
 
@@ -50,6 +51,12 @@ PresentationContext::PresentationContext()
                                               QVariant::fromValue(new TranslationHelper(qApp)));
 }
 
+PresentationContext::~PresentationContext()
+{
+    PresentationContext::saveGeometry();
+    //delete m_view;
+}
+
 PresentationContext* PresentationContext::instance()
 {
     static PresentationContext context;
@@ -75,6 +82,25 @@ void PresentationContext::load()
 
 void PresentationContext::show()
 {
-    settings::Provider::boolValue(settings::gui::fullscreen) ?
-                instance()->m_view->showFullScreen() : instance()->m_view->showMaximized();
+    if (settings::Provider::boolValue(settings::gui::fullscreen))
+    {
+        instance()->m_view->showFullScreen();
+    }
+    else
+    {
+        QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
+
+        if (rect.isNull()) instance()->m_view->showMaximized();
+        else
+        {
+            instance()->m_view->setGeometry(rect);
+            instance()->m_view->show();
+        }
+    }
+}
+
+void PresentationContext::saveGeometry()
+{
+    if (instance()->m_view->windowState() & Qt::WindowFullScreen) return;
+    settings::Provider::setValue(settings::gui::geometry, instance()->m_view->geometry());
 }

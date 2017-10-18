@@ -85,6 +85,7 @@ void GuiSettingsPresenter::save()
 
     d->paletteManager.reloadPalette();
 
+    PresentationContext::saveGeometry();
     PresentationContext::show();
 }
 
