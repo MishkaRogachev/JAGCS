@@ -57,10 +57,17 @@ find_package(Qt5 COMPONENTS
     Gamepad
 REQUIRED)
 
+# Common libraries
 set(LIBRARIES
-    opengl32
-# Libraries
 )
+
+# Windows only libraries
+IF(WIN32)
+set(LIBRARIES
+    ${LIBRARIES}
+    opengl32
+)
+ENDIF(WIN32)
 
 # Includes
 include_directories("3rdparty/mavlink_v2")
