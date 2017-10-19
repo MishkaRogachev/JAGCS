@@ -50,8 +50,6 @@ void MainPresenter::setMode(int iMode)
         d->modePresenter = nullptr;
     }
 
-    this->setViewProperty(PROPERTY(mode), d->mode);
-
     switch (d->mode) {
     case Control:
         d->modePresenter = new ControlPresenter(this);
@@ -68,6 +66,8 @@ void MainPresenter::setMode(int iMode)
     default:
         break;
     }
+
+    this->setViewProperty(PROPERTY(mode), d->mode);
 }
 
 void MainPresenter::connectView(QObject* view)
