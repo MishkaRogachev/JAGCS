@@ -13,6 +13,9 @@ namespace presentation
         explicit StatusbarPresenter(QObject* parent = nullptr);
         ~StatusbarPresenter() override;
 
+    public slots:
+        void setStatusbarEnabled(bool enabled);
+
     signals:
         void setMode(int mode);
 

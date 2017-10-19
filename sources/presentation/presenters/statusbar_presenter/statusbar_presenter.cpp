@@ -30,6 +30,11 @@ StatusbarPresenter::StatusbarPresenter(QObject* parent):
 StatusbarPresenter::~StatusbarPresenter()
 {}
 
+void StatusbarPresenter::setStatusbarEnabled(bool enabled)
+{
+    this->setViewProperty(PROPERTY(enabled), enabled);
+}
+
 void StatusbarPresenter::connectView(QObject* view)
 {
     d->radio->setView(view->findChild<QObject*>(NAME(radio)));

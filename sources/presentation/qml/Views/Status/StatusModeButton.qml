@@ -9,13 +9,7 @@ Controls.Button {
 
     property int mode: MainPresenter.NoMode
 
-    onClicked: {
-        if (highlighted) return;
-
-        parent.enabled = false;
-        setMode(mode);
-    }
+    onClicked: if (!highlighted) setMode(mode)
     highlighted: main.mode === mode
-    onHighlightedChanged: if (highlighted) parent.enabled = true;
     flat: true
 }

@@ -40,15 +40,17 @@ MainPresenter::Mode MainPresenter::mode() const
 
 void MainPresenter::setMode(int iMode)
 {
-    Mode mode = static_cast<Mode>(iMode);
-    if (mode == d->mode) return;
-    d->mode = mode;
+    d->statusbar->setStatusbarEnabled(false);
+
+    d->mode = static_cast<Mode>(iMode);
 
     if (d->modePresenter)
     {
         delete d->modePresenter;
         d->modePresenter = nullptr;
     }
+
+    this->setViewProperty(PROPERTY(mode), d->mode);
 
     switch (d->mode) {
     case Control:
@@ -67,7 +69,7 @@ void MainPresenter::setMode(int iMode)
         break;
     }
 
-    this->setViewProperty(PROPERTY(mode), d->mode);
+    d->statusbar->setStatusbarEnabled(true);
 }
 
 void MainPresenter::connectView(QObject* view)
