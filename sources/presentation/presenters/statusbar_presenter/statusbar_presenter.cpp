@@ -2,6 +2,7 @@
 
 // Qt
 #include <QGuiApplication>
+#include <QDebug>
 
 // Internal
 #include "service_registry.h"
@@ -41,5 +42,10 @@ void StatusbarPresenter::connectView(QObject* view)
     d->logbook->setView(view->findChild<QObject*>(NAME(logbook)));
 
     connect(view, SIGNAL(setMode(int)), this, SIGNAL(setMode(int)));
-    connect(view, SIGNAL(quit()), qApp, SLOT(quit()));
+    connect(view, SIGNAL(quit()), this, SLOT(onQuit()));
+}
+
+void StatusbarPresenter::onQuit() // TODO: fix quiting without internet(MapBox Gl lag)
+{
+    qApp->quit();
 }
