@@ -15,10 +15,10 @@ set(VERSION_PATCH 0)
 
 # Get git revision hash
 execute_process(
-  COMMAND git rev-parse HEAD
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_REVISION
-  OUTPUT_STRIP_TRAILING_WHITESPACE
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_REVISION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
 add_definitions(-DVERSION_MAJOR=${VERSION_MAJOR})
@@ -36,8 +36,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Add compiler flags
-set (CMAKE_CXX_STANDARD 11)
-
+set(CMAKE_CXX_STANDARD 14)
 add_compile_options(-Wall -fPIC)
 
 # Enable globaly some Qt modules
@@ -62,12 +61,18 @@ set(LIBRARIES
 )
 
 # Windows only libraries
-IF(WIN32)
+if (WIN32)
 set(LIBRARIES
     ${LIBRARIES}
     opengl32
 )
-ENDIF(WIN32)
+endif(WIN32)
+
+# Android Qt extras
+if (ANDROID)
+    find_package(Qt5AndroidExtras)
+    set(LIBS ${LIBS} Qt5::AndroidExtras android)
+endif()
 
 # Includes
 include_directories("3rdparty/mavlink_v2")
@@ -113,9 +118,17 @@ qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 #qt5_generate_moc(sources/domain/types/modes.h ${MOC_SOURCES})
 qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
 
-# Executable target
-add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
-    ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
+if(ANDROID)
+    include_directories(${ANDROID_SYSROOT}/usr/include)
+    add_library(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
+        ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
+    set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
+        ${VERSION_MAJOR}"."${VERSION_MINOR}"."${VERSION_PATCH})
+else(ANDROID)
+    # Executable target
+    add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
+        ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
+endif()
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
@@ -135,6 +148,17 @@ qt5_use_modules(${PROJECT}
     QuickControls2
     Gamepad
 )
+
+if(ANDROID)
+    set (QT_ANDROID_APP_NAME ${PROJECT_NAME})
+    include(3rdparty/qt-android-cmake/AddQtAndroidApk.cmake)
+    add_qt_android_apk(${PROJECT_NAME}_apk.
+                        ${PROJECT_NAME}
+                        NAME "JAGCS"
+                        PACKAGE_NAME "mishkarogachev.jagcs"
+                        PACKAGE_SOURCES ${CMAKE_SOURCE_DIR}/android
+)
+endif()
 
 # Install instructions
 install(TARGETS ${PROJECT} DESTINATION "/usr/bin")
