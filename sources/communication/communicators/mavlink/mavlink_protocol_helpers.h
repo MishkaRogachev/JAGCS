@@ -1,8 +1,15 @@
 #ifndef MAVLINK_PROTOCOL_HELPERS_H
 #define MAVLINK_PROTOCOL_HELPERS_H
 
+// Std
+#include <limits.h>
+
 // Qt
 #include <QGeoCoordinate>
+
+#ifndef UINT16_MAX
+#define UINT16_MAX std::numeric_limits<std::uint32_t>::max()
+#endif
 
 namespace comm
 {
