@@ -157,6 +157,8 @@ if(ANDROID)
                         NAME "JAGCS"
                         PACKAGE_NAME "mishkarogachev.jagcs"
                         PACKAGE_SOURCES ${CMAKE_SOURCE_DIR}/android
+                        BUILDTOOLS_REVISION "23.0.3"
+                        VERSION_CODE 5
 )
 endif()
 

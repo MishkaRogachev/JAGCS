@@ -15,7 +15,8 @@ git clone --recursive https://github.com/MishkaRogachev/JAGCS.git
   * Qt 5.9 or higher
   * CMake 3.0 or higher
 
-  ANGLE is required for MapBox GL QtLocation plugin under windows.
+  GCC version 4.9 or higher required for MapBox GL QtLocation plugin
+  ANGLE API is required for MapBox GL under windows
 
 ### Building desktop(Windows/Linux/Mac) application
 ```
@@ -25,9 +26,9 @@ cmake ..
 make
 ```
 ### Building Android application
-Cause https://bugreports.qt.io/browse/QTBUG-54666, use workaround, comment line: 
+Cause https://bugreports.qt.io/browse/QTBUG-54666, use workaround, comment line with # 
 ```
-https://bugreports.qt.io/browse/QTBUG-54666
+set_property(TARGET Qt5::Core PROPERTY INTERFACE_COMPILE_FEATURES cxx_decltype)
 ```
 in Qt5CoreConfigExtras.cmake file
 
