@@ -1,5 +1,9 @@
 #include "settings_presenter.h"
 
+// Qt
+#include <QMap>
+#include <QDebug>
+
 // Internal
 #include "settings_provider.h"
 
@@ -19,33 +23,13 @@ using namespace presentation;
 class SettingsPresenter::Impl
 {
 public:
-    DataBasePresenter* dataBase;
-    CommunicationSettingsPresenter* communications;
-    VehiclesPresenter* vehicles;
-    VideoSettingsPresenter* video;
-
-    MapSettingsPresenter* map;
-    JoystickSettingsPresenter* joystick;
-    GuiSettingsPresenter* gui;
-    NetworkSettingsPresenter* network;
-    AboutPresenter* about;
+    BasePresenter* presenter = nullptr;
 };
 
 SettingsPresenter::SettingsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
-{
-    d->dataBase = new DataBasePresenter(this);
-    d->communications = new CommunicationSettingsPresenter(this);
-    d->vehicles = new VehiclesPresenter(this);
-    d->video = new VideoSettingsPresenter(this);
-
-    d->map = new MapSettingsPresenter(this);
-    d->joystick = new JoystickSettingsPresenter(this);
-    d->gui = new GuiSettingsPresenter(this);
-    d->network = new NetworkSettingsPresenter(this);
-    d->about = new AboutPresenter(this);
-}
+{}
 
 SettingsPresenter::~SettingsPresenter()
 {}
@@ -62,18 +46,32 @@ void SettingsPresenter::hide()
 
 void SettingsPresenter::connectView(QObject* view)
 {
-    d->dataBase->setView(view->findChild<QObject*>(NAME(dataBase)));
-    d->communications->setView(view->findChild<QObject*>(NAME(communications)));
-    d->vehicles->setView(view->findChild<QObject*>(NAME(vehicles)));
-    d->video->setView(view->findChild<QObject*>(NAME(video)));
-
-    d->map->setView(view->findChild<QObject*>(NAME(map)));
-    d->joystick->setView(view->findChild<QObject*>(NAME(joystick)));
-    d->gui->setView(view->findChild<QObject*>(NAME(gui)));
-    d->network->setView(view->findChild<QObject*>(NAME(network)));
-    d->about->setView(view->findChild<QObject*>(NAME(about)));
-
     connect(view, SIGNAL(makeDefaults()), this, SLOT(onMakeDefaults()));
+    connect(view, SIGNAL(requestPresenter(QString)), this, SLOT(onRequestPresenter(QString)));
+
+    this->setViewProperty(PROPERTY(currentSettings), 0); // Select first settings on startup
+}
+
+void SettingsPresenter::onRequestPresenter(const QString& view)
+{
+    if (d->presenter)
+    {
+        delete d->presenter;
+        d->presenter = nullptr;
+    }
+
+    if (view == "dataBase") d->presenter = new DataBasePresenter(this);
+    else if (view == "communications") d->presenter = new CommunicationSettingsPresenter(this);
+    else if (view == "vehicles") d->presenter = new VehiclesPresenter(this);
+    else if (view == "video") d->presenter = new VideoSettingsPresenter(this);
+    else if (view == "map") d->presenter = new MapSettingsPresenter(this);
+    else if (view == "joystick") d->presenter = new JoystickSettingsPresenter(this);
+    else if (view == "gui") d->presenter = new GuiSettingsPresenter(this);
+    else if (view == "network") d->presenter = new NetworkSettingsPresenter(this);
+    else if (view == "about") d->presenter = new AboutPresenter(this);
+    else return;
+
+    d->presenter->setView(this->view()->findChild<QObject*>(view));
 }
 
 void SettingsPresenter::onMakeDefaults()

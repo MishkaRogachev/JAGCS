@@ -21,6 +21,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
+        void onRequestPresenter(const QString& view);
         void onMakeDefaults();
 
     private:
