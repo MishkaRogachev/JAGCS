@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
@@ -24,32 +25,42 @@ Controls.Pane {
     RowLayout {
         anchors.fill: parent
 
-        ColumnLayout {
+        Flickable {
+            Layout.fillHeight: true
+            implicitWidth: column.width
+            contentHeight: column.height
+            clip: true
 
-            Controls.ButtonBar {
-                id: bar
-                anchors.top: parent.top
-                currentIndex: -1
-                model: [
-                    qsTr("Data Base"),
-                    qsTr("Communications"),
-                    qsTr("Vehicles"),
-                    qsTr("Video"),
+            ScrollBar.vertical: Controls.ScrollBar {}
 
-                    qsTr("Map"),
-                    qsTr("Joystick"),
-                    qsTr("GUI"),
-                    qsTr("Networking"),
-                    qsTr("About")
-                ]
-            }
+            ColumnLayout {
+                id: column
 
-            Item { Layout.fillHeight: true }
+                Controls.ButtonBar {
+                    id: bar
+                    anchors.top: parent.top
+                    currentIndex: -1
+                    model: [
+                        qsTr("Data Base"),
+                        qsTr("Communications"),
+                        qsTr("Vehicles"),
+                        qsTr("Video"),
 
-            Controls.Button {
-                text: qsTr("Make defaults")
-                Layout.preferredWidth: bar.width
-                onClicked: makeDefaults()
+                        qsTr("Map"),
+                        qsTr("Joystick"),
+                        qsTr("GUI"),
+                        qsTr("Networking"),
+                        qsTr("About")
+                    ]
+                }
+
+                Item { Layout.fillHeight: true }
+
+                Controls.Button {
+                    text: qsTr("Make defaults")
+                    Layout.preferredWidth: bar.width
+                    onClicked: makeDefaults()
+                }
             }
         }
 

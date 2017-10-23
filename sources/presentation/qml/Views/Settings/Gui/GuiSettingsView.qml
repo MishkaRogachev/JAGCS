@@ -1,9 +1,10 @@
 import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-Controls.Frame {
+ColumnLayout {
     id: root
 
     property bool changed: false
@@ -26,189 +27,197 @@ Controls.Frame {
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
 
-    GridLayout {
-        anchors.fill: parent
-        rowSpacing: palette.spacing
-        columns: 3
+    Flickable {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        contentHeight: frame.height
+        clip: true
 
-        Controls.Label {
-            text: qsTr("Fullscreen")
-            Layout.fillWidth: true
-        }
+        ScrollBar.vertical: Controls.ScrollBar {}
 
-        Controls.CheckBox {
-            id: fullscreenBox
-            Layout.columnSpan: 2
-            onCheckedChanged: changed = true
-        }
+        Controls.Frame {
+            id: frame
+            width: root.width
 
-        Controls.Label {
-            text: qsTr("Language")
-            Layout.fillWidth: true
-        }
+            GridLayout {
+                anchors.fill: parent
+                rowSpacing: palette.spacing
+                columns: 3
 
-        Controls.ComboBox {
-            id: languageBox
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-            onCurrentIndexChanged: changed = true
-        }
-
-        Controls.Label {
-            text: qsTr("UI size")
-            Layout.fillWidth: true
-        }
-
-        Controls.Slider {
-            id: uiSlider
-            from: 24
-            to: 64
-            Layout.fillWidth: true
-            onPressedChanged:  if (!pressed) changed = true
-        }
-
-        Controls.Label {
-            Layout.preferredWidth: 86
-            horizontalAlignment: Text.AlignHCenter
-            text: uiSlider.visualValue.toFixed(0)
-        }
-
-        Controls.Label {
-            text: qsTr("Palette")
-            Layout.fillWidth: true
-        }
-
-        Item {
-            Layout.fillWidth: true
-            Layout.columnSpan: 2
-            height: paletteBar.height
-
-            Controls.TabBar {
-                id: paletteBar
-                anchors.centerIn: parent
-                width: parent.width
-                onCurrentIndexChanged: changed = true
-
-                Controls.TabButton {
-                    text: qsTr("Outdoor")
+                Controls.Label {
+                    text: qsTr("Fullscreen")
                 }
-                Controls.TabButton {
-                    text: qsTr("Indoor")
+
+                Controls.CheckBox {
+                    id: fullscreenBox
+                    Layout.columnSpan: 2
+                    onCheckedChanged: changed = true
+                }
+
+                Controls.Label {
+                    text: qsTr("Language")
+                }
+
+                Controls.ComboBox {
+                    id: languageBox
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    onCurrentIndexChanged: changed = true
+                }
+
+                Controls.Label {
+                    text: qsTr("UI size")
+                }
+
+                RowLayout {
+                    Layout.columnSpan: 2
+
+                    Controls.Slider {
+                        id: uiSlider
+                        from: 24
+                        to: 64
+                        Layout.fillWidth: true
+                        onPressedChanged:  if (!pressed) changed = true
+                    }
+
+                    Controls.Label {
+                        Layout.preferredWidth: 86
+                        horizontalAlignment: Text.AlignHCenter
+                        text: uiSlider.visualValue.toFixed(0)
+                    }
+                }
+
+                Controls.Label {
+                    text: qsTr("Palette")
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
+                    height: paletteBar.height
+
+                    Controls.TabBar {
+                        id: paletteBar
+                        anchors.centerIn: parent
+                        width: parent.width
+                        onCurrentIndexChanged: changed = true
+
+                        Controls.TabButton {
+                            text: qsTr("Outdoor")
+                        }
+                        Controls.TabButton {
+                            text: qsTr("Indoor")
+                        }
+                    }
+                }
+
+                Controls.Label {
+                    text: qsTr("Artificial horizon")
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
+                    height: rollBar.height
+
+                    Controls.TabBar {
+                        id: rollBar
+                        anchors.centerIn: parent
+                        width: parent.width
+                        onCurrentIndexChanged: changed = true
+
+                        Controls.TabButton {
+                            text: qsTr("Western")
+                        }
+                        Controls.TabButton {
+                            text: qsTr("Russian")
+                        }
+                    }
+                }
+
+                Controls.Label {
+                    text: qsTr("Speed scale step")
+                }
+
+                Controls.ComboBox {
+                    id: speedBox
+                    model: [5, 10, 25, 50, 100]
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    onCurrentTextChanged: {
+                        speedStep = currentText;
+                        changed = true;
+                    }
+                }
+
+                Controls.Label {
+                    text: qsTr("Speed units")
+                }
+
+                Controls.ComboBox {
+                    id: speedUnitsBox
+                    model: [ qsTr("mps"), qsTr("kph") ]
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    onCurrentIndexChanged: changed = true;
+                }
+
+                Controls.Label {
+                    text: qsTr("Altitude scale step")
+                }
+
+                Controls.ComboBox {
+                    id: altitudeBox
+                    model: [5, 10, 25, 50, 100]
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    onCurrentTextChanged: {
+                        altitudeStep = currentText;
+                        changed = true;
+                    }
+                }
+
+                Controls.Label {
+                    text: qsTr("Relative altitude")
+                }
+
+                Controls.CheckBox {
+                    id: relativeAltitudeBox
+                    Layout.columnSpan: 2
+                    onCheckedChanged: changed = true
+                }
+
+                Controls.Label {
+                    text: qsTr("Coordinates in DMS")
+                }
+
+                Controls.CheckBox {
+                    id: coordinatesDmsBox
+                    Layout.columnSpan: 2
+                    onCheckedChanged: changed = true
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+
+                Controls.Button {
+                    text: qsTr("Restore")
+                    iconSource: "qrc:/icons/restore.svg"
+                    onClicked: restore()
+                    enabled: changed
+                    Layout.fillWidth: true
+                }
+
+                Controls.Button {
+                    text: qsTr("Save")
+                    iconSource: "qrc:/icons/save.svg"
+                    onClicked: save()
+                    enabled: changed
+                    Layout.fillWidth: true
                 }
             }
-        }
-
-        Controls.Label {
-            text: qsTr("Artificial horizon")
-            Layout.fillWidth: true
-        }
-
-        Item {
-            Layout.fillWidth: true
-            Layout.columnSpan: 2
-            height: rollBar.height
-
-            Controls.TabBar {
-                id: rollBar
-                anchors.centerIn: parent
-                width: parent.width
-                onCurrentIndexChanged: changed = true
-
-                Controls.TabButton {
-                    text: qsTr("Western")
-                }
-                Controls.TabButton {
-                    text: qsTr("Russian")
-                }
-            }
-        }
-
-        Controls.Label {
-            text: qsTr("Speed scale step")
-            Layout.fillWidth: true
-        }
-
-        Controls.ComboBox {
-            id: speedBox
-            model: [5, 10, 25, 50, 100]
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-            onCurrentTextChanged: {
-                speedStep = currentText;
-                changed = true;
-            }
-        }
-
-        Controls.Label {
-            text: qsTr("Speed units")
-            Layout.fillWidth: true
-        }
-
-        Controls.ComboBox {
-            id: speedUnitsBox
-            model: [ qsTr("mps"), qsTr("kph") ]
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-            onCurrentIndexChanged: changed = true;
-        }
-
-        Controls.Label {
-            text: qsTr("Altitude scale step")
-            Layout.fillWidth: true
-        }
-
-        Controls.ComboBox {
-            id: altitudeBox
-            model: [5, 10, 25, 50, 100]
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-            onCurrentTextChanged: {
-                altitudeStep = currentText;
-                changed = true;
-            }
-        }
-
-        Controls.Label {
-            text: qsTr("Relative altitude")
-            Layout.fillWidth: true
-        }
-
-        Controls.CheckBox {
-            id: relativeAltitudeBox
-            Layout.columnSpan: 2
-            onCheckedChanged: changed = true
-        }
-
-        Controls.Label {
-            text: qsTr("Coordinates in DMS")
-            Layout.fillWidth: true
-        }
-
-        Controls.CheckBox {
-            id: coordinatesDmsBox
-            Layout.columnSpan: 2
-            onCheckedChanged: changed = true
-        }
-
-        Item {
-            Layout.fillHeight: true
-            Layout.columnSpan: 3
-        }
-
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
-            enabled: changed
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            text: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
-            enabled: changed
-            Layout.fillWidth: true
         }
     }
 }
