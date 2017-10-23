@@ -120,7 +120,7 @@ qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
 
 if(ANDROID)
     include_directories(${ANDROID_SYSROOT}/usr/include)
-    add_library(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
+    add_library(${PROJECT} SHARED ${SOURCES} ${HEADERS} ${QML}
         ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
         ${VERSION_MAJOR}"."${VERSION_MINOR}"."${VERSION_PATCH})
