@@ -45,6 +45,7 @@ find_package(Qt5 COMPONENTS
     Network
     SerialPort
     Sql
+    Svg
     Gui
     Quick
     LinguistTools
@@ -139,6 +140,7 @@ qt5_use_modules(${PROJECT}
     Network
     SerialPort
     Sql
+    Svg
     Gui
     Quick
     Multimedia
