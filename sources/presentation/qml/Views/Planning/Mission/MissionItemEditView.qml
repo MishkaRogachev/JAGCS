@@ -1,11 +1,12 @@
 import QtQuick 2.6
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Item {
+ColumnLayout {
     id: root
 
     property bool editEnabled: false
@@ -144,51 +145,51 @@ Item {
         map.pickerCoordinate = position;
     }
 
-    GridLayout {
-        anchors.fill: parent
-        columns: 2
-
+    RowLayout {
         Controls.Label {
             text: qsTr("Item")
             Layout.fillWidth: true
             Layout.minimumWidth: palette.controlBaseSize * 3
         }
 
-        RowLayout {
-            Controls.DelayButton {
-                iconSource: "qrc:/icons/remove.svg"
-                iconColor: palette.dangerColor
-                enabled: sequence > -1 && editEnabled
-                onActivated: remove()
-            }
-
-            Controls.Button {
-                iconSource: "qrc:/icons/left.svg"
-                enabled: sequence > 0
-                onClicked: selectItem(sequence - 1)
-                onPressAndHold: selectItem(0)
-            }
-
-            Controls.Label {
-                text: sequence > -1 ? (sequence + "/" + count) : "-"
-                horizontalAlignment: Qt.AlignHCenter
-                Layout.alignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                iconSource: "qrc:/icons/right.svg"
-                enabled: sequence < count - 1
-                onClicked: selectItem(sequence + 1)
-                onPressAndHold: selectItem(count - 1)
-            }
-
-            Controls.Button {
-                iconSource: "qrc:/icons/add.svg"
-                enabled: selectedMission > 0
-                onClicked: addItem()
-            }
+        Controls.DelayButton {
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: palette.dangerColor
+            enabled: sequence > -1 && editEnabled
+            onActivated: remove()
         }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/left.svg"
+            enabled: sequence > 0
+            onClicked: selectItem(sequence - 1)
+            onPressAndHold: selectItem(0)
+        }
+
+        Controls.Label {
+            text: sequence > -1 ? (sequence + "/" + count) : "-"
+            horizontalAlignment: Qt.AlignHCenter
+            Layout.alignment: Qt.AlignVCenter
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/right.svg"
+            enabled: sequence < count - 1
+            onClicked: selectItem(sequence + 1)
+            onPressAndHold: selectItem(count - 1)
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/add.svg"
+            enabled: selectedMission > 0
+            onClicked: addItem()
+        }
+    }
+
+    RowLayout { // FIXME: update status items view
+        Layout.alignment: Qt.AlignRight
+        visible: sequence > -1
 
         Controls.Label {
             text: qsTr("Move")
@@ -196,346 +197,351 @@ Item {
             visible: sequence > -1
         }
 
-        RowLayout { // FIXME: update status items view
-            Layout.alignment: Qt.AlignRight
-            visible: sequence > -1
-
-            Controls.Button {
-                iconSource: "qrc:/icons/left_left.svg"
-                enabled: sequence > 1
-                onClicked: changeSequence(sequence - 1)
-            }
-
-            Controls.Button {
-                iconSource: "qrc:/icons/right_right.svg"
-                enabled: sequence > 0 && sequence + 1 < count
-                onClicked: changeSequence(sequence + 1)
-            }
+        Controls.Button {
+            iconSource: "qrc:/icons/left_left.svg"
+            enabled: sequence > 1
+            onClicked: changeSequence(sequence - 1)
         }
 
-        Controls.Label {
-            text: qsTr("Command")
-            Layout.fillWidth: true
-            visible: sequence > -1
+        Controls.Button {
+            iconSource: "qrc:/icons/right_right.svg"
+            enabled: sequence > 0 && sequence + 1 < count
+            onClicked: changeSequence(sequence + 1)
         }
+    }
 
-        Controls.ComboBox {
-            id: commandBox
-            visible: sequence > -1
-            enabled: editEnabled
-            currentIndex: 0
-            onCurrentIndexChanged: {
-                updateCommand(currentIndex);
-                changed = true;
-            }
-            Layout.fillWidth: true
-        }
+    Flickable {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        contentHeight: grid.height
+        clip: true
 
-        Controls.Label {
-            text: qsTr("Altitude")
-            visible: altitudeVisible
-            Layout.fillWidth: true
-        }
+        ScrollBar.vertical: Controls.ScrollBar {}
 
         GridLayout {
-            visible: altitudeVisible
+            id: grid
             columns: 2
-            Layout.rowSpan: abortAltitudeVisible ? 2 : 1
 
-            Controls.RealSpinBox {
-                id: altitudeBox
+            Controls.Label {
+                text: qsTr("Command")
+                Layout.fillWidth: true
+                visible: sequence > -1
+            }
+
+            Controls.ComboBox {
+                id: commandBox
+                visible: sequence > -1
                 enabled: editEnabled
-                realFrom: -20000 // 418 m Dead Sea shore
-                realTo: 20000 // TODO: constants to config
-                onRealValueChanged: changed = true;
+                currentIndex: 0
+                onCurrentIndexChanged: {
+                    updateCommand(currentIndex);
+                    changed = true;
+                }
                 Layout.fillWidth: true
             }
 
-            Controls.CheckBox {
-                id: altitudeRelativeBox
-                text: qsTr("Rel.")
-                enabled: editEnabled && sequence > 0
-                onCheckedChanged: changed = true
-                Layout.rowSpan: 2
+            Controls.Label {
+                text: qsTr("Altitude")
+                visible: altitudeVisible
+                Layout.fillWidth: true
             }
 
-            Controls.RealSpinBox {
-                id: abortAltitudeBox
+            GridLayout {
+                visible: altitudeVisible
+                columns: 2
+                Layout.rowSpan: abortAltitudeVisible ? 2 : 1
+
+                Controls.RealSpinBox {
+                    id: altitudeBox
+                    enabled: editEnabled
+                    realFrom: -20000 // 418 m Dead Sea shore
+                    realTo: 20000 // TODO: constants to config
+                    onRealValueChanged: changed = true;
+                    Layout.fillWidth: true
+                }
+
+                Controls.CheckBox {
+                    id: altitudeRelativeBox
+                    text: qsTr("Rel.")
+                    enabled: editEnabled && sequence > 0
+                    onCheckedChanged: changed = true
+                    Layout.rowSpan: 2
+                }
+
+                Controls.RealSpinBox {
+                    id: abortAltitudeBox
+                    visible: abortAltitudeVisible
+                    enabled: editEnabled
+                    realFrom: -20000 // 418 m Daed Sea shore
+                    realTo: 20000 // TODO: constants to config
+                    onRealValueChanged: changed = true;
+                    Layout.fillWidth: true
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Abort alt.")
                 visible: abortAltitudeVisible
-                enabled: editEnabled
-                realFrom: -20000 // 418 m Daed Sea shore
-                realTo: 20000 // TODO: constants to config
-                onRealValueChanged: changed = true;
-                Layout.fillWidth: true
-            }
-        }
-
-        Controls.Label {
-            text: qsTr("Abort alt.")
-            visible: abortAltitudeVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Climb")
-            visible: altitudeVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: climbBox
-            visible: altitudeVisible
-            enabled: editEnabled
-            realFrom: -20000
-            realValue: 0
-            realTo: 20000 // TODO: constants to config
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Latitude")
-            visible: positionVisible
-            Layout.fillWidth: true
-        }
-
-        GridLayout {
-            columns: 2
-            Layout.rowSpan: 2
-            visible: positionVisible
-
-            Controls.CoordSpinBox {
-                id: latitudeBox
-                enabled: editEnabled
-                onRealValueChanged: {
-                    position.latitude = realValue;
-                    updateDistAndAzimuthFromPos();
-                    updatePicker();
-
-                    changed = true;
-                }
                 Layout.fillWidth: true
             }
 
-            Controls.MapPickButton {
-                id: pickButton
-                enabled: editEnabled
-                Layout.rowSpan: 2
-                onPicked: {
-                    latitudeBox.realValue = coordinate.latitude;
-                    longitudeBox.realValue = coordinate.longitude;
-                }
-            }
-
-            Controls.CoordSpinBox {
-                id: longitudeBox
-                enabled: editEnabled
-                isLongitude: true
-                onRealValueChanged: {
-                    position.longitude = realValue;
-                    updateDistAndAzimuthFromPos();
-                    updatePicker();
-
-                    changed = true;
-                }
+            Controls.Label {
+                text: qsTr("Climb")
+                visible: altitudeVisible
                 Layout.fillWidth: true
             }
-        }
-
-        Controls.Label {
-            text: qsTr("Longitude")
-            visible: positionVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Distance")
-            visible: distanceVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: distanceBox
-            visible: distanceVisible
-            enabled: editEnabled
-            onRealValueChanged: updatePosFromDistAndAzimuth()
-            to: 200000 // TODO: constants to config
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Azimuth")
-            visible: azimuthVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: azimuthBox
-            visible: azimuthVisible
-            enabled: editEnabled
-            onRealValueChanged: updatePosFromDistAndAzimuth()
-            realFrom: -180
-            realTo: 360
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Radius")
-            visible: radiusVisible
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            visible: radiusVisible
 
             Controls.RealSpinBox {
-                id: radiusBox
+                id: climbBox
+                visible: altitudeVisible
                 enabled: editEnabled
-                realTo: 5000 // TODO: constants to config
+                realFrom: -20000
+                realValue: 0
+                realTo: 20000 // TODO: constants to config
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Latitude")
+                visible: positionVisible
+                Layout.fillWidth: true
+            }
+
+            GridLayout {
+                columns: 2
+                Layout.rowSpan: 2
+                visible: positionVisible
+
+                Controls.CoordSpinBox {
+                    id: latitudeBox
+                    enabled: editEnabled
+                    onRealValueChanged: {
+                        position.latitude = realValue;
+                        updateDistAndAzimuthFromPos();
+                        updatePicker();
+
+                        changed = true;
+                    }
+                    Layout.fillWidth: true
+                }
+
+                Controls.MapPickButton {
+                    id: pickButton
+                    enabled: editEnabled
+                    Layout.rowSpan: 2
+                    onPicked: {
+                        latitudeBox.realValue = coordinate.latitude;
+                        longitudeBox.realValue = coordinate.longitude;
+                    }
+                }
+
+                Controls.CoordSpinBox {
+                    id: longitudeBox
+                    enabled: editEnabled
+                    isLongitude: true
+                    onRealValueChanged: {
+                        position.longitude = realValue;
+                        updateDistAndAzimuthFromPos();
+                        updatePicker();
+
+                        changed = true;
+                    }
+                    Layout.fillWidth: true
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Longitude")
+                visible: positionVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Distance")
+                visible: distanceVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.RealSpinBox {
+                id: distanceBox
+                visible: distanceVisible
+                enabled: editEnabled
+                onRealValueChanged: updatePosFromDistAndAzimuth()
+                to: 200000 // TODO: constants to config
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Azimuth")
+                visible: azimuthVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.RealSpinBox {
+                id: azimuthBox
+                visible: azimuthVisible
+                enabled: editEnabled
+                onRealValueChanged: updatePosFromDistAndAzimuth()
+                realFrom: -180
+                realTo: 360
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Radius")
+                visible: radiusVisible
+                Layout.fillWidth: true
+            }
+
+            RowLayout {
+                visible: radiusVisible
+
+                Controls.RealSpinBox {
+                    id: radiusBox
+                    enabled: editEnabled
+                    realTo: 5000 // TODO: constants to config
+                    onRealValueChanged: changed = true
+                    Layout.fillWidth: true
+                }
+
+                Controls.CheckBox {
+                    id: clockwiseBox
+                    text: qsTr("CW")
+                    visible: clockwiseVisible
+                    enabled: editEnabled
+                    onCheckedChanged: changed = true
+                    Layout.alignment: Qt.AlignRight
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Pitch")
+                visible: pitchVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.RealSpinBox {
+                id: pitchBox
+                visible: pitchVisible
+                enabled: editEnabled
+                realFrom: -90
+                realTo: 90 // TODO: constants to config
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Yaw")
+                visible: yawVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.RealSpinBox {
+                id: yawBox
+                visible: yawVisible
+                enabled: editEnabled
+                realFrom: -180
+                realTo: 360 // TODO: constants to config
+                onRealValueChanged: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Repeats")
+                visible: repeatsVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.SpinBox {
+                id: repeatsBox
+                visible: repeatsVisible
+                onValueChanged: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: qsTr("Time")
+                visible: timeVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.RealSpinBox {
+                id: timeBox
+                visible: timeVisible
+                enabled: editEnabled
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }
 
             Controls.CheckBox {
-                id: clockwiseBox
-                text: qsTr("CW")
-                visible: clockwiseVisible
+                id: speedEnabledBox
+                visible: speedVisible
                 enabled: editEnabled
                 onCheckedChanged: changed = true
-                Layout.alignment: Qt.AlignRight
-            }
-        }
-
-        Controls.Label {
-            text: qsTr("Pitch")
-            visible: pitchVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: pitchBox
-            visible: pitchVisible
-            enabled: editEnabled
-            realFrom: -90
-            realTo: 90 // TODO: constants to config
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Yaw")
-            visible: yawVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: yawBox
-            visible: yawVisible
-            enabled: editEnabled
-            realFrom: -180
-            realTo: 360 // TODO: constants to config
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Repeats")
-            visible: repeatsVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.SpinBox {
-            id: repeatsBox
-            visible: repeatsVisible
-            onValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Time")
-            visible: timeVisible
-            Layout.fillWidth: true
-        }
-
-        Controls.RealSpinBox {
-            id: timeBox
-            visible: timeVisible
-            enabled: editEnabled
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.CheckBox {
-            id: speedEnabledBox
-            visible: speedVisible
-            enabled: editEnabled
-            onCheckedChanged: changed = true
-            text: qsTr("Speed")
-        }
-
-        Controls.RealSpinBox {
-            id: speedBox
-            visible: speedVisible
-            enabled: editEnabled && speedEnabled
-            onRealValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.TabBar {
-            id: isGroundSpeedBar
-
-            Controls.TabButton {
-                text: qsTr("Ground speed")
-            }
-            Controls.TabButton {
-                text: qsTr("Air speed")
+                text: qsTr("Speed")
             }
 
-            enabled: editEnabled && speedEnabled
-            visible: speedVisible
-            onCurrentIndexChanged: changed = true
-            Layout.fillWidth: true
-            Layout.columnSpan: 2
-        }
-
-        Controls.CheckBox {
-            id: throttleEnabledBox
-            visible: speedVisible
-            enabled: editEnabled
-            onCheckedChanged: changed = true
-            text: qsTr("Throttle")
-        }
-
-        Controls.SpinBox {
-            id: throttleBox
-            visible: speedVisible
-            enabled: editEnabled && throttleEnabled
-            onValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Item {
-            Layout.fillHeight: true
-            Layout.columnSpan: 2
-        }
-
-        RowLayout {
-            Layout.columnSpan: 2
-
-            Controls.Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                enabled: changed
-                onClicked: restore()
+            Controls.RealSpinBox {
+                id: speedBox
+                visible: speedVisible
+                enabled: editEnabled && speedEnabled
+                onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }
 
-            Controls.Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                enabled: changed && editEnabled
-                onClicked: save()
+            Controls.TabBar {
+                id: isGroundSpeedBar
+
+                Controls.TabButton {
+                    text: qsTr("Ground speed")
+                }
+                Controls.TabButton {
+                    text: qsTr("Air speed")
+                }
+
+                enabled: editEnabled && speedEnabled
+                visible: speedVisible
+                onCurrentIndexChanged: changed = true
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
+            Controls.CheckBox {
+                id: throttleEnabledBox
+                visible: speedVisible
+                enabled: editEnabled
+                onCheckedChanged: changed = true
+                text: qsTr("Throttle")
+            }
+
+            Controls.SpinBox {
+                id: throttleBox
+                visible: speedVisible
+                enabled: editEnabled && throttleEnabled
+                onValueChanged: changed = true
                 Layout.fillWidth: true
             }
         }
     }
+
+    RowLayout {
+        Layout.columnSpan: 2
+
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            enabled: changed
+            onClicked: restore()
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            enabled: changed && editEnabled
+            onClicked: save()
+            Layout.fillWidth: true
+        }
+    }
 }
+
