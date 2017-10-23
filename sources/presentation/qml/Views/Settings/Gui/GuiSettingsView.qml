@@ -42,7 +42,7 @@ ColumnLayout {
             GridLayout {
                 anchors.fill: parent
                 rowSpacing: palette.spacing
-                columns: 3
+                columns: 2
 
                 Controls.Label {
                     text: qsTr("Fullscreen")
@@ -50,7 +50,6 @@ ColumnLayout {
 
                 Controls.CheckBox {
                     id: fullscreenBox
-                    Layout.columnSpan: 2
                     onCheckedChanged: changed = true
                 }
 
@@ -60,7 +59,6 @@ ColumnLayout {
 
                 Controls.ComboBox {
                     id: languageBox
-                    Layout.columnSpan: 2
                     Layout.fillWidth: true
                     onCurrentIndexChanged: changed = true
                 }
@@ -70,7 +68,6 @@ ColumnLayout {
                 }
 
                 RowLayout {
-                    Layout.columnSpan: 2
 
                     Controls.Slider {
                         id: uiSlider
@@ -93,7 +90,6 @@ ColumnLayout {
 
                 Item {
                     Layout.fillWidth: true
-                    Layout.columnSpan: 2
                     height: paletteBar.height
 
                     Controls.TabBar {
@@ -117,7 +113,6 @@ ColumnLayout {
 
                 Item {
                     Layout.fillWidth: true
-                    Layout.columnSpan: 2
                     height: rollBar.height
 
                     Controls.TabBar {
@@ -142,7 +137,6 @@ ColumnLayout {
                 Controls.ComboBox {
                     id: speedBox
                     model: [5, 10, 25, 50, 100]
-                    Layout.columnSpan: 2
                     Layout.fillWidth: true
                     onCurrentTextChanged: {
                         speedStep = currentText;
@@ -157,7 +151,6 @@ ColumnLayout {
                 Controls.ComboBox {
                     id: speedUnitsBox
                     model: [ qsTr("mps"), qsTr("kph") ]
-                    Layout.columnSpan: 2
                     Layout.fillWidth: true
                     onCurrentIndexChanged: changed = true;
                 }
@@ -169,7 +162,6 @@ ColumnLayout {
                 Controls.ComboBox {
                     id: altitudeBox
                     model: [5, 10, 25, 50, 100]
-                    Layout.columnSpan: 2
                     Layout.fillWidth: true
                     onCurrentTextChanged: {
                         altitudeStep = currentText;
@@ -183,7 +175,6 @@ ColumnLayout {
 
                 Controls.CheckBox {
                     id: relativeAltitudeBox
-                    Layout.columnSpan: 2
                     onCheckedChanged: changed = true
                 }
 
@@ -193,7 +184,6 @@ ColumnLayout {
 
                 Controls.CheckBox {
                     id: coordinatesDmsBox
-                    Layout.columnSpan: 2
                     onCheckedChanged: changed = true
                 }
 
@@ -201,23 +191,25 @@ ColumnLayout {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                 }
-
-                Controls.Button {
-                    text: qsTr("Restore")
-                    iconSource: "qrc:/icons/restore.svg"
-                    onClicked: restore()
-                    enabled: changed
-                    Layout.fillWidth: true
-                }
-
-                Controls.Button {
-                    text: qsTr("Save")
-                    iconSource: "qrc:/icons/save.svg"
-                    onClicked: save()
-                    enabled: changed
-                    Layout.fillWidth: true
-                }
             }
+        }
+    }
+
+    RowLayout {
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: changed
+            Layout.fillWidth: true
         }
     }
 }

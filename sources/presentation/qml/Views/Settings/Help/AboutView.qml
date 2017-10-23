@@ -2,63 +2,77 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
-Frame {
+ColumnLayout {
     id: root
 
     property string version: qsTr("(undefined version)")
     property string revision: qsTr("Undefined")
     property string qtVersion: qsTr("Undefined")
 
-    GridLayout {
-        id: grid
-        columns: 2
-        rowSpacing: palette.spacing
+    Flickable {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        contentHeight: frame.height
+        clip: true
 
-        Label {
-            text: "Just another ground control station " + version
-            font.bold: true
-            Layout.columnSpan: 2
-        }
+        ScrollBar.vertical: Controls.ScrollBar {}
 
-        Label {
-            text: qsTr("Revision")
-        }
+        Controls.Frame {
+            id: frame
+            width: root.width
 
-        Label {
-            text: revision
-        }
+            GridLayout {
+                id: grid
+                columns: 2
+                rowSpacing: palette.spacing
 
-        Label {
-            text: qsTr("Qt version")
-        }
+                Controls.Label {
+                    text: "Just another ground control station " + version
+                    font.bold: true
+                    Layout.columnSpan: 2
+                }
 
-        Label {
-            text: qtVersion
-        }
+                Controls.Label {
+                    text: qsTr("Revision")
+                }
 
-        Label {
-            text: qsTr("Contacts")
-        }
+                Controls.Label {
+                    text: revision
+                }
 
-        Link {
-            text: "<a href='mailto:mishkarogachev@gmail.com'>mishkarogachev@gmail.com</a>"
-        }
+                Controls.Label {
+                    text: qsTr("Qt version")
+                }
 
-        Label {
-            text: qsTr("Web site")
-        }
+                Controls.Label {
+                    text: qtVersion
+                }
 
-        Link {
-            text: "<a href='https://github.com/MishkaRogachev/JAGCS'>https://github.com/MishkaRogachev/JAGCS</a>"
-        }
+                Controls.Label {
+                    text: qsTr("Contacts")
+                }
 
-        Label {
-            text: qsTr("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
-            Layout.columnSpan: 2
-            wrapMode: Text.WordWrap
-            Layout.maximumWidth: root.parent.width - palette.margins * 2
+                Controls.Link {
+                    text: "<a href='mailto:mishkarogachev@gmail.com'>mishkarogachev@gmail.com</a>"
+                }
+
+                Controls.Label {
+                    text: qsTr("Web site")
+                }
+
+                Controls.Link {
+                    text: "<a href='https://github.com/MishkaRogachev/JAGCS'>https://github.com/MishkaRogachev/JAGCS</a>"
+                }
+
+                Controls.Label {
+                    text: qsTr("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
+                    Layout.columnSpan: 2
+                    wrapMode: Text.WordWrap
+                    Layout.maximumWidth: root.parent.width - palette.margins * 2
+                }
+            }
         }
     }
 }

@@ -88,6 +88,10 @@ ColumnLayout {
         }
     }
 
+    Item {
+        Layout.fillHeight: true
+    }
+
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -102,9 +106,5 @@ ColumnLayout {
             text: qsTr("Apply")
             onClicked: apply()
         }
-    }
-
-    Item {
-        Layout.fillHeight: true
     }
 }
