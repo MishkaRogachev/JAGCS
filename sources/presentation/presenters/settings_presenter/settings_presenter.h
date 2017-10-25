@@ -22,7 +22,6 @@ namespace presentation
 
     private slots:
         void onRequestPresenter(const QString& view);
-        void onMakeDefaults();
 
     private:
         class Impl;

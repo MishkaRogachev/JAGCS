@@ -20,7 +20,6 @@ Controls.Pane {
     property alias currentSettings: bar.currentIndex
 
     signal requestPresenter(string view)
-    signal makeDefaults()
 
     RowLayout {
         anchors.fill: parent
@@ -52,14 +51,6 @@ Controls.Pane {
                         qsTr("Networking"),
                         qsTr("About")
                     ]
-                }
-
-                Item { Layout.fillHeight: true }
-
-                Controls.Button {
-                    text: qsTr("Make defaults")
-                    Layout.preferredWidth: bar.width
-                    onClicked: makeDefaults()
                 }
             }
         }

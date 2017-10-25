@@ -5,8 +5,6 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
-
 #include "data_base_presenter.h"
 #include "vehicles_presenter.h"
 #include "communication_settings_presenter.h"
@@ -46,7 +44,6 @@ void SettingsPresenter::hide()
 
 void SettingsPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(makeDefaults()), this, SLOT(onMakeDefaults()));
     connect(view, SIGNAL(requestPresenter(QString)), this, SLOT(onRequestPresenter(QString)));
 
     this->setViewProperty(PROPERTY(currentSettings), 0); // Select first settings on startup
@@ -72,9 +69,4 @@ void SettingsPresenter::onRequestPresenter(const QString& view)
     else return;
 
     d->presenter->setView(this->view()->findChild<QObject*>(view));
-}
-
-void SettingsPresenter::onMakeDefaults()
-{
-    settings::Provider::makeDefaults();
 }
