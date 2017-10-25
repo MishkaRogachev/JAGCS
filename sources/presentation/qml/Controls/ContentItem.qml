@@ -12,10 +12,11 @@ Item {
     property alias horizontalAlignment: label.horizontalAlignment
 
     clip: true
-    implicitWidth: icon.implicitWidth + label.implicitWidth + palette.spacing
-    implicitHeight: Math.max(icon.implicitHeight, label.implicitHeight)
+    implicitWidth: row.implicitWidth
+    implicitHeight: row.implicitHeight
 
     Row {
+        id: row
         anchors.centerIn: parent
         spacing: palette.spacing
 
@@ -34,7 +35,7 @@ Item {
             color: enabled ? textColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
-            visible: label.width < content.width - palette.spacing - icon.width
+            visible: !icon.visible || label.implicitWidth < content.width - row.spacing - icon.width
         }
     }
 }
