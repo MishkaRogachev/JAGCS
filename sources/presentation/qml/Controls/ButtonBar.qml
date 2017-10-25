@@ -8,6 +8,8 @@ ColumnLayout {
     property alias model: repeater.model
     property int currentIndex: 0
 
+    spacing: palette.padding / 2
+
     Repeater {
         id: repeater
 
