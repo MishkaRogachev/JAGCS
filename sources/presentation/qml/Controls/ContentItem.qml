@@ -2,8 +2,6 @@ import QtQuick 2.6
 
 Item {
     id: content
-    implicitWidth: row.width
-    implicitHeight: row.height
 
     property color iconColor: palette.textColor
     property color textColor: palette.textColor
@@ -13,8 +11,11 @@ Item {
     property alias text: label.text
     property alias horizontalAlignment: label.horizontalAlignment
 
+    clip: true
+    implicitWidth: icon.implicitWidth + label.implicitWidth + palette.spacing
+    implicitHeight: Math.max(icon.implicitHeight, label.implicitHeight)
+
     Row {
-        id: row
         anchors.centerIn: parent
         spacing: palette.spacing
 
@@ -33,6 +34,7 @@ Item {
             color: enabled ? textColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
+            visible: label.width < content.width - palette.spacing - icon.width
         }
     }
 }
