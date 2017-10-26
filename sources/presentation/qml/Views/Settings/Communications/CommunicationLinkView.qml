@@ -51,9 +51,13 @@ Controls.Frame {
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
+    contentHeight: grid.height
+
     GridLayout {
-        anchors.fill: parent
-        columns: 4
+        id: grid
+        anchors.centerIn: parent
+        width: parent.width
+        columns: 3
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
 
@@ -71,7 +75,6 @@ Controls.Frame {
                 }
             }
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
 
         Controls.Button {
@@ -97,7 +100,6 @@ Controls.Frame {
                 }
             }
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
 
         Controls.Button {
@@ -117,7 +119,6 @@ Controls.Frame {
             placeholderText: qsTr("Enter name")
             onEditingFinished: changed = true
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
 
         Controls.Button {
@@ -140,7 +141,6 @@ Controls.Frame {
             visible: type == LinkDescription.Udp
             onValueChanged: changed = true
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
 
         Controls.Label {
@@ -158,7 +158,6 @@ Controls.Frame {
                 changed = true;
             }
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
 
         Controls.DelayButton {
@@ -183,19 +182,12 @@ Controls.Frame {
                 changed = true;
             }
             Layout.fillWidth: true
-            Layout.columnSpan: 2
         }
 
         Item {
             implicitWidth: palette.controlBaseSize
             implicitHeight: palette.controlBaseSize
             visible: type == LinkDescription.Serial
-        }
-
-        Controls.Button {
-            iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            onClicked: chart.visible = !chart.visible
-            Layout.alignment: Qt.AlignTop
         }
 
         ChartView {
@@ -246,6 +238,18 @@ Controls.Frame {
 
                 upperSeries: LineSeries { id: recvSeries }
             }
+        }
+
+        Item {
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+            visible: !chart.visible
+        }
+
+        Controls.Button {
+            iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            onClicked: chart.visible = !chart.visible
+            Layout.alignment: Qt.AlignTop
         }
     }
 }
