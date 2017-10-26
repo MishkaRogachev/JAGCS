@@ -19,8 +19,12 @@ Controls.Frame {
     signal remove()
     signal setupPreview(QtObject preview)
 
+    implicitHeight: grid.height + palette.margins * 2
+
     GridLayout {
-        anchors.fill: parent
+        id: grid
+        anchors.centerIn: parent
+        width: parent.width - palette.margins * 2
         columns: 4
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
@@ -115,8 +119,8 @@ Controls.Frame {
             id: preview
             visible: false
             onVisibleChanged: visible ? setupPreview(preview) : setupPreview(null)
-            Layout.preferredHeight: palette.controlBaseSize * 4
-            implicitWidth: height / ratio
+            Layout.fillWidth: true
+            Layout.preferredHeight: width * ratio
             Layout.columnSpan: 2
         }
     }
