@@ -46,7 +46,6 @@ Map {
 
     plugin: mapPlugin ? mapBoxGl : osm // TODO: different map views for map type
     implicitHeight: width
-    activeMapType: supportedMapTypes[settings.value("Map/activeMapType", 0)]
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     gesture.preventStealing: true
@@ -103,6 +102,10 @@ Map {
                                           settings.value("Map/centerLongitude"));
         zoomLevel = settings.value("Map/zoomLevel");
         bearing = settings.value("Map/bearing");
+
+        activeMapType = supportedMapTypes[ mapPlugin ?
+                settings.value("Map/mapBoxGlActiveMapType") :
+                settings.value("Map/osmActiveMapType") ]
     }
 
     Component.onDestruction: if (visible) saveViewport()
