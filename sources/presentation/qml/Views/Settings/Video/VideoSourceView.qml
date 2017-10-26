@@ -19,191 +19,105 @@ Controls.Frame {
     signal remove()
     signal setupPreview(QtObject preview)
 
-    RowLayout {
+    GridLayout {
         anchors.fill: parent
-        spacing: palette.spacing
+        columns: 4
+        rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
 
-        GridLayout {
-            columns: 3
-            rowSpacing: palette.spacing
-            columnSpacing: palette.spacing
+        Controls.Label {
+            text: qsTr("Video") + " " + number
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+        }
 
-            Controls.Label {
-                text: qsTr("Video") + " " + number
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: changed
+        }
 
-            Controls.Button {
-                iconSource: preview.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: preview.visible = !preview.visible
-                Layout.alignment: Qt.AlignRight
-            }
+        Controls.Label {
+            text: qsTr("Type")
+            Layout.fillWidth: true
+        }
 
-            Controls.Label {
-                text: qsTr("Type")
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
-
-            Controls.Label {
-                text: {
-                    switch (type) {
-                    case VideoSource.Stream: return qsTr("Stream video")
-                    case VideoSource.Device: return qsTr("Device")
-                    default: return qsTr("Unknown:")
-                    }
-                }
-                Layout.alignment: Qt.AlignRight
-            }
-
-            Controls.Label {
-                text: {
-                    switch (type) {
-                    case VideoSource.Stream: return qsTr("Stream URL:")
-                    case VideoSource.Device: return qsTr("Device file:")
-                    default: return qsTr("Unknown:")
-                    }
+        Controls.Label {
+            id: typeLabel
+            text: {
+                switch (type) {
+                case VideoSource.Stream: return qsTr("Stream video")
+                case VideoSource.Device: return qsTr("Device")
+                default: return qsTr("Unknown:")
                 }
             }
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
 
-            Controls.TextField {
-                visible: type == VideoSource.Stream
-                text: source
-                placeholderText: qsTr("Enter stream url")
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                onTextChanged: {
-                    source = text;
-                    changed = true;
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+        }
+
+        Controls.Label {
+            text: {
+                switch (type) {
+                case VideoSource.Stream: return qsTr("Stream URL:")
+                case VideoSource.Device: return qsTr("Device file:")
+                default: return qsTr("Unknown:")
                 }
             }
+            Layout.fillWidth: true
+        }
 
-            Controls.ComboBox {
-                visible: type == VideoSource.Device
-                model: videoDevices
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                currentIndex: videoDevices.indexOf(source);
-                onCurrentTextChanged: {
-                    source = currentText;
-                    changed = true;
-                }
+        Controls.TextField {
+            visible: type == VideoSource.Stream
+            text: source
+            placeholderText: qsTr("Enter stream url")
+            onTextChanged: {
+                source = text;
+                changed = true;
             }
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
 
-            Controls.Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-                enabled: changed
-                Layout.fillWidth: true
+        Controls.ComboBox {
+            visible: type == VideoSource.Device
+            model: videoDevices
+            currentIndex: videoDevices.indexOf(source);
+            onCurrentTextChanged: {
+                source = currentText;
+                changed = true;
             }
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+        }
 
-            Controls.Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-                enabled: changed
-                Layout.fillWidth: true
-            }
+        Controls.DelayButton {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            onActivated: remove()
+            iconColor: palette.dangerColor
+        }
 
-            Controls.DelayButton {
-                text: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onActivated: remove()
-                iconColor: palette.dangerColor
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            text: qsTr("Preview")
+            iconSource: preview.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            onClicked: preview.visible = !preview.visible
         }
 
         VideoView {
             id: preview
             visible: false
             onVisibleChanged: visible ? setupPreview(preview) : setupPreview(null)
-            Layout.fillHeight: true
+            Layout.preferredHeight: palette.controlBaseSize * 4
             implicitWidth: height / ratio
+            Layout.columnSpan: 2
         }
     }
 }
-
-    /*
-    ColumnLayout {
-        anchors.fill: parent
-        spacing: palette.spacing
-
-        RowLayout {
-
-            Controls.Label {
-                text: {
-                    switch (type) {
-                    case VideoSource.Stream: return qsTr("URL:")
-                    case VideoSource.Device: return qsTr("Device:")
-                    default: return qsTr("Unknown:")
-                    }
-                }
-                c
-            }
-
-            Controls.TextField {
-                visible: type == VideoSource.Stream
-                text: source
-                placeholderText: qsTr("Enter stream url")
-                Layout.fillWidth: true
-                onTextChanged: {
-                    source = text;
-                    changed = true;
-                }
-            }
-
-            Controls.ComboBox {
-                visible: type == VideoSource.Device
-                model: videoDevices
-                Layout.fillWidth: true
-                currentIndex: videoDevices.indexOf(source);
-                onCurrentTextChanged: {
-                    source = currentText;
-                    changed = true;
-                }
-            }
-
-            Controls.Button {
-                iconSource: preview.visible ? "qrc:/ui/show.svg" : "qrc:/ui/hide.svg"
-                onClicked: preview.visible = !preview.visible
-            }
-        }
-
-        VideoView {
-            id: preview
-            visible: false
-            onVisibleChanged: visible ? setupPreview(preview) : setupPreview(null)
-            implicitWidth: controlsRow.width
-            Layout.alignment: Qt.AlignRight
-        }
-
-        RowLayout {
-            id: controlsRow
-            Layout.alignment: Qt.AlignRight
-
-            Controls.Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-                enabled: changed
-            }
-
-            Controls.Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-                enabled: changed
-            }
-
-            Controls.Button {
-                text: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onClicked: remove()
-                iconColor: palette.dangerColor
-            }
-        }
-    }
-}*/
