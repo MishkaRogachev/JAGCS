@@ -35,7 +35,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            text: qsTr("Save")
+            toolTip: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             onClicked: save()
             enabled: changed
@@ -60,7 +60,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            text: qsTr("Restore")
+            toolTip: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
             onClicked: restore()
             enabled: changed
@@ -102,7 +102,7 @@ Controls.Frame {
         }
 
         Controls.DelayButton {
-            text: qsTr("Remove")
+            toolTip: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             onActivated: remove()
             iconColor: palette.dangerColor
@@ -123,7 +123,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            text: qsTr("Preview")
+            toolTip: qsTr("Preview")
             iconSource: preview.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
             onClicked: preview.visible = !preview.visible
             Layout.alignment: Qt.AlignTop

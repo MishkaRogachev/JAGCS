@@ -25,10 +25,12 @@ BaseDisplay {
         id: row
         anchors.centerIn: parent
         width: parent.width
+        spacing: palette.spacing
 
         ColumnLayout {
             id: column
             Layout.fillWidth: true
+            spacing: palette.spacing
 
             Controls.Label {
                 font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)

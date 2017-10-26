@@ -79,7 +79,7 @@ Controls.Frame {
 
         Controls.Button {
             enabled: !changed
-            text: connected ? qsTr("Disconnect") : qsTr("Connect")
+            toolTip: connected ? qsTr("Disconnect") : qsTr("Connect")
             iconSource: connected ? "qrc:/icons/disconnect.svg" :
                                     "qrc:/icons/connect.svg"
             onClicked: setConnected(!connected)
@@ -103,7 +103,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            text: qsTr("Save")
+            toolTip: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             onClicked: save()
             enabled: changed
@@ -122,7 +122,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            text: qsTr("Restore")
+            toolTip: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
             onClicked: restore()
             enabled: changed
@@ -161,7 +161,7 @@ Controls.Frame {
         }
 
         Controls.DelayButton {
-            text: qsTr("Remove")
+            toolTip: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             onActivated: remove()
             iconColor: palette.dangerColor

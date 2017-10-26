@@ -10,6 +10,7 @@ T.Button {
     property alias iconColor: content.iconColor
     property alias textColor: content.textColor
     property alias backgroundColor: backgroundItem.color
+    property string toolTip // TODO: tooltip
 
     font.pixelSize: palette.fontPixelSize
     implicitWidth: Math.max(palette.controlBaseSize, content.implicitWidth)
