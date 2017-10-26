@@ -108,11 +108,9 @@ Controls.Frame {
             iconColor: palette.dangerColor
         }
 
-        Controls.Button {
-            text: qsTr("Preview")
-            iconSource: preview.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            onClicked: preview.visible = !preview.visible
-            Layout.alignment: Qt.AlignTop
+        Item {
+            Layout.fillWidth: true
+            Layout.columnSpan: preview.visible ? 1 : 3
         }
 
         VideoView {
@@ -122,6 +120,13 @@ Controls.Frame {
             Layout.fillWidth: true
             Layout.preferredHeight: width * ratio
             Layout.columnSpan: 2
+        }
+
+        Controls.Button {
+            text: qsTr("Preview")
+            iconSource: preview.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            onClicked: preview.visible = !preview.visible
+            Layout.alignment: Qt.AlignTop
         }
     }
 }
