@@ -19,6 +19,7 @@ BaseDisplay {
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
 
     implicitHeight: row.height
+    opacity: satelliteEnabled ? 1 : 0.33
 
     RowLayout {
         id: row
@@ -30,7 +31,7 @@ BaseDisplay {
             Layout.fillWidth: true
 
             Controls.Label {
-                font.pixelSize: root.width * 0.044
+                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -40,7 +41,7 @@ BaseDisplay {
             }
 
             Controls.Label {
-                font.pixelSize: root.width * 0.044
+                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -85,7 +86,7 @@ BaseDisplay {
             Layout.alignment: Qt.AlignRight
 
             Controls.Label {
-                font.pixelSize: root.width * 0.044
+                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -93,7 +94,7 @@ BaseDisplay {
             }
 
             Controls.Label {
-                font.pixelSize: root.width * 0.044
+                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
