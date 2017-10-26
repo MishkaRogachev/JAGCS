@@ -51,164 +51,158 @@ Controls.Frame {
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
-    RowLayout {
+    GridLayout {
         anchors.fill: parent
-        spacing: palette.spacing
+        columns: 4
+        rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
 
-        GridLayout {
-            columns: 4
-            rowSpacing: palette.spacing
-            columnSpacing: palette.spacing
+        Controls.Label {
+            text: qsTr("Type:")
+            Layout.fillWidth: true
+        }
 
-            Controls.Label {
-                text: qsTr("Type:")
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
-
-            Controls.Label {
-                text: {
-                    switch (type) {
-                    case LinkDescription.Udp: return qsTr("UDP");
-                    case LinkDescription.Serial: return qsTr("Serial");
-                    default: return qsTr("Unknown");
-                    }
+        Controls.Label {
+            text: {
+                switch (type) {
+                case LinkDescription.Udp: return qsTr("UDP");
+                case LinkDescription.Serial: return qsTr("Serial");
+                default: return qsTr("Unknown");
                 }
-                Layout.fillWidth: true
             }
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
 
-            Controls.Label {
-                text: qsTr("Protocol:")
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            enabled: !changed
+            text: connected ? qsTr("Disconnect") : qsTr("Connect")
+            iconSource: connected ? "qrc:/icons/disconnect.svg" :
+                                    "qrc:/icons/connect.svg"
+            onClicked: setConnected(!connected)
+        }
 
-            Controls.Label {
-                text: {
-                    switch (protocol) {
-                    case LinkDescription.MavLink1: return "MAVLink v1";
-                    case LinkDescription.MavLink2: return "MAVLink v2";
-                    case LinkDescription.UnknownProtocol: return qsTr("Unknown");
-                    default: return qsTr("Unknown");
-                    }
+        Controls.Label {
+            text: qsTr("Protocol:")
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: {
+                switch (protocol) {
+                case LinkDescription.MavLink1: return "MAVLink v1";
+                case LinkDescription.MavLink2: return "MAVLink v2";
+                case LinkDescription.UnknownProtocol: return qsTr("Unknown");
+                default: return qsTr("Unknown");
                 }
-                Layout.fillWidth: true
             }
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
 
-            Controls.Button {
-                iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: chart.visible = !chart.visible
-                Layout.alignment: Qt.AlignRight
-            }
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: changed
+        }
 
-            Controls.Label {
-                text: qsTr("Name:")
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.Label {
+            text: qsTr("Name:")
+            Layout.fillWidth: true
+        }
 
-            Controls.TextField {
-                id: nameField
-                placeholderText: qsTr("Enter name")
-                onEditingFinished: changed = true
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.TextField {
+            id: nameField
+            placeholderText: qsTr("Enter name")
+            onEditingFinished: changed = true
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
 
-            Controls.Label {
-                text: qsTr("Port:")
-                visible: type == LinkDescription.Udp
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
+        }
 
-            Controls.SpinBox {
-                id: portBox
-                from: 0
-                to: 65535
-                visible: type == LinkDescription.Udp
-                onValueChanged: changed = true
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.Label {
+            text: qsTr("Port:")
+            visible: type == LinkDescription.Udp
+            Layout.fillWidth: true
+        }
 
-            Controls.Label {
-                text: qsTr("Device:")
-                visible: type == LinkDescription.Serial
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.SpinBox {
+            id: portBox
+            from: 0
+            to: 65535
+            visible: type == LinkDescription.Udp
+            onValueChanged: changed = true
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
 
-            Controls.ComboBox {
-                id: deviceBox
-                visible: type == LinkDescription.Serial
-                model: []
-                onCurrentTextChanged: {
-                    device = currentText;
-                    changed = true;
-                }
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.Label {
+            text: qsTr("Device:")
+            visible: type == LinkDescription.Serial
+            Layout.fillWidth: true
+        }
 
-            Controls.Label {
-                text: qsTr("Baud rate:")
-                visible: type == LinkDescription.Serial
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
+        Controls.ComboBox {
+            id: deviceBox
+            visible: type == LinkDescription.Serial
+            model: []
+            onCurrentTextChanged: {
+                device = currentText;
+                changed = true;
             }
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
 
-            Controls.ComboBox {
-                id: baudBox
-                visible: type == LinkDescription.Serial
-                model: []
-                onCurrentTextChanged: {
-                    baudRate = currentText;
-                    changed = true;
-                }
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-            }
+        Controls.DelayButton {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            onActivated: remove()
+            iconColor: palette.dangerColor
+        }
 
-            Controls.Button {
-                text: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-                enabled: changed
-                Layout.fillWidth: true
-            }
+        Controls.Label {
+            text: qsTr("Baud rate:")
+            visible: type == LinkDescription.Serial
+            Layout.fillWidth: true
+        }
 
-            Controls.Button {
-                text: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-                enabled: changed
-                Layout.fillWidth: true
+        Controls.ComboBox {
+            id: baudBox
+            visible: type == LinkDescription.Serial
+            model: []
+            onCurrentTextChanged: {
+                baudRate = currentText;
+                changed = true;
             }
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
 
-            Controls.Button {
-                enabled: !changed
-                text: connected ? qsTr("Disconnect") : qsTr("Connect")
-                iconSource: connected ? "qrc:/icons/disconnect.svg" :
-                                        "qrc:/icons/connect.svg"
-                onClicked: setConnected(!connected)
-                Layout.fillWidth: true
-            }
+        Item {
+            implicitWidth: palette.controlBaseSize
+            implicitHeight: palette.controlBaseSize
+            visible: type == LinkDescription.Serial
+        }
 
-            Controls.DelayButton {
-                text: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onActivated: remove()
-                iconColor: palette.dangerColor
-                Layout.fillWidth: true
-            }
+        Controls.Button {
+            iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            onClicked: chart.visible = !chart.visible
+            Layout.alignment: Qt.AlignTop
         }
 
         ChartView {
             id: chart
-            implicitWidth: root.width / 2
+            implicitHeight: width / 3
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.columnSpan: 2
             antialiasing: true
             animationOptions: ChartView.SeriesAnimations
             backgroundColor: "transparent"
