@@ -54,19 +54,19 @@ ColumnLayout {
         }
     }
 
-    Controls.Button {
-        id: addButton
-        Layout.fillWidth: true
-        text: qsTr("Add Vehicle")
-        iconSource: "qrc:/icons/add.svg"
-        anchors.right: parent.right
-        onClicked: addVehicle()
-    }
+    RowLayout {
+        Controls.Button {
+            id: addButton
+            text: qsTr("Add Vehicle")
+            iconSource: "qrc:/icons/add.svg"
+            onClicked: addVehicle()
+            Layout.fillWidth: true
+        }
 
-    Controls.CheckBox {
-         id: autoAdd
-         text: qsTr("Auto add new vehicles")
-         onCheckedChanged: setAutoAdd(checked)
-         Layout.alignment: Qt.AlignHCenter
+        Controls.CheckBox {
+            id: autoAdd
+            text: qsTr("Autoadd")
+            onCheckedChanged: setAutoAdd(checked)
+        }
     }
 }

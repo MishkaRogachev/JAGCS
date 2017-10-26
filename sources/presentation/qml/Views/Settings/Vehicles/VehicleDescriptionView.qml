@@ -23,7 +23,7 @@ Controls.Frame {
 
     GridLayout {
         anchors.fill: parent
-        columns: 3
+        columns: 4
         rowSpacing: palette.spacing
 
         Controls.Label {
@@ -35,12 +35,19 @@ Controls.Frame {
             id: nameField
             placeholderText: qsTr("Enter name")
             onEditingFinished: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
+
+        Controls.Button {
+            text: qsTr("Save")
+            iconSource: "qrc:/icons/save.svg"
+            onClicked: save()
+            enabled: changed
         }
 
         Controls.Label {
-            text: qsTr("MAVLink id:")
+            text: qsTr("MAV Id:")
             Layout.fillWidth: true
         }
 
@@ -50,8 +57,15 @@ Controls.Frame {
             from: 0
             to: 255
             onValueChanged: changed = true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
+
+        Controls.Button {
+            text: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            onClicked: restore()
+            enabled: changed
         }
 
         Controls.Label {
@@ -65,8 +79,16 @@ Controls.Frame {
                 type = currentIndex;
                 changed = true;
             }
-            Layout.columnSpan: 2
             Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
+
+        Controls.DelayButton {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            onActivated: remove()
+            enabled: !online
+            iconColor: palette.dangerColor
         }
 
         Controls.Label {
@@ -76,33 +98,8 @@ Controls.Frame {
 
         Controls.Label {
             text: online ? qsTr("Online") : qsTr("Offline")
-            Layout.columnSpan: 2
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
-            enabled: changed
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            text: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
-            enabled: changed
-            Layout.fillWidth: true
-        }
-
-        Controls.DelayButton {
-            text: qsTr("Remove")
-            iconSource: "qrc:/icons/remove.svg"
-            onActivated: remove()
-            enabled: !online
-            iconColor: palette.dangerColor
-            Layout.fillWidth: true
+            Layout.columnSpan: 3
         }
     }
 }
