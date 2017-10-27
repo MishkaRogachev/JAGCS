@@ -58,7 +58,7 @@ PresentationContext::PresentationContext()
 PresentationContext::~PresentationContext()
 {
     PresentationContext::saveGeometry();
-    //delete m_view;
+    m_view->deleteLater();
 }
 
 PresentationContext* PresentationContext::instance()
