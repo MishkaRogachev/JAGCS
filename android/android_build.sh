@@ -7,9 +7,13 @@ export ANDROID_SDK=/home/mishka/.android/sdk/
 export ANDROID_API_LEVEL=16
 export CMAKE_PREFIX_PATH=/opt/Qt/5.9.1/android_armv7/lib/cmake
 
-mkdir -p `pwd`/build_android
-cd `pwd`/build_android
-cmake .. -DCMAKE_TOOLCHAIN_FILE=`pwd`/../3rdparty/qt-android-cmake/toolchain/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release
+# Absolute path to this script, e.g. /home/user/bin/foo.sh
+SCRIPT=$(readlink -f "$0")
+cd $(dirname "$SCRIPT")
+
+mkdir -p ../build_android
+cd ../build_android
+cmake .. -DCMAKE_TOOLCHAIN_FILE=../3rdparty/qt-android-cmake/toolchain/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release
 make -j5
 
 #$ANDROID_SDK/platform-tools/adb install -r ./bin/QtApp-debug.apk
