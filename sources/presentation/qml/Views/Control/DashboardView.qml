@@ -28,6 +28,7 @@ Repeater {
             case "satellite": return Qt.createComponent("Displays/SatelliteDisplay.qml");
             case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
             case "navigator": return Qt.createComponent("Displays/NavigationDisplay.qml");
+            case "battery": return Qt.createComponent("Displays/BatteryDisplay.qml");
             case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
             case "mission": return Qt.createComponent("Displays/MissionDisplay.qml");
             default: return null

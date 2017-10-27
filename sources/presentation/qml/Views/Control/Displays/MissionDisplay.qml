@@ -1,12 +1,8 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
-
 import "../../Common"
-import "../Command"
 
 BaseDisplay {
     id: root
@@ -38,24 +34,6 @@ BaseDisplay {
             enabled: online
             highlighted: downloading
             onClicked: downloading ? cancelSyncMission() : downloadMission()
-        }
-
-        Controls.Label {
-            Layout.fillWidth: true
-            text: itemsStatus.selectedCommand === MissionItem.UnknownCommand ?
-                      qsTr("No waypoint") : translator.translateCommand(itemsStatus.selectedCommand)
-        }
-
-        CommandButton {
-            iconSource: "qrc:/icons/play.svg"
-            enabled: online
-            command: Command.Start
-        }
-
-        CommandButton {
-            iconSource: "qrc:/icons/home.svg"
-            enabled: online
-            command: Command.Return
         }
     }
 }

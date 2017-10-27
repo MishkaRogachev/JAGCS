@@ -55,10 +55,12 @@ DashboardPresenter* GenericDashboardFactory::create()
     dashboard->addInstrumentPresenter("navigator", new WindPresenter(
                                           node->childNode(domain::Telemetry::Wind), dashboard));
 
-    dashboard->addInstrument("status", 400);
-    dashboard->addInstrumentPresenter("status", m_status);
-    dashboard->addInstrumentPresenter("status", new BatteryPresenter(
+    dashboard->addInstrument("battery", 400);
+    dashboard->addInstrumentPresenter("battery", new BatteryPresenter(
                                           node->childNode(domain::Telemetry::Battery), dashboard));
+
+    dashboard->addInstrument("status", 500);
+    dashboard->addInstrumentPresenter("status", m_status);
 
     MissionInstrumentPresenter* mission = new MissionInstrumentPresenter(m_vehicle->id(), dashboard);
 
@@ -69,7 +71,7 @@ DashboardPresenter* GenericDashboardFactory::create()
     QObject::connect(m_map, &AbstractMapPresenter::holded,
             mission, &MissionInstrumentPresenter::goToItem);
 
-    dashboard->addInstrument("mission", 500);
+    dashboard->addInstrument("mission", 600);
     dashboard->addInstrumentPresenter("mission", m_status);
     dashboard->addInstrumentPresenter("mission", mission);
 

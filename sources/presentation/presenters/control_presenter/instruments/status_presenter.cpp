@@ -30,6 +30,7 @@ void StatusPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap&
         QVariantList list;
         for (auto item: parameters[domain::Telemetry::AvailableModes].value< QList<domain::Mode> >())
         {
+            if (item == domain::Mode::Return) continue; // Return by Home button
             list.append(QVariant::fromValue(item));
         }
         this->setViewsProperty(PROPERTY(availableModes), list);

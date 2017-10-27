@@ -81,6 +81,7 @@
         <file>Views/Control/Displays/SatelliteDisplay.qml</file>
         <file>Views/Control/Displays/FlightDisplay.qml</file>
         <file>Views/Control/Displays/NavigationDisplay.qml</file>
+        <file>Views/Control/Displays/BatteryDisplay.qml</file>
         <file>Views/Control/Displays/StatusDisplay.qml</file>
         <file>Views/Control/Displays/MissionDisplay.qml</file>
         <file>Views/Planning/PlanningView.qml</file>
