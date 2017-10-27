@@ -21,10 +21,14 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
+# Get version from git
 add_definitions(-DVERSION_MAJOR=${VERSION_MAJOR})
 add_definitions(-DVERSION_MINOR=${VERSION_MINOR})
 add_definitions(-DVERSION_PATCH=${VERSION_PATCH})
 add_definitions(-DGIT_REVISION="${GIT_REVISION}")
+
+# Minimum Qt version
+set(QT_REQUIRED_VERSION 5.9.0)
 
 # Set default output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
