@@ -45,6 +45,7 @@ public:
         settings.setValue(map::plugin, 0);
         settings.setValue(map::osmActiveMapType, 0);
         settings.setValue(map::mapBoxGlActiveMapType, 5);
+        settings.setValue(map::esriActiveMapType, 0);
         settings.setValue(map::tileHost, "http://a.tile.openstreetmap.org/");
         settings.setValue(map::cacheSize, 52428800);
         settings.setValue(map::highdpiTiles, true);

@@ -20,6 +20,8 @@ void MapSettingsPresenter::updateView()
                           settings::Provider::value(settings::map::osmActiveMapType));
     this->setViewProperty(PROPERTY(mapBoxGlActiveMapType),
                           settings::Provider::value(settings::map::mapBoxGlActiveMapType));
+    this->setViewProperty(PROPERTY(esriActiveMapType),
+                          settings::Provider::value(settings::map::esriActiveMapType));
     this->setViewProperty(PROPERTY(cacheSize),
                           settings::Provider::value(settings::map::cacheSize));
     this->setViewProperty(PROPERTY(highdpiTiles),
@@ -38,6 +40,8 @@ void MapSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(osmActiveMapType)));
     settings::Provider::setValue(settings::map::mapBoxGlActiveMapType,
                                  this->viewProperty(PROPERTY(mapBoxGlActiveMapType)));
+    settings::Provider::setValue(settings::map::esriActiveMapType,
+                                 this->viewProperty(PROPERTY(esriActiveMapType)));
     settings::Provider::setValue(settings::map::cacheSize,
                                  this->viewProperty(PROPERTY(cacheSize)));
     settings::Provider::setValue(settings::map::highdpiTiles,

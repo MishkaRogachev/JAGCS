@@ -10,6 +10,8 @@ ColumnLayout {
 
     property int osmActiveMapType: -1
     property int mapBoxGlActiveMapType: -1
+    property int esriActiveMapType: -1
+
     property bool changed: false
 
     property alias plugin: pluginBox.currentIndex
@@ -24,8 +26,17 @@ ColumnLayout {
     onMapBoxGlActiveMapTypeChanged: updateSelectedMapType()
 
     function updateSelectedMapType() {
-        if (activeMapTypeBox.model.length === 0) return;
-        activeMapTypeBox.currentIndex = plugin ? mapBoxGlActiveMapType : osmActiveMapType;
+        switch (plugin) {
+        case 0:
+            activeMapTypeBox.currentIndex = osmActiveMapType;
+            break;
+        case 1:
+            activeMapTypeBox.currentIndex = mapBoxGlActiveMapType;
+            break;
+        case 2:
+            activeMapTypeBox.currentIndex = esriActiveMapType;
+            break;
+        }
     }
 
     Flickable {
@@ -52,7 +63,7 @@ ColumnLayout {
 
                 Controls.ComboBox {
                     id: pluginBox
-                    model: [ "OSM", "Map Box" ]
+                    model: [ "OSM", "Map Box", "Esri" ]
                     currentIndex: -1
                     onCurrentIndexChanged: changed = true
                     Layout.fillWidth: true
@@ -68,7 +79,17 @@ ColumnLayout {
                     model: []
                     onModelChanged: updateSelectedMapType()
                     onActivated: {
-                        plugin ? mapBoxGlActiveMapType = index : osmActiveMapType = index;
+                        switch (plugin) {
+                        case 0:
+                            osmActiveMapType = index;
+                            break;
+                        case 1:
+                            mapBoxGlActiveMapType = index;
+                            break;
+                        case 2:
+                            esriActiveMapType = index;
+                            break;
+                        }
                         changed = true;
                     }
                     Layout.fillWidth: true

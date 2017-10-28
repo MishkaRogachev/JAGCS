@@ -44,7 +44,20 @@ Map {
         PluginParameter { name: "mapboxgl.mapping.cache.size"; value: settings.value("Map/cacheSize", 0) }
     }
 
-    plugin: mapPlugin ? mapBoxGl : osm // TODO: different map views for map type
+    Plugin {
+        id: esri
+        name: "esri"
+
+        PluginParameter { name: "esri.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
+    }
+
+    plugin: {
+        switch (mapPlugin) {
+        case 0: return osm;
+        case 1: return mapBoxGl;
+        case 2: return esri;
+        }
+    }
     implicitHeight: width
     gesture.flickDeceleration: 3000
     gesture.enabled: true
@@ -103,9 +116,17 @@ Map {
         zoomLevel = settings.value("Map/zoomLevel");
         bearing = settings.value("Map/bearing");
 
-        activeMapType = supportedMapTypes[ mapPlugin ?
-                settings.value("Map/mapBoxGlActiveMapType") :
-                settings.value("Map/osmActiveMapType") ]
+        switch (mapPlugin) {
+        case 0:
+            activeMapType = supportedMapTypes[settings.value("Map/osmActiveMapType")];
+            break;
+        case 1:
+            activeMapType = supportedMapTypes[settings.value("Map/mapBoxGlActiveMapType")];
+            break;
+        case 2:
+            activeMapType = supportedMapTypes[settings.value("Map/esriActiveMapType")];
+            break;
+        }
     }
 
     Component.onDestruction: if (visible) saveViewport()
