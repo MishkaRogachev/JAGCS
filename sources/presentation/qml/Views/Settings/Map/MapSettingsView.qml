@@ -8,17 +8,25 @@ import "../../Map"
 ColumnLayout {
     id: root
 
+    property int osmActiveMapType: -1
+    property int mapBoxGlActiveMapType: -1
     property bool changed: false
 
     property alias plugin: pluginBox.currentIndex
     property alias cacheSize: cacheSizeBox.value
-    property alias osmActiveMapType: osmActiveMapTypeBox.currentIndex
-    property alias mapBoxGlActiveMapType: mapBoxGlActiveMapTypeBox.currentIndex
     property alias highdpiTiles: highdpiTilesBox.checked
     property alias trackLength: trackLengthSlider.value
 
     signal save()
     signal restore()
+
+    onOsmActiveMapTypeChanged: updateSelectedMapType()
+    onMapBoxGlActiveMapTypeChanged: updateSelectedMapType()
+
+    function updateSelectedMapType() {
+        if (activeMapTypeBox.model.length === 0) return;
+        activeMapTypeBox.currentIndex = plugin ? mapBoxGlActiveMapType : osmActiveMapType;
+    }
 
     Flickable {
         Layout.fillWidth: true
@@ -45,6 +53,7 @@ ColumnLayout {
                 Controls.ComboBox {
                     id: pluginBox
                     model: [ "OSM", "Map Box" ]
+                    currentIndex: -1
                     onCurrentIndexChanged: changed = true
                     Layout.fillWidth: true
                 }
@@ -55,34 +64,15 @@ ColumnLayout {
                 }
 
                 Controls.ComboBox {
-                    id: osmActiveMapTypeBox
+                    id: activeMapTypeBox
                     model: []
-                    onCurrentIndexChanged: changed = true
+                    onModelChanged: updateSelectedMapType()
+                    onActivated: {
+                        plugin ? mapBoxGlActiveMapType = index : osmActiveMapType = index;
+                        changed = true;
+                    }
                     Layout.fillWidth: true
-                    visible: plugin === 0
                 }
-
-                Controls.ComboBox {
-                    id: mapBoxGlActiveMapTypeBox
-                    model: []
-                    onCurrentIndexChanged: changed = true
-                    Layout.fillWidth: true
-                    visible: plugin === 1
-                }
-
-                // TODO: customize OSM tile host
-                //        Controls.Label {
-                //            text: qsTr("Tile host")
-                //            Layout.fillWidth: true
-                //        }
-
-                //        Controls.TextField {
-                //            id: tileHostField
-                //            placeholderText: qsTr("Enter tile host url")
-                //            Layout.fillWidth: true
-                //            onTextChanged: changed = true
-                //            enabled: mapTypeBox.currentIndex === mapTypeBox.model.length - 1
-                //        }
 
                 Controls.Label {
                     text: qsTr("Cache size")
@@ -123,8 +113,8 @@ ColumnLayout {
                     Controls.Label {
                         Layout.preferredWidth: 86
                         horizontalAlignment: Text.AlignHCenter
-                        text: trackLengthSlider.visualValue > -1 ? trackLengthSlider.visualValue.toFixed(0)
-                                                                 : qsTr("Infinite")
+                        text: trackLengthSlider.visualValue > -1 ?
+                                  trackLengthSlider.visualValue.toFixed(0) : qsTr("Infinite")
                     }
                 }
             }
@@ -144,15 +134,7 @@ ColumnLayout {
                     for (var i = 0; i < supportedMapTypes.length; ++i) {
                         types.push(supportedMapTypes[i].name);
                     }
-
-                    switch(mapPlugin) {
-                    case 0:
-                        osmActiveMapTypeBox.model = types;
-                        break;
-                    case 1:
-                        mapBoxGlActiveMapTypeBox.model = types;
-                        break;
-                    }
+                    activeMapTypeBox.model = types;
                 }
             }
         }
@@ -163,6 +145,7 @@ ColumnLayout {
             Layout.preferredHeight: Math.max(palette.controlBaseSize * 4, root.height - frame.height)
             Layout.columnSpan: 2
             Component.onCompleted: reload()
+
             function reload() {
                 sourceComponent = null;
                 sourceComponent = mapComponent;
@@ -189,4 +172,3 @@ ColumnLayout {
         }
     }
 }
-
