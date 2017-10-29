@@ -211,7 +211,6 @@ void MissionItemEditPresenter::connectView(QObject* view)
 {
     this->updateAvailableCommands();
 
-    connect(view, SIGNAL(selectItem(int)), this, SLOT(selectItem(int)));
     connect(view, SIGNAL(changeSequence(int)), this, SLOT(onChangeSequence(int)));
     connect(view, SIGNAL(updateCommand(int)), this, SLOT(onUpdateCommand(int)));
 

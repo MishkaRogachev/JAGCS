@@ -10,6 +10,7 @@ Flickable {
 
     property int selectedItem: -1
     property int selectedCommand: MissionItem.UnknownCommand
+    property int count: repeater.model.length
 
     property alias items: repeater.model
 

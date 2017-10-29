@@ -114,10 +114,33 @@ ColumnLayout {
         }
     }
 
-    MissionItemsStatusView {
-        id: itemsStatus
-        objectName: "itemsStatus"
-        Layout.fillWidth: true
+    RowLayout {
+        Controls.Button {
+            iconSource: "qrc:/icons/left.svg"
+            enabled: itemsStatus.selectedItem > 0
+            onClicked: itemsStatus.selectItem(itemsStatus.selectedItem - 1)
+            onPressAndHold: itemsStatus.selectItem(0)
+        }
+
+        MissionItemsStatusView {
+            id: itemsStatus
+            objectName: "itemsStatus"
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/right.svg"
+            visible: itemsStatus.selectedItem < itemsStatus.count - 1
+            onClicked: itemsStatus.selectItem(itemsStatus.selectedItem + 1)
+            onPressAndHold: itemsStatus.selectItem(itemsStatus.count - 1)
+        }
+
+        Controls.Button { // TODO: Add menu
+            iconSource: "qrc:/icons/add.svg"
+            visible: itemsStatus.selectedItem == itemsStatus.count - 1
+            enabled: selectedMission > 0
+            onClicked: addItem()
+        }
     }
 
     MissionItemEditView {

@@ -69,7 +69,6 @@ ColumnLayout {
     signal save()
     signal restore()
     signal remove()
-    signal selectItem(int sequence)
     signal changeSequence(int sequence)
     signal updateCommand(int commandIndex)
 
@@ -143,71 +142,6 @@ ColumnLayout {
         if (!map.pickerVisible) return;
 
         map.pickerCoordinate = position;
-    }
-
-    RowLayout {
-        Controls.Label {
-            text: qsTr("Item")
-            Layout.fillWidth: true
-            Layout.minimumWidth: palette.controlBaseSize * 3
-        }
-
-        Controls.DelayButton {
-            iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.dangerColor
-            enabled: sequence > -1 && editEnabled
-            onActivated: remove()
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/left.svg"
-            enabled: sequence > 0
-            onClicked: selectItem(sequence - 1)
-            onPressAndHold: selectItem(0)
-        }
-
-        Controls.Label {
-            text: sequence > -1 ? (sequence + "/" + count) : "-"
-            horizontalAlignment: Qt.AlignHCenter
-            Layout.alignment: Qt.AlignVCenter
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/right.svg"
-            enabled: sequence < count - 1
-            onClicked: selectItem(sequence + 1)
-            onPressAndHold: selectItem(count - 1)
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/add.svg"
-            enabled: selectedMission > 0
-            onClicked: addItem()
-        }
-    }
-
-    RowLayout { // FIXME: update status items view
-        Layout.alignment: Qt.AlignRight
-        visible: sequence > -1
-
-        Controls.Label {
-            text: qsTr("Move")
-            Layout.fillWidth: true
-            visible: sequence > -1
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/left_left.svg"
-            enabled: sequence > 1
-            onClicked: changeSequence(sequence - 1)
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/right_right.svg"
-            enabled: sequence > 0 && sequence + 1 < count
-            onClicked: changeSequence(sequence + 1)
-        }
     }
 
     Flickable {
@@ -525,22 +459,45 @@ ColumnLayout {
     }
 
     RowLayout {
-        Layout.columnSpan: 2
-
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            enabled: changed
-            onClicked: restore()
+        Controls.Label {
+            text: qsTr("Actions")
             Layout.fillWidth: true
         }
 
+        Controls.DelayButton {
+            toolTip: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: palette.dangerColor
+            enabled: sequence > -1 && editEnabled
+            onActivated: remove()
+        }
+
         Controls.Button {
-            text: qsTr("Save")
+            toolTip: qsTr("Move left")
+            iconSource: "qrc:/icons/left_left.svg"
+            enabled: sequence > 1
+            onClicked: changeSequence(sequence - 1)
+        }
+
+        Controls.Button {
+            toolTip: qsTr("Move right")
+            iconSource: "qrc:/icons/right_right.svg"
+            enabled: sequence > 0 && sequence + 1 < count
+            onClicked: changeSequence(sequence + 1)
+        }
+
+        Controls.Button {
+            toolTip: qsTr("Restore")
+            iconSource: "qrc:/icons/restore.svg"
+            enabled: changed
+            onClicked: restore()
+        }
+
+        Controls.Button {
+            toolTip: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             enabled: changed && editEnabled
             onClicked: save()
-            Layout.fillWidth: true
         }
     }
 }
