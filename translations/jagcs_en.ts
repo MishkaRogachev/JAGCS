@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US" sourcelanguage="en_US">
+<TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
     <name>AboutView</name>
     <message>
@@ -15,27 +15,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="26"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="38"/>
         <source>Revision</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="46"/>
         <source>Qt version</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="42"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="54"/>
         <source>Contacts</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="50"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="62"/>
         <source>Web site</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="58"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Help/AboutView.qml" line="70"/>
         <source>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</source>
         <translation></translation>
     </message>
@@ -45,6 +45,19 @@
     <message>
         <location filename="../sources/presentation/qml/Indicators/ArtificialHorizon.qml" line="113"/>
         <source>DISARMED</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>BatteryDisplay</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/BatteryDisplay.qml" line="30"/>
+        <source> V</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/BatteryDisplay.qml" line="54"/>
+        <source> A</source>
         <translation></translation>
     </message>
 </context>
@@ -174,7 +187,7 @@
 <context>
     <name>CommunicationLinkView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="64"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="65"/>
         <source>Type:</source>
         <translation></translation>
     </message>
@@ -190,73 +203,73 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="74"/>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="91"/>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="92"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="98"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="99"/>
         <source>Unknown</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="81"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="89"/>
         <source>Protocol:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="105"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="113"/>
         <source>Name:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="112"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="119"/>
         <source>Enter name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="132"/>
         <source>Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="136"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="147"/>
         <source>Device:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="155"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="171"/>
         <source>Baud rate:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="174"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="125"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="182"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="106"/>
         <source>Save</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="199"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="164"/>
         <source>Remove</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="191"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="82"/>
         <source>Disconnect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="191"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="82"/>
         <source>Connect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="233"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="219"/>
         <source>Bytes sent</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="245"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Communications/CommunicationLinkView.qml" line="231"/>
         <source>Bytes received</source>
         <translation></translation>
     </message>
@@ -310,52 +323,57 @@
 <context>
     <name>DataBaseView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="45"/>
         <source>Data base:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="41"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="56"/>
         <source>SQLite data base file:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="47"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="62"/>
         <source>Enter filepath</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="53"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="68"/>
         <source>Migration:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="96"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="87"/>
+        <source>No records</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="110"/>
         <source>Clear DB log</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="105"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="119"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="113"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="127"/>
         <source>Save</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="121"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="135"/>
         <source>Migrate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="128"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="142"/>
         <source>Reconnect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="128"/>
+        <location filename="../sources/presentation/qml/Views/Settings/DataBase/DataBaseView.qml" line="142"/>
         <source>Connect</source>
         <translation></translation>
     </message>
@@ -448,92 +466,92 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="58"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="67"/>
         <source>UI size</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="88"/>
         <source>Palette</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="96"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="105"/>
         <source>Indoor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="102"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="111"/>
         <source>Artificial horizon</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="118"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="125"/>
         <source>Western</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="121"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="128"/>
         <source>Russian</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="127"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="134"/>
         <source>Speed scale step</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="143"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="148"/>
         <source>Speed units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="149"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="153"/>
         <source>mps</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="149"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="153"/>
         <source>kph</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="156"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="159"/>
         <source>Altitude scale step</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="172"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="173"/>
         <source>Relative altitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="183"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="182"/>
         <source>Coordinates in DMS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="199"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="200"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="207"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="208"/>
         <source>Save</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="102"/>
         <source>Outdoor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="35"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="48"/>
         <source>Fullscreen</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="46"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Gui/GuiSettingsView.qml" line="57"/>
         <source>Language</source>
         <translation></translation>
     </message>
@@ -541,67 +559,67 @@
 <context>
     <name>JoystickSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="12"/>
         <source>No Axis</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="12"/>
         <source>Axis left X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="11"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="12"/>
         <source>Axis left Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="12"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="13"/>
         <source>Axis right X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="12"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="13"/>
         <source>Axis right Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="44"/>
         <source>Enabled</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="41"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="54"/>
         <source>Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="64"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="77"/>
         <source>Pitch axis</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="90"/>
         <source>Roll axis</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="90"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="103"/>
         <source>Yaw axis</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="103"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="116"/>
         <source>Throttle axis</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="121"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="138"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="129"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Joystick/JoystickSettingsView.qml" line="146"/>
         <source>Save</source>
         <translation></translation>
     </message>
@@ -609,168 +627,170 @@
 <context>
     <name>MapSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="60"/>
         <source>Map provider</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="40"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="73"/>
         <source>Map type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="99"/>
         <source>Cache size</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="87"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="111"/>
         <source>High DPI tiles</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="97"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="121"/>
         <source>Track length</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="114"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="138"/>
         <source>Infinite</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="154"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="177"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="162"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Map/MapSettingsView.qml" line="185"/>
         <source>Save</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>MissionDisplay</name>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/MissionDisplay.qml" line="46"/>
-        <source>No waypoint</source>
         <translation></translation>
     </message>
 </context>
 <context>
     <name>MissionItemEditView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="152"/>
-        <source>Item</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="194"/>
-        <source>Move</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="217"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="160"/>
         <source>Command</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="235"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="178"/>
         <source>Altitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="256"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="199"/>
         <source>Rel.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="274"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="217"/>
         <source>Abort alt.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="280"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="223"/>
         <source>Climb</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="296"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="239"/>
         <source>Latitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="345"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="288"/>
         <source>Longitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="351"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="294"/>
         <source>Distance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="366"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="309"/>
         <source>Azimuth</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="382"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="325"/>
         <source>Radius</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="400"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="343"/>
         <source>CW</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="409"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="352"/>
         <source>Pitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="425"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="368"/>
         <source>Yaw</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="441"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="384"/>
         <source>Repeats</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="454"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="397"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="472"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="415"/>
         <source>Speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="487"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="430"/>
         <source>Ground speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="490"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="433"/>
         <source>Air speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="505"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="448"/>
         <source>Throttle</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="522"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="463"/>
+        <source>Actions</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="468"/>
+        <source>Remove</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="476"/>
+        <source>Move left</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="483"/>
+        <source>Move right</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="490"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="530"/>
+        <location filename="../sources/presentation/qml/Views/Planning/Mission/MissionItemEditView.qml" line="497"/>
         <source>Save</source>
         <translation></translation>
     </message>
@@ -778,7 +798,7 @@
 <context>
     <name>MissionItemsStatusView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Common/MissionItemsStatusView.qml" line="40"/>
+        <location filename="../sources/presentation/qml/Views/Common/MissionItemsStatusView.qml" line="41"/>
         <source>No waypoints</source>
         <translation></translation>
     </message>
@@ -882,12 +902,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Network/NetworkSettingsView.qml" line="96"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Network/NetworkSettingsView.qml" line="100"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Network/NetworkSettingsView.qml" line="102"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Network/NetworkSettingsView.qml" line="106"/>
         <source>Apply</source>
         <translation></translation>
     </message>
@@ -914,22 +934,22 @@
 <context>
     <name>SatelliteDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="40"/>
         <source>Lat.: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="47"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="50"/>
         <source>Lon.: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="92"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="95"/>
         <source>HDOP: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="100"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/SatelliteDisplay.qml" line="103"/>
         <source>VDOP: </source>
         <translation></translation>
     </message>
@@ -937,76 +957,66 @@
 <context>
     <name>SettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="50"/>
         <source>GUI</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="44"/>
         <source>Communications</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="30"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="43"/>
         <source>Data Base</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="32"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="45"/>
         <source>Vehicles</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="46"/>
         <source>Video</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="35"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="48"/>
         <source>Map</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="49"/>
         <source>Joystick</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="51"/>
         <source>Networking</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="39"/>
+        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="52"/>
         <source>About</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Settings/SettingsView.qml" line="46"/>
-        <source>Make defaults</source>
         <translation></translation>
     </message>
 </context>
 <context>
     <name>StatusDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="39"/>
-        <source> V</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="57"/>
-        <source> A</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="23"/>
         <source>DISARM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="23"/>
         <source>ARM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Control/Displays/StatusDisplay.qml" line="42"/>
+        <source>Return to launch</source>
         <translation></translation>
     </message>
 </context>
@@ -1023,42 +1033,42 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="43"/>
-        <source>MAVLink id:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="58"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="72"/>
         <source>Type:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="95"/>
         <source>Status:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="78"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="100"/>
         <source>Online</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="78"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="100"/>
         <source>Offline</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="84"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="65"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="92"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="43"/>
         <source>Save</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="100"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="50"/>
+        <source>MAV Id:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleDescriptionView.qml" line="87"/>
         <source>Remove</source>
         <translation></translation>
     </message>
@@ -1077,7 +1087,7 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Settings/Vehicles/VehicleSettingsView.qml" line="68"/>
-        <source>Auto add new vehicles</source>
+        <source>Autoadd</source>
         <translation></translation>
     </message>
 </context>
@@ -1112,53 +1122,58 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="44"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="45"/>
         <source>Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="52"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="53"/>
         <source>Stream video</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="53"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="54"/>
         <source>Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="54"/>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="55"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="74"/>
         <source>Unknown:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="72"/>
         <source>Stream URL:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="64"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="73"/>
         <source>Device file:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="73"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="83"/>
         <source>Enter stream url</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="95"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="126"/>
+        <source>Preview</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="63"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="103"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="38"/>
         <source>Save</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="111"/>
+        <location filename="../sources/presentation/qml/Views/Settings/Video/VideoSourceView.qml" line="105"/>
         <source>Remove</source>
         <translation></translation>
     </message>
