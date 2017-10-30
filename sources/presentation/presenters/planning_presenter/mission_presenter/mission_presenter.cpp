@@ -131,7 +131,7 @@ void MissionPresenter::setViewConnected(bool connected)
     {
         connect(this->view(), SIGNAL(selectMission(int)), this, SLOT(onSelectMission(int)));
         connect(this->view(), SIGNAL(addMission()), this, SLOT(onAddMission()));
-        connect(this->view(), SIGNAL(addItem()), this, SLOT(onAddItem()));
+        connect(this->view(), SIGNAL(addItem(int)), this, SLOT(onAddItem(int)));
         connect(this->view(), SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
         connect(this->view(), SIGNAL(renameMission(QString)), this, SLOT(onRenameMission(QString)));
         connect(this->view(), SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
@@ -249,11 +249,12 @@ void MissionPresenter::onAddMission()
     this->selectMission(mission);
 }
 
-void MissionPresenter::onAddItem()
+void MissionPresenter::onAddItem(int command)
 {
     if (d->selectedMission.isNull()) return;
 
-    d->missionService->addNewMissionItem(d->selectedMission->id());
+    d->missionService->addNewMissionItem(d->selectedMission->id(),
+                                         static_cast<dao::MissionItem::Command>(command));
     d->itemEdit->selectItem(d->selectedMission->count() - 1);
     d->itemEdit->enablePicker();
 }

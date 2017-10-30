@@ -287,7 +287,7 @@ void MissionService::unload(const MissionAssignmentPtr& assignment)
     d->assignmentRepository.unload(assignment->id());
 }
 
-void MissionService::addNewMissionItem(int missionId)
+void MissionService::addNewMissionItem(int missionId, MissionItem::Command command)
 {
     QMutexLocker locker(&d->mutex);
 
@@ -296,37 +296,42 @@ void MissionService::addNewMissionItem(int missionId)
 
     MissionItemPtr item = MissionItemPtr::create();
     MissionItemPtr lastItem = this->missionItem(missionId, mission->count() - 1);
+
     item->setMissionId(missionId);
+    item->setCommand(command);
 
-    if (mission->count() > 1) // TODO: default parms to settings
-    {
-        item->setCommand(MissionItem::Waypoint);
-
+    switch (command) { // TODO: to MissionItemFactory
+    case MissionItem::Home:
+        item->setAltitude(0);
+        item->setAltitudeRelative(false);
+        break;
+    case MissionItem::Waypoint:
         if (lastItem)
         {
             item->setAltitudeRelative(lastItem->isAltitudeRelative());
             item->setAltitude(lastItem->altitude());
         }
-    }
-    else if (mission->count() == 1)
-    {
-        item->setCommand(MissionItem::Takeoff);
+        break;
+    case MissionItem::Takeoff:
         if (lastItem)
         {
             item->setAltitude(50); // TODO: default parms to settings
             item->setAltitudeRelative(true);
         }
         item->setParameter(MissionItem::Pitch, 15);
-    }
-    else
-    {
-        item->setCommand(MissionItem::Home);
-        item->setAltitude(0);
-        item->setAltitudeRelative(false);
+        break;
+    case MissionItem::Landing:
+        if (lastItem)
+        {
+            item->setAltitude(0);
+            item->setAltitudeRelative(true);
+        }
+        break;
+    default:
+        break;
     }
 
     item->setSequence(mission->count());
-
     this->save(item);
 }
 

@@ -18,7 +18,7 @@ ColumnLayout {
 
     signal selectMission(int index)
     signal addMission()
-    signal addItem()
+    signal addItem(int command)
     signal removeMission()
     signal renameMission(string name)
     signal assignVehicle(int index)
@@ -53,6 +53,7 @@ ColumnLayout {
 
         Controls.Button {
             id: edit
+            toolTip: checked ? qsTr("Edit mission name") : qsTr("Cancel edit mission name")
             iconSource: "qrc:/icons/edit.svg"
             checkable: true
             enabled: selectedMission > 0
@@ -71,11 +72,13 @@ ColumnLayout {
         }
 
         Controls.Button {
+            toolTip: qsTr("Add mission")
             iconSource: "qrc:/icons/add.svg"
             onClicked: addMission()
         }
 
         Controls.DelayButton {
+            toolTip: qsTr("Remove mission")
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.dangerColor
             enabled: selectedMission > 0 && assignedVehicle === 0
@@ -94,12 +97,14 @@ ColumnLayout {
         }
 
         Controls.Button {
+            toolTip: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
             iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
             enabled: selectedMission > 0
             onClicked: setMissionVisible(!missionVisible)
         }
 
         Controls.Button {
+            toolTip: qsTr("Download mission from MAV")
             iconSource: "qrc:/icons/download.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
             highlighted: status === MissionAssignment.Downloading
@@ -107,6 +112,7 @@ ColumnLayout {
         }
 
         Controls.Button {
+            toolTip: qsTr("Upload mission to MAV")
             iconSource: "qrc:/icons/upload.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
             highlighted: status === MissionAssignment.Uploading
@@ -116,6 +122,7 @@ ColumnLayout {
 
     RowLayout {
         Controls.Button {
+            toolTip: qsTr("Left")
             iconSource: "qrc:/icons/left.svg"
             enabled: itemsStatus.selectedItem > 0
             onClicked: itemsStatus.selectItem(itemsStatus.selectedItem - 1)
@@ -129,17 +136,52 @@ ColumnLayout {
         }
 
         Controls.Button {
+            toolTip: qsTr("Right")
             iconSource: "qrc:/icons/right.svg"
             visible: itemsStatus.selectedItem < itemsStatus.count - 1
             onClicked: itemsStatus.selectItem(itemsStatus.selectedItem + 1)
             onPressAndHold: itemsStatus.selectItem(itemsStatus.count - 1)
         }
 
-        Controls.Button { // TODO: Add menu
+        Controls.Button {
+            toolTip: qsTr("Add mission item")
             iconSource: "qrc:/icons/add.svg"
             visible: itemsStatus.selectedItem == itemsStatus.count - 1
             enabled: selectedMission > 0
-            onClicked: addItem()
+            onClicked: if (!addMenu.visible) addMenu.open()
+
+            Controls.Menu {
+                id: addMenu
+                y: parent.height
+
+                Controls.MenuItem {
+                    text: qsTr("Home")
+                    iconSource: "qrc:/icons/home.svg"
+                    enabled: itemsStatus.selectedItem == -1
+                    onTriggered: addItem(MissionItem.Home)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Waypoint")
+                    iconSource: "qrc:/icons/map-marker.svg"
+                    enabled: itemsStatus.selectedItem >= 0
+                    onTriggered: addItem(MissionItem.Waypoint)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Takeoff")
+                    iconSource: "qrc:/icons/takeoff.svg"
+                    enabled: itemsStatus.selectedItem >= 0
+                    onTriggered: addItem(MissionItem.Takeoff)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Landing")
+                    iconSource: "qrc:/icons/landing.svg"
+                    enabled: itemsStatus.selectedItem >= 0
+                    onTriggered: addItem(MissionItem.Landing)
+                }
+            }
         }
     }
 
