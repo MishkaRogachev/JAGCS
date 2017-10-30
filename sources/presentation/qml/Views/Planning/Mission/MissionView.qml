@@ -53,7 +53,7 @@ ColumnLayout {
 
         Controls.Button {
             id: edit
-            toolTip: checked ? qsTr("Edit mission name") : qsTr("Cancel edit mission name")
+            tipText: checked ? qsTr("Edit mission name") : qsTr("Cancel edit mission name")
             iconSource: "qrc:/icons/edit.svg"
             checkable: true
             enabled: selectedMission > 0
@@ -72,13 +72,13 @@ ColumnLayout {
         }
 
         Controls.Button {
-            toolTip: qsTr("Add mission")
+            tipText: qsTr("Add mission")
             iconSource: "qrc:/icons/add.svg"
             onClicked: addMission()
         }
 
         Controls.DelayButton {
-            toolTip: qsTr("Remove mission")
+            tipText: qsTr("Remove mission")
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.dangerColor
             enabled: selectedMission > 0 && assignedVehicle === 0
@@ -97,14 +97,14 @@ ColumnLayout {
         }
 
         Controls.Button {
-            toolTip: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
+            tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
             iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
             enabled: selectedMission > 0
             onClicked: setMissionVisible(!missionVisible)
         }
 
         Controls.Button {
-            toolTip: qsTr("Download mission from MAV")
+            tipText: qsTr("Download mission from MAV")
             iconSource: "qrc:/icons/download.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
             highlighted: status === MissionAssignment.Downloading
@@ -112,7 +112,7 @@ ColumnLayout {
         }
 
         Controls.Button {
-            toolTip: qsTr("Upload mission to MAV")
+            tipText: qsTr("Upload mission to MAV")
             iconSource: "qrc:/icons/upload.svg"
             enabled: selectedMission > 0 && assignedVehicle > 0
             highlighted: status === MissionAssignment.Uploading
@@ -122,7 +122,7 @@ ColumnLayout {
 
     RowLayout {
         Controls.Button {
-            toolTip: qsTr("Left")
+            tipText: qsTr("Left")
             iconSource: "qrc:/icons/left.svg"
             enabled: itemsStatus.selectedItem > 0
             onClicked: itemsStatus.selectItem(itemsStatus.selectedItem - 1)
@@ -136,7 +136,7 @@ ColumnLayout {
         }
 
         Controls.Button {
-            toolTip: qsTr("Right")
+            tipText: qsTr("Right")
             iconSource: "qrc:/icons/right.svg"
             visible: itemsStatus.selectedItem < itemsStatus.count - 1
             onClicked: itemsStatus.selectItem(itemsStatus.selectedItem + 1)
@@ -144,7 +144,7 @@ ColumnLayout {
         }
 
         Controls.Button {
-            toolTip: qsTr("Add mission item")
+            tipText: qsTr("Add mission item")
             iconSource: "qrc:/icons/add.svg"
             visible: itemsStatus.selectedItem == itemsStatus.count - 1
             enabled: selectedMission > 0

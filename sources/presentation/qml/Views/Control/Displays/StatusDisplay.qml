@@ -39,7 +39,7 @@ BaseDisplay {
 
         CommandButton {
             iconSource: "qrc:/icons/home.svg"
-            toolTip: qsTr("Return to launch")
+            tipText: qsTr("Return to launch")
             command: Command.Return
             enabled: online
             Layout.alignment: Qt.AlignRight

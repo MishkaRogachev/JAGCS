@@ -40,7 +40,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            toolTip: qsTr("Save")
+            tipText: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             onClicked: save()
             enabled: changed
@@ -62,7 +62,7 @@ Controls.Frame {
         }
 
         Controls.Button {
-            toolTip: qsTr("Restore")
+            tipText: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
             onClicked: restore()
             enabled: changed
@@ -84,7 +84,7 @@ Controls.Frame {
         }
 
         Controls.DelayButton {
-            toolTip: qsTr("Remove")
+            tipText: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             onActivated: remove()
             enabled: !online

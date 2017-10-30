@@ -465,7 +465,7 @@ ColumnLayout {
         }
 
         Controls.DelayButton {
-            toolTip: qsTr("Remove")
+            tipText: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.dangerColor
             enabled: sequence > -1 && editEnabled
@@ -473,28 +473,28 @@ ColumnLayout {
         }
 
         Controls.Button {
-            toolTip: qsTr("Move left")
+            tipText: qsTr("Move left")
             iconSource: "qrc:/icons/left_left.svg"
             enabled: sequence > 1
             onClicked: changeSequence(sequence - 1)
         }
 
         Controls.Button {
-            toolTip: qsTr("Move right")
+            tipText: qsTr("Move right")
             iconSource: "qrc:/icons/right_right.svg"
             enabled: sequence > 0 && sequence + 1 < count
             onClicked: changeSequence(sequence + 1)
         }
 
         Controls.Button {
-            toolTip: qsTr("Restore")
+            tipText: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
             enabled: changed
             onClicked: restore()
         }
 
         Controls.Button {
-            toolTip: qsTr("Save")
+            tipText: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             enabled: changed && editEnabled
             onClicked: save()

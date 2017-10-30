@@ -10,7 +10,7 @@ T.Button {
     property alias iconColor: content.iconColor
     property alias textColor: content.textColor
     property alias backgroundColor: backgroundItem.color
-    property string toolTip // TODO: tooltip
+    property string tipText
 
     font.pixelSize: palette.fontPixelSize
     implicitWidth: Math.max(palette.controlBaseSize, content.implicitWidth)
@@ -40,5 +40,11 @@ T.Button {
         text: control.text
         font: control.font
         textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
+    }
+
+    ToolTip {
+        visible: hovered && tipText
+        text: tipText
+        delay: 1000
     }
 }
