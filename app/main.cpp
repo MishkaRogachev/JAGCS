@@ -15,7 +15,7 @@
 #include "presentation_context.h"
 #include "translation_manager.h"
 #include "palette_manager.h"
-#include "main_presenter.h"
+#include "unified_presenter.h"
 
 #include "link_description.h"
 
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     presentation::PaletteManager paletteManager;
     paletteManager.reloadPalette();
 
-    presentation::MainPresenter presenter;
+    presentation::UnifiedPresenter presenter;
 
     presentation::PresentationContext::rootContext()->setContextProperty(
                 PROPERTY(settings), settings::Provider::instance());
@@ -65,7 +65,6 @@ int main(int argc, char* argv[])
     presentation::PresentationContext::load();
     presenter.setView(presentation::PresentationContext::rootView());
 
-    presenter.setMode(presentation::MainPresenter::Planning);
     presentation::PresentationContext::show();
 
     return app.exec();
