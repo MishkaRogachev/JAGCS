@@ -30,6 +30,7 @@ BaseDisplay {
         }
 
         Controls.Button {
+            tipText: qsTr("Download mission from MAV")
             iconSource: "qrc:/icons/download.svg"
             enabled: online
             highlighted: downloading

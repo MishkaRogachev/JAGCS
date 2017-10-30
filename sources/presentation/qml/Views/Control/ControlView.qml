@@ -34,6 +34,7 @@ Controls.Pane {
             Layout.alignment: Qt.AlignTop
 
             Controls.Button {
+                tipText: qsTr("Center MAV")
                 iconSource: "qrc:/icons/center.svg"
                 checkable: true
                 enabled: dashboard.online
@@ -48,6 +49,7 @@ Controls.Pane {
             }
 
             Controls.Button {
+                tipText: qsTr("Command list")
                 id: commandButton
                 iconSource: "qrc:/icons/command.svg"
                 checkable: true
@@ -110,14 +112,16 @@ Controls.Pane {
         anchors.margins: palette.margins
 
         Controls.Button {
-            onClicked: cornerMap = !cornerMap
+            tipText: cornerMap ? qsTr("Map") : qsTr("Video")
             iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
+            onClicked: cornerMap = !cornerMap
         }
 
         Controls.Button {
             id: maxMinButton
-            onClicked: cornerVisible = !cornerVisible
+            tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
             iconSource: cornerVisible ? "qrc:/icons/minimize.svg" : "qrc:/icons/maximize.svg"
+            onClicked: cornerVisible = !cornerVisible
         }
     }
 }

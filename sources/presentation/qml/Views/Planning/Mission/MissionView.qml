@@ -53,7 +53,7 @@ ColumnLayout {
 
         Controls.Button {
             id: edit
-            tipText: checked ? qsTr("Edit mission name") : qsTr("Cancel edit mission name")
+            tipText: checked ? qsTr("Edit mission name") : qsTr("End edit mission name")
             iconSource: "qrc:/icons/edit.svg"
             checkable: true
             enabled: selectedMission > 0

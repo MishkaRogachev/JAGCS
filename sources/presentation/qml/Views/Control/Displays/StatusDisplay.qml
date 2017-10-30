@@ -20,7 +20,8 @@ BaseDisplay {
         width: parent.width
 
         CommandSwitch {
-            text: armed ? qsTr("DISARM") : qsTr("ARM")
+            text: armed ? qsTr("ARMED") : qsTr("DISARMED")
+            tipText: armed ? qsTr("Disarm") : qsTr("Arm")
             enabled: online
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
@@ -31,6 +32,7 @@ BaseDisplay {
         CommandModeBox {
             mode: root.mode
             model: availableModes
+            tipText: qsTr("Select mode")
             enabled: online
             font.pixelSize: palette.fontPixelSize * 0.75
             font.bold: true
@@ -38,8 +40,8 @@ BaseDisplay {
         }
 
         CommandButton {
-            iconSource: "qrc:/icons/home.svg"
             tipText: qsTr("Return to launch")
+            iconSource: "qrc:/icons/home.svg"
             command: Command.Return
             enabled: online
             Layout.alignment: Qt.AlignRight

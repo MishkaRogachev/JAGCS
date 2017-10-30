@@ -7,6 +7,7 @@ Button {
 
     signal picked(var coordinate)
 
+    tipText: qsTr("Pick on map")
     iconSource: "qrc:/icons/map-marker.svg"
     checkable: true
     onPickingChanged: map.picking = picking
