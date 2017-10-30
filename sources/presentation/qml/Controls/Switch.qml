@@ -9,6 +9,7 @@ T.Switch {
     property bool inputChecked: checked
     property alias textColor: text.color
     property alias backgroundColor: backgroundItem.color
+    property string tipText
 
     spacing: palette.spacing
     font.pixelSize: palette.fontPixelSize
@@ -51,5 +52,11 @@ T.Switch {
         font: control.font
         color: palette.textColor
         leftPadding: indicator.width + control.spacing
+    }
+
+    ToolTip {
+        visible: hovered && tipText
+        text: tipText
+        delay: 1000
     }
 }

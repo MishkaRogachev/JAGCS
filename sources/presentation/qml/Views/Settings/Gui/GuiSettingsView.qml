@@ -67,21 +67,12 @@ ColumnLayout {
                     text: qsTr("UI size")
                 }
 
-                RowLayout {
-
-                    Controls.Slider {
-                        id: uiSlider
-                        from: 24
-                        to: 64
-                        Layout.fillWidth: true
-                        onPressedChanged:  if (!pressed) changed = true
-                    }
-
-                    Controls.Label {
-                        Layout.preferredWidth: 86
-                        horizontalAlignment: Text.AlignHCenter
-                        text: uiSlider.visualValue.toFixed(0)
-                    }
+                Controls.Slider {
+                    id: uiSlider
+                    from: 24
+                    to: 64
+                    Layout.fillWidth: true
+                    onPressedChanged: if (!pressed) changed = true
                 }
 
                 Controls.Label {

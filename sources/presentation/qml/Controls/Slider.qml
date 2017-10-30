@@ -49,4 +49,10 @@ T.Slider {
             visible: control.pressed
         }
     }
+
+    ToolTip {
+        parent: handle
+        visible: hovered
+        text: visualValue.toFixed(0)
+    }
 }

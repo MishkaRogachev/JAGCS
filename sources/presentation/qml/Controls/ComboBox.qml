@@ -8,6 +8,7 @@ T.ComboBox {
     id: control
 
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
+    property string tipText
 
     font.pixelSize: palette.fontPixelSize
     clip: true
@@ -70,5 +71,11 @@ T.ComboBox {
             boundsBehavior: Flickable.StopAtBounds
             ScrollBar.vertical: ScrollBar {}
         }
+    }
+
+    ToolTip {
+        visible: hovered && tipText
+        text: tipText
+        delay: 1000
     }
 }
