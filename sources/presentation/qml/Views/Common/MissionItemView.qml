@@ -21,7 +21,7 @@ Rectangle {
     implicitWidth: palette.controlBaseSize
     implicitHeight: palette.controlBaseSize
     radius: height / 2
-    border.width: width / 10
+    border.width: palette.controlBaseSize / 10
     color: selected ? palette.selectionColor : palette.raisedColor
     border.color: {
         if (current) return palette.activeMissionColor; // TODO: highlight current only in mission
