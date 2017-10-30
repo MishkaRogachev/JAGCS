@@ -1,9 +1,16 @@
 import QtQuick 2.6
-import JAGCS 1.0
 
-import "../Controls" as Controls
-
-Item {
+Rectangle {
     id: unified
+
+    color: palette.backgroundColor
+
+    TopbarView {
+        id: topbar
+        objectName: "topbar"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+    }
 
 }

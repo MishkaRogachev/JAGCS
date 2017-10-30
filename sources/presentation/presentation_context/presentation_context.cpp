@@ -21,6 +21,7 @@
 #include <QQuickView>
 #include <QQuickItem>
 #include <QQmlContext>
+#include <QQmlEngine>
 #include <QDebug>
 
 using namespace presentation;
@@ -51,8 +52,11 @@ PresentationContext::PresentationContext()
                                      "Can't create enums in QML");
 
     m_view = new QQuickView();
+    m_view->setResizeMode(QQuickView::SizeRootObjectToView);
     m_view->rootContext()->setContextProperty("translator",
                                               QVariant::fromValue(new TranslationHelper(qApp)));
+
+    QObject::connect(m_view->engine(), &QQmlEngine::quit, qApp, &QGuiApplication::quit);
 }
 
 PresentationContext::~PresentationContext()
@@ -94,7 +98,10 @@ void PresentationContext::show()
     {
         QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
 
-        if (rect.isNull()) instance()->m_view->showMaximized();
+        if (rect.isNull())
+        {
+            instance()->m_view->showMaximized();
+        }
         else
         {
             instance()->m_view->setGeometry(rect);

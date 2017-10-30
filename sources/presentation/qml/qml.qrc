@@ -102,5 +102,6 @@
         <file>Views/Settings/Network/NetworkSettingsView.qml</file>
         <file>Views/Settings/Help/AboutView.qml</file>
         <file>Views/UnifiedView.qml</file>
+        <file>Views/TopbarView.qml</file>
     </qresource>
 </RCC>
