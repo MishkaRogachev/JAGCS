@@ -1,9 +1,10 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.0 as T
 
+import "../Shaders" as Shaders
 import "./"
 
-MenuItem {
+T.MenuItem {
     id: control
 
     property alias iconSource: icon.source
@@ -19,9 +20,15 @@ MenuItem {
         border.color: control.activeFocus ? palette.selectionColor : "transparent"
     }
 
+    Shaders.Hatch {
+        anchors.fill: parent
+        color: palette.sunkenColor
+        visible: !control.enabled
+    }
+
     indicator: ColoredIcon {
         id: icon
-        color: iconColor
+        color: enabled ? iconColor : palette.sunkenColor
         source: control.checked ? "qrc:/ui/ok.svg" : ""
         anchors.verticalCenter: parent.verticalCenter
         width: palette.controlBaseSize * 0.6
@@ -32,6 +39,9 @@ MenuItem {
         id: label
         font: control.font
         text: control.text
-        color: control.pressed ? palette.selectedTextColor: palette.textColor
+        color: {
+            if (!enabled) return palette.sunkenColor;
+            pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor;
+        }
     }
 }

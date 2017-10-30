@@ -9,6 +9,6 @@ Menu {
     background: Rectangle {
         implicitWidth: palette.controlBaseSize * 6
         implicitHeight: palette.controlBaseSize
-        color: palette.sunkenColor
+        color: palette.raisedColor
     }
 }
