@@ -11,6 +11,8 @@ ColumnLayout {
     property string revision: qsTr("Undefined")
     property string qtVersion: qsTr("Undefined")
 
+    spacing: palette.spacing
+
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -27,6 +29,7 @@ ColumnLayout {
                 id: grid
                 columns: 2
                 rowSpacing: palette.spacing
+                columnSpacing: palette.spacing
 
                 Controls.Label {
                     text: "Just another ground control station " + version

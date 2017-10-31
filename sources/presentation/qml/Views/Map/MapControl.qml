@@ -6,6 +6,8 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    spacing: palette.spacing
+
     RotationAnimation {
         id: bearingAnimation
         target: map

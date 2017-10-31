@@ -144,6 +144,8 @@ ColumnLayout {
         map.pickerCoordinate = position;
     }
 
+    spacing: palette.spacing
+
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -154,6 +156,8 @@ ColumnLayout {
 
         GridLayout {
             id: grid
+            rowSpacing: palette.spacing
+            columnSpacing: palette.spacing
             columns: 2
 
             Controls.Label {
@@ -181,6 +185,8 @@ ColumnLayout {
             }
 
             GridLayout {
+                rowSpacing: palette.spacing
+                columnSpacing: palette.spacing
                 visible: altitudeVisible
                 columns: 2
                 Layout.rowSpan: abortAltitudeVisible ? 2 : 1
@@ -242,6 +248,8 @@ ColumnLayout {
             }
 
             GridLayout {
+                rowSpacing: palette.spacing
+                columnSpacing: palette.spacing
                 columns: 2
                 Layout.rowSpan: 2
                 visible: positionVisible
@@ -328,6 +336,7 @@ ColumnLayout {
             }
 
             RowLayout {
+                spacing: palette.spacing
                 visible: radiusVisible
 
                 Controls.RealSpinBox {
@@ -459,6 +468,8 @@ ColumnLayout {
     }
 
     RowLayout {
+        spacing: palette.spacing
+
         Controls.Label {
             text: qsTr("Actions")
             Layout.fillWidth: true

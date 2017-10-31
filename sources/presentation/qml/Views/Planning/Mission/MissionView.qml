@@ -33,6 +33,8 @@ ColumnLayout {
 
     GridLayout {
         columns: 5
+        rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
 
         Controls.Label {
             text: qsTr("Mission")
@@ -121,6 +123,8 @@ ColumnLayout {
     }
 
     RowLayout {
+        spacing: palette.spacing
+
         Controls.Button {
             tipText: qsTr("Left")
             iconSource: "qrc:/icons/left.svg"

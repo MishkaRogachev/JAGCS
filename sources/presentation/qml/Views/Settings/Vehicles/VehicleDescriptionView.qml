@@ -25,6 +25,7 @@ Controls.Frame {
         anchors.fill: parent
         columns: 4
         rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
 
         Controls.Label {
             text: qsTr("Name:")

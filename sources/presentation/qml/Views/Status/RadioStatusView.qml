@@ -10,6 +10,8 @@ RowLayout {
     property alias rssi: rssiItem.rssi
     property alias remoteRssi: remoteRssiItem.rssi
 
+    spacing: palette.spacing
+
     Indicators.RssiIndicator {
         id: rssiItem
     }

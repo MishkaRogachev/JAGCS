@@ -13,6 +13,8 @@ ColumnLayout {
     signal addVehicle()
     signal setAutoAdd(bool add)
 
+    spacing: palette.spacing
+
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -55,6 +57,8 @@ ColumnLayout {
     }
 
     RowLayout {
+        spacing: palette.spacing
+
         Controls.Button {
             id: addButton
             text: qsTr("Add Vehicle")
