@@ -40,7 +40,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Add compiler flags
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -fPIC)
 
 # Enable globaly some Qt modules
@@ -65,12 +65,22 @@ REQUIRED)
 set(LIBRARIES
 )
 
-# Windows only libraries
+# Windows stuff
 if (WIN32)
+
 set(LIBRARIES
     ${LIBRARIES}
     opengl32
 )
+
+set(ICON_FILE "windows/jagcs.ico")
+
+configure_file("windows/jagcs.rc.in" "jagcs.rc")
+set(RC_FILE "jagcs.rc")
+set(CMAKE_RC_COMPILER_INIT windres)
+enable_language(RC)
+set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+
 endif(WIN32)
 
 # Android Qt extras
@@ -123,16 +133,26 @@ qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 #qt5_generate_moc(sources/domain/types/modes.h ${MOC_SOURCES})
 qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
 
+set(TARGET_SOURCES
+    ${SOURCES}
+    ${HEADERS} # for Qt Creator
+    ${QML} # for Qt Creator
+    ${JS} # for Qt Creator
+    ${QRC_SOURCES}
+    ${APP_SOURCES}
+    ${APP_HEADERS}
+    ${MOC_SOURCES}
+    ${META_SOURCES}
+)
+
 if(ANDROID)
     include_directories(${ANDROID_SYSROOT}/usr/include)
-    add_library(${PROJECT} SHARED ${SOURCES} ${HEADERS} ${QML}
-        ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
+    add_library(${PROJECT} SHARED ${TARGET_SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
         ${VERSION_MAJOR}"."${VERSION_MINOR}"."${VERSION_PATCH})
 else(ANDROID)
     # Executable target
-    add_executable(${PROJECT} ${SOURCES} ${HEADERS} ${QML}
-        ${JS} ${QRC_SOURCES} ${APP_SOURCES} ${APP_HEADERS} ${MOC_SOURCES})
+    add_executable(${PROJECT} ${TARGET_SOURCES})
 endif()
 
 # Link Libraries
