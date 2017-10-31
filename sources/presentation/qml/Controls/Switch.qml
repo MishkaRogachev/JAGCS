@@ -55,7 +55,7 @@ T.Switch {
     }
 
     ToolTip {
-        visible: hovered && tipText
+        visible: (hovered || down) && tipText
         text: tipText
         delay: 1000
     }
