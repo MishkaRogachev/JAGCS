@@ -2,7 +2,7 @@
 #define PRESENTATION_CONTEXT_H
 
 // Internal
-#include "base_presenter.h"
+#include <QObject>
 
 class QQmlContext;
 class QQuickView;

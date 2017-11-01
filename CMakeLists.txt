@@ -10,8 +10,8 @@ include(cmake/RecurseSubdirs.cmake)
 
 # Versions
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 5)
-set(VERSION_PATCH 0)
+set(VERSION_MINOR 4)
+set(VERSION_PATCH 1)
 
 # Get git revision hash
 execute_process(
@@ -34,10 +34,10 @@ set(QT_REQUIRED_VERSION 5.9.0)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Add compiler flags
 set(CMAKE_CXX_STANDARD 11)
@@ -89,23 +89,19 @@ if (ANDROID)
     set(LIBS ${LIBS} Qt5::AndroidExtras android)
 endif()
 
-# Includes
+# Common includes
 include_directories("3rdparty/mavlink_v2")
 include_directories("3rdparty/mavlink_v2/ardupilotmega")
 
-# Internal sources and headers
-file(GLOB_RECURSE HEADERS "sources/*.h")
-file(GLOB_RECURSE SOURCES "sources/*.cpp")
-file(GLOB_RECURSE QML "sources/*.qml")
-file(GLOB_RECURSE JS "sources/*.js")
+# Internal sources
+add_subdirectory(sources)
 
-HEADER_DIRECTORIES(INCLUDES "sources")
-include_directories(${INCLUDES})
+# NOTE: temporary solution for Q_NAMESPACE
+# qt5_generate_moc(sources/domain/types/modes.h ${MOC_SOURCES})
+qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
 
-# App sources and headers
-file(GLOB_RECURSE APP_HEADERS "app/*.h")
-file(GLOB_RECURSE APP_SOURCES "app/*.cpp")
-include_directories("app")
+# Application sources
+add_subdirectory(app)
 
 # Translations
 file(GLOB TS_FILES "translations/*.ts")
@@ -129,30 +125,16 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
-# NOTE: temporary solution for Q_NAMESPACE
-#qt5_generate_moc(sources/domain/types/modes.h ${MOC_SOURCES})
-qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
-
-set(TARGET_SOURCES
-    ${SOURCES}
-    ${HEADERS} # for Qt Creator
-    ${QML} # for Qt Creator
-    ${JS} # for Qt Creator
-    ${QRC_SOURCES}
-    ${APP_SOURCES}
-    ${APP_HEADERS}
-    ${MOC_SOURCES}
-    ${META_SOURCES}
-)
+include_directories(${INCLUDES})
 
 if(ANDROID)
     include_directories(${ANDROID_SYSROOT}/usr/include)
-    add_library(${PROJECT} SHARED ${TARGET_SOURCES})
+    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
         ${VERSION_MAJOR}"."${VERSION_MINOR}"."${VERSION_PATCH})
 else(ANDROID)
     # Executable target
-    add_executable(${PROJECT} ${TARGET_SOURCES})
+    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
 endif()
 
 # Link Libraries
