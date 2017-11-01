@@ -73,9 +73,9 @@ set(LIBRARIES
     opengl32
 )
 
-set(ICON_FILE "windows/jagcs.ico")
+set(ICON_FILE "platforms/windows/jagcs.ico")
 
-configure_file("windows/jagcs.rc.in" "jagcs.rc")
+configure_file("platforms/windows/jagcs.rc.in" "jagcs.rc")
 set(RC_FILE "jagcs.rc")
 set(CMAKE_RC_COMPILER_INIT windres)
 enable_language(RC)
@@ -182,7 +182,7 @@ if(ANDROID)
                         ${PROJECT_NAME}
                         NAME "JAGCS"
                         PACKAGE_NAME "mishkarogachev.jagcs"
-                        PACKAGE_SOURCES ${CMAKE_SOURCE_DIR}/android
+                        PACKAGE_SOURCES ${CMAKE_SOURCE_DIR}/platforms/android
                         BUILDTOOLS_REVISION "23.0.3"
                         VERSION_CODE 5
 )
@@ -196,7 +196,7 @@ install(FILES "resources/icons/jagcs.svg" DESTINATION "/usr/share/icons/")
 # CPack Debian package
 option(WITH_DEBIAN "Include instructions to make Debian package")
 if (WITH_DEBIAN)
-    add_subdirectory(debian)
+    add_subdirectory(platforms/debian)
 endif (WITH_DEBIAN)
 
 # Tests

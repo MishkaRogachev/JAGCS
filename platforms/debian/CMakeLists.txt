@@ -1,5 +1,5 @@
 # CMake version string
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.0)
 
 # CPack generator type
 set(CPACK_GENERATOR "DEB")
@@ -11,9 +11,9 @@ set(CPACK_PACKAGE_CONTACT "mishkarogachev@gmail.com")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/MishkaRogachev/JAGCS")
 
 # Set package version
-set(CPACK_PACKAGE_VERSION_MAJOR "0")
-set(CPACK_PACKAGE_VERSION_MINOR "1")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
 
 # Scripts
 #set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
