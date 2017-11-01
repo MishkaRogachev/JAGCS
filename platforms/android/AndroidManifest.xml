@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest android:versionName="0.5" package="mishka.rogachev.jagcs" android:installLocation="auto" xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="0">
-    <application android:label="JAGCS" android:name="org.qtproject.qt5.android.bindings.QtApplication">
+    <application android:icon="@mipmap/ic_launcher" android:label="JAGCS" android:name="org.qtproject.qt5.android.bindings.QtApplication">
 		<activity android:label="JAGCS" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:screenOrientation="landscape" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
