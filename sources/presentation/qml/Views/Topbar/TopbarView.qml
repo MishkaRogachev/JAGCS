@@ -18,6 +18,7 @@ Rectangle {
             tipText: qsTr("Menu")
             iconSource: "qrc:/icons/burger.svg"
             anchors.verticalCenter: parent.verticalCenter
+            highlighted: menu.opened
             onClicked: menu.opened = !menu.opened
         }
     }
