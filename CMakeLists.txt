@@ -83,11 +83,19 @@ set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <S
 
 endif(WIN32)
 
-# Android Qt extras
+# Android stuff
 if (ANDROID)
-    find_package(Qt5AndroidExtras)
-    set(LIBS ${LIBS} Qt5::AndroidExtras android)
-endif()
+
+find_package(Qt5AndroidExtras)
+
+set(LIBS
+    ${LIBS}
+    Qt5::AndroidExtras
+    android
+# TODO: add to 3rd party openssl android library, avoid https://bugreports.qt.io/browse/QTBUG-57922
+)
+
+endif(ANDROID)
 
 # Common includes
 include_directories("3rdparty/mavlink_v2")
@@ -127,13 +135,13 @@ qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
 include_directories(${INCLUDES})
 
+# Target
 if(ANDROID)
     include_directories(${ANDROID_SYSROOT}/usr/include)
     add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
-        ${VERSION_MAJOR}"."${VERSION_MINOR}"."${VERSION_PATCH})
+        ${VERSION_MAJOR} "." ${VERSION_MINOR} "." ${VERSION_PATCH})
 else(ANDROID)
-    # Executable target
     add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
 endif()
 
