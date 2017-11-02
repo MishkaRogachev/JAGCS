@@ -10,46 +10,49 @@ Controls.Frame {
 
     Flickable {
         anchors.fill: parent
-        implicitWidth: column.width
-        contentHeight: column.height
+        implicitWidth: content.width
+        contentHeight: content.height
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-        ColumnLayout {
-            id: column
-            implicitHeight: root.height
-            spacing: palette.spacing
+        Item {
+            id: content
+            width: column.width
+            height: Math.max(root.height, column.implicitHeight)
 
-            Controls.ButtonBar {
-                id: bar
-                anchors.top: parent.top
-                currentIndex: -1
-                model: [
-                    qsTr("Data Base"),
-                    qsTr("Communications"),
-                    qsTr("Vehicles"),
-                    qsTr("Video"),
+            ColumnLayout {
+                id: column
+                anchors.centerIn: parent
+                height: parent.height
+                spacing: palette.spacing
 
-                    qsTr("Map"),
-                    qsTr("Joystick"),
-                    qsTr("GUI"),
-                    qsTr("Networking"),
-                    qsTr("About")
-                ]
-            }
+                Controls.ButtonBar {
+                    id: bar
+                    anchors.top: parent.top
+                    currentIndex: -1
+                    model: [
+                        qsTr("Data Base"),
+                        qsTr("Communications"),
+                        qsTr("Vehicles"),
+                        qsTr("Video"),
 
-            Item {
-                Layout.fillHeight: true
-            }
+                        qsTr("Map"),
+                        qsTr("Joystick"),
+                        qsTr("GUI"),
+                        qsTr("Networking"),
+                        qsTr("About")
+                    ]
+                }
 
-            Controls.Button {
-                text: qsTr("Exit")
-                iconSource: "qrc:/icons/quit.svg"
-                iconColor: palette.dangerColor
-                onClicked: Qt.quit()
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignBottom
+                Controls.Button {
+                    text: qsTr("Exit")
+                    iconSource: "qrc:/icons/quit.svg"
+                    iconColor: palette.dangerColor
+                    onClicked: Qt.quit()
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignBottom
+                }
             }
         }
     }
