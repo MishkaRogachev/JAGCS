@@ -32,6 +32,7 @@ Controls.Pane {
 
         RowLayout {
             Layout.alignment: Qt.AlignTop
+            spacing: palette.spacing
 
             Controls.Button {
                 tipText: qsTr("Center MAV")

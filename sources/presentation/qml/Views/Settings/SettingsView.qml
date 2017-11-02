@@ -23,6 +23,7 @@ Controls.Pane {
 
     RowLayout {
         anchors.fill: parent
+        spacing: palette.spacing
 
         Flickable {
             Layout.fillHeight: true
@@ -34,6 +35,7 @@ Controls.Pane {
 
             ColumnLayout {
                 id: column
+                spacing: palette.spacing
 
                 Controls.ButtonBar {
                     id: bar

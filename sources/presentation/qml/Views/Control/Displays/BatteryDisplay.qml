@@ -17,6 +17,7 @@ BaseDisplay {
         id: row
         anchors.centerIn: parent
         width: parent.width
+        spacing: palette.spacing
 
         Indicators.BatteryIndicator {
             id: battery

@@ -27,6 +27,8 @@ ColumnLayout {
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
 
+    spacing: palette.spacing
+
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -41,8 +43,9 @@ ColumnLayout {
 
             GridLayout {
                 anchors.fill: parent
-                rowSpacing: palette.spacing
                 columns: 2
+                rowSpacing: palette.spacing
+                columnSpacing: palette.spacing
 
                 Controls.Label {
                     text: qsTr("Fullscreen")
@@ -187,6 +190,8 @@ ColumnLayout {
     }
 
     RowLayout {
+        spacing: palette.spacing
+
         Controls.Button {
             text: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"

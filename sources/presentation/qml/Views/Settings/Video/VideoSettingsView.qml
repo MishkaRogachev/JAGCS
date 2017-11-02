@@ -13,6 +13,8 @@ ColumnLayout {
     signal addDeviceVideo()
     signal addStreamVideo()
 
+    spacing: palette.spacing
+
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true

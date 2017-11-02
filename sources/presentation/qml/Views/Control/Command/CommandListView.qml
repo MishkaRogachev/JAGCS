@@ -19,6 +19,8 @@ Controls.Pane {
         id: grid
         anchors.centerIn: parent
         width: palette.controlBaseSize * 8
+        columnSpacing: palette.spacing
+        rowSpacing: palette.spacing
         columns: 3
 
         Controls.Label {

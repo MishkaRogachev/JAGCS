@@ -12,6 +12,8 @@ ColumnLayout {
     signal addUdpLink()
     signal addSerialLink()
 
+    spacing: palette.spacing
+
     Flickable {
         Layout.fillWidth: true
         Layout.fillHeight: true

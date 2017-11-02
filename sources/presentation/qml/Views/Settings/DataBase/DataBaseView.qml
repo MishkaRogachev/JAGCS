@@ -21,6 +21,8 @@ GridLayout {
     signal tryConnect()
 
     columns: 2
+    rowSpacing: palette.spacing
+    columnSpacing: palette.spacing
 
     Flickable {
         Layout.fillWidth: true
@@ -82,6 +84,7 @@ GridLayout {
 
                     ColumnLayout {
                         anchors.fill: parent
+                        spacing: palette.spacing
 
                         Controls.Label {
                             text: qsTr("No records")

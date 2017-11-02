@@ -18,6 +18,7 @@ BaseDisplay {
         id: row
         anchors.centerIn: parent
         width: parent.width
+        spacing: palette.spacing
 
         CommandSwitch {
             text: armed ? qsTr("ARMED") : qsTr("DISARMED")

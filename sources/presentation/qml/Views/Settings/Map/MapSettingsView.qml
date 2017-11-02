@@ -53,8 +53,9 @@ ColumnLayout {
 
             GridLayout {
                 width: parent.width
-                rowSpacing: palette.spacing
                 columns: 2
+                rowSpacing: palette.spacing
+                columnSpacing: palette.spacing
 
                 Controls.Label {
                     text: qsTr("Map provider")
@@ -123,6 +124,8 @@ ColumnLayout {
                 }
 
                 RowLayout {
+                    spacing: palette.spacing
+
                     Controls.Slider {
                         id: trackLengthSlider
                         from: -1
@@ -144,6 +147,8 @@ ColumnLayout {
 
     GridLayout {
         columns: 2
+        rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
 
         Component {
             id: mapComponent

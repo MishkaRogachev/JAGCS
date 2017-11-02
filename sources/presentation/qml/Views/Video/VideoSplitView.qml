@@ -28,6 +28,7 @@ Item {
         RowLayout {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
+            spacing: palette.spacing
 
             Controls.ComboBox {
                 model: videoSources

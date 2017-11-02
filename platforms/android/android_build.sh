@@ -11,10 +11,8 @@ export CMAKE_PREFIX_PATH=/opt/Qt/5.9.1/android_armv7/lib/cmake
 SCRIPT=$(readlink -f "$0")
 cd $(dirname "$SCRIPT")
 
-mkdir -p ../build_android
-cd ../build_android
+mkdir -p ../../build_android
+cd ../../build_android
 cmake .. -DCMAKE_TOOLCHAIN_FILE=../3rdparty/qt-android-cmake/toolchain/android.toolchain.cmake -DCMAKE_BUILD_TYPE=Release
 make -j5
-
-#$ANDROID_SDK/platform-tools/adb install -r ./bin/QtApp-debug.apk
 

@@ -20,6 +20,8 @@ BaseDisplay {
         id: grid
         anchors.top: parent.top
         width: root.width
+        rowSpacing: palette.spacing
+        columnSpacing: palette.spacing
         columns: 3
 
         MissionItemsStatusView {

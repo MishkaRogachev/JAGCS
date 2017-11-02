@@ -22,12 +22,16 @@ ColumnLayout {
         typeItem.currentIndex = typeModel.indexOf(proxyType);
     }
 
+    spacing: palette.spacing
+
     Frame {
         Layout.fillWidth: true
 
         GridLayout {
             columns: 2
             anchors.fill: parent
+            rowSpacing: palette.spacing
+            columnSpacing: palette.spacing
 
             Label {
                 Layout.fillWidth: true
@@ -94,6 +98,7 @@ ColumnLayout {
 
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
+        spacing: palette.spacing
 
         Button {
             Layout.fillWidth: true

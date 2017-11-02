@@ -1,0 +1,9 @@
+# CMake version string
+cmake_minimum_required(VERSION 3.0)
+
+# Internal sources and headers
+file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp")
+set(SOURCES ${SOURCES} ${INTERNAL_SOURCES} PARENT_SCOPE)
+
+HEADER_DIRECTORIES(INTERNAL_INCLUDES ".")
+set(INCLUDES ${INCLUDES} ${INTERNAL_INCLUDES} PARENT_SCOPE)
