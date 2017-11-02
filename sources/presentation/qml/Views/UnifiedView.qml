@@ -1,5 +1,7 @@
 import QtQuick 2.6
 
+import "Topbar"
+
 Rectangle {
     id: unified
 
@@ -12,5 +14,4 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
     }
-
 }
