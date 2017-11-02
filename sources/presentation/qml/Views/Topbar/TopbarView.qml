@@ -2,7 +2,6 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
-import "../Menu"
 
 Rectangle {
     id: root
@@ -19,12 +18,7 @@ Rectangle {
             tipText: qsTr("Menu")
             iconSource: "qrc:/icons/burger.svg"
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: menu.open()
-
-            MenuView {
-                id: menu
-                y: menuButton.height
-            }
+            onClicked: menu.opened = !menu.opened
         }
     }
 }

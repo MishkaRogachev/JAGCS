@@ -3,19 +3,22 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-Controls.Menu {
+Controls.Frame {
     id: root
 
-    title: qsTr("Menu")
+    padding: 0
 
-    Controls.MenuItem {
-        text: qsTr("About")
-    }
+    ColumnLayout {
+        anchors.fill: parent
 
-    Controls.MenuItem {
-        text: qsTr("Exit")
-        iconSource: "qrc:/icons/quit.svg"
-        iconColor: palette.dangerColor
-        onTriggered: Qt.quit()
+        Controls.Button {
+            flat: true
+            text: qsTr("Exit")
+            iconSource: "qrc:/icons/quit.svg"
+            iconColor: palette.dangerColor
+            onClicked: Qt.quit()
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignBottom
+        }
     }
 }
