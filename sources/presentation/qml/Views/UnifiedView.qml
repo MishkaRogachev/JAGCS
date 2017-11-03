@@ -23,6 +23,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.right
         anchors.leftMargin: opened ? -width : 0
-        Behavior on anchors.leftMargin { PropertyAnimation { duration: 200 } }
+
+        Behavior on anchors.leftMargin { PropertyAnimation { duration: 100 } }
+        Behavior on width { PropertyAnimation { duration: 100 } }
     }
 }

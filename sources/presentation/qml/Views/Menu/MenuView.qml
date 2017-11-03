@@ -8,6 +8,22 @@ Controls.Frame {
 
     padding: 0
 
+    // NOTE: function in model does not work properly
+    // https://stackoverflow.com/questions/43175574/how-to-store-a-function-and-call-it-later-in-qml-javascript
+    property var menuModel:[
+        { text: qsTr("Data Base") },
+        { text: qsTr("Communications") },
+        { text: qsTr("Vehicles") },
+        { text: qsTr("Video") },
+
+        { text: qsTr("Map") },
+        { text: qsTr("Joystick") },
+        { text: qsTr("GUI") },
+        { text: qsTr("Networking") },
+        { text: qsTr("About"), func: function() { console.log("about") } },
+        { text: qsTr("Quit"), func: function() { Qt.quit() } },
+    ]
+
     Flickable {
         anchors.fill: parent
         implicitWidth: content.width
@@ -27,32 +43,19 @@ Controls.Frame {
                 height: parent.height
                 spacing: palette.spacing
 
-                Controls.ButtonBar {
-                    id: bar
-                    anchors.top: parent.top
-                    currentIndex: -1
-                    model: [
-                        qsTr("Data Base"),
-                        qsTr("Communications"),
-                        qsTr("Vehicles"),
-                        qsTr("Video"),
+                Repeater {
+                    model: menuModel
 
-                        qsTr("Map"),
-                        qsTr("Joystick"),
-                        qsTr("GUI"),
-                        qsTr("Networking"),
-                        qsTr("About")
-                    ]
+                    Controls.Button {
+                        text: modelData.text ? modelData.text : ""
+                        iconSource: modelData.icon ? modelData.icon : ""
+                        onClicked: if (menuModel[index].func) menuModel[index].func()
+                        Layout.preferredWidth: palette.controlBaseSize * 7
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Controls.Button {
-                    text: qsTr("Exit")
-                    iconSource: "qrc:/icons/quit.svg"
-                    iconColor: palette.dangerColor
-                    onClicked: Qt.quit()
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom
-                }
+                Item { Layout.fillHeight: true }
             }
         }
     }
