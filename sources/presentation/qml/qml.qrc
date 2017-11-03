@@ -100,10 +100,10 @@
         <file>Views/Settings/Joystick/JoystickSettingsView.qml</file>
         <file>Views/Settings/Gui/GuiSettingsView.qml</file>
         <file>Views/Settings/Network/NetworkSettingsView.qml</file>
-        <file>Views/Settings/Help/AboutView.qml</file>
         
         <file>Views/UnifiedView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
+        <file>Views/Menu/About/AboutView.qml</file>
     </qresource>
 </RCC>

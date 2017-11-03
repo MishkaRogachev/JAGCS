@@ -15,47 +15,60 @@ Controls.Frame {
         { text: qsTr("Communications") },
         { text: qsTr("Vehicles") },
         { text: qsTr("Video") },
-
         { text: qsTr("Map") },
         { text: qsTr("Joystick") },
         { text: qsTr("GUI") },
         { text: qsTr("Networking") },
-        { text: qsTr("About"), func: function() { console.log("about") } },
+        { text: qsTr("About"), func: function() { loader.source = "About/AboutView.qml" } },
         { text: qsTr("Quit"), func: function() { Qt.quit() } },
     ]
 
-    Flickable {
+    RowLayout {
         anchors.fill: parent
-        implicitWidth: content.width
-        contentHeight: content.height
-        clip: true
+        spacing: palette.spacing
+        implicitWidth: loader.item ? 800 : flickable.width
 
-        Controls.ScrollBar.vertical: Controls.ScrollBar {}
+        Loader {
+            id: loader
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            //Layout.preferredWidth: item ? item.implicitWidth : 0
+        }
 
-        Item {
-            id: content
-            width: column.width
-            height: Math.max(root.height, column.implicitHeight)
+        Flickable {
+            id: flickable
+            implicitWidth: content.width
+            contentHeight: content.height
+            clip: true
+            Layout.fillHeight: true
 
-            ColumnLayout {
-                id: column
-                anchors.centerIn: parent
-                height: parent.height
-                spacing: palette.spacing
+            Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-                Repeater {
-                    model: menuModel
+            Item {
+                id: content
+                width: column.width
+                height: Math.max(root.height, column.implicitHeight)
 
-                    Controls.Button {
-                        text: modelData.text ? modelData.text : ""
-                        iconSource: modelData.icon ? modelData.icon : ""
-                        onClicked: if (menuModel[index].func) menuModel[index].func()
-                        Layout.preferredWidth: palette.controlBaseSize * 7
-                        Layout.fillWidth: true
+                ColumnLayout {
+                    id: column
+                    anchors.centerIn: parent
+                    height: parent.height
+                    spacing: palette.spacing
+
+                    Repeater {
+                        model: menuModel
+
+                        Controls.Button {
+                            text: modelData.text ? modelData.text : ""
+                            iconSource: modelData.icon ? modelData.icon : ""
+                            onClicked: if (menuModel[index].func) menuModel[index].func()
+                            Layout.preferredWidth: palette.controlBaseSize * 7
+                            Layout.fillWidth: true
+                        }
                     }
-                }
 
-                Item { Layout.fillHeight: true }
+                    Item { Layout.fillHeight: true }
+                }
             }
         }
     }
