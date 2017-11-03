@@ -21,10 +21,10 @@ Rectangle {
         property bool opened: false
         anchors.top: topbar.bottom
         anchors.bottom: parent.bottom
-        anchors.left: parent.right
-        anchors.leftMargin: opened ? -width : 0
+        anchors.right: parent.right
+        anchors.rightMargin: opened ? 0 : -width
 
-        Behavior on anchors.leftMargin { PropertyAnimation { duration: 100 } }
+        Behavior on anchors.rightMargin { PropertyAnimation { duration: 100 } }
         Behavior on width { PropertyAnimation { duration: 100 } }
     }
 }

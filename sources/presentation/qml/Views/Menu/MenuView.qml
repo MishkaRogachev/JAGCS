@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
+import "About"
+
 Controls.Frame {
     id: root
 
@@ -19,20 +21,26 @@ Controls.Frame {
         { text: qsTr("Joystick") },
         { text: qsTr("GUI") },
         { text: qsTr("Networking") },
-        { text: qsTr("About"), func: function() { loader.source = "About/AboutView.qml" } },
-        { text: qsTr("Quit"), func: function() { Qt.quit() } },
+        { text: qsTr("About"), comp: aboutComponent }
     ]
+
+    Component {
+        id: aboutComponent
+
+        AboutView {
+            id: about
+            objectName: "about"
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
         spacing: palette.spacing
-        implicitWidth: loader.item ? 800 : flickable.width
 
         Loader {
             id: loader
             Layout.fillHeight: true
-            Layout.fillWidth: true
-            //Layout.preferredWidth: item ? item.implicitWidth : 0
+            Layout.preferredWidth: item ? unified.width - flickable.width - palette.spacing : 0
         }
 
         Flickable {
@@ -61,13 +69,27 @@ Controls.Frame {
                         Controls.Button {
                             text: modelData.text ? modelData.text : ""
                             iconSource: modelData.icon ? modelData.icon : ""
-                            onClicked: if (menuModel[index].func) menuModel[index].func()
+                            iconColor: modelData.iconColor ? modelData.iconColor : iconColor
+                            onClicked: {
+                                if (modelData.comp) {
+                                    loader.sourceComponent = highlighted ? null : modelData.comp
+                                }
+                            }
+                            highlighted: loader.sourceComponent === modelData.comp
                             Layout.preferredWidth: palette.controlBaseSize * 7
                             Layout.fillWidth: true
                         }
                     }
 
                     Item { Layout.fillHeight: true }
+
+                    Controls.Button {
+                        text: qsTr("Exit")
+                        iconSource: "qrc:/icons/quit.svg"
+                        iconColor: palette.dangerColor
+                        onClicked: Qt.quit()
+                        Layout.fillWidth: true
+                    }
                 }
             }
         }
