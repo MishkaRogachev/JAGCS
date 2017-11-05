@@ -25,6 +25,5 @@ Rectangle {
         anchors.rightMargin: opened ? 0 : -width
 
         Behavior on anchors.rightMargin { PropertyAnimation { duration: 100 } }
-        Behavior on width { PropertyAnimation { duration: 100 } }
     }
 }
