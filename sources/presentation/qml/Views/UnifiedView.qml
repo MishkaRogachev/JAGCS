@@ -23,9 +23,10 @@ Rectangle {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        anchors.rightMargin: opened ? 0 : -width
+        anchors.rightMargin: -width * (1 - opening)
 
-        Behavior on anchors.rightMargin { PropertyAnimation { duration: 100 } }
+        Behavior on opening { PropertyAnimation { duration: 100 } }
+        Behavior on width { PropertyAnimation { duration: 100 } }
     }
 
     Controls.Button {

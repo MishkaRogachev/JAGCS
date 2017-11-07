@@ -31,7 +31,7 @@ T.Button {
         Shaders.Hatch {
             anchors.fill: parent
             color: palette.sunkenColor
-            visible: !control.enabled
+            visible: !control.enabled && !control.flat
         }
     }
 

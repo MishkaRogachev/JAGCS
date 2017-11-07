@@ -6,6 +6,8 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    property int preferredWidth: palette.controlBaseSize * 7
+
     spacing: palette.spacing
 
     Controls.Button {

@@ -1,7 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls" as Controls
+import "../../Controls" as Controls
 
 import "About"
 import "Quit"
@@ -10,6 +10,7 @@ Controls.Frame {
     id: root
 
     property bool opened: false
+    property real opening: opened ? 1.0 : 0.0
 
     function home() {
         menuLabel.text = "";
@@ -24,9 +25,7 @@ Controls.Frame {
         spacing: palette.spacing
 
         RowLayout {
-            opacity: opened ? 1 : 0
-
-            Behavior on opacity { PropertyAnimation { duration: 100 } }
+            opacity: opening
 
             Controls.Button {
                 tipText: qsTr("Home")
@@ -47,7 +46,7 @@ Controls.Frame {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            onItemChanged:  if (item) root.width = item.preferredWidth
+            onItemChanged: if (item) root.width = item.preferredWidth
 
             Connections {
                 target: loader.item
@@ -68,7 +67,7 @@ Controls.Frame {
             property int preferredWidth: palette.controlBaseSize * 7
 
             menuModel: [
-                { text: qsTr("Data Base") },
+                { text: qsTr("Database") },
                 { text: qsTr("Communications") },
                 { text: qsTr("Vehicles") },
                 { text: qsTr("Video") },
