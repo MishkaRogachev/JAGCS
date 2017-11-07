@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 import "About"
+import "Quit"
 
 Controls.Frame {
     id: root
@@ -76,14 +77,11 @@ Controls.Frame {
                         { text: qsTr("Networking") }
                     ] },
                 { text: qsTr("About"), component: aboutComponent },
-                { text: qsTr("Quit") }
+                { text: qsTr("Quit"), component: quitComponent }
             ]
         }
     }
 
-    Component {
-        id: aboutComponent
-
-        AboutView { objectName: "about" }
-    }
+    Component { id: aboutComponent; AboutView { objectName: "about" } }
+    Component { id: quitComponent; QuitView { objectName: "quit" } }
 }

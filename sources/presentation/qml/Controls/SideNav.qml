@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout { // TODO: to common menu
-    id: column
+ColumnLayout {
+    id: control
 
     signal reqestComponent(Component component, string text)
 
@@ -20,7 +20,6 @@ ColumnLayout { // TODO: to common menu
             text: modelData.text ? modelData.text : ""
             iconSource: modelData.icon ? modelData.icon : ""
             iconColor: modelData.iconColor ? modelData.iconColor : iconColor
-            highlighted: loader.sourceComponent === modelData.comp
             onClicked: if (modelData.component) reqestComponent(modelData.component, text)
             Layout.fillWidth: true
         }
