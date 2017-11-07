@@ -41,20 +41,27 @@ Controls.Frame {
             }
         }
 
-        Loader {
-            id: loader
+        Flickable {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            contentHeight: loader.height
+            clip: true
 
-            onItemChanged: if (item) root.width = item.preferredWidth
+            Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-            Connections {
-                target: loader.item
-                ignoreUnknownSignals: true
+            Loader {
+                id: loader
+                width: parent.width
+                onItemChanged: if (item) root.width = item.preferredWidth
 
-                onReqestComponent: {
-                    menuLabel.text = text;
-                    loader.sourceComponent = component;
+                Connections {
+                    target: loader.item
+                    ignoreUnknownSignals: true
+
+                    onReqestComponent: {
+                        menuLabel.text = text;
+                        loader.sourceComponent = component;
+                    }
                 }
             }
         }
