@@ -32,6 +32,7 @@
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/ToolTip.qml</file>
+        <file>Controls/SideNav.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
         <file>Indicators/BarIndicator.qml</file>
@@ -104,6 +105,5 @@
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/About/AboutView.qml</file>
-        <file>Views/Menu/TopMenu.qml</file>
     </qresource>
 </RCC>
