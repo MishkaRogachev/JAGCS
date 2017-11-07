@@ -1,5 +1,7 @@
 import QtQuick 2.6
 
+import "qrc:/Controls" as Controls
+
 import "Topbar"
 import "Menu"
 
@@ -18,12 +20,21 @@ Rectangle {
 
     MenuView {
         id: menu
-        property bool opened: false
-        anchors.top: topbar.bottom
+        anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.rightMargin: opened ? 0 : -width
 
         Behavior on anchors.rightMargin { PropertyAnimation { duration: 100 } }
+    }
+
+    Controls.Button {
+        id: menuButton
+        tipText: qsTr("Menu")
+        iconSource: "qrc:/icons/burger.svg"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        highlighted: menu.opened
+        onClicked: menu.opened = !menu.opened
     }
 }
