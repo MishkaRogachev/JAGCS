@@ -16,7 +16,6 @@ Controls.Frame {
         loader.sourceComponent = topMenuComponent;
     }
 
-    implicitWidth: palette.controlBaseSize * 7
     padding: 0
     Component.onCompleted: home()
 
@@ -46,6 +45,9 @@ Controls.Frame {
         Loader {
             id: loader
             Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            onItemChanged:  if (item) root.width = item.preferredWidth
 
             Connections {
                 target: loader.item
@@ -57,14 +59,14 @@ Controls.Frame {
                 }
             }
         }
-
-        Item { Layout.fillHeight: true }
     }
 
     Component {
         id: topMenuComponent
 
         Controls.SideNav {
+            property int preferredWidth: palette.controlBaseSize * 7
+
             menuModel: [
                 { text: qsTr("Data Base") },
                 { text: qsTr("Communications") },

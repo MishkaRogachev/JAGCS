@@ -24,4 +24,8 @@ ColumnLayout {
             Layout.fillWidth: true
         }
     }
+
+    Item {
+        Layout.fillHeight: true
+    }
 }

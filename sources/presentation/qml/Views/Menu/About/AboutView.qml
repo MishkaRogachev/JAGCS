@@ -7,6 +7,8 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    property int preferredWidth: unified.width / 2
+
     property string version: qsTr("(undefined version)")
     property string revision: qsTr("Undefined")
     property string qtVersion: qsTr("Undefined")
