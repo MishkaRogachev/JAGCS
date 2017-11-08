@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-import "qrc:/Controls" as Controls
+import "../Controls" as Controls
 
 import "Topbar"
 import "Menu"
@@ -18,14 +18,28 @@ Rectangle {
         anchors.top: parent.top
     }
 
-    MenuView {
-        id: menu
+    Controls.Swipeable {
+        id: menuSwipeable
+        swipeToRight: true
+        dragStartX: parent.width - widthOfSeizure
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.rightMargin: -width * (1 - opening)
+        width: menu.width
 
-        Behavior on opening { PropertyAnimation { duration: 100 } }
+        Rectangle {
+            opacity: 0.33
+            anchors.fill: parent
+        }
+
+        MenuView {
+            id: menu
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.leftMargin: menuSwipeable.widthOfSeizure
+        }
+
+        Behavior on x { PropertyAnimation { duration: 100 } }
         Behavior on width { PropertyAnimation { duration: 100 } }
     }
 
@@ -35,7 +49,7 @@ Rectangle {
         iconSource: "qrc:/icons/burger.svg"
         anchors.top: parent.top
         anchors.right: parent.right
-        highlighted: menu.opened
-        onClicked: menu.opened = !menu.opened
+        highlighted: menuSwipeable.isOpened
+        onClicked: menuSwipeable.isOpened ? menuSwipeable.close() : menuSwipeable.open()
     }
 }

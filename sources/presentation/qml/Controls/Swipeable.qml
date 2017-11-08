@@ -3,7 +3,7 @@ import QtQuick 2.6
 Item {
     id: control
 
-    property int widthOfSeizure: 15
+    property int widthOfSeizure: palette.controlBaseSize * 0.5
     property int dragStartX: 0
 
     property bool swipeToRight: false

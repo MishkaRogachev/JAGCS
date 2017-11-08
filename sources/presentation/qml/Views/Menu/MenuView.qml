@@ -9,9 +9,6 @@ import "Quit"
 Controls.Frame {
     id: root
 
-    property bool opened: false
-    property real opening: opened ? 1.0 : 0.0
-
     function home() {
         menuLabel.text = "";
         loader.sourceComponent = topMenuComponent;
@@ -25,8 +22,6 @@ Controls.Frame {
         spacing: palette.spacing
 
         RowLayout {
-            opacity: opening
-
             Controls.Button {
                 tipText: qsTr("Home")
                 iconSource: "qrc:/icons/home.svg"
@@ -42,10 +37,11 @@ Controls.Frame {
         }
 
         Flickable {
+            contentHeight: loader.height
+            flickableDirection: Flickable.VerticalFlick
+            clip: true
             Layout.fillWidth: true
             Layout.fillHeight: true
-            contentHeight: loader.height
-            clip: true
 
             Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
@@ -74,11 +70,11 @@ Controls.Frame {
             property int preferredWidth: palette.controlBaseSize * 7
 
             menuModel: [
-                { text: qsTr("Database") },
                 { text: qsTr("Communications") },
                 { text: qsTr("Vehicles") },
                 { text: qsTr("Video") },
                 { text: qsTr("Settings"), menu: [
+                        { text: qsTr("Database") },
                         { text: qsTr("Map") },
                         { text: qsTr("Joystick") },
                         { text: qsTr("GUI") },

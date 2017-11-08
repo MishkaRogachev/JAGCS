@@ -36,7 +36,6 @@ Item {
         }
     }
 
-
     Component{
         id: controlComponent
 
