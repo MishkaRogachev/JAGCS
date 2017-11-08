@@ -1,4 +1,4 @@
-#include "topbar_presenter.h".h"
+#include "topbar_presenter.h"
 
 // Qt
 #include <QDebug>

@@ -53,7 +53,6 @@
         <file>Views/Common/MissionItemView.qml</file>
         <file>Views/Common/MissionItemsStatusView.qml</file>
         <file>Views/Common/VerticalProfileView.qml</file>
-        <file>Views/MainView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/RadioStatusView.qml</file>
