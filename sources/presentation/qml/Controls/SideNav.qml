@@ -6,9 +6,13 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: control
 
+    property var menuModel
+
     signal reqestComponent(Component component, string text)
 
-    property var menuModel
+    function home() {
+        repeater.model = menuModel;
+    }
 
     spacing: palette.spacing
 
@@ -20,7 +24,10 @@ ColumnLayout {
             text: modelData.text ? modelData.text : ""
             iconSource: modelData.icon ? modelData.icon : ""
             iconColor: modelData.iconColor ? modelData.iconColor : iconColor
-            onClicked: if (modelData.component) reqestComponent(modelData.component, text)
+            onClicked: {
+                if (modelData.component) reqestComponent(modelData.component, text);
+                if (modelData.menu) repeater.model = modelData.menu;
+            }
             Layout.fillWidth: true
         }
     }
