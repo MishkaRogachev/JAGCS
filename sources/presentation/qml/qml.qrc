@@ -32,6 +32,7 @@
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/ToolTip.qml</file>
+        <file>Controls/Swipeable.qml</file>
         <file>Controls/SideNav.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
