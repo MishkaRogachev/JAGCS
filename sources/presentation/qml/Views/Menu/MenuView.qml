@@ -3,6 +3,12 @@ import QtQuick.Layouts 1.3
 
 import "../../Controls" as Controls
 
+import "Settings/DataBase"
+import "Settings/Map"
+import "Settings/Gui"
+import "Settings/Joystick"
+import "Settings/Network"
+
 import "About"
 import "Quit"
 
@@ -136,14 +142,20 @@ Controls.Frame {
             property int preferredWidth: palette.controlBaseSize * 7
 
             menuModel: [
-                { text: qsTr("Database") },
-                { text: qsTr("Map") },
-                { text: qsTr("Joystick") },
-                { text: qsTr("GUI") },
-                { text: qsTr("Networking") }
+                { text: qsTr("Database"), component: dbComponent },
+                { text: qsTr("Map"), component: mapComponent  },
+                { text: qsTr("Joystick"), component: joystickComponent  },
+                { text: qsTr("GUI"), component: guiComponent  },
+                { text: qsTr("Networking"), component: networkComponent  }
             ]
         }
     }
+
+    Component { id: dbComponent; DataBaseView { objectName: "database" } }
+    Component { id: mapComponent; MapSettingsView { objectName: "map" } }
+    Component { id: joystickComponent; JoystickSettingsView { objectName: "joystick" } }
+    Component { id: guiComponent; GuiSettingsView { objectName: "gui" } }
+    Component { id: networkComponent; NetworkSettingsView { objectName: "network" } }
 
     Component { id: aboutComponent; AboutView { objectName: "about" } }
     Component { id: quitComponent; QuitView { objectName: "quit" } }

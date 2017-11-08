@@ -7,6 +7,8 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    property int preferredWidth: palette.controlBaseSize * 17
+
     property bool changed: false
 
     property var axes: [ qsTr("No Axis"), qsTr("Axis left X"),  qsTr("Axis left Y"),

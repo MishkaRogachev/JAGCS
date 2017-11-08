@@ -7,6 +7,8 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
+    property int preferredWidth: palette.controlBaseSize * 17
+
     property bool changed: false
     property int speedStep: 0
     property int altitudeStep: 0

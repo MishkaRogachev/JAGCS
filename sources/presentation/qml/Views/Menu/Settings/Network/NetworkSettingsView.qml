@@ -7,6 +7,8 @@ import "qrc:/Controls"
 ColumnLayout {
     id: root
 
+    property int preferredWidth: palette.controlBaseSize * 17
+
     property alias type: typeItem.currentText
     property alias hostName: hostNameItem.text
     property alias port: portItem.value

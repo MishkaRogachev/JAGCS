@@ -3,10 +3,12 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
-import "../../Map"
+import "../../../Map"
 
 ColumnLayout {
     id: root
+
+    property int preferredWidth: palette.controlBaseSize * 17
 
     property int osmActiveMapType: -1
     property int mapBoxGlActiveMapType: -1
