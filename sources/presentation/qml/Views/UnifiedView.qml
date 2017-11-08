@@ -28,6 +28,7 @@ Rectangle {
 
         MenuView {
             id: menu
+            objectName: "menu"
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left

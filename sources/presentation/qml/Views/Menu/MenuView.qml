@@ -14,6 +14,8 @@ Controls.Frame {
         loader.sourceComponent = topMenuComponent;
     }
 
+    signal requestPresenter(string view)
+
     padding: 0
     Component.onCompleted: home()
 
@@ -48,7 +50,12 @@ Controls.Frame {
             Loader {
                 id: loader
                 width: parent.width
-                onItemChanged: if (item) root.width = item.preferredWidth
+                onItemChanged: {
+                    if (!item) return;
+
+                    root.width = item.preferredWidth
+                    root.requestPresenter(item.objectName)
+                }
 
                 Connections {
                     target: loader.item
