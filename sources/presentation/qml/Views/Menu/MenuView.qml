@@ -10,8 +10,40 @@ Controls.Frame {
     id: root
 
     function home() {
-        menuLabel.text = "";
         loader.sourceComponent = topMenuComponent;
+        loader.path = [];
+        menuLabel.path = [];
+
+        updatePath();
+    }
+
+    function back() {
+        if (loader.path.length < 1) return;
+
+        loader.sourceComponent = loader.path.pop();
+        menuLabel.path.pop();
+
+        updatePath();
+    }
+
+    function deepIn(component, text) {
+        loader.path.push(loader.sourceComponent);
+        loader.sourceComponent = component;
+        menuLabel.path.push(text);
+
+        updatePath();
+    }
+
+    function updatePath() {
+        menuLabel.text = menuLabel.path.join(", ");
+
+        backButton.enabled = loader.path.length > 0;
+        if (menuLabel.path.length > 1) {
+            backButton.tipText = qsTr("Back to ") + menuLabel.path[menuLabel.path.length - 2];
+        }
+        else {
+            backButton.tipText = qsTr("Back to home");
+        }
     }
 
     signal requestPresenter(string view)
@@ -32,8 +64,18 @@ Controls.Frame {
                 onClicked: home()
             }
 
+            Controls.Button {
+                id: backButton
+                iconSource: "qrc:/icons/left.svg"
+                flat: true
+                onClicked: back()
+            }
+
             Controls.Label {
                 id: menuLabel
+
+                property var path: []
+
                 Layout.fillWidth: true
             }
         }
@@ -49,6 +91,9 @@ Controls.Frame {
 
             Loader {
                 id: loader
+
+                property var path: []
+
                 width: parent.width
                 onItemChanged: {
                     if (!item) return;
@@ -61,10 +106,7 @@ Controls.Frame {
                     target: loader.item
                     ignoreUnknownSignals: true
 
-                    onReqestComponent: {
-                        menuLabel.text = text;
-                        loader.sourceComponent = component;
-                    }
+                    onReqestComponent: root.deepIn(component, text)
                 }
             }
         }
@@ -80,15 +122,25 @@ Controls.Frame {
                 { text: qsTr("Communications") },
                 { text: qsTr("Vehicles") },
                 { text: qsTr("Video") },
-                { text: qsTr("Settings"), menu: [
-                        { text: qsTr("Database") },
-                        { text: qsTr("Map") },
-                        { text: qsTr("Joystick") },
-                        { text: qsTr("GUI") },
-                        { text: qsTr("Networking") }
-                    ] },
+                { text: qsTr("Settings"), component: settingsMenuComponent },
                 { text: qsTr("About"), component: aboutComponent },
                 { text: qsTr("Quit"), component: quitComponent }
+            ]
+        }
+    }
+
+    Component {
+        id: settingsMenuComponent
+
+        Controls.SideNav {
+            property int preferredWidth: palette.controlBaseSize * 7
+
+            menuModel: [
+                { text: qsTr("Database") },
+                { text: qsTr("Map") },
+                { text: qsTr("Joystick") },
+                { text: qsTr("GUI") },
+                { text: qsTr("Networking") }
             ]
         }
     }
