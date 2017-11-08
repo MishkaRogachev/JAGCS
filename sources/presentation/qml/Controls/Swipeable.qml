@@ -34,4 +34,12 @@ Item {
 
         onReleased: control.isOpened ? control.open() : control.close()
     }
+
+    Rectangle {
+        color: palette.highlightColor
+        opacity: dragArea.pressed ? 0.5 : 0.0
+        anchors.fill: parent
+
+        Behavior on opacity { PropertyAnimation { duration: 200 } }
+    }
 }

@@ -24,12 +24,7 @@ Rectangle {
         dragStartX: parent.width - widthOfSeizure
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        width: menu.width
-
-        Rectangle {
-            opacity: 0.33
-            anchors.fill: parent
-        }
+        width: menu.width + widthOfSeizure
 
         MenuView {
             id: menu
@@ -39,8 +34,15 @@ Rectangle {
             anchors.leftMargin: menuSwipeable.widthOfSeizure
         }
 
-        Behavior on x { PropertyAnimation { duration: 100 } }
-        Behavior on width { PropertyAnimation { duration: 100 } }
+        Behavior on x {
+            enabled: !widthAnimation.running;
+            PropertyAnimation { id: xAnimation; duration: 100; }
+        }
+
+        Behavior on width {
+            enabled: !xAnimation.running;
+            PropertyAnimation { id: widthAnimation; duration: 100 }
+        }
     }
 
     Controls.Button {
