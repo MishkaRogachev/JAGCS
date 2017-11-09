@@ -6,8 +6,6 @@ import "qrc:/Controls" as Controls
 GridLayout {
     id: root
 
-    property int preferredWidth: palette.controlBaseSize * 14
-
     property bool changed: false
     property bool connected: false
     property var log: []

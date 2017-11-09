@@ -28,6 +28,7 @@ ColumnLayout {
                 if (modelData.component) reqestComponent(modelData.component, text);
                 if (modelData.menu) repeater.model = modelData.menu;
             }
+            Layout.preferredWidth: palette.controlBaseSize * 7
             Layout.fillWidth: true
         }
     }

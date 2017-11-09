@@ -7,16 +7,15 @@ import "qrc:/Controls" as Controls
 GridLayout {
     id: root
 
-    property int preferredWidth: palette.controlBaseSize * 14
-
     property bool changed: false
+
+    property int uiSize: 0
     property int speedStep: 0
     property int altitudeStep: 0
 
     property alias fullscreen: fullscreenBox.checked
     property alias locales: languageBox.model
     property alias localeIndex: languageBox.currentIndex
-    property alias uiSize: uiSlider.value
     property alias paletteStyle: paletteBox.currentIndex
     property alias rollInverted: rollBar.currentIndex
     property alias speedUnits: speedUnitsBox.currentIndex
@@ -26,6 +25,7 @@ GridLayout {
     signal save()
     signal restore()
 
+    onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
 
@@ -56,12 +56,14 @@ GridLayout {
         text: qsTr("UI size")
     }
 
-    Controls.Slider {
-        id: uiSlider
-        from: 24
-        to: 64
+    Controls.ComboBox {
+        id: uiSizeBox
+        model: [24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64]
         Layout.fillWidth: true
-        onPressedChanged: if (!pressed) changed = true
+        onCurrentTextChanged: {
+            uiSize = currentText;
+            changed = true;
+        }
     }
 
     Controls.Label {

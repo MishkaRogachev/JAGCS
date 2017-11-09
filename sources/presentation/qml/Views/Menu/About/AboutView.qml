@@ -6,8 +6,6 @@ import "qrc:/Controls" as Controls
 GridLayout {
     id: grid
 
-    property int preferredWidth: palette.controlBaseSize * 16
-
     property string version: qsTr("(undefined version)")
     property string revision: qsTr("Undefined")
     property string qtVersion: qsTr("Undefined")

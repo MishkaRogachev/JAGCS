@@ -8,8 +8,6 @@ import "../../../Map"
 ColumnLayout {
     id: root
 
-    property int preferredWidth: palette.controlBaseSize * 17
-
     property int osmActiveMapType: -1
     property int mapBoxGlActiveMapType: -1
     property int esriActiveMapType: -1

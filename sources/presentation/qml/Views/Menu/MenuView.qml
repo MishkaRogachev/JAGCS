@@ -106,7 +106,7 @@ Controls.Frame {
                 onItemChanged: {
                     if (!item) return;
 
-                    root.width = item.preferredWidth + palette.margins * 2
+                    root.width = item.implicitWidth + palette.margins * 2
                     item.height = Qt.binding(function() {
                         return Math.max(item.implicitHeight, flickable.height);
                     } );
@@ -127,8 +127,6 @@ Controls.Frame {
         id: topMenuComponent
 
         Controls.SideNav {
-            property int preferredWidth: palette.controlBaseSize * 7
-
             menuModel: [
                 { text: qsTr("Communications") },
                 { text: qsTr("Vehicles") },
@@ -144,8 +142,6 @@ Controls.Frame {
         id: settingsMenuComponent
 
         Controls.SideNav {
-            property int preferredWidth: palette.controlBaseSize * 7
-
             menuModel: [
                 { text: qsTr("Database"), component: dbComponent },
                 { text: qsTr("Map"), component: mapComponent  },
