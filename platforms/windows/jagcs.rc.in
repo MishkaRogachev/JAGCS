@@ -1,28 +1,25 @@
-#include "winver.h"
-
-IDI_ICON1               ICON    DISCARDABLE     "@ICON_FILE@"
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION @VERSION_MAJOR@,@VERSION_MINOR@,@VERSION_PATCH@,@GIT_REVISION@
- PRODUCTVERSION @VERSION_MAJOR@,@VERSION_MINOR@,@VERSION_PATCH@,@GIT_REVISION@
- FILEFLAGS 0x0L
- FILEFLAGSMASK 0x3fL
- FILEOS 0x00040004L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
+jagcs ICON "jagcs.ico"
+1 VERSIONINFO
+FILEVERSION @VERSION_MAJOR@,@VERSION_MINOR@,@VERSION_PATCH@,@GIT_REVISION@
+PRODUCTVERSION @VERSION_MAJOR@,@VERSION_MINOR@,@VERSION_PATCH@,@GIT_REVISION@
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "000004b0"
+        BLOCK "080904E4"
         BEGIN
             VALUE "CompanyName", "MishkaRogachev"
-            VALUE "FileDescription", "@PROJECT_NAME@"
+            VALUE "FileDescription", "Joint architecture ground control station"
             VALUE "FileVersion", "@GIT_REVISION@"
-            VALUE "LegalCopyright", "@COPYRIGHT@"
+            VALUE "LegalCopyright", "MishkaRogachev"
             VALUE "InternalName", "@PROJECT_NAME@"
             VALUE "OriginalFilename", "@PROJECT_NAME@.exe"
             VALUE "ProductName", "@PROJECT_NAME@"
             VALUE "ProductVersion", "@GIT_REVISION@"
         END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x809, 1252
     END
 END

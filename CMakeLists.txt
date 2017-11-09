@@ -73,13 +73,13 @@ set(LIBRARIES
     opengl32
 )
 
-set(ICON_FILE "platforms/windows/jagcs.ico")
-
-configure_file("platforms/windows/jagcs.rc.in" "jagcs.rc")
-set(RC_FILE "jagcs.rc")
-set(CMAKE_RC_COMPILER_INIT windres)
+# RC compiler
+string(REPLACE "gcc" "windres" CMAKE_RC_COMPILER_INIT ${CMAKE_C_COMPILER})
 enable_language(RC)
-set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -o <OBJECT> <SOURCE> -I ${CMAKE_SOURCE_DIR}/platforms/windows/")
+
+configure_file(${CMAKE_SOURCE_DIR}/platforms/windows/jagcs.rc.in ${CMAKE_CURRENT_BINARY_DIR}/jagcs.rc)
+set(META_SOURCES jagcs.rc)
 
 endif(WIN32)
 
