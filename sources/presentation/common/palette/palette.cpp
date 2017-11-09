@@ -132,6 +132,16 @@ void Palette::setSelectionColor(QColor selectionColor)
     m_selectionColor = selectionColor;
 }
 
+QColor Palette::linkColor() const
+{
+    return m_linkColor;
+}
+
+void Palette::setLinkColor(QColor linkColor)
+{
+    m_linkColor = linkColor;
+}
+
 QColor Palette::dangerColor() const
 {
     return m_dangerColor;

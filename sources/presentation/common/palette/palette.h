@@ -25,6 +25,8 @@ namespace presentation
         Q_PROPERTY(QColor selectedTextColor READ selectedTextColor WRITE setSelectedTextColor)
         Q_PROPERTY(QColor highlightColor READ highlightColor WRITE setHighlightColor)
         Q_PROPERTY(QColor selectionColor READ selectionColor WRITE setSelectionColor)
+        Q_PROPERTY(QColor linkColor READ linkColor WRITE setLinkColor)
+
         Q_PROPERTY(QColor dangerColor READ dangerColor WRITE setDangerColor)
         Q_PROPERTY(QColor cautionColor READ cautionColor WRITE setCautionColor)
         Q_PROPERTY(QColor positiveColor READ positiveColor WRITE setPositiveColor)
@@ -76,6 +78,9 @@ namespace presentation
         QColor selectionColor() const;
         void setSelectionColor(QColor selectionColor);
 
+        QColor linkColor() const;
+        void setLinkColor(QColor linkColor);
+
         QColor dangerColor() const;
         void setDangerColor(QColor dangerColor);
 
@@ -115,6 +120,7 @@ namespace presentation
         QColor m_selectedTextColor;
         QColor m_highlightColor;
         QColor m_selectionColor;
+        QColor m_linkColor;
         QColor m_dangerColor;
         QColor m_cautionColor;
         QColor m_positiveColor;
