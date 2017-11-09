@@ -1,4 +1,4 @@
-#include "data_base_presenter.h"
+#include "database_presenter.h"
 
 // Qt
 #include <QVariant>
@@ -11,25 +11,25 @@
 
 using namespace presentation;
 
-class DataBasePresenter::Impl
+class DatabasePresenter::Impl
 {
 public:
     db::DbManager manager;
 };
 
-DataBasePresenter::DataBasePresenter(QObject* parent):
+DatabasePresenter::DatabasePresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
     d->manager.clarify();
 
-    connect(&d->manager, &db::DbManager::logChanged, this, &DataBasePresenter::updateLog);
+    connect(&d->manager, &db::DbManager::logChanged, this, &DatabasePresenter::updateLog);
 }
 
-DataBasePresenter::~DataBasePresenter()
+DatabasePresenter::~DatabasePresenter()
 {}
 
-void DataBasePresenter::updateView()
+void DatabasePresenter::updateView()
 {
     this->setViewProperty(PROPERTY(path),
                           settings::Provider::value(settings::data_base::name));
@@ -37,23 +37,23 @@ void DataBasePresenter::updateView()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void DataBasePresenter::updateConnected()
+void DatabasePresenter::updateConnected()
 {
     this->setViewProperty(PROPERTY(migration), d->manager.migrationVersion());
     this->setViewProperty(PROPERTY(connected), d->manager.isOpen());
 }
 
-void DataBasePresenter::updateLog()
+void DatabasePresenter::updateLog()
 {
     this->setViewProperty(PROPERTY(log), d->manager.dbLog());
 }
 
-void DataBasePresenter::clearLog()
+void DatabasePresenter::clearLog()
 {
     d->manager.clearLog();
 }
 
-void DataBasePresenter::save()
+void DatabasePresenter::save()
 {
     if (settings::Provider::value(settings::data_base::name) !=
         this->viewProperty(PROPERTY(path)))
@@ -66,14 +66,14 @@ void DataBasePresenter::save()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void DataBasePresenter::migrate()
+void DatabasePresenter::migrate()
 {
     d->manager.migrateLastVersion();
 
     this->updateConnected();
 }
 
-void DataBasePresenter::tryConnect()
+void DatabasePresenter::tryConnect()
 {
     if (d->manager.isOpen())
     {
@@ -85,7 +85,7 @@ void DataBasePresenter::tryConnect()
     this->updateConnected();
 }
 
-void DataBasePresenter::connectView(QObject* view)
+void DatabasePresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(clearLog()), this, SLOT(clearLog()));
     connect(view, SIGNAL(save()), this, SLOT(save()));

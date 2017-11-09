@@ -98,7 +98,7 @@
         <file>Views/UnifiedView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
-        <file>Views/Menu/Settings/DataBase/DataBaseView.qml</file>
+        <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>
         <file>Views/Menu/Settings/Joystick/JoystickSettingsView.qml</file>
         <file>Views/Menu/Settings/Gui/GuiSettingsView.qml</file>

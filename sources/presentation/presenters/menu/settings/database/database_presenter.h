@@ -1,5 +1,5 @@
-#ifndef DATA_BASE_PRESENTER_H
-#define DATA_BASE_PRESENTER_H
+#ifndef DATABASE_PRESENTER_H
+#define DATABASE_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -7,13 +7,13 @@
 
 namespace presentation
 {
-    class DataBasePresenter: public BasePresenter
+    class DatabasePresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit DataBasePresenter(QObject* parent = nullptr);
-        ~DataBasePresenter() override;
+        explicit DatabasePresenter(QObject* parent = nullptr);
+        ~DatabasePresenter() override;
 
     public slots:
         void updateView();
@@ -33,4 +33,4 @@ namespace presentation
     };
 }
 
-#endif // DATA_BASE_PRESENTER_H
+#endif // DATABASE_PRESENTER_H

@@ -20,12 +20,10 @@ GridLayout {
         text: "Just another ground control station " + version
         font.bold: true
         Layout.columnSpan: 2
-        Layout.leftMargin: palette.margins
     }
 
     Controls.Label {
         text: qsTr("Revision")
-        Layout.leftMargin: palette.margins
     }
 
     Controls.Label {
@@ -34,7 +32,6 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("Qt version")
-        Layout.leftMargin: palette.margins
     }
 
     Controls.Label {
@@ -43,7 +40,6 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("Contacts")
-        Layout.leftMargin: palette.margins
     }
 
     Controls.Link {
@@ -52,7 +48,6 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("Web site")
-        Layout.leftMargin: palette.margins
     }
 
     Controls.Link {
@@ -61,7 +56,6 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("Donate")
-        Layout.leftMargin: palette.margins
     }
 
     Controls.Link {
@@ -73,6 +67,5 @@ GridLayout {
         Layout.columnSpan: 2
         wrapMode: Text.WordWrap
         Layout.maximumWidth: root.width - palette.margins * 2
-        Layout.leftMargin: palette.margins
     }
 }

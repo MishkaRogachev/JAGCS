@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "../../Controls" as Controls
 
-import "Settings/DataBase"
+import "Settings/Database"
 import "Settings/Map"
 import "Settings/Gui"
 import "Settings/Joystick"
@@ -87,11 +87,13 @@ Controls.Frame {
         }
 
         Flickable {
+            id: flickable
             contentHeight: loader.height
             flickableDirection: Flickable.VerticalFlick
             clip: true
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.margins: palette.margins
 
             Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
@@ -104,7 +106,10 @@ Controls.Frame {
                 onItemChanged: {
                     if (!item) return;
 
-                    root.width = item.preferredWidth
+                    root.width = item.preferredWidth + palette.margins * 2
+                    item.height = Qt.binding(function() {
+                        return Math.max(item.implicitHeight, flickable.height);
+                    } );
                     root.requestPresenter(item.objectName)
                 }
 
@@ -151,7 +156,7 @@ Controls.Frame {
         }
     }
 
-    Component { id: dbComponent; DataBaseView { objectName: "database" } }
+    Component { id: dbComponent; DatabaseView { objectName: "database" } }
     Component { id: mapComponent; MapSettingsView { objectName: "map" } }
     Component { id: joystickComponent; JoystickSettingsView { objectName: "joystick" } }
     Component { id: guiComponent; GuiSettingsView { objectName: "gui" } }

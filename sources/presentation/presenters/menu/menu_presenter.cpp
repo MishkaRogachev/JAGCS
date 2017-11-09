@@ -7,9 +7,9 @@
 // Internal
 //#include "vehicles_presenter.h"
 //#include "communication_settings_presenter.h"
-
-//#include "data_base_presenter.h"
 //#include "video_settings_presenter.h"
+
+#include "database_presenter.h"
 //#include "map_settings_presenter.h"
 //#include "joystick_settings_presenter.h"
 //#include "gui_settings_presenter.h"
@@ -46,7 +46,7 @@ void MenuPresenter::onRequestPresenter(const QString& view)
         d->presenter = nullptr;
     }
 
-//    if (view == "dataBase") d->presenter = new DataBasePresenter(this);
+    if (view == "database") d->presenter = new DatabasePresenter(this);
 //    else if (view == "communications") d->presenter = new CommunicationSettingsPresenter(this);
 //    else if (view == "vehicles") d->presenter = new VehiclesPresenter(this);
 //    else if (view == "video") d->presenter = new VideoSettingsPresenter(this);
@@ -54,7 +54,7 @@ void MenuPresenter::onRequestPresenter(const QString& view)
 //    else if (view == "joystick") d->presenter = new JoystickSettingsPresenter(this);
 //    else if (view == "gui") d->presenter = new GuiSettingsPresenter(this);
 //    else if (view == "network") d->presenter = new NetworkSettingsPresenter(this);
-    if (view == "about") d->presenter = new AboutPresenter(this);
+    else if (view == "about") d->presenter = new AboutPresenter(this);
     else return;
 
     d->presenter->setView(this->view()->findChild<QObject*>(view));
