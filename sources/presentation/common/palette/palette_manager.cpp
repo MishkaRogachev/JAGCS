@@ -52,6 +52,7 @@ void PaletteManager::reloadPalette()
 
     palette.setHighlightColor("#1effb4");
     palette.setSelectionColor("#1ce9a5");
+    palette.setLinkColor("#64adf6");
 
     palette.setDangerColor("#e53535");
     palette.setCautionColor("#ff9800");

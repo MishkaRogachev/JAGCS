@@ -4,8 +4,8 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: planeMark
 
-    property int pitch: 0
-    property int roll: 0
+    property real pitch: 0.0
+    property real roll: 0.0
     property int effectiveHeight: height
 
     property color markColor: palette.activeMissionColor
@@ -13,12 +13,17 @@ Item {
 
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
-    onRollChanged: canvas.requestPaint()
-    onPitchChanged: canvas.requestPaint()
+    onMarkColorChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
-        anchors.fill: parent
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: effectiveHeight / 2 - Helper.mapToRange(
+                                          -pitch, minPitch, maxPitch, effectiveHeight)
+        width: parent.width
+        height: parent.height
+        rotation: -roll
+
         onPaint: {
             var ctx = canvas.getContext('2d');
 
@@ -34,8 +39,6 @@ Item {
             ctx.beginPath();
 
             ctx.translate(width / 2, height / 2);
-            ctx.rotate(-roll * Math.PI / 180);
-            ctx.translate(0, offset - effectiveHeight / 2);
 
             ctx.moveTo(-width / 2, 0);
             ctx.lineTo(-width / 4, 0);
