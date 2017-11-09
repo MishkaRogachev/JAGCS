@@ -64,25 +64,35 @@ GridLayout {
         Layout.fillHeight: true
         Layout.columnSpan: 2
 
-        ColumnLayout {
+        Flickable {
             anchors.fill: parent
-            spacing: palette.spacing
+            contentHeight: column.height
+            flickableDirection: Flickable.VerticalFlick
+            clip: true
 
-            Controls.Label {
-                text: qsTr("No records")
-                horizontalAlignment: Qt.AlignHCenter
-                visible: log.length == 0
-                Layout.fillWidth: true
-            }
+            Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-            Repeater {
-                model: log
+            ColumnLayout {
+                id:column
+                width: parent.width
+                spacing: palette.spacing
 
                 Controls.Label {
-                    text: modelData
+                    text: qsTr("No records")
                     horizontalAlignment: Qt.AlignHCenter
-                    wrapMode: Text.WordWrap
+                    visible: log.length == 0
                     Layout.fillWidth: true
+                }
+
+                Repeater {
+                    model: log
+
+                    Controls.Label {
+                        text: modelData
+                        horizontalAlignment: Qt.AlignHCenter
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
                 }
             }
         }

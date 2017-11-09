@@ -6,7 +6,7 @@ import "qrc:/Controls" as Controls
 GridLayout {
     id: grid
 
-    property int preferredWidth: palette.controlBaseSize * 17
+    property int preferredWidth: palette.controlBaseSize * 16
 
     property string version: qsTr("(undefined version)")
     property string revision: qsTr("Undefined")
@@ -67,5 +67,9 @@ GridLayout {
         Layout.columnSpan: 2
         wrapMode: Text.WordWrap
         Layout.maximumWidth: root.width - palette.margins * 2
+    }
+
+    Item {
+        Layout.fillHeight: true
     }
 }
