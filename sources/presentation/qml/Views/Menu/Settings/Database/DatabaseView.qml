@@ -25,7 +25,6 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("Data base:")
-        Layout.fillWidth: true
     }
 
     Controls.ComboBox {
@@ -36,7 +35,6 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("SQLite data base file:")
-        Layout.fillWidth: true
     }
 
     Controls.TextField {
@@ -48,12 +46,11 @@ GridLayout {
 
     Controls.Label {
         text: qsTr("Migration:")
-        Layout.fillWidth: true
     }
 
     Controls.Label {
         id: migrationLabel
-        Layout.fillWidth: true
+        text: qsTr("Migration not specified")
     }
 
     Controls.Frame {
@@ -121,18 +118,22 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Button {
-        text: qsTr("Migrate")
-        iconSource: "qrc:/icons/right.svg"
-        onClicked: migrate()
-        Layout.fillWidth: true
-    }
+    RowLayout {
+        Layout.columnSpan: 2
 
-    Controls.Button {
-        text: connected ? qsTr("Reconnect") : qsTr("Connect")
-        iconSource: "qrc:/icons/connect.svg"
-        onClicked: tryConnect()
-        enabled: !changed
-        Layout.fillWidth: true
+        Controls.Button {
+            text: qsTr("Migrate")
+            iconSource: "qrc:/icons/right.svg"
+            onClicked: migrate()
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: connected ? qsTr("Reconnect") : qsTr("Connect")
+            iconSource: "qrc:/icons/connect.svg"
+            onClicked: tryConnect()
+            enabled: !changed
+            Layout.fillWidth: true
+        }
     }
 }

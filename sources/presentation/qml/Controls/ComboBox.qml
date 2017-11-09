@@ -7,6 +7,7 @@ import "../Shaders" as Shaders
 T.ComboBox {
     id: control
 
+    // TODO: fix dynamic width calculation
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
     property string tipText
 

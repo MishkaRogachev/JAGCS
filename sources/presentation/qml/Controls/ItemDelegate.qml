@@ -8,6 +8,7 @@ T.ItemDelegate {
     property alias iconSource: content.iconSource
 
     font.pixelSize: palette.fontPixelSize
+    implicitWidth: content.implicitWidth
     implicitHeight: palette.controlBaseSize
 
     contentItem: RowLayout {
@@ -16,7 +17,7 @@ T.ItemDelegate {
             font: control.font
             text: control.text
             textColor: control.highlighted ? palette.selectedTextColor : palette.textColor
-            Layout.margins: palette.padding
+            Layout.leftMargin: palette.padding
         }
 
         Item { Layout.fillWidth: true }

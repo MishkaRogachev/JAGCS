@@ -12,7 +12,7 @@ Item {
     property alias horizontalAlignment: label.horizontalAlignment
 
     clip: true
-    implicitWidth: (icon.visible ? icon.width + row.spacing : 0) + label.width
+    implicitWidth: (icon.visible ? icon.width + row.spacing : 0) + label.implicitWidth
     implicitHeight: row.implicitHeight
 
     Row {
