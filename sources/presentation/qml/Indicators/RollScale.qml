@@ -4,14 +4,17 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: rollScale
 
-    property int roll: 0
-    property int minRoll: -25
-    property int maxRoll: 25
-    property int rollStep: 5
+    property real roll: 0.0
+    property real minRoll: -25.0
+    property real maxRoll: 25.0
+    property real rollStep: 5.0
     property color color: palette.textColor
     property int fontPixelSize: height > 0 ? height * 0.1 : 1
 
     onRollChanged: canvas.requestPaint()
+    onMinRollChanged: canvas.requestPaint()
+    onMaxRollChanged: canvas.requestPaint()
+    onRollStepChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
@@ -57,7 +60,7 @@ Item {
                        -height / 2 + fontPixelSize / 2);
 
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
-            ctx.fillText(Math.abs(roll), 0, -height / 2 + fontPixelSize);
+            ctx.fillText(Math.round(roll), 0, -height / 2 + fontPixelSize);
 
             ctx.restore();
 

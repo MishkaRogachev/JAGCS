@@ -6,9 +6,9 @@ import "../Shaders" as Shaders
 Item {
     id: pitchScale
 
-    property int roll: 0
-    property int minPitch: -25
-    property int maxPitch: 25
+    property real roll: 0.0
+    property real minPitch: -25.0
+    property real maxPitch: 25.0
     property int pitchStep: 10
     property color color: palette.textColor
     property int fontPixelSize: Math.max(height * 0.1, 9)
@@ -43,8 +43,8 @@ Item {
             ctx.beginPath();
 
             var counter = 0;
-            for (var pitch = minPitch - (minPitch % pitchStep); pitch <= maxPitch;
-                 pitch += (pitchStep / 2)) {
+            for (var pitch = minPitch - (minPitch % (pitchStep * 2)); pitch <= maxPitch;
+                 pitch += pitchStep) {
                 var major = (counter++ % 2) == 0;
                 if (pitch == 0) continue;
 

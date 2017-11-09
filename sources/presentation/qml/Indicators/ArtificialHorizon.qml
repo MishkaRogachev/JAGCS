@@ -18,7 +18,7 @@ Item {
 
     property real minPitch: -maxPitch
     property real maxPitch: 23
-    property real pitchStep: 10
+    property real pitchStep: 5
     property real minRoll: -maxRoll
     property real maxRoll: width > height ? 90 : 90 - (180 * Math.acos(width / height) / Math.PI)
     property real rollStep: 10
@@ -29,6 +29,12 @@ Item {
 
     property alias markWidth: mark.markWidth
     property real ratio: height / width
+
+    Behavior on pitch { PropertyAnimation { duration: 100 } }
+    Behavior on roll { PropertyAnimation { duration: 100 } }
+    Behavior on yawspeed { PropertyAnimation { duration: 100 } }
+    Behavior on desiredPitch { PropertyAnimation { duration: 100 } }
+    Behavior on desiredRoll { PropertyAnimation { duration: 100 } }
 
     clip: true
     implicitHeight: width

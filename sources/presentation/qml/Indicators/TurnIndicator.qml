@@ -4,8 +4,8 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: root
 
-    property real value: 0
-    property real border: 180
+    property real value: 0.0
+    property real border: 180.0
 
     onValueChanged: canvas.requestPaint()
     onBorderChanged: canvas.requestPaint()

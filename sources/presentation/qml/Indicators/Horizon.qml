@@ -4,8 +4,8 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: root
 
-    property int pitch: 0
-    property int roll: 0
+    property real pitch: 0.0
+    property real roll: 0.0
     property int effectiveHeight: height
 
     Rectangle {
