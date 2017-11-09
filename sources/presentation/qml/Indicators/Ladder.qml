@@ -48,20 +48,17 @@ Item {
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.textAlign = mirrored ? 'left' : 'right';
             ctx.textBaseline = 'middle';
-            
+
+            // Vertical line
             ctx.save();
-            ctx.translate(mirrored ? 2 : width - 2, 0);
             ctx.lineWidth = 2;
+            ctx.translate(mirrored ? ctx.lineWidth : width - ctx.lineWidth, 0);
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(0, height);
-
-            ctx.moveTo(0, 2);
-            ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, 2);
-            ctx.moveTo(0, height - 2);
-            ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height - 2);
             ctx.stroke();
 
+            // Ticks
             var counter = 0;
             for (var i = minValue - (minValue % valueStep); i <= maxValue;
                  i += (valueStep / 2)) {
@@ -79,18 +76,20 @@ Item {
                 if (major) ctx.fillText(i, mirrored ? 2 + textOrigin : -2 - textOrigin, pos);
             }
 
+            // Clear rect for current value
             var markHeight = label.height;
             ctx.clearRect(mirrored ? 1 : -1, height / 2 - markHeight / 2,
                           mirrored ? width : -width, markHeight);
 
+            // Arrow for current value
             ctx.lineWidth = 2;
-
             ctx.beginPath();
             ctx.moveTo(mirrored ? majorTickSize : -majorTickSize, height / 2 - markHeight / 2);
             ctx.lineTo(mirrored ? 2 : -2, height / 2);
             ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
             ctx.stroke();
 
+            // Error mark
             if (error) {
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = palette.activeMissionColor;
