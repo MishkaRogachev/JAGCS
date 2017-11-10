@@ -1,0 +1,2 @@
+#!/bin/bash
+chmod 777 /usr/local/bin/jagcs.sh

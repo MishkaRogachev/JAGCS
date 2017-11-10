@@ -182,7 +182,7 @@ endif()
 option(WITH_DEBIAN "Include instructions to make Debian package")
 if (WITH_DEBIAN)
     # https://cmake.org/Bug/view.php?id=14444
-    install(TARGETS ${PROJECT} DESTINATION "/usr/bin")
+    install(TARGETS ${PROJECT} DESTINATION "/usr/local/bin/")
 
     add_subdirectory(platforms/debian)
 endif (WITH_DEBIAN)
