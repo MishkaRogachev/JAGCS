@@ -1,4 +1,4 @@
-#include "unified_presenter.h"
+#include "main_presenter.h"
 
 // Qt
 #include <QDebug>
@@ -9,14 +9,14 @@
 
 using namespace presentation;
 
-class UnifiedPresenter::Impl
+class MainPresenter::Impl
 {
 public:
     TopbarPresenter* topbar;
     MenuPresenter* menu;
 };
 
-UnifiedPresenter::UnifiedPresenter(QObject* parent):
+MainPresenter::MainPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
@@ -24,10 +24,10 @@ UnifiedPresenter::UnifiedPresenter(QObject* parent):
     d->menu = new MenuPresenter(this);
 }
 
-UnifiedPresenter::~UnifiedPresenter()
+MainPresenter::~MainPresenter()
 {}
 
-void UnifiedPresenter::connectView(QObject* view)
+void MainPresenter::connectView(QObject* view)
 {
     d->topbar->setView(view->findChild<QObject*>(NAME(topbar)));
     d->menu->setView(view->findChild<QObject*>(NAME(menu)));

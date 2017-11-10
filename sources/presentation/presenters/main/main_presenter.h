@@ -1,17 +1,17 @@
-#ifndef UNIFIED_PRESENTER_H
-#define UNIFIED_PRESENTER_H
+#ifndef MAIN_PRESENTER_H
+#define MAIN_PRESENTER_H
 
 #include "base_presenter.h"
 
 namespace presentation
 {
-    class UnifiedPresenter: public BasePresenter
+    class MainPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit UnifiedPresenter(QObject* parent = nullptr);
-        ~UnifiedPresenter() override;
+        explicit MainPresenter(QObject* parent = nullptr);
+        ~MainPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
@@ -22,4 +22,4 @@ namespace presentation
     };
 }
 
-#endif // UNIFIED_PRESENTER_H
+#endif // MAIN_PRESENTER_H

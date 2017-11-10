@@ -59,19 +59,6 @@
         <file>Views/Logbook/LogbookView.qml</file>
         <file>Views/Logbook/LogList.qml</file>
         <file>Views/Logbook/LogEntry.qml</file>
-        <file>Views/Video/VideoView.qml</file>
-        <file>Views/Video/VideoSplitView.qml</file>
-        <file>Views/Map/MapView.qml</file>
-        <file>Views/Map/MapControl.qml</file>
-        <file>Views/Map/MapPicker.qml</file>
-        <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/MissionLineMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/MissionPointMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/RadiusMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/AcceptanceRadiusMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Control/ControlView.qml</file>
         <file>Views/Control/DashboardView.qml</file>
         <file>Views/Control/Command/CommandButton.qml</file>
@@ -95,8 +82,22 @@
         <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
         <file>Views/Settings/Video/VideoSettingsView.qml</file>
         <file>Views/Settings/Video/VideoSourceView.qml</file>
-        <file>Views/UnifiedView.qml</file>
+        
+        <file>Views/MainView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
+        <file>Views/Video/VideoView.qml</file>
+        <file>Views/Video/VideoSplitView.qml</file>
+        <file>Views/Map/MapView.qml</file>
+        <file>Views/Map/MapControl.qml</file>
+        <file>Views/Map/MapPicker.qml</file>
+        <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/MissionLineMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/MissionPointMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/RadiusMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/AcceptanceRadiusMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
+        <file>Views/Map/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>

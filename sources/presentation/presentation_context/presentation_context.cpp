@@ -79,7 +79,7 @@ QQmlContext* PresentationContext::rootContext()
 
 void PresentationContext::load()
 {
-    instance()->m_view->setSource(QUrl("qrc:/Views/UnifiedView.qml"));
+    instance()->m_view->setSource(QUrl("qrc:/Views/MainView.qml"));
 
     // TODO: wait objectCreated
 }

@@ -8,7 +8,7 @@ import "Video"
 import "Menu"
 
 Rectangle {
-    id: unified
+    id: main
 
     property bool cornerMap: false
     property bool cornerVisible: false
