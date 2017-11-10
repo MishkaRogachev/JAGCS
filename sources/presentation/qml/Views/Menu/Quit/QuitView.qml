@@ -6,13 +6,13 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: root
 
-    implicitWidth: palette.controlBaseSize * 7
     spacing: palette.spacing
 
     Controls.Button {
         text: qsTr("Quit")
         iconSource: "qrc:/icons/quit.svg"
         onClicked: Qt.quit()
+        Layout.preferredWidth: palette.controlBaseSize * 7
         Layout.fillWidth: true
     }
 }
