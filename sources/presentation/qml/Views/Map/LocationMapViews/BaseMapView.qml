@@ -24,46 +24,14 @@ Map {
 
     property bool trackingVehicle: false
 
-    property int mapPlugin: settings.value("Map/plugin")
-
     signal picked(var coordinate)
 
-    Plugin {
-        id: osm
-        name: "osm"
-
-        PluginParameter { name: "osm.useragent"; value: "JAGCS" }
-        PluginParameter { name: "osm.mapping.custom.host"; value: "http://a.tile.openstreetmap.org/" }
-        PluginParameter { name: "osm.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
-        PluginParameter { name: "osm.mapping.highdpi_tiles"; value: settings.boolValue("Map/highdpiTiles", true) }
-    }
-
-    Plugin {
-        id: mapBoxGl
-        name: "mapboxgl"
-
-        PluginParameter { name: "mapboxgl.mapping.cache.size"; value: settings.value("Map/cacheSize", 0) }
-    }
-
-    Plugin {
-        id: esri
-        name: "esri"
-
-        PluginParameter { name: "esri.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
-    }
-
-    plugin: {
-        switch (mapPlugin) {
-        case 0: return osm;
-        case 1: return mapBoxGl;
-        case 2: return esri;
-        }
-    }
     implicitHeight: width
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     gesture.preventStealing: true
     copyrightsVisible: false
+    objectName: "map"
 
     MissionLineMapOverlayView { model: missionLinesVisible ? lineModel : 0 }
     RadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
@@ -94,18 +62,6 @@ Map {
         zoomLevel = settings.value("Map/zoomLevel");
         bearing = settings.value("Map/bearing");
         tilt = settings.value("Map/tilt");
-
-        switch (mapPlugin) {
-        case 0:
-            activeMapType = supportedMapTypes[settings.value("Map/osmActiveMapType")];
-            break;
-        case 1:
-            activeMapType = supportedMapTypes[settings.value("Map/mapBoxGlActiveMapType")];
-            break;
-        case 2:
-            activeMapType = supportedMapTypes[settings.value("Map/esriActiveMapType")];
-            break;
-        }
 
         setGesturesEnabled(true);
     }

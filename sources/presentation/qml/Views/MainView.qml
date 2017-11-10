@@ -4,7 +4,6 @@ import "../Controls" as Controls
 
 import "Topbar"
 import "Map"
-import "Map/LocationMapViews"
 import "Video"
 import "Menu"
 
@@ -28,7 +27,7 @@ Rectangle {
         id: substrate
         anchors.fill: parent
         anchors.topMargin: topbar.height
-        sourceComponent: cornerMap ? videoComponent : mapComponent;
+        sourceComponent: cornerMap ? videoComponent : mapFactory.create()
     }
 
     MapControl { // TODO: to ToolsPanel
@@ -57,7 +56,7 @@ Rectangle {
         anchors.right: tools.left
         anchors.margins: palette.margins
         width: Math.min(parent.width / 3, parent.height / 3)
-        sourceComponent: cornerMap ? mapComponent : videoComponent;
+        sourceComponent: cornerMap ? mapFactory.create() : videoComponent
         visible: cornerVisible
         z: 1
     }
@@ -100,6 +99,6 @@ Rectangle {
         onClicked: menuSwipeable.isOpened ? menuSwipeable.close() : menuSwipeable.open()
     }
 
-    Component { id: mapComponent; MapBoxGlMapView { objectName: "map" } }
+    MapFactory { id: mapFactory }
     Component { id: videoComponent; VideoView { objectName: "video" } }
 }

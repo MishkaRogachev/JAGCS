@@ -1,28 +1,20 @@
 import QtQuick 2.6
-import QtQuick.Layouts 1.3
 
-import "qrc:/Controls" as Controls
+import "LocationMapViews"
 
-ColumnLayout {
-    id: root
+Item { // TODO: to builder QtObject
+    id: factory
 
-    spacing: palette.spacing
-
-    RotationAnimation {
-        id: bearingAnimation
-        target: map
-        properties: "bearing"
-        to: 0
-        duration: 200
-        direction: RotationAnimation.Shortest
+    function create() {
+        switch (parseInt(settings.value("Map/plugin"))) {
+        case 0: return osm;
+        case 1: return mapBoxGl;
+        case 2: return esri;
+        default: return null;
+        }
     }
 
-    z: 10000
-
-    Controls.Button {
-        tipText: qsTr("North")
-        iconSource: "qrc:/icons/compas.svg"
-        onClicked: bearingAnimation.start()
-        enabled: !map.trackingVehicle
-    }
+    Component { id: osm; OsmMapView {} }
+    Component { id: mapBoxGl; MapBoxGlMapView {} }
+    Component { id: esri; EsriMapView {} }
 }
