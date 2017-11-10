@@ -178,14 +178,12 @@ if(ANDROID)
 )
 endif()
 
-# Install instructions
-install(TARGETS ${PROJECT} DESTINATION "/usr/bin")
-install(FILES "debian/jagcs.desktop" DESTINATION "/usr/share/applications/")
-install(FILES "resources/icons/jagcs.svg" DESTINATION "/usr/share/icons/")
-
 # CPack Debian package
 option(WITH_DEBIAN "Include instructions to make Debian package")
 if (WITH_DEBIAN)
+    # https://cmake.org/Bug/view.php?id=14444
+    install(TARGETS ${PROJECT} DESTINATION "/usr/local/bin/")
+
     add_subdirectory(platforms/debian)
 endif (WITH_DEBIAN)
 
