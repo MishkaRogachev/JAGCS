@@ -12,7 +12,6 @@ Rectangle {
 
     property bool cornerMap: false
     property bool cornerVisible: false
-    property int cornerWidth: Math.min(width / 3, height / 3)
 
     color: palette.backgroundColor
 
@@ -24,44 +23,18 @@ Rectangle {
         anchors.top: parent.top
     }
 
-    MapView {
-        id: map
-        objectName: "map"
-        z: cornerMap
-        anchors.bottom: parent.bottom
-        anchors.right: cornerMap ? tools.left : parent.right
-        anchors.margins: cornerMap ? palette.margins : 0
-        width: cornerMap ? cornerWidth : parent.width
-        height: cornerMap ? implicitHeight : parent.height
-        visible: cornerMap && cornerVisible || !cornerMap
-
-        Behavior on x { PropertyAnimation { duration: 100 } }
-        Behavior on y { PropertyAnimation { duration: 100 } }
-        Behavior on width { PropertyAnimation { duration: 100 } }
-        Behavior on height { PropertyAnimation { duration: 100 } }
-    }
-
-    VideoSplitView {
-        id: video
-        objectName: "video"
-        anchors.bottom: parent.bottom
-        anchors.right: cornerMap ? parent.right : tools.left
-        anchors.margins: cornerMap ? 0 : palette.margins
-        width: cornerMap ? parent.width : cornerWidth
-        height: cornerMap ? parent.height : implicitHeight
-        visible: !cornerMap && cornerVisible || cornerMap
-
-        Behavior on x { PropertyAnimation { duration: 100 } }
-        Behavior on y { PropertyAnimation { duration: 100 } }
-        Behavior on width { PropertyAnimation { duration: 100 } }
-        Behavior on height { PropertyAnimation { duration: 100 } }
+    Loader {
+        id: substrate
+        anchors.fill: parent
+        anchors.topMargin: topbar.height
+        sourceComponent: cornerMap ? videoComponent : mapComponent;
     }
 
     MapControl { // TODO: to ToolsPanel
         id: tools
+        anchors.right: menuSwipeable.left
         anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.margins: palette.margins
+        anchors.bottomMargin: palette.margins
 
         Controls.Button {
             tipText: cornerMap ? qsTr("Map") : qsTr("Video")
@@ -75,6 +48,17 @@ Rectangle {
             iconSource: cornerVisible ? "qrc:/icons/minimize.svg" : "qrc:/icons/maximize.svg"
             onClicked: cornerVisible = !cornerVisible
         }
+    }
+
+    Loader {
+        id: corner
+        anchors.bottom: parent.bottom
+        anchors.right: tools.left
+        anchors.margins: palette.margins
+        width: Math.min(parent.width / 3, parent.height / 3)
+        sourceComponent: cornerMap ? mapComponent : videoComponent;
+        visible: cornerVisible
+        z: 1
     }
 
     Controls.Swipeable {
@@ -114,4 +98,7 @@ Rectangle {
         highlighted: menuSwipeable.isOpened
         onClicked: menuSwipeable.isOpened ? menuSwipeable.close() : menuSwipeable.open()
     }
+
+    Component { id: mapComponent; MapView { objectName: "map" } }
+    Component { id: videoComponent; VideoView { objectName: "video" } }
 }
