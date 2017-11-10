@@ -82,22 +82,24 @@
         <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
         <file>Views/Settings/Video/VideoSettingsView.qml</file>
         <file>Views/Settings/Video/VideoSourceView.qml</file>
-        
         <file>Views/MainView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/VideoSplitView.qml</file>
-        <file>Views/Map/MapView.qml</file>
         <file>Views/Map/MapControl.qml</file>
         <file>Views/Map/MapPicker.qml</file>
-        <file>Views/Map/Overlays/VehicleMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/MissionLineMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/MissionPointMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/RadiusMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/AcceptanceRadiusMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/TrackMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/HdopRadiusMapOverlayView.qml</file>
-        <file>Views/Map/Overlays/TargetPointOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/BaseMapView.qml</file>
+        <file>Views/Map/LocationMapViews/OsmMapView.qml</file>
+        <file>Views/Map/LocationMapViews/MapBoxGlMapView.qml</file>
+        <file>Views/Map/LocationMapViews/EsriMapView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/VehicleMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/MissionLineMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/MissionPointMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/RadiusMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/AcceptanceRadiusMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/TrackMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
+        <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>

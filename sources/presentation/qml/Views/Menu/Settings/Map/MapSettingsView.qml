@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
-import "../../../Map"
+import "../../../Map/LocationMapViews"
 
 ColumnLayout {
     id: root
@@ -153,7 +153,7 @@ ColumnLayout {
         Component {
             id: mapComponent
 
-            MapView {
+            MapBoxGlMapView {
                 id: map
                 Component.onCompleted: {
                     var types = new Array(0);

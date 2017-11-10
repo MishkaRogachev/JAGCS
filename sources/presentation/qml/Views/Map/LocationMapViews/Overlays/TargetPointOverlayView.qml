@@ -4,7 +4,7 @@ import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Control
-import "../../Common"
+import "qrc:/Views/Common"
 
 MapItemView {
     id: root

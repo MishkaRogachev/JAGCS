@@ -4,6 +4,7 @@ import "../Controls" as Controls
 
 import "Topbar"
 import "Map"
+import "Map/LocationMapViews"
 import "Video"
 import "Menu"
 
@@ -99,6 +100,6 @@ Rectangle {
         onClicked: menuSwipeable.isOpened ? menuSwipeable.close() : menuSwipeable.open()
     }
 
-    Component { id: mapComponent; MapView { objectName: "map" } }
+    Component { id: mapComponent; MapBoxGlMapView { objectName: "map" } }
     Component { id: videoComponent; VideoView { objectName: "video" } }
 }
