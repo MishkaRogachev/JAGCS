@@ -5,7 +5,7 @@ import QtPositioning 5.6
 import "Overlays"
 
 Map {
-    id: root
+    id: map
 
     property var lineModel
     property var pointModel
@@ -64,37 +64,14 @@ Map {
     gesture.preventStealing: true
     copyrightsVisible: false
 
-    MissionLineMapOverlayView {
-        model: missionLinesVisible ? lineModel : 0
-    }
-
-    RadiusMapOverlayView {
-        model: missionPointsVisible ? pointModel : 0
-    }
-
-    AcceptanceRadiusMapOverlayView {
-        model: missionPointsVisible ? pointModel : 0
-    }
-
-    MissionPointMapOverlayView {
-        model: missionPointsVisible ? pointModel : 0
-    }
-
-    TargetPointOverlayView {
-        model: vehicleVisible ? vehicleModel : 0
-    }
-
-    VehicleMapOverlayView {
-        model: vehicleVisible ? vehicleModel : 0
-    }
-
-    TrackMapOverlayView {
-        model: trackVisible ? vehicleModel : 0
-    }
-
-    HdopRadiusMapOverlayView {
-        model: hdopVisible ? vehicleModel : 0
-    }
+    MissionLineMapOverlayView { model: missionLinesVisible ? lineModel : 0 }
+    RadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
+    AcceptanceRadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
+    MissionPointMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
+    TargetPointOverlayView { model: vehicleVisible ? vehicleModel : 0 }
+    VehicleMapOverlayView { model: vehicleVisible ? vehicleModel : 0 }
+    TrackMapOverlayView { model: trackVisible ? vehicleModel : 0 }
+    HdopRadiusMapOverlayView { model: hdopVisible ? vehicleModel : 0 }
 
     MapPicker {
         id: picker
@@ -106,7 +83,7 @@ Map {
         anchors.fill: parent
         hoverEnabled: true
         enabled: picking
-        onClicked: root.picked(root.toCoordinate(Qt.point(mouseX, mouseY)));
+        onClicked: map.picked(map.toCoordinate(Qt.point(mouseX, mouseY)));
         cursorShape: picking ? Qt.CrossCursor : Qt.ArrowCursor
     }
 
@@ -115,6 +92,7 @@ Map {
                                           settings.value("Map/centerLongitude"));
         zoomLevel = settings.value("Map/zoomLevel");
         bearing = settings.value("Map/bearing");
+        tilt = settings.value("Map/tilt");
 
         switch (mapPlugin) {
         case 0:
@@ -127,6 +105,8 @@ Map {
             activeMapType = supportedMapTypes[settings.value("Map/esriActiveMapType")];
             break;
         }
+
+        setGesturesEnabled(true);
     }
 
     Component.onDestruction: if (visible) saveViewport()
@@ -140,12 +120,17 @@ Map {
         settings.setValue("Map/centerLongitude", center.longitude);
         settings.setValue("Map/zoomLevel", zoomLevel);
         settings.setValue("Map/bearing", bearing);
+        settings.setValue("Map/tilt", tilt);
     }
 
     function setGesturesEnabled(enabled) {
-        gesture.acceptedGestures = enabled ?
-                    (MapGestureArea.PinchGesture | MapGestureArea.PanGesture |
-                     MapGestureArea.FlickGesture | MapGestureArea.RotationGesture) :
-                    MapGestureArea.PinchGesture
+        gesture.acceptedGestures = enabled ? (MapGestureArea.PinchGesture |
+                                              MapGestureArea.PanGesture |
+                                              MapGestureArea.FlickGesture |
+                                              MapGestureArea.RotationGesture |
+                                              MapGestureArea.TiltGesture)
+                                           :
+                                             MapGestureArea.PinchGesture |
+                                             MapGestureArea.TiltGesture
     }
 }

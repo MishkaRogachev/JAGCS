@@ -35,6 +35,7 @@ namespace settings
         const QString centerLatitude = "Map/centerLatitude";
         const QString centerLongitude = "Map/centerLongitude";
         const QString bearing = "Map/bearing";
+        const QString tilt = "Map/tilt";
         const QString plugin = "Map/plugin";
         const QString osmActiveMapType = "Map/osmActiveMapType";
         const QString mapBoxGlActiveMapType = "Map/mapBoxGlActiveMapType";
