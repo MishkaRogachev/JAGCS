@@ -1,6 +1,10 @@
 # CMake version string
 cmake_minimum_required(VERSION 3.0)
 
+# Install debian instructions
+install(FILES "jagcs.desktop" DESTINATION "/usr/share/applications/")
+install(FILES "../../resources/icons/jagcs.svg" DESTINATION "/usr/share/icons/")
+
 # CPack generator type
 set(CPACK_GENERATOR "DEB")
 
