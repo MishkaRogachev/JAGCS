@@ -27,7 +27,7 @@ Controls.Frame {
         currentLabel.text = text;
     }
 
-    function backOut(index){
+    function backOut(index) {
         loader.sourceComponent = pathModel.get(index).component;
         currentLabel.text = pathModel.get(index).text;
 

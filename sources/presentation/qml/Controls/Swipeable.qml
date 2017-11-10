@@ -30,10 +30,12 @@ Item {
         property int lastX: 0
 
         anchors.fill: parent
+        anchors.rightMargin: swipeToRight ? 0 : -widthOfSeizure
+        anchors.leftMargin: swipeToRight ? -widthOfSeizure : 0
         drag.target: parent
         drag.axis: Drag.XAxis
-        drag.minimumX: swipeToRight ? dragStartX - width + widthOfSeizure : dragStartX
-        drag.maximumX: swipeToRight ? dragStartX : dragStartX + width - widthOfSeizure
+        drag.minimumX: swipeToRight ? dragStartX - parent.width : dragStartX
+        drag.maximumX: swipeToRight ? dragStartX : dragStartX + parent.width
 
         onPressed: lastX = parent.x
         onReleased: {
@@ -49,7 +51,7 @@ Item {
     Rectangle {
         color: palette.highlightColor
         opacity: dragArea.pressed ? 0.5 : 0.0
-        anchors.fill: parent
+        anchors.fill: dragArea
 
         Behavior on opacity { PropertyAnimation { duration: 200 } }
     }

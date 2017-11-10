@@ -34,7 +34,7 @@ Rectangle {
         id: tools
         anchors.right: menuSwipeable.left
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: palette.margins
+        anchors.margins: palette.margins
 
         Controls.Button {
             tipText: cornerMap ? qsTr("Map") : qsTr("Video")
@@ -64,10 +64,10 @@ Rectangle {
     Controls.Swipeable {
         id: menuSwipeable
         swipeToRight: true
-        dragStartX: parent.width - widthOfSeizure
+        dragStartX: parent.width
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        width: menu.width + widthOfSeizure
+        width: menu.width
 
         MenuView {
             id: menu
@@ -75,7 +75,6 @@ Rectangle {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            anchors.leftMargin: menuSwipeable.widthOfSeizure
         }
 
         Behavior on x {
