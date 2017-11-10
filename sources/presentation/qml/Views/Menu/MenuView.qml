@@ -17,38 +17,22 @@ Controls.Frame {
 
     function home() {
         loader.sourceComponent = topMenuComponent;
-        loader.path = [];
-        menuLabel.path = [];
-
-        updatePath();
-    }
-
-    function back() {
-        if (loader.path.length < 1) return;
-
-        loader.sourceComponent = loader.path.pop();
-        menuLabel.path.pop();
-
-        updatePath();
+        currentLabel.text = "";
+        pathModel.clear();
     }
 
     function deepIn(component, text) {
-        loader.path.push(loader.sourceComponent);
         loader.sourceComponent = component;
-        menuLabel.path.push(text);
-
-        updatePath();
+        pathModel.append({ "component": component, "text": text });
+        currentLabel.text = text;
     }
 
-    function updatePath() {
-        menuLabel.text = menuLabel.path.join(", ");
+    function backOut(index){
+        loader.sourceComponent = pathModel.get(index).component;
+        currentLabel.text = pathModel.get(index).text;
 
-        backButton.enabled = loader.path.length > 0;
-        if (menuLabel.path.length > 1) {
-            backButton.tipText = qsTr("Back to ") + menuLabel.path[menuLabel.path.length - 2];
-        }
-        else {
-            backButton.tipText = qsTr("Back to home");
+        if (index + 1 < pathModel.count) {
+            pathModel.remove(index + 1, pathModel.count - index - 1);
         }
     }
 
@@ -70,19 +54,20 @@ Controls.Frame {
                 onClicked: home()
             }
 
-            Controls.Button {
-                id: backButton
-                iconSource: "qrc:/icons/left.svg"
-                flat: true
-                onClicked: back()
+            Repeater {
+                model: ListModel { id: pathModel }
+
+                Controls.Button {
+                    text: model.text
+                    font.bold: true
+                    flat: true
+                    visible: index + 1 < pathModel.count
+                    onClicked: backOut(index)
+                }
             }
 
             Controls.Label {
-                id: menuLabel
-
-                property var path: []
-
-                Layout.fillWidth: true
+                id: currentLabel
             }
         }
 
@@ -99,9 +84,6 @@ Controls.Frame {
 
             Loader {
                 id: loader
-
-                property var path: []
-
                 width: parent.width
                 onItemChanged: {
                     if (!item) return;
