@@ -37,6 +37,12 @@ void MainPresenter::connectView(QObject* view)
 {
     d->topbar->setView(view->findChild<QObject*>(NAME(topbar)));
     d->menu->setView(view->findChild<QObject*>(NAME(menu)));
-    d->map->setView(view->findChild<QObject*>(NAME(map)));
-    d->video->setView(view->findChild<QObject*>(NAME(video)));
+
+    d->map->setView(this->view()->findChild<QObject*>("map"));
+    connect(view, SIGNAL(requestPresenter(QString)), this, SLOT(onRequestPresenter(QString)));
+}
+
+void MainPresenter::onRequestPresenter(const QString& view)
+{
+    if (view == "map") d->map->setView(this->view()->findChild<QObject*>(view));
 }

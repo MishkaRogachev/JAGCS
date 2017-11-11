@@ -13,6 +13,8 @@ Rectangle {
     property bool cornerMap: false
     property bool cornerVisible: false
 
+    signal requestPresenter(string view)
+
     color: palette.backgroundColor
 
     TopbarView {
@@ -28,6 +30,7 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: topbar.height
         sourceComponent: cornerMap ? videoComponent : mapFactory.create()
+        onItemChanged: if (item) main.requestPresenter(item.objectName)
     }
 
     MapControl { // TODO: to ToolsPanel
@@ -57,6 +60,7 @@ Rectangle {
         anchors.margins: palette.margins
         width: Math.min(parent.width / 3, parent.height / 3)
         sourceComponent: cornerMap ? mapFactory.create() : videoComponent
+        onItemChanged: if (item) main.requestPresenter(item.objectName)
         visible: cornerVisible
         z: 1
     }

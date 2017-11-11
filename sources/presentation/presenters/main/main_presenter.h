@@ -16,6 +16,9 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
+    private slots:
+        void onRequestPresenter(const QString& view);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
