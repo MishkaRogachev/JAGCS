@@ -25,6 +25,7 @@ GridLayout {
     signal restore()
 
     Component.onCompleted: updateMapTypes()
+    onChangedChanged: if (!changed) main.reloadMap()
 
     Connections {
         target: main
@@ -62,7 +63,6 @@ GridLayout {
     Controls.ComboBox {
         id: activeMapTypeBox
         onActivated: {
-            console.log(plugin)
             switch (plugin) {
             case 0:
                 osmActiveMapType = currentIndex;
