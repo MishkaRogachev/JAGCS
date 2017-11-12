@@ -1,12 +1,14 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 import "../../../Map/LocationMapViews"
 
-ColumnLayout {
+GridLayout {
     id: root
+    columns: 2
+    rowSpacing: palette.spacing
+    columnSpacing: palette.spacing
 
     property int osmActiveMapType: -1
     property int mapBoxGlActiveMapType: -1
@@ -22,161 +24,117 @@ ColumnLayout {
     signal save()
     signal restore()
 
-    onOsmActiveMapTypeChanged: updateSelectedMapType()
-    onMapBoxGlActiveMapTypeChanged: updateSelectedMapType()
+    Component.onCompleted: updateMapTypes()
 
-    function updateSelectedMapType() {
-        switch (plugin) {
-        case 0:
-            activeMapTypeBox.currentIndex = osmActiveMapType;
-            break;
-        case 1:
-            activeMapTypeBox.currentIndex = mapBoxGlActiveMapType;
-            break;
-        case 2:
-            activeMapTypeBox.currentIndex = esriActiveMapType;
-            break;
-        }
+    Connections {
+        target: main
+        onMapChanged: updateMapTypes()
     }
 
-    Flickable {
+    function updateMapTypes() {
+        var types = new Array(0);
+        if (map) {
+            for (var i = 0; i < map.supportedMapTypes.length; ++i) {
+                types.push(map.supportedMapTypes[i].name);
+            }
+        }
+        activeMapTypeBox.model = types;
+    }
+
+    Controls.Label {
+        text: qsTr("Map provider")
         Layout.fillWidth: true
-        Layout.fillHeight: true
-        contentHeight: frame.height
-        clip: true
+    }
 
-        ScrollBar.vertical: Controls.ScrollBar {}
+    Controls.ComboBox {
+        id: pluginBox
+        model: [ "OSM", "Map Box", "Esri" ]
+        currentIndex: -1
+        onCurrentIndexChanged: changed = true
+        Layout.fillWidth: true
+    }
 
-        Controls.Frame {
-            id: frame
-            width: root.width
+    Controls.Label {
+        text: qsTr("Map type")
+        Layout.fillWidth: true
+    }
 
-            GridLayout {
-                width: parent.width
-                columns: 2
-                rowSpacing: palette.spacing
-                columnSpacing: palette.spacing
-
-                Controls.Label {
-                    text: qsTr("Map provider")
-                    Layout.fillWidth: true
-                }
-
-                Controls.ComboBox {
-                    id: pluginBox
-                    model: [ "OSM", "Map Box", "Esri" ]
-                    currentIndex: -1
-                    onCurrentIndexChanged: changed = true
-                    Layout.fillWidth: true
-                }
-
-                Controls.Label {
-                    text: qsTr("Map type")
-                    Layout.fillWidth: true
-                }
-
-                Controls.ComboBox {
-                    id: activeMapTypeBox
-                    model: []
-                    onModelChanged: updateSelectedMapType()
-                    onActivated: {
-                        switch (plugin) {
-                        case 0:
-                            osmActiveMapType = index;
-                            break;
-                        case 1:
-                            mapBoxGlActiveMapType = index;
-                            break;
-                        case 2:
-                            esriActiveMapType = index;
-                            break;
-                        }
-                        changed = true;
-                    }
-                    Layout.fillWidth: true
-                }
-
-                Controls.Label {
-                    text: qsTr("Cache size")
-                    Layout.fillWidth: true
-                }
-
-                Controls.SpinBox {
-                    id: cacheSizeBox
-                    Layout.fillWidth: true
-                    onValueChanged: changed = true;
-                    to: 2147483647 // TODO: to helper
-                }
-
-                Controls.Label {
-                    text: qsTr("High DPI tiles")
-                    Layout.fillWidth: true
-                }
-
-                Controls.CheckBox {
-                    id: highdpiTilesBox
-                    onCheckedChanged: changed = true
-                }
-
-                Controls.Label {
-                    text: qsTr("Track length")
-                    Layout.fillWidth: true
-                }
-
-                RowLayout {
-                    spacing: palette.spacing
-
-                    Controls.Slider {
-                        id: trackLengthSlider
-                        from: -1
-                        to: 1000
-                        Layout.fillWidth: true
-                        onPressedChanged: if (!pressed) changed = true
-                    }
-
-                    Controls.Label {
-                        Layout.preferredWidth: 86
-                        horizontalAlignment: Text.AlignHCenter
-                        text: trackLengthSlider.visualValue > -1 ?
-                                  trackLengthSlider.visualValue.toFixed(0) : qsTr("Infinite")
-                    }
-                }
+    Controls.ComboBox {
+        id: activeMapTypeBox
+        onActivated: {
+            console.log(plugin)
+            switch (plugin) {
+            case 0:
+                osmActiveMapType = currentIndex;
+                break;
+            case 1:
+                mapBoxGlActiveMapType = currentIndex;
+                break;
+            case 2:
+                esriActiveMapType = currentIndex;
+                break;
+            default:
+                return;
             }
+
+            changed = true;
+        }
+        Layout.fillWidth: true
+    }
+
+    Controls.Label {
+        text: qsTr("Cache size")
+        Layout.fillWidth: true
+    }
+
+    Controls.SpinBox {
+        id: cacheSizeBox
+        Layout.fillWidth: true
+        onValueChanged: changed = true
+        to: 2147483647 // TODO: to helper
+    }
+
+    Controls.Label {
+        text: qsTr("High DPI tiles")
+        Layout.fillWidth: true
+    }
+
+    Controls.CheckBox {
+        id: highdpiTilesBox
+        onCheckedChanged: changed = true
+    }
+
+    Controls.Label {
+        text: qsTr("Track length")
+        Layout.fillWidth: true
+    }
+
+    RowLayout {
+        spacing: palette.spacing
+
+        Controls.Slider {
+            id: trackLengthSlider
+            from: -1
+            to: 1000
+            Layout.fillWidth: true
+            onPressedChanged: if (!pressed) changed = true
+        }
+
+        Controls.Label {
+            Layout.preferredWidth: 86
+            horizontalAlignment: Text.AlignHCenter
+            text: trackLengthSlider.visualValue > -1 ?
+                      trackLengthSlider.visualValue.toFixed(0) : qsTr("Infinite")
         }
     }
 
-    GridLayout {
-        columns: 2
-        rowSpacing: palette.spacing
-        columnSpacing: palette.spacing
+    Item {
+        Layout.fillHeight: true
+    }
 
-        Component {
-            id: mapComponent
-
-            MapBoxGlMapView {
-                id: map
-                Component.onCompleted: {
-                    var types = new Array(0);
-                    for (var i = 0; i < supportedMapTypes.length; ++i) {
-                        types.push(supportedMapTypes[i].name);
-                    }
-                    activeMapTypeBox.model = types;
-                }
-            }
-        }
-
-        Loader {
-            id: mapPreview
-            Layout.fillWidth: true
-            Layout.preferredHeight: Math.max(palette.controlBaseSize * 4, root.height - frame.height)
-            Layout.columnSpan: 2
-            Component.onCompleted: reload()
-
-            function reload() {
-                sourceComponent = null;
-                sourceComponent = mapComponent;
-            }
-        }
+    RowLayout {
+        spacing: palette.spacing
+        Layout.columnSpan: 2
 
         Controls.Button {
             text: qsTr("Restore")
@@ -189,10 +147,7 @@ ColumnLayout {
         Controls.Button {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
-            onClicked: {
-                save();
-                mapPreview.reload();
-            }
+            onClicked: save()
             enabled: changed
             Layout.fillWidth: true
         }

@@ -13,6 +13,15 @@ Rectangle {
     property bool cornerMap: false
     property bool cornerVisible: false
 
+    property Component mapComponent
+    property QtObject map
+
+    function reloadMap() {
+        mapComponent = mapFactory.create();
+    }
+
+    Component.onCompleted: reloadMap()
+
     signal requestPresenter(string view)
 
     color: palette.backgroundColor
@@ -29,8 +38,13 @@ Rectangle {
         id: substrate
         anchors.fill: parent
         anchors.topMargin: topbar.height
-        sourceComponent: cornerMap ? videoComponent : mapFactory.create()
-        onItemChanged: if (item) main.requestPresenter(item.objectName)
+        sourceComponent: cornerMap ? videoComponent : mapComponent
+        onItemChanged: {
+            if (!item) return;
+
+            main.requestPresenter(item.objectName);
+            map = item;
+        }
     }
 
     MapControl { // TODO: to ToolsPanel
@@ -59,7 +73,7 @@ Rectangle {
         anchors.right: tools.left
         anchors.margins: palette.margins
         width: Math.min(parent.width / 3, parent.height / 3)
-        sourceComponent: cornerMap ? mapFactory.create() : videoComponent
+        sourceComponent: cornerMap ? mapComponent : videoComponent
         onItemChanged: if (item) main.requestPresenter(item.objectName)
         visible: cornerVisible
         z: 1

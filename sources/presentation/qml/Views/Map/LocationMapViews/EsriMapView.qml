@@ -5,7 +5,7 @@ import QtPositioning 5.6
 BaseMapView {
     id: map
 
-    Plugin {
+    plugin: Plugin {
         name: "esri"
 
         PluginParameter { name: "esri.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
