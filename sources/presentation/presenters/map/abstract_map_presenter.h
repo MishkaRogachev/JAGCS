@@ -7,12 +7,16 @@
 
 namespace presentation
 {
+    class MapHandle;
+
     class AbstractMapPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
         AbstractMapPresenter(QObject* object = nullptr);
+
+        MapHandle* handle() const;
 
         virtual double centerLatitude() const = 0;
         virtual double centerLongitude() const = 0;
@@ -29,6 +33,9 @@ namespace presentation
     signals:
         void missionItemSelected(const dao::MissionItemPtr& item);
         void holded();
+
+    private:
+        MapHandle* m_handle;
     };
 }
 

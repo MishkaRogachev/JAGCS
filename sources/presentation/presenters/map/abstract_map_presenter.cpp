@@ -4,10 +4,16 @@
 #include <QDebug>
 
 // Internal
-#include "settings_provider.h"
+#include "map_handle.h"
 
 using namespace presentation;
 
 AbstractMapPresenter::AbstractMapPresenter(QObject* object):
-    BasePresenter(object)
+    BasePresenter(object),
+    m_handle(new MapHandle(this))
 {}
+
+MapHandle* AbstractMapPresenter::handle() const
+{
+    return m_handle;
+}

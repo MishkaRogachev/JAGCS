@@ -5,7 +5,10 @@
 
 // Internal
 #include "topbar_presenter.h"
+
+#include "map_handle.h"
 #include "location_map_presenter.h"
+
 #include "video_split_presenter.h"
 #include "menu_presenter.h"
 
@@ -27,7 +30,7 @@ MainPresenter::MainPresenter(QObject* parent):
     d->topbar = new TopbarPresenter(this);
     d->map = new  LocationMapPresenter(this);
     d->video = new VideoSplitPresenter(this);
-    d->menu = new MenuPresenter(this);
+    d->menu = new MenuPresenter(d->map->handle(), this);
 }
 
 MainPresenter::~MainPresenter()
@@ -37,6 +40,8 @@ void MainPresenter::connectView(QObject* view)
 {
     d->topbar->setView(view->findChild<QObject*>(NAME(topbar)));
     d->menu->setView(view->findChild<QObject*>(NAME(menu)));
+
+    connect(d->map->handle(), SIGNAL(reloadMap()), view, SLOT(reloadMap()));
 
     d->map->setView(this->view()->findChild<QObject*>("map"));
     connect(view, SIGNAL(requestPresenter(QString)), this, SLOT(onRequestPresenter(QString)));

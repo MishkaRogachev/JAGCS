@@ -9,8 +9,13 @@ namespace presentation
 
     class MapHandle: public QObject
     {
+        Q_OBJECT
+
     public:
         MapHandle(AbstractMapPresenter* map);
+
+    signals:
+        void reloadMap();
 
     private:
         AbstractMapPresenter* const m_map;

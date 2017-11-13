@@ -5,12 +5,14 @@
 
 namespace presentation
 {
+    class MapHandle;
+
     class MenuPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MenuPresenter(QObject* parent = nullptr);
+        explicit MenuPresenter(MapHandle* handle, QObject* parent = nullptr);
         ~MenuPresenter() override;
 
     protected:

@@ -24,8 +24,7 @@ GridLayout {
     signal save()
     signal restore()
 
-    Component.onCompleted: updateMapTypes()
-    onChangedChanged: if (!changed) main.reloadMap()
+    onPluginChanged: updateMapTypes()
 
     Connections {
         target: main
@@ -49,9 +48,9 @@ GridLayout {
 
     Controls.ComboBox {
         id: pluginBox
-        model: [ "OSM", "Map Box", "Esri" ]
+        model: [ "OSM", "MapBox GL", "Esri" ]
         currentIndex: -1
-        onCurrentIndexChanged: changed = true
+        onActivated: changed = true
         Layout.fillWidth: true
     }
 
