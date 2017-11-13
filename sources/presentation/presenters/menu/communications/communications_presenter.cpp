@@ -1,4 +1,4 @@
-#include "communication_settings_presenter.h"
+#include "communications_presenter.h"
 
 // Qt
 #include <QMap>
@@ -17,7 +17,7 @@
 using namespace presentation;
 using namespace domain;
 
-class CommunicationSettingsPresenter::Impl
+class CommunicationsPresenter::Impl
 {
 public:
     domain::CommunicationService* service = ServiceRegistry::communicationService();
@@ -25,18 +25,18 @@ public:
     QMap<dao::LinkDescriptionPtr, CommunicationLinkPresenter*> linkPresenters;
 };
 
-CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
+CommunicationsPresenter::CommunicationsPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
     connect(d->service, &CommunicationService::descriptionAdded,
-            this, &CommunicationSettingsPresenter::onLinkAdded);
+            this, &CommunicationsPresenter::onLinkAdded);
     connect(d->service, &CommunicationService::descriptionChanged,
-            this, &CommunicationSettingsPresenter::onLinkChanged);
+            this, &CommunicationsPresenter::onLinkChanged);
     connect(d->service, &CommunicationService::linkStatisticsChanged,
-            this, &CommunicationSettingsPresenter::onLinkStatisticsChanged);
+            this, &CommunicationsPresenter::onLinkStatisticsChanged);
     connect(d->service, &CommunicationService::descriptionRemoved,
-            this, &CommunicationSettingsPresenter::onLinkRemoved);
+            this, &CommunicationsPresenter::onLinkRemoved);
 
     for (const dao::LinkDescriptionPtr& description: d->service->descriptions())
     {
@@ -44,10 +44,10 @@ CommunicationSettingsPresenter::CommunicationSettingsPresenter(QObject* parent):
     }
 }
 
-CommunicationSettingsPresenter::~CommunicationSettingsPresenter()
+CommunicationsPresenter::~CommunicationsPresenter()
 {}
 
-void CommunicationSettingsPresenter::connectView(QObject* view)
+void CommunicationsPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(addUdpLink()), this, SLOT(onAddUdpLink()));
     connect(view, SIGNAL(addSerialLink()), this, SLOT(onAddSerialLink()));
@@ -55,26 +55,26 @@ void CommunicationSettingsPresenter::connectView(QObject* view)
     this->updateCommunicationsLinks();
 }
 
-void CommunicationSettingsPresenter::onLinkAdded(const dao::LinkDescriptionPtr& description)
+void CommunicationsPresenter::onLinkAdded(const dao::LinkDescriptionPtr& description)
 {
     d->linkPresenters[description] = new CommunicationLinkPresenter(description, this);
 
     this->updateCommunicationsLinks();
 }
 
-void CommunicationSettingsPresenter::onLinkChanged(const dao::LinkDescriptionPtr& description)
+void CommunicationsPresenter::onLinkChanged(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateView();
 }
 
-void CommunicationSettingsPresenter::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description)
+void CommunicationsPresenter::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     d->linkPresenters[description]->updateStatistics();
 }
 
-void CommunicationSettingsPresenter::onLinkRemoved(const dao::LinkDescriptionPtr& description)
+void CommunicationsPresenter::onLinkRemoved(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkPresenters.contains(description)) return;
     CommunicationLinkPresenter* linkPresenter = d->linkPresenters.take(description);
@@ -83,7 +83,7 @@ void CommunicationSettingsPresenter::onLinkRemoved(const dao::LinkDescriptionPtr
     this->updateCommunicationsLinks();
 }
 
-void CommunicationSettingsPresenter::updateCommunicationsLinks()
+void CommunicationsPresenter::updateCommunicationsLinks()
 {
     QList<QObject*> objectList;
     for (CommunicationLinkPresenter* linkPresenter: d->linkPresenters.values())
@@ -94,7 +94,7 @@ void CommunicationSettingsPresenter::updateCommunicationsLinks()
     this->setViewProperty(PROPERTY(links), QVariant::fromValue(objectList));
 }
 
-void CommunicationSettingsPresenter::onAddUdpLink()
+void CommunicationsPresenter::onAddUdpLink()
 {
     auto description = dao::LinkDescriptionPtr::create();
 
@@ -105,7 +105,7 @@ void CommunicationSettingsPresenter::onAddUdpLink()
     d->service->save(description);
 }
 
-void CommunicationSettingsPresenter::onAddSerialLink()
+void CommunicationsPresenter::onAddSerialLink()
 {
     auto description = dao::LinkDescriptionPtr::create();
 

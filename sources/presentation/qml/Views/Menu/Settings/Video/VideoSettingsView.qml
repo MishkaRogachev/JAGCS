@@ -1,5 +1,4 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
@@ -21,7 +20,7 @@ ColumnLayout {
         contentHeight: column.height
         clip: true
 
-        ScrollBar.vertical: Controls.ScrollBar {}
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         Controls.Frame {
             visible: repeater.count == 0

@@ -43,7 +43,7 @@ Rectangle {
             if (!item) return;
 
             main.requestPresenter(item.objectName);
-            map = item;
+            if (!cornerMap) map = item;
         }
     }
 
@@ -74,9 +74,14 @@ Rectangle {
         anchors.margins: palette.margins
         width: Math.min(parent.width / 3, parent.height / 3)
         sourceComponent: cornerMap ? mapComponent : videoComponent
-        onItemChanged: if (item) main.requestPresenter(item.objectName)
         visible: cornerVisible
         z: 1
+        onItemChanged: {
+            if (!item) return;
+
+            main.requestPresenter(item.objectName);
+            if (cornerMap) map = item;
+        }
     }
 
     Controls.Swipeable {

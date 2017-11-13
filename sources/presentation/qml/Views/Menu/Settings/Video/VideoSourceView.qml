@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../../Video"
 
 Controls.Frame {
     id: root
@@ -24,21 +23,14 @@ Controls.Frame {
         id: grid
         anchors.centerIn: parent
         width: parent.width - palette.margins * 2
-        columns: 4
+        columns: 2
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
 
         Controls.Label {
             text: qsTr("Video") + " " + number
-            Layout.columnSpan: 3
+            Layout.columnSpan: 2
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
-            enabled: changed
         }
 
         Controls.Label {
@@ -55,15 +47,7 @@ Controls.Frame {
                 default: return qsTr("Unknown:")
                 }
             }
-            Layout.columnSpan: 2
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
-            enabled: changed
         }
 
         Controls.Label {
@@ -85,7 +69,6 @@ Controls.Frame {
                 source = text;
                 changed = true;
             }
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -97,36 +80,32 @@ Controls.Frame {
                 source = currentText;
                 changed = true;
             }
+            Layout.fillWidth: true
+        }
+
+        RowLayout {
             Layout.columnSpan: 2
-            Layout.fillWidth: true
-        }
 
-        Controls.DelayButton {
-            tipText: qsTr("Remove")
-            iconSource: "qrc:/icons/remove.svg"
-            onActivated: remove()
-            iconColor: palette.dangerColor
-        }
+            Controls.Button {
+                tipText: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+                enabled: changed
+            }
 
-        Item {
-            Layout.fillWidth: true
-            Layout.columnSpan: preview.visible ? 1 : 3
-        }
+            Controls.Button {
+                tipText: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+                enabled: changed
+            }
 
-        VideoView {
-            id: preview
-            visible: false
-            onVisibleChanged: visible ? setupPreview(preview) : setupPreview(null)
-            Layout.fillWidth: true
-            Layout.preferredHeight: width * ratio
-            Layout.columnSpan: 2
-        }
-
-        Controls.Button {
-            tipText: qsTr("Preview")
-            iconSource: preview.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            onClicked: preview.visible = !preview.visible
-            Layout.alignment: Qt.AlignTop
+            Controls.DelayButton {
+                tipText: qsTr("Remove")
+                iconSource: "qrc:/icons/remove.svg"
+                onActivated: remove()
+                iconColor: palette.dangerColor
+            }
         }
     }
 }

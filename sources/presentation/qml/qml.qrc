@@ -76,12 +76,6 @@
         <file>Views/Planning/PlanningView.qml</file>
         <file>Views/Planning/Mission/MissionView.qml</file>
         <file>Views/Planning/Mission/MissionItemEditView.qml</file>
-        <file>Views/Settings/Vehicles/VehicleSettingsView.qml</file>
-        <file>Views/Settings/Vehicles/VehicleDescriptionView.qml</file>
-        <file>Views/Settings/Communications/CommunicationSettingsView.qml</file>
-        <file>Views/Settings/Communications/CommunicationLinkView.qml</file>
-        <file>Views/Settings/Video/VideoSettingsView.qml</file>
-        <file>Views/Settings/Video/VideoSourceView.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Video/VideoView.qml</file>
@@ -102,8 +96,14 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
+        <file>Views/Menu/Vehicles/VehicleSettingsView.qml</file>
+        <file>Views/Menu/Vehicles/VehicleDescriptionView.qml</file>
+        <file>Views/Menu/Communications/CommunicationSettingsView.qml</file>
+        <file>Views/Menu/Communications/CommunicationLinkView.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>
+        <file>Views/Menu/Settings/Video/VideoSettingsView.qml</file>
+        <file>Views/Menu/Settings/Video/VideoSourceView.qml</file>
         <file>Views/Menu/Settings/Joystick/JoystickSettingsView.qml</file>
         <file>Views/Menu/Settings/Gui/GuiSettingsView.qml</file>
         <file>Views/Menu/Settings/Network/NetworkSettingsView.qml</file>

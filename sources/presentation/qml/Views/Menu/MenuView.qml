@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import "../../Controls" as Controls
 
 import "Settings/Database"
+import "Settings/Video"
 import "Settings/Map"
 import "Settings/Gui"
 import "Settings/Joystick"
@@ -59,7 +60,6 @@ Controls.Frame {
 
                 Controls.Button {
                     text: model.text
-                    font.bold: true
                     flat: true
                     visible: index + 1 < pathModel.count
                     onClicked: backOut(index)
@@ -68,6 +68,7 @@ Controls.Frame {
 
             Controls.Label {
                 id: currentLabel
+                font.bold: true
             }
         }
 
@@ -112,7 +113,6 @@ Controls.Frame {
             menuModel: [
                 { text: qsTr("Communications") },
                 { text: qsTr("Vehicles") },
-                { text: qsTr("Video") },
                 { text: qsTr("Settings"), component: settingsMenuComponent },
                 { text: qsTr("About"), component: aboutComponent },
                 { text: qsTr("Quit"), component: quitComponent }
@@ -126,16 +126,18 @@ Controls.Frame {
         Controls.SideNav {
             menuModel: [
                 { text: qsTr("Database"), component: dbComponent },
-                { text: qsTr("Map"), component: mapComponent  },
-                { text: qsTr("Joystick"), component: joystickComponent  },
-                { text: qsTr("GUI"), component: guiComponent  },
-                { text: qsTr("Networking"), component: networkComponent  }
+                { text: qsTr("Map"), component: mapComponent },
+                { text: qsTr("Video"), component: videoComponent },
+                { text: qsTr("Joystick"), component: joystickComponent },
+                { text: qsTr("GUI"), component: guiComponent },
+                { text: qsTr("Networking"), component: networkComponent }
             ]
         }
     }
 
     Component { id: dbComponent; DatabaseView { objectName: "database" } }
     Component { id: mapComponent; MapSettingsView { objectName: "map" } }
+    Component { id: videoComponent; VideoSettingsView { objectName: "video" } }
     Component { id: joystickComponent; JoystickSettingsView { objectName: "joystick" } }
     Component { id: guiComponent; GuiSettingsView { objectName: "gui" } }
     Component { id: networkComponent; NetworkSettingsView { objectName: "network" } }

@@ -6,11 +6,11 @@
 
 // Internal
 //#include "vehicles_presenter.h"
-//#include "communication_settings_presenter.h"
-//#include "video_settings_presenter.h"
+//#include "communications_presenter.h"
 
 #include "database_presenter.h"
 #include "map_settings_presenter.h"
+#include "video_settings_presenter.h"
 //#include "joystick_settings_presenter.h"
 #include "gui_settings_presenter.h"
 //#include "network_settings_presenter.h"
@@ -51,10 +51,10 @@ void MenuPresenter::onRequestPresenter(const QString& view)
     }
 
     if (view == "database") d->presenter = new DatabasePresenter(this);
-//    else if (view == "communications") d->presenter = new CommunicationSettingsPresenter(this);
+//    else if (view == "communications") d->presenter = new CommunicationsPresenter(this);
 //    else if (view == "vehicles") d->presenter = new VehiclesPresenter(this);
-//    else if (view == "video") d->presenter = new VideoSettingsPresenter(this);
     else if (view == "map") d->presenter = new MapSettingsPresenter(d->handle, this);
+    else if (view == "video") d->presenter = new VideoSettingsPresenter(this);
 //    else if (view == "joystick") d->presenter = new JoystickSettingsPresenter(this);
     else if (view == "gui") d->presenter = new GuiSettingsPresenter(this);
 //    else if (view == "network") d->presenter = new NetworkSettingsPresenter(this);
