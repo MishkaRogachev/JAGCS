@@ -17,12 +17,9 @@ Controls.Frame {
     signal remove()
     signal setupPreview(QtObject preview)
 
-    implicitHeight: grid.height + palette.margins * 2
-
     GridLayout {
         id: grid
-        anchors.centerIn: parent
-        width: parent.width - palette.margins * 2
+        anchors.fill: parent
         columns: 2
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
@@ -83,9 +80,11 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        RowLayout {
-            Layout.columnSpan: 2
+        Controls.Label {
+            text: qsTr("Actions")
+        }
 
+        RowLayout {
             Controls.Button {
                 tipText: qsTr("Save")
                 iconSource: "qrc:/icons/save.svg"

@@ -13,7 +13,7 @@ import "Settings/Network"
 import "About"
 import "Quit"
 
-Controls.Frame {
+Controls.Pane {
     id: root
 
     function home() {
