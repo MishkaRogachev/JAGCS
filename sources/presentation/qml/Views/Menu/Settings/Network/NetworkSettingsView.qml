@@ -1,11 +1,12 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls"
+import "qrc:/Controls" as Controls
 
 ColumnLayout {
     id: root
+
+    property bool changed: false
 
     property alias type: typeItem.currentText
     property alias hostName: hostNameItem.text
@@ -24,7 +25,7 @@ ColumnLayout {
 
     spacing: palette.spacing
 
-    Frame {
+    Controls.Frame {
         Layout.fillWidth: true
 
         GridLayout {
@@ -33,61 +34,66 @@ ColumnLayout {
             rowSpacing: palette.spacing
             columnSpacing: palette.spacing
 
-            Label {
+            Controls.Label {
                 Layout.fillWidth: true
                 text: qsTr("Proxy type")
             }
 
-            ComboBox {
+            Controls.ComboBox {
                 id: typeItem
                 Layout.fillWidth: true
                 model: typeModel
+                onActivated: changed = true
             }
 
-            Label {
+            Controls.Label {
                 Layout.fillWidth: true
                 text: qsTr("Host name")
             }
 
-            TextField {
+            Controls.TextField {
                 id: hostNameItem
                 Layout.fillWidth: true
                 placeholderText: qsTr("Enter hostname")
+                onEditingFinished: changed = true
             }
 
-            Label {
+            Controls.Label {
                 Layout.fillWidth: true
                 text: qsTr("Port")
             }
 
-            SpinBox {
+            Controls.SpinBox {
                 id: portItem
                 Layout.fillWidth: true
                 from: 0
                 to: 99999
+                onValueChanged: changed = true
             }
 
-            Label {
+            Controls.Label {
                 Layout.fillWidth: true
                 text: qsTr("User name")
             }
 
-            TextField {
+            Controls.TextField {
                 id: userItem
                 Layout.fillWidth: true
                 placeholderText: qsTr("Enter user name")
+                onEditingFinished: changed = true
             }
 
-            Label {
+            Controls.Label {
                 Layout.fillWidth: true
                 text: qsTr("User password")
             }
 
-            TextField {
+            Controls.TextField {
                 id: passwordItem
                 Layout.fillWidth: true
                 placeholderText: qsTr("Enter password")
                 echoMode: TextInput.Password
+                onEditingFinished: changed = true
             }
         }
     }
@@ -100,15 +106,17 @@ ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: palette.spacing
 
-        Button {
+        Controls.Button {
             Layout.fillWidth: true
             text: qsTr("Restore")
+            enabled: changed
             onClicked: restore()
         }
 
-        Button {
+       Controls.Button {
             Layout.fillWidth: true
             text: qsTr("Apply")
+            enabled: changed
             onClicked: apply()
         }
     }

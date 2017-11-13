@@ -55,6 +55,8 @@ void NetworkSettingsPresenter::onApply()
     proxy.setPassword(this->viewProperty(PROPERTY(password)).toString());
 
     d->manager.setProxy(proxy);
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
 void NetworkSettingsPresenter::onRestore()
@@ -67,5 +69,7 @@ void NetworkSettingsPresenter::onRestore()
     this->setViewProperty(PROPERTY(port), proxy.port());
     this->setViewProperty(PROPERTY(user), proxy.user());
     this->setViewProperty(PROPERTY(password), proxy.password());
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
