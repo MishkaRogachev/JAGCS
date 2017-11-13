@@ -98,7 +98,7 @@
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/Vehicles/VehicleSettingsView.qml</file>
         <file>Views/Menu/Vehicles/VehicleDescriptionView.qml</file>
-        <file>Views/Menu/Communications/CommunicationSettingsView.qml</file>
+        <file>Views/Menu/Communications/CommunicationsView.qml</file>
         <file>Views/Menu/Communications/CommunicationLinkView.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>

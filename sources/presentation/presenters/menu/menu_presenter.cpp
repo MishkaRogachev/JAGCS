@@ -5,8 +5,8 @@
 #include <QDebug>
 
 // Internal
+#include "communications_presenter.h"
 //#include "vehicles_presenter.h"
-//#include "communications_presenter.h"
 
 #include "database_presenter.h"
 #include "map_settings_presenter.h"
@@ -50,8 +50,8 @@ void MenuPresenter::onRequestPresenter(const QString& view)
         d->presenter = nullptr;
     }
 
-    if (view == "database") d->presenter = new DatabasePresenter(this);
-//    else if (view == "communications") d->presenter = new CommunicationsPresenter(this);
+    if (view == "communications") d->presenter = new CommunicationsPresenter(this);
+    else if (view == "database") d->presenter = new DatabasePresenter(this);
 //    else if (view == "vehicles") d->presenter = new VehiclesPresenter(this);
     else if (view == "map") d->presenter = new MapSettingsPresenter(d->handle, this);
     else if (view == "video") d->presenter = new VideoSettingsPresenter(this);

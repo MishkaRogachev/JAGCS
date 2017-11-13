@@ -1,10 +1,9 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout {
+Item {
     id: root
 
     property var links: []
@@ -12,17 +11,17 @@ ColumnLayout {
     signal addUdpLink()
     signal addSerialLink()
 
-    spacing: palette.spacing
+    implicitWidth: palette.controlBaseSize * 11
 
     Flickable {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        anchors.fill: parent
+        anchors.bottomMargin: addButton.height
         contentHeight: column.height
         clip: true
 
-        ScrollBar.vertical: Controls.ScrollBar {}
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-        Frame {
+        Controls.Frame {
             visible: repeater.count == 0
             width: parent.width
             height: label.height + palette.margins * 2
@@ -56,10 +55,11 @@ ColumnLayout {
 
     Controls.Button {
         id: addButton
-        Layout.fillWidth: true
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         text: qsTr("Add Link")
         iconSource: "qrc:/icons/add.svg"
-        anchors.right: parent.right
         onClicked: if (!addMenu.visible) addMenu.open()
 
         Controls.Menu {
