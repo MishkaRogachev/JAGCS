@@ -35,7 +35,8 @@ GridLayout {
         var types = new Array(0);
         if (map) {
             for (var i = 0; i < map.supportedMapTypes.length; ++i) {
-                types.push(map.supportedMapTypes[i].name);
+                var array = map.supportedMapTypes[i].name.split("/");
+                types.push(array[array.length - 1]);
             }
         }
         activeMapTypeBox.model = types;
