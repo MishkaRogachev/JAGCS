@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import "../../Controls" as Controls
 
 import "Communications"
+import "Vehicles"
 
 import "Settings/Database"
 import "Settings/Video"
@@ -114,7 +115,7 @@ Controls.Pane {
         Controls.SideNav {
             menuModel: [
                 { text: qsTr("Communications"), component: commComponent },
-                { text: qsTr("Vehicles") },
+                { text: qsTr("Vehicles"), component: vehiclesComponent },
                 { text: qsTr("Settings"), component: settingsMenuComponent },
                 { text: qsTr("About"), component: aboutComponent },
                 { text: qsTr("Quit"), component: quitComponent }
@@ -138,6 +139,7 @@ Controls.Pane {
     }
 
     Component { id: commComponent; CommunicationsView { objectName: "communications" } }
+    Component { id: vehiclesComponent; VehiclesView { objectName: "vehicles" } }
 
     Component { id: dbComponent; DatabaseView { objectName: "database" } }
     Component { id: mapComponent; MapSettingsView { objectName: "map" } }

@@ -57,12 +57,12 @@ Controls.Frame {
         id: grid
         anchors.centerIn: parent
         width: parent.width
-        columns: 3
+        columns: 2
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
 
         Controls.Label {
-            text: qsTr("Type:")
+            text: qsTr("Type")
             Layout.fillWidth: true
         }
 
@@ -77,16 +77,8 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Controls.Button {
-            enabled: !changed
-            tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
-            iconSource: connected ? "qrc:/icons/disconnect.svg" :
-                                    "qrc:/icons/connect.svg"
-            onClicked: setConnected(!connected)
-        }
-
         Controls.Label {
-            text: qsTr("Protocol:")
+            text: qsTr("Protocol")
             Layout.fillWidth: true
         }
 
@@ -102,15 +94,8 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Controls.Button {
-            tipText: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
-            enabled: changed
-        }
-
         Controls.Label {
-            text: qsTr("Name:")
+            text: qsTr("Name")
             Layout.fillWidth: true
         }
 
@@ -121,15 +106,8 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Controls.Button {
-            tipText: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
-            enabled: changed
-        }
-
         Controls.Label {
-            text: qsTr("Port:")
+            text: qsTr("Port")
             visible: type == LinkDescription.Udp
             Layout.fillWidth: true
         }
@@ -144,7 +122,7 @@ Controls.Frame {
         }
 
         Controls.Label {
-            text: qsTr("Device:")
+            text: qsTr("Device")
             visible: type == LinkDescription.Serial
             Layout.fillWidth: true
         }
@@ -160,15 +138,8 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Controls.DelayButton {
-            tipText: qsTr("Remove")
-            iconSource: "qrc:/icons/remove.svg"
-            onActivated: remove()
-            iconColor: palette.dangerColor
-        }
-
         Controls.Label {
-            text: qsTr("Baud rate:")
+            text: qsTr("Baud rate")
             visible: type == LinkDescription.Serial
             Layout.fillWidth: true
         }
@@ -184,39 +155,31 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Item {
-            implicitWidth: palette.controlBaseSize
-            implicitHeight: palette.controlBaseSize
-            visible: type == LinkDescription.Serial
-        }
-
         ChartView {
             id: chart
             implicitHeight: width / 3
             Layout.fillWidth: true
             Layout.columnSpan: 2
             antialiasing: true
-            animationOptions: ChartView.SeriesAnimations
             backgroundColor: "transparent"
             legend.labelColor: palette.textColor
-            legend.alignment: Qt.AlignBottom
+            legend.alignment: Qt.AlignLeft
             margins.top: 0
             margins.bottom: 0
             visible: false
 
             ValueAxis {
                 id: timeAxis
-                labelsColor: palette.textColor
                 visible: false
             }
 
             ValueAxis {
                 id: valueAxis
-                labelsColor: palette.textColor
+                visible: false
             }
 
             AreaSeries {
-                name: qsTr("Bytes sent")
+                name: qsTr("Sent")
                 axisX: timeAxis
                 axisY: valueAxis
                 borderWidth: 3
@@ -228,7 +191,7 @@ Controls.Frame {
             }
 
             AreaSeries {
-                name: qsTr("Bytes received")
+                name: qsTr("Recv.")
                 axisX: timeAxis
                 axisY: valueAxis
                 borderWidth: 3
@@ -240,16 +203,46 @@ Controls.Frame {
             }
         }
 
-        Item {
+        Controls.Label {
+            text: qsTr("Actions")
             Layout.fillWidth: true
-            Layout.columnSpan: 2
-            visible: !chart.visible
         }
 
-        Controls.Button {
-            iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            onClicked: chart.visible = !chart.visible
-            Layout.alignment: Qt.AlignTop
+        RowLayout {
+            Controls.Button {
+                iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+                onClicked: chart.visible = !chart.visible
+                Layout.alignment: Qt.AlignTop
+            }
+
+            Controls.Button {
+                enabled: !changed
+                tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
+                iconSource: connected ? "qrc:/icons/disconnect.svg" :
+                                        "qrc:/icons/connect.svg"
+                onClicked: setConnected(!connected)
+            }
+
+            Controls.Button {
+                tipText: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+                enabled: changed
+            }
+
+            Controls.Button {
+                tipText: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+                enabled: changed
+            }
+
+            Controls.DelayButton {
+                tipText: qsTr("Remove")
+                iconSource: "qrc:/icons/remove.svg"
+                onActivated: remove()
+                iconColor: palette.dangerColor
+            }
         }
     }
 }

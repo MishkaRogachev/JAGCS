@@ -96,7 +96,7 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
-        <file>Views/Menu/Vehicles/VehicleSettingsView.qml</file>
+        <file>Views/Menu/Vehicles/VehiclesView.qml</file>
         <file>Views/Menu/Vehicles/VehicleDescriptionView.qml</file>
         <file>Views/Menu/Communications/CommunicationsView.qml</file>
         <file>Views/Menu/Communications/CommunicationLinkView.qml</file>

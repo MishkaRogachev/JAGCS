@@ -1,10 +1,9 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout {
+Item {
     id: root
 
     property var vehicles
@@ -13,15 +12,15 @@ ColumnLayout {
     signal addVehicle()
     signal setAutoAdd(bool add)
 
-    spacing: palette.spacing
+    implicitWidth: palette.controlBaseSize * 11
 
     Flickable {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        anchors.fill: parent
+        anchors.bottomMargin: addRow.height
         contentHeight: column.height
         clip: true
 
-        ScrollBar.vertical: Controls.ScrollBar {}
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         Controls.Frame {
             visible: repeater.count == 0
@@ -57,10 +56,13 @@ ColumnLayout {
     }
 
     RowLayout {
+        id: addRow
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         spacing: palette.spacing
 
         Controls.Button {
-            id: addButton
             text: qsTr("Add Vehicle")
             iconSource: "qrc:/icons/add.svg"
             onClicked: addVehicle()
