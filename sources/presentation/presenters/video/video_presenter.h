@@ -29,6 +29,10 @@ namespace presentation
         void connectView(QObject* view) override;
         void disconnectView(QObject* view) override;
 
+    private slots:
+        void onVideoSourceChanged(const dao::VideoSourcePtr& video);
+        void onVideoSourceRemoved(const dao::VideoSourcePtr& video);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

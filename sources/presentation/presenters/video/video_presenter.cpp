@@ -9,6 +9,9 @@
 // Internal
 #include "video_source.h"
 
+#include "service_registry.h"
+#include "video_service.h"
+
 #include "video_provider.h"
 
 using namespace presentation;
@@ -24,7 +27,14 @@ public:
 VideoPresenter::VideoPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
-{}
+{
+    connect(domain::ServiceRegistry::videoService(),
+            &domain::VideoService::videoSourceChanged,
+            this, &VideoPresenter::onVideoSourceChanged);
+    connect(domain::ServiceRegistry::videoService(),
+            &domain::VideoService::videoSourceRemoved,
+            this, &VideoPresenter::onVideoSourceRemoved);
+}
 
 VideoPresenter::~VideoPresenter()
 {}
@@ -102,4 +112,17 @@ void VideoPresenter::disconnectView(QObject* view)
         delete d->media;
         d->media = nullptr;
     }
+}
+
+void VideoPresenter::onVideoSourceChanged(const dao::VideoSourcePtr& video)
+{
+    if (d->video == video) this->updateSource();
+}
+
+void VideoPresenter::onVideoSourceRemoved(const dao::VideoSourcePtr& video)
+{
+    if (d->video != video) return;
+
+    d->video.clear();
+    this->updateSource();
 }
