@@ -6,6 +6,8 @@ import "../../Controls" as Controls
 import "Communications"
 import "Vehicles"
 
+import "Planning/Mission"
+
 import "Settings/Database"
 import "Settings/Video"
 import "Settings/Map"
@@ -116,12 +118,30 @@ Controls.Pane {
             menuModel: [
                 { text: qsTr("Communications"), component: commComponent },
                 { text: qsTr("Vehicles"), component: vehiclesComponent },
+                { text: qsTr("Planning"), component: planningComponent },
                 { text: qsTr("Settings"), component: settingsMenuComponent },
                 { text: qsTr("About"), component: aboutComponent },
                 { text: qsTr("Quit"), component: quitComponent }
             ]
         }
     }
+
+    Component { id: commComponent; CommunicationsView { objectName: "communications" } }
+    Component { id: vehiclesComponent; VehiclesView { objectName: "vehicles" } }
+
+    Component {
+        id: planningComponent
+
+        Controls.SideNav {
+            menuModel: [
+                { text: qsTr("Mission"), component: missionComponent },
+//                { text: qsTr("Survey"), component: surveyComponent },
+//                { text: qsTr("Fence"), component: fenceComponent },
+            ]
+        }
+    }
+
+    Component { id: missionComponent; MissionView { objectName: "mission" } }
 
     Component {
         id: settingsMenuComponent
@@ -137,9 +157,6 @@ Controls.Pane {
             ]
         }
     }
-
-    Component { id: commComponent; CommunicationsView { objectName: "communications" } }
-    Component { id: vehiclesComponent; VehiclesView { objectName: "vehicles" } }
 
     Component { id: dbComponent; DatabaseView { objectName: "database" } }
     Component { id: mapComponent; MapSettingsView { objectName: "map" } }

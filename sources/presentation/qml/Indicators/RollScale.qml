@@ -34,9 +34,9 @@ Item {
             ctx.textAlign = 'center';
 
             ctx.save();
-            ctx.beginPath();
-
             ctx.translate(width / 2, height / 2);
+
+            ctx.beginPath();
             for (var i = minRoll - (minRoll % rollStep); i <= maxRoll;
                  i += rollStep) {
                 ctx.save();
@@ -45,26 +45,24 @@ Item {
                 ctx.lineTo(0, -height / 2 + fontPixelSize / 4);
                 ctx.restore();
             }
-
             ctx.stroke();
-            ctx.beginPath();
 
             ctx.save();
             var rotation = Math.max(Math.min(-roll, maxRoll), minRoll);
             ctx.rotate(rotation * Math.PI / 180);
 
+            ctx.beginPath();
             ctx.moveTo(-fontPixelSize / 2,
                        -height / 2 + fontPixelSize / 2);
             ctx.lineTo(0, 2 - height / 2);
             ctx.lineTo(fontPixelSize / 2,
                        -height / 2 + fontPixelSize / 2);
+            ctx.stroke();
 
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.fillText(Math.round(roll), 0, -height / 2 + fontPixelSize);
 
             ctx.restore();
-
-            ctx.stroke();
             ctx.restore();
         }
     }

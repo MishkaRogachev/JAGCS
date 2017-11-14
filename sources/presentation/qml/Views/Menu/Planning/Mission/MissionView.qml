@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../../Common"
+import "qrc:/Views/Common"
 
 ColumnLayout {
     id: root
@@ -192,6 +192,7 @@ ColumnLayout {
     MissionItemEditView {
         id: itemEdit
         objectName: "itemEdit"
+        Layout.preferredWidth: palette.controlBaseSize * 11
         Layout.fillWidth: true
         Layout.fillHeight: true
     }

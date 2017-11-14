@@ -1,5 +1,4 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtPositioning 5.6
 import JAGCS 1.0
@@ -152,7 +151,7 @@ ColumnLayout {
         contentHeight: grid.height
         clip: true
 
-        ScrollBar.vertical: Controls.ScrollBar {}
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         GridLayout {
             id: grid

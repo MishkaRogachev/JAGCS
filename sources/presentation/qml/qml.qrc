@@ -75,9 +75,6 @@
         <file>Views/Control/Displays/BatteryDisplay.qml</file>
         <file>Views/Control/Displays/StatusDisplay.qml</file>
         <file>Views/Control/Displays/MissionDisplay.qml</file>
-        <file>Views/Planning/PlanningView.qml</file>
-        <file>Views/Planning/Mission/MissionView.qml</file>
-        <file>Views/Planning/Mission/MissionItemEditView.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Map/MapControl.qml</file>
@@ -101,6 +98,8 @@
         <file>Views/Menu/Vehicles/VehicleDescriptionView.qml</file>
         <file>Views/Menu/Communications/CommunicationsView.qml</file>
         <file>Views/Menu/Communications/CommunicationLinkView.qml</file>
+        <file>Views/Menu/Planning/Mission/MissionView.qml</file>
+        <file>Views/Menu/Planning/Mission/MissionItemEditView.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>
         <file>Views/Menu/Settings/Video/VideoSettingsView.qml</file>
