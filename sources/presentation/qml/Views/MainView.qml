@@ -14,7 +14,9 @@ Rectangle {
     property bool cornerVisible: false
 
     property Component mapComponent
+
     property QtObject map
+    property QtObject video
 
     function reloadMap() {
         mapComponent = mapFactory.create();
@@ -43,7 +45,7 @@ Rectangle {
             if (!item) return;
 
             main.requestPresenter(item.objectName);
-            if (!cornerMap) map = item;
+            cornerMap ? video = item : map = item;
         }
     }
 
@@ -80,7 +82,7 @@ Rectangle {
             if (!item) return;
 
             main.requestPresenter(item.objectName);
-            if (cornerMap) map = item;
+            cornerMap ? map = item : video = item;
         }
     }
 

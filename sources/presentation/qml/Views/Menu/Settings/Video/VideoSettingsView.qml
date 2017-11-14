@@ -15,6 +15,7 @@ Item {
     signal setActiveVideo(int video)
 
     implicitWidth: palette.controlBaseSize * 11
+    onActiveVideoChanged: video.updateActiveVideo()
 
     Controls.ButtonGroup { id: radioGroup }
 

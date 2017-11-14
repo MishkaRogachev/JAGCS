@@ -9,7 +9,7 @@
 #include "map_handle.h"
 #include "location_map_presenter.h"
 
-#include "video_split_presenter.h"
+#include "active_video_presenter.h"
 #include "menu_presenter.h"
 
 using namespace presentation;
@@ -19,7 +19,7 @@ class MainPresenter::Impl
 public:
     TopbarPresenter* topbar;
     LocationMapPresenter* map;
-    VideoSplitPresenter* video;
+    ActiveVideoPresenter* video;
     MenuPresenter* menu;
 };
 
@@ -29,7 +29,7 @@ MainPresenter::MainPresenter(QObject* parent):
 {
     d->topbar = new TopbarPresenter(this);
     d->map = new  LocationMapPresenter(this);
-    d->video = new VideoSplitPresenter(this);
+    d->video = new ActiveVideoPresenter(this);
     d->menu = new MenuPresenter(d->map->handle(), this);
 }
 
@@ -50,4 +50,5 @@ void MainPresenter::connectView(QObject* view)
 void MainPresenter::onRequestPresenter(const QString& view)
 {
     if (view == "map") d->map->setView(this->view()->findChild<QObject*>(view));
+    else if (view == "video") d->video->setView(this->view()->findChild<QObject*>(view));
 }

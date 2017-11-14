@@ -72,11 +72,8 @@ void VideoSettingsPresenter::onVideoSourceRemoved(const dao::VideoSourcePtr& vid
         d->videoPresenters.removeOne(videoPresenter);
         delete videoPresenter;
 
-        if (settings::Provider::value(settings::video::activeVideo, -1).toInt() == video->id())
-        {
-            settings::Provider::setValue(settings::video::activeVideo, -1);
-            this->setViewProperty(PROPERTY(activeVideo), -1);
-        }
+        if (settings::Provider::value(settings::video::activeVideo, -1).toInt() ==
+            video->id()) this->onSetActiveVideo(-1);
 
         this->updateVideoSources();
         return;
@@ -124,5 +121,6 @@ void VideoSettingsPresenter::onAddStreamVideo()
 void VideoSettingsPresenter::onSetActiveVideo(int video)
 {
     settings::Provider::setValue(settings::video::activeVideo, video);
+    this->setViewProperty(PROPERTY(activeVideo), video);
 }
 

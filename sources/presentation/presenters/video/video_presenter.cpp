@@ -80,8 +80,9 @@ void VideoPresenter::updateSource()
 
 void VideoPresenter::setVideo(const dao::VideoSourcePtr& video)
 {
-    d->video = video;
+    if (d->video == video) return;
 
+    d->video = video;
     this->updateSource();
 }
 

@@ -18,7 +18,7 @@
 
 #include "vehicle_type_mapper.h"
 #include "location_map_presenter.h"
-#include "video_split_presenter.h"
+#include "active_video_presenter.h"
 
 #include "dashboard_presenter.h"
 #include "aerial_dashboard_factory.h"
@@ -32,7 +32,7 @@ public:
     domain::JoystickManager* joystick = nullptr;
 
     AbstractMapPresenter* map;
-    VideoSplitPresenter* video;
+    ActiveVideoPresenter* video;
     CommandController* commander;
     DashboardPresenter* dashboard = nullptr;
 };
@@ -47,7 +47,7 @@ ControlPresenter::ControlPresenter(QObject* parent):
     }
 
     d->map = new LocationMapPresenter(this);
-    d->video = new VideoSplitPresenter(this);
+    d->video = new ActiveVideoPresenter(this);
     d->commander = new CommandController(this);
 
     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
