@@ -4,22 +4,22 @@
         <file>Shaders/Hatch.qml</file>
         <file>Shaders/OpacityBorder.qml</file>
         <file>Shaders/Pie.qml</file>
+        <file>Controls/Pane.qml</file>
+        <file>Controls/Frame.qml</file>
         <file>Controls/ContentItem.qml</file>
         <file>Controls/Button.qml</file>
         <file>Controls/DelayButton.qml</file>
         <file>Controls/ButtonBar.qml</file>
         <file>Controls/TabButton.qml</file>
         <file>Controls/TabBar.qml</file>
-        <file>Controls/MapPickButton.qml</file>
         <file>Controls/CheckBox.qml</file>
         <file>Controls/Switch.qml</file>
-        <file>Controls/Pane.qml</file>
+        <file>Controls/RadioButton.qml</file>
         <file>Controls/ToolBar.qml</file>
         <file>Controls/Label.qml</file>
         <file>Controls/Link.qml</file>
         <file>Controls/Menu.qml</file>
         <file>Controls/MenuItem.qml</file>
-        <file>Controls/Frame.qml</file>
         <file>Controls/ProgressBar.qml</file>
         <file>Controls/Slider.qml</file>
         <file>Controls/ComboBox.qml</file>
@@ -34,6 +34,7 @@
         <file>Controls/ToolTip.qml</file>
         <file>Controls/Swipeable.qml</file>
         <file>Controls/SideNav.qml</file>
+        <file>Controls/MapPickButton.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
         <file>Indicators/BarIndicator.qml</file>
