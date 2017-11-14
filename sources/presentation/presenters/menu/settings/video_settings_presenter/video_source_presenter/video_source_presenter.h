@@ -12,8 +12,6 @@ namespace domain
 
 namespace presentation
 {
-    class VideoPresenter;
-
     class VideoSourcePresenter: public BasePresenter
     {
         Q_OBJECT
@@ -33,13 +31,9 @@ namespace presentation
     protected:
         void connectView(QObject* view) override;
 
-    private slots:
-        void setupPreview(QObject* preview);
-
     private:
         domain::VideoService* const m_service;
         dao::VideoSourcePtr m_video;
-        VideoPresenter* m_preview;
     };
 }
 

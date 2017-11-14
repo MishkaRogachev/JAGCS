@@ -5,6 +5,7 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
 #include "service_registry.h"
 #include "video_service.h"
 #include "video_source.h"
@@ -47,6 +48,10 @@ void VideoSettingsPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(addDeviceVideo()), this, SLOT(onAddDeviceVideo()));
     connect(view, SIGNAL(addStreamVideo()), this, SLOT(onAddStreamVideo()));
+    connect(view, SIGNAL(setActiveVideo(int)), this, SLOT(onSetActiveVideo(int)));
+
+    this->setViewProperty(PROPERTY(activeVideo),
+                          settings::Provider::value(settings::video::activeVideo, -1).toInt());
 
     this->updateCameraInfo();
     this->updateVideoSources();
@@ -66,6 +71,13 @@ void VideoSettingsPresenter::onVideoSourceRemoved(const dao::VideoSourcePtr& vid
 
         d->videoPresenters.removeOne(videoPresenter);
         delete videoPresenter;
+
+        if (settings::Provider::value(settings::video::activeVideo, -1).toInt() == video->id())
+        {
+            settings::Provider::setValue(settings::video::activeVideo, -1);
+            this->setViewProperty(PROPERTY(activeVideo), -1);
+        }
+
         this->updateVideoSources();
         return;
     }
@@ -107,5 +119,10 @@ void VideoSettingsPresenter::onAddStreamVideo()
     dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
     video->setType(dao::VideoSource::Stream);
     d->service->save(video);
+}
+
+void VideoSettingsPresenter::onSetActiveVideo(int video)
+{
+    settings::Provider::setValue(settings::video::activeVideo, video);
 }
 

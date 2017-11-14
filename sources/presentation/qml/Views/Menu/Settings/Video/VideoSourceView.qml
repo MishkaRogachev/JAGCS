@@ -7,9 +7,11 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
-    property int number: 0
+    property int videoId: -1
     property int type: VideoSource.UnknownType
     property string source
+    property bool selected: false
+
     property bool changed: false
 
     signal save()
@@ -24,8 +26,11 @@ Controls.Frame {
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
 
-        Controls.Label {
-            text: qsTr("Video") + " " + number
+        Controls.RadioButton {
+            text: qsTr("Video") + " " + videoId
+            checked: root.selected
+            Controls.ButtonGroup.group: radioGroup
+            onCheckedChanged: if (checked) setActiveVideo(videoId)
             Layout.columnSpan: 2
             Layout.fillWidth: true
         }

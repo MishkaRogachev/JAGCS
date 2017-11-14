@@ -32,6 +32,7 @@ namespace presentation
 
         void onAddDeviceVideo();
         void onAddStreamVideo();
+        void onSetActiveVideo(int video);
 
     private:
         class Impl;

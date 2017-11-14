@@ -46,6 +46,11 @@ namespace settings
         const QString trackLength = "Map/trackLength";
     }
 
+    namespace video
+    {
+        const QString activeVideo = "Video/activeVideo";
+    }
+
     namespace joystick
     {
         const QString enabled = "Joystick/joystickEnabled";

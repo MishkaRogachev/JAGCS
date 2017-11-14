@@ -6,13 +6,17 @@ import "qrc:/Controls" as Controls
 Item {
     id: root
 
-    property var videoSources
+    property var videoSources: []
     property var videoDevices: []
+    property int activeVideo: -1
 
     signal addDeviceVideo()
     signal addStreamVideo()
+    signal setActiveVideo(int video)
 
     implicitWidth: palette.controlBaseSize * 11
+
+    Controls.ButtonGroup { id: radioGroup }
 
     Flickable {
         anchors.fill: parent
@@ -49,7 +53,7 @@ Item {
 
                 VideoSourceView {
                     id: sourceView
-                    number: index + 1
+                    selected: activeVideo == videoId
                     Layout.fillWidth: true
                     Component.onCompleted: modelData.setView(sourceView)
                 }
