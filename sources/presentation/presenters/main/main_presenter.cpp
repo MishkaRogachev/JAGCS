@@ -44,11 +44,12 @@ void MainPresenter::connectView(QObject* view)
     connect(d->map->handle(), SIGNAL(reloadMap()), view, SLOT(reloadMap()));
 
     d->map->setView(this->view()->findChild<QObject*>("map"));
-    connect(view, SIGNAL(requestPresenter(QString)), this, SLOT(onRequestPresenter(QString)));
+    connect(view, SIGNAL(requestPresenter(QString, QObject*)),
+            this, SLOT(onRequestPresenter(QString, QObject*)));
 }
 
-void MainPresenter::onRequestPresenter(const QString& view)
+void MainPresenter::onRequestPresenter(const QString& name, QObject* view)
 {
-    if (view == "map") d->map->setView(this->view()->findChild<QObject*>(view));
-    else if (view == "video") d->video->setView(this->view()->findChild<QObject*>(view));
+    if (name == "map") d->map->setView(view);
+    else if (name == "video") d->video->setView(view);
 }

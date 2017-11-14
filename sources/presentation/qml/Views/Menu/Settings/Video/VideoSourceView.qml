@@ -11,6 +11,7 @@ Controls.Frame {
     property int type: VideoSource.UnknownType
     property string source
     property bool selected: false
+    // TODO: video description
 
     property bool changed: false
 

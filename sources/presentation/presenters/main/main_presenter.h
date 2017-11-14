@@ -17,7 +17,7 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onRequestPresenter(const QString& view);
+        void onRequestPresenter(const QString& name, QObject* view);
 
     private:
         class Impl;

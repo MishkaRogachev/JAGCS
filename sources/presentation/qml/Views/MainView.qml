@@ -24,7 +24,7 @@ Rectangle {
 
     Component.onCompleted: reloadMap()
 
-    signal requestPresenter(string view)
+    signal requestPresenter(string name, QtObject view)
 
     color: palette.backgroundColor
 
@@ -44,7 +44,7 @@ Rectangle {
         onItemChanged: {
             if (!item) return;
 
-            main.requestPresenter(item.objectName);
+            main.requestPresenter(item.objectName, item);
             cornerMap ? video = item : map = item;
         }
     }
@@ -81,7 +81,7 @@ Rectangle {
         onItemChanged: {
             if (!item) return;
 
-            main.requestPresenter(item.objectName);
+            main.requestPresenter(item.objectName, item);
             cornerMap ? map = item : video = item;
         }
     }
