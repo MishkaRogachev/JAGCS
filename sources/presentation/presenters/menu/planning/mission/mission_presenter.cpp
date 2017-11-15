@@ -17,6 +17,8 @@
 #include "vehicle_service.h"
 #include "command_service.h"
 
+#include "map_handle.h"
+
 #include "mission_items_status_presenter.h"
 #include "mission_item_edit_presenter.h"
 
@@ -37,23 +39,10 @@ public:
 
 using namespace presentation;
 
-MissionPresenter::MissionPresenter(QObject* parent):
+MissionPresenter::MissionPresenter(MapHandle* handle, QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->itemsStatus = new MissionItemsStatusPresenter(this);
-    d->itemEdit = new MissionItemEditPresenter(this);
-
-    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
-            this, &MissionPresenter::missionItemSelected);
-    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
-            d->itemsStatus, &MissionItemsStatusPresenter::selectMissionItem);
-
-    connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
-            d->itemEdit, &MissionItemEditPresenter::selectItem);
-    connect(d->itemsStatus, &MissionItemsStatusPresenter::holded,
-            d->itemEdit, &MissionItemEditPresenter::enablePicker);
-
     d->missions.append(d->missionService->missions());
 
     connect(d->missionService, &domain::MissionService::missionAdded,
@@ -74,6 +63,26 @@ MissionPresenter::MissionPresenter(QObject* parent):
             this, &MissionPresenter::updateVehiclesBox);
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehiclesBox);
+
+    d->itemsStatus = new MissionItemsStatusPresenter(this);
+    d->itemEdit = new MissionItemEditPresenter(this);
+
+    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
+            this, &MissionPresenter::missionItemSelected);
+    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
+            d->itemsStatus, &MissionItemsStatusPresenter::selectMissionItem);
+
+    connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
+            d->itemEdit, &MissionItemEditPresenter::selectItem);
+    connect(d->itemsStatus, &MissionItemsStatusPresenter::holded,
+            d->itemEdit, &MissionItemEditPresenter::enablePicker);
+
+    connect(this, &MissionPresenter::missionItemSelected,
+            handle, &MapHandle::selectMissionItem);
+    connect(handle, &MapHandle::missionItemSelected,
+            this, &MissionPresenter::selectMissionItem);
+    connect(handle, &MapHandle::holded,
+            d->itemEdit, &MissionItemEditPresenter::enablePicker);
 }
 
 MissionPresenter::~MissionPresenter()
@@ -109,11 +118,6 @@ void MissionPresenter::selectMissionItem(const dao::MissionItemPtr& item)
     this->selectMission(d->missionService->mission(item->missionId()));
 
     d->itemEdit->selectItem(item->sequence());
-}
-
-void MissionPresenter::enablePicker()
-{
-    d->itemEdit->enablePicker();
 }
 
 void MissionPresenter::connectView(QObject* view)

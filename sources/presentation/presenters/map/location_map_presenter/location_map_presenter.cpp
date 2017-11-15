@@ -12,6 +12,8 @@
 #include "mission_line_map_item_model.h"
 #include "vehicle_map_item_model.h"
 
+#include "map_handle.h"
+
 using namespace presentation;
 
 class LocationMapPresenter::Impl
@@ -34,8 +36,8 @@ LocationMapPresenter::LocationMapPresenter(QObject* object):
     d(new Impl())
 {
     connect(&d->pointModel, &MissionPointMapItemModel::missionItemSelected,
-            this, &LocationMapPresenter::missionItemSelected);
-    connect(&d->pointModel, &MissionPointMapItemModel::holded, this, &LocationMapPresenter::holded);
+            m_handle, &MapHandle::missionItemSelected);
+    connect(&d->pointModel, &MissionPointMapItemModel::holded,  m_handle, &MapHandle::holded);
 }
 
 LocationMapPresenter::~LocationMapPresenter()

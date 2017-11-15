@@ -18,9 +18,9 @@
 
 using namespace presentation;
 
-AerialDashboardFactory::AerialDashboardFactory(AbstractMapPresenter* map,
+AerialDashboardFactory::AerialDashboardFactory(MapHandle* handle,
                                                const dao::VehiclePtr& vehicle):
-    GenericDashboardFactory(map, vehicle)
+    GenericDashboardFactory(handle, vehicle)
 {}
 
 DashboardPresenter* AerialDashboardFactory::create()

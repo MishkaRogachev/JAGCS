@@ -7,18 +7,19 @@
 
 namespace presentation
 {
+    class MapHandle;
+
     class MissionPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionPresenter(QObject* parent = nullptr);
+        explicit MissionPresenter(MapHandle* handle, QObject* parent = nullptr);
         ~MissionPresenter() override;
 
     public slots:
         void selectMission(const dao::MissionPtr& mission);
         void selectMissionItem(const dao::MissionItemPtr& item);
-        void enablePicker();
 
     protected:
         void connectView(QObject* view) override;
