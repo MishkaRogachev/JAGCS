@@ -7,27 +7,23 @@
 
 namespace presentation
 {
+    class MapHandle;
+
     class MissionItemEditPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionItemEditPresenter(QObject* object = nullptr);
+        explicit MissionItemEditPresenter(MapHandle* handle, QObject* object = nullptr);
         ~MissionItemEditPresenter() override;
 
-        dao::MissionPtr selectedMission() const;
-
     public slots:
-        void selectMission(const dao::MissionPtr& mission);
         void enablePicker();
 
         void remove();
-        void selectItem(int index);
+        void selectItem(int index); // TODO: remove mission from MissionItemEditPresenter
         void save();
         void updateView();
-
-    signals:
-        void itemSelected(const dao::MissionItemPtr& item);
 
     protected:
         void connectView(QObject* view) override;
@@ -36,6 +32,9 @@ namespace presentation
         void updateCount();
         void updateAvailableCommands();
         void onUpdateCommand(int commandIndex);
+
+        void onMissionSelected(const dao::MissionPtr& mission);
+        void onMissionItemSelected(const dao::MissionItemPtr& item);
 
         void onChangeSequence(int sequence);
 

@@ -99,7 +99,7 @@ void ControlPresenter::onSelectVehicle(int index)
     {
         dao::VehiclePtr vehicle = vehicles[index - 1];
 
-        d->map->selectVehicle(vehicle);
+        //FIXME: d->map->selectVehicle(vehicle);
         d->commander->setControlVehicle(vehicle->id());
 
         AerialDashboardFactory factory(d->map->handle(), vehicle);
@@ -117,7 +117,7 @@ void ControlPresenter::onSelectVehicle(int index)
     else
     {
         d->dashboard = nullptr;
-        d->map->selectVehicle(dao::VehiclePtr());
+        //FIXME: d->map->selectVehicle(dao::VehiclePtr());
 
         d->commander->setControlVehicle(0);
 

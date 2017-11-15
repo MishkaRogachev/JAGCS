@@ -26,6 +26,7 @@ namespace presentation
         virtual void setMapCenter(double latitude, double longitude) = 0;
         virtual void setZoomLevel(float zoomLevel) = 0;
 
+    private slots:
         virtual void selectMissionItem(const dao::MissionItemPtr& item) = 0;
         virtual void selectVehicle(const dao::VehiclePtr& vehicle) = 0;
 

@@ -35,6 +35,8 @@ public:
 
     MissionItemsStatusPresenter* itemsStatus;
     MissionItemEditPresenter* itemEdit;
+
+    MapHandle* handle;
 };
 
 using namespace presentation;
@@ -44,14 +46,12 @@ MissionPresenter::MissionPresenter(MapHandle* handle, QObject* parent):
     d(new Impl())
 {
     d->missions.append(d->missionService->missions());
-
     connect(d->missionService, &domain::MissionService::missionAdded,
             this, &MissionPresenter::onMissionAdded);
     connect(d->missionService, &domain::MissionService::missionRemoved,
             this, &MissionPresenter::onMissionRemoved);
     connect(d->missionService, &domain::MissionService::missionChanged,
             this, &MissionPresenter::onMissionChanged);
-
     connect(d->missionService, &domain::MissionService::assignmentAdded,
             this, &MissionPresenter::updateAssignment);
     connect(d->missionService, &domain::MissionService::assignmentRemoved,
@@ -64,61 +64,16 @@ MissionPresenter::MissionPresenter(MapHandle* handle, QObject* parent):
     connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &MissionPresenter::updateVehiclesBox);
 
-    d->itemsStatus = new MissionItemsStatusPresenter(this);
-    d->itemEdit = new MissionItemEditPresenter(this);
+    d->itemsStatus = new MissionItemsStatusPresenter(handle, this);
+    d->itemEdit = new MissionItemEditPresenter(handle, this);
+    d->handle = handle;
 
-    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
-            this, &MissionPresenter::missionItemSelected);
-    connect(d->itemEdit, &MissionItemEditPresenter::itemSelected,
-            d->itemsStatus, &MissionItemsStatusPresenter::selectMissionItem);
-
-    connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
-            d->itemEdit, &MissionItemEditPresenter::selectItem);
-    connect(d->itemsStatus, &MissionItemsStatusPresenter::holded,
-            d->itemEdit, &MissionItemEditPresenter::enablePicker);
-
-    connect(this, &MissionPresenter::missionItemSelected,
-            handle, &MapHandle::selectMissionItem);
-    connect(handle, &MapHandle::missionItemSelected,
-            this, &MissionPresenter::selectMissionItem);
-    connect(handle, &MapHandle::holded,
-            d->itemEdit, &MissionItemEditPresenter::enablePicker);
+    d->selectedMission = handle->selectedMission();
+    connect(handle, &MapHandle::missionSelected, this, &MissionPresenter::onMissionSelected);
 }
 
 MissionPresenter::~MissionPresenter()
 {}
-
-void MissionPresenter::selectMission(const dao::MissionPtr& mission)
-{
-    if (d->selectedMission == mission) return;
-
-    d->selectedMission = mission;
-
-    d->itemsStatus->selectMission(mission);
-    d->itemEdit->selectMission(mission);
-
-    this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
-
-    if (mission)
-    {
-        this->setViewProperty(PROPERTY(missionVisible),
-                              settings::Provider::value(settings::mission::visibility + "/" + mission->id()));
-    }
-    else this->setViewProperty(PROPERTY(missionVisible), false);
-
-    this->updateAssignment();
-
-    emit missionSelected(mission);
-}
-
-void MissionPresenter::selectMissionItem(const dao::MissionItemPtr& item)
-{
-    if (!item) return;
-
-    this->selectMission(d->missionService->mission(item->missionId()));
-
-    d->itemEdit->selectItem(item->sequence());
-}
 
 void MissionPresenter::connectView(QObject* view)
 {
@@ -167,6 +122,23 @@ void MissionPresenter::onMissionChanged(const dao::MissionPtr& mission)
     Q_UNUSED(mission)
 
     this->updateMissionsBox();
+}
+
+void MissionPresenter::onMissionSelected(const dao::MissionPtr& mission)
+{
+    if (d->selectedMission == mission) return;
+
+    d->selectedMission = mission;
+    this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
+
+    if (mission)
+    {
+        this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
+                                  settings::mission::visibility + "/" + mission->id()));
+    }
+    else this->setViewProperty(PROPERTY(missionVisible), false);
+
+    this->updateAssignment();
 }
 
 void MissionPresenter::updateMissionsBox()
@@ -235,11 +207,11 @@ void MissionPresenter::onSelectMission(int index)
 {
     if (index > 0 && index < d->missions.count() + 1)
     {
-        this->selectMission(d->missions.at(index - 1));
+        d->handle->selectMission(d->missions.at(index - 1));
     }
     else
     {
-        this->selectMission(dao::MissionPtr());
+        d->handle->selectMission(dao::MissionPtr());
     }
 }
 
@@ -250,7 +222,7 @@ void MissionPresenter::onAddMission()
     mission->setName(tr("New Mission %1").arg(d->missionService->missions().count()));
 
     d->missionService->save(mission);
-    this->selectMission(mission);
+    d->handle->selectMission(mission);
 }
 
 void MissionPresenter::onAddItem(int command)
@@ -270,8 +242,6 @@ void MissionPresenter::onRemoveMission()
     d->missionService->remove(d->selectedMission);
     d->selectedMission.clear();
     this->setViewProperty(PROPERTY(selectedMission), 0);
-
-    d->itemEdit->selectMission(dao::MissionPtr());
 }
 
 void MissionPresenter::onRenameMission(const QString& name)

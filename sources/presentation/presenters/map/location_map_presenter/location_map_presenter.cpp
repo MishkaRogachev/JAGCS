@@ -36,8 +36,8 @@ LocationMapPresenter::LocationMapPresenter(QObject* object):
     d(new Impl())
 {
     connect(&d->pointModel, &MissionPointMapItemModel::missionItemSelected,
-            m_handle, &MapHandle::missionItemSelected);
-    connect(&d->pointModel, &MissionPointMapItemModel::holded,  m_handle, &MapHandle::holded);
+            m_handle, &MapHandle::selectMissionItem);
+    connect(&d->pointModel, &MissionPointMapItemModel::holded, m_handle, &MapHandle::holded);
 }
 
 LocationMapPresenter::~LocationMapPresenter()
@@ -73,6 +73,15 @@ void LocationMapPresenter::setZoomLevel(float zoomLevel)
     this->setViewProperty(PROPERTY(zoomLevel), zoomLevel);
 }
 
+void LocationMapPresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
+    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
+    this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
+}
+
 void LocationMapPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 {
     d->pointModel.setSelectedItem(item);
@@ -81,13 +90,4 @@ void LocationMapPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 void LocationMapPresenter::selectVehicle(const dao::VehiclePtr& vehicle)
 {
     d->vehicleModel.setSelectedVehicle(vehicle);
-}
-
-void LocationMapPresenter::connectView(QObject* view)
-{
-    Q_UNUSED(view)
-
-    this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
-    this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
-    this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
 }

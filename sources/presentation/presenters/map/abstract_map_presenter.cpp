@@ -15,7 +15,7 @@ AbstractMapPresenter::AbstractMapPresenter(QObject* object):
     BasePresenter(object),
     m_handle(new MapHandle(this))
 {
-    connect(m_handle, &MapHandle::selectMissionItem,
+    connect(m_handle, &MapHandle::missionItemSelected,
             this, &AbstractMapPresenter::selectMissionItem);
     connect(m_handle, &MapHandle::selectVehicle,
             this, &AbstractMapPresenter::selectVehicle);

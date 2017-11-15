@@ -17,10 +17,6 @@ namespace presentation
         explicit MissionPresenter(MapHandle* handle, QObject* parent = nullptr);
         ~MissionPresenter() override;
 
-    public slots:
-        void selectMission(const dao::MissionPtr& mission);
-        void selectMissionItem(const dao::MissionItemPtr& item);
-
     protected:
         void connectView(QObject* view) override;
         void setViewConnected(bool connected);
@@ -29,6 +25,8 @@ namespace presentation
         void onMissionAdded(const dao::MissionPtr& mission);
         void onMissionRemoved(const dao::MissionPtr& mission);
         void onMissionChanged(const dao::MissionPtr& mission);
+
+        void onMissionSelected(const dao::MissionPtr& mission);
 
         void updateMissionsBox();
         void updateVehiclesBox();
@@ -44,10 +42,6 @@ namespace presentation
         void onUploadMission();
         void onDownloadMission();
         void onCancelSyncMission();
-
-    signals:
-        void missionSelected(const dao::MissionPtr& mission);
-        void missionItemSelected(const dao::MissionItemPtr& item);
 
     private:
         class Impl;

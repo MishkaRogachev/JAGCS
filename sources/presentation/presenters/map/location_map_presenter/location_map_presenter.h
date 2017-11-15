@@ -22,11 +22,12 @@ namespace presentation
         void setMapCenter(double latitude, double longitude) override;
         void setZoomLevel(float zoomLevel) override;
 
-        void selectMissionItem(const dao::MissionItemPtr& item) override;
-        void selectVehicle(const dao::VehiclePtr& vehicle) override;
-
     protected:
         void connectView(QObject* view) override;
+
+    private slots:
+        void selectMissionItem(const dao::MissionItemPtr& item) override;
+        void selectVehicle(const dao::VehiclePtr& vehicle) override;
 
     private:
         class Impl;

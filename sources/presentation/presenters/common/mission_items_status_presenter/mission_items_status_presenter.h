@@ -6,20 +6,18 @@
 
 namespace presentation
 {
+    class MapHandle;
+
     class MissionItemsStatusPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionItemsStatusPresenter(QObject* object = nullptr);
+        explicit MissionItemsStatusPresenter(MapHandle* handle, QObject* object = nullptr);
         ~MissionItemsStatusPresenter() override;
 
         dao::MissionPtr mission() const;
         dao::MissionItemPtr missionItem() const;
-
-    public slots:
-        void selectMission(const dao::MissionPtr& mission);
-        void selectMissionItem(const dao::MissionItemPtr& item);
 
     protected:
         void connectView(QObject* view) override;
@@ -29,9 +27,10 @@ namespace presentation
         void updateMissionItem(const dao::MissionItemPtr& item);
         void updateSelectedItem();
 
-    signals:
-        void selectItem(int index);
-        void holded();
+        void onMissionSelected(const dao::MissionPtr& mission);
+        void onMissionItemSelected(const dao::MissionItemPtr& item);
+
+        void onSelectItem(int index);
 
     private:
         class Impl;

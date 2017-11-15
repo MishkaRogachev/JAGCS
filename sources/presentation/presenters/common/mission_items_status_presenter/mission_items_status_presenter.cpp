@@ -11,6 +11,8 @@
 #include "mission.h"
 #include "mission_item.h"
 
+#include "map_handle.h"
+
 using namespace presentation;
 
 class MissionItemsStatusPresenter::Impl
@@ -20,18 +22,30 @@ public:
 
     dao::MissionPtr mission;
     dao::MissionItemPtr item;
+
+    MapHandle* handle;
 };
 
-MissionItemsStatusPresenter::MissionItemsStatusPresenter(QObject* object):
+MissionItemsStatusPresenter::MissionItemsStatusPresenter(MapHandle* handle, QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
+    d->mission = handle->selectedMission();
+    d->item = handle->selectedMissionItem();
+
+    d->handle = handle;
+
     connect(d->service, &domain::MissionService::missionItemAdded,
             this, &MissionItemsStatusPresenter::updateItemsStatus);
     connect(d->service, &domain::MissionService::missionItemRemoved,
             this, &MissionItemsStatusPresenter::updateItemsStatus);
     connect(d->service, &domain::MissionService::missionItemChanged,
             this, &MissionItemsStatusPresenter::updateMissionItem);
+
+    connect(d->handle, &MapHandle::missionSelected,
+            this, &MissionItemsStatusPresenter::onMissionSelected);
+    connect(d->handle, &MapHandle::missionItemSelected,
+            this, &MissionItemsStatusPresenter::onMissionItemSelected);
 }
 
 MissionItemsStatusPresenter::~MissionItemsStatusPresenter()
@@ -47,25 +61,9 @@ dao::MissionItemPtr MissionItemsStatusPresenter::missionItem() const
     return d->item;
 }
 
-void MissionItemsStatusPresenter::selectMission(const dao::MissionPtr& mission)
-{
-    d->mission = mission;
-
-    this->updateItemsStatus();
-}
-
-void MissionItemsStatusPresenter::selectMissionItem(const dao::MissionItemPtr& item)
-{
-    // don't check, cause sequence could changed
-    d->item = item;
-
-    this->updateSelectedItem();
-}
-
 void MissionItemsStatusPresenter::connectView(QObject* view)
 {
-    connect(view, SIGNAL(selectItem(int)), this, SIGNAL(selectItem(int)));
-    connect(view, SIGNAL(holded()), this, SIGNAL(holded()));
+    connect(view, SIGNAL(selectItem(int)), this, SLOT(onSelectItem(int)));
 
     this->updateItemsStatus();
     this->updateSelectedItem();
@@ -97,4 +95,31 @@ void MissionItemsStatusPresenter::updateMissionItem(const dao::MissionItemPtr& i
 void MissionItemsStatusPresenter::updateSelectedItem()
 {
     this->setViewProperty(PROPERTY(selectedItem), d->item ? d->item->sequence() : -1);
+}
+
+void MissionItemsStatusPresenter::onMissionSelected(const dao::MissionPtr& mission)
+{
+    d->mission = mission;
+
+    this->updateItemsStatus();
+}
+
+void MissionItemsStatusPresenter::onMissionItemSelected(const dao::MissionItemPtr& item)
+{
+    // don't check, cause sequence could changed
+    d->item = item;
+
+    this->updateSelectedItem();
+}
+
+void MissionItemsStatusPresenter::onSelectItem(int index)
+{
+    if (d->mission.isNull() || index == -1)
+    {
+        d->handle->selectMissionItem(dao::MissionItemPtr());
+    }
+    else
+    {
+        d->handle->selectMissionItem(d->service->missionItem(d->mission->id(), index));
+    }
 }

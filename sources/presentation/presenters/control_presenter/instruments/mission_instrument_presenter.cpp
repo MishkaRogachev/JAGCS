@@ -33,7 +33,7 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
 {
     d->assignment = d->missionService->vehicleAssignment(vehicleId);
 
-    d->itemsStatus = new MissionItemsStatusPresenter(this);
+    /*FIXME: d->itemsStatus = new MissionItemsStatusPresenter(this);
     connect(d->itemsStatus, &MissionItemsStatusPresenter::selectItem,
             this, &MissionInstrumentPresenter::onSelectItem);
     connect(d->itemsStatus, &MissionItemsStatusPresenter::holded,
@@ -47,7 +47,7 @@ MissionInstrumentPresenter::MissionInstrumentPresenter(int vehicleId, QObject* p
             d->itemsStatus->selectMissionItem(
                         d->missionService->missionItem(d->assignment->missionId(), sequence));
         });
-    }
+    }*/
 
     connect(d->missionService, &domain::MissionService::assignmentChanged,
             this, [this](const dao::MissionAssignmentPtr& assignment) {
@@ -73,7 +73,7 @@ void MissionInstrumentPresenter::onCancelSyncMission()
 
 void MissionInstrumentPresenter::selectMissionItem(const dao::MissionItemPtr& item)
 {
-    if (d->assignment && item && item->missionId() == d->assignment->missionId())
+    /*if (d->assignment && item && item->missionId() == d->assignment->missionId())
     {
         d->itemsStatus->selectMissionItem(item);
     }
@@ -82,13 +82,13 @@ void MissionInstrumentPresenter::selectMissionItem(const dao::MissionItemPtr& it
         d->itemsStatus->selectMissionItem(dao::MissionItemPtr());
     }
 
-    emit missionItemSelected(d->itemsStatus->missionItem());
+    emit missionItemSelected(d->itemsStatus->missionItem());*/
 }
 
 void MissionInstrumentPresenter::connectView(QObject* view)
 {
-    QObject* statusView = view->findChild<QObject*>(NAME(itemsStatus));
-    if (statusView) d->itemsStatus->setView(statusView);
+    //QObject* statusView = view->findChild<QObject*>(NAME(itemsStatus));
+    //if (statusView) d->itemsStatus->setView(statusView);
 
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));

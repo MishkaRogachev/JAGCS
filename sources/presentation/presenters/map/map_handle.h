@@ -9,28 +9,36 @@
 
 namespace presentation
 {
-    class AbstractMapPresenter;
-
     class MapHandle: public QObject
     {
         Q_OBJECT
 
     public:
-        MapHandle(AbstractMapPresenter* map);
+        explicit MapHandle(QObject* parent = nullptr);
+        ~MapHandle() override;
+
+        dao::MissionPtr selectedMission() const;
+        dao::MissionItemPtr selectedMissionItem() const;
+
+    public slots:
+        void selectMission(const dao::MissionPtr& mission);
+        void selectMissionItem(const dao::MissionItemPtr& item);
 
     signals:
         void reloadMap();
 
-        // Signals to map
-        void selectMissionItem(const dao::MissionItemPtr& item);
+        // TODO: m_trackingVehicle
         void selectVehicle(const dao::VehiclePtr& vehicle);
 
         // Signals from map
+        void missionSelected(const dao::MissionPtr& mission);
         void missionItemSelected(const dao::MissionItemPtr& item);
+
         void holded();
 
     private:
-        AbstractMapPresenter* const m_map;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
