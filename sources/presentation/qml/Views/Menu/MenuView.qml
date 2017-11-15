@@ -118,7 +118,8 @@ Controls.Pane {
             menuModel: [
                 { text: qsTr("Communications"), component: commComponent },
                 { text: qsTr("Vehicles"), component: vehiclesComponent },
-                { text: qsTr("Planning"), component: planningComponent },
+// TMP               { text: qsTr("Planning"), component: planningComponent },
+                { text: qsTr("Mission"), component: missionComponent },
                 { text: qsTr("Settings"), component: settingsMenuComponent },
                 { text: qsTr("About"), component: aboutComponent },
                 { text: qsTr("Quit"), component: quitComponent }
@@ -129,17 +130,18 @@ Controls.Pane {
     Component { id: commComponent; CommunicationsView { objectName: "communications" } }
     Component { id: vehiclesComponent; VehiclesView { objectName: "vehicles" } }
 
+    /* TMP: survey
     Component {
         id: planningComponent
 
         Controls.SideNav {
             menuModel: [
                 { text: qsTr("Mission"), component: missionComponent },
-//                { text: qsTr("Survey"), component: surveyComponent },
-//                { text: qsTr("Fence"), component: fenceComponent },
+                { text: qsTr("Survey"), component: surveyComponent },
+                { text: qsTr("Fence"), component: fenceComponent },
             ]
         }
-    }
+    }*/
 
     Component { id: missionComponent; MissionView { objectName: "mission" } }
 
