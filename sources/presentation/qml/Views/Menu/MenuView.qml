@@ -6,7 +6,7 @@ import "../../Controls" as Controls
 import "Communications"
 import "Vehicles"
 
-import "Planning/Mission"
+import "Planning"
 
 import "Settings/Database"
 import "Settings/Video"
@@ -118,8 +118,7 @@ Controls.Pane {
             menuModel: [
                 { text: qsTr("Communications"), component: commComponent },
                 { text: qsTr("Vehicles"), component: vehiclesComponent },
-// TMP               { text: qsTr("Planning"), component: planningComponent },
-                { text: qsTr("Mission"), component: missionComponent },
+                { text: qsTr("Planning"), component: planningComponent },
                 { text: qsTr("Settings"), component: settingsMenuComponent },
                 { text: qsTr("About"), component: aboutComponent },
                 { text: qsTr("Quit"), component: quitComponent }
@@ -129,21 +128,7 @@ Controls.Pane {
 
     Component { id: commComponent; CommunicationsView { objectName: "communications" } }
     Component { id: vehiclesComponent; VehiclesView { objectName: "vehicles" } }
-
-    /* TMP: survey
-    Component {
-        id: planningComponent
-
-        Controls.SideNav {
-            menuModel: [
-                { text: qsTr("Mission"), component: missionComponent },
-                { text: qsTr("Survey"), component: surveyComponent },
-                { text: qsTr("Fence"), component: fenceComponent },
-            ]
-        }
-    }*/
-
-    Component { id: missionComponent; MissionView { objectName: "mission" } }
+    Component { id: planningComponent; PlanningView { objectName: "planning" } }
 
     Component {
         id: settingsMenuComponent

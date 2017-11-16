@@ -98,6 +98,7 @@
         <file>Views/Menu/Vehicles/VehicleDescriptionView.qml</file>
         <file>Views/Menu/Communications/CommunicationsView.qml</file>
         <file>Views/Menu/Communications/CommunicationLinkView.qml</file>
+        <file>Views/Menu/Planning/PlanningView.qml</file>
         <file>Views/Menu/Planning/Mission/MissionView.qml</file>
         <file>Views/Menu/Planning/Mission/MissionItemEditView.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>

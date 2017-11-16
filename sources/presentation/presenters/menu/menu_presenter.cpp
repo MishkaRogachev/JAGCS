@@ -7,8 +7,7 @@
 // Internal
 #include "communications_presenter.h"
 #include "vehicles_presenter.h"
-
-#include "mission_presenter.h"
+#include "planning_presenter.h"
 
 #include "database_presenter.h"
 #include "map_settings_presenter.h"
@@ -54,8 +53,7 @@ void MenuPresenter::onRequestPresenter(const QString& view)
 
     if (view == "communications") d->presenter = new CommunicationsPresenter(this);
     else if (view == "vehicles") d->presenter = new VehiclesPresenter(this);
-
-    else if (view == "mission") d->presenter = new MissionPresenter(d->handle, this);
+    else if (view == "planning") d->presenter = new PlanningPresenter(this);
 
     else if (view == "database") d->presenter = new DatabasePresenter(this);
     else if (view == "map") d->presenter = new MapSettingsPresenter(this);
