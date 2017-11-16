@@ -26,6 +26,8 @@ namespace presentation
         void onMissionRemoved(const dao::MissionPtr& mission);
         void onMissionChanged(const dao::MissionPtr& mission);
 
+        void onAddMission();
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

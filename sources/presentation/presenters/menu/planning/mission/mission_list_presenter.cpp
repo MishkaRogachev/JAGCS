@@ -22,7 +22,7 @@ class MissionListPresenter::Impl
 public:
     domain::MissionService* service = domain::ServiceRegistry::missionService();
 
-     QMap<int, MissionPresenter*> missionPresenters;
+     QMap<dao::MissionPtr, MissionPresenter*> missionPresenters;
 };
 
 MissionListPresenter::MissionListPresenter(QObject* parent):
@@ -38,7 +38,7 @@ MissionListPresenter::MissionListPresenter(QObject* parent):
 
     for (const dao::MissionPtr& mission: d->service->missions())
     {
-        d->missionPresenters[mission->id()] = new MissionPresenter(mission, this);
+        d->missionPresenters[mission] = new MissionPresenter(mission, this);
     }
 }
 
@@ -58,28 +58,38 @@ void MissionListPresenter::updateMissions()
 
 void MissionListPresenter::connectView(QObject* view)
 {
+    connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
+
     this->updateMissions();
 }
 
 void MissionListPresenter::onMissionAdded(const dao::MissionPtr& mission)
 {
-    if (d->missionPresenters.contains(mission->id())) return;
+    if (d->missionPresenters.contains(mission)) return;
 
-    d->missionPresenters[mission->id()] = new MissionPresenter(mission, this);
+    d->missionPresenters[mission] = new MissionPresenter(mission, this);
     this->updateMissions();
 }
 
 void MissionListPresenter::onMissionRemoved(const dao::MissionPtr& mission)
 {
-    if (!d->missionPresenters.contains(mission->id())) return;
+    if (!d->missionPresenters.contains(mission)) return;
 
-    delete d->missionPresenters.take(mission->id());
+    delete d->missionPresenters.take(mission);
     this->updateMissions();
 }
 
 void MissionListPresenter::onMissionChanged(const dao::MissionPtr& mission)
 {
-    if (!d->missionPresenters.contains(mission->id())) return;
+    if (!d->missionPresenters.contains(mission)) return;
 
-    d->missionPresenters[mission->id()]->updateView();
+    d->missionPresenters[mission]->updateView();
+}
+
+void MissionListPresenter::onAddMission()
+{
+    dao::MissionPtr mission = dao::MissionPtr::create();
+    mission->setName(tr("New Mission"));
+
+    d->service->save(mission);
 }
