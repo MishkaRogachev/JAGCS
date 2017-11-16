@@ -8,7 +8,9 @@ import "Mission"
 Item {
     id: root
 
-    implicitWidth: palette.controlBaseSize * 11
+    property var vehicles: []
+
+    implicitWidth: palette.controlBaseSize * 10
 
     Flickable {
         anchors.fill: parent

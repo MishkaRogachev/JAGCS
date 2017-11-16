@@ -8,11 +8,11 @@ Controls.Frame {
     id: root
 
     property bool missionVisible: false
-    property int assignedVehicle: -1
     property int status: MissionAssignment.NotActual
 
     property bool changed: false
 
+    property int assignedVehicle: vehicleBox.currentIndex
     property alias name: nameEdit.text
 
     signal restore()
@@ -36,6 +36,17 @@ Controls.Frame {
         Controls.TextField {
             id: nameEdit
             onTextChanged: changed = true
+            Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: qsTr("Vehicle")
+        }
+
+        Controls.ComboBox {
+            id: vehicleBox
+            model: vehicles
+            onActivated: changed = true
             Layout.fillWidth: true
         }
 

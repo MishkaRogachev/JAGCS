@@ -13,6 +13,9 @@ namespace presentation
         explicit PlanningPresenter(QObject* parent = nullptr);
         ~PlanningPresenter() override;
 
+    public slots:
+        void updateVehicles();
+
     protected:
         void connectView(QObject* view) override;
 
