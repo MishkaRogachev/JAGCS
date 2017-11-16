@@ -24,6 +24,7 @@ GridLayout {
     signal save()
     signal restore()
 
+    onChangedChanged: if (!changed) main.reloadMap() // TODO: reload map on change
     onPluginChanged: updateMapTypes()
 
     Connections {

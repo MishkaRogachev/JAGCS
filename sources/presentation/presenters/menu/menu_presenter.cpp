@@ -58,7 +58,7 @@ void MenuPresenter::onRequestPresenter(const QString& view)
     else if (view == "mission") d->presenter = new MissionPresenter(d->handle, this);
 
     else if (view == "database") d->presenter = new DatabasePresenter(this);
-    else if (view == "map") d->presenter = new MapSettingsPresenter(d->handle, this);
+    else if (view == "map") d->presenter = new MapSettingsPresenter(this);
     else if (view == "video") d->presenter = new VideoSettingsPresenter(this);
     else if (view == "joystick") d->presenter = new JoystickSettingsPresenter(this);
     else if (view == "gui") d->presenter = new GuiSettingsPresenter(this);

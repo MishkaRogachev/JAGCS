@@ -41,8 +41,6 @@ void MainPresenter::connectView(QObject* view)
     d->topbar->setView(view->findChild<QObject*>(NAME(topbar)));
     d->menu->setView(view->findChild<QObject*>(NAME(menu)));
 
-    connect(d->map->handle(), SIGNAL(reloadMap()), view, SLOT(reloadMap()));
-
     d->map->setView(this->view()->findChild<QObject*>("map"));
     connect(view, SIGNAL(requestPresenter(QString, QObject*)),
             this, SLOT(onRequestPresenter(QString, QObject*)));

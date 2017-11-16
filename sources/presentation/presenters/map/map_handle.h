@@ -25,8 +25,6 @@ namespace presentation
         void selectMissionItem(const dao::MissionItemPtr& item);
 
     signals:
-        void reloadMap();
-
         // TODO: m_trackingVehicle
         void selectVehicle(const dao::VehiclePtr& vehicle);
 

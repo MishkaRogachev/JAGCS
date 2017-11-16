@@ -5,14 +5,12 @@
 
 namespace presentation
 {
-    class MapHandle;
-
     class MapSettingsPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MapSettingsPresenter(MapHandle* handle, QObject* parent);
+        explicit MapSettingsPresenter(QObject* parent);
 
     public slots:
         void updateView();
@@ -20,9 +18,6 @@ namespace presentation
 
     protected:
         void connectView(QObject* view) override;
-
-    private:
-        MapHandle* m_handle;
     };
 }
 

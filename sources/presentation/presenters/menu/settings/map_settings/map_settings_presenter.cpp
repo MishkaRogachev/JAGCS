@@ -9,9 +9,8 @@
 
 using namespace presentation;
 
-MapSettingsPresenter::MapSettingsPresenter(MapHandle* handle, QObject* parent):
-    BasePresenter(parent),
-    m_handle(handle)
+MapSettingsPresenter::MapSettingsPresenter(QObject* parent):
+    BasePresenter(parent)
 {}
 
 void MapSettingsPresenter::updateView()
@@ -52,8 +51,6 @@ void MapSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(trackLength)).toInt());
 
     this->setViewProperty(PROPERTY(changed), false);
-
-    m_handle->reloadMap();
 }
 
 void MapSettingsPresenter::connectView(QObject* view)
