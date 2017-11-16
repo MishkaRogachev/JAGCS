@@ -10,8 +10,8 @@ include(cmake/RecurseSubdirs.cmake)
 
 # Versions
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 4)
-set(VERSION_PATCH 1)
+set(VERSION_MINOR 5)
+set(VERSION_PATCH 0)
 
 # Get git revision hash
 execute_process(
