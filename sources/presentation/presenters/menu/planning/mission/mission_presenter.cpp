@@ -8,155 +8,37 @@
 #include "settings_provider.h"
 
 #include "mission.h"
-#include "mission_item.h"
-#include "mission_assignment.h"
-#include "vehicle.h"
-
-#include "service_registry.h"
-#include "mission_service.h"
-#include "vehicle_service.h"
-#include "command_service.h"
-
-#include "map_handle.h"
-
-#include "mission_items_status_presenter.h"
-#include "mission_item_edit_presenter.h"
 
 using namespace presentation;
 
-class MissionPresenter::Impl
-{
-public:
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
-
-    dao::MissionPtr selectedMission;
-    dao::MissionPtrList missions;
-
-    MissionItemsStatusPresenter* itemsStatus;
-    MissionItemEditPresenter* itemEdit;
-
-    MapHandle* handle;
-};
-
-using namespace presentation;
-
-MissionPresenter::MissionPresenter(MapHandle* handle, QObject* parent):
+MissionPresenter::MissionPresenter(const dao::MissionPtr& mission, QObject* parent):
     BasePresenter(parent),
-    d(new Impl())
-{
-    d->missions.append(d->missionService->missions());
-    connect(d->missionService, &domain::MissionService::missionAdded,
-            this, &MissionPresenter::onMissionAdded);
-    connect(d->missionService, &domain::MissionService::missionRemoved,
-            this, &MissionPresenter::onMissionRemoved);
-    connect(d->missionService, &domain::MissionService::missionChanged,
-            this, &MissionPresenter::onMissionChanged);
-    connect(d->missionService, &domain::MissionService::assignmentAdded,
-            this, &MissionPresenter::updateAssignment);
-    connect(d->missionService, &domain::MissionService::assignmentRemoved,
-            this, &MissionPresenter::updateAssignment);
-    connect(d->missionService, &domain::MissionService::assignmentChanged,
-            this, &MissionPresenter::updateAssignment);
-
-    connect(d->vehicleService, &domain::VehicleService::vehicleAdded,
-            this, &MissionPresenter::updateVehiclesBox);
-    connect(d->vehicleService, &domain::VehicleService::vehicleRemoved,
-            this, &MissionPresenter::updateVehiclesBox);
-
-    d->itemsStatus = new MissionItemsStatusPresenter(handle, this);
-    d->itemEdit = new MissionItemEditPresenter(handle, this);
-    d->handle = handle;
-
-    d->selectedMission = handle->selectedMission();
-    connect(handle, &MapHandle::missionSelected, this, &MissionPresenter::onMissionSelected);
-}
+    m_mission(mission)
+{}
 
 MissionPresenter::~MissionPresenter()
 {}
 
+void MissionPresenter::updateView()
+{
+    this->setViewProperty(PROPERTY(name), m_mission->name());
+    this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
+                              settings::mission::visibility + "/" + m_mission->id()));
+}
+
 void MissionPresenter::connectView(QObject* view)
 {
-    d->itemsStatus->setView(view->findChild<QObject*>(NAME(itemsStatus)));
-    d->itemEdit->setView(view->findChild<QObject*>(NAME(itemEdit)));
+//    connect(view, SIGNAL(remove()), this, SLOT(onRemove()));
+//    connect(view, SIGNAL(rename(QString)), this, SLOT(onRename(QString)));
+//    connect(view, SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
+    connect(view, SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
+//    connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
+//    connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
+//    connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
 
-    this->updateVehiclesBox();
-    this->updateMissionsBox();
+    this->updateView();
 }
-
-void MissionPresenter::setViewConnected(bool connected)
-{
-    if (connected)
-    {
-        connect(this->view(), SIGNAL(selectMission(int)), this, SLOT(onSelectMission(int)));
-        connect(this->view(), SIGNAL(addMission()), this, SLOT(onAddMission()));
-        connect(this->view(), SIGNAL(addItem(int)), this, SLOT(onAddItem(int)));
-        connect(this->view(), SIGNAL(removeMission()), this, SLOT(onRemoveMission()));
-        connect(this->view(), SIGNAL(renameMission(QString)), this, SLOT(onRenameMission(QString)));
-        connect(this->view(), SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
-        connect(this->view(), SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
-        connect(this->view(), SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
-        connect(this->view(), SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
-        connect(this->view(), SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
-    }
-    else
-    {
-        disconnect(this->view(), 0, this, 0);
-    }
-}
-
-void MissionPresenter::onMissionAdded(const dao::MissionPtr& mission)
-{
-    d->missions.append(mission);
-    this->updateMissionsBox();
-}
-
-void MissionPresenter::onMissionRemoved(const dao::MissionPtr& mission)
-{
-    d->missions.removeOne(mission);
-    this->updateMissionsBox();
-}
-
-void MissionPresenter::onMissionChanged(const dao::MissionPtr& mission)
-{
-    Q_UNUSED(mission)
-
-    this->updateMissionsBox();
-}
-
-void MissionPresenter::onMissionSelected(const dao::MissionPtr& mission)
-{
-    if (d->selectedMission == mission) return;
-
-    d->selectedMission = mission;
-    this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
-
-    if (mission)
-    {
-        this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
-                                  settings::mission::visibility + "/" + mission->id()));
-    }
-    else this->setViewProperty(PROPERTY(missionVisible), false);
-
-    this->updateAssignment();
-}
-
-void MissionPresenter::updateMissionsBox()
-{
-    this->setViewConnected(false);
-
-    QStringList missions;
-    missions.append(QString());
-
-    for (const dao::MissionPtr& mission: d->missions)
-    {
-        missions.append(mission->name());
-    }
-    this->setViewProperty(PROPERTY(missions), QVariant::fromValue(missions));
-    this->setViewProperty(PROPERTY(selectedMission), d->missions.indexOf(d->selectedMission) + 1);
-    this->setViewConnected(true);
-}
-
+/*
 void MissionPresenter::updateVehiclesBox()
 {
     this->setViewConnected(false);
@@ -203,39 +85,7 @@ void MissionPresenter::updateAssignment()
     this->setViewConnected(true);
 }
 
-void MissionPresenter::onSelectMission(int index)
-{
-    if (index > 0 && index < d->missions.count() + 1)
-    {
-        d->handle->selectMission(d->missions.at(index - 1));
-    }
-    else
-    {
-        d->handle->selectMission(dao::MissionPtr());
-    }
-}
-
-void MissionPresenter::onAddMission()
-{
-    dao::MissionPtr mission = dao::MissionPtr::create();
-
-    mission->setName(tr("New Mission %1").arg(d->missionService->missions().count()));
-
-    d->missionService->save(mission);
-    d->handle->selectMission(mission);
-}
-
-void MissionPresenter::onAddItem(int command)
-{
-    if (d->selectedMission.isNull()) return;
-
-    d->missionService->addNewMissionItem(d->selectedMission->id(),
-                                         static_cast<dao::MissionItem::Command>(command));
-    d->itemEdit->selectItem(d->selectedMission->count() - 1);
-    d->itemEdit->enablePicker();
-}
-
-void MissionPresenter::onRemoveMission()
+void MissionPresenter::onRemove()
 {
     if (d->selectedMission.isNull()) return;
 
@@ -244,7 +94,7 @@ void MissionPresenter::onRemoveMission()
     this->setViewProperty(PROPERTY(selectedMission), 0);
 }
 
-void MissionPresenter::onRenameMission(const QString& name)
+void MissionPresenter::onRename(const QString& name)
 {
     if (d->selectedMission.isNull() || name.isEmpty()) return;
 
@@ -272,18 +122,13 @@ void MissionPresenter::onAssignVehicle(int index) // TODO: AssignmentPresenter a
         d->missionService->unassign(d->selectedMission->id());
     }
 }
-
+*/
 void MissionPresenter::onSetMissionVisible(bool visible)
 {
-    if (!d->selectedMission) return;
-
-    settings::Provider::setValue(settings::mission::visibility + "/" +
-                                 d->selectedMission->id(), visible);
+    settings::Provider::setValue(settings::mission::visibility + "/" + m_mission->id(), visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
-
-    d->missionService->missionChanged(d->selectedMission);
 }
-
+/*
 void MissionPresenter::onUploadMission()
 {
     if (!d->selectedMission) return;
@@ -310,3 +155,4 @@ void MissionPresenter::onCancelSyncMission()
 
     d->missionService->cancelSync(assignment);
 }
+*/

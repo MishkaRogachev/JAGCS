@@ -22,7 +22,9 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onSetVisible(int id, bool visible);
+        void onMissionAdded(const dao::MissionPtr& mission);
+        void onMissionRemoved(const dao::MissionPtr& mission);
+        void onMissionChanged(const dao::MissionPtr& mission);
 
     private:
         class Impl;

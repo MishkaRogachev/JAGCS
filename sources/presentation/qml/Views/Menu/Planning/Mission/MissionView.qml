@@ -3,197 +3,90 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "qrc:/Views/Common"
 
-ColumnLayout {
+Controls.Frame {
     id: root
 
-    property alias missions: missionsBox.model
-    property alias vehicles: vehiclesBox.model
-    property alias selectedMission: missionsBox.currentIndex
-    property alias assignedVehicle: vehiclesBox.currentIndex
+    property string name
+    property bool missionVisible: false
+    property int assignedVehicle: -1
     property int status: MissionAssignment.NotActual
 
-    property bool missionVisible: false
+    property bool changed: false
 
-    signal selectMission(int index)
-    signal addMission()
-    signal addItem(int command)
-    signal removeMission()
-    signal renameMission(string name)
-    signal assignVehicle(int index)
+    signal restore()
+    signal save()
+    signal remove()
     signal setMissionVisible(bool visible)
     signal uploadMission()
     signal downloadMission()
     signal cancelSyncMission()
 
-    Layout.margins: palette.margins
-    spacing: palette.spacing
-    width: palette.controlBaseSize * 11
-
     GridLayout {
-        columns: 5
+        anchors.fill: parent
+        columns: 2
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
 
         Controls.Label {
-            text: qsTr("Mission")
-        }
-
-        Controls.ComboBox {
-            id: missionsBox
-            visible: !edit.checked
-            onCurrentIndexChanged: selectMission(currentIndex);
-            Layout.fillWidth: true
+            text: qsTr("Name")
         }
 
         Controls.TextField {
-            id: nameEdit
-            visible: edit.checked
+            text: name
+            onEditingFinished: changed = true
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            id: edit
-            tipText: checked ? qsTr("Edit mission name") : qsTr("End edit mission name")
-            iconSource: "qrc:/icons/edit.svg"
-            checkable: true
-            enabled: selectedMission > 0
-            onCheckedChanged: {
-                if (checked)
-                {
-                    nameEdit.text = missionsBox.currentText;
-                    nameEdit.forceActiveFocus();
-                    nameEdit.selectAll();
-                }
-                else
-                {
-                    renameMission(nameEdit.text);
-                }
-            }
-        }
-
-        Controls.Button {
-            tipText: qsTr("Add mission")
-            iconSource: "qrc:/icons/add.svg"
-            onClicked: addMission()
-        }
-
-        Controls.DelayButton {
-            tipText: qsTr("Remove mission")
-            iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.dangerColor
-            enabled: selectedMission > 0 && assignedVehicle === 0
-            onActivated: removeMission()
         }
 
         Controls.Label {
-            text: qsTr("Vehicle")
+            text: qsTr("Actions")
         }
 
-        Controls.ComboBox {
-            id: vehiclesBox
-            enabled: selectedMission > 0
-            onCurrentIndexChanged: assignVehicle(currentIndex)
-            Layout.fillWidth: true
-        }
+        RowLayout {
+            Layout.alignment: Qt.AlignRight
 
-        Controls.Button {
-            tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
-            iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            enabled: selectedMission > 0
-            onClicked: setMissionVisible(!missionVisible)
-        }
+            Controls.Button {
+                tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
+                iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+                onClicked: setMissionVisible(!missionVisible)
+            }
 
-        Controls.Button {
-            tipText: qsTr("Download mission from MAV")
-            iconSource: "qrc:/icons/download.svg"
-            enabled: selectedMission > 0 && assignedVehicle > 0
-            highlighted: status === MissionAssignment.Downloading
-            onClicked: highlighted ? cancelSyncMission() : downloadMission()
-        }
+            Controls.Button {
+                tipText: qsTr("Download mission from MAV")
+                iconSource: "qrc:/icons/download.svg"
+                enabled: assignedVehicle > 0
+                highlighted: status === MissionAssignment.Downloading
+                onClicked: highlighted ? cancelSyncMission() : downloadMission()
+            }
 
-        Controls.Button {
-            tipText: qsTr("Upload mission to MAV")
-            iconSource: "qrc:/icons/upload.svg"
-            enabled: selectedMission > 0 && assignedVehicle > 0
-            highlighted: status === MissionAssignment.Uploading
-            onClicked: highlighted ? cancelSyncMission() : uploadMission()
-        }
-    }
+            Controls.Button {
+                tipText: qsTr("Upload mission to MAV")
+                iconSource: "qrc:/icons/upload.svg"
+                enabled: assignedVehicle > 0
+                highlighted: status === MissionAssignment.Uploading
+                onClicked: highlighted ? cancelSyncMission() : uploadMission()
+            }
 
-    RowLayout {
-        spacing: palette.spacing
+            Controls.Button {
+                tipText: qsTr("Restore")
+                iconSource: "qrc:/icons/restore.svg"
+                onClicked: restore()
+                enabled: changed
+            }
 
-        Controls.Button {
-            tipText: qsTr("Left")
-            iconSource: "qrc:/icons/left.svg"
-            enabled: itemsStatus.selectedItem > 0
-            onClicked: itemsStatus.selectItem(itemsStatus.selectedItem - 1)
-            onPressAndHold: itemsStatus.selectItem(0)
-        }
+            Controls.Button {
+                tipText: qsTr("Save")
+                iconSource: "qrc:/icons/save.svg"
+                onClicked: save()
+                enabled: changed
+            }
 
-        MissionItemsStatusView {
-            id: itemsStatus
-            objectName: "itemsStatus"
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Right")
-            iconSource: "qrc:/icons/right.svg"
-            visible: itemsStatus.selectedItem < itemsStatus.count - 1
-            onClicked: itemsStatus.selectItem(itemsStatus.selectedItem + 1)
-            onPressAndHold: itemsStatus.selectItem(itemsStatus.count - 1)
-        }
-
-        Controls.Button {
-            tipText: qsTr("Add mission item")
-            iconSource: "qrc:/icons/add.svg"
-            visible: itemsStatus.selectedItem == itemsStatus.count - 1
-            enabled: selectedMission > 0
-            onClicked: if (!addMenu.visible) addMenu.open()
-
-            Controls.Menu {
-                id: addMenu
-                y: parent.height
-
-                Controls.MenuItem {
-                    text: qsTr("Home")
-                    iconSource: "qrc:/icons/home.svg"
-                    enabled: itemsStatus.selectedItem == -1
-                    onTriggered: addItem(MissionItem.Home)
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Waypoint")
-                    iconSource: "qrc:/icons/map-marker.svg"
-                    enabled: itemsStatus.selectedItem >= 0
-                    onTriggered: addItem(MissionItem.Waypoint)
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Takeoff")
-                    iconSource: "qrc:/icons/takeoff.svg"
-                    enabled: itemsStatus.selectedItem >= 0
-                    onTriggered: addItem(MissionItem.Takeoff)
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Landing")
-                    iconSource: "qrc:/icons/landing.svg"
-                    enabled: itemsStatus.selectedItem >= 0
-                    onTriggered: addItem(MissionItem.Landing)
-                }
+            Controls.DelayButton {
+                tipText: qsTr("Remove")
+                iconSource: "qrc:/icons/remove.svg"
+                onActivated: remove()
+                iconColor: palette.dangerColor
             }
         }
-    }
-
-    MissionItemEditView {
-        id: itemEdit
-        objectName: "itemEdit"
-        Layout.preferredWidth: palette.controlBaseSize * 11
-        Layout.fillWidth: true
-        Layout.fillHeight: true
     }
 }

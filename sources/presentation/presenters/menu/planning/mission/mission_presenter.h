@@ -14,38 +14,29 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MissionPresenter(MapHandle* handle, QObject* parent = nullptr);
+        explicit MissionPresenter(const dao::MissionPtr& mission, QObject* parent = nullptr);
         ~MissionPresenter() override;
+
+    public slots:
+        void updateView();
 
     protected:
         void connectView(QObject* view) override;
-        void setViewConnected(bool connected);
 
     private slots:
-        void onMissionAdded(const dao::MissionPtr& mission);
-        void onMissionRemoved(const dao::MissionPtr& mission);
-        void onMissionChanged(const dao::MissionPtr& mission);
+//        void updateVehiclesBox();
+//        void updateAssignment();
 
-        void onMissionSelected(const dao::MissionPtr& mission);
-
-        void updateMissionsBox();
-        void updateVehiclesBox();
-        void updateAssignment();
-
-        void onSelectMission(int index);
-        void onAddMission();
-        void onAddItem(int command);
-        void onRemoveMission();
-        void onRenameMission(const QString& name);
-        void onAssignVehicle(int index);
+//        void onRemove();
+//        void onRename(const QString& name);
+//        void onAssignVehicle(int index);
         void onSetMissionVisible(bool visible);
-        void onUploadMission();
-        void onDownloadMission();
-        void onCancelSyncMission();
+//        void onUploadMission();
+//        void onDownloadMission();
+//        void onCancelSyncMission();
 
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        dao::MissionPtr m_mission;
     };
 }
 
