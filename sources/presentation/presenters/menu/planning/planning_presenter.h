@@ -11,9 +11,14 @@ namespace presentation
 
     public:
         explicit PlanningPresenter(QObject* parent = nullptr);
+        ~PlanningPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

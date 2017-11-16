@@ -3,25 +3,24 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
+import "Mission"
+
 Item {
     id: root
-
-    property var missions
-
-    signal addMission()
 
     implicitWidth: palette.controlBaseSize * 11
 
     Flickable {
         anchors.fill: parent
         anchors.bottomMargin: addRow.height
-        contentHeight: column.height
+        contentHeight: Math.max(column.height, frame.height)
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         Controls.Frame {
-            visible: missionRepeater.count == 0
+            id: frame
+            visible: missions.model.count === 0
             width: parent.width
             height: label.height + palette.margins * 2
 
@@ -40,15 +39,9 @@ Item {
             anchors.centerIn: parent
             spacing: palette.spacing
 
-            Repeater {
-                id: missionRepeater
-                model: vehicles
-
-//                MissionView {
-//                    id: descriptionView
-//                    Layout.fillWidth: true
-//                    Component.onCompleted: modelData.setView(descriptionView)
-//                }
+            MissionListView {
+                id: missions
+                objectName: "missions"
             }
         }
     }
@@ -63,7 +56,7 @@ Item {
         Controls.Button {
             text: qsTr("Add Mission")
             iconSource: "qrc:/icons/add.svg"
-            onClicked: addMission()
+            onClicked: missions.addMission()
             Layout.fillWidth: true
         }
 
