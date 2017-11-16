@@ -7,12 +7,16 @@
 // Internal
 #include "settings_provider.h"
 
+#include "service_registry.h"
+#include "mission_service.h"
+
 #include "mission.h"
 
 using namespace presentation;
 
 MissionPresenter::MissionPresenter(const dao::MissionPtr& mission, QObject* parent):
     BasePresenter(parent),
+    m_service(domain::ServiceRegistry::missionService()),
     m_mission(mission)
 {}
 
@@ -24,17 +28,19 @@ void MissionPresenter::updateView()
     this->setViewProperty(PROPERTY(name), m_mission->name());
     this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
                               settings::mission::visibility + "/" + m_mission->id()));
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
 void MissionPresenter::connectView(QObject* view)
 {
-//    connect(view, SIGNAL(remove()), this, SLOT(onRemove()));
-//    connect(view, SIGNAL(rename(QString)), this, SLOT(onRename(QString)));
-//    connect(view, SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
     connect(view, SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
 //    connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
 //    connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
 //    connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
+    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
+    connect(view, SIGNAL(save()), this, SLOT(onSave()));
+    connect(view, SIGNAL(remove()), this, SLOT(onRemove()));
 
     this->updateView();
 }
@@ -84,49 +90,13 @@ void MissionPresenter::updateAssignment()
 
     this->setViewConnected(true);
 }
-
-void MissionPresenter::onRemove()
-{
-    if (d->selectedMission.isNull()) return;
-
-    d->missionService->remove(d->selectedMission);
-    d->selectedMission.clear();
-    this->setViewProperty(PROPERTY(selectedMission), 0);
-}
-
-void MissionPresenter::onRename(const QString& name)
-{
-    if (d->selectedMission.isNull() || name.isEmpty()) return;
-
-    // TODO: check unique name
-    d->selectedMission->setName(name);
-    d->missionService->save(d->selectedMission);
-    this->updateMissionsBox();
-}
-
-void MissionPresenter::onAssignVehicle(int index) // TODO: AssignmentPresenter and View
-{
-    // TODO: fix vehicle assignment
-    if (!d->selectedMission) return;
-
-    dao::VehiclePtrList vehicles = d->vehicleService->vehicles();
-    dao::VehiclePtr vehicle = (index > 0 && index <= vehicles.count()) ?
-                                 vehicles.at(index - 1) : dao::VehiclePtr();
-
-    if (vehicle)
-    {
-        d->missionService->assign(d->selectedMission->id(), vehicle->id());
-    }
-    else
-    {
-        d->missionService->unassign(d->selectedMission->id());
-    }
-}
 */
 void MissionPresenter::onSetMissionVisible(bool visible)
 {
     settings::Provider::setValue(settings::mission::visibility + "/" + m_mission->id(), visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
+
+    m_service->missionChanged(m_mission);
 }
 /*
 void MissionPresenter::onUploadMission()
@@ -156,3 +126,15 @@ void MissionPresenter::onCancelSyncMission()
     d->missionService->cancelSync(assignment);
 }
 */
+
+void MissionPresenter::onSave()
+{
+    m_mission->setName(this->viewProperty(PROPERTY(name)).toString());
+
+    if (m_service->save(m_mission)) this->setViewProperty(PROPERTY(changed), false);
+}
+
+void MissionPresenter::onRemove()
+{
+    m_service->remove(m_mission);
+}

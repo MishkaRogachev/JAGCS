@@ -7,12 +7,13 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
-    property string name
     property bool missionVisible: false
     property int assignedVehicle: -1
     property int status: MissionAssignment.NotActual
 
     property bool changed: false
+
+    property alias name: nameEdit.text
 
     signal restore()
     signal save()
@@ -33,8 +34,8 @@ Controls.Frame {
         }
 
         Controls.TextField {
-            text: name
-            onEditingFinished: changed = true
+            id: nameEdit
+            onTextChanged: changed = true
             Layout.fillWidth: true
         }
 

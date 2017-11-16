@@ -5,6 +5,11 @@
 #include "base_presenter.h"
 #include "dao_traits.h"
 
+namespace domain
+{
+    class MissionService;
+}
+
 namespace presentation
 {
     class MapHandle;
@@ -27,15 +32,15 @@ namespace presentation
 //        void updateVehiclesBox();
 //        void updateAssignment();
 
-//        void onRemove();
-//        void onRename(const QString& name);
-//        void onAssignVehicle(int index);
         void onSetMissionVisible(bool visible);
 //        void onUploadMission();
 //        void onDownloadMission();
 //        void onCancelSyncMission();
+        void onSave();
+        void onRemove();
 
     private:
+        domain::MissionService* const m_service;
         dao::MissionPtr m_mission;
     };
 }
