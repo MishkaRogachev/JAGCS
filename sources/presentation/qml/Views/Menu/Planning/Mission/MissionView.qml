@@ -12,7 +12,7 @@ Controls.Frame {
 
     property bool changed: false
 
-    property int assignedVehicle: vehicleBox.currentIndex
+    property alias assignedVehicle: vehicleBox.currentIndex
     property alias name: nameEdit.text
 
     signal restore()
@@ -43,11 +43,18 @@ Controls.Frame {
             text: qsTr("Vehicle")
         }
 
-        Controls.ComboBox {
-            id: vehicleBox
-            model: vehicles
-            onActivated: changed = true
-            Layout.fillWidth: true
+        RowLayout {
+            Controls.ComboBox {
+                id: vehicleBox
+                model: vehicles
+                onActivated: changed = true
+                Layout.fillWidth: true
+            }
+
+            Controls.ComboBox { // NOTE: for mission slot
+                enabled: false
+                Layout.maximumWidth: palette.controlBaseSize * 3
+            }
         }
 
         Controls.Label {
@@ -66,7 +73,7 @@ Controls.Frame {
             Controls.Button {
                 tipText: qsTr("Download mission from MAV")
                 iconSource: "qrc:/icons/download.svg"
-                enabled: assignedVehicle > 0
+                enabled: !changed && assignedVehicle > 0
                 highlighted: status === MissionAssignment.Downloading
                 onClicked: highlighted ? cancelSyncMission() : downloadMission()
             }
@@ -74,7 +81,7 @@ Controls.Frame {
             Controls.Button {
                 tipText: qsTr("Upload mission to MAV")
                 iconSource: "qrc:/icons/upload.svg"
-                enabled: assignedVehicle > 0
+                enabled: !changed && assignedVehicle > 0
                 highlighted: status === MissionAssignment.Uploading
                 onClicked: highlighted ? cancelSyncMission() : uploadMission()
             }

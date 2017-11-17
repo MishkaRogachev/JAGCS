@@ -29,13 +29,10 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-//        void updateVehiclesBox();
-//        void updateAssignment();
-
         void onSetMissionVisible(bool visible);
-//        void onUploadMission();
-//        void onDownloadMission();
-//        void onCancelSyncMission();
+        void onUploadMission();
+        void onDownloadMission();
+        void onCancelSyncMission();
         void onSave();
         void onRemove();
 
