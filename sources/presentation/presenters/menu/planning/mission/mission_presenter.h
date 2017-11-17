@@ -23,7 +23,8 @@ namespace presentation
         ~MissionPresenter() override;
 
     public slots:
-        void updateView();
+        void updateMission();
+        void updateAssignment();
 
     protected:
         void connectView(QObject* view) override;
@@ -32,6 +33,7 @@ namespace presentation
         void onRename(const QString& name);
         void onSetMissionVisible(bool visible);
         void onRemove();
+        void onAssignVehicle(int id);
         void onUploadMission();
         void onDownloadMission();
         void onCancelSyncMission();

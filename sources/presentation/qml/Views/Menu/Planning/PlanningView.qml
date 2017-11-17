@@ -6,7 +6,7 @@ import "qrc:/Controls" as Controls
 import "Mission"
 
 Item {
-    id: root
+    id: planning
 
     property var vehicles: []
 

@@ -8,24 +8,40 @@ Controls.Frame {
     id: root
 
     property bool missionVisible: false
+    property int assignedVehicleId: -1
     property int status: MissionAssignment.NotActual
 
-    property bool changed: false
-
-    property alias assignedVehicle: vehicleBox.currentIndex
     property alias name: nameEdit.text
 
-    signal restore()
-    signal save()
-    signal remove()
+    signal rename(string name)
     signal setMissionVisible(bool visible)
+    signal remove()
+    signal assignVehicle(int id)
     signal uploadMission()
     signal downloadMission()
     signal cancelSyncMission()
 
+    onAssignedVehicleIdChanged: updateSelectedVehicle()
+
+    Connections {
+        target: planning
+        onVehiclesChanged: updateSelectedVehicle()
+    }
+
+    function updateSelectedVehicle() {
+        for (var i = 0; i < vehicles.length; ++i) {
+            console.log(i);
+            if (vehicles[i].id === assignedVehicleId) {
+                vehicleBox.currentIndex = i;
+                return;
+            }
+        }
+        vehicleBox.currentIndex = -1;
+    }
+
     GridLayout {
         anchors.fill: parent
-        columns: 2
+        columns: 4
         rowSpacing: palette.spacing
         columnSpacing: palette.spacing
 
@@ -35,8 +51,21 @@ Controls.Frame {
 
         Controls.TextField {
             id: nameEdit
-            onTextChanged: changed = true
+            onEditingFinished: rename(text)
             Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
+            iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            onClicked: setMissionVisible(!missionVisible)
+        }
+
+        Controls.DelayButton {
+            tipText: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            onActivated: remove()
+            iconColor: palette.dangerColor
         }
 
         Controls.Label {
@@ -47,65 +76,31 @@ Controls.Frame {
             Controls.ComboBox {
                 id: vehicleBox
                 model: vehicles
-                onActivated: changed = true
+                textRole: "name"
+                onActivated: assignVehicle(vehicles[currentIndex].id)
                 Layout.fillWidth: true
             }
 
             Controls.ComboBox { // NOTE: for mission slot
                 enabled: false
-                Layout.maximumWidth: palette.controlBaseSize * 3
+                Layout.maximumWidth: palette.controlBaseSize
             }
         }
 
-        Controls.Label {
-            text: qsTr("Actions")
+        Controls.Button {
+            tipText: qsTr("Download mission from MAV")
+            iconSource: "qrc:/icons/download.svg"
+            enabled: assignedVehicleId > 0
+            highlighted: status === MissionAssignment.Downloading
+            onClicked: highlighted ? cancelSyncMission() : downloadMission()
         }
 
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
-
-            Controls.Button {
-                tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
-                iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: setMissionVisible(!missionVisible)
-            }
-
-            Controls.Button {
-                tipText: qsTr("Download mission from MAV")
-                iconSource: "qrc:/icons/download.svg"
-                enabled: !changed && assignedVehicle > 0
-                highlighted: status === MissionAssignment.Downloading
-                onClicked: highlighted ? cancelSyncMission() : downloadMission()
-            }
-
-            Controls.Button {
-                tipText: qsTr("Upload mission to MAV")
-                iconSource: "qrc:/icons/upload.svg"
-                enabled: !changed && assignedVehicle > 0
-                highlighted: status === MissionAssignment.Uploading
-                onClicked: highlighted ? cancelSyncMission() : uploadMission()
-            }
-
-            Controls.Button {
-                tipText: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
-                enabled: changed
-            }
-
-            Controls.Button {
-                tipText: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
-                enabled: changed
-            }
-
-            Controls.DelayButton {
-                tipText: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onActivated: remove()
-                iconColor: palette.dangerColor
-            }
+        Controls.Button {
+            tipText: qsTr("Upload mission to MAV")
+            iconSource: "qrc:/icons/upload.svg"
+            enabled: assignedVehicleId > 0
+            highlighted: status === MissionAssignment.Uploading
+            onClicked: highlighted ? cancelSyncMission() : uploadMission()
         }
     }
 }

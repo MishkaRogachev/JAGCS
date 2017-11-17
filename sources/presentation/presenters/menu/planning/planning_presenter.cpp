@@ -40,12 +40,12 @@ PlanningPresenter::~PlanningPresenter()
 
 void PlanningPresenter::updateVehicles()
 {
-    QStringList vehicles;
-    vehicles.append("");
+    QVariantList vehicles;
+    vehicles.append(QVariant::fromValue(dao::Vehicle()));
 
     for (const dao::VehiclePtr& vehicle: d->service->vehicles())
     {
-        vehicles.append(vehicle->name());
+        vehicles.append(QVariant::fromValue(*vehicle));
     }
 
     this->setViewProperty(PROPERTY(vehicles), vehicles);

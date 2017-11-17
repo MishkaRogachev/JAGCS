@@ -9,6 +9,7 @@
 #include "settings_provider.h"
 
 #include "mission.h"
+#include "mission_assignment.h"
 
 #include "service_registry.h"
 #include "mission_service.h"
@@ -22,7 +23,7 @@ class MissionListPresenter::Impl
 public:
     domain::MissionService* service = domain::ServiceRegistry::missionService();
 
-     QMap<dao::MissionPtr, MissionPresenter*> missionPresenters;
+    QMap<int, MissionPresenter*> missions;
 };
 
 MissionListPresenter::MissionListPresenter(QObject* parent):
@@ -36,9 +37,16 @@ MissionListPresenter::MissionListPresenter(QObject* parent):
     connect(d->service, &domain::MissionService::missionChanged,
             this, &MissionListPresenter::onMissionChanged);
 
+    connect(d->service, &domain::MissionService::assignmentAdded,
+            this, &MissionListPresenter::updateMissionAssignment);
+    connect(d->service, &domain::MissionService::assignmentRemoved,
+            this, &MissionListPresenter::updateMissionAssignment);
+    connect(d->service, &domain::MissionService::assignmentChanged,
+            this, &MissionListPresenter::updateMissionAssignment);
+
     for (const dao::MissionPtr& mission: d->service->missions())
     {
-        d->missionPresenters[mission] = new MissionPresenter(mission, this);
+        d->missions[mission->id()] = new MissionPresenter(mission, this);
     }
 }
 
@@ -48,7 +56,7 @@ MissionListPresenter::~MissionListPresenter()
 void MissionListPresenter::updateMissions()
 {
     QObjectList objectList;
-    for (MissionPresenter* missionPresenter: d->missionPresenters.values())
+    for (MissionPresenter* missionPresenter: d->missions.values())
     {
         objectList.append(missionPresenter);
     }
@@ -65,25 +73,32 @@ void MissionListPresenter::connectView(QObject* view)
 
 void MissionListPresenter::onMissionAdded(const dao::MissionPtr& mission)
 {
-    if (d->missionPresenters.contains(mission)) return;
+    if (d->missions.contains(mission->id())) return;
 
-    d->missionPresenters[mission] = new MissionPresenter(mission, this);
+    d->missions[mission->id()] = new MissionPresenter(mission, this);
     this->updateMissions();
 }
 
 void MissionListPresenter::onMissionRemoved(const dao::MissionPtr& mission)
 {
-    if (!d->missionPresenters.contains(mission)) return;
+    if (!d->missions.contains(mission->id())) return;
 
-    delete d->missionPresenters.take(mission);
+    delete d->missions.take(mission->id());
     this->updateMissions();
 }
 
 void MissionListPresenter::onMissionChanged(const dao::MissionPtr& mission)
 {
-    if (!d->missionPresenters.contains(mission)) return;
+    if (!d->missions.contains(mission->id())) return;
 
-    d->missionPresenters[mission]->updateView();
+    d->missions[mission->id()]->updateMission();
+}
+
+void MissionListPresenter::updateMissionAssignment(const dao::MissionAssignmentPtr& assignment)
+{
+    if (!d->missions.contains(assignment->missionId())) return;
+
+    d->missions[assignment->missionId()]->updateAssignment();
 }
 
 void MissionListPresenter::onAddMission()

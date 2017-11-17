@@ -25,6 +25,7 @@ namespace presentation
         void onMissionAdded(const dao::MissionPtr& mission);
         void onMissionRemoved(const dao::MissionPtr& mission);
         void onMissionChanged(const dao::MissionPtr& mission);
+        void updateMissionAssignment(const dao::MissionAssignmentPtr& assignment);
 
         void onAddMission();
 
