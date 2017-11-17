@@ -55,16 +55,28 @@ void MissionPresenter::updateView()
 
 void MissionPresenter::connectView(QObject* view)
 {
+    connect(view, SIGNAL(rename(QString)), this, SLOT(onRename(QString)));
+    connect(view, SIGNAL(remove()), this, SLOT(onRemove()));
     connect(view, SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
     connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-    connect(view, SIGNAL(save()), this, SLOT(onSave()));
-    connect(view, SIGNAL(remove()), this, SLOT(onRemove()));
 
     this->updateView();
 }
+
+void MissionPresenter::onRename(const QString& name)
+{
+    m_mission->setName(name);
+
+    if (m_service->save(m_mission)) this->setViewProperty(PROPERTY(name), m_mission->name());
+}
+
+void MissionPresenter::onRemove()
+{
+    m_service->remove(m_mission);
+}
+
 
 void MissionPresenter::onSetMissionVisible(bool visible)
 {
@@ -96,16 +108,4 @@ void MissionPresenter::onCancelSyncMission()
     if (assignment.isNull()) return;
 
     m_service->cancelSync(assignment);
-}
-
-void MissionPresenter::onSave()
-{
-    m_mission->setName(this->viewProperty(PROPERTY(name)).toString());
-
-    if (m_service->save(m_mission)) this->setViewProperty(PROPERTY(changed), false);
-}
-
-void MissionPresenter::onRemove()
-{
-    m_service->remove(m_mission);
 }

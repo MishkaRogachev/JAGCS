@@ -28,9 +28,9 @@ void PaletteManager::reloadPalette()
 
     palette.setControlBaseSize(uiSize);
     palette.setFontPixelSize(uiSize / 2);
-    palette.setSpacing(uiSize / 4);
+    palette.setSpacing(uiSize / 6);
     palette.setMargins(uiSize / 4);
-    palette.setPadding(uiSize / 5);
+    palette.setPadding(uiSize / 6);
 
     palette.setTrackColor("#ff173c");
     palette.setMissionColor("#1ce9a5");

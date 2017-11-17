@@ -29,12 +29,12 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
+        void onRename(const QString& name);
         void onSetMissionVisible(bool visible);
+        void onRemove();
         void onUploadMission();
         void onDownloadMission();
         void onCancelSyncMission();
-        void onSave();
-        void onRemove();
 
     private:
         domain::MissionService* const m_service;
