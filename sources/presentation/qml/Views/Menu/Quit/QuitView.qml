@@ -31,7 +31,7 @@ Item {
             Controls.Button {
                 text: qsTr("No")
                 iconSource: "qrc:/icons/remove.svg"
-                onClicked: backOut()
+                onClicked: menu.home()
                 Layout.fillWidth: true
             }
         }

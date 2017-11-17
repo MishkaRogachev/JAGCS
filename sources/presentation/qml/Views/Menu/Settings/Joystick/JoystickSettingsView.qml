@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 ColumnLayout {
-    id: root
+    id: joystick
 
     property bool changed: false
 
@@ -24,6 +24,7 @@ ColumnLayout {
     signal restore()
 
     spacing: palette.spacing
+    Component.onCompleted: factory.createJoystickSettingsPresenter(joystick)
 
     Flickable {
         Layout.fillWidth: true
@@ -35,7 +36,7 @@ ColumnLayout {
 
         Controls.Frame {
             id: frame
-            width: root.width
+            width: joystick.width
 
             GridLayout {
                 anchors.fill: parent

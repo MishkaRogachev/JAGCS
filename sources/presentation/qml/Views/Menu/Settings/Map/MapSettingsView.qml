@@ -5,7 +5,7 @@ import "qrc:/Controls" as Controls
 import "../../../Map/LocationMapViews"
 
 GridLayout {
-    id: root
+    id: mapSettings
     columns: 2
     rowSpacing: palette.spacing
     columnSpacing: palette.spacing
@@ -24,6 +24,7 @@ GridLayout {
     signal save()
     signal restore()
 
+    Component.onCompleted: factory.createMapSettingsPresenter(mapSettings)
     onChangedChanged: if (!changed) main.reloadMap() // TODO: reload map on change
     onPluginChanged: updateMapTypes()
 

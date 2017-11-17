@@ -8,7 +8,7 @@ ColumnLayout {
 
     property var menuModel
 
-    signal reqestComponent(Component component, string text)
+    signal reqestComponent(string source, string text)
 
     function home() {
         repeater.model = menuModel;
@@ -25,7 +25,7 @@ ColumnLayout {
             iconSource: modelData.icon ? modelData.icon : ""
             iconColor: modelData.iconColor ? modelData.iconColor : iconColor
             onClicked: {
-                if (modelData.component) reqestComponent(modelData.component, text);
+                if (modelData.source) reqestComponent(modelData.source, text);
                 if (modelData.menu) repeater.model = modelData.menu;
             }
             Layout.preferredWidth: palette.controlBaseSize * 7

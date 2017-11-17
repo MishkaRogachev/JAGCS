@@ -116,7 +116,7 @@ Controls.Frame {
         Controls.Button {
             tipText: qsTr("Edit commands")
             iconSource: "qrc:/icons/edit.svg"
-            onClicked: deepIn(Qt.createComponent("MissionItemEditView.qml"), name);
+            onClicked: deepIn("Planning/Mission/MissionItemEditView.qml", name);
         }
 
         Controls.Button {

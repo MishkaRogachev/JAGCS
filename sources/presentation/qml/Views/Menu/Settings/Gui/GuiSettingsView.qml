@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 GridLayout {
-    id: root
+    id: gui
 
     property bool changed: false
 
@@ -25,6 +25,7 @@ GridLayout {
     signal save()
     signal restore()
 
+    Component.onCompleted: factory.createGuiSettingsPresenter(gui)
     onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)

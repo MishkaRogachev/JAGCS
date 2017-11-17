@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 Item {
-    id: root
+    id: videoSettings
 
     property var videoSources: []
     property var videoDevices: []
@@ -14,6 +14,7 @@ Item {
     signal addStreamVideo()
     signal setActiveVideo(int video)
 
+    Component.onCompleted: factory.createVideoSettingsPresenter(videoSettings)
     implicitWidth: palette.controlBaseSize * 11
     onActiveVideoChanged: video.updateActiveVideo()
 

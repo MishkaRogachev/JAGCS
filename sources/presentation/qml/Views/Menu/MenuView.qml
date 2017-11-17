@@ -3,46 +3,29 @@ import QtQuick.Layouts 1.3
 
 import "../../Controls" as Controls
 
-import "Communications"
-import "Vehicles"
-
-import "Planning"
-
-import "Settings/Database"
-import "Settings/Video"
-import "Settings/Map"
-import "Settings/Gui"
-import "Settings/Joystick"
-import "Settings/Network"
-
-import "About"
-import "Quit"
-
 Controls.Pane {
-    id: root
+    id: menu
 
     function home() {
-        loader.sourceComponent = topMenuComponent;
+        loader.source = "TopMenu.qml";
         currentLabel.text = "";
         pathModel.clear();
     }
 
-    function deepIn(component, text) {
-        loader.sourceComponent = component;
-        pathModel.append({ "component": component, "text": text });
+    function deepIn(source, text) {
+        loader.source = source;
+        pathModel.append({ "source": source, "text": text });
         currentLabel.text = text;
     }
 
     function backOut(index) {
-        loader.sourceComponent = pathModel.get(index).component;
+        loader.source = pathModel.get(index).source;
         currentLabel.text = pathModel.get(index).text;
 
         if (index + 1 < pathModel.count) {
             pathModel.remove(index + 1, pathModel.count - index - 1);
         }
     }
-
-    signal requestPresenter(string view)
 
     padding: 0
     Component.onCompleted: home()
@@ -56,7 +39,7 @@ Controls.Pane {
                 tipText: qsTr("Home")
                 iconSource: "qrc:/icons/home.svg"
                 flat: true
-                enabled: loader.sourceComponent !== topMenuComponent
+                enabled: loader.source != "TopMenu.qml"
                 onClicked: home()
             }
 
@@ -94,64 +77,18 @@ Controls.Pane {
                 onItemChanged: {
                     if (!item) return;
 
-                    root.width = item.implicitWidth + palette.margins * 2
+                    menu.width = item.implicitWidth + palette.margins * 2
                     item.height = Qt.binding(function() {
                         return Math.max(item.implicitHeight, flickable.height);
                     } );
-                    root.requestPresenter(item.objectName)
                 }
 
                 Connections {
                     target: loader.item
                     ignoreUnknownSignals: true
-
-                    onReqestComponent: root.deepIn(component, text)
+                    onReqestComponent: menu.deepIn(source, text)
                 }
             }
         }
     }
-
-    Component {
-        id: topMenuComponent
-
-        Controls.SideNav {
-            menuModel: [
-                { text: qsTr("Communications"), component: commComponent },
-                { text: qsTr("Vehicles"), component: vehiclesComponent },
-                { text: qsTr("Planning"), component: planningComponent },
-                { text: qsTr("Settings"), component: settingsMenuComponent },
-                { text: qsTr("About"), component: aboutComponent },
-                { text: qsTr("Quit"), component: quitComponent }
-            ]
-        }
-    }
-
-    Component { id: commComponent; CommunicationsView { objectName: "communications" } }
-    Component { id: vehiclesComponent; VehiclesView { objectName: "vehicles" } }
-    Component { id: planningComponent; PlanningView { objectName: "planning" } }
-
-    Component {
-        id: settingsMenuComponent
-
-        Controls.SideNav {
-            menuModel: [
-                { text: qsTr("Database"), component: dbComponent },
-                { text: qsTr("Map"), component: mapComponent },
-                { text: qsTr("Video"), component: videoComponent },
-                { text: qsTr("Joystick"), component: joystickComponent },
-                { text: qsTr("GUI"), component: guiComponent },
-                { text: qsTr("Networking"), component: networkComponent }
-            ]
-        }
-    }
-
-    Component { id: dbComponent; DatabaseView { objectName: "database" } }
-    Component { id: mapComponent; MapSettingsView { objectName: "map" } }
-    Component { id: videoComponent; VideoSettingsView { objectName: "video" } }
-    Component { id: joystickComponent; JoystickSettingsView { objectName: "joystick" } }
-    Component { id: guiComponent; GuiSettingsView { objectName: "gui" } }
-    Component { id: networkComponent; NetworkSettingsView { objectName: "network" } }
-
-    Component { id: aboutComponent; AboutView { objectName: "about" } }
-    Component { id: quitComponent; QuitView { objectName: "quit" } }
 }

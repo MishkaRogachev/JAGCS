@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 ColumnLayout {
-    id: root
+    id: networkSettings
 
     property bool changed: false
 
@@ -24,6 +24,7 @@ ColumnLayout {
     }
 
     spacing: palette.spacing
+    Component.onCompleted: factory.createNetworkSettingsPresenter(networkSettings)
 
     Controls.Frame {
         Layout.fillWidth: true

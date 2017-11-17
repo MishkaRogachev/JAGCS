@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 GridLayout {
-    id: root
+    id: database
 
     property bool changed: false
     property bool connected: false
@@ -22,6 +22,7 @@ GridLayout {
     columns: 2
     rowSpacing: palette.spacing
     columnSpacing: palette.spacing
+    Component.onCompleted: factory.createDatabasePresenter(database)
 
     Controls.Label {
         text: qsTr("Data base:")
