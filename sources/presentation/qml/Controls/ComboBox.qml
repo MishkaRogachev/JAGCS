@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import QtQuick.Templates 2.0 as T
+import QtQuick.Templates 2.1 as T
 import QtQuick.Layouts 1.3
 
 import "../Shaders" as Shaders
@@ -10,18 +10,26 @@ T.ComboBox {
     // TODO: fix dynamic width calculation
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
     property string tipText
+    property string iconRole: "icon"
+    property string displayIcon: currentItem && currentItem[control.iconRole] !== undefined ?
+                                     currentItem[control.iconRole] : ""
 
     font.pixelSize: palette.fontPixelSize
     clip: true
     implicitWidth: palette.controlBaseSize * 4
     implicitHeight: palette.controlBaseSize
     opacity: enabled ? 1 : 0.33
+    displayText: currentItem && currentItem[control.textRole] !== undefined ?
+                     currentItem[control.textRole] : currentItem
 
-    delegate: ItemDelegate {
-        width: control.width
-        text: modelData.text !== undefined ? modelData.text : modelData
-        iconSource: modelData.icon !== undefined ? modelData.icon : ""
-        highlighted: control.highlightedIndex === index
+    indicator: ColoredIcon {
+        visible: control.focus
+        x: control.width - width
+        y: control.height - height
+        width: palette.controlBaseSize / 2
+        height: width
+        source: "qrc:/ui/menu_arrow.svg"
+        color: control.down ? palette.highlightColor : palette.selectionColor
     }
 
     background: Rectangle {
@@ -37,20 +45,17 @@ T.ComboBox {
         }
     }
 
-    indicator: ColoredIcon {
-        visible: control.focus
-        x: control.width - width
-        y: control.height - height
-        width: palette.controlBaseSize / 2
-        height: width
-        source: "qrc:/ui/menu_arrow.svg"
-        color: control.down ? palette.highlightColor : palette.selectionColor
+    delegate: ItemDelegate {
+        width: control.width
+        text: modelData[control.textRole] !== undefined ? modelData[control.textRole] : modelData
+        iconSource: modelData[iconRole] !== undefined ? modelData[iconRole] : ""
+        highlighted: control.highlightedIndex === index
     }
 
     contentItem: RowLayout {
         ContentItem {
-            text: currentItem ? (currentItem.text !== undefined  ? currentItem.text : currentItem) : ""
-            iconSource: currentItem && currentItem.icon !== undefined ? currentItem.icon : ""
+            text: displayText
+            iconSource: displayIcon
             font: control.font
             Layout.margins: palette.padding
         }
