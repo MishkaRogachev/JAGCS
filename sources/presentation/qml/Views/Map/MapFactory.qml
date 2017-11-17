@@ -1,7 +1,7 @@
 import QtQuick 2.6
 
 QtObject {
-    id: factory
+    id: mapFactory
 
     function create() {
         switch (parseInt(settings.value("Map/plugin"))) {

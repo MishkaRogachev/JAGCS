@@ -57,6 +57,7 @@ Map {
     }
 
     Component.onCompleted: {
+        factory.createMapPresenter(map);
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),
                                           settings.value("Map/centerLongitude"));
         zoomLevel = settings.value("Map/zoomLevel");

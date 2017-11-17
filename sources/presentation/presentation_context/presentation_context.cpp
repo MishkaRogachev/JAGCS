@@ -14,6 +14,7 @@
 #include "log_message.h"
 
 #include "translation_helper.h"
+#include "presenters_factory.h"
 
 // Qt
 #include <QGuiApplication>
@@ -51,6 +52,8 @@ PresentationContext::PresentationContext()
     m_view->setResizeMode(QQuickView::SizeRootObjectToView);
     m_view->rootContext()->setContextProperty("translator",
                                               QVariant::fromValue(new TranslationHelper(qApp)));
+    m_view->rootContext()->setContextProperty("factory",
+                                              QVariant::fromValue(new PresentersFactory(qApp)));
 
     QObject::connect(m_view->engine(), &QQmlEngine::quit, qApp, &QGuiApplication::quit);
 }

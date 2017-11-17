@@ -18,15 +18,10 @@ Rectangle {
     property QtObject map
     property QtObject video
 
-    function reloadMap() {
-        mapComponent = mapFactory.create();
-    }
-
-    Component.onCompleted: reloadMap()
-
-    signal requestPresenter(string name, QtObject view)
+    function reloadMap() { mapComponent = mapFactory.create(); }
 
     color: palette.backgroundColor
+    Component.onCompleted: reloadMap()
 
     TopbarView {
         id: topbar
@@ -41,12 +36,7 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: topbar.height
         sourceComponent: cornerMap ? videoComponent : mapComponent
-        onItemChanged: {
-            if (!item) return;
-
-            main.requestPresenter(item.objectName, item);
-            cornerMap ? video = item : map = item;
-        }
+        onItemChanged: if (item) cornerMap ? video = item : map = item;
     }
 
     MapControl { // TODO: to ToolsPanel
@@ -77,13 +67,8 @@ Rectangle {
         width: Math.min(parent.width / 3, parent.height / 3)
         sourceComponent: cornerMap ? mapComponent : videoComponent
         visible: cornerVisible
+        onItemChanged: if (item) cornerMap ? map = item : video = item;
         z: 1
-        onItemChanged: {
-            if (!item) return;
-
-            main.requestPresenter(item.objectName, item);
-            cornerMap ? map = item : video = item;
-        }
     }
 
     Controls.Swipeable {
@@ -124,5 +109,14 @@ Rectangle {
     }
 
     MapFactory { id: mapFactory }
-    Component { id: videoComponent; VideoView { objectName: "video" } }
+
+    Component {
+        id: videoComponent
+
+        VideoView {
+            id: video
+            objectName: "video"
+            Component.onCompleted: factory.createVideoPresenter(video)
+        }
+    }
 }

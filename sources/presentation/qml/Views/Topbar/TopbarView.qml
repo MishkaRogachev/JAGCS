@@ -9,4 +9,9 @@ Rectangle {
     color: palette.raisedColor
     height: palette.controlBaseSize
 
+    Component.onCompleted: {
+        factory.createTopbarPresenter()
+        home();
+    }
+
 }
