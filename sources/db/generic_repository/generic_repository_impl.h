@@ -101,7 +101,7 @@ bool GenericRepository<T>::remove(const QSharedPointer<T>& entity)
     m_query.bindValue(":id", entity->id());
     if (!this->runQuerry()) return false;
     this->unload(entity->id());
-    entity->setId(0);
+//    entity->setId(0);
     return true;
 }
 
