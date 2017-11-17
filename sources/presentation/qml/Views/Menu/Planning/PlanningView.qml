@@ -10,7 +10,8 @@ Item {
 
     property var vehicles: []
 
-    implicitWidth: palette.controlBaseSize * 10
+    implicitWidth: palette.controlBaseSize * 11
+    Component.onCompleted: factory.createPlanningPresenter(planning)
 
     Flickable {
         anchors.fill: parent

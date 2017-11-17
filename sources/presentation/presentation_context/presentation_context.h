@@ -20,7 +20,6 @@ namespace presentation
         static QObject* rootView();
         static QQmlContext* rootContext();
 
-        static void load();
         static void show();
         static void saveGeometry();
 

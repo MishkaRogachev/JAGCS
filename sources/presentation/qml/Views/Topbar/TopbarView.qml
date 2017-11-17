@@ -4,14 +4,10 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 Rectangle {
-    id: root
+    id: topbar
 
     color: palette.raisedColor
     height: palette.controlBaseSize
 
-    Component.onCompleted: {
-        factory.createTopbarPresenter()
-        home();
-    }
-
+    Component.onCompleted: factory.createTopbarPresenter(topbar)
 }

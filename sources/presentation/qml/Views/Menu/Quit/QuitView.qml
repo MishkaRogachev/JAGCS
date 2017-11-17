@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 Item {
-    id: root
+    id: quit
 
     implicitWidth: frame.width
     implicitHeight: frame.height

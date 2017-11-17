@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 Item {
-    id: root
+    id: comm
 
     property var links: []
 
@@ -12,6 +12,7 @@ Item {
     signal addSerialLink()
 
     implicitWidth: palette.controlBaseSize * 11
+    Component.onCompleted: factory.createCommunicationPresenter(comm)
 
     Flickable {
         anchors.fill: parent

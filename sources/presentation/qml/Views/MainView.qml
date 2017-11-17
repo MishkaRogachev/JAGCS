@@ -25,7 +25,6 @@ Rectangle {
 
     TopbarView {
         id: topbar
-        objectName: "topbar"
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
@@ -81,7 +80,6 @@ Rectangle {
 
         MenuView {
             id: menu
-            objectName: "menu"
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
@@ -115,7 +113,6 @@ Rectangle {
 
         VideoView {
             id: video
-            objectName: "video"
             Component.onCompleted: factory.createVideoPresenter(video)
         }
     }

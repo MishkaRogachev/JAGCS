@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 Item {
-    id: root
+    id: veh
 
     property var vehicles
     property alias autoAdd: autoAdd.checked
@@ -13,6 +13,7 @@ Item {
     signal setAutoAdd(bool add)
 
     implicitWidth: palette.controlBaseSize * 11
+    Component.onCompleted: factory.createVehiclesPresenter(veh)
 
     Flickable {
         anchors.fill: parent

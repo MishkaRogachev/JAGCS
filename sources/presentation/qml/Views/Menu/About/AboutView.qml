@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 
 GridLayout {
-    id: grid
+    id: about
 
     property string version: qsTr("(undefined version)")
     property string revision: qsTr("Undefined")
@@ -13,6 +13,7 @@ GridLayout {
     columns: 2
     rowSpacing: palette.spacing
     columnSpacing: palette.spacing
+    Component.onCompleted: factory.createAboutPresenter(about)
 
     Controls.Label {
         text: "Just another ground control station " + version

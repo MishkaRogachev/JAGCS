@@ -3,6 +3,7 @@
 // Qt
 #include <QVersionNumber>
 #include <QVariant>
+#include <QDebug>
 
 using namespace presentation;
 

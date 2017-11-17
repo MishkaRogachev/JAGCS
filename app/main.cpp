@@ -15,9 +15,6 @@
 #include "presentation_context.h"
 #include "translation_manager.h"
 #include "palette_manager.h"
-#include "main_presenter.h"
-
-#include "link_description.h"
 
 int main(int argc, char* argv[])
 {
@@ -57,13 +54,8 @@ int main(int argc, char* argv[])
     presentation::PaletteManager paletteManager;
     paletteManager.reloadPalette();
 
-    presentation::MainPresenter presenter;
-
     presentation::PresentationContext::rootContext()->setContextProperty(
-                PROPERTY(settings), settings::Provider::instance());
-
-    presentation::PresentationContext::load();
-    presenter.setView(presentation::PresentationContext::rootView());
+                "settings", settings::Provider::instance());
 
     presentation::PresentationContext::show();
 

@@ -31,7 +31,6 @@ Map {
     gesture.enabled: true
     gesture.preventStealing: true
     copyrightsVisible: false
-    objectName: "map"
 
     MissionLineMapOverlayView { model: missionLinesVisible ? lineModel : 0 }
     RadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }

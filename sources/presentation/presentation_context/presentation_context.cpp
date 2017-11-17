@@ -80,15 +80,10 @@ QQmlContext* PresentationContext::rootContext()
     return instance()->m_view->rootContext();
 }
 
-void PresentationContext::load()
-{
-    instance()->m_view->setSource(QUrl("qrc:/Views/MainView.qml"));
-
-    // TODO: wait objectCreated
-}
-
 void PresentationContext::show()
 {
+    instance()->m_view->setSource(QUrl("qrc:/Views/MainView.qml")); // TODO: wait objectCreated
+
     if (settings::Provider::boolValue(settings::gui::fullscreen))
     {
         instance()->m_view->showFullScreen();
