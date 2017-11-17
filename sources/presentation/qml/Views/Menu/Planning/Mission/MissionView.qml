@@ -8,6 +8,7 @@ Controls.Frame {
     id: root
 
     property bool missionVisible: false
+    property int count: 0
     property int assignedVehicleId: -1
     property int status: MissionAssignment.NotActual
 
@@ -30,7 +31,6 @@ Controls.Frame {
 
     function updateSelectedVehicle() {
         for (var i = 0; i < vehicles.length; ++i) {
-            console.log(i);
             if (vehicles[i].id === assignedVehicleId) {
                 vehicleBox.currentIndex = i;
                 return;
@@ -101,6 +101,29 @@ Controls.Frame {
             enabled: assignedVehicleId > 0
             highlighted: status === MissionAssignment.Uploading
             onClicked: highlighted ? cancelSyncMission() : uploadMission()
+        }
+
+        Controls.Label {
+            text: qsTr("Commands")
+        }
+
+        Controls.Label { // Items Row
+            text: count
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            tipText: qsTr("Edit commands")
+            iconSource: "qrc:/icons/edit.svg"
+            onClicked: deepIn(Qt.createComponent("MissionItemEditView.qml"), name);
+        }
+
+        Controls.Button {
+            tipText: qsTr("Export mission")
+            iconSource: "qrc:/icons/save.svg"
+            enabled: false
+            //onClicked: TODO: export()
         }
     }
 }
