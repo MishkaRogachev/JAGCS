@@ -25,6 +25,7 @@
         <file>Controls/Slider.qml</file>
         <file>Controls/ComboBox.qml</file>
         <file>Controls/TextField.qml</file>
+        <file>Controls/TextEdit.qml</file>
         <file>Controls/ItemDelegate.qml</file>
         <file>Controls/Popup.qml</file>
         <file>Controls/SpinBox.qml</file>
