@@ -13,6 +13,7 @@ namespace dao
         Q_PROPERTY(int mavId READ mavId WRITE setMavId)
         Q_PROPERTY(QString name READ name WRITE setName)
         Q_PROPERTY(Type type READ type WRITE setType)
+        Q_PROPERTY(bool online READ isOnline WRITE setOnline)
 
     public:
         enum Type: quint8

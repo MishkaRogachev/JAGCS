@@ -67,8 +67,6 @@ void MissionListPresenter::updateMissions()
 void MissionListPresenter::connectView(QObject* view)
 {
     connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
-
-    this->updateMissions();
 }
 
 void MissionListPresenter::onMissionAdded(const dao::MissionPtr& mission)

@@ -14,7 +14,9 @@ Item {
     implicitWidth: palette.controlBaseSize * 11
 
     PlanningPresenter {
+        id: presenter
         view: planning
+        Component.onCompleted: updateVehicles()
     }
 
     Flickable {
@@ -27,7 +29,7 @@ Item {
 
         Controls.Frame {
             id: frame
-            visible: missions.model.count === 0
+            visible: missionList.missions.count === 0
             width: parent.width
             height: label.height + palette.margins * 2
 
@@ -47,8 +49,7 @@ Item {
             spacing: palette.spacing
 
             MissionListView {
-                id: missions
-                objectName: "missions"
+                id: missionList
             }
         }
     }
@@ -63,7 +64,7 @@ Item {
         Controls.Button {
             text: qsTr("Add Mission")
             iconSource: "qrc:/icons/add.svg"
-            onClicked: missions.addMission()
+            onClicked: missionList.addMission()
             Layout.fillWidth: true
         }
 

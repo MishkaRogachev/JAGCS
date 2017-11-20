@@ -16,9 +16,6 @@ namespace presentation
     public slots:
         void updateVehicles();
 
-    protected:
-        void connectView(QObject* view) override;
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;

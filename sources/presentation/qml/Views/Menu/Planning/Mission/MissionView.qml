@@ -12,6 +12,7 @@ Controls.Frame {
     property bool missionVisible: false
     property int assignedVehicleId: -1
     property int status: MissionAssignment.NotActual
+    property bool vehicleOnline: false
 
     property alias name: nameEdit.text
 
@@ -34,10 +35,12 @@ Controls.Frame {
         for (var i = 0; i < vehicles.length; ++i) {
             if (vehicles[i].id === assignedVehicleId) {
                 vehicleBox.currentIndex = i;
+                vehicleOnline = vehicles[i].online;
                 return;
             }
         }
         vehicleBox.currentIndex = -1;
+        vehicleOnline = false;
     }
 
     GridLayout {
@@ -91,7 +94,7 @@ Controls.Frame {
         Controls.Button {
             tipText: qsTr("Download mission from MAV")
             iconSource: "qrc:/icons/download.svg"
-            enabled: assignedVehicleId > 0
+            enabled: assignedVehicleId > 0 && vehicleOnline
             highlighted: status === MissionAssignment.Downloading
             onClicked: highlighted ? cancelSyncMission() : downloadMission()
         }
@@ -99,7 +102,7 @@ Controls.Frame {
         Controls.Button {
             tipText: qsTr("Upload mission to MAV")
             iconSource: "qrc:/icons/upload.svg"
-            enabled: assignedVehicleId > 0
+            enabled: assignedVehicleId > 0 && vehicleOnline
             highlighted: status === MissionAssignment.Uploading
             onClicked: highlighted ? cancelSyncMission() : uploadMission()
         }

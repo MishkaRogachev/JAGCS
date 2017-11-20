@@ -6,8 +6,6 @@
 #include "service_registry.h"
 #include "vehicle_service.h"
 
-#include "mission_list_presenter.h"
-
 // Qt
 #include <QVariant>
 #include <QDebug>
@@ -18,7 +16,6 @@ class PlanningPresenter::Impl
 {
 public:
     domain::VehicleService* const service = domain::ServiceRegistry::vehicleService();
-    MissionListPresenter* missions;
 };
 
 PlanningPresenter::PlanningPresenter(QObject* parent):
@@ -31,8 +28,6 @@ PlanningPresenter::PlanningPresenter(QObject* parent):
             this, &PlanningPresenter::updateVehicles);
     connect(d->service, &domain::VehicleService::vehicleChanged,
             this, &PlanningPresenter::updateVehicles);
-
-    d->missions = new MissionListPresenter(this);
 }
 
 PlanningPresenter::~PlanningPresenter()
@@ -49,11 +44,4 @@ void PlanningPresenter::updateVehicles()
     }
 
     this->setViewProperty(PROPERTY(vehicles), vehicles);
-}
-
-void PlanningPresenter::connectView(QObject* view)
-{
-    d->missions->setView(this->view()->findChild<QObject*>("missions"));
-
-    this->updateVehicles();
 }

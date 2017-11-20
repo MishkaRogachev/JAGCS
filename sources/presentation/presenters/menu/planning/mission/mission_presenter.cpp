@@ -57,9 +57,6 @@ void MissionPresenter::connectView(QObject* view)
     connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
     connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
     connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
-
-    this->updateMission();
-    this->updateAssignment();
 }
 
 void MissionPresenter::onRename(const QString& name)
