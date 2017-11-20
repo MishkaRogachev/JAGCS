@@ -4,7 +4,7 @@ import "../../Controls" as Controls
 
 Controls.SideNav {
     menuModel: [
-        { text: qsTr("Communications"), source: "Communications/CommunicationsView.qml" },
+        { text: qsTr("Communication"), source: "Communication/CommunicationView.qml" },
         { text: qsTr("Vehicles"), source: "Vehicles/VehiclesView.qml" },
         { text: qsTr("Planning"), source: "Planning/PlanningView.qml" },
         { text: qsTr("Settings"), source: "Settings/SettingsMenu.qml" },

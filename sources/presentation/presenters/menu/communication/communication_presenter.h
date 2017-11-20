@@ -7,13 +7,13 @@
 
 namespace presentation
 {
-    class CommunicationsPresenter: public BasePresenter
+    class CommunicationPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit CommunicationsPresenter(QObject* parent = nullptr);
-        ~CommunicationsPresenter() override;
+        explicit CommunicationPresenter(QObject* parent = nullptr);
+        ~CommunicationPresenter() override;
 
     protected:
         void connectView(QObject* view) override;
