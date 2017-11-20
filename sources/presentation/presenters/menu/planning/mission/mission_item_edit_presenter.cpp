@@ -14,8 +14,6 @@
 
 #include "translation_helper.h"
 
-#include "map_handle.h"
-
 using namespace presentation;
 
 class MissionItemEditPresenter::Impl
@@ -27,8 +25,6 @@ public:
     dao::MissionItemPtr item;
 
     TranslationHelper helper;
-
-    MapHandle* handle;
 
     QList<dao::MissionItem::Command> availableCommands;
 
@@ -53,7 +49,7 @@ public:
     }
 };
 
-MissionItemEditPresenter::MissionItemEditPresenter(MapHandle* handle, QObject* object):
+MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
     BasePresenter(object),
     d(new Impl())
 {
@@ -61,16 +57,6 @@ MissionItemEditPresenter::MissionItemEditPresenter(MapHandle* handle, QObject* o
     connect(d->service, &domain::MissionService::missionItemRemoved, this, &MissionItemEditPresenter::updateCount);
     connect(d->service, &domain::MissionService::missionItemChanged,
             this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateView(); });
-
-    d->mission = handle->selectedMission();
-    d->item = handle->selectedMissionItem();
-
-    d->handle = handle;
-    connect(handle, &MapHandle::missionItemSelected,
-            this, &MissionItemEditPresenter::onMissionItemSelected);
-    connect(handle, &MapHandle::missionSelected,
-            this, &MissionItemEditPresenter::onMissionSelected);
-    connect(handle, &MapHandle::holded, this, &MissionItemEditPresenter::enablePicker);
 }
 
 MissionItemEditPresenter::~MissionItemEditPresenter()
@@ -94,12 +80,17 @@ void MissionItemEditPresenter::selectItem(int index)
 {
     if (index == -1 || d->mission.isNull())
     {
-        d->handle->selectMissionItem(dao::MissionItemPtr());
+        this->onMissionItemSelected(dao::MissionItemPtr());
     }
     else
     {
-        d->handle->selectMissionItem(d->service->missionItem(d->mission->id(), index));
+        this->onMissionItemSelected(d->service->missionItem(d->mission->id(), index));
     }
+}
+
+void MissionItemEditPresenter::selectMission(int id)
+{
+    this->onMissionSelected(d->service->mission(id));
 }
 
 void MissionItemEditPresenter::save()
@@ -262,6 +253,8 @@ void MissionItemEditPresenter::onMissionSelected(const dao::MissionPtr& mission)
 
     d->mission = mission;
     this->updateCount();
+
+    if (d->mission && d->mission->count()) this->selectItem(0);
 }
 
 void MissionItemEditPresenter::onMissionItemSelected(const dao::MissionItemPtr& item)
@@ -285,5 +278,5 @@ void MissionItemEditPresenter::onChangeSequence(int sequence)
     if (other.isNull()) return;
 
     d->service->swapItems(d->item, other);
-    d->handle->selectMissionItem(d->item);
+    this->onMissionItemSelected(d->item);
 }

@@ -26,6 +26,7 @@ MissionPresenter::~MissionPresenter()
 
 void MissionPresenter::updateMission()
 {
+    this->setViewProperty(PROPERTY(missionId), m_mission->id());
     this->setViewProperty(PROPERTY(name), m_mission->name());
     this->setViewProperty(PROPERTY(count), m_mission->count());
     this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(

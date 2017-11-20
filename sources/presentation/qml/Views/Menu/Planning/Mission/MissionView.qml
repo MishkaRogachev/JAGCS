@@ -7,8 +7,9 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
-    property bool missionVisible: false
+    property int missionId: 0
     property int count: 0
+    property bool missionVisible: false
     property int assignedVehicleId: -1
     property int status: MissionAssignment.NotActual
 
@@ -116,7 +117,10 @@ Controls.Frame {
         Controls.Button {
             tipText: qsTr("Edit commands")
             iconSource: "qrc:/icons/edit.svg"
-            onClicked: deepIn("Planning/Mission/MissionItemEditView.qml", name);
+            onClicked: {
+                var item = deepIn("Planning/Mission/MissionItemEditView.qml", name,
+                                  { "missionId": missionId });
+            }
         }
 
         Controls.Button {

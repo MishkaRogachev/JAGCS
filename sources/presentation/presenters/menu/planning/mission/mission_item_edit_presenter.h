@@ -14,7 +14,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MissionItemEditPresenter(MapHandle* handle, QObject* object = nullptr);
+        explicit MissionItemEditPresenter(QObject* object = nullptr);
         ~MissionItemEditPresenter() override;
 
     public slots:
@@ -22,6 +22,7 @@ namespace presentation
 
         void remove();
         void selectItem(int index); // TODO: remove mission from MissionItemEditPresenter
+        void selectMission(int id);
         void save();
         void updateView();
 

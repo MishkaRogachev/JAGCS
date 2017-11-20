@@ -19,8 +19,9 @@ namespace presentation
 
         Q_INVOKABLE QObject* createCommunicationPresenter(QObject* view);
         Q_INVOKABLE QObject* createVehiclesPresenter(QObject* view);
+
         Q_INVOKABLE QObject* createPlanningPresenter(QObject* view);
-        Q_INVOKABLE QObject* createAboutPresenter(QObject* view);
+        Q_INVOKABLE QObject* createMissionItemEditPresenter(QObject* view, int missionId);
 
         Q_INVOKABLE QObject* createDatabasePresenter(QObject* view);
         Q_INVOKABLE QObject* createGuiSettingsPresenter(QObject* view);
@@ -28,6 +29,8 @@ namespace presentation
         Q_INVOKABLE QObject* createMapSettingsPresenter(QObject* view);
         Q_INVOKABLE QObject* createNetworkSettingsPresenter(QObject* view);
         Q_INVOKABLE QObject* createVideoSettingsPresenter(QObject* view);
+
+        Q_INVOKABLE QObject* createAboutPresenter(QObject* view);
     };
 }
 

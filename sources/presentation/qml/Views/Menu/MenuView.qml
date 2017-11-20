@@ -72,6 +72,7 @@ Controls.Pane {
 
             Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
+            // TODO: heal loader to use qml components instead raw sources
             Loader {
                 id: loader
                 width: parent.width

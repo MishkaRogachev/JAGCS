@@ -8,8 +8,9 @@
 
 #include "communications_presenter.h"
 #include "vehicles_presenter.h"
+
 #include "planning_presenter.h"
-#include "about_presenter.h"
+#include "mission_item_edit_presenter.h"
 
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
@@ -17,6 +18,8 @@
 #include "map_settings_presenter.h"
 #include "network_settings_presenter.h"
 #include "video_settings_presenter.h"
+
+#include "about_presenter.h"
 
 using namespace presentation;
 
@@ -66,11 +69,12 @@ QObject* PresentersFactory::createPlanningPresenter(QObject* view)
     return planning;
 }
 
-QObject* PresentersFactory::createAboutPresenter(QObject* view)
+QObject* PresentersFactory::createMissionItemEditPresenter(QObject* view, int missionId)
 {
-    AboutPresenter* about = new AboutPresenter(view);
-    about->setView(view);
-    return about;
+    MissionItemEditPresenter* itemEdit = new MissionItemEditPresenter(view);
+    itemEdit->setView(view);
+    itemEdit->selectMission(missionId);
+    return itemEdit;
 }
 
 QObject* PresentersFactory::createDatabasePresenter(QObject* view)
@@ -113,4 +117,11 @@ QObject* PresentersFactory::createVideoSettingsPresenter(QObject* view)
     VideoSettingsPresenter* video = new VideoSettingsPresenter(view);
     video->setView(view);
     return video;
+}
+
+QObject* PresentersFactory::createAboutPresenter(QObject* view)
+{
+    AboutPresenter* about = new AboutPresenter(view);
+    about->setView(view);
+    return about;
 }
