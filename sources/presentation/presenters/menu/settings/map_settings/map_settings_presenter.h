@@ -10,7 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit MapSettingsPresenter(QObject* parent);
+        explicit MapSettingsPresenter(QObject* parent = nullptr);
 
     public slots:
         void updateView();

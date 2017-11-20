@@ -12,6 +12,8 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(QObject* view READ view WRITE setView NOTIFY viewChanged)
+
     public:
         explicit BasePresenter(QObject* parent = nullptr);
 
@@ -26,6 +28,9 @@ namespace presentation
         void invokeViewMethod(const char* name);
         void invokeViewMethod(const char* name, const QVariant& arg);
         void invokeViewMethod(const char* name, const QVariant& arg1, const QVariant& arg2);
+
+    signals:
+        void viewChanged(QObject* view);
 
     protected:
         QVariant viewProperty(const char* name) const;

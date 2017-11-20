@@ -74,8 +74,6 @@ Item {
 
     implicitWidth: palette.controlBaseSize * 11
 
-    Component.onCompleted: factory.createMissionItemEditPresenter(itemEdit, missionId)
-
     onChangedChanged: {
         if (changed) return;
 
@@ -146,6 +144,10 @@ Item {
         if (!map.pickerVisible) return;
 
         map.pickerCoordinate = position;
+    }
+
+    MissionItemEditPresenter {
+        view: itemEdit
     }
 
     ColumnLayout {

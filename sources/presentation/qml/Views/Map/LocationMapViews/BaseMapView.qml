@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
+import JAGCS 1.0
 
 import "../"
 import "Overlays"
@@ -32,6 +33,10 @@ Map {
     gesture.preventStealing: true
     copyrightsVisible: false
 
+    MapPresenter {
+        view: map
+    }
+
     MissionLineMapOverlayView { model: missionLinesVisible ? lineModel : 0 }
     RadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
     AcceptanceRadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
@@ -56,7 +61,6 @@ Map {
     }
 
     Component.onCompleted: {
-        factory.createMapPresenter(map);
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),
                                           settings.value("Map/centerLongitude"));
         zoomLevel = settings.value("Map/zoomLevel");

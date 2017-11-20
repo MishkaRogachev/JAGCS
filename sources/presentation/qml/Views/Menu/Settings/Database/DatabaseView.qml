@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
@@ -22,7 +23,10 @@ GridLayout {
     columns: 2
     rowSpacing: palette.spacing
     columnSpacing: palette.spacing
-    Component.onCompleted: factory.createDatabasePresenter(database)
+
+    DatabasePresenter {
+        view: database
+    }
 
     Controls.Label {
         text: qsTr("Data base:")

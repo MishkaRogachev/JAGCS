@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
@@ -24,7 +25,10 @@ ColumnLayout {
     }
 
     spacing: palette.spacing
-    Component.onCompleted: factory.createNetworkSettingsPresenter(networkSettings)
+
+    NetworkSettingsPresenter {
+        view: networkSettings
+    }
 
     Controls.Frame {
         Layout.fillWidth: true

@@ -1,18 +1,22 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
 Item {
-    id: comm
+    id: communication
 
     property var links: []
 
     signal addUdpLink()
     signal addSerialLink()
 
-    implicitWidth: palette.controlBaseSize * 11
-    Component.onCompleted: factory.createCommunicationPresenter(comm)
+    implicitWidth: palette.controlBaseSi* 11
+
+    CommunicationPresenter {
+        view: communication
+    }
 
     Flickable {
         anchors.fill: parent

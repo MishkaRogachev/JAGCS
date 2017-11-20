@@ -107,13 +107,5 @@ Rectangle {
     }
 
     MapFactory { id: mapFactory }
-
-    Component {
-        id: videoComponent
-
-        VideoView {
-            id: video
-            Component.onCompleted: factory.createVideoPresenter(video)
-        }
-    }
+    Component { id: videoComponent; ActiveVideoView { id: video } }
 }

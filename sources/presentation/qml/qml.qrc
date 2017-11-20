@@ -81,6 +81,7 @@
         <file>Views/Map/MapPicker.qml</file>
         <file>Views/Map/MapFactory.qml</file>
         <file>Views/Video/VideoView.qml</file>
+        <file>Views/Video/ActiveVideoView.qml</file>
         <file>Views/Map/LocationMapViews/BaseMapView.qml</file>
         <file>Views/Map/LocationMapViews/OsmMapView.qml</file>
         <file>Views/Map/LocationMapViews/MapBoxGlMapView.qml</file>

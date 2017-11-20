@@ -24,6 +24,8 @@ namespace presentation
         static void saveGeometry();
 
     private:
+        void registerQuickTypes();
+
         QQuickView* m_view;
 
         Q_DISABLE_COPY(PresentationContext)

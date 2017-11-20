@@ -1,14 +1,11 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../../../Map/LocationMapViews"
 
 GridLayout {
     id: mapSettings
-    columns: 2
-    rowSpacing: palette.spacing
-    columnSpacing: palette.spacing
 
     property int osmActiveMapType: -1
     property int mapBoxGlActiveMapType: -1
@@ -24,9 +21,16 @@ GridLayout {
     signal save()
     signal restore()
 
-    Component.onCompleted: factory.createMapSettingsPresenter(mapSettings)
+    columns: 2
+    rowSpacing: palette.spacing
+    columnSpacing: palette.spacing
+
     onChangedChanged: if (!changed) main.reloadMap() // TODO: reload map on change
     onPluginChanged: updateMapTypes()
+
+    MapSettingsPresenter {
+        view: mapSettings
+    }
 
     Connections {
         target: main

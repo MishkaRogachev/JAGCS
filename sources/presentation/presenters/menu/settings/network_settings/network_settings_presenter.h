@@ -10,7 +10,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit NetworkSettingsPresenter(QObject* parent);
+        explicit NetworkSettingsPresenter(QObject* parent = nullptr);
         ~NetworkSettingsPresenter() override;
 
     protected:

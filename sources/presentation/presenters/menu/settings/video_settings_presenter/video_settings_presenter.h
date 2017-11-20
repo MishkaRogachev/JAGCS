@@ -17,7 +17,7 @@ namespace presentation
         Q_OBJECT
 
     public:
-        explicit VideoSettingsPresenter(QObject* parent);
+        explicit VideoSettingsPresenter(QObject* parent = nullptr);
         ~VideoSettingsPresenter() override;
 
     protected:

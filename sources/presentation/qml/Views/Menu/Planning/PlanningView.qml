@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
@@ -11,7 +12,10 @@ Item {
     property var vehicles: []
 
     implicitWidth: palette.controlBaseSize * 11
-    Component.onCompleted: factory.createPlanningPresenter(planning)
+
+    PlanningPresenter {
+        view: planning
+    }
 
     Flickable {
         anchors.fill: parent
