@@ -7,15 +7,16 @@ Controls.Pane {
     id: menu
 
     function home() {
-        loader.source = "TopMenu.qml";
+        loader.setSource("TopMenu.qml")
         currentLabel.text = "";
         pathModel.clear();
     }
 
-    function deepIn(source, text) {
-        loader.source = source;
+    function deepIn(source, text, properties) {
+        loader.setSource(source, properties);
         pathModel.append({ "source": source, "text": text });
         currentLabel.text = text;
+        return loader.item;
     }
 
     function backOut(index) {
@@ -86,7 +87,7 @@ Controls.Pane {
                 Connections {
                     target: loader.item
                     ignoreUnknownSignals: true
-                    onReqestComponent: menu.deepIn(source, text)
+                    onReqestComponent: menu.deepIn(source, text, properties)
                 }
             }
         }
