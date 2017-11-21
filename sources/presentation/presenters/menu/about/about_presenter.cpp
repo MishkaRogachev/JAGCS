@@ -11,10 +11,8 @@ AboutPresenter::AboutPresenter(QObject* parent):
     BasePresenter(parent)
 {}
 
-void AboutPresenter::connectView(QObject* view)
+void AboutPresenter::updateVersions()
 {
-    Q_UNUSED(view)
-
     this->setViewProperty(PROPERTY(version), QVariant::fromValue(
                               QVersionNumber(VERSION_MAJOR,
                                              VERSION_MINOR,

@@ -12,8 +12,8 @@ namespace presentation
     public:
         explicit AboutPresenter(QObject* parent = nullptr);
 
-    protected:
-        void connectView(QObject* view) override;
+    public slots:
+        void updateVersions();
     };
 }
 

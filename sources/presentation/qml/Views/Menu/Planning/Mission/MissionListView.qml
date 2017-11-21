@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: missionList
 
-    property var missions: []
+    property var missionIds: []
 
     function addMission() { presenter.addMission(); }
 
@@ -20,7 +20,7 @@ ColumnLayout {
     }
 
     Repeater {
-        model: missions
+        model: missionIds
 
         MissionView {
             id: missionView

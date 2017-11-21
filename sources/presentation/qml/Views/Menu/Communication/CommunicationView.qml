@@ -7,15 +7,14 @@ import "qrc:/Controls" as Controls
 Item {
     id: communication
 
-    property var links: []
-
-    signal addUdpLink()
-    signal addSerialLink()
+    property var linkIds: []
 
     implicitWidth: palette.controlBaseSi* 11
 
     CommunicationPresenter {
+        id: presenter
         view: communication
+        Component.onCompleted: updateLinks()
     }
 
     Flickable {
@@ -47,12 +46,12 @@ Item {
 
             Repeater {
                 id: repeater
-                model: links
+                model: linkIds
 
                 CommunicationLinkView {
                     id: linkView
                     Layout.fillWidth: true
-                    Component.onCompleted: modelData.setView(linkView)
+                    linkId: modelData
                 }
             }
         }
@@ -75,13 +74,13 @@ Item {
             Controls.MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
-                onTriggered: addUdpLink()
+                onTriggered: presenter.addUdpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
-                onTriggered: addSerialLink()
+                onTriggered: presenter.addSerialLink()
             }
         }
     }

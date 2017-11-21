@@ -24,13 +24,13 @@ MissionListPresenter::MissionListPresenter(QObject* parent):
 
 void MissionListPresenter::updateMissions()
 {
-    QVariantList list;
+    QVariantList missionIds;
     for (const dao::MissionPtr& mission: m_service->missions())
     {
-        list.append(mission->id());
+        missionIds.append(mission->id());
     }
 
-    this->setViewProperty(PROPERTY(missions), list);
+    this->setViewProperty(PROPERTY(missionIds), missionIds);
 }
 
 void MissionListPresenter::addMission()

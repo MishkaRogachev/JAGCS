@@ -9,6 +9,7 @@ namespace presentation
 {
     class MapHandle;
 
+    // TODO: MissionItemListPresenter
     class MissionItemEditPresenter: public BasePresenter
     {
         Q_OBJECT
@@ -21,7 +22,7 @@ namespace presentation
         void enablePicker();
 
         void setMission(int id);
-        void selectItem(int index); // TODO: remove mission from MissionItemEditPresenter
+        void selectItem(int index);
         void save();
         void remove();
         void changeSequence(int sequence);
@@ -30,7 +31,7 @@ namespace presentation
         void updateAvailableCommands();
         void updateCommand(int commandIndex);
 
-    private slots:
+    private slots: // TODO: replace
         void onMissionSelected(const dao::MissionPtr& mission);
         void onMissionItemSelected(const dao::MissionItemPtr& item);
 

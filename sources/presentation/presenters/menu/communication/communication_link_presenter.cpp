@@ -26,6 +26,13 @@ dao::LinkDescriptionPtr CommunicationLinkPresenter::description() const
     return m_description;
 }
 
+void CommunicationLinkPresenter::updateRates()
+{
+    QVariantList baudRates;
+    for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
+    this->setViewProperty(PROPERTY(baudRates), baudRates);
+}
+
 void CommunicationLinkPresenter::updateView()
 {
     this->setViewProperty(PROPERTY(type), m_description->type());
@@ -76,21 +83,3 @@ void CommunicationLinkPresenter::remove()
 {
     m_commService->remove(m_description);
 }
-
-void CommunicationLinkPresenter::connectView(QObject* view)
-{
-    QVariantList baudRates;
-    for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
-    this->setViewProperty(PROPERTY(baudRates), baudRates);
-
-    this->updateDevices();
-    this->updateView();
-
-    connect(m_serialPortsService, &domain::SerialPortService::availableDevicesChanged,
-            this, &CommunicationLinkPresenter::updateDevices);
-    connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-    connect(view, SIGNAL(remove()), this, SLOT(remove()));
-    connect(view, SIGNAL(setConnected(bool)), this, SLOT(setConnected(bool)));
-}
-

@@ -19,6 +19,7 @@
 #include "location_map_presenter.h"
 #include "active_video_presenter.h"
 #include "communication_presenter.h"
+#include "communication_link_presenter.h"
 #include "vehicles_presenter.h"
 #include "planning_presenter.h"
 #include "mission_list_presenter.h"
@@ -132,6 +133,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
     qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "VideoPresenter");
     qmlRegisterType<CommunicationPresenter>("JAGCS", 1, 0, "CommunicationPresenter");
+    qmlRegisterType<CommunicationLinkPresenter>("JAGCS", 1, 0, "CommunicationLinkPresenter");
     qmlRegisterType<VehiclesPresenter>("JAGCS", 1, 0, "VehiclesPresenter");
     qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
     qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");

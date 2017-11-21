@@ -8,6 +8,7 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
+    property int linkId: 0
     property bool connected: false
     property int type: LinkDescription.UnknownType
     property alias name: nameField.text

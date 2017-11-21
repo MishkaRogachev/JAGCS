@@ -29,7 +29,7 @@ Item {
 
         Controls.Frame {
             id: frame
-            visible: missionList.missions.count === 0
+            visible: missionList.missionIds.count === 0
             width: parent.width
             height: label.height + palette.margins * 2
 

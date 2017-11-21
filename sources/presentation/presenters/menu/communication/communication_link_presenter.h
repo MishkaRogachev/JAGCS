@@ -21,18 +21,14 @@ namespace presentation
         CommunicationLinkPresenter(const dao::LinkDescriptionPtr& description,
                                    QObject* parent = nullptr);
 
-        dao::LinkDescriptionPtr description() const;
-
     public slots:
+        void updateRates();
+        void updateDevices();
         void updateView();
         void updateStatistics();
-        void updateDevices();
         void setConnected(bool connected);
         void save();
         void remove();
-
-    protected:
-        void connectView(QObject* view) override;
 
     private:
         domain::SerialPortService* m_serialPortsService;

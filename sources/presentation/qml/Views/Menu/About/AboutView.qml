@@ -17,6 +17,7 @@ GridLayout {
 
     AboutPresenter {
         view: about
+        Component.onCompleted: updateVersions()
     }
 
     Controls.Label {
