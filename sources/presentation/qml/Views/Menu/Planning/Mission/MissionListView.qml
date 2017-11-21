@@ -27,7 +27,7 @@ ColumnLayout {
         MissionView {
             id: missionView
             Layout.fillWidth: true
-            presenter: modelData
+            missionId: modelData
         }
     }
 }

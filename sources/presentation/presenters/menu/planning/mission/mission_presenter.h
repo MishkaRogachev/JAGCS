@@ -12,17 +12,15 @@ namespace domain
 
 namespace presentation
 {
-    class MapHandle;
-
     class MissionPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionPresenter(const dao::MissionPtr& mission, QObject* parent = nullptr);
-        ~MissionPresenter() override;
+        explicit MissionPresenter(QObject* parent = nullptr);
 
     public slots:
+        void setMission(int id);
         void updateMission();
         void updateAssignment();
 

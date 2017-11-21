@@ -3,7 +3,11 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dao_traits.h"
+
+namespace domain
+{
+    class MissionService;
+}
 
 namespace presentation
 {
@@ -13,21 +17,13 @@ namespace presentation
 
     public:
         explicit MissionListPresenter(QObject* parent = nullptr);
-        ~MissionListPresenter() override;
 
     public slots:
         void updateMissions();
         void addMission();
 
-    private slots:
-        void onMissionAdded(const dao::MissionPtr& mission);
-        void onMissionRemoved(const dao::MissionPtr& mission);
-        void onMissionChanged(const dao::MissionPtr& mission);
-        void updateMissionAssignment(const dao::MissionAssignmentPtr& assignment);
-
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        domain::MissionService* const m_service;
     };
 }
 

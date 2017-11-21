@@ -15,27 +15,55 @@
 
 using namespace presentation;
 
-MissionPresenter::MissionPresenter(const dao::MissionPtr& mission, QObject* parent):
+MissionPresenter::MissionPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::missionService()),
-    m_mission(mission)
-{}
+    m_service(domain::ServiceRegistry::missionService())
+{
+    connect(m_service, &domain::MissionService::missionChanged, this,
+            [this](const dao::MissionPtr& mission) {
+        if (m_mission && m_mission == mission) this->updateMission();
+    });
 
-MissionPresenter::~MissionPresenter()
-{}
+    connect(m_service, &domain::MissionService::assignmentAdded, this,
+            [this](const dao::MissionAssignmentPtr& assignment) {
+        if (m_mission && m_mission->id() == assignment->missionId()) this->updateAssignment();
+    });
+
+    connect(m_service, &domain::MissionService::assignmentRemoved, this,
+            [this](const dao::MissionAssignmentPtr& assignment) {
+        if (m_mission && m_mission->id() == assignment->missionId()) this->updateAssignment();
+    });
+
+    connect(m_service, &domain::MissionService::assignmentChanged, this,
+            [this](const dao::MissionAssignmentPtr& assignment) {
+        if (m_mission && m_mission->id() == assignment->missionId()) this->updateAssignment();
+    });
+}
+
+void MissionPresenter::setMission(int id)
+{
+    m_mission = m_service->mission(id);
+
+    this->updateMission();
+    this->updateAssignment();
+}
 
 void MissionPresenter::updateMission()
 {
-    this->setViewProperty(PROPERTY(missionId), m_mission->id());
-    this->setViewProperty(PROPERTY(name), m_mission->name());
-    this->setViewProperty(PROPERTY(count), m_mission->count());
-    this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
-                              settings::mission::visibility + "/" + m_mission->id()));
+    if (m_mission.isNull()) return;
+
+    this->setViewProperty(PROPERTY(name), m_mission ? m_mission->name() : "");
+    this->setViewProperty(PROPERTY(count), m_mission ? m_mission->count() : 0);
+    this->setViewProperty(PROPERTY(missionVisible), m_mission ?
+                              settings::Provider::value(settings::mission::visibility + "/" +
+                                                        m_mission->id()) : false);
 }
 
 void MissionPresenter::updateAssignment()
 {
-    dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
+    dao::MissionAssignmentPtr assignment = m_mission ?
+                                               m_service->missionAssignment(m_mission->id()) :
+                                               dao::MissionAssignmentPtr();
     if (assignment)
     {
         this->setViewProperty(PROPERTY(assignedVehicleId), assignment->vehicleId());
@@ -50,30 +78,28 @@ void MissionPresenter::updateAssignment()
 
 void MissionPresenter::rename(const QString& name)
 {
-    m_mission->setName(name);
+    if (m_mission.isNull()) return;
 
+    m_mission->setName(name);
     if (m_service->save(m_mission)) this->setViewProperty(PROPERTY(name), m_mission->name());
 }
 
 void MissionPresenter::remove()
 {
-    m_service->remove(m_mission);
+    if (m_mission) m_service->remove(m_mission);
 }
 
 void MissionPresenter::assignVehicle(int id)
 {
-    if (id)
-    {
-        m_service->assign(m_mission->id(), id);
-    }
-    else
-    {
-        m_service->unassign(m_mission->id());
-    }
+    if (m_mission.isNull()) return;
+
+    id ? m_service->assign(m_mission->id(), id) : m_service->unassign(m_mission->id());
 }
 
 void MissionPresenter::setMissionVisible(bool visible)
 {
+    if (m_mission.isNull()) return;
+
     settings::Provider::setValue(settings::mission::visibility + "/" + m_mission->id(), visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
 
@@ -82,6 +108,8 @@ void MissionPresenter::setMissionVisible(bool visible)
 
 void MissionPresenter::uploadMission()
 {
+    if (m_mission.isNull()) return;
+
     dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
     if (assignment.isNull()) return;
 
@@ -90,6 +118,8 @@ void MissionPresenter::uploadMission()
 
 void MissionPresenter::downloadMission()
 {
+    if (m_mission.isNull()) return;
+
     dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
     if (assignment.isNull()) return;
 
@@ -98,6 +128,8 @@ void MissionPresenter::downloadMission()
 
 void MissionPresenter::cancelSyncMission()
 {
+    if (m_mission.isNull()) return;
+
     dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
     if (assignment.isNull()) return;
 

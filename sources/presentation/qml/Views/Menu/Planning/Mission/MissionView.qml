@@ -16,14 +16,6 @@ Controls.Frame {
 
     property alias name: nameEdit.text
 
-    property MissionPresenter presenter
-
-    onPresenterChanged: {
-        if (!presenter) return;
-        presenter.setView(missionView);
-        presenter.updateMission();
-        presenter.updateAssignment();
-    }
     onAssignedVehicleIdChanged: updateSelectedVehicle()
 
     Connections {
@@ -41,6 +33,12 @@ Controls.Frame {
         }
         vehicleBox.currentIndex = -1;
         vehicleOnline = false;
+    }
+
+    MissionPresenter {
+        id: presenter
+        view: missionView
+        Component.onCompleted: setMission(missionId)
     }
 
     GridLayout {

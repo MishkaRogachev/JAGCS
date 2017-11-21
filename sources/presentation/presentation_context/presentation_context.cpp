@@ -135,7 +135,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<VehiclesPresenter>("JAGCS", 1, 0, "VehiclesPresenter");
     qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
     qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");
-    qmlRegisterUncreatableType<MissionPresenter>("JAGCS", 1, 0, "MissionPresenter", "Need to specify mission");
+    qmlRegisterType<MissionPresenter>("JAGCS", 1, 0, "MissionPresenter");
     qmlRegisterType<MissionItemEditPresenter>("JAGCS", 1, 0, "MissionItemEditPresenter");
     qmlRegisterType<DatabasePresenter>("JAGCS", 1, 0, "DatabasePresenter");
     qmlRegisterType<GuiSettingsPresenter>("JAGCS", 1, 0, "GuiSettingsPresenter");
