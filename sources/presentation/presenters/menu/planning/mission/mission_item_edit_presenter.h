@@ -20,24 +20,19 @@ namespace presentation
     public slots:
         void enablePicker();
 
-        void remove();
-        void selectItem(int index); // TODO: remove mission from MissionItemEditPresenter
         void setMission(int id);
+        void selectItem(int index); // TODO: remove mission from MissionItemEditPresenter
         void save();
-        void updateView();
-
-    protected:
-        void connectView(QObject* view) override;
-
-    private slots:
+        void remove();
+        void changeSequence(int sequence);
+        void updateMissionItem();
         void updateCount();
         void updateAvailableCommands();
-        void onUpdateCommand(int commandIndex);
+        void updateCommand(int commandIndex);
 
+    private slots:
         void onMissionSelected(const dao::MissionPtr& mission);
         void onMissionItemSelected(const dao::MissionItemPtr& item);
-
-        void onChangeSequence(int sequence);
 
     private:
          class Impl;

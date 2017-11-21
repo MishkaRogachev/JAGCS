@@ -56,7 +56,7 @@ MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
     connect(d->service, &domain::MissionService::missionItemAdded, this, &MissionItemEditPresenter::updateCount);
     connect(d->service, &domain::MissionService::missionItemRemoved, this, &MissionItemEditPresenter::updateCount);
     connect(d->service, &domain::MissionService::missionItemChanged,
-            this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateView(); });
+            this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateMissionItem(); });
 }
 
 MissionItemEditPresenter::~MissionItemEditPresenter()
@@ -69,11 +69,9 @@ void MissionItemEditPresenter::enablePicker()
     this->setViewProperty(PROPERTY(picking), true);
 }
 
-void MissionItemEditPresenter::remove()
+void MissionItemEditPresenter::setMission(int id)
 {
-    if (d->item.isNull()) return;
-
-    d->service->remove(d->item);
+    this->onMissionSelected(d->service->mission(id));
 }
 
 void MissionItemEditPresenter::selectItem(int index)
@@ -86,11 +84,6 @@ void MissionItemEditPresenter::selectItem(int index)
     {
         this->onMissionItemSelected(d->service->missionItem(d->mission->id(), index));
     }
-}
-
-void MissionItemEditPresenter::setMission(int id)
-{
-    this->onMissionSelected(d->service->mission(id));
 }
 
 void MissionItemEditPresenter::save()
@@ -122,7 +115,25 @@ void MissionItemEditPresenter::save()
     if (!d->service->save(d->item)) return;
 }
 
-void MissionItemEditPresenter::updateView()
+void MissionItemEditPresenter::remove()
+{
+    if (d->item.isNull()) return;
+
+    d->service->remove(d->item);
+}
+
+void MissionItemEditPresenter::changeSequence(int sequence)
+{
+    if (d->item.isNull()) return;
+
+    dao::MissionItemPtr other = d->service->missionItem(d->mission->id(), sequence);
+    if (other.isNull()) return;
+
+    d->service->swapItems(d->item, other);
+    this->onMissionItemSelected(d->item);
+}
+
+void MissionItemEditPresenter::updateMissionItem()
 {
     if (d->mission && d->item)
     {
@@ -195,20 +206,6 @@ void MissionItemEditPresenter::updateView()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void MissionItemEditPresenter::connectView(QObject* view)
-{
-    this->updateAvailableCommands();
-
-    connect(view, SIGNAL(changeSequence(int)), this, SLOT(onChangeSequence(int)));
-    connect(view, SIGNAL(updateCommand(int)), this, SLOT(onUpdateCommand(int)));
-
-    connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-    connect(view, SIGNAL(remove()), this, SLOT(remove()));
-
-    this->updateCount();
-}
-
 void MissionItemEditPresenter::updateCount()
 {
     if (d->mission)
@@ -223,7 +220,7 @@ void MissionItemEditPresenter::updateCount()
     {
         this->setViewProperty(PROPERTY(count), 0);
         d->item.clear();
-        this->updateView();
+        this->updateMissionItem();
     }
 }
 
@@ -239,7 +236,7 @@ void MissionItemEditPresenter::updateAvailableCommands()
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 }
 
-void MissionItemEditPresenter::onUpdateCommand(int commandIndex)
+void MissionItemEditPresenter::updateCommand(int commandIndex)
 {
     if (commandIndex > 0 && commandIndex < d->availableCommands.count())
     {
@@ -267,16 +264,5 @@ void MissionItemEditPresenter::onMissionItemSelected(const dao::MissionItemPtr& 
     d->item = item;
 
     this->updateAvailableCommands();
-    this->updateView();
-}
-
-void MissionItemEditPresenter::onChangeSequence(int sequence)
-{
-    if (d->item.isNull()) return;
-
-    dao::MissionItemPtr other = d->service->missionItem(d->mission->id(), sequence);
-    if (other.isNull()) return;
-
-    d->service->swapItems(d->item, other);
-    this->onMissionItemSelected(d->item);
+    this->updateMissionItem();
 }
