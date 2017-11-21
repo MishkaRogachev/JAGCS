@@ -9,9 +9,7 @@ ColumnLayout {
 
     property var missions: []
 
-    function addMission() {
-        presenter.addMission()
-    }
+    function addMission() { presenter.addMission(); }
 
     spacing: palette.spacing
 

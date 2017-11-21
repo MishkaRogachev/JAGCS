@@ -10,7 +10,7 @@ Controls.Frame {
     property int missionId: 0
     property int count: 0
     property bool missionVisible: false
-    property int assignedVehicleId: -1
+    property int assignedVehicleId: 0
     property int status: MissionAssignment.NotActual
     property bool vehicleOnline: false
 
@@ -53,7 +53,7 @@ Controls.Frame {
 
         Controls.TextField {
             id: nameEdit
-            onEditingFinished: rename(text)
+            onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
         }
 
@@ -118,10 +118,9 @@ Controls.Frame {
         Controls.Button {
             tipText: qsTr("Edit commands")
             iconSource: "qrc:/icons/edit.svg"
-            onClicked: {
-                var item = deepIn("Planning/Mission/MissionItemEditView.qml", name,
-                                  { "missionId": missionId });
-            }
+            enabled: missionId > 0
+            onClicked: deepIn("Planning/Mission/MissionItemEditView.qml", name,
+                              { "missionId": missionId });
         }
 
         Controls.Button {

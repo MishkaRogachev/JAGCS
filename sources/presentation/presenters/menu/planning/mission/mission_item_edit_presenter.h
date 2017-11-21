@@ -22,7 +22,7 @@ namespace presentation
 
         void remove();
         void selectItem(int index); // TODO: remove mission from MissionItemEditPresenter
-        void selectMission(int id);
+        void setMission(int id);
         void save();
         void updateView();
 

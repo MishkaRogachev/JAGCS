@@ -10,7 +10,7 @@ Item {
 
     property bool editEnabled: false
     property bool changed: false
-    property int missionId
+    property int missionId: 0
     property int sequence: -1
     property int count: 0
     property int command: MissionItem.UnknownCommand
@@ -148,6 +148,7 @@ Item {
 
     MissionItemEditPresenter {
         view: itemEdit
+        Component.onCompleted: setMission(missionId)
     }
 
     ColumnLayout {

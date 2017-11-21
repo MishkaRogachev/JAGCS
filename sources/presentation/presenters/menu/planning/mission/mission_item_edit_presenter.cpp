@@ -88,7 +88,7 @@ void MissionItemEditPresenter::selectItem(int index)
     }
 }
 
-void MissionItemEditPresenter::selectMission(int id)
+void MissionItemEditPresenter::setMission(int id)
 {
     this->onMissionSelected(d->service->mission(id));
 }
