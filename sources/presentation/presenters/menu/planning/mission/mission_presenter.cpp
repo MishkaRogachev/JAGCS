@@ -48,30 +48,19 @@ void MissionPresenter::updateAssignment()
     }
 }
 
-void MissionPresenter::connectView(QObject* view)
-{
-    connect(view, SIGNAL(rename(QString)), this, SLOT(onRename(QString)));
-    connect(view, SIGNAL(setMissionVisible(bool)), this, SLOT(onSetMissionVisible(bool)));
-    connect(view, SIGNAL(remove()), this, SLOT(onRemove()));
-    connect(view, SIGNAL(assignVehicle(int)), this, SLOT(onAssignVehicle(int)));
-    connect(view, SIGNAL(uploadMission()), this, SLOT(onUploadMission()));
-    connect(view, SIGNAL(downloadMission()), this, SLOT(onDownloadMission()));
-    connect(view, SIGNAL(cancelSyncMission()), this, SLOT(onCancelSyncMission()));
-}
-
-void MissionPresenter::onRename(const QString& name)
+void MissionPresenter::rename(const QString& name)
 {
     m_mission->setName(name);
 
     if (m_service->save(m_mission)) this->setViewProperty(PROPERTY(name), m_mission->name());
 }
 
-void MissionPresenter::onRemove()
+void MissionPresenter::remove()
 {
     m_service->remove(m_mission);
 }
 
-void MissionPresenter::onAssignVehicle(int id)
+void MissionPresenter::assignVehicle(int id)
 {
     if (id)
     {
@@ -83,7 +72,7 @@ void MissionPresenter::onAssignVehicle(int id)
     }
 }
 
-void MissionPresenter::onSetMissionVisible(bool visible)
+void MissionPresenter::setMissionVisible(bool visible)
 {
     settings::Provider::setValue(settings::mission::visibility + "/" + m_mission->id(), visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
@@ -91,7 +80,7 @@ void MissionPresenter::onSetMissionVisible(bool visible)
     m_service->missionChanged(m_mission);
 }
 
-void MissionPresenter::onUploadMission()
+void MissionPresenter::uploadMission()
 {
     dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
     if (assignment.isNull()) return;
@@ -99,7 +88,7 @@ void MissionPresenter::onUploadMission()
     m_service->upload(assignment);
 }
 
-void MissionPresenter::onDownloadMission()
+void MissionPresenter::downloadMission()
 {
     dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
     if (assignment.isNull()) return;
@@ -107,7 +96,7 @@ void MissionPresenter::onDownloadMission()
     m_service->download(assignment);
 }
 
-void MissionPresenter::onCancelSyncMission()
+void MissionPresenter::cancelSyncMission()
 {
     dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_mission->id());
     if (assignment.isNull()) return;

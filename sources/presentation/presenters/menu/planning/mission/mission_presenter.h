@@ -26,17 +26,13 @@ namespace presentation
         void updateMission();
         void updateAssignment();
 
-    protected:
-        void connectView(QObject* view) override;
-
-    private slots:
-        void onRename(const QString& name);
-        void onSetMissionVisible(bool visible);
-        void onRemove();
-        void onAssignVehicle(int id);
-        void onUploadMission();
-        void onDownloadMission();
-        void onCancelSyncMission();
+        void rename(const QString& name);
+        void setMissionVisible(bool visible);
+        void remove();
+        void assignVehicle(int id);
+        void uploadMission();
+        void downloadMission();
+        void cancelSyncMission();
 
     private:
         domain::MissionService* const m_service;

@@ -9,11 +9,14 @@ ColumnLayout {
 
     property var missions: []
 
-    signal addMission()
+    function addMission() {
+        presenter.addMission()
+    }
 
     spacing: palette.spacing
 
     MissionListPresenter {
+        id: presenter
         view: missionList
         Component.onCompleted: updateMissions()
     }
@@ -24,11 +27,7 @@ ColumnLayout {
         MissionView {
             id: missionView
             Layout.fillWidth: true
-            Component.onCompleted: {
-                modelData.setView(missionView);
-                modelData.updateMission();
-                modelData.updateAssignment();
-            }
+            presenter: modelData
         }
     }
 }

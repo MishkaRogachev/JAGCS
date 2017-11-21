@@ -22,6 +22,7 @@
 #include "vehicles_presenter.h"
 #include "planning_presenter.h"
 #include "mission_list_presenter.h"
+#include "mission_presenter.h"
 #include "mission_item_edit_presenter.h"
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
@@ -134,6 +135,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<VehiclesPresenter>("JAGCS", 1, 0, "VehiclesPresenter");
     qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
     qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");
+    qmlRegisterUncreatableType<MissionPresenter>("JAGCS", 1, 0, "MissionPresenter", "Need to specify mission");
     qmlRegisterType<MissionItemEditPresenter>("JAGCS", 1, 0, "MissionItemEditPresenter");
     qmlRegisterType<DatabasePresenter>("JAGCS", 1, 0, "DatabasePresenter");
     qmlRegisterType<GuiSettingsPresenter>("JAGCS", 1, 0, "GuiSettingsPresenter");

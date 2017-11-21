@@ -17,17 +17,13 @@ namespace presentation
 
     public slots:
         void updateMissions();
-
-    protected:
-        void connectView(QObject* view) override;
+        void addMission();
 
     private slots:
         void onMissionAdded(const dao::MissionPtr& mission);
         void onMissionRemoved(const dao::MissionPtr& mission);
         void onMissionChanged(const dao::MissionPtr& mission);
         void updateMissionAssignment(const dao::MissionAssignmentPtr& assignment);
-
-        void onAddMission();
 
     private:
         class Impl;

@@ -64,9 +64,12 @@ void MissionListPresenter::updateMissions()
     this->setViewProperty(PROPERTY(missions), QVariant::fromValue(objectList));
 }
 
-void MissionListPresenter::connectView(QObject* view)
+void MissionListPresenter::addMission()
 {
-    connect(view, SIGNAL(addMission()), this, SLOT(onAddMission()));
+    dao::MissionPtr mission = dao::MissionPtr::create();
+    mission->setName(tr("New Mission"));
+
+    d->service->save(mission);
 }
 
 void MissionListPresenter::onMissionAdded(const dao::MissionPtr& mission)
@@ -97,12 +100,4 @@ void MissionListPresenter::updateMissionAssignment(const dao::MissionAssignmentP
     if (!d->missions.contains(assignment->missionId())) return;
 
     d->missions[assignment->missionId()]->updateAssignment();
-}
-
-void MissionListPresenter::onAddMission()
-{
-    dao::MissionPtr mission = dao::MissionPtr::create();
-    mission->setName(tr("New Mission"));
-
-    d->service->save(mission);
 }

@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Controls.Frame {
-    id: root
+    id: missionView
 
     property int missionId: 0
     property int count: 0
@@ -16,14 +16,14 @@ Controls.Frame {
 
     property alias name: nameEdit.text
 
-    signal rename(string name)
-    signal setMissionVisible(bool visible)
-    signal remove()
-    signal assignVehicle(int id)
-    signal uploadMission()
-    signal downloadMission()
-    signal cancelSyncMission()
+    property MissionPresenter presenter
 
+    onPresenterChanged: {
+        if (!presenter) return;
+        presenter.setView(missionView);
+        presenter.updateMission();
+        presenter.updateAssignment();
+    }
     onAssignedVehicleIdChanged: updateSelectedVehicle()
 
     Connections {
@@ -62,13 +62,13 @@ Controls.Frame {
         Controls.Button {
             tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
             iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            onClicked: setMissionVisible(!missionVisible)
+            onClicked: presenter.setMissionVisible(!missionVisible)
         }
 
         Controls.DelayButton {
             tipText: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
-            onActivated: remove()
+            onActivated: presenter.remove()
             iconColor: palette.dangerColor
         }
 
@@ -81,7 +81,7 @@ Controls.Frame {
                 id: vehicleBox
                 model: vehicles
                 textRole: "name"
-                onActivated: assignVehicle(vehicles[currentIndex].id)
+                onActivated: presenter.assignVehicle(vehicles[currentIndex].id)
                 Layout.fillWidth: true
             }
 
@@ -96,7 +96,7 @@ Controls.Frame {
             iconSource: "qrc:/icons/download.svg"
             enabled: assignedVehicleId > 0 && vehicleOnline
             highlighted: status === MissionAssignment.Downloading
-            onClicked: highlighted ? cancelSyncMission() : downloadMission()
+            onClicked: highlighted ? presenter.cancelSyncMission() : presenter.downloadMission()
         }
 
         Controls.Button {
@@ -104,7 +104,7 @@ Controls.Frame {
             iconSource: "qrc:/icons/upload.svg"
             enabled: assignedVehicleId > 0 && vehicleOnline
             highlighted: status === MissionAssignment.Uploading
-            onClicked: highlighted ? cancelSyncMission() : uploadMission()
+            onClicked: highlighted ? presenter.cancelSyncMission() : presenter.uploadMission()
         }
 
         Controls.Label {
