@@ -129,6 +129,7 @@ void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
     d->vehicleIds.append(vehicleId);
 
     domain::Telemetry* node = d->telemetryService->vehicleNode(vehicle->id());
+    if (!node) return;
 
     connect(node->childNode(domain::Telemetry::Position),
             &domain::Telemetry::parametersChanged,
@@ -161,9 +162,6 @@ void VehicleMapItemModel::onVehicleRemoved(const dao::VehiclePtr& vehicle)
 {
     int row = d->vehicleIds.indexOf(vehicle->id());
     if (row == -1) return;
-
-    domain::Telemetry* node = d->telemetryService->vehicleNode(vehicle->id());
-    disconnect(node, 0, this, 0);
 
     this->beginRemoveRows(QModelIndex(), row, row);
     d->vehicleIds.removeOne(vehicle->id());

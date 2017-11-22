@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "settings_provider.h"

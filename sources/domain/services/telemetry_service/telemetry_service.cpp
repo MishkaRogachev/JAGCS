@@ -39,7 +39,14 @@ TelemetryService::TelemetryService(VehicleService* service, QObject* parent):
     qRegisterMetaType<Telemetry::TelemetryMap>("Telemetry::TelemetryMap");
 
     d->service = service;
+    connect(d->service, &VehicleService::vehicleAdded, this, &TelemetryService::onVehicleAdded);
     connect(d->service, &VehicleService::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
+
+    VehicleTelemetryFactory factory;
+    for (const dao::VehiclePtr& vehicle: d->service->vehicles())
+    {
+        d->vehicleNodes[vehicle->id()] = factory.create();
+    }
 }
 
 TelemetryService::~TelemetryService()
@@ -57,11 +64,6 @@ QList<Telemetry*> TelemetryService::rootNodes() const
 
 Telemetry* TelemetryService::vehicleNode(int vehicleId) const
 {
-    if (!d->vehicleNodes.contains(vehicleId))
-    {
-        VehicleTelemetryFactory factory;
-        d->vehicleNodes[vehicleId] = factory.create();
-    }
     return d->vehicleNodes.value(vehicleId, nullptr);
 }
 
@@ -75,9 +77,20 @@ Telemetry* TelemetryService::radioNode() const
     return &d->radioNode;
 }
 
+void TelemetryService::onVehicleAdded(const dao::VehiclePtr& vehicle)
+{
+    if (d->vehicleNodes.contains(vehicle->id())) return;
+
+    VehicleTelemetryFactory factory;
+    d->vehicleNodes[vehicle->id()] = factory.create();
+}
+
 void TelemetryService::onVehicleRemoved(const dao::VehiclePtr& vehicle)
 {
-    delete d->vehicleNodes.take(vehicle->id());
+    if (!d->vehicleNodes.contains(vehicle->id())) return;
+
+    // FIXME: crash on removing nodes
+    //delete d->vehicleNodes[vehicle->id()];
 }
 
 

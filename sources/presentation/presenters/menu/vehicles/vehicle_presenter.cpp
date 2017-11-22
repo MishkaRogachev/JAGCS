@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "vehicle.h"
@@ -45,25 +46,34 @@ void VehiclePresenter::setVehicle(int id)
 
 void VehiclePresenter::updateView()
 {
-    this->setViewProperty(PROPERTY(name), m_vehicle->name());
-    this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
-    this->setViewProperty(PROPERTY(type), ::availableTypes.indexOf(m_vehicle->type()));
-    this->setViewProperty(PROPERTY(online), m_vehicle->isOnline());
+    this->setViewProperty(PROPERTY(name), m_vehicle ? m_vehicle->name() : QString());
+    this->setViewProperty(PROPERTY(mavId), m_vehicle ? m_vehicle->mavId() : 0);
+    this->setViewProperty(PROPERTY(type), m_vehicle ? ::availableTypes.indexOf(m_vehicle->type()) :
+                                                      dao::Vehicle::UnknownType);
+    this->setViewProperty(PROPERTY(online), m_vehicle && m_vehicle->isOnline());
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void VehiclePresenter::save()
 {
+    if (m_vehicle.isNull()) return;
+
     m_vehicle->setName(this->viewProperty(PROPERTY(name)).toString());
     m_vehicle->setMavId(this->viewProperty(PROPERTY(mavId)).toInt());
-    m_vehicle->setType(::availableTypes.at(this->viewProperty(PROPERTY(type)).toInt()));
+    int type = this->viewProperty(PROPERTY(type)).toInt();
+    if (type >= 0 && type < ::availableTypes.count())
+    {
+        m_vehicle->setType(::availableTypes.at(this->viewProperty(PROPERTY(type)).toInt()));
+    }
 
     if (m_service->save(m_vehicle)) this->setViewProperty(PROPERTY(changed), false);
 }
 
 void VehiclePresenter::remove()
 {
+    if (m_vehicle.isNull()) return;
+
     m_service->remove(m_vehicle);
 }
 

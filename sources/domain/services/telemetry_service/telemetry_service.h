@@ -25,6 +25,7 @@ namespace domain
         Telemetry* radioNode() const;
 
     private slots:
+        void onVehicleAdded(const dao::VehiclePtr& vehicle);
         void onVehicleRemoved(const dao::VehiclePtr& vehicle);
 
     private:

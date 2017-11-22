@@ -27,13 +27,13 @@ Item {
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         Controls.Frame {
-            visible: vehicleIds.count === 0
+            visible: repeater.count == 0
             width: parent.width
             height: label.height + palette.margins * 2
 
             Controls.Label {
                 id: label
-                text: qsTr("No vehciles present")
+                text: qsTr("No vehicles present")
                 width: parent.width
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
@@ -43,10 +43,10 @@ Item {
         ColumnLayout {
             id: column
             width: parent.width
-            anchors.centerIn: parent
             spacing: palette.spacing
 
             Repeater {
+                id: repeater
                 model: vehicleIds
 
                 VehicleView {
