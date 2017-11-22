@@ -31,8 +31,8 @@ namespace presentation
         void remove();
 
     private:
-        domain::SerialPortService* m_serialPortsService;
-        domain::CommunicationService* m_commService;
+        domain::SerialPortService* const m_serialPortsService;
+        domain::CommunicationService* const m_commService;
         dao::LinkDescriptionPtr m_description;
     };
 }

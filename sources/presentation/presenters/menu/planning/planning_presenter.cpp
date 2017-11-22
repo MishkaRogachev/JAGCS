@@ -12,33 +12,24 @@
 
 using namespace presentation;
 
-class PlanningPresenter::Impl
-{
-public:
-    domain::VehicleService* const service = domain::ServiceRegistry::vehicleService();
-};
-
 PlanningPresenter::PlanningPresenter(QObject* parent):
     BasePresenter(parent),
-    d(new Impl())
+    m_service(domain::ServiceRegistry::vehicleService())
 {
-    connect(d->service, &domain::VehicleService::vehicleAdded,
+    connect(m_service, &domain::VehicleService::vehicleAdded,
             this, &PlanningPresenter::updateVehicles);
-    connect(d->service, &domain::VehicleService::vehicleRemoved,
+    connect(m_service, &domain::VehicleService::vehicleRemoved,
             this, &PlanningPresenter::updateVehicles);
-    connect(d->service, &domain::VehicleService::vehicleChanged,
+    connect(m_service, &domain::VehicleService::vehicleChanged,
             this, &PlanningPresenter::updateVehicles);
 }
-
-PlanningPresenter::~PlanningPresenter()
-{}
 
 void PlanningPresenter::updateVehicles()
 {
     QVariantList vehicles;
     vehicles.append(QVariant::fromValue(dao::Vehicle()));
 
-    for (const dao::VehiclePtr& vehicle: d->service->vehicles())
+    for (const dao::VehiclePtr& vehicle: m_service->vehicles())
     {
         vehicles.append(QVariant::fromValue(*vehicle));
     }

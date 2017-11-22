@@ -3,6 +3,11 @@
 
 #include "base_presenter.h"
 
+namespace domain
+{
+    class VehicleService;
+}
+
 namespace presentation
 {
     class PlanningPresenter: public BasePresenter
@@ -11,14 +16,12 @@ namespace presentation
 
     public:
         explicit PlanningPresenter(QObject* parent = nullptr);
-        ~PlanningPresenter() override;
 
     public slots:
         void updateVehicles();
 
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        domain::VehicleService* const m_service;
     };
 }
 

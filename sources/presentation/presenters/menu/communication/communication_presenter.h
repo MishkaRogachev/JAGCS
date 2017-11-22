@@ -24,7 +24,7 @@ namespace presentation
         void addSerialLink();
 
     private:
-        domain::CommunicationService* m_service;
+        domain::CommunicationService* const m_service;
     };
 }
 

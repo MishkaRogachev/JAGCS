@@ -19,7 +19,7 @@ using namespace presentation;
 class MissionItemEditPresenter::Impl
 {
 public:
-    domain::MissionService* service = domain::ServiceRegistry::missionService();
+    domain::MissionService* const service = domain::ServiceRegistry::missionService();
 
     dao::MissionPtr mission;
     dao::MissionItemPtr item;
