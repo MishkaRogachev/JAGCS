@@ -18,13 +18,13 @@ namespace presentation
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(const dao::LinkDescriptionPtr& description,
-                                   QObject* parent = nullptr);
+        CommunicationLinkPresenter(QObject* parent = nullptr);
 
     public slots:
+        void setLink(int id);
         void updateRates();
         void updateDevices();
-        void updateView();
+        void updateLink();
         void updateStatistics();
         void setConnected(bool connected);
         void save();

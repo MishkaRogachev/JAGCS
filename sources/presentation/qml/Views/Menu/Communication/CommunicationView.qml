@@ -9,7 +9,7 @@ Item {
 
     property var linkIds: []
 
-    implicitWidth: palette.controlBaseSi* 11
+    implicitWidth: palette.controlBaseSize * 11
 
     CommunicationPresenter {
         id: presenter
@@ -49,7 +49,6 @@ Item {
                 model: linkIds
 
                 CommunicationLinkView {
-                    id: linkView
                     Layout.fillWidth: true
                     linkId: modelData
                 }

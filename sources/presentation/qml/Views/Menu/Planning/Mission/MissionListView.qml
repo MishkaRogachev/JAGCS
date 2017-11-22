@@ -23,7 +23,6 @@ ColumnLayout {
         model: missionIds
 
         MissionView {
-            id: missionView
             Layout.fillWidth: true
             missionId: modelData
         }

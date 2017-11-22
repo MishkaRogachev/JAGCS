@@ -6,7 +6,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Controls.Frame {
-    id: root
+    id: linkView
 
     property int linkId: 0
     property bool connected: false
@@ -21,11 +21,6 @@ Controls.Frame {
     property bool changed: false
     property var bytesSent: []
     property var bytesRecv: []
-
-    signal save()
-    signal restore()
-    signal remove()
-    signal setConnected(bool connected)
 
     onBytesSentChanged: {
         sentSeries.clear();
@@ -51,8 +46,17 @@ Controls.Frame {
 
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
-
     contentHeight: grid.height
+
+    CommunicationLinkPresenter {
+        id: presenter
+        view: linkView
+
+        Component.onCompleted: {
+            updateRates();
+            setLink(linkId);
+        }
+    }
 
     GridLayout {
         id: grid
@@ -210,10 +214,11 @@ Controls.Frame {
         }
 
         RowLayout {
+            enabled: linkId > 0
+
             Controls.Button {
                 iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
                 onClicked: chart.visible = !chart.visible
-                Layout.alignment: Qt.AlignTop
             }
 
             Controls.Button {
@@ -221,28 +226,28 @@ Controls.Frame {
                 tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
                 iconSource: connected ? "qrc:/icons/disconnect.svg" :
                                         "qrc:/icons/connect.svg"
-                onClicked: setConnected(!connected)
+                onClicked: presenter.setConnected(!connected)
             }
 
             Controls.Button {
                 tipText: qsTr("Save")
                 iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
+                onClicked: presenter.save()
                 enabled: changed
             }
 
             Controls.Button {
                 tipText: qsTr("Restore")
                 iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
+                onClicked: presenter.updateLink()
                 enabled: changed
             }
 
             Controls.DelayButton {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
-                onActivated: remove()
                 iconColor: palette.dangerColor
+                onActivated: presenter.remove()
             }
         }
     }
