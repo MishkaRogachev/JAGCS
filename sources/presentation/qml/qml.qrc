@@ -96,8 +96,8 @@
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>
-        <file>Views/Menu/Vehicles/VehiclesView.qml</file>
-        <file>Views/Menu/Vehicles/VehicleDescriptionView.qml</file>
+        <file>Views/Menu/Vehicles/VehiclesListView.qml</file>
+        <file>Views/Menu/Vehicles/VehicleView.qml</file>
         <file>Views/Menu/Communication/CommunicationView.qml</file>
         <file>Views/Menu/Communication/CommunicationLinkView.qml</file>
         <file>Views/Menu/Planning/PlanningView.qml</file>

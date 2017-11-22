@@ -5,8 +5,9 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Controls.Frame {
-    id: root
+    id: vehicleView
 
+    property int vehicleId: 0
     property bool online: false
     property bool changed: false
     property int type: Vehicle.UnknownType
@@ -15,11 +16,13 @@ Controls.Frame {
     property alias mavId: idBox.value
     property alias types: typeBox.model
 
-    signal save()
-    signal restore()
-    signal remove()
-
     onTypeChanged: typeBox.currentIndex = type
+
+    VehiclePresenter {
+        id: presenter
+        view: vehicleView
+        Component.onCompleted: setVehicle(vehicleId)
+    }
 
     GridLayout {
         anchors.fill: parent
@@ -86,21 +89,21 @@ Controls.Frame {
             Controls.Button {
                 tipText: qsTr("Save")
                 iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
+                onClicked: presenter.save()
                 enabled: changed
             }
 
             Controls.Button {
                 tipText: qsTr("Restore")
                 iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
+                onClicked: presenter.updateView()
                 enabled: changed
             }
 
             Controls.DelayButton {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
-                onActivated: remove()
+                onActivated: presenter.remove()
                 enabled: !online
                 iconColor: palette.dangerColor
             }

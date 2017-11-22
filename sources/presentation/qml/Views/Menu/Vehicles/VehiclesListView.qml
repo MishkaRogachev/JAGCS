@@ -5,18 +5,17 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Item {
-    id: veh
+    id: vehiclesList
 
-    property var vehicles
+    property var vehicleIds: []
     property alias autoAdd: autoAdd.checked
-
-    signal addVehicle()
-    signal setAutoAdd(bool add)
 
     implicitWidth: palette.controlBaseSize * 11
 
-    VehiclesPresenter {
-        view: veh
+    VehiclesListPresenter {
+        id: presenter
+        view: vehiclesList
+        Component.onCompleted: updateVehicles()
     }
 
     Flickable {
@@ -28,7 +27,7 @@ Item {
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         Controls.Frame {
-            visible: repeater.count == 0
+            visible: vehicleIds.count === 0
             width: parent.width
             height: label.height + palette.margins * 2
 
@@ -48,13 +47,11 @@ Item {
             spacing: palette.spacing
 
             Repeater {
-                id: repeater
-                model: vehicles
+                model: vehicleIds
 
-                VehicleDescriptionView {
-                    id: descriptionView
+                VehicleView {
                     Layout.fillWidth: true
-                    Component.onCompleted: modelData.setView(descriptionView)
+                    vehicleId: modelData
                 }
             }
         }
@@ -70,14 +67,14 @@ Item {
         Controls.Button {
             text: qsTr("Add Vehicle")
             iconSource: "qrc:/icons/add.svg"
-            onClicked: addVehicle()
+            onClicked: presenter.addVehicle()
             Layout.fillWidth: true
         }
 
         Controls.CheckBox {
             id: autoAdd
             text: qsTr("Autoadd")
-            onCheckedChanged: setAutoAdd(checked)
+            onCheckedChanged: presenter.setAutoAdd(checked)
         }
     }
 }
