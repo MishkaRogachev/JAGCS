@@ -18,16 +18,21 @@ Item {
         Component.onCompleted: updateVehicles()
     }
 
-    Flickable {
+    ListView {
         anchors.fill: parent
         anchors.bottomMargin: addRow.height
-        contentHeight: column.height
-        clip: true
+        spacing: palette.spacing
+        model: vehicleIds
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
+        delegate: VehicleView {
+            width: parent.width
+            vehicleId: modelData
+        }
+
         Controls.Frame {
-            visible: repeater.count == 0
+            visible: parent.count === 0
             width: parent.width
             height: label.height + palette.margins * 2
 
@@ -37,22 +42,6 @@ Item {
                 width: parent.width
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
-            }
-        }
-
-        ColumnLayout {
-            id: column
-            width: parent.width
-            spacing: palette.spacing
-
-            Repeater {
-                id: repeater
-                model: vehicleIds
-
-                VehicleView {
-                    Layout.fillWidth: true
-                    vehicleId: modelData
-                }
             }
         }
     }

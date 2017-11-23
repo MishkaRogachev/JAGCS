@@ -64,7 +64,7 @@ Controls.Pane {
         Flickable {
             id: flickable
             contentHeight: loader.height
-            flickableDirection: Flickable.VerticalFlick
+            flickableDirection: Flickable.AutoFlickIfNeeded
             clip: true
             Layout.fillWidth: true
             Layout.fillHeight: true

@@ -17,16 +17,21 @@ Item {
         Component.onCompleted: updateLinks()
     }
 
-    Flickable {
+    ListView {
         anchors.fill: parent
         anchors.bottomMargin: addButton.height
-        contentHeight: column.height
-        clip: true
+        spacing: palette.spacing
+        model: linkIds
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
+        delegate: LinkView {
+            width: parent.width
+            linkId: modelData
+        }
+
         Controls.Frame {
-            visible: repeater.count == 0
+            visible: parent.count === 0
             width: parent.width
             height: label.height + palette.margins * 2
 
@@ -36,22 +41,6 @@ Item {
                 width: parent.width
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
-            }
-        }
-
-        ColumnLayout {
-            id: column
-            width: parent.width
-            spacing: palette.spacing
-
-            Repeater {
-                id: repeater
-                model: linkIds
-
-                LinkView {
-                    Layout.fillWidth: true
-                    linkId: modelData
-                }
             }
         }
     }
