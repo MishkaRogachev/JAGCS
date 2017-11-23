@@ -1,5 +1,5 @@
-#ifndef COMMUNICATIONS_PRESENTER_H
-#define COMMUNICATIONS_PRESENTER_H
+#ifndef LINK_LIST_PRESENTER_H
+#define LINK_LIST_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -11,12 +11,12 @@ namespace domain
 
 namespace presentation
 {
-    class CommunicationPresenter: public BasePresenter
+    class LinkListPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit CommunicationPresenter(QObject* parent = nullptr);
+        explicit LinkListPresenter(QObject* parent = nullptr);
 
     public slots:
         void updateLinks();
@@ -28,4 +28,4 @@ namespace presentation
     };
 }
 
-#endif // COMMUNICATIONS_PRESENTER_H
+#endif // LINK_LIST_PRESENTER_H

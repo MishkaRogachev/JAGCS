@@ -1,5 +1,5 @@
-#ifndef COMMUNICATION_LINK_PRESENTER_H
-#define COMMUNICATION_LINK_PRESENTER_H
+#ifndef LINK_PRESENTER_H
+#define LINK_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -13,12 +13,12 @@ namespace domain
 
 namespace presentation
 {
-    class CommunicationLinkPresenter: public BasePresenter
+    class LinkPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        CommunicationLinkPresenter(QObject* parent = nullptr);
+        LinkPresenter(QObject* parent = nullptr);
 
     public slots:
         void setLink(int id);
@@ -37,4 +37,4 @@ namespace presentation
     };
 }
 
-#endif // COMMUNICATION_LINK_PRESENTER_H
+#endif // LINK_PRESENTER_H

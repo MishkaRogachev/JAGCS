@@ -5,15 +5,15 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Item {
-    id: communication
+    id: linkList
 
     property var linkIds: []
 
     implicitWidth: palette.controlBaseSize * 11
 
-    CommunicationPresenter {
+    LinkListPresenter {
         id: presenter
-        view: communication
+        view: linkList
         Component.onCompleted: updateLinks()
     }
 
@@ -48,7 +48,7 @@ Item {
                 id: repeater
                 model: linkIds
 
-                CommunicationLinkView {
+                LinkView {
                     Layout.fillWidth: true
                     linkId: modelData
                 }

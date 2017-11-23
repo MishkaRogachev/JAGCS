@@ -1,4 +1,4 @@
-#include "communication_presenter.h"
+#include "link_list_presenter.h"
 
 // Qt
 #include <QMap>
@@ -14,17 +14,17 @@
 
 using namespace presentation;
 
-CommunicationPresenter::CommunicationPresenter(QObject* parent):
+LinkListPresenter::LinkListPresenter(QObject* parent):
     BasePresenter(parent),
     m_service(domain::ServiceRegistry::communicationService())
 {
     connect(m_service, &domain::CommunicationService::descriptionAdded,
-            this, &CommunicationPresenter::updateLinks);
+            this, &LinkListPresenter::updateLinks);
     connect(m_service, &domain::CommunicationService::descriptionRemoved,
-            this, &CommunicationPresenter::updateLinks);
+            this, &LinkListPresenter::updateLinks);
 }
 
-void CommunicationPresenter::updateLinks()
+void LinkListPresenter::updateLinks()
 {
     QVariantList linkIds;
     for (const dao::LinkDescriptionPtr& link: m_service->descriptions())
@@ -35,7 +35,7 @@ void CommunicationPresenter::updateLinks()
     this->setViewProperty(PROPERTY(linkIds), linkIds);
 }
 
-void CommunicationPresenter::addUdpLink()
+void LinkListPresenter::addUdpLink()
 {
     auto description = dao::LinkDescriptionPtr::create();
 
@@ -46,7 +46,7 @@ void CommunicationPresenter::addUdpLink()
     m_service->save(description);
 }
 
-void CommunicationPresenter::addSerialLink()
+void LinkListPresenter::addSerialLink()
 {
     auto description = dao::LinkDescriptionPtr::create();
 

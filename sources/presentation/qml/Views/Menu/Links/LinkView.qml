@@ -48,7 +48,7 @@ Controls.Frame {
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
     contentHeight: grid.height
 
-    CommunicationLinkPresenter {
+    LinkPresenter {
         id: presenter
         view: linkView
 

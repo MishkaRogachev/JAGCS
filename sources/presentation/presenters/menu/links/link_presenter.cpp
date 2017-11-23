@@ -1,4 +1,4 @@
-#include "communication_link_presenter.h"
+#include "link_presenter.h"
 
 // Qt
 #include <QMap>
@@ -13,13 +13,13 @@
 
 using namespace presentation;
 
-CommunicationLinkPresenter::CommunicationLinkPresenter(QObject* parent):
+LinkPresenter::LinkPresenter(QObject* parent):
     BasePresenter(parent),
     m_serialPortsService(domain::ServiceRegistry::serialPortService()),
     m_commService(domain::ServiceRegistry::communicationService())
 {
     connect(m_serialPortsService, &domain::SerialPortService::availableDevicesChanged,
-            this, &CommunicationLinkPresenter::updateDevices);
+            this, &LinkPresenter::updateDevices);
 
     connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
             [this](const dao::LinkDescriptionPtr& description) {
@@ -31,7 +31,7 @@ CommunicationLinkPresenter::CommunicationLinkPresenter(QObject* parent):
     });
 }
 
-void CommunicationLinkPresenter::setLink(int id)
+void LinkPresenter::setLink(int id)
 {
     m_description = m_commService->description(id);
 
@@ -40,14 +40,14 @@ void CommunicationLinkPresenter::setLink(int id)
     this->updateStatistics();
 }
 
-void CommunicationLinkPresenter::updateRates()
+void LinkPresenter::updateRates()
 {
     QVariantList baudRates;
     for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
     this->setViewProperty(PROPERTY(baudRates), baudRates);
 }
 
-void CommunicationLinkPresenter::updateLink()
+void LinkPresenter::updateLink()
 {
     this->setViewProperty(PROPERTY(type), m_description ? m_description->type() :
                                                           dao::LinkDescription::UnknownType);
@@ -59,7 +59,7 @@ void CommunicationLinkPresenter::updateLink()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void CommunicationLinkPresenter::updateStatistics()
+void LinkPresenter::updateStatistics()
 {
     this->setViewProperty(PROPERTY(connected), m_description && m_description->isConnected());
     this->setViewProperty(PROPERTY(protocol), m_description ? m_description->protocol() :
@@ -70,7 +70,7 @@ void CommunicationLinkPresenter::updateStatistics()
                               QVariant::fromValue(m_description->bytesRecv()) : QVariant());
 }
 
-void CommunicationLinkPresenter::updateDevices()
+void LinkPresenter::updateDevices()
 {
     QStringList devices;
     devices.append(QString());
@@ -88,14 +88,14 @@ void CommunicationLinkPresenter::updateDevices()
     this->setViewProperty(PROPERTY(devices), devices);
 }
 
-void CommunicationLinkPresenter::setConnected(bool connected)
+void LinkPresenter::setConnected(bool connected)
 {
     if (m_description.isNull()) return;
 
     m_commService->setLinkConnected(m_description, connected);
 }
 
-void CommunicationLinkPresenter::save()
+void LinkPresenter::save()
 {
     if (m_description.isNull()) return;
 
@@ -109,7 +109,7 @@ void CommunicationLinkPresenter::save()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void CommunicationLinkPresenter::remove()
+void LinkPresenter::remove()
 {
     if (m_description.isNull()) return;
 

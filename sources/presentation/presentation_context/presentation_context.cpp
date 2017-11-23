@@ -18,9 +18,9 @@
 #include "topbar_presenter.h"
 #include "location_map_presenter.h"
 #include "active_video_presenter.h"
-#include "communication_presenter.h"
-#include "communication_link_presenter.h"
-#include "vehicles_list_presenter.h"
+#include "link_list_presenter.h"
+#include "link_presenter.h"
+#include "vehicle_list_presenter.h"
 #include "vehicle_presenter.h"
 #include "planning_presenter.h"
 #include "mission_list_presenter.h"
@@ -133,9 +133,9 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");
     qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
     qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "VideoPresenter");
-    qmlRegisterType<CommunicationPresenter>("JAGCS", 1, 0, "CommunicationPresenter");
-    qmlRegisterType<CommunicationLinkPresenter>("JAGCS", 1, 0, "CommunicationLinkPresenter");
-    qmlRegisterType<VehiclesListPresenter>("JAGCS", 1, 0, "VehiclesListPresenter");
+    qmlRegisterType<LinkListPresenter>("JAGCS", 1, 0, "LinkListPresenter");
+    qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");
+    qmlRegisterType<VehicleListPresenter>("JAGCS", 1, 0, "VehicleListPresenter");
     qmlRegisterType<VehiclePresenter>("JAGCS", 1, 0, "VehiclePresenter");
     qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
     qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");

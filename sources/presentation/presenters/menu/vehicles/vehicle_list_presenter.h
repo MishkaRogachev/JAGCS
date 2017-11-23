@@ -1,5 +1,5 @@
-#ifndef VEHICLES_LIST_PRESENTER_H
-#define VEHICLES_LIST_PRESENTER_H
+#ifndef VEHICLE_LIST_PRESENTER_H
+#define VEHICLE_LIST_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -11,12 +11,12 @@ namespace domain
 
 namespace presentation
 {
-    class VehiclesListPresenter: public BasePresenter
+    class VehicleListPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit VehiclesListPresenter(QObject* parent = nullptr);
+        explicit VehicleListPresenter(QObject* parent = nullptr);
 
     public slots:
         void updateVehicles();
@@ -32,4 +32,4 @@ namespace presentation
     };
 }
 
-#endif // VEHICLES_LIST_PRESENTER_H
+#endif // VEHICLE_LIST_PRESENTER_H

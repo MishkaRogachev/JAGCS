@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-import "Mission"
+import "Missions"
 
 Item {
     id: planning

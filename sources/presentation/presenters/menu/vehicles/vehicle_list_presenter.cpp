@@ -1,4 +1,4 @@
-#include "vehicles_list_presenter.h"
+#include "vehicle_list_presenter.h"
 
 // Qt
 #include <QVariant>
@@ -14,17 +14,17 @@
 
 using namespace presentation;
 
-VehiclesListPresenter::VehiclesListPresenter(QObject* parent):
+VehicleListPresenter::VehicleListPresenter(QObject* parent):
     BasePresenter(parent),
     m_service(domain::ServiceRegistry::vehicleService())
 {
     connect(m_service, &domain::VehicleService::vehicleAdded,
-            this, &VehiclesListPresenter::updateVehicles);
+            this, &VehicleListPresenter::updateVehicles);
     connect(m_service, &domain::VehicleService::vehicleRemoved,
-            this, &VehiclesListPresenter::updateVehicles);
+            this, &VehicleListPresenter::updateVehicles);
 }
 
-void VehiclesListPresenter::updateVehicles()
+void VehicleListPresenter::updateVehicles()
 {
     QVariantList vehicleIds;
     for (const dao::VehiclePtr& vehicle: m_service->vehicles())
@@ -35,7 +35,7 @@ void VehiclesListPresenter::updateVehicles()
     this->setViewProperty(PROPERTY(vehicleIds), QVariant::fromValue(vehicleIds));
 }
 
-void VehiclesListPresenter::addVehicle()
+void VehicleListPresenter::addVehicle()
 {
     auto description = dao::VehiclePtr::create();
 
@@ -44,12 +44,12 @@ void VehiclesListPresenter::addVehicle()
     m_service->save(description);
 }
 
-void VehiclesListPresenter::setAutoAdd(bool add)
+void VehicleListPresenter::setAutoAdd(bool add)
 {
     settings::Provider::setValue(settings::communication::autoAdd, QVariant(add));
 }
 
-void VehiclesListPresenter::connectView(QObject* view)
+void VehicleListPresenter::connectView(QObject* view)
 {
     view->setProperty(PROPERTY(autoAdd), settings::Provider::value(settings::communication::autoAdd));
 }

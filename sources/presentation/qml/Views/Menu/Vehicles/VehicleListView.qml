@@ -5,16 +5,16 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Item {
-    id: vehiclesList
+    id: vehicleList
 
     property var vehicleIds: []
     property alias autoAdd: autoAdd.checked
 
     implicitWidth: palette.controlBaseSize * 11
 
-    VehiclesListPresenter {
+    VehicleListPresenter {
         id: presenter
-        view: vehiclesList
+        view: vehicleList
         Component.onCompleted: updateVehicles()
     }
 
