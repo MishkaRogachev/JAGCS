@@ -9,6 +9,7 @@ Controls.Frame {
 
     property int vehicleId: 0
     property bool online: false
+    property bool mavIdIsCorrect: false
     property bool changed: false
     property int type: Vehicle.UnknownType
 
@@ -50,9 +51,13 @@ Controls.Frame {
         Controls.SpinBox {
             id: idBox
             enabled: !online
-            from: 0
+            from: 1
             to: 255
-            onValueChanged: changed = true
+            backgroundColor: mavIdIsCorrect ? palette.sunkenColor : palette.dangerColor
+            onValueChanged: {
+                presenter.checkMavId(value);
+                changed = true;
+            }
             Layout.fillWidth: true
         }
 
@@ -90,7 +95,7 @@ Controls.Frame {
                 tipText: qsTr("Save")
                 iconSource: "qrc:/icons/save.svg"
                 onClicked: presenter.save()
-                enabled: changed
+                enabled: mavIdIsCorrect && changed
             }
 
             Controls.Button {

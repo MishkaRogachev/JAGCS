@@ -39,11 +39,8 @@ namespace dao
             Ornithopter = 62
         };
 
-        Vehicle();
-        ~Vehicle() override;
-
         int mavId() const;
-        bool setMavId(int mavId);
+        void setMavId(int mavId);
 
         QString name() const;
         void setName(const QString& name);
@@ -57,10 +54,9 @@ namespace dao
     private:
         int m_mavId = 0;
         QString m_name;
-        Type m_type = Auto;
+        Type m_type = UnknownType;
 
-        static QMap<Vehicle*, int> m_mavIds;
-        bool m_online;
+        bool m_online = false;
 
         Q_ENUM(Type)
     };

@@ -7,6 +7,7 @@ T.SpinBox {
     id: control
 
     property bool isValid: value >= from && value <= to
+    property color backgroundColor: palette.sunkenColor
 
     font.pixelSize: palette.fontPixelSize
     editable: true
@@ -17,7 +18,7 @@ T.SpinBox {
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: isValid ? palette.sunkenColor : palette.dangerColor
+        color: isValid ? backgroundColor : palette.dangerColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 
         Shaders.Hatch {

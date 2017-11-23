@@ -22,6 +22,7 @@ namespace presentation
     public slots:
         void setVehicle(int id);
         void updateView();
+        void checkMavId(int mavId);
         void save();
         void remove();
 

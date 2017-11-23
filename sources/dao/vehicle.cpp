@@ -5,34 +5,14 @@
 
 using namespace dao;
 
-QMap<Vehicle*, int> Vehicle::m_mavIds;
-
-Vehicle::Vehicle():
-    BaseDao(),
-    m_mavId(-1),
-    m_type(UnknownType),
-    m_online(false)
-{
-    m_mavIds[this] = m_mavId;
-}
-
-Vehicle::~Vehicle()
-{
-    m_mavIds.remove(this);
-}
-
 int Vehicle::mavId() const
 {
     return m_mavId;
 }
 
-bool Vehicle::setMavId(int mavId)
+void Vehicle::setMavId(int mavId)
 {
-    if (m_mavIds.values().contains(mavId)) return false;
-
     m_mavId = mavId;
-    m_mavIds[this] = mavId;
-    return true;
 }
 
 QString Vehicle::name() const

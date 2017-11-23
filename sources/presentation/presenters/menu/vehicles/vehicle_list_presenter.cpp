@@ -37,11 +37,7 @@ void VehicleListPresenter::updateVehicles()
 
 void VehicleListPresenter::addVehicle()
 {
-    auto description = dao::VehiclePtr::create();
-
-    description->setName(tr("New Vehicle"));
-
-    m_service->save(description);
+    m_service->addNewVehicle();
 }
 
 void VehicleListPresenter::setAutoAdd(bool add)

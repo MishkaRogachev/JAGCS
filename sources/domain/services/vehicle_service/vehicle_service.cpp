@@ -81,6 +81,16 @@ int VehicleService::mavIdByVehicleId(int vehicleId) const
     return -1;
 }
 
+QList<int> VehicleService::employedMavIds() const
+{
+    QList<int> mavIds;
+    for (const VehiclePtr& vehicle: this->vehicles())
+    {
+        mavIds.append(vehicle->mavId());
+    }
+    return mavIds;
+}
+
 bool VehicleService::save(const VehiclePtr& vehicle)
 {
     QMutexLocker locker(&d->mutex);
@@ -102,4 +112,19 @@ bool VehicleService::remove(const VehiclePtr& vehicle)
     if (!d->vehicleRepository.remove(vehicle)) return false;
     emit vehicleRemoved(vehicle);
     return true;
+}
+
+bool VehicleService::addNewVehicle()
+{
+    VehiclePtr vehicle = VehiclePtr::create();
+
+    QList<int> mavIds = this->employedMavIds();
+    int mavId = 1;
+    while (mavIds.contains(mavId)) mavId++;
+
+    vehicle->setMavId(mavId);
+    vehicle->setName(tr("New vehicle"));
+    vehicle->setType(Vehicle::Auto);
+
+    return this->save(vehicle);
 }

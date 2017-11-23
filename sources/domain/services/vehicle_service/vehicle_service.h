@@ -25,9 +25,12 @@ namespace domain
         int vehicleIdByMavId(int mavId) const;
         int mavIdByVehicleId(int vehicleId) const;
 
+        QList<int> employedMavIds() const;
+
     public slots:
         bool save(const dao::VehiclePtr& vehicle);
         bool remove(const dao::VehiclePtr& vehicle);
+        bool addNewVehicle();
 
     signals:
         void vehicleAdded(dao::VehiclePtr vehicle);
