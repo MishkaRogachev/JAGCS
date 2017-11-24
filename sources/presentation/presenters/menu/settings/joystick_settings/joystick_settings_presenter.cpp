@@ -8,18 +8,8 @@
 
 using namespace presentation;
 
-class JoystickSettingsPresenter::Impl
-{
-public:
-
-};
-
 JoystickSettingsPresenter::JoystickSettingsPresenter(QObject* parent):
-    BasePresenter(parent),
-    d(new Impl())
-{}
-
-JoystickSettingsPresenter::~JoystickSettingsPresenter()
+    BasePresenter(parent)
 {}
 
 void JoystickSettingsPresenter::updateView()
@@ -57,13 +47,4 @@ void JoystickSettingsPresenter::save()
 
     this->setViewProperty(PROPERTY(changed), false);
 }
-
-void JoystickSettingsPresenter::connectView(QObject* view)
-{
-    connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-
-    this->updateView();
-}
-
 

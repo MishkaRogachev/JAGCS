@@ -11,18 +11,10 @@ namespace presentation
 
     public:
         explicit JoystickSettingsPresenter(QObject* parent = nullptr);
-        ~JoystickSettingsPresenter() override;
 
     public slots:
         void updateView();
         void save();
-
-    protected:
-        void connectView(QObject* view) override;
-
-    private:
-        class Impl;
-        QScopedPointer<Impl> const d;
     };
 }
 
