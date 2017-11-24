@@ -24,6 +24,7 @@ Item {
     x: dragStartX
     Drag.active: dragArea.drag.active
 
+    // TODO: try MultiPointTouchArea
     MouseArea {
         id: dragArea
 

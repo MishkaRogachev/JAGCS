@@ -86,12 +86,12 @@ Rectangle {
         }
 
         Behavior on x {
-            enabled: !widthAnimation.running;
+            enabled: !widthAnimation.running
             PropertyAnimation { id: xAnimation; duration: 100; }
         }
 
         Behavior on width {
-            enabled: !xAnimation.running;
+            enabled: !xAnimation.running
             PropertyAnimation { id: widthAnimation; duration: 100 }
         }
     }

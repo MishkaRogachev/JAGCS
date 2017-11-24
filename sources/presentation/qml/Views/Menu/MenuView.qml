@@ -79,10 +79,12 @@ Controls.Pane {
                 onItemChanged: {
                     if (!item) return;
 
-                    menu.width = item.implicitWidth + sizings.margins * 2
+                    menu.width = Qt.binding(function() {
+                        return item.implicitWidth + sizings.margins * 2
+                    });
                     item.height = Qt.binding(function() {
                         return Math.max(item.implicitHeight, flickable.height);
-                    } );
+                    });
                 }
 
                 Connections {
