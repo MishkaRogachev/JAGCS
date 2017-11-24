@@ -119,7 +119,7 @@ Controls.Frame {
             tipText: qsTr("Edit commands")
             iconSource: "qrc:/icons/edit.svg"
             enabled: missionId > 0
-            onClicked: deepIn("Planning/Mission/MissionItemEditView.qml", name,
+            onClicked: deepIn("Planning/Missions/MissionItemEditView.qml", name,
                               { "missionId": missionId });
         }
 

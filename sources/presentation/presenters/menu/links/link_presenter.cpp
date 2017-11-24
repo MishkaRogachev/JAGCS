@@ -15,10 +15,10 @@ using namespace presentation;
 
 LinkPresenter::LinkPresenter(QObject* parent):
     BasePresenter(parent),
-    m_serialPortsService(domain::ServiceRegistry::serialPortService()),
+    m_serialService(domain::ServiceRegistry::serialPortService()),
     m_commService(domain::ServiceRegistry::communicationService())
 {
-    connect(m_serialPortsService, &domain::SerialPortService::availableDevicesChanged,
+    connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
             this, &LinkPresenter::updateDevices);
 
     connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
@@ -75,7 +75,7 @@ void LinkPresenter::updateDevices()
     QStringList devices;
     devices.append(QString());
 
-    for (const QString& device: m_serialPortsService->availableDevices())
+    for (const QString& device: m_serialService->availableDevices())
     {
         devices.append(device);
     }
