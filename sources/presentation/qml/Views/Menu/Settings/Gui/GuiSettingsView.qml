@@ -23,10 +23,6 @@ GridLayout {
     property alias relativeAltitude: relativeAltitudeBox.checked
     property alias coordinatesDms: coordinatesDmsBox.checked
 
-    signal save()
-    signal restore()
-
-    Component.onCompleted: factory.createGuiSettingsPresenter(gui)
     onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
@@ -36,7 +32,9 @@ GridLayout {
     columnSpacing: palette.spacing
 
     GuiSettingsPresenter {
+        id: presenter
         view: gui
+        Component.onCompleted: updateView()
     }
 
     Controls.Label {
@@ -162,7 +160,7 @@ GridLayout {
         Controls.Button {
             text: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
+            onClicked: presenter.updateView()
             enabled: changed
             Layout.fillWidth: true
         }
@@ -170,7 +168,7 @@ GridLayout {
         Controls.Button {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
+            onClicked: presenter.save()
             enabled: changed
             Layout.fillWidth: true
         }

@@ -58,7 +58,7 @@ PresentationContext::PresentationContext()
 
 PresentationContext::~PresentationContext()
 {
-    PresentationContext::saveGeometry();
+    PresentationContext::saveWindowedGeometry();
     m_view->deleteLater();
 }
 
@@ -78,31 +78,46 @@ QQmlContext* PresentationContext::rootContext()
     return instance()->m_view->rootContext();
 }
 
-void PresentationContext::show()
+void PresentationContext::start()
 {
     instance()->m_view->setSource(QUrl("qrc:/Views/MainView.qml")); // TODO: wait objectCreated
 
+    PresentationContext::show();
+}
+
+void PresentationContext::show()
+{
     if (settings::Provider::boolValue(settings::gui::fullscreen))
     {
-        instance()->m_view->showFullScreen();
+        PresentationContext::showFullscreen();
     }
     else
     {
-        QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
-
-        if (rect.isNull())
-        {
-            instance()->m_view->showMaximized();
-        }
-        else
-        {
-            instance()->m_view->setGeometry(rect);
-            instance()->m_view->show();
-        }
+        PresentationContext::showWindowed();
     }
 }
 
-void PresentationContext::saveGeometry()
+void PresentationContext::showFullscreen()
+{
+    instance()->m_view->showFullScreen();
+}
+
+void PresentationContext::showWindowed()
+{
+    QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
+
+    if (rect.isNull())
+    {
+        instance()->m_view->showMaximized();
+    }
+    else
+    {
+        instance()->m_view->setGeometry(rect);
+        instance()->m_view->show();
+    }
+}
+
+void PresentationContext::saveWindowedGeometry()
 {
     if (instance()->m_view->windowState() & Qt::WindowFullScreen) return;
     settings::Provider::setValue(settings::gui::geometry, instance()->m_view->geometry());

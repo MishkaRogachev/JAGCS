@@ -17,9 +17,6 @@ namespace presentation
         void updateView();
         void save();
 
-    protected:
-        void connectView(QObject* view) override;
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;

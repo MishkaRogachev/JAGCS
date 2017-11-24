@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     presentation::PresentationContext::rootContext()->setContextProperty(
                 "settings", settings::Provider::instance());
 
-    presentation::PresentationContext::show();
+    presentation::PresentationContext::start();
 
     return app.exec();
 }

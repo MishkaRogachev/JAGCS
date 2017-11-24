@@ -20,8 +20,13 @@ namespace presentation
         static QObject* rootView();
         static QQmlContext* rootContext();
 
+        static void start();
+
         static void show();
-        static void saveGeometry();
+        static void showFullscreen();
+        static void showWindowed();
+
+        static void saveWindowedGeometry();
 
     private:
         void registerQuickTypes();

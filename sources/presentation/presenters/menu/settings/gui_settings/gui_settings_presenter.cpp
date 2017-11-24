@@ -29,11 +29,11 @@ GuiSettingsPresenter::~GuiSettingsPresenter()
 
 void GuiSettingsPresenter::updateView()
 {
-    this->setViewProperty(PROPERTY(fullscreen),
-                          settings::Provider::value(settings::gui::fullscreen));
+    this->setViewProperty(PROPERTY(fullscreen), settings::Provider::value(settings::gui::fullscreen));
 
     const QStringList& locales = d->translationManager.avalibleLocales();
     int index = locales.indexOf(d->translationManager.currentLocale());
+    this->setViewProperty(PROPERTY(locales), locales);
     this->setViewProperty(PROPERTY(localeIndex), index);
 
     this->setViewProperty(PROPERTY(uiSize),
@@ -85,19 +85,6 @@ void GuiSettingsPresenter::save()
 
     d->paletteManager.reloadPalette();
 
-    PresentationContext::saveGeometry();
+    PresentationContext::saveWindowedGeometry();
     PresentationContext::show();
 }
-
-void GuiSettingsPresenter::connectView(QObject* view)
-{
-    this->setViewProperty(PROPERTY(locales), QVariant::fromValue(
-                              d->translationManager.avalibleLocales()));
-
-    connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-
-    this->updateView();
-}
-
-
