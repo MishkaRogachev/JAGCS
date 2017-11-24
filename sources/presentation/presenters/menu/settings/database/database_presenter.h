@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dao_traits.h"
+#include "db_manager.h"
 
 namespace presentation
 {
@@ -13,23 +13,18 @@ namespace presentation
 
     public:
         explicit DatabasePresenter(QObject* parent = nullptr);
-        ~DatabasePresenter() override;
 
     public slots:
-        void updateView();
+        void updatePath();
         void updateConnected();
         void updateLog();
         void clearLog();
-        void save();
+        void savePath();
         void migrate();
         void tryConnect();
 
-    protected:
-        void connectView(QObject* view) override;
-
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        db::DbManager m_manager;
     };
 }
 

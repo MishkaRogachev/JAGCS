@@ -14,18 +14,18 @@ GridLayout {
     property alias path: pathField.text
     property alias migration: migrationLabel.text
 
-    signal clearLog()
-    signal save()
-    signal restore()
-    signal migrate()
-    signal tryConnect()
-
     columns: 2
     rowSpacing: palette.spacing
     columnSpacing: palette.spacing
 
     DatabasePresenter {
+        id: presenter
         view: database
+        Component.onCompleted: {
+            updatePath();
+            updateLog();
+            updateConnected();
+        }
     }
 
     Controls.Label {
@@ -34,7 +34,7 @@ GridLayout {
 
     Controls.ComboBox {
         model: [ "SQLite" ]
-        enabled: false // TODO: data base providers
+        enabled: false // TODO: other data base providers
         Layout.fillWidth: true
     }
 
@@ -101,7 +101,7 @@ GridLayout {
     Controls.Button {
         text: qsTr("Clear DB log")
         iconSource: "qrc:/icons/remove.svg"
-        onClicked: clearLog()
+        onClicked: presenter.clearLog()
         enabled: log.length > 0
         Layout.fillWidth: true
         Layout.columnSpan: 2
@@ -110,7 +110,7 @@ GridLayout {
     Controls.Button {
         text: qsTr("Restore")
         iconSource: "qrc:/icons/restore.svg"
-        onClicked: restore()
+        onClicked: presenter.updatePath()
         enabled: changed
         Layout.fillWidth: true
     }
@@ -118,7 +118,7 @@ GridLayout {
     Controls.Button {
         text: qsTr("Save")
         iconSource: "qrc:/icons/save.svg"
-        onClicked: save()
+        onClicked: presenter.savePath()
         enabled: changed
         Layout.fillWidth: true
     }
@@ -129,14 +129,14 @@ GridLayout {
         Controls.Button {
             text: qsTr("Migrate")
             iconSource: "qrc:/icons/right.svg"
-            onClicked: migrate()
+            onClicked: presenter.migrate()
             Layout.fillWidth: true
         }
 
         Controls.Button {
             text: connected ? qsTr("Reconnect") : qsTr("Connect")
             iconSource: "qrc:/icons/connect.svg"
-            onClicked: tryConnect()
+            onClicked: presenter.tryConnect()
             enabled: !changed
             Layout.fillWidth: true
         }

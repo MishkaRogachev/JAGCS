@@ -7,59 +7,45 @@
 // Internal
 #include "settings_provider.h"
 
-#include "db_manager.h"
-
 using namespace presentation;
 
-class DatabasePresenter::Impl
-{
-public:
-    db::DbManager manager;
-};
-
 DatabasePresenter::DatabasePresenter(QObject* parent):
-    BasePresenter(parent),
-    d(new Impl())
+    BasePresenter(parent)
 {
-    d->manager.clarify();
+    m_manager.clarify();
 
-    connect(&d->manager, &db::DbManager::logChanged, this, &DatabasePresenter::updateLog);
+    connect(&m_manager, &db::DbManager::logChanged, this, &DatabasePresenter::updateLog);
 }
 
-DatabasePresenter::~DatabasePresenter()
-{}
-
-void DatabasePresenter::updateView()
+void DatabasePresenter::updatePath()
 {
-    this->setViewProperty(PROPERTY(path),
-                          settings::Provider::value(settings::data_base::name));
-
+    this->setViewProperty(PROPERTY(path), settings::Provider::value(settings::data_base::name));
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void DatabasePresenter::updateConnected()
 {
-    this->setViewProperty(PROPERTY(migration), d->manager.migrationVersion());
-    this->setViewProperty(PROPERTY(connected), d->manager.isOpen());
+    this->setViewProperty(PROPERTY(migration), m_manager.migrationVersion());
+    this->setViewProperty(PROPERTY(connected), m_manager.isOpen());
 }
 
 void DatabasePresenter::updateLog()
 {
-    this->setViewProperty(PROPERTY(log), d->manager.dbLog());
+    this->setViewProperty(PROPERTY(log), m_manager.dbLog());
 }
 
 void DatabasePresenter::clearLog()
 {
-    d->manager.clearLog();
+    m_manager.clearLog();
 }
 
-void DatabasePresenter::save()
+void DatabasePresenter::savePath()
 {
-    if (settings::Provider::value(settings::data_base::name) !=
-        this->viewProperty(PROPERTY(path)))
+    QString path = this->viewProperty(PROPERTY(path)).toString();
+
+    if (settings::Provider::value(settings::data_base::name) != path)
     {
-        settings::Provider::setValue(settings::data_base::name,
-                                     this->viewProperty(PROPERTY(path)));
+        settings::Provider::setValue(settings::data_base::name, path);
         this->tryConnect();
     }
 
@@ -68,32 +54,19 @@ void DatabasePresenter::save()
 
 void DatabasePresenter::migrate()
 {
-    d->manager.migrateLastVersion();
+    m_manager.migrateLastVersion();
 
     this->updateConnected();
 }
 
 void DatabasePresenter::tryConnect()
 {
-    if (d->manager.isOpen())
+    if (m_manager.isOpen())
     {
         // FIXME: clear DB cache
-        d->manager.close();
+        m_manager.close();
     }
-    d->manager.open(settings::Provider::value(settings::data_base::name).toString());
+    m_manager.open(settings::Provider::value(settings::data_base::name).toString());
 
     this->updateConnected();
-}
-
-void DatabasePresenter::connectView(QObject* view)
-{
-    connect(view, SIGNAL(clearLog()), this, SLOT(clearLog()));
-    connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-    connect(view, SIGNAL(tryConnect()), this, SLOT(tryConnect()));
-    connect(view, SIGNAL(migrate()), this, SLOT(migrate()));
-
-    this->updateView();
-    this->updateConnected();
-    this->updateLog();
 }
