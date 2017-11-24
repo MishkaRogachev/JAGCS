@@ -16,14 +16,14 @@ Item {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         text: log ? "[" + Helper.formatTime(log.timestamp) + "]" : ""
-        font.pixelSize: palette.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.6
         font.bold: true
         color: label.color
     }
 
     Item {
         id: container
-        width: root.width - timestamp.width - palette.spacing
+        width: root.width - timestamp.width - sizings.spacing
         height: label.height
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
@@ -32,7 +32,7 @@ Item {
         Controls.Label {
             id: label
             text: log ? log.message : ""
-            font.pixelSize: palette.fontPixelSize * 0.6
+            font.pixelSize: sizings.fontPixelSize * 0.6
             color: {
                 if (!log) return palette.backgroundColor;
 

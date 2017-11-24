@@ -10,7 +10,7 @@ Item {
     property var vehicleIds: []
     property alias autoAdd: autoAdd.checked
 
-    implicitWidth: palette.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 11
 
     VehicleListPresenter {
         id: presenter
@@ -21,7 +21,7 @@ Item {
     ListView {
         anchors.fill: parent
         anchors.bottomMargin: addRow.height
-        spacing: palette.spacing
+        spacing: sizings.spacing
         model: vehicleIds
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
@@ -34,7 +34,7 @@ Item {
         Controls.Frame {
             visible: parent.count === 0
             width: parent.width
-            height: label.height + palette.margins * 2
+            height: label.height + sizings.margins * 2
 
             Controls.Label {
                 id: label
@@ -51,7 +51,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Controls.Button {
             text: qsTr("Add Vehicle")

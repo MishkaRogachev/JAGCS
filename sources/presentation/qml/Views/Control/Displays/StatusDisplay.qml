@@ -18,13 +18,13 @@ BaseDisplay {
         id: row
         anchors.centerIn: parent
         width: parent.width
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         CommandSwitch {
             text: armed ? qsTr("ARMED") : qsTr("DISARMED")
             tipText: armed ? qsTr("Disarm") : qsTr("Arm")
             enabled: online
-            font.pixelSize: palette.fontPixelSize * 0.75
+            font.pixelSize: sizings.fontPixelSize * 0.75
             font.bold: true
             command: Command.ArmDisarm
             inputChecked: armed
@@ -35,7 +35,7 @@ BaseDisplay {
             model: availableModes
             tipText: qsTr("Select mode")
             enabled: online
-            font.pixelSize: palette.fontPixelSize * 0.75
+            font.pixelSize: sizings.fontPixelSize * 0.75
             font.bold: true
             Layout.alignment: Qt.AlignRight
         }

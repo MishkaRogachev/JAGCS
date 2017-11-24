@@ -14,7 +14,7 @@ Item {
     LogList {
         width: parent.width
         anchors.top: parent.top
-        anchors.topMargin: palette.margins
+        anchors.topMargin: sizings.margins
         height: maximized ? main.height * logHeightFactor : root.height
         visible: maximized
         onVisibleChanged: if (visible) flickToEnd()

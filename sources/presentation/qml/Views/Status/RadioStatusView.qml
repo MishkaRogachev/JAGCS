@@ -10,7 +10,7 @@ RowLayout {
     property alias rssi: rssiItem.rssi
     property alias remoteRssi: remoteRssiItem.rssi
 
-    spacing: palette.spacing
+    spacing: sizings.spacing
 
     Indicators.RssiIndicator {
         id: rssiItem
@@ -18,7 +18,7 @@ RowLayout {
 
     Controls.Label {
         text: qsTr("RSSI: ") + rssi.toFixed(1) + qsTr(" dBm")
-        font.pixelSize: palette.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.6
         font.bold: true
     }
 
@@ -28,7 +28,7 @@ RowLayout {
 
     Controls.Label {
         text: qsTr("Rem. RSSI: ") + remoteRssi.toFixed(1) + qsTr(" dBm")
-        font.pixelSize: palette.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.6
         font.bold: true
     }
 }

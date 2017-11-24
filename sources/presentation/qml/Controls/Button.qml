@@ -12,9 +12,9 @@ T.Button {
     property alias backgroundColor: backgroundItem.color
     property string tipText
 
-    font.pixelSize: palette.fontPixelSize
-    implicitWidth: Math.max(palette.controlBaseSize, content.implicitWidth)
-    implicitHeight: Math.max(palette.controlBaseSize, content.implicitHeight)
+    font.pixelSize: sizings.fontPixelSize
+    implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
+    implicitHeight: Math.max(sizings.controlBaseSize, content.implicitHeight)
     clip: true
 
     background: Rectangle {

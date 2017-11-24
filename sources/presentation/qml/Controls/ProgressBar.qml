@@ -6,8 +6,8 @@ T.ProgressBar {
 
       background: Rectangle {
           width: control.availableWidth
-          implicitWidth: palette.controlBaseSize * 6
-          implicitHeight: palette.controlBaseSize / 4
+          implicitWidth: sizings.controlBaseSize * 6
+          implicitHeight: sizings.controlBaseSize / 4
           radius: height / 2
           color: palette.sunkenColor
       }

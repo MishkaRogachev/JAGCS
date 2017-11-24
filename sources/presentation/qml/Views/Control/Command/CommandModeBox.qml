@@ -47,7 +47,7 @@ Controls.ComboBox {
             text: translator.translateMode(mode)
             font: control.font
             textColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
-            Layout.margins: palette.padding
+            Layout.margins: sizings.padding
         }
 
         Item { Layout.fillWidth: true }

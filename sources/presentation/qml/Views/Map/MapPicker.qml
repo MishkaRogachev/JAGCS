@@ -10,7 +10,7 @@ MapQuickItem {
     anchorPoint.y: sourceItem.height / 2
 
     sourceItem: Controls.ColoredIcon {
-        width: palette.controlBaseSize
+        width: sizings.controlBaseSize
         height: width
         source: "qrc:/indicators/pick_aim.svg"
         color: palette.activeMissionColor

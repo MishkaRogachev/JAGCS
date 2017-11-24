@@ -24,7 +24,7 @@ ColumnLayout {
         typeItem.currentIndex = typeModel.indexOf(proxyType);
     }
 
-    spacing: palette.spacing
+    spacing: sizings.spacing
 
     NetworkSettingsPresenter {
         view: networkSettings
@@ -36,8 +36,8 @@ ColumnLayout {
         GridLayout {
             columns: 2
             anchors.fill: parent
-            rowSpacing: palette.spacing
-            columnSpacing: palette.spacing
+            rowSpacing: sizings.spacing
+            columnSpacing: sizings.spacing
 
             Controls.Label {
                 Layout.fillWidth: true
@@ -109,7 +109,7 @@ ColumnLayout {
 
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Controls.Button {
             Layout.fillWidth: true

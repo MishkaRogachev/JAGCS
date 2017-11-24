@@ -48,7 +48,7 @@ MapItemView {
                 rotation: courseAnimated
                 speed: groundspeed
                 visible: groundspeed > 0.1
-                width: palette.controlBaseSize * 4
+                width: sizings.controlBaseSize * 4
                 height: width
             }
 
@@ -56,7 +56,7 @@ MapItemView {
                 anchors.centerIn: parent
                 rotation: headingAnimated
                 source: mark
-                width: palette.controlBaseSize * 3
+                width: sizings.controlBaseSize * 3
                 height: width
             }
 
@@ -64,7 +64,7 @@ MapItemView {
                 text: vehicleId
                 anchors.centerIn: parent
                 rotation: map.bearing
-                font.pixelSize: palette.fontPixelSize * 0.75
+                font.pixelSize: sizings.fontPixelSize * 0.75
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

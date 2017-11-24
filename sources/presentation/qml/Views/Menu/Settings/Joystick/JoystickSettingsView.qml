@@ -24,7 +24,7 @@ ColumnLayout {
     signal save()
     signal restore()
 
-    spacing: palette.spacing
+    spacing: sizings.spacing
     Component.onCompleted: factory.createJoystickSettingsPresenter(joystickSettings)
 
     JoystickSettingsPresenter {
@@ -46,8 +46,8 @@ ColumnLayout {
             GridLayout {
                 anchors.fill: parent
                 columns: 2
-                rowSpacing: palette.spacing
-                columnSpacing: palette.spacing
+                rowSpacing: sizings.spacing
+                columnSpacing: sizings.spacing
 
                 Controls.Label {
                     text: qsTr("Enabled")
@@ -143,7 +143,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Controls.Button {
             text: qsTr("Restore")

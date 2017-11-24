@@ -44,8 +44,8 @@ Controls.Frame {
     GridLayout {
         anchors.fill: parent
         columns: 4
-        rowSpacing: palette.spacing
-        columnSpacing: palette.spacing
+        rowSpacing: sizings.spacing
+        columnSpacing: sizings.spacing
 
         Controls.Label {
             text: qsTr("Name")
@@ -85,7 +85,7 @@ Controls.Frame {
 
             Controls.ComboBox { // NOTE: for mission slot
                 enabled: false
-                Layout.maximumWidth: palette.controlBaseSize
+                Layout.maximumWidth: sizings.controlBaseSize
             }
         }
 

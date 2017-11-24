@@ -15,8 +15,8 @@ GridLayout {
     property alias migration: migrationLabel.text
 
     columns: 2
-    rowSpacing: palette.spacing
-    columnSpacing: palette.spacing
+    rowSpacing: sizings.spacing
+    columnSpacing: sizings.spacing
 
     DatabasePresenter {
         id: presenter
@@ -75,7 +75,7 @@ GridLayout {
             ColumnLayout {
                 id:column
                 width: parent.width
-                spacing: palette.spacing
+                spacing: sizings.spacing
 
                 Controls.Label {
                     text: qsTr("No records")

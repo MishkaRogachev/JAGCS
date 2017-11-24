@@ -7,9 +7,9 @@ T.ItemDelegate {
 
     property alias iconSource: content.iconSource
 
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
     implicitWidth: content.implicitWidth
-    implicitHeight: palette.controlBaseSize
+    implicitHeight: sizings.controlBaseSize
 
     contentItem: RowLayout {
         ContentItem {
@@ -17,14 +17,14 @@ T.ItemDelegate {
             font: control.font
             text: control.text
             textColor: control.highlighted ? palette.selectedTextColor : palette.textColor
-            Layout.leftMargin: palette.padding
+            Layout.leftMargin: sizings.padding
         }
 
         Item { Layout.fillWidth: true }
     }
 
     background: Rectangle {
-        implicitHeight: palette.controlBaseSize
+        implicitHeight: sizings.controlBaseSize
         border.color: control.activeFocus ? palette.selectionColor : "transparent"
         color: {
             if (control.down) return palette.highlightColor;

@@ -78,7 +78,7 @@ Item {
         id: pitchScale
         anchors.centerIn: parent
         width: parent.width
-        height: parent.height - palette.controlBaseSize * 2
+        height: parent.height - sizings.controlBaseSize * 2
         roll: rollInverted ? 0 : root.roll
         minPitch: pitchInverted ? root.pitch + root.minPitch : root.minPitch
         maxPitch: pitchInverted ? root.pitch + root.maxPitch : root.maxPitch
@@ -90,7 +90,7 @@ Item {
     DesiredAnglesMark {
         id: desiredMark
         anchors.fill: parent
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
         effectiveHeight: pitchScale.height
         visible: guided
         pitch: pitchInverted ? root.pitch - desiredPitch : -desiredPitch
@@ -106,7 +106,7 @@ Item {
     PlaneMark {
         id: mark
         anchors.fill: parent
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
         effectiveHeight: pitchScale.height
         pitch: pitchInverted ? 0 : -root.pitch
         roll: rollInverted ? -root.roll : 0

@@ -8,13 +8,13 @@ ColumnLayout {
     property alias model: repeater.model
     property int currentIndex: 0
 
-    spacing: palette.padding / 2
+    spacing: sizings.padding / 2
 
     Repeater {
         id: repeater
 
         Button {
-            Layout.preferredWidth: palette.controlBaseSize * 7
+            Layout.preferredWidth: sizings.controlBaseSize * 7
             text: modelData
             onClicked: if (!highlighted) currentIndex = index
             highlighted: currentIndex == index

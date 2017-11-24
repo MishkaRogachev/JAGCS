@@ -11,7 +11,7 @@ ColumnLayout {
 
     function addMission() { presenter.addMission(); }
 
-    spacing: palette.spacing
+    spacing: sizings.spacing
 
     MissionListPresenter {
         id: presenter

@@ -28,8 +28,8 @@ Controls.Frame {
     GridLayout {
         anchors.fill: parent
         columns: 2
-        rowSpacing: palette.spacing
-        columnSpacing: palette.spacing
+        rowSpacing: sizings.spacing
+        columnSpacing: sizings.spacing
 
         Controls.Label {
             text: qsTr("Name:")

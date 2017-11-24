@@ -63,8 +63,8 @@ Controls.Frame {
         anchors.centerIn: parent
         width: parent.width
         columns: 2
-        rowSpacing: palette.spacing
-        columnSpacing: palette.spacing
+        rowSpacing: sizings.spacing
+        columnSpacing: sizings.spacing
 
         Controls.Label {
             text: qsTr("Type")

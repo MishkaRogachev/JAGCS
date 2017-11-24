@@ -18,7 +18,7 @@ Item {
     Row {
         id: row
         anchors.centerIn: parent
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         ColoredIcon {
             id: icon
@@ -31,7 +31,7 @@ Item {
 
         Label {
             id: label
-            font.pixelSize: palette.fontPixelSize
+            font.pixelSize: sizings.fontPixelSize
             color: enabled ? textColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter

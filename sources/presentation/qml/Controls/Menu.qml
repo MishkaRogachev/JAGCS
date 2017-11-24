@@ -5,8 +5,8 @@ T.Menu {
     id: control
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize * 6
-        implicitHeight: palette.controlBaseSize
+        implicitWidth: sizings.controlBaseSize * 6
+        implicitHeight: sizings.controlBaseSize
         color: palette.raisedColor
     }
 }

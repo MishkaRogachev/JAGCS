@@ -4,8 +4,8 @@ import QtQuick.Templates 2.0 as T
 T.ScrollBar {
     id: control
 
-    implicitWidth: palette.controlBaseSize / 6
-    implicitHeight: palette.controlBaseSize / 6
+    implicitWidth: sizings.controlBaseSize / 6
+    implicitHeight: sizings.controlBaseSize / 6
 
     background: Item { }
 

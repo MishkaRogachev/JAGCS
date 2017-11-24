@@ -5,7 +5,7 @@ T.Label {
     id: control
 
     // TODO: fix dynamic width calculation
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
     color: palette.textColor
     verticalAlignment: Qt.AlignVCenter
     elide: Text.ElideRight

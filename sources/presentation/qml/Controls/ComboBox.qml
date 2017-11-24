@@ -14,10 +14,10 @@ T.ComboBox {
     property string displayIcon: currentItem && currentItem[control.iconRole] !== undefined ?
                                      currentItem[control.iconRole] : ""
 
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
     clip: true
-    implicitWidth: palette.controlBaseSize * 4
-    implicitHeight: palette.controlBaseSize
+    implicitWidth: sizings.controlBaseSize * 4
+    implicitHeight: sizings.controlBaseSize
     opacity: enabled ? 1 : 0.33
     displayText: currentItem && currentItem[control.textRole] !== undefined ?
                      currentItem[control.textRole] : currentItem
@@ -26,7 +26,7 @@ T.ComboBox {
         visible: control.focus
         x: control.width - width
         y: control.height - height
-        width: palette.controlBaseSize / 2
+        width: sizings.controlBaseSize / 2
         height: width
         source: "qrc:/ui/menu_arrow.svg"
         color: control.down ? palette.highlightColor : palette.selectionColor
@@ -57,7 +57,7 @@ T.ComboBox {
             text: displayText
             iconSource: displayIcon
             font: control.font
-            Layout.margins: palette.padding
+            Layout.margins: sizings.padding
         }
 
         Item { Layout.fillWidth: true }

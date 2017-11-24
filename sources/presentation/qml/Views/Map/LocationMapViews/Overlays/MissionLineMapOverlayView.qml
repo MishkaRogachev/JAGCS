@@ -5,7 +5,7 @@ import JAGCS 1.0
 
 MapItemView {
     delegate: MapPolyline {
-        line.width: palette.controlBaseSize / 8
+        line.width: sizings.controlBaseSize / 8
         line.color: {
             switch (missionStatus) {
             case MissionAssignment.Actual:

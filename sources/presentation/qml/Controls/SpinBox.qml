@@ -9,10 +9,10 @@ T.SpinBox {
     property bool isValid: value >= from && value <= to
     property color backgroundColor: palette.sunkenColor
 
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
     editable: true
-    implicitWidth: palette.controlBaseSize * 5
-    implicitHeight: palette.controlBaseSize
+    implicitWidth: sizings.controlBaseSize * 5
+    implicitHeight: sizings.controlBaseSize
     opacity: enabled ? 1 : 0.33
 
     background: Rectangle {
@@ -30,7 +30,7 @@ T.SpinBox {
 
     contentItem: TextInput {
         anchors.left: parent.left
-        anchors.leftMargin: palette.padding
+        anchors.leftMargin: sizings.padding
         anchors.right: down.indicator.left
         anchors.verticalCenter: parent.verticalCenter
         text: isValid ? control.textFromValue(control.value, control.locale) : "NaN"
@@ -46,8 +46,8 @@ T.SpinBox {
 
     down.indicator: Rectangle {
         x: control.mirrored ? up.indicator.width : control.width - width - up.indicator.width
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: palette.controlBaseSize
+        implicitWidth: sizings.controlBaseSize
+        implicitHeight: sizings.controlBaseSize
         radius: 3
         color: down.pressed ? palette.highlightColor : "transparent"
         opacity: enabled ? 1 : 0.33
@@ -63,8 +63,8 @@ T.SpinBox {
 
     up.indicator: Rectangle {
         x: control.mirrored ? 0 : control.width - width
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: palette.controlBaseSize
+        implicitWidth: sizings.controlBaseSize
+        implicitHeight: sizings.controlBaseSize
         radius: 3
         color: up.pressed ? palette.highlightColor : "transparent"
         opacity: enabled ? 1 : 0.33

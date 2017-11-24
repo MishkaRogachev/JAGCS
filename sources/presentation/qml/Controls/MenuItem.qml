@@ -10,10 +10,10 @@ T.MenuItem {
     property color iconColor: label.color
 
     leftPadding: icon.width
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
 
     background: Rectangle {
-        implicitWidth: palette.controlBaseSize
+        implicitWidth: sizings.controlBaseSize
         implicitHeight: implicitWidth
         color: control.pressed ? palette.highlightColor : "transparent"
         border.color: control.activeFocus ? palette.selectionColor : "transparent"
@@ -30,7 +30,7 @@ T.MenuItem {
         color: enabled ? iconColor : palette.sunkenColor
         source: control.checked ? "qrc:/ui/ok.svg" : ""
         anchors.verticalCenter: parent.verticalCenter
-        width: palette.controlBaseSize * 0.6
+        width: sizings.controlBaseSize * 0.6
         height: width
     }
 

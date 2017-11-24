@@ -66,7 +66,7 @@ Item {
 
     property alias picking: pickButton.picking
 
-    implicitWidth: palette.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 11
 
     onChangedChanged: {
         if (changed) return;
@@ -157,8 +157,8 @@ Item {
         GridLayout {
             id: grid
             width: parent.width
-            rowSpacing: palette.spacing
-            columnSpacing: palette.spacing
+            rowSpacing: sizings.spacing
+            columnSpacing: sizings.spacing
             columns: 2
 
             Controls.Label {
@@ -211,8 +211,8 @@ Item {
             }
 
             GridLayout {
-                rowSpacing: palette.spacing
-                columnSpacing: palette.spacing
+                rowSpacing: sizings.spacing
+                columnSpacing: sizings.spacing
                 visible: altitudeVisible
                 columns: 2
                 Layout.rowSpan: abortAltitudeVisible ? 2 : 1
@@ -274,8 +274,8 @@ Item {
             }
 
             GridLayout {
-                rowSpacing: palette.spacing
-                columnSpacing: palette.spacing
+                rowSpacing: sizings.spacing
+                columnSpacing: sizings.spacing
                 columns: 2
                 Layout.rowSpan: 2
                 visible: positionVisible
@@ -362,7 +362,7 @@ Item {
             }
 
             RowLayout {
-                spacing: palette.spacing
+                spacing: sizings.spacing
                 visible: radiusVisible
 
                 Controls.RealSpinBox {
@@ -496,7 +496,7 @@ Item {
     RowLayout {
         id: addRow
         anchors.bottom: parent.bottom
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Controls.Label {
             text: qsTr("Actions")

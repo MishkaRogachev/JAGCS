@@ -56,8 +56,8 @@ BaseDisplay {
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
     implicitWidth: ai.width / 0.55
-    minimumHeight: palette.controlBaseSize * 4
-    maximumHeight: palette.controlBaseSize * 12
+    minimumHeight: sizings.controlBaseSize * 4
+    maximumHeight: sizings.controlBaseSize * 12
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
@@ -127,7 +127,7 @@ BaseDisplay {
     Indicators.ArtificialHorizon {
         id: ai
         anchors.centerIn: parent
-        height: root.height - palette.padding
+        height: root.height - sizings.padding
         width: root.width * 0.55
         enabled: ahrsEnabled
         operational: ahrsOperational

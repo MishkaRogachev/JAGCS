@@ -26,13 +26,13 @@ Controls.Pane {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.margins: palette.margins
-        spacing: palette.spacing
-        width: Math.max(palette.controlBaseSize * 8, height / 2)
+        anchors.margins: sizings.margins
+        spacing: sizings.spacing
+        width: Math.max(sizings.controlBaseSize * 8, height / 2)
 
         RowLayout {
             Layout.alignment: Qt.AlignTop
-            spacing: palette.spacing
+            spacing: sizings.spacing
 
             Controls.Button {
                 tipText: qsTr("Center MAV")
@@ -70,7 +70,7 @@ Controls.Pane {
         id: commandList
         anchors.top: parent.top
         anchors.left: background.left
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
         visible: commandButton.checked
         z: 10
     }
@@ -81,14 +81,14 @@ Controls.Pane {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.leftMargin: palette.margins
+        anchors.leftMargin: sizings.margins
     }
 
     Item {
         id: corner
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
         width: cornerVisible ? background.width / 3 : 0
         height: cornerVisible ? cornerMap ? map.implicitHeight : video.implicitHeight : 0
     }
@@ -110,7 +110,7 @@ Controls.Pane {
         id: control
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
 
         Controls.Button {
             tipText: cornerMap ? qsTr("Map") : qsTr("Video")

@@ -8,7 +8,7 @@
 
 #include "presentation_context.h"
 #include "translation_manager.h"
-#include "palette_manager.h"
+#include "ui_style_manager.h"
 
 using namespace presentation;
 
@@ -16,7 +16,7 @@ class GuiSettingsPresenter::Impl
 {
 public:
     TranslationManager translationManager;
-    PaletteManager paletteManager;
+    UiStyleManager uiStyleManager;
 };
 
 GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
@@ -83,7 +83,8 @@ void GuiSettingsPresenter::save()
     QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
     d->translationManager.setCurrentLocale(locale);
 
-    d->paletteManager.loadSavedPalette();
+    d->uiStyleManager.loadSavedSizings();
+    d->uiStyleManager.loadSavedPalette();
 
     PresentationContext::saveWindowedGeometry();
     PresentationContext::show();
@@ -94,7 +95,12 @@ void GuiSettingsPresenter::setFullscreen(bool fullscreen)
     fullscreen ? PresentationContext::showFullscreen() : PresentationContext::showWindowed();
 }
 
+void GuiSettingsPresenter::setUiSize(int size)
+{
+    d->uiStyleManager.setSizings(size);
+}
+
 void GuiSettingsPresenter::setPalleteStyle(int paletteStyle)
 {
-    d->paletteManager.setPalette(static_cast<PaletteManager::Style>(paletteStyle));
+    d->uiStyleManager.setPalette(static_cast<UiStyleManager::PaletteStyle>(paletteStyle));
 }

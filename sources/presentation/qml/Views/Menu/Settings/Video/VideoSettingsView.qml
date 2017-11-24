@@ -16,7 +16,7 @@ Item {
     signal setActiveVideo(int video)
 
     Component.onCompleted: factory.createVideoSettingsPresenter(videoSettings)
-    implicitWidth: palette.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 11
     onActiveVideoChanged: video.updateActiveVideo()
 
     Controls.ButtonGroup { id: radioGroup }
@@ -37,7 +37,7 @@ Item {
             id: frame
             visible: repeater.count == 0
             width: parent.width
-            height: label.height + palette.margins * 2
+            height: label.height + sizings.margins * 2
 
             Controls.Label {
                 id: label
@@ -52,7 +52,7 @@ Item {
             id: column
             anchors.centerIn: parent
             width: parent.width
-            spacing: palette.spacing
+            spacing: sizings.spacing
 
             Repeater {
                 id: repeater

@@ -11,7 +11,7 @@ Item {
 
     property var vehicles: []
 
-    implicitWidth: palette.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 11
 
     PlanningPresenter {
         id: presenter
@@ -31,7 +31,7 @@ Item {
             id: frame
             visible: missionList.missionIds.count === 0
             width: parent.width
-            height: label.height + palette.margins * 2
+            height: label.height + sizings.margins * 2
 
             Controls.Label {
                 id: label
@@ -46,7 +46,7 @@ Item {
             id: column
             width: parent.width
             anchors.centerIn: parent
-            spacing: palette.spacing
+            spacing: sizings.spacing
 
             MissionListView {
                 id: missionList
@@ -59,7 +59,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Controls.Button {
             text: qsTr("Add Mission")

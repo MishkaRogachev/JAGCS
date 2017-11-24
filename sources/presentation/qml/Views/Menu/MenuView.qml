@@ -33,7 +33,7 @@ Controls.Pane {
 
     ColumnLayout {
         anchors.fill: parent
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         RowLayout {
             Controls.Button {
@@ -68,7 +68,7 @@ Controls.Pane {
             clip: true
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.margins: palette.margins
+            Layout.margins: sizings.margins
 
             Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
@@ -79,7 +79,7 @@ Controls.Pane {
                 onItemChanged: {
                     if (!item) return;
 
-                    menu.width = item.implicitWidth + palette.margins * 2
+                    menu.width = item.implicitWidth + sizings.margins * 2
                     item.height = Qt.binding(function() {
                         return Math.max(item.implicitHeight, flickable.height);
                     } );

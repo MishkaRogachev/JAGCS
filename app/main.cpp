@@ -14,7 +14,7 @@
 
 #include "presentation_context.h"
 #include "translation_manager.h"
-#include "palette_manager.h"
+#include "ui_style_manager.h"
 
 int main(int argc, char* argv[])
 {
@@ -51,8 +51,9 @@ int main(int argc, char* argv[])
     presentation::TranslationManager translations;
     translations.initLocales();
 
-    presentation::PaletteManager paletteManager;
-    paletteManager.loadSavedPalette();
+    presentation::UiStyleManager uiStyleManager;
+    uiStyleManager.loadSavedPalette();
+    uiStyleManager.loadSavedSizings();
 
     presentation::PresentationContext::rootContext()->setContextProperty(
                 "settings", settings::Provider::instance());

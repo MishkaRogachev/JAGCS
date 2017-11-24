@@ -17,7 +17,7 @@ BaseDisplay {
         id: row
         anchors.centerIn: parent
         width: parent.width
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Indicators.BatteryIndicator {
             id: battery
@@ -25,7 +25,7 @@ BaseDisplay {
         }
 
         Controls.Label {
-            font.pixelSize: palette.fontPixelSize * 0.6
+            font.pixelSize: sizings.fontPixelSize * 0.6
             font.bold: true
             color: batteryVoltage > 0.01 ? palette.textColor : palette.sunkenColor
             text: batteryVoltage.toFixed(2) + qsTr(" V")
@@ -49,7 +49,7 @@ BaseDisplay {
         }
 
         Controls.Label {
-            font.pixelSize: palette.fontPixelSize * 0.6
+            font.pixelSize: sizings.fontPixelSize * 0.6
             font.bold: true
             color: current.color
             text: batteryCurrent.toFixed(2) + qsTr(" A")

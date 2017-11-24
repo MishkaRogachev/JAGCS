@@ -42,7 +42,7 @@ Rectangle {
         id: tools
         anchors.right: menuSwipeable.left
         anchors.bottom: parent.bottom
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
 
         Controls.Button {
             tipText: cornerMap ? qsTr("Map") : qsTr("Video")
@@ -62,7 +62,7 @@ Rectangle {
         id: corner
         anchors.bottom: parent.bottom
         anchors.right: tools.left
-        anchors.margins: palette.margins
+        anchors.margins: sizings.margins
         width: Math.min(parent.width / 3, parent.height / 3)
         sourceComponent: cornerMap ? mapComponent : videoComponent
         visible: cornerVisible

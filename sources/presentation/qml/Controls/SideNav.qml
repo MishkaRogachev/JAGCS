@@ -14,7 +14,7 @@ ColumnLayout {
         repeater.model = menuModel;
     }
 
-    spacing: palette.spacing
+    spacing: sizings.spacing
 
     Repeater {
         id: repeater
@@ -34,7 +34,7 @@ ColumnLayout {
                     repeater.model = modelData.menu;
                 }
             }
-            Layout.preferredWidth: palette.controlBaseSize * 7
+            Layout.preferredWidth: sizings.controlBaseSize * 7
             Layout.fillWidth: true
         }
     }

@@ -22,8 +22,8 @@ GridLayout {
     signal restore()
 
     columns: 2
-    rowSpacing: palette.spacing
-    columnSpacing: palette.spacing
+    rowSpacing: sizings.spacing
+    columnSpacing: sizings.spacing
 
     onChangedChanged: if (!changed) main.reloadMap() // TODO: reload map on change
     onPluginChanged: updateMapTypes()
@@ -116,7 +116,7 @@ GridLayout {
     }
 
     RowLayout {
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Controls.Slider {
             id: trackLengthSlider
@@ -139,7 +139,7 @@ GridLayout {
     }
 
     RowLayout {
-        spacing: palette.spacing
+        spacing: sizings.spacing
         Layout.columnSpan: 2
 
         Controls.Button {

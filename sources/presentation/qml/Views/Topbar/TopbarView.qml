@@ -8,7 +8,7 @@ Rectangle {
     id: topbar
 
     color: palette.raisedColor
-    height: palette.controlBaseSize
+    height: sizings.controlBaseSize
 
     TopbarPresenter {
         view: topbar

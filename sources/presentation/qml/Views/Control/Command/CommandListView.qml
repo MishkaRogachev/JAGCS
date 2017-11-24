@@ -12,20 +12,20 @@ Controls.Pane {
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
-    width: grid.width + palette.margins * 2
-    height: grid.height + palette.margins * 2
+    width: grid.width + sizings.margins * 2
+    height: grid.height + sizings.margins * 2
 
     GridLayout {
         id: grid
         anchors.centerIn: parent
-        width: palette.controlBaseSize * 8
-        columnSpacing: palette.spacing
-        rowSpacing: palette.spacing
+        width: sizings.controlBaseSize * 8
+        columnSpacing: sizings.spacing
+        rowSpacing: sizings.spacing
         columns: 3
 
         Controls.Label {
             text: qsTr("Com.")
-            font.pixelSize: palette.fontPixelSize * 0.7
+            font.pixelSize: sizings.fontPixelSize * 0.7
             font.bold: true
         }
 
@@ -71,7 +71,7 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("Alt.")
-            font.pixelSize: palette.fontPixelSize * 0.7
+            font.pixelSize: sizings.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.SetHome ||
                      command === Command.SetAltitude ||
@@ -90,7 +90,7 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("Lat.")
-            font.pixelSize: palette.fontPixelSize * 0.7
+            font.pixelSize: sizings.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.SetHome || command === Command.NavTo
             Layout.fillWidth: true
@@ -120,7 +120,7 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("Lon.")
-            font.pixelSize: palette.fontPixelSize * 0.7
+            font.pixelSize: sizings.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.SetHome || command === Command.NavTo
             Layout.fillWidth: true
@@ -135,7 +135,7 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("Spd.")
-            font.pixelSize: palette.fontPixelSize * 0.7
+            font.pixelSize: sizings.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.SetSpeed
         }
@@ -156,7 +156,7 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("Cal.")
-            font.pixelSize: palette.fontPixelSize * 0.7
+            font.pixelSize: sizings.fontPixelSize * 0.7
             font.bold: true
             visible: command === Command.PreflightCalibration
         }

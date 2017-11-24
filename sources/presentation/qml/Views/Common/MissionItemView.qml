@@ -18,10 +18,10 @@ Rectangle {
     signal selectionRequest()
     signal holded()
 
-    implicitWidth: palette.controlBaseSize
-    implicitHeight: palette.controlBaseSize
+    implicitWidth: sizings.controlBaseSize
+    implicitHeight: sizings.controlBaseSize
     radius: height / 2
-    border.width: palette.controlBaseSize / 10
+    border.width: sizings.controlBaseSize / 10
     color: selected ? palette.selectionColor : palette.raisedColor
     border.color: {
         if (current) return palette.activeMissionColor; // TODO: highlight current only in mission

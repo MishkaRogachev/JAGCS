@@ -28,8 +28,8 @@ GridLayout {
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
 
     columns: 2
-    rowSpacing: palette.spacing
-    columnSpacing: palette.spacing
+    rowSpacing: sizings.spacing
+    columnSpacing: sizings.spacing
 
     GuiSettingsPresenter {
         id: presenter
@@ -69,6 +69,7 @@ GridLayout {
         Layout.fillWidth: true
         onCurrentTextChanged: {
             uiSize = currentText;
+            presenter.setUiSize(uiSize);
             changed = true;
         }
     }
@@ -82,7 +83,7 @@ GridLayout {
         model: [ qsTr("Outdoor"), qsTr("Indoor") ]
         Layout.fillWidth: true
         onCurrentIndexChanged: {
-            presenter.setPalleteStyle(currentIndex)
+            presenter.setPalleteStyle(currentIndex);
             changed = true;
         }
     }
@@ -160,7 +161,7 @@ GridLayout {
     }
 
     RowLayout {
-        spacing: palette.spacing
+        spacing: sizings.spacing
         Layout.columnSpan: 2
 
         Controls.Button {

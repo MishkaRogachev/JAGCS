@@ -25,15 +25,15 @@ BaseDisplay {
         id: row
         anchors.centerIn: parent
         width: parent.width
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         ColumnLayout {
             id: column
             Layout.fillWidth: true
-            spacing: palette.spacing
+            spacing: sizings.spacing
 
             Controls.Label {
-                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -43,7 +43,7 @@ BaseDisplay {
             }
 
             Controls.Label {
-                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -70,7 +70,7 @@ BaseDisplay {
                 }
             }
             source: "qrc:/icons/gps.svg"
-            height: palette.controlBaseSize
+            height: sizings.controlBaseSize
             width: height
             Layout.alignment: Qt.AlignRight
 
@@ -88,7 +88,7 @@ BaseDisplay {
             Layout.alignment: Qt.AlignRight
 
             Controls.Label {
-                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -96,7 +96,7 @@ BaseDisplay {
             }
 
             Controls.Label {
-                font.pixelSize: Math.max(root.width * 0.04, palette.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor

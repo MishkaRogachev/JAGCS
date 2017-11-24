@@ -2,56 +2,6 @@
 
 using namespace presentation;
 
-int Palette::controlBaseSize() const
-{
-    return m_controlBaseSize;
-}
-
-void Palette::setControlBaseSize(int controlBaseSize)
-{
-    m_controlBaseSize = controlBaseSize;
-}
-
-int Palette::fontPixelSize() const
-{
-    return m_fontPixelSize;
-}
-
-void Palette::setFontPixelSize(int fontPixelSize)
-{
-    m_fontPixelSize = fontPixelSize;
-}
-
-int Palette::spacing() const
-{
-    return m_spacing;
-}
-
-void Palette::setSpacing(int spacing)
-{
-    m_spacing = spacing;
-}
-
-int Palette::margins() const
-{
-    return m_margins;
-}
-
-void Palette::setMargins(int margins)
-{
-    m_margins = margins;
-}
-
-int Palette::padding() const
-{
-    return m_padding;
-}
-
-void Palette::setPadding(int padding)
-{
-    m_padding = padding;
-}
-
 QColor Palette::backgroundColor() const
 {
     return m_backgroundColor;

@@ -9,7 +9,7 @@ Item {
 
     property var linkIds: []
 
-    implicitWidth: palette.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 11
 
     LinkListPresenter {
         id: presenter
@@ -20,7 +20,7 @@ Item {
     ListView {
         anchors.fill: parent
         anchors.bottomMargin: addButton.height
-        spacing: palette.spacing
+        spacing: sizings.spacing
         model: linkIds
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
@@ -33,7 +33,7 @@ Item {
         Controls.Frame {
             visible: parent.count === 0
             width: parent.width
-            height: label.height + palette.margins * 2
+            height: label.height + sizings.margins * 2
 
             Controls.Label {
                 id: label

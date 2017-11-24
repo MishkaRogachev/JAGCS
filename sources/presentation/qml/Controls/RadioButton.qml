@@ -6,15 +6,15 @@ import "../Shaders" as Shaders
 T.RadioButton {
     id: control
 
-    font.pixelSize: palette.fontPixelSize
-    height: palette.controlBaseSize
+    font.pixelSize: sizings.fontPixelSize
+    height: sizings.controlBaseSize
     leftPadding: 0
-    spacing: palette.spacing
+    spacing: sizings.spacing
     implicitWidth: text.length > 0 ? contentItem.implicitWidth + spacing : indicator.implicitWidth
 
     indicator: Rectangle {
-        implicitWidth: palette.controlBaseSize * 0.8
-        implicitHeight: palette.controlBaseSize * 0.8
+        implicitWidth: sizings.controlBaseSize * 0.8
+        implicitHeight: sizings.controlBaseSize * 0.8
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: width / 2

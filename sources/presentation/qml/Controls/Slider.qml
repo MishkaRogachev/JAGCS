@@ -6,14 +6,14 @@ T.Slider {
 
     property real visualValue: from + position * (to - from)
 
-    height: palette.controlBaseSize
+    height: sizings.controlBaseSize
     opacity: enabled ? 1 : 0.33
 
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: palette.controlBaseSize * 6
-        implicitHeight: palette.controlBaseSize / 4
+        implicitWidth: sizings.controlBaseSize * 6
+        implicitHeight: sizings.controlBaseSize / 4
         width: control.availableWidth
         height: implicitHeight
         radius: height / 2
@@ -33,7 +33,7 @@ T.Slider {
     handle: Rectangle {
         x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: palette.controlBaseSize / 1.5
+        implicitWidth: sizings.controlBaseSize / 1.5
         implicitHeight: implicitWidth
         radius: width / 2
         color: palette.highlightColor

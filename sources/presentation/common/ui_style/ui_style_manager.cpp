@@ -1,4 +1,4 @@
-#include "palette_manager.h"
+#include "ui_style_manager.h"
 
 // Qt
 #include <QQmlContext>
@@ -11,26 +11,18 @@
 
 using namespace presentation;
 
-PaletteManager::PaletteManager(QObject* parent): QObject(parent)
+UiStyleManager::UiStyleManager(QObject* parent): QObject(parent)
 {}
 
-void PaletteManager::setPalette(const Palette& palette)
+void UiStyleManager::setPalette(const Palette& palette)
 {
     PresentationContext::rootContext()->setContextProperty("palette", QVariant::fromValue(palette));
 }
 
-void PaletteManager::setPalette(PaletteManager::Style paletteStyle)
+void UiStyleManager::setPalette(UiStyleManager::PaletteStyle paletteStyle)
 {
     // TODO: store palette in files
     Palette palette;
-
-    int uiSize = settings::Provider::value(settings::gui::uiSize).toInt();
-
-    palette.setControlBaseSize(uiSize);
-    palette.setFontPixelSize(uiSize / 2);
-    palette.setSpacing(uiSize / 6);
-    palette.setMargins(uiSize / 4);
-    palette.setPadding(uiSize / 6);
 
     palette.setTrackColor("#ff173c");
     palette.setMissionColor("#1ce9a5");
@@ -61,7 +53,30 @@ void PaletteManager::setPalette(PaletteManager::Style paletteStyle)
     this->setPalette(palette);
 }
 
-void PaletteManager::loadSavedPalette()
+void UiStyleManager::loadSavedPalette()
 {
-    this->setPalette(Style(settings::Provider::value(settings::gui::paletteStyle).toInt()));
+    this->setPalette(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
+}
+
+void UiStyleManager::setSizings(const Sizings& sizings)
+{
+    PresentationContext::rootContext()->setContextProperty("sizings", QVariant::fromValue(sizings));
+}
+
+void UiStyleManager::setSizings(int controlBaseSize)
+{
+    Sizings sizings;
+
+    sizings.setControlBaseSize(controlBaseSize);
+    sizings.setFontPixelSize(controlBaseSize / 2);
+    sizings.setSpacing(controlBaseSize / 6);
+    sizings.setMargins(controlBaseSize / 4);
+    sizings.setPadding(controlBaseSize / 6);
+
+    this->setSizings(sizings);
+}
+
+void UiStyleManager::loadSavedSizings()
+{
+    this->setSizings(settings::Provider::value(settings::gui::uiSize).toInt());
 }

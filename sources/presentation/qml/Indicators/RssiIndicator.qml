@@ -9,7 +9,7 @@ Item {
     property real rssi: minRssiValue
     property real minRssiValue: -120
 
-    implicitWidth: palette.controlBaseSize
+    implicitWidth: sizings.controlBaseSize
     implicitHeight: implicitWidth
 
     Row {

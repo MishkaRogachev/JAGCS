@@ -13,13 +13,13 @@ Controls.ToolBar {
 
     RowLayout {
         anchors.fill: parent
-        spacing: palette.spacing
+        spacing: sizings.spacing
 
         Image {
             source: "qrc:/icons/jagcs.svg"
             anchors.verticalCenter: parent.verticalCenter
-            sourceSize.width: palette.controlBaseSize
-            sourceSize.height: palette.controlBaseSize
+            sourceSize.width: sizings.controlBaseSize
+            sourceSize.height: sizings.controlBaseSize
         }
 
         Controls.Label {

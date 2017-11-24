@@ -6,14 +6,14 @@ import "../Shaders" as Shaders
 T.TextField {
     id: control
 
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
     color: palette.textColor
     selectionColor: palette.selectionColor
     selectedTextColor: palette.selectedTextColor
     selectByMouse: true
-    implicitWidth: palette.controlBaseSize * 4
-    implicitHeight: palette.controlBaseSize
-    leftPadding: palette.padding
+    implicitWidth: sizings.controlBaseSize * 4
+    implicitHeight: sizings.controlBaseSize
+    leftPadding: sizings.padding
     verticalAlignment: Text.AlignVCenter
     opacity: enabled ? 1 : 0.33
 

@@ -4,8 +4,8 @@ import QtQuick.Controls 2.0 as T
 T.ToolTip {
     id: control
 
-//    implicitHeight: palette.controlBaseSize
-//    implicitWidth: label.implicitWidth + palette.margins * 2
+//    implicitHeight: sizings.controlBaseSize
+//    implicitWidth: label.implicitWidth + sizings.margins * 2
 
     contentItem: Label {
         text: control.text

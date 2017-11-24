@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: root
 
-    padding: palette.margins / 2
+    padding: sizings.margins / 2
     backgroundColor: palette.sunkenColor
 
     function flickToEnd() {

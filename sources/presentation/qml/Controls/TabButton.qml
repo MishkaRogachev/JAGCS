@@ -11,7 +11,7 @@ T.TabButton {
     property alias textColor: content.textColor
     property alias backgroundColor: backgroundItem.color
 
-    font.pixelSize: palette.fontPixelSize
+    font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(backgroundItem.implicitWidth, content.implicitWidth)
     implicitHeight: Math.max(backgroundItem.implicitHeight, content.implicitHeight)
     clip: true
@@ -19,8 +19,8 @@ T.TabButton {
     background: Rectangle {
         id: backgroundItem
         anchors.fill: parent
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: palette.controlBaseSize
+        implicitWidth: sizings.controlBaseSize
+        implicitHeight: sizings.controlBaseSize
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         radius: 3
         color: {

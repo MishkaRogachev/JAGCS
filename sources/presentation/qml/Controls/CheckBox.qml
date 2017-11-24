@@ -7,16 +7,16 @@ import "../Shaders" as Shaders
 T.CheckBox {
     id: control
 
-    font.pixelSize: palette.fontPixelSize
-    height: palette.controlBaseSize
+    font.pixelSize: sizings.fontPixelSize
+    height: sizings.controlBaseSize
     leftPadding: 0
-    spacing: palette.spacing
+    spacing: sizings.spacing
     implicitWidth: text.length > 0 ? contentItem.implicitWidth + spacing : indicator.implicitWidth
     opacity: enabled ? 1 : 0.33
 
     indicator: Rectangle {
-        implicitWidth: palette.controlBaseSize
-        implicitHeight: palette.controlBaseSize
+        implicitWidth: sizings.controlBaseSize
+        implicitHeight: sizings.controlBaseSize
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: 3
