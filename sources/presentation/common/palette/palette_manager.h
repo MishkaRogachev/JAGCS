@@ -11,13 +11,22 @@ namespace presentation
         Q_OBJECT
 
     public:
+        enum Style
+        {
+            Outdoor,
+            Indoor
+        };
+
         explicit PaletteManager(QObject* parent = nullptr);
 
     public slots:
         void setPalette(const Palette& palette);
+        void setPalette(Style paletteStyle);
 
-        void reloadPalette();
+        void loadSavedPalette();
 
+    private:
+        Q_ENUM(Style)
     };
 }
 

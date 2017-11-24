@@ -43,7 +43,10 @@ GridLayout {
 
     Controls.CheckBox {
         id: fullscreenBox
-        onCheckedChanged: changed = true
+        onCheckedChanged: {
+            presenter.setFullscreen(checked);
+            changed = true;
+        }
     }
 
     Controls.Label {
@@ -78,7 +81,10 @@ GridLayout {
         id: paletteBox
         model: [ qsTr("Outdoor"), qsTr("Indoor") ]
         Layout.fillWidth: true
-        onCurrentIndexChanged: changed = true;
+        onCurrentIndexChanged: {
+            presenter.setPalleteStyle(currentIndex)
+            changed = true;
+        }
     }
 
     Controls.Label {

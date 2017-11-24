@@ -19,12 +19,12 @@ void PaletteManager::setPalette(const Palette& palette)
     PresentationContext::rootContext()->setContextProperty("palette", QVariant::fromValue(palette));
 }
 
-void PaletteManager::reloadPalette()
+void PaletteManager::setPalette(PaletteManager::Style paletteStyle)
 {
+    // TODO: store palette in files
     Palette palette;
 
     int uiSize = settings::Provider::value(settings::gui::uiSize).toInt();
-    int paletteStyle = settings::Provider::value(settings::gui::paletteStyle).toInt();
 
     palette.setControlBaseSize(uiSize);
     palette.setFontPixelSize(uiSize / 2);
@@ -59,4 +59,9 @@ void PaletteManager::reloadPalette()
     palette.setPositiveColor("#86c34a");
 
     this->setPalette(palette);
+}
+
+void PaletteManager::loadSavedPalette()
+{
+    this->setPalette(Style(settings::Provider::value(settings::gui::paletteStyle).toInt()));
 }

@@ -83,8 +83,18 @@ void GuiSettingsPresenter::save()
     QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
     d->translationManager.setCurrentLocale(locale);
 
-    d->paletteManager.reloadPalette();
+    d->paletteManager.loadSavedPalette();
 
     PresentationContext::saveWindowedGeometry();
     PresentationContext::show();
+}
+
+void GuiSettingsPresenter::setFullscreen(bool fullscreen)
+{
+    fullscreen ? PresentationContext::showFullscreen() : PresentationContext::showWindowed();
+}
+
+void GuiSettingsPresenter::setPalleteStyle(int paletteStyle)
+{
+    d->paletteManager.setPalette(static_cast<PaletteManager::Style>(paletteStyle));
 }

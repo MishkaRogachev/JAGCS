@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     translations.initLocales();
 
     presentation::PaletteManager paletteManager;
-    paletteManager.reloadPalette();
+    paletteManager.loadSavedPalette();
 
     presentation::PresentationContext::rootContext()->setContextProperty(
                 "settings", settings::Provider::instance());

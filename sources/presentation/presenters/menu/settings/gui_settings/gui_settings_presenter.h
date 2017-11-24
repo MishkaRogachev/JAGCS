@@ -17,6 +17,9 @@ namespace presentation
         void updateView();
         void save();
 
+        void setFullscreen(bool fullscreen);
+        void setPalleteStyle(int paletteStyle);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
