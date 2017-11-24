@@ -12,6 +12,7 @@ T.CheckBox {
     leftPadding: 0
     spacing: sizings.spacing
     implicitWidth: text.length > 0 ? contentItem.implicitWidth + spacing : indicator.implicitWidth
+    implicitHeight: contentItem.height
     opacity: enabled ? 1 : 0.33
 
     indicator: Rectangle {
