@@ -15,9 +15,6 @@ namespace presentation
     public slots:
         void updateView();
         void save();
-
-    protected:
-        void connectView(QObject* view) override;
     };
 }
 

@@ -53,12 +53,3 @@ void MapSettingsPresenter::save()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void MapSettingsPresenter::connectView(QObject* view)
-{
-    connect(view, SIGNAL(save()), this, SLOT(save()));
-    connect(view, SIGNAL(restore()), this, SLOT(updateView()));
-
-    this->updateView();
-}
-
-

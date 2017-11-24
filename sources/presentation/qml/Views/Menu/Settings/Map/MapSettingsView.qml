@@ -18,18 +18,19 @@ GridLayout {
     property alias highdpiTiles: highdpiTilesBox.checked
     property alias trackLength: trackLengthSlider.value
 
-    signal save()
-    signal restore()
-
     columns: 2
     rowSpacing: sizings.spacing
     columnSpacing: sizings.spacing
 
-    onChangedChanged: if (!changed) main.reloadMap() // TODO: reload map on change
-    onPluginChanged: updateMapTypes()
+    onPluginChanged: {
+        if (main.mapType !== plugin) main.reloadMap(plugin);
+        updateMapTypes();
+    }
 
     MapSettingsPresenter {
+        id: presenter
         view: mapSettings
+        Component.onCompleted: updateView()
     }
 
     Connections {
@@ -145,7 +146,7 @@ GridLayout {
         Controls.Button {
             text: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
-            onClicked: restore()
+            onClicked: presenter.updateView()
             enabled: changed
             Layout.fillWidth: true
         }
@@ -153,7 +154,7 @@ GridLayout {
         Controls.Button {
             text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
-            onClicked: save()
+            onClicked: presenter.save()
             enabled: changed
             Layout.fillWidth: true
         }

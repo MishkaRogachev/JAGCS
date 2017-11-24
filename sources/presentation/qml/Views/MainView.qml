@@ -12,13 +12,17 @@ Rectangle {
 
     property bool cornerMap: false
     property bool cornerVisible: false
+    property int mapType: -1
 
     property Component mapComponent
 
     property QtObject map
     property QtObject video
 
-    function reloadMap() { mapComponent = mapFactory.create(); }
+    function reloadMap(type) {
+        mapType = type !== undefined ? type : parseInt(settings.value("Map/plugin"));
+        mapComponent = mapFactory.create(mapType);
+    }
 
     color: palette.backgroundColor
     Component.onCompleted: reloadMap()
