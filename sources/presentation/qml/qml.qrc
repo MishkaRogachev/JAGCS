@@ -107,7 +107,7 @@
         <file>Views/Menu/Settings/SettingsMenu.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
         <file>Views/Menu/Settings/Map/MapSettingsView.qml</file>
-        <file>Views/Menu/Settings/Video/VideoSettingsView.qml</file>
+        <file>Views/Menu/Settings/Video/VideoSourceListView.qml</file>
         <file>Views/Menu/Settings/Video/VideoSourceView.qml</file>
         <file>Views/Menu/Settings/Joystick/JoystickSettingsView.qml</file>
         <file>Views/Menu/Settings/Gui/GuiSettingsView.qml</file>

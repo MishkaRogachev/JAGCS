@@ -5,20 +5,22 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Controls.Frame {
-    id: root
+    id: videoSource
 
     property int videoId: -1
     property int type: VideoSource.UnknownType
     property string source
-    property bool selected: false
-    // TODO: video description
 
+    property bool selected: false
     property bool changed: false
 
-    signal save()
-    signal restore()
-    signal remove()
-    signal setupPreview(QtObject preview)
+    signal setActiveVideo(int videoId)
+
+    VideoSourcePresenter{
+        id: presenter
+        view: videoSource
+        Component.onCompleted: setVideo(videoId)
+    }
 
     GridLayout {
         id: grid
@@ -27,12 +29,15 @@ Controls.Frame {
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
 
-        Controls.RadioButton {
+        Controls.Label {
             text: qsTr("Video") + " " + videoId
-            checked: root.selected
+            Layout.fillWidth: true
+        }
+
+        Controls.RadioButton {
+            checked: videoSource.selected
             Controls.ButtonGroup.group: radioGroup
             onCheckedChanged: if (checked) setActiveVideo(videoId)
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -47,7 +52,7 @@ Controls.Frame {
                 switch (type) {
                 case VideoSource.Stream: return qsTr("Stream video")
                 case VideoSource.Device: return qsTr("Device")
-                default: return qsTr("Unknown:")
+                default: return qsTr("Unknown")
                 }
             }
             Layout.fillWidth: true
@@ -94,21 +99,21 @@ Controls.Frame {
             Controls.Button {
                 tipText: qsTr("Save")
                 iconSource: "qrc:/icons/save.svg"
-                onClicked: save()
+                onClicked: presenter.save()
                 enabled: changed
             }
 
             Controls.Button {
                 tipText: qsTr("Restore")
                 iconSource: "qrc:/icons/restore.svg"
-                onClicked: restore()
+                onClicked: presenter.updateView()
                 enabled: changed
             }
 
             Controls.DelayButton {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
-                onActivated: remove()
+                onActivated: presenter.remove()
                 iconColor: palette.dangerColor
             }
         }

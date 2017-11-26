@@ -37,9 +37,6 @@ void NetworkSettingsPresenter::updateView()
 {
     QNetworkProxy proxy = d->manager.proxy();
 
-    QStringList typeModel = d->typeModelMap.values();
-    this->setViewProperty(PROPERTY(typeModel), typeModel);
-
     QString type = d->typeModelMap.value(proxy.type());
     this->invokeViewMethod(PROPERTY(setProxyType), type);
     this->setViewProperty(PROPERTY(hostName), proxy.hostName());
@@ -63,6 +60,12 @@ void NetworkSettingsPresenter::save()
     d->manager.setProxy(proxy);
 
     this->setViewProperty(PROPERTY(changed), false);
+}
+
+void NetworkSettingsPresenter::connectView(QObject* view)
+{
+    QStringList typeModel = d->typeModelMap.values();
+    view->setProperty(PROPERTY(typeModel), typeModel);
 }
 
 

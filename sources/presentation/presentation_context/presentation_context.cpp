@@ -31,7 +31,8 @@
 #include "joystick_settings_presenter.h"
 #include "map_settings_presenter.h"
 #include "network_settings_presenter.h"
-#include "video_settings_presenter.h"
+#include "video_source_list_presenter.h"
+#include "video_source_presenter.h"
 #include "about_presenter.h"
 
 // Qt
@@ -161,6 +162,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<JoystickSettingsPresenter>("JAGCS", 1, 0, "JoystickSettingsPresenter");
     qmlRegisterType<MapSettingsPresenter>("JAGCS", 1, 0, "MapSettingsPresenter");
     qmlRegisterType<NetworkSettingsPresenter>("JAGCS", 1, 0, "NetworkSettingsPresenter");
-    qmlRegisterType<VideoSettingsPresenter>("JAGCS", 1, 0, "VideoSettingsPresenter");
+    qmlRegisterType<VideoSourceListPresenter>("JAGCS", 1, 0, "VideoSourceListPresenter");
+    qmlRegisterType<VideoSourcePresenter>("JAGCS", 1, 0, "VideoSourcePresenter");
     qmlRegisterType<AboutPresenter>("JAGCS", 1, 0, "AboutPresenter");
 }

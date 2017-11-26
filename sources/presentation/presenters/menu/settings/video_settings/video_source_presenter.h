@@ -17,19 +17,13 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VideoSourcePresenter(domain::VideoService* service,
-                             const dao::VideoSourcePtr& video,
-                             QObject* parent = nullptr);
-
-        dao::VideoSourcePtr video() const;
+        VideoSourcePresenter(QObject* parent = nullptr);
 
     public slots:
+        void setVideo(int id);
         void updateView();
         void save();
         void remove();
-
-    protected:
-        void connectView(QObject* view) override;
 
     private:
         domain::VideoService* const m_service;

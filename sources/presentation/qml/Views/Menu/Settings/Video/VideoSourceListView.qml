@@ -5,37 +5,42 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Item {
-    id: videoSettings
+    id: videoSourceList
 
-    property var videoSources: []
+    property var videoSourceIds: []
     property var videoDevices: []
     property int activeVideo: -1
 
-    signal addDeviceVideo()
-    signal addStreamVideo()
-    signal setActiveVideo(int video)
-
-    Component.onCompleted: factory.createVideoSettingsPresenter(videoSettings)
     implicitWidth: sizings.controlBaseSize * 11
-    onActiveVideoChanged: video.updateActiveVideo()
+
+    VideoSourceListPresenter {
+        id: presenter
+        view: videoSourceList
+        Component.onCompleted: {
+            updateCameraInfo();
+            updateVideoSources();
+        }
+    }
 
     Controls.ButtonGroup { id: radioGroup }
 
-    VideoSettingsPresenter {
-        view: videoSettings
-    }
-
-    Flickable {
+    ListView {
         anchors.fill: parent
         anchors.bottomMargin: addButton.height
-        contentHeight: Math.max(frame.height, column.height)
-        clip: true
+        spacing: sizings.spacing
+        model: videoSourceIds
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
+        delegate: VideoSourceView {
+            width: parent.width
+            videoId: modelData
+            selected: activeVideo == videoId
+            onSetActiveVideo: presenter.setActiveVideo(videoId)
+        }
+
         Controls.Frame {
-            id: frame
-            visible: repeater.count == 0
+            visible: parent.count === 0
             width: parent.width
             height: label.height + sizings.margins * 2
 
@@ -45,25 +50,6 @@ Item {
                 width: parent.width
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
-            }
-        }
-
-        ColumnLayout {
-            id: column
-            anchors.centerIn: parent
-            width: parent.width
-            spacing: sizings.spacing
-
-            Repeater {
-                id: repeater
-                model: videoSources
-
-                VideoSourceView {
-                    id: sourceView
-                    selected: activeVideo == videoId
-                    Layout.fillWidth: true
-                    Component.onCompleted: modelData.setView(sourceView)
-                }
             }
         }
     }
@@ -85,15 +71,14 @@ Item {
             Controls.MenuItem {
                 text: qsTr("Device")
                 implicitWidth: parent.width
-                onTriggered: addDeviceVideo()
+                onTriggered: presenter.addDeviceVideo()
             }
 
             Controls.MenuItem {
                 text: qsTr("Stream")
                 implicitWidth: parent.width
-                onTriggered: addStreamVideo()
+                onTriggered: presenter.addStreamVideo()
             }
         }
     }
 }
-
