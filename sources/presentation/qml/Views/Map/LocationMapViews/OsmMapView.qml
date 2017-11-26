@@ -14,5 +14,5 @@ BaseMapView {
         PluginParameter { name: "osm.mapping.highdpi_tiles"; value: settings.boolValue("Map/highdpiTiles", true) }
     }
 
-    activeMapType: supportedMapTypes[settings.value("Map/osmActiveMapType")]
+    activeMapTypeIndex: settings.value("Map/osmActiveMapType")
 }

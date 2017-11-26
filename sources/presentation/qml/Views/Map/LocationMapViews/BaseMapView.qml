@@ -25,8 +25,11 @@ Map {
 
     property bool trackingVehicle: false
 
+    property int activeMapTypeIndex: 0
+
     signal picked(var coordinate)
 
+    activeMapType: supportedMapTypes[activeMapTypeIndex]
     implicitHeight: width
     gesture.flickDeceleration: 3000
     gesture.enabled: true

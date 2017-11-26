@@ -12,5 +12,5 @@ BaseMapView {
         PluginParameter { name: "mapboxgl.mapping.cache.size"; value: settings.value("Map/cacheSize", 0) }
     }
 
-    activeMapType: supportedMapTypes[settings.value("Map/mapBoxGlActiveMapType")]
+    activeMapTypeIndex: settings.value("Map/mapBoxGlActiveMapType")
 }

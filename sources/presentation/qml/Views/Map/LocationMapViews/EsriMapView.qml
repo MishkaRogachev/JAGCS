@@ -11,5 +11,5 @@ BaseMapView {
         PluginParameter { name: "esri.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
     }
 
-    activeMapType: supportedMapTypes[settings.value("Map/esriActiveMapType")]
+    activeMapTypeIndex: settings.value("Map/esriActiveMapType")
 }

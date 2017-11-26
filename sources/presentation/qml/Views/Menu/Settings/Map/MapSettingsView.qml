@@ -27,6 +27,10 @@ GridLayout {
         updateMapTypes();
     }
 
+    onOsmActiveMapTypeChanged: if (main.mapType === 0) activeMapTypeBox.currentIndex = osmActiveMapType
+    onMapBoxGlActiveMapTypeChanged: if (main.mapType === 1) activeMapTypeBox.currentIndex = mapBoxGlActiveMapType
+    onEsriActiveMapTypeChanged: if (main.mapType === 2) activeMapTypeBox.currentIndex = esriActiveMapType
+
     MapSettingsPresenter {
         id: presenter
         view: mapSettings
@@ -47,6 +51,7 @@ GridLayout {
             }
         }
         activeMapTypeBox.model = types;
+        activeMapTypeBox.currentIndex = map.activeMapTypeIndex;
     }
 
     Controls.Label {
@@ -69,7 +74,7 @@ GridLayout {
 
     Controls.ComboBox {
         id: activeMapTypeBox
-        onActivated: {
+        onCurrentIndexChanged: {
             switch (plugin) {
             case 0:
                 osmActiveMapType = currentIndex;
@@ -83,6 +88,8 @@ GridLayout {
             default:
                 return;
             }
+
+            map.activeMapTypeIndex = currentIndex;
 
             changed = true;
         }
