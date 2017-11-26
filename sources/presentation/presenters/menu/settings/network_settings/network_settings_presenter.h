@@ -13,12 +13,9 @@ namespace presentation
         explicit NetworkSettingsPresenter(QObject* parent = nullptr);
         ~NetworkSettingsPresenter() override;
 
-    protected:
-        void connectView(QObject* view) override;
-
-    private slots:
-        void onApply();
-        void onRestore();
+    public slots:
+        void updateView();
+        void save();
 
     private:
         class Impl;

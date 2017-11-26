@@ -33,18 +33,24 @@ NetworkSettingsPresenter::NetworkSettingsPresenter(QObject* parent):
 NetworkSettingsPresenter::~NetworkSettingsPresenter()
 {}
 
-void NetworkSettingsPresenter::connectView(QObject* view)
+void NetworkSettingsPresenter::updateView()
 {
-    connect(view, SIGNAL(apply()), this, SLOT(onApply()));
-    connect(view, SIGNAL(restore()), this, SLOT(onRestore()));
+    QNetworkProxy proxy = d->manager.proxy();
 
     QStringList typeModel = d->typeModelMap.values();
     this->setViewProperty(PROPERTY(typeModel), typeModel);
 
-    this->onRestore();
+    QString type = d->typeModelMap.value(proxy.type());
+    this->invokeViewMethod(PROPERTY(setProxyType), type);
+    this->setViewProperty(PROPERTY(hostName), proxy.hostName());
+    this->setViewProperty(PROPERTY(port), proxy.port());
+    this->setViewProperty(PROPERTY(user), proxy.user());
+    this->setViewProperty(PROPERTY(password), proxy.password());
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
-void NetworkSettingsPresenter::onApply()
+void NetworkSettingsPresenter::save()
 {
     QNetworkProxy proxy;
 
@@ -59,17 +65,4 @@ void NetworkSettingsPresenter::onApply()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void NetworkSettingsPresenter::onRestore()
-{
-    QNetworkProxy proxy = d->manager.proxy();
-
-    QString type = d->typeModelMap.value(proxy.type());
-    this->invokeViewMethod(PROPERTY(setProxyType), type);
-    this->setViewProperty(PROPERTY(hostName), proxy.hostName());
-    this->setViewProperty(PROPERTY(port), proxy.port());
-    this->setViewProperty(PROPERTY(user), proxy.user());
-    this->setViewProperty(PROPERTY(password), proxy.password());
-
-    this->setViewProperty(PROPERTY(changed), false);
-}
 

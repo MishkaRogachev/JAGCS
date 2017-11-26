@@ -27,7 +27,9 @@ ColumnLayout {
     spacing: sizings.spacing
 
     NetworkSettingsPresenter {
+        id: presenter
         view: networkSettings
+        Component.onCompleted: updateView()
     }
 
     Controls.Frame {
@@ -115,14 +117,14 @@ ColumnLayout {
             Layout.fillWidth: true
             text: qsTr("Restore")
             enabled: changed
-            onClicked: restore()
+            onClicked: presenter.updateView()
         }
 
        Controls.Button {
             Layout.fillWidth: true
-            text: qsTr("Apply")
+            text: qsTr("Save")
             enabled: changed
-            onClicked: apply()
+            onClicked: presenter.save()
         }
     }
 }
