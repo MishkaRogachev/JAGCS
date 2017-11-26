@@ -7,8 +7,6 @@ Rectangle {
     property alias videoSource: videoOutput.source
     property real ratio: videoOutput.sourceRect.height / videoOutput.sourceRect.width
 
-    signal updateActiveVideo() // TODO: temporary, till multivideo added
-
     implicitHeight: width * ratio
 
     color: "black"

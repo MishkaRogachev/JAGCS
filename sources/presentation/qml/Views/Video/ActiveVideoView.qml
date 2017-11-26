@@ -4,7 +4,13 @@ import JAGCS 1.0
 VideoView {
     id: video
 
-    VideoPresenter {
+    function updateActiveVideo() {
+        presenter.updateActiveVideo();
+    }
+
+    ActiveVideoPresenter {
+        id: presenter
         view: video
+        Component.onCompleted: updateActiveVideo()
     }
 }

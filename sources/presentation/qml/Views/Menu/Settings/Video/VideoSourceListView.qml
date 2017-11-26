@@ -12,6 +12,7 @@ Item {
     property int activeVideo: -1
 
     implicitWidth: sizings.controlBaseSize * 11
+    onActiveVideoChanged: video.updateActiveVideo()
 
     VideoSourceListPresenter {
         id: presenter

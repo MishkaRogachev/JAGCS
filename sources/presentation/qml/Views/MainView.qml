@@ -57,7 +57,7 @@ Rectangle {
         Controls.Button {
             id: maxMinButton
             tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
-            iconSource: cornerVisible ? "qrc:/icons/minimize.svg" : "qrc:/icons/maximize.svg"
+            iconSource: cornerVisible ? "qrc:/icons/window.svg" : "qrc:/icons/subwindow.svg"
             onClicked: cornerVisible = !cornerVisible
         }
     }
@@ -68,6 +68,7 @@ Rectangle {
         anchors.right: tools.left
         anchors.margins: sizings.margins
         width: Math.min(parent.width / 3, parent.height / 3)
+        //height: item ? item.height : 0
         sourceComponent: cornerMap ? mapComponent : videoComponent
         visible: cornerVisible
         onItemChanged: if (item) cornerMap ? map = item : video = item;

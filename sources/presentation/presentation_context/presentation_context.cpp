@@ -148,7 +148,7 @@ void PresentationContext::registerQuickTypes()
 
     qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");
     qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
-    qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "VideoPresenter");
+    qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "ActiveVideoPresenter");
     qmlRegisterType<LinkListPresenter>("JAGCS", 1, 0, "LinkListPresenter");
     qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");
     qmlRegisterType<VehicleListPresenter>("JAGCS", 1, 0, "VehicleListPresenter");

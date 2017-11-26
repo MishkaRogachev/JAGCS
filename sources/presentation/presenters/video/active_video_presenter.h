@@ -14,9 +14,6 @@ namespace presentation
 
     public slots:
         void updateActiveVideo();
-
-    protected:
-        void connectView(QObject* view) override;
     };
 }
 

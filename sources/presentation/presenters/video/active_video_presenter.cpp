@@ -26,11 +26,3 @@ void ActiveVideoPresenter::updateActiveVideo()
     }
     this->setVideo(video);
 }
-
-void ActiveVideoPresenter::connectView(QObject* view)
-{
-    connect(view, SIGNAL(updateActiveVideo()), this, SLOT(updateActiveVideo()));
-    this->updateActiveVideo();
-
-    VideoPresenter::connectView(view);
-}
