@@ -31,3 +31,18 @@ void MissionAssignment::setStatus(Status status)
 {
     m_status = status;
 }
+
+int MissionAssignment::progress() const
+{
+    return m_progress;
+}
+
+void MissionAssignment::setProgress(int progess)
+{
+    m_progress = progess;
+}
+
+void MissionAssignment::addProgress()
+{
+    m_progress++;
+}

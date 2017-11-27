@@ -9,10 +9,11 @@ Controls.Frame {
 
     property int missionId: 0
     property int count: 0
+    property int progress: 0
     property bool missionVisible: false
+    property bool vehicleOnline: false
     property int assignedVehicleId: 0
     property int status: MissionAssignment.NotActual
-    property bool vehicleOnline: false
 
     property alias name: nameEdit.text
 
@@ -109,9 +110,10 @@ Controls.Frame {
             text: qsTr("Commands")
         }
 
-        Controls.Label { // Items Row
-            text: count
-            horizontalAlignment: Text.AlignHCenter
+       Controls.ProgressBar {
+            to: count
+            value: progress
+            text: progress + "/" + count
             Layout.fillWidth: true
         }
 

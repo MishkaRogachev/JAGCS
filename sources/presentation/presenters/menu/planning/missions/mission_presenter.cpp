@@ -68,11 +68,13 @@ void MissionPresenter::updateAssignment()
     {
         this->setViewProperty(PROPERTY(assignedVehicleId), assignment->vehicleId());
         this->setViewProperty(PROPERTY(status), assignment->status());
+        this->setViewProperty(PROPERTY(progress), assignment->progress());
     }
     else
     {
         this->setViewProperty(PROPERTY(assignedVehicleId), 0);
         this->setViewProperty(PROPERTY(status), dao::MissionAssignment::NotActual);
+        this->setViewProperty(PROPERTY(progress), 0);
     }
 }
 

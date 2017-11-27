@@ -24,4 +24,3 @@ void Mission::setCount(int count)
 {
     m_count = count;
 }
-

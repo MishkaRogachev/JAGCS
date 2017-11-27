@@ -115,6 +115,7 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
     if (vehicle.isNull()) return;
 
     assignment->setStatus(dao::MissionAssignment::Downloading);
+    assignment->setProgress(0);
     d->missionService->assignmentChanged(assignment);
 
     this->enterStage(Stage::WaitingCount, vehicle->mavId());
@@ -143,6 +144,7 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     else
     {
         assignment->setStatus(dao::MissionAssignment::Uploading);
+        assignment->setProgress(0);
         d->missionService->assignmentChanged(assignment);
 
         d->lastSendedSequence = -1;
@@ -475,11 +477,11 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
         d->mavStages.value(message.sysid, Stage::Idle) == Stage::WaitingItem)
     {
         d->mavSequencer[message.sysid].removeOne(msgItem.seq);
+        assignment->addProgress();
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
             assignment->setStatus(dao::MissionAssignment::Actual);
-            d->missionService->assignmentChanged(assignment);
 
             this->sendMissionAck(message.sysid);
             this->enterStage(Stage::Idle, message.sysid);
@@ -489,6 +491,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
             this->enterStage(Stage::WaitingItem, message.sysid);
             this->requestMissionItem(message.sysid, d->mavSequencer[message.sysid].first());
         }
+
+        d->missionService->assignmentChanged(assignment);
     }
 }
 
@@ -554,14 +558,16 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     if (d->mavStages[message.sysid] == Stage::SendingItem)
     {
         d->mavSequencer[message.sysid].removeOne(d->lastSendedSequence);
+        assignment->addProgress();
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
             assignment->setStatus(dao::MissionAssignment::Actual);
-            d->missionService->assignmentChanged(assignment);
 
             this->enterStage(Stage::Idle, message.sysid);
         }
+
+        d->missionService->assignmentChanged(assignment);
     }
 }
 

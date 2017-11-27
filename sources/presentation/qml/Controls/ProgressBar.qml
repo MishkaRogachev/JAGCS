@@ -26,11 +26,12 @@ T.ProgressBar {
 
     contentItem: Item {
         anchors.fill: parent
+        anchors.margins: 1
 
         Rectangle {
             width: control.visualPosition * background.width
             height: parent.height
-            radius: height / 2
+            radius: 2
             color: palette.selectionColor
         }
 

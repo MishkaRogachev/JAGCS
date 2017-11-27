@@ -15,6 +15,8 @@ namespace dao
 
         Q_PROPERTY(int missionId READ missionId WRITE setMissionId)
         Q_PROPERTY(int vehicleId READ vehicleId WRITE setVehicleId)
+        Q_PROPERTY(Status status READ status WRITE setStatus)
+        Q_PROPERTY(int progress READ progress WRITE setProgress)
 
     public:
         enum Status: quint8
@@ -34,11 +36,16 @@ namespace dao
         Status status() const;
         void setStatus(Status status);
 
+        int progress() const;
+        void setProgress(int progress);
+        void addProgress();
+
     private:
         int m_missionId = 0;
         int m_vehicleId = 0;
 
         Status m_status = NotActual;
+        int m_progress = 0;
 
         Q_ENUM(Status)
     };

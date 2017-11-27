@@ -22,6 +22,7 @@ namespace dao
 
     private:
         QString m_name;
+
         int m_count = 0;
     };
 }
