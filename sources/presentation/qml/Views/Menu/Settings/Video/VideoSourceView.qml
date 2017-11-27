@@ -114,7 +114,7 @@ Controls.Frame {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
                 onActivated: {
-                    setActiveVideo(-1);
+                    if (selected) setActiveVideo(-1);
                     presenter.remove();
                 }
                 iconColor: palette.dangerColor
