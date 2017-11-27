@@ -1,4 +1,4 @@
-#include "ui_style_manager.h"
+#include "gui_style_manager.h"
 
 // Qt
 #include <QQmlContext>
@@ -11,15 +11,15 @@
 
 using namespace presentation;
 
-UiStyleManager::UiStyleManager(QObject* parent): QObject(parent)
+GuiStyleManager::GuiStyleManager(QObject* parent): QObject(parent)
 {}
 
-void UiStyleManager::setPalette(const Palette& palette)
+void GuiStyleManager::setPalette(const Palette& palette)
 {
     PresentationContext::rootContext()->setContextProperty("palette", QVariant::fromValue(palette));
 }
 
-void UiStyleManager::setPalette(UiStyleManager::PaletteStyle paletteStyle)
+void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
 {
     // TODO: store palette in files
     Palette palette;
@@ -53,17 +53,17 @@ void UiStyleManager::setPalette(UiStyleManager::PaletteStyle paletteStyle)
     this->setPalette(palette);
 }
 
-void UiStyleManager::loadSavedPalette()
+void GuiStyleManager::loadSavedPalette()
 {
     this->setPalette(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
 }
 
-void UiStyleManager::setSizings(const Sizings& sizings)
+void GuiStyleManager::setSizings(const Sizings& sizings)
 {
     PresentationContext::rootContext()->setContextProperty("sizings", QVariant::fromValue(sizings));
 }
 
-void UiStyleManager::setSizings(int controlBaseSize)
+void GuiStyleManager::setSizings(int controlBaseSize)
 {
     Sizings sizings;
 
@@ -76,7 +76,7 @@ void UiStyleManager::setSizings(int controlBaseSize)
     this->setSizings(sizings);
 }
 
-void UiStyleManager::loadSavedSizings()
+void GuiStyleManager::loadSavedSizings()
 {
     this->setSizings(settings::Provider::value(settings::gui::uiSize).toInt());
 }
