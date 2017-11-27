@@ -113,7 +113,10 @@ Controls.Frame {
             Controls.DelayButton {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
-                onActivated: presenter.remove()
+                onActivated: {
+                    setActiveVideo(-1);
+                    presenter.remove();
+                }
                 iconColor: palette.dangerColor
             }
         }

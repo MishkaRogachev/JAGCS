@@ -68,7 +68,6 @@ Rectangle {
         anchors.right: tools.left
         anchors.margins: sizings.margins
         width: Math.min(parent.width / 3, parent.height / 3)
-        //height: item ? item.height : 0
         sourceComponent: cornerMap ? mapComponent : videoComponent
         visible: cornerVisible
         onItemChanged: if (item) cornerMap ? map = item : video = item;
