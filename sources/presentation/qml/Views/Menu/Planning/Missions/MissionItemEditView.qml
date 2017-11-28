@@ -148,7 +148,7 @@ Item {
 
     Flickable {
         anchors.fill: parent
-        anchors.bottomMargin: addRow.height
+        anchors.bottomMargin: saveRow.height
         contentHeight: grid.height
         clip: true
 
@@ -169,11 +169,27 @@ Item {
             RowLayout {
                 Layout.alignment: Qt.AlignRight
 
+                Controls.DelayButton {
+                    tipText: qsTr("Remove")
+                    iconSource: "qrc:/icons/remove.svg"
+                    iconColor: palette.dangerColor
+                    enabled: sequence > -1 && editEnabled
+                    onActivated: presenter.remove()
+                }
+
+                Controls.Button {
+                    tipText: qsTr("Move left")
+                    iconSource: "qrc:/icons/left_left.svg"
+                    enabled: sequence > 1
+                    onClicked: presenter.changeSequence(sequence - 1)
+                }
+
                 Controls.Button {
                     tipText: qsTr("Left")
                     iconSource: "qrc:/icons/left.svg"
                     enabled: sequence > 0
                     onClicked: presenter.selectItem(sequence - 1)
+                    onPressAndHold: presenter.selectItem(0)
                 }
 
                 Controls.Label {
@@ -187,6 +203,14 @@ Item {
                     iconSource: "qrc:/icons/right.svg"
                     enabled: sequence + 1 < count
                     onClicked: presenter.selectItem(sequence + 1)
+                    onPressAndHold: presenter.selectItem(count - 1)
+                }
+
+                Controls.Button {
+                    tipText: qsTr("Move right")
+                    iconSource: "qrc:/icons/right_right.svg"
+                    enabled: sequence > 0 && sequence + 1 < count
+                    onClicked: presenter.changeSequence(sequence + 1)
                 }
 
                 Controls.Button {
@@ -536,49 +560,25 @@ Item {
     }
 
     RowLayout {
-        id: addRow
+        id: saveRow
+        width: parent.width
         anchors.bottom: parent.bottom
         spacing: sizings.spacing
 
-        Controls.Label {
-            text: qsTr("Actions")
-            Layout.fillWidth: true
-        }
-
-        Controls.DelayButton {
-            tipText: qsTr("Remove")
-            iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.dangerColor
-            enabled: sequence > -1 && editEnabled
-            onActivated: presenter.remove()
-        }
-
         Controls.Button {
-            tipText: qsTr("Move left")
-            iconSource: "qrc:/icons/left_left.svg"
-            enabled: sequence > 1
-            onClicked: presenter.changeSequence(sequence - 1)
-        }
-
-        Controls.Button {
-            tipText: qsTr("Move right")
-            iconSource: "qrc:/icons/right_right.svg"
-            enabled: sequence > 0 && sequence + 1 < count
-            onClicked: presenter.changeSequence(sequence + 1)
-        }
-
-        Controls.Button {
-            tipText: qsTr("Restore")
+            text: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
             enabled: changed && editEnabled
             onClicked: presenter.updateItem()
+            Layout.fillWidth: true
         }
 
         Controls.Button {
-            tipText: qsTr("Save")
+            text: qsTr("Save")
             iconSource: "qrc:/icons/save.svg"
             enabled: changed && editEnabled
             onClicked: presenter.save()
+            Layout.fillWidth: true
         }
     }
 }
