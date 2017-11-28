@@ -177,7 +177,9 @@ Item {
                 }
 
                 Controls.Label {
-                    text: sequence
+                    text: sequence >= 0 ? ((sequence + 1) + "/" + count) : "-"
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
                 }
 
                 Controls.Button {
@@ -185,6 +187,46 @@ Item {
                     iconSource: "qrc:/icons/right.svg"
                     enabled: sequence + 1 < count
                     onClicked: presenter.selectItem(sequence + 1)
+                }
+
+                Controls.Button {
+                    tipText: qsTr("Add mission item")
+                    iconSource: "qrc:/icons/add.svg"
+                    enabled: missionId > 0
+                    onClicked: if (!addMenu.visible) addMenu.open()
+
+                    Controls.Menu {
+                        id: addMenu
+                        y: parent.height
+
+                        Controls.MenuItem {
+                            text: qsTr("Home")
+                            iconSource: "qrc:/icons/home.svg"
+                            enabled: sequence == -1
+                            onTriggered: presenter.addItem(MissionItem.Home)
+                        }
+
+                        Controls.MenuItem {
+                            text: qsTr("Waypoint")
+                            iconSource: "qrc:/icons/map-marker.svg"
+                            enabled: sequence >= 0
+                            onTriggered: presenter.addItem(MissionItem.Waypoint)
+                        }
+
+                        Controls.MenuItem {
+                            text: qsTr("Takeoff")
+                            iconSource: "qrc:/icons/takeoff.svg"
+                            enabled: sequence >= 0
+                            onTriggered: presenter.addItem(MissionItem.Takeoff)
+                        }
+
+                        Controls.MenuItem {
+                            text: qsTr("Landing")
+                            iconSource: "qrc:/icons/landing.svg"
+                            enabled: sequence >= 0
+                            onTriggered: presenter.addItem(MissionItem.Landing)
+                        }
+                    }
                 }
             }
 

@@ -4,6 +4,7 @@
 // Internal
 #include "base_presenter.h"
 #include "dao_traits.h"
+#include "mission_item.h"
 
 namespace presentation
 {
@@ -22,18 +23,20 @@ namespace presentation
         void enablePicker();
 
         void setMission(int id);
-        void selectItem(int index);
+        void selectItem(int sequence);
+        void addItem(dao::MissionItem::Command command);
         void save();
         void remove();
         void changeSequence(int sequence);
-        void updateMissionItem();
+
+        void updateItem();
         void updateCount();
         void updateAvailableCommands();
         void updateCommand(int commandIndex);
 
-    private slots: // TODO: replace
-        void onMissionSelected(const dao::MissionPtr& mission);
-        void onMissionItemSelected(const dao::MissionItemPtr& item);
+    private slots:
+        void setMission(const dao::MissionPtr& mission);
+        void setItem(const dao::MissionItemPtr& item);
 
     private:
          class Impl;

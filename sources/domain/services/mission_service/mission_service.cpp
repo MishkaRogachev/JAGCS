@@ -187,15 +187,7 @@ bool MissionService::save(const MissionItemPtr& item)
     item->clearSuperfluousParameters();
     if (!d->itemRepository.save(item)) return false;
 
-    if (isNew)
-    {
-        this->fixMissionItemOrder(item->missionId());
-        emit missionItemAdded(item);
-    }
-    else
-    {
-        emit missionItemChanged(item);  // TODO: check changed flag
-    }
+    emit (isNew ? missionItemAdded(item) : missionItemChanged(item));
 
     return true;
 }
@@ -287,7 +279,7 @@ void MissionService::unload(const MissionAssignmentPtr& assignment)
     d->assignmentRepository.unload(assignment->id());
 }
 
-void MissionService::addNewMissionItem(int missionId, MissionItem::Command command)
+void MissionService::addNewMissionItem(int missionId, MissionItem::Command command, int sequence)
 {
     QMutexLocker locker(&d->mutex);
 
@@ -295,7 +287,7 @@ void MissionService::addNewMissionItem(int missionId, MissionItem::Command comma
     if (mission.isNull()) return;
 
     MissionItemPtr item = MissionItemPtr::create();
-    MissionItemPtr lastItem = this->missionItem(missionId, mission->count() - 1);
+    MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
 
     item->setMissionId(missionId);
     item->setCommand(command);
@@ -331,8 +323,25 @@ void MissionService::addNewMissionItem(int missionId, MissionItem::Command comma
         break;
     }
 
-    item->setSequence(mission->count());
-    this->save(item);
+    item->setSequence(sequence);
+    item->clearSuperfluousParameters();
+
+    int i = sequence;
+    for (; i < mission->count(); ++i)
+    {
+        dao::MissionItemPtr other = this->missionItem(missionId, i);
+        if (!other) continue;
+
+        other->setSequence(i + 1);
+        other->setStatus(MissionItem::NotActual);
+        this->save(other);
+    }
+
+    mission->setCount(i + 1);
+    emit missionChanged(mission);
+
+    Q_ASSERT(d->itemRepository.save(item)); // TODO: handle if can not save
+    emit missionItemAdded(item);
 }
 
 void MissionService::fixMissionItemOrder(int missionId)

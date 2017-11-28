@@ -56,7 +56,7 @@ MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
     connect(d->service, &domain::MissionService::missionItemAdded, this, &MissionItemEditPresenter::updateCount);
     connect(d->service, &domain::MissionService::missionItemRemoved, this, &MissionItemEditPresenter::updateCount);
     connect(d->service, &domain::MissionService::missionItemChanged,
-            this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateMissionItem(); });
+            this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateItem(); });
 }
 
 MissionItemEditPresenter::~MissionItemEditPresenter()
@@ -71,19 +71,28 @@ void MissionItemEditPresenter::enablePicker()
 
 void MissionItemEditPresenter::setMission(int id)
 {
-    this->onMissionSelected(d->service->mission(id));
+    this->setMission(d->service->mission(id));
 }
 
-void MissionItemEditPresenter::selectItem(int index)
+void MissionItemEditPresenter::selectItem(int sequence)
 {
-    if (index == -1 || d->mission.isNull())
+    if (sequence == -1 || d->mission.isNull())
     {
-        this->onMissionItemSelected(dao::MissionItemPtr());
+        this->setItem(dao::MissionItemPtr());
     }
     else
     {
-        this->onMissionItemSelected(d->service->missionItem(d->mission->id(), index));
+        this->setItem(d->service->missionItem(d->mission->id(), sequence));
     }
+}
+
+void MissionItemEditPresenter::addItem(dao::MissionItem::Command command)
+{
+    if (d->mission.isNull()) return;
+
+    int seq = d->item ? d->item->sequence() + 1 : 0;
+    d->service->addNewMissionItem(d->mission->id(), command, seq);
+    this->selectItem(seq);
 }
 
 void MissionItemEditPresenter::save()
@@ -130,20 +139,17 @@ void MissionItemEditPresenter::changeSequence(int sequence)
     if (other.isNull()) return;
 
     d->service->swapItems(d->item, other);
-    this->onMissionItemSelected(d->item);
+    this->setItem(d->item);
 }
 
-void MissionItemEditPresenter::updateMissionItem()
+void MissionItemEditPresenter::updateItem()
 {
     if (d->mission && d->item)
     {
         int homeAltitude = 0;
         dao::MissionItemPtr home = d->service->missionItem(d->mission->id(), 0);
 
-        if (home)
-        {
-            homeAltitude = home->altitude();
-        }
+        if (home) homeAltitude = home->altitude();
         this->setViewProperty(PROPERTY(homeAltitude), homeAltitude);
 
         int previousGlobalAltitude = 0;
@@ -220,7 +226,7 @@ void MissionItemEditPresenter::updateCount()
     {
         this->setViewProperty(PROPERTY(count), 0);
         d->item.clear();
-        this->updateMissionItem();
+        this->updateItem();
     }
 }
 
@@ -244,7 +250,7 @@ void MissionItemEditPresenter::updateCommand(int commandIndex)
     }
 }
 
-void MissionItemEditPresenter::onMissionSelected(const dao::MissionPtr& mission)
+void MissionItemEditPresenter::setMission(const dao::MissionPtr& mission)
 {
     if (d->mission == mission) return;
 
@@ -254,9 +260,9 @@ void MissionItemEditPresenter::onMissionSelected(const dao::MissionPtr& mission)
     if (d->mission && d->mission->count()) this->selectItem(0);
 }
 
-void MissionItemEditPresenter::onMissionItemSelected(const dao::MissionItemPtr& item)
+void MissionItemEditPresenter::setItem(const dao::MissionItemPtr& item)
 {
-    if (d->mission.isNull() || item->missionId() != d->mission->id())
+    if (d->mission.isNull() || (item && item->missionId() != d->mission->id()))
         return;
 
     if (d->item == item) return;
@@ -264,5 +270,5 @@ void MissionItemEditPresenter::onMissionItemSelected(const dao::MissionItemPtr& 
     d->item = item;
 
     this->updateAvailableCommands();
-    this->updateMissionItem();
+    this->updateItem();
 }
