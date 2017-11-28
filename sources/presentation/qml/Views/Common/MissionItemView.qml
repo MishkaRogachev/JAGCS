@@ -62,7 +62,7 @@ Rectangle {
 
     Controls.Label {
         visible: !icon.visible
-        text: sequence
+        text: sequence + 1
         color: palette.textColor
         anchors.centerIn: parent
         font.bold: true
