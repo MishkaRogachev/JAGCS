@@ -20,8 +20,6 @@ namespace presentation
         ~MissionItemEditPresenter() override;
 
     public slots:
-        void enablePicker();
-
         void setMission(int id);
         void selectItem(int sequence);
         void addItem(dao::MissionItem::Command command);

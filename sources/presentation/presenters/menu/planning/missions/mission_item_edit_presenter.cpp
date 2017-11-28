@@ -62,13 +62,6 @@ MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
 MissionItemEditPresenter::~MissionItemEditPresenter()
 {}
 
-void MissionItemEditPresenter::enablePicker()
-{
-    if (d->item.isNull() || !d->item->isPositionatedItem() || d->item->isCurrent()) return;
-
-    this->setViewProperty(PROPERTY(picking), true);
-}
-
 void MissionItemEditPresenter::setMission(int id)
 {
     this->setMission(d->service->mission(id));
@@ -93,6 +86,8 @@ void MissionItemEditPresenter::addItem(dao::MissionItem::Command command)
     int seq = d->item ? d->item->sequence() + 1 : 0;
     d->service->addNewMissionItem(d->mission->id(), command, seq);
     this->selectItem(seq);
+
+    this->setViewProperty(PROPERTY(picking), true);
 }
 
 void MissionItemEditPresenter::save()

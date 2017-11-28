@@ -571,7 +571,7 @@ Item {
             tipText: qsTr("Restore")
             iconSource: "qrc:/icons/restore.svg"
             enabled: changed && editEnabled
-            onClicked: presenter.restore()
+            onClicked: presenter.updateItem()
         }
 
         Controls.Button {
