@@ -6,14 +6,12 @@
 
 namespace presentation
 {
-    class MapHandle;
-
     class MissionItemsStatusPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit MissionItemsStatusPresenter(MapHandle* handle, QObject* object = nullptr);
+        explicit MissionItemsStatusPresenter(QObject* object = nullptr);
         ~MissionItemsStatusPresenter() override;
 
         dao::MissionPtr mission() const;

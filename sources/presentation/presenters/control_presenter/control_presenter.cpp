@@ -102,7 +102,7 @@ void ControlPresenter::onSelectVehicle(int index)
         //FIXME: d->map->selectVehicle(vehicle);
         d->commander->setControlVehicle(vehicle->id());
 
-        AerialDashboardFactory factory(d->map->handle(), vehicle);
+        AerialDashboardFactory factory(vehicle);
         d->dashboard = factory.create();
 
         if (d->dashboard)

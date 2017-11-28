@@ -4,7 +4,6 @@
 #include <QDebug>
 
 // Internal
-#include "map_handle.h"
 #include "settings_provider.h"
 
 using namespace presentation;

@@ -11,8 +11,6 @@
 #include "mission.h"
 #include "mission_item.h"
 
-#include "map_handle.h"
-
 using namespace presentation;
 
 class MissionItemsStatusPresenter::Impl
@@ -22,14 +20,12 @@ public:
 
     dao::MissionPtr mission;
     dao::MissionItemPtr item;
-
-    MapHandle* handle;
 };
 
-MissionItemsStatusPresenter::MissionItemsStatusPresenter(MapHandle* handle, QObject* object):
+MissionItemsStatusPresenter::MissionItemsStatusPresenter(QObject* object):
     BasePresenter(object),
     d(new Impl())
-{
+{/*
     d->mission = handle->selectedMission();
     d->item = handle->selectedMissionItem();
 
@@ -45,7 +41,7 @@ MissionItemsStatusPresenter::MissionItemsStatusPresenter(MapHandle* handle, QObj
     connect(d->handle, &MapHandle::missionSelected,
             this, &MissionItemsStatusPresenter::onMissionSelected);
     connect(d->handle, &MapHandle::missionItemSelected,
-            this, &MissionItemsStatusPresenter::onMissionItemSelected);
+            this, &MissionItemsStatusPresenter::onMissionItemSelected);*/
 }
 
 MissionItemsStatusPresenter::~MissionItemsStatusPresenter()
@@ -114,12 +110,5 @@ void MissionItemsStatusPresenter::onMissionItemSelected(const dao::MissionItemPt
 
 void MissionItemsStatusPresenter::onSelectItem(int index)
 {
-    if (d->mission.isNull() || index == -1)
-    {
-        d->handle->selectMissionItem(dao::MissionItemPtr());
-    }
-    else
-    {
-        d->handle->selectMissionItem(d->service->missionItem(d->mission->id(), index));
-    }
+
 }

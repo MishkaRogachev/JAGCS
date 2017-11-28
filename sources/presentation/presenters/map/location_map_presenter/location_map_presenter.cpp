@@ -12,8 +12,6 @@
 #include "mission_line_map_item_model.h"
 #include "vehicle_map_item_model.h"
 
-#include "map_handle.h"
-
 using namespace presentation;
 
 class LocationMapPresenter::Impl
@@ -34,11 +32,7 @@ public:
 LocationMapPresenter::LocationMapPresenter(QObject* object):
     AbstractMapPresenter(object),
     d(new Impl())
-{
-    connect(&d->pointModel, &MissionPointMapItemModel::missionItemSelected,
-            m_handle, &MapHandle::selectMissionItem);
-    connect(&d->pointModel, &MissionPointMapItemModel::holded, m_handle, &MapHandle::holded);
-}
+{}
 
 LocationMapPresenter::~LocationMapPresenter()
 {
@@ -80,14 +74,4 @@ void LocationMapPresenter::connectView(QObject* view)
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
     this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
     this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
-}
-
-void LocationMapPresenter::selectMissionItem(const dao::MissionItemPtr& item)
-{
-    d->pointModel.setSelectedItem(item);
-}
-
-void LocationMapPresenter::selectVehicle(const dao::VehiclePtr& vehicle)
-{
-    d->vehicleModel.setSelectedVehicle(vehicle);
 }

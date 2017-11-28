@@ -9,7 +9,6 @@
 #include "mission_item.h"
 
 #include "dashboard_presenter.h"
-#include "map_handle.h"
 
 #include "status_presenter.h"
 #include "satellite_presenter.h"
@@ -22,9 +21,8 @@
 
 using namespace presentation;
 
-GenericDashboardFactory::GenericDashboardFactory(MapHandle* handle, const dao::VehiclePtr& vehicle):
+GenericDashboardFactory::GenericDashboardFactory(const dao::VehiclePtr& vehicle):
     IDashboardFactory(),
-    m_handle(handle),
     m_vehicle(vehicle)
 {}
 
@@ -62,13 +60,6 @@ DashboardPresenter* GenericDashboardFactory::create()
     dashboard->addInstrumentPresenter("status", m_status);
 
     MissionInstrumentPresenter* mission = new MissionInstrumentPresenter(m_vehicle->id(), dashboard);
-
-    QObject::connect(mission, &MissionInstrumentPresenter::missionItemSelected,
-                     m_handle, &MapHandle::selectMissionItem);
-    QObject::connect(m_handle, &MapHandle::missionItemSelected,
-                     mission, &MissionInstrumentPresenter::selectMissionItem);
-    QObject::connect(m_handle, &MapHandle::holded,
-                     mission, &MissionInstrumentPresenter::goToItem);
 
     dashboard->addInstrument("mission", 600);
     dashboard->addInstrumentPresenter("mission", m_status);

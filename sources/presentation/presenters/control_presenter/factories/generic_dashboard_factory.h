@@ -9,17 +9,14 @@
 
 namespace presentation
 {
-    class MapHandle;
-
     class GenericDashboardFactory: public IDashboardFactory
     {
     public:
-        GenericDashboardFactory(MapHandle* handle, const dao::VehiclePtr& vehicle);
+        GenericDashboardFactory(const dao::VehiclePtr& vehicle);
 
         DashboardPresenter* create() override;
 
     protected:
-        MapHandle* m_handle;
         dao::VehiclePtr m_vehicle;
 
         BaseInstrumentPresenter* m_satellite;
