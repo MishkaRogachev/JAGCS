@@ -284,13 +284,14 @@ void MissionService::addNewMissionItem(int missionId, MissionItem::Command comma
     QMutexLocker locker(&d->mutex);
 
     MissionPtr mission = this->mission(missionId);
-    if (mission.isNull()) return;
+    if (mission.isNull() || mission->count() < sequence) return;
 
     MissionItemPtr item = MissionItemPtr::create();
     MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
 
     item->setMissionId(missionId);
     item->setCommand(command);
+    item->setSequence(sequence);
 
     switch (command) { // TODO: to MissionItemFactory
     case MissionItem::Home:
@@ -323,9 +324,6 @@ void MissionService::addNewMissionItem(int missionId, MissionItem::Command comma
         break;
     }
 
-    item->setSequence(sequence);
-    item->clearSuperfluousParameters();
-
     int i = sequence;
     for (; i < mission->count(); ++i)
     {
@@ -337,11 +335,17 @@ void MissionService::addNewMissionItem(int missionId, MissionItem::Command comma
         this->save(other);
     }
 
-    mission->setCount(i + 1);
-    emit missionChanged(mission);
+    mission->setCount(mission->count() + 1);
+    this->save(mission);
 
-    Q_ASSERT(d->itemRepository.save(item)); // TODO: handle if can not save
-    emit missionItemAdded(item);
+    dao::MissionAssignmentPtr assignment = this->missionAssignment(missionId);
+    if (assignment)
+    {
+        assignment->setStatus(MissionAssignment::NotActual);
+        emit assignmentChanged(assignment);
+    }
+
+    Q_ASSERT(this->save(item)); // TODO: handle if can not save
 }
 
 void MissionService::fixMissionItemOrder(int missionId)
