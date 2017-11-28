@@ -54,9 +54,14 @@ MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
     d(new Impl())
 {
     connect(d->service, &domain::MissionService::missionItemAdded, this, &MissionItemEditPresenter::updateCount);
-    connect(d->service, &domain::MissionService::missionItemRemoved, this, &MissionItemEditPresenter::updateCount);
-    connect(d->service, &domain::MissionService::missionItemChanged,
-            this, [this](dao::MissionItemPtr item) { if (item == d->item) this->updateItem(); });
+    connect(d->service, &domain::MissionService::missionItemRemoved, this,
+            [this](dao::MissionItemPtr item) {
+        if (item == d->item) this->selectItem(item->sequence());
+        this->updateCount();
+    });
+
+    connect(d->service, &domain::MissionService::missionItemChanged, this,
+            [this](dao::MissionItemPtr item) { if (item == d->item) this->updateItem(); });
 }
 
 MissionItemEditPresenter::~MissionItemEditPresenter()
