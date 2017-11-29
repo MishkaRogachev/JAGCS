@@ -37,6 +37,12 @@ VehiclePresenter::VehiclePresenter(QObject* parent):
     });
 }
 
+bool VehiclePresenter::checkMavId(int mavId)
+{
+    return mavId > 0 && mavId < 255 && m_vehicle &&
+            (mavId == m_vehicle->mavId() || !m_service->employedMavIds().contains(mavId));
+}
+
 void VehiclePresenter::setVehicle(int id)
 {
     m_vehicle = m_service->vehicle(id);
@@ -53,15 +59,6 @@ void VehiclePresenter::updateView()
     this->setViewProperty(PROPERTY(online), m_vehicle && m_vehicle->isOnline());
 
     this->setViewProperty(PROPERTY(changed), false);
-}
-
-void VehiclePresenter::checkMavId(int mavId)
-{
-    this->setViewProperty(PROPERTY(mavIdIsCorrect),
-                          mavId > 0 &&
-                          mavId < 255 &&
-                          ((m_vehicle && mavId == m_vehicle->mavId()) ||
-                          !m_service->employedMavIds().contains(mavId)));
 }
 
 void VehiclePresenter::save()

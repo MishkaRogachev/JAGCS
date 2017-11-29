@@ -22,7 +22,10 @@ Controls.Frame {
     VehiclePresenter {
         id: presenter
         view: vehicleView
-        Component.onCompleted: setVehicle(vehicleId)
+        Component.onCompleted: {
+            setVehicle(vehicleId);
+            mavIdIsCorrect = Qt.binding(function () { return checkMavId(mavId); });
+        }
     }
 
     GridLayout {
@@ -54,10 +57,7 @@ Controls.Frame {
             from: 1
             to: 255
             backgroundColor: mavIdIsCorrect ? palette.sunkenColor : palette.dangerColor
-            onValueChanged: {
-                presenter.checkMavId(value);
-                changed = true;
-            }
+            onValueChanged: changed = true
             Layout.fillWidth: true
         }
 

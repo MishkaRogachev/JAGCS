@@ -19,10 +19,11 @@ namespace presentation
     public:
         VehiclePresenter(QObject* parent = nullptr);
 
+        Q_INVOKABLE bool checkMavId(int mavId);
+
     public slots:
         void setVehicle(int id);
         void updateView();
-        void checkMavId(int mavId);
         void save();
         void remove();
 
