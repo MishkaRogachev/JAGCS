@@ -10,8 +10,9 @@ Flickable {
     property int missionId: 0
     property var itemIds: []
 
-    implicitWidth: sizings.controlBaseSize * 11
     contentWidth: row.width
+    implicitWidth: row.width
+    implicitHeight: row.height
     boundsBehavior: Flickable.StopAtBounds
     clip: true
 
