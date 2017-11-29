@@ -52,9 +52,7 @@
         <file>Indicators/SpeedArrow.qml</file>
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
-        <file>Views/Common/MissionItemView.qml</file>
-        <file>Views/Common/MissionItemsStatusView.qml</file>
-        <file>Views/Common/VerticalProfileView.qml</file>
+        <file>Views/Common/PointView.qml</file>
         <file>Views/Status/StatusView.qml</file>
         <file>Views/Status/StatusModeButton.qml</file>
         <file>Views/Status/RadioStatusView.qml</file>
@@ -80,6 +78,7 @@
         <file>Views/Map/MapControl.qml</file>
         <file>Views/Map/MapPicker.qml</file>
         <file>Views/Map/MapFactory.qml</file>
+        <file>Views/VerticalProfile/VerticalProfileView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/ActiveVideoView.qml</file>
         <file>Views/Map/LocationMapViews/BaseMapView.qml</file>

@@ -36,7 +36,7 @@ Flickable {
             model: itemIds
 
              MissionItemView {
-                // TODO: impl
+                 itemId: modelData
              }
         }
     }

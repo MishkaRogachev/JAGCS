@@ -4,14 +4,15 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Rectangle {
-    id: root
+    id: pointView
 
     property bool selected: false
+
     property bool current: false
     property bool reached: false
+    property int sequence: -1
     property int status: MissionItem.NotActual
     property int command: MissionItem.UnknownCommand
-    property int sequence: -1
 
     property alias selectionAvalible: area.visible
 
@@ -72,6 +73,6 @@ Rectangle {
         id: area
         anchors.fill: parent
         onPressed: selectionRequest()
-        onPressAndHold: holded()
     }
 }
+

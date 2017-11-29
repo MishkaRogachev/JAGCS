@@ -12,7 +12,7 @@ MapItemView {
         anchorPoint.y: sourceItem.height / 2
         z: itemSelected ? 999 : 500
 
-        sourceItem: MissionItemView {
+        sourceItem: PointView {
             selected: itemSelected
             current: itemPtr.current
             reached: itemPtr.reached

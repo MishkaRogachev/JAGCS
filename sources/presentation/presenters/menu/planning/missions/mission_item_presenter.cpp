@@ -31,5 +31,9 @@ void MissionItemPresenter::setItem(int id)
 
 void MissionItemPresenter::updateItem()
 {
-    if (m_item.isNull()) return;
+    this->setViewProperty(PROPERTY(current), m_item ? m_item->isCurrent() : false);
+    this->setViewProperty(PROPERTY(reached), m_item ? m_item->isReached() : false);
+    this->setViewProperty(PROPERTY(sequence), m_item ? m_item->sequence() : -1);
+    this->setViewProperty(PROPERTY(status), m_item ? m_item->status() : false);
+    this->setViewProperty(PROPERTY(command), m_item ? m_item->command() : false);
 }

@@ -15,7 +15,7 @@ MapItemView {
         anchorPoint.y: sourceItem.height / 2
         z: 50
 
-        sourceItem: MissionItemView {
+        sourceItem: PointView {
             current: true
             sequence: vehicleId
             command: MissionItem.TargetPoint
