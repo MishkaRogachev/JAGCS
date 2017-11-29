@@ -8,7 +8,10 @@ Flickable {
     id: missionItemList
 
     property int missionId: 0
+    property int selectedItemId: 0
     property var itemIds: []
+
+    signal selectionRequest(int itemId)
 
     contentWidth: row.width
     implicitWidth: row.width
@@ -38,6 +41,8 @@ Flickable {
 
              MissionItemView {
                  itemId: modelData
+                 selected: selectedItemId == itemId
+                 onSelectionRequest: missionItemList.selectionRequest(itemId)
              }
         }
     }

@@ -13,10 +13,12 @@ ColumnLayout {
 
     MissionItemListView {
         missionId: missionEdit.missionId
+        onSelectionRequest: selectedItemId = itemId
         Layout.fillWidth: true
     }
 
     MissionItemEditView {
+        id: itemEdit
         missionId: missionEdit.missionId
         Layout.fillWidth: true
         Layout.fillHeight: true

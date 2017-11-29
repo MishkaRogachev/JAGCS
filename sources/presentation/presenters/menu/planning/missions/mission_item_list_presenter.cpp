@@ -32,16 +32,19 @@ void MissionItemListPresenter::setMission(int id)
 {
     m_missionId = id;
 
-    this->updateMissionItems();
+    this->updateMissionItems(true);
 }
 
-void MissionItemListPresenter::updateMissionItems()
+void MissionItemListPresenter::updateMissionItems(bool selectLast)
 {
     QVariantList itemIds;
+    int selectedItemId = 0;
+
     for (const dao::MissionItemPtr& item: m_service->missionItems(m_missionId))
     {
-        itemIds.append(item->id());
+        itemIds.append(selectedItemId = item->id());
     }
 
     this->setViewProperty(PROPERTY(itemIds), itemIds);
+    if (selectLast) this->setViewProperty(PROPERTY(selectedItemId), selectedItemId);
 }

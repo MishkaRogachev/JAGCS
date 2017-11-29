@@ -7,7 +7,6 @@ Rectangle {
     id: pointView
 
     property bool selected: false
-
     property bool current: false
     property bool reached: false
     property int sequence: -1
