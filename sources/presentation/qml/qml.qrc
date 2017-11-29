@@ -103,6 +103,8 @@
         <file>Views/Menu/Planning/PlanningView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionListView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionView.qml</file>
+        <file>Views/Menu/Planning/Missions/MissionItemListView.qml</file>
+        <file>Views/Menu/Planning/Missions/MissionItemView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionItemEditView.qml</file>
         <file>Views/Menu/Settings/SettingsMenu.qml</file>
         <file>Views/Menu/Settings/Database/DatabaseView.qml</file>
