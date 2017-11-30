@@ -10,9 +10,7 @@ Item {
 
     property bool editEnabled: false
     property bool changed: false
-    property int missionId: 0
-    property int sequence: -1
-    property int count: 0
+    property int itemId: 0
     property int command: MissionItem.UnknownCommand
 
     property alias commandIndex: commandBox.currentIndex
@@ -67,6 +65,8 @@ Item {
     property alias picking: pickButton.picking
 
     implicitWidth: sizings.controlBaseSize * 11
+
+    onItemIdChanged: presenter.setItem(itemId)
 
     onChangedChanged: {
         if (changed) return;
@@ -143,7 +143,7 @@ Item {
     MissionItemEditPresenter {
         id: presenter
         view: itemEdit
-        Component.onCompleted: setMission(missionId)
+        Component.onCompleted: setItem(itemId)
     }
 
     Flickable {
@@ -162,106 +162,13 @@ Item {
             columns: 2
 
             Controls.Label {
-                text: qsTr("Item")
-                Layout.fillWidth: true
-            }
-
-            RowLayout {
-                Layout.alignment: Qt.AlignRight
-
-                Controls.DelayButton {
-                    tipText: qsTr("Remove")
-                    iconSource: "qrc:/icons/remove.svg"
-                    iconColor: palette.dangerColor
-                    enabled: sequence > -1 && editEnabled
-                    onActivated: presenter.remove()
-                }
-
-                Controls.Button {
-                    tipText: qsTr("Move left")
-                    iconSource: "qrc:/icons/left_left.svg"
-                    enabled: sequence > 1
-                    onClicked: presenter.changeSequence(sequence - 1)
-                }
-
-                Controls.Button {
-                    tipText: qsTr("Left")
-                    iconSource: "qrc:/icons/left.svg"
-                    enabled: sequence > 0
-                    onClicked: presenter.selectItem(sequence - 1)
-                    onPressAndHold: presenter.selectItem(0)
-                }
-
-                Controls.Label {
-                    text: sequence >= 0 ? ((sequence + 1) + "/" + count) : "-"
-                    horizontalAlignment: Text.AlignHCenter
-                    Layout.fillWidth: true
-                }
-
-                Controls.Button {
-                    tipText: qsTr("Right")
-                    iconSource: "qrc:/icons/right.svg"
-                    enabled: sequence + 1 < count
-                    onClicked: presenter.selectItem(sequence + 1)
-                    onPressAndHold: presenter.selectItem(count - 1)
-                }
-
-                Controls.Button {
-                    tipText: qsTr("Move right")
-                    iconSource: "qrc:/icons/right_right.svg"
-                    enabled: sequence > 0 && sequence + 1 < count
-                    onClicked: presenter.changeSequence(sequence + 1)
-                }
-
-                Controls.Button {
-                    tipText: qsTr("Add mission item")
-                    iconSource: "qrc:/icons/add.svg"
-                    enabled: missionId > 0
-                    onClicked: if (!addMenu.visible) addMenu.open()
-
-                    Controls.Menu {
-                        id: addMenu
-                        y: parent.height
-
-                        Controls.MenuItem {
-                            text: qsTr("Home")
-                            iconSource: "qrc:/icons/home.svg"
-                            enabled: sequence == -1
-                            onTriggered: presenter.addItem(MissionItem.Home)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Waypoint")
-                            iconSource: "qrc:/icons/map-marker.svg"
-                            enabled: sequence >= 0
-                            onTriggered: presenter.addItem(MissionItem.Waypoint)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Takeoff")
-                            iconSource: "qrc:/icons/takeoff.svg"
-                            enabled: sequence >= 0
-                            onTriggered: presenter.addItem(MissionItem.Takeoff)
-                        }
-
-                        Controls.MenuItem {
-                            text: qsTr("Landing")
-                            iconSource: "qrc:/icons/landing.svg"
-                            enabled: sequence >= 0
-                            onTriggered: presenter.addItem(MissionItem.Landing)
-                        }
-                    }
-                }
-            }
-
-            Controls.Label {
                 text: qsTr("Command")
                 Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: commandBox
-                enabled: editEnabled && sequence > -1
+                enabled: editEnabled
                 currentIndex: 0
                 onCurrentIndexChanged: {
                     presenter.updateCommand(currentIndex);
@@ -295,7 +202,7 @@ Item {
                 Controls.CheckBox {
                     id: altitudeRelativeBox
                     text: qsTr("Rel.")
-                    enabled: editEnabled && sequence > 0
+                    enabled: editEnabled && command !== MissionItem.Home
                     onCheckedChanged: changed = true
                     Layout.rowSpan: 2
                 }

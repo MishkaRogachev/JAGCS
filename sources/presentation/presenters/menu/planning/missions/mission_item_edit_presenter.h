@@ -8,9 +8,6 @@
 
 namespace presentation
 {
-    class MapHandle;
-
-    // TODO: MissionItemListPresenter
     class MissionItemEditPresenter: public BasePresenter
     {
         Q_OBJECT
@@ -20,21 +17,13 @@ namespace presentation
         ~MissionItemEditPresenter() override;
 
     public slots:
-        void setMission(int id);
-        void selectItem(int sequence);
-        void addItem(dao::MissionItem::Command command);
+        void setItem(int id);
         void save();
         void remove();
-        void changeSequence(int sequence);
 
         void updateItem();
-        void updateCount();
         void updateAvailableCommands();
         void updateCommand(int commandIndex);
-
-    private slots:
-        void setMission(const dao::MissionPtr& mission);
-        void setItem(const dao::MissionItemPtr& item);
 
     private:
          class Impl;
