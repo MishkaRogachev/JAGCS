@@ -33,6 +33,7 @@ namespace domain
         dao::MissionAssignmentPtrList missionAssignments() const;
 
         dao::MissionItemPtr currentWaypoint(int vehicleId) const;
+        dao::MissionItemPtr addNewMissionItem(int missionId, dao::MissionItem::Command command, int sequence);
 
     public slots:
         bool save(const dao::MissionPtr& mission);
@@ -47,7 +48,6 @@ namespace domain
         void unload(const dao::MissionItemPtr& item);
         void unload(const dao::MissionAssignmentPtr& assignment);
 
-        void addNewMissionItem(int missionId, dao::MissionItem::Command command, int sequence);
         void fixMissionItemOrder(int missionId);
 
         void assign(int missionId, int vehicleId);

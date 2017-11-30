@@ -116,6 +116,76 @@ MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
     return d->currentItems.value(vehicleId);
 }
 
+dao::MissionItemPtr MissionService::addNewMissionItem(int missionId, MissionItem::Command command, int sequence)
+{
+    QMutexLocker locker(&d->mutex);
+
+    MissionPtr mission = this->mission(missionId);
+    if (mission.isNull() || mission->count() < sequence) return dao::MissionItemPtr();
+
+    MissionItemPtr item = MissionItemPtr::create();
+    MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
+
+    item->setMissionId(missionId);
+    item->setCommand(command);
+    item->setSequence(sequence);
+
+    switch (command) { // TODO: to MissionItemFactory
+    case MissionItem::Home:
+        item->setAltitude(0);
+        item->setAltitudeRelative(false);
+        break;
+    case MissionItem::Waypoint:
+        if (lastItem)
+        {
+            item->setAltitudeRelative(lastItem->isAltitudeRelative());
+            item->setAltitude(lastItem->altitude());
+        }
+        break;
+    case MissionItem::Takeoff:
+        if (lastItem)
+        {
+            item->setAltitude(50); // TODO: default parms to settings
+            item->setAltitudeRelative(true);
+        }
+        item->setParameter(MissionItem::Pitch, 15);
+        break;
+    case MissionItem::Landing:
+        if (lastItem)
+        {
+            item->setAltitude(0);
+            item->setAltitudeRelative(true);
+        }
+        break;
+    default:
+        break;
+    }
+
+    int i = sequence;
+    for (; i < mission->count(); ++i)
+    {
+        dao::MissionItemPtr other = this->missionItem(missionId, i);
+        if (!other) continue;
+
+        other->setSequence(i + 1);
+        other->setStatus(MissionItem::NotActual);
+        this->save(other);
+    }
+
+    mission->setCount(mission->count() + 1);
+    this->save(mission);
+
+    dao::MissionAssignmentPtr assignment = this->missionAssignment(missionId);
+    if (assignment)
+    {
+        assignment->setStatus(MissionAssignment::NotActual);
+        emit assignmentChanged(assignment);
+    }
+
+    Q_ASSERT(this->save(item)); // FIXME: handle if can not save
+    return item;
+}
+
 MissionAssignmentPtr MissionService::missionAssignment(int missionId) const
 {
     QMutexLocker locker(&d->mutex);
@@ -277,75 +347,6 @@ void MissionService::unload(const MissionAssignmentPtr& assignment)
     QMutexLocker locker(&d->mutex);
 
     d->assignmentRepository.unload(assignment->id());
-}
-
-void MissionService::addNewMissionItem(int missionId, MissionItem::Command command, int sequence)
-{
-    QMutexLocker locker(&d->mutex);
-
-    MissionPtr mission = this->mission(missionId);
-    if (mission.isNull() || mission->count() < sequence) return;
-
-    MissionItemPtr item = MissionItemPtr::create();
-    MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
-
-    item->setMissionId(missionId);
-    item->setCommand(command);
-    item->setSequence(sequence);
-
-    switch (command) { // TODO: to MissionItemFactory
-    case MissionItem::Home:
-        item->setAltitude(0);
-        item->setAltitudeRelative(false);
-        break;
-    case MissionItem::Waypoint:
-        if (lastItem)
-        {
-            item->setAltitudeRelative(lastItem->isAltitudeRelative());
-            item->setAltitude(lastItem->altitude());
-        }
-        break;
-    case MissionItem::Takeoff:
-        if (lastItem)
-        {
-            item->setAltitude(50); // TODO: default parms to settings
-            item->setAltitudeRelative(true);
-        }
-        item->setParameter(MissionItem::Pitch, 15);
-        break;
-    case MissionItem::Landing:
-        if (lastItem)
-        {
-            item->setAltitude(0);
-            item->setAltitudeRelative(true);
-        }
-        break;
-    default:
-        break;
-    }
-
-    int i = sequence;
-    for (; i < mission->count(); ++i)
-    {
-        dao::MissionItemPtr other = this->missionItem(missionId, i);
-        if (!other) continue;
-
-        other->setSequence(i + 1);
-        other->setStatus(MissionItem::NotActual);
-        this->save(other);
-    }
-
-    mission->setCount(mission->count() + 1);
-    this->save(mission);
-
-    dao::MissionAssignmentPtr assignment = this->missionAssignment(missionId);
-    if (assignment)
-    {
-        assignment->setStatus(MissionAssignment::NotActual);
-        emit assignmentChanged(assignment);
-    }
-
-    Q_ASSERT(this->save(item)); // TODO: handle if can not save
 }
 
 void MissionService::fixMissionItemOrder(int missionId)
