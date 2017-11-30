@@ -7,11 +7,22 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: missionEdit
 
+    property int sequence: 0
+    property int count: 0
+
     property alias missionId: itemList.missionId
     property alias selectedItemId: itemList.selectedItemId
 
     implicitWidth: sizings.controlBaseSize * 11
     spacing: sizings.spacing
+
+    onSelectedItemIdChanged: presenter.setItem(selectedItemId)
+
+    MissionEditPresenter {
+        id: presenter
+        view: missionEdit
+        Component.onCompleted: setMission(missionId)
+    }
 
     MissionItemListView {
         id: itemList
@@ -20,7 +31,6 @@ ColumnLayout {
         Layout.fillWidth: true
     }
 
-    /*
     RowLayout
     {
         Controls.Label {
@@ -32,7 +42,7 @@ ColumnLayout {
             tipText: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
             iconColor: palette.dangerColor
-            enabled: sequence > -1 && editEnabled
+            enabled: sequence > -1
             onActivated: presenter.remove()
         }
 
@@ -111,7 +121,7 @@ ColumnLayout {
                 }
             }
         }
-    }*/
+    }
 
     MissionItemEditView {
         id: itemEdit

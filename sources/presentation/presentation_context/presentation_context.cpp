@@ -25,6 +25,7 @@
 #include "planning_presenter.h"
 #include "mission_list_presenter.h"
 #include "mission_presenter.h"
+#include "mission_edit_presenter.h"
 #include "mission_item_list_presenter.h"
 #include "mission_item_presenter.h"
 #include "mission_item_edit_presenter.h"
@@ -158,6 +159,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
     qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");
     qmlRegisterType<MissionPresenter>("JAGCS", 1, 0, "MissionPresenter");
+    qmlRegisterType<MissionEditPresenter>("JAGCS", 1, 0, "MissionEditPresenter");
     qmlRegisterType<MissionItemListPresenter>("JAGCS", 1, 0, "MissionItemListPresenter");
     qmlRegisterType<MissionItemPresenter>("JAGCS", 1, 0, "MissionItemPresenter");
     qmlRegisterType<MissionItemEditPresenter>("JAGCS", 1, 0, "MissionItemEditPresenter");

@@ -96,13 +96,6 @@ void MissionItemEditPresenter::save()
     if (!d->service->save(d->item)) return;
 }
 
-void MissionItemEditPresenter::remove()
-{
-    if (d->item.isNull()) return;
-
-    d->service->remove(d->item);
-}
-
 void MissionItemEditPresenter::updateItem()
 {
     if (d->item)

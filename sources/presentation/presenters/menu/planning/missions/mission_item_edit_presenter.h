@@ -19,7 +19,6 @@ namespace presentation
     public slots:
         void setItem(int id);
         void save();
-        void remove();
 
         void updateItem();
         void updateAvailableCommands();
