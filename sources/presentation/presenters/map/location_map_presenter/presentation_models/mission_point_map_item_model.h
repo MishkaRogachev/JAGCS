@@ -26,7 +26,6 @@ namespace presentation
             ItemVisibleRole,
             ItemAcceptanceRadius,
             ItemRadius,
-            ItemSelected,
             ItemIndex
         };
 
@@ -42,13 +41,6 @@ namespace presentation
         void onMissionItemChanged(const dao::MissionItemPtr& item);
         void onMissionChanged(const dao::MissionPtr& mission);
 
-        void setSelectedItem(const dao::MissionItemPtr& item);
-        void setSelectedMissionItem(int index);
-
-    signals:
-        void missionItemSelected(const dao::MissionItemPtr& item);
-        void holded();
-
     protected:
         QHash<int, QByteArray> roleNames() const override;
         QModelIndex itemIndex(const dao::MissionItemPtr& item) const;
@@ -56,7 +48,6 @@ namespace presentation
     private:
         domain::MissionService* m_service;
         dao::MissionItemPtrList m_items;
-        dao::MissionItemPtr m_selectedItem;
     };
 }
 

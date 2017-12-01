@@ -6,6 +6,7 @@ import "qrc:/Views/Common"
 
 MapItemView {
     delegate: MapQuickItem {
+        property bool itemSelected: itemPtr.id === selectedItemId
         coordinate: itemCoordinate
         visible: itemVisible
         anchorPoint.x: sourceItem.width / 2
@@ -20,8 +21,7 @@ MapItemView {
             command: itemPtr.command
             sequence: itemPtr.sequence
             selectionAvalible: !picking
-            onSelectionRequest: pointModel.setSelectedMissionItem(itemIndex)
-            onHolded: pointModel.holded()
+            onSelectionRequest: map.selectItem(itemPtr.id)
         }
     }
 }

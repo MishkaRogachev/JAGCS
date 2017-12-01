@@ -79,8 +79,6 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
             return item->parameter(dao::MissionItem::Radius, 0);
         else return 0;
     }
-    case ItemSelected:
-        return item == m_selectedItem;
     case ItemIndex:
         return index.row();
     default:
@@ -124,33 +122,6 @@ void MissionPointMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
     }
 }
 
-void MissionPointMapItemModel::setSelectedItem(const dao::MissionItemPtr& item)
-{
-    if (m_selectedItem == item) return;
-
-    dao::MissionItemPtr oldItem = m_selectedItem;
-    m_selectedItem = item;
-
-    if (oldItem)
-    {
-        QModelIndex index = this->itemIndex(oldItem);
-        if (index.isValid()) emit dataChanged(index, index, { ItemRole, ItemSelected });
-    }
-
-    if (item)
-    {
-        QModelIndex index = this->itemIndex(item);
-        if (index.isValid()) emit dataChanged(index, index, { ItemRole, ItemSelected });
-    }
-}
-
-void MissionPointMapItemModel::setSelectedMissionItem(int index)
-{
-    if (index < 0 || index >= m_items.count()) return;
-
-    emit missionItemSelected(m_items.at(index));
-}
-
 QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -160,7 +131,6 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemVisibleRole] = "itemVisible";
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
-    roles[ItemSelected] = "itemSelected";
     roles[ItemIndex] = "itemIndex";
 
     return roles;

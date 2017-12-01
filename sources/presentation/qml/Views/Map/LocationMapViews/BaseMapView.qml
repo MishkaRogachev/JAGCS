@@ -24,10 +24,12 @@ Map {
     property alias pickerVisible: picker.visible
 
     property bool trackingVehicle: false
+    property int selectedItemId: 0
 
     property int activeMapTypeIndex: 0
 
     signal picked(var coordinate)
+    signal selectItem(int itemId)
 
     activeMapType: supportedMapTypes[activeMapTypeIndex]
     implicitHeight: width

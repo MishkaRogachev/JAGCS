@@ -17,7 +17,19 @@ ColumnLayout {
     implicitWidth: sizings.controlBaseSize * 11
     spacing: sizings.spacing
 
-    onSelectedItemIdChanged: presenter.setItem(selectedItemId)
+    onSelectedItemIdChanged: {
+        presenter.setItem(selectedItemId);
+        if (map) map.selectedItemId = selectedItemId;
+    }
+
+    Component.onDestruction: if (map) map.selectedItemId = 0
+
+    Connections {
+        target: map
+        ignoreUnknownSignals: true
+
+        onSelectItem: selectedItemId = itemId
+    }
 
     MissionEditPresenter {
         id: presenter
