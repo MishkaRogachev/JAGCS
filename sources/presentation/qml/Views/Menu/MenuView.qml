@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "../../Controls" as Controls
 
-Controls.Pane {
+ColumnLayout {
     id: menu
 
     function home() {
@@ -28,70 +28,65 @@ Controls.Pane {
         }
     }
 
-    padding: 0
+    spacing: sizings.spacing
     Component.onCompleted: home()
 
-    ColumnLayout {
-        anchors.fill: parent
-        spacing: sizings.spacing
+    RowLayout {
+        Controls.Button {
+            tipText: qsTr("Home")
+            iconSource: "qrc:/icons/home.svg"
+            flat: true
+            enabled: loader.source != "TopMenu.qml"
+            onClicked: home()
+        }
 
-        RowLayout {
+        Repeater {
+            model: ListModel { id: pathModel }
+
             Controls.Button {
-                tipText: qsTr("Home")
-                iconSource: "qrc:/icons/home.svg"
+                text: model.text
                 flat: true
-                enabled: loader.source != "TopMenu.qml"
-                onClicked: home()
-            }
-
-            Repeater {
-                model: ListModel { id: pathModel }
-
-                Controls.Button {
-                    text: model.text
-                    flat: true
-                    visible: index + 1 < pathModel.count
-                    onClicked: backOut(index)
-                }
-            }
-
-            Controls.Label {
-                id: currentLabel
-                font.bold: true
+                visible: index + 1 < pathModel.count
+                onClicked: backOut(index)
             }
         }
 
-        Flickable {
-            id: flickable
-            contentHeight: loader.height
-            flickableDirection: Flickable.AutoFlickIfNeeded
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.margins: sizings.margins
+        Controls.Label {
+            id: currentLabel
+            font.bold: true
+        }
+    }
 
-            Controls.ScrollBar.vertical: Controls.ScrollBar {}
+    Flickable {
+        id: flickable
+        contentHeight: loader.height
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        clip: true
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.margins: sizings.margins
 
-            // TODO: heal loader to use qml components instead raw sources
-            Loader {
-                id: loader
-                width: parent.width
-                onItemChanged: {
-                    if (!item) return;
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-                    menu.width = Qt.binding(function() {
-                        return item.implicitWidth + sizings.margins * 2
-                    });
-                    item.height = Qt.binding(function() {
-                        return Math.max(item.implicitHeight, flickable.height);
-                    });
-                }
+        // TODO: heal loader to use qml components instead raw sources
+        Loader {
+            id: loader
+            width: parent.width
+            onItemChanged: {
+                if (!item) return;
 
-                Connections {
-                    target: loader.item
-                    ignoreUnknownSignals: true
-                    onReqestComponent: menu.deepIn(source, text, properties)
-                }
+                menu.width = Qt.binding(function() {
+                    return item.implicitWidth + sizings.margins * 2
+                });
+                item.height = Qt.binding(function() {
+                    return Math.max(item.implicitHeight, flickable.height);
+                });
+            }
+
+            Connections {
+                target: loader.item
+                ignoreUnknownSignals: true
+                onReqestComponent: menu.deepIn(source, text, properties)
             }
         }
     }

@@ -38,7 +38,7 @@ Rectangle {
         id: substrate
         anchors.left: parent.left
         anchors.top: topbar.bottom
-        anchors.right: menuSwipeable.left
+        width: menuDrawer.visible ? menuDrawer.x : parent.width
         anchors.bottom: parent.bottom
         sourceComponent: cornerMap ? videoComponent : mapComponent
         onItemChanged: if (item) cornerMap ? video = item : map = item;
@@ -46,7 +46,7 @@ Rectangle {
 
     MapControl { // TODO: to ToolsPanel
         id: tools
-        anchors.right: menuSwipeable.left
+        anchors.right: substrate.right
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
 
@@ -76,29 +76,17 @@ Rectangle {
         z: 1
     }
 
-    Controls.Swipeable {
-        id: menuSwipeable
-        swipeToRight: true
-        dragStartX: parent.width
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+    Controls.Drawer {
+        id: menuDrawer
         width: menu.width
+        height: parent.height
+        edge: Qt.RightEdge
 
         MenuView {
             id: menu
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-        }
-
-        Behavior on x {
-            enabled: !widthAnimation.running
-            PropertyAnimation { id: xAnimation; duration: 100; }
-        }
-
-        Behavior on width {
-            enabled: !xAnimation.running
-            PropertyAnimation { id: widthAnimation; duration: 100 }
         }
     }
 
@@ -108,8 +96,8 @@ Rectangle {
         iconSource: "qrc:/icons/burger.svg"
         anchors.top: parent.top
         anchors.right: parent.right
-        highlighted: menuSwipeable.isOpened
-        onClicked: menuSwipeable.isOpened ? menuSwipeable.close() : menuSwipeable.open()
+        highlighted: menuDrawer.position == 1.0
+        onClicked: menuDrawer.isOpened ? menuDrawer.close() : menuDrawer.open()
     }
 
     MapFactory { id: mapFactory }
