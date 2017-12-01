@@ -36,8 +36,10 @@ Rectangle {
 
     Loader {
         id: substrate
-        anchors.fill: parent
-        anchors.topMargin: topbar.height
+        anchors.left: parent.left
+        anchors.top: topbar.bottom
+        anchors.right: menuSwipeable.left
+        anchors.bottom: parent.bottom
         sourceComponent: cornerMap ? videoComponent : mapComponent
         onItemChanged: if (item) cornerMap ? video = item : map = item;
     }
