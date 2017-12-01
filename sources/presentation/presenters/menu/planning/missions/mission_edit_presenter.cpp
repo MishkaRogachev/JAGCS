@@ -99,5 +99,6 @@ void MissionEditPresenter::changeSequence(int sequence)
     if (other.isNull()) return;
 
     d->service->swapItems(d->item, other);
+    this->selectItem(sequence);
 }
 

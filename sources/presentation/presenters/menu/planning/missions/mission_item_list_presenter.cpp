@@ -26,6 +26,10 @@ MissionItemListPresenter::MissionItemListPresenter(QObject* parent):
             [this](dao::MissionItemPtr item) {
         if (item->missionId() == m_missionId) this->updateMissionItems();
     });
+    connect(m_service, &domain::MissionService::missionItemChanged, this,
+            [this](dao::MissionItemPtr item) {
+        if (item->missionId() == m_missionId) this->updateMissionItems();
+    });
 }
 
 void MissionItemListPresenter::setMission(int id)
