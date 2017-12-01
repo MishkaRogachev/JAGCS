@@ -84,10 +84,10 @@ void MissionEditPresenter::addItem(dao::MissionItem::Command command)
 {
     if (d->mission.isNull()) return;
 
-    d->item = d->service->addNewMissionItem(d->mission->id(), command, d->item->sequence() + 1);
+    d->item = d->service->addNewMissionItem(d->mission->id(), command,
+                                            d->item ? d->item->sequence() + 1 : 0);
 
     this->updateItem();
-
     if (d->item && d->item->isPositionatedItem()) this->setViewProperty(PROPERTY(picking), true);
 }
 

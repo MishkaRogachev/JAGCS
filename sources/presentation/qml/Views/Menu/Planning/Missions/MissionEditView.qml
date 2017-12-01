@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: missionEdit
 
-    property int sequence: 0
+    property int sequence: -1
     property int count: 0
 
     property alias missionId: itemList.missionId
