@@ -74,7 +74,10 @@ void MissionEditPresenter::remove()
 {
     if (d->item.isNull()) return;
 
+    int sequence = d->item->sequence();
     d->service->remove(d->item);
+
+    this->selectItem(sequence - 1);
 }
 
 void MissionEditPresenter::addItem(dao::MissionItem::Command command)
