@@ -116,7 +116,9 @@ MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
     return d->currentItems.value(vehicleId);
 }
 
-dao::MissionItemPtr MissionService::addNewMissionItem(int missionId, MissionItem::Command command, int sequence)
+dao::MissionItemPtr MissionService::addNewMissionItem(int missionId,
+                                                      MissionItem::Command command,
+                                                      int sequence)
 {
     QMutexLocker locker(&d->mutex);
 
@@ -161,13 +163,11 @@ dao::MissionItemPtr MissionService::addNewMissionItem(int missionId, MissionItem
         break;
     }
 
-    int i = sequence;
-    for (; i < mission->count(); ++i)
+    for (const dao::MissionItemPtr& other: this->missionItems(missionId))
     {
-        dao::MissionItemPtr other = this->missionItem(missionId, i);
-        if (!other) continue;
+        if (other->sequence() < sequence) continue;
 
-        other->setSequence(i + 1);
+        other->setSequence(other->sequence() + 1);
         other->setStatus(MissionItem::NotActual);
         this->save(other);
     }
