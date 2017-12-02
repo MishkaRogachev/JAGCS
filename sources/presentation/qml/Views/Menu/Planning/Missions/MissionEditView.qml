@@ -28,7 +28,10 @@ ColumnLayout {
         target: map
         ignoreUnknownSignals: true
 
-        onSelectItem: selectedItemId = itemId
+        onSelectItem: {
+            if (missionEdit.missionId !== missionId) return;
+            selectedItemId = itemId;
+        }
     }
 
     MissionEditPresenter {

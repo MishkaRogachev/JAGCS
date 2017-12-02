@@ -29,7 +29,7 @@ Map {
     property int activeMapTypeIndex: 0
 
     signal picked(var coordinate)
-    signal selectItem(int itemId)
+    signal selectItem(int missionId, int itemId)
 
     activeMapType: supportedMapTypes[activeMapTypeIndex]
     implicitHeight: width

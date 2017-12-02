@@ -21,7 +21,7 @@ MapItemView {
             command: itemPtr.command
             sequence: itemPtr.sequence
             selectionAvalible: !picking
-            onSelectionRequest: map.selectItem(itemPtr.id)
+            onSelectionRequest: map.selectItem(itemPtr.missionId, itemPtr.id)
         }
     }
 }

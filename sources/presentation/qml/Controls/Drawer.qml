@@ -5,7 +5,7 @@ T.Drawer {
     id: control
 
     dragMargin: sizings.margins
-    closePolicy: Popup.NoAutoClose
+    closePolicy: T.Popup.NoAutoClose
     modal: false
 
     background: Rectangle {
