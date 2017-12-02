@@ -4,8 +4,8 @@ import QtQuick.Controls 2.0 as T
 T.Drawer {
     id: control
 
-    dragMargin: sizings.controlBaseSize * 0.5
-    closePolicy: Controls.Popup.NoAutoClose
+    dragMargin: sizings.margins
+    closePolicy: Popup.NoAutoClose
     modal: false
 
     background: Rectangle {

@@ -32,6 +32,8 @@ ColumnLayout {
     Component.onCompleted: home()
 
     RowLayout {
+        Layout.fillWidth: true
+
         Controls.Button {
             tipText: qsTr("Home")
             iconSource: "qrc:/icons/home.svg"
@@ -54,6 +56,18 @@ ColumnLayout {
         Controls.Label {
             id: currentLabel
             font.bold: true
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            tipText: qsTr("Close menu")
+            iconSource: "qrc:/icons/right.svg"
+            flat: true
+            onClicked: menuDrawer.close()
+            Layout.alignment: Qt.AlignRight
         }
     }
 
