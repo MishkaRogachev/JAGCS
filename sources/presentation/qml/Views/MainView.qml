@@ -87,6 +87,7 @@ Rectangle {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
+            visible: menuDrawer.position > 0
         }
     }
 
