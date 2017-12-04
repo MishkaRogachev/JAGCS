@@ -92,6 +92,8 @@ Rectangle {
             anchors.left: parent.left
             visible: menuDrawer.position > 0
         }
+
+        Behavior on width { PropertyAnimation { duration: 200 } }
     }
 
     MapFactory { id: mapFactory }

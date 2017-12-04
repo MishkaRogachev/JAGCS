@@ -36,9 +36,10 @@ Rectangle {
     }
 
     RowLayout {
-        anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        width: menu.width
+        anchors.right: parent.right
+        //y: menuDrawer.y
+        width: menuDrawer.width
         clip: true
         visible: menu.visible
 
@@ -87,7 +88,5 @@ Rectangle {
         flat: true
         visible: !menu.visible
         onClicked: menuDrawer.open()
-//        highlighted: menuDrawer.position == 1.0
-//        onClicked: menuDrawer.isOpened ? menuDrawer.close() : menuDrawer.open()
     }
 }
