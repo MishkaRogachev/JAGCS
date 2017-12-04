@@ -7,20 +7,18 @@ ColumnLayout {
     id: menu
 
     property string homeSource: "TopMenu.qml"
-    property bool atHome: true//loader.source == homeSource
+    readonly property bool atHome: pathModel.count == 0
 
     function home() {
         loader.setSource(homeSource);
         topbar.currentContext = "";
         pathModel.clear();
-        atHome = true;
     }
 
     function deepIn(source, text, properties) {
         loader.setSource(source, properties);
         pathModel.append({ "source": source, "text": text });
         topbar.currentContext = text;
-        atHome = false;
         return loader.item;
     }
 
@@ -31,8 +29,6 @@ ColumnLayout {
         if (index + 1 < pathModel.count) {
             pathModel.remove(index + 1, pathModel.count - index - 1);
         }
-
-        if (pathModel.count == 0) atHome = true;
     }
 
     spacing: sizings.spacing
