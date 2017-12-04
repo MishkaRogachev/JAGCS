@@ -27,6 +27,8 @@ Rectangle {
     color: palette.backgroundColor
     Component.onCompleted: reloadMap()
 
+    ListModel { id: pathModel }
+
     TopbarView {
         id: topbar
         anchors.left: parent.left
@@ -78,8 +80,9 @@ Rectangle {
 
     Controls.Drawer {
         id: menuDrawer
+        y: topbar.height
         width: menu.width
-        height: parent.height
+        height: parent.height - y
         edge: Qt.RightEdge
 
         MenuView {
@@ -89,16 +92,6 @@ Rectangle {
             anchors.left: parent.left
             visible: menuDrawer.position > 0
         }
-    }
-
-    Controls.Button {
-        id: menuButton
-        tipText: qsTr("Menu")
-        iconSource: "qrc:/icons/burger.svg"
-        anchors.top: parent.top
-        anchors.right: parent.right
-        highlighted: menuDrawer.position == 1.0
-        onClicked: menuDrawer.isOpened ? menuDrawer.close() : menuDrawer.open()
     }
 
     MapFactory { id: mapFactory }

@@ -6,70 +6,37 @@ import "../../Controls" as Controls
 ColumnLayout {
     id: menu
 
+    property string homeSource: "TopMenu.qml"
+    property bool atHome: true//loader.source == homeSource
+
     function home() {
-        loader.setSource("TopMenu.qml")
-        currentLabel.text = "";
+        loader.setSource(homeSource);
+        topbar.currentContext = "";
         pathModel.clear();
+        atHome = true;
     }
 
     function deepIn(source, text, properties) {
         loader.setSource(source, properties);
         pathModel.append({ "source": source, "text": text });
-        currentLabel.text = text;
+        topbar.currentContext = text;
+        atHome = false;
         return loader.item;
     }
 
     function backOut(index) {
         loader.source = pathModel.get(index).source;
-        currentLabel.text = pathModel.get(index).text;
+        topbar.currentContext = pathModel.get(index).text;
 
         if (index + 1 < pathModel.count) {
             pathModel.remove(index + 1, pathModel.count - index - 1);
         }
+
+        if (pathModel.count == 0) atHome = true;
     }
 
     spacing: sizings.spacing
     Component.onCompleted: home()
-
-    RowLayout {
-        Layout.fillWidth: true
-
-        Controls.Button {
-            tipText: qsTr("Home")
-            iconSource: "qrc:/icons/home.svg"
-            flat: true
-            enabled: loader.source != "TopMenu.qml"
-            onClicked: home()
-        }
-
-        Repeater {
-            model: ListModel { id: pathModel }
-
-            Controls.Button {
-                text: model.text
-                flat: true
-                visible: index + 1 < pathModel.count
-                onClicked: backOut(index)
-            }
-        }
-
-        Controls.Label {
-            id: currentLabel
-            font.bold: true
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Close menu")
-            iconSource: "qrc:/icons/right.svg"
-            flat: true
-            onClicked: menuDrawer.close()
-            Layout.alignment: Qt.AlignRight
-        }
-    }
 
     Flickable {
         id: flickable
