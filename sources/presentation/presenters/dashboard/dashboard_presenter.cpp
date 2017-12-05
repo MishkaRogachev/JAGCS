@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVariant>
+#include <QDebug>
 
 // Internal
 #include "vehicle.h"
@@ -23,7 +24,12 @@ public:
 DashboardPresenter::DashboardPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
-{}
+{
+    connect(d->service, &domain::VehicleService::vehicleChanged,
+            [this](const dao::VehiclePtr& vehicle) {
+        if (vehicle == d->vehicle) this->updateInstruments();
+    });
+}
 
 DashboardPresenter::~DashboardPresenter()
 {}

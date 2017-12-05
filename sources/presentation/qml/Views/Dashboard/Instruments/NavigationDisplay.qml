@@ -24,6 +24,8 @@ BaseDisplay {
     property real windDirection: 0
     property real windSpeed: 0
 
+    property url vehicleMark: "qrc:/indicators/fixed_wing_mark.svg" // TODO: vehicle mark
+
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
     minimumHeight: sizings.controlBaseSize * 3

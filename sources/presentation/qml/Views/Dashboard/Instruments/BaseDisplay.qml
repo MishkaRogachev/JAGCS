@@ -1,6 +1,8 @@
 import QtQuick 2.6
 
-Item {
+import "qrc:/Controls" as Controls
+
+Controls.Pane {
     id: root
 
     property int minimumHeight: implicitHeight

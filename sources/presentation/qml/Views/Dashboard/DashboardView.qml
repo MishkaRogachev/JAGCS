@@ -9,11 +9,9 @@ Item {
 
     property var instruments: []
 
-    function setActiveVehicle(vehicleId) {
-        presenter.setVehicle(vehicleId);
-    }
+    function setActiveVehicle(vehicleId) { presenter.setVehicle(vehicleId); }
 
-    implicitWidth: sizings.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 9
 
     DashboardPresenter {
         id: presenter
@@ -21,51 +19,33 @@ Item {
     }
 
     ListView {
-        anchors.fill: parent
-        anchors.bottomMargin: addButton.height
+        y: sizings.margins
+        width: parent.width
+        height: Math.min(parent.height, contentHeight)
         spacing: sizings.spacing
-        model: linkIds
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
+        model: instruments
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         delegate: Loader {
             width: parent.width
+            height: width / 2
+            source: createIndicator(modelData)
+        }
+    }
+
+    function createIndicator(instrument) {
+        switch (instrument) {
+        //case "satellite": return Qt.createComponent("Instruments/SatelliteDisplay.qml");
+        case DashboardPresenter.FlightDisplay: return "Instruments/FlightDisplay.qml";
+        case DashboardPresenter.NavigationDisplay: return "Instruments/NavigationDisplay.qml";
+        //case "battery": return Qt.createComponent("Instruments/BatteryDisplay.qml");
+        //case "status": return Qt.createComponent("Instruments/StatusDisplay.qml");
+        //case "mission": return Qt.createComponent("Instruments/MissionDisplay.qml");
+        default: return null
         }
     }
 }
-
-/*Repeater {
-    id: root
-
-    property var instruments
-
-    property url vehicleMark
-    property bool online: false
-
-    signal instrumentAdded(string name, QtObject view)
-
-    model: instruments
-
-    Loader {
-        sourceComponent: createIndicator(modelData)
-        onItemChanged: if (item) instrumentAdded(modelData, item)
-        Layout.alignment: Qt.AlignTop
-        Layout.minimumHeight: item ? item.minimumHeight : 0
-        Layout.maximumHeight: item ? item.maximumHeight : 0
-        Layout.preferredHeight: (Layout.minimumHeight + Layout.maximumHeight) / 2
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-
-        function createIndicator(modelData) {
-            switch (modelData) {
-            case "satellite": return Qt.createComponent("Displays/SatelliteDisplay.qml");
-            case "fd": return Qt.createComponent("Displays/FlightDisplay.qml");
-            case "navigator": return Qt.createComponent("Displays/NavigationDisplay.qml");
-            case "battery": return Qt.createComponent("Displays/BatteryDisplay.qml");
-            case "status": return Qt.createComponent("Displays/StatusDisplay.qml");
-            case "mission": return Qt.createComponent("Displays/MissionDisplay.qml");
-            default: return null
-            }
-        }
-    }
-}*/
