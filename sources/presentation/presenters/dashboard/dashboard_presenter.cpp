@@ -9,7 +9,7 @@
 #include "service_registry.h"
 #include "vehicle_service.h"
 
-#include "telemetry.h"
+#include "vehicle_dashboard_factory.h"
 
 using namespace presentation;
 
@@ -37,5 +37,14 @@ void DashboardPresenter::setVehicle(int id)
 
 void DashboardPresenter::updateInstruments()
 {
-    // TODO: instruments
+    if (d->vehicle)
+    {
+        VehicleDashboardFactory f(d->vehicle);
+
+        this->setViewProperty(PROPERTY(instruments), f.create());
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(instruments), QVariantList());
+    }
 }

@@ -7,13 +7,30 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
+    property var instruments: []
+
     function setActiveVehicle(vehicleId) {
         presenter.setVehicle(vehicleId);
     }
 
+    implicitWidth: sizings.controlBaseSize * 11
+
     DashboardPresenter {
         id: presenter
         view: dashboard
+    }
+
+    ListView {
+        anchors.fill: parent
+        anchors.bottomMargin: addButton.height
+        spacing: sizings.spacing
+        model: linkIds
+
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
+
+        delegate: Loader {
+            width: parent.width
+        }
     }
 }
 

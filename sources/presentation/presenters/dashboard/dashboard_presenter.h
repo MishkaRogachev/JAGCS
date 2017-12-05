@@ -11,6 +11,12 @@ namespace presentation
         Q_OBJECT
 
     public:
+        enum Instrument // TODO: instruments to dao type - differet instruments for different vehicles
+        {
+            FlightDisplay,
+            NavigationDisplay
+        };
+
         DashboardPresenter(QObject* parent = nullptr);
         ~DashboardPresenter() override;
 
@@ -21,6 +27,8 @@ namespace presentation
     private:
         class Impl;
         QScopedPointer<Impl> const d;
+
+        Q_ENUM(Instrument)
     };
 }
 

@@ -21,7 +21,6 @@
 #include "active_video_presenter.h"
 
 #include "dashboard_presenter.h"
-#include "aerial_dashboard_factory.h"
 #include "command_controller.h"
 
 using namespace presentation;
@@ -102,8 +101,8 @@ void ControlPresenter::onSelectVehicle(int index)
         //FIXME: d->map->selectVehicle(vehicle);
         d->commander->setControlVehicle(vehicle->id());
 
-        AerialDashboardFactory factory(vehicle);
-        d->dashboard = factory.create();
+//        AerialDashboardFactory factory(vehicle);
+//        d->dashboard = factory.create();
 
         if (d->dashboard)
         {
