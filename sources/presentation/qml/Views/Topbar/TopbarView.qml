@@ -31,7 +31,7 @@ Rectangle {
         Controls.ComboBox {
             model: vehicles
             textRole: "name"
-            //onActivated: setActiveVehicle(vehicles[currentIndex].id)
+            onActivated: dashboard.setActiveVehicle(vehicles[currentIndex].id)
         }
     }
 

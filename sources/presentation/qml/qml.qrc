@@ -60,7 +60,6 @@
         <file>Views/Logbook/LogList.qml</file>
         <file>Views/Logbook/LogEntry.qml</file>
         <file>Views/Control/ControlView.qml</file>
-        <file>Views/Control/DashboardView.qml</file>
         <file>Views/Control/Command/CommandButton.qml</file>
         <file>Views/Control/Command/CommandSwitch.qml</file>
         <file>Views/Control/Command/CommandLadder.qml</file>
@@ -93,6 +92,7 @@
         <file>Views/Map/LocationMapViews/Overlays/TrackMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
+        <file>Views/Dashboard/DashboardView.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>
         <file>Views/Menu/Vehicles/VehicleListView.qml</file>

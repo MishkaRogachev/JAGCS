@@ -1,7 +1,23 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
-Repeater {
+import "qrc:/Controls" as Controls
+
+Item {
+    id: dashboard
+
+    function setActiveVehicle(vehicleId) {
+        presenter.setVehicle(vehicleId);
+    }
+
+    DashboardPresenter {
+        id: presenter
+        view: dashboard
+    }
+}
+
+/*Repeater {
     id: root
 
     property var instruments
@@ -35,4 +51,4 @@ Repeater {
             }
         }
     }
-}
+}*/

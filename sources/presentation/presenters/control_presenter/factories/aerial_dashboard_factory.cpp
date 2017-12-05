@@ -29,7 +29,7 @@ DashboardPresenter* AerialDashboardFactory::create()
     if (!node) return nullptr;
 
     DashboardPresenter* dashboard = GenericDashboardFactory::create();
-
+/*
     dashboard->addInstrument("fd", 200);
     dashboard->addInstrumentPresenter("fd", m_status);
     dashboard->addInstrumentPresenter("fd", new AhrsPresenter(
@@ -46,6 +46,6 @@ DashboardPresenter* AerialDashboardFactory::create()
                                           node->childNode(domain::Telemetry::PowerSystem), dashboard));
     dashboard->addInstrumentPresenter("fd", new HomeAltitudePresenter(
                                           node->childNode(domain::Telemetry::HomePosition), dashboard));
-
+*/
     return dashboard;
 }

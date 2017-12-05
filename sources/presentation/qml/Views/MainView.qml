@@ -3,8 +3,9 @@ import QtQuick 2.6
 import "../Controls" as Controls
 
 import "Topbar"
-import "Map"
 import "Video"
+import "Map"
+import "Dashboard"
 import "Menu"
 
 Rectangle {
@@ -44,6 +45,13 @@ Rectangle {
         anchors.bottom: parent.bottom
         sourceComponent: cornerMap ? videoComponent : mapComponent
         onItemChanged: if (item) cornerMap ? video = item : map = item;
+    }
+
+    DashboardView {
+        id: dashboard
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
     }
 
     MapControl { // TODO: to ToolsPanel
