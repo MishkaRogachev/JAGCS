@@ -37,8 +37,7 @@ Rectangle {
 
     RowLayout {
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        //y: menuDrawer.y
+        anchors.right: menuButton.right
         width: menuDrawer.width
         clip: true
         visible: menu.visible
@@ -70,23 +69,15 @@ Rectangle {
         Item {
             Layout.fillWidth: true
         }
-
-        Controls.Button {
-            tipText: qsTr("Close menu")
-            iconSource: "qrc:/icons/right.svg"
-            flat: true
-            onClicked: menuDrawer.close()
-            Layout.alignment: Qt.AlignRight
-        }
     }
 
     Controls.Button {
+        id: menuButton
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        tipText: qsTr("Menu")
-        iconSource: "qrc:/icons/burger.svg"
+        tipText: menu.visible ? qsTr("Menu") : qsTr("Close menu")
+        iconSource: menu.visible ? "qrc:/icons/right.svg" : "qrc:/icons/burger.svg"
         flat: true
-        visible: !menu.visible
-        onClicked: menuDrawer.open()
+        onClicked: menu.visible ? menuDrawer.close() : menuDrawer.open()
     }
 }
