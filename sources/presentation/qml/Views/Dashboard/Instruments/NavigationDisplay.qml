@@ -28,8 +28,7 @@ BaseDisplay {
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
-    minimumHeight: sizings.controlBaseSize * 3
-    maximumHeight: sizings.controlBaseSize * 9
+    implicitHeight: width * 0.75
 
     Indicators.DistanceLabel {
         anchors.top: parent.top

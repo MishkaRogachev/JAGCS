@@ -54,9 +54,7 @@ BaseDisplay {
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
-    implicitWidth: ai.width / 0.55
-    minimumHeight: sizings.controlBaseSize * 4
-    maximumHeight: sizings.controlBaseSize * 12
+    implicitHeight: width * 0.75
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter

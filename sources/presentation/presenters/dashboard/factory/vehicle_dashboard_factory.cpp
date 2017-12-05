@@ -30,6 +30,7 @@ QVariantList VehicleDashboardFactory::create()
     case dao::Vehicle::Airship:
     case dao::Vehicle::Kite:
     case dao::Vehicle::Ornithopter:
+        instruments.append(DashboardPresenter::SatelliteDispaly);
         instruments.append(DashboardPresenter::FlightDisplay);
         instruments.append(DashboardPresenter::NavigationDisplay);
         break;

@@ -19,12 +19,12 @@ BaseDisplay {
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
 
     implicitHeight: row.height
-    opacity: satelliteEnabled ? 1 : 0.33
 
     RowLayout {
         id: row
         anchors.centerIn: parent
         width: parent.width
+        opacity: satelliteEnabled ? 1 : 0.33
         spacing: sizings.spacing
 
         ColumnLayout {

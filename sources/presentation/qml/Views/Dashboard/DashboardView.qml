@@ -19,7 +19,7 @@ Item {
     }
 
     ListView {
-        y: sizings.margins
+        y: sizings.spacing
         width: parent.width
         height: Math.min(parent.height, contentHeight)
         spacing: sizings.spacing
@@ -32,14 +32,13 @@ Item {
 
         delegate: Loader {
             width: parent.width
-            height: width / 2
             source: createIndicator(modelData)
         }
     }
 
     function createIndicator(instrument) {
         switch (instrument) {
-        //case "satellite": return Qt.createComponent("Instruments/SatelliteDisplay.qml");
+        case DashboardPresenter.SatelliteDispaly: return "Instruments/SatelliteDisplay.qml";
         case DashboardPresenter.FlightDisplay: return "Instruments/FlightDisplay.qml";
         case DashboardPresenter.NavigationDisplay: return "Instruments/NavigationDisplay.qml";
         //case "battery": return Qt.createComponent("Instruments/BatteryDisplay.qml");

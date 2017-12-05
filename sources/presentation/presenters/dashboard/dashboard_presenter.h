@@ -13,6 +13,7 @@ namespace presentation
     public:
         enum Instrument // TODO: instruments to dao type - differet instruments for different vehicles
         {
+            SatelliteDispaly,
             FlightDisplay,
             NavigationDisplay
         };
