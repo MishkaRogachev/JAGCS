@@ -27,7 +27,7 @@ Rectangle {
     color: palette.backgroundColor
     Component.onCompleted: reloadMap()
 
-    ListModel { id: pathModel }
+    ListModel { id: contextModel }
 
     TopbarView {
         id: topbar

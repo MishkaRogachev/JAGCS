@@ -7,27 +7,27 @@ ColumnLayout {
     id: menu
 
     property string homeSource: "TopMenu.qml"
-    readonly property bool atHome: pathModel.count == 0
+    readonly property bool atHome: contextModel.count == 0
 
     function home() {
         loader.setSource(homeSource);
-        topbar.currentContext = "";
-        pathModel.clear();
+        topbar.contextText = "";
+        contextModel.clear();
     }
 
     function deepIn(source, text, properties) {
         loader.setSource(source, properties);
-        pathModel.append({ "source": source, "text": text });
-        topbar.currentContext = text;
+        contextModel.append({ "source": source, "text": text });
+        topbar.contextText = text;
         return loader.item;
     }
 
     function backOut(index) {
-        loader.source = pathModel.get(index).source;
-        topbar.currentContext = pathModel.get(index).text;
+        loader.source = contextModel.get(index).source;
+        topbar.contextText = contextModel.get(index).text;
 
-        if (index + 1 < pathModel.count) {
-            pathModel.remove(index + 1, pathModel.count - index - 1);
+        if (index + 1 < contextModel.count) {
+            contextModel.remove(index + 1, contextModel.count - index - 1);
         }
     }
 

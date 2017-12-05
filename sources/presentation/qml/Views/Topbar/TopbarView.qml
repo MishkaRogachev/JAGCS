@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 Rectangle {
     id: topbar
 
-    property string currentContext
+    property string contextText
     property var vehicles: []
 
     color: palette.raisedColor
@@ -51,18 +51,18 @@ Rectangle {
         }
 
         Repeater {
-            model: pathModel
+            model: contextModel
 
             Controls.Button {
                 text: model.text
                 flat: true
-                visible: index + 1 < pathModel.count
+                visible: index + 1 < contextModel.count
                 onClicked: menu.backOut(index)
             }
         }
 
         Controls.Label {
-            text: currentContext
+            text: contextText
             font.bold: true
         }
 
