@@ -229,10 +229,10 @@ namespace domain
         TelemetryId id() const;
 
         QVariant parameter(TelemetryId id) const;
-        QMap<TelemetryId, QVariant> parameters() const;
+        TelemetryMap parameters() const;
 
         QList<TelemetryId> changedParameterKeys() const;
-        QMap<TelemetryId, QVariant> takeChangedParameters();
+        TelemetryMap takeChangedParameters();
 
         Telemetry* parentNode() const;
         Telemetry* childNode(TelemetryId id);

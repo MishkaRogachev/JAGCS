@@ -5,7 +5,7 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
 
 BaseDisplay {
-    id: root
+    id: flightDisplay
 
     property bool ahrsEnabled: false
     property bool ahrsOperational: false
@@ -17,12 +17,12 @@ BaseDisplay {
     property alias armed: ai.armed
     property alias guided: ai.guided
 
-    property int throttle: 0
-
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
     property real groundspeed: 0
     property int satelliteAltitude: 0
+
+    property int throttle: 0
 
     property bool pitotEnabled: false
     property bool pitotOperational: false
@@ -56,6 +56,11 @@ BaseDisplay {
 
     implicitHeight: width * 0.75
 
+    FlightDisplayPresenter {
+        id: presenter
+        view: flightDisplay
+    }
+
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
@@ -68,7 +73,7 @@ BaseDisplay {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: ai.left
-        width: (root.width - ai.width) / 2
+        width: (flightDisplay.width - ai.width) / 2
         height: parent.height * 0.7
         value: speedUnits ? Helper.mpsToKph(indicatedAirspeed) : indicatedAirspeed
         error: speedUnits ? Helper.mpsToKph(airspeedError) : airspeedError
@@ -122,11 +127,11 @@ BaseDisplay {
     Indicators.ArtificialHorizon {
         id: ai
         anchors.centerIn: parent
-        height: root.height - sizings.padding
-        width: root.width * 0.55
+        height: flightDisplay.height - sizings.padding
+        width: flightDisplay.width * 0.55
         enabled: ahrsEnabled
         operational: ahrsOperational
-        rollInverted: root.rollInverted
+        rollInverted: flightDisplay.rollInverted
     }
 
     Indicators.BarIndicator {
@@ -144,7 +149,7 @@ BaseDisplay {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: ai.right
-        width: (root.width - ai.width) / 2
+        width: (flightDisplay.width - ai.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         error: altitudeError
