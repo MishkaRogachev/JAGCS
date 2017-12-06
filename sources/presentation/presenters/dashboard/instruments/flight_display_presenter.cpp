@@ -83,10 +83,10 @@ void FlightDisplayPresenter::updateRangefinder(const domain::Telemetry::Telemetr
 
 void FlightDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
 {
-    this->setViewsProperty(PROPERTY(desiredPitch), parameters.value(domain::Telemetry::DesiredPitch, 0));
-    this->setViewsProperty(PROPERTY(desiredRoll), parameters.value(domain::Telemetry::DesiredRoll, 0));
-    this->setViewsProperty(PROPERTY(airspeedError), parameters.value(domain::Telemetry::AirspeedError, false));
-    this->setViewsProperty(PROPERTY(altitudeError), parameters.value(domain::Telemetry::AltitudeError, false));
+    this->setViewProperty(PROPERTY(desiredPitch), parameters.value(domain::Telemetry::DesiredPitch, 0));
+    this->setViewProperty(PROPERTY(desiredRoll), parameters.value(domain::Telemetry::DesiredRoll, 0));
+    this->setViewProperty(PROPERTY(airspeedError), parameters.value(domain::Telemetry::AirspeedError, false));
+    this->setViewProperty(PROPERTY(altitudeError), parameters.value(domain::Telemetry::AltitudeError, false));
 }
 
 void FlightDisplayPresenter::updateHomeAltitude(const domain::Telemetry::TelemetryMap& parameters)

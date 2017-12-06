@@ -51,10 +51,10 @@ void NavigationDisplayPresenter::updateHome(const domain::Telemetry::TelemetryMa
 
 void NavigationDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
 {
-    this->setViewsProperty(PROPERTY(targetBearing), parameters.value(domain::Telemetry::TargetBearing, 0));
-    this->setViewsProperty(PROPERTY(desiredHeading), parameters.value(domain::Telemetry::DesiredHeading, 0));
-    this->setViewsProperty(PROPERTY(targetDistance), parameters.value(domain::Telemetry::TargetDistance, 0));
-    this->setViewsProperty(PROPERTY(trackError), parameters.value(domain::Telemetry::TrackError, 0));
+    this->setViewProperty(PROPERTY(targetBearing), parameters.value(domain::Telemetry::TargetBearing, 0));
+    this->setViewProperty(PROPERTY(desiredHeading), parameters.value(domain::Telemetry::DesiredHeading, 0));
+    this->setViewProperty(PROPERTY(targetDistance), parameters.value(domain::Telemetry::TargetDistance, 0));
+    this->setViewProperty(PROPERTY(trackError), parameters.value(domain::Telemetry::TrackError, 0));
 }
 
 void NavigationDisplayPresenter::updateWind(const domain::Telemetry::TelemetryMap& parameters)
