@@ -1,10 +1,11 @@
 import QtQuick 2.6
+import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Indicators" as Indicators
 
 BaseDisplay {
-    id: root
+    id: navigationDisplay
 
     property alias guided: hsi.guided
     property alias heading: hsi.heading
@@ -29,6 +30,12 @@ BaseDisplay {
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
     implicitHeight: width * 0.75
+
+    NavigationDisplayPresenter {
+        id: presenter
+        view: navigationDisplay
+        Component.onCompleted: setVehicle(vehicleId)
+    }
 
     Indicators.DistanceLabel {
         anchors.top: parent.top

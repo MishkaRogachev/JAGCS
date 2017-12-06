@@ -23,6 +23,7 @@ namespace presentation
         void updatePitot(const domain::Telemetry::TelemetryMap& parameters);
         void updateBarometric(const domain::Telemetry::TelemetryMap& parameters);
         void updateRangefinder(const domain::Telemetry::TelemetryMap& parameters);
+        void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
         void updateHomeAltitude(const domain::Telemetry::TelemetryMap& parameters);
     };
 }

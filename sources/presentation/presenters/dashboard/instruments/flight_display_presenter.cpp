@@ -23,6 +23,8 @@ void FlightDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&FlightDisplayPresenter::updateBarometric, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Rangefinder),
                     std::bind(&FlightDisplayPresenter::updateRangefinder, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Navigator),
+                    std::bind(&FlightDisplayPresenter::updateNavigator, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::HomePosition),
                     std::bind(&FlightDisplayPresenter::updateHomeAltitude, this, std::placeholders::_1));
 }
@@ -77,6 +79,14 @@ void FlightDisplayPresenter::updateRangefinder(const domain::Telemetry::Telemetr
     this->setViewProperty(PROPERTY(rangefinderEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(rangefinderOperational), parameters.value(domain::Telemetry::Operational, false));
     this->setViewProperty(PROPERTY(rangefinderHeight), parameters.value(domain::Telemetry::Height, 0));
+}
+
+void FlightDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewsProperty(PROPERTY(desiredPitch), parameters.value(domain::Telemetry::DesiredPitch, 0));
+    this->setViewsProperty(PROPERTY(desiredRoll), parameters.value(domain::Telemetry::DesiredRoll, 0));
+    this->setViewsProperty(PROPERTY(airspeedError), parameters.value(domain::Telemetry::AirspeedError, false));
+    this->setViewsProperty(PROPERTY(altitudeError), parameters.value(domain::Telemetry::AltitudeError, false));
 }
 
 void FlightDisplayPresenter::updateHomeAltitude(const domain::Telemetry::TelemetryMap& parameters)
