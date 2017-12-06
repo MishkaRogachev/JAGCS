@@ -59,6 +59,7 @@ BaseDisplay {
     FlightDisplayPresenter {
         id: presenter
         view: flightDisplay
+        Component.onCompleted: setVehicle(vehicleId)
     }
 
     Indicators.BarIndicator {

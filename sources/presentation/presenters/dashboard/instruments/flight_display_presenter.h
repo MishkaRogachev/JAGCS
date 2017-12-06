@@ -21,7 +21,7 @@ namespace presentation
         void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);
         void updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updatePitot(const domain::Telemetry::TelemetryMap& parameters);
-        void updateBarometrics(const domain::Telemetry::TelemetryMap& parameters);
+        void updateBarometric(const domain::Telemetry::TelemetryMap& parameters);
         void updateRangefinder(const domain::Telemetry::TelemetryMap& parameters);
         void updateHomeAltitude(const domain::Telemetry::TelemetryMap& parameters);
     };

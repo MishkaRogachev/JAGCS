@@ -1,6 +1,9 @@
 #ifndef ABSTRACT_INSTRUMENT_PRESENTER_H
 #define ABSTRACT_INSTRUMENT_PRESENTER_H
 
+// Std
+#include <functional>
+
 // Internal
 #include "base_presenter.h"
 #include "telemetry.h"
@@ -20,6 +23,9 @@ namespace presentation
     protected:
         virtual void connectNode(domain::Telemetry* node) = 0;
         virtual void disconnectNode();
+
+        void chainNode(domain::Telemetry* node,
+                       std::function<void(const domain::Telemetry::TelemetryMap&)> f);
 
     private:
         domain::Telemetry* m_node = nullptr;

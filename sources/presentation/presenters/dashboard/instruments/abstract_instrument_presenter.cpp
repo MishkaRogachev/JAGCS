@@ -30,3 +30,10 @@ void AbstractInstrumentPresenter::disconnectNode()
 {
     disconnect(m_node, 0, this, 0);
 }
+
+void AbstractInstrumentPresenter::chainNode(
+        domain::Telemetry* node, std::function<void(const domain::Telemetry::TelemetryMap&)> f)
+{
+    if (node) QObject::connect(node, &domain::Telemetry::parametersChanged, this, f);
+    f(node ? node->parameters() : domain::Telemetry::TelemetryMap());
+}

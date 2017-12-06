@@ -7,9 +7,13 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
+    property int vehicleId: 0
     property var instruments: []
 
-    function setActiveVehicle(vehicleId) { presenter.setVehicle(vehicleId); }
+    function setActiveVehicle(vehicleId) {
+        dashboard.vehicleId = vehicleId;
+        presenter.setVehicle(vehicleId);
+    }
 
     implicitWidth: sizings.controlBaseSize * 9
 

@@ -11,13 +11,20 @@ FlightDisplayPresenter::FlightDisplayPresenter(QObject* parent):
 
 void FlightDisplayPresenter::connectNode(domain::Telemetry* node)
 {
-    domain::Telemetry* ahrs = node->childNode(domain::Telemetry::Ahrs);
-    if (ahrs)
-    {
-        connect(ahrs, &domain::Telemetry::parametersChanged,
-                this, &FlightDisplayPresenter::updateAhrs);
-        this->updateAhrs(ahrs->parameters());
-    }
+    this->chainNode(node->childNode(domain::Telemetry::Ahrs),
+                    std::bind(&FlightDisplayPresenter::updateAhrs, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Satellite),
+                    std::bind(&FlightDisplayPresenter::updateSatellite, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::PowerSystem),
+                    std::bind(&FlightDisplayPresenter::updatePowerSystem, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Pitot),
+                    std::bind(&FlightDisplayPresenter::updatePitot, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Barometric),
+                    std::bind(&FlightDisplayPresenter::updateBarometric, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Rangefinder),
+                    std::bind(&FlightDisplayPresenter::updateRangefinder, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::HomePosition),
+                    std::bind(&FlightDisplayPresenter::updateHomeAltitude, this, std::placeholders::_1));
 }
 
 void FlightDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)
@@ -78,7 +85,7 @@ void FlightDisplayPresenter::updatePitot(const domain::Telemetry::TelemetryMap& 
         this->setViewProperty(PROPERTY(indicatedAirspeed), parameters[domain::Telemetry::IndicatedAirspeed]);
 }
 
-void FlightDisplayPresenter::updateBarometrics(const domain::Telemetry::TelemetryMap& parameters)
+void FlightDisplayPresenter::updateBarometric(const domain::Telemetry::TelemetryMap& parameters)
 {
     if (parameters.contains(domain::Telemetry::Enabled))
         this->setViewProperty(PROPERTY(barometricEnabled), parameters[domain::Telemetry::Enabled]);
