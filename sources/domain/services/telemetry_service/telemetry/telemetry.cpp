@@ -110,8 +110,8 @@ void Telemetry::notify()
     {
         child->notify();
     }
-
-    emit parametersChanged(this->takeChangedParameters());
+    // FIXME: changed parameters strategy
+    if (!this->changedParameterKeys().empty()) emit parametersChanged(this->parameters());
 }
 
 void Telemetry::addChildNode(Telemetry* childNode)

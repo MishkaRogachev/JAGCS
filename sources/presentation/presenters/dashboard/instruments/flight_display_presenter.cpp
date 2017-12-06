@@ -29,86 +29,57 @@ void FlightDisplayPresenter::connectNode(domain::Telemetry* node)
 
 void FlightDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Enabled))
-        this->setViewProperty(PROPERTY(ahrsEnabled), parameters[domain::Telemetry::Enabled]);
-    if (parameters.contains(domain::Telemetry::Operational))
-        this->setViewProperty(PROPERTY(ahrsOperational), parameters[domain::Telemetry::Operational]);
-    if (parameters.contains(domain::Telemetry::Pitch))
-        this->setViewProperty(PROPERTY(pitch), parameters[domain::Telemetry::Pitch]);
-    if (parameters.contains(domain::Telemetry::Roll))
-        this->setViewProperty(PROPERTY(roll), parameters[domain::Telemetry::Roll]);
-    if (parameters.contains(domain::Telemetry::Yaw))
-        this->setViewProperty(PROPERTY(yaw), parameters[domain::Telemetry::Yaw]);
-    if (parameters.contains(domain::Telemetry::YawSpeed))
-        this->setViewProperty(PROPERTY(yawspeed), parameters[domain::Telemetry::YawSpeed]);
+    this->setViewProperty(PROPERTY(ahrsEnabled), parameters.value(domain::Telemetry::Enabled, false));
+    this->setViewProperty(PROPERTY(ahrsOperational), parameters.value(domain::Telemetry::Operational, false));
+    this->setViewProperty(PROPERTY(pitch), parameters.value(domain::Telemetry::Pitch, 0));
+    this->setViewProperty(PROPERTY(roll), parameters.value(domain::Telemetry::Roll, 0));
+    this->setViewProperty(PROPERTY(yaw), parameters.value(domain::Telemetry::Yaw, 0));
+    this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
 }
 
 void FlightDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Enabled))
-        this->setViewProperty(PROPERTY(satelliteEnabled), parameters[domain::Telemetry::Enabled]);
-    if (parameters.contains(domain::Telemetry::Operational))
-        this->setViewProperty(PROPERTY(satelliteOperational), parameters[domain::Telemetry::Operational]);
-    if (parameters.contains(domain::Telemetry::Fix))
-        this->setViewProperty(PROPERTY(fix), parameters[domain::Telemetry::Fix]);
-    if (parameters.contains(domain::Telemetry::Coordinate))
-        this->setViewProperty(PROPERTY(coordinate), parameters[domain::Telemetry::Coordinate]);
-    if (parameters.contains(domain::Telemetry::Groundspeed))
-        this->setViewProperty(PROPERTY(groundspeed), parameters[domain::Telemetry::Groundspeed]);
-    if (parameters.contains(domain::Telemetry::Course))
-        this->setViewProperty(PROPERTY(course), parameters[domain::Telemetry::Course]);
-    if (parameters.contains(domain::Telemetry::Altitude))
-        this->setViewProperty(PROPERTY(satelliteAltitude), parameters[domain::Telemetry::Altitude]);
-    if (parameters.contains(domain::Telemetry::Eph))
-        this->setViewProperty(PROPERTY(eph), parameters[domain::Telemetry::Eph]);
-    if (parameters.contains(domain::Telemetry::Epv))
-        this->setViewProperty(PROPERTY(epv), parameters[domain::Telemetry::Epv]);
-    if (parameters.contains(domain::Telemetry::SatellitesVisible))
-        this->setViewProperty(PROPERTY(satellitesVisible), parameters[domain::Telemetry::SatellitesVisible]);
+    this->setViewProperty(PROPERTY(satelliteEnabled), parameters.value(domain::Telemetry::Enabled, false));
+    this->setViewProperty(PROPERTY(satelliteOperational), parameters.value(domain::Telemetry::Operational, false));
+    this->setViewProperty(PROPERTY(fix), parameters.value(domain::Telemetry::Fix, 0));
+    this->setViewProperty(PROPERTY(coordinate), parameters.value(domain::Telemetry::Coordinate, 0));
+    this->setViewProperty(PROPERTY(groundspeed), parameters.value(domain::Telemetry::Groundspeed, 0));
+    this->setViewProperty(PROPERTY(course), parameters.value(domain::Telemetry::Course, 0));
+    this->setViewProperty(PROPERTY(satelliteAltitude), parameters.value(domain::Telemetry::Altitude, 0));
+    this->setViewProperty(PROPERTY(eph), parameters.value(domain::Telemetry::Eph, 0));
+    this->setViewProperty(PROPERTY(epv), parameters.value(domain::Telemetry::Epv, 0));
+    this->setViewProperty(PROPERTY(satellitesVisible), parameters.value(domain::Telemetry::SatellitesVisible, 0));
 }
 
 void FlightDisplayPresenter::updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Throttle))
-        this->setViewProperty(PROPERTY(throttle), parameters[domain::Telemetry::Throttle]);
+    this->setViewProperty(PROPERTY(throttle), parameters.value(domain::Telemetry::Throttle, 0));
 }
 
 void FlightDisplayPresenter::updatePitot(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Enabled))
-        this->setViewProperty(PROPERTY(pitotEnabled), parameters[domain::Telemetry::Enabled]);
-    if (parameters.contains(domain::Telemetry::Operational))
-        this->setViewProperty(PROPERTY(pitotOperational), parameters[domain::Telemetry::Operational]);
-    if (parameters.contains(domain::Telemetry::TrueAirspeed))
-        this->setViewProperty(PROPERTY(trueAirspeed), parameters[domain::Telemetry::TrueAirspeed]);
-    if (parameters.contains(domain::Telemetry::IndicatedAirspeed))
-        this->setViewProperty(PROPERTY(indicatedAirspeed), parameters[domain::Telemetry::IndicatedAirspeed]);
+    this->setViewProperty(PROPERTY(pitotEnabled), parameters.value(domain::Telemetry::Enabled, false));
+    this->setViewProperty(PROPERTY(pitotOperational), parameters.value(domain::Telemetry::Operational, false));
+    this->setViewProperty(PROPERTY(trueAirspeed), parameters.value(domain::Telemetry::TrueAirspeed, 0));
+    this->setViewProperty(PROPERTY(indicatedAirspeed), parameters.value(domain::Telemetry::IndicatedAirspeed, 0));
 }
 
 void FlightDisplayPresenter::updateBarometric(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Enabled))
-        this->setViewProperty(PROPERTY(barometricEnabled), parameters[domain::Telemetry::Enabled]);
-    if (parameters.contains(domain::Telemetry::Operational))
-        this->setViewProperty(PROPERTY(barometricOperational), parameters[domain::Telemetry::Operational]);
-    if (parameters.contains(domain::Telemetry::Altitude))
-        this->setViewProperty(PROPERTY(barometricAltitude), parameters[domain::Telemetry::Altitude]);
-    if (parameters.contains(domain::Telemetry::Climb))
-        this->setViewProperty(PROPERTY(barometricClimb), parameters[domain::Telemetry::Climb]);
+    this->setViewProperty(PROPERTY(barometricEnabled), parameters.value(domain::Telemetry::Enabled, false));
+    this->setViewProperty(PROPERTY(barometricOperational), parameters.value(domain::Telemetry::Operational, false));
+    this->setViewProperty(PROPERTY(barometricAltitude), parameters.value(domain::Telemetry::Altitude, 0));
+    this->setViewProperty(PROPERTY(barometricClimb), parameters.value(domain::Telemetry::Climb, 0));
 }
 
 void FlightDisplayPresenter::updateRangefinder(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Enabled))
-        this->setViewProperty(PROPERTY(rangefinderEnabled), parameters[domain::Telemetry::Enabled]);
-    if (parameters.contains(domain::Telemetry::Operational))
-        this->setViewProperty(PROPERTY(rangefinderOperational), parameters[domain::Telemetry::Operational]);
-    if (parameters.contains(domain::Telemetry::Height))
-        this->setViewProperty(PROPERTY(rangefinderHeight), parameters[domain::Telemetry::Height]);
+    this->setViewProperty(PROPERTY(rangefinderEnabled), parameters.value(domain::Telemetry::Enabled, false));
+    this->setViewProperty(PROPERTY(rangefinderOperational), parameters.value(domain::Telemetry::Operational, false));
+    this->setViewProperty(PROPERTY(rangefinderHeight), parameters.value(domain::Telemetry::Height, 0));
 }
 
 void FlightDisplayPresenter::updateHomeAltitude(const domain::Telemetry::TelemetryMap& parameters)
 {
-    if (parameters.contains(domain::Telemetry::Altitude))
-        this->setViewProperty(PROPERTY(homeAltitude), parameters[domain::Telemetry::Altitude]);
+    this->setViewProperty(PROPERTY(homeAltitude), parameters.value(domain::Telemetry::Altitude, 0));
 }
