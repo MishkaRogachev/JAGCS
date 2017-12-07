@@ -245,7 +245,8 @@ namespace domain
         void notify();
 
     signals:
-        void parametersChanged(Telemetry::TelemetryMap parameters);
+        void parametersChanged(Telemetry::TelemetryMap parameters); // Only changed parameters
+        void parametersUpdated(Telemetry::TelemetryMap parameters); // All node's parameters
 
     protected:
         void addChildNode(Telemetry* childNode);
