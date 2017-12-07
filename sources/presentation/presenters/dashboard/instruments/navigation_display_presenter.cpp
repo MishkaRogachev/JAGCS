@@ -11,6 +11,8 @@ NavigationDisplayPresenter::NavigationDisplayPresenter(QObject* parent):
 
 void NavigationDisplayPresenter::connectNode(domain::Telemetry* node)
 {
+    this->chainNode(node->childNode(domain::Telemetry::Status),
+                    std::bind(&NavigationDisplayPresenter::updateStatus, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Compass),
                     std::bind(&NavigationDisplayPresenter::updateCompas, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
@@ -21,6 +23,11 @@ void NavigationDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&NavigationDisplayPresenter::updateNavigator, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Wind),
                     std::bind(&NavigationDisplayPresenter::updateWind, this, std::placeholders::_1));
+}
+
+void NavigationDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
 }
 
 void NavigationDisplayPresenter::updateCompas(const domain::Telemetry::TelemetryMap& parameters)

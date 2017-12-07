@@ -8,6 +8,7 @@ BaseDisplay {
     id: navigationDisplay
 
     property alias guided: hsi.guided
+
     property alias heading: hsi.heading
     property alias course: hsi.course
     property alias targetBearing: hsi.targetBearing

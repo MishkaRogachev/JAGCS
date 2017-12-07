@@ -29,6 +29,12 @@ void FlightDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&FlightDisplayPresenter::updateHomeAltitude, this, std::placeholders::_1));
 }
 
+void FlightDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
+    this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
+}
+
 void FlightDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setViewProperty(PROPERTY(ahrsEnabled), parameters.value(domain::Telemetry::Enabled, false));

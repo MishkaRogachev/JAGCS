@@ -7,15 +7,17 @@ import "qrc:/Indicators" as Indicators
 BaseDisplay {
     id: flightDisplay
 
+    property alias armed: ai.armed
+    property alias guided: ai.guided
+
     property bool ahrsEnabled: false
     property bool ahrsOperational: false
     property alias pitch: ai.pitch
     property alias roll: ai.roll
+    property alias yawspeed: ai.yawspeed
+
     property alias desiredPitch: ai.desiredPitch
     property alias desiredRoll: ai.desiredRoll
-    property alias yawspeed: ai.yawspeed
-    property alias armed: ai.armed
-    property alias guided: ai.guided
 
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
