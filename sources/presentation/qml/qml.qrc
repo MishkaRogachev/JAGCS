@@ -4,6 +4,7 @@
         <file>Shaders/Hatch.qml</file>
         <file>Shaders/OpacityBorder.qml</file>
         <file>Shaders/Pie.qml</file>
+        <file>Controls/Shadow.qml</file>
         <file>Controls/Pane.qml</file>
         <file>Controls/Frame.qml</file>
         <file>Controls/ContentItem.qml</file>

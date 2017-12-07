@@ -6,11 +6,19 @@ T.Frame {
 
     property color backgroundColor: palette.raisedColor
 
-    background: Rectangle {
-        color: backgroundColor
-        border.color: palette.backgroundColor
-        radius: 3
+    background: Item {
 
-        // TODO: Shaders.Hatch
+        Rectangle {
+            id: rect
+            anchors.fill: parent
+            color: backgroundColor
+            radius: 3
+            visible: false
+        }
+
+        Shadow {
+            anchors.fill: rect
+            source: rect
+        }
     }
 }
