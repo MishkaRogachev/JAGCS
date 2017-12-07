@@ -32,7 +32,9 @@ Item {
         clip: true
         model: instruments
 
-        Controls.ScrollBar.vertical: Controls.ScrollBar {}
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
+        }
 
         delegate: Loader {
             width: parent.width
