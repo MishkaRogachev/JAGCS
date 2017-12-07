@@ -11,6 +11,8 @@ FlightDisplayPresenter::FlightDisplayPresenter(QObject* parent):
 
 void FlightDisplayPresenter::connectNode(domain::Telemetry* node)
 {
+    this->chainNode(node->childNode(domain::Telemetry::Status),
+                    std::bind(&FlightDisplayPresenter::updateStatus, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Ahrs),
                     std::bind(&FlightDisplayPresenter::updateAhrs, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
@@ -41,7 +43,6 @@ void FlightDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& p
     this->setViewProperty(PROPERTY(ahrsOperational), parameters.value(domain::Telemetry::Operational, false));
     this->setViewProperty(PROPERTY(pitch), parameters.value(domain::Telemetry::Pitch, 0));
     this->setViewProperty(PROPERTY(roll), parameters.value(domain::Telemetry::Roll, 0));
-    this->setViewProperty(PROPERTY(yaw), parameters.value(domain::Telemetry::Yaw, 0));
     this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
 }
 
@@ -49,14 +50,8 @@ void FlightDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryM
 {
     this->setViewProperty(PROPERTY(satelliteEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(satelliteOperational), parameters.value(domain::Telemetry::Operational, false));
-    this->setViewProperty(PROPERTY(fix), parameters.value(domain::Telemetry::Fix, 0));
-    this->setViewProperty(PROPERTY(coordinate), parameters.value(domain::Telemetry::Coordinate, 0));
     this->setViewProperty(PROPERTY(groundspeed), parameters.value(domain::Telemetry::Groundspeed, 0));
-    this->setViewProperty(PROPERTY(course), parameters.value(domain::Telemetry::Course, 0));
     this->setViewProperty(PROPERTY(satelliteAltitude), parameters.value(domain::Telemetry::Altitude, 0));
-    this->setViewProperty(PROPERTY(eph), parameters.value(domain::Telemetry::Eph, 0));
-    this->setViewProperty(PROPERTY(epv), parameters.value(domain::Telemetry::Epv, 0));
-    this->setViewProperty(PROPERTY(satellitesVisible), parameters.value(domain::Telemetry::SatellitesVisible, 0));
 }
 
 void FlightDisplayPresenter::updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters)

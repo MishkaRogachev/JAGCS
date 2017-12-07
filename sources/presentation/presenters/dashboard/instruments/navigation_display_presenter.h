@@ -4,6 +4,9 @@
 // Internal
 #include "abstract_instrument_presenter.h"
 
+// Qt
+#include <QGeoCoordinate>
+
 namespace presentation
 {
     class NavigationDisplayPresenter: public AbstractInstrumentPresenter
@@ -20,9 +23,16 @@ namespace presentation
         void updateStatus(const domain::Telemetry::TelemetryMap& parameters);
         void updateCompas(const domain::Telemetry::TelemetryMap& parameters);
         void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);
+        void updatePosition(const domain::Telemetry::TelemetryMap& parameters);
         void updateHome(const domain::Telemetry::TelemetryMap& parameters);
         void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
         void updateWind(const domain::Telemetry::TelemetryMap& parameters);
+
+    private:
+        void updateHoming();
+
+        QGeoCoordinate m_position;
+        QGeoCoordinate m_homePosition;
     };
 }
 
