@@ -44,14 +44,5 @@ BaseDisplay {
             font.bold: true
             Layout.fillWidth: true
         }
-
-        CommandControls.Button {
-            tipText: qsTr("Return to launch")
-            iconSource: "qrc:/icons/home.svg"
-            text: qsTr("RTL")
-            command: Command.Return
-            enabled: online
-            Layout.fillWidth: true
-        }
     }
 }

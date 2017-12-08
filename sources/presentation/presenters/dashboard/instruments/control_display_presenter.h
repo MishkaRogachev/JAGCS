@@ -3,6 +3,7 @@
 
 // Internal
 #include "abstract_instrument_presenter.h"
+#include "command.h"
 
 namespace domain
 {
@@ -27,6 +28,7 @@ namespace presentation
 
     private slots:
         void updateStatus(const domain::Telemetry::TelemetryMap& parameters);
+        void onCommandStatusChanged(domain::Command::CommandType type, domain::Command::CommandStatus status);
 
     private:
         domain::CommandService* const m_service;
