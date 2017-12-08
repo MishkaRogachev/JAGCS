@@ -60,12 +60,6 @@
         <file>Views/Logbook/LogbookView.qml</file>
         <file>Views/Logbook/LogList.qml</file>
         <file>Views/Logbook/LogEntry.qml</file>
-        <file>Views/Control/ControlView.qml</file>
-        <file>Views/Control/Command/CommandButton.qml</file>
-        <file>Views/Control/Command/CommandSwitch.qml</file>
-        <file>Views/Control/Command/CommandLadder.qml</file>
-        <file>Views/Control/Command/CommandModeBox.qml</file>
-        <file>Views/Control/Command/CommandListView.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Map/MapControl.qml</file>
@@ -87,13 +81,17 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
+        <file>Views/Dashboard/CommandControls/Button.qml</file>
+        <file>Views/Dashboard/CommandControls/Switch.qml</file>
+        <file>Views/Dashboard/CommandControls/Ladder.qml</file>
+        <file>Views/Dashboard/CommandControls/ModeBox.qml</file>
+        <file>Views/Dashboard/CommandControls/ListView.qml</file>
         <file>Views/Dashboard/Instruments/BaseDisplay.qml</file>
         <file>Views/Dashboard/Instruments/SatelliteDisplay.qml</file>
+        <file>Views/Dashboard/Instruments/BatteryDisplay.qml</file>
         <file>Views/Dashboard/Instruments/FlightDisplay.qml</file>
         <file>Views/Dashboard/Instruments/NavigationDisplay.qml</file>
-        <file>Views/Dashboard/Instruments/BatteryDisplay.qml</file>
-        <file>Views/Dashboard/Instruments/StatusDisplay.qml</file>
-        <file>Views/Dashboard/Instruments/MissionDisplay.qml</file>
+        <file>Views/Dashboard/Instruments/ControlDisplay.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>
         <file>Views/Menu/Vehicles/VehicleListView.qml</file>
