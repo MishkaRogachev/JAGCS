@@ -17,6 +17,8 @@ namespace presentation
     public:
         explicit AbstractInstrumentPresenter(QObject* parent = nullptr);
 
+        int vehicleId() const;
+
     public slots:
         void setVehicle(int vehicleId);
 
@@ -28,6 +30,7 @@ namespace presentation
                        std::function<void(const domain::Telemetry::TelemetryMap&)> f);
 
     private:
+        int m_vehicleId = 0;
         domain::Telemetry* m_node = nullptr;
     };
 }

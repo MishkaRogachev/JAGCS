@@ -47,9 +47,7 @@ Item {
         case DashboardPresenter.SatelliteDispaly: return "Instruments/SatelliteDisplay.qml";
         case DashboardPresenter.FlightDisplay: return "Instruments/FlightDisplay.qml";
         case DashboardPresenter.NavigationDisplay: return "Instruments/NavigationDisplay.qml";
-        //case "battery": return Qt.createComponent("Instruments/BatteryDisplay.qml");
-        //case "status": return Qt.createComponent("Instruments/StatusDisplay.qml");
-        //case "mission": return Qt.createComponent("Instruments/MissionDisplay.qml");
+        case DashboardPresenter.ControlDisplay: return "Instruments/ControlDisplay.qml";
         default: return null
         }
     }

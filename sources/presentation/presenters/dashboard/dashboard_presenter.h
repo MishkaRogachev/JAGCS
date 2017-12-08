@@ -15,7 +15,8 @@ namespace presentation
         {
             SatelliteDispaly,
             FlightDisplay,
-            NavigationDisplay
+            NavigationDisplay,
+            ControlDisplay
         };
 
         DashboardPresenter(QObject* parent = nullptr);

@@ -13,7 +13,7 @@ Indicators.Ladder {
 
     property bool controlEnabled: true
 
-    CommandButton {
+    Button {
         iconSource: "qrc:/icons/up.svg"
         flat: true
         x: root.mirrored ? root.width - width : 0
@@ -25,7 +25,7 @@ Indicators.Ladder {
         onBeforeSended: newValue = value + 1
     }
 
-    CommandButton {
+    Button {
         iconSource: "qrc:/icons/down.svg"
         flat: true
         x: root.mirrored ? root.width - width : 0

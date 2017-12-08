@@ -10,11 +10,11 @@ Controls.ComboBox {
     property int mode: Domain.None
     property int status: Command.Idle
 
-    onActivated: commander.executeCommand(Command.SetMode, [ model[index] ])
+    onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
 
     Connections {
-        target: commander
+        target: presenter
         onCommandStatusChanged: if (type == Command.SetMode) control.status = status
     }
 

@@ -10,13 +10,13 @@ Controls.Switch {
     property int status: Command.Idle
 
     Connections {
-        target: commander
+        target: presenter
         onCommandStatusChanged: if (type == command) control.status = status
     }
 
     onCheckedChanged: {
-        if (status == Command.Sending) commander.rejectCommand(command);
-        else if (inputChecked != checked) commander.executeCommand(command, [checked]);
+        if (status == Command.Sending) presenter.rejectCommand(command);
+        else if (inputChecked != checked) presenter.executeCommand(command, [checked]);
     }
 
     onStatusChanged: {

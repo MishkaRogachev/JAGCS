@@ -13,8 +13,15 @@ AbstractInstrumentPresenter::AbstractInstrumentPresenter(QObject* parent):
     BasePresenter(parent)
 {}
 
+int AbstractInstrumentPresenter::vehicleId() const
+{
+    return m_vehicleId;
+}
+
 void AbstractInstrumentPresenter::setVehicle(int vehicleId)
 {
+    m_vehicleId = vehicleId;
+
     domain::TelemetryService* service = domain::ServiceRegistry::telemetryService();
     domain::Telemetry* node = service->vehicleNode(vehicleId);
     if (m_node == node) return;

@@ -22,6 +22,7 @@
 #include "satellite_display_presenter.h"
 #include "flight_display_presenter.h"
 #include "navigation_display_presenter.h"
+#include "control_display_presenter.h"
 #include "link_list_presenter.h"
 #include "link_presenter.h"
 #include "vehicle_list_presenter.h"
@@ -160,6 +161,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<SatelliteDisplayPresenter>("JAGCS", 1, 0, "SatelliteDisplayPresenter");
     qmlRegisterType<FlightDisplayPresenter>("JAGCS", 1, 0, "FlightDisplayPresenter");
     qmlRegisterType<NavigationDisplayPresenter>("JAGCS", 1, 0, "NavigationDisplayPresenter");
+    qmlRegisterType<ControlDisplayPresenter>("JAGCS", 1, 0, "ControlDisplayPresenter");
     qmlRegisterType<LinkListPresenter>("JAGCS", 1, 0, "LinkListPresenter");
     qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");
     qmlRegisterType<VehicleListPresenter>("JAGCS", 1, 0, "VehicleListPresenter");

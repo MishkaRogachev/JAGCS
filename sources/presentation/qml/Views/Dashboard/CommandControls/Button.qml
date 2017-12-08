@@ -13,19 +13,19 @@ Controls.Button {
     signal beforeSended()
 
     Connections {
-        target: commander
+        target: presenter
         onCommandStatusChanged: if (type == command) control.status = status
     }
 
     onClicked: {
         if (status == Command.Sending)
         {
-            commander.rejectCommand(command);
+            presenter.rejectCommand(command);
         }
         else
         {
             beforeSended();
-            commander.executeCommand(command, args);
+            presenter.executeCommand(command, args);
         }
     }
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
