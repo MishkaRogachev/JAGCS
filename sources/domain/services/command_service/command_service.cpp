@@ -1,44 +1,49 @@
 #include "command_service.h"
 
 // Qt
-#include <QQueue>
+#include <QMap>
 
 // Internal
 #include "command_sender.h"
 
 using namespace domain;
 
+class CommandService::Impl
+{
+public:
+    QMap<int, CommandSender*> senders;
+};
+
 CommandService::CommandService(QObject* parent):
     QObject(parent),
-    m_sender(new CommandSender(this))
+    d(new Impl())
 {
     qRegisterMetaType<Command>("Command");
     qRegisterMetaType<Command::CommandType>("Command::CommandType");
     qRegisterMetaType<Command::CommandStatus>("Command::CommandStatus");
-
-    connect(m_sender, &CommandSender::commandStatusChanged,
-            this, &CommandService::commandStatusChanged);
 }
 
-CommandSender* CommandService::sender() const
-{
-    return m_sender;
-}
+CommandService::~CommandService()
+{}
 
-void CommandService::executeCommand(const Command& command)
+void CommandService::executeCommand(int vehicleId, const Command& command)
 {
-    if (command.type() == Command::UnknownCommand)
+    if (vehicleId == 0 || command.type() == Command::UnknownCommand)
     {
-        emit commandStatusChanged(Command::UnknownCommand, Command::Rejected);
+//        command.setStatus(Command::Rejected);
+//        emit commandStatusChanged(command);
         return;
     }
 
-    m_sender->addCommand(command);
+    d->senders.value(vehicleId, new CommandSender(this))->addCommand(command);
 }
 
-void CommandService::rejectCommand(Command::CommandType type)
+void CommandService::rejectCommand(int vehicleId, Command::CommandType type)
 {
-    m_sender->removeCommand(type);
+    if (!d->senders.contains(vehicleId)
+        || !d->senders[vehicleId]->hasCommand(type)) return;
 
-    emit commandStatusChanged(type, Command::Canceled);
+    Command command = d->senders[vehicleId]->takeCommand(type);
+    command.setStatus(Command::Canceled);
+    emit commandStatusChanged(command);
 }

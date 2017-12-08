@@ -12,6 +12,7 @@ namespace domain
         Q_GADGET
 
     public:
+        // TODO: Merge command and mission item comman enums
         enum CommandType
         {
             UnknownCommand,
@@ -47,23 +48,23 @@ namespace domain
             Completed,
         };
 
-        Command(CommandType type = UnknownCommand, int vehicleId = 0);
+        Command(CommandType type = UnknownCommand, CommandStatus status = Idle);
         Command(const Command& command);
 
         CommandType type() const;
         void setType(CommandType type);
 
+        CommandStatus status() const;
+        void setStatus(CommandStatus status);
+
         QVariantList arguments() const;
         void setArguments(const QVariantList& arguments);
         void addArgument(const QVariant& argument);
 
-        int vehicleId() const;
-        void setVehicleId(int vehicleId);
-
     private:
         CommandType m_type;
+        CommandStatus m_status;
         QVariantList m_arguments;
-        int m_vehicleId;
 
         Q_ENUM(CommandType)
         Q_ENUM(CommandStatus)

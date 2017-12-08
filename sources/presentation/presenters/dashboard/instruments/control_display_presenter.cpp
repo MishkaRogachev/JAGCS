@@ -7,26 +7,29 @@
 #include "service_registry.h"
 #include "command_service.h"
 
+#include "command.h"
+
 using namespace presentation;
 
 ControlDisplayPresenter::ControlDisplayPresenter(QObject* parent):
     AbstractInstrumentPresenter(parent),
     m_service(domain::ServiceRegistry::commandService())
 {
-    connect(m_service, &domain::CommandService::commandStatusChanged,
-            this, &ControlDisplayPresenter::onCommandStatusChanged);
+//    connect(m_service, &domain::CommandService::commandStatusChanged,
+//            this, &ControlDisplayPresenter::onCommandStatusChanged);
 }
 
 void ControlDisplayPresenter::executeCommand(int commandType, const QVariant& args)
 {
-    domain::Command command(domain::Command::CommandType(commandType), this->vehicleId());
+    domain::Command command;
+    command.setType(domain::Command::CommandType(commandType));
     command.setArguments(args.toList());
-    m_service->executeCommand(command);
+    m_service->executeCommand(this->vehicleId(), command);
 }
 
 void ControlDisplayPresenter::rejectCommand(int commandType)
 {
-    m_service->rejectCommand(domain::Command::CommandType(commandType));
+    m_service->rejectCommand(this->vehicleId(), domain::Command::CommandType(commandType));
 }
 
 void ControlDisplayPresenter::connectNode(domain::Telemetry* node)
@@ -41,10 +44,4 @@ void ControlDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap
     this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
     this->setViewProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
     this->setViewProperty(PROPERTY(availableModes), parameters.value(domain::Telemetry::AvailableModes));
-}
-
-void ControlDisplayPresenter::onCommandStatusChanged(domain::Command::CommandType type,
-                                                     domain::Command::CommandStatus status)
-{
-    // TODO: coommand feedback
 }

@@ -9,28 +9,24 @@
 
 namespace domain
 {
-    class CommandSender;
-
-    // TODO: separate command on local, and mavlink specified to make one interface for all
-    //       direct channel actions. Make commands arguments static, not QVariant
     class CommandService: public QObject
     {
         Q_OBJECT
 
     public:
         explicit CommandService(QObject* parent = nullptr);
-
-        CommandSender* sender() const;
+        ~CommandService() override;
 
     public slots:
-        void executeCommand(const Command& command);
-        void rejectCommand(Command::CommandType type);
+        void executeCommand(int vehicleId, const Command& command);
+        void rejectCommand(int vehicleId, Command::CommandType type);
 
     signals:
-        void commandStatusChanged(Command::CommandType type, Command::CommandStatus status);
+        void commandStatusChanged(const Command& command);
 
     private:
-        CommandSender* m_sender;
+        class Impl;
+        const QScopedPointer<Impl> d;
     };
 }
 

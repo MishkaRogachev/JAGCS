@@ -2,15 +2,15 @@
 
 using namespace domain;
 
-Command::Command(CommandType type, int vehicleId):
+Command::Command(CommandType type, CommandStatus status):
     m_type(type),
-    m_vehicleId(vehicleId)
+    m_status(status)
 {}
 
 Command::Command(const Command& command):
     m_type(command.type()),
-    m_arguments(command.arguments()),
-    m_vehicleId(command.vehicleId())
+    m_status(command.status()),
+    m_arguments(command.arguments())
 {}
 
 Command::CommandType Command::type() const
@@ -21,6 +21,16 @@ Command::CommandType Command::type() const
 void Command::setType(CommandType type)
 {
     m_type = type;
+}
+
+Command::CommandStatus Command::status() const
+{
+    return m_status;
+}
+
+void Command::setStatus(CommandStatus status)
+{
+    m_status = status;
 }
 
 QVariantList Command::arguments() const
@@ -36,14 +46,4 @@ void Command::setArguments(const QVariantList& arguments)
 void Command::addArgument(const QVariant& argument)
 {
     m_arguments.append(argument);
-}
-
-int Command::vehicleId() const
-{
-    return m_vehicleId;
-}
-
-void Command::setVehicleId(int vehicleId)
-{
-    m_vehicleId = vehicleId;
 }

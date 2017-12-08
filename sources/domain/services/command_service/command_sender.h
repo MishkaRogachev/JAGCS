@@ -14,15 +14,16 @@ namespace domain
         explicit CommandSender(QObject* parent = nullptr);
         ~CommandSender() override;
 
+        bool hasCommand(Command::CommandType type) const;
+        Command takeCommand(Command::CommandType type);
+
     public slots:
         void addCommand(const Command& command);
-        void removeCommand(Command::CommandType type);
-
-        void setCommandStatus(Command::CommandType type, Command::CommandStatus status);
+        void finishCommand(Command::CommandType type, Command::CommandStatus status);
 
     signals:
         void sendCommand(const Command& command, int attempt);
-        void commandStatusChanged(Command::CommandType type, Command::CommandStatus status);
+        void commandFinished(const Command& command);
 
     protected:
         void timerEvent(QTimerEvent* event) override;

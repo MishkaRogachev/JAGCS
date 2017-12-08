@@ -63,10 +63,10 @@ public:
 
     void ackCommand(Command::CommandType type, Command::CommandStatus status)
     {
-        QMetaObject::invokeMethod(commandService->sender(), "setCommandStatus",
+        /*QMetaObject::invokeMethod(commandService->sender(), "setCommandStatus",
                                   Qt::QueuedConnection,
                                   Q_ARG(Command::CommandType, type),
-                                  Q_ARG(Command::CommandStatus, status));
+                                  Q_ARG(Command::CommandStatus, status));*/
     }
 };
 
@@ -74,8 +74,8 @@ CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
-    connect(d->commandService->sender(), &CommandSender::sendCommand,
-            this, &CommandHandler::onSendCommand);
+    /*connect(d->commandService->sender(), &CommandSender::sendCommand,
+            this, &CommandHandler::onSendCommand);*/
 }
 
 CommandHandler::~CommandHandler()
@@ -120,7 +120,7 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
 }
 
 void CommandHandler::onSendCommand(const Command& command, int attempt)
-{
+{/*
     qDebug() << command.type() << command.arguments() << attempt;
 
     dao::VehiclePtr vehicle = d->vehicleService->vehicle(command.vehicleId());
@@ -154,7 +154,7 @@ void CommandHandler::onSendCommand(const Command& command, int attempt)
                             args.at(1).toDouble(),
                             args.at(2).toFloat());
         }
-    }
+    }*/
 }
 
 void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,

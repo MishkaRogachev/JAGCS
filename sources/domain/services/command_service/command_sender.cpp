@@ -28,6 +28,20 @@ CommandSender::CommandSender(QObject* parent):
 CommandSender::~CommandSender()
 {}
 
+bool CommandSender::hasCommand(Command::CommandType type) const
+{
+    return d->typeCommands.contains(type);
+}
+
+Command CommandSender::takeCommand(Command::CommandType type)
+{
+    Command cmd = d->typeCommands.take(type);
+    d->typeAttemps.remove(type);
+
+    if (d->typeTimers.contains(type)) this->killTimer(d->typeTimers.take(type));
+    return cmd;
+}
+
 void CommandSender::addCommand(const Command& command)
 {
     if (d->typeTimers.contains(command.type())) this->killTimer(d->typeTimers.take(command.type()));
@@ -37,22 +51,17 @@ void CommandSender::addCommand(const Command& command)
 
     emit sendCommand(command, d->typeAttemps[command.type()]);
     d->typeTimers[command.type()] = this->startTimer(::interval);
-    emit commandStatusChanged(command.type(), Command::Sending);
+    d->typeCommands[command.type()].setStatus(Command::Sending);
+    emit commandFinished(d->typeCommands[command.type()]);
 }
 
-void CommandSender::removeCommand(Command::CommandType type)
+void CommandSender::finishCommand(Command::CommandType type, Command::CommandStatus status)
 {
-    d->typeCommands.remove(type);
-    d->typeAttemps.remove(type);
+    Command cmd = this->takeCommand(type);
 
-    if (d->typeTimers.contains(type)) this->killTimer(d->typeTimers.take(type));
-}
+    cmd.setStatus(status);
 
-void CommandSender::setCommandStatus(Command::CommandType type, Command::CommandStatus status)
-{
-    this->removeCommand(type);
-
-    emit commandStatusChanged(type, status);
+    emit commandFinished(cmd);
 }
 
 void CommandSender::timerEvent(QTimerEvent* event)
@@ -61,6 +70,6 @@ void CommandSender::timerEvent(QTimerEvent* event)
     Command::CommandType type = d->typeTimers.key(event->timerId());
 
     emit sendCommand(d->typeCommands[type], ++d->typeAttemps[type]);
-    if (d->typeAttemps[type] >= maxAttemps) this->setCommandStatus(type, Command::Rejected);
+    if (d->typeAttemps[type] >= maxAttemps) this->finishCommand(type, Command::Rejected);
 }
 
