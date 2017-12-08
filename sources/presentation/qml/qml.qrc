@@ -86,7 +86,6 @@
         <file>Views/Dashboard/CommandControls/Ladder.qml</file>
         <file>Views/Dashboard/CommandControls/ModeBox.qml</file>
         <file>Views/Dashboard/CommandControls/ListView.qml</file>
-        <file>Views/Dashboard/Instruments/BaseDisplay.qml</file>
         <file>Views/Dashboard/Instruments/SatelliteDisplay.qml</file>
         <file>Views/Dashboard/Instruments/BatteryDisplay.qml</file>
         <file>Views/Dashboard/Instruments/FlightDisplay.qml</file>

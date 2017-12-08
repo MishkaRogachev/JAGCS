@@ -6,7 +6,7 @@ import JAGCS 1.0
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
-BaseDisplay {
+Controls.Pane {
     id: satelliteDisplay
 
     property bool satelliteEnabled: false
@@ -19,8 +19,6 @@ BaseDisplay {
 
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
 
-    implicitHeight: row.height
-
     SatelliteDisplayPresenter {
         id: presenter
         view: satelliteDisplay
@@ -28,7 +26,6 @@ BaseDisplay {
     }
 
     RowLayout {
-        id: row
         anchors.centerIn: parent
         width: parent.width
         opacity: satelliteEnabled ? 1 : 0.33
