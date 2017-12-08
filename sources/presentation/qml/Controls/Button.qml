@@ -15,11 +15,9 @@ T.Button {
     font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
     implicitHeight: Math.max(sizings.controlBaseSize, content.implicitHeight)
-    clip: true
 
     background: Rectangle {
         id: backgroundItem
-        anchors.fill: parent
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         radius: 3
         color: {
@@ -32,6 +30,11 @@ T.Button {
             anchors.fill: parent
             color: palette.sunkenColor
             visible: !control.enabled && !control.flat
+        }
+
+        Shadow {
+            visible: !control.flat
+            source: parent
         }
     }
 

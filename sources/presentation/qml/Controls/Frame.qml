@@ -6,19 +6,12 @@ T.Frame {
 
     property color backgroundColor: palette.raisedColor
 
-    background: Item {
-
-        Rectangle {
-            id: rect
-            anchors.fill: parent
-            color: backgroundColor
-            radius: 3
-            visible: false
-        }
+    background:  Rectangle {
+        color: backgroundColor
+        radius: 3
 
         Shadow {
-            anchors.fill: rect
-            source: rect
+            source: parent
         }
     }
 }
