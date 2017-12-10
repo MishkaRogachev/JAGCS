@@ -58,7 +58,7 @@ find_package(Qt5 COMPONENTS
     Location
     Charts
     QuickControls2
-    Gamepad
+#    Gamepad
 REQUIRED)
 
 # Common libraries
@@ -162,7 +162,7 @@ qt5_use_modules(${PROJECT}
     Location
     Charts
     QuickControls2
-    Gamepad
+ #   Gamepad
 )
 
 if(ANDROID)
