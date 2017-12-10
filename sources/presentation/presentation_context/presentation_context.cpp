@@ -45,10 +45,8 @@
 
 // Qt
 #include <QGuiApplication>
-#include <QQuickView>
-#include <QQuickItem>
+#include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QQmlEngine>
 #include <QDebug>
 
 using namespace presentation;
@@ -57,18 +55,16 @@ PresentationContext::PresentationContext()
 {
     this->registerQuickTypes();
 
-    m_view = new QQuickView();
-    m_view->setResizeMode(QQuickView::SizeRootObjectToView);
-    m_view->rootContext()->setContextProperty("translator",
-                                              QVariant::fromValue(new TranslationHelper(qApp)));
+    m_engine = new QQmlApplicationEngine(qApp);
 
-    QObject::connect(m_view->engine(), &QQmlEngine::quit, qApp, &QGuiApplication::quit);
+    m_engine->rootContext()->setContextProperty("translator",
+                                                QVariant::fromValue(new TranslationHelper(qApp)));
+    QObject::connect(m_engine, &QQmlEngine::quit, qApp, &QGuiApplication::quit);
 }
 
 PresentationContext::~PresentationContext()
 {
     PresentationContext::saveWindowedGeometry();
-    m_view->deleteLater();
 }
 
 PresentationContext* PresentationContext::instance()
@@ -79,19 +75,18 @@ PresentationContext* PresentationContext::instance()
 
 QObject* PresentationContext::rootView()
 {
-    return instance()->m_view->rootObject();
+    QList<QObject*> list = instance()->m_engine->rootObjects();
+    return list.isEmpty() ? nullptr : list.first();
 }
 
 QQmlContext* PresentationContext::rootContext()
 {
-    return instance()->m_view->rootContext();
+    return instance()->m_engine->rootContext();
 }
 
 void PresentationContext::start()
 {
-    instance()->m_view->setSource(QUrl("qrc:/Views/MainView.qml")); // TODO: wait objectCreated
-
-    PresentationContext::show();
+    instance()->m_engine->load(QUrl("qrc:/Views/MainView.qml"));
 }
 
 void PresentationContext::show()
@@ -108,11 +103,11 @@ void PresentationContext::show()
 
 void PresentationContext::showFullscreen()
 {
-    instance()->m_view->showFullScreen();
+    //instance()->m_view->showFullScreen();
 }
 
 void PresentationContext::showWindowed()
-{
+{/*
     QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
 
     if (rect.isNull())
@@ -123,13 +118,13 @@ void PresentationContext::showWindowed()
     {
         instance()->m_view->setGeometry(rect);
         instance()->m_view->show();
-    }
+    }*/
 }
 
 void PresentationContext::saveWindowedGeometry()
 {
-    if (instance()->m_view->windowState() & Qt::WindowFullScreen) return;
-    settings::Provider::setValue(settings::gui::geometry, instance()->m_view->geometry());
+    //if (instance()->m_view->windowState() & Qt::WindowFullScreen) return;
+    //settings::Provider::setValue(settings::gui::geometry, instance()->m_view->geometry());
 }
 
 void PresentationContext::registerQuickTypes()

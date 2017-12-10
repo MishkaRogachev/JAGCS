@@ -5,7 +5,7 @@
 #include <QObject>
 
 class QQmlContext;
-class QQuickView;
+class QQmlApplicationEngine;
 
 namespace presentation
 {
@@ -31,7 +31,7 @@ namespace presentation
     private:
         void registerQuickTypes();
 
-        QQuickView* m_view;
+        QQmlApplicationEngine* m_engine;
 
         Q_DISABLE_COPY(PresentationContext)
     };

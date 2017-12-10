@@ -8,7 +8,7 @@ import "Map"
 import "Dashboard"
 import "Menu"
 
-Rectangle {
+Controls.ApplicationWindow  {
     id: main
 
     property bool cornerMap: false
@@ -25,7 +25,7 @@ Rectangle {
         mapComponent = mapFactory.create(mapType);
     }
 
-    color: palette.backgroundColor
+    visible: true
     Component.onCompleted: reloadMap()
 
     ListModel { id: contextModel }
