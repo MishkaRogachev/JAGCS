@@ -14,7 +14,6 @@ namespace presentation
         PresentationContext();
 
     public:
-        ~PresentationContext();
         static PresentationContext* instance();
 
         static QObject* rootView();
@@ -22,10 +21,8 @@ namespace presentation
 
         static void start();
 
-        static void show();
-        static void showFullscreen();
-        static void showWindowed();
-
+        static void updateGeometry();
+        static void updateGeometry(bool fullscreen);
         static void saveWindowedGeometry();
 
     private:

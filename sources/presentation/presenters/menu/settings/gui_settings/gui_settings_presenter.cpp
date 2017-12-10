@@ -87,12 +87,12 @@ void GuiSettingsPresenter::save()
     d->guiStyleManager.loadSavedPalette();
 
     PresentationContext::saveWindowedGeometry();
-    PresentationContext::show();
+    PresentationContext::updateGeometry();
 }
 
 void GuiSettingsPresenter::setFullscreen(bool fullscreen)
 {
-    fullscreen ? PresentationContext::showFullscreen() : PresentationContext::showWindowed();
+    PresentationContext::updateGeometry(fullscreen);
 }
 
 void GuiSettingsPresenter::setUiSize(int size)

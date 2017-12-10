@@ -11,6 +11,7 @@ import "Menu"
 Controls.ApplicationWindow  {
     id: main
 
+    property bool fullscreen: false
     property bool cornerMap: false
     property bool cornerVisible: false
     property int mapType: -1
@@ -30,11 +31,8 @@ Controls.ApplicationWindow  {
 
     ListModel { id: contextModel }
 
-    TopbarView {
+    header: TopbarView {
         id: topbar
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
     }
 
     Loader {

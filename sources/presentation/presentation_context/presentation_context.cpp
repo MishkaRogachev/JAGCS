@@ -47,6 +47,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QWindow>
 #include <QDebug>
 
 using namespace presentation;
@@ -59,12 +60,10 @@ PresentationContext::PresentationContext()
 
     m_engine->rootContext()->setContextProperty("translator",
                                                 QVariant::fromValue(new TranslationHelper(qApp)));
-    QObject::connect(m_engine, &QQmlEngine::quit, qApp, &QGuiApplication::quit);
-}
-
-PresentationContext::~PresentationContext()
-{
-    PresentationContext::saveWindowedGeometry();
+    QObject::connect(m_engine, &QQmlEngine::quit, [this]() {
+        this->saveWindowedGeometry();
+        qApp->quit();
+    });
 }
 
 PresentationContext* PresentationContext::instance()
@@ -87,44 +86,55 @@ QQmlContext* PresentationContext::rootContext()
 void PresentationContext::start()
 {
     instance()->m_engine->load(QUrl("qrc:/Views/MainView.qml"));
+    PresentationContext::updateGeometry();
 }
 
-void PresentationContext::show()
+void PresentationContext::updateGeometry()
 {
-    if (settings::Provider::boolValue(settings::gui::fullscreen))
+    PresentationContext::updateGeometry(settings::Provider::boolValue(settings::gui::fullscreen));
+}
+
+void PresentationContext::updateGeometry(bool fullscreen)
+{
+    QObject* view = PresentationContext::rootView();
+    if (!view) return;
+
+    if (fullscreen)
     {
-        PresentationContext::showFullscreen();
+        view->setProperty(PROPERTY(visibility), QWindow::FullScreen);
     }
     else
     {
-        PresentationContext::showWindowed();
+        QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
+
+        if (rect.isNull())
+        {
+            view->setProperty(PROPERTY(visibility), QWindow::Maximized);
+        }
+        else
+        {
+            view->setProperty(PROPERTY(visibility), QWindow::Windowed);
+            view->setProperty(PROPERTY(x), rect.x());
+            view->setProperty(PROPERTY(y), rect.y());
+            view->setProperty(PROPERTY(width), rect.width());
+            view->setProperty(PROPERTY(height), rect.height());
+        }
     }
-}
-
-void PresentationContext::showFullscreen()
-{
-    //instance()->m_view->showFullScreen();
-}
-
-void PresentationContext::showWindowed()
-{/*
-    QRect rect = settings::Provider::value(settings::gui::geometry).toRect();
-
-    if (rect.isNull())
-    {
-        instance()->m_view->showMaximized();
-    }
-    else
-    {
-        instance()->m_view->setGeometry(rect);
-        instance()->m_view->show();
-    }*/
 }
 
 void PresentationContext::saveWindowedGeometry()
 {
-    //if (instance()->m_view->windowState() & Qt::WindowFullScreen) return;
-    //settings::Provider::setValue(settings::gui::geometry, instance()->m_view->geometry());
+    QObject* view = PresentationContext::rootView();
+    if (!view) return;
+
+    if (view->property(PROPERTY(visibility)).value<QWindow::Visibility>() == QWindow::FullScreen)
+        return;
+
+    QRect geometry(view->property(PROPERTY(x)).toInt(),
+                   view->property(PROPERTY(y)).toInt(),
+                   view->property(PROPERTY(width)).toInt(),
+                   view->property(PROPERTY(height)).toInt());
+    settings::Provider::setValue(settings::gui::geometry, geometry);
 }
 
 void PresentationContext::registerQuickTypes()
