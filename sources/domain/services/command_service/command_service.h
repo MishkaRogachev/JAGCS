@@ -10,6 +10,8 @@
 
 namespace domain
 {
+    class AbstractCommandHandler;
+
     class CommandService: public QObject
     {
         Q_OBJECT
@@ -17,6 +19,8 @@ namespace domain
     public:
         explicit CommandService(QObject* parent = nullptr);
         ~CommandService() override;
+
+        void addHandler(AbstractCommandHandler* handler);
 
     public slots:
         void executeCommand(int vehicleId, const dao::CommandPtr& command);

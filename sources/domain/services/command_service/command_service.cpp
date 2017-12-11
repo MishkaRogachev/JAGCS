@@ -4,6 +4,7 @@
 #include <QMap>
 
 // Internal
+#include "abstract_command_handler.h"
 #include "command_sender.h"
 
 using namespace domain;
@@ -23,6 +24,13 @@ CommandService::CommandService(QObject* parent):
 
 CommandService::~CommandService()
 {}
+
+void CommandService::addHandler(AbstractCommandHandler* handler)
+{
+    connect(handler, &AbstractCommandHandler::ackCommand, this, [this](){
+
+    });
+}
 
 void CommandService::executeCommand(int vehicleId, const dao::CommandPtr& command)
 {

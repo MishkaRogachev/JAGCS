@@ -53,29 +53,19 @@ class CommandHandler::Impl
 {
 public:
     domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
-    domain::CommandService* commandService = domain::ServiceRegistry::commandService();
 
     QScopedPointer<IModeHelper> modeHelper;
     quint8 baseMode = 0;
     int customMode = -1;
     int requestedCustomMode = -1;
-
-    void ackCommand(dao::Command::CommandType type, dao::Command::CommandStatus status)
-    {
-//        QMetaObject::invokeMethod(commandService->sender(), "setCommandStatus",
-//                                  Qt::QueuedConnection,
-//                                  Q_ARG(Command::CommandType, type),
-//                                  Q_ARG(Command::CommandStatus, status));
-    }
 };
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
-    QObject(communicator),
+    AbstractCommandHandler(communicator),
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
-//    connect(d->commandService->sender(), &CommandSender::sendCommand,
-//            this, &CommandHandler::onSendCommand);
+    domain::ServiceRegistry::commandService()->addHandler(this);
 }
 
 CommandHandler::~CommandHandler()
@@ -95,7 +85,8 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
     dao::Command::CommandType type = ::mavCommandLongMap.value(ack.command, dao::Command::UnknownCommand);
     if (type == dao::Command::UnknownCommand) return;
 
-    d->ackCommand(type, ::mavStatusMap.value(ack.result, dao::Command::Idle));
+    this->ackCommand(d->vehicleService->vehicleIdByMavId(message.sysid),
+                     type, ::mavStatusMap.value(ack.result, dao::Command::Idle));
 }
 
 void CommandHandler::processHeartbeat(const mavlink_message_t& message)
@@ -112,41 +103,43 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
     d->baseMode = heartbeat.base_mode;
     d->customMode = heartbeat.custom_mode;
 
+    // FIXME: by vehicle!
     if (d->requestedCustomMode > -1 && d->requestedCustomMode == d->customMode)
     {
-        d->ackCommand(dao::Command::SetMode, dao::Command::Completed);
+        this->ackCommand(d->vehicleService->vehicleIdByMavId(message.sysid),
+                         dao::Command::SetMode, dao::Command::Completed);
         d->requestedCustomMode = -1;
     }
 }
 
-void CommandHandler::onSendCommand(const dao::CommandPtr& command, int attempt)
-{/*
-    qDebug() << command->type() << command->arguments() << attempt;
+void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, int attempt)
+{
+    qDebug() << "MAV:" << vehicleId << command->type() << command->arguments() << attempt;
 
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(command.vehicleId());
+    dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
     if (vehicle.isNull()) return;
 
-    if (::mavCommandLongMap.values().contains(command.type()))
+    if (::mavCommandLongMap.values().contains(command->type()))
     {
         this->sendCommandLong(vehicle->mavId(),
-                              ::mavCommandLongMap.key(command.type()),
-                              command.arguments(), attempt);
+                              ::mavCommandLongMap.key(command->type()),
+                              command->arguments(), attempt);
         return;
     }
 
-    if (command.arguments().count() < 1) return;
+    if (command->arguments().count() < 1) return;
 
-    if (command.type() == dao::Command::SetMode) // TODO: special command map
+    if (command->type() == dao::Command::SetMode) // TODO: special command map
     {
-        this->sendSetMode(vehicle->mavId(), command.arguments().first().value<Mode>());
+        this->sendSetMode(vehicle->mavId(), command->arguments().first().value<domain::Mode>());
     }
-    else if (command.type() == dao::Command::GoToItem)
+    else if (command->type() == dao::Command::GoToItem)
     {
-        this->sendCurrentItem(vehicle->mavId(), command.arguments().first().toInt());
+        this->sendCurrentItem(vehicle->mavId(), command->arguments().first().toInt());
     }
-    else if (command.type() == dao::Command::NavTo)
+    else if (command->type() == dao::Command::NavTo)
     {
-        QVariantList args = command.arguments();
+        QVariantList args = command->arguments();
         if (args.count() > 2)
         {
             this->sentNavTo(vehicle->mavId(),
@@ -154,7 +147,7 @@ void CommandHandler::onSendCommand(const dao::CommandPtr& command, int attempt)
                             args.at(1).toDouble(),
                             args.at(2).toFloat());
         }
-    }*/
+    }
 }
 
 void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
@@ -229,7 +222,8 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
                                                 &message, &current);
     m_communicator->sendMessage(message, link);
 
-    d->ackCommand(dao::Command::GoToItem, dao::Command::Completed); // TODO: wait current item
+    this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
+                     dao::Command::GoToItem, dao::Command::Completed); // TODO: wait current item
 }
 
 void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)
@@ -257,5 +251,6 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
                                          &message, &item);
     m_communicator->sendMessage(message, link);
 
-    d->ackCommand(dao::Command::NavTo, dao::Command::Completed); // TODO: wait nav to
+    this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
+                     dao::Command::NavTo, dao::Command::Completed); // TODO: wait nav to
 }
