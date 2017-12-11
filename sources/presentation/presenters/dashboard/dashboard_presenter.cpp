@@ -38,6 +38,7 @@ void DashboardPresenter::setVehicle(int id)
 {
     d->vehicle = d->service->vehicle(id);
 
+    this->setViewProperty(PROPERTY(instruments), QVariantList()); // TMP
     this->updateVehicle();
 }
 
