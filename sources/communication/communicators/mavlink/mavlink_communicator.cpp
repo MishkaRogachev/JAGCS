@@ -11,8 +11,7 @@
 
 // Internal
 #include "abstract_link.h"
-
-// TODO: multiplexing
+#include "abstract_mavlink_handler.h"
 
 using namespace comm;
 
@@ -26,6 +25,8 @@ public:
     QMap<quint8, AbstractLink*> mavSystemLinks;
     QList<quint8> avalibleChannels;
     AbstractLink* receivedLink = nullptr;
+
+    QList<AbstractMavLinkHandler*> handlers;
 
     int oldPacketsReceived = 0;
     int oldPacketsDrops = 0;
@@ -47,7 +48,12 @@ MavLinkCommunicator::MavLinkCommunicator(quint8 systemId, quint8 componentId, QO
 }
 
 MavLinkCommunicator::~MavLinkCommunicator()
-{}
+{
+    while (!d->handlers.isEmpty())
+    {
+        delete d->handlers.takeLast();
+    }
+}
 
 bool MavLinkCommunicator::isAddLinkEnabled()
 {
@@ -143,6 +149,11 @@ void MavLinkCommunicator::setComponentId(quint8 componentId)
     emit componentIdChanged(componentId);
 }
 
+void MavLinkCommunicator::addHandler(AbstractMavLinkHandler* handler)
+{
+    d->handlers.append(handler);
+}
+
 void MavLinkCommunicator::sendMessage(mavlink_message_t& message, AbstractLink* link)
 {
     if (!link || !link->isConnected()) return;
@@ -178,7 +189,11 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         }
 
         d->mavSystemLinks[message.sysid] = d->receivedLink;
-        emit messageReceived(message);
+
+        for (AbstractMavLinkHandler* handler: d->handlers)
+        {
+            handler->processMessage(message);
+        }
     }
 
     if (d->oldPacketsReceived != status.packet_rx_success_count ||

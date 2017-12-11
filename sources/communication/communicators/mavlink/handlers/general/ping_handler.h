@@ -7,12 +7,9 @@ namespace comm
 {
     class PingHandler: public AbstractMavLinkHandler
     {
-        Q_OBJECT
-
     public:
         explicit PingHandler(MavLinkCommunicator* communicator); // TODO: send ping
 
-    public slots:
         void processMessage(const mavlink_message_t& message) override;
     };
 }

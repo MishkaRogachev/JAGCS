@@ -1,11 +1,15 @@
 #ifndef HEARTBEAT_HANDLER_H
 #define HEARTBEAT_HANDLER_H
 
+// Qt
+#include <QObject>
+
+// Internal
 #include "abstract_mavlink_handler.h"
 
 namespace comm
 {
-    class HeartbeatHandler: public AbstractMavLinkHandler
+    class HeartbeatHandler: public QObject, public AbstractMavLinkHandler
     {
         Q_OBJECT
 
@@ -13,9 +17,9 @@ namespace comm
         explicit HeartbeatHandler(MavLinkCommunicator* communicator);
         ~HeartbeatHandler() override;
 
-    public slots:
         void processMessage(const mavlink_message_t& message) override;
 
+    public slots:
         void sendHeartbeat();
 
     protected:

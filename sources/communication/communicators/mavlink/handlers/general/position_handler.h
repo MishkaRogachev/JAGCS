@@ -12,16 +12,13 @@ namespace comm
 {
     class PositionHandler: public AbstractMavLinkHandler
     {
-        Q_OBJECT
-
     public:
         explicit PositionHandler(MavLinkCommunicator* communicator);
 
-    public slots:
         void processMessage(const mavlink_message_t& message) override;
 
     private:
-        domain::TelemetryService* m_telemetryService;
+        const domain::TelemetryService* m_telemetryService;
     };
 }
 #endif // POSITION_HANDLER_H

@@ -12,16 +12,13 @@ namespace comm
 {
     class AttitudeHandler: public AbstractMavLinkHandler
     {
-        Q_OBJECT
-
     public:
         explicit AttitudeHandler(MavLinkCommunicator* communicator);
 
-    public slots:
         void processMessage(const mavlink_message_t& message) override;
 
     private:
-        domain::TelemetryService* m_telemetryService;
+        const domain::TelemetryService* m_telemetryService;
     };
 }
 

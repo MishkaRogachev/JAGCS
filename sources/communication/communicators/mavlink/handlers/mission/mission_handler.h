@@ -1,6 +1,9 @@
 #ifndef MISSION_HANDLER_H
 #define MISSION_HANDLER_H
 
+// Qt
+#include <QObject>
+
 // Internal
 #include "abstract_mavlink_handler.h"
 #include "dao_traits.h"
@@ -14,7 +17,7 @@ namespace domain
 
 namespace comm
 {
-    class MissionHandler: public AbstractMavLinkHandler
+    class MissionHandler: public QObject, public AbstractMavLinkHandler
     {
         Q_OBJECT
 

@@ -1,6 +1,9 @@
 #ifndef COMMAND_HANDLER_H
 #define COMMAND_HANDLER_H
 
+// Qt
+#include <QObject>
+
 // Internal
 #include "dao_traits.h"
 
@@ -9,7 +12,7 @@
 
 namespace comm
 {
-    class CommandHandler: public AbstractMavLinkHandler // TODO: separate command handlers
+    class CommandHandler: public QObject, public AbstractMavLinkHandler // TODO: separate command handlers
     {
         Q_OBJECT
 
@@ -17,9 +20,9 @@ namespace comm
         explicit CommandHandler(MavLinkCommunicator* communicator);
         ~CommandHandler() override;
 
-    public slots:
-       void processMessage(const mavlink_message_t& message) override;
+        void processMessage(const mavlink_message_t& message) override;
 
+    public slots:
        void processCommandAck(const mavlink_message_t& message);
        void processHeartbeat(const mavlink_message_t& message);
 

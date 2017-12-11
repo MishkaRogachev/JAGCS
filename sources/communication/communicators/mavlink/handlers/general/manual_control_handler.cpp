@@ -22,22 +22,13 @@ namespace
 
 using namespace comm;
 
-class ManualControlHandler::Impl
-{
-public:
-    const domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
-};
-
 ManualControlHandler::ManualControlHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    d(new Impl())
+    m_vehicleService(domain::ServiceRegistry::vehicleService())
 {
-    connect(d->vehicleService, &domain::VehicleService::sendManualControl,
+    connect(m_vehicleService, &domain::VehicleService::sendManualControl,
             this, &ManualControlHandler::sendManualControl);
 }
-
-ManualControlHandler::~ManualControlHandler()
-{}
 
 void ManualControlHandler::processMessage(const mavlink_message_t& message)
 {
@@ -48,7 +39,7 @@ void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float 
 {
     mavlink_manual_control_t mavlink_manual_control;
 
-    int mavId = d->vehicleService->mavIdByVehicleId(vehicledId);
+    int mavId = m_vehicleService->mavIdByVehicleId(vehicledId);
     mavlink_manual_control.target = mavId;
 
     mavlink_manual_control.x = ::normalize(pitch);

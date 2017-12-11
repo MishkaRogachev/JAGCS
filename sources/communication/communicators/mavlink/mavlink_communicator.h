@@ -8,6 +8,8 @@
 
 namespace comm
 {
+    class AbstractMavLinkHandler;
+
     class MavLinkCommunicator: public AbstractCommunicator
     {
         Q_OBJECT
@@ -35,11 +37,11 @@ namespace comm
         void setSystemId(quint8 systemId);
         void setComponentId(quint8 componentId);
 
+        void addHandler(AbstractMavLinkHandler* handler);
+
         void sendMessage(mavlink_message_t& message, AbstractLink* link);
 
     signals:
-        void messageReceived(const mavlink_message_t& message);
-
         void systemIdChanged(quint8 systemId);
         void componentIdChanged(quint8 componentId);
 

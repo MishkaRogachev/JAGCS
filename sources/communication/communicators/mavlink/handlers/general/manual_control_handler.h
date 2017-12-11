@@ -1,26 +1,33 @@
 #ifndef MANUAL_CONTROL_HANDLER_H
 #define MANUAL_CONTROL_HANDLER_H
 
+// Qt
+#include <QObject>
+
+// Internal
 #include "abstract_mavlink_handler.h"
+
+namespace domain
+{
+    class VehicleService;
+}
 
 namespace comm
 {
-    class ManualControlHandler: public AbstractMavLinkHandler
+    class ManualControlHandler: public QObject, public AbstractMavLinkHandler
     {
         Q_OBJECT
 
     public:
         explicit ManualControlHandler(MavLinkCommunicator* communicator);
-        ~ManualControlHandler() override;
 
-    public slots:
         void processMessage(const mavlink_message_t& message) override;
 
+    public slots:
         void sendManualControl(int vehicledId, float pitch, float roll, float thrust, float yaw);
 
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        const domain::VehicleService* m_vehicleService;
     };
 }
 

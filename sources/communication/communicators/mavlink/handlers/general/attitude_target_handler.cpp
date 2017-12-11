@@ -14,22 +14,13 @@
 
 using namespace comm;
 
-class AttitudeTargetHandler::Impl
-{
-public:
-    const domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
-};
-
 AttitudeTargetHandler::AttitudeTargetHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    d(new Impl())
+    m_vehicleService(domain::ServiceRegistry::vehicleService())
 {
-    connect(d->vehicleService, &domain::VehicleService::sendManualControl,
-            this, &AttitudeTargetHandler::sendAttitude);
+//    connect(d->vehicleService, &domain::VehicleService::sendManualControl,
+//            this, &AttitudeTargetHandler::sendAttitude);
 }
-
-AttitudeTargetHandler::~AttitudeTargetHandler()
-{}
 
 void AttitudeTargetHandler::processMessage(const mavlink_message_t& message)
 {
@@ -38,7 +29,7 @@ void AttitudeTargetHandler::processMessage(const mavlink_message_t& message)
 
 void AttitudeTargetHandler::sendAttitude(int vehicledId, float pitch, float roll, float thrust, float yaw)
 {
-    int mavId = d->vehicleService->mavIdByVehicleId(vehicledId);
+    int mavId = m_vehicleService->mavIdByVehicleId(vehicledId);
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
 

@@ -34,24 +34,24 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
 {
     auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
 
-    new PingHandler(communicator);
-    new HeartbeatHandler(communicator);
-    new SystemStatusHandler(communicator);
-    new AutopilotVersionHandler(communicator);
-    new AttitudeHandler(communicator);
-    new PressureHandler(communicator);
-    new PositionHandler(communicator);
-    new HomePositionHandler(communicator);
-    new GpsHandler(communicator);
-    new VfrHudHandler(communicator);
-    new RangefinderHandler(communicator);
-    new WindHandler(communicator);
-    new RadioStatusHandler(communicator);
-    new NavControllerHandler(communicator);
-    new TargetPositionHandler(communicator);
-    new CommandHandler(communicator);
-    new MissionHandler(communicator);
-    new AttitudeTargetHandler(communicator);
+    communicator->addHandler(new PingHandler(communicator));
+    communicator->addHandler(new HeartbeatHandler(communicator));
+    communicator->addHandler(new SystemStatusHandler(communicator));
+    communicator->addHandler(new AutopilotVersionHandler(communicator));
+    communicator->addHandler(new AttitudeHandler(communicator));
+    communicator->addHandler(new PressureHandler(communicator));
+    communicator->addHandler(new PositionHandler(communicator));
+    communicator->addHandler(new HomePositionHandler(communicator));
+    communicator->addHandler(new GpsHandler(communicator));
+    communicator->addHandler(new VfrHudHandler(communicator));
+    communicator->addHandler(new RangefinderHandler(communicator));
+    communicator->addHandler(new WindHandler(communicator));
+    communicator->addHandler(new RadioStatusHandler(communicator));
+    communicator->addHandler(new NavControllerHandler(communicator));
+    communicator->addHandler(new TargetPositionHandler(communicator));
+    communicator->addHandler(new CommandHandler(communicator));
+    communicator->addHandler(new MissionHandler(communicator));
+    communicator->addHandler(new AttitudeTargetHandler(communicator));
 
     return communicator;
 }

@@ -619,7 +619,7 @@ void MissionHandler::enterStage(Stage stage, quint8 mavId)
 void MissionHandler::timerEvent(QTimerEvent* event)
 {
     quint8 mavId = d->mavTimers.key(event->timerId(), 0);
-    if (!mavId) AbstractMavLinkHandler::timerEvent(event);
+    if (!mavId) QObject::timerEvent(event);
 
     switch (d->mavStages.value(mavId, Stage::Idle))
     {

@@ -133,7 +133,7 @@ void HomePositionHandler::timerEvent(QTimerEvent* event)
 {
     dao::VehiclePtr vehicle = d->vehicleService->vehicle(
                                   d->vehiclesTimers.key(event->timerId(), -1));
-    if (vehicle.isNull()) return AbstractMavLinkHandler::timerEvent(event);
+    if (vehicle.isNull()) return QObject::timerEvent(event);
 
     this->sendHomePositionRequest(vehicle->mavId());
 }

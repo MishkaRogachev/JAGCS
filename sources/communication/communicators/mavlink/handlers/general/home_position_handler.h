@@ -1,12 +1,15 @@
 #ifndef HOME_POSITION_HANDLER_H
 #define HOME_POSITION_HANDLER_H
 
+// Qt
+#include <QObject>
+
 // Internal
 #include "abstract_mavlink_handler.h"
 
 namespace comm
 {
-    class HomePositionHandler: public AbstractMavLinkHandler
+    class HomePositionHandler: public QObject, public AbstractMavLinkHandler
     {
         Q_OBJECT
 
@@ -14,9 +17,9 @@ namespace comm
         explicit HomePositionHandler(MavLinkCommunicator* communicator);
         ~HomePositionHandler();
 
-    public slots:
         void processMessage(const mavlink_message_t& message) override;
 
+    public slots:
         void sendHomePositionRequest(quint8 mavId);
 
     protected:

@@ -4,22 +4,16 @@
 // MAVLink
 #include <mavlink_types.h>
 
-// Qt
-#include <QObject>
-
 namespace comm
 {
     class MavLinkCommunicator;
 
-    class AbstractMavLinkHandler: public QObject // TODO: separate hander on handler & sender with no QObject inheritance
+    class AbstractMavLinkHandler
     {
-        Q_OBJECT
-
     public:
         explicit AbstractMavLinkHandler(MavLinkCommunicator* communicator);
-        ~AbstractMavLinkHandler() override;
+        virtual ~AbstractMavLinkHandler();
 
-    public slots:
         virtual void processMessage(const mavlink_message_t& message) = 0;
 
     protected:
