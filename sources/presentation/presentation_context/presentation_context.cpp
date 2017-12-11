@@ -60,9 +60,10 @@ PresentationContext::PresentationContext()
 
     m_engine->rootContext()->setContextProperty("translator",
                                                 QVariant::fromValue(new TranslationHelper(qApp)));
-    QObject::connect(m_engine, &QQmlEngine::quit, [this]() {
+
+    QObject::connect(m_engine, &QQmlEngine::quit, qApp, &QGuiApplication::quit);
+    QObject::connect(qApp, &QGuiApplication::aboutToQuit, qApp, [this]() {
         this->saveWindowedGeometry();
-        qApp->quit();
     });
 }
 
