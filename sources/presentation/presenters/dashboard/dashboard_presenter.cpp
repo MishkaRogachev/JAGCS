@@ -27,7 +27,7 @@ DashboardPresenter::DashboardPresenter(QObject* parent):
 {
     connect(d->service, &domain::VehicleService::vehicleChanged,
             [this](const dao::VehiclePtr& vehicle) {
-        if (vehicle == d->vehicle) this->updateInstruments();
+        if (vehicle == d->vehicle) this->updateVehicle();
     });
 }
 
@@ -38,15 +38,17 @@ void DashboardPresenter::setVehicle(int id)
 {
     d->vehicle = d->service->vehicle(id);
 
-    this->updateInstruments();
+    this->updateVehicle();
 }
 
-void DashboardPresenter::updateInstruments()
+void DashboardPresenter::updateVehicle()
 {
     if (d->vehicle)
     {
-        VehicleDashboardFactory f(d->vehicle);
+        this->setViewProperty(PROPERTY(online), d->vehicle->isOnline());
 
+        // TODO: handle VehicleInstruments dao
+        VehicleDashboardFactory f(d->vehicle);
         this->setViewProperty(PROPERTY(instruments), f.create());
     }
     else

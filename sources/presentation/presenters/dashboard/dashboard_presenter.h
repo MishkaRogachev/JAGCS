@@ -24,7 +24,7 @@ namespace presentation
 
     public slots:
         void setVehicle(int id);
-        void updateInstruments();
+        void updateVehicle();
 
     private:
         class Impl;

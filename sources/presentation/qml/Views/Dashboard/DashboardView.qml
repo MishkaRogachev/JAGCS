@@ -8,6 +8,8 @@ Item {
     id: dashboard
 
     property int vehicleId: 0
+
+    property bool online: false
     property var instruments: []
 
     function setActiveVehicle(vehicleId) {
