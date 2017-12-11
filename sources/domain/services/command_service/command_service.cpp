@@ -18,32 +18,37 @@ CommandService::CommandService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<Command>("Command");
-    qRegisterMetaType<Command::CommandType>("Command::CommandType");
-    qRegisterMetaType<Command::CommandStatus>("Command::CommandStatus");
+    qRegisterMetaType<dao::CommandPtr>("dao::CommandPtr");
 }
 
 CommandService::~CommandService()
 {}
 
-void CommandService::executeCommand(int vehicleId, const Command& command)
+void CommandService::executeCommand(int vehicleId, const dao::CommandPtr& command)
 {
-    if (vehicleId == 0 || command.type() == Command::UnknownCommand)
+    if (vehicleId == 0 || command->type() == dao::Command::UnknownCommand)
     {
-//        command.setStatus(Command::Rejected);
-//        emit commandStatusChanged(command);
+        command->setStatus(dao::Command::Rejected);
+        emit commandChanged(command);
         return;
     }
 
-    d->senders.value(vehicleId, new CommandSender(this))->addCommand(command);
+    CommandSender* sender = d->senders.value(vehicleId, nullptr);
+    if (!sender)
+    {
+        sender = new CommandSender(this);
+        d->senders[vehicleId] = sender;
+        connect(sender, &CommandSender::commandChanged, this, &CommandService::commandChanged);
+    }
+
+    sender->addCommand(command);
 }
 
-void CommandService::rejectCommand(int vehicleId, Command::CommandType type)
+void CommandService::cancelCommand(int vehicleId, dao::Command::CommandType type)
 {
-    if (!d->senders.contains(vehicleId)
-        || !d->senders[vehicleId]->hasCommand(type)) return;
+    if (!d->senders.contains(vehicleId) || !d->senders[vehicleId]->hasCommand(type)) return;
 
-    Command command = d->senders[vehicleId]->takeCommand(type);
-    command.setStatus(Command::Canceled);
-    emit commandStatusChanged(command);
+    dao::CommandPtr command = d->senders[vehicleId]->takeCommand(type);
+    command->setStatus(dao::Command::Canceled);
+    emit commandChanged(command);
 }

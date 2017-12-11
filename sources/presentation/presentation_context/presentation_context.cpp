@@ -150,10 +150,10 @@ void PresentationContext::registerQuickTypes()
                 "JAGCS", 1, 0, "MissionAssignment", "Can't create entities in QML");
     qmlRegisterUncreatableType<dao::MissionItem>(
                 "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
+    qmlRegisterUncreatableType<dao::Command>(
+                "JAGCS", 1, 0, "Command", "Can't create entities in QML");
     qmlRegisterUncreatableType<dao::VideoSource>(
                 "JAGCS", 1, 0, "VideoSource", "Can't create entities in QML");
-    qmlRegisterUncreatableType<domain::Command>(
-                "JAGCS", 1, 0, "Command", "Can't create commands in QML");
     qmlRegisterUncreatableType<domain::LogMessage>(
                 "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
 

@@ -15,9 +15,9 @@ using namespace domain;
 class CommandSender::Impl
 {
 public:
-    QMap <Command::CommandType, Command> typeCommands;
-    QMap <Command::CommandType, int> typeAttemps;
-    QMap <Command::CommandType, int> typeTimers;
+    QMap <dao::Command::CommandType, dao::CommandPtr> typeCommands;
+    QMap <dao::Command::CommandType, int> typeAttemps;
+    QMap <dao::Command::CommandType, int> typeTimers;
 };
 
 CommandSender::CommandSender(QObject* parent):
@@ -28,48 +28,51 @@ CommandSender::CommandSender(QObject* parent):
 CommandSender::~CommandSender()
 {}
 
-bool CommandSender::hasCommand(Command::CommandType type) const
+bool CommandSender::hasCommand(dao::Command::CommandType type) const
 {
     return d->typeCommands.contains(type);
 }
 
-Command CommandSender::takeCommand(Command::CommandType type)
+dao::CommandPtr CommandSender::takeCommand(dao::Command::CommandType type)
 {
-    Command cmd = d->typeCommands.take(type);
+    dao::CommandPtr cmd = d->typeCommands.take(type);
     d->typeAttemps.remove(type);
 
     if (d->typeTimers.contains(type)) this->killTimer(d->typeTimers.take(type));
     return cmd;
 }
 
-void CommandSender::addCommand(const Command& command)
+void CommandSender::addCommand(const dao::CommandPtr& command)
 {
-    if (d->typeTimers.contains(command.type())) this->killTimer(d->typeTimers.take(command.type()));
+    if (d->typeTimers.contains(command->type()))
+    {
+        this->killTimer(d->typeTimers.take(command->type()));
+    }
 
-    d->typeCommands[command.type()] = command;
-    d->typeAttemps[command.type()] = 0;
+    d->typeCommands[command->type()] = command;
+    d->typeAttemps[command->type()] = 0;
 
-    emit sendCommand(command, d->typeAttemps[command.type()]);
-    d->typeTimers[command.type()] = this->startTimer(::interval);
-    d->typeCommands[command.type()].setStatus(Command::Sending);
-    emit commandFinished(d->typeCommands[command.type()]);
+    emit sendCommand(command, d->typeAttemps[command->type()]);
+    d->typeTimers[command->type()] = this->startTimer(::interval);
+    d->typeCommands[command->type()]->setStatus(dao::Command::Sending);
+    emit commandChanged(d->typeCommands[command->type()]);
 }
 
-void CommandSender::finishCommand(Command::CommandType type, Command::CommandStatus status)
+void CommandSender::finishCommand(dao::Command::CommandType type, dao::Command::CommandStatus status)
 {
-    Command cmd = this->takeCommand(type);
+    dao::CommandPtr cmd = this->takeCommand(type);
 
-    cmd.setStatus(status);
+    cmd->setStatus(status);
 
-    emit commandFinished(cmd);
+    emit commandChanged(cmd);
 }
 
 void CommandSender::timerEvent(QTimerEvent* event)
 {
     if (!d->typeTimers.values().contains(event->timerId())) return QObject::timerEvent(event);
-    Command::CommandType type = d->typeTimers.key(event->timerId());
+    dao::Command::CommandType type = d->typeTimers.key(event->timerId());
 
     emit sendCommand(d->typeCommands[type], ++d->typeAttemps[type]);
-    if (d->typeAttemps[type] >= maxAttemps) this->finishCommand(type, Command::Rejected);
+    if (d->typeAttemps[type] >= maxAttemps) this->finishCommand(type, dao::Command::Rejected);
 }
 

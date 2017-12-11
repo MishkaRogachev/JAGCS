@@ -1,6 +1,7 @@
 #ifndef LINK_DESCRIPTION_H
 #define LINK_DESCRIPTION_H
 
+// Internal
 #include "base_dao.h"
 
 namespace dao

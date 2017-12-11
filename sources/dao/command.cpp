@@ -1,17 +1,6 @@
 #include "command.h"
 
-using namespace domain;
-
-Command::Command(CommandType type, CommandStatus status):
-    m_type(type),
-    m_status(status)
-{}
-
-Command::Command(const Command& command):
-    m_type(command.type()),
-    m_status(command.status()),
-    m_arguments(command.arguments())
-{}
+using namespace dao;
 
 Command::CommandType Command::type() const
 {

@@ -1,15 +1,21 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
+// Internal
+#include "base_dao.h"
+
 // Qt
-#include <QObject>
 #include <QVariant>
 
-namespace domain
+namespace dao
 {
-    class Command
+    class Command: public BaseDao
     {
         Q_GADGET
+
+        Q_PROPERTY(CommandType type READ type WRITE setType)
+        Q_PROPERTY(CommandStatus status READ status WRITE setStatus)
+        Q_PROPERTY(QVariantList arguments READ arguments WRITE setArguments)
 
     public:
         // TODO: Merge command and mission item comman enums
@@ -48,9 +54,6 @@ namespace domain
             Completed,
         };
 
-        Command(CommandType type = UnknownCommand, CommandStatus status = Idle);
-        Command(const Command& command);
-
         CommandType type() const;
         void setType(CommandType type);
 
@@ -62,8 +65,8 @@ namespace domain
         void addArgument(const QVariant& argument);
 
     private:
-        CommandType m_type;
-        CommandStatus m_status;
+        CommandType m_type = UnknownCommand;
+        CommandStatus m_status = Idle;
         QVariantList m_arguments;
 
         Q_ENUM(CommandType)

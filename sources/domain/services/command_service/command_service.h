@@ -5,6 +5,7 @@
 #include <QObject>
 
 // Internal
+#include "dao_traits.h"
 #include "command.h"
 
 namespace domain
@@ -18,11 +19,11 @@ namespace domain
         ~CommandService() override;
 
     public slots:
-        void executeCommand(int vehicleId, const Command& command);
-        void rejectCommand(int vehicleId, Command::CommandType type);
+        void executeCommand(int vehicleId, const dao::CommandPtr& command);
+        void cancelCommand(int vehicleId, dao::Command::CommandType type);
 
     signals:
-        void commandStatusChanged(const Command& command);
+        void commandChanged(dao::CommandPtr command);
 
     private:
         class Impl;

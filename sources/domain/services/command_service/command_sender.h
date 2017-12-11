@@ -2,6 +2,7 @@
 #define COMMAND_SENDER_H
 
 // Internal
+#include "dao_traits.h"
 #include "command.h"
 
 namespace domain
@@ -14,16 +15,16 @@ namespace domain
         explicit CommandSender(QObject* parent = nullptr);
         ~CommandSender() override;
 
-        bool hasCommand(Command::CommandType type) const;
-        Command takeCommand(Command::CommandType type);
+        bool hasCommand(dao::Command::CommandType type) const;
+        dao::CommandPtr takeCommand(dao::Command::CommandType type);
 
     public slots:
-        void addCommand(const Command& command);
-        void finishCommand(Command::CommandType type, Command::CommandStatus status);
+        void addCommand(const dao::CommandPtr& command);
+        void finishCommand(dao::Command::CommandType type, dao::Command::CommandStatus status);
 
     signals:
-        void sendCommand(const Command& command, int attempt);
-        void commandFinished(const Command& command);
+        void sendCommand(dao::CommandPtr command, int attempt);
+        void commandChanged(dao::CommandPtr command);
 
     protected:
         void timerEvent(QTimerEvent* event) override;

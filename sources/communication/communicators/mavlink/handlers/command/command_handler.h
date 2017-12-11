@@ -2,13 +2,10 @@
 #define COMMAND_HANDLER_H
 
 // Internal
+#include "dao_traits.h"
+
 #include "abstract_mavlink_handler.h"
 #include "modes.h"
-
-namespace domain
-{
-    class Command;
-}
 
 namespace comm
 {
@@ -27,7 +24,7 @@ namespace comm
        void processHeartbeat(const mavlink_message_t& message);
 
     private slots:
-       void onSendCommand(const domain::Command& command, int attempt = 0);
+       void onSendCommand(const dao::CommandPtr& command, int attempt = 0);
 
        void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);
        void sendSetMode(quint8 mavId, domain::Mode mode);
