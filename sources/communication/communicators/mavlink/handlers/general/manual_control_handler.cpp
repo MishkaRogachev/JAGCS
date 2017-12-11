@@ -24,6 +24,7 @@ using namespace comm;
 
 ManualControlHandler::ManualControlHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
+    QObject(communicator),
     m_vehicleService(domain::ServiceRegistry::vehicleService())
 {
     connect(m_vehicleService, &domain::VehicleService::sendManualControl,

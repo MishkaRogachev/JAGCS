@@ -94,6 +94,7 @@ public:
 };
 
 HeartbeatHandler::HeartbeatHandler(MavLinkCommunicator* communicator):
+    QObject(communicator),
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {

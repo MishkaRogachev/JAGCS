@@ -70,6 +70,7 @@ public:
 };
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
+    QObject(communicator),
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {

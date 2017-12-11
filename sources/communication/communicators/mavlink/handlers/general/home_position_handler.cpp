@@ -43,6 +43,7 @@ public:
 };
 
 HomePositionHandler::HomePositionHandler(MavLinkCommunicator* communicator):
+    QObject(communicator),
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
