@@ -55,9 +55,19 @@ public:
     domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
 
     QScopedPointer<IModeHelper> modeHelper;
-    quint8 baseMode = 0;
-    int customMode = -1;
-    int requestedCustomMode = -1;
+
+    struct ModeAgregator
+    {
+        quint8 baseMode = 0;
+        int customMode = -1;
+        int requestedCustomMode = -1;
+
+        bool isObtained()
+        {
+            return requestedCustomMode > -1 && requestedCustomMode == customMode;
+        }
+    };
+    QMap<quint8, ModeAgregator> modes;
 };
 
 CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
@@ -100,15 +110,14 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
         d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
     }
 
-    d->baseMode = heartbeat.base_mode;
-    d->customMode = heartbeat.custom_mode;
+    d->modes[message.sysid].baseMode = heartbeat.base_mode;
+    d->modes[message.sysid].customMode = heartbeat.custom_mode;
 
-    // FIXME: by vehicle!
-    if (d->requestedCustomMode > -1 && d->requestedCustomMode == d->customMode)
+    if (d->modes[message.sysid].isObtained())
     {
         this->ackCommand(d->vehicleService->vehicleIdByMavId(message.sysid),
                          dao::Command::SetMode, dao::Command::Completed);
-        d->requestedCustomMode = -1;
+        d->modes[message.sysid].requestedCustomMode = -1;
     }
 }
 
@@ -187,12 +196,12 @@ void CommandHandler::sendSetMode(quint8 mavId, domain::Mode mode)
     mavlink_set_mode_t setMode;
 
     setMode.target_system = mavId;
-    setMode.base_mode = d->baseMode;
+    setMode.base_mode = d->modes[mavId].baseMode;
 
-    d->requestedCustomMode = d->modeHelper->modeToCustomMode(mode);
-    if (d->requestedCustomMode < 0) return;
+    d->modes[mavId].requestedCustomMode = d->modeHelper->modeToCustomMode(mode);
+    if (d->modes[mavId].requestedCustomMode < 0) return;
 
-    setMode.custom_mode = d->requestedCustomMode;
+    setMode.custom_mode = d->modes[mavId].requestedCustomMode;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
