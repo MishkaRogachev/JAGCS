@@ -71,6 +71,7 @@ public:
 };
 
 MissionHandler::MissionHandler(MavLinkCommunicator* communicator):
+    QObject(communicator),
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {

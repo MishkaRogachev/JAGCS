@@ -9,7 +9,7 @@
 
 namespace comm
 {
-    class CommandHandler:
+    class CommandHandler: // Rename to MavLinkCommandHandler
             public domain::AbstractCommandHandler,
             public AbstractMavLinkHandler
     {

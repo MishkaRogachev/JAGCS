@@ -9,6 +9,7 @@
 #include "command_service.h"
 
 #include "command.h"
+#include "modes.h"
 
 using namespace presentation;
 
@@ -24,7 +25,6 @@ ControlDisplayPresenter::ControlDisplayPresenter(QObject* parent):
 
 void ControlDisplayPresenter::executeCommand(int commandType, const QVariant& args)
 {
-    qDebug() << commandType << args;
     dao::CommandPtr command = dao::CommandPtr::create();
     command->setType(dao::Command::CommandType(commandType));
     command->setArguments(args.toList());
@@ -44,9 +44,15 @@ void ControlDisplayPresenter::connectNode(domain::Telemetry* node)
 
 void ControlDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
 {
-    qDebug() << "status" << parameters.value(domain::Telemetry::AvailableModes);
     this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
     this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
     this->setViewProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
-    this->setViewProperty(PROPERTY(availableModes), parameters.value(domain::Telemetry::AvailableModes));
+
+    QVariantList modes;
+    for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
+         QList<domain::Mode> >())
+    {
+        modes.append(QVariant::fromValue(item));
+    }
+    this->setViewProperty(PROPERTY(availableModes), modes);
 }

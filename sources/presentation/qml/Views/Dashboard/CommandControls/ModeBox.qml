@@ -10,6 +10,7 @@ Controls.ComboBox {
     property int mode: Domain.None
     property int status: Command.Idle
 
+    model: []
     onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
 
