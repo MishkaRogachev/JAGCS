@@ -18,20 +18,16 @@ namespace domain
 
     public:
         explicit CommandService(QObject* parent = nullptr);
-        ~CommandService() override;
-
-        void addHandler(AbstractCommandHandler* handler);
 
     public slots:
+        void addHandler(AbstractCommandHandler* handler);
+        void removeHandler(AbstractCommandHandler* handler);
+
+    signals:
         void executeCommand(int vehicleId, const dao::CommandPtr& command);
         void cancelCommand(int vehicleId, dao::Command::CommandType type);
 
-    signals:
         void commandChanged(dao::CommandPtr command);
-
-    private:
-        class Impl;
-        const QScopedPointer<Impl> d;
     };
 }
 

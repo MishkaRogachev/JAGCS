@@ -1,6 +1,7 @@
 #include "control_display_presenter.h"
 
 // Qt
+#include <QVariant>
 #include <QDebug>
 
 // Internal
@@ -15,12 +16,15 @@ ControlDisplayPresenter::ControlDisplayPresenter(QObject* parent):
     AbstractInstrumentPresenter(parent),
     m_service(domain::ServiceRegistry::commandService())
 {
-//    connect(m_service, &domain::CommandService::commandStatusChanged,
-//            this, &ControlDisplayPresenter::onCommandStatusChanged);
+    connect(m_service, &domain::CommandService::commandChanged,
+            this, [this](const dao::CommandPtr& command) {
+        this->invokeViewMethod(PROPERTY(updateCommandStatus), command->type(), command->status());
+    });
 }
 
 void ControlDisplayPresenter::executeCommand(int commandType, const QVariant& args)
 {
+    qDebug() << commandType << args;
     dao::CommandPtr command = dao::CommandPtr::create();
     command->setType(dao::Command::CommandType(commandType));
     command->setArguments(args.toList());
@@ -40,6 +44,7 @@ void ControlDisplayPresenter::connectNode(domain::Telemetry* node)
 
 void ControlDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
 {
+    qDebug() << "status" << parameters.value(domain::Telemetry::AvailableModes);
     this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
     this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
     this->setViewProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));

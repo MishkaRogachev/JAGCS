@@ -5,58 +5,25 @@
 
 // Internal
 #include "abstract_command_handler.h"
-#include "command_sender.h"
 
 using namespace domain;
 
-class CommandService::Impl
-{
-public:
-    QMap<int, CommandSender*> senders;
-};
-
 CommandService::CommandService(QObject* parent):
-    QObject(parent),
-    d(new Impl())
+    QObject(parent)
 {
     qRegisterMetaType<dao::CommandPtr>("dao::CommandPtr");
 }
 
-CommandService::~CommandService()
-{}
-
 void CommandService::addHandler(AbstractCommandHandler* handler)
 {
-    connect(handler, &AbstractCommandHandler::ackCommand, this, [this](){
+    connect(this, &CommandService::executeCommand, handler, &AbstractCommandHandler::executeCommand);
+    connect(this, &CommandService::cancelCommand, handler, &AbstractCommandHandler::cancelCommand);
 
-    });
+    connect(handler, &AbstractCommandHandler::commandChanged, this, &CommandService::commandChanged);
 }
 
-void CommandService::executeCommand(int vehicleId, const dao::CommandPtr& command)
+void CommandService::removeHandler(AbstractCommandHandler* handler)
 {
-    if (vehicleId == 0 || command->type() == dao::Command::UnknownCommand)
-    {
-        command->setStatus(dao::Command::Rejected);
-        emit commandChanged(command);
-        return;
-    }
-
-    CommandSender* sender = d->senders.value(vehicleId, nullptr);
-    if (!sender)
-    {
-        sender = new CommandSender(this);
-        d->senders[vehicleId] = sender;
-        connect(sender, &CommandSender::commandChanged, this, &CommandService::commandChanged);
-    }
-
-    sender->addCommand(command);
-}
-
-void CommandService::cancelCommand(int vehicleId, dao::Command::CommandType type)
-{
-    if (!d->senders.contains(vehicleId) || !d->senders[vehicleId]->hasCommand(type)) return;
-
-    dao::CommandPtr command = d->senders[vehicleId]->takeCommand(type);
-    command->setStatus(dao::Command::Canceled);
-    emit commandChanged(command);
+    disconnect(this, 0, handler, 0);
+    disconnect(handler, 0, this, 0);
 }

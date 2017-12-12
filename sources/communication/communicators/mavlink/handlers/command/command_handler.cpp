@@ -10,7 +10,6 @@
 #include "service_registry.h"
 
 #include "command_service.h"
-#include "command_sender.h"
 
 #include "vehicle_service.h"
 #include "vehicle.h"

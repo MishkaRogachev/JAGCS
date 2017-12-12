@@ -13,6 +13,7 @@ Controls.Pane {
     property bool armed: false
 
     enabled: online
+    onAvailableModesChanged: console.log(availableModes)
 
     function updateCommandStatus(command, status) {
         switch (command) {

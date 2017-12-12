@@ -15,16 +15,25 @@ namespace domain
 
     public:
         explicit AbstractCommandHandler(QObject* parent = nullptr);
+        ~AbstractCommandHandler() override;
 
-    protected:
-        virtual void sendCommand(int vehicleId,
-                                 const dao::CommandPtr& command,
-                                 int attempt = 0) = 0;
+    public slots:
+        void executeCommand(int vehicleId, const dao::CommandPtr& command);
+        void cancelCommand(int vehicleId, dao::Command::CommandType type);
 
     signals:
-        void ackCommand(int vehicleId,
-                        dao::Command::CommandType type,
-                        dao::Command::CommandStatus status);
+        void commandChanged(dao::CommandPtr command);
+
+    protected:
+        void ackCommand(int vehicleId, dao::Command::CommandType type, dao::Command::CommandStatus status);
+        void stopCommand(int vehicleId, const dao::CommandPtr& command);
+        void timerEvent(QTimerEvent* event) override;
+
+        virtual void sendCommand(int vehicleId, const dao::CommandPtr& command, int attempt = 0) = 0;
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
