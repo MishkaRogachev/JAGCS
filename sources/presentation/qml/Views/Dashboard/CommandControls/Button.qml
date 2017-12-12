@@ -12,11 +12,6 @@ Controls.Button {
 
     signal beforeSended()
 
-    Connections {
-        target: presenter
-        onCommandStatusChanged: if (type == command) control.status = status
-    }
-
     onClicked: {
         if (status == Command.Sending)
         {

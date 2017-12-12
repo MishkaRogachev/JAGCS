@@ -13,11 +13,6 @@ Controls.ComboBox {
     onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
 
-    Connections {
-        target: presenter
-        onCommandStatusChanged: if (type == Command.SetMode) control.status = status
-    }
-
     Timer {
         id: timer
         onTriggered: status = Command.Idle

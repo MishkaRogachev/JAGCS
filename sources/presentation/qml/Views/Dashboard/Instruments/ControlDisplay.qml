@@ -8,13 +8,29 @@ import "../CommandControls" as CommandControls
 Controls.Pane {
     id: controlDisplay
 
-    property int mode: Domain.None
-    property var availableModes: []
+    property int mode: modeBox.mode
+    property var availableModes: modeBox.model
     property bool armed: false
+
+    enabled: online
+
+    function updateCommandStatus(command, status) {
+        switch (command) {
+        case Command.ArmDisarm:
+            armDisarm.status = status;
+            break;
+        case Command.SetMode:
+            modeBox.status = status;
+            break;
+        default:
+            break;
+        }
+    }
 
     ControlDisplayPresenter {
         id: presenter
         view: controlDisplay
+        Component.onCompleted: setVehicle(vehicleId)
     }
 
     GridLayout {
@@ -24,24 +40,18 @@ Controls.Pane {
         rowSpacing: sizings.spacing
         columns: 2
 
-        CommandControls.Switch {
+        CommandControls.Button {
+            id: armDisarm
             text: armed ? qsTr("ARMED") : qsTr("DISARMED")
-            tipText: armed ? qsTr("Disarm") : qsTr("Arm")
-            enabled: online
-            font.pixelSize: sizings.fontPixelSize * 0.75
-            font.bold: true
+            tipText: armed ? qsTr("Hold to disarm") : qsTr("Hold to arm")
+            args: [ !armed ]
             command: Command.ArmDisarm
-            inputChecked: armed
             Layout.fillWidth: true
         }
 
         CommandControls.ModeBox {
-            mode: controlDisplay.mode
-            model: availableModes
+            id: modeBox
             tipText: qsTr("Select mode")
-            enabled: online
-            font.pixelSize: sizings.fontPixelSize * 0.75
-            font.bold: true
             Layout.fillWidth: true
         }
     }
