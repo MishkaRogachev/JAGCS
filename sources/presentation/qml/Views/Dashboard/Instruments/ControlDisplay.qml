@@ -51,7 +51,7 @@ Controls.Pane {
 
         CommandControls.ModeBox {
             id: modeBox
-            mode: root.mode
+            mode: controlDisplay.mode
             model: availableModes
             tipText: qsTr("Select mode")
             Layout.fillWidth: true
