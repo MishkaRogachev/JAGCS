@@ -8,12 +8,11 @@ import "../CommandControls" as CommandControls
 Controls.Pane {
     id: controlDisplay
 
-    property int mode: modeBox.mode
-    property var availableModes: modeBox.model
+    property int mode: Domain.None
+    property var availableModes: []
     property bool armed: false
 
     enabled: online
-    onAvailableModesChanged: console.log(availableModes)
 
     function updateCommandStatus(command, status) {
         switch (command) {
@@ -52,6 +51,8 @@ Controls.Pane {
 
         CommandControls.ModeBox {
             id: modeBox
+            mode: root.mode
+            model: availableModes
             tipText: qsTr("Select mode")
             Layout.fillWidth: true
         }
