@@ -3,6 +3,7 @@
 // Qt
 #include <QMap>
 #include <QTimerEvent>
+#include <QDebug>
 
 namespace
 {
@@ -45,11 +46,11 @@ void AbstractCommandHandler::executeCommand(int vehicleId, const dao::CommandPtr
 
     d->vehicleCommands.insert(vehicleId, command);
     d->attemps[command] = 0;
+    d->commandTimers[command] = this->startTimer(::interval);
+    command->setStatus(dao::Command::Sending);
 
     this->sendCommand(vehicleId, command);
 
-    d->commandTimers[command] = this->startTimer(::interval);
-    command->setStatus(dao::Command::Sending);
     emit commandChanged(command);
 }
 
