@@ -66,6 +66,7 @@ namespace domain
         void missionItemAdded(dao::MissionItemPtr item);
         void missionItemRemoved(dao::MissionItemPtr item);
         void missionItemChanged(dao::MissionItemPtr item);
+        void currentItemChanged(int vehicleId, dao::MissionItemPtr item);
 
         void assignmentAdded(dao::MissionAssignmentPtr assignment);
         void assignmentRemoved(dao::MissionAssignmentPtr assignment);

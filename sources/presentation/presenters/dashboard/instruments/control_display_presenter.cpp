@@ -5,10 +5,11 @@
 #include <QDebug>
 
 // Internal
+#include "command.h"
+
 #include "service_registry.h"
 #include "command_service.h"
 
-#include "command.h"
 #include "modes.h"
 
 using namespace presentation;

@@ -91,6 +91,7 @@
         <file>Views/Dashboard/Instruments/FlightDisplay.qml</file>
         <file>Views/Dashboard/Instruments/NavigationDisplay.qml</file>
         <file>Views/Dashboard/Instruments/ControlDisplay.qml</file>
+        <file>Views/Dashboard/Instruments/MissionDisplay.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>
         <file>Views/Menu/Vehicles/VehicleListView.qml</file>

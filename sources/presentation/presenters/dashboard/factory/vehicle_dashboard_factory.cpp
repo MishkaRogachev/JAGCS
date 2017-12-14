@@ -22,6 +22,7 @@ QVariantList VehicleDashboardFactory::create()
     instruments.append(DashboardPresenter::FlightDisplay);
     instruments.append(DashboardPresenter::NavigationDisplay);
     instruments.append(DashboardPresenter::ControlDisplay);
+    instruments.append(DashboardPresenter::MissionDisplay);
 
     return instruments;
 }

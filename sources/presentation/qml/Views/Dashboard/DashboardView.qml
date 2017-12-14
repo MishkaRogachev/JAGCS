@@ -17,7 +17,7 @@ Item {
         presenter.setVehicle(vehicleId);
     }
 
-    implicitWidth: sizings.controlBaseSize * 9
+    implicitWidth: sizings.controlBaseSize * 8 // TODO: instruments row size
 
     DashboardPresenter {
         id: presenter
@@ -50,6 +50,7 @@ Item {
         case DashboardPresenter.FlightDisplay: return "Instruments/FlightDisplay.qml";
         case DashboardPresenter.NavigationDisplay: return "Instruments/NavigationDisplay.qml";
         case DashboardPresenter.ControlDisplay: return "Instruments/ControlDisplay.qml";
+        case DashboardPresenter.MissionDisplay: return "Instruments/MissionDisplay.qml";
         default: return null
         }
     }

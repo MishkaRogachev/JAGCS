@@ -434,6 +434,8 @@ void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& current
         emit missionItemChanged(current);
     }
     else if (oldCurrent) d->currentItems.remove(vehicleId);
+
+    emit currentItemChanged(vehicleId, current);
 }
 
 void MissionService::swapItems(const MissionItemPtr& first, const MissionItemPtr& second)

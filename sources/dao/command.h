@@ -24,7 +24,7 @@ namespace dao
             UnknownCommand,
 
             SetMode,
-            GoToItem,
+            GoTo,
             NavTo,
 
             ArmDisarm,

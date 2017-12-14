@@ -141,7 +141,7 @@ void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, 
     {
         this->sendSetMode(vehicle->mavId(), command->arguments().first().value<domain::Mode>());
     }
-    else if (command->type() == dao::Command::GoToItem)
+    else if (command->type() == dao::Command::GoTo)
     {
         this->sendCurrentItem(vehicle->mavId(), command->arguments().first().toInt());
     }
@@ -231,7 +231,7 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
     m_communicator->sendMessage(message, link);
 
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dao::Command::GoToItem, dao::Command::Completed); // TODO: wait current item
+                     dao::Command::GoTo, dao::Command::Completed); // TODO: wait current item
 }
 
 void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)
