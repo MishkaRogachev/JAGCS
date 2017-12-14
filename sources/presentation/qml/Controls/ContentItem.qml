@@ -3,8 +3,8 @@ import QtQuick 2.6
 Item {
     id: content
 
-    property color iconColor: palette.textColor
     property color textColor: palette.textColor
+    property color iconColor: textColor
 
     property alias iconSource: icon.source
     property alias font: label.font

@@ -39,7 +39,7 @@ Item {
         }
 
         delegate: Loader {
-            width: parent.width // TODO: shadow width
+            width: parent.width - 3 // TODO: shadow width
             source: createIndicator(modelData)
         }
     }

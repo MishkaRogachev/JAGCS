@@ -6,11 +6,13 @@ import "../Shaders" as Shaders
 T.DelayButton {
     id: control
 
-    property alias iconSource: content.iconSource
-    property alias iconColor: content.iconColor
-    property alias textColor: content.textColor
-    property alias backgroundColor: backgroundItem.color
+    property url iconSource
     property string tipText
+    property alias textColor: content.textColor
+
+    property alias backgroundColor: backgroundItem.color
+
+    onActivated: progress = 0
 
     font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
@@ -24,11 +26,30 @@ T.DelayButton {
         clip: true
         color: control.flat ? "transparent" : palette.buttonColor
 
+        ContentItem {
+            id: content
+            anchors.centerIn: parent
+            text: control.text
+            font: control.font
+            iconSource: control.iconSource
+            textColor: palette.textColor
+        }
+
         Rectangle {
             radius: parent.radius
             height: parent.height
             width: parent.width * control.progress
-            color: palette.highlightColor
+            color: palette.selectionColor
+            clip: true
+
+            ContentItem {
+                anchors.verticalCenter: parent.verticalCenter
+                x: (backgroundItem.width - width) / 2
+                text: control.text
+                font: control.font
+                iconSource: control.iconSource
+                textColor: palette.selectedTextColor
+            }
         }
 
         Shaders.Hatch {
@@ -43,12 +64,7 @@ T.DelayButton {
         }
     }
 
-    contentItem: ContentItem {
-        id: content
-        text: control.text
-        font: control.font
-        textColor: progress > 0.5 || control.highlighted ? palette.selectedTextColor: palette.textColor
-    }
+    contentItem: Item {}
 
     ToolTip {
         visible: (hovered || down) && tipText

@@ -40,7 +40,7 @@ Controls.Pane {
         rowSpacing: sizings.spacing
         columns: 2
 
-        CommandControls.Button {
+        CommandControls.DelayButton {
             id: armDisarm
             text: armed ? qsTr("ARMED") : qsTr("DISARMED")
             tipText: armed ? qsTr("Hold to disarm") : qsTr("Hold to arm")

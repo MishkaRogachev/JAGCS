@@ -6,11 +6,12 @@ import "../Shaders" as Shaders
 T.Button {
     id: control
 
-    property alias iconSource: content.iconSource
-    property alias iconColor: content.iconColor
-    property alias textColor: content.textColor
-    property alias backgroundColor: backgroundItem.color
     property string tipText
+
+    property alias iconSource: content.iconSource
+    property alias textColor: content.textColor
+    property alias iconColor: content.iconColor
+    property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)

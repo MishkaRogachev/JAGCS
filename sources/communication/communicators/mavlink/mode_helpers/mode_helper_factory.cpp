@@ -29,7 +29,7 @@ IModeHelper* ModeHelperFactory::create(uint8_t autopilot, uint8_t type)
         case MAV_TYPE_OCTOROTOR:
         case MAV_TYPE_COAXIAL:
         case MAV_TYPE_HELICOPTER:
-            return new ApmCopterModeHelper;
+            return new ApmCopterModeHelper();
         default:
             break;
         }

@@ -83,8 +83,7 @@
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
         <file>Views/Dashboard/CommandControls/Button.qml</file>
-        <file>Views/Dashboard/CommandControls/Switch.qml</file>
-        <file>Views/Dashboard/CommandControls/Ladder.qml</file>
+        <file>Views/Dashboard/CommandControls/DelayButton.qml</file>
         <file>Views/Dashboard/CommandControls/ModeBox.qml</file>
         <file>Views/Dashboard/CommandControls/ListView.qml</file>
         <file>Views/Dashboard/Instruments/SatelliteDisplay.qml</file>
