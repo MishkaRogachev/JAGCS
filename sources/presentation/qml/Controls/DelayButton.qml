@@ -1,17 +1,23 @@
 import QtQuick 2.6
-import QtQuick.Templates 2.0 as T
+import QtQuick.Controls 2.2 as T
 
 import "../Shaders" as Shaders
 
-Button {
+T.DelayButton {
     id: control
 
-    property int delay: 1000
-    property real progress: 0.0
+    property alias iconSource: content.iconSource
+    property alias iconColor: content.iconColor
+    property alias textColor: content.textColor
+    property alias backgroundColor: backgroundItem.color
+    property string tipText
 
-    signal activated()
+    font.pixelSize: sizings.fontPixelSize
+    implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
+    implicitHeight: Math.max(sizings.controlBaseSize, content.implicitHeight)
 
     background: Rectangle {
+        id: backgroundItem
         anchors.fill: parent
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         radius: 3
@@ -30,39 +36,23 @@ Button {
             color: palette.sunkenColor
             visible: !control.enabled
         }
-    }
 
-    Timer {
-        id: counter
-        repeat: true
-        interval: delay / 100
-        onTriggered: {
-            if (progress < 1)
-            {
-                progress += 0.01;
-            }
-            else
-            {
-                progress = 0;
-                control.stop();
-                control.activated();
-            }
+        Shadow {
+            visible: !control.flat
+            source: parent
         }
     }
 
-    onPressed: start()
-    onCanceled: stop()
-    onReleased: stop()
-    onVisibleChanged: if (!visible) stop()
-    onEnabledChanged: if (!enabled) stop()
-
-    function start() {
-        progress = 0;
-        counter.start();
+    contentItem: ContentItem {
+        id: content
+        text: control.text
+        font: control.font
+        textColor: progress > 0.5 || control.highlighted ? palette.selectedTextColor: palette.textColor
     }
 
-    function stop() {
-        progress = 0;
-        counter.stop();
+    ToolTip {
+        visible: (hovered || down) && tipText
+        text: tipText
+        delay: 1000
     }
 }
