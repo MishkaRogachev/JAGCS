@@ -18,12 +18,11 @@ Button {
         clip: true
         color: control.flat ? "transparent" : palette.buttonColor
 
-        Shaders.Pie {
-            anchors.centerIn: parent
-            width: parent.height
-            height: parent.width
-            rotation: 90
-            angle: progress * Math.PI * 2
+        Rectangle {
+            radius: parent.radius
+            height: parent.height
+            width: parent.width * control.progress
+            color: palette.highlightColor
         }
 
         Shaders.Hatch {
