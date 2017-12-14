@@ -22,6 +22,9 @@ Controls.Pane {
         case Command.SetMode:
             modeBox.status = status;
             break;
+        case Command.Return:
+            rtl.status = status;
+            break;
         default:
             break;
         }
@@ -33,12 +36,10 @@ Controls.Pane {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
-    GridLayout {
+    RowLayout {
         anchors.centerIn: parent
         width: parent.width
-        columnSpacing: sizings.spacing
-        rowSpacing: sizings.spacing
-        columns: 2
+        spacing: sizings.spacing
 
         CommandControls.DelayButton {
             id: armDisarm
@@ -55,6 +56,14 @@ Controls.Pane {
             model: availableModes
             tipText: qsTr("Select mode")
             Layout.fillWidth: true
+        }
+
+        CommandControls.Button {
+            id: rtl
+            tipText: qsTr("Return to launch")
+            iconSource: "qrc:/icons/home.svg"
+            command: Command.Return
+            Layout.alignment: Qt.AlignRight
         }
     }
 }

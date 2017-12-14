@@ -52,6 +52,8 @@ void ControlDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap
     for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
          QList<domain::Mode> >())
     {
+        if (item == domain::Mode::Return) continue; // special button for return
+
         modes.append(QVariant::fromValue(item));
     }
     this->setViewProperty(PROPERTY(availableModes), modes);
