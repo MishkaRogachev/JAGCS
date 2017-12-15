@@ -20,17 +20,17 @@ MissionDisplayPresenter::MissionDisplayPresenter(QObject* parent):
     m_missionService(domain::ServiceRegistry::missionService()),
     m_commandService(domain::ServiceRegistry::commandService())
 {
-    connect(m_missionService, &domain::MissionService::currentItemChanged,
+    connect(m_missionService, &domain::MissionService::currentItemChanged, this,
             [this](int vehicleId, const dao::MissionItemPtr& item) {
         if (m_assignment && m_assignment->vehicleId() == vehicleId)
             this->setViewProperty(PROPERTY(current), item->sequence());
     });
-    connect(m_missionService, &domain::MissionService::missionChanged,
+    connect(m_missionService, &domain::MissionService::missionChanged, this,
             [this](const dao::MissionPtr& mission) {
         if (m_assignment && m_assignment->missionId() == mission->id())
             this->updateItems();
     });
-    connect(m_commandService, &domain::CommandService::commandChanged,
+    connect(m_commandService, &domain::CommandService::commandChanged, this,
             [this](const dao::CommandPtr& command) {
         if (command->type() == dao::Command::GoTo)
             this->setViewProperty(PROPERTY(status), command->status());
