@@ -46,11 +46,20 @@ void MissionDisplayPresenter::setVehicle(int vehicleId)
 
 void MissionDisplayPresenter::updateItems()
 {
-    this->setViewProperty(PROPERTY(count), m_assignment ?
-                              m_missionService->mission(m_assignment->missionId())->count() : 0);
-    this->setViewProperty(PROPERTY(current), m_assignment ?
-                              m_missionService->currentWaypoint(
-                                  m_assignment->vehicleId())->sequence() : -1);
+    if (m_assignment)
+    {
+        this->setViewProperty(PROPERTY(count),
+                              m_missionService->mission(m_assignment->missionId())->count());
+
+        dao::MissionItemPtr current =  m_missionService->currentWaypoint(m_assignment->vehicleId());
+        if (current) this->setViewProperty(PROPERTY(current), current->sequence());
+        else this->setViewProperty(PROPERTY(current), -1);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(count), 0);
+        this->setViewProperty(PROPERTY(current), -1);
+    }
 }
 
 void MissionDisplayPresenter::goTo(int index)
