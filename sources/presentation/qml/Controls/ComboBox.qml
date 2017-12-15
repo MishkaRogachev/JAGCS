@@ -10,6 +10,7 @@ T.ComboBox {
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
     property string tipText
 
+    property alias contentColor: content.color
     property alias horizontalAlignment: content.horizontalAlignment
 
     font.pixelSize: sizings.fontPixelSize

@@ -9,9 +9,10 @@ Controls.Pane {
 
     property int current: -1
     property int count: 0
-    //property int status: 0
+    property int status: 0
 
     onCurrentChanged: itemBox.currentIndex = current
+    onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
     onCountChanged: {
         var items = [];
         for (var i = 0; i < count; ++i) items.push(i + 1);
@@ -24,6 +25,11 @@ Controls.Pane {
         id: presenter
         view: missionDisplay
         Component.onCompleted: setVehicle(vehicleId)
+    }
+
+    Timer {
+        id: timer
+        onTriggered: status = Command.Idle
     }
 
     RowLayout {
@@ -47,8 +53,21 @@ Controls.Pane {
             id: itemBox
             currentIndex: count
             onActivated: presenter.goTo(index)
+            contentColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: sizings.controlBaseSize * 3
+
+            Rectangle {
+                z: -1
+                anchors.fill: parent
+                radius: 3
+                color: {
+                    if (status == Command.Rejected) return palette.dangerColor;
+                    if (status == Command.Sending) return palette.cautionColor;
+                    if (status == Command.Completed) return palette.positiveColor;
+                    return "transparent";
+                }
+            }
         }
 
         Controls.Button {
