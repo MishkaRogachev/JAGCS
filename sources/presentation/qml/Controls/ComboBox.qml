@@ -7,18 +7,17 @@ import "../Shaders" as Shaders
 T.ComboBox {
     id: control
 
-    // TODO: fix dynamic width calculation
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
     property string tipText
-    property string iconRole: "icon"
-    property string displayIcon: currentItem && currentItem[control.iconRole] !== undefined ?
-                                     currentItem[control.iconRole] : ""
+
+    property alias horizontalAlignment: content.horizontalAlignment
 
     font.pixelSize: sizings.fontPixelSize
-    clip: true
     implicitWidth: sizings.controlBaseSize * 4
     implicitHeight: sizings.controlBaseSize
+    padding: sizings.padding
     opacity: enabled ? 1 : 0.33
+    clip: true
     displayText: currentItem && currentItem[control.textRole] !== undefined ?
                      currentItem[control.textRole] : currentItem
 
@@ -47,20 +46,18 @@ T.ComboBox {
 
     delegate: ItemDelegate {
         width: control.width
+        horizontalAlignment: control.horizontalAlignment
         text: modelData[control.textRole] !== undefined ? modelData[control.textRole] : modelData
-        iconSource: modelData[iconRole] !== undefined ? modelData[iconRole] : ""
+        font: control.font
         highlighted: control.highlightedIndex === index
     }
 
-    contentItem: RowLayout {
-        ContentItem {
-            text: displayText
-            iconSource: displayIcon
-            font: control.font
-            Layout.margins: sizings.padding
-        }
-
-        Item { Layout.fillWidth: true }
+    contentItem: Text {
+        id: content
+        font: control.font
+        text: displayText
+        color: palette.textColor
+        verticalAlignment: Text.AlignVCenter
     }
 
     popup: Popup {

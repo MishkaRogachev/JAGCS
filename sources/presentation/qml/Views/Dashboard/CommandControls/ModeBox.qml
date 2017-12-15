@@ -33,19 +33,17 @@ Controls.ComboBox {
 
     delegate: Controls.ItemDelegate {
         width: control.width
+        horizontalAlignment: control.horizontalAlignment
         text: translator.translateMode(modelData)
         font: control.font
         highlighted: control.highlightedIndex === index
     }
 
-    contentItem: RowLayout {
-        Controls.ContentItem {
-            text: translator.translateMode(mode)
-            font: control.font
-            textColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
-            Layout.margins: sizings.padding
-        }
-
-        Item { Layout.fillWidth: true }
+    contentItem: Text {
+        id: content
+        font: control.font
+        text: translator.translateMode(mode)
+        color: status == Command.Idle ? palette.textColor: palette.selectedTextColor
+        verticalAlignment: Text.AlignVCenter
     }
 }

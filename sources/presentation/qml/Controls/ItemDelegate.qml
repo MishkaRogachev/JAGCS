@@ -5,22 +5,18 @@ import QtQuick.Layouts 1.3
 T.ItemDelegate {
     id: control
 
-    property alias iconSource: content.iconSource
+    property alias horizontalAlignment: text.horizontalAlignment
 
     font.pixelSize: sizings.fontPixelSize
-    implicitWidth: content.implicitWidth
+    implicitWidth: text.implicitWidth
     implicitHeight: sizings.controlBaseSize
+    padding: sizings.padding
 
-    contentItem: RowLayout {
-        ContentItem {
-            id: content
-            font: control.font
-            text: control.text
-            textColor: control.highlighted ? palette.selectedTextColor : palette.textColor
-            Layout.leftMargin: sizings.padding
-        }
-
-        Item { Layout.fillWidth: true }
+    contentItem: Text {
+        id: text
+        font: control.font
+        text: control.text
+        color: control.highlighted ? palette.selectedTextColor : palette.textColor
     }
 
     background: Rectangle {

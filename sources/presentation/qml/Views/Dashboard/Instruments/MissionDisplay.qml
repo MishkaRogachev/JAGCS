@@ -9,7 +9,7 @@ Controls.Pane {
 
     property int current: -1
     property int count: 0
-    property int status: 0
+    //property int status: 0
 
     onCurrentChanged: itemBox.currentIndex = current
     onCountChanged: {
@@ -47,6 +47,8 @@ Controls.Pane {
             id: itemBox
             currentIndex: count
             onActivated: presenter.goTo(index)
+            horizontalAlignment: Text.AlignHCenter
+            Layout.preferredWidth: sizings.controlBaseSize * 3
         }
 
         Controls.Button {
