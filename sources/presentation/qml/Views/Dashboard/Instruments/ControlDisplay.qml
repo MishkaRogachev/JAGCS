@@ -43,10 +43,11 @@ Controls.Pane {
 
         CommandControls.DelayButton {
             id: armDisarm
-            text: armed ? qsTr("ARMED") : qsTr("DISARMED")
-            tipText: armed ? qsTr("Hold to disarm") : qsTr("Hold to arm")
+            text: armed ? qsTr("DISARM") : qsTr("ARM")
             args: [ !armed ]
+            delay: 1000
             command: Command.ArmDisarm
+            Layout.preferredWidth: sizings.controlBaseSize * 4
             Layout.fillWidth: true
         }
 
