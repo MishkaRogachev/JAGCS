@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../CommandControls" as CommandControls
 
 Controls.Pane {
     id: missionDisplay
@@ -12,8 +11,14 @@ Controls.Pane {
     property int count: 0
     property int status: 0
 
+    onCurrentChanged: itemBox.currentIndex = current
+    onCountChanged: {
+        var items = [];
+        for (var i = 0; i < count; ++i) items.push(i + 1);
+        itemBox.model = items;
+    }
+
     enabled: online
-    onCurrentChanged: box.currentIndex = current
 
     MissionDisplayPresenter {
         id: presenter
@@ -38,10 +43,11 @@ Controls.Pane {
             onClicked: presenter.goTo(current - 1)
         }
 
-         Controls.ComboBox {
-             id: box
-             model: count
-         }
+        Controls.ComboBox {
+            id: itemBox
+            currentIndex: count
+            onActivated: presenter.goTo(index)
+        }
 
         Controls.Button {
             tipText: qsTr("Goto right")
