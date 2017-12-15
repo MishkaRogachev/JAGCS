@@ -6,10 +6,11 @@ import "../Shaders" as Shaders
 T.DelayButton {
     id: control
 
-    property url iconSource
     property string tipText
-    property alias textColor: content.textColor
 
+    property alias iconSource: content.iconSource
+    property alias textColor: content.textColor
+    property alias iconColor: content.iconColor
     property alias backgroundColor: backgroundItem.color
 
     onActivated: progress = 0
@@ -29,9 +30,9 @@ T.DelayButton {
         ContentItem {
             id: content
             anchors.centerIn: parent
+            height: parent.height
             text: control.text
             font: control.font
-            iconSource: control.iconSource
             textColor: palette.textColor
         }
 
@@ -44,6 +45,7 @@ T.DelayButton {
 
             ContentItem {
                 anchors.verticalCenter: parent.verticalCenter
+                height: parent.height
                 x: (backgroundItem.width - width) / 2
                 text: control.text
                 font: control.font
