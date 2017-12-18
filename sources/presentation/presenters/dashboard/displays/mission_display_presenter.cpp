@@ -16,7 +16,7 @@
 using namespace presentation;
 
 MissionDisplayPresenter::MissionDisplayPresenter(QObject* parent):
-    BasePresenter(parent),
+    BaseDisplayPresenter(parent),
     m_missionService(domain::ServiceRegistry::missionService()),
     m_commandService(domain::ServiceRegistry::commandService())
 {
@@ -39,6 +39,8 @@ MissionDisplayPresenter::MissionDisplayPresenter(QObject* parent):
 
 void MissionDisplayPresenter::setVehicle(int vehicleId)
 {
+    BaseDisplayPresenter::setVehicle(vehicleId);
+
     m_assignment = m_missionService->vehicleAssignment(vehicleId);
 
     this->updateItems();

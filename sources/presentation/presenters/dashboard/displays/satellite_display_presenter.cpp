@@ -6,7 +6,7 @@
 using namespace presentation;
 
 SatelliteDisplayPresenter::SatelliteDisplayPresenter(QObject* parent):
-    AbstractDisplayPresenter(parent)
+    AbstractTelemetryPresenter(parent)
 {}
 
 void SatelliteDisplayPresenter::connectNode(domain::Telemetry* node)

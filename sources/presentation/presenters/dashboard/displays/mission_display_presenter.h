@@ -2,7 +2,7 @@
 #define MISSION_DISPLAY_PRESENTER_H
 
 // Internal
-#include "base_presenter.h"
+#include "base_display_presenter.h"
 #include "dao_traits.h"
 
 namespace domain
@@ -13,7 +13,7 @@ namespace domain
 
 namespace presentation
 {
-    class MissionDisplayPresenter: public BasePresenter
+    class MissionDisplayPresenter: public BaseDisplayPresenter
     {
         Q_OBJECT
 
@@ -21,7 +21,7 @@ namespace presentation
         explicit MissionDisplayPresenter(QObject* parent = nullptr);
 
     public slots:
-        void setVehicle(int vehicleId);
+        void setVehicle(int vehicleId) override;
         void updateItems();
 
         void goTo(int index);

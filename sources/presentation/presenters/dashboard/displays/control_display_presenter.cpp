@@ -15,7 +15,7 @@
 using namespace presentation;
 
 ControlDisplayPresenter::ControlDisplayPresenter(QObject* parent):
-    AbstractDisplayPresenter(parent),
+    AbstractTelemetryPresenter(parent),
     m_service(domain::ServiceRegistry::commandService())
 {
     connect(m_service, &domain::CommandService::commandChanged,

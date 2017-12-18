@@ -2,11 +2,11 @@
 #define VEHICLE_DISPLAY_PRESENTER_H
 
 // Internal
-#include "abstract_display_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class VehicleDisplayPresenter: public AbstractDisplayPresenter
+    class VehicleDisplayPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 

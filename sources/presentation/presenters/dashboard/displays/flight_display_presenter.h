@@ -2,11 +2,11 @@
 #define FLIGHT_DISPLAY_PRESENTER_H
 
 // Internal
-#include "abstract_display_presenter.h"
+#include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class FlightDisplayPresenter: public AbstractDisplayPresenter
+    class FlightDisplayPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 
