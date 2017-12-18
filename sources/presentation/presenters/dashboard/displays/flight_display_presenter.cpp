@@ -6,7 +6,7 @@
 using namespace presentation;
 
 FlightDisplayPresenter::FlightDisplayPresenter(QObject* parent):
-    AbstractInstrumentPresenter(parent)
+    AbstractDisplayPresenter(parent)
 {}
 
 void FlightDisplayPresenter::connectNode(domain::Telemetry* node)

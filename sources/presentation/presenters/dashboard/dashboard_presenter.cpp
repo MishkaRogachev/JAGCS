@@ -10,7 +10,7 @@
 #include "service_registry.h"
 #include "vehicle_service.h"
 
-#include "vehicle_dashboard_factory.h"
+#include "vehicle_display_model.h"
 
 using namespace presentation;
 
@@ -19,6 +19,8 @@ class DashboardPresenter::Impl
 public:
     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
     dao::VehiclePtr vehicle;
+
+    QAbstractItemModel* model = nullptr;
 };
 
 DashboardPresenter::DashboardPresenter(QObject* parent):
@@ -27,7 +29,7 @@ DashboardPresenter::DashboardPresenter(QObject* parent):
 {
     connect(d->service, &domain::VehicleService::vehicleChanged,
             [this](const dao::VehiclePtr& vehicle) {
-        if (vehicle == d->vehicle) this->updateVehicle();
+        if (vehicle == d->vehicle) this->updateSelection();
     });
 }
 
@@ -38,13 +40,26 @@ void DashboardPresenter::setVehicle(int id)
 {
     d->vehicle = d->service->vehicle(id);
 
-    this->setViewProperty(PROPERTY(instruments), QVariantList()); // TMP
-    this->updateVehicle();
+    //this->setViewProperty(PROPERTY(instruments), QVariantList()); // TMP
+    this->updateSelection();
 }
 
-void DashboardPresenter::updateVehicle()
+void DashboardPresenter::updateSelection()
 {
+    if (d->model)
+    {
+        delete d->model;
+        d->model = nullptr;
+    }
+
     if (d->vehicle)
+    {
+        d->model = new VehicleDisplayModel(d->vehicle, this);
+    }
+
+    this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(d->model));
+
+    /*if (d->vehicle)
     {
         this->setViewProperty(PROPERTY(online), d->vehicle->isOnline());
 
@@ -55,5 +70,5 @@ void DashboardPresenter::updateVehicle()
     else
     {
         this->setViewProperty(PROPERTY(instruments), QVariantList());
-    }
+    }*/
 }

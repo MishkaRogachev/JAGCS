@@ -13,6 +13,7 @@ namespace presentation
     public:
         enum Instrument // TODO: instruments to dao type - differet instruments for different vehicles
         {
+            VehcicleDispaly,
             SatelliteDispaly,
             FlightDisplay,
             NavigationDisplay,
@@ -25,7 +26,7 @@ namespace presentation
 
     public slots:
         void setVehicle(int id);
-        void updateVehicle();
+        void updateSelection();
 
     private:
         class Impl;

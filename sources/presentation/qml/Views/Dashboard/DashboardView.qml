@@ -7,13 +7,9 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
-    property int vehicleId: 0
-
-    property bool online: false
     property var instruments: []
 
     function setActiveVehicle(vehicleId) {
-        dashboard.vehicleId = vehicleId;
         presenter.setVehicle(vehicleId);
     }
 
@@ -40,18 +36,36 @@ Item {
 
         delegate: Loader {
             width: parent.width - 3 // TODO: shadow width
-            source: createIndicator(modelData)
-        }
-    }
-
-    function createIndicator(instrument) {
-        switch (instrument) {
-        case DashboardPresenter.SatelliteDispaly: return "Instruments/SatelliteDisplay.qml";
-        case DashboardPresenter.FlightDisplay: return "Instruments/FlightDisplay.qml";
-        case DashboardPresenter.NavigationDisplay: return "Instruments/NavigationDisplay.qml";
-        case DashboardPresenter.ControlDisplay: return "Instruments/ControlDisplay.qml";
-        case DashboardPresenter.MissionDisplay: return "Instruments/MissionDisplay.qml";
-        default: return null
+            Component.onCompleted: {
+                switch (instrument) {
+                case DashboardPresenter.VehicleDispaly:
+                    setSource("Displays/VehicleDispaly.qml",
+                              { "vehicleId": vehicleId });
+                    break;
+                case DashboardPresenter.SatelliteDispaly:
+                    setSource("Displays/SatelliteDisplay.qml",
+                              { "vehicleId": vehicleId });
+                    break;
+                case DashboardPresenter.FlightDisplay:
+                    setSource("Displays/FlightDisplay.qml",
+                              { "vehicleId": vehicleId });
+                    break;
+                case DashboardPresenter.NavigationDisplay:
+                    setSource("Displays/NavigationDisplay.qml",
+                              { "vehicleId": vehicleId });
+                    break;
+                case DashboardPresenter.ControlDisplay:
+                    setSource("Displays/ControlDisplay.qml",
+                              { "vehicleId": vehicleId });
+                    break;
+                case DashboardPresenter.MissionDisplay:
+                    setSource("Displays/MissionDisplay.qml",
+                              { "vehicleId": vehicleId });
+                    break;
+                default:
+                    break;
+                }
+            }
         }
     }
 }

@@ -2,11 +2,11 @@
 #define SATELLITE_DISPLAY_PRESENTER_H
 
 // Internal
-#include "abstract_instrument_presenter.h"
+#include "abstract_display_presenter.h"
 
 namespace presentation
 {
-    class SatelliteDisplayPresenter: public AbstractInstrumentPresenter
+    class SatelliteDisplayPresenter: public AbstractDisplayPresenter
     {
         Q_OBJECT
 

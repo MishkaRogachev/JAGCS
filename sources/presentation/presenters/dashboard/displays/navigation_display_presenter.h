@@ -2,14 +2,14 @@
 #define NAVIGATION_DISPLAY_PRESENTER_H
 
 // Internal
-#include "abstract_instrument_presenter.h"
+#include "abstract_display_presenter.h"
 
 // Qt
 #include <QGeoCoordinate>
 
 namespace presentation
 {
-    class NavigationDisplayPresenter: public AbstractInstrumentPresenter
+    class NavigationDisplayPresenter: public AbstractDisplayPresenter
     {
         Q_OBJECT
 

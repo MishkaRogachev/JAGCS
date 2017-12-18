@@ -6,7 +6,7 @@
 using namespace presentation;
 
 NavigationDisplayPresenter::NavigationDisplayPresenter(QObject* parent):
-    AbstractInstrumentPresenter(parent)
+    AbstractDisplayPresenter(parent)
 {}
 
 void NavigationDisplayPresenter::connectNode(domain::Telemetry* node)

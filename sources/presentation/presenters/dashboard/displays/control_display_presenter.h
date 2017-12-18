@@ -2,7 +2,7 @@
 #define CONTROL_DISPLAY_PRESENTER_H
 
 // Internal
-#include "abstract_instrument_presenter.h"
+#include "abstract_display_presenter.h"
 
 namespace domain
 {
@@ -11,7 +11,7 @@ namespace domain
 
 namespace presentation
 {
-    class ControlDisplayPresenter: public AbstractInstrumentPresenter
+    class ControlDisplayPresenter: public AbstractDisplayPresenter
     {
         Q_OBJECT
 

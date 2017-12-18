@@ -45,7 +45,6 @@ Controls.Pane {
             id: armDisarm
             text: armed ? qsTr("DISARM") : qsTr("ARM")
             args: [ !armed ]
-            delay: 1000
             command: Command.ArmDisarm
             Layout.preferredWidth: sizings.controlBaseSize * 4
             Layout.fillWidth: true

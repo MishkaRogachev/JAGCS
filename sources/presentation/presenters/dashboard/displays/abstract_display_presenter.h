@@ -1,5 +1,5 @@
-#ifndef ABSTRACT_INSTRUMENT_PRESENTER_H
-#define ABSTRACT_INSTRUMENT_PRESENTER_H
+#ifndef ABSTRACT_DISPLAY_PRESENTER_H
+#define ABSTRACT_DISPLAY_PRESENTER_H
 
 // Std
 #include <functional>
@@ -10,12 +10,12 @@
 
 namespace presentation
 {
-    class AbstractInstrumentPresenter: public BasePresenter
+    class AbstractDisplayPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit AbstractInstrumentPresenter(QObject* parent = nullptr);
+        explicit AbstractDisplayPresenter(QObject* parent = nullptr);
 
         int vehicleId() const;
 
@@ -35,4 +35,4 @@ namespace presentation
     };
 }
 
-#endif // ABSTRACT_INSTRUMENT_PRESENTER_H
+#endif // ABSTRACT_DISPLAY_PRESENTER_H

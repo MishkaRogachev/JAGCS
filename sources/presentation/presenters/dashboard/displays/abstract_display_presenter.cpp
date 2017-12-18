@@ -1,4 +1,4 @@
-#include "abstract_instrument_presenter.h"
+#include "abstract_display_presenter.h"
 
 // Qt
 #include <QDebug>
@@ -9,16 +9,16 @@
 
 using namespace presentation;
 
-AbstractInstrumentPresenter::AbstractInstrumentPresenter(QObject* parent):
+AbstractDisplayPresenter::AbstractDisplayPresenter(QObject* parent):
     BasePresenter(parent)
 {}
 
-int AbstractInstrumentPresenter::vehicleId() const
+int AbstractDisplayPresenter::vehicleId() const
 {
     return m_vehicleId;
 }
 
-void AbstractInstrumentPresenter::setVehicle(int vehicleId)
+void AbstractDisplayPresenter::setVehicle(int vehicleId)
 {
     m_vehicleId = vehicleId;
 
@@ -33,12 +33,12 @@ void AbstractInstrumentPresenter::setVehicle(int vehicleId)
     if (node) this->connectNode(node);
 }
 
-void AbstractInstrumentPresenter::disconnectNode()
+void AbstractDisplayPresenter::disconnectNode()
 {
     disconnect(m_node, 0, this, 0);
 }
 
-void AbstractInstrumentPresenter::chainNode(
+void AbstractDisplayPresenter::chainNode(
         domain::Telemetry* node, std::function<void(const domain::Telemetry::TelemetryMap&)> f)
 {
     if (node) QObject::connect(node, &domain::Telemetry::parametersUpdated, this, f);
