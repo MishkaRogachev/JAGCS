@@ -10,28 +10,13 @@ Controls.DelayButton {
     property int status: Command.Idle
     property var args: []
 
-    signal beforeSended()
-
-    onActivated: {
-        if (status == Command.Sending)
-        {
-            presenter.rejectCommand(command);
-        }
-        else
-        {
-            beforeSended();
-            presenter.executeCommand(command, args);
-        }
-    }
+    delay: status == Command.Sending ? 0 : 1000
+    onActivated: status == Command.Sending ? presenter.rejectCommand(command):
+                                             presenter.executeCommand(command, args);
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
     onCommandChanged: {
         if (timer.running) timer.stop();
         status = Command.Idle;
-    }
-
-    Timer {
-        id: timer
-        onTriggered: status = Command.Idle
     }
 
     backgroundColor: {
@@ -46,5 +31,10 @@ Controls.DelayButton {
             status == Command.Sending ||
             status == Command.Completed) return palette.selectedTextColor;
         return palette.textColor;
+    }
+
+    Timer {
+        id: timer
+        onTriggered: status = Command.Idle
     }
 }

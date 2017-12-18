@@ -12,6 +12,8 @@ CommandService::CommandService(QObject* parent):
     QObject(parent)
 {
     qRegisterMetaType<dao::CommandPtr>("dao::CommandPtr");
+    qRegisterMetaType<dao::Command::CommandType>("dao::Command::CommandType");
+    qRegisterMetaType<dao::Command::CommandStatus>("dao::Command::CommandStatus");
 }
 
 void CommandService::addHandler(AbstractCommandHandler* handler)
