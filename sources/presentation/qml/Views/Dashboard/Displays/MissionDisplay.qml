@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Pane {
+BaseDisplay {
     id: missionDisplay
 
     property int current: -1

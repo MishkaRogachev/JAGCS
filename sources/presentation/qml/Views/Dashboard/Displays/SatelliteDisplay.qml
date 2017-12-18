@@ -6,7 +6,7 @@ import JAGCS 1.0
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
-Controls.Pane {
+BaseDisplay {
     id: satelliteDisplay
 
     property bool satelliteEnabled: false

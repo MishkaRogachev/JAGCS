@@ -5,7 +5,7 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Controls.Pane {
+BaseDisplay {
     id: flightDisplay
 
     property alias armed: ai.armed

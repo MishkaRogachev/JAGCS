@@ -39,8 +39,6 @@ DashboardPresenter::~DashboardPresenter()
 void DashboardPresenter::setVehicle(int id)
 {
     d->vehicle = d->service->vehicle(id);
-
-    //this->setViewProperty(PROPERTY(instruments), QVariantList()); // TMP
     this->updateSelection();
 }
 
@@ -50,6 +48,7 @@ void DashboardPresenter::updateSelection()
     {
         delete d->model;
         d->model = nullptr;
+        this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(nullptr));
     }
 
     if (d->vehicle)
@@ -58,17 +57,4 @@ void DashboardPresenter::updateSelection()
     }
 
     this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(d->model));
-
-    /*if (d->vehicle)
-    {
-        this->setViewProperty(PROPERTY(online), d->vehicle->isOnline());
-
-        // TODO: handle VehicleInstruments dao
-        VehicleDashboardFactory f(d->vehicle);
-        this->setViewProperty(PROPERTY(instruments), f.create());
-    }
-    else
-    {
-        this->setViewProperty(PROPERTY(instruments), QVariantList());
-    }*/
 }

@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Controls.Pane {
+BaseDisplay {
     id: root
 
     property real batteryVoltage: 0

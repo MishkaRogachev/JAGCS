@@ -4,14 +4,25 @@
 #include <QDebug>
 
 //Internal
+#include "vehicle.h"
+
 #include "service_registry.h"
 #include "telemetry_service.h"
+#include "vehicle_service.h"
 
 using namespace presentation;
 
 AbstractDisplayPresenter::AbstractDisplayPresenter(QObject* parent):
     BasePresenter(parent)
-{}
+{
+    connect(domain::ServiceRegistry::vehicleService(),
+            &domain::VehicleService::vehicleChanged, this, [this](const dao::VehiclePtr& vehicle)
+    {
+        if (vehicle->id() != m_vehicleId) return;
+
+        this->setViewProperty(PROPERTY(online), vehicle->isOnline());
+    });
+}
 
 int AbstractDisplayPresenter::vehicleId() const
 {
@@ -22,8 +33,7 @@ void AbstractDisplayPresenter::setVehicle(int vehicleId)
 {
     m_vehicleId = vehicleId;
 
-    domain::TelemetryService* service = domain::ServiceRegistry::telemetryService();
-    domain::Telemetry* node = service->vehicleNode(vehicleId);
+    domain::Telemetry* node = domain::ServiceRegistry::telemetryService()->vehicleNode(vehicleId);
     if (m_node == node) return;
 
     if (m_node) this->disconnectNode();
@@ -31,6 +41,9 @@ void AbstractDisplayPresenter::setVehicle(int vehicleId)
     m_node = node;
 
     if (node) this->connectNode(node);
+
+    dao::VehiclePtr vehicle = domain::ServiceRegistry::vehicleService()->vehicle(vehicleId);
+    if (vehicle) this->setViewProperty(PROPERTY(online), vehicle->isOnline());
 }
 
 void AbstractDisplayPresenter::disconnectNode()

@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "../CommandControls" as CommandControls
 
-Controls.Pane {
+BaseDisplay {
     id: controlDisplay
 
     property int mode: Domain.None
