@@ -18,6 +18,7 @@ Item {
     DashboardPresenter {
         id: presenter
         view: dashboard
+        Component.onCompleted: updateSelection()
     }
 
     ListView {
@@ -39,7 +40,7 @@ Item {
             Component.onCompleted: {
                 switch (instrument) {
                 case DashboardPresenter.VehicleDispaly:
-                    setSource("Displays/VehicleDispaly.qml",
+                    setSource("Displays/VehicleDisplay.qml",
                               { "vehicleId": vehicleId });
                     break;
                 case DashboardPresenter.SatelliteDispaly:

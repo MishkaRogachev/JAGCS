@@ -10,6 +10,7 @@
 #include "service_registry.h"
 #include "vehicle_service.h"
 
+#include "generic_display_model.h"
 #include "vehicle_display_model.h"
 
 using namespace presentation;
@@ -20,7 +21,7 @@ public:
     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
     dao::VehiclePtr vehicle;
 
-    QAbstractItemModel* model = nullptr;
+    AbstractDisplayModel* model = nullptr;
 };
 
 DashboardPresenter::DashboardPresenter(QObject* parent):
@@ -44,16 +45,22 @@ void DashboardPresenter::setVehicle(int id)
 
 void DashboardPresenter::updateSelection()
 {
+    this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(nullptr));
+
     if (d->model)
     {
         delete d->model;
         d->model = nullptr;
-        this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(nullptr));
+
     }
 
     if (d->vehicle)
     {
         d->model = new VehicleDisplayModel(d->vehicle, this);
+    }
+    else
+    {
+        d->model = new GenericDisplayModel(this);
     }
 
     this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(d->model));

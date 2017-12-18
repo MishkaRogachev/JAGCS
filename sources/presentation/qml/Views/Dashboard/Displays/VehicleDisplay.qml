@@ -32,16 +32,16 @@ BaseDisplay {
     property bool rangefinderOperational: false
 
     property int homeAltitude: 0
-            anchors.centerIn: parent
-    property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
 
+    property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
     RowLayout {
         Indicators.ArtificialHorizon {
+            id: ai
             enabled: ahrsEnabled
             operational: ahrsOperational
-            rollInverted: flightDisplay.rollInverted
+            rollInverted: vehicleDisplay.rollInverted
         }
     }
 }

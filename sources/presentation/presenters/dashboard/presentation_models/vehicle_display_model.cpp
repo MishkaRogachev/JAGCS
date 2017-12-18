@@ -23,7 +23,7 @@ namespace
 }
 
 VehicleDisplayModel::VehicleDisplayModel(const dao::VehiclePtr& vehicle, QObject* parent):
-    QAbstractListModel(parent),
+    AbstractDisplayModel(parent),
     m_vehicle(vehicle)
 {
     // TODO: handle instrument's change
@@ -44,14 +44,4 @@ QVariant VehicleDisplayModel::data(const QModelIndex& index, int role) const
     default:
         return QVariant();
     }
-}
-
-QHash<int, QByteArray> VehicleDisplayModel::roleNames() const
-{
-    QHash<int, QByteArray> roles;
-
-    roles[InstrumentRole] = "instrument";
-    roles[VehicleIdRole] = "vehicleId";
-
-    return roles;
 }
