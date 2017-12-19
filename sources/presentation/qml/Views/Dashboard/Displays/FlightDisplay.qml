@@ -135,6 +135,7 @@ BaseDisplay {
         width: flightDisplay.width * 0.55
         enabled: ahrsEnabled
         operational: ahrsOperational
+        available: online
         rollInverted: flightDisplay.rollInverted
     }
 

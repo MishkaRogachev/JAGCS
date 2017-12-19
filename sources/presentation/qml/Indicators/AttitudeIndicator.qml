@@ -5,17 +5,13 @@ Item {
     id: ai
 
     property bool operational: false
-    property bool armed: false
+    property bool available: false
 
     property real pitch: 0.0
     property real roll: 0.0
 
-    property real minPitch: -maxPitch
     property real maxPitch: 23
-    property real pitchStep: 5
-    property real minRoll: -maxRoll
-    property real maxRoll: width > height ? 90 : 90 - (180 * Math.acos(width / height) / Math.PI)
-    property real rollStep: 10
+    property real minPitch: -maxPitch
 
     property bool pitchInverted: true
     property bool rollInverted: false
@@ -38,6 +34,9 @@ Item {
         effectiveHeight: ai.effectiveHeight
         pitch: pitchInverted ? ai.pitch : 0
         roll: rollInverted ? 0 : ai.roll
+        minPitch: ai.minPitch
+        maxPitch: ai.maxPitch
+        operational: ai.operational
     }
 
     Rectangle {

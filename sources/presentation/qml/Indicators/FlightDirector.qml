@@ -5,11 +5,17 @@ import "../Controls" as Controls
 AttitudeIndicator {
     id: fd
 
+    property bool armed: false
     property bool guided: false
 
     property real yawspeed: 0.0
     property real desiredPitch: 0.0
     property real desiredRoll: 0.0
+
+    property real pitchStep: 5
+    property real maxRoll: width > height ? 90 : 90 - (180 * Math.acos(width / height) / Math.PI)
+    property real minRoll: -maxRoll
+    property real rollStep: 10
 
     Behavior on yawspeed { PropertyAnimation { duration: 100 } }
     Behavior on desiredPitch { PropertyAnimation { duration: 100 } }

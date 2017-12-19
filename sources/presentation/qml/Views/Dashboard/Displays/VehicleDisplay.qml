@@ -35,6 +35,12 @@ BaseDisplay {
     property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
+    VehicleDisplayPresenter {
+        id: presenter
+        view: vehicleDisplay
+        Component.onCompleted: setVehicle(vehicleId)
+    }
+
     RowLayout {
         Indicators.ArtificialHorizon {
             id: ai
@@ -42,6 +48,7 @@ BaseDisplay {
             implicitHeight: width * 1.5
             enabled: ahrsEnabled
             operational: ahrsOperational
+            available: online
             rollInverted: vehicleDisplay.rollInverted
         }
     }

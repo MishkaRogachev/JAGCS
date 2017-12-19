@@ -1,11 +1,16 @@
 import QtQuick 2.6
+
 import "qrc:/JS/helper.js" as Helper
 
 Item {
     id: root
 
+    property bool operational: false
+
     property real pitch: 0.0
     property real roll: 0.0
+    property real minPitch: -25.0
+    property real maxPitch: 25.0
     property int effectiveHeight: height
 
     Rectangle {
@@ -22,7 +27,8 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height / 2 - 0.5
-            color: palette.skyColor
+            color: operational ? palette.skyColor : "#c6c9d1" // TODO: palette
+            Behavior on color { ColorAnimation { duration: 200 } }
         }
 
         Rectangle {
@@ -30,7 +36,8 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height / 2 - 0.5
-            color: palette.groundColor
+            color: operational ? palette.groundColor : "#798f99" // TODO: palette
+            Behavior on color { ColorAnimation { duration: 200 } }
         }
     }
 }
