@@ -12,10 +12,10 @@ Canvas {
     property url mark
     property int tickFactor: 5
     property real scalesRatio: 0.08
-    property real minorTickFactor: 0.4
-    property real majorTickFactor: 0.8
-    property real textFactor: 1.6
-    property int scalesOffset: root.width * scalesRatio
+    property real scalesOffset: root.width * scalesRatio
+    property real minorTickOffset: 0.4 * scalesOffset
+    property real majorTickOffset: 0.8 * scalesOffset
+    property real textOffset: 1.4 * scalesOffset
 
     onWidthChanged: requestPaint()
     onHeightChanged: requestPaint()
@@ -43,24 +43,24 @@ Canvas {
 
         // Scales
         for (var i = 0; i <= 360; i += tickFactor) {
-            ctx.lineWidth = i % 30 ? 2 : 3;
+            ctx.lineWidth = i % 30 ? 1 : 2;
             ctx.beginPath();
             ctx.save();
             ctx.rotate((i - heading) * Math.PI / 180);
             ctx.translate(0, -height / 2);
 
             if (i % 10) {
-                ctx.moveTo(0, 0)
-                ctx.lineTo(0, scalesOffset * minorTickFactor);
+                ctx.moveTo(0, textOffset + majorTickOffset - minorTickOffset);
+                ctx.lineTo(0, textOffset + majorTickOffset);
             }
             else {
-                ctx.moveTo(0, 0)
-                ctx.lineTo(0, scalesOffset * majorTickFactor);
+                ctx.moveTo(0, textOffset);
+                ctx.lineTo(0, textOffset + majorTickOffset);
             }
 
             if (!(i % 30)) {
                 ctx.save();
-                ctx.translate(0, scalesOffset * textFactor);
+                ctx.translate(0, textOffset / 2);
                 ctx.rotate((-i + heading) * Math.PI / 180);
 
                 ctx.font = 'bold ' + scalesOffset * 1.2 + 'px "Open Sans"';
@@ -99,14 +99,6 @@ Canvas {
             ctx.stroke();
             ctx.restore();
         }
-
-        // Tick
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(0, -height / 2)
-        ctx.lineTo(0, scalesOffset - height / 2);
-        ctx.stroke();
 
         ctx.restore();
     }
