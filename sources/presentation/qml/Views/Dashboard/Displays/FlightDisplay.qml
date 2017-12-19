@@ -93,7 +93,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: speedLadder.horizontalCenter
-        font.pixelSize: speedLadder.fontPixelSize * 1.15
+        font.pixelSize: speedLadder.fontPixelSize
         digits: 1
         value: {
             switch (speedUnits) {
@@ -112,7 +112,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: speedLadder.horizontalCenter
-        font.pixelSize: speedLadder.fontPixelSize * 1.15
+        font.pixelSize: speedLadder.fontPixelSize
         digits: 1
         value: {
             switch (speedUnits) {
@@ -173,7 +173,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        font.pixelSize: altitudeLadder.fontPixelSize * 1.15
+        font.pixelSize: altitudeLadder.fontPixelSize
         value: satelliteAltitude
         enabled: satelliteEnabled
         operational: satelliteOperational
@@ -185,7 +185,7 @@ BaseDisplay {
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        font.pixelSize: altitudeLadder.fontPixelSize * 1.15
+        font.pixelSize: altitudeLadder.fontPixelSize
         value: rangefinderHeight
         digits: 2
         enabled: rangefinderEnabled

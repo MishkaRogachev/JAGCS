@@ -13,10 +13,11 @@ Item {
     property int maxValue: 100
     property int valueStep: 20
 
-    property int fontPixelSize: Math.max(height * 0.075, sizings.fontPixelSize * 0.5)
-    property int minorTickSize: fontPixelSize * 0.4
-    property int majorTickSize: fontPixelSize * 0.6
-    property int textOrigin: fontPixelSize * 0.8
+    property int fontPixelSize: height * 0.1
+    property int fontScaleSize: fontPixelSize * 0.85
+    property int minorTickSize: fontScaleSize * 0.4
+    property int majorTickSize: fontScaleSize * 0.6
+    property int textOrigin: fontScaleSize * 0.8
     property bool mirrored: false
 
     property bool operational: false
@@ -45,13 +46,13 @@ Item {
 
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
-            ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
+            ctx.font = 'bold ' + fontScaleSize + 'px "Open Sans"';
             ctx.textAlign = mirrored ? 'left' : 'right';
             ctx.textBaseline = 'middle';
 
             // Vertical line
             ctx.save();
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1;
             ctx.translate(mirrored ? ctx.lineWidth : width - ctx.lineWidth, 0);
             ctx.beginPath();
             ctx.moveTo(0, 0);
@@ -67,7 +68,7 @@ Item {
                 var pos = height - Helper.mapToRange(i, minValue, maxValue, height)
                 var tick = major ? majorTickSize : minorTickSize;
 
-                ctx.lineWidth = major ? 3 : 2;
+                ctx.lineWidth = major ? 2 : 1;
                 ctx.beginPath();
                 ctx.moveTo(0, pos);
                 ctx.lineTo(mirrored ? tick : -tick, pos);
@@ -126,7 +127,7 @@ Item {
         color: root.color
         horizontalAlignment: Text.AlignHCenter
         font.bold: true
-        font.pixelSize: fontPixelSize * 1.15
+        font.pixelSize: fontPixelSize
         text: prefix + "\n" + value + " " + suffix
     }
 }
