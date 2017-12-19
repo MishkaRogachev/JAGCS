@@ -49,7 +49,7 @@ Compass {
             ctx.fill();
 
             ctx.beginPath();
-            ctx.lineWidth = 6;
+            ctx.lineWidth = 4;
 
             ctx.moveTo(0, height * 0.1 - height / 2);
             ctx.lineTo(0, -height / 4 - 1);
@@ -64,7 +64,7 @@ Compass {
             ctx.translate(-Helper.mapToRange(trackError, 0, maxTrackError, width), 0);
 
             ctx.beginPath();
-            ctx.lineWidth = 6;
+            ctx.lineWidth = 4;
             ctx.moveTo(0, -height / 4 + 1);
             ctx.lineTo(0, height / 4 - 1);
             ctx.stroke();

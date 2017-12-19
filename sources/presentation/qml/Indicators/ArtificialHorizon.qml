@@ -13,5 +13,6 @@ AttitudeIndicator {
         pitch: pitchInverted ? 0 : -ah.pitch
         roll: rollInverted ? -ah.roll : 0
         markColor: armed ? palette.selectedTextColor : palette.dangerColor
+        markWidth: 1.5
     }
 }

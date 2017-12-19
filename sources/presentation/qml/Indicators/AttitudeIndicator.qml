@@ -17,7 +17,7 @@ Item {
     property bool rollInverted: false
 
     property real ratio: height / width
-    property int effectiveHeight: height - sizings.controlBaseSize * 2
+    property real effectiveHeight: height - sizings.controlBaseSize * 2
 
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }

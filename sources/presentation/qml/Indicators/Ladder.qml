@@ -6,18 +6,18 @@ import "../Shaders" as Shaders
 Item {
     id: root
 
-    property int value: 0
-    property int error: 0
-    property int warningValue: minValue
-    property int minValue: 0
-    property int maxValue: 100
-    property int valueStep: 20
+    property real value: 0
+    property real error: 0
+    property real warningValue: minValue
+    property real minValue: 0
+    property real maxValue: 100
+    property real valueStep: 20
 
-    property int fontPixelSize: height * 0.1
-    property int fontScaleSize: fontPixelSize * 0.85
-    property int minorTickSize: fontScaleSize * 0.4
-    property int majorTickSize: fontScaleSize * 0.6
-    property int textOrigin: fontScaleSize * 0.8
+    property real fontPixelSize: height * 0.1
+    property real fontScaleSize: fontPixelSize * 0.85
+    property real minorTickSize: fontScaleSize * 0.4
+    property real majorTickSize: fontScaleSize * 0.6
+    property real textOrigin: fontScaleSize * 0.8
     property bool mirrored: false
 
     property bool operational: false
@@ -128,6 +128,6 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         font.bold: true
         font.pixelSize: fontPixelSize
-        text: prefix + "\n" + value + " " + suffix
+        text: prefix + "\n" + Math.round(value) + " " + suffix
     }
 }

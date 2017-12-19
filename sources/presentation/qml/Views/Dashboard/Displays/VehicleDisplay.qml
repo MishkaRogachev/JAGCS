@@ -34,6 +34,8 @@ BaseDisplay {
 
     property int homeAltitude: 0
 
+    property url vehicleMark: "qrc:/indicators/fixed_wing_mark.svg" // TODO: vehicle mark
+
     property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
@@ -46,6 +48,23 @@ BaseDisplay {
 
     RowLayout {
         anchors.fill: parent
+
+        Indicators.Compass {
+            Layout.fillHeight: true
+            implicitWidth: height
+            tickFactor: 15
+            scalesRatio: 0.1
+
+            Indicators.ArtificialHorizon {
+                id: ai
+                anchors.fill: parent
+                anchors.margins: parent.textOffset
+                enabled: ahrsEnabled
+                operational: ahrsOperational
+                available: online
+                rollInverted: vehicleDisplay.rollInverted
+            }
+        }
 
         ColumnLayout {
             Indicators.FdLabel {
@@ -81,16 +100,6 @@ BaseDisplay {
             }
         }
 
-        Indicators.ArtificialHorizon {
-            id: ai
-            Layout.fillHeight: true
-            implicitWidth: height * 0.75
-            enabled: ahrsEnabled
-            operational: ahrsOperational
-            available: online
-            rollInverted: vehicleDisplay.rollInverted
-        }
-
         ColumnLayout {
             Indicators.FdLabel {
                 value: satelliteAltitude
@@ -109,11 +118,6 @@ BaseDisplay {
                 suffix: qsTr("m")
                 Layout.fillWidth: true
             }
-        }
-
-        Indicators.Compass {
-            Layout.fillHeight: true
-            implicitWidth: height
         }
     }
 }

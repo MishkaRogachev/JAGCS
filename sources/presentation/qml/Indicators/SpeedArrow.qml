@@ -6,7 +6,7 @@ Item {
 
     property real speed: 0
     property real maxSpeed: 30 // TODO: in settings
-    property int fix: -11
+    property int fix: -1
     property color color: {
         switch (fix) {
         case -1:
@@ -42,7 +42,7 @@ Item {
             var offset = Math.min(speed, maxSpeed) / maxSpeed * height / 2;
 
             ctx.beginPath();
-            ctx.lineWidth = 6;
+            ctx.lineWidth = 4;
             ctx.moveTo(0, 0);
             ctx.lineTo(0, height * 0.1 - offset);
             ctx.stroke();

@@ -9,7 +9,7 @@ Item {
     property real maxRoll: 25.0
     property real rollStep: 5.0
     property color color: palette.textColor
-    property int fontPixelSize: height > 0 ? height * 0.1 : 1
+    property real fontPixelSize: height > 0 ? height * 0.1 : 1
 
     onRollChanged: canvas.requestPaint()
     onMinRollChanged: canvas.requestPaint()
@@ -27,7 +27,7 @@ Item {
 
             ctx.clearRect(0, 0, width, height);
 
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2;
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
             ctx.textBaseline = 'middle';
@@ -42,7 +42,7 @@ Item {
                 ctx.save();
                 ctx.rotate(i * Math.PI / 180);
                 ctx.moveTo(0, -height / 2);
-                ctx.lineTo(0, -height / 2 + fontPixelSize / 4);
+                ctx.lineTo(0, -height / 2 + (i == 0 ? fontPixelSize / 2 : fontPixelSize / 4));
                 ctx.restore();
             }
             ctx.stroke();

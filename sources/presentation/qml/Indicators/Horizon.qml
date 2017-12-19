@@ -11,7 +11,7 @@ Item {
     property real roll: 0.0
     property real minPitch: -25.0
     property real maxPitch: 25.0
-    property int effectiveHeight: height
+    property real effectiveHeight: height
 
     Rectangle {
         anchors.centerIn: parent

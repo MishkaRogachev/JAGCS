@@ -6,10 +6,10 @@ Item {
 
     property real pitch: 0.0
     property real roll: 0.0
-    property int effectiveHeight: height
+    property real effectiveHeight: height
 
     property color markColor
-    property int markWidth: Math.max(2, height * 0.017)
+    property real markWidth: 2
 
     implicitHeight: width
     onWidthChanged: canvas.requestPaint()

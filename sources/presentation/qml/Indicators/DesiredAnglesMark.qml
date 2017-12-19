@@ -6,10 +6,10 @@ Item {
 
     property real pitch: 0.0
     property real roll: 0.0
-    property int effectiveHeight: height
+    property real effectiveHeight: height
 
     property color markColor: palette.activeMissionColor
-    property int markWidth: height * 0.017 + 2
+    property real markWidth: 5
 
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()

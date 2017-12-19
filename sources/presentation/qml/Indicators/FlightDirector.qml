@@ -45,16 +45,6 @@ AttitudeIndicator {
         color: operational ? palette.textColor : palette.dangerColor
     }
 
-    DesiredAnglesMark {
-        id: desiredMark
-        anchors.fill: parent
-        anchors.margins: sizings.margins
-        effectiveHeight: fd.effectiveHeight
-        visible: guided
-        pitch: pitchInverted ? fd.pitch - desiredPitch : -desiredPitch
-        roll: rollInverted ? -desiredRoll : fd.roll - desiredRoll
-    }
-
     TurnIndicator {
         id: turn
         anchors.fill: parent
@@ -70,6 +60,16 @@ AttitudeIndicator {
         color: armed ? "transparent" : palette.dangerColor
     }
 
+    DesiredAnglesMark {
+        id: desiredMark
+        anchors.fill: parent
+        anchors.margins: sizings.margins
+        effectiveHeight: fd.effectiveHeight
+        visible: guided
+        pitch: pitchInverted ? fd.pitch - desiredPitch : -desiredPitch
+        roll: rollInverted ? -desiredRoll : fd.roll - desiredRoll
+    }
+
     PlaneMark {
         id: mark
         anchors.fill: parent
@@ -78,5 +78,6 @@ AttitudeIndicator {
         pitch: pitchInverted ? 0 : -fd.pitch
         roll: rollInverted ? -fd.roll : 0
         markColor: armed ? palette.selectedTextColor : palette.dangerColor
+        markWidth: 3
     }
 }

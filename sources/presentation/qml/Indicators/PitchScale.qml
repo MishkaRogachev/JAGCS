@@ -9,9 +9,9 @@ Item {
     property real roll: 0.0
     property real minPitch: -25.0
     property real maxPitch: 25.0
-    property int pitchStep: 10
+    property real pitchStep: 10
     property color color: palette.textColor
-    property int fontPixelSize: Math.max(height * 0.1, 9)
+    property real fontPixelSize: Math.max(height * 0.1, 9)
 
     onMinPitchChanged: canvas.requestPaint()
     onMaxPitchChanged: canvas.requestPaint()
@@ -33,23 +33,22 @@ Item {
 
             ctx.clearRect(0, 0, width, height);
 
-            ctx.lineWidth = 2;
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
             ctx.textBaseline = 'middle';
 
             ctx.save();
-            ctx.beginPath();
 
-            var counter = 0;
             for (var pitch = minPitch - (minPitch % (pitchStep * 2)); pitch <= maxPitch;
                  pitch += pitchStep) {
-                var major = (counter++ % 2) == 0;
                 if (pitch == 0) continue;
 
+                var major = (pitch % (pitchStep * 2)) == 0;
                 var yPos = height - Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
+                ctx.lineWidth = major ? 2 : 1;
+                ctx.beginPath();
                 ctx.save();
                 ctx.translate(width / 2, yPos);
 
@@ -57,6 +56,7 @@ Item {
                                          width / 16
                 ctx.moveTo(-tickLength, 0);
                 ctx.lineTo(+tickLength, 0);
+                ctx.stroke();
 
                 if (major) {
                     ctx.textAlign = 'left';
@@ -67,7 +67,6 @@ Item {
 
                 ctx.restore();
             }
-            ctx.stroke();
             ctx.restore();
         }
     }
