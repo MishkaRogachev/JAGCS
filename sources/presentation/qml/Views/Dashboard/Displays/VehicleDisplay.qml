@@ -10,7 +10,6 @@ BaseDisplay {
     id: vehicleDisplay
 
     property alias armed: ai.armed
-    property alias guided: ai.guided
 
     property bool ahrsEnabled: false
     property bool ahrsOperational: false
@@ -39,6 +38,8 @@ BaseDisplay {
     RowLayout {
         Indicators.ArtificialHorizon {
             id: ai
+            implicitWidth: vehicleDisplay.width / 6
+            implicitHeight: width * 1.5
             enabled: ahrsEnabled
             operational: ahrsOperational
             rollInverted: vehicleDisplay.rollInverted

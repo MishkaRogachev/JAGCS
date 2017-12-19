@@ -8,17 +8,17 @@ import "qrc:/Indicators" as Indicators
 BaseDisplay {
     id: flightDisplay
 
-    property alias armed: ai.armed
-    property alias guided: ai.guided
+    property alias armed: fd.armed
+    property alias guided: fd.guided
 
     property bool ahrsEnabled: false
     property bool ahrsOperational: false
-    property alias pitch: ai.pitch
-    property alias roll: ai.roll
-    property alias yawspeed: ai.yawspeed
+    property alias pitch: fd.pitch
+    property alias roll: fd.roll
+    property alias yawspeed: fd.yawspeed
 
-    property alias desiredPitch: ai.desiredPitch
-    property alias desiredRoll: ai.desiredRoll
+    property alias desiredPitch: fd.desiredPitch
+    property alias desiredRoll: fd.desiredRoll
 
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
@@ -76,8 +76,8 @@ BaseDisplay {
     Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: ai.left
-        width: (flightDisplay.width - ai.width) / 2
+        anchors.right: fd.left
+        width: (flightDisplay.width - fd.width) / 2
         height: parent.height * 0.7
         value: speedUnits ? Helper.mpsToKph(indicatedAirspeed) : indicatedAirspeed
         error: speedUnits ? Helper.mpsToKph(airspeedError) : airspeedError
@@ -128,8 +128,8 @@ BaseDisplay {
         suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
     }
 
-    Indicators.ArtificialHorizon {
-        id: ai
+    Indicators.FlightDirector {
+        id: fd
         anchors.centerIn: parent
         height: flightDisplay.height - sizings.padding
         width: flightDisplay.width * 0.55
@@ -152,8 +152,8 @@ BaseDisplay {
     Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: ai.right
-        width: (flightDisplay.width - ai.width) / 2
+        anchors.left: fd.right
+        width: (flightDisplay.width - fd.width) / 2
         height: parent.height * 0.7
         value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
         error: altitudeError

@@ -9,8 +9,9 @@ Item {
     property int effectiveHeight: height
 
     property color markColor
-    property int markWidth: height * 0.017
+    property int markWidth: Math.max(2, height * 0.017)
 
+    implicitHeight: width
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
     onMarkColorChanged: canvas.requestPaint()
