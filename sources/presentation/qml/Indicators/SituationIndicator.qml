@@ -19,7 +19,7 @@ Compass {
     Canvas {
         id: canvas
         anchors.fill: parent
-        anchors.margins: scalesOffset * 2
+        anchors.margins: textOffset + majorTickOffset
         visible: guided
 
         onPaint: {
@@ -42,16 +42,16 @@ Compass {
 
             ctx.beginPath();
             ctx.moveTo(0, -height / 2);
-            ctx.lineTo(width * 0.05, height * 0.15 - height / 2);
-            ctx.lineTo(0, height * 0.1 - height / 2);
-            ctx.lineTo(-width * 0.05, height * 0.15 - height / 2);
+            ctx.lineTo(minorTickOffset, majorTickOffset - height / 2);
+            ctx.lineTo(0, minorTickOffset - height / 2);
+            ctx.lineTo(-minorTickOffset, majorTickOffset - height / 2);
             ctx.closePath();
             ctx.fill();
 
             ctx.beginPath();
             ctx.lineWidth = 4;
 
-            ctx.moveTo(0, height * 0.1 - height / 2);
+            ctx.moveTo(0, minorTickOffset - height / 2);
             ctx.lineTo(0, -height / 4 - 1);
 
             ctx.moveTo(0, height / 4 + 1);

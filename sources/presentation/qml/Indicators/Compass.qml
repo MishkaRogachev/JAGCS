@@ -6,22 +6,24 @@ Canvas {
     property real heading: 0
     property real course: 0
 
-    property color color: palette.textColor
-    property color courseColor: palette.positiveColor
     property bool courseEnabled: true
+    property color headingColor: palette.textColor
+    property color courseColor: palette.positiveColor
     property url mark
     property int tickFactor: 5
     property real scalesRatio: 0.08
     property real scalesOffset: root.width * scalesRatio
-    property real minorTickOffset: 0.4 * scalesOffset
-    property real majorTickOffset: 0.8 * scalesOffset
+    property real minorTickOffset: 0.5 * scalesOffset
+    property real majorTickOffset: 1.0 * scalesOffset
     property real textOffset: 1.4 * scalesOffset
 
     onWidthChanged: requestPaint()
     onHeightChanged: requestPaint()
-    onCourseChanged: requestPaint()
     onHeadingChanged: requestPaint()
-    onColorChanged: requestPaint()
+    onHeadingColorChanged: requestPaint()
+    onCourseChanged: requestPaint()
+    onCourseEnabledChanged: requestPaint()
+    onCourseColorChanged: requestPaint()
 
     implicitHeight: width
     clip: true
@@ -33,8 +35,8 @@ Canvas {
 
         ctx.save();
 
-        ctx.strokeStyle = color;
-        ctx.fillStyle = color;
+        ctx.strokeStyle = headingColor;
+        ctx.fillStyle = headingColor;
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'center';
 
@@ -88,17 +90,27 @@ Canvas {
 
         // Course Mark
         if (courseEnabled) {
-            ctx.strokeStyle = courseColor;
+            ctx.fillStyle = courseColor;
             ctx.save();
             ctx.rotate((course - heading) * Math.PI / 180);
             ctx.beginPath();
-            ctx.lineWidth = 4;
-            ctx.moveTo(-scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
-            ctx.lineTo(0, (ctx.lineWidth - height) / 2);
-            ctx.lineTo(scalesOffset, scalesOffset - (ctx.lineWidth + height) / 2);
-            ctx.stroke();
+            ctx.moveTo(0, textOffset + majorTickOffset - height / 2);
+            ctx.lineTo(minorTickOffset, textOffset + majorTickOffset - minorTickOffset - height / 2);
+            ctx.lineTo(-minorTickOffset, textOffset + majorTickOffset - minorTickOffset - height / 2);
+            ctx.closePath();
+            ctx.fill();
             ctx.restore();
         }
+
+        // Current Arrow
+        ctx.fillStyle = headingColor;
+        ctx.beginPath();
+        ctx.moveTo(0, textOffset + majorTickOffset - height / 2);
+        ctx.lineTo(minorTickOffset, textOffset + majorTickOffset * 2 - height / 2);
+        ctx.lineTo(0, textOffset + majorTickOffset - height / 2 + minorTickOffset);
+        ctx.lineTo(-minorTickOffset, textOffset + majorTickOffset * 2 - height / 2);
+        ctx.closePath();
+        ctx.fill();
 
         ctx.restore();
     }

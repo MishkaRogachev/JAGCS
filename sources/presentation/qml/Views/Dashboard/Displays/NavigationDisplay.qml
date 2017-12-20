@@ -84,8 +84,8 @@ BaseDisplay {
         width: height
         mark: vehicleMark
         opacity: compassEnabled ? 1 : 0.33
-        color: compassOperational ? palette.textColor : palette.dangerColor
         courseEnabled: groundspeed > 0.1
+        headingColor: compassOperational ? palette.textColor : palette.dangerColor
         courseColor: satelliteEnabled ? (satelliteOperational ? palette.positiveColor :
                                                                 palette.dangerColor) :
                                         "transparent"
