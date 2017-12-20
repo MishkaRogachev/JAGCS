@@ -7,6 +7,7 @@ import "qrc:/Controls" as Controls
 Rectangle {
     id: topbar
 
+    property string unitText
     property string contextText
 
     color: palette.raisedColor
@@ -17,11 +18,21 @@ Rectangle {
         view: topbar
     }
 
-    Controls.Button {
-        iconSource: "qrc:/icons/left.svg"
-        visible: dashboard.selectedVehicle > 0
-        onClicked: dashboard.selectVehicle(0)
-        flat: true
+    RowLayout {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+
+        Controls.Button {
+            iconSource: "qrc:/icons/left.svg"
+            visible: dashboard.selectedVehicle > 0
+            onClicked: dashboard.selectVehicle(0)
+            flat: true
+        }
+
+        Controls.Label {
+            text: unitText
+            font.bold: true
+        }
     }
 
     RowLayout {

@@ -12,6 +12,7 @@ Item {
 
     function selectVehicle(vehicleId) {
         selectedVehicle = vehicleId;
+        // TODO: vehicle name
         presenter.setVehicle(vehicleId);
     }
 
