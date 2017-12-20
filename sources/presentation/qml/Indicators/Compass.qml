@@ -116,10 +116,9 @@ Canvas {
     }
 
     Image {
-        anchors.centerIn: parent
+        anchors.fill: parent
         source: mark
-        width: parent.width / 1.5
-        height: width
+        anchors.margins: textOffset + majorTickOffset
         z: 1
     }
 }

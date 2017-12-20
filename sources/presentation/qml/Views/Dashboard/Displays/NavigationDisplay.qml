@@ -100,7 +100,7 @@ BaseDisplay {
                 width: parent.width * 0.12
                 height: width
                 anchors.centerIn: parent
-                anchors.verticalCenterOffset: -parent.height * 0.3
+                anchors.verticalCenterOffset: -(hsi.textOffset + hsi.majorTickOffset)
                 source: "qrc:/icons/home.svg"
                 rotation: -parent.rotation
             }
