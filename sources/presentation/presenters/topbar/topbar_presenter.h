@@ -13,12 +13,6 @@ namespace presentation
         explicit TopbarPresenter(QObject* parent = nullptr);
         ~TopbarPresenter() override;
 
-    public slots:
-        void updateVehicles();
-
-    protected:
-        void connectView(QObject* view) override;
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;

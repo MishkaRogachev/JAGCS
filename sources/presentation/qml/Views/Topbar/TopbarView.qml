@@ -8,7 +8,6 @@ Rectangle {
     id: topbar
 
     property string contextText
-    property var vehicles: []
 
     color: palette.raisedColor
     height: sizings.controlBaseSize
@@ -16,23 +15,13 @@ Rectangle {
     TopbarPresenter {
         id: presenter
         view: topbar
-        Component.onCompleted: updateVehicles()
     }
 
-    RowLayout {
-        anchors.left: parent.left
-        anchors.leftMargin: sizings.margins
-        anchors.verticalCenter: parent.verticalCenter
-
-        Controls.Label {
-            text: qsTr("MAV")
-        }
-
-        Controls.ComboBox {
-            model: vehicles
-            textRole: "name"
-            onActivated: dashboard.setActiveVehicle(vehicles[currentIndex].id)
-        }
+    Controls.Button {
+        iconSource: "qrc:/icons/left.svg"
+        visible: dashboard.selectedVehicle > 0
+        onClicked: dashboard.selectVehicle(0)
+        flat: true
     }
 
     RowLayout {

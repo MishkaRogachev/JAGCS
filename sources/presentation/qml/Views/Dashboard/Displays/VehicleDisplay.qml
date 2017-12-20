@@ -58,7 +58,7 @@ BaseDisplay {
             Indicators.ArtificialHorizon {
                 id: ai
                 anchors.fill: parent
-                anchors.margins: parent.textOffset
+                anchors.margins: parent.textOffset + parent.minorTickOffset
                 enabled: ahrsEnabled
                 operational: ahrsOperational
                 available: online
@@ -118,6 +118,13 @@ BaseDisplay {
                 suffix: qsTr("m")
                 Layout.fillWidth: true
             }
+        }
+
+        Controls.Button {
+            Layout.alignment: Qt.AlignRight | Qt.AlignTop
+            flat: true
+            iconSource: "qrc:/icons/right.svg"
+            onClicked: dashboard.selectVehicle(vehicleId)
         }
     }
 }

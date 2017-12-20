@@ -7,9 +7,11 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
+    property int selectedVehicle: 0
     property var instruments: []
 
-    function setActiveVehicle(vehicleId) {
+    function selectVehicle(vehicleId) {
+        selectedVehicle = vehicleId;
         presenter.setVehicle(vehicleId);
     }
 
@@ -28,7 +30,6 @@ Item {
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        clip: true
         model: instruments
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
@@ -36,7 +37,7 @@ Item {
         }
 
         delegate: Loader {
-            width: parent.width - 3 // TODO: shadow width
+            width: parent.width
             Component.onCompleted: {
                 switch (instrument) {
                 case DashboardPresenter.VehicleDispaly:
