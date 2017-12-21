@@ -6,5 +6,6 @@ Controls.Pane {
     id: baseDisplay
 
     property int vehicleId: 0
+    property string vehicleName
     property bool online: false
 }

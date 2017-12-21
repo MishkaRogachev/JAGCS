@@ -15,6 +15,6 @@ Text {
     font.bold: true
     font.pixelSize: sizings.fontPixelSize * 0.7
     wrapMode: Text.WordWrap
-    text: (prefix.length > 0 ? prefix + "\t" : "") +
+    text: (prefix.length > 0 ? prefix + "\n" : "") +
           (enabled ? value.toFixed(digits) + " " + suffix : "-")
 }

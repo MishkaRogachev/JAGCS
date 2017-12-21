@@ -16,7 +16,8 @@ BaseDisplayPresenter::BaseDisplayPresenter(QObject* parent):
     BasePresenter(parent)
 {
     connect(domain::ServiceRegistry::vehicleService(),
-            &domain::VehicleService::vehicleChanged, this, [this](const dao::VehiclePtr& vehicle)
+            &domain::VehicleService::vehicleChanged, this,
+            [this](const dao::VehiclePtr& vehicle)
     {
         if (vehicle->id() != m_vehicleId) return;
 
@@ -34,5 +35,8 @@ void BaseDisplayPresenter::setVehicle(int vehicleId)
     m_vehicleId = vehicleId;
 
     dao::VehiclePtr vehicle = domain::ServiceRegistry::vehicleService()->vehicle(vehicleId);
-    if (vehicle) this->setViewProperty(PROPERTY(online), vehicle->isOnline());
+    if (vehicle.isNull()) return;
+
+    this->setViewProperty(PROPERTY(vehicleName), vehicle->name());
+    this->setViewProperty(PROPERTY(online), vehicle->isOnline());
 }

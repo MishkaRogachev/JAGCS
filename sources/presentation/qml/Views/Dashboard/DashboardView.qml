@@ -7,12 +7,10 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
-    property int selectedVehicle: 0
     property var instruments: []
 
-    function selectVehicle(vehicleId) {
-        selectedVehicle = vehicleId;
-        // TODO: vehicle name
+    function selectVehicle(vehicleId, vehicleName) {
+        topbar.unitName = vehicleName;
         presenter.setVehicle(vehicleId);
     }
 
