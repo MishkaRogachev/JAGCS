@@ -14,6 +14,7 @@ Text {
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
     font.pixelSize: sizings.fontPixelSize * 0.7
-    text: (prefix.length > 0 ? prefix + "\n" : "") +
+    wrapMode: Text.WordWrap
+    text: (prefix.length > 0 ? prefix + "\t" : "") +
           (enabled ? value.toFixed(digits) + " " + suffix : "-")
 }
