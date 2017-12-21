@@ -16,6 +16,7 @@
 #include "translation_helper.h"
 
 #include "topbar_presenter.h"
+#include "radio_status_presenter.h"
 #include "location_map_presenter.h"
 #include "active_video_presenter.h"
 #include "dashboard_presenter.h"
@@ -163,6 +164,7 @@ void PresentationContext::registerQuickTypes()
                                      "Can't create enums in QML");
 
     qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");
+    qmlRegisterType<RadioStatusPresenter>("JAGCS", 1, 0, "RadioStatusPresenter");
     qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
     qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "ActiveVideoPresenter");
     qmlRegisterType<DashboardPresenter>("JAGCS", 1, 0, "DashboardPresenter");

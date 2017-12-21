@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "../RadioStatus"
 
 Rectangle {
     id: topbar
@@ -19,19 +20,29 @@ Rectangle {
     }
 
     RowLayout {
+        id: unitRow
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
 
-        Controls.Button {
-            iconSource: "qrc:/icons/left.svg"
-            visible: unitName.length > 0
-            onClicked: dashboard.selectVehicle(0, "")
-            flat: true
+        RowLayout { // TODO: Unit & vehicle statistics row
+            Layout.minimumWidth: dashboard.width
+
+            Controls.Button {
+                iconSource: "qrc:/icons/left.svg"
+                visible: unitName.length > 0
+                onClicked: dashboard.selectVehicle(0, "")
+                flat: true
+            }
+
+            Controls.Label {
+                text: unitName
+                font.bold: true
+                Layout.fillWidth: true
+            }
         }
 
-        Controls.Label {
-            text: unitName
-            font.bold: true
+        RadioStatusView {
+            id: radioStatus
         }
     }
 

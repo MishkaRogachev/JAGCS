@@ -1,16 +1,22 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
 RowLayout {
-    id: root
+    id: radioStatus
 
     property alias rssi: rssiItem.rssi
     property alias remoteRssi: remoteRssiItem.rssi
 
     spacing: sizings.spacing
+
+    RadioStatusPresenter {
+        id: presenter
+        view: radioStatus
+    }
 
     Indicators.RssiIndicator {
         id: rssiItem

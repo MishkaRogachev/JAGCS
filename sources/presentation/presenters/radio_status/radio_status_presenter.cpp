@@ -1,19 +1,19 @@
-#include "radio_presenter.h"
+#include "radio_status_presenter.h"
 
 // Qt
 #include <QDebug>
 
 using namespace presentation;
 
-RadioPresenter::RadioPresenter(domain::Telemetry* node, QObject* parent):
-    BasePresenter(parent),
-    m_node(node)
+RadioStatusPresenter::RadioStatusPresenter(QObject* parent):
+    BasePresenter(parent)
+    //m_node(node)
 {
-    connect(node, &domain::Telemetry::parametersChanged,
-            this, &RadioPresenter::onParametersChanged);
+//    connect(node, &domain::Telemetry::parametersChanged,
+//            this, &RadioPresenter::onParametersChanged);
 }
 
-void RadioPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
+void RadioStatusPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
 {
     if (parameters.contains(domain::Telemetry::Rssi))
         this->setViewProperty(PROPERTY(rssi), parameters[domain::Telemetry::Rssi]);
@@ -21,7 +21,7 @@ void RadioPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& 
         this->setViewProperty(PROPERTY(remoteRssi), parameters[domain::Telemetry::RemoteRssi]);
 }
 
-void RadioPresenter::connectView(QObject* view)
+void RadioStatusPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
 

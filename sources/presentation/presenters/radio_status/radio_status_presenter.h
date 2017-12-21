@@ -1,5 +1,5 @@
-#ifndef RADIO_PRESENTER_H
-#define RADIO_PRESENTER_H
+#ifndef RADIO_STATUS_PRESENTER_H
+#define RADIO_STATUS_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -7,12 +7,12 @@
 
 namespace presentation
 {
-    class RadioPresenter: public BasePresenter
+    class RadioStatusPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit RadioPresenter(domain::Telemetry* node, QObject* parent = nullptr);
+        explicit RadioStatusPresenter(QObject* parent = nullptr);
 
     public slots:
         void onParametersChanged(const domain::Telemetry::TelemetryMap& parameters);
@@ -25,4 +25,4 @@ namespace presentation
     };
 }
 
-#endif // RADIO_PRESENTER_H
+#endif // RADIO_STATUS_PRESENTER_H
