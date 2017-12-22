@@ -14,7 +14,7 @@ Item {
     property real valueStep: 20
 
     property real fontPixelSize: height * 0.1
-    property real fontScaleSize: fontPixelSize * 0.85
+    property real fontScaleSize: fontPixelSize * 0.75
     property real minorTickSize: fontScaleSize * 0.4
     property real majorTickSize: fontScaleSize * 0.6
     property real textOrigin: fontScaleSize * 0.8

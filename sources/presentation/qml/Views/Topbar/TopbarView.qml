@@ -39,6 +39,12 @@ Rectangle {
             Layout.fillWidth: true
         }
 
+        Controls.Button { // TODO: goto Vehicle settings
+            iconSource: "qrc:/icons/settings.svg"
+            flat: true
+            enabled: false
+        }
+
         RadioStatusView {
             id: radioStatus
         }

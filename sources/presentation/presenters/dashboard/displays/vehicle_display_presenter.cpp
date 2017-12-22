@@ -17,6 +17,8 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
                     std::bind(&VehicleDisplayPresenter::updateSatellite, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Compass),
+                    std::bind(&VehicleDisplayPresenter::updateCompass, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::PowerSystem),
                     std::bind(&VehicleDisplayPresenter::updatePowerSystem, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Pitot),
@@ -44,6 +46,13 @@ void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& 
     this->setViewProperty(PROPERTY(pitch), parameters.value(domain::Telemetry::Pitch, 0));
     this->setViewProperty(PROPERTY(roll), parameters.value(domain::Telemetry::Roll, 0));
     this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
+}
+
+void VehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewProperty(PROPERTY(compassEnabled), parameters.value(domain::Telemetry::Enabled, false));
+    this->setViewProperty(PROPERTY(compassOperational), parameters.value(domain::Telemetry::Operational, false));
+    this->setViewProperty(PROPERTY(heading), parameters.value(domain::Telemetry::Heading, 0));
 }
 
 void VehicleDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryMap& parameters)

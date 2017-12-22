@@ -20,9 +20,9 @@ BaseDisplay {
     property alias pitch: ah.pitch
     property alias roll: ah.roll
 
-//    property bool compassEnabled: compass.enabled
-//    property bool compassOperational: compass.operational
-//    property alias heading: compass.yaw
+    property bool compassEnabled: compass.enabled
+    property bool compassOperational: compass.operational
+    property real heading
 
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
@@ -50,26 +50,7 @@ BaseDisplay {
 
     GridLayout {
         anchors.fill: parent
-        columns: 4
-
-        Indicators.Compass {
-            id: compass
-            Layout.rowSpan: 3
-            Layout.fillHeight: true
-            implicitWidth: height
-            tickFactor: 15
-            scalesRatio: 0.08
-            minorTickOffset: 0.2 * scalesOffset
-            majorTickOffset: 0.4 * scalesOffset
-
-            Indicators.ArtificialHorizon {
-                id: ah
-                anchors.centerIn: parent
-                height: parent.height -(compass.textOffset + compass.majorTickOffset) * 2
-                width: height// * 0.75
-                available: online
-            }
-        }
+        columns: 5
 
         Indicators.FdLabel {
             digits: 0
@@ -87,8 +68,27 @@ BaseDisplay {
             Layout.preferredWidth: parent.width * 0.2
         }
 
+        Indicators.ArtificialHorizon {
+            id: ah
+            Layout.rowSpan: 2
+            Layout.fillHeight: true
+            implicitWidth: height * 0.75
+            available: online
+        }
+
+        Indicators.FdLabel {
+            value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
+            enabled: barometricEnabled
+            operational: barometricOperational
+            prefix: qsTr("ALT")
+            suffix: qsTr("m")
+            Layout.preferredWidth: parent.width * 0.2
+        }
+
         Controls.Label {
             text: vehicleName
+            font.pixelSize: sizings.fontPixelSize * 0.75
+            font.bold: true
             Layout.fillWidth: true
         }
 
@@ -114,22 +114,24 @@ BaseDisplay {
             Layout.preferredWidth: parent.width * 0.2
         }
 
+        Indicators.FdLabel {
+            digits: 0
+            value: heading
+            enabled: compassEnabled
+            operational: compassOperational
+            prefix: qsTr("HDG")
+            suffix: "\u00B0"
+            Layout.preferredWidth: parent.width * 0.2
+        }
+
         CommandControls.ModeBox {
             id: modeBox
             mode: vehicleDisplay.mode
             model: availableModes
+            font.pixelSize: sizings.fontPixelSize * 0.75
             tipText: qsTr("Select mode")
             Layout.columnSpan: 2
             Layout.fillWidth: true
-        }
-
-        Indicators.FdLabel {
-            value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
-            enabled: barometricEnabled
-            operational: barometricOperational
-            prefix: qsTr("ALT")
-            suffix: qsTr("m")
-            Layout.preferredWidth: parent.width * 0.2
         }
 
         // TODO: select mission item

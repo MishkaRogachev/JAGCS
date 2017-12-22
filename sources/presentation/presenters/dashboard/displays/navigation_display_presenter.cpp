@@ -14,7 +14,7 @@ void NavigationDisplayPresenter::connectNode(domain::Telemetry* node)
     this->chainNode(node->childNode(domain::Telemetry::Status),
                     std::bind(&NavigationDisplayPresenter::updateStatus, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Compass),
-                    std::bind(&NavigationDisplayPresenter::updateCompas, this, std::placeholders::_1));
+                    std::bind(&NavigationDisplayPresenter::updateCompass, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
                     std::bind(&NavigationDisplayPresenter::updateSatellite, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::HomePosition),
@@ -32,7 +32,7 @@ void NavigationDisplayPresenter::updateStatus(const domain::Telemetry::Telemetry
     this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
 }
 
-void NavigationDisplayPresenter::updateCompas(const domain::Telemetry::TelemetryMap& parameters)
+void NavigationDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setViewProperty(PROPERTY(compassEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(compassOperational), parameters.value(domain::Telemetry::Operational, false));
