@@ -3,7 +3,6 @@
 
 // Internal
 #include "base_presenter.h"
-#include "telemetry.h"
 
 namespace presentation
 {
@@ -13,15 +12,14 @@ namespace presentation
 
     public:
         explicit RadioStatusPresenter(QObject* parent = nullptr);
+        ~RadioStatusPresenter() override;
 
     public slots:
-        void onParametersChanged(const domain::Telemetry::TelemetryMap& parameters);
-
-    protected:
-        void connectView(QObject* view) override;
+        void updateParameters();
 
     private:
-        domain::Telemetry* m_node;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

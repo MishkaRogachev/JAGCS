@@ -3,27 +3,33 @@
 // Qt
 #include <QDebug>
 
+// Internal
+#include "service_registry.h"
+
+#include "telemetry_service.h"
+#include "telemetry.h"
+
 using namespace presentation;
 
+class RadioStatusPresenter::Impl
+{
+public:
+    domain::Telemetry* node = domain::ServiceRegistry::telemetryService()->radioNode();
+};
+
 RadioStatusPresenter::RadioStatusPresenter(QObject* parent):
-    BasePresenter(parent)
-    //m_node(node)
+    BasePresenter(parent),
+    d(new Impl())
 {
-//    connect(node, &domain::Telemetry::parametersChanged,
-//            this, &RadioPresenter::onParametersChanged);
+    connect(d->node, &domain::Telemetry::parametersChanged,
+            this, &RadioStatusPresenter::updateParameters);
 }
 
-void RadioStatusPresenter::onParametersChanged(const domain::Telemetry::TelemetryMap& parameters)
-{
-    if (parameters.contains(domain::Telemetry::Rssi))
-        this->setViewProperty(PROPERTY(rssi), parameters[domain::Telemetry::Rssi]);
-    if (parameters.contains(domain::Telemetry::RemoteRssi))
-        this->setViewProperty(PROPERTY(remoteRssi), parameters[domain::Telemetry::RemoteRssi]);
-}
+RadioStatusPresenter::~RadioStatusPresenter()
+{}
 
-void RadioStatusPresenter::connectView(QObject* view)
+void RadioStatusPresenter::updateParameters()
 {
-    Q_UNUSED(view)
-
-    this->onParametersChanged(m_node->parameters());
+    this->setViewProperty(PROPERTY(rssi), d->node->parameter(domain::Telemetry::Rssi));
+    this->setViewProperty(PROPERTY(remoteRssi), d->node->parameter(domain::Telemetry::RemoteRssi));
 }

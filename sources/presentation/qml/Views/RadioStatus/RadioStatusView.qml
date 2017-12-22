@@ -16,6 +16,7 @@ RowLayout {
     RadioStatusPresenter {
         id: presenter
         view: radioStatus
+        Component.onCompleted: updateParameters()
     }
 
     Indicators.RssiIndicator {
