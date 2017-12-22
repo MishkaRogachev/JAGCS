@@ -8,32 +8,34 @@ RowLayout {
     id: connection
 
     property bool connected: false
-    property real sended: 0.0
-    property real received: 0.0
+    property real bytesRecv: 0.0
+    property real bytesSent: 0.0
 
     spacing: sizings.spacing
 
-//    ConnectionPresenter {
-//        id: presenter
-//        view: connection
-//        //Component.onCompleted:
-//    }
+    ConnectionPresenter {
+        id: presenter
+        view: connection
+        Component.onCompleted: updateStatus()
+    }
 
-    Controls.ColoredIcon {
-        source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        color: connected ? palette.textColor : palette.dangerColor
+    Controls.Button {
+        iconSource: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
+        iconColor: connected ? palette.textColor : palette.dangerColor
+        flat: true
+        onClicked: presenter.setConnected(!connected)
     }
 
     Controls.ContentItem {
         iconSource: "qrc:/icons/up.svg"
-        text: sended.toFixed(1) + " " + qsTr("B/s")
+        text: bytesSent.toFixed(1) + " " + qsTr("B/s")
         font.pixelSize: sizings.fontPixelSize * 0.6
         font.bold: true
     }
 
     Controls.ContentItem {
         iconSource: "qrc:/icons/down.svg"
-        text: received.toFixed(1) + " " + qsTr("B/s")
+        text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
         font.pixelSize: sizings.fontPixelSize * 0.6
         font.bold: true
     }

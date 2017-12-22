@@ -14,6 +14,10 @@ namespace presentation
         explicit ConnectionPresenter(QObject* parent = nullptr);
         ~ConnectionPresenter() override;
 
+    public slots:
+        void updateStatus();
+        void setConnected(bool connected);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
