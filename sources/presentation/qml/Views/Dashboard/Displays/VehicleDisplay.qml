@@ -52,6 +52,25 @@ BaseDisplay {
         anchors.fill: parent
         columns: 4
 
+        Indicators.Compass {
+            id: compass
+            Layout.rowSpan: 3
+            Layout.fillHeight: true
+            implicitWidth: height
+            tickFactor: 15
+            scalesRatio: 0.08
+            minorTickOffset: 0.2 * scalesOffset
+            majorTickOffset: 0.4 * scalesOffset
+
+            Indicators.ArtificialHorizon {
+                id: ah
+                anchors.centerIn: parent
+                height: parent.height -(compass.textOffset + compass.majorTickOffset) * 2
+                width: height// * 0.75
+                available: online
+            }
+        }
+
         Indicators.FdLabel {
             digits: 0
             value: {
@@ -66,14 +85,6 @@ BaseDisplay {
             prefix: qsTr("GS")
             suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
             Layout.preferredWidth: parent.width * 0.2
-        }
-
-        Indicators.ArtificialHorizon {
-            id: ah
-            implicitWidth: height * 0.75
-            available: online
-            Layout.rowSpan: 3
-            Layout.fillHeight: true
         }
 
         Controls.Label {

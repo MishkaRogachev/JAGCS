@@ -28,6 +28,8 @@ Item {
     property alias warningColor: hatch.color
 
     clip: true
+    onWidthChanged: canvas.requestPaint()
+    onHeightChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()
     onValueChanged: canvas.requestPaint()
 

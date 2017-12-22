@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../RadioStatus"
+import "RadioStatus"
+import "Connection"
 
 Rectangle {
     id: topbar
@@ -23,32 +24,34 @@ Rectangle {
         id: unitRow
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
+        spacing: sizings.spacing
 
-        RowLayout { // TODO: Unit & vehicle statistics row
-            Layout.minimumWidth: dashboard.width
+        Controls.Button {
+            iconSource: "qrc:/icons/left.svg"
+            enabled: unitName.length > 0
+            onClicked: dashboard.selectVehicle(0, "")
+            flat: true
+        }
 
-            Controls.Button {
-                iconSource: "qrc:/icons/left.svg"
-                visible: unitName.length > 0
-                onClicked: dashboard.selectVehicle(0, "")
-                flat: true
-            }
-
-            Controls.Label {
-                text: unitName
-                font.bold: true
-                Layout.fillWidth: true
-            }
+        Controls.Label {
+            text: unitName.length ? unitName : qsTr("All MAVs")
+            font.bold: true
+            Layout.fillWidth: true
         }
 
         RadioStatusView {
             id: radioStatus
+        }
+
+        ConnectionView {
+            id: connection
         }
     }
 
     RowLayout {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: menuButton.right
+        spacing: sizings.spacing
         width: menuDrawer.width
         clip: true
         visible: menu.visible

@@ -12,8 +12,6 @@ Item {
     implicitWidth: sizings.controlBaseSize
     implicitHeight: implicitWidth
 
-    onRssiChanged: console.log(rssi)
-
     Row {
         id: row
         spacing: root.width / 20
