@@ -5,13 +5,15 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-RowLayout {
+GridLayout {
     id: radioStatus
 
     property alias rssi: rssiItem.rssi
     property alias remoteRssi: remoteRssiItem.rssi
 
-    spacing: sizings.spacing
+    columns: 3
+    rowSpacing: 0
+    columnSpacing: sizings.spacing
 
     RadioStatusPresenter {
         id: presenter
@@ -21,21 +23,23 @@ RowLayout {
 
     Indicators.RssiIndicator {
         id: rssiItem
-    }
-
-    Controls.Label {
-        text: qsTr("RSSI: ") + rssi.toFixed(1) + qsTr(" dBm")
-        font.pixelSize: sizings.fontPixelSize * 0.6
-        font.bold: true
+        Layout.rowSpan: 2
     }
 
     Indicators.RssiIndicator {
         id: remoteRssiItem
+        Layout.rowSpan: 2
+    }
+
+    Controls.Label {
+        text: qsTr("RSSI: ") + rssi.toFixed(1) + qsTr(" dBm")
+        font.pixelSize: sizings.fontPixelSize * 0.5
+        font.bold: true
     }
 
     Controls.Label {
         text: qsTr("Rem. RSSI: ") + remoteRssi.toFixed(1) + qsTr(" dBm")
-        font.pixelSize: sizings.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.5
         font.bold: true
     }
 }

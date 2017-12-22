@@ -4,14 +4,16 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-RowLayout {
+GridLayout {
     id: connection
 
     property bool connected: false
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
 
-    spacing: sizings.spacing
+    columns: 2
+    rowSpacing: 0
+    columnSpacing: sizings.spacing
 
     ConnectionPresenter {
         id: presenter
@@ -24,19 +26,20 @@ RowLayout {
         iconColor: connected ? palette.textColor : palette.dangerColor
         flat: true
         onClicked: presenter.setConnected(!connected)
+        Layout.rowSpan: 2
     }
 
     Controls.ContentItem {
         iconSource: "qrc:/icons/up.svg"
         text: bytesSent.toFixed(1) + " " + qsTr("B/s")
-        font.pixelSize: sizings.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.5
         font.bold: true
     }
 
     Controls.ContentItem {
         iconSource: "qrc:/icons/down.svg"
         text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
-        font.pixelSize: sizings.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.5
         font.bold: true
     }
 }
