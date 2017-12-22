@@ -5,71 +5,71 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="36"
-   height="36"
+   version="1.1"
    id="svg4359"
-   version="1.1">
+   height="36"
+   width="36">
   <defs
      id="defs4361">
     <clipPath
        id="clipPath6">
       <rect
-         id="rect8"
-         x="26.85"
-         y="220.75"
-         width="3.825"
+         style="color:#bebebe;fill:#bebebe"
          height="6.375"
-         style="color:#bebebe;fill:#bebebe" />
+         width="3.825"
+         y="220.75"
+         x="26.85"
+         id="rect8" />
     </clipPath>
     <clipPath
        id="clipPath10">
       <rect
-         id="rect12"
-         x="26.966"
-         y="221.33"
-         width="2.898"
+         style="color:#bebebe;fill:#bebebe"
          height="5.2160001"
-         style="color:#bebebe;fill:#bebebe" />
+         width="2.898"
+         y="221.33"
+         x="26.966"
+         id="rect12" />
     </clipPath>
     <clipPath
        id="clipPath14">
       <rect
-         id="rect16"
-         x="26.999001"
-         y="221.5"
-         width="1.876"
+         style="color:#bebebe;fill:#bebebe"
          height="4.8740001"
-         style="color:#bebebe;fill:#bebebe" />
+         width="1.876"
+         y="221.5"
+         x="26.999001"
+         id="rect16" />
     </clipPath>
     <clipPath
        id="clipPath3025">
       <rect
-         height="4.8740001"
-         width="1.876"
-         y="221.5"
-         x="26.999001"
+         style="color:#bebebe;fill:#bebebe"
          id="rect3027"
-         style="color:#bebebe;fill:#bebebe" />
+         x="26.999001"
+         y="221.5"
+         width="1.876"
+         height="4.8740001" />
     </clipPath>
     <clipPath
        id="clipPath3021">
       <rect
-         height="5.2160001"
-         width="2.898"
-         y="221.33"
-         x="26.966"
+         style="color:#bebebe;fill:#bebebe"
          id="rect3023"
-         style="color:#bebebe;fill:#bebebe" />
+         x="26.966"
+         y="221.33"
+         width="2.898"
+         height="5.2160001" />
     </clipPath>
     <clipPath
        id="clipPath3017">
       <rect
-         height="6.375"
-         width="3.825"
-         y="220.75"
-         x="26.85"
+         style="color:#bebebe;fill:#bebebe"
          id="rect3019"
-         style="color:#bebebe;fill:#bebebe" />
+         x="26.85"
+         y="220.75"
+         width="3.825"
+         height="6.375" />
     </clipPath>
   </defs>
   <metadata
@@ -85,37 +85,37 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="stroke:#ffffff"
+     id="g4189"
      transform="translate(0,4.2711864)"
-     id="g4189">
+     style="stroke:#f6f5f0">
     <rect
-       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect4147"
-       width="30.355934"
-       height="21.050848"
-       x="2.8220329"
+       ry="2.7457631"
        y="7.474576"
-       ry="2.7457631" />
+       x="2.8220329"
+       height="21.050848"
+       width="30.355934"
+       id="rect4147"
+       style="fill:none;stroke:#f6f5f0;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" />
     <path
-       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4147-3"
        d="m 8.8719444,3.5092691 c -0.591558,0 -1.1257104,0.2370399 -1.5117187,0.6230469 -0.386008,0.3860085 -0.6230469,0.9201602 -0.6230469,1.5117187 l 0,1.7998213 c 0.029548,9.32e-4 0.04639,0.03125 0.076172,0.03125 l 7.2460942,0 0,-1.8310713 c 0,-0.5915585 -0.238992,-1.1257102 -0.625,-1.5117187 -0.386008,-0.386007 -0.92016,-0.6230469 -1.511719,-0.6230469 z"
-       id="rect4147-3" />
+       style="fill:none;stroke:#f6f5f0;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" />
     <path
-       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect4147-3-6"
        d="m 24.443989,3.5080112 c -0.591558,0 -1.125711,0.2370398 -1.511719,0.6230468 -0.386008,0.3860085 -0.623047,0.9201603 -0.623047,1.5117188 l 0,1.8007812 c 0.02955,9.32e-4 0.04639,0.03125 0.07617,0.03125 l 7.246094,0 0,-1.8320312 c 0,-0.5915585 -0.238992,-1.1257103 -0.625,-1.5117188 C 28.62048,3.745051 28.086329,3.5080112 27.49477,3.5080112 l -3.050781,0 z"
-       id="rect4147-3-6" />
+       style="fill:none;stroke:#f6f5f0;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" />
   </g>
   <g
-     transform="translate(-0.57730355,-0.43145499)"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      id="text4194"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+     transform="translate(-0.57730355,-0.43145499)">
     <path
-       id="path4201"
+       d="m 6.8906631,3.0440174 0,1.08 5.2499999,0 0,-1.08 -5.2499999,0 z"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;stroke:none"
-       d="m 6.8906631,3.0440174 0,1.08 5.2499999,0 0,-1.08 -5.2499999,0 z" />
+       id="path4201" />
     <path
-       id="path4203"
+       d="m 28.073944,3.0890174 0,-2.23499995 -1.17,0 0,2.23499995 -2.16,0 0,1.05 2.16,0 0,2.22 1.17,0 0,-2.22 2.19,0 0,-1.05 -2.19,0 z"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#ffffff;stroke:none"
-       d="m 28.073944,3.0890174 0,-2.23499995 -1.17,0 0,2.23499995 -2.16,0 0,1.05 2.16,0 0,2.22 1.17,0 0,-2.22 2.19,0 0,-1.05 -2.19,0 z" />
+       id="path4203" />
   </g>
 </svg>
