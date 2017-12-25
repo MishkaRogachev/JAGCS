@@ -38,6 +38,19 @@ BaseDisplay {
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
+    function updateCommandStatus(command, status) {
+        switch (command) {
+        case Command.SetMode:
+            modeBox.status = status;
+            break;
+        case Command.Return:
+            rtl.status = status;
+            break;
+        default:
+            break;
+        }
+    }
+
     VehicleDisplayPresenter {
         id: presenter
         view: vehicleDisplay
@@ -82,8 +95,6 @@ BaseDisplay {
         }
 
         ColumnLayout {
-            Layout.preferredWidth: parent.width * 0.2
-
             Indicators.FdLabel {
                 digits: 0
                 value: {
@@ -97,7 +108,7 @@ BaseDisplay {
                 operational: satelliteOperational
                 prefix: qsTr("GS")
                 suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
-                Layout.fillWidth: true
+                Layout.minimumWidth: sizings.controlBaseSize * 1.5
             }
 
             Indicators.FdLabel {
@@ -106,7 +117,7 @@ BaseDisplay {
                 operational: barometricOperational
                 prefix: qsTr("ALT")
                 suffix: qsTr("m")
-                Layout.fillWidth: true
+                Layout.minimumWidth: sizings.controlBaseSize * 1.5
             }
         }
 
@@ -132,9 +143,17 @@ BaseDisplay {
                 mode: vehicleDisplay.mode
                 model: availableModes
                 font.pixelSize: sizings.fontPixelSize * 0.75
+                enabled: online
                 tipText: qsTr("Select mode")
-                Layout.columnSpan: 2
                 Layout.fillWidth: true
+            }
+
+            CommandControls.Button {
+                id: rtl
+                tipText: qsTr("Return to launch")
+                iconSource: "qrc:/icons/home.svg"
+                command: Command.Return
+                Layout.alignment: Qt.AlignRight
             }
         }
         // TODO: select mission item

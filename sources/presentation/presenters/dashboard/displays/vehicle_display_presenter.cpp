@@ -6,13 +6,13 @@
 using namespace presentation;
 
 VehicleDisplayPresenter::VehicleDisplayPresenter(QObject* parent):
-    AbstractTelemetryPresenter(parent)
+    ControlDisplayPresenter(parent)
 {}
 
 void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
-    this->chainNode(node->childNode(domain::Telemetry::Status),
-                    std::bind(&VehicleDisplayPresenter::updateStatus, this, std::placeholders::_1));
+    ControlDisplayPresenter::connectNode(node);
+
     this->chainNode(node->childNode(domain::Telemetry::Ahrs),
                     std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
@@ -23,12 +23,6 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&VehicleDisplayPresenter::updateBarometric, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::HomePosition),
                     std::bind(&VehicleDisplayPresenter::updateHomeAltitude, this, std::placeholders::_1));
-}
-
-void VehicleDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
-{
-    this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
-    this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
 }
 
 void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)

@@ -2,11 +2,11 @@
 #define VEHICLE_DISPLAY_PRESENTER_H
 
 // Internal
-#include "abstract_telemetry_presenter.h"
+#include "control_display_presenter.h"
 
 namespace presentation
 {
-    class VehicleDisplayPresenter: public AbstractTelemetryPresenter
+    class VehicleDisplayPresenter: public ControlDisplayPresenter
     {
         Q_OBJECT
 
@@ -17,7 +17,6 @@ namespace presentation
         void connectNode(domain::Telemetry* node) override;
 
     private slots:
-        void updateStatus(const domain::Telemetry::TelemetryMap& parameters);
         void updateAhrs(const domain::Telemetry::TelemetryMap& parameters);
         void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);
         void updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters);
