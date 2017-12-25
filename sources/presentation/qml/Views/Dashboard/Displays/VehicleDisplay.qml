@@ -19,18 +19,11 @@ BaseDisplay {
     property alias ahrsOperational: ah.operational
     property alias pitch: ah.pitch
     property alias roll: ah.roll
-
-    property bool compassEnabled: compass.enabled
-    property bool compassOperational: compass.operational
-    property real heading
+    property alias yaw: compass.yaw
 
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
     property real groundspeed: 0
-
-    property bool pitotEnabled: false
-    property bool pitotOperational: false
-    property real indicatedAirspeed: 0
 
     property bool barometricEnabled: false
     property bool barometricOperational: false
@@ -48,92 +41,80 @@ BaseDisplay {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
-    GridLayout {
+    RowLayout {
         anchors.fill: parent
-        columns: 5
 
-        Indicators.FdLabel {
-            digits: 0
-            value: {
-                switch (speedUnits) {
-                default:
-                case 0: return groundspeed;
-                case 1: return Helper.mpsToKph(groundspeed);
-                }
-            }
-            enabled: satelliteEnabled
-            operational: satelliteOperational
-            prefix: qsTr("GS")
-            suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
-            Layout.preferredWidth: parent.width * 0.2
-        }
-
-        Indicators.ArtificialHorizon {
-            id: ah
+        Indicators.Compass {
+            id: compass
+            tickFactor: 15
+            implicitWidth: height * 0.75
             Layout.rowSpan: 2
             Layout.fillHeight: true
-            implicitWidth: height * 0.75
-            available: online
-        }
 
-        Indicators.FdLabel {
-            value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
-            enabled: barometricEnabled
-            operational: barometricOperational
-            prefix: qsTr("ALT")
-            suffix: qsTr("m")
-            Layout.preferredWidth: parent.width * 0.2
-        }
-
-        Controls.Label {
-            text: vehicleName
-            font.pixelSize: sizings.fontPixelSize * 0.75
-            font.bold: true
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            flat: true
-            iconSource: "qrc:/icons/right.svg"
-            onClicked: dashboard.selectVehicle(vehicleId, vehicleName)
-        }
-
-        Indicators.FdLabel {
-            digits: 0
-            value: {
-                switch (speedUnits) {
-                default:
-                case 0: return indicatedAirspeed;
-                case 1: return Helper.mpsToKph(indicatedAirspeed);
-                }
+            Indicators.ArtificialHorizon {
+                id: ah
+                available: online
+                anchors.fill: parent
+                anchors.margins: compass.textOffset + compass.majorTickOffset
             }
-            enabled: pitotEnabled
-            operational: pitotOperational
-            prefix: qsTr("IAS")
-            suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
-            Layout.preferredWidth: parent.width * 0.2
         }
 
-        Indicators.FdLabel {
-            digits: 0
-            value: heading
-            enabled: compassEnabled
-            operational: compassOperational
-            prefix: qsTr("HDG")
-            suffix: "\u00B0"
+        ColumnLayout {
             Layout.preferredWidth: parent.width * 0.2
+
+            Indicators.FdLabel {
+                digits: 0
+                value: {
+                    switch (speedUnits) {
+                    default:
+                    case 0: return groundspeed;
+                    case 1: return Helper.mpsToKph(groundspeed);
+                    }
+                }
+                enabled: satelliteEnabled
+                operational: satelliteOperational
+                prefix: qsTr("GS")
+                suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
+                Layout.fillWidth: true
+            }
+
+            Indicators.FdLabel {
+                value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
+                enabled: barometricEnabled
+                operational: barometricOperational
+                prefix: qsTr("ALT")
+                suffix: qsTr("m")
+                Layout.fillWidth: true
+            }
         }
 
-        CommandControls.ModeBox {
-            id: modeBox
-            mode: vehicleDisplay.mode
-            model: availableModes
-            font.pixelSize: sizings.fontPixelSize * 0.75
-            tipText: qsTr("Select mode")
-            Layout.columnSpan: 2
+        GridLayout {
             Layout.fillWidth: true
-        }
+            columns: 2
 
+            Controls.Label {
+                text: vehicleName
+                font.pixelSize: sizings.fontPixelSize * 0.75
+                font.bold: true
+                Layout.fillWidth: true
+            }
+
+            Controls.Button {
+                flat: true
+                iconSource: "qrc:/icons/right.svg"
+                onClicked: dashboard.selectVehicle(vehicleId, vehicleName)
+            }
+
+            CommandControls.ModeBox {
+                id: modeBox
+                mode: vehicleDisplay.mode
+                model: availableModes
+                font.pixelSize: sizings.fontPixelSize * 0.75
+                tipText: qsTr("Select mode")
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+            }
+        }
         // TODO: select mission item
     }
 }
