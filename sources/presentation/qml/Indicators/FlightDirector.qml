@@ -21,6 +21,8 @@ AttitudeIndicator {
     Behavior on desiredPitch { PropertyAnimation { duration: 100 } }
     Behavior on desiredRoll { PropertyAnimation { duration: 100 } }
 
+    effectiveHeight: height - sizings.controlBaseSize * 2
+
     RollScale {
         id: rollScale
         anchors.fill: parent

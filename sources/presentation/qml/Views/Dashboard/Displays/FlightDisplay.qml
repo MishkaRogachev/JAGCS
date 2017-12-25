@@ -46,7 +46,6 @@ BaseDisplay {
     property int homeAltitude: 0
 
     property real scalingFactor: 2.7
-    property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * scalingFactor
     property int maxSpeed: settings.value("Gui/fdSpeedStep") * scalingFactor
     property int speedStep: settings.value("Gui/fdSpeedStep")
@@ -136,7 +135,7 @@ BaseDisplay {
         enabled: ahrsEnabled
         operational: ahrsOperational
         available: online
-        rollInverted: flightDisplay.rollInverted
+        rollInverted:  settings.boolValue("Gui/fdRollInverted")
     }
 
     Indicators.BarIndicator {
