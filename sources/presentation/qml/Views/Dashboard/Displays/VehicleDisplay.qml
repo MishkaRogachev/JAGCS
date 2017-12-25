@@ -21,6 +21,8 @@ BaseDisplay {
     property alias roll: ah.roll
     property alias yaw: compass.yaw
 
+    property int throttle: 0
+
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
     property real groundspeed: 0
@@ -28,6 +30,7 @@ BaseDisplay {
     property bool barometricEnabled: false
     property bool barometricOperational: false
     property int barometricAltitude: 0
+    property real barometricClimb: 0
 
     property int homeAltitude: 0
 
@@ -44,18 +47,18 @@ BaseDisplay {
     RowLayout {
         anchors.fill: parent
 
-        Indicators.Compass {
+        Indicators.YawIndicator {
             id: compass
-            tickFactor: 15
-            implicitWidth: height * 0.75
+            implicitWidth: height
             Layout.rowSpan: 2
             Layout.fillHeight: true
 
             Indicators.ArtificialHorizon {
                 id: ah
                 available: online
-                anchors.fill: parent
-                anchors.margins: compass.textOffset + compass.majorTickOffset
+                anchors.centerIn: parent
+                height: parent.height - parent.size * 2
+                width: height * 0.8
             }
         }
 

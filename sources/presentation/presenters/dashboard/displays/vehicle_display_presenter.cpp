@@ -17,18 +17,10 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
                     std::bind(&VehicleDisplayPresenter::updateSatellite, this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Compass),
-                    std::bind(&VehicleDisplayPresenter::updateCompass, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::PowerSystem),
                     std::bind(&VehicleDisplayPresenter::updatePowerSystem, this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Pitot),
-                    std::bind(&VehicleDisplayPresenter::updatePitot, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Barometric),
                     std::bind(&VehicleDisplayPresenter::updateBarometric, this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Rangefinder),
-                    std::bind(&VehicleDisplayPresenter::updateRangefinder, this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Navigator),
-                    std::bind(&VehicleDisplayPresenter::updateNavigator, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::HomePosition),
                     std::bind(&VehicleDisplayPresenter::updateHomeAltitude, this, std::placeholders::_1));
 }
@@ -45,14 +37,7 @@ void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& 
     this->setViewProperty(PROPERTY(ahrsOperational), parameters.value(domain::Telemetry::Operational, false));
     this->setViewProperty(PROPERTY(pitch), parameters.value(domain::Telemetry::Pitch, 0));
     this->setViewProperty(PROPERTY(roll), parameters.value(domain::Telemetry::Roll, 0));
-    this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
-}
-
-void VehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
-{
-    this->setViewProperty(PROPERTY(compassEnabled), parameters.value(domain::Telemetry::Enabled, false));
-    this->setViewProperty(PROPERTY(compassOperational), parameters.value(domain::Telemetry::Operational, false));
-    this->setViewProperty(PROPERTY(heading), parameters.value(domain::Telemetry::Heading, 0));
+    this->setViewProperty(PROPERTY(yaw), parameters.value(domain::Telemetry::Yaw, 0));
 }
 
 void VehicleDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryMap& parameters)
@@ -68,35 +53,12 @@ void VehicleDisplayPresenter::updatePowerSystem(const domain::Telemetry::Telemet
     this->setViewProperty(PROPERTY(throttle), parameters.value(domain::Telemetry::Throttle, 0));
 }
 
-void VehicleDisplayPresenter::updatePitot(const domain::Telemetry::TelemetryMap& parameters)
-{
-    this->setViewProperty(PROPERTY(pitotEnabled), parameters.value(domain::Telemetry::Enabled, false));
-    this->setViewProperty(PROPERTY(pitotOperational), parameters.value(domain::Telemetry::Operational, false));
-    this->setViewProperty(PROPERTY(trueAirspeed), parameters.value(domain::Telemetry::TrueAirspeed, 0));
-    this->setViewProperty(PROPERTY(indicatedAirspeed), parameters.value(domain::Telemetry::IndicatedAirspeed, 0));
-}
-
 void VehicleDisplayPresenter::updateBarometric(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setViewProperty(PROPERTY(barometricEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(barometricOperational), parameters.value(domain::Telemetry::Operational, false));
     this->setViewProperty(PROPERTY(barometricAltitude), parameters.value(domain::Telemetry::Altitude, 0));
     this->setViewProperty(PROPERTY(barometricClimb), parameters.value(domain::Telemetry::Climb, 0));
-}
-
-void VehicleDisplayPresenter::updateRangefinder(const domain::Telemetry::TelemetryMap& parameters)
-{
-    this->setViewProperty(PROPERTY(rangefinderEnabled), parameters.value(domain::Telemetry::Enabled, false));
-    this->setViewProperty(PROPERTY(rangefinderOperational), parameters.value(domain::Telemetry::Operational, false));
-    this->setViewProperty(PROPERTY(rangefinderHeight), parameters.value(domain::Telemetry::Height, 0));
-}
-
-void VehicleDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
-{
-    this->setViewProperty(PROPERTY(desiredPitch), parameters.value(domain::Telemetry::DesiredPitch, 0));
-    this->setViewProperty(PROPERTY(desiredRoll), parameters.value(domain::Telemetry::DesiredRoll, 0));
-    this->setViewProperty(PROPERTY(airspeedError), parameters.value(domain::Telemetry::AirspeedError, false));
-    this->setViewProperty(PROPERTY(altitudeError), parameters.value(domain::Telemetry::AltitudeError, false));
 }
 
 void VehicleDisplayPresenter::updateHomeAltitude(const domain::Telemetry::TelemetryMap& parameters)

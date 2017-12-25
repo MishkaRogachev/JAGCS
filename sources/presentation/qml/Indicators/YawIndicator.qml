@@ -7,6 +7,8 @@ Rectangle {
     property real yaw: 0
     property real size: width * 0.05
 
+    Behavior on yaw { PropertyAnimation { duration: 100 } }
+
     implicitHeight: width
     radius: Math.min(width / 2, height / 2)
     opacity: enabled ? 1 : 0.33
@@ -29,9 +31,7 @@ Rectangle {
 
             ctx.fillStyle = operational ? palette.textColor : palette.dangerColor;
 
-            ctx.translate(width / 2, height / 2);
-            ctx.rotate(yaw * Math.PI / 180);
-            ctx.translate(0, -height / 2);
+            ctx.translate(width / 2, 0);
 
             ctx.beginPath();
             ctx.moveTo(0, 0);

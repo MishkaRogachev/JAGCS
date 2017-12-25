@@ -23,11 +23,11 @@ Item {
     property bool operational: false
     property string prefix
     property string suffix
-    opacity: enabled ? 1 : 0.33
     property color color: operational ? palette.textColor : palette.dangerColor
     property alias warningColor: hatch.color
 
     clip: true
+    opacity: enabled ? 1 : 0.33
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()
