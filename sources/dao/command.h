@@ -64,6 +64,8 @@ namespace dao
         void setArguments(const QVariantList& arguments);
         void addArgument(const QVariant& argument);
 
+        bool isFinished() const;
+
     private:
         CommandType m_type = UnknownCommand;
         CommandStatus m_status = Idle;

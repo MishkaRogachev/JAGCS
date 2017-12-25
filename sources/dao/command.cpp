@@ -36,3 +36,8 @@ void Command::addArgument(const QVariant& argument)
 {
     m_arguments.append(argument);
 }
+
+bool Command::isFinished() const
+{
+    return m_status == Rejected || m_status == Canceled || m_status == Completed;
+}

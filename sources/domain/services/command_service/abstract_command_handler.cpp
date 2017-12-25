@@ -66,7 +66,7 @@ void AbstractCommandHandler::ackCommand(int vehicleId, dao::Command::CommandType
     {
         if (command->type() != type) continue;
 
-        this->stopCommand(vehicleId, command);
+        if (command->isFinished()) this->stopCommand(vehicleId, command);
 
         command->setStatus(status);
         emit commandChanged(command);

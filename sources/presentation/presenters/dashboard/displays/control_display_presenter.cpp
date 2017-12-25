@@ -14,27 +14,42 @@
 
 using namespace presentation;
 
+class ControlDisplayPresenter::Impl
+{
+public:
+    domain::CommandService* service = domain::ServiceRegistry::commandService();
+    QList<dao::CommandPtr> commands;
+};
+
 ControlDisplayPresenter::ControlDisplayPresenter(QObject* parent):
     AbstractTelemetryPresenter(parent),
-    m_service(domain::ServiceRegistry::commandService())
+    d(new Impl())
 {
-    connect(m_service, &domain::CommandService::commandChanged,
+    connect(d->service, &domain::CommandService::commandChanged,
             this, [this](const dao::CommandPtr& command) {
+        if (!d->commands.contains(command)) return;
+
         this->invokeViewMethod(PROPERTY(updateCommandStatus), command->type(), command->status());
+        if (command->isFinished()) d->commands.removeOne(command);
     });
 }
+
+ControlDisplayPresenter::~ControlDisplayPresenter()
+{}
 
 void ControlDisplayPresenter::executeCommand(int commandType, const QVariant& args)
 {
     dao::CommandPtr command = dao::CommandPtr::create();
     command->setType(dao::Command::CommandType(commandType));
     command->setArguments(args.toList());
-    m_service->executeCommand(this->vehicleId(), command);
+
+    d->commands.append(command);
+    d->service->executeCommand(this->vehicleId(), command);
 }
 
 void ControlDisplayPresenter::rejectCommand(int commandType)
 {
-    m_service->cancelCommand(this->vehicleId(), dao::Command::CommandType(commandType));
+    d->service->cancelCommand(this->vehicleId(), dao::Command::CommandType(commandType));
 }
 
 void ControlDisplayPresenter::connectNode(domain::Telemetry* node)

@@ -4,11 +4,6 @@
 // Internal
 #include "abstract_telemetry_presenter.h"
 
-namespace domain
-{
-    class CommandService;
-}
-
 namespace presentation
 {
     class ControlDisplayPresenter: public AbstractTelemetryPresenter
@@ -17,6 +12,7 @@ namespace presentation
 
     public:
         explicit ControlDisplayPresenter(QObject* parent = nullptr);
+        ~ControlDisplayPresenter() override;
 
     public slots:
         void executeCommand(int commandType, const QVariant& args);
@@ -29,7 +25,8 @@ namespace presentation
         void updateStatus(const domain::Telemetry::TelemetryMap& parameters);
 
     private:
-        domain::CommandService* const m_service;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
