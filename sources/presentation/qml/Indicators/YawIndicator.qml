@@ -7,7 +7,7 @@ Rectangle {
     property real yaw: 0
     property real size: width * 0.05
 
-    Behavior on yaw { PropertyAnimation { duration: 100 } }
+    Behavior on yaw { RotationAnimation { duration: 100; direction: RotationAnimation.Shortest } }
 
     implicitHeight: width
     radius: Math.min(width / 2, height / 2)
