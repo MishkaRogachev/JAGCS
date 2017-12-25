@@ -53,12 +53,31 @@ BaseDisplay {
             Layout.rowSpan: 2
             Layout.fillHeight: true
 
+            Indicators.BarIndicator {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: ah.left
+                width: 4
+                height: parent.height * 0.5
+                value: throttle
+            }
+
             Indicators.ArtificialHorizon {
                 id: ah
                 available: online
                 anchors.centerIn: parent
                 height: parent.height - parent.size * 2
                 width: height * 0.8
+            }
+
+            Indicators.BarIndicator {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: ah.right
+                width: 4
+                height: parent.height * 0.5
+                value: barometricClimb
+                fillColor: barometricClimb > 0 ? palette.skyColor : palette.groundColor
+                minValue: -10
+                maxValue: 10 // TODO: to consts
             }
         }
 
