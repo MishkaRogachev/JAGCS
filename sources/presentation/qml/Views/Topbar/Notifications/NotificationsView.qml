@@ -7,26 +7,22 @@ import "qrc:/Controls" as Controls
 Controls.Button {
     id: connection
 
-    property int type: 0
+    property int count: 0
     property var messages: []
 
     function logAdded(message) {
-
         if (messagePopup.visible) {
-            type = message.type;
             messages.push(message);
-            //FIXME : notify messages has changed
+            enabled = true;
+            count = messages.length;
         }
         else {
             messagePopup.show(message);
         }
     }
 
-    enabled: messages.length > 0
-    onClicked: {
-        if (messages.length > 0) messagePopup.show(messages.pop());
-        if (messages.length > 0) type = messages[messages.length - 1].type;
-    }
+    enabled: false
+    // TODO: go to log onClicked:
 
     NotificationsPresenter {
         id: presenter
@@ -36,27 +32,13 @@ Controls.Button {
 
     flat: true
     iconSource: "qrc:/icons/notify.svg"
-    iconColor: {
-        if (!enabled) return palette.sunkenColor;
-
-        switch (type) {
-        case LogMessage.Positive:
-            return palette.positiveColor;
-        case LogMessage.Warning:
-            return palette.cautionColor;
-        case LogMessage.Critical:
-            return palette.dangerColor;
-        case LogMessage.Common:
-        default:
-            return palette.textColor;
-        }
-    }
+    iconColor: enabled ? palette.textColor : palette.sunkenColor;
 
     Text {
         anchors.centerIn: parent
         color: parent.iconColor
         font.pixelSize: sizings.fontPixelSize * 0.6
-        text: enabled ? messages.length : "!"
+        text: enabled ? count : "!"
     }
 
     NotificationMessage {
@@ -64,5 +46,11 @@ Controls.Button {
         x: 0
         y: connection.height + sizings.margins
         width: (menuDrawer.x > 0 ? menuDrawer.x : main.width) - connection.x - sizings.margins
+        onDropped: {
+            if (messages.length > 0) messagePopup.show(messages.pop());
+            if (messages.length > 0) type = messages[messages.length - 1].type;
+            connection.enabled = messages.length;
+            count = messages.length;
+        }
     }
 }
