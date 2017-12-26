@@ -8,16 +8,24 @@ Controls.Button {
     id: connection
 
     property int type: 0
-    property int count: 0
+    property var messages: []
 
-    function logAdded(msg) {
-        if (message.visible) {
-            type = msg.type;
-            count++;
+    function logAdded(message) {
+
+        if (messagePopup.visible) {
+            type = message.type;
+            messages.push(message);
+            //FIXME : notify messages has changed
         }
         else {
-            message.show(msg);
+            messagePopup.show(message);
         }
+    }
+
+    enabled: messages.length > 0
+    onClicked: {
+        if (messages.length > 0) messagePopup.show(messages.pop());
+        if (messages.length > 0) type = messages[messages.length - 1].type;
     }
 
     NotificationsPresenter {
@@ -29,7 +37,7 @@ Controls.Button {
     flat: true
     iconSource: "qrc:/icons/notify.svg"
     iconColor: {
-        if (count == 0) return palette.sunkenColor;
+        if (!enabled) return palette.sunkenColor;
 
         switch (type) {
         case LogMessage.Positive:
@@ -48,11 +56,13 @@ Controls.Button {
         anchors.centerIn: parent
         color: parent.iconColor
         font.pixelSize: sizings.fontPixelSize * 0.6
-        text: count > 0 ? count : "!"
+        text: enabled ? messages.length : "!"
     }
 
     NotificationMessage {
-        id: message
+        id: messagePopup
+        x: 0
         y: connection.height + sizings.margins
+        width: (menuDrawer.x > 0 ? menuDrawer.x : main.width) - connection.x - sizings.margins
     }
 }

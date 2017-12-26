@@ -26,7 +26,6 @@ Rectangle {
         id: unitRow
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.right: nav.left
         spacing: sizings.spacing
 
         Controls.Button {
@@ -61,7 +60,6 @@ Rectangle {
     }
 
     RowLayout {
-        id: nav
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: menuButton.right
         spacing: sizings.spacing
