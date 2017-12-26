@@ -12,7 +12,7 @@ LogBus* LogBus::instance()
     return &bus;
 }
 
-QList<LogMessage> LogBus::logs()
+const QList<LogMessage>& LogBus::logs()
 {
     QMutexLocker locker(&instance()->m_mutex);
     return instance()->m_messages;

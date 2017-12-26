@@ -17,6 +17,7 @@
 
 #include "topbar_presenter.h"
 #include "radio_status_presenter.h"
+#include "notifications_presenter.h"
 #include "connection_presenter.h"
 #include "location_map_presenter.h"
 #include "active_video_presenter.h"
@@ -166,6 +167,7 @@ void PresentationContext::registerQuickTypes()
 
     qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");
     qmlRegisterType<RadioStatusPresenter>("JAGCS", 1, 0, "RadioStatusPresenter");
+    qmlRegisterType<NotificationsPresenter>("JAGCS", 1, 0, "NotificationsPresenter");
     qmlRegisterType<ConnectionPresenter>("JAGCS", 1, 0, "ConnectionPresenter");
     qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
     qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "ActiveVideoPresenter");

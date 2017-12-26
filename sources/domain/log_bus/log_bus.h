@@ -16,7 +16,7 @@ namespace domain
     public:
         static LogBus* instance();
 
-        static QList<LogMessage> logs();
+        static const QList<LogMessage>& logs();
 
         static void log(const LogMessage& message);
         static void log(const QString& message, LogMessage::LogType type = LogMessage::Common);

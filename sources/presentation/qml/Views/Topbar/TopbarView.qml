@@ -3,8 +3,10 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+
 import "RadioStatus"
 import "Connection"
+import "Notifications"
 
 Rectangle {
     id: topbar
@@ -24,6 +26,7 @@ Rectangle {
         id: unitRow
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
+        anchors.right: nav.left
         spacing: sizings.spacing
 
         Controls.Button {
@@ -47,14 +50,21 @@ Rectangle {
 
         RadioStatusView {
             id: radioStatus
+            Layout.fillWidth: true
         }
 
         ConnectionView {
             id: connection
+            Layout.fillWidth: true
+        }
+
+        NotificationsView {
+            id: notification
         }
     }
 
     RowLayout {
+        id: nav
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: menuButton.right
         spacing: sizings.spacing
