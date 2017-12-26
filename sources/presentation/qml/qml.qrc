@@ -66,6 +66,7 @@
         <file>Views/Topbar/RadioStatus/RadioStatusView.qml</file>
         <file>Views/Topbar/Connection/ConnectionView.qml</file>
         <file>Views/Topbar/Notifications/NotificationsView.qml</file>
+        <file>Views/Topbar/Notifications/NotificationMessage.qml</file>
         <file>Views/Map/MapControl.qml</file>
         <file>Views/Map/MapPicker.qml</file>
         <file>Views/Map/MapFactory.qml</file>

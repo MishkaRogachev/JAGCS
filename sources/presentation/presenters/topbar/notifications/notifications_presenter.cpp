@@ -28,6 +28,5 @@ void NotificationsPresenter::initLog()
 
 void NotificationsPresenter::onLogAdded(const domain::LogMessage& message)
 {
-    this->invokeViewMethod(PROPERTY(logAdded));
-    this->setViewProperty(PROPERTY(type), message.type());
+    this->invokeViewMethod(PROPERTY(logAdded), QVariant::fromValue(message));
 }

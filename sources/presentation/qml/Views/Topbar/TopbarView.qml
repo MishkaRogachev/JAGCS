@@ -39,7 +39,6 @@ Rectangle {
         Controls.Label {
             text: unitName.length ? unitName : qsTr("All MAVs")
             font.bold: true
-            Layout.fillWidth: true
         }
 
         Controls.Button { // TODO: goto Vehicle settings
@@ -50,12 +49,10 @@ Rectangle {
 
         RadioStatusView {
             id: radioStatus
-            Layout.fillWidth: true
         }
 
         ConnectionView {
             id: connection
-            Layout.fillWidth: true
         }
 
         NotificationsView {

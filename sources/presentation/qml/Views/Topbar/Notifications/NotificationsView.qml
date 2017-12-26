@@ -10,8 +10,14 @@ Controls.Button {
     property int type: 0
     property int count: 0
 
-    function logAdded() {
-        count++;
+    function logAdded(msg) {
+        if (message.visible) {
+            type = msg.type;
+            count++;
+        }
+        else {
+            message.show(msg);
+        }
     }
 
     NotificationsPresenter {
@@ -43,5 +49,10 @@ Controls.Button {
         color: parent.iconColor
         font.pixelSize: sizings.fontPixelSize * 0.6
         text: count > 0 ? count : "!"
+    }
+
+    NotificationMessage {
+        id: message
+        y: connection.height + sizings.margins
     }
 }
