@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Rectangle {
+Controls.Button {
     id: connection
 
     property int type: 0
@@ -20,12 +20,11 @@ Rectangle {
         Component.onCompleted: initLog()
     }
 
-    implicitWidth: sizings.controlBaseSize * 0.75
-    implicitHeight: width
-    radius: width / 2
-    color: "transparent"
-    border.width: 2
-    border.color: {
+    flat: true
+    iconSource: "qrc:/icons/notify.svg"
+    iconColor: {
+        if (count == 0) return palette.sunkenColor;
+
         switch (type) {
         case LogMessage.Positive:
             return palette.positiveColor;
@@ -41,8 +40,8 @@ Rectangle {
 
     Text {
         anchors.centerIn: parent
-        color: parent.border.color
-        font.pixelSize: sizings.fontPixelSize
-        text: count
+        color: parent.iconColor
+        font.pixelSize: sizings.fontPixelSize * 0.6
+        text: count > 0 ? count : "!"
     }
 }
