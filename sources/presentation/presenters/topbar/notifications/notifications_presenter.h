@@ -18,9 +18,6 @@ namespace presentation
     public:
         explicit NotificationsPresenter(QObject* parent = nullptr);
 
-    public slots:
-        void initLog();
-
     private slots:
         void onLogAdded(const domain::LogMessage& message);
     };

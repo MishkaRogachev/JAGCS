@@ -27,7 +27,6 @@ Controls.Button {
     NotificationsPresenter {
         id: presenter
         view: connection
-        Component.onCompleted: initLog()
     }
 
     flat: true
@@ -48,7 +47,6 @@ Controls.Button {
         width: (menuDrawer.x > 0 ? menuDrawer.x : main.width) - connection.x - sizings.margins
         onDropped: {
             if (messages.length > 0) messagePopup.show(messages.pop());
-            if (messages.length > 0) type = messages[messages.length - 1].type;
             connection.enabled = messages.length;
             count = messages.length;
         }

@@ -15,17 +15,6 @@ NotificationsPresenter::NotificationsPresenter(QObject* parent):
             this, &NotificationsPresenter::onLogAdded);
 }
 
-void NotificationsPresenter::initLog()
-{
-    const QList<domain::LogMessage>& logs = domain::LogBus::instance()->logs();
-    this->setViewProperty(PROPERTY(count), logs.count());
-
-    if (!logs.isEmpty())
-    {
-        this->setViewProperty(PROPERTY(type), logs.last().type());
-    }
-}
-
 void NotificationsPresenter::onLogAdded(const domain::LogMessage& message)
 {
     this->invokeViewMethod(PROPERTY(logAdded), QVariant::fromValue(message));

@@ -7,22 +7,18 @@ import "qrc:/Controls" as Controls
 Controls.Popup {
     id: popup
 
-    property string text: ""
-    property int type: 0
+    property var message
 
     signal dropped()
 
     function show(message) {
-        text = message.message;
-        type = message.type;
+        popup.message = message;
         opacity = 1.0;
         open();
         startHidingLoop();
     }
 
     function drop() {
-        text = "";
-        type = 0;
         if (animation.running) animation.stop();
         if (timer.running) timer.stop();
         close();
@@ -66,10 +62,9 @@ Controls.Popup {
         spacing: sizings.spacing
 
         Controls.Label {
-            text: popup.text
+            text: message.message
             color: {
-                console.log(type)
-                switch (type) {
+                switch (message.type) {
                 case LogMessage.Positive:
                     return palette.positiveColor;
                 case LogMessage.Warning:
