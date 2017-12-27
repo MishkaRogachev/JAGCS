@@ -11,11 +11,11 @@ Item {
 
     implicitWidth: sizings.controlBaseSize * 11
 
-//    LogListPresenter {
-//        id: presenter
-//        view: logList
-//        Component.onCompleted: updateLog()
-//    }
+    LogListPresenter {
+        id: presenter
+        view: logList
+        Component.onCompleted: updateLog()
+    }
 
     ListView {
         anchors.fill: parent

@@ -32,6 +32,7 @@
 #include "link_presenter.h"
 #include "vehicle_list_presenter.h"
 #include "vehicle_presenter.h"
+#include "log_list_presenter.h"
 #include "planning_presenter.h"
 #include "mission_list_presenter.h"
 #include "mission_presenter.h"
@@ -182,6 +183,7 @@ void PresentationContext::registerQuickTypes()
     qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");
     qmlRegisterType<VehicleListPresenter>("JAGCS", 1, 0, "VehicleListPresenter");
     qmlRegisterType<VehiclePresenter>("JAGCS", 1, 0, "VehiclePresenter");
+    qmlRegisterType<LogListPresenter>("JAGCS", 1, 0, "LogListPresenter");
     qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
     qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");
     qmlRegisterType<MissionPresenter>("JAGCS", 1, 0, "MissionPresenter");

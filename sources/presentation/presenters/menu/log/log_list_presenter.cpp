@@ -1,4 +1,4 @@
-#include "logbook_presenter.h"
+#include "log_list_presenter.h".h"
 
 // Qt
 #include <QVariant>
@@ -9,11 +9,11 @@
 
 using namespace presentation;
 
-LogbookPresenter::LogbookPresenter(QObject* parent):
+LogListPresenter::LogListPresenter(QObject* parent):
     BasePresenter(parent)
 {}
 
-void LogbookPresenter::updateLog() // TODO: to QAbstractListModel
+void LogListPresenter::updateLog() // TODO: to QAbstractListModel
 {
     QVariantList logs;
 
@@ -25,12 +25,12 @@ void LogbookPresenter::updateLog() // TODO: to QAbstractListModel
     this->setViewProperty(PROPERTY(logs), logs);
 }
 
-void LogbookPresenter::connectView(QObject* view)
+void LogListPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
 
     this->updateLog();
 
     connect(domain::LogBus::instance(), &domain::LogBus::logAdded,
-            this, &LogbookPresenter::updateLog);
+            this, &LogListPresenter::updateLog);
 }

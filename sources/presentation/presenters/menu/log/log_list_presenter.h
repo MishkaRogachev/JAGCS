@@ -1,16 +1,16 @@
-#ifndef LOGBOOK_PRESENTER_H
-#define LOGBOOK_PRESENTER_H
+#ifndef LOG_LIST_PRESENTER_H
+#define LOG_LIST_PRESENTER_H
 
 #include "base_presenter.h"
 
 namespace presentation
 {
-    class LogbookPresenter: public BasePresenter
+    class LogListPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
-        explicit LogbookPresenter(QObject* parent = nullptr);
+        explicit LogListPresenter(QObject* parent = nullptr);
 
     public slots:
         void updateLog();
@@ -20,4 +20,4 @@ namespace presentation
     };
 }
 
-#endif // LOGBOOK_PRESENTER_H
+#endif // LOG_LIST_PRESENTER_H
