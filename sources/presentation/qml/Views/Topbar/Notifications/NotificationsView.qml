@@ -44,7 +44,7 @@ Controls.Button {
         id: messagePopup
         x: 0
         y: connection.height + sizings.margins
-        width: (menuDrawer.x > 0 ? menuDrawer.x : main.width) - connection.x - sizings.margins
+        width: Math.min(implicitWidth, substrate.width - connection.x - sizings.margins)
         onDropped: {
             if (messages.length > 0) messagePopup.show(messages.pop());
             connection.enabled = messages.length;

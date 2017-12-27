@@ -33,7 +33,7 @@ Controls.Popup {
     }
 
     padding: sizings.padding
-    implicitWidth: row.implicitWidth
+    implicitWidth: row.implicitWidth + padding * 2
     implicitHeight: row.implicitHeight + padding * 2
     closePolicy: Controls.Popup.NoAutoClose
 
@@ -61,6 +61,13 @@ Controls.Popup {
         anchors.fill: parent
         spacing: sizings.spacing
 
+        Controls.Button {
+            iconSource: "qrc:/icons/remove.svg"
+            flat: true
+            onClicked: drop()
+            Layout.alignment: Qt.AlignTop
+        }
+
         Controls.Label {
             text: message.message
             color: {
@@ -77,12 +84,6 @@ Controls.Popup {
                 }
             }
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/remove.svg"
-            flat: true
-            onClicked: drop()
         }
     }
 }

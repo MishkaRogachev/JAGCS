@@ -33,5 +33,6 @@ RowLayout {
             case LogMessage.Critical: return palette.dangerColor;
             }
         }
+        Layout.fillWidth: true
     }
 }
