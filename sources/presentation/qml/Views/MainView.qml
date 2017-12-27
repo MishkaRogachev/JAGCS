@@ -29,8 +29,6 @@ Controls.ApplicationWindow  {
     visible: true
     Component.onCompleted: reloadMap()
 
-    ListModel { id: contextModel }
-
     header: TopbarView {
         id: topbar
     }

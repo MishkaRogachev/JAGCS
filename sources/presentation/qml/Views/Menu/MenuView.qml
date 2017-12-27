@@ -6,25 +6,26 @@ import "../../Controls" as Controls
 ColumnLayout {
     id: menu
 
+    property string contextText
     property string homeSource: "TopMenu.qml"
     readonly property bool atHome: contextModel.count == 0
 
     function home() {
         loader.setSource(homeSource);
-        topbar.contextText = "";
+        contextText = "";
         contextModel.clear();
     }
 
     function deepIn(source, text, properties) {
         loader.setSource(source, properties);
         contextModel.append({ "source": source, "text": text });
-        topbar.contextText = text;
+        contextText = text;
         return loader.item;
     }
 
     function backOut(index) {
         loader.source = contextModel.get(index).source;
-        topbar.contextText = contextModel.get(index).text;
+        contextText = contextModel.get(index).text;
 
         if (index + 1 < contextModel.count) {
             contextModel.remove(index + 1, contextModel.count - index - 1);
@@ -33,6 +34,40 @@ ColumnLayout {
 
     spacing: sizings.spacing
     Component.onCompleted: home()
+
+    ListModel { id: contextModel }
+
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.Button {
+            tipText: qsTr("Home")
+            iconSource: "qrc:/icons/home.svg"
+            flat: true
+            enabled: !atHome
+            onClicked: home()
+        }
+
+        Repeater {
+            model: contextModel
+
+            Controls.Button {
+                text: model.text
+                flat: true
+                visible: index + 1 < contextModel.count
+                onClicked: backOut(index)
+            }
+        }
+
+        Controls.Label {
+            text: contextText
+            font.bold: true
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
+    }
 
     Flickable {
         id: flickable

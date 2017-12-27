@@ -12,7 +12,6 @@ Rectangle {
     id: topbar
 
     property string unitName
-    property string contextText
 
     color: palette.raisedColor
     height: sizings.controlBaseSize
@@ -24,7 +23,6 @@ Rectangle {
 
     RowLayout {
         id: unitRow
-        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         spacing: sizings.spacing
 
@@ -60,49 +58,15 @@ Rectangle {
     }
 
     RowLayout {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: menuButton.right
+        anchors.right: parent.right
         spacing: sizings.spacing
-        width: menuDrawer.width
-        clip: true
-        visible: menu.visible
 
         Controls.Button {
-            tipText: qsTr("Home")
-            iconSource: "qrc:/icons/home.svg"
+            id: menuButton
+            tipText: menu.visible ? qsTr("Menu") : qsTr("Close menu")
+            iconSource: menu.visible ? "qrc:/icons/right.svg" : "qrc:/icons/burger.svg"
             flat: true
-            enabled: !menu.atHome
-            onClicked: menu.home()
+            onClicked: menu.visible ? menuDrawer.close() : menuDrawer.open()
         }
-
-        Repeater {
-            model: contextModel
-
-            Controls.Button {
-                text: model.text
-                flat: true
-                visible: index + 1 < contextModel.count
-                onClicked: menu.backOut(index)
-            }
-        }
-
-        Controls.Label {
-            text: contextText
-            font.bold: true
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-    }
-
-    Controls.Button {
-        id: menuButton
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        tipText: menu.visible ? qsTr("Menu") : qsTr("Close menu")
-        iconSource: menu.visible ? "qrc:/icons/right.svg" : "qrc:/icons/burger.svg"
-        flat: true
-        onClicked: menu.visible ? menuDrawer.close() : menuDrawer.open()
     }
 }
