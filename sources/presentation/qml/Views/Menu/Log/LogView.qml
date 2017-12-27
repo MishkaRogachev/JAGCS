@@ -10,8 +10,6 @@ RowLayout {
 
     property var log
 
-    implicitHeight: Math.max(timestamp.height, container.height)
-
     Controls.Label {
         id: timestamp
         anchors.verticalCenter: parent.verticalCenter

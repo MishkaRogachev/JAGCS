@@ -21,6 +21,7 @@ Item {
         anchors.fill: parent
         spacing: sizings.spacing
         model: logs
+        onCountChanged: positionViewAtEnd()
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
