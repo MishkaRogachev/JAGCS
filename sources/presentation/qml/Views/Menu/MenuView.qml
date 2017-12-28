@@ -7,8 +7,10 @@ ColumnLayout {
     id: menu
 
     property string contextText
-    property string homeSource: "TopMenu.qml"
-    readonly property bool atHome: contextModel.count == 0
+    property string homeContext: "TopMenu.qml"
+
+    readonly property alias currentContext: loader.source
+    readonly property bool atHome: currentContext == homeContext
 
     function goTo(source, text, properties) {
         if (!atHome) home();
@@ -17,7 +19,7 @@ ColumnLayout {
     }
 
     function home() {
-        loader.setSource(homeSource);
+        loader.setSource(homeContext);
         contextText = "";
         contextModel.clear();
     }
@@ -30,7 +32,8 @@ ColumnLayout {
     }
 
     function backOut(index) {
-        loader.source = contextModel.get(index).source;
+        loader.source = contextModel.get(index).source; // FIXME: properties
+        currentContext = loader.source;
         contextText = contextModel.get(index).text;
 
         if (index + 1 < contextModel.count) {

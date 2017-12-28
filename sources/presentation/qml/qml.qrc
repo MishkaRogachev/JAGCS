@@ -60,6 +60,7 @@
         <file>Views/Common/PointView.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
+        <file>Views/Topbar/TopbarButton.qml</file>
         <file>Views/Topbar/RadioStatus/RadioStatusView.qml</file>
         <file>Views/Topbar/Connection/ConnectionView.qml</file>
         <file>Views/Topbar/Notifications/NotificationsView.qml</file>

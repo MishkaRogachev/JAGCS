@@ -38,23 +38,21 @@ Rectangle {
             font.bold: true
         }
 
-        Controls.Button {
+        TopbarButton {
             iconSource: "qrc:/icons/settings.svg"
-            flat: true
             tipText: qsTr("Vehicles")
-            onClicked: menu.goTo("Vehicles/VehicleListView.qml", tipText, {})
+            entry: "../Menu/Vehicles/VehicleListView.qml"
         }
 
         RadioStatusView {
             id: radioStatus
         }
 
-        Controls.Button {
+        TopbarButton {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
             iconColor: connection.connected ? palette.textColor : palette.dangerColor
-            flat: true
             tipText: qsTr("Links")
-            onClicked: menu.goTo("Links/LinkListView.qml", tipText, {})
+            entry: "../Menu/Links/LinkListView.qml"
         }
 
         ConnectionView {
@@ -70,26 +68,21 @@ Rectangle {
         anchors.right: parent.right
         spacing: sizings.spacing
 
-        Controls.Button {
+        TopbarButton {
             iconSource: "qrc:/icons/map-marker.svg"
-            flat: true
             tipText: qsTr("Planning")
-            onClicked: menu.goTo("Planning/PlanningView.qml", tipText, {})
+            entry: "../Menu/Planning/PlanningView.qml"
         }
 
-        Controls.Button {
-            id: menuButton
+        TopbarButton {
             iconSource: "qrc:/icons/burger.svg"
-            flat: true
             tipText: qsTr("Menu")
-            onClicked: menu.goTo();
         }
 
-        Controls.Button {
+        TopbarButton {
             iconSource: "qrc:/icons/quit.svg"
-            flat: true
             tipText: qsTr("Quit")
-            onClicked: menu.goTo("Quit/QuitView.qml", tipText, {})
+            entry: "../Menu/Quit/QuitView.qml"
         }
     }
 }
