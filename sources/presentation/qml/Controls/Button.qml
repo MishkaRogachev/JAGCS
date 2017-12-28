@@ -9,9 +9,10 @@ T.Button {
     property string tipText
 
     property alias iconSource: content.iconSource
-    property alias textColor: content.textColor
+    property alias iconScaling: content.iconScaling
     property alias iconColor: content.iconColor
     property alias backgroundColor: backgroundItem.color
+    property alias textColor: content.textColor
 
     font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)

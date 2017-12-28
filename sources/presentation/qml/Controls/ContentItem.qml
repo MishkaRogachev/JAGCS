@@ -5,6 +5,7 @@ Item {
 
     property color textColor: palette.textColor
     property color iconColor: textColor
+    property real iconScaling: 0.6
 
     property alias iconSource: icon.source
     property alias font: label.font
@@ -24,7 +25,7 @@ Item {
             id: icon
             color: enabled ? iconColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
-            height: content.height * 0.6
+            height: content.height * iconScaling
             width: height
             visible: source != ""
         }
