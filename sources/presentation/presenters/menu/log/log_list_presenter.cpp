@@ -1,4 +1,4 @@
-#include "log_list_presenter.h".h"
+#include "log_list_presenter.h"
 
 // Qt
 #include <QVariant>

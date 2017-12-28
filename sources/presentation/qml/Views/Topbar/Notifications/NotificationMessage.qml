@@ -36,6 +36,7 @@ Controls.Popup {
     implicitWidth: row.implicitWidth + padding * 2
     implicitHeight: row.implicitHeight + padding * 2
     closePolicy: Controls.Popup.NoAutoClose
+    clip: true
 
     Timer {
         id: timer
