@@ -4,29 +4,19 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-GridLayout {
+ColumnLayout {
     id: connection
 
     property bool connected: false
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
 
-    columns: 2
-    rowSpacing: 0
-    columnSpacing: sizings.spacing
+    spacing: 0
 
     ConnectionPresenter {
         id: presenter
         view: connection
         Component.onCompleted: updateStatus()
-    }
-
-    Controls.Button {
-        iconSource: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        iconColor: connected ? palette.textColor : palette.dangerColor
-        flat: true
-        onClicked: presenter.setConnected(!connected)
-        Layout.rowSpan: 2
     }
 
     Controls.ContentItem {

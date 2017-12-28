@@ -22,7 +22,8 @@ Controls.Button {
     }
 
     enabled: false
-    // TODO: go to log onClicked:
+    tipText: qsTr("Logbook")
+    onClicked: menu.goTo("Log/LogListView.qml", tipText, {})
 
     NotificationsPresenter {
         id: presenter
