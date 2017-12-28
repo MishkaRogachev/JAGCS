@@ -10,6 +10,12 @@ ColumnLayout {
     property string homeSource: "TopMenu.qml"
     readonly property bool atHome: contextModel.count == 0
 
+    function goTo(source, text, properties) {
+        if (!atHome) home();
+        if (source) deepIn(source, text, properties);
+        if (!menu.visible) menuDrawer.open();
+    }
+
     function home() {
         loader.setSource(homeSource);
         contextText = "";
@@ -38,7 +44,7 @@ ColumnLayout {
     ListModel { id: contextModel }
 
     RowLayout {
-        spacing: sizings.spacing
+        spacing: 0
 
         Controls.Button {
             tipText: qsTr("Home")
@@ -52,7 +58,7 @@ ColumnLayout {
             model: contextModel
 
             Controls.Button {
-                text: model.text
+                text: model.text + ", "
                 flat: true
                 visible: index + 1 < contextModel.count
                 onClicked: backOut(index)
@@ -66,6 +72,13 @@ ColumnLayout {
 
         Item {
             Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            tipText: qsTr("Close menu")
+            iconSource: "qrc:/icons/right.svg"
+            flat: true
+            onClicked: menuDrawer.close()
         }
     }
 

@@ -62,11 +62,25 @@ Rectangle {
         spacing: sizings.spacing
 
         Controls.Button {
-            id: menuButton
-            tipText: menu.visible ? qsTr("Menu") : qsTr("Close menu")
-            iconSource: menu.visible ? "qrc:/icons/right.svg" : "qrc:/icons/burger.svg"
+            tipText: qsTr("Planning")
+            iconSource: "qrc:/icons/map-marker.svg"
             flat: true
-            onClicked: menu.visible ? menuDrawer.close() : menuDrawer.open()
+            onClicked: menu.goTo("Planning/PlanningView.qml", qsTr("Planning"), {})
+        }
+
+        Controls.Button {
+            id: menuButton
+            tipText: qsTr("Menu")
+            iconSource: "qrc:/icons/burger.svg"
+            flat: true
+            onClicked: menu.goTo();
+        }
+
+        Controls.Button {
+            tipText: qsTr("Quit")
+            iconSource: "qrc:/icons/quit.svg"
+            flat: true
+            onClicked: menu.goTo("Quit/QuitView.qml", qsTr("Quit"), {})
         }
     }
 }
