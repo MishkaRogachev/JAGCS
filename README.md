@@ -1,5 +1,5 @@
 # JAGCS
-Just another ground control station
+Just another ground control station. Checkout stable branch for stable version, master branch is under reconstruction;)
 
 [![Build Status](https://travis-ci.org/MishkaRogachev/JAGCS.svg?branch=master)](https://travis-ci.org/MishkaRogachev/JAGCS)
 
