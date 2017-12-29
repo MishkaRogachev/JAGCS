@@ -5,10 +5,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   version="1.1"
-   id="svg2"
+   width="19.2pt"
    height="19.2pt"
-   width="19.2pt">
+   id="svg2"
+   version="1.1">
   <metadata
      id="metadata12">
     <rdf:RDF>
@@ -23,14 +23,12 @@
   </metadata>
   <defs
      id="defs4" />
-  <text
+  <g
      id="text4140"
-     y="22.582537"
-     x="7.2108235"
-     style="font-style:normal;font-weight:normal;font-size:28.76315117px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     xml:space="preserve"><tspan
+     style="font-style:normal;font-weight:normal;font-size:28.76315117px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <path
+       id="path4136"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DejaVu Serif';-inkscape-font-specification:'DejaVu Serif';fill:#f6f5f0"
-       y="22.582537"
-       x="7.2108235"
-       id="tspan4142">i</tspan></text>
+       d="m 10.005681,3.0185379 q 0,-0.6460474 0.463468,-1.1235606 0.477514,-0.4775133 1.137605,-0.4775133 0.646048,0 1.109516,0.4775133 0.477514,0.4775132 0.477514,1.1235606 0,0.6600918 -0.463469,1.1235606 -0.463469,0.4634687 -1.123561,0.4634687 -0.660091,0 -1.137605,-0.4634687 -0.463468,-0.4634688 -0.463468,-1.1235606 z m 3.300459,18.0752811 2.443744,0 0,1.488718 -7.4997669,0 0,-1.488718 2.4718329,0 0,-11.9378314 -2.4718329,0 0,-1.5027623 5.0560229,0 0,13.4405937 z" />
+  </g>
 </svg>

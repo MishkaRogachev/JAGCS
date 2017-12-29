@@ -24,7 +24,6 @@ T.DelayButton {
         anchors.fill: parent
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
         radius: 3
-        clip: true
         color: control.flat ? "transparent" : palette.buttonColor
 
         ContentItem {
@@ -57,7 +56,7 @@ T.DelayButton {
         Shaders.Hatch {
             anchors.fill: parent
             color: palette.sunkenColor
-            visible: !control.enabled
+            visible: !control.enabled && !control.flat
         }
 
         Shadow {
