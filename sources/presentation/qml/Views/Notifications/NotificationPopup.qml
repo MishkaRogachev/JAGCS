@@ -9,7 +9,16 @@ Controls.Popup {
 
     property var message
 
+    function logAdded(message) {
+        show(message);
+    }
+
     signal dropped()
+
+    NotificationsPresenter {
+        id: presenter
+        view: popup
+    }
 
     function show(message) {
         popup.message = message;

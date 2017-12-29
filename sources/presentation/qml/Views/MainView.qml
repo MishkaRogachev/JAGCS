@@ -2,6 +2,7 @@ import QtQuick 2.6
 
 import "../Controls" as Controls
 
+import "Notifications"
 import "Topbar"
 import "Video"
 import "Map"
@@ -80,6 +81,13 @@ Controls.ApplicationWindow  {
         visible: cornerVisible
         onItemChanged: if (item) cornerMap ? map = item : video = item;
         z: 1
+    }
+
+    NotificationPopup {
+        id: notificator
+        x: substrate.width - width - sizings.margins
+        y: substrate.y + sizings.margins
+        width: implicitWidth
     }
 
     Controls.Drawer {

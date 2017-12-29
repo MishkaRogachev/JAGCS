@@ -9,16 +9,9 @@ TopbarButton {
     id: connection
 
     property int count: 0
-    property var messages: []
 
     function logAdded(message) {
-        if (messagePopup.visible) {
-            messages.push(message);
-            count = messages.length;
-        }
-        else {
-            messagePopup.show(message);
-        }
+        count++;
     }
 
     tipText: qsTr("Logbook")
@@ -37,16 +30,5 @@ TopbarButton {
         color: parent.iconColor
         font.pixelSize: sizings.fontPixelSize * 0.6
         text: count
-    }
-
-    NotificationMessage {
-        id: messagePopup
-        x: 0
-        y: connection.height + sizings.margins
-        width: Math.min(implicitWidth, substrate.width - connection.x - sizings.margins)
-        onDropped: {
-            if (messages.length > 0) messagePopup.show(messages.pop());
-            count = messages.length;
-        }
     }
 }
