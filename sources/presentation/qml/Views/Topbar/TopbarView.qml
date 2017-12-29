@@ -41,7 +41,7 @@ Rectangle {
         TopbarButton {
             iconSource: "qrc:/icons/settings.svg"
             tipText: qsTr("Vehicles")
-            entry: "../Menu/Vehicles/VehicleListView.qml"
+            entry: "qrc:/Views/Menu/Vehicles/VehicleListView.qml"
         }
 
         RadioStatusView {
@@ -52,7 +52,7 @@ Rectangle {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
             iconColor: connection.connected ? palette.textColor : palette.dangerColor
             tipText: qsTr("Links")
-            entry: "../Menu/Links/LinkListView.qml"
+            entry: "qrc:/Views/Menu/Links/LinkListView.qml"
         }
 
         ConnectionView {
@@ -72,25 +72,25 @@ Rectangle {
         TopbarButton {
             iconSource: "qrc:/icons/planning.svg"
             tipText: qsTr("Planning")
-            entry: "../Menu/Planning/PlanningView.qml"
+            entry: "qrc:/Views/Menu/Planning/PlanningView.qml"
         }
 
         TopbarButton {
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Settings")
-            entry: "../Menu/Settings/SettingsMenu.qml"
+            entry: "qrc:/Views/Menu/Settings/SettingsMenu.qml"
         }
 
         TopbarButton {
             iconSource: "qrc:/icons/info.svg"
             tipText: qsTr("About")
-            entry: "../Menu/About/AboutView.qml"
+            entry: "qrc:/Views/Menu/About/AboutView.qml"
         }
 
         TopbarButton {
             iconSource: "qrc:/icons/quit.svg"
             tipText: qsTr("Quit")
-            entry: "../Menu/Quit/QuitView.qml"
+            entry: "qrc:/Views/Menu/Quit/QuitView.qml"
         }
     }
 }

@@ -7,7 +7,7 @@ ColumnLayout {
     id: menu
 
     property string contextText
-    property string homeContext: "TopMenu.qml"
+    property url homeContext: "qrc:/Views/Menu/TopMenu.qml"
 
     readonly property alias currentContext: loader.source
     readonly property bool atHome: currentContext == homeContext
@@ -26,14 +26,15 @@ ColumnLayout {
 
     function deepIn(source, text, properties) {
         loader.setSource(source, properties);
-        contextModel.append({ "source": source, "text": text });
+        contextModel.append({ "source": source.toString(), "text": text, "properties": properties });
         contextText = text;
         return loader.item;
     }
 
     function backOut(index) {
-        loader.source = contextModel.get(index).source; // FIXME: properties
-        currentContext = loader.source;
+        var source = contextModel.get(index).source;
+        var properties = contextModel.get(index).properties;
+        loader.setSource(source, properties);
         contextText = contextModel.get(index).text;
 
         if (index + 1 < contextModel.count) {

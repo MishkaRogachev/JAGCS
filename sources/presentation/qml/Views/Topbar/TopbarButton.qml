@@ -9,7 +9,7 @@ Rectangle {
     property real iconScaling: 0.6
     property string tipText
     property url entry
-    readonly property bool activeEntry: entry == menu.currentContext
+    readonly property bool activeEntry: menu.currentContext == entry
 
     property alias iconSource: icon.source
     property alias iconColor: icon.color
@@ -23,8 +23,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
         height: sizings.controlBaseSize / 8
-        color: palette.selectionColor
-        visible: activeEntry
+        color: activeEntry ? palette.selectionColor : palette.sunkenColor
     }
 
     Controls.ColoredIcon {
