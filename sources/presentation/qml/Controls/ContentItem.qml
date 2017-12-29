@@ -13,8 +13,8 @@ Item {
     property alias text: label.text
     property alias horizontalAlignment: label.horizontalAlignment
 
-    implicitWidth: row.implicitWidth
-    implicitHeight: row.implicitHeight
+    implicitWidth: row.width
+    implicitHeight: label.height
     clip: true
 
     RowLayout {

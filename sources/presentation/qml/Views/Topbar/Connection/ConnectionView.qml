@@ -11,6 +11,7 @@ ColumnLayout {
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
 
+    implicitHeight: sizings.controlBaseSize
     spacing: 0
 
     ConnectionPresenter {
@@ -24,6 +25,7 @@ ColumnLayout {
         text: bytesSent.toFixed(1) + " " + qsTr("B/s")
         font.pixelSize: sizings.fontPixelSize * 0.5
         font.bold: true
+        implicitHeight: connection.height / 2
     }
 
     Controls.ContentItem {
@@ -31,5 +33,6 @@ ColumnLayout {
         text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
         font.pixelSize: sizings.fontPixelSize * 0.5
         font.bold: true
+        implicitHeight: connection.height / 2
     }
 }
