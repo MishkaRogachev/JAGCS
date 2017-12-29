@@ -44,6 +44,12 @@ ColumnLayout {
 
     spacing: sizings.spacing
     Component.onCompleted: home()
+    onVisibleChanged: {
+        if (visible) return;
+        loader.setSource(undefined);
+        contextText = "";
+        contextModel.clear();
+    }
 
     ListModel { id: contextModel }
 
