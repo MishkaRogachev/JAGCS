@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import QtQuick.Layouts 1.3
 
 Item {
     id: content
@@ -12,11 +13,11 @@ Item {
     property alias text: label.text
     property alias horizontalAlignment: label.horizontalAlignment
 
-    clip: true
-    implicitWidth: (icon.visible ? icon.width + row.spacing : 0) + label.implicitWidth
+    implicitWidth: row.implicitWidth
     implicitHeight: row.implicitHeight
+    clip: true
 
-    Row {
+    RowLayout {
         id: row
         anchors.centerIn: parent
         spacing: sizings.spacing
@@ -25,9 +26,10 @@ Item {
             id: icon
             color: enabled ? iconColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
-            height: content.height * iconScaling
-            width: height
+            implicitHeight: content.height * iconScaling
+            implicitWidth: height
             visible: source != ""
+            Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
@@ -36,7 +38,8 @@ Item {
             color: enabled ? textColor : palette.sunkenColor
             anchors.verticalCenter: parent.verticalCenter
             verticalAlignment: Text.AlignVCenter
-            visible: !icon.visible || label.implicitWidth < content.width - row.spacing - icon.width
+            visible: text.length > 0
+            Layout.alignment: Qt.AlignHCenter
         }
     }
 }
