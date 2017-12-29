@@ -14,7 +14,7 @@ ColumnLayout {
 
     function goTo(source, text, properties) {
         if (!atHome) home();
-        if (source) deepIn(source, text, properties);
+        deepIn(source, text, properties);
         if (!menu.visible) menuDrawer.open();
     }
 

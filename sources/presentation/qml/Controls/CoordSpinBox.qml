@@ -8,6 +8,7 @@ RealSpinBox {
     property bool isLongitude: false
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
 
+    // FIXME: fix formula
     from: isLongitude ? (-180 / precision) : (-90 / precision)
     to: isLongitude ? (180 / precision) : (90 / precision)
     precision: dmsFormat ? Helper.dmsToDegree(1, 0, 0, 0.01) : 0.000001

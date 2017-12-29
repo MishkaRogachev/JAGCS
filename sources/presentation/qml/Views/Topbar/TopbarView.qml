@@ -69,14 +69,21 @@ Rectangle {
         spacing: sizings.spacing
 
         TopbarButton {
-            iconSource: "qrc:/icons/map-marker.svg"
+            iconSource: "qrc:/icons/planning.svg"
             tipText: qsTr("Planning")
             entry: "../Menu/Planning/PlanningView.qml"
         }
 
         TopbarButton {
             iconSource: "qrc:/icons/burger.svg"
-            tipText: qsTr("Menu")
+            tipText: qsTr("Settings")
+            entry: "../Menu/Settings/SettingsMenu.qml"
+        }
+
+        TopbarButton {
+            iconSource: "qrc:/icons/info.svg"
+            tipText: qsTr("About")
+            entry: "../Menu/About/AboutView.qml"
         }
 
         TopbarButton {
