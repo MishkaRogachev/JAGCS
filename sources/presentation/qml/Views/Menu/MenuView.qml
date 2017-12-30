@@ -43,12 +43,17 @@ ColumnLayout {
     }
 
     spacing: sizings.spacing
-    Component.onCompleted: home()
     onVisibleChanged: {
-        if (visible) return;
-        loader.setSource(undefined);
-        contextText = "";
-        contextModel.clear();
+        if (visible)
+        {
+            if (currentContext == "") home();
+        }
+        else
+        {
+            loader.source = "";
+            contextText = "";
+            contextModel.clear();
+        }
     }
 
     ListModel { id: contextModel }
@@ -108,20 +113,18 @@ ColumnLayout {
             id: loader
             width: parent.width
             onItemChanged: {
-                if (!item) return;
+                if (!item || typeof(item) === "undefined") return;
 
-                menu.width = Qt.binding(function() {
-                    return item.implicitWidth + sizings.margins * 2
-                });
-                item.height = Qt.binding(function() {
-                    return Math.max(item.implicitHeight, flickable.height);
-                });
+                menu.width = item.implicitWidth + sizings.margins * 2
+                item.height = Math.max(item.implicitHeight, flickable.height);
             }
 
             Connections {
                 target: loader.item
                 ignoreUnknownSignals: true
                 onReqestComponent: menu.deepIn(source, text, properties)
+                onImplicitWidthChanged: menu.width = implicitWidth + sizings.margins * 2
+                onImplicitHeightChanged: Math.max(implicitHeight, flickable.height);
             }
         }
     }
