@@ -57,7 +57,6 @@ Rectangle {
 
         ConnectionView {
             id: connection
-            Layout.fillHeight: true
         }
 
         NotificationsView {
