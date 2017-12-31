@@ -9,12 +9,21 @@ TopbarButton {
     id: connection
 
     property int count: 0
+    property var messages: []
 
     function logAdded(message) {
-        count++;
+        if (notificator.visible) {
+            messages.push(message);
+            count = messages.length;
+        }
+        else {
+            notificator.show(message);
+        }
     }
 
     tipText: qsTr("Logbook")
+    iconSource: "qrc:/icons/notify.svg"
+    iconColor: enabled ? palette.textColor : palette.sunkenColor;
     entry: "../../Menu/Log/LogListView.qml"
 
     NotificationsPresenter {
@@ -22,8 +31,13 @@ TopbarButton {
         view: connection
     }
 
-    iconSource: "qrc:/icons/notify.svg"
-    iconColor: enabled ? palette.textColor : palette.sunkenColor;
+    Connections {
+        target: notificator
+        onDropped: {
+            if (messages.length > 0) notificator.show(messages.pop());
+            count = messages.length;
+        }
+    }
 
     Text {
         anchors.centerIn: parent
