@@ -33,10 +33,23 @@ Controls.Popup {
     }
 
     padding: sizings.padding
-    implicitWidth: row.implicitWidth + padding * 2
+    implicitWidth: sizings.controlBaseSize * 11
     implicitHeight: row.implicitHeight + padding * 2
     closePolicy: Controls.Popup.NoAutoClose
     clip: true
+    backgroundColor: {
+        switch (message.type) {
+        case LogMessage.Positive:
+            return palette.positiveColor;
+        case LogMessage.Warning:
+            return palette.cautionColor;
+        case LogMessage.Critical:
+            return palette.dangerColor;
+        case LogMessage.Common:
+        default:
+            return palette.textColor;
+        }
+    }
 
     Timer {
         id: timer
@@ -62,29 +75,19 @@ Controls.Popup {
         anchors.fill: parent
         spacing: sizings.spacing
 
+        Controls.Label {
+            id: label
+            text: message.message
+            color: palette.selectedTextColor
+            Layout.fillWidth: true
+        }
+
         Controls.Button {
             iconSource: "qrc:/icons/remove.svg"
+            iconColor: palette.selectedTextColor
             flat: true
             onClicked: drop()
             Layout.alignment: Qt.AlignTop
-        }
-
-        Controls.Label {
-            text: message.message
-            color: {
-                switch (message.type) {
-                case LogMessage.Positive:
-                    return palette.positiveColor;
-                case LogMessage.Warning:
-                    return palette.cautionColor;
-                case LogMessage.Critical:
-                    return palette.dangerColor;
-                case LogMessage.Common:
-                default:
-                    return palette.textColor;
-                }
-            }
-            Layout.fillWidth: true
         }
     }
 }

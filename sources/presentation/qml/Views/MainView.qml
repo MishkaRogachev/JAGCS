@@ -87,7 +87,7 @@ Controls.ApplicationWindow  {
         id: notificator
         x: substrate.width - width - sizings.margins
         y: substrate.y + sizings.margins
-        width: implicitWidth
+        width: Math.min(implicitWidth, substrate.width - dashboard.width - sizings.margins * 2)
     }
 
     Controls.Drawer {
