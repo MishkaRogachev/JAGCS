@@ -38,9 +38,9 @@ namespace presentation
         virtual void connectView(QObject* view);
         virtual void disconnectView(QObject* view);
 
+    private:
         QPointer<QObject> m_view;
 
-    private:
         Q_DISABLE_COPY(BasePresenter)
     };
 }

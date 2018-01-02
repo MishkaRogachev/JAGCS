@@ -26,8 +26,6 @@ namespace presentation
         static void saveWindowedGeometry();
 
     private:
-        void registerQuickTypes();
-
         QQmlApplicationEngine* m_engine;
 
         Q_DISABLE_COPY(PresentationContext)

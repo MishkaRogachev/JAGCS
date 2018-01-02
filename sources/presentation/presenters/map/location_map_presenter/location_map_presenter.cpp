@@ -35,9 +35,7 @@ LocationMapPresenter::LocationMapPresenter(QObject* object):
 {}
 
 LocationMapPresenter::~LocationMapPresenter()
-{
-    if (m_view) this->invokeViewMethod("saveViewport");
-}
+{}
 
 double LocationMapPresenter::centerLatitude() const
 {
