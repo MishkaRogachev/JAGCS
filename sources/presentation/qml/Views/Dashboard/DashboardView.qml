@@ -7,20 +7,14 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
-    property var instruments: []
-
-    function selectVehicle(vehicleId, vehicleName) {
-        topbar.unitName = vehicleName;
-        presenter.setVehicle(vehicleId);
-    }
-
-    implicitWidth: sizings.controlBaseSize * 8 // TODO: instruments row size
+    property var displays
 
     DashboardPresenter {
         id: presenter
         view: dashboard
-        Component.onCompleted: updateSelection()
     }
+
+    implicitWidth: sizings.controlBaseSize * 8 // TODO: display row size
 
     ListView {
         y: sizings.spacing
@@ -29,7 +23,7 @@ Item {
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        model: instruments
+        model: displays
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
@@ -38,30 +32,12 @@ Item {
         delegate: Loader {
             width: parent.width
             Component.onCompleted: {
-                switch (instrument) {
-                case DashboardPresenter.VehicleDispaly:
-                    setSource("Displays/VehicleDisplay.qml",
-                              { "vehicleId": vehicleId });
+                switch (display) {
+                case DashboardPresenter.ShortVehicleDisplay:
+                    setSource("Displays/ShortVehicleDisplay.qml", { "vehicleId": vehicleId });
                     break;
-                case DashboardPresenter.SatelliteDispaly:
-                    setSource("Displays/SatelliteDisplay.qml",
-                              { "vehicleId": vehicleId });
-                    break;
-                case DashboardPresenter.FlightDisplay:
-                    setSource("Displays/FlightDisplay.qml",
-                              { "vehicleId": vehicleId });
-                    break;
-                case DashboardPresenter.NavigationDisplay:
-                    setSource("Displays/NavigationDisplay.qml",
-                              { "vehicleId": vehicleId });
-                    break;
-                case DashboardPresenter.ControlDisplay:
-                    setSource("Displays/ControlDisplay.qml",
-                              { "vehicleId": vehicleId });
-                    break;
-                case DashboardPresenter.MissionDisplay:
-                    setSource("Displays/MissionDisplay.qml",
-                              { "vehicleId": vehicleId });
+                case DashboardPresenter.FixedWingVehicleDisplay:
+                    setSource("Displays/FixedWingVehicleDisplay.qml", { "vehicleId": vehicleId });
                     break;
                 default:
                     break;

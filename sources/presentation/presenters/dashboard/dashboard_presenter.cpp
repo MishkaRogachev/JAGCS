@@ -10,8 +10,7 @@
 #include "service_registry.h"
 #include "vehicle_service.h"
 
-#include "generic_display_model.h"
-#include "vehicle_display_model.h"
+#include "displays_model.h"
 
 using namespace presentation;
 
@@ -19,49 +18,29 @@ class DashboardPresenter::Impl
 {
 public:
     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
-    dao::VehiclePtr vehicle;
 
-    AbstractDisplayModel* model = nullptr;
+    DisplaysModel displaysModel;
 };
 
 DashboardPresenter::DashboardPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    connect(d->service, &domain::VehicleService::vehicleChanged,
-            [this](const dao::VehiclePtr& vehicle) {
-        if (vehicle == d->vehicle) this->updateSelection();
-    });
+     for (const dao::VehiclePtr& vehicle: d->service->vehicles())
+     {
+         d->displaysModel.addVehicle(vehicle);
+     }
+
+     connect(d->service, &domain::VehicleService::vehicleAdded,
+             &d->displaysModel, &DisplaysModel::addVehicle);
+     connect(d->service, &domain::VehicleService::vehicleRemoved,
+             &d->displaysModel, &DisplaysModel::removeVehicle);
 }
 
 DashboardPresenter::~DashboardPresenter()
 {}
 
-void DashboardPresenter::setVehicle(int id)
+void DashboardPresenter::connectView(QObject* view)
 {
-    d->vehicle = d->service->vehicle(id);
-    this->updateSelection();
-}
-
-void DashboardPresenter::updateSelection()
-{
-    this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(nullptr));
-
-    if (d->model)
-    {
-        delete d->model;
-        d->model = nullptr;
-
-    }
-
-    if (d->vehicle)
-    {
-        d->model = new VehicleDisplayModel(d->vehicle, this);
-    }
-    else
-    {
-        d->model = new GenericDisplayModel(this);
-    }
-
-    this->setViewProperty(PROPERTY(instruments), QVariant::fromValue(d->model));
+    view->setProperty(PROPERTY(displays), QVariant::fromValue(&d->displaysModel));
 }

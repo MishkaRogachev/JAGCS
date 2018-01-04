@@ -89,13 +89,8 @@
         <file>Views/Dashboard/CommandControls/ModeBox.qml</file>
         <file>Views/Dashboard/CommandControls/ListView.qml</file>
         <file>Views/Dashboard/Displays/BaseDisplay.qml</file>
-        <file>Views/Dashboard/Displays/VehicleDisplay.qml</file>
-        <file>Views/Dashboard/Displays/SatelliteDisplay.qml</file>
-        <file>Views/Dashboard/Displays/BatteryDisplay.qml</file>
-        <file>Views/Dashboard/Displays/FlightDisplay.qml</file>
-        <file>Views/Dashboard/Displays/NavigationDisplay.qml</file>
-        <file>Views/Dashboard/Displays/ControlDisplay.qml</file>
-        <file>Views/Dashboard/Displays/MissionDisplay.qml</file>
+        <file>Views/Dashboard/Displays/ShortVehicleDisplay.qml</file>
+        <file>Views/Dashboard/Displays/FixedWingVehicleDisplay.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>
         <file>Views/Menu/Vehicles/VehicleListView.qml</file>
