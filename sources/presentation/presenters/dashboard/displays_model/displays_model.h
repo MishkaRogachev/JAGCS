@@ -28,6 +28,7 @@ namespace presentation
     public slots:
         void addVehicle(const dao::VehiclePtr& vehicle);
         void removeVehicle(const dao::VehiclePtr& vehicle);
+        void setSelectedVehicle(const dao::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

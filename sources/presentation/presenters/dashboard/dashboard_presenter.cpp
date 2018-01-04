@@ -40,6 +40,11 @@ DashboardPresenter::DashboardPresenter(QObject* parent):
 DashboardPresenter::~DashboardPresenter()
 {}
 
+void DashboardPresenter::selectVehicle(int vehicleId)
+{
+    d->displaysModel.setSelectedVehicle(d->service->vehicle(vehicleId));
+}
+
 void DashboardPresenter::connectView(QObject* view)
 {
     view->setProperty(PROPERTY(displays), QVariant::fromValue(&d->displaysModel));

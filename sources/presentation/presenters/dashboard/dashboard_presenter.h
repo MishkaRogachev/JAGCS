@@ -21,6 +21,9 @@ namespace presentation
         DashboardPresenter(QObject* parent = nullptr);
         ~DashboardPresenter() override;
 
+    public slots:
+        void selectVehicle(int vehicleId);
+
     protected:
         void connectView(QObject* view);
 

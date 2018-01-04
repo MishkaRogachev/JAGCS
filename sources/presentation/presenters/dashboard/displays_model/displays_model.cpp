@@ -67,6 +67,15 @@ void DisplaysModel::removeVehicle(const dao::VehiclePtr& vehicle)
     this->endRemoveRows();
 }
 
+void DisplaysModel::setSelectedVehicle(const dao::VehiclePtr& vehicle)
+{
+    if (m_selectedVehicle == vehicle) return;
+
+    this->beginResetModel();
+    m_selectedVehicle = vehicle;
+    this->endResetModel();
+}
+
 QHash<int, QByteArray> DisplaysModel::roleNames() const
 {
     QHash<int, QByteArray> roles;

@@ -9,6 +9,11 @@ Item {
 
     property var displays
 
+    function selectVehicle(vehicleId, vehicleName) {
+        topbar.unitName = vehicleName;
+        presenter.selectVehicle(vehicleId);
+    }
+
     DashboardPresenter {
         id: presenter
         view: dashboard
