@@ -7,9 +7,13 @@ import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 import "../CommandControls" as CommandControls
 
-BaseDisplay {
+Controls.Pane {
     id: vehicleDisplay
 
+    property int vehicleId: 0
+    property string vehicleName
+
+    property bool online: false
     property alias armed: ah.armed
 
     property int mode: Domain.None

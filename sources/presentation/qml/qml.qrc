@@ -88,7 +88,6 @@
         <file>Views/Dashboard/CommandControls/DelayButton.qml</file>
         <file>Views/Dashboard/CommandControls/ModeBox.qml</file>
         <file>Views/Dashboard/CommandControls/ListView.qml</file>
-        <file>Views/Dashboard/Displays/BaseDisplay.qml</file>
         <file>Views/Dashboard/Displays/ShortVehicleDisplay.qml</file>
         <file>Views/Dashboard/Displays/FixedWingVehicleDisplay.qml</file>
         <file>Views/Menu/MenuView.qml</file>
