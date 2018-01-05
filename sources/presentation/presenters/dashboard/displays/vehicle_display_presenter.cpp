@@ -5,7 +5,6 @@
 
 // Internal
 #include "mission.h"
-#include "command.h"
 #include "mission_assignment.h"
 
 #include "service_registry.h"
@@ -24,7 +23,7 @@ public:
 };
 
 VehicleDisplayPresenter::VehicleDisplayPresenter(QObject* parent):
-    ControlDisplayPresenter(parent),
+    CommonVehicleDisplayPresenter(parent),
     d(new Impl())
 {
     connect(d->missionService, &domain::MissionService::currentItemChanged, this,
@@ -44,7 +43,7 @@ VehicleDisplayPresenter::~VehicleDisplayPresenter()
 
 void VehicleDisplayPresenter::setVehicle(int vehicleId)
 {
-    AbstractTelemetryPresenter::setVehicle(vehicleId);
+    CommonVehicleDisplayPresenter::setVehicle(vehicleId);
 
     d->assignment = d->missionService->vehicleAssignment(vehicleId);
 
@@ -71,7 +70,7 @@ void VehicleDisplayPresenter::updateMissionItems()
 
 void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
-    ControlDisplayPresenter::connectNode(node);
+    CommonVehicleDisplayPresenter::connectNode(node);
 
     this->chainNode(node->childNode(domain::Telemetry::Status),
                     std::bind(&VehicleDisplayPresenter::updateStatus, this, std::placeholders::_1));

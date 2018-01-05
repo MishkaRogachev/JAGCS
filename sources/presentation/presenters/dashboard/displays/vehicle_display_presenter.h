@@ -2,14 +2,14 @@
 #define VEHICLE_DISPLAY_PRESENTER_H
 
 // Internal
-#include "control_display_presenter.h"
+#include "common_vehicle_display_presenter.h"
 
 // Qt
 #include <QGeoCoordinate>
 
 namespace presentation
 {
-    class VehicleDisplayPresenter: public ControlDisplayPresenter
+    class VehicleDisplayPresenter: public CommonVehicleDisplayPresenter
     {
         Q_OBJECT
 

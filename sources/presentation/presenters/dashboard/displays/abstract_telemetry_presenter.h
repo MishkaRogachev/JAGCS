@@ -5,12 +5,12 @@
 #include <functional>
 
 // Internal
-#include "base_display_presenter.h"
+#include "base_presenter.h"
 #include "telemetry.h"
 
 namespace presentation
 {
-    class AbstractTelemetryPresenter: public BaseDisplayPresenter
+    class AbstractTelemetryPresenter: public BasePresenter
     {
         Q_OBJECT
 
@@ -18,7 +18,7 @@ namespace presentation
         explicit AbstractTelemetryPresenter(QObject* parent = nullptr);
 
     public slots:
-        void setVehicle(int vehicleId) override;
+        void setNode(domain::Telemetry* node);
 
     protected:
         virtual void connectNode(domain::Telemetry* node) = 0;

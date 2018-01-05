@@ -3,21 +3,14 @@
 // Qt
 #include <QDebug>
 
-//Internal
-#include "service_registry.h"
-#include "telemetry_service.h"
-
 using namespace presentation;
 
 AbstractTelemetryPresenter::AbstractTelemetryPresenter(QObject* parent):
-    BaseDisplayPresenter(parent)
+    BasePresenter(parent)
 {}
 
-void AbstractTelemetryPresenter::setVehicle(int vehicleId)
+void AbstractTelemetryPresenter::setNode(domain::Telemetry* node)
 {
-    BaseDisplayPresenter::setVehicle(vehicleId);
-
-    domain::Telemetry* node = domain::ServiceRegistry::telemetryService()->vehicleNode(vehicleId);
     if (m_node == node) return;
 
     if (m_node) this->disconnectNode();

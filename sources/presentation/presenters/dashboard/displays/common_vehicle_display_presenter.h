@@ -1,20 +1,22 @@
-#ifndef CONTROL_DISPLAY_PRESENTER_H
-#define CONTROL_DISPLAY_PRESENTER_H
+#ifndef COMMON_VEHICLE_DISPLAY_PRESENTER_H
+#define COMMON_VEHICLE_DISPLAY_PRESENTER_H
 
 // Internal
 #include "abstract_telemetry_presenter.h"
 
 namespace presentation
 {
-    class ControlDisplayPresenter: public AbstractTelemetryPresenter
+    class CommonVehicleDisplayPresenter: public AbstractTelemetryPresenter
     {
         Q_OBJECT
 
     public:
-        explicit ControlDisplayPresenter(QObject* parent = nullptr);
-        ~ControlDisplayPresenter() override;
+        explicit CommonVehicleDisplayPresenter(QObject* parent = nullptr);
+        ~CommonVehicleDisplayPresenter() override;
 
     public slots:
+        virtual void setVehicle(int vehicleId);
+
         void executeCommand(int commandType, const QVariant& args);
         void rejectCommand(int commandType);
 
@@ -30,4 +32,4 @@ namespace presentation
     };
 }
 
-#endif // CONTROL_DISPLAY_PRESENTER_H
+#endif // COMMON_VEHICLE_DISPLAY_PRESENTER_H
