@@ -5,39 +5,12 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-BaseDisplay {
-    id: navigationDisplay
-
-    property alias guided: hsi.guided
-
-    property alias heading: hsi.heading
-    property alias course: hsi.course
-    property alias targetBearing: hsi.targetBearing
-    property alias desiredHeading: hsi.desiredHeading
-    property alias trackError: hsi.trackError
-
-    property bool compassEnabled: false
-    property bool compassOperational: false
-    property bool satelliteEnabled: false
-    property bool satelliteOperational: false
-    property real groundspeed: 0
-    property int targetDistance: 0
-    property int homeDistance: 0
-    property real homeDirection: 0
-    property real windDirection: 0
-    property real windSpeed: 0
+Controls.Pane {
+    id: navigationInstrument
 
     property url vehicleMark: "qrc:/indicators/fixed_wing_mark.svg" // TODO: vehicle mark
 
-    property int speedUnits: settings.value("Gui/fdSpeedUnits")
-
     implicitHeight: width * 0.75
-
-    NavigationDisplayPresenter {
-        id: presenter
-        view: navigationDisplay
-        Component.onCompleted: setVehicle(vehicleId)
-    }
 
     Indicators.DistanceLabel {
         anchors.top: parent.top
@@ -83,6 +56,11 @@ BaseDisplay {
         height: Math.min(parent.height, parent.width * 0.6) - sizings.padding
         width: height
         mark: vehicleMark
+        heading: vehicleDisplay.heading
+        course: vehicleDisplay.course
+        targetBearing: vehicleDisplay.targetBearing
+        desiredHeading: vehicleDisplay.desiredHeading
+        trackError: vehicleDisplay.trackError
         opacity: compassEnabled ? 1 : 0.33
         courseEnabled: groundspeed > 0.1
         headingColor: compassOperational ? palette.textColor : palette.dangerColor

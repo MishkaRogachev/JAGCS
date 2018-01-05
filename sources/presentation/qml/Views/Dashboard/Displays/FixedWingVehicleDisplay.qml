@@ -15,9 +15,7 @@ BaseVehicleDisplay {
     property bool ahrsOperational: false
     property real yawspeed: 0.0
 
-    property real desiredPitch: 0.0
-    property real desiredRoll: 0.0
-
+    property real course: 0
     property int fix: -1
     property int eph: 0
     property int epv: 0
@@ -26,15 +24,28 @@ BaseVehicleDisplay {
 
     property bool pitotEnabled: false
     property bool pitotOperational: false
-    property real indicatedAirspeed: 0
-    property real trueAirspeed: 0
-    property real airspeedError: 0
+    property real indicatedAirspeed: 0.0
+    property real trueAirspeed: 0.0
 
-    property real altitudeError: 0
+    property real desiredPitch: 0.0
+    property real desiredRoll: 0.0
+    property real targetBearing: 0.0
+    property real desiredHeading: 0.0
+    property real trackError: 0.0
+    property real airspeedError: 0.0
+    property real altitudeError: 0.0
+    property int targetDistance: 0
 
     property bool rangefinderEnabled: false
     property bool rangefinderOperational: false
     property real rangefinderHeight: 0
+
+    property bool compassEnabled: false
+    property bool compassOperational: false
+    property real heading: 0.0
+
+    property real windDirection: 0
+    property real windSpeed: 0
 
     ColumnLayout {
         id: column
@@ -50,12 +61,12 @@ BaseVehicleDisplay {
             visible: true // TODO: instruments settings
             Layout.fillWidth: true
         }
-/*
+
         Instruments.NavigationInstrument  {
             visible: true // TODO: instruments settings
             Layout.fillWidth: true
         }
-
+/*
         Instruments.ControlInstrument  {
             visible: true // TODO: instruments settings
             Layout.fillWidth: true

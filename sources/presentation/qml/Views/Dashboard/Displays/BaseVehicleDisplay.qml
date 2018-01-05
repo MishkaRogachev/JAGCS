@@ -34,6 +34,8 @@ Item {
     property real barometricClimb: 0
 
     property int homeAltitude: 0
+    property int homeDistance: 0
+    property real homeDirection: 0
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
