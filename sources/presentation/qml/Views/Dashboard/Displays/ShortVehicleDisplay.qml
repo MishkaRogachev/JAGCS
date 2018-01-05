@@ -5,7 +5,8 @@ import JAGCS 1.0
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
-import "../CommandControls" as CommandControls
+
+import "CommandControls" as CommandControls
 
 BaseVehicleDisplay {
     id: vehicleDisplay
@@ -32,6 +33,7 @@ BaseVehicleDisplay {
 
         RowLayout {
             anchors.fill: parent
+            spacing: sizings.spacing
 
             Indicators.YawIndicator {
                 id: compass
@@ -73,6 +75,8 @@ BaseVehicleDisplay {
             }
 
             ColumnLayout {
+                spacing: sizings.spacing
+
                 Indicators.FdLabel {
                     digits: 0
                     value: displayedGroundSpeed
@@ -96,6 +100,8 @@ BaseVehicleDisplay {
             GridLayout {
                 Layout.fillWidth: true
                 columns: 2
+                columnSpacing: sizings.spacing
+                rowSpacing: sizings.spacing
 
                 Controls.Label {
                     text: vehicleName

@@ -84,10 +84,16 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
-        <file>Views/Dashboard/CommandControls/Button.qml</file>
-        <file>Views/Dashboard/CommandControls/DelayButton.qml</file>
-        <file>Views/Dashboard/CommandControls/ModeBox.qml</file>
-        <file>Views/Dashboard/CommandControls/ListView.qml</file>
+        <file>Views/Dashboard/Displays/CommandControls/Button.qml</file>
+        <file>Views/Dashboard/Displays/CommandControls/DelayButton.qml</file>
+        <file>Views/Dashboard/Displays/CommandControls/ModeBox.qml</file>
+        <file>Views/Dashboard/Displays/CommandControls/ListView.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/BatteryInstrument.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/SatelliteInstrument.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/FlightInstrument.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/NavigationInstrument.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/ControlInstrument.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/MissionInstrument.qml</file>
         <file>Views/Dashboard/Displays/BaseVehicleDisplay.qml</file>
         <file>Views/Dashboard/Displays/ShortVehicleDisplay.qml</file>
         <file>Views/Dashboard/Displays/FixedWingVehicleDisplay.qml</file>

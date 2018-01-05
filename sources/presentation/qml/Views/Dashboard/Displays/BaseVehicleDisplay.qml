@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
@@ -24,6 +25,7 @@ Item {
 
     property bool satelliteEnabled: false
     property bool satelliteOperational: false
+    property var coordinate: QtPositioning.coordinate()
     property real groundspeed: 0
 
     property bool barometricEnabled: false

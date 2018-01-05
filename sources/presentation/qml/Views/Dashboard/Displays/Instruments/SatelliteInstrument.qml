@@ -1,29 +1,14 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
-BaseDisplay {
-    id: satelliteDisplay
-
-    property bool satelliteEnabled: false
-    property bool satelliteOperational: false
-    property int fix: -1
-    property int eph: 0
-    property int epv: 0
-    property int satellitesVisible: 0
-    property var coordinate: QtPositioning.coordinate()
+Controls.Pane {
+    id: satelliteInstrument
 
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
-
-    SatelliteDisplayPresenter {
-        id: presenter
-        view: satelliteDisplay
-        Component.onCompleted: setVehicle(vehicleId)
-    }
 
     RowLayout {
         anchors.centerIn: parent
@@ -37,7 +22,7 @@ BaseDisplay {
             spacing: sizings.spacing
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteDisplay.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -47,7 +32,7 @@ BaseDisplay {
             }
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteDisplay.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -92,7 +77,7 @@ BaseDisplay {
             Layout.alignment: Qt.AlignRight
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteDisplay.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -100,7 +85,7 @@ BaseDisplay {
             }
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteDisplay.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
