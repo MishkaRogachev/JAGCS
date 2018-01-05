@@ -12,6 +12,7 @@ Item {
 
     property bool online: false
     property bool armed: false
+    property bool guided: false
 
     property int mode: Domain.None
     property var availableModes: []
@@ -19,7 +20,6 @@ Item {
     property bool ahrsEnabled: false
     property real pitch: 0.0
     property real roll: 0.0
-    property real yaw: 0.0
 
     property int throttle: 0
 

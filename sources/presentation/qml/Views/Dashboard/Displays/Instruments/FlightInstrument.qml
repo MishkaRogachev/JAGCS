@@ -5,64 +5,19 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-BaseDisplay {
+Controls.Pane {
     id: flightDisplay
-
-    property alias armed: fd.armed
-    property alias guided: fd.guided
-
-    property bool ahrsEnabled: false
-    property bool ahrsOperational: false
-    property alias pitch: fd.pitch
-    property alias roll: fd.roll
-    property alias yawspeed: fd.yawspeed
-
-    property alias desiredPitch: fd.desiredPitch
-    property alias desiredRoll: fd.desiredRoll
-
-    property bool satelliteEnabled: false
-    property bool satelliteOperational: false
-    property real groundspeed: 0
-    property int satelliteAltitude: 0
-
-    property int throttle: 0
-
-    property bool pitotEnabled: false
-    property bool pitotOperational: false
-    property real indicatedAirspeed: 0
-    property real trueAirspeed: 0
-    property real airspeedError: 0
-
-    property bool barometricEnabled: false
-    property bool barometricOperational: false
-    property int barometricAltitude: 0
-    property real barometricClimb: 0
-    property real altitudeError: 0
-
-    property bool rangefinderEnabled: false
-    property bool rangefinderOperational: false
-    property real rangefinderHeight: 0
-
-    property int homeAltitude: 0
 
     property real scalingFactor: 2.7
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * scalingFactor
     property int maxSpeed: settings.value("Gui/fdSpeedStep") * scalingFactor
     property int speedStep: settings.value("Gui/fdSpeedStep")
-    property int speedUnits: settings.value("Gui/fdSpeedUnits")
 
     property int minAltitude: -settings.value("Gui/fdAltitudeStep") * scalingFactor
     property int maxAltitude: settings.value("Gui/fdAltitudeStep") * scalingFactor
     property int altitudeStep: settings.value("Gui/fdAltitudeStep")
-    property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
     implicitHeight: width * 0.75
-
-    FlightDisplayPresenter {
-        id: presenter
-        view: flightDisplay
-        Component.onCompleted: setVehicle(vehicleId)
-    }
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
@@ -132,10 +87,16 @@ BaseDisplay {
         anchors.centerIn: parent
         height: flightDisplay.height - sizings.padding
         width: flightDisplay.width * 0.55
-        enabled: ahrsEnabled
+        enabled: online && ahrsEnabled
         operational: ahrsOperational
-        available: online
-        rollInverted:  settings.boolValue("Gui/fdRollInverted")
+        armed: vehicleDisplay.armed
+        guided: vehicleDisplay.guided
+        pitch: vehicleDisplay.pitch
+        roll: vehicleDisplay.roll
+        yawspeed: vehicleDisplay.yawspeed
+        desiredPitch: vehicleDisplay.desiredPitch
+        desiredRoll: vehicleDisplay.desiredRoll
+        rollInverted: settings.boolValue("Gui/fdRollInverted")
     }
 
     Indicators.BarIndicator {

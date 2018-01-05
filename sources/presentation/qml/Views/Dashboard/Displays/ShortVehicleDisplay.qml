@@ -11,6 +11,8 @@ import "CommandControls" as CommandControls
 BaseVehicleDisplay {
     id: vehicleDisplay
 
+    property real yaw: 0.0
+
     onUpdateCommandStatus:  {
         switch (command) {
         case Command.SetMode:
