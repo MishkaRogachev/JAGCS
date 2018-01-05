@@ -5,8 +5,6 @@ import "qrc:/JS/helper.js" as Helper
 Item {
     id: root
 
-    property bool operational: false
-
     property real pitch: 0.0
     property real roll: 0.0
     property real minPitch: -25.0
@@ -27,7 +25,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height / 2 - 0.5
-            color: operational ? palette.skyColor : "#c6c9d1" // TODO: palette
+            color: enabled ? palette.skyColor : "#c6c9d1" // TODO: palette
             Behavior on color { ColorAnimation { duration: 200 } }
         }
 
@@ -36,7 +34,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height / 2 - 0.5
-            color: operational ? palette.groundColor : "#798f99" // TODO: palette
+            color: enabled ? palette.groundColor : "#798f99" // TODO: palette
             Behavior on color { ColorAnimation { duration: 200 } }
         }
     }

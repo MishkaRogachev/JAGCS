@@ -4,9 +4,6 @@ import QtGraphicalEffects 1.0
 Item {
     id: ai
 
-    property bool operational: false
-    property bool available: false
-
     property real pitch: 0.0
     property real roll: 0.0
 
@@ -36,7 +33,6 @@ Item {
         roll: rollInverted ? 0 : ai.roll
         minPitch: ai.minPitch
         maxPitch: ai.maxPitch
-        operational: ai.operational
     }
 
     Rectangle {

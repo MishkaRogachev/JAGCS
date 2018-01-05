@@ -7,6 +7,7 @@ AttitudeIndicator {
 
     property bool armed: false
     property bool guided: false
+    property bool operational: false
 
     property real yawspeed: 0.0
     property real desiredPitch: 0.0
