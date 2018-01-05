@@ -153,7 +153,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
             vehicle->setType(::decodeType(heartbeat.type));
             changed = true;
         }
-        if (changed) d->vehicleService->vehicleChanged(vehicle);
+        if (changed) d->vehicleService->save(vehicle);
     }
 
     TelemetryPortion portion(d->telemetryService->mavNode(message.sysid));
@@ -226,9 +226,9 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
                 return;
             }
 
-            vehicle->setOnline(false);
-            d->vehicleService->vehicleChanged(vehicle);
             timer->stop();
+            vehicle->setOnline(false);
+            d->vehicleService->save(vehicle);
 
             LogBus::log(tr("Vehicle %1 gone offline").arg(vehicle->name()), LogMessage::Warning);
         }
