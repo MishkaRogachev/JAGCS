@@ -75,9 +75,12 @@ BaseVehicleDisplay {
         }
     }
 
+    implicitWidth: column.implicitWidth
+    implicitHeight: column.implicitHeight
+
     ColumnLayout {
         id: column
-        anchors.fill: parent
+        width: parent.width
         spacing: sizings.spacing
 
         Instruments.SatelliteInstrument {
