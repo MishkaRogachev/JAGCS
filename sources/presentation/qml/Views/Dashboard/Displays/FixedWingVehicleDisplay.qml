@@ -94,12 +94,18 @@ BaseVehicleDisplay {
             visible: true // TODO: instruments settings
             Layout.fillWidth: true
         }
-/*
+
         Instruments.ControlInstrument  {
+            id: control
             visible: true // TODO: instruments settings
             Layout.fillWidth: true
-        }
 
+            Connections {
+                target: vehicleDisplay
+                onUpdateCommandStatus: control.updateCommandStatus(command, status)
+            }
+        }
+/*
         Instruments.MissionInstrument  {
             visible: true // TODO: instruments settings
             Layout.fillWidth: true

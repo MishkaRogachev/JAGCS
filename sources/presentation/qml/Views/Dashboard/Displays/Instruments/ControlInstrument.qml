@@ -5,12 +5,8 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "../CommandControls" as CommandControls
 
-BaseDisplay {
+Controls.Pane {
     id: controlDisplay
-
-    property int mode: Domain.None
-    property var availableModes: []
-    property bool armed: false
 
     enabled: online
 
@@ -30,12 +26,6 @@ BaseDisplay {
         }
     }
 
-    ControlDisplayPresenter {
-        id: presenter
-        view: controlDisplay
-        Component.onCompleted: setVehicle(vehicleId)
-    }
-
     RowLayout {
         anchors.centerIn: parent
         width: parent.width
@@ -52,7 +42,7 @@ BaseDisplay {
 
         CommandControls.ModeBox {
             id: modeBox
-            mode: controlDisplay.mode
+            mode: vehicleDisplay.mode
             model: availableModes
             tipText: qsTr("Select mode")
             Layout.fillWidth: true
