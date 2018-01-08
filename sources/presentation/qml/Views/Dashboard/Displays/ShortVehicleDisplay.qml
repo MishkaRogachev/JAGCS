@@ -90,7 +90,7 @@ BaseVehicleDisplay {
                 }
 
                 Indicators.FdLabel {
-                    value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
+                    value: displayedAltitude
                     enabled: barometricEnabled
                     operational: barometricOperational
                     prefix: qsTr("ALT")

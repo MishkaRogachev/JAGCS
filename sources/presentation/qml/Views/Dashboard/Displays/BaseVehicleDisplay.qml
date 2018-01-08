@@ -59,7 +59,9 @@ Item {
 
     property string altitudeSuffix: qsTr("m")
 
-    property real referenceAltitude: 0
+    property real displayedAltitude: {
+        return altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude;
+    }
 
     signal updateCommandStatus(var command, var status)
 

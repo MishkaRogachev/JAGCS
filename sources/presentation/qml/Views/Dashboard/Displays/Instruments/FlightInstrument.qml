@@ -104,7 +104,7 @@ Controls.Pane {
         anchors.left: fd.right
         width: (flightDisplay.width - fd.width) / 2
         height: parent.height * 0.7
-        value: altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude
+        value: displayedAltitude
         error: altitudeError
         minValue: value + minAltitude
         maxValue: value + maxAltitude
