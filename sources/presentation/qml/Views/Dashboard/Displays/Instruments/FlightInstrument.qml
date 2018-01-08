@@ -41,7 +41,7 @@ Controls.Pane {
         enabled: pitotEnabled
         operational: pitotOperational
         prefix: qsTr("IAS")
-        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
+        suffix: speedSuffix
     }
 
     Indicators.FdLabel {
@@ -60,7 +60,7 @@ Controls.Pane {
         operational: satelliteOperational
         width: speedLadder.width
         prefix: qsTr("GS")
-        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
+        suffix: speedSuffix
     }
 
     Indicators.FdLabel {
@@ -79,7 +79,7 @@ Controls.Pane {
         operational: pitotOperational
         width: speedLadder.width
         prefix: qsTr("TAS")
-        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
+        suffix: speedSuffix
     }
 
     Indicators.FlightDirector {

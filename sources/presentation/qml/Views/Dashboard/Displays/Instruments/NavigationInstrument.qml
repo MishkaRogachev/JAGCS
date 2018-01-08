@@ -39,14 +39,8 @@ Controls.Pane {
         width: parent.width * 0.2
         font.pixelSize: Math.max(hsi.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("WIND")
-        value: {
-            switch (speedUnits) {
-            default:
-            case 0: return windSpeed;
-            case 1: return Helper.mpsToKph(windSpeed);
-            }
-        }
-        suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
+        value: displayedWindSpeed
+        suffix: speedSuffix
         enabled: windSpeed > 0
     }
 

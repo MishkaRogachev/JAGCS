@@ -46,6 +46,13 @@ BaseVehicleDisplay {
 
     property real windDirection: 0
     property real windSpeed: 0
+    property real displayedWindSpeed: {
+        switch (speedUnits) {
+        default:
+        case 0: return windSpeed;
+        case 1: return Helper.mpsToKph(windSpeed);
+        }
+    }
 
     ColumnLayout {
         id: column
