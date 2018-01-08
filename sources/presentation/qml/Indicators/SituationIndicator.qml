@@ -1,7 +1,7 @@
 import QtQuick 2.6
 import "qrc:/JS/helper.js" as Helper
 
-Compass {
+Item {
     id: root
 
     property bool guided: false
@@ -10,8 +10,13 @@ Compass {
     property real trackError: 0
     property real maxTrackError: 100
 
+    property real scalesRatio: 0.08
+    property real scalesOffset: root.width * scalesRatio
+    property real minorTickOffset: 0.5 * scalesOffset
+    property real majorTickOffset: 1.0 * scalesOffset
+    property real textOffset: 1.4 * scalesOffset
+
     onGuidedChanged: canvas.requestPaint()
-    onHeadingChanged: canvas.requestPaint()
     onTargetBearingChanged: canvas.requestPaint()
     onDesiredHeadingChanged: canvas.requestPaint()
     onTrackErrorChanged: canvas.requestPaint()
