@@ -26,6 +26,20 @@ BaseVehicleDisplay {
     property bool pitotOperational: false
     property real indicatedAirspeed: 0.0
     property real trueAirspeed: 0.0
+    property real displayedIndicatedAirspeed: {
+        switch (speedUnits) {
+        default:
+        case 0: return indicatedAirspeed;
+        case 1: return Helper.mpsToKph(indicatedAirspeed);
+        }
+    }
+    property real displayedTrueAirspeed: {
+        switch (speedUnits) {
+        default:
+        case 0: return trueAirspeed;
+        case 1: return Helper.mpsToKph(trueAirspeed);
+        }
+    }
 
     property real desiredPitch: 0.0
     property real desiredRoll: 0.0
@@ -35,6 +49,13 @@ BaseVehicleDisplay {
     property real airspeedError: 0.0
     property real altitudeError: 0.0
     property int targetDistance: 0
+    property real displayedAirspeedError: {
+        switch (speedUnits) {
+        default:
+        case 0: return airspeedError;
+        case 1: return Helper.mpsToKph(airspeedError);
+        }
+    }
 
     property bool rangefinderEnabled: false
     property bool rangefinderOperational: false

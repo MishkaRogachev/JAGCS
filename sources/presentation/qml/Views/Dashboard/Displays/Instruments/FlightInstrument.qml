@@ -33,8 +33,8 @@ Controls.Pane {
         anchors.right: fd.left
         width: (flightDisplay.width - fd.width) / 2
         height: parent.height * 0.7
-        value: speedUnits ? Helper.mpsToKph(indicatedAirspeed) : indicatedAirspeed
-        error: speedUnits ? Helper.mpsToKph(airspeedError) : airspeedError
+        value: displayedIndicatedAirspeed
+        error: displayedAirspeedError
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -49,13 +49,7 @@ Controls.Pane {
         anchors.horizontalCenter: speedLadder.horizontalCenter
         font.pixelSize: speedLadder.fontPixelSize
         digits: 1
-        value: {
-            switch (speedUnits) {
-            default:
-            case 0: return groundspeed;
-            case 1: return Helper.mpsToKph(groundspeed);
-            }
-        }
+        value: displayedGroundSpeed
         enabled: satelliteEnabled
         operational: satelliteOperational
         width: speedLadder.width
@@ -68,13 +62,7 @@ Controls.Pane {
         anchors.horizontalCenter: speedLadder.horizontalCenter
         font.pixelSize: speedLadder.fontPixelSize
         digits: 1
-        value: {
-            switch (speedUnits) {
-            default:
-            case 0: return trueAirspeed;
-            case 1: return Helper.mpsToKph(trueAirspeed);
-            }
-        }
+        value: displayedTrueAirspeed
         enabled: pitotEnabled
         operational: pitotOperational
         width: speedLadder.width
