@@ -8,7 +8,24 @@ import "qrc:/Indicators" as Indicators
 Controls.Pane {
     id: root
 
-    property url vehicleMark: "qrc:/indicators/fixed_wing_mark.svg" // TODO: vehicle mark
+    // TODO: to common
+    property url vehicleMark: {
+        switch (vehicleType) {
+        case Vehicle.FixedWing:
+            return "qrc:/indicators/fixed_wing_mark.svg"
+        case Vehicle.FlyingWing:
+            return "qrc:/indicators/flying_wing_mark.svg"
+        case Vehicle.Tricopter:
+        case Vehicle.Quadcopter:
+        case Vehicle.Hexcopter:
+            return "qrc:/indicators/quadcopter_mark.svg"
+        case Vehicle.Helicopter:
+        case Vehicle.Coaxial:
+            return "qrc:/indicators/helicopter_mark.svg"
+        default:
+            return "qrc:/indicators/unknown_mark.svg"
+        }
+    }
 
     implicitHeight: width * 0.75
 

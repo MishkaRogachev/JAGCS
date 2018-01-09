@@ -20,7 +20,7 @@ using namespace presentation;
 class CommonVehicleDisplayPresenter::Impl
 {
 public:
-    int vehicleId = 0;
+    dao::VehiclePtr vehicle;
     QList<dao::CommandPtr> commands;
 
     domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
@@ -33,10 +33,7 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
 {
     connect(d->vehicleService, &domain::VehicleService::vehicleChanged,
             this, [this](const dao::VehiclePtr& vehicle) {
-        if (vehicle->id() != d->vehicleId) return;
-
-        this->setViewProperty(PROPERTY(vehicleName), vehicle->name());
-        this->setViewProperty(PROPERTY(online), vehicle->isOnline());
+        if (vehicle == d->vehicle) this->updateVehicle();
     });
 
     connect(d->commandService, &domain::CommandService::commandChanged,
@@ -53,38 +50,54 @@ CommonVehicleDisplayPresenter::~CommonVehicleDisplayPresenter()
 
 void CommonVehicleDisplayPresenter::setVehicle(int vehicleId)
 {
-    if (d->vehicleId == vehicleId) return;
+    if (d->vehicle && d->vehicle->id() == vehicleId) return;
 
-    d->vehicleId = vehicleId;
+    d->vehicle = d->vehicleService->vehicle(vehicleId);
+    this->updateVehicle();
+
     this->setNode(domain::ServiceRegistry::telemetryService()->vehicleNode(vehicleId));
+}
 
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
-    if (vehicle)
+void CommonVehicleDisplayPresenter::updateVehicle()
+{
+    if (d->vehicle)
     {
-        this->setViewProperty(PROPERTY(vehicleName), vehicle->name());
-        this->setViewProperty(PROPERTY(online), vehicle->isOnline());
+        this->setViewProperty(PROPERTY(vehicleName), d->vehicle->name());
+        this->setViewProperty(PROPERTY(vehicleType), d->vehicle->type());
+        this->setViewProperty(PROPERTY(online), d->vehicle->isOnline());
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(vehicleName), QString());
+        this->setViewProperty(PROPERTY(vehicleType), dao::Vehicle::UnknownType);
+        this->setViewProperty(PROPERTY(online), false);
     }
 }
 
 void CommonVehicleDisplayPresenter::executeCommand(int commandType, const QVariant& args)
 {
+    if (d->vehicle.isNull()) return;
+
     dao::CommandPtr command = dao::CommandPtr::create();
     command->setType(dao::Command::CommandType(commandType));
     command->setArguments(args.toList());
 
     d->commands.append(command);
-    d->commandService->executeCommand(d->vehicleId, command);
+    d->commandService->executeCommand(d->vehicle->id(), command);
 }
 
 void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
 {
-    d->commandService->cancelCommand(d->vehicleId, dao::Command::CommandType(commandType));
+    if (d->vehicle.isNull()) return;
+
+    d->commandService->cancelCommand(d->vehicle->id(), dao::Command::CommandType(commandType));
 }
 
 void CommonVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
     this->chainNode(node->childNode(domain::Telemetry::Status),
-                    std::bind(&CommonVehicleDisplayPresenter::updateStatus, this, std::placeholders::_1));
+                    std::bind(&CommonVehicleDisplayPresenter::updateStatus,
+                              this, std::placeholders::_1));
 }
 
 void CommonVehicleDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)

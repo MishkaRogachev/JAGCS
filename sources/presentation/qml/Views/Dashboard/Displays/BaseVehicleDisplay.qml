@@ -9,6 +9,7 @@ Item {
 
     property int vehicleId: 0
     property string vehicleName
+    property int vehicleType: Vehicle.UnknownType
 
     property int missionItems: 0
     property int currentItem: -1

@@ -17,6 +17,8 @@ namespace presentation
     public slots:
         virtual void setVehicle(int vehicleId);
 
+        void updateVehicle();
+
         void executeCommand(int commandType, const QVariant& args);
         void rejectCommand(int commandType);
 
