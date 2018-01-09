@@ -258,6 +258,7 @@ bool MissionService::save(const MissionItemPtr& item)
     if (!d->itemRepository.save(item)) return false;
 
     emit (isNew ? missionItemAdded(item) : missionItemChanged(item));
+    if (isNew) this->fixMissionItemCount(item->missionId());
 
     return true;
 }
@@ -365,10 +366,17 @@ void MissionService::fixMissionItemOrder(int missionId)
         counter++;
     }
 
+    this->fixMissionItemCount(missionId);
+}
+
+void MissionService::fixMissionItemCount(int missionId)
+{
+    int count = this->missionItems(missionId).count();
     MissionPtr mission = this->mission(missionId);
-    if (mission->count() != counter)
+
+    if (mission->count() != count)
     {
-        mission->setCount(counter);
+        mission->setCount(count);
         this->save(mission);
     }
 }
