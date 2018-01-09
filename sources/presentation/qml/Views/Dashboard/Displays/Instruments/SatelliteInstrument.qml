@@ -6,7 +6,7 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 
 Controls.Pane {
-    id: satelliteInstrument
+    id: root
 
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
 
@@ -22,7 +22,7 @@ Controls.Pane {
             spacing: sizings.spacing
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -32,7 +32,7 @@ Controls.Pane {
             }
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -77,7 +77,7 @@ Controls.Pane {
             Layout.alignment: Qt.AlignRight
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor
@@ -85,7 +85,7 @@ Controls.Pane {
             }
 
             Controls.Label {
-                font.pixelSize: Math.max(satelliteInstrument.width * 0.04, sizings.fontPixelSize * 0.5)
+                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
                 opacity: enabled ? 1 : 0.33
                 color: satelliteOperational ? palette.textColor : palette.dangerColor

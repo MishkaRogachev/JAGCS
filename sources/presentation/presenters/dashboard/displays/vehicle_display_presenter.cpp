@@ -29,7 +29,7 @@ VehicleDisplayPresenter::VehicleDisplayPresenter(QObject* parent):
     connect(d->missionService, &domain::MissionService::currentItemChanged, this,
             [this](int vehicleId, const dao::MissionItemPtr& item) {
         if (d->assignment && d->assignment->vehicleId() == vehicleId)
-            this->setViewProperty(PROPERTY(current), item->sequence());
+            this->setViewProperty(PROPERTY(currentItem), item->sequence());
     });
     connect(d->missionService, &domain::MissionService::missionChanged, this,
             [this](const dao::MissionPtr& mission) {
@@ -54,17 +54,17 @@ void VehicleDisplayPresenter::updateMissionItems()
 {
     if (d->assignment)
     {
-        this->setViewProperty(PROPERTY(count),
+        this->setViewProperty(PROPERTY(missionItems),
                               d->missionService->mission(d->assignment->missionId())->count());
 
         dao::MissionItemPtr current =  d->missionService->currentWaypoint(d->assignment->vehicleId());
-        if (current) this->setViewProperty(PROPERTY(current), current->sequence());
-        else this->setViewProperty(PROPERTY(current), -1);
+        if (current) this->setViewProperty(PROPERTY(currentItem), current->sequence());
+        else this->setViewProperty(PROPERTY(currentItem), -1);
     }
     else
     {
-        this->setViewProperty(PROPERTY(count), 0);
-        this->setViewProperty(PROPERTY(current), -1);
+        this->setViewProperty(PROPERTY(missionItems), 0);
+        this->setViewProperty(PROPERTY(currentItem), -1);
     }
 }
 

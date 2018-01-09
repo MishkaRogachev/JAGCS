@@ -6,7 +6,7 @@ import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
 Controls.Pane {
-    id: flightDisplay
+    id: root
 
     property real scalingFactor: 2.7
     property int minSpeed: -settings.value("Gui/fdSpeedStep") * scalingFactor
@@ -31,7 +31,7 @@ Controls.Pane {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: fd.left
-        width: (flightDisplay.width - fd.width) / 2
+        width: (root.width - fd.width) / 2
         height: parent.height * 0.7
         value: displayedIndicatedAirspeed
         error: displayedAirspeedError
@@ -73,8 +73,8 @@ Controls.Pane {
     Indicators.FlightDirector {
         id: fd
         anchors.centerIn: parent
-        height: flightDisplay.height - sizings.padding
-        width: flightDisplay.width * 0.55
+        height: root.height - sizings.padding
+        width: root.width * 0.55
         enabled: online && ahrsEnabled
         operational: ahrsOperational
         armed: vehicleDisplay.armed
@@ -102,7 +102,7 @@ Controls.Pane {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: fd.right
-        width: (flightDisplay.width - fd.width) / 2
+        width: (root.width - fd.width) / 2
         height: parent.height * 0.7
         value: displayedAltitude
         error: altitudeError

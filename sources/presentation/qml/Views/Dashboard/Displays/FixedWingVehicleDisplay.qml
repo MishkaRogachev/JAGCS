@@ -108,10 +108,17 @@ BaseVehicleDisplay {
                 onUpdateCommandStatus: control.updateCommandStatus(command, status)
             }
         }
-/*
+
         Instruments.MissionInstrument  {
+            id: mission
             visible: true // TODO: instruments settings
             Layout.fillWidth: true
-        }*/
+
+            Connections {
+                target: vehicleDisplay
+                onCurrentItemChanged: mission.current = currentItem
+                onUpdateCommandStatus: mission.updateCommandStatus(command, status)
+            }
+        }
     }
 }

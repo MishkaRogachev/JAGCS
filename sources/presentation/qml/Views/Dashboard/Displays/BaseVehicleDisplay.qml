@@ -10,6 +10,9 @@ Item {
     property int vehicleId: 0
     property string vehicleName
 
+    property int missionItems: 0
+    property int currentItem: -1
+
     property bool online: false
     property bool armed: false
     property bool guided: false

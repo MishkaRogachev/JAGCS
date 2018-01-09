@@ -4,28 +4,39 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-BaseDisplay {
-    id: missionDisplay
+Controls.Pane {
+    id: root
 
-    property int current: -1
-    property int count: 0
-    property int status: 0
+    property int count: missionItems
+    property int status: Command.Idle
 
-    onCurrentChanged: itemBox.currentIndex = current
-    onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
-    onCountChanged: {
+    property alias current: itemBox.currentIndex
+
+    function updateCommandStatus(command, status) {
+        switch (command) {
+        case Command.GoTo:
+            root.status = status;
+            if (status === Command.Completed || status === Command.Rejected) timer.start()
+            break;
+        default:
+            break;
+        }
+    }
+
+    function goTo(index) {
+        presenter.executeCommand(Command.GoTo, [ index ]);
+    }
+
+    function updateItems() {
         var items = [];
         for (var i = 0; i < count; ++i) items.push(i + 1);
         itemBox.model = items;
     }
 
-    enabled: online
+    Component.onCompleted: updateItems()
+    onCountChanged: updateItems()
 
-    MissionDisplayPresenter {
-        id: presenter
-        view: missionDisplay
-        Component.onCompleted: setVehicle(vehicleId)
-    }
+    enabled: online
 
     Timer {
         id: timer
@@ -46,13 +57,13 @@ BaseDisplay {
             tipText: qsTr("Goto left")
             iconSource: "qrc:/icons/left.svg"
             enabled: current > 1
-            onClicked: presenter.goTo(current - 1)
+            onClicked: goTo(current - 1)
         }
 
         Controls.ComboBox {
             id: itemBox
             currentIndex: count
-            onActivated: presenter.goTo(index)
+            onActivated: goTo(index)
             contentColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: sizings.controlBaseSize * 3
@@ -74,7 +85,7 @@ BaseDisplay {
             tipText: qsTr("Goto right")
             iconSource: "qrc:/icons/right.svg"
             enabled: current < count - 1
-            onClicked: presenter.goTo(current + 1)
+            onClicked: goTo(current + 1)
         }
     }
 }

@@ -6,7 +6,7 @@ import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
 Controls.Pane {
-    id: navigationInstrument
+    id: root
 
     property url vehicleMark: "qrc:/indicators/fixed_wing_mark.svg" // TODO: vehicle mark
 

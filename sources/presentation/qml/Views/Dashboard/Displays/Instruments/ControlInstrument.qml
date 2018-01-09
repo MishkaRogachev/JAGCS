@@ -6,7 +6,7 @@ import "qrc:/Controls" as Controls
 import "../CommandControls" as CommandControls
 
 Controls.Pane {
-    id: controlDisplay
+    id: root
 
     enabled: online
 
