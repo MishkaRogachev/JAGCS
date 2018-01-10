@@ -6,10 +6,13 @@
 
 // Internal
 #include "vehicle.h"
+#include "mission.h"
+#include "mission_assignment.h"
 #include "command.h"
 
 #include "service_registry.h"
 #include "vehicle_service.h"
+#include "mission_service.h"
 #include "command_service.h"
 #include "telemetry_service.h"
 
@@ -21,9 +24,11 @@ class CommonVehicleDisplayPresenter::Impl
 {
 public:
     dao::VehiclePtr vehicle;
+    dao::MissionAssignmentPtr assignment;
     QList<dao::CommandPtr> commands;
 
     domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
     domain::CommandService* commandService = domain::ServiceRegistry::commandService();
 };
 
@@ -34,6 +39,32 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
     connect(d->vehicleService, &domain::VehicleService::vehicleChanged,
             this, [this](const dao::VehiclePtr& vehicle) {
         if (vehicle == d->vehicle) this->updateVehicle();
+    });
+
+    connect(d->missionService, &domain::MissionService::assignmentAdded, this,
+            [this](const dao::MissionAssignmentPtr& assignment) {
+        if (d->vehicle.isNull() || assignment->vehicleId() != d->vehicle->id()) return;
+
+        d->assignment = assignment;
+        this->updateMissionItems();
+    });
+    connect(d->missionService, &domain::MissionService::assignmentRemoved, this,
+            [this](const dao::MissionAssignmentPtr& assignment) {
+        if (d->assignment != assignment) return;
+
+        d->assignment.clear();
+        this->updateMissionItems();
+    });
+
+    connect(d->missionService, &domain::MissionService::currentItemChanged, this,
+            [this](int vehicleId, const dao::MissionItemPtr& item) {
+        if (d->assignment && d->assignment->vehicleId() == vehicleId)
+            this->setViewProperty(PROPERTY(currentItem), item->sequence());
+    });
+    connect(d->missionService, &domain::MissionService::missionChanged, this,
+            [this](const dao::MissionPtr& mission) {
+        if (d->assignment && d->assignment->missionId() == mission->id())
+            this->updateMissionItems();
     });
 
     connect(d->commandService, &domain::CommandService::commandChanged,
@@ -55,6 +86,9 @@ void CommonVehicleDisplayPresenter::setVehicle(int vehicleId)
     d->vehicle = d->vehicleService->vehicle(vehicleId);
     this->updateVehicle();
 
+    d->assignment = d->missionService->vehicleAssignment(vehicleId);
+    this->updateMissionItems();
+
     this->setNode(domain::ServiceRegistry::telemetryService()->vehicleNode(vehicleId));
 }
 
@@ -71,6 +105,24 @@ void CommonVehicleDisplayPresenter::updateVehicle()
         this->setViewProperty(PROPERTY(vehicleName), QString());
         this->setViewProperty(PROPERTY(vehicleType), dao::Vehicle::UnknownType);
         this->setViewProperty(PROPERTY(online), false);
+    }
+}
+
+void CommonVehicleDisplayPresenter::updateMissionItems()
+{
+    if (d->assignment)
+    {
+        this->setViewProperty(PROPERTY(missionItems),
+                              d->missionService->mission(d->assignment->missionId())->count());
+
+        dao::MissionItemPtr current =  d->missionService->currentWaypoint(d->assignment->vehicleId());
+        if (current) this->setViewProperty(PROPERTY(currentItem), current->sequence());
+        else this->setViewProperty(PROPERTY(currentItem), -1);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(missionItems), 0);
+        this->setViewProperty(PROPERTY(currentItem), -1);
     }
 }
 

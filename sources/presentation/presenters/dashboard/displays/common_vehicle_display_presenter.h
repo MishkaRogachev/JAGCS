@@ -18,6 +18,7 @@ namespace presentation
         virtual void setVehicle(int vehicleId);
 
         void updateVehicle();
+        void updateMissionItems();
 
         void executeCommand(int commandType, const QVariant& args);
         void rejectCommand(int commandType);

@@ -15,11 +15,6 @@ namespace presentation
 
     public:
         explicit VehicleDisplayPresenter(QObject* parent = nullptr);
-        ~VehicleDisplayPresenter() override;
-
-    public slots:
-        void setVehicle(int vehicleId) override;
-        void updateMissionItems();
 
     protected:
         void connectNode(domain::Telemetry* node) override;
@@ -41,8 +36,8 @@ namespace presentation
     private:
         void updateHoming();
 
-        class Impl;
-        QScopedPointer<Impl> const d;
+        QGeoCoordinate m_position;
+        QGeoCoordinate m_homePosition;
     };
 }
 

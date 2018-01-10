@@ -3,70 +3,11 @@
 // Qt
 #include <QDebug>
 
-// Internal
-#include "mission.h"
-#include "mission_assignment.h"
-
-#include "service_registry.h"
-#include "mission_service.h"
-
 using namespace presentation;
 
-class VehicleDisplayPresenter::Impl
-{
-public:
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
-
-    dao::MissionAssignmentPtr assignment;
-    QGeoCoordinate position;
-    QGeoCoordinate homePosition;
-};
-
 VehicleDisplayPresenter::VehicleDisplayPresenter(QObject* parent):
-    CommonVehicleDisplayPresenter(parent),
-    d(new Impl())
-{
-    connect(d->missionService, &domain::MissionService::currentItemChanged, this,
-            [this](int vehicleId, const dao::MissionItemPtr& item) {
-        if (d->assignment && d->assignment->vehicleId() == vehicleId)
-            this->setViewProperty(PROPERTY(currentItem), item->sequence());
-    });
-    connect(d->missionService, &domain::MissionService::missionChanged, this,
-            [this](const dao::MissionPtr& mission) {
-        if (d->assignment && d->assignment->missionId() == mission->id())
-            this->updateMissionItems();
-    });
-}
-
-VehicleDisplayPresenter::~VehicleDisplayPresenter()
+    CommonVehicleDisplayPresenter(parent)
 {}
-
-void VehicleDisplayPresenter::setVehicle(int vehicleId)
-{
-    CommonVehicleDisplayPresenter::setVehicle(vehicleId);
-
-    d->assignment = d->missionService->vehicleAssignment(vehicleId);
-
-    this->updateMissionItems();
-}
-
-void VehicleDisplayPresenter::updateMissionItems()
-{
-    if (d->assignment)
-    {
-        this->setViewProperty(PROPERTY(missionItems),
-                              d->missionService->mission(d->assignment->missionId())->count());
-
-        dao::MissionItemPtr current =  d->missionService->currentWaypoint(d->assignment->vehicleId());
-        if (current) this->setViewProperty(PROPERTY(currentItem), current->sequence());
-        else this->setViewProperty(PROPERTY(currentItem), -1);
-    }
-    else
-    {
-        this->setViewProperty(PROPERTY(missionItems), 0);
-        this->setViewProperty(PROPERTY(currentItem), -1);
-    }
-}
 
 void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
@@ -165,7 +106,7 @@ void VehicleDisplayPresenter::updateRangefinder(const domain::Telemetry::Telemet
 
 void VehicleDisplayPresenter::updatePosition(const domain::Telemetry::TelemetryMap& parameters)
 {
-    d->position = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
+    m_position = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
 
     this->updateHoming();
 }
@@ -174,7 +115,7 @@ void VehicleDisplayPresenter::updateHome(const domain::Telemetry::TelemetryMap& 
 {
     this->setViewProperty(PROPERTY(homeAltitude), parameters.value(domain::Telemetry::Altitude, 0));
 
-    d->homePosition = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
+    m_homePosition = parameters.value(domain::Telemetry::Coordinate).value<QGeoCoordinate>();
     this->updateHoming();
 }
 
@@ -198,10 +139,10 @@ void VehicleDisplayPresenter::updateWind(const domain::Telemetry::TelemetryMap& 
 
 void VehicleDisplayPresenter::updateHoming()
 {
-    if (d->position.isValid() && d->homePosition.isValid())
+    if (m_position.isValid() && m_homePosition.isValid())
     {
-        this->setViewProperty(PROPERTY(homeDistance), d->position.distanceTo(d->homePosition));
-        this->setViewProperty(PROPERTY(homeDirection), d->position.azimuthTo(d->homePosition));
+        this->setViewProperty(PROPERTY(homeDistance), m_position.distanceTo(m_homePosition));
+        this->setViewProperty(PROPERTY(homeDirection), m_position.azimuthTo(m_homePosition));
     }
     else
     {
