@@ -83,6 +83,7 @@ void VehicleDisplayPresenter::updatePowerSystem(const domain::Telemetry::Telemet
 
 void VehicleDisplayPresenter::updatePitot(const domain::Telemetry::TelemetryMap& parameters)
 {
+    this->setViewProperty(PROPERTY(pitotPresent), parameters.value(domain::Telemetry::Present, false));
     this->setViewProperty(PROPERTY(pitotEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(pitotOperational), parameters.value(domain::Telemetry::Operational, false));
     this->setViewProperty(PROPERTY(trueAirspeed), parameters.value(domain::Telemetry::TrueAirspeed, 0));

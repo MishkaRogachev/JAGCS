@@ -33,14 +33,14 @@ Controls.Pane {
         anchors.right: fd.left
         width: (root.width - fd.width) / 2
         height: parent.height * 0.7
-        value: displayedIndicatedAirspeed
-        error: displayedAirspeedError
+        value: pitotPresent ? displayedIndicatedAirspeed : displayedGroundSpeed
+        error: pitotPresent ? displayedAirspeedError : 0
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
-        enabled: pitotEnabled
-        operational: pitotOperational
-        prefix: qsTr("IAS")
+        enabled: pitotPresent ? pitotEnabled : satelliteEnabled
+        operational: pitotPresent ? pitotOperational : satelliteOperational
+        prefix: pitotPresent ? qsTr("IAS") : qsTr("GS")
         suffix: speedSuffix
     }
 
@@ -55,6 +55,7 @@ Controls.Pane {
         width: speedLadder.width
         prefix: qsTr("GS")
         suffix: speedSuffix
+        visible: pitotPresent
     }
 
     Indicators.FdLabel {
@@ -68,6 +69,7 @@ Controls.Pane {
         width: speedLadder.width
         prefix: qsTr("TAS")
         suffix: speedSuffix
+        visible: pitotPresent
     }
 
     Indicators.FlightDirector {

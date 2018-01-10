@@ -22,6 +22,7 @@ BaseVehicleDisplay {
     property int satelliteAltitude: 0
     property int satellitesVisible: 0
 
+    property bool pitotPresent: false
     property bool pitotEnabled: false
     property bool pitotOperational: false
     property real indicatedAirspeed: 0.0
