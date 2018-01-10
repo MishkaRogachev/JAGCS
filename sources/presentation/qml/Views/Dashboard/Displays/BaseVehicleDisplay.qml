@@ -67,6 +67,18 @@ Item {
         return altitudeRelative ? barometricAltitude - homeAltitude : barometricAltitude;
     }
 
+    function fromDisplayedAltitude(altitude) {
+        return altitudeRelative ? altitude + homeAltitude : altitude;
+    }
+
+    function fromDisplayedSpeed(speed) {
+        switch (speedUnits) {
+        default:
+        case 0: return speed;
+        case 1: return Helper.kphToMps(speed);
+        }
+    }
+
     signal updateCommandStatus(var command, var status)
 
     property QtObject presenter: VehicleDisplayPresenter {

@@ -50,6 +50,8 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("WP")
+            font.pixelSize: sizings.fontPixelSize * 0.7
+            font.bold: true
             Layout.fillWidth: true
         }
 
