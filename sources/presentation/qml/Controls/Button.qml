@@ -40,11 +40,15 @@ T.Button {
         }
     }
 
-    contentItem: ContentItem {
-        id: content
-        text: control.text
-        font: control.font
-        textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
+    contentItem: Item {
+            ContentItem {
+            id: content
+            anchors.centerIn: parent
+            height: parent.height
+            text: control.text
+            font: control.font
+            textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
+        }
     }
 
     ToolTip {

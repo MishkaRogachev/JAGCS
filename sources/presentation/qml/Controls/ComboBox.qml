@@ -9,8 +9,11 @@ T.ComboBox {
 
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
     property string tipText
+    property string iconRole: "icon"
+    property string displayIcon: currentItem && currentItem[control.iconRole] !== undefined ?
+                                      currentItem[control.iconRole] : ""
 
-    property alias contentColor: content.color
+    property alias contentColor: content.textColor
     property alias horizontalAlignment: content.horizontalAlignment
 
     font.pixelSize: sizings.fontPixelSize
@@ -19,6 +22,7 @@ T.ComboBox {
     padding: sizings.padding
     opacity: enabled ? 1 : 0.33
     clip: true
+    textRole: "text"
     displayText: currentItem && currentItem[control.textRole] !== undefined ?
                      currentItem[control.textRole] : currentItem
 
@@ -49,16 +53,16 @@ T.ComboBox {
         width: control.width
         horizontalAlignment: control.horizontalAlignment
         text: modelData[control.textRole] !== undefined ? modelData[control.textRole] : modelData
+        iconSource: modelData[control.iconRole] !== undefined ? modelData[control.iconRole] : ""
         font: control.font
         highlighted: control.highlightedIndex === index
     }
 
-    contentItem: Text {
+    contentItem: ContentItem {
         id: content
         font: control.font
         text: displayText
-        color: palette.textColor
-        verticalAlignment: Text.AlignVCenter
+        iconSource: displayIcon
     }
 
     popup: Popup {

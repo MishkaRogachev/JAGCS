@@ -1,6 +1,7 @@
 import QtQuick 2.6
+import QtQuick.Layouts 1.3
 
-Item {
+RowLayout {
     id: content
 
     property color textColor: palette.textColor
@@ -12,31 +13,24 @@ Item {
     property alias text: label.text
     property alias horizontalAlignment: label.horizontalAlignment
 
-    implicitWidth: row.width
-    implicitHeight: row.height
-    clip: true
+    spacing: sizings.spacing
 
-    Row {
-        id: row
-        anchors.centerIn: parent
-        spacing: sizings.spacing
+    ColoredIcon {
+        id: icon
+        color: enabled ? iconColor : palette.sunkenColor
+        implicitHeight: content.height * iconScaling
+        implicitWidth: height
+        visible: source != ""
+        Layout.alignment: Qt.AlignCenter
+    }
 
-        ColoredIcon {
-            id: icon
-            color: enabled ? iconColor : palette.sunkenColor
-            anchors.verticalCenter: parent.verticalCenter
-            width: content.height * iconScaling
-            height: width
-            visible: source != ""
-        }
-
-        Label {
-            id: label
-            font.pixelSize: sizings.fontPixelSize
-            color: enabled ? textColor : palette.sunkenColor
-            anchors.verticalCenter: parent.verticalCenter
-            verticalAlignment: Text.AlignVCenter
-            visible: text.length > 0
-        }
+    Text {
+        id: label
+        font.pixelSize: sizings.fontPixelSize
+        color: enabled ? textColor : palette.sunkenColor
+        verticalAlignment: Text.AlignVCenter
+        visible: text.length > 0
+        Layout.alignment: Qt.AlignVCenter
+        Layout.fillWidth: true
     }
 }
