@@ -6,6 +6,7 @@
 // Qt
 #include <QMap>
 #include <QTimerEvent>
+#include <QCoreApplication>
 #include <QDebug>
 
 // Internal
@@ -20,12 +21,15 @@
 #include "command_service.h"
 #include "vehicle_service.h"
 #include "mission_service.h"
+
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
+#include "log_bus.h"
+
 namespace
 {
-    const int interval = 1000;
+    const int interval = 2000;
 
     const QMap<quint16, dao::MissionItem::Command> mavCommandLongMap =
     {
@@ -52,6 +56,35 @@ namespace
         { MAV_CMD_DO_SET_CAM_TRIGG_DIST, dao::MissionItem::SetCameraTriggerDistance },
         { MAV_CMD_DO_DIGICAM_CONTROL, dao::MissionItem::CameraControl }
     };
+
+    QString decodeCommandResult(int result)
+    {
+        switch (result) {
+        case MAV_MISSION_ERROR:
+            return qApp->translate("MissionHandler", "generic error");
+        case MAV_MISSION_UNSUPPORTED_FRAME:
+            return qApp->translate("MissionHandler", "coordinate frame is not supported");
+        case MAV_MISSION_UNSUPPORTED:
+            return qApp->translate("MissionHandler", "command is not supported");
+        case MAV_MISSION_NO_SPACE:
+            return qApp->translate("MissionHandler", "mission item exceeds storage space");
+        case MAV_MISSION_INVALID:
+        case MAV_MISSION_INVALID_PARAM1:
+        case MAV_MISSION_INVALID_PARAM2:
+        case MAV_MISSION_INVALID_PARAM3:
+        case MAV_MISSION_INVALID_PARAM4:
+        case MAV_MISSION_INVALID_PARAM5_X:
+        case MAV_MISSION_INVALID_PARAM6_Y:
+        case MAV_MISSION_INVALID_PARAM7:
+            return qApp->translate("MissionHandler", "invalid parameter(s)");
+        case MAV_MISSION_INVALID_SEQUENCE:
+            return qApp->translate("MissionHandler", "waypoint out of sequence");
+        case MAV_MISSION_DENIED:
+            return qApp->translate("MissionHandler", "not accepting any mission commands");
+        default:
+            return qApp->translate("MissionHandler", "unknown");
+        }
+    }
 }
 
 using namespace comm;
@@ -467,7 +500,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
 //    if (msgItem.command == MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT)
 //    {
-//  TODO: In Plane 3.4 (and later) the param1 value sets how close the vehicle
+//  TODO: In APM Plane 3.4 (and later) the param1 value sets how close the vehicle
 //        altitude must be to target altitude for command completion.
 //    }
 
@@ -537,7 +570,6 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     mavlink_mission_ack_t ack;
     mavlink_msg_mission_ack_decode(&message, &ack);
 
-
     if (ack.mission_type != MAV_MISSION_TYPE_MISSION) return;
 
     dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(),
@@ -550,7 +582,8 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     }
     else
     {
-        // TODO: show error, why not actual
+        LogBus::instance()->log(tr("Error uploading mission item, %1").arg(
+                                    ::decodeCommandResult(ack.type)));
         item->setStatus(dao::MissionItem::NotActual);
     }
 
