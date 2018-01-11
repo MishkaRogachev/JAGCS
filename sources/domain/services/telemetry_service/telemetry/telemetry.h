@@ -63,7 +63,9 @@
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
 //  |  |-Operational                    bool
-//  |  |-Altitude                       real
+//  |  |-AltitudeMsl                    real
+//  |  |-AltitudeRelative               real
+//  |  |-AltitudeTerrain                real
 //  |  |-Climb                          real
 //  |  |-AbsPressure                    int
 //  |  |-DiffPressure                   int
@@ -179,6 +181,9 @@ namespace domain
             Barometric = 4000,
             AbsPressure = 4001,
             DiffPressure = 4002,
+            AltitudeMsl = 4003,
+            AltitudeRelative = 4004,
+            AltitudeTerrain = 4005,
 
             Pitot = 5000,
 

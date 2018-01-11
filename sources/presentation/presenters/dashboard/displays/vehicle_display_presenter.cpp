@@ -94,7 +94,7 @@ void VehicleDisplayPresenter::updateBarometric(const domain::Telemetry::Telemetr
 {
     this->setViewProperty(PROPERTY(barometricEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(barometricOperational), parameters.value(domain::Telemetry::Operational, false));
-    this->setViewProperty(PROPERTY(barometricAltitude), parameters.value(domain::Telemetry::Altitude, 0));
+    this->setViewProperty(PROPERTY(barometricAltitude), parameters.value(domain::Telemetry::AltitudeMsl, 0));
     this->setViewProperty(PROPERTY(barometricClimb), parameters.value(domain::Telemetry::Climb, 0));
 }
 
