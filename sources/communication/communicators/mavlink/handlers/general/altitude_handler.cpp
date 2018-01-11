@@ -4,7 +4,6 @@
 #include <mavlink.h>
 
 // Qt
-#include <QtMath>
 #include <QVariant>
 #include <QDebug>
 

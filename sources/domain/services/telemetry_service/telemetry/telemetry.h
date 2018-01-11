@@ -6,6 +6,9 @@
 #include <QMap>
 
 // mav
+//  |-Flight
+//  |  |-Uid                            uint64
+//  |  |-Time                           QDateTime
 //  |-Status
 //  |  |-Armed                          bool
 //  |  |-Auto                           bool
@@ -16,12 +19,12 @@
 //  |  |-AvailableModes                 QList<Modes>
 //  |  |-State                          SystemState
 //  |-Position
-//  |  |-Coordinate                     coordinate
-//  |  |-Direction                      direction
+//  |  |-Coordinate                     QGeoCoordinate
+//  |  |-Direction                      QVector3D
 //  |-HomePosition
-//  |  |-Coordinate                     coordinate
-//  |  |-Direction                      direction
-//  |  |-Altitude                       altitude
+//  |  |-Coordinate                     QGeoCoordinate
+//  |  |-Direction                      QVector3D
+//  |  |-Altitude                       real
 //  |-Ahrs
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
@@ -45,14 +48,14 @@
 //  |  |-Enabled                        bool
 //  |  |-Operational                    bool
 //  |  |-Fix                            int
-//  |  |-Coordinate                     coordinate
+//  |  |-Coordinate                     QGeoCoordinate
 //  |  |-Groundspeed                    real
 //  |  |-Course                         real
 //  |  |-Altitude                       real
 //  |  |-Climb                          real
 //  |  |-Eph                            int
 //  |  |-Epv                            int
-//  |  |-Time                           time
+//  |  |-Time                           QTime
 //  |  |-SatellitesVisible              int
 //  |-Compass
 //  |  |-Present                        bool
@@ -90,7 +93,7 @@
 //  |  |-DesiredPitch                   real
 //  |  |-DesiredRoll                    real
 //  |  |-DesiredHeading                 real
-//  |  |-Coordinate                     coordinate
+//  |  |-Coordinate                     QGeoCoordinate
 //  |-PowerSystem
 //  |  |-Throttle                       int
 //  |-Battery
@@ -124,6 +127,10 @@ namespace domain
         enum TelemetryId
         {
             Root = 1,
+
+            Flight = 10,
+            Uid = 11,
+            Time = 12,
 
             Status = 100,
             Armed = 102,
@@ -173,8 +180,7 @@ namespace domain
             Fix = 2002,
             Eph = 2003,
             Epv = 2004,
-            Time = 2005,
-            SatellitesVisible = 2006,
+            SatellitesVisible = 2005,
 
             Compass = 3000,
 
