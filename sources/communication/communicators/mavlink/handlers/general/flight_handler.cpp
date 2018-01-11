@@ -1,4 +1,4 @@
-#include "flight_handler.h".h"
+#include "flight_handler.h"
 
 // MAVLink
 #include <mavlink.h>
@@ -30,7 +30,7 @@ void FlightHandler::processMessage(const mavlink_message_t& message)
     mavlink_flight_information_t info;
     mavlink_msg_flight_information_decode(&message, &info);
 
-    portion.setParameter({ Telemetry, Telemetry::Uid }, info.flight_uuid);
-    portion.setParameter({ Telemetry, Telemetry::Time },
-                         QDateTime::fromMSecsSinceEpoch(info.takeoff_time_utc);
+    portion.setParameter({ Telemetry::Flight, Telemetry::Uid }, quint64(info.flight_uuid));
+    portion.setParameter({ Telemetry::Flight, Telemetry::Time },
+                         QDateTime::fromMSecsSinceEpoch(info.takeoff_time_utc));
 }
