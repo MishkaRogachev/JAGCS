@@ -86,8 +86,6 @@ namespace dao
         enum Status
         {
             NotActual = 0,
-            Downloading,
-            Uploading,
             Actual
         };
 

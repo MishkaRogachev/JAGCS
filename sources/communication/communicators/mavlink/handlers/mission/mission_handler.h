@@ -62,6 +62,8 @@ namespace comm
     private:
         class Impl;
         QScopedPointer<Impl> const d;
+
+        Q_ENUM(Stage)
     };
 }
 

@@ -29,9 +29,7 @@ Rectangle {
 
         switch (status) {
         case MissionItem.Actual: return palette.missionColor;
-        case MissionItem.StatusNone: return palette.sunkenColor;
-        case MissionItem.Downloading:
-        case MissionItem.Uploading: return palette.cautionColor;
+//        case MissionItem.StatusNone: return palette.sunkenColor;
         case MissionItem.NotActual:
         default: return palette.dangerColor;
         }
