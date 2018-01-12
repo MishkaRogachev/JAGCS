@@ -37,6 +37,7 @@
 //  |  |-Pitchspeed                     real
 //  |  |-Rollspeed                      real
 //  |  |-Yawspeed                       real
+//  |  |-Vibration                      QVector3D
 //  |  |-Accel
 //  |  |  |-Present                     bool
 //  |  |  |-Enabled                     bool
@@ -184,6 +185,7 @@ namespace domain
             PitchSpeed = 1004,
             RollSpeed = 1005,
             YawSpeed = 1006,
+            Vibration = 1010,
             Accel = 1100,
             Gyro = 1200,
 

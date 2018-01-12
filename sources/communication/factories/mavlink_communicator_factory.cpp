@@ -10,6 +10,7 @@
 #include "autopilot_version_handler.h"
 #include "flight_handler.h"
 #include "attitude_handler.h"
+#include "vibration_handler.h"
 #include "altitude_handler.h"
 #include "pressure_handler.h"
 #include "position_handler.h"
@@ -46,6 +47,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     communicator->addHandler(new AutopilotVersionHandler(communicator));
     communicator->addHandler(new FlightHandler(communicator));
     communicator->addHandler(new AttitudeHandler(communicator));
+    communicator->addHandler(new VibrationHandler(communicator));
     communicator->addHandler(new AltitudeHandler(communicator));
     communicator->addHandler(new PressureHandler(communicator));
     communicator->addHandler(new PositionHandler(communicator));
