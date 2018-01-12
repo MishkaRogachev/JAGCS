@@ -128,7 +128,7 @@ void VehicleDisplayPresenter::updateNavigator(const domain::Telemetry::Telemetry
     this->setViewProperty(PROPERTY(altitudeError), parameters.value(domain::Telemetry::AltitudeError, false));
     this->setViewProperty(PROPERTY(targetBearing), parameters.value(domain::Telemetry::TargetBearing, 0));
     this->setViewProperty(PROPERTY(desiredHeading), parameters.value(domain::Telemetry::DesiredHeading, 0));
-    this->setViewProperty(PROPERTY(targetDistance), parameters.value(domain::Telemetry::TargetDistance, 0));
+    this->setViewProperty(PROPERTY(targetDistance), parameters.value(domain::Telemetry::Distance, 0));
     this->setViewProperty(PROPERTY(trackError), parameters.value(domain::Telemetry::TrackError, 0));
 }
 

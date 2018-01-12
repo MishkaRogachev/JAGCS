@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QMap>
 
+// TODO: unit support
+
 // mav
 //  |-Flight
 //  |  |-Uid                            uint64
@@ -88,7 +90,7 @@
 //  |  |-Voltage                        real
 //  |-Navigator
 //  |  |-TargetBearing                  real
-//  |  |-TargetDistance                 real
+//  |  |-Distance                       real
 //  |  |-TrackError                     real
 //  |  |-AltitudeError                  real
 //  |  |-DesiredPitch                   real
@@ -108,6 +110,13 @@
 //  |  |-Yaw                            real
 //  |  |-Speed                          real
 //  |  |-Climb                          real
+//  |-LandingSystem
+//  |  |-Distance                       real
+//  |  |-DeviationX                     real
+//  |  |-DeviationY                     real
+//  |  |-SizeX                          real
+//  |  |-SizeY                          real
+//  |  |-Coordinate                     coordinate
 // radio
 //  |-Rssi                              real
 //  |-Noise                             int
@@ -150,6 +159,7 @@ namespace domain
             Position = 300,
             Coordinate = 301,
             Direction = 302,
+            Distance = 303,
 
             HomePosition = 400,
 
@@ -199,13 +209,12 @@ namespace domain
 
             Navigator = 7000,
             TargetBearing = 7001,
-            TargetDistance = 7002,
-            TrackError = 7003,
-            AirspeedError = 7004,
-            AltitudeError = 7005,
-            DesiredPitch = 7006,
-            DesiredRoll = 7007,
-            DesiredHeading = 7008,
+            TrackError = 7002,
+            AirspeedError = 7003,
+            AltitudeError = 7004,
+            DesiredPitch = 7005,
+            DesiredRoll = 7006,
+            DesiredHeading = 7007,
 
             PowerSystem = 8000,
             Throttle = 8001,
@@ -220,6 +229,12 @@ namespace domain
             Fixed = 10006,
 
             Wind = 11000,
+
+            LandingSystem = 12000,
+            DeviationX = 12001,
+            DeviationY = 12002,
+            SizeX = 12003,
+            SizeY = 12004,
         };
 
         enum SystemState

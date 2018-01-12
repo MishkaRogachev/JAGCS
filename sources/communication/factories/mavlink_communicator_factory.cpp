@@ -23,6 +23,7 @@
 #include "command_handler.h"
 #include "mission_handler.h"
 #include "attitude_target_handler.h"
+#include "land_target_handler.h"
 
 using namespace comm;
 
@@ -56,6 +57,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     communicator->addHandler(new CommandHandler(communicator));
     communicator->addHandler(new MissionHandler(communicator));
     communicator->addHandler(new AttitudeTargetHandler(communicator));
+    communicator->addHandler(new LandTargetHandler(communicator));
 
     return communicator;
 }
