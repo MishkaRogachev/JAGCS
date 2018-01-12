@@ -15,18 +15,36 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
+#include "satellite_info.h"
+
 using namespace comm;
 using namespace domain;
 
 GpsHandler::GpsHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_telemetryService(ServiceRegistry::telemetryService())
-{} // TODO: handle GPS_STATUS
+{
+    qRegisterMetaType<SatelliteInfo>("SatelliteInfo");
+}
 
 void GpsHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_GPS_RAW_INT) return;
+    switch (message.msgid)
+    {
+    case MAVLINK_MSG_ID_GPS_RAW_INT:
+        this->processGpsRaw(message);
+        break;
+    case MAVLINK_MSG_ID_GPS_STATUS:
+        this->processGpsStatus(message);
+        break;
+    default:
+        break;
+    }
 
+}
+
+void GpsHandler::processGpsRaw(const mavlink_message_t& message)
+{
     TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_gps_raw_int_t gps;
@@ -50,4 +68,25 @@ void GpsHandler::processMessage(const mavlink_message_t& message)
                          QDateTime::fromMSecsSinceEpoch(gps.time_usec));
     portion.setParameter({ Telemetry::Satellite, Telemetry::SatellitesVisible },
                          gps.satellites_visible);
+}
+
+void GpsHandler::processGpsStatus(const mavlink_message_t& message)
+{
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
+
+    mavlink_gps_status_t gps;
+    mavlink_msg_gps_status_decode(&message, &gps);
+
+    QList<SatelliteInfo> infos;
+    infos.reserve(gps.satellites_visible);
+
+    for (int i = 0; i < gps.satellites_visible; ++i)
+    {
+        infos.append(SatelliteInfo(gps.satellite_prn[i], gps.satellite_used[i],
+                                   gps.satellite_elevation[i], gps.satellite_azimuth[i],
+                                   gps.satellite_snr[i]));
+    }
+
+    portion.setParameter({ Telemetry::SatellitesVisible, Telemetry::SatelliteInfos },
+                         QVariant::fromValue(infos));
 }

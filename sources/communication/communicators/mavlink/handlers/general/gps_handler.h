@@ -17,6 +17,10 @@ namespace comm
 
         void processMessage(const mavlink_message_t& message) override;
 
+    protected:
+        void processGpsRaw(const mavlink_message_t& message);
+        void processGpsStatus(const mavlink_message_t& message);
+
     private:
         const domain::TelemetryService* m_telemetryService;
     };

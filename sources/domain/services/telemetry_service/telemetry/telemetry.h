@@ -57,6 +57,7 @@
 //  |  |-Epv                            int
 //  |  |-Time                           QTime
 //  |  |-SatellitesVisible              int
+//  |  |-SatelliteInfos                 QList<SatelliteInfo>
 //  |-Compass
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
@@ -181,6 +182,7 @@ namespace domain
             Eph = 2003,
             Epv = 2004,
             SatellitesVisible = 2005,
+            SatelliteInfos = 2006,
 
             Compass = 3000,
 
