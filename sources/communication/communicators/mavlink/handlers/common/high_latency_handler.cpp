@@ -1,4 +1,4 @@
-#include "high_latency_handler.h".h"
+#include "high_latency_handler.h"
 
 // Qt
 #include <QGeoCoordinate>
@@ -51,7 +51,7 @@ void HighLatencyHandler::processMessage(const mavlink_message_t& message)
 
     portion.setParameter({ Telemetry::Pitot, Telemetry::IndicatedAirspeed }, high.airspeed);
     portion.setParameter({ Telemetry::Pitot, Telemetry::TrueAirspeed },
-                         high.getTrueAirspeed(high.airspeed, high.altitude_amsl));
+                          getTrueAirspeed(high.airspeed, high.altitude_amsl));
 
     portion.setParameter({ Telemetry::Compass, Telemetry::Heading }, high.heading);
 
