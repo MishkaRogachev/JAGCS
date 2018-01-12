@@ -13,8 +13,8 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
     CommonVehicleDisplayPresenter::connectNode(node);
 
-    this->chainNode(node->childNode(domain::Telemetry::Status),
-                    std::bind(&VehicleDisplayPresenter::updateStatus, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::System),
+                    std::bind(&VehicleDisplayPresenter::updateSystem, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Ahrs),
                     std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Compass),
@@ -39,7 +39,7 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&VehicleDisplayPresenter::updateWind, this, std::placeholders::_1));
 }
 
-void VehicleDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
+void VehicleDisplayPresenter::updateSystem(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
     this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));

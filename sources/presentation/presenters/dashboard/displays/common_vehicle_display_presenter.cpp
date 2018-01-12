@@ -147,7 +147,7 @@ void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
 
 void CommonVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
-    this->chainNode(node->childNode(domain::Telemetry::Status),
+    this->chainNode(node->childNode(domain::Telemetry::System),
                     std::bind(&CommonVehicleDisplayPresenter::updateStatus,
                               this, std::placeholders::_1));
 }

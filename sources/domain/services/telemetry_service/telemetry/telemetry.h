@@ -11,7 +11,7 @@
 //  |-Flight
 //  |  |-Uid                            uint64
 //  |  |-Time                           QDateTime
-//  |-Status
+//  |-System
 //  |  |-Armed                          bool
 //  |  |-Auto                           bool
 //  |  |-Guided                         bool
@@ -142,7 +142,7 @@ namespace domain
             Uid = 11,
             Time = 12,
 
-            Status = 100,
+            System = 100,
             Armed = 102,
             Auto = 103,
             Guided = 104,

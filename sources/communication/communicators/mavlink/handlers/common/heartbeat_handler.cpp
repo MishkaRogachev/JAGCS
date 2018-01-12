@@ -158,15 +158,15 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 
     TelemetryPortion portion(d->telemetryService->mavNode(message.sysid));
 
-    portion.setParameter({ Telemetry::Status, Telemetry::Armed },
+    portion.setParameter({ Telemetry::System, Telemetry::Armed },
                          heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
-    portion.setParameter({ Telemetry::Status, Telemetry::Auto },
+    portion.setParameter({ Telemetry::System, Telemetry::Auto },
                          heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
-    portion.setParameter({ Telemetry::Status, Telemetry::Guided },
+    portion.setParameter({ Telemetry::System, Telemetry::Guided },
                          heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
-    portion.setParameter({ Telemetry::Status, Telemetry::Stabilized },
+    portion.setParameter({ Telemetry::System, Telemetry::Stabilized },
                          heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
-    portion.setParameter({ Telemetry::Status, Telemetry::Manual },
+    portion.setParameter({ Telemetry::System, Telemetry::Manual },
                          heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
 
     if (d->modeHelper.isNull())
@@ -174,17 +174,17 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         ModeHelperFactory f;
         d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
 
-        portion.setParameter({ Telemetry::Status, Telemetry::AvailableModes },
+        portion.setParameter({ Telemetry::System, Telemetry::AvailableModes },
                              qVariantFromValue(d->modeHelper->availableModes()));
     }
 
     if (d->modeHelper)
     {
-        portion.setParameter({ Telemetry::Status, Telemetry::Mode },
+        portion.setParameter({ Telemetry::System, Telemetry::Mode },
                              QVariant::fromValue(d->modeHelper->customModeToMode(heartbeat.custom_mode)));
     }
 
-    portion.setParameter({ Telemetry::Status, Telemetry::State },
+    portion.setParameter({ Telemetry::System, Telemetry::State },
                          ::decodeState(heartbeat.system_status));
 }
 

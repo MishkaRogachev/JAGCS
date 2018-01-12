@@ -16,7 +16,7 @@ Telemetry* VehicleTelemetryFactory::create()
 {
     Telemetry* root = new Telemetry(Telemetry::Root);
 
-    new Telemetry(Telemetry::Status, root);
+    new Telemetry(Telemetry::System, root);
     new Telemetry(Telemetry::Position, root);
     new Telemetry(Telemetry::HomePosition, root);
     Telemetry* ahrs = new Telemetry(Telemetry::Ahrs, root);
