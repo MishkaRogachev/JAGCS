@@ -18,6 +18,7 @@
 #include "gps_handler.h"
 #include "rangefinder_handler.h"
 #include "vfr_hud_handler.h"
+#include "high_latency_handler.h"
 #include "wind_handler.h"
 #include "radio_status_handler.h"
 #include "radio_handler.h"
@@ -54,6 +55,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     communicator->addHandler(new HomePositionHandler(communicator));
     communicator->addHandler(new GpsHandler(communicator));
     communicator->addHandler(new VfrHudHandler(communicator));
+    communicator->addHandler(new HighLatencyHandler(communicator));
     communicator->addHandler(new RangefinderHandler(communicator));
     communicator->addHandler(new WindHandler(communicator));
     communicator->addHandler(new RadioStatusHandler(communicator));

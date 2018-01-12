@@ -68,6 +68,16 @@ namespace comm
         return value == UINT16_MAX ? qQNaN() : float(value) / 100;
     }
 
+    inline float getTrueAirspeed(float indicatedAirspeed, float altitude)
+    {
+        return indicatedAirspeed + (indicatedAirspeed * 0.02 * altitude / 1000);
+    }
+
+    inline float fromCentidegrees(float centidegrees)
+    {
+        return centidegrees / 100;
+    }
+
     inline float decodeVoltage(uint16_t value)
     {
         return float(value) / 1000;

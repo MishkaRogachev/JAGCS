@@ -118,12 +118,9 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Battery, Telemetry::Operational },
                          status.onboard_control_sensors_health &
                          MAV_SYS_STATUS_SENSOR_BATTERY);
-    portion.setParameter({ Telemetry::Battery, Telemetry::Voltage },
-                         ::decodeVoltage(status.voltage_battery));
-    portion.setParameter({ Telemetry::Battery, Telemetry::Current },
-                         ::decodeCurrent(status.current_battery));
-    portion.setParameter({ Telemetry::Battery, Telemetry::Percentage },
-                         ::decodeCurrent(status.battery_remaining));
+    portion.setParameter({ Telemetry::Battery, Telemetry::Voltage }, decodeVoltage(status.voltage_battery));
+    portion.setParameter({ Telemetry::Battery, Telemetry::Current }, decodeCurrent(status.current_battery));
+    portion.setParameter({ Telemetry::Battery, Telemetry::Percentage }, status.battery_remaining);
 
     // TODO: load, drop rate, errors
 }

@@ -11,6 +11,8 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
+#include "mavlink_protocol_helpers.h"
+
 using namespace comm;
 using namespace domain;
 
@@ -30,7 +32,7 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
 
     portion.setParameter({ Telemetry::Pitot, Telemetry::IndicatedAirspeed }, vfrHud.airspeed);
     portion.setParameter({ Telemetry::Pitot, Telemetry::TrueAirspeed },
-                         vfrHud.airspeed + (vfrHud.airspeed * 0.02 * vfrHud.alt / 1000));
+                         getTrueAirspeed(vfrHud.airspeed, vfrHud.alt));
 
     portion.setParameter({ Telemetry::Compass, Telemetry::Heading }, vfrHud.heading);
 
