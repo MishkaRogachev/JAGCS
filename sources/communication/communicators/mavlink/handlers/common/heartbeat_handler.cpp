@@ -24,7 +24,6 @@
 
 #include "mavlink_communicator.h"
 #include "mode_helper_factory.h"
-#include "mode_helper_factory.h"
 
 using namespace comm;
 using namespace domain;
@@ -181,7 +180,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     if (d->modeHelper)
     {
         portion.setParameter({ Telemetry::System, Telemetry::Mode },
-                             QVariant::fromValue(d->modeHelper->customModeToMode(heartbeat.custom_mode)));
+                             QVariant::fromValue(d->modeHelper->customModeToMode(
+                                                     heartbeat.custom_mode)));
     }
 
     portion.setParameter({ Telemetry::System, Telemetry::State },

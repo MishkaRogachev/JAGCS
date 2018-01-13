@@ -28,7 +28,6 @@ void HighLatencyHandler::processMessage(const mavlink_message_t& message)
 
 // TODO: some anothr high latency data
 // uint32_t custom_mode; /*< A bitfield for use for autopilot-specific flags.*/
-// uint8_t base_mode; /*< System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h*/
 // uint8_t landed_state; /*< The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.*/
 // uint8_t failsafe; /*< failsafe (each bit represents a failsafe where 0=ok, 1=failsafe active (bit0:RC, bit1:batt, bit2:GPS, bit3:GCS, bit4:fence)*/
 // uint8_t wp_num; /*< current waypoint number*/
@@ -38,6 +37,17 @@ void HighLatencyHandler::processMessage(const mavlink_message_t& message)
 
     mavlink_high_latency_t high;
     mavlink_msg_high_latency_decode(&message, &high);
+
+    portion.setParameter({ Telemetry::System, Telemetry::Armed },
+                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+    portion.setParameter({ Telemetry::System, Telemetry::Auto },
+                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
+    portion.setParameter({ Telemetry::System, Telemetry::Guided },
+                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
+    portion.setParameter({ Telemetry::System, Telemetry::Stabilized },
+                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
+    portion.setParameter({ Telemetry::System, Telemetry::Manual },
+                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
 
     QGeoCoordinate coordinate(decodeLatLon(high.latitude), decodeLatLon(high.longitude),
                               decodeAltitude(high.altitude_amsl));

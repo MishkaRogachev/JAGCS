@@ -171,12 +171,10 @@ namespace domain
             Heading = 505,
             Speed = 506,
             Groundspeed = 507,
-            IndicatedAirspeed = 508,
-            TrueAirspeed = 509,
-            Temperature = 510,
-            Voltage = 511,
-            Current = 512,
-            Percentage = 513,
+            Temperature = 508,
+            Voltage = 509,
+            Current = 510,
+            Percentage = 511,
 
             Ahrs = 1000,
             Pitch = 1001,
@@ -206,6 +204,8 @@ namespace domain
             AltitudeTerrain = 4005,
 
             Pitot = 5000,
+            IndicatedAirspeed = 5001,
+            TrueAirspeed = 5002,
 
             Rangefinder = 6000,
 
