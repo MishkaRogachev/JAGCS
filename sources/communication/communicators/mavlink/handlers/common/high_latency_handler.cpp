@@ -63,7 +63,7 @@ void HighLatencyHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Pitot, Telemetry::TrueAirspeed },
                           getTrueAirspeed(high.airspeed, high.altitude_amsl));
 
-    portion.setParameter({ Telemetry::Compass, Telemetry::Heading }, high.heading);
+    portion.setParameter({ Telemetry::Ahrs, Telemetry::Compass, Telemetry::Heading }, high.heading);
 
     portion.setParameter({ Telemetry::Barometric, Telemetry::AltitudeMsl }, high.altitude_amsl);
     portion.setParameter({ Telemetry::Barometric, Telemetry::AltitudeRelative }, high.altitude_sp);

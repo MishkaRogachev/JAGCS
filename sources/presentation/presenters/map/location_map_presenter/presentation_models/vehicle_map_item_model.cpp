@@ -82,7 +82,8 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
         break;
     case HeadingRole:
-        data = node->childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
+        data = node->childNode(domain::Telemetry::Ahrs)->
+                     childNode(domain::Telemetry::Compass)->parameter(domain::Telemetry::Heading);
         if (!data.isValid()) data = 0;
         break;
     case CourseRole:
@@ -137,10 +138,10 @@ void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
         this->onPositionParametersChanged(vehicleId, parameters);
     });
 
-    connect(node->childNode(domain::Telemetry::Compass),
+    connect(node->childNode(domain::Telemetry::Ahrs),
             &domain::Telemetry::parametersChanged,
             this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
-        this->onCompassParametersChanged(vehicleId, parameters);
+        this->onAhrsParametersChanged(vehicleId, parameters);
     });
 
     connect(node->childNode(domain::Telemetry::Satellite),
@@ -225,7 +226,7 @@ void VehicleMapItemModel::onPositionParametersChanged(
     emit dataChanged(index, index, { CoordinateRole });
 }
 
-void VehicleMapItemModel::onCompassParametersChanged(
+void VehicleMapItemModel::onAhrsParametersChanged(
         int vehicleId, const domain::Telemetry::TelemetryMap& parameters)
 {
     Q_UNUSED(parameters)

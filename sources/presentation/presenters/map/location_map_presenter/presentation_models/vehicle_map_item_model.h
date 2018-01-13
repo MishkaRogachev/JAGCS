@@ -60,7 +60,7 @@ namespace presentation
     private slots:
         void onPositionParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
-        void onCompassParametersChanged(
+        void onAhrsParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
         void onSatelliteParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);

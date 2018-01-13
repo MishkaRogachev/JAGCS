@@ -15,10 +15,12 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 
     this->chainNode(node->childNode(domain::Telemetry::System),
                     std::bind(&VehicleDisplayPresenter::updateSystem, this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Ahrs),
-                    std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Compass),
+
+    domain::Telemetry* ahrs = node->childNode(domain::Telemetry::Ahrs);
+    this->chainNode(ahrs, std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
+    this->chainNode(ahrs->childNode(domain::Telemetry::Compass),
                     std::bind(&VehicleDisplayPresenter::updateCompass, this, std::placeholders::_1));
+
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
                     std::bind(&VehicleDisplayPresenter::updateSatellite, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::PowerSystem),
@@ -35,6 +37,8 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&VehicleDisplayPresenter::updatePosition, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Navigator),
                     std::bind(&VehicleDisplayPresenter::updateNavigator, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::FlightControl),
+                    std::bind(&VehicleDisplayPresenter::updateFlightControl, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Wind),
                     std::bind(&VehicleDisplayPresenter::updateWind, this, std::placeholders::_1));
 }
@@ -122,14 +126,18 @@ void VehicleDisplayPresenter::updateHome(const domain::Telemetry::TelemetryMap& 
 
 void VehicleDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
 {
-    this->setViewProperty(PROPERTY(desiredPitch), parameters.value(domain::Telemetry::DesiredPitch, 0));
-    this->setViewProperty(PROPERTY(desiredRoll), parameters.value(domain::Telemetry::DesiredRoll, 0));
     this->setViewProperty(PROPERTY(airspeedError), parameters.value(domain::Telemetry::AirspeedError, false));
     this->setViewProperty(PROPERTY(altitudeError), parameters.value(domain::Telemetry::AltitudeError, false));
     this->setViewProperty(PROPERTY(targetBearing), parameters.value(domain::Telemetry::TargetBearing, 0));
-    this->setViewProperty(PROPERTY(desiredHeading), parameters.value(domain::Telemetry::DesiredHeading, 0));
     this->setViewProperty(PROPERTY(targetDistance), parameters.value(domain::Telemetry::Distance, 0));
     this->setViewProperty(PROPERTY(trackError), parameters.value(domain::Telemetry::TrackError, 0));
+}
+
+void VehicleDisplayPresenter::updateFlightControl(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewProperty(PROPERTY(desiredPitch), parameters.value(domain::Telemetry::DesiredPitch, 0));
+    this->setViewProperty(PROPERTY(desiredRoll), parameters.value(domain::Telemetry::DesiredRoll, 0));
+    this->setViewProperty(PROPERTY(desiredHeading), parameters.value(domain::Telemetry::DesiredHeading, 0));
 }
 
 void VehicleDisplayPresenter::updateWind(const domain::Telemetry::TelemetryMap& parameters)

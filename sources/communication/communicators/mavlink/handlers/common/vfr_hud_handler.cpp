@@ -34,7 +34,7 @@ void VfrHudHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Pitot, Telemetry::TrueAirspeed },
                          getTrueAirspeed(vfrHud.airspeed, vfrHud.alt));
 
-    portion.setParameter({ Telemetry::Compass, Telemetry::Heading }, vfrHud.heading);
+    portion.setParameter({ Telemetry::Ahrs, Telemetry::Compass, Telemetry::Heading }, vfrHud.heading);
 
     portion.setParameter({ Telemetry::Barometric, Telemetry::AltitudeMsl }, vfrHud.alt);
     portion.setParameter({ Telemetry::Barometric, Telemetry::Climb }, vfrHud.climb);

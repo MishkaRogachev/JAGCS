@@ -59,6 +59,16 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
                          status.onboard_control_sensors_health &
                          MAV_SYS_STATUS_SENSOR_3D_GYRO);
 
+    portion.setParameter({ Telemetry::Ahrs, Telemetry::Compass, Telemetry::Present },
+                         status.onboard_control_sensors_present &
+                         MAV_SYS_STATUS_SENSOR_3D_MAG);
+    portion.setParameter({ Telemetry::Ahrs, Telemetry::Compass, Telemetry::Enabled },
+                         status.onboard_control_sensors_enabled &
+                         MAV_SYS_STATUS_SENSOR_3D_MAG);
+    portion.setParameter({ Telemetry::Ahrs, Telemetry::Compass, Telemetry::Operational },
+                         status.onboard_control_sensors_health &
+                         MAV_SYS_STATUS_SENSOR_3D_MAG);
+
     portion.setParameter({ Telemetry::Satellite, Telemetry::Present },
                          status.onboard_control_sensors_present &
                          MAV_SYS_STATUS_SENSOR_GPS);
@@ -68,16 +78,6 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Satellite, Telemetry::Operational },
                          status.onboard_control_sensors_health &
                          MAV_SYS_STATUS_SENSOR_GPS);
-
-    portion.setParameter({ Telemetry::Compass, Telemetry::Present },
-                         status.onboard_control_sensors_present &
-                         MAV_SYS_STATUS_SENSOR_3D_MAG);
-    portion.setParameter({ Telemetry::Compass, Telemetry::Enabled },
-                         status.onboard_control_sensors_enabled &
-                         MAV_SYS_STATUS_SENSOR_3D_MAG);
-    portion.setParameter({ Telemetry::Compass, Telemetry::Operational },
-                         status.onboard_control_sensors_health &
-                         MAV_SYS_STATUS_SENSOR_3D_MAG);
 
     portion.setParameter({ Telemetry::Barometric, Telemetry::Present },
                          status.onboard_control_sensors_present &

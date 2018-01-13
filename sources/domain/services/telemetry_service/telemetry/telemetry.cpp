@@ -97,7 +97,7 @@ void Telemetry::setParameter(const TelemetryList& path, const QVariant& value)
     if (path.count() > 1)
     {
         Telemetry* child = this->childNode(path.at(0));
-        child->setParameter(path.at(1), value);
+        child->setParameter(path.mid(1), value);
         return;
     }
 

@@ -31,6 +31,7 @@ namespace presentation
         void updatePosition(const domain::Telemetry::TelemetryMap& parameters);
         void updateHome(const domain::Telemetry::TelemetryMap& parameters);
         void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
+        void updateFlightControl(const domain::Telemetry::TelemetryMap& parameters);
         void updateWind(const domain::Telemetry::TelemetryMap& parameters);
 
     private:

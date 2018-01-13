@@ -22,12 +22,13 @@ Telemetry* VehicleTelemetryFactory::create()
     Telemetry* ahrs = new Telemetry(Telemetry::Ahrs, root);
     new Telemetry(Telemetry::Accel, ahrs);
     new Telemetry(Telemetry::Gyro, ahrs);
+    new Telemetry(Telemetry::Compass, ahrs);
     new Telemetry(Telemetry::Satellite, root);
-    new Telemetry(Telemetry::Compass, root);
     new Telemetry(Telemetry::Barometric, root);
     new Telemetry(Telemetry::Pitot, root);
     new Telemetry(Telemetry::Rangefinder, root);
     new Telemetry(Telemetry::Navigator, root);
+    new Telemetry(Telemetry::FlightControl, root);
     new Telemetry(Telemetry::PowerSystem, root);
     new Telemetry(Telemetry::Battery, root);
     new Telemetry(Telemetry::Wind, root);

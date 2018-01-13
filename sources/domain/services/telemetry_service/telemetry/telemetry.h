@@ -42,10 +42,18 @@
 //  |  |  |-Present                     bool
 //  |  |  |-Enabled                     bool
 //  |  |  |-Operational                 bool
+//  |  |  |-Acceleration                QVector3D
 //  |  |-Gyro
 //  |  |  |-Present                     bool
 //  |  |  |-Enabled                     bool
 //  |  |  |-Operational                 bool
+//  |  |  |-AngularSpeed                QVector3D
+//  |  |-Compass
+//  |     |-Present                     bool
+//  |     |-Enabled                     bool
+//  |     |-Operational                 bool
+//  |     |-Heading                     real
+//  |     |-MagneticField               QVector3D
 //  |-Satellite
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
@@ -61,11 +69,6 @@
 //  |  |-Time                           QTime
 //  |  |-SatellitesVisible              int
 //  |  |-SatelliteInfos                 QList<SatelliteInfo>
-//  |-Compass
-//  |  |-Present                        bool
-//  |  |-Enabled                        bool
-//  |  |-Operational                    bool
-//  |  |-Heading                        real
 //  |-Barometric
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
@@ -94,6 +97,7 @@
 //  |  |-Distance                       real
 //  |  |-TrackError                     real
 //  |  |-AltitudeError                  real
+//  |-FlightControl
 //  |  |-DesiredPitch                   real
 //  |  |-DesiredRoll                    real
 //  |  |-DesiredHeading                 real
@@ -185,38 +189,42 @@ namespace domain
             YawSpeed = 1006,
             Vibration = 1010,
             Accel = 1100,
+            Acceleration = 1101,
             Gyro = 1200,
+            AngularSpeed = 1201,
+            Compass = 1300,
+            MagneticField = 1301,
 
             Satellite = 2000,
-            Fix = 2002,
-            Eph = 2003,
-            Epv = 2004,
-            SatellitesVisible = 2005,
-            SatelliteInfos = 2006,
+            Fix = 2001,
+            Eph = 2002,
+            Epv = 2003,
+            SatellitesVisible = 2004,
+            SatelliteInfos = 2005,
 
-            Compass = 3000,
+            Barometric = 3000,
+            AbsPressure = 3001,
+            DiffPressure = 3002,
+            AltitudeMsl = 3003,
+            AltitudeRelative = 3004,
+            AltitudeTerrain = 3005,
 
-            Barometric = 4000,
-            AbsPressure = 4001,
-            DiffPressure = 4002,
-            AltitudeMsl = 4003,
-            AltitudeRelative = 4004,
-            AltitudeTerrain = 4005,
+            Pitot = 4000,
+            IndicatedAirspeed = 4001,
+            TrueAirspeed = 4002,
 
-            Pitot = 5000,
-            IndicatedAirspeed = 5001,
-            TrueAirspeed = 5002,
+            Rangefinder = 5000,
 
-            Rangefinder = 6000,
+            Navigator = 6000,
+            TargetBearing = 6001,
+            TrackError = 6002,
+            AirspeedError = 6003,
+            AltitudeError = 6004,
 
-            Navigator = 7000,
-            TargetBearing = 7001,
-            TrackError = 7002,
-            AirspeedError = 7003,
-            AltitudeError = 7004,
-            DesiredPitch = 7005,
-            DesiredRoll = 7006,
-            DesiredHeading = 7007,
+            FlightControl = 7000,
+            DesiredPitch = 7001,
+            DesiredRoll = 7002,
+            DesiredHeading = 7003,
 
             PowerSystem = 8000,
             Throttle = 8001,
