@@ -50,7 +50,7 @@ Controls.Pane {
         enabled: homeDistance > 0
     }
 
-    Indicators.FdLabel {
+    Indicators.InstrumentLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
@@ -105,7 +105,7 @@ Controls.Pane {
         // TODO: wind indicator
     }
 
-    Indicators.FdLabel {
+    Indicators.InstrumentLabel {
         anchors.top: parent.top
         anchors.right: parent.right
         color: guided ? palette.activeMissionColor : palette.textColor
@@ -117,7 +117,7 @@ Controls.Pane {
         suffix: "\u00B0"
     }
 
-    Indicators.FdLabel {
+    Indicators.InstrumentLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         value: heading
@@ -129,7 +129,7 @@ Controls.Pane {
         suffix: "\u00B0"
     }
 
-    Indicators.FdLabel {
+    Indicators.InstrumentLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         value: course

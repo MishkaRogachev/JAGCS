@@ -9,6 +9,7 @@ Controls.ComboBox {
 
     property int status: Command.Idle
 
+    currentIndex: -1
     contentColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
     horizontalAlignment: Text.AlignHCenter
     tipText: qsTr("Go to mission item")

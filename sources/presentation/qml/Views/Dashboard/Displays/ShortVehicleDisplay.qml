@@ -21,10 +21,23 @@ BaseVehicleDisplay {
         case Command.Return:
             rtl.status = status;
             break;
+        case Command.GoTo:
+            itemBox.status = status;
+            break;
         default:
             break;
         }
     }
+
+    function updateItems() {
+        var items = [];
+        for (var i = 0; i < missionItems; ++i) items.push(i + 1);
+        itemBox.model = items;
+    }
+
+    Component.onCompleted: updateItems()
+    onMissionItemsChanged: updateItems()
+    onCurrentItemChanged: itemBox.currentIndex = currentItem
 
     implicitWidth: pane.implicitWidth
     implicitHeight: pane.implicitHeight
@@ -39,10 +52,10 @@ BaseVehicleDisplay {
 
             Indicators.YawIndicator {
                 id: compass
-                implicitWidth: height
+                implicitWidth: sizings.controlBaseSize * 2
+                implicitHeight: width
                 yaw: vehicleDisplay.yaw
                 Layout.rowSpan: 2
-                Layout.fillHeight: true
 
                 Indicators.ArtificialHorizon {
                     id: ah
@@ -84,38 +97,29 @@ BaseVehicleDisplay {
                     value: displayedGroundSpeed
                     enabled: satelliteEnabled
                     operational: satelliteOperational
-                    prefix: qsTr("GS")
-                    suffix: speedSuffix
-                    Layout.minimumWidth: sizings.controlBaseSize * 1.5
+                    prefix: qsTr("GS") + ", " + speedSuffix
+                    Layout.alignment: Qt.AlignHCenter
                 }
 
                 Indicators.FdLabel {
                     value: displayedAltitude
                     enabled: barometricEnabled
                     operational: barometricOperational
-                    prefix: qsTr("ALT")
-                    suffix: altitudeSuffix
-                    Layout.minimumWidth: sizings.controlBaseSize * 1.5
+                    prefix: qsTr("ALT") + ", " + altitudeSuffix
+                    Layout.alignment: Qt.AlignHCenter
                 }
             }
 
-            GridLayout {
-                Layout.fillWidth: true
-                columns: 2
-                columnSpacing: sizings.spacing
-                rowSpacing: sizings.spacing
+            ColumnLayout {
+                spacing: sizings.spacing
 
                 Controls.Label {
                     text: vehicleName
                     font.pixelSize: sizings.fontPixelSize * 0.75
                     font.bold: true
+                    height: sizings.controlBaseSize * 0.75
+                    wrapMode: Text.NoWrap
                     Layout.fillWidth: true
-                }
-
-                Controls.Button {
-                    flat: true
-                    iconSource: "qrc:/icons/right.svg"
-                    onClicked: dashboard.selectVehicle(vehicleId, vehicleName)
                 }
 
                 CommandControls.ModeBox {
@@ -123,7 +127,26 @@ BaseVehicleDisplay {
                     mode: vehicleDisplay.mode
                     model: availableModes
                     enabled: online
+                    implicitHeight: sizings.controlBaseSize * 0.75
                     Layout.fillWidth: true
+                }
+
+                CommandControls.WaypointBox {
+                    id: itemBox
+                    enabled: online && missionItems > 0
+                    implicitHeight: sizings.controlBaseSize * 0.75
+                    Layout.fillWidth: true
+                }
+            }
+
+            ColumnLayout {
+                spacing: sizings.spacing
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+
+                Controls.Button {
+                    flat: true
+                    iconSource: "qrc:/icons/right.svg"
+                    onClicked: dashboard.selectVehicle(vehicleId, vehicleName)
                 }
 
                 CommandControls.Button {
@@ -132,10 +155,8 @@ BaseVehicleDisplay {
                     iconSource: "qrc:/icons/home.svg"
                     enabled: online
                     command: Command.Return
-                    Layout.alignment: Qt.AlignRight
                 }
             }
-            // TODO: select mission item
         }
     }
 }

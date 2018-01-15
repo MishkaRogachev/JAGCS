@@ -40,35 +40,30 @@ Controls.Pane {
         valueStep: speedStep
         enabled: pitotPresent ? pitotEnabled : satelliteEnabled
         operational: pitotPresent ? pitotOperational : satelliteOperational
-        prefix: pitotPresent ? qsTr("IAS") : qsTr("GS")
-        suffix: speedSuffix
+        prefix: (pitotPresent ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
     }
 
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: speedLadder.horizontalCenter
-        font.pixelSize: speedLadder.fontPixelSize
         digits: 1
         value: displayedGroundSpeed
         enabled: satelliteEnabled
         operational: satelliteOperational
         width: speedLadder.width
-        prefix: qsTr("GS")
-        suffix: speedSuffix
+        prefix: qsTr("GS") + ", " + speedSuffix
         visible: pitotPresent
     }
 
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: speedLadder.horizontalCenter
-        font.pixelSize: speedLadder.fontPixelSize
         digits: 1
         value: displayedTrueAirspeed
         enabled: pitotEnabled
         operational: pitotOperational
         width: speedLadder.width
-        prefix: qsTr("TAS")
-        suffix: speedSuffix
+        prefix: qsTr("TAS") + ", " + speedSuffix
         visible: pitotPresent
     }
 
@@ -116,32 +111,27 @@ Controls.Pane {
         enabled: barometricEnabled
         operational: barometricOperational
         mirrored: true
-        prefix: qsTr("ALT")
-        suffix: qsTr("m")
+        prefix: qsTr("ALT") + ", " + altitudeSuffix
     }
 
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        font.pixelSize: altitudeLadder.fontPixelSize
         value: satelliteAltitude
         enabled: satelliteEnabled
         operational: satelliteOperational
         width: altitudeLadder.width
-        prefix: qsTr("SAT")
-        suffix: qsTr("m")
+        prefix: qsTr("SAT") + ", " + altitudeSuffix
     }
 
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        font.pixelSize: altitudeLadder.fontPixelSize
         value: rangefinderHeight
         digits: 2
         enabled: rangefinderEnabled
         operational: rangefinderOperational
         width: altitudeLadder.width
-        prefix: qsTr("RF")
-        suffix: qsTr("m")
+        prefix: qsTr("RF") + ", " + altitudeSuffix
     }
 }

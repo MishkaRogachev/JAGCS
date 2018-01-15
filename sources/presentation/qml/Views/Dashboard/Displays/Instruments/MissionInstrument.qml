@@ -30,7 +30,7 @@ Controls.Pane {
     Component.onCompleted: updateItems()
     onCountChanged: updateItems()
 
-    enabled: online
+    enabled: online && missionItems > 0
 
     Timer {
         id: timer
@@ -58,7 +58,6 @@ Controls.Pane {
 
         CommandControls.WaypointBox {
             id: itemBox
-            currentIndex: count
             Layout.preferredWidth: sizings.controlBaseSize * 3
         }
 
