@@ -41,8 +41,8 @@ Item {
                 case DashboardPresenter.ShortVehicleDisplay:
                     setSource("Displays/ShortVehicleDisplay.qml", { "vehicleId": vehicleId });
                     break;
-                case DashboardPresenter.FixedWingVehicleDisplay:
-                    setSource("Displays/FixedWingVehicleDisplay.qml", { "vehicleId": vehicleId });
+                case DashboardPresenter.AerialVehicleDisplay:
+                    setSource("Displays/AerialVehicleDisplay.qml", { "vehicleId": vehicleId });
                     break;
                 default:
                     break;

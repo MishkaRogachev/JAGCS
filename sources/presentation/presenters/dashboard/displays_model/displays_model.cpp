@@ -43,7 +43,7 @@ QVariant DisplaysModel::data(const QModelIndex& index, int role) const
             if (m_selectedVehicle.isNull()) return DashboardPresenter::ShortVehicleDisplay;
 
             // TODO: displays for other vehicles
-            return DashboardPresenter::FixedWingVehicleDisplay;
+            return DashboardPresenter::AerialVehicleDisplay;
         case VehicleIdRole:
             return vehicle->id();
         default:

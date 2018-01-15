@@ -14,8 +14,7 @@ namespace presentation
         enum Display
         {
             ShortVehicleDisplay,
-            FixedWingVehicleDisplay,
-            RotarityWingVehicleDisplay,
+            AerialVehicleDisplay
         };
 
         DashboardPresenter(QObject* parent = nullptr);

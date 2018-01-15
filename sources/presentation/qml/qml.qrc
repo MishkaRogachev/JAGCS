@@ -97,7 +97,7 @@
         <file>Views/Dashboard/Displays/Instruments/MissionInstrument.qml</file>
         <file>Views/Dashboard/Displays/BaseVehicleDisplay.qml</file>
         <file>Views/Dashboard/Displays/ShortVehicleDisplay.qml</file>
-        <file>Views/Dashboard/Displays/FixedWingVehicleDisplay.qml</file>
+        <file>Views/Dashboard/Displays/AerialVehicleDisplay.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>
         <file>Views/Menu/Vehicles/VehicleListView.qml</file>
