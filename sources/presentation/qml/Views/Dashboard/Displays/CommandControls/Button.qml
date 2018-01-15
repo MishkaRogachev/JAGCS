@@ -45,4 +45,7 @@ Controls.Button {
     iconColor: control.pressed || status == Command.Rejected ||
                status == Command.Sending || status == Command.Completed ?
                    palette.selectedTextColor: palette.textColor
+
+    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.bold: true
 }

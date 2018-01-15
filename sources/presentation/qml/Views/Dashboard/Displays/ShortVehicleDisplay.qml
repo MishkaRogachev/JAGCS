@@ -122,9 +122,7 @@ BaseVehicleDisplay {
                     id: modeBox
                     mode: vehicleDisplay.mode
                     model: availableModes
-                    font.pixelSize: sizings.fontPixelSize * 0.75
                     enabled: online
-                    tipText: qsTr("Select mode")
                     Layout.fillWidth: true
                 }
 
@@ -132,6 +130,7 @@ BaseVehicleDisplay {
                     id: rtl
                     tipText: qsTr("Return to launch")
                     iconSource: "qrc:/icons/home.svg"
+                    enabled: online
                     command: Command.Return
                     Layout.alignment: Qt.AlignRight
                 }

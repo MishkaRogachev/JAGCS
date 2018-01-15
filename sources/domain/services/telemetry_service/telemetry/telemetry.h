@@ -7,7 +7,7 @@
 
 // TODO: unit support
 
-// mav
+// Vehicle
 //  |-Flight
 //  |  |-Uid                            uint64
 //  |  |-Time                           QDateTime
@@ -101,7 +101,6 @@
 //  |  |-DesiredPitch                   real
 //  |  |-DesiredRoll                    real
 //  |  |-DesiredHeading                 real
-//  |  |-Coordinate                     QGeoCoordinate
 //  |-PowerSystem
 //  |  |-Throttle                       int
 //  |-Battery
@@ -122,7 +121,7 @@
 //  |  |-SizeX                          real
 //  |  |-SizeY                          real
 //  |  |-Coordinate                     coordinate
-// radio
+// Radio
 //  |-Rssi                              real
 //  |-Noise                             int
 //  |-RemoteRssi                        real

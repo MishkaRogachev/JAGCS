@@ -37,4 +37,7 @@ Controls.DelayButton {
         id: timer
         onTriggered: status = Command.Idle
     }
+
+    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.bold: true
 }

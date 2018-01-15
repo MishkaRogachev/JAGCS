@@ -98,7 +98,7 @@ set(LIBS
 endif(ANDROID)
 
 # MAVLink includes
-option(MAVLINK_V2 "Include instructions to make Debian package")
+option(MAVLINK_V2 "MAVLink version 2 includes")
 if (MAVLINK_V2)
     include_directories("3rdparty/mavlink_v2")
     include_directories("3rdparty/mavlink_v2/ardupilotmega")

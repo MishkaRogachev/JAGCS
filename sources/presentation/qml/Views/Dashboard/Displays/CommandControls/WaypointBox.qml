@@ -7,16 +7,20 @@ import "qrc:/Controls" as Controls
 Controls.ComboBox {
     id: control
 
-    property int mode: Domain.None
     property int status: Command.Idle
 
-    model: []
-    tipText: qsTr("Select mode")
+    contentColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
+    horizontalAlignment: Text.AlignHCenter
+    tipText: qsTr("Go to mission item")
     font.pixelSize: sizings.fontPixelSize * 0.75
     font.bold: true
 
-    onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])
+    onActivated: goTo(index)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
+
+    function goTo(index) {
+        presenter.executeCommand(Command.GoTo, [ index ]);
+    }
 
     Timer {
         id: timer
@@ -33,21 +37,5 @@ Controls.ComboBox {
             if (status == Command.Completed) return palette.positiveColor;
             return "transparent";
         }
-    }
-
-    delegate: Controls.ItemDelegate {
-        width: control.width
-        horizontalAlignment: control.horizontalAlignment
-        text: translator.translateMode(modelData)
-        font: control.font
-        highlighted: control.highlightedIndex === index
-    }
-
-    contentItem: Text {
-        id: content
-        font: control.font
-        text: translator.translateMode(mode)
-        color: status == Command.Idle ? palette.textColor: palette.selectedTextColor
-        verticalAlignment: Text.AlignVCenter
     }
 }

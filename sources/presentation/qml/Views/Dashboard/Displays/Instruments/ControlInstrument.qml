@@ -48,7 +48,6 @@ Controls.Pane {
             id: modeBox
             mode: vehicleDisplay.mode
             model: availableModes
-            tipText: qsTr("Select mode")
             Layout.fillWidth: true
         }
 
