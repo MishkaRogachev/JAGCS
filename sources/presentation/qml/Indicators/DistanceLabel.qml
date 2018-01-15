@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-FdLabel {
+InstrumentLabel {
     id: root
 
     property real distance: 0

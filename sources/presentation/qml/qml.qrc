@@ -52,6 +52,7 @@
         <file>Indicators/ArtificialHorizon.qml</file>
         <file>Indicators/FlightDirector.qml</file>
         <file>Indicators/YawIndicator.qml</file>
+        <file>Indicators/InstrumentLabel.qml</file>
         <file>Indicators/FdLabel.qml</file>
         <file>Indicators/DistanceLabel.qml</file>
         <file>Indicators/SpeedArrow.qml</file>

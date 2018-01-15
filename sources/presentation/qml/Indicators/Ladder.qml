@@ -121,15 +121,13 @@ Item {
         }
     }
 
-    Text {
+    FdLabel {
         id: label
         anchors.centerIn: parent
-        anchors.horizontalCenterOffset: mirrored ? majorTickSize : -majorTickSize
-        width: parent.width
-        color: root.color
-        horizontalAlignment: Text.AlignHCenter
-        font.bold: true
-        font.pixelSize: fontPixelSize
-        text: prefix + "\n" + Math.round(value) + " " + suffix
+        anchors.horizontalCenterOffset: mirrored ? majorTickSize * 0.5 : -majorTickSize * 0.5
+        width: parent.width - majorTickSize
+        value: root.value
+        prefix: root.prefix
+        operational: root.operational
     }
 }
