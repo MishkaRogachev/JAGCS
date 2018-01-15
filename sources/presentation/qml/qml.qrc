@@ -89,7 +89,7 @@
         <file>Views/Dashboard/Displays/CommandControls/DelayButton.qml</file>
         <file>Views/Dashboard/Displays/CommandControls/ModeBox.qml</file>
         <file>Views/Dashboard/Displays/CommandControls/WaypointBox.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/BatteryInstrument.qml</file>
+        <file>Views/Dashboard/Displays/Instruments/StatusInstrument.qml</file>
         <file>Views/Dashboard/Displays/Instruments/SatelliteInstrument.qml</file>
         <file>Views/Dashboard/Displays/Instruments/FlightInstrument.qml</file>
         <file>Views/Dashboard/Displays/Instruments/NavigationInstrument.qml</file>

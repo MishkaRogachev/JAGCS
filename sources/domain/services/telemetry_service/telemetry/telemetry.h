@@ -246,6 +246,7 @@ namespace domain
             SizeY = 12004,
         };
 
+        // FIXME: to types domain
         enum SystemState
         {
             UnknownState,

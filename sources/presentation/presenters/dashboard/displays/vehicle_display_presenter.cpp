@@ -25,6 +25,8 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
                     std::bind(&VehicleDisplayPresenter::updateSatellite, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::PowerSystem),
                     std::bind(&VehicleDisplayPresenter::updatePowerSystem, this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::Battery),
+                    std::bind(&VehicleDisplayPresenter::updateBattery, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Pitot),
                     std::bind(&VehicleDisplayPresenter::updatePitot, this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Barometric),
@@ -83,6 +85,15 @@ void VehicleDisplayPresenter::updateSatellite(const domain::Telemetry::Telemetry
 void VehicleDisplayPresenter::updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setViewProperty(PROPERTY(throttle), parameters.value(domain::Telemetry::Throttle, 0));
+}
+
+void VehicleDisplayPresenter::updateBattery(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewProperty(PROPERTY(batteryEnabled), parameters.value(domain::Telemetry::Enabled, 0));
+    this->setViewProperty(PROPERTY(batteryOperational), parameters.value(domain::Telemetry::Operational, 0));
+    this->setViewProperty(PROPERTY(batteryVoltage), parameters.value(domain::Telemetry::Voltage, 0));
+    this->setViewProperty(PROPERTY(batteryCurrent), parameters.value(domain::Telemetry::Current, 0));
+    this->setViewProperty(PROPERTY(batteryPercentage), parameters.value(domain::Telemetry::Percentage, 0));
 }
 
 void VehicleDisplayPresenter::updatePitot(const domain::Telemetry::TelemetryMap& parameters)

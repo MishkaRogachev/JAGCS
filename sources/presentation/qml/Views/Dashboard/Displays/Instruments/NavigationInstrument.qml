@@ -27,7 +27,7 @@ Controls.Pane {
         }
     }
 
-    implicitHeight: width * 0.75
+    implicitHeight: width * 0.6
 
     Indicators.DistanceLabel {
         anchors.top: parent.top
@@ -64,7 +64,7 @@ Controls.Pane {
     Indicators.Compass {
         id: compass
         anchors.centerIn: parent
-        height: Math.min(parent.height, parent.width * 0.6) - sizings.padding
+        height: parent.height - sizings.padding
         width: height
         mark: vehicleMark
         heading: vehicleDisplay.heading

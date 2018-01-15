@@ -4,24 +4,28 @@ import QtQuick.Layouts 1.3
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-BaseDisplay {
+Controls.Pane {
     id: root
 
-    property real batteryVoltage: 0
-    property real batteryCurrent: 0
-    property int batteryPercentage: 0
-
-    implicitHeight: row.height
-
-    RowLayout {
-        id: row
+    GridLayout {
         anchors.centerIn: parent
         width: parent.width
-        spacing: sizings.spacing
+        rowSpacing: sizings.spacing
+        columnSpacing: sizings.spacing
+        columns: 3
+
+        Controls.Label {
+            text: vehicleName
+            font.pixelSize: sizings.fontPixelSize * 0.75
+            font.bold: true
+            Layout.fillWidth: true
+             Layout.rowSpan: 2
+        }
 
         Indicators.BatteryIndicator {
             id: battery
             percentage: batteryPercentage
+            Layout.rowSpan: 2
         }
 
         Controls.Label {
@@ -31,9 +35,9 @@ BaseDisplay {
             text: batteryVoltage.toFixed(2) + qsTr(" V")
         }
 
-        Controls.ColoredIcon {
-            id: current
-            source: "qrc:/icons/current.svg"
+        Controls.Label {
+            font.pixelSize: sizings.fontPixelSize * 0.6
+            font.bold: true
             color: {
                 if (batteryCurrent < -0.01)
                     return palette.positiveColor;
@@ -46,12 +50,6 @@ BaseDisplay {
 
                 return palette.sunkenColor;
             }
-        }
-
-        Controls.Label {
-            font.pixelSize: sizings.fontPixelSize * 0.6
-            font.bold: true
-            color: current.color
             text: batteryCurrent.toFixed(2) + qsTr(" A")
         }
     }

@@ -12,6 +12,12 @@ import "Instruments" as Instruments
 BaseVehicleDisplay {
     id: vehicleDisplay
 
+    property bool batteryEnabled: false
+    property bool batteryOperational: false
+    property real batteryVoltage: 0
+    property real batteryCurrent: 0
+    property int batteryPercentage: 0
+
     property bool ahrsOperational: false
     property real yawspeed: 0.0
 
@@ -83,6 +89,11 @@ BaseVehicleDisplay {
         id: column
         width: parent.width
         spacing: sizings.spacing
+
+        Instruments.StatusInstrument {
+            visible: true // TODO: instruments settings
+            Layout.fillWidth: true
+        }
 
         Instruments.SatelliteInstrument {
             visible: true // TODO: instruments settings
