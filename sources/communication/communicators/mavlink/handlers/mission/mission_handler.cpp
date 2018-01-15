@@ -376,8 +376,11 @@ void MissionHandler::sendMissionAck(quint8 mavId)
 
     ackItem.target_system = mavId;
     ackItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
-    ackItem.mission_type = MAV_MISSION_TYPE_MISSION;
     ackItem.type = MAV_MISSION_ACCEPTED;
+
+#ifdef MAVLINK_V2
+    ackItem.mission_type = MAV_MISSION_TYPE_MISSION;
+#endif
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
@@ -571,7 +574,9 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     mavlink_mission_ack_t ack;
     mavlink_msg_mission_ack_decode(&message, &ack);
 
+#ifdef MAVLINK_V2
     if (ack.mission_type != MAV_MISSION_TYPE_MISSION) return;
+#endif
 
     if (ack.type == MAV_MISSION_ACCEPTED)
     {

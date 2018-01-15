@@ -23,6 +23,7 @@ FlightHandler::FlightHandler(MavLinkCommunicator* communicator):
 
 void FlightHandler::processMessage(const mavlink_message_t& message)
 {
+#ifdef MAVLINK_V2
     if (message.msgid != MAVLINK_MSG_ID_FLIGHT_INFORMATION) return;
 
     TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
@@ -33,4 +34,5 @@ void FlightHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::Flight, Telemetry::Uid }, quint64(info.flight_uuid));
     portion.setParameter({ Telemetry::Flight, Telemetry::Time },
                          QDateTime::fromMSecsSinceEpoch(info.takeoff_time_utc));
+#endif
 }

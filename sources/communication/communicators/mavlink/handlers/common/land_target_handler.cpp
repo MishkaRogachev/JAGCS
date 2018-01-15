@@ -41,6 +41,7 @@ void LandTargetHandler::processMessage(const mavlink_message_t& message)
                          qRadiansToDegrees(landing.size_y));
 
     // TODO: handle MAV_FRAME, LANDING_TARGET_TYPE, ID(target_num)
+#ifdef MAVLINK_V2
     if (landing.position_valid)
     {
         portion.setParameter({ Telemetry::LandingSystem, Telemetry::Coordinate },
@@ -51,4 +52,5 @@ void LandTargetHandler::processMessage(const mavlink_message_t& message)
         portion.setParameter({ Telemetry::LandingSystem, Telemetry::Coordinate },
                              QVariant::fromValue(QGeoCoordinate()));
     }
+#endif
 }

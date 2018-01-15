@@ -3,12 +3,12 @@
 // Internal
 #include "mavlink_communicator.h"
 
+// MAVLink v1
 #include "ping_handler.h"
 #include "heartbeat_handler.h"
 #include "system_status_handler.h"
 #include "system_time_handler.h"
 #include "autopilot_version_handler.h"
-#include "flight_handler.h"
 #include "attitude_handler.h"
 #include "imu_handler.h"
 #include "vibration_handler.h"
@@ -30,6 +30,9 @@
 #include "attitude_target_handler.h"
 #include "land_target_handler.h"
 
+// MAVLink v2
+#include "flight_handler.h"
+
 using namespace comm;
 
 MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(quint8 systemId, quint8 componentId):
@@ -47,7 +50,6 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     communicator->addHandler(new SystemStatusHandler(communicator));
     communicator->addHandler(new SystemTimeHandler(communicator));
     communicator->addHandler(new AutopilotVersionHandler(communicator));
-    communicator->addHandler(new FlightHandler(communicator));
     communicator->addHandler(new AttitudeHandler(communicator));
     communicator->addHandler(new ImuHandler(communicator));
     communicator->addHandler(new VibrationHandler(communicator));
@@ -68,6 +70,10 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     communicator->addHandler(new MissionHandler(communicator));
     communicator->addHandler(new AttitudeTargetHandler(communicator));
     communicator->addHandler(new LandTargetHandler(communicator));
+
+#ifdef MAVLINK_V2
+    communicator->addHandler(new FlightHandler(communicator));
+# endif
 
     return communicator;
 }
