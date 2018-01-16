@@ -50,7 +50,7 @@ QString TranslationHelper::translateVehicleType(dao::Vehicle::Type type)
     }
 }
 
-QString TranslationHelper::translateMode(domain::vehicle::Mode mode)
+QString TranslationHelper::translateVehicleMode(domain::vehicle::Mode mode)
 {
     switch (mode)
     {
@@ -74,6 +74,21 @@ QString TranslationHelper::translateMode(domain::vehicle::Mode mode)
     case domain::vehicle::Mode::Takeoff: return tr("TAKEOFF");
     case domain::vehicle::Mode::Throw: return tr("THROW");
     case domain::vehicle::Mode::None:
+    default: return tr("None");
+    }
+}
+
+QString TranslationHelper::translateVehicleState(domain::vehicle::SystemState state)
+{
+    switch (state)
+    {
+    case domain::vehicle::SystemState::Active: return tr("Active");
+    case domain::vehicle::SystemState::Boot: return tr("Boot");
+    case domain::vehicle::SystemState::Calibrating: return tr("Calibrating");
+    case domain::vehicle::SystemState::Critical: return tr("Critical");
+    case domain::vehicle::SystemState::Emergency: return tr("Emergency");
+    case domain::vehicle::SystemState::Standby: return tr("Standby");
+    case domain::vehicle::SystemState::UnknownState:
     default: return tr("None");
     }
 }

@@ -19,7 +19,6 @@ Controls.Pane {
             font.pixelSize: sizings.fontPixelSize * 0.75
             font.bold: true
             Layout.fillWidth: true
-             Layout.rowSpan: 2
         }
 
         Indicators.BatteryIndicator {
@@ -33,6 +32,13 @@ Controls.Pane {
             font.bold: true
             color: batteryVoltage > 0.01 ? palette.textColor : palette.sunkenColor
             text: batteryVoltage.toFixed(2) + qsTr(" V")
+        }
+
+        Controls.Label {
+            text: translator.translateVehicleState(vehicleState)
+            font.pixelSize: sizings.fontPixelSize * 0.75
+            font.bold: true
+            Layout.fillWidth: true
         }
 
         Controls.Label {

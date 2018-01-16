@@ -14,6 +14,7 @@ Item {
     property int missionItems: 0
     property int currentItem: -1
 
+    property int vehicleState: Domain.UnknownState
     property bool online: false
     property bool armed: false
     property bool guided: false

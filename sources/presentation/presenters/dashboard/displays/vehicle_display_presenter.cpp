@@ -49,6 +49,7 @@ void VehicleDisplayPresenter::updateSystem(const domain::Telemetry::TelemetryMap
 {
     this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
     this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
+    this->setViewProperty(PROPERTY(vehicleState), parameters.value(domain::Telemetry::State));
 }
 
 void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)
