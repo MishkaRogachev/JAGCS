@@ -1,7 +1,7 @@
 #ifndef I_MODE_HELPER_H
 #define I_MODE_HELPER_H
 
-#include "modes.h"
+#include "vehicle_types.h"
 
 namespace comm
 {
@@ -11,10 +11,10 @@ namespace comm
         IModeHelper() {}
         virtual ~IModeHelper() {}
 
-        virtual int modeToCustomMode(domain::Mode mode) = 0;
-        virtual domain::Mode customModeToMode(quint32 mode) = 0;
+        virtual int modeToCustomMode(domain::vehicle::Mode mode) = 0;
+        virtual domain::vehicle::Mode customModeToMode(quint32 mode) = 0;
 
-        virtual QList<domain::Mode> availableModes() const = 0;
+        virtual QList<domain::vehicle::Mode> availableModes() const = 0;
     };
 }
 

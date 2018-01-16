@@ -14,7 +14,7 @@
 #include "telemetry_portion.h"
 #include "vehicle_telemetry_factory.h"
 
-#include "modes.h"
+#include "vehicle_types.h"
 
 using namespace domain;
 

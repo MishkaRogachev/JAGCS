@@ -112,8 +112,8 @@ endif (WITH_MAVLINK_V2)
 add_subdirectory(sources)
 
 # NOTE: temporary solution for Q_NAMESPACE
-# qt5_generate_moc(sources/domain/types/modes.h ${MOC_SOURCES})
-qt5_wrap_cpp(MOC_SOURCES sources/domain/types/modes.h)
+# qt5_generate_moc(sources/domain/types/vehicle_types.h ${MOC_SOURCES})
+qt5_wrap_cpp(MOC_SOURCES sources/domain/types/vehicle_types.h)
 
 # Application sources
 add_subdirectory(app)

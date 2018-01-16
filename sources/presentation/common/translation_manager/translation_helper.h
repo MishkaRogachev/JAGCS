@@ -7,7 +7,7 @@
 // Internal
 #include "mission_item.h"
 #include "vehicle.h"
-#include "modes.h"
+#include "vehicle_types.h"
 
 namespace presentation
 {
@@ -20,7 +20,7 @@ namespace presentation
 
         Q_INVOKABLE QString translateCommand(dao::MissionItem::Command command);
         Q_INVOKABLE QString translateVehicleType(dao::Vehicle::Type type);
-        Q_INVOKABLE QString translateMode(domain::Mode mode);
+        Q_INVOKABLE QString translateMode(domain::vehicle::Mode mode);
     };
 }
 

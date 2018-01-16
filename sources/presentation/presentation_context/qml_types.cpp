@@ -8,7 +8,7 @@
 #include "mission_assignment.h"
 #include "mission_item.h"
 #include "video_source.h"
-#include "modes.h"
+#include "vehicle_types.h"
 #include "command.h"
 #include "log_message.h"
 
@@ -66,7 +66,7 @@ static void registerTypes()
     qmlRegisterUncreatableType<domain::LogMessage>(
                 "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
 
-    qmlRegisterUncreatableMetaObject(domain::staticMetaObject, "JAGCS", 1, 0, "Domain",
+    qmlRegisterUncreatableMetaObject(domain::vehicle::staticMetaObject, "JAGCS", 1, 0, "Vehicle",
                                      "Can't create enums in QML");
 
     qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");

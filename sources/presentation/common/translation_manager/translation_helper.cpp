@@ -7,7 +7,7 @@ TranslationHelper::TranslationHelper(QObject* parent):
 {
     qRegisterMetaType<dao::MissionItem::Command>("dao::MissionItem::Command");
     qRegisterMetaType<dao::Vehicle::Type>("dao::Vehicle::Type");
-    qRegisterMetaType<domain::Mode>("domain::Mode");
+    qRegisterMetaType<domain::vehicle::Mode>("domain::vehicle::Mode");
 }
 
 QString TranslationHelper::translateCommand(dao::MissionItem::Command command)
@@ -50,30 +50,30 @@ QString TranslationHelper::translateVehicleType(dao::Vehicle::Type type)
     }
 }
 
-QString TranslationHelper::translateMode(domain::Mode mode)
+QString TranslationHelper::translateMode(domain::vehicle::Mode mode)
 {
     switch (mode)
     {
-    case domain::Mode::Acro: return tr("ACRO");
-    case domain::Mode::Autotune: return tr("AUTOTUN");
-    case domain::Mode::Avoid: return tr("AVOID");
-    case domain::Mode::Circle: return tr("CIRCLE");
-    case domain::Mode::Cruise: return tr("CRUISE");
-    case domain::Mode::CtrlByAltitude: return tr("CTRL BY ALT");
-    case domain::Mode::CtrlByAttitude: return tr("CTRL BY ATT");
-    case domain::Mode::Follow: return tr("FOLLOW");
-    case domain::Mode::Guided: return tr("GUIDED");
-    case domain::Mode::HoldPosition: return tr("HOLD");
-    case domain::Mode::Init: return tr("INIT");
-    case domain::Mode::Landing: return tr("LAND");
-    case domain::Mode::Loiter: return tr("LOITER");
-    case domain::Mode::Manual: return tr("MANUAL");
-    case domain::Mode::Mission: return tr("MISSION");
-    case domain::Mode::Return: return tr("RETURN");
-    case domain::Mode::Stabilize: return tr("STAB");
-    case domain::Mode::Takeoff: return tr("TAKEOFF");
-    case domain::Mode::Throw: return tr("THROW");
-    case domain::Mode::None:
+    case domain::vehicle::Mode::Acro: return tr("ACRO");
+    case domain::vehicle::Mode::Autotune: return tr("AUTOTUN");
+    case domain::vehicle::Mode::Avoid: return tr("AVOID");
+    case domain::vehicle::Mode::Circle: return tr("CIRCLE");
+    case domain::vehicle::Mode::Cruise: return tr("CRUISE");
+    case domain::vehicle::Mode::CtrlByAltitude: return tr("CTRL BY ALT");
+    case domain::vehicle::Mode::CtrlByAttitude: return tr("CTRL BY ATT");
+    case domain::vehicle::Mode::Follow: return tr("FOLLOW");
+    case domain::vehicle::Mode::Guided: return tr("GUIDED");
+    case domain::vehicle::Mode::HoldPosition: return tr("HOLD");
+    case domain::vehicle::Mode::Init: return tr("INIT");
+    case domain::vehicle::Mode::Landing: return tr("LAND");
+    case domain::vehicle::Mode::Loiter: return tr("LOITER");
+    case domain::vehicle::Mode::Manual: return tr("MANUAL");
+    case domain::vehicle::Mode::Mission: return tr("MISSION");
+    case domain::vehicle::Mode::Return: return tr("RETURN");
+    case domain::vehicle::Mode::Stabilize: return tr("STAB");
+    case domain::vehicle::Mode::Takeoff: return tr("TAKEOFF");
+    case domain::vehicle::Mode::Throw: return tr("THROW");
+    case domain::vehicle::Mode::None:
     default: return tr("None");
     }
 }

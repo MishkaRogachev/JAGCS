@@ -5,7 +5,7 @@
 #include "abstract_command_handler.h"
 #include "abstract_mavlink_handler.h"
 
-#include "modes.h"
+#include "vehicle_types.h"
 
 namespace comm
 {
@@ -30,7 +30,7 @@ namespace comm
 
     private slots:
         void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);
-        void sendSetMode(quint8 mavId, domain::Mode mode);
+        void sendSetMode(quint8 mavId, domain::vehicle::Mode mode);
         void sendCurrentItem(quint8 mavId, quint16 seq);
         void sentNavTo(quint8 mavId, double latitude, double longitude, float altitude);
 

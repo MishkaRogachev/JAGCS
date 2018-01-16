@@ -246,18 +246,6 @@ namespace domain
             SizeY = 12004,
         };
 
-        // FIXME: to types domain
-        enum SystemState
-        {
-            UnknownState,
-            Boot,
-            Calibrating,
-            Standby,
-            Active,
-            Critical,
-            Emergency
-        };
-
         using TelemetryList = QList<TelemetryId>;
         using TelemetryMap = QMap<TelemetryId, QVariant>;
 
@@ -299,7 +287,6 @@ namespace domain
         QMap<TelemetryId, Telemetry*> m_childNodes;
 
         Q_ENUM(TelemetryId)
-        Q_ENUM(SystemState)
     };
 }
 

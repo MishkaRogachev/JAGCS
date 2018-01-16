@@ -139,7 +139,7 @@ void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, 
 
     if (command->type() == dao::Command::SetMode) // TODO: special command map
     {
-        this->sendSetMode(vehicle->mavId(), command->arguments().first().value<domain::Mode>());
+        this->sendSetMode(vehicle->mavId(), command->arguments().first().value<domain::vehicle::Mode>());
     }
     else if (command->type() == dao::Command::GoTo)
     {
@@ -187,7 +187,7 @@ void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
     m_communicator->sendMessage(message, link);
 }
 
-void CommandHandler::sendSetMode(quint8 mavId, domain::Mode mode)
+void CommandHandler::sendSetMode(quint8 mavId, domain::vehicle::Mode mode)
 {
     if (d->modeHelper.isNull()) return;
 

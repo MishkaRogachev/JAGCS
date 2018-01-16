@@ -57,25 +57,25 @@ namespace
         }
     }
 
-    Telemetry::SystemState decodeState(quint8 state)
+    domain::vehicle::SystemState decodeState(quint8 state)
     {
         switch (state)
         {
         case MAV_STATE_BOOT:
-            return Telemetry::Boot;
+            return domain::vehicle::SystemState::Boot;
         case MAV_STATE_CALIBRATING:
-            return Telemetry::Calibrating;
+            return domain::vehicle::SystemState::Calibrating;
         case MAV_STATE_STANDBY:
-            return Telemetry::Standby;
+            return domain::vehicle::SystemState::Standby;
         case MAV_STATE_ACTIVE:
-            return Telemetry::Active;
+            return domain::vehicle::SystemState::Active;
         case MAV_STATE_CRITICAL:
-            return Telemetry::Critical;
+            return domain::vehicle::SystemState::Critical;
         case MAV_STATE_EMERGENCY:
-            return Telemetry::Emergency;
+            return domain::vehicle::SystemState::Emergency;
         case MAV_STATE_UNINIT:
         default:
-            return Telemetry::UnknownState;
+            return domain::vehicle::SystemState::UnknownState;
         }
     }
 }
@@ -185,7 +185,7 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     }
 
     portion.setParameter({ Telemetry::System, Telemetry::State },
-                         ::decodeState(heartbeat.system_status));
+                         QVariant::fromValue(::decodeState(heartbeat.system_status)));
 }
 
 void HeartbeatHandler::sendHeartbeat()

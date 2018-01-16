@@ -16,7 +16,7 @@
 #include "command_service.h"
 #include "telemetry_service.h"
 
-#include "modes.h"
+#include "vehicle_types.h"
 
 using namespace presentation;
 
@@ -160,9 +160,9 @@ void CommonVehicleDisplayPresenter::updateStatus(const domain::Telemetry::Teleme
 
     QVariantList modes;
     for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
-         QList<domain::Mode> >())
+         QList<domain::vehicle::Mode> >())
     {
-        if (item == domain::Mode::Return) continue; // special button for return
+        if (item == domain::vehicle::Mode::Return) continue; // special button for return
 
         modes.append(QVariant::fromValue(item));
     }
