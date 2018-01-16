@@ -12,7 +12,12 @@ Controls.Pane {
         width: parent.width
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
-        columns: 3
+        columns: 4
+
+        Indicators.StateIndicator {
+            state: vehicleState
+            Layout.rowSpan: 2
+        }
 
         Controls.Label {
             text: vehicleName
@@ -35,7 +40,7 @@ Controls.Pane {
         }
 
         Controls.Label {
-            text: translator.translateVehicleState(vehicleState)
+            text: translator.translateVehicleType(vehicleType)
             font.pixelSize: sizings.fontPixelSize * 0.75
             font.bold: true
             Layout.fillWidth: true

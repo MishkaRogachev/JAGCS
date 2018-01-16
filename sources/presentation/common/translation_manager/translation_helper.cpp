@@ -7,7 +7,9 @@ TranslationHelper::TranslationHelper(QObject* parent):
 {
     qRegisterMetaType<dao::MissionItem::Command>("dao::MissionItem::Command");
     qRegisterMetaType<dao::Vehicle::Type>("dao::Vehicle::Type");
+
     qRegisterMetaType<domain::vehicle::Mode>("domain::vehicle::Mode");
+    qRegisterMetaType<domain::vehicle::SystemState>("domain::vehicle::SystemState");
 }
 
 QString TranslationHelper::translateCommand(dao::MissionItem::Command command)
@@ -109,6 +111,21 @@ QString TranslationHelper::translateVehicleState(domain::vehicle::SystemState st
     case domain::vehicle::SystemState::Emergency: return tr("Emergency");
     case domain::vehicle::SystemState::Standby: return tr("Standby");
     case domain::vehicle::SystemState::UnknownState:
-    default: return tr("None");
+    default: return tr("Unknown");
+    }
+}
+
+QUrl TranslationHelper::imageFromVehicleState(domain::vehicle::SystemState state)
+{
+    switch (state)
+    {
+    case domain::vehicle::SystemState::Active: return QUrl("qrc:/indicators/states/active.svg");
+    case domain::vehicle::SystemState::Boot: return QUrl("qrc:/indicators/states/boot.svg");
+    case domain::vehicle::SystemState::Calibrating: return QUrl("qrc:/indicators/states/calibrating.svg");
+    case domain::vehicle::SystemState::Critical: return QUrl("qrc:/indicators/states/critical.svg");
+    case domain::vehicle::SystemState::Emergency: return QUrl("qrc:/indicators/states/emergency.svg");
+    case domain::vehicle::SystemState::Standby: return QUrl("qrc:/indicators/states/standby.svg");
+    case domain::vehicle::SystemState::UnknownState:
+    default: return QUrl("qrc:/indicators/states/unknown.svg");
     }
 }
