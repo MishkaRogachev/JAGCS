@@ -113,13 +113,37 @@ BaseVehicleDisplay {
             ColumnLayout {
                 spacing: sizings.spacing
 
-                Controls.Label {
-                    text: vehicleName
-                    font.pixelSize: sizings.fontPixelSize * 0.75
-                    font.bold: true
-                    height: sizings.controlBaseSize * 0.75
-                    wrapMode: Text.NoWrap
-                    Layout.fillWidth: true
+                RowLayout {
+                    spacing: sizings.spacing
+
+                    Controls.ColoredIcon {
+                        id: icon
+                        source: translator.imageFromVehicleState(vehicleState)
+                        height: sizings.controlBaseSize * 0.75
+                        width: height
+                        color: {
+                            switch (vehicleState) {
+                            case Domain.Active: return palette.missionColor;
+                            case Domain.Boot:
+                            case Domain.Calibrating: return palette.selectionColor;
+                            case Domain.Critical: return palette.dangerColor;
+                            case Domain.Emergency: return palette.cautionColor;
+                            case Domain.Standby: return palette.positiveColor;
+                            case Domain.UnknownState:
+                            default: return palette.sunkenColor;
+                            }
+                        }
+                        Behavior on color { ColorAnimation { duration: 200 } }
+                    }
+
+                    Controls.Label {
+                        text: vehicleName
+                        font.pixelSize: sizings.fontPixelSize * 0.75
+                        font.bold: true
+                        height: sizings.controlBaseSize * 0.75
+                        wrapMode: Text.NoWrap
+                        Layout.fillWidth: true
+                    }
                 }
 
                 CommandControls.ModeBox {

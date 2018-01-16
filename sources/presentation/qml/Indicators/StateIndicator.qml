@@ -29,6 +29,7 @@ Rectangle {
 
     Controls.ColoredIcon {
         id: icon
+        source: translator.imageFromVehicleState(state)
         anchors.fill: parent
     }
 
