@@ -55,7 +55,7 @@ MapItemView {
             Image {
                 anchors.centerIn: parent
                 rotation: headingAnimated
-                source: mark
+                source: translator.imageFromVehicleType(type)
                 width: sizings.controlBaseSize * 3
                 height: width
             }

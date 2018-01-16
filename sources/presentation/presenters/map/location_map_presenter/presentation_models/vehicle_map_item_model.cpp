@@ -15,8 +15,6 @@
 #include "telemetry_service.h"
 #include "telemetry.h"
 
-#include "vehicle_type_mapper.h"
-
 using namespace presentation;
 
 class VehicleMapItemModel::Impl
@@ -98,8 +96,8 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Fix);
         if (!data.isValid()) data = -1;
         break;
-    case MarkRole:
-        data = ::vehicleIcon(vehicle->type());
+    case TypeRole:
+        data = vehicle->type();
         break;
     case VehicleIdRole:
         data = vehicle->mavId();
@@ -195,7 +193,7 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[HeadingRole] = "heading";
     roles[GroundspeedRole] = "groundspeed";
     roles[SnsFixRole] = "snsFix";
-    roles[MarkRole] = "mark";
+    roles[TypeRole] = "type";
     roles[VehicleIdRole] = "vehicleId";
     roles[TrackRole] = "track";
     roles[SelectedRole] = "isSelected";

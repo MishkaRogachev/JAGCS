@@ -30,7 +30,7 @@ namespace presentation
             CourseRole,
             GroundspeedRole,
             SnsFixRole,
-            MarkRole,
+            TypeRole,
             VehicleIdRole,
             TrackRole,
             SelectedRole,

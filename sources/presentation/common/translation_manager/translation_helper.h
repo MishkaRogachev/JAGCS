@@ -3,6 +3,7 @@
 
 // Qt
 #include <QObject>
+#include <QUrl>
 
 // Internal
 #include "mission_item.h"
@@ -20,6 +21,7 @@ namespace presentation
 
         Q_INVOKABLE QString translateCommand(dao::MissionItem::Command command);
         Q_INVOKABLE QString translateVehicleType(dao::Vehicle::Type type);
+        Q_INVOKABLE QUrl imageFromVehicleType(dao::Vehicle::Type type);
         Q_INVOKABLE QString translateVehicleMode(domain::vehicle::Mode mode);
         Q_INVOKABLE QString translateVehicleState(domain::vehicle::SystemState state);
     };

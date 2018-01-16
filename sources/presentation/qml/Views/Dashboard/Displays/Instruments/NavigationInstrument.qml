@@ -8,25 +8,6 @@ import "qrc:/Indicators" as Indicators
 Controls.Pane {
     id: root
 
-    // TODO: to common
-    property url vehicleMark: {
-        switch (vehicleType) {
-        case Vehicle.FixedWing:
-            return "qrc:/indicators/fixed_wing_mark.svg"
-        case Vehicle.FlyingWing:
-            return "qrc:/indicators/flying_wing_mark.svg"
-        case Vehicle.Tricopter:
-        case Vehicle.Quadcopter:
-        case Vehicle.Hexcopter:
-            return "qrc:/indicators/quadcopter_mark.svg"
-        case Vehicle.Helicopter:
-        case Vehicle.Coaxial:
-            return "qrc:/indicators/helicopter_mark.svg"
-        default:
-            return "qrc:/indicators/unknown_mark.svg"
-        }
-    }
-
     implicitHeight: width * 0.6
 
     Indicators.DistanceLabel {
@@ -66,7 +47,7 @@ Controls.Pane {
         anchors.centerIn: parent
         height: parent.height - sizings.padding
         width: height
-        mark: vehicleMark
+        mark: translator.imageFromVehicleType(vehicleType)
         heading: vehicleDisplay.heading
         course: vehicleDisplay.course
         courseEnabled: groundspeed > 0.1

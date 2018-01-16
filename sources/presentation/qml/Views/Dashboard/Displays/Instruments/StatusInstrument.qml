@@ -45,14 +45,10 @@ Controls.Pane {
             font.pixelSize: sizings.fontPixelSize * 0.6
             font.bold: true
             color: {
-                if (batteryCurrent < -0.01)
-                    return palette.positiveColor;
-                if (batteryCurrent > 0.0)
-                    return palette.textColor;
-                if (batteryCurrent > 5.0)
-                    return palette.cautionColor;
-                if (batteryCurrent > 10.0)
-                    return palette.dangerColor;
+                if (batteryCurrent < -0.01) return palette.positiveColor;
+                if (batteryCurrent > 0.0) return palette.textColor;
+                if (batteryCurrent > 5.0) return palette.cautionColor;
+                if (batteryCurrent > 10.0) return palette.dangerColor;
 
                 return palette.sunkenColor;
             }
