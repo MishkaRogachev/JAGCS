@@ -21,6 +21,12 @@ BaseVehicleDisplay {
     property bool ahrsOperational: false
     property real yawspeed: 0.0
 
+    property real velocityVariance: 0.0
+    property real verticalVariance: 0.0
+    property real horizontVariance: 0.0
+    property real compassVariance: 0.0
+    property real terrainAltitudeVariance: 0.0
+
     property real course: 0
     property int fix: -1
     property int eph: 0

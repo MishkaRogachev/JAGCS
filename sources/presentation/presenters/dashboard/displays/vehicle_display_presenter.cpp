@@ -20,6 +20,8 @@ void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
     this->chainNode(ahrs, std::bind(&VehicleDisplayPresenter::updateAhrs, this, std::placeholders::_1));
     this->chainNode(ahrs->childNode(domain::Telemetry::Compass),
                     std::bind(&VehicleDisplayPresenter::updateCompass, this, std::placeholders::_1));
+    this->chainNode(ahrs->childNode(domain::Telemetry::Ekf),
+                    std::bind(&VehicleDisplayPresenter::updateEkf, this, std::placeholders::_1));
 
     this->chainNode(node->childNode(domain::Telemetry::Satellite),
                     std::bind(&VehicleDisplayPresenter::updateSatellite, this, std::placeholders::_1));
@@ -67,6 +69,20 @@ void VehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMa
     this->setViewProperty(PROPERTY(compassEnabled), parameters.value(domain::Telemetry::Enabled, false));
     this->setViewProperty(PROPERTY(compassOperational), parameters.value(domain::Telemetry::Operational, false));
     this->setViewProperty(PROPERTY(heading), parameters.value(domain::Telemetry::Heading, 0));
+}
+
+void VehicleDisplayPresenter::updateEkf(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setViewProperty(PROPERTY(velocityVariance),
+                          parameters.value(domain::Telemetry::VelocityVariance, 0.0));
+    this->setViewProperty(PROPERTY(verticalVariance),
+                          parameters.value(domain::Telemetry::VerticalVariance, 0.0));
+    this->setViewProperty(PROPERTY(horizontVariance),
+                          parameters.value(domain::Telemetry::HorizontVariance, 0.0));
+    this->setViewProperty(PROPERTY(compassVariance),
+                          parameters.value(domain::Telemetry::CompassVariance, 0.0));
+    this->setViewProperty(PROPERTY(terrainAltitudeVariance),
+                          parameters.value(domain::Telemetry::TerrainAltitudeVariance, 0.0));
 }
 
 void VehicleDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryMap& parameters)

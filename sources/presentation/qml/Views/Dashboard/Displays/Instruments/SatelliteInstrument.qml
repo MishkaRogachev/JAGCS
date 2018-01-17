@@ -4,6 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Controls.Pane {
     id: root
@@ -44,6 +45,11 @@ Controls.Pane {
 
         Item {
             Layout.fillWidth: true
+        }
+
+        Indicators.EkfIndicator {
+            bars: [ velocityVariance, verticalVariance, horizontVariance,
+                compassVariance, terrainAltitudeVariance ]
         }
 
         Controls.ColoredIcon {

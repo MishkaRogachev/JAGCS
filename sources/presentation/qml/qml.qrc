@@ -38,10 +38,11 @@
         <file>Controls/Drawer.qml</file>
         <file>Controls/SideNav.qml</file>
         <file>Controls/MapPickButton.qml</file>
+        <file>Indicators/BarIndicator.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/StateIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
-        <file>Indicators/BarIndicator.qml</file>
+        <file>Indicators/EkfIndicator.qml</file>
         <file>Indicators/Horizon.qml</file>
         <file>Indicators/PlaneMark.qml</file>
         <file>Indicators/DesiredAnglesMark.qml</file>

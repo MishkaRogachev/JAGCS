@@ -23,7 +23,7 @@ void EkfStatusHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_EKF_STATUS_REPORT) return;
 
-    TelemetryPortion portion(m_telemetryService->radioNode());
+    TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     mavlink_ekf_status_report_t ekf;
     mavlink_msg_ekf_status_report_decode(&message, &ekf);

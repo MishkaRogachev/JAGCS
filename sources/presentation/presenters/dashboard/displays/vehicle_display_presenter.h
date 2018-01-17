@@ -23,6 +23,7 @@ namespace presentation
         void updateSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updateAhrs(const domain::Telemetry::TelemetryMap& parameters);
         void updateCompass(const domain::Telemetry::TelemetryMap& parameters);
+        void updateEkf(const domain::Telemetry::TelemetryMap& parameters);
         void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);
         void updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updateBattery(const domain::Telemetry::TelemetryMap& parameters);

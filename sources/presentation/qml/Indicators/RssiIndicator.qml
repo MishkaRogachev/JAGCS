@@ -10,7 +10,7 @@ Item {
     property real minRssiValue: -120
 
     implicitWidth: sizings.controlBaseSize
-    implicitHeight: implicitWidth
+    implicitHeight: width
 
     Row {
         id: row
@@ -26,6 +26,7 @@ Item {
                 anchors.bottom: parent.bottom
                 width: root.width / repeater.count - row.spacing
                 height: (repeater.count - index) * root.height / (repeater.count + 1)
+                radius: 2
                 color: rssi != 0 && rssi >= Helper.mapToRange(index, 0, 5, minRssiValue) ?
                            palette.selectionColor : palette.sunkenColor
             }
