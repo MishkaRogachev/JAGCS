@@ -49,11 +49,17 @@
 //  |  |  |-Operational                 bool
 //  |  |  |-AngularSpeed                QVector3D
 //  |  |-Compass
-//  |     |-Present                     bool
-//  |     |-Enabled                     bool
-//  |     |-Operational                 bool
-//  |     |-Heading                     real
-//  |     |-MagneticField               QVector3D
+//  |  |  |-Present                     bool
+//  |  |  |-Enabled                     bool
+//  |  |  |-Operational                 bool
+//  |  |  |-Heading                     real
+//  |  |  |-MagneticField               QVector3D
+//  |  |-Ekf
+//  |  |  |-VelocityVariance            real
+//  |  |  |-HorizontVariance            real
+//  |  |  |-VerticalVariance            real
+//  |  |  |-CompassVariance             real
+//  |  |  |-TerrainAltitudeVariance     real
 //  |-Satellite
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
@@ -193,6 +199,12 @@ namespace domain
             AngularSpeed = 1201,
             Compass = 1300,
             MagneticField = 1301,
+            Ekf = 1400,
+            VelocityVariance = 1401,
+            HorizontVariance = 1402,
+            VerticalVariance = 1403,
+            CompassVariance = 1404,
+            TerrainAltitudeVariance = 1405,
 
             Satellite = 2000,
             Fix = 2001,

@@ -92,8 +92,7 @@ namespace comm
     {
         if (lat == 0 && lon == 0) return QGeoCoordinate();
 
-        return QGeoCoordinate(decodeLatLon(lat), decodeLatLon(lon),
-                              decodeAltitude(alt));
+        return QGeoCoordinate(decodeLatLon(lat), decodeLatLon(lon), decodeAltitude(alt));
     }
 
     inline float decodeRssi(uint16_t value)

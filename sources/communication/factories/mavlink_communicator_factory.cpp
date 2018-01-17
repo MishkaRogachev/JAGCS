@@ -12,6 +12,7 @@
 #include "attitude_handler.h"
 #include "imu_handler.h"
 #include "vibration_handler.h"
+#include "ekf_status_handler.h"
 #include "altitude_handler.h"
 #include "pressure_handler.h"
 #include "position_handler.h"
@@ -30,8 +31,9 @@
 #include "attitude_target_handler.h"
 #include "land_target_handler.h"
 
-// MAVLink v2
+#ifdef MAVLINK_V2
 #include "flight_handler.h"
+# endif
 
 using namespace comm;
 
@@ -53,6 +55,7 @@ AbstractCommunicator* MavLinkCommunicatorFactory::create()
     communicator->addHandler(new AttitudeHandler(communicator));
     communicator->addHandler(new ImuHandler(communicator));
     communicator->addHandler(new VibrationHandler(communicator));
+    communicator->addHandler(new EkfStatusHandler(communicator));
     communicator->addHandler(new AltitudeHandler(communicator));
     communicator->addHandler(new PressureHandler(communicator));
     communicator->addHandler(new PositionHandler(communicator));
