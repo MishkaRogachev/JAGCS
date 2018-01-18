@@ -38,6 +38,7 @@ Item {
         }
 
         Controls.Button {
+            id: displaysSettingsButton
             iconSource: "qrc:/icons/settings.svg"
             tipText: qsTr("Instruments")
             enabled: selectedVehicle !== undefined

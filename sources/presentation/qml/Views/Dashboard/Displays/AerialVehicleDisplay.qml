@@ -91,34 +91,69 @@ BaseVehicleDisplay {
     implicitWidth: column.implicitWidth
     implicitHeight: column.implicitHeight
 
+    Connections {
+        target: displaysSettingsButton
+        onClicked: instrumentsVisibility.visible ? instrumentsVisibility.close() :
+                                                   instrumentsVisibility.open()
+    }
+
+    Controls.Popup {
+        id: instrumentsVisibility
+        x: displaysSettingsButton.x
+        y: -sizings.padding
+        closePolicy: Controls.Popup.NoAutoClose
+        padding: sizings.padding
+
+        ColumnLayout {
+            spacing: sizings.spacing
+
+            Repeater {
+                model: [
+                    { text: qsTr("Status"), instrument: status },
+                    { text: qsTr("Positioning"), instrument: positioning },
+                    { text: qsTr("Flight instrument"), instrument: flight },
+                    { text: qsTr("Navigation instrument"), instrument: navigation },
+                    { text: qsTr("Mission control"), instrument: mission },
+                    { text: qsTr("Control panel"), instrument: control }
+                ]
+
+                Controls.CheckBox {
+                    text: modelData.text
+                    checked: modelData.instrument.visible
+                    onCheckedChanged: modelData.instrument.visible = checked
+                }
+            }
+        }
+    }
+
     ColumnLayout {
         id: column
         width: parent.width
         spacing: sizings.spacing
+        // TODO: initial visibility to settings
 
         Instruments.StatusInstrument {
-            visible: true // TODO: instruments settings
+            id: status
             Layout.fillWidth: true
         }
 
         Instruments.PositioningInstrument {
-            visible: true // TODO: instruments settings
+            id: positioning
             Layout.fillWidth: true
         }
 
         Instruments.FlightInstrument {
-            visible: true // TODO: instruments settings
+            id: flight
             Layout.fillWidth: true
         }
 
         Instruments.NavigationInstrument  {
-            visible: true // TODO: instruments settings
+            id: navigation
             Layout.fillWidth: true
         }
 
         Instruments.MissionInstrument  {
             id: mission
-            visible: true // TODO: instruments settings
             Layout.fillWidth: true
 
             Connections {
@@ -130,7 +165,6 @@ BaseVehicleDisplay {
 
         Instruments.ControlInstrument  {
             id: control
-            visible: true // TODO: instruments settings
             Layout.fillWidth: true
 
             Connections {
