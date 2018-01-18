@@ -8,12 +8,9 @@ import "RadioStatus"
 import "Connection"
 import "Notifications"
 
-Rectangle {
+Item {
     id: topbar
 
-    property string unitName
-
-    color: palette.raisedColor
     height: sizings.controlBaseSize
 
     TopbarPresenter {
@@ -22,27 +19,8 @@ Rectangle {
     }
 
     RowLayout {
-        id: unitRow
         anchors.left: parent.left
         spacing: sizings.spacing
-
-        Controls.Button {
-            iconSource: "qrc:/icons/left.svg"
-            enabled: unitName.length > 0
-            onClicked: dashboard.selectVehicle(0, "")
-            flat: true
-        }
-
-        Controls.Label {
-            text: unitName.length ? unitName : qsTr("All MAVs")
-            font.bold: true
-        }
-
-        TopbarButton {
-            iconSource: "qrc:/icons/settings.svg"
-            tipText: qsTr("Vehicles")
-            entry: "qrc:/Views/Menu/Vehicles/VehicleListView.qml"
-        }
 
         RadioStatusView {
             id: radioStatus
@@ -67,6 +45,12 @@ Rectangle {
     RowLayout {
         anchors.right: parent.right
         spacing: sizings.spacing
+
+        TopbarButton {
+            iconSource: "qrc:/icons/flight.svg"
+            tipText: qsTr("Vehicles")
+            entry: "qrc:/Views/Menu/Vehicles/VehicleListView.qml"
+        }
 
         TopbarButton {
             iconSource: "qrc:/icons/planning.svg"

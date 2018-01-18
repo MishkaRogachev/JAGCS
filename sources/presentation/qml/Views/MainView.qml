@@ -32,6 +32,7 @@ Controls.ApplicationWindow  {
 
     header: TopbarView {
         id: topbar
+        anchors.left: dashboard.right
     }
 
     Loader {
@@ -46,9 +47,10 @@ Controls.ApplicationWindow  {
 
     DashboardView {
         id: dashboard
-        anchors.top: topbar.bottom
+        anchors.top: topbar.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+        z: 1
     }
 
     MapControl { // TODO: to ToolsPanel

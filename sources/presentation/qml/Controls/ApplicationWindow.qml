@@ -4,5 +4,5 @@ import QtQuick.Controls 2.0 as Controls
 Controls.ApplicationWindow {
     id: window
 
-    color: palette.backgroundColor
+    color: palette.raisedColor
 }
