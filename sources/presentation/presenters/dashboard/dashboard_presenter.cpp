@@ -46,11 +46,11 @@ void DashboardPresenter::selectVehicle(int vehicleId)
 
     if (vehicle)
     {
-        this->view()->setProperty(PROPERTY(vehicle), QVariant::fromValue(*vehicle));
+        this->view()->setProperty(PROPERTY(selectedVehicle), QVariant::fromValue(*vehicle));
     }
     else
     {
-        this->view()->setProperty(PROPERTY(vehicle), QVariant());
+        this->view()->setProperty(PROPERTY(selectedVehicle), QVariant());
     }
 
     d->displaysModel.setSelectedVehicle(vehicle);

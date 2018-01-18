@@ -72,6 +72,7 @@ void GuiStyleManager::setSizings(int controlBaseSize)
     sizings.setSpacing(controlBaseSize / 6);
     sizings.setMargins(controlBaseSize / 4);
     sizings.setPadding(controlBaseSize / 6);
+    sizings.setShadowSize(3);
 
     this->setSizings(sizings);
 }

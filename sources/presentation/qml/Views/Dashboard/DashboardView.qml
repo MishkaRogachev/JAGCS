@@ -5,9 +5,9 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Item {
-    id: dashboard
+    id: root
 
-    property var vehicle
+    property var selectedVehicle
     property var displays
 
     function selectVehicle(vehicleId) {
@@ -16,47 +16,43 @@ Item {
 
     DashboardPresenter {
         id: presenter
-        view: dashboard
+        view: root
     }
 
     implicitWidth: sizings.controlBaseSize * 8 // TODO: display row size
 
     RowLayout {
         id: unitRow
-        width: parent.width
         spacing: sizings.spacing
 
         Controls.Button {
             iconSource: "qrc:/icons/left.svg"
-            enabled: vehicle !== undefined
+            enabled: selectedVehicle !== undefined
             onClicked: selectVehicle(0)
             flat: true
         }
 
         Controls.Label {
-            text: vehicle ? vehicle.name : qsTr("All MAVs")
+            text: selectedVehicle ? selectedVehicle.name : qsTr("All MAVs")
             font.bold: true
-        }
-
-        Item {
-            Layout.fillWidth: true
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/settings.svg"
             tipText: qsTr("Instruments")
-            enabled: vehicle !== undefined
+            enabled: selectedVehicle !== undefined
             flat: true
         }
     }
 
     ListView {
         y: unitRow.height + sizings.spacing
-        width: parent.width
-        height: Math.min(parent.height, contentHeight)
+        width: root.width
+        height: Math.min(parent.height, contentHeight + sizings.shadowSize)
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
+        clip: true
         model: displays
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
@@ -64,7 +60,7 @@ Item {
         }
 
         delegate: Loader {
-            width: parent.width
+            width: parent.width - sizings.shadowSize
             Component.onCompleted: {
                 switch (display) {
                 case DashboardPresenter.ShortVehicleDisplay:

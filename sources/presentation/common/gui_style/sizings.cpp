@@ -51,3 +51,13 @@ void Sizings::setPadding(int padding)
 {
     m_padding = padding;
 }
+
+int Sizings::shadowSize() const
+{
+    return m_shadowSize;
+}
+
+void Sizings::setShadowSize(int shadowSize)
+{
+    m_shadowSize = shadowSize;
+}
