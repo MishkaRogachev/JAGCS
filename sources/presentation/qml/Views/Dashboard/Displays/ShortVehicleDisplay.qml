@@ -170,7 +170,7 @@ BaseVehicleDisplay {
                 Controls.Button {
                     flat: true
                     iconSource: "qrc:/icons/right.svg"
-                    onClicked: dashboard.selectVehicle(vehicleId, vehicleName)
+                    onClicked: dashboard.selectVehicle(vehicleId)
                 }
 
                 CommandControls.Button {

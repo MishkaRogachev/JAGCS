@@ -42,7 +42,18 @@ DashboardPresenter::~DashboardPresenter()
 
 void DashboardPresenter::selectVehicle(int vehicleId)
 {
-    d->displaysModel.setSelectedVehicle(d->service->vehicle(vehicleId));
+    dao::VehiclePtr vehicle = d->service->vehicle(vehicleId);
+
+    if (vehicle)
+    {
+        this->view()->setProperty(PROPERTY(vehicle), QVariant::fromValue(*vehicle));
+    }
+    else
+    {
+        this->view()->setProperty(PROPERTY(vehicle), QVariant());
+    }
+
+    d->displaysModel.setSelectedVehicle(vehicle);
 }
 
 void DashboardPresenter::connectView(QObject* view)

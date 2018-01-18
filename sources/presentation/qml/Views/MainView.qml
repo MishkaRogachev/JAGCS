@@ -33,6 +33,7 @@ Controls.ApplicationWindow  {
     header: TopbarView {
         id: topbar
         anchors.left: dashboard.right
+        anchors.right: parent.right
     }
 
     Loader {

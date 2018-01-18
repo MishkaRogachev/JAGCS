@@ -7,11 +7,10 @@ import "qrc:/Controls" as Controls
 Item {
     id: dashboard
 
-    property string unitName
+    property var vehicle
     property var displays
 
-    function selectVehicle(vehicleId, vehicleName) {
-        unitName = vehicleName;
+    function selectVehicle(vehicleId) {
         presenter.selectVehicle(vehicleId);
     }
 
@@ -29,13 +28,13 @@ Item {
 
         Controls.Button {
             iconSource: "qrc:/icons/left.svg"
-            enabled: unitName.length > 0
-            onClicked: selectVehicle(0, "")
+            enabled: vehicle !== undefined
+            onClicked: selectVehicle(0)
             flat: true
         }
 
         Controls.Label {
-            text: unitName.length ? unitName : qsTr("All MAVs")
+            text: vehicle ? vehicle.name : qsTr("All MAVs")
             font.bold: true
         }
 
@@ -46,7 +45,7 @@ Item {
         Controls.Button {
             iconSource: "qrc:/icons/settings.svg"
             tipText: qsTr("Instruments")
-            enabled: unitName.length > 0
+            enabled: vehicle !== undefined
             flat: true
         }
     }
