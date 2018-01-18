@@ -101,7 +101,7 @@ BaseVehicleDisplay {
             Layout.fillWidth: true
         }
 
-        Instruments.SatelliteInstrument {
+        Instruments.PositioningInstrument {
             visible: true // TODO: instruments settings
             Layout.fillWidth: true
         }
