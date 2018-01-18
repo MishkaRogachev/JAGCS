@@ -25,7 +25,6 @@ public:
 
     QList<int> vehicleIds;
     QMap<int, QVariantList> tracks;
-    int trackingVehicleId = 0;
 
     int trackLength = settings::Provider::value(settings::map::trackLength).toInt();
 };
@@ -51,9 +50,7 @@ VehicleMapItemModel::VehicleMapItemModel(domain::VehicleService* vehicleService,
 }
 
 VehicleMapItemModel::~VehicleMapItemModel()
-{
-    delete d;
-}
+{}
 
 int VehicleMapItemModel::rowCount(const QModelIndex& parent) const
 {
@@ -100,13 +97,13 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
         data = vehicle->type();
         break;
     case VehicleIdRole:
+        data = vehicleId;
+        break;
+    case MavIdRole:
         data = vehicle->mavId();
         break;
     case TrackRole:
         data = d->tracks[vehicleId];
-        break;
-    case SelectedRole:
-        data = bool(d->trackingVehicleId == vehicleId);
         break;
     case HdopRadius:
         data = node->childNode(domain::Telemetry::Satellite)->parameter(domain::Telemetry::Eph);
@@ -169,21 +166,6 @@ void VehicleMapItemModel::onVehicleRemoved(const dao::VehiclePtr& vehicle)
     this->endRemoveRows();
 }
 
-void VehicleMapItemModel::setSelectedVehicle(const dao::VehiclePtr& vehicle)
-{
-    QModelIndex lastIndex;
-    QModelIndex newIndex;
-
-    if (d->trackingVehicleId) lastIndex = this->vehicleIndex(d->trackingVehicleId);
-
-    d->trackingVehicleId = vehicle.isNull() ? 0 : vehicle->id();
-
-    if (vehicle) newIndex = this->vehicleIndex(vehicle->id());
-
-    if (lastIndex.isValid()) emit dataChanged(lastIndex, lastIndex, { SelectedRole });
-    if (newIndex.isValid()) emit dataChanged(newIndex, newIndex, { SelectedRole });
-}
-
 QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -195,8 +177,8 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[SnsFixRole] = "snsFix";
     roles[TypeRole] = "type";
     roles[VehicleIdRole] = "vehicleId";
+    roles[MavIdRole] = "mavId";
     roles[TrackRole] = "track";
-    roles[SelectedRole] = "isSelected";
     roles[HdopRadius] = "hdopRadius";
     roles[TargetCoordinateRole] = "targetPosition";
 

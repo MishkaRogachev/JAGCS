@@ -23,7 +23,7 @@ Map {
     property alias pickerCoordinate: picker.coordinate
     property alias pickerVisible: picker.visible
 
-    property bool trackingVehicle: false
+    property int trackingVehicleId: 0
     property int selectedItemId: 0
 
     property int activeMapTypeIndex: 0
@@ -77,7 +77,7 @@ Map {
 
     Component.onDestruction: if (visible) saveViewport()
     onVisibleChanged: if (!visible) saveViewport()
-    onTrackingVehicleChanged: setGesturesEnabled(!trackingVehicle)
+    onTrackingVehicleIdChanged: setGesturesEnabled(trackingVehicleId == 0)
 
     function saveViewport() {
         if (width == 0 || height == 0) return;

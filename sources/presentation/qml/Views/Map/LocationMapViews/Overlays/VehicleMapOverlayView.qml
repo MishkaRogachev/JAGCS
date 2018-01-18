@@ -34,7 +34,7 @@ MapItemView {
 
         Connections {
             target: map
-            onTrackingVehicleChanged: tryCenterVehicle()
+            onTrackingVehicleIdChanged: tryCenterVehicle()
             onCenterChanged: tryCenterVehicle()
         }
 
@@ -61,7 +61,7 @@ MapItemView {
             }
 
             Controls.Label {
-                text: vehicleId
+                text: mavId
                 anchors.centerIn: parent
                 rotation: map.bearing
                 font.pixelSize: sizings.fontPixelSize * 0.75
@@ -72,7 +72,7 @@ MapItemView {
         }
 
         function tryCenterVehicle() {
-            if (!map.trackingVehicle || !isSelected) return;
+            if (map.trackingVehicleId != vehicleId) return;
 
             if (coordinate) map.center = coordinate;
             map.bearing = headingAnimated;

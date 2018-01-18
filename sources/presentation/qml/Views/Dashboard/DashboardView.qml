@@ -23,7 +23,8 @@ Item {
 
     RowLayout {
         id: unitRow
-        spacing: sizings.spacing
+        width: root.width
+        spacing: 0
 
         Controls.Button {
             iconSource: "qrc:/icons/left.svg"
@@ -35,6 +36,20 @@ Item {
         Controls.Label {
             text: selectedVehicle ? selectedVehicle.name : qsTr("All MAVs")
             font.bold: true
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/center.svg"
+            tipText: qsTr("Center vehicle on map")
+            checkable: true
+            enabled: selectedVehicle !== undefined && map.visible
+            onEnabledChanged: if (!enabled) checked = false;
+            onCheckedChanged: map.trackingVehicleId = checked ? selectedVehicle.id : 0
+            flat: true
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Controls.Button {

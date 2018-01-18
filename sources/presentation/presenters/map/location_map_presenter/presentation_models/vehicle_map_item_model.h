@@ -32,8 +32,8 @@ namespace presentation
             SnsFixRole,
             TypeRole,
             VehicleIdRole,
+            MavIdRole,
             TrackRole,
-            SelectedRole,
             HdopRadius,
             TargetCoordinateRole
         };
@@ -49,8 +49,6 @@ namespace presentation
     public slots:
         void onVehicleAdded(const dao::VehiclePtr& vehicle);
         void onVehicleRemoved(const dao::VehiclePtr& vehicle);
-
-        void setSelectedVehicle(const dao::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
@@ -69,7 +67,7 @@ namespace presentation
 
     private:
         class Impl;
-        Impl* const d;
+        QScopedPointer<Impl> const d;
     };
 }
 
