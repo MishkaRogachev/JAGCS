@@ -109,10 +109,10 @@ BaseVehicleDisplay {
 
             Repeater {
                 model: [
-                    { text: qsTr("Status"), instrument: status },
-                    { text: qsTr("Positioning"), instrument: positioning },
-                    { text: qsTr("Flight instrument"), instrument: flight },
-                    { text: qsTr("Navigation instrument"), instrument: navigation },
+                    { text: qsTr("Diagnostics panel"), instrument: diagnostics },
+                    { text: qsTr("Status panel"), instrument: status },
+                    { text: qsTr("Flight instrument(FD)"), instrument: fd },
+                    { text: qsTr("Horizontal situation indicator(HSI)"), instrument: hsi },
                     { text: qsTr("Mission control"), instrument: mission },
                     { text: qsTr("Control panel"), instrument: control }
                 ]
@@ -132,27 +132,27 @@ BaseVehicleDisplay {
         spacing: sizings.spacing
         // TODO: initial visibility to settings
 
-        Instruments.StatusInstrument {
+        Instruments.DiagnosticsPanel {
+            id: diagnostics
+            Layout.fillWidth: true
+        }
+
+        Instruments.StatusPanel {
             id: status
             Layout.fillWidth: true
         }
 
-        Instruments.PositioningInstrument {
-            id: positioning
+        Instruments.FlightDirector {
+            id: fd
             Layout.fillWidth: true
         }
 
-        Instruments.FlightInstrument {
-            id: flight
+        Instruments.HorizontalSituationIndicator  {
+            id: hsi
             Layout.fillWidth: true
         }
 
-        Instruments.NavigationInstrument  {
-            id: navigation
-            Layout.fillWidth: true
-        }
-
-        Instruments.MissionInstrument  {
+        Instruments.MissionControl  {
             id: mission
             Layout.fillWidth: true
 
@@ -163,7 +163,7 @@ BaseVehicleDisplay {
             }
         }
 
-        Instruments.ControlInstrument  {
+        Instruments.ControlPanel {
             id: control
             Layout.fillWidth: true
 
