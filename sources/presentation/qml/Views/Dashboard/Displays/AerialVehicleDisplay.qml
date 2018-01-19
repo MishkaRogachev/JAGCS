@@ -20,6 +20,7 @@ BaseVehicleDisplay {
 
     property bool ahrsOperational: false
     property real yawspeed: 0.0
+    property vector3d vibration
 
     property real velocityVariance: 0.0
     property real verticalVariance: 0.0

@@ -43,6 +43,7 @@
         <file>Indicators/StateIndicator.qml</file>
         <file>Indicators/RssiIndicator.qml</file>
         <file>Indicators/EkfIndicator.qml</file>
+        <file>Indicators/MiniPlot.qml</file>
         <file>Indicators/Horizon.qml</file>
         <file>Indicators/PlaneMark.qml</file>
         <file>Indicators/DesiredAnglesMark.qml</file>
@@ -52,7 +53,7 @@
         <file>Indicators/RollScale.qml</file>
         <file>Indicators/AttitudeIndicator.qml</file>
         <file>Indicators/ArtificialHorizon.qml</file>
-        <file>Indicators/FlightDirector.qml</file>
+        <file>Indicators/AttitudeDirectorIndicator.qml</file>
         <file>Indicators/YawIndicator.qml</file>
         <file>Indicators/InstrumentLabel.qml</file>
         <file>Indicators/FdLabel.qml</file>

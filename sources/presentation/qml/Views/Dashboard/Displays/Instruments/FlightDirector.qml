@@ -67,7 +67,7 @@ Controls.Pane {
         visible: pitotPresent
     }
 
-    Indicators.FlightDirector {
+    Indicators.AttitudeDirectorIndicator {
         id: fd
         anchors.centerIn: parent
         height: root.height - sizings.padding

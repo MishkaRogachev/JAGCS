@@ -1,6 +1,7 @@
 #include "vehicle_display_presenter.h"
 
 // Qt
+#include <QVector3D>
 #include <QDebug>
 
 using namespace presentation;
@@ -62,6 +63,7 @@ void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& 
     this->setViewProperty(PROPERTY(roll), parameters.value(domain::Telemetry::Roll, 0));
     this->setViewProperty(PROPERTY(yaw), parameters.value(domain::Telemetry::Yaw, 0));
     this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
+    this->setViewProperty(PROPERTY(vibration), parameters.value(domain::Telemetry::Vibration, QVector3D()));
 }
 
 void VehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
