@@ -45,6 +45,7 @@ ColumnLayout {
         missionId: missionEdit.missionId
         onSelectionRequest: missionEdit.selectedItemId = itemId
         Layout.fillWidth: true
+        implicitWidth: missionEdit.width
     }
 
     RowLayout
