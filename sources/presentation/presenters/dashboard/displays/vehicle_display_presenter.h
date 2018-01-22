@@ -9,6 +9,8 @@
 
 namespace presentation
 {
+    class VibrationModel;
+
     class VehicleDisplayPresenter: public CommonVehicleDisplayPresenter
     {
         Q_OBJECT
@@ -36,11 +38,15 @@ namespace presentation
         void updateFlightControl(const domain::Telemetry::TelemetryMap& parameters);
         void updateWind(const domain::Telemetry::TelemetryMap& parameters);
 
+    protected:
+        void connectView(QObject* view);
+
     private:
         void updateHoming();
 
         QGeoCoordinate m_position;
         QGeoCoordinate m_homePosition;
+        VibrationModel* m_vibrationModel;
     };
 }
 

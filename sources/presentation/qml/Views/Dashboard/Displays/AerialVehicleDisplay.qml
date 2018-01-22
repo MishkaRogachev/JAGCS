@@ -20,7 +20,7 @@ BaseVehicleDisplay {
 
     property bool ahrsOperational: false
     property real yawspeed: 0.0
-    property vector3d vibration
+    property var vibration
 
     property real velocityVariance: 0.0
     property real verticalVariance: 0.0
@@ -110,7 +110,7 @@ BaseVehicleDisplay {
 
             Repeater {
                 model: [
-                    { text: qsTr("Diagnostics panel"), instrument: diagnostics },
+//                    { text: qsTr("Diagnostics panel"), instrument: diagnostics },
                     { text: qsTr("Status panel"), instrument: status },
                     { text: qsTr("Flight instrument(FD)"), instrument: fd },
                     { text: qsTr("Horizontal situation indicator(HSI)"), instrument: hsi },
@@ -133,10 +133,10 @@ BaseVehicleDisplay {
         spacing: sizings.spacing
         // TODO: initial visibility to settings
 
-        Instruments.DiagnosticsPanel {
+/*        Instruments.DiagnosticsPanel {
             id: diagnostics
             Layout.fillWidth: true
-        }
+        }*/
 
         Instruments.StatusPanel {
             id: status

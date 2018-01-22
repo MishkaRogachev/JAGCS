@@ -24,54 +24,33 @@ Controls.Pane {
             Layout.minimumHeight: sizings.controlBaseSize * 1.5
             Layout.fillHeight: true
 
-            LineSeries {
-                id: xSeries
-                name: "X"
-                axisX: plot.timeAxis
-                axisY: plot.valueAxis
-                width: 2
-                color: palette.positiveColor
-            }
+            SplineSeries {
+                axisX : ValueAxis {
+                    min: 0 //chartModel.xMin
+                    max: 1000 //chartModel.xMax
+                }
 
-            LineSeries {
-                id: ySeries
-                name: "Y"
-                axisX: plot.timeAxis
-                axisY: plot.valueAxis
-                width: 2
-                color: palette.cautionColor
-            }
+                axisY : ValueAxis {
+                    min: 0
+                    max: 1
+                }
 
-            LineSeries {
-                id: zSeries
-                name: "Z"
-                axisX: plot.timeAxis
-                axisY: plot.valueAxis
-                width: 2
-                color: palette.dangerColor
-            }
+                VXYModelMapper {
+                    xColumn: 0
+                    yColumn: 1
+                    model: vibration
+                }
 
-            Connections {
-                target: vehicleDisplay
+                VXYModelMapper {
+                    xColumn: 0
+                    yColumn: 2
+                    model: vibration
+                }
 
-                onVibrationChanged: {
-                    xSeries.append(plot.time, vibration.x);
-                    ySeries.append(plot.time, vibration.y);
-                    zSeries.append(plot.time, vibration.z);
-
-                    if (plot.time > 100)
-                    {
-
-                        xSeries.removePoints(0, 1);
-                        ySeries.removePoints(0, 1);
-                        zSeries.removePoints(0, 1);
-                    }
-
-                    if (vibration.x > plot.topValue) plot.topValue = vibration.x;
-                    if (vibration.y > plot.topValue) plot.topValue = vibration.y;
-                    if (vibration.z > plot.topValue) plot.topValue = vibration.z;
-
-                    plot.time++;
+                VXYModelMapper {
+                    xColumn: 0
+                    yColumn: 3
+                    model: vibration
                 }
             }
         }

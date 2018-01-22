@@ -9,9 +9,10 @@ namespace
 {
     QMap<int, QColor> colors(
     {
-                { 0, Qt::cyan },
-                { 1, Qt::magenta },
-                { 2, Qt::red }
+                { 0, Qt::black },
+                { 1, Qt::cyan },
+                { 2, Qt::magenta },
+                { 3, Qt::red }
     });
 }
 
@@ -32,7 +33,7 @@ int VibrationModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
 
-    return 3; // Vector3D
+    return 4; // Time + Vector3D
 }
 
 QVariant VibrationModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -42,9 +43,10 @@ QVariant VibrationModel::headerData(int section, Qt::Orientation orientation, in
     if (orientation == Qt::Horizontal)
     {
         switch (section) {
-        case 0: return tr("X");
-        case 1: return tr("Y");
-        case 2: return tr("Z");
+        case 0: return tr("T");
+        case 1: return tr("X");
+        case 2: return tr("Y");
+        case 3: return tr("Z");
         default: return QVariant();
         }
     }
@@ -59,9 +61,10 @@ QVariant VibrationModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        return m_data.at(index.row()).operator [](index.column());
+        if (index.column() == 0) return index.row();
+        return m_data.at(index.row()).operator [](index.column() - 1);
     case Qt::BackgroundRole:
-        return ::colors.value(index.column(), Qt::white);
+        return ::colors.value(index.column() + 1, Qt::white);
     default:
         return QVariant();
     }

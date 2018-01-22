@@ -4,10 +4,14 @@
 #include <QVector3D>
 #include <QDebug>
 
+// Internal
+#include "vibration_model.h"
+
 using namespace presentation;
 
 VehicleDisplayPresenter::VehicleDisplayPresenter(QObject* parent):
-    CommonVehicleDisplayPresenter(parent)
+    CommonVehicleDisplayPresenter(parent),
+    m_vibrationModel(new VibrationModel(this))
 {}
 
 void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
@@ -63,7 +67,8 @@ void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& 
     this->setViewProperty(PROPERTY(roll), parameters.value(domain::Telemetry::Roll, 0));
     this->setViewProperty(PROPERTY(yaw), parameters.value(domain::Telemetry::Yaw, 0));
     this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
-    this->setViewProperty(PROPERTY(vibration), parameters.value(domain::Telemetry::Vibration, QVector3D()));
+
+    m_vibrationModel->addData(parameters.value(domain::Telemetry::Vibration).value<QVector3D>());
 }
 
 void VehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
@@ -174,6 +179,13 @@ void VehicleDisplayPresenter::updateWind(const domain::Telemetry::TelemetryMap& 
 {
     this->setViewProperty(PROPERTY(windDirection), parameters.value(domain::Telemetry::Yaw, false));
     this->setViewProperty(PROPERTY(windSpeed), parameters.value(domain::Telemetry::Speed, false));
+}
+
+void VehicleDisplayPresenter::connectView(QObject* view)
+{
+    view->setProperty(PROPERTY(vibration), QVariant::fromValue(m_vibrationModel));
+
+    BasePresenter::connectView(view);
 }
 
 void VehicleDisplayPresenter::updateHoming()
