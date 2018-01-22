@@ -64,7 +64,7 @@ Item {
     ListView {
         y: unitRow.height + sizings.spacing
         width: root.width
-        height: Math.min(parent.height, contentHeight + sizings.shadowSize)
+        height: Math.min(parent.height - y, contentHeight + sizings.shadowSize)
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
