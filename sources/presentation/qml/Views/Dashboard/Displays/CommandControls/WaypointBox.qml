@@ -11,6 +11,7 @@ Controls.ComboBox {
 
     currentIndex: -1
     contentColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
+    contentZ: 10
     horizontalAlignment: Text.AlignHCenter
     tipText: qsTr("Go to mission item")
     font.pixelSize: sizings.fontPixelSize * 0.75
@@ -29,7 +30,6 @@ Controls.ComboBox {
     }
 
     Rectangle {
-        z: -1
         anchors.fill: parent
         radius: 3
         color: {

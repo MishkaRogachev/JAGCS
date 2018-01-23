@@ -46,7 +46,7 @@ T.DelayButton {
             ContentItem {
                 anchors.verticalCenter: parent.verticalCenter
                 height: parent.height
-                x: (backgroundItem.width - width) / 2
+                x: (backgroundItem.width - implicitWidth) / 2
                 text: control.text
                 font: control.font
                 iconSource: control.iconSource

@@ -24,7 +24,6 @@ Controls.ComboBox {
     }
 
     Rectangle {
-        z: -1
         anchors.fill: parent
         radius: 3
         color: {
@@ -49,5 +48,6 @@ Controls.ComboBox {
         text: translator.translateVehicleMode(mode)
         color: status == Command.Idle ? palette.textColor: palette.selectedTextColor
         verticalAlignment: Text.AlignVCenter
+        z: 10
     }
 }

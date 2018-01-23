@@ -14,6 +14,7 @@ T.ComboBox {
                                       currentItem[control.iconRole] : ""
 
     property alias contentColor: content.textColor
+    property alias contentZ: content.z
     property alias horizontalAlignment: content.horizontalAlignment
 
     font.pixelSize: sizings.fontPixelSize
