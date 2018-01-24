@@ -17,18 +17,15 @@ Controls.ApplicationWindow  {
     property bool cornerVisible: false
     property int mapType: -1
 
-    property Component mapComponent
-
     property QtObject map
-    property QtObject video
 
     function reloadMap(type) {
         mapType = type !== undefined ? type : parseInt(settings.value("Map/plugin"));
-        mapComponent = mapFactory.create(mapType);
+        mapLoader.sourceComponent = mapFactory.create(mapType);
     }
 
-    visible: true
     Component.onCompleted: reloadMap()
+    visible: true
 
     header: TopbarView {
         id: topbar
@@ -36,15 +33,40 @@ Controls.ApplicationWindow  {
         anchors.right: parent.right
     }
 
-    Loader {
+    Item {
         id: substrate
         anchors.left: parent.left
         anchors.top: topbar.bottom
         width: menuDrawer.visible ? menuDrawer.x : parent.width
         anchors.bottom: parent.bottom
-        sourceComponent: cornerMap ? videoComponent : mapComponent
-        onItemChanged: if (item) cornerMap ? video = item : map = item;
     }
+
+    Item {
+        id: corner
+        anchors.top: topbar.bottom
+        anchors.right: tools.left
+        anchors.margins: sizings.margins
+        width: Math.min(parent.width / 3, parent.height / 3)
+        height: cornerMap ? map.implicitHeight : video.implicitHeight
+    }
+
+    ActiveVideoView {
+        id: video
+        anchors.fill: cornerMap ? substrate : corner
+        visible: cornerVisible || cornerMap
+        z: !cornerMap
+    }
+
+    Loader {
+        id: mapLoader
+        anchors.fill: cornerMap ? corner : substrate
+        visible: cornerVisible || !cornerMap
+        onItemChanged: map = item
+        z: cornerMap
+    }
+
+    MapFactory { id: mapFactory }
+
 
     DashboardView {
         id: dashboard
@@ -85,18 +107,6 @@ Controls.ApplicationWindow  {
         }
     }
 
-    Loader {
-        id: corner
-        anchors.bottom: parent.bottom
-        anchors.right: tools.left
-        anchors.margins: sizings.margins
-        width: Math.min(parent.width / 3, parent.height / 3)
-        sourceComponent: cornerMap ? mapComponent : videoComponent
-        visible: cornerVisible
-        onItemChanged: if (item) cornerMap ? map = item : video = item;
-        z: 1
-    }
-
     NotificationPopup {
         id: notificator
         x: substrate.width - width - sizings.margins
@@ -121,7 +131,4 @@ Controls.ApplicationWindow  {
 
         Behavior on width { PropertyAnimation { duration: 200 } }
     }
-
-    MapFactory { id: mapFactory }
-    Component { id: videoComponent; ActiveVideoView { id: video } }
 }
