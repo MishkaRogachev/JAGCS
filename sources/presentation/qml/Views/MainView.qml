@@ -2,6 +2,7 @@ import QtQuick 2.6
 
 import "../Controls" as Controls
 
+import "Tools"
 import "Notifications"
 import "Topbar"
 import "Video"
@@ -76,35 +77,11 @@ Controls.ApplicationWindow  {
         z: 1
     }
 
-    MapControl { // TODO: to ToolsPanel
+    ToolsPanel {
         id: tools
         anchors.right: substrate.right
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
-
-        Controls.Button {
-            id: tracking
-            iconSource: "qrc:/icons/center.svg"
-            tipText: qsTr("Center vehicle on map")
-            checkable: true
-            enabled: dashboard.selectedVehicle !== undefined && map.visible
-            onEnabledChanged: if (!enabled) checked = false;
-            onCheckedChanged: map.trackingVehicleId = checked ?
-                                  dashboard.selectedVehicle.id : 0
-        }
-
-        Controls.Button {
-            tipText: cornerMap ? qsTr("Map") : qsTr("Video")
-            iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
-            onClicked: cornerMap = !cornerMap
-        }
-
-        Controls.Button {
-            id: maxMinButton
-            tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
-            iconSource: cornerVisible ? "qrc:/icons/window.svg" : "qrc:/icons/subwindow.svg"
-            onClicked: cornerVisible = !cornerVisible
-        }
     }
 
     NotificationPopup {

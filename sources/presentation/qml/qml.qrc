@@ -63,18 +63,18 @@
         <file>Indicators/SituationIndicator.qml</file>
         <file>Views/Common/PointView.qml</file>
         <file>Views/MainView.qml</file>
+        <file>Views/Tools/ToolsPanel.qml</file>
         <file>Views/Notifications/NotificationPopup.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Topbar/TopbarButton.qml</file>
         <file>Views/Topbar/RadioStatus/RadioStatusView.qml</file>
         <file>Views/Topbar/Connection/ConnectionView.qml</file>
         <file>Views/Topbar/Notifications/NotificationsView.qml</file>
-        <file>Views/Map/MapControl.qml</file>
-        <file>Views/Map/MapPicker.qml</file>
-        <file>Views/Map/MapFactory.qml</file>
         <file>Views/VerticalProfile/VerticalProfileView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/ActiveVideoView.qml</file>
+        <file>Views/Map/MapPicker.qml</file>
+        <file>Views/Map/MapFactory.qml</file>
         <file>Views/Map/LocationMapViews/BaseMapView.qml</file>
         <file>Views/Map/LocationMapViews/OsmMapView.qml</file>
         <file>Views/Map/LocationMapViews/MapBoxGlMapView.qml</file>
