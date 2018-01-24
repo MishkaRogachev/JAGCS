@@ -61,6 +61,17 @@ Controls.ApplicationWindow  {
         anchors.margins: sizings.margins
 
         Controls.Button {
+            id: tracking
+            iconSource: "qrc:/icons/center.svg"
+            tipText: qsTr("Center vehicle on map")
+            checkable: true
+            enabled: dashboard.selectedVehicle !== undefined && map.visible
+            onEnabledChanged: if (!enabled) checked = false;
+            onCheckedChanged: map.trackingVehicleId = checked ?
+                                  dashboard.selectedVehicle.id : 0
+        }
+
+        Controls.Button {
             tipText: cornerMap ? qsTr("Map") : qsTr("Video")
             iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
             onClicked: cornerMap = !cornerMap

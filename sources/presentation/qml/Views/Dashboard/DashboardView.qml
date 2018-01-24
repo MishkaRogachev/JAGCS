@@ -38,16 +38,6 @@ Item {
             font.bold: true
         }
 
-        Controls.Button {
-            iconSource: "qrc:/icons/center.svg"
-            tipText: qsTr("Center vehicle on map")
-            checkable: true
-            enabled: selectedVehicle !== undefined && map.visible
-            onEnabledChanged: if (!enabled) checked = false;
-            onCheckedChanged: map.trackingVehicleId = checked ? selectedVehicle.id : 0
-            flat: true
-        }
-
         Item {
             Layout.fillWidth: true
         }

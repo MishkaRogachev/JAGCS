@@ -17,12 +17,10 @@ ColumnLayout {
         direction: RotationAnimation.Shortest
     }
 
-    z: 10000
-
     Controls.Button {
         tipText: qsTr("North")
         iconSource: "qrc:/icons/compas.svg"
         onClicked: bearingAnimation.start()
-        enabled: !map.trackingVehicle
+        enabled: map.trackingVehicleId === 0
     }
 }
