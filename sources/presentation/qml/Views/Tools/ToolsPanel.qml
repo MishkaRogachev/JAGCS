@@ -8,6 +8,17 @@ ColumnLayout {
 
     spacing: sizings.spacing
 
+    Controls.Button {
+        id: maxMinButton
+        tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
+        iconSource: cornerVisible ? "qrc:/icons/window.svg" : "qrc:/icons/subwindow.svg"
+        onClicked: cornerVisible = !cornerVisible
+    }
+
+    Item {
+        Layout.fillHeight: true
+    }
+
     RotationAnimation {
         id: bearingAnimation
         target: map
@@ -33,18 +44,5 @@ ColumnLayout {
         onEnabledChanged: if (!enabled) checked = false;
         onCheckedChanged: map.trackingVehicleId = checked ?
                               dashboard.selectedVehicle.id : 0
-    }
-
-    Controls.Button {
-        tipText: cornerMap ? qsTr("Map") : qsTr("Video")
-        iconSource: cornerMap ? "qrc:/icons/map-marker.svg" : "qrc:/icons/video.svg"
-        onClicked: cornerMap = !cornerMap
-    }
-
-    Controls.Button {
-        id: maxMinButton
-        tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
-        iconSource: cornerVisible ? "qrc:/icons/window.svg" : "qrc:/icons/subwindow.svg"
-        onClicked: cornerVisible = !cornerVisible
     }
 }

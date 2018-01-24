@@ -42,13 +42,15 @@ Controls.ApplicationWindow  {
         anchors.bottom: parent.bottom
     }
 
-    Item {
+    MouseArea {
         id: corner
         anchors.top: topbar.bottom
-        anchors.right: tools.left
+        anchors.right: substrate.right
         anchors.margins: sizings.margins
         width: Math.min(parent.width / 3, parent.height / 3)
         height: cornerMap ? map.implicitHeight : video.implicitHeight
+        z: cornerVisible ? 2 : -1
+        onClicked: cornerMap = !cornerMap
     }
 
     ActiveVideoView {
@@ -68,7 +70,6 @@ Controls.ApplicationWindow  {
 
     MapFactory { id: mapFactory }
 
-
     DashboardView {
         id: dashboard
         anchors.top: topbar.top
@@ -79,15 +80,17 @@ Controls.ApplicationWindow  {
 
     ToolsPanel {
         id: tools
+        anchors.top: topbar.bottom
         anchors.right: substrate.right
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
+        z: 3
     }
 
     NotificationPopup {
         id: notificator
-        x: substrate.width - width - sizings.margins
-        y: substrate.y + sizings.margins
+        x: tools.x - width - sizings.margins
+        y: substrate.y + substrate.height - height - sizings.margins
         width: Math.min(implicitWidth, substrate.width - dashboard.width - sizings.margins * 2)
     }
 
