@@ -84,8 +84,8 @@ Controls.Frame {
             visible: type == VideoSource.Device
             model: videoDevices
             currentIndex: videoDevices.indexOf(source);
-            onCurrentTextChanged: {
-                source = currentText;
+            onDisplayTextChanged: {
+                source = displayText;
                 changed = true;
             }
             Layout.fillWidth: true

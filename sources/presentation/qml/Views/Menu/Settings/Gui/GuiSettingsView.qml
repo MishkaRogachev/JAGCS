@@ -67,8 +67,8 @@ GridLayout {
         id: uiSizeBox
         model: [24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64]
         Layout.fillWidth: true
-        onCurrentTextChanged: {
-            uiSize = currentText;
+        onDisplayTextChanged: {
+            uiSize = displayText;
             presenter.setUiSize(uiSize);
             changed = true;
         }
@@ -107,8 +107,8 @@ GridLayout {
         id: speedBox
         model: [5, 10, 25, 50, 100]
         Layout.fillWidth: true
-        onCurrentTextChanged: {
-            speedStep = currentText;
+        onDisplayTextChanged: {
+            speedStep = displayText;
             changed = true;
         }
     }
@@ -132,8 +132,8 @@ GridLayout {
         id: altitudeBox
         model: [5, 10, 25, 50, 100]
         Layout.fillWidth: true
-        onCurrentTextChanged: {
-            altitudeStep = currentText;
+        onDisplayTextChanged: {
+            altitudeStep = displayText;
             changed = true;
         }
     }

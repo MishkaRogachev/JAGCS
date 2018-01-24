@@ -136,8 +136,8 @@ Controls.Frame {
             id: deviceBox
             visible: type == LinkDescription.Serial
             model: []
-            onCurrentTextChanged: {
-                device = currentText;
+            onDisplayTextChanged: {
+                device = displayText;
                 changed = true;
             }
             Layout.fillWidth: true
@@ -153,8 +153,8 @@ Controls.Frame {
             id: baudBox
             visible: type == LinkDescription.Serial
             model: []
-            onCurrentTextChanged: {
-                baudRate = currentText;
+            onDisplayTextChanged: {
+                baudRate = displayText;
                 changed = true;
             }
             Layout.fillWidth: true
