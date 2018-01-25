@@ -9,6 +9,7 @@ Item {
 
     function addLog(message) {
         messages.append({ "msg": message });
+        list.positionViewAtEnd();
     }
 
     NotificationsPresenter {
@@ -17,14 +18,21 @@ Item {
     }
 
     ListView {
+        id: list
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         width: Math.min(sizings.controlBaseSize * 11, notificationsList.width)
         height: Math.min(contentHeight, parent.height)
-        clip: true
+        spacing: sizings.spacing
         model: ListModel { id: messages }
         verticalLayoutDirection: ListView.BottomToTop
-        spacing: sizings.spacing
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
+
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
+        }
 
         delegate: NotificationView {
             message: msg
