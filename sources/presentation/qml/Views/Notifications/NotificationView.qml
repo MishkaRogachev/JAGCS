@@ -4,38 +4,21 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Popup {
-    id: popup
+Controls.Frame {
+    id: notification
 
     property var message
 
     signal dropped()
 
-    function show(message) {
-        popup.message = message;
-        opacity = 1.0;
-        open();
-        startHidingLoop();
-    }
-
     function drop() {
-        if (animation.running) animation.stop();
+        if (fadeAnimation.running) fadeAnimation.stop();
         if (timer.running) timer.stop();
-        close();
         dropped();
     }
 
-    function startHidingLoop() {
-        opacity = 1.0;
-        if (animation.running) animation.stop();
-        if (timer.running) timer.stop();
-        timer.start();
-    }
-
     padding: sizings.padding
-    implicitWidth: sizings.controlBaseSize * 11
-    implicitHeight: row.implicitHeight + padding * 2
-    closePolicy: Controls.Popup.NoAutoClose
+    implicitHeight: label.implicitHeight + padding * 2
     clip: true
     backgroundColor: {
         switch (message.type) {
@@ -54,24 +37,30 @@ Controls.Popup {
     Timer {
         id: timer
         interval: 3000
-        onTriggered: animation.start()
+        running: true
+        onTriggered: fadeAnimation.start()
     }
 
     MouseArea {
         anchors.fill: parent
-        onPressed: startHidingLoop();
+        onPressed: {
+            notification.opacity = 1.0;
+            if (fadeAnimation.running) fadeAnimation.stop();
+            if (timer.running) timer.stop();
+            timer.start();
+        }
     }
 
     PropertyAnimation on opacity {
-        id: animation
+        id: fadeAnimation
         duration: 2000
         from: 1.0
         to: 0.0
+        running: false
         onStopped: if (!opacity) drop()
     }
 
     RowLayout {
-        id: row
         anchors.fill: parent
         spacing: sizings.spacing
 
@@ -79,6 +68,7 @@ Controls.Popup {
             id: label
             text: message.message
             color: palette.selectedTextColor
+            Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
         }
 

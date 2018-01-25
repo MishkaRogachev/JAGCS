@@ -87,11 +87,14 @@ Controls.ApplicationWindow  {
         z: 3
     }
 
-    NotificationPopup {
-        id: notificator
-        x: tools.x - width - sizings.margins
-        y: substrate.y + substrate.height - height - sizings.margins
-        width: Math.min(implicitWidth, substrate.width - dashboard.width - sizings.margins * 2)
+    NotificationListView {
+        id: notifications
+        anchors.top: corner.bottom
+        anchors.right: tools.left
+        anchors.bottom: parent.bottom
+        anchors.left: dashboard.right
+        anchors.margins: sizings.margins
+        z: 3
     }
 
     Controls.Drawer {

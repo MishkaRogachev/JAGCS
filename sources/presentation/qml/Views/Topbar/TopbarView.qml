@@ -6,7 +6,6 @@ import "qrc:/Controls" as Controls
 
 import "RadioStatus"
 import "Connection"
-import "Notifications"
 
 Item {
     id: topbar
@@ -35,10 +34,6 @@ Item {
 
         ConnectionView {
             id: connection
-        }
-
-        NotificationsView {
-            id: notification
         }
     }
 
