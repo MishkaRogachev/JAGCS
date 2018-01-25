@@ -18,28 +18,25 @@ Item {
     }
 
     RowLayout {
-        anchors.left: parent.left
+        anchors.right: parent.right
         spacing: sizings.spacing
 
         RadioStatusView {
             id: radioStatus
         }
 
-        TopbarButton {
-            iconSource: connection.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-            iconColor: connection.connected ? palette.textColor : palette.dangerColor
-            tipText: qsTr("Links")
-            entry: "qrc:/Views/Menu/Links/LinkListView.qml"
-        }
-
         ConnectionView {
             id: connection
         }
-    }
 
-    RowLayout {
-        anchors.right: parent.right
-        spacing: sizings.spacing
+        TopbarButton {
+            iconSource: connection.connected ? "qrc:/icons/connect.svg" :
+                                               "qrc:/icons/disconnect.svg"
+            iconColor: connection.connected ? palette.textColor :
+                                              palette.dangerColor
+            tipText: qsTr("Links")
+            entry: "qrc:/Views/Menu/Links/LinkListView.qml"
+        }
 
         TopbarButton {
             iconSource: "qrc:/icons/flight.svg"

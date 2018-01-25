@@ -18,7 +18,7 @@ Controls.Frame {
     }
 
     padding: sizings.padding
-    implicitHeight: label.implicitHeight + padding * 2
+    height: label.implicitHeight + padding * 2
     clip: true
     backgroundColor: {
         switch (message.type) {
@@ -61,14 +61,14 @@ Controls.Frame {
     }
 
     RowLayout {
-        anchors.fill: parent
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width
         spacing: sizings.spacing
 
         Controls.Label {
             id: label
             text: message.message
             color: palette.selectedTextColor
-            Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
         }
 
@@ -77,7 +77,6 @@ Controls.Frame {
             iconColor: palette.selectedTextColor
             flat: true
             onClicked: drop()
-            Layout.alignment: Qt.AlignTop
         }
     }
 }

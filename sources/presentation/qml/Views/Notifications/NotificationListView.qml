@@ -7,8 +7,6 @@ import "qrc:/Controls" as Controls
 Item {
     id: notificationsList
 
-    ListModel { id: messages }
-
     function addLog(message) {
         messages.append({ "msg": message });
     }
@@ -24,7 +22,7 @@ Item {
         width: Math.min(sizings.controlBaseSize * 11, notificationsList.width)
         height: Math.min(contentHeight, parent.height)
         clip: true
-        model: messages
+        model: ListModel { id: messages }
         verticalLayoutDirection: ListView.BottomToTop
         spacing: sizings.spacing
 
