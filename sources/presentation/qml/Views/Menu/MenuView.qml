@@ -116,7 +116,9 @@ ColumnLayout {
                 if (!item || typeof(item) === "undefined") return;
 
                 menu.width = item.implicitWidth + sizings.margins * 2
-                item.height = Math.max(item.implicitHeight, flickable.height);
+                item.height = Qt.binding(function() {
+                    return Math.max(item.implicitHeight, flickable.height);
+                });
             }
 
             Connections {
@@ -124,7 +126,6 @@ ColumnLayout {
                 ignoreUnknownSignals: true
                 onReqestComponent: menu.deepIn(source, text, properties)
                 onImplicitWidthChanged: menu.width = implicitWidth + sizings.margins * 2
-                onImplicitHeightChanged: Math.max(implicitHeight, flickable.height);
             }
         }
     }
