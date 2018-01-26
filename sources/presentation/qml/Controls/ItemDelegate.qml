@@ -13,20 +13,16 @@ T.ItemDelegate {
     implicitHeight: sizings.controlBaseSize
     padding: sizings.padding
 
+    background: Rectangle {
+        visible: control.highlighted
+        color: palette.selectionColor
+        anchors.fill: parent
+    }
+
     contentItem: ContentItem {
         id: content
         font: control.font
         text: control.text
         textColor: control.highlighted ? palette.selectedTextColor : palette.textColor
-    }
-
-    background: Rectangle {
-        implicitHeight: sizings.controlBaseSize
-        border.color: control.activeFocus ? palette.selectionColor : "transparent"
-        color: {
-            if (control.down) return palette.highlightColor;
-            if (control.highlighted) return palette.selectionColor;
-            return palette.sunkenColor;
-        }
     }
 }
