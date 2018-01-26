@@ -19,8 +19,10 @@ PresentationContext::PresentationContext()
 {
     m_engine = new QQmlApplicationEngine(qApp);
 
-    m_engine->rootContext()->setContextProperty("translator",
-                                                QVariant::fromValue(new TranslationHelper(qApp)));
+    m_engine->addImportPath(":/Controls");
+
+    m_engine->rootContext()->setContextProperty(
+                "translator", QVariant::fromValue(new TranslationHelper(qApp)));
 
     QObject::connect(m_engine, &QQmlEngine::quit, qApp, &QGuiApplication::quit);
     QObject::connect(qApp, &QGuiApplication::aboutToQuit, qApp, [this]() {
@@ -53,7 +55,8 @@ void PresentationContext::start()
 
 void PresentationContext::updateGeometry()
 {
-    PresentationContext::updateGeometry(settings::Provider::boolValue(settings::gui::fullscreen));
+    PresentationContext::updateGeometry(
+                settings::Provider::boolValue(settings::gui::fullscreen));
 }
 
 void PresentationContext::updateGeometry(bool fullscreen)
@@ -89,8 +92,8 @@ void PresentationContext::saveWindowedGeometry()
     QObject* view = PresentationContext::rootView();
     if (!view) return;
 
-    if (view->property(PROPERTY(visibility)).value<QWindow::Visibility>() == QWindow::FullScreen)
-        return;
+    if (view->property(PROPERTY(visibility)).value<QWindow::Visibility>() ==
+        QWindow::FullScreen) return;
 
     QRect geometry(view->property(PROPERTY(x)).toInt(),
                    view->property(PROPERTY(y)).toInt(),
