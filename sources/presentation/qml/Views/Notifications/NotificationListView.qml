@@ -17,18 +17,21 @@ Item {
         view: notificationsList
     }
 
+    clip: true
+
     ListView {
         id: list
         anchors.right: parent.right
+        anchors.rightMargin: sizings.shadowSize
         anchors.bottom: parent.bottom
-        width: Math.min(sizings.controlBaseSize * 11, notificationsList.width)
+        width: Math.min(sizings.controlBaseSize * 11,
+                        notificationsList.width) - sizings.shadowSize
         height: Math.min(contentHeight, parent.height)
         spacing: sizings.spacing
         model: ListModel { id: messages }
         verticalLayoutDirection: ListView.BottomToTop
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height

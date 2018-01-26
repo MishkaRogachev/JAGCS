@@ -19,7 +19,6 @@ Controls.Frame {
 
     padding: sizings.padding
     height: label.implicitHeight + padding * 2
-    clip: true
     backgroundColor: {
         switch (message.type) {
         case LogMessage.Positive:
@@ -36,7 +35,7 @@ Controls.Frame {
 
     Timer {
         id: timer
-        interval: 3000
+        interval: 5000
         running: true
         onTriggered: fadeAnimation.start()
     }
@@ -64,6 +63,7 @@ Controls.Frame {
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width
         spacing: sizings.spacing
+        clip: true
 
         Controls.Label {
             id: label
