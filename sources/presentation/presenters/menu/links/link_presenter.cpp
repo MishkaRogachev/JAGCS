@@ -6,38 +6,63 @@
 #include <QDebug>
 
 // Internal
+#include "link_description.h"
+#include "link_statistics.h"
+
 #include "service_registry.h"
 #include "serial_ports_service.h"
 #include "communication_service.h"
-#include "link_description.h"
+
+#include "link_statistics_model.h"
 
 using namespace presentation;
 
+class LinkPresenter::Impl
+{
+public:
+    dao::LinkDescriptionPtr description;
+
+    domain::SerialPortService* const serialService =
+            domain::ServiceRegistry::serialPortService();
+    domain::CommunicationService* const commService =
+            domain::ServiceRegistry::communicationService();
+
+    LinkStatisticsModel model;
+};
+
 LinkPresenter::LinkPresenter(QObject* parent):
     BasePresenter(parent),
-    m_serialService(domain::ServiceRegistry::serialPortService()),
-    m_commService(domain::ServiceRegistry::communicationService())
+    d(new Impl())
 {
-    connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
+    connect(d->serialService, &domain::SerialPortService::availableDevicesChanged,
             this, &LinkPresenter::updateDevices);
 
-    connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
+    connect(d->commService, &domain::CommunicationService::descriptionChanged, this,
             [this](const dao::LinkDescriptionPtr& description) {
-        if (m_description == description) this->updateLink();
+        if (d->description == description) this->updateLink();
     });
-    connect(m_commService, &domain::CommunicationService::linkStatisticsChanged, this,
+    connect(d->commService, &domain::CommunicationService::linkStatusChanged, this,
             [this](const dao::LinkDescriptionPtr& description) {
-        if (m_description == description) this->updateStatistics();
+        if (d->description == description) this->updateStatus();
+    });
+    connect(d->commService, &domain::CommunicationService::linkStatisticsChanged, this,
+            [this](const dao::LinkStatisticsPtr& statistics) {
+        if (d->description->id() != statistics->linkId()) return;
+
+        d->model.addData(statistics->bytesRecv(), statistics->bytesSent());
     });
 }
 
+LinkPresenter::~LinkPresenter()
+{}
+
 void LinkPresenter::setLink(int id)
 {
-    m_description = m_commService->description(id);
+    d->description = d->commService->description(id);
 
     this->updateDevices();
     this->updateLink();
-    this->updateStatistics();
+    this->updateStatus();
 }
 
 void LinkPresenter::updateRates()
@@ -49,25 +74,21 @@ void LinkPresenter::updateRates()
 
 void LinkPresenter::updateLink()
 {
-    this->setViewProperty(PROPERTY(type), m_description ? m_description->type() :
-                                                          dao::LinkDescription::UnknownType);
-    this->setViewProperty(PROPERTY(name), m_description ? m_description->name() : QString());
-    this->setViewProperty(PROPERTY(port), m_description ? m_description->port() : 0);
-    this->setViewProperty(PROPERTY(device), m_description ? m_description->device() : QString());
-    this->setViewProperty(PROPERTY(baudRate), m_description ? m_description->baudRate() : 0);
+    this->setViewProperty(PROPERTY(type), d->description ? d->description->type() :
+                                                           dao::LinkDescription::UnknownType);
+    this->setViewProperty(PROPERTY(name), d->description ? d->description->name() : QString());
+    this->setViewProperty(PROPERTY(port), d->description ? d->description->port() : 0);
+    this->setViewProperty(PROPERTY(device), d->description ? d->description->device() : QString());
+    this->setViewProperty(PROPERTY(baudRate), d->description ? d->description->baudRate() : 0);
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void LinkPresenter::updateStatistics()
+void LinkPresenter::updateStatus()
 {
-    this->setViewProperty(PROPERTY(connected), m_description && m_description->isConnected());
-    this->setViewProperty(PROPERTY(protocol), m_description ? m_description->protocol() :
-                                                              dao::LinkDescription::UnknownProtocol);
-    this->setViewProperty(PROPERTY(bytesSent), m_description ?
-                              QVariant::fromValue(m_description->bytesSent()) : QVariant());
-    this->setViewProperty(PROPERTY(bytesRecv), m_description ?
-                              QVariant::fromValue(m_description->bytesRecv()) : QVariant());
+    this->setViewProperty(PROPERTY(connected), d->description && d->description->isConnected());
+    this->setViewProperty(PROPERTY(protocol), d->description ? d->description->protocol() :
+                                                               dao::LinkDescription::UnknownProtocol);
 }
 
 void LinkPresenter::updateDevices()
@@ -75,14 +96,14 @@ void LinkPresenter::updateDevices()
     QStringList devices;
     devices.append(QString());
 
-    for (const QString& device: m_serialService->availableDevices())
+    for (const QString& device: d->serialService->availableDevices())
     {
         devices.append(device);
     }
 
-    if (m_description && !devices.contains(m_description->device()))
+    if (d->description && !devices.contains(d->description->device()))
     {
-        devices.append(m_description->device());
+        devices.append(d->description->device());
     }
 
     this->setViewProperty(PROPERTY(devices), devices);
@@ -90,28 +111,33 @@ void LinkPresenter::updateDevices()
 
 void LinkPresenter::setConnected(bool connected)
 {
-    if (m_description.isNull()) return;
+    if (d->description.isNull()) return;
 
-    m_commService->setLinkConnected(m_description, connected);
+    d->commService->setLinkConnected(d->description, connected);
 }
 
 void LinkPresenter::save()
 {
-    if (m_description.isNull()) return;
+    if (d->description.isNull()) return;
 
-    m_description->setName(this->viewProperty(PROPERTY(name)).toString());
-    m_description->setPort(this->viewProperty(PROPERTY(port)).toInt());
-    m_description->setDevice(this->viewProperty(PROPERTY(device)).toString());
-    m_description->setBaudRate(this->viewProperty(PROPERTY(baudRate)).toInt());
+    d->description->setName(this->viewProperty(PROPERTY(name)).toString());
+    d->description->setPort(this->viewProperty(PROPERTY(port)).toInt());
+    d->description->setDevice(this->viewProperty(PROPERTY(device)).toString());
+    d->description->setBaudRate(this->viewProperty(PROPERTY(baudRate)).toInt());
 
-    if (!m_commService->save(m_description)) return;
+    if (!d->commService->save(d->description)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void LinkPresenter::remove()
 {
-    if (m_description.isNull()) return;
+    if (d->description.isNull()) return;
 
-    m_commService->remove(m_description);
+    d->commService->remove(d->description);
+}
+
+void LinkPresenter::connectView(QObject* view)
+{
+    view->setProperty(PROPERTY(statistics), QVariant::fromValue(&d->model));
 }

@@ -21,8 +21,8 @@ ConnectionPresenter::ConnectionPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    connect(d->service, &domain::CommunicationService::linkStatisticsChanged,
-            this, &ConnectionPresenter::updateStatus);
+//    connect(d->service, &domain::CommunicationService::linkStatisticsChanged,
+//            this, &ConnectionPresenter::updateStatus);
 }
 
 ConnectionPresenter::~ConnectionPresenter()
@@ -34,12 +34,12 @@ void ConnectionPresenter::updateStatus()
     qreal bytesRecv = 0;
     qreal bytesSent = 0;
 
-    for (const dao::LinkDescriptionPtr& link: d->service->descriptions())
-    {
-        if (!link->bytesRecv().isEmpty()) bytesRecv += link->bytesRecv().last();
-        if (!link->bytesSent().isEmpty()) bytesSent += link->bytesSent().last();
-        if (!connected && link->isConnected()) connected = true;
-    }
+//    for (const dao::LinkDescriptionPtr& link: d->service->descriptions())
+//    {
+//        if (!link->bytesRecv().isEmpty()) bytesRecv += link->bytesRecv().last();
+//        if (!link->bytesSent().isEmpty()) bytesSent += link->bytesSent().last();
+//        if (!connected && link->isConnected()) connected = true;
+//    }
 
     this->setViewProperty(PROPERTY(connected), connected);
     this->setViewProperty(PROPERTY(bytesRecv), bytesRecv);

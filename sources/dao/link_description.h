@@ -18,8 +18,6 @@ namespace dao
         Q_PROPERTY(bool autoConnect READ isAutoConnect WRITE setAutoConnect)
 
     public:
-        LinkDescription();
-
         enum Type: quint8
         {
             UnknownType = 0,
@@ -55,18 +53,6 @@ namespace dao
         bool isConnected() const;
         void setConnected(bool isConnected);
 
-        const QList<int>& bytesSent() const;
-        void addBytesSent(int bytesSent);
-
-        const QList<int>& bytesRecv() const;
-        void addBytesRecv(int bytesRecv);
-
-        const QList<int>& packetsRecv() const;
-        void addPacketsRecv(int packetsRecv);
-
-        const QList<int>& packetDrops() const;
-        void addPacketDrops(int packetDrops);
-
         Protocol protocol() const;
         void setProtocol(Protocol protocol);
 
@@ -80,12 +66,6 @@ namespace dao
 
         Protocol m_protocol = UnknownProtocol;
         bool m_connected = false;
-
-        int m_statistcsCount;
-        QList<int> m_bytesSent;
-        QList<int> m_bytesRecv;
-        QList<int> m_packetsRecv;
-        QList<int> m_packetDrops;
 
         Q_ENUM(Type)
         Q_ENUM(Protocol)

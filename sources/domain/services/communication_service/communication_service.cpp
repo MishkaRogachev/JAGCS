@@ -9,6 +9,8 @@
 #include "settings_provider.h"
 
 #include "link_description.h"
+#include "link_statistics.h"
+
 #include "generic_repository.h"
 #include "generic_repository_impl.h"
 
@@ -25,7 +27,8 @@ class CommunicationService::Impl
 {
 public:
     SerialPortService* serialPortService;
-    QMap<dao::LinkDescriptionPtr, QString> descriptionDevices;
+    QMap<dao::LinkDescriptionPtr, QString> descriptedDevices;
+    QMap<dao::LinkDescriptionPtr, dao::LinkStatisticsPtr> linkStatistics;
 
     QThread* commThread;
     CommunicatorWorker* commWorker;
@@ -39,6 +42,17 @@ public:
     void loadDescriptions(const QString& condition = QString())
     {
         for (int id: linkRepository.selectId(condition)) linkRepository.read(id);
+    }
+
+    dao::LinkStatisticsPtr getlinkStatistics(
+            const dao::LinkDescriptionPtr& description)
+    {
+        if (!linkStatistics.contains(description))
+        {
+            linkStatistics[description] = dao::LinkStatisticsPtr::create();
+            linkStatistics[description]->setlinkId(description->id());
+        }
+        return linkStatistics[description];
     }
 };
 
@@ -77,9 +91,9 @@ CommunicationService::~CommunicationService()
         description->setAutoConnect(description->isConnected());
         this->save(description);
 
-        if (d->descriptionDevices.contains(description))
+        if (d->descriptedDevices.contains(description))
         {
-            d->serialPortService->releaseDevice(d->descriptionDevices.take(description));
+            d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
         }
     }
 
@@ -117,7 +131,7 @@ void CommunicationService::init()
             !description->device().isEmpty())
         {
             d->serialPortService->holdDevice(description->device());
-            d->descriptionDevices[description] = description->device();
+            d->descriptedDevices[description] = description->device();
         }
     }
 }
@@ -130,19 +144,19 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
                               Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
 
-    if (d->descriptionDevices.contains(description) &&
-        description->device() != d->descriptionDevices[description])
+    if (d->descriptedDevices.contains(description) &&
+        description->device() != d->descriptedDevices[description])
     {
-        d->serialPortService->releaseDevice(d->descriptionDevices.take(description));
+        d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
     }
 
     isNew ? descriptionAdded(description) : descriptionChanged(description);
 
     if (description->type() == dao::LinkDescription::Serial &&
-        !description->device().isEmpty() && !d->descriptionDevices.contains(description))
+        !description->device().isEmpty() && !d->descriptedDevices.contains(description))
     {
         d->serialPortService->holdDevice(description->device());
-        d->descriptionDevices[description] = description->device();
+        d->descriptedDevices[description] = description->device();
     }
 
     return true;
@@ -155,9 +169,14 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
     QMetaObject::invokeMethod(d->commWorker, "removeLinkByDescription",
                               Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
 
-    if (d->descriptionDevices.contains(description))
+    if (d->descriptedDevices.contains(description))
     {
-        d->serialPortService->releaseDevice(d->descriptionDevices.take(description));
+        d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
+    }
+
+    if (d->linkStatistics.contains(description))
+    {
+        d->linkStatistics.remove(description);
     }
 
     emit descriptionRemoved(description);
@@ -180,27 +199,33 @@ void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr
                                                    int bytesSentSec,
                                                    bool connected)
 {
-    description->addBytesRecv(bytesReceivedSec);
-    description->addBytesSent(bytesSentSec);
-
     if (description->isConnected() != connected)
     {
         LogBus::log(tr("Link") + " " + description->name() + " " +
                        (connected ? tr("connected") : tr("disconnected")),
                        connected ? LogMessage::Positive : LogMessage::Warning);
         description->setConnected(connected);
+
+        emit linkStatusChanged(description);
     }
 
-    emit linkStatisticsChanged(description);
+    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(description);
+
+    statistics->setBytesRecv(bytesReceivedSec);
+    statistics->setBytesSent(bytesSentSec);
+
+    emit linkStatisticsChanged(statistics);
 }
 
 void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
                                                       int packetsReceived, int packetsDrops)
 {
-    description->addPacketsRecv(packetsReceived);
-    description->addPacketDrops(packetsDrops);
+    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(description);
 
-    emit linkStatisticsChanged(description);
+    statistics->setPacketsRecv(packetsReceived);
+    statistics->setPacketDrops(packetsDrops);
+
+    emit linkStatisticsChanged(statistics);
 }
 
 void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
@@ -215,14 +240,14 @@ void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPt
     LogBus::log(tr("Link") + " " + description->name() + " " + msg);
     description->setProtocol(protocol);
 
-    emit linkStatisticsChanged(description);
+    emit linkStatusChanged(description);
 }
 
 void CommunicationService::onDevicesChanged()
 {
     QStringList devices = d->serialPortService->devices();
 
-    for (const dao::LinkDescriptionPtr& description: d->descriptionDevices.keys())
+    for (const dao::LinkDescriptionPtr& description: d->descriptedDevices.keys())
     {
         if (!description->isConnected() && description->isAutoConnect() &&
             devices.contains(description->device()))

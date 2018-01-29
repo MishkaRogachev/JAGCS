@@ -4,6 +4,7 @@ import QtCharts 2.0
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Controls.Frame {
     id: linkView
@@ -19,30 +20,8 @@ Controls.Frame {
     property int baudRate
     property alias baudRates: baudBox.model
     property bool changed: false
-    property var bytesSent: []
-    property var bytesRecv: []
 
-    onBytesSentChanged: {
-        sentSeries.clear();
-
-        if (timeAxis.max < bytesSent.length - 1) timeAxis.max = bytesSent.length - 1;
-
-        for (var i = 0; i < bytesSent.length; ++i) {
-            if (bytesSent[i] > valueAxis.max) valueAxis.max = bytesSent[i];
-            sentSeries.append(i, bytesSent[i]);
-        }
-    }
-
-    onBytesRecvChanged: {
-        recvSeries.clear();
-
-        if (timeAxis.max < bytesRecv.length - 1) timeAxis.max = bytesRecv.length - 1;
-
-        for (var i = 0; i < bytesRecv.length; ++i) {
-            if (bytesRecv[i] > valueAxis.max) valueAxis.max = bytesRecv[i];
-            recvSeries.append(i, bytesRecv[i]);
-        }
-    }
+    property var statistics
 
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
@@ -160,51 +139,41 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        ChartView {
-            id: chart
-            implicitHeight: width / 3
+        Indicators.MiniPlot {
+            id: plot
             Layout.fillWidth: true
             Layout.columnSpan: 2
-            antialiasing: true
-            backgroundColor: "transparent"
-            legend.labelColor: palette.textColor
-            legend.alignment: Qt.AlignLeft
-            margins.top: 0
-            margins.bottom: 0
+            implicitHeight: width / 3
             visible: false
 
-            ValueAxis {
-                id: timeAxis
-                visible: false
-            }
+            SplineSeries {
+                axisX : ValueAxis {
+                    min: 0 //chartModel.xMin
+                    max: 1000 //chartModel.xMax
+                }
 
-            ValueAxis {
-                id: valueAxis
-                visible: false
-            }
+                axisY : ValueAxis {
+                    min: 0
+                    max: 1
+                }
 
-            AreaSeries {
-                name: qsTr("Sent")
-                axisX: timeAxis
-                axisY: valueAxis
-                borderWidth: 3
-                color: palette.positiveColor
-                opacity: 0.33
-                borderColor: palette.positiveColor
+                VXYModelMapper {
+                    xColumn: 0
+                    yColumn: 1
+                    model: statistics
+                }
 
-                upperSeries: LineSeries { id: sentSeries }
-            }
+                VXYModelMapper {
+                    xColumn: 0
+                    yColumn: 2
+                    model: statistics
+                }
 
-            AreaSeries {
-                name: qsTr("Recv.")
-                axisX: timeAxis
-                axisY: valueAxis
-                borderWidth: 3
-                color: palette.skyColor
-                opacity: 0.33
-                borderColor: palette.skyColor
-
-                upperSeries: LineSeries { id: recvSeries }
+                VXYModelMapper {
+                    xColumn: 0
+                    yColumn: 3
+                    model: statistics
+                }
             }
         }
 
@@ -217,8 +186,8 @@ Controls.Frame {
             enabled: linkId > 0
 
             Controls.Button {
-                iconSource: chart.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: chart.visible = !chart.visible
+                iconSource: plot.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+                onClicked: plot.visible = !plot.visible
             }
 
             Controls.Button {

@@ -1,14 +1,6 @@
 #include "link_description.h"
 
-// Internal
-#include "settings_provider.h"
-
 using namespace dao;
-
-LinkDescription::LinkDescription():
-    BaseDao(),
-    m_statistcsCount(settings::Provider::value(settings::communication::statisticsCount).toUInt())
-{}
 
 QString LinkDescription::name() const
 {
@@ -78,50 +70,6 @@ bool LinkDescription::isConnected() const
 void LinkDescription::setConnected(bool connected)
 {
     m_connected = connected;
-}
-
-const QList<int>& LinkDescription::bytesSent() const
-{
-    return m_bytesSent;
-}
-
-void LinkDescription::addBytesSent(int bytesSent)
-{
-    m_bytesSent.append(bytesSent);
-    while (m_bytesSent.count() > m_statistcsCount) m_bytesSent.removeFirst();
-}
-
-const QList<int>& LinkDescription::bytesRecv() const
-{
-    return m_bytesRecv;
-}
-
-void LinkDescription::addBytesRecv(int bytesRecv)
-{
-    m_bytesRecv.append(bytesRecv);
-    while (m_bytesRecv.count() > m_statistcsCount) m_bytesRecv.removeFirst();
-}
-
-const QList<int>& LinkDescription::packetsRecv() const
-{
-    return m_packetsRecv;
-}
-
-void LinkDescription::addPacketsRecv(int packetsRecv)
-{
-    m_packetsRecv.append(packetsRecv);
-    while (m_packetsRecv.count() > m_statistcsCount) m_packetsRecv.removeFirst();
-}
-
-const QList<int>& LinkDescription::packetDrops() const
-{
-    return m_packetDrops;
-}
-
-void LinkDescription::addPacketDrops(int packetDrops)
-{
-    m_packetDrops.append(packetDrops);
-    while (m_packetDrops.count() > m_statistcsCount) m_packetDrops.removeFirst();
 }
 
 LinkDescription::Protocol LinkDescription::protocol() const

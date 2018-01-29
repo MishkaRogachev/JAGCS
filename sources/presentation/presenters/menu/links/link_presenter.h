@@ -19,21 +19,24 @@ namespace presentation
 
     public:
         LinkPresenter(QObject* parent = nullptr);
+        ~LinkPresenter() override;
 
     public slots:
         void setLink(int id);
         void updateRates();
         void updateDevices();
         void updateLink();
-        void updateStatistics();
+        void updateStatus();
         void setConnected(bool connected);
         void save();
         void remove();
 
+    protected:
+        void connectView(QObject* view) override;
+
     private:
-        domain::SerialPortService* const m_serialService;
-        domain::CommunicationService* const m_commService;
-        dao::LinkDescriptionPtr m_description;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

@@ -13,6 +13,7 @@ namespace dao
     class Command;
     class Vehicle;
     class LinkDescription;
+    class LinkStatistics;
     class VideoSource;
 
     using MissionPtr = QSharedPointer<Mission>;
@@ -21,6 +22,7 @@ namespace dao
     using CommandPtr = QSharedPointer<Command>;
     using VehiclePtr = QSharedPointer<Vehicle>;
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
+    using LinkStatisticsPtr = QSharedPointer<LinkStatistics>;
     using VideoSourcePtr = QSharedPointer<VideoSource>;
 
     using MissionPtrList = QList<MissionPtr>;
