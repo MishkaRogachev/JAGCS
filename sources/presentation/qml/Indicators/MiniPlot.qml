@@ -4,11 +4,8 @@ import JAGCS 1.0
 
 import "../Controls" as Controls
 
-ChartView { // TODO: HXYModelMapper
+ChartView {
     id: chart
-
-    property int time: 0
-    property real topValue: 0.0
 
     property ValueAxis timeAxis: ValueAxis {
         visible: false
@@ -21,8 +18,6 @@ ChartView { // TODO: HXYModelMapper
     }
 
     backgroundColor: palette.sunkenColor
-   // legend.labelColor: palette.textColor
-    //legend.alignment: Qt.AlignLeft
     legend.visible: false
     margins.top: 0
     margins.bottom: 0

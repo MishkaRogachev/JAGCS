@@ -5,15 +5,6 @@
 #include <QColor>
 #include <QDebug>
 
-namespace
-{
-    QMap<int, QColor> colors(
-    {
-        { 1, "#CDDC39" },
-        { 2, "#18FFFF" }
-    });
-}
-
 using namespace presentation;
 
 LinkStatisticsModel::LinkStatisticsModel(QObject* parent):
@@ -64,18 +55,31 @@ QVariant LinkStatisticsModel::data(const QModelIndex& index, int role) const
         if (index.column() == 1) return m_data.at(index.row()).x();
         if (index.column() == 2) return m_data.at(index.row()).y();
         return QVariant();
-    case Qt::BackgroundRole:
-        return ::colors.value(index.column() + 1, Qt::white);
     default:
         return QVariant();
     }
 }
 
-void LinkStatisticsModel::addData(float received, float sent)
+int LinkStatisticsModel::maxTime() const
+{
+    return m_data.count() - 1;
+}
+
+int LinkStatisticsModel::maxValue() const
+{
+    return m_maxValue * 1.2; // +20%
+}
+
+void LinkStatisticsModel::addData(int received, int sent)
 {
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
 
-    m_data.append(QPointF(received, sent));
+    m_data.append(QPoint(received, sent));
 
     this->endInsertRows();
+
+    if (m_maxValue < received) m_maxValue = received;
+    if (m_maxValue < sent) m_maxValue = sent;
+
+    emit boundsChanged();
 }

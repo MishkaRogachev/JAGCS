@@ -145,34 +145,40 @@ Controls.Frame {
             Layout.columnSpan: 2
             implicitHeight: width / 3
             visible: false
+            valueAxis.max: statistics.maxValue
+            timeAxis.max: statistics.maxTime
 
-            SplineSeries {
-                axisX : ValueAxis {
-                    min: 0 //chartModel.xMin
-                    max: 1000 //chartModel.xMax
+            AreaSeries {
+                axisX: plot.timeAxis
+                axisY: plot.valueAxis
+                borderWidth: 3
+                color: palette.positiveColor
+                opacity: 0.33
+                borderColor: palette.positiveColor
+
+                upperSeries: LineSeries {
+                    VXYModelMapper {
+                        xColumn: 0
+                        yColumn: 1
+                        model: statistics
+                    }
                 }
+            }
 
-                axisY : ValueAxis {
-                    min: 0
-                    max: 1
-                }
+            AreaSeries {
+                axisX: plot.timeAxis
+                axisY: plot.valueAxis
+                borderWidth: 3
+                color: palette.skyColor
+                opacity: 0.33
+                borderColor: palette.skyColor
 
-                VXYModelMapper {
-                    xColumn: 0
-                    yColumn: 1
-                    model: statistics
-                }
-
-                VXYModelMapper {
-                    xColumn: 0
-                    yColumn: 2
-                    model: statistics
-                }
-
-                VXYModelMapper {
-                    xColumn: 0
-                    yColumn: 3
-                    model: statistics
+                upperSeries: LineSeries {
+                    VXYModelMapper {
+                        xColumn: 0
+                        yColumn: 2
+                        model: statistics
+                    }
                 }
             }
         }

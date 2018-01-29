@@ -60,7 +60,7 @@ Controls.Frame {
     }
 
     RowLayout {
-        anchors.verticalCenter: parent.verticalCenter
+        y: parent.height / 2 - height / 2
         width: parent.width
         spacing: sizings.spacing
         clip: true

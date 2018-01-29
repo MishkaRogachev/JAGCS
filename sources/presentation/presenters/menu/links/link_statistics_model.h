@@ -3,13 +3,16 @@
 
 // Qt
 #include <QAbstractTableModel>
-#include <QPointF>
+#include <QPoint>
 
 namespace presentation
 {
     class LinkStatisticsModel: public QAbstractTableModel
     {
         Q_OBJECT
+
+        Q_PROPERTY(int maxTime READ maxTime NOTIFY boundsChanged)
+        Q_PROPERTY(int maxValue READ maxValue NOTIFY boundsChanged)
 
     public:
         explicit LinkStatisticsModel(QObject* parent = nullptr);
@@ -21,11 +24,18 @@ namespace presentation
                             int role = Qt::DisplayRole) const override;
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+        int maxTime() const;
+        int maxValue() const;
+
     public slots:
-        void addData(float received, float sent);
+        void addData(int received, int sent);
+
+    signals:
+        void boundsChanged();
 
     private:
-        QList<QPointF> m_data;
+        QList<QPoint> m_data;
+        int m_maxValue = 0;
     };
 }
 
