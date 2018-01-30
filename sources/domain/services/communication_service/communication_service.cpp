@@ -110,9 +110,19 @@ dao::LinkDescriptionPtr CommunicationService::description(int id) const
     return d->linkRepository.read(id);
 }
 
-dao::LinkDescriptionPtrList CommunicationService::descriptions()
+dao::LinkDescriptionPtrList CommunicationService::descriptions() const
 {
     return d->linkRepository.loadedEntities();
+}
+
+dao::LinkStatisticsPtr CommunicationService::statistics(int descriptionId) const
+{
+     return d->linkStatistics.value(descriptionId);
+}
+
+dao::LinkStatisticsPtrList CommunicationService::statistics() const
+{
+    return d->linkStatistics.values();
 }
 
 void CommunicationService::init()

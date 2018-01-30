@@ -26,7 +26,10 @@ namespace domain
         ~CommunicationService() override;
 
         dao::LinkDescriptionPtr description(int id) const;
-        dao::LinkDescriptionPtrList descriptions();
+        dao::LinkDescriptionPtrList descriptions() const;
+
+        dao::LinkStatisticsPtr statistics(int descriptionId) const;
+        dao::LinkStatisticsPtrList statistics() const;
 
         void init();
 

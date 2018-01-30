@@ -5,6 +5,7 @@
 
 // Internal
 #include "link_description.h"
+#include "link_statistics.h"
 
 #include "service_registry.h"
 #include "communication_service.h"
@@ -21,8 +22,10 @@ ConnectionPresenter::ConnectionPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-//    connect(d->service, &domain::CommunicationService::linkStatisticsChanged,
-//            this, &ConnectionPresenter::updateStatus);
+    connect(d->service, &domain::CommunicationService::linkStatusChanged,
+            this, &ConnectionPresenter::updateStatus);
+    connect(d->service, &domain::CommunicationService::linkStatisticsChanged,
+            this, &ConnectionPresenter::updateStatistics);
 }
 
 ConnectionPresenter::~ConnectionPresenter()
@@ -31,17 +34,29 @@ ConnectionPresenter::~ConnectionPresenter()
 void ConnectionPresenter::updateStatus()
 {
     bool connected = false;
+
+    for (const dao::LinkDescriptionPtr& link: d->service->descriptions())
+    {
+        if (!link->isConnected()) continue;
+
+        connected = true;
+        break;
+    }
+
+    this->setViewProperty(PROPERTY(connected), connected);
+}
+
+void ConnectionPresenter::updateStatistics()
+{
     qreal bytesRecv = 0;
     qreal bytesSent = 0;
 
-//    for (const dao::LinkDescriptionPtr& link: d->service->descriptions())
-//    {
-//        if (!link->bytesRecv().isEmpty()) bytesRecv += link->bytesRecv().last();
-//        if (!link->bytesSent().isEmpty()) bytesSent += link->bytesSent().last();
-//        if (!connected && link->isConnected()) connected = true;
-//    }
+    for (const dao::LinkStatisticsPtr& stats: d->service->statistics())
+    {
+        bytesRecv += stats->bytesRecv();
+        bytesSent += stats->bytesSent();
+    }
 
-    this->setViewProperty(PROPERTY(connected), connected);
     this->setViewProperty(PROPERTY(bytesRecv), bytesRecv);
     this->setViewProperty(PROPERTY(bytesSent), bytesSent);
 }

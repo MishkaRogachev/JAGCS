@@ -138,7 +138,11 @@ void CommunicatorWorker::updateLinkImpl(int linkId,
         d->descriptedLinks[linkId] = link;
         if (d->communicator) d->communicator->addLink(link);
 
-        if (autoconnect) link->connectLink();
+        if (autoconnect)
+        {
+            link->connectLink();
+            emit linkStatusChanged(linkId, link->isConnected());
+        }
     }
 }
 

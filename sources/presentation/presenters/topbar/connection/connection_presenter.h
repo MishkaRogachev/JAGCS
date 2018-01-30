@@ -16,6 +16,8 @@ namespace presentation
 
     public slots:
         void updateStatus();
+        void updateStatistics();
+
         void setConnected(bool connected);
 
     private:

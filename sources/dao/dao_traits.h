@@ -31,6 +31,7 @@ namespace dao
     using CommandPtrList = QList<CommandPtr>;
     using VehiclePtrList = QList<VehiclePtr>;
     using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
+    using LinkStatisticsPtrList = QList<LinkStatisticsPtr>;
     using VideoSourcePtrList = QList<VideoSourcePtr>;
 }
 
