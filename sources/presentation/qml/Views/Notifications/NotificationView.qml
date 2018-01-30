@@ -18,7 +18,6 @@ Controls.Frame {
     }
 
     padding: sizings.padding
-    //height: label.implicitHeight + padding * 2
     implicitWidth: row.implicitWidth
     implicitHeight: row.implicitHeight + padding * 2
     backgroundColor: {

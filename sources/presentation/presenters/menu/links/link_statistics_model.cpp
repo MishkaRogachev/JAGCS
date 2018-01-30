@@ -5,6 +5,9 @@
 #include <QColor>
 #include <QDebug>
 
+// Internal
+#include "settings_provider.h"
+
 using namespace presentation;
 
 LinkStatisticsModel::LinkStatisticsModel(QObject* parent):
@@ -73,13 +76,49 @@ int LinkStatisticsModel::maxValue() const
 void LinkStatisticsModel::addData(int received, int sent)
 {
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
-
     m_data.append(QPoint(received, sent));
-
     this->endInsertRows();
 
     if (m_maxValue < received) m_maxValue = received;
     if (m_maxValue < sent) m_maxValue = sent;
+
+    if (m_data.count() > settings::Provider::value(
+            settings::communication::statisticsCount).toInt())
+    {
+       this->beginRemoveRows(QModelIndex(), 0, 0);
+        m_data.removeFirst();
+        this->endRemoveRows();
+    }
+
+    qDebug() << received << sent << m_data.count();
+
+    emit boundsChanged();
+}
+
+void LinkStatisticsModel::resetData(const QList<QPoint>& data)
+{
+    this->beginResetModel();
+
+    int maxCount = settings::Provider::value(
+                       settings::communication::statisticsCount).toInt();
+
+    if (data.count() < maxCount)
+    {
+        m_data = data;
+    }
+    else
+    {
+        m_data = data.mid(0, maxCount);
+    }
+
+    this->endResetModel();
+
+    m_maxValue = 0;
+    for (const QPoint& point : m_data)
+    {
+        if (m_maxValue < point.x()) m_maxValue = point.x();
+        if (m_maxValue < point.y()) m_maxValue = point.y();
+    }
 
     emit boundsChanged();
 }

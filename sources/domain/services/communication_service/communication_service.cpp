@@ -225,7 +225,7 @@ void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescription
     statistics->setPacketsRecv(packetsReceived);
     statistics->setPacketDrops(packetsDrops);
 
-    emit linkStatisticsChanged(statistics);
+    emit mavLinkStatisticsChanged(statistics);
 }
 
 void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,

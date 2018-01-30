@@ -29,6 +29,7 @@ namespace presentation
 
     public slots:
         void addData(int received, int sent);
+        void resetData(const QList<QPoint>& data);
 
     signals:
         void boundsChanged();
