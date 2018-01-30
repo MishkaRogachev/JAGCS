@@ -10,7 +10,8 @@ namespace dao
     {
         Q_GADGET
 
-        Q_PROPERTY(int linkId READ linkId WRITE setlinkId)
+        Q_PROPERTY(int linkId READ linkId WRITE setLinkId)
+        Q_PROPERTY(int timestamp READ timestamp WRITE setTimestamp)
         Q_PROPERTY(int bytesSent READ bytesSent WRITE setBytesSent)
         Q_PROPERTY(int bytesRecv READ bytesRecv WRITE setBytesRecv)
         Q_PROPERTY(int packetsRecv READ packetsRecv WRITE setPacketsRecv)
@@ -18,7 +19,10 @@ namespace dao
 
     public:
         int linkId() const;
-        void setlinkId(int linkId);
+        void setLinkId(int linkId);
+
+        int timestamp() const;
+        void setTimestamp(int timestamp);
 
         int bytesSent() const;
         void setBytesSent(int bytesSent);
@@ -34,6 +38,7 @@ namespace dao
 
     private:
         int m_linkId = 0;
+        int m_timestamp = 0;
         int m_bytesSent = 0;
         int m_bytesRecv = 0;
         int m_packetsRecv = 0;

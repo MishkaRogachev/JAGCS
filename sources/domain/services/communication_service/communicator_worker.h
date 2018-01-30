@@ -27,28 +27,32 @@ namespace domain
         comm::AbstractCommunicator* communicator() const;
 
     signals:
-        // TODO: description change fixes
-        void linkStatisticsChanged(const dao::LinkDescriptionPtr& description,
-                                   int bytesReceived, int bytesSent, bool connected);
-        void mavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
-                                      int packetsReceived, int packetsDrops);
-        void mavLinkProtocolChanged(const dao::LinkDescriptionPtr& description,
+        void linkStatusChanged(int linkId, bool connected);
+        void linkStatisticsChanged(int linkId, int timestamp,
+                                   int bytesReceivedSec, int bytesSentSec);
+        void mavLinkStatisticsChanged(int linkId, int packetsReceived,
+                                      int packetsDrops);
+        void mavLinkProtocolChanged(int linkId,
                                     dao::LinkDescription::Protocol protocol);
 
     public slots:
         void initCommunicator(comm::ICommunicatorFactory* commFactory);
         void updateLinkFromDescription(const dao::LinkDescriptionPtr& description);
         void removeLinkByDescription(const dao::LinkDescriptionPtr& description);
-        void setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected);
+        void setLinkConnected(const dao::LinkDescriptionPtr& description,
+                              bool connected);
 
     private slots:
-        void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived, int bytesSent);
-        void onMavLinkStatisticsChanged(comm::AbstractLink* link, int packetsReceived, int packetsDrops);
-        void onMavLinkProtocolChanged(comm::AbstractLink* link, comm::AbstractCommunicator::Protocol protocol);
+        void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,
+                                     int bytesSent);
+        void onMavLinkStatisticsChanged(comm::AbstractLink* link, int packetsReceived,
+                                        int packetsDrops);
+        void onMavLinkProtocolChanged(comm::AbstractLink* link,
+                                      comm::AbstractCommunicator::Protocol protocol);
 
     private:
         comm::AbstractCommunicator* m_communicator = nullptr;
-        QMap<dao::LinkDescriptionPtr, comm::AbstractLink*> m_descriptedLinks;
+        QMap<int, comm::AbstractLink*> m_descriptedLinks;
     };
 }
 

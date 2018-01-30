@@ -7,9 +7,19 @@ int LinkStatistics::linkId() const
     return m_linkId;
 }
 
-void LinkStatistics::setlinkId(int linkId)
+void LinkStatistics::setLinkId(int linkId)
 {
     m_linkId = linkId;
+}
+
+int LinkStatistics::timestamp() const
+{
+    return m_timestamp;
+}
+
+void LinkStatistics::setTimestamp(int timestamp)
+{
+    m_timestamp = timestamp;
 }
 
 int LinkStatistics::bytesSent() const

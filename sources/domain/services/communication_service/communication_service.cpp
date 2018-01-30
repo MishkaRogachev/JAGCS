@@ -28,7 +28,7 @@ class CommunicationService::Impl
 public:
     SerialPortService* serialPortService;
     QMap<dao::LinkDescriptionPtr, QString> descriptedDevices;
-    QMap<dao::LinkDescriptionPtr, dao::LinkStatisticsPtr> linkStatistics;
+    QMap<int, dao::LinkStatisticsPtr> linkStatistics;
 
     QThread* commThread;
     CommunicatorWorker* commWorker;
@@ -44,15 +44,14 @@ public:
         for (int id: linkRepository.selectId(condition)) linkRepository.read(id);
     }
 
-    dao::LinkStatisticsPtr getlinkStatistics(
-            const dao::LinkDescriptionPtr& description)
+    dao::LinkStatisticsPtr getlinkStatistics(int linkId)
     {
-        if (!linkStatistics.contains(description))
+        if (!linkStatistics.contains(linkId))
         {
-            linkStatistics[description] = dao::LinkStatisticsPtr::create();
-            linkStatistics[description]->setlinkId(description->id());
+            linkStatistics[linkId] = dao::LinkStatisticsPtr::create();
+            linkStatistics[linkId]->setLinkId(linkId);
         }
-        return linkStatistics[description];
+        return linkStatistics[linkId];
     }
 };
 
@@ -74,6 +73,8 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     d->commWorker = new CommunicatorWorker();
 
     connect(d->commThread, &QThread::finished, d->commWorker, &QObject::deleteLater);
+    connect(d->commWorker, &CommunicatorWorker::linkStatusChanged,
+            this, &CommunicationService::onLinkStatusChanged);
     connect(d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
             this, &CommunicationService::onLinkStatisticsChanged);
     connect(d->commWorker, &CommunicatorWorker::mavLinkStatisticsChanged,
@@ -125,7 +126,8 @@ void CommunicationService::init()
     for (const dao::LinkDescriptionPtr& description: this->descriptions())
     {
         QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
-                                  Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
+                                  Qt::QueuedConnection,
+                                  Q_ARG(dao::LinkDescriptionPtr, description));
 
         if (description->type() == dao::LinkDescription::Serial &&
             !description->device().isEmpty())
@@ -174,9 +176,9 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
         d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
     }
 
-    if (d->linkStatistics.contains(description))
+    if (d->linkStatistics.contains(description->id()))
     {
-        d->linkStatistics.remove(description);
+        d->linkStatistics.remove(description->id());
     }
 
     emit descriptionRemoved(description);
@@ -194,43 +196,51 @@ void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& descr
     description->setAutoConnect(connected);
 }
 
-void CommunicationService::onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
-                                                   int bytesReceivedSec,
-                                                   int bytesSentSec,
-                                                   bool connected)
+void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
 {
+    dao::LinkDescriptionPtr description = this->description(linkId);
+
     if (description->isConnected() != connected)
     {
         LogBus::log(tr("Link") + " " + description->name() + " " +
-                       (connected ? tr("connected") : tr("disconnected")),
-                       connected ? LogMessage::Positive : LogMessage::Warning);
+                    (connected ? tr("connected") : tr("disconnected")),
+                    connected ? LogMessage::Positive : LogMessage::Warning);
         description->setConnected(connected);
 
         emit linkStatusChanged(description);
     }
+}
 
-    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(description);
+void CommunicationService::onLinkStatisticsChanged(int linkId,
+                                                   int timestamp,
+                                                   int bytesReceivedSec,
+                                                   int bytesSentSec)
+{
+    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
 
+    statistics->setTimestamp(timestamp);
     statistics->setBytesRecv(bytesReceivedSec);
     statistics->setBytesSent(bytesSentSec);
 
     emit linkStatisticsChanged(statistics);
 }
 
-void CommunicationService::onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
-                                                      int packetsReceived, int packetsDrops)
+void CommunicationService::onMavLinkStatisticsChanged(int linkId,
+                                                      int packetsReceived,
+                                                      int packetsDrops)
 {
-    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(description);
+    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
 
     statistics->setPacketsRecv(packetsReceived);
     statistics->setPacketDrops(packetsDrops);
 
-    emit mavLinkStatisticsChanged(statistics);
+    // TODO: No handle for MavLinkStatistics yet
 }
 
-void CommunicationService::onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
+void CommunicationService::onMavlinkProtocolChanged(int linkId,
                                                     dao::LinkDescription::Protocol protocol)
 {
+    dao::LinkDescriptionPtr description = this->description(linkId);
     if (description->protocol() == protocol) return;
 
     QString msg;

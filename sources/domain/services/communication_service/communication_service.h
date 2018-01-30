@@ -42,14 +42,18 @@ namespace domain
         void descriptionChanged(dao::LinkDescriptionPtr description);
         void linkStatusChanged(dao::LinkDescriptionPtr description);
         void linkStatisticsChanged(dao::LinkStatisticsPtr statistics);
-        void mavLinkStatisticsChanged(dao::LinkStatisticsPtr statistics);
 
     private slots:
-        void onLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
-                                     int bytesReceivedSec, int bytesSentSec, bool connected);
-        void onMavLinkStatisticsChanged(const dao::LinkDescriptionPtr& description,
-                                        int packetsReceived, int packetsDrops);
-        void onMavlinkProtocolChanged(const dao::LinkDescriptionPtr& description,
+        void onLinkStatusChanged(int linkId,
+                                 bool connected);
+        void onLinkStatisticsChanged(int linkId,
+                                     int timestamp,
+                                     int bytesReceivedSec,
+                                     int bytesSentSec);
+        void onMavLinkStatisticsChanged(int linkId,
+                                        int packetsReceived,
+                                        int packetsDrops);
+        void onMavlinkProtocolChanged(int linkId,
                                       dao::LinkDescription::Protocol protocol);
         void onDevicesChanged();
 

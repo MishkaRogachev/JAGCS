@@ -1,6 +1,7 @@
 #include "communicator_worker.h"
 
 // Qt
+#include <QTime>
 #include <QDebug>
 
 // Internal
@@ -71,14 +72,15 @@ void CommunicatorWorker::initCommunicator(comm::ICommunicatorFactory* commFactor
     }
 }
 
-void CommunicatorWorker::updateLinkFromDescription(const dao::LinkDescriptionPtr& description)
+void CommunicatorWorker::updateLinkFromDescription(
+        const dao::LinkDescriptionPtr& description)
 {
     DescriptionLinkFactory factory(description);
     AbstractLink* link = nullptr;
 
-    if (m_descriptedLinks.contains(description))
+    if (m_descriptedLinks.contains(description->id()))
     {
-        link = m_descriptedLinks[description];
+        link = m_descriptedLinks[description->id()];
         factory.update(link);
     }
     else
@@ -87,54 +89,63 @@ void CommunicatorWorker::updateLinkFromDescription(const dao::LinkDescriptionPtr
         if (!link) return;
         link->setParent(this);
 
-        m_descriptedLinks[description] = link;
+        m_descriptedLinks[description->id()] = link;
         if (m_communicator) m_communicator->addLink(link);
 
         if (description->isAutoConnect()) link->connectLink();
     }
 }
 
-void CommunicatorWorker::removeLinkByDescription(const dao::LinkDescriptionPtr& description)
+void CommunicatorWorker::removeLinkByDescription(
+        const dao::LinkDescriptionPtr& description)
 {
-    if (m_descriptedLinks.contains(description))
+    if (m_descriptedLinks.contains(description->id()))
     {
-        AbstractLink* link = m_descriptedLinks.take(description);
+        AbstractLink* link = m_descriptedLinks.take(description->id());
 
         if (m_communicator) m_communicator->removeLink(link);
         delete link;
     }
 }
 
-void CommunicatorWorker::setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected)
+void CommunicatorWorker::setLinkConnected(const dao::LinkDescriptionPtr& description,
+                                          bool connected)
 {
-    AbstractLink* link = m_descriptedLinks[description];
+    AbstractLink* link = m_descriptedLinks[description->id()];
     if (!link) return;
 
     link->setConnected(connected);
-    emit linkStatisticsChanged(description, 0, 0, link->isConnected());
+    emit linkStatusChanged(description->id(), link->isConnected());
 }
 
-void CommunicatorWorker::onLinkStatisticsChanged(AbstractLink* link, int bytesReceived, int bytesSent)
+void CommunicatorWorker::onLinkStatisticsChanged(AbstractLink* link,
+                                                 int bytesReceived,
+                                                 int bytesSent)
 {
-    dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
-    if (description.isNull()) return;
+    int linkId = m_descriptedLinks.key(link, 0);
+    if (!linkId) return;
 
-    emit linkStatisticsChanged(description, bytesReceived, bytesSent, link->isConnected());
+    emit linkStatisticsChanged(linkId,
+                               QTime::currentTime().msecsSinceStartOfDay(),
+                               bytesReceived, bytesSent);
 }
 
-void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link, int packetsReceived, int packetsDrops)
+void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link,
+                                                    int packetsReceived,
+                                                    int packetsDrops)
 {
-    dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
-    if (description.isNull()) return;
+    int linkId = m_descriptedLinks.key(link, 0);
+    if (!linkId) return;
 
-    emit mavLinkStatisticsChanged(description, packetsReceived, packetsDrops);
+    emit mavLinkStatisticsChanged(linkId, packetsReceived, packetsDrops);
 }
 
-void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link, AbstractCommunicator::Protocol protocol)
+void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link,
+                                                  AbstractCommunicator::Protocol protocol)
 {
-    dao::LinkDescriptionPtr description = m_descriptedLinks.key(link);
-    if (description.isNull()) return;
+    int linkId = m_descriptedLinks.key(link, 0);
+    if (!linkId) return;
 
-    emit mavLinkProtocolChanged(description, ::toDaoProtocol(protocol));
+    emit mavLinkProtocolChanged(linkId, ::toDaoProtocol(protocol));
 }
 
