@@ -14,8 +14,8 @@ SerialLink::SerialLink(const QString& portName, qint32 baudRate,
     m_port->setBaudRate(baudRate);
 
     connect(m_port, &QSerialPort::readyRead, this, &SerialLink::readSerialData);
-    connect(m_port,
-            static_cast<void(QSerialPort::*)(QSerialPort::SerialPortError)>(&QSerialPort::error),
+    connect(m_port, static_cast<void(QSerialPort::*)
+            (QSerialPort::SerialPortError)>(&QSerialPort::error),
             this, &SerialLink::onError);
 }
 

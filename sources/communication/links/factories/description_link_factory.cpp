@@ -24,7 +24,8 @@ AbstractLink* DescriptionLinkFactory::create()
     case LinkDescription::Udp:
         return new UdpLink(m_description->port());
     case LinkDescription::Serial:
-        return new SerialLink(m_description->device(), m_description->baudRate());
+        return new SerialLink(m_description->device(),
+                              m_description->baudRate());
     default:
         return nullptr;
     }

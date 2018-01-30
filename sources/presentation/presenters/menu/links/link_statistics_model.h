@@ -3,10 +3,16 @@
 
 // Qt
 #include <QAbstractTableModel>
-#include <QPoint>
 
 namespace presentation
 {
+    struct Statistics
+    {
+        int timestamp = 0;
+        int received = 0;
+        int sent = 0;
+    };
+
     class LinkStatisticsModel: public QAbstractTableModel
     {
         Q_OBJECT
@@ -28,15 +34,17 @@ namespace presentation
         int maxValue() const;
 
     public slots:
-        void addData(int received, int sent);
-        void resetData(const QList<QPoint>& data);
+        void addData(const Statistics& statistics);
+        void resetData(const QList<Statistics>& data);
 
     signals:
         void boundsChanged();
 
     private:
-        QList<QPoint> m_data;
+        QList<Statistics> m_data;
         int m_maxValue = 0;
+        int m_maxTime = 0;
+        int m_minTime = 0;
     };
 }
 

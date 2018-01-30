@@ -44,8 +44,7 @@ namespace domain
         void linkStatisticsChanged(dao::LinkStatisticsPtr statistics);
 
     private slots:
-        void onLinkStatusChanged(int linkId,
-                                 bool connected);
+        void onLinkStatusChanged(int linkId, bool connected);
         void onLinkStatisticsChanged(int linkId,
                                      int timestamp,
                                      int bytesReceivedSec,

@@ -16,6 +16,7 @@
 
 #include "serial_ports_service.h"
 
+#include "description_link_factory.h"
 #include "mavlink_communicator_factory.h"
 #include "communicator_worker.h"
 
@@ -61,7 +62,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 {
     qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
     qRegisterMetaType<dao::LinkDescription::Protocol>("dao::LinkDescription::Protocol");
-    qRegisterMetaType<comm::AbstractCommunicator::Protocol>("comm::AbstractCommunicator::Protocol");
+    qRegisterMetaType<comm::LinkFactoryPtr>("comm::LinkFactoryPtr");
 
     d->serialPortService = serialPortService;
     connect(serialPortService, &SerialPortService::devicesChanged,
@@ -71,6 +72,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     d->commThread->setObjectName("Communication thread");
 
     d->commWorker = new CommunicatorWorker();
+    d->commWorker->moveToThread(d->commThread);
 
     connect(d->commThread, &QThread::finished, d->commWorker, &QObject::deleteLater);
     connect(d->commWorker, &CommunicatorWorker::linkStatusChanged,
@@ -118,16 +120,17 @@ void CommunicationService::init()
     comm::MavLinkCommunicatorFactory commFactory(
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());
+    comm::AbstractCommunicator* communicator = commFactory.create();
 
-    d->commWorker->initCommunicator(&commFactory);
-    d->commWorker->moveToThread(d->commThread);
+    d->commWorker->setCommunicator(communicator);
     d->commThread->start();
 
     for (const dao::LinkDescriptionPtr& description: this->descriptions())
     {
-        QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
-                                  Qt::QueuedConnection,
-                                  Q_ARG(dao::LinkDescriptionPtr, description));
+        comm::LinkFactoryPtr factory(new comm::DescriptionLinkFactory(
+                                         description));
+        d->commWorker->updateLink(description->id(),
+                                  factory, description->isAutoConnect());
 
         if (description->type() == dao::LinkDescription::Serial &&
             !description->device().isEmpty())
@@ -143,8 +146,10 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     bool isNew = description->id() == 0;
     if (!d->linkRepository.save(description)) return false;
 
-    QMetaObject::invokeMethod(d->commWorker, "updateLinkFromDescription",
-                              Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
+    comm::LinkFactoryPtr factory(new comm::DescriptionLinkFactory(
+                                     description));
+    d->commWorker->updateLink(description->id(),
+                              factory, description->isAutoConnect());
 
     if (d->descriptedDevices.contains(description) &&
         description->device() != d->descriptedDevices[description])
@@ -168,8 +173,7 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
 {
     if (!d->linkRepository.remove(description)) return false;
 
-    QMetaObject::invokeMethod(d->commWorker, "removeLinkByDescription",
-                              Qt::QueuedConnection, Q_ARG(dao::LinkDescriptionPtr, description));
+    d->commWorker->removeLink(description->id());
 
     if (d->descriptedDevices.contains(description))
     {
@@ -189,10 +193,8 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
 void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& description,
                                             bool connected)
 {
-    QMetaObject::invokeMethod(d->commWorker, "setLinkConnected",
-                              Qt::QueuedConnection,
-                              Q_ARG(dao::LinkDescriptionPtr, description),
-                              Q_ARG(bool, connected));
+    d->commWorker->setLinkConnected(description->id(), connected);
+
     description->setAutoConnect(connected);
 }
 

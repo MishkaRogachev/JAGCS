@@ -2,16 +2,14 @@
 
 // Qt
 #include <QTime>
+#include <QMutex>
 #include <QDebug>
 
 // Internal
 #include "link_description.h"
 
 #include "abstract_communicator.h"
-#include "i_communicator_factory.h"
-
 #include "abstract_link.h"
-#include "description_link_factory.h"
 
 namespace
 {
@@ -29,100 +27,98 @@ namespace
 using namespace comm;
 using namespace domain;
 
+class CommunicatorWorker::Impl
+{
+public:
+    QMutex mutex;
+    comm::AbstractCommunicator* communicator = nullptr;
+    QMap<int, comm::AbstractLink*> descriptedLinks;
+
+    Impl():
+        mutex(QMutex::Recursive)
+    {}
+};
+
 CommunicatorWorker::CommunicatorWorker(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    d(new Impl())
+{
+    connect(this, &CommunicatorWorker::updateLink,
+            this, &CommunicatorWorker::updateLinkImpl);
+}
+
+CommunicatorWorker::~CommunicatorWorker()
 {}
 
-comm::AbstractCommunicator* CommunicatorWorker::communicator() const
+void CommunicatorWorker::setCommunicator(AbstractCommunicator* communicator)
 {
-    return m_communicator;
-}
+    QMutexLocker locker(&d->mutex);
 
-void CommunicatorWorker::initCommunicator(comm::ICommunicatorFactory* commFactory)
-{
-    if (m_communicator)
+    // TODO: if several communicators, who owns the link?
+    if (d->communicator)
     {
-        for (AbstractLink* link: m_descriptedLinks.values())
+        for (AbstractLink* link: d->descriptedLinks.values())
         {
-            m_communicator->removeLink(link);
+            d->communicator->removeLink(link);
         }
 
-        disconnect(m_communicator, 0, this, 0);
+        disconnect(d->communicator, 0, this, 0);
 
-        delete m_communicator;
+        delete d->communicator;
     }
 
-    m_communicator = commFactory->create();
+    d->communicator = communicator;
 
-    if (m_communicator)
+    if (d->communicator)
     {
-        m_communicator->setParent(this);
+        d->communicator->moveToThread(this->thread());
+        d->communicator->setParent(this);
 
-        connect(m_communicator, &AbstractCommunicator::linkStatisticsChanged,
+        connect(d->communicator, &AbstractCommunicator::linkStatisticsChanged,
                 this, &CommunicatorWorker::onLinkStatisticsChanged);
-        connect(m_communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
+        connect(d->communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
                 this, &CommunicatorWorker::onMavLinkStatisticsChanged);
-        connect(m_communicator, &AbstractCommunicator::mavLinkProtocolChanged,
+        connect(d->communicator, &AbstractCommunicator::mavLinkProtocolChanged,
                 this, &CommunicatorWorker::onMavLinkProtocolChanged);
 
-        for (AbstractLink* link: m_descriptedLinks.values())
+        for (AbstractLink* link: d->descriptedLinks.values())
         {
-            m_communicator->addLink(link);
+            d->communicator->addLink(link);
         }
     }
 }
 
-void CommunicatorWorker::updateLinkFromDescription(
-        const dao::LinkDescriptionPtr& description)
+void CommunicatorWorker::removeLink(int linkId)
 {
-    DescriptionLinkFactory factory(description);
-    AbstractLink* link = nullptr;
+    QMutexLocker locker(&d->mutex);
 
-    if (m_descriptedLinks.contains(description->id()))
+    if (d->descriptedLinks.contains(linkId))
     {
-        link = m_descriptedLinks[description->id()];
-        factory.update(link);
-    }
-    else
-    {
-        link = factory.create();
-        if (!link) return;
-        link->setParent(this);
+        AbstractLink* link = d->descriptedLinks.take(linkId);
 
-        m_descriptedLinks[description->id()] = link;
-        if (m_communicator) m_communicator->addLink(link);
-
-        if (description->isAutoConnect()) link->connectLink();
-    }
-}
-
-void CommunicatorWorker::removeLinkByDescription(
-        const dao::LinkDescriptionPtr& description)
-{
-    if (m_descriptedLinks.contains(description->id()))
-    {
-        AbstractLink* link = m_descriptedLinks.take(description->id());
-
-        if (m_communicator) m_communicator->removeLink(link);
+        if (d->communicator) d->communicator->removeLink(link);
         delete link;
     }
 }
 
-void CommunicatorWorker::setLinkConnected(const dao::LinkDescriptionPtr& description,
-                                          bool connected)
+void CommunicatorWorker::setLinkConnected(int linkId, bool connected)
 {
-    AbstractLink* link = m_descriptedLinks[description->id()];
+    QMutexLocker locker(&d->mutex);
+
+    AbstractLink* link = d->descriptedLinks[linkId];
     if (!link) return;
 
     link->setConnected(connected);
-    emit linkStatusChanged(description->id(), link->isConnected());
+    emit linkStatusChanged(linkId, link->isConnected());
 }
 
 void CommunicatorWorker::onLinkStatisticsChanged(AbstractLink* link,
                                                  int bytesReceived,
                                                  int bytesSent)
 {
-    int linkId = m_descriptedLinks.key(link, 0);
+    QMutexLocker locker(&d->mutex);
+
+    int linkId = d->descriptedLinks.key(link, 0);
     if (!linkId) return;
 
     emit linkStatisticsChanged(linkId,
@@ -134,7 +130,9 @@ void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link,
                                                     int packetsReceived,
                                                     int packetsDrops)
 {
-    int linkId = m_descriptedLinks.key(link, 0);
+    QMutexLocker locker(&d->mutex);
+
+    int linkId = d->descriptedLinks.key(link, 0);
     if (!linkId) return;
 
     emit mavLinkStatisticsChanged(linkId, packetsReceived, packetsDrops);
@@ -143,9 +141,38 @@ void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link,
 void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link,
                                                   AbstractCommunicator::Protocol protocol)
 {
-    int linkId = m_descriptedLinks.key(link, 0);
+    QMutexLocker locker(&d->mutex);
+
+    int linkId = d->descriptedLinks.key(link, 0);
     if (!linkId) return;
 
     emit mavLinkProtocolChanged(linkId, ::toDaoProtocol(protocol));
+}
+
+void CommunicatorWorker::updateLinkImpl(int linkId,
+                                        const LinkFactoryPtr& factory,
+                                        bool autoconnect)
+{
+    QMutexLocker locker(&d->mutex);
+
+    AbstractLink* link = nullptr;
+
+    if (d->descriptedLinks.contains(linkId))
+    {
+        link = d->descriptedLinks[linkId];
+        factory->update(link);
+    }
+    else
+    {
+        link = factory->create();
+        if (!link) return;
+
+        link->setParent(this);
+
+        d->descriptedLinks[linkId] = link;
+        if (d->communicator) d->communicator->addLink(link);
+
+        if (autoconnect) link->connectLink();
+    }
 }
 

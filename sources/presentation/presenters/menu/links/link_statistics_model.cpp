@@ -54,9 +54,9 @@ QVariant LinkStatisticsModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        if (index.column() == 0) return index.row();
-        if (index.column() == 1) return m_data.at(index.row()).x();
-        if (index.column() == 2) return m_data.at(index.row()).y();
+        if (index.column() == 0) return m_data.at(index.row()).timestamp;
+        if (index.column() == 1) return m_data.at(index.row()).received;
+        if (index.column() == 2) return m_data.at(index.row()).sent;
         return QVariant();
     default:
         return QVariant();
@@ -73,14 +73,14 @@ int LinkStatisticsModel::maxValue() const
     return m_maxValue * 1.2; // +20%
 }
 
-void LinkStatisticsModel::addData(int received, int sent)
+void LinkStatisticsModel::addData(const Statistics& statistics)
 {
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
-    m_data.append(QPoint(received, sent));
+    m_data.append(statistics);
     this->endInsertRows();
 
-    if (m_maxValue < received) m_maxValue = received;
-    if (m_maxValue < sent) m_maxValue = sent;
+    if (m_maxValue < statistics.received) m_maxValue = statistics.received;
+    if (m_maxValue < statistics.sent) m_maxValue = statistics.sent;
 
     if (m_data.count() > settings::Provider::value(
             settings::communication::statisticsCount).toInt())
@@ -89,13 +89,10 @@ void LinkStatisticsModel::addData(int received, int sent)
         m_data.removeFirst();
         this->endRemoveRows();
     }
-
-    qDebug() << received << sent << m_data.count();
-
     emit boundsChanged();
 }
 
-void LinkStatisticsModel::resetData(const QList<QPoint>& data)
+void LinkStatisticsModel::resetData(const QList<Statistics>& data)
 {
     this->beginResetModel();
 
@@ -114,10 +111,11 @@ void LinkStatisticsModel::resetData(const QList<QPoint>& data)
     this->endResetModel();
 
     m_maxValue = 0;
-    for (const QPoint& point : m_data)
+    m_minTime = 0;
+    for (const Statistics& statistics: m_data)
     {
-        if (m_maxValue < point.x()) m_maxValue = point.x();
-        if (m_maxValue < point.y()) m_maxValue = point.y();
+        if (m_maxValue < statistics.received) m_maxValue = statistics.received;
+        if (m_maxValue < statistics.sent) m_maxValue = statistics.sent;
     }
 
     emit boundsChanged();

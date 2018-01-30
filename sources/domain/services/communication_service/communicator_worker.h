@@ -5,9 +5,10 @@
 #include <QMap>
 
 // Internal
-#include "dao_traits.h"
 #include "link_description.h"
 #include "abstract_communicator.h"
+
+#include "i_link_factory.h"
 
 namespace comm
 {
@@ -23,10 +24,12 @@ namespace domain
 
     public:
         explicit CommunicatorWorker(QObject* parent = nullptr);
-
-        comm::AbstractCommunicator* communicator() const;
+        ~CommunicatorWorker() override;
 
     signals:
+        void updateLink(int linkId, const comm::LinkFactoryPtr& factory,
+                        bool autoconnect);
+
         void linkStatusChanged(int linkId, bool connected);
         void linkStatisticsChanged(int linkId, int timestamp,
                                    int bytesReceivedSec, int bytesSentSec);
@@ -36,23 +39,25 @@ namespace domain
                                     dao::LinkDescription::Protocol protocol);
 
     public slots:
-        void initCommunicator(comm::ICommunicatorFactory* commFactory);
-        void updateLinkFromDescription(const dao::LinkDescriptionPtr& description);
-        void removeLinkByDescription(const dao::LinkDescriptionPtr& description);
-        void setLinkConnected(const dao::LinkDescriptionPtr& description,
-                              bool connected);
+        void setCommunicator(comm::AbstractCommunicator* communicator);
+        void removeLink(int linkId);
+        void setLinkConnected(int linkId, bool connected);
 
     private slots:
         void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,
                                      int bytesSent);
-        void onMavLinkStatisticsChanged(comm::AbstractLink* link, int packetsReceived,
+        void onMavLinkStatisticsChanged(comm::AbstractLink* link,
+                                        int packetsReceived,
                                         int packetsDrops);
         void onMavLinkProtocolChanged(comm::AbstractLink* link,
                                       comm::AbstractCommunicator::Protocol protocol);
 
+        void updateLinkImpl(int linkId, const comm::LinkFactoryPtr& factory,
+                            bool autoconnect);
+
     private:
-        comm::AbstractCommunicator* m_communicator = nullptr;
-        QMap<int, comm::AbstractLink*> m_descriptedLinks;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

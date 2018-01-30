@@ -49,7 +49,7 @@ LinkPresenter::LinkPresenter(QObject* parent):
             [this](const dao::LinkStatisticsPtr& statistics) {
         if (d->description->id() != statistics->linkId()) return;
 
-        d->model.addData(statistics->bytesRecv(), statistics->bytesSent());
+        //d->model.addData(statistics->bytesRecv(), statistics->bytesSent());
     });
 }
 
@@ -86,9 +86,11 @@ void LinkPresenter::updateLink()
 
 void LinkPresenter::updateStatus()
 {
-    this->setViewProperty(PROPERTY(connected), d->description && d->description->isConnected());
-    this->setViewProperty(PROPERTY(protocol), d->description ? d->description->protocol() :
-                                                               dao::LinkDescription::UnknownProtocol);
+    this->setViewProperty(PROPERTY(connected), d->description &&
+                          d->description->isConnected());
+    this->setViewProperty(PROPERTY(protocol), d->description ?
+                              d->description->protocol() :
+                              dao::LinkDescription::UnknownProtocol);
 }
 
 void LinkPresenter::updateDevices()

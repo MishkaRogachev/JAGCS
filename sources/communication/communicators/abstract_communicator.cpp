@@ -17,6 +17,8 @@ using namespace comm;
 AbstractCommunicator::AbstractCommunicator(QObject* parent):
     QObject(parent)
 {
+    qRegisterMetaType<Protocol>("Protocol");
+
     m_statisticsTimer = this->startTimer(::second);
 }
 
@@ -37,7 +39,8 @@ void AbstractCommunicator::addLink(AbstractLink* link)
 {
     m_links.append(link);
 
-    connect(link, &AbstractLink::dataReceived, this, &AbstractCommunicator::onDataReceived);
+    connect(link, &AbstractLink::dataReceived,
+            this, &AbstractCommunicator::onDataReceived);
     emit linkAdded(link);
 }
 
@@ -45,7 +48,8 @@ void AbstractCommunicator::removeLink(AbstractLink* link)
 {
     m_links.removeOne(link);
 
-    disconnect(link, &AbstractLink::dataReceived, this, &AbstractCommunicator::onDataReceived);
+    disconnect(link, &AbstractLink::dataReceived,
+               this, &AbstractCommunicator::onDataReceived);
     emit linkRemoved(link);
 }
 
@@ -55,6 +59,8 @@ void AbstractCommunicator::timerEvent(QTimerEvent* event)
 
     for (AbstractLink* link: m_links)
     {
-        emit linkStatisticsChanged(link, link->takeBytesReceived(), link->takeBytesSent());
+        emit linkStatisticsChanged(link,
+                                   link->takeBytesReceived(),
+                                   link->takeBytesSent());
     }
 }
