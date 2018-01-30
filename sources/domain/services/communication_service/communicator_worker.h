@@ -27,8 +27,11 @@ namespace domain
         ~CommunicatorWorker() override;
 
     signals:
+        void setCommunicator(comm::AbstractCommunicator* communicator);
         void updateLink(int linkId, const comm::LinkFactoryPtr& factory,
                         bool autoconnect);
+        void removeLink(int linkId);
+        void setLinkConnected(int linkId, bool connected);
 
         void linkStatusChanged(int linkId, bool connected);
         void linkStatisticsChanged(int linkId, int timestamp,
@@ -37,11 +40,6 @@ namespace domain
                                       int packetsDrops);
         void mavLinkProtocolChanged(int linkId,
                                     dao::LinkDescription::Protocol protocol);
-
-    public slots:
-        void setCommunicator(comm::AbstractCommunicator* communicator);
-        void removeLink(int linkId);
-        void setLinkConnected(int linkId, bool connected);
 
     private slots:
         void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,
@@ -52,8 +50,11 @@ namespace domain
         void onMavLinkProtocolChanged(comm::AbstractLink* link,
                                       comm::AbstractCommunicator::Protocol protocol);
 
+        void setCommunicatorImpl(comm::AbstractCommunicator* communicator);
         void updateLinkImpl(int linkId, const comm::LinkFactoryPtr& factory,
                             bool autoconnect);
+        void removeLinkImpl(int linkId);
+        void setLinkConnectedImpl(int linkId, bool connected);
 
     private:
         class Impl;

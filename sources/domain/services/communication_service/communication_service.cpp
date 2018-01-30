@@ -73,6 +73,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 
     d->commWorker = new CommunicatorWorker();
     d->commWorker->moveToThread(d->commThread);
+    d->commThread->start();
 
     connect(d->commThread, &QThread::finished, d->commWorker, &QObject::deleteLater);
     connect(d->commWorker, &CommunicatorWorker::linkStatusChanged,
@@ -120,10 +121,11 @@ void CommunicationService::init()
     comm::MavLinkCommunicatorFactory commFactory(
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());
+
     comm::AbstractCommunicator* communicator = commFactory.create();
+    communicator->moveToThread(d->commThread);
 
     d->commWorker->setCommunicator(communicator);
-    d->commThread->start();
 
     for (const dao::LinkDescriptionPtr& description: this->descriptions())
     {
