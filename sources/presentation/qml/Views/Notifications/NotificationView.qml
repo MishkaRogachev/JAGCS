@@ -18,7 +18,9 @@ Controls.Frame {
     }
 
     padding: sizings.padding
-    height: label.implicitHeight + padding * 2
+    //height: label.implicitHeight + padding * 2
+    implicitWidth: row.implicitWidth
+    implicitHeight: row.implicitHeight + padding * 2
     backgroundColor: {
         switch (message.type) {
         case LogMessage.Positive:
@@ -60,7 +62,7 @@ Controls.Frame {
     }
 
     RowLayout {
-        y: parent.height / 2 - height / 2
+        id: row
         width: parent.width
         spacing: sizings.spacing
         clip: true
