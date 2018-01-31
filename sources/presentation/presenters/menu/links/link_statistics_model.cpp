@@ -8,6 +8,8 @@
 // Internal
 #include "settings_provider.h"
 
+#include "link_statistics.h"
+
 using namespace presentation;
 
 LinkStatisticsModel::LinkStatisticsModel(QObject* parent):
@@ -54,18 +56,23 @@ QVariant LinkStatisticsModel::data(const QModelIndex& index, int role) const
     switch (role)
     {
     case Qt::DisplayRole:
-        if (index.column() == 0) return m_data.at(index.row()).timestamp;
-        if (index.column() == 1) return m_data.at(index.row()).received;
-        if (index.column() == 2) return m_data.at(index.row()).sent;
+        if (index.column() == 0) return m_data.at(index.row())->timestamp();
+        if (index.column() == 1) return m_data.at(index.row())->bytesRecv();
+        if (index.column() == 2) return m_data.at(index.row())->bytesSent();
         return QVariant();
     default:
         return QVariant();
     }
 }
 
+int LinkStatisticsModel::minTime() const
+{
+    return m_minTime;
+}
+
 int LinkStatisticsModel::maxTime() const
 {
-    return m_data.count() - 1;
+    return m_maxTime;
 }
 
 int LinkStatisticsModel::maxValue() const
@@ -73,26 +80,32 @@ int LinkStatisticsModel::maxValue() const
     return m_maxValue * 1.2; // +20%
 }
 
-void LinkStatisticsModel::addData(const Statistics& statistics)
+void LinkStatisticsModel::addData(const dao::LinkStatisticsPtr& statistics)
 {
+    int maxValue = qMax(statistics->bytesRecv(), statistics->bytesSent());
+    if (m_maxValue < maxValue || m_data.isEmpty()) m_maxValue = maxValue;
+    if (m_data.isEmpty()) m_minTime = statistics->timestamp();
+    if (m_maxTime < statistics->timestamp() || m_data.isEmpty()) m_maxTime = statistics->timestamp();
+
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
     m_data.append(statistics);
     this->endInsertRows();
 
-    if (m_maxValue < statistics.received) m_maxValue = statistics.received;
-    if (m_maxValue < statistics.sent) m_maxValue = statistics.sent;
+    // FIXME: bound plot by count
+//    int count = qMax(2, settings::Provider::value(settings::communication::statisticsCount).toInt());
+//    if (m_data.count() > count)
+//    {
+//        this->beginRemoveRows(QModelIndex(), 0, 0);
+//        m_data.removeFirst();
+//        this->endRemoveRows();
 
-    if (m_data.count() > settings::Provider::value(
-            settings::communication::statisticsCount).toInt())
-    {
-       this->beginRemoveRows(QModelIndex(), 0, 0);
-        m_data.removeFirst();
-        this->endRemoveRows();
-    }
+//        m_minTime = m_data.first()->timestamp();
+//    }
+
     emit boundsChanged();
 }
 
-void LinkStatisticsModel::resetData(const QList<Statistics>& data)
+void LinkStatisticsModel::resetData(const dao::LinkStatisticsPtrList& data)
 {
     this->beginResetModel();
 
@@ -110,12 +123,15 @@ void LinkStatisticsModel::resetData(const QList<Statistics>& data)
 
     this->endResetModel();
 
-    m_maxValue = 0;
-    m_minTime = 0;
-    for (const Statistics& statistics: m_data)
+    m_maxValue = m_data.isEmpty() ? 0 : qMax(m_data.first()->bytesRecv(),
+                                             m_data.first()->bytesSent());
+    m_minTime = m_data.isEmpty() ? 0 : m_data.first()->timestamp();
+    m_maxTime = m_data.isEmpty() ? 0 : m_data.last()->timestamp();
+
+    for (const dao::LinkStatisticsPtr& statistics: m_data)
     {
-        if (m_maxValue < statistics.received) m_maxValue = statistics.received;
-        if (m_maxValue < statistics.sent) m_maxValue = statistics.sent;
+        if (m_maxValue < statistics->bytesRecv()) m_maxValue = statistics->bytesRecv();
+        if (m_maxValue < statistics->bytesSent()) m_maxValue = statistics->bytesSent();
     }
 
     emit boundsChanged();

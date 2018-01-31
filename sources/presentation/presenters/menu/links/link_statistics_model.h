@@ -4,19 +4,16 @@
 // Qt
 #include <QAbstractTableModel>
 
+// Internal
+#include "dao_traits.h"
+
 namespace presentation
 {
-    struct Statistics
-    {
-        int timestamp = 0;
-        int received = 0;
-        int sent = 0;
-    };
-
     class LinkStatisticsModel: public QAbstractTableModel
     {
         Q_OBJECT
 
+        Q_PROPERTY(int minTime READ minTime NOTIFY boundsChanged)
         Q_PROPERTY(int maxTime READ maxTime NOTIFY boundsChanged)
         Q_PROPERTY(int maxValue READ maxValue NOTIFY boundsChanged)
 
@@ -30,18 +27,19 @@ namespace presentation
                             int role = Qt::DisplayRole) const override;
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+        int minTime() const;
         int maxTime() const;
         int maxValue() const;
 
     public slots:
-        void addData(const Statistics& statistics);
-        void resetData(const QList<Statistics>& data);
+        void addData(const dao::LinkStatisticsPtr& statistics);
+        void resetData(const dao::LinkStatisticsPtrList& data);
 
     signals:
         void boundsChanged();
 
     private:
-        QList<Statistics> m_data;
+        dao::LinkStatisticsPtrList m_data;
         int m_maxValue = 0;
         int m_maxTime = 0;
         int m_minTime = 0;

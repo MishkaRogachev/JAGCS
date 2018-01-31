@@ -146,6 +146,7 @@ Controls.Frame {
             implicitHeight: width / 3
             visible: false
             valueAxis.max: statistics.maxValue
+            timeAxis.min: statistics.minTime
             timeAxis.max: statistics.maxTime
 
             AreaSeries {

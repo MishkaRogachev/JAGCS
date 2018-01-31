@@ -47,9 +47,7 @@ LinkPresenter::LinkPresenter(QObject* parent):
     });
     connect(d->commService, &domain::CommunicationService::linkStatisticsChanged, this,
             [this](const dao::LinkStatisticsPtr& statistics) {
-        if (d->description->id() != statistics->linkId()) return;
-
-        //d->model.addData(statistics->bytesRecv(), statistics->bytesSent());
+        if (d->description->id() == statistics->linkId())  d->model.addData(statistics);
     });
 }
 
