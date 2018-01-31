@@ -88,19 +88,18 @@ void LinkStatisticsModel::addData(const dao::LinkStatisticsPtr& statistics)
     if (m_maxTime < statistics->timestamp() || m_data.isEmpty()) m_maxTime = statistics->timestamp();
 
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
-    m_data.append(statistics);
+    m_data.append(dao::LinkStatisticsPtr(new dao::LinkStatistics(*statistics.data())));
     this->endInsertRows();
 
-    // FIXME: bound plot by count
-//    int count = qMax(2, settings::Provider::value(settings::communication::statisticsCount).toInt());
-//    if (m_data.count() > count)
-//    {
-//        this->beginRemoveRows(QModelIndex(), 0, 0);
-//        m_data.removeFirst();
-//        this->endRemoveRows();
+    int count = qMax(2, settings::Provider::value(settings::communication::statisticsCount).toInt());
+    if (m_data.count() > count)
+    {
+        this->beginRemoveRows(QModelIndex(), 0, 0);
+        m_data.removeFirst();
+        this->endRemoveRows();
 
-//        m_minTime = m_data.first()->timestamp();
-//    }
+        m_minTime = m_data.first()->timestamp();
+    }
 
     emit boundsChanged();
 }
