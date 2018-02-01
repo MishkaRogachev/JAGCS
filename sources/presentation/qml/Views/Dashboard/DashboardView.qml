@@ -36,10 +36,8 @@ Item {
         Controls.Label {
             text: selectedVehicle ? selectedVehicle.name : qsTr("All MAVs")
             font.bold: true
-        }
-
-        Item {
             Layout.fillWidth: true
+            clip: true
         }
 
         Controls.Button {

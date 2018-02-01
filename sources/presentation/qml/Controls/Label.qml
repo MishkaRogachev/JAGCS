@@ -9,5 +9,4 @@ T.Label {
     color: palette.textColor
     verticalAlignment: Qt.AlignVCenter
     elide: Text.ElideRight
-    wrapMode: Text.WordWrap
 }

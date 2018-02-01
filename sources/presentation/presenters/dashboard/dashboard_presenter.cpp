@@ -17,6 +17,7 @@ using namespace presentation;
 class DashboardPresenter::Impl
 {
 public:
+    dao::VehiclePtr selectedVehicle;
     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
 
     DisplaysModel displaysModel;
@@ -35,6 +36,12 @@ DashboardPresenter::DashboardPresenter(QObject* parent):
              &d->displaysModel, &DisplaysModel::addVehicle);
      connect(d->service, &domain::VehicleService::vehicleRemoved,
              &d->displaysModel, &DisplaysModel::removeVehicle);
+     connect(d->service, &domain::VehicleService::vehicleChanged,
+             this, [this](const dao::VehiclePtr& vehicle){
+                 if (d->selectedVehicle != vehicle) return;
+
+                 this->view()->setProperty(PROPERTY(selectedVehicle), QVariant::fromValue(*vehicle));
+             });
 }
 
 DashboardPresenter::~DashboardPresenter()
@@ -44,6 +51,9 @@ void DashboardPresenter::selectVehicle(int vehicleId)
 {
     dao::VehiclePtr vehicle = d->service->vehicle(vehicleId);
 
+    if (vehicle == d->selectedVehicle) return;
+
+    d->selectedVehicle = vehicle;
     if (vehicle)
     {
         this->view()->setProperty(PROPERTY(selectedVehicle), QVariant::fromValue(*vehicle));
