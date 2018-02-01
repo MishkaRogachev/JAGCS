@@ -47,7 +47,7 @@ Controls.ApplicationWindow  {
         anchors.top: topbar.bottom
         anchors.right: substrate.right
         anchors.margins: sizings.margins
-        width: Math.min(parent.width / 3, parent.height / 3)
+        width: Math.min(parent.width / 3, parent.height / 2)
         height: cornerMap ? map.implicitHeight : video.implicitHeight
         z: cornerVisible ? 2 : -1
         onClicked: cornerMap = !cornerMap
