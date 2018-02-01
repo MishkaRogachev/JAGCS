@@ -15,6 +15,11 @@ T.SpinBox {
     implicitHeight: sizings.controlBaseSize
     opacity: enabled ? 1 : 0.33
 
+    validator: IntValidator {
+        bottom: Math.min(control.from, control.to)
+        top: Math.max(control.from, control.to)
+    }
+
     background: Rectangle {
         anchors.fill: parent
         radius: 3
