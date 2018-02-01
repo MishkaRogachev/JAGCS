@@ -70,6 +70,7 @@ Controls.Frame {
             id: label
             text: message.message
             color: palette.selectedTextColor
+            wrapMode: Text.WordWrap
             Layout.fillWidth: true
         }
 
