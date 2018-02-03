@@ -14,11 +14,10 @@ Controls.Pane {
     RowLayout {
         anchors.centerIn: parent
         width: parent.width
-        opacity: satelliteEnabled ? 1 : 0.33
         spacing: sizings.spacing
 
         Controls.ColoredIcon {
-            opacity: enabled ? 1 : 0.33
+            id: snsIcon
             color: {
                 switch (fix) {
                 case -1:
@@ -52,8 +51,7 @@ Controls.Pane {
             Controls.Label {
                 font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
-                opacity: enabled ? 1 : 0.33
-                color: satelliteOperational ? palette.textColor : palette.dangerColor
+                color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
                                             Helper.degreesToDmsString(coordinate.latitude, false) :
                                             Helper.degreesToString(coordinate.latitude, 6))
@@ -62,8 +60,7 @@ Controls.Pane {
             Controls.Label {
                 font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
                 font.bold: true
-                opacity: enabled ? 1 : 0.33
-                color: satelliteOperational ? palette.textColor : palette.dangerColor
+                color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
                                             Helper.degreesToDmsString(coordinate.longitude, true) :
                                             Helper.degreesToString(coordinate.longitude, 6))
