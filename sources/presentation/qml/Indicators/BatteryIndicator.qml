@@ -7,8 +7,9 @@ Controls.ColoredIcon {
     id: root
 
     property int percentage: -1
+    readonly property int percentageBordered: Math.max(0, Math.min(percentage, 100))
 
-    source: "qrc:/icons/battery.svg"
+    source: "qrc:/indicators/battery.svg"
     implicitWidth: sizings.controlBaseSize
     implicitHeight: width
     color: {
@@ -24,7 +25,7 @@ Controls.ColoredIcon {
 
     Text {
         id: textItem
-        text: percentage > -1 ? percentage : "-"
+        text: percentage// > -1 ? percentage : "-"
         font.pixelSize: parent.height / 3
         font.bold: true
         anchors.centerIn: parent
@@ -37,7 +38,7 @@ Controls.ColoredIcon {
         anchors.bottomMargin: 3
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width - 6
-        height: percentage > 0 ? (parent.height - 16) * percentage / 100 : 0
+        height: (parent.height - 14) * percentageBordered / 100
         color: parent.color
         clip: true
 

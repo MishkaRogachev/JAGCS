@@ -9,6 +9,7 @@
         <file>ui/minus.svg</file>
         <file>ui/up.svg</file>
         <file>ui/down.svg</file>
+        <file>indicators/battery.svg</file>
         <file>indicators/pick_aim.svg</file>
         <file>indicators/unknown_mark.svg</file>
         <file>indicators/fixed_wing_mark.svg</file>
@@ -67,7 +68,6 @@
         <file>icons/speed.svg</file>
         <file>icons/calibrate.svg</file>
         <file>icons/gps.svg</file>
-        <file>icons/battery.svg</file>
         <file>icons/current.svg</file>
         <file>icons/flight.svg</file>
         <file>icons/download.svg</file>
