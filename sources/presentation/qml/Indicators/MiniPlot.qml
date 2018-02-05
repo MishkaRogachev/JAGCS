@@ -7,6 +7,8 @@ import "../Controls" as Controls
 ChartView {
     id: chart
 
+    animationOptions: ChartView.NoAnimation
+    theme: ChartView.ChartThemeDark
     backgroundColor: palette.sunkenColor
     legend.visible: false
     margins.top: 0

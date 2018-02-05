@@ -153,26 +153,19 @@ Controls.Frame {
                 max: statistics.maxTime
             }
 
-            ValueAxis {
-                id: recvAxis
-                visible: false
-                max: statistics.maxRecv
-            }
-
-            ValueAxis {
-                id: sentAxis
-                visible: false
-                max: statistics.maxSent
-            }
-
             AreaSeries {
-                axisX: timeAxis
-                axisY: recvAxis
                 color: palette.positiveColor
                 borderColor: palette.positiveColor
                 borderWidth: 3
                 opacity: 0.33
-
+                axisX: timeAxis
+                axisY: ValueAxis {
+                    titleText: qsTr("Recv.")
+                    titleFont.pixelSize: sizings.fontPixelSize * 0.5
+                    color: palette.positiveColor
+                    max: statistics.maxRecv
+                    labelsVisible: false
+                }
                 upperSeries: LineSeries {
                     VXYModelMapper {
                         xColumn: 0
@@ -183,13 +176,18 @@ Controls.Frame {
             }
 
             AreaSeries {
-                axisX: timeAxis
-                axisY: sentAxis
                 color: palette.skyColor
                 borderColor: palette.skyColor
                 borderWidth: 3
                 opacity: 0.33
-
+                axisX: timeAxis
+                axisYRight: ValueAxis {
+                    titleText: qsTr("Sent")
+                    titleFont.pixelSize: sizings.fontPixelSize * 0.5
+                    color: palette.skyColor
+                    max: statistics.maxSent
+                    labelsVisible: false
+                }
                 upperSeries: LineSeries {
                     VXYModelMapper {
                         xColumn: 0
