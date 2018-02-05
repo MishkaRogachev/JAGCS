@@ -145,17 +145,33 @@ Controls.Frame {
             Layout.columnSpan: 2
             implicitHeight: width / 3
             visible: false
-            valueAxis.max: statistics.maxValue
-            timeAxis.min: statistics.minTime
-            timeAxis.max: statistics.maxTime
+
+            ValueAxis {
+                id: timeAxis
+                visible: false
+                min: statistics.minTime
+                max: statistics.maxTime
+            }
+
+            ValueAxis {
+                id: recvAxis
+                visible: false
+                max: statistics.maxRecv
+            }
+
+            ValueAxis {
+                id: sentAxis
+                visible: false
+                max: statistics.maxSent
+            }
 
             AreaSeries {
-                axisX: plot.timeAxis
-                axisY: plot.valueAxis
-                borderWidth: 3
+                axisX: timeAxis
+                axisY: recvAxis
                 color: palette.positiveColor
-                opacity: 0.33
                 borderColor: palette.positiveColor
+                borderWidth: 3
+                opacity: 0.33
 
                 upperSeries: LineSeries {
                     VXYModelMapper {
@@ -167,12 +183,12 @@ Controls.Frame {
             }
 
             AreaSeries {
-                axisX: plot.timeAxis
-                axisY: plot.valueAxis
-                borderWidth: 3
+                axisX: timeAxis
+                axisY: sentAxis
                 color: palette.skyColor
-                opacity: 0.33
                 borderColor: palette.skyColor
+                borderWidth: 3
+                opacity: 0.33
 
                 upperSeries: LineSeries {
                     VXYModelMapper {

@@ -75,17 +75,22 @@ int LinkStatisticsModel::maxTime() const
     return m_maxTime;
 }
 
-int LinkStatisticsModel::maxValue() const
+int LinkStatisticsModel::maxRecv() const
 {
-    return m_maxValue * 1.2; // +20%
+    return m_maxRecv * 1.2; // +20%
+}
+
+int LinkStatisticsModel::maxSent() const
+{
+    return m_maxSent * 1.2; // +20%
 }
 
 void LinkStatisticsModel::addData(const dao::LinkStatisticsPtr& statistics)
 {
-    int maxValue = qMax(statistics->bytesRecv(), statistics->bytesSent());
-    if (m_maxValue < maxValue || m_data.isEmpty()) m_maxValue = maxValue;
     if (m_data.isEmpty()) m_minTime = statistics->timestamp();
     if (m_maxTime < statistics->timestamp() || m_data.isEmpty()) m_maxTime = statistics->timestamp();
+    if (m_maxRecv < statistics->bytesRecv() || m_data.isEmpty()) m_maxRecv = statistics->bytesRecv();
+    if (m_maxSent < statistics->bytesSent() || m_data.isEmpty()) m_maxSent = statistics->bytesSent();
 
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
     m_data.append(dao::LinkStatisticsPtr(new dao::LinkStatistics(*statistics.data())));
@@ -122,15 +127,15 @@ void LinkStatisticsModel::resetData(const dao::LinkStatisticsPtrList& data)
 
     this->endResetModel();
 
-    m_maxValue = m_data.isEmpty() ? 0 : qMax(m_data.first()->bytesRecv(),
-                                             m_data.first()->bytesSent());
     m_minTime = m_data.isEmpty() ? 0 : m_data.first()->timestamp();
     m_maxTime = m_data.isEmpty() ? 0 : m_data.last()->timestamp();
+    m_maxRecv = m_data.isEmpty() ? 0 : m_data.first()->bytesRecv();
+    m_maxSent = m_data.isEmpty() ? 0 : m_data.first()->bytesSent();
 
     for (const dao::LinkStatisticsPtr& statistics: m_data)
     {
-        if (m_maxValue < statistics->bytesRecv()) m_maxValue = statistics->bytesRecv();
-        if (m_maxValue < statistics->bytesSent()) m_maxValue = statistics->bytesSent();
+        if (m_maxRecv < statistics->bytesRecv()) m_maxRecv = statistics->bytesRecv();
+        if (m_maxSent < statistics->bytesSent()) m_maxSent = statistics->bytesSent();
     }
 
     emit boundsChanged();

@@ -15,7 +15,8 @@ namespace presentation
 
         Q_PROPERTY(int minTime READ minTime NOTIFY boundsChanged)
         Q_PROPERTY(int maxTime READ maxTime NOTIFY boundsChanged)
-        Q_PROPERTY(int maxValue READ maxValue NOTIFY boundsChanged)
+        Q_PROPERTY(int maxRecv READ maxRecv NOTIFY boundsChanged)
+        Q_PROPERTY(int maxSent READ maxSent NOTIFY boundsChanged)
 
     public:
         explicit LinkStatisticsModel(QObject* parent = nullptr);
@@ -29,7 +30,8 @@ namespace presentation
 
         int minTime() const;
         int maxTime() const;
-        int maxValue() const;
+        int maxRecv() const;
+        int maxSent() const;
 
     public slots:
         void addData(const dao::LinkStatisticsPtr& statistics);
@@ -40,9 +42,10 @@ namespace presentation
 
     private:
         dao::LinkStatisticsPtrList m_data;
-        int m_maxValue = 0;
-        int m_maxTime = 0;
         int m_minTime = 0;
+        int m_maxTime = 0;
+        int m_maxRecv = 0;
+        int m_maxSent = 0;
     };
 }
 

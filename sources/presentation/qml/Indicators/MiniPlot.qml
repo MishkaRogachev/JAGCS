@@ -7,16 +7,6 @@ import "../Controls" as Controls
 ChartView {
     id: chart
 
-    property ValueAxis timeAxis: ValueAxis {
-        visible: false
-        max: time
-    }
-
-     property ValueAxis valueAxis: ValueAxis {
-        visible: false
-        max: topValue
-    }
-
     backgroundColor: palette.sunkenColor
     legend.visible: false
     margins.top: 0
