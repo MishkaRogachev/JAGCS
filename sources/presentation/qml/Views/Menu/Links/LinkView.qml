@@ -162,9 +162,10 @@ Controls.Frame {
                 axisY: ValueAxis {
                     titleText: qsTr("Recv.")
                     titleFont.pixelSize: sizings.fontPixelSize * 0.5
+                    labelsFont.pixelSize: 1
+                    labelsVisible: false
                     color: palette.positiveColor
                     max: statistics.maxRecv
-                    labelsVisible: false
                 }
                 upperSeries: LineSeries {
                     VXYModelMapper {
@@ -184,9 +185,10 @@ Controls.Frame {
                 axisYRight: ValueAxis {
                     titleText: qsTr("Sent")
                     titleFont.pixelSize: sizings.fontPixelSize * 0.5
+                    labelsVisible: false
+                    labelsFont.pixelSize: 1
                     color: palette.skyColor
                     max: statistics.maxSent
-                    labelsVisible: false
                 }
                 upperSeries: LineSeries {
                     VXYModelMapper {
