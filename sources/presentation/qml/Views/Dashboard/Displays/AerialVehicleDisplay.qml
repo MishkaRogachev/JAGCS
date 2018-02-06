@@ -115,18 +115,35 @@ BaseVehicleDisplay {
 
             Repeater {
                 model: [
-                    { text: qsTr("Diagnostics panel"), instrument: diagnostics },
-                    { text: qsTr("Status panel"), instrument: status },
-                    { text: qsTr("Flight instrument(FD)"), instrument: fd },
-                    { text: qsTr("Horizontal situation indicator(HSI)"), instrument: hsi },
-                    { text: qsTr("Mission control"), instrument: mission },
-                    { text: qsTr("Control panel"), instrument: control }
+                    { text: qsTr("Diagnostics panel"), instrument: diagnostics,
+                        setting: "diagnosticsVisible" },
+                    { text: qsTr("Status panel"), instrument: status,
+                        setting: "statusVisible" },
+                    { text: qsTr("Flight instrument(FD)"), instrument: fd,
+                        setting: "fdVisible" },
+                    { text: qsTr("Horizontal situation indicator(HSI)"), instrument: hsi,
+                        setting: "hsiVisible" },
+                    { text: qsTr("Mission control"), instrument: mission,
+                        setting: "missionVisible" },
+                    { text: qsTr("Control panel"), instrument: control,
+                        setting: "controlVisible" }
                 ]
 
                 Controls.CheckBox {
                     text: modelData.text
                     checked: modelData.instrument.visible
                     onCheckedChanged: modelData.instrument.visible = checked
+                    Component.onCompleted: {
+                        checked = settings.boolValue("Vehicles/" +
+                                                     vehicleId + "/" +
+                                                     modelData.setting, true);
+                        modelData.instrument.visible = checked;
+                    }
+                    Component.onDestruction: {
+                        settings.setValue("Vehicles/" + vehicleId + "/" +
+                                          modelData.setting,
+                                          modelData.instrument.visible)
+                    }
                 }
             }
         }
@@ -136,7 +153,6 @@ BaseVehicleDisplay {
         id: column
         width: parent.width
         spacing: sizings.spacing
-        // TODO: initial visibility to settings
 
         Instruments.DiagnosticsPanel {
             id: diagnostics
