@@ -73,6 +73,7 @@ namespace settings
         const QString fdSpeedUnits = "Gui/fdSpeedUnits";
         const QString fdAltitudeStep = "Gui/fdAltitudeStep";
         const QString fdRelativeAltitude = "Gui/fdRelativeAltitude";
+        const QString vibrationModelCount = "Gui/vibrationModelCount";
         const QString coordinatesDms = "Gui/coordinatesDms";
     }
 

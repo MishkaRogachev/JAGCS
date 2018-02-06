@@ -12,6 +12,7 @@ import "Instruments" as Instruments
 BaseVehicleDisplay {
     id: vehicleDisplay
 
+    // TODO: params to vehicle qml qtobject
     property bool batteryEnabled: false
     property bool batteryOperational: false
     property real batteryVoltage: 0
@@ -98,6 +99,10 @@ BaseVehicleDisplay {
                                                    instrumentsVisibility.open()
     }
 
+//    TODO: instruments to ListModel {
+//        id: instrumentsModel
+//    }
+
     Controls.Popup {
         id: instrumentsVisibility
         x: displaysSettingsButton.x
@@ -110,7 +115,7 @@ BaseVehicleDisplay {
 
             Repeater {
                 model: [
-//                    { text: qsTr("Diagnostics panel"), instrument: diagnostics },
+                    { text: qsTr("Diagnostics panel"), instrument: diagnostics },
                     { text: qsTr("Status panel"), instrument: status },
                     { text: qsTr("Flight instrument(FD)"), instrument: fd },
                     { text: qsTr("Horizontal situation indicator(HSI)"), instrument: hsi },
@@ -133,10 +138,10 @@ BaseVehicleDisplay {
         spacing: sizings.spacing
         // TODO: initial visibility to settings
 
-/*        Instruments.DiagnosticsPanel {
+        Instruments.DiagnosticsPanel {
             id: diagnostics
             Layout.fillWidth: true
-        }*/
+        }
 
         Instruments.StatusPanel {
             id: status

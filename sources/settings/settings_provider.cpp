@@ -70,6 +70,7 @@ public:
         settings.setValue(gui::fdSpeedUnits, 0);
         settings.setValue(gui::fdAltitudeStep, 10);
         settings.setValue(gui::fdRelativeAltitude, true);
+        settings.setValue(gui::vibrationModelCount, 30);
         settings.setValue(gui::coordinatesDms, true);
 
         settings.setValue(proxy::type, 0);

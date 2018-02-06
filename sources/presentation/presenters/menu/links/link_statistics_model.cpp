@@ -88,13 +88,14 @@ int LinkStatisticsModel::maxSent() const
 void LinkStatisticsModel::addData(const dao::LinkStatisticsPtr& statistics)
 {
     if (m_data.isEmpty()) m_minTime = statistics->timestamp();
-    if (m_maxTime < statistics->timestamp() || m_data.isEmpty()) m_maxTime = statistics->timestamp();
-    if (m_maxRecv < statistics->bytesRecv() || m_data.isEmpty()) m_maxRecv = statistics->bytesRecv();
-    if (m_maxSent < statistics->bytesSent() || m_data.isEmpty()) m_maxSent = statistics->bytesSent();
 
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
     m_data.append(dao::LinkStatisticsPtr(new dao::LinkStatistics(*statistics.data())));
     this->endInsertRows();
+
+    if (m_maxTime < statistics->timestamp() || m_data.isEmpty()) m_maxTime = statistics->timestamp();
+    if (m_maxRecv < statistics->bytesRecv() || m_data.isEmpty()) m_maxRecv = statistics->bytesRecv();
+    if (m_maxSent < statistics->bytesSent() || m_data.isEmpty()) m_maxSent = statistics->bytesSent();
 
     int count = qMax(2, settings::Provider::value(settings::communication::statisticsCount).toInt());
     if (m_data.count() > count)

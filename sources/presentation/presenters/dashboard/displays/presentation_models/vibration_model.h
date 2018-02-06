@@ -7,9 +7,19 @@
 
 namespace presentation
 {
+    struct Vibration
+    {
+        int timestamp = 0;
+        QVector3D data;
+    };
+
     class VibrationModel: public QAbstractTableModel
     {
         Q_OBJECT
+
+        Q_PROPERTY(int minTime READ minTime NOTIFY boundsChanged)
+        Q_PROPERTY(int maxTime READ maxTime NOTIFY boundsChanged)
+        Q_PROPERTY(float maxValue READ maxValue NOTIFY boundsChanged)
 
     public:
         explicit VibrationModel(QObject* parent = nullptr);
@@ -21,11 +31,22 @@ namespace presentation
                             int role = Qt::DisplayRole) const override;
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+        int minTime() const;
+        int maxTime() const;
+        float maxValue() const;
+
     public slots:
-        void addData(const QVector3D& newData);
+        void addData(const Vibration& vibration);
+        void resetData(const QList<Vibration>& data);
+
+    signals:
+        void boundsChanged();
 
     private:
-        QList<QVector3D> m_data;
+        QList<Vibration> m_data;
+        int m_minTime = 0;
+        int m_maxTime = 0;
+        float m_maxValue = 0;
     };
 }
 

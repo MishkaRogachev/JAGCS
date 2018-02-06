@@ -2,6 +2,7 @@
 
 // Qt
 #include <QVector3D>
+#include <QTime>
 #include <QDebug>
 
 // Internal
@@ -68,7 +69,12 @@ void VehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& 
     this->setViewProperty(PROPERTY(yaw), parameters.value(domain::Telemetry::Yaw, 0));
     this->setViewProperty(PROPERTY(yawspeed), parameters.value(domain::Telemetry::YawSpeed, 0));
 
-    m_vibrationModel->addData(parameters.value(domain::Telemetry::Vibration).value<QVector3D>());
+    // TODO: telemetry timestamp
+    Vibration vibration;
+    vibration.timestamp = QTime::currentTime().msecsSinceStartOfDay();
+    vibration.data = parameters.value(domain::Telemetry::Vibration).value<QVector3D>();
+
+    m_vibrationModel->addData(vibration);
 }
 
 void VehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
