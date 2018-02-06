@@ -5,6 +5,8 @@
 #include <QDebug>
 
 // Internal
+#include "settings_provider.h"
+
 #include "vehicle.h"
 
 #include "generic_repository.h"
@@ -110,6 +112,9 @@ bool VehicleService::remove(const VehiclePtr& vehicle)
     if (assignment && !d->missionService->remove(assignment)) return false;
 
     if (!d->vehicleRepository.remove(vehicle)) return false;
+
+    settings::Provider::remove(settings::vehicle + QString::number(vehicle->id()));
+
     emit vehicleRemoved(vehicle);
     return true;
 }

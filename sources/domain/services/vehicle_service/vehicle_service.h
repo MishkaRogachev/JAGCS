@@ -37,6 +37,7 @@ namespace domain
         void vehicleRemoved(dao::VehiclePtr vehicle);
         void vehicleChanged(dao::VehiclePtr vehicle);
 
+        // FIXME: to command
         void sendManualControl(int vehicleId, float pitch, float roll, float thrust, float yaw);
 
     private:

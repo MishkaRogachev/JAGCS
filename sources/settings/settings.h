@@ -85,6 +85,8 @@ namespace settings
         const QString user = "NetworkProxy/user";
         const QString password = "NetworkProxy/password";
     }
+
+    const QString vehicle = "veh_";
 }
 
 #endif // SETTINGS_H

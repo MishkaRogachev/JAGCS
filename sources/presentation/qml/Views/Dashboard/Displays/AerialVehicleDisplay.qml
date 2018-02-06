@@ -134,13 +134,12 @@ BaseVehicleDisplay {
                     checked: modelData.instrument.visible
                     onCheckedChanged: modelData.instrument.visible = checked
                     Component.onCompleted: {
-                        checked = settings.boolValue("Vehicles/" +
-                                                     vehicleId + "/" +
+                        checked = settings.boolValue("veh_" + vehicleId + "/" +
                                                      modelData.setting, true);
                         modelData.instrument.visible = checked;
                     }
                     Component.onDestruction: {
-                        settings.setValue("Vehicles/" + vehicleId + "/" +
+                        settings.setValue("veh_" + vehicleId + "/" +
                                           modelData.setting,
                                           modelData.instrument.visible)
                     }
