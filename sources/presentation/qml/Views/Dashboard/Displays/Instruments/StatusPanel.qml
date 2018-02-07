@@ -19,7 +19,7 @@ Controls.Pane {
         Controls.ColoredIcon {
             id: snsIcon
             color: {
-                switch (fix) {
+                switch (vehicle.satellite.fix) {
                 case -1:
                 case 0: return palette.sunkenColor;
                 case 1: return palette.dangerColor;
@@ -34,7 +34,7 @@ Controls.Pane {
             Layout.alignment: Qt.AlignRight
 
             Text {
-                text: satellitesVisible
+                text: vehicle.satellite.satellitesVisible
                 font.pixelSize: parent.height / 4
                 font.bold: true
                 anchors.bottom: parent.bottom
@@ -53,8 +53,8 @@ Controls.Pane {
                 font.bold: true
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
-                                            Helper.degreesToDmsString(coordinate.latitude, false) :
-                                            Helper.degreesToString(coordinate.latitude, 6))
+                           Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false) :
+                           Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
             }
 
             Controls.Label {
@@ -62,8 +62,8 @@ Controls.Pane {
                 font.bold: true
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
-                                            Helper.degreesToDmsString(coordinate.longitude, true) :
-                                            Helper.degreesToString(coordinate.longitude, 6))
+                           Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true) :
+                           Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
             }
         }
 
@@ -93,7 +93,7 @@ Controls.Pane {
 
         Indicators.BatteryIndicator {
             id: battery
-            percentage: batteryPercentage
+            percentage: vehicle.battery.percentage
         }
 
         ColumnLayout {
@@ -102,22 +102,22 @@ Controls.Pane {
             Controls.Label {
                 font.pixelSize: sizings.fontPixelSize * 0.6
                 font.bold: true
-                color: batteryVoltage > 0.01 ? palette.textColor : palette.sunkenColor
-                text: batteryVoltage.toFixed(2) + qsTr(" V")
+                color: vehicle.battery.voltage > 0.01 ? palette.textColor : palette.sunkenColor
+                text: vehicle.battery.voltage.toFixed(2) + qsTr(" V")
             }
 
             Controls.Label {
                 font.pixelSize: sizings.fontPixelSize * 0.6
                 font.bold: true
                 color: {
-                    if (batteryCurrent < -0.01) return palette.positiveColor;
-                    if (batteryCurrent > 0.0) return palette.textColor;
-                    if (batteryCurrent > 5.0) return palette.cautionColor;
-                    if (batteryCurrent > 10.0) return palette.dangerColor;
+                    if (vehicle.battery.current < -0.01) return palette.positiveColor;
+                    if (vehicle.battery.current > 0.0) return palette.textColor;
+                    if (vehicle.battery.current > 5.0) return palette.cautionColor;
+                    if (vehicle.battery.current > 10.0) return palette.dangerColor;
 
                     return palette.sunkenColor;
                 }
-                text: batteryCurrent.toFixed(2) + qsTr(" A")
+                text: vehicle.battery.current.toFixed(2) + qsTr(" A")
             }
         }
     }

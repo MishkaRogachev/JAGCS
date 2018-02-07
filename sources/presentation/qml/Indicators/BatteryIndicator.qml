@@ -35,10 +35,10 @@ Controls.ColoredIcon {
 
     Rectangle {
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 3
+        anchors.bottomMargin: 4
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width - 6
-        height: (parent.height - 14) * percentageBordered / 100
+        height: (parent.height - 18) * percentageBordered / 100
         color: parent.color
         clip: true
 
