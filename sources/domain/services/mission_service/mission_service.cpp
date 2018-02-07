@@ -242,7 +242,8 @@ bool MissionService::save(const MissionPtr& mission)
 
     if (isNew)
     {
-        settings::Provider::setValue(settings::mission::visibility + "/" + mission->id(), true);
+        settings::Provider::setValue(settings::mission::visibility + "/" +
+                                     QString::number(mission->id()), true);
     }
 
     emit (isNew ? missionAdded(mission) : missionChanged(mission));
@@ -286,7 +287,8 @@ bool MissionService::remove(const MissionPtr& mission)
         if (!this->remove(item)) return false;
     }
 
-    settings::Provider::remove(settings::mission::visibility + "/" + mission->id());
+    settings::Provider::remove(settings::mission::visibility + "/" +
+                               QString::number(mission->id()));
     if (!d->missionRepository.remove(mission)) return false;
 
     emit missionRemoved(mission);

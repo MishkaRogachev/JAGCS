@@ -55,8 +55,9 @@ void MissionPresenter::updateMission()
     this->setViewProperty(PROPERTY(name), m_mission ? m_mission->name() : "");
     this->setViewProperty(PROPERTY(count), m_mission ? m_mission->count() : 0);
     this->setViewProperty(PROPERTY(missionVisible), m_mission ?
-                              settings::Provider::value(settings::mission::visibility + "/" +
-                                                        m_mission->id()) : false);
+                              settings::Provider::value(
+                                  settings::mission::visibility + "/" +
+                                  QString::number(m_mission->id())) : false);
 }
 
 void MissionPresenter::updateAssignment()
@@ -102,7 +103,8 @@ void MissionPresenter::setMissionVisible(bool visible)
 {
     if (m_mission.isNull()) return;
 
-    settings::Provider::setValue(settings::mission::visibility + "/" + m_mission->id(), visible);
+    settings::Provider::setValue(settings::mission::visibility + "/" +
+                                 QString::number(m_mission->id()), visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
 
     m_service->missionChanged(m_mission);
