@@ -15,20 +15,21 @@ Controls.Pane {
         anchors.left: parent.left
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("DIST")
-        color: guided ? palette.activeMissionColor : palette.textColor
-        opacity: guided ? 1 : 0.33
-        distance: targetDistance
+        color: vehicle.guided ? palette.activeMissionColor : palette.textColor
+        opacity: vehicle.guided ? 1 : 0.33
+        distance: vehicle.navigator.targetDistance
         width: parent.width * 0.2
     }
 
     Indicators.DistanceLabel {
+        id: homeLabel
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("HOME")
-        distance: homeDistance
+        distance: vehicle.position.distanceTo(vehicle.homePosition)
         width: parent.width * 0.2
-        enabled: homeDistance > 0
+        enabled: distance > 0
     }
 
     Indicators.InstrumentLabel {
@@ -37,9 +38,9 @@ Controls.Pane {
         width: parent.width * 0.2
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("WIND")
-        value: displayedWindSpeed
-        suffix: speedSuffix
-        enabled: windSpeed > 0
+        value: vehicle.wind.displayedSpeed
+        suffix: vehicle.speedSuffix
+        enabled: value > 0
     }
 
     Indicators.Compass {
@@ -48,29 +49,30 @@ Controls.Pane {
         height: parent.height - sizings.padding
         width: height
         mark: translator.imageFromVehicleType(vehicleType)
-        heading: vehicleDisplay.heading
-        course: vehicleDisplay.course
-        courseEnabled: groundspeed > 0.1
-        opacity: compassEnabled ? 1 : 0.33
-        headingColor: compassOperational ? palette.textColor : palette.dangerColor
-        courseColor: satelliteEnabled ? (satelliteOperational ? palette.positiveColor :
-                                                                palette.dangerColor) :
-                                        "transparent"
+        heading: vehicle.compass.heading
+        course: vehicle.satellite.course
+        courseEnabled: vehicle.satellite.groundSpeed > 0.1
+        opacity: vehicle.compass.enabled ? 1 : 0.33
+        headingColor: vehicle.compass.operational ? palette.textColor : palette.dangerColor
+        courseColor: vehicle.satellite.enabled ?
+                         (vehicle.satellite.operational ?
+                              palette.positiveColor : palette.dangerColor) : "transparent"
 
         Indicators.SituationIndicator {
             id: hsi
             anchors.fill: parent
-            guided: vehicleDisplay.guided
-            targetBearing: vehicleDisplay.targetBearing
-            desiredHeading: vehicleDisplay.desiredHeading
-            trackError: vehicleDisplay.trackError
+            guided: vehicle.guided
+            heading: vehicle.compass.heading
+            targetBearing: vehicle.navigator.targetBearing
+            desiredHeading: vehicle.flightControl.desiredHeading
+            trackError: vehicle.navigator.trackError
             z: -1
         }
 
         Item {
             anchors.fill: parent
-            rotation: homeDirection - heading
-            visible: homeDistance > 0
+            rotation: vehicle.position.azimuthTo(vehicle.homePosition) - vehicle.compass.heading
+            visible: homeLabel.distance > 0
             z: -1
 
             Image {
@@ -82,16 +84,14 @@ Controls.Pane {
                 rotation: -parent.rotation
             }
         }
-
-        // TODO: wind indicator
     }
 
     Indicators.InstrumentLabel {
         anchors.top: parent.top
         anchors.right: parent.right
-        color: guided ? palette.activeMissionColor : palette.textColor
-        opacity: guided ? 1 : 0.33
-        value: targetBearing
+        color: vehicle.guided ? palette.activeMissionColor : palette.textColor
+        opacity: vehicle.guided ? 1 : 0.33
+        value: vehicle.navigator.targetBearing
         width: parent.width * 0.2
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("TRG")
@@ -101,10 +101,10 @@ Controls.Pane {
     Indicators.InstrumentLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        value: heading
+        value: vehicle.compass.heading
         width: parent.width * 0.2
-        enabled: compassEnabled
-        operational: compassOperational
+        enabled: vehicle.compass.enabled
+        operational: vehicle.compass.operational
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("HDG")
         suffix: "\u00B0"
@@ -113,10 +113,10 @@ Controls.Pane {
     Indicators.InstrumentLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        value: course
+        value: vehicle.satellite.course
         width: parent.width * 0.2
-        enabled: compassEnabled
-        operational: compassOperational
+        enabled: vehicle.satellite.enabled
+        operational: vehicle.satellite.operational
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("CRS")
         suffix: "\u00B0"

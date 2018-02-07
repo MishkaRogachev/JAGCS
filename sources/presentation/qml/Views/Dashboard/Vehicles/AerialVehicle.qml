@@ -52,16 +52,8 @@ BaseVehicle {
         property real desiredPitch: 0.0
         property real desiredRoll: 0.0
         property real desiredHeading: 0.0
-    }
-
-    property QtObject navigator: QtObject {
-        objectName: "navigator"
-
-        property real targetBearing: 0.0
-        property real trackError: 0.0
         property real airspeedError: 0.0
         property real altitudeError: 0.0
-        property int targetDistance: 0
 
         readonly property real displayedAirspeedError: {
             switch (speedUnits) {
@@ -70,6 +62,14 @@ BaseVehicle {
             case 1: return Helper.mpsToKph(airspeedError);
             }
         }
+    }
+
+    property QtObject navigator: QtObject {
+        objectName: "navigator"
+
+        property real targetBearing: 0.0
+        property real trackError: 0.0
+        property int targetDistance: 0
     }
 
     property QtObject wind: QtObject {

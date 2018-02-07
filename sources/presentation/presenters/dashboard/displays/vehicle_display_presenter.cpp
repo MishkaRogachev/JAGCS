@@ -212,14 +212,14 @@ void VehicleDisplayPresenter::updateFlightControl(const domain::Telemetry::Telem
                              parameters.value(domain::Telemetry::DesiredRoll, 0));
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(desiredHeading),
                              parameters.value(domain::Telemetry::DesiredHeading, 0));
-}
-
-void VehicleDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
-{
     this->setVehicleProperty(PROPERTY(navigator), PROPERTY(airspeedError),
                              parameters.value(domain::Telemetry::AirspeedError, false));
     this->setVehicleProperty(PROPERTY(navigator), PROPERTY(altitudeError),
                              parameters.value(domain::Telemetry::AltitudeError, false));
+}
+
+void VehicleDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
+{
     this->setVehicleProperty(PROPERTY(navigator), PROPERTY(targetBearing),
                              parameters.value(domain::Telemetry::TargetBearing, 0));
     this->setVehicleProperty(PROPERTY(navigator), PROPERTY(targetDistance),

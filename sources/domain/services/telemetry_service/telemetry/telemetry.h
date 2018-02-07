@@ -98,15 +98,16 @@
 //  |  |-Operational                    bool
 //  |  |-Altitude                       real
 //  |  |-Voltage                        real
-//  |-Navigator
-//  |  |-TargetBearing                  real
-//  |  |-Distance                       real
-//  |  |-TrackError                     real
-//  |  |-AltitudeError                  real
 //  |-FlightControl
 //  |  |-DesiredPitch                   real
 //  |  |-DesiredRoll                    real
 //  |  |-DesiredHeading                 real
+//  |  |-AirspeedError                  real
+//  |  |-AltitudeError                  real
+//  |-Navigator
+//  |  |-TargetBearing                  real
+//  |  |-Distance                       real
+//  |  |-TrackError                     real
 //  |-PowerSystem
 //  |  |-Throttle                       int
 //  |-Battery
@@ -225,16 +226,16 @@ namespace domain
 
             Radalt = 5000,
 
-            Navigator = 6000,
-            TargetBearing = 6001,
-            TrackError = 6002,
-            AirspeedError = 6003,
-            AltitudeError = 6004,
+            FlightControl = 6000,
+            DesiredPitch = 6001,
+            DesiredRoll = 6002,
+            DesiredHeading = 6003,
+            AirspeedError = 6004,
+            AltitudeError = 6005,
 
-            FlightControl = 7000,
-            DesiredPitch = 7001,
-            DesiredRoll = 7002,
-            DesiredHeading = 7003,
+            Navigator = 7000,
+            TargetBearing = 7001,
+            TrackError = 7002,
 
             PowerSystem = 8000,
             Throttle = 8001,

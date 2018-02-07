@@ -5,7 +5,7 @@ export QT_ANDROID_ANT=/usr/bin/ant
 export ANDROID_NDK=/home/mishka/.android/android-ndk-r14b
 export ANDROID_SDK=/home/mishka/.android/sdk/
 export ANDROID_API_LEVEL=16
-export CMAKE_PREFIX_PATH=/opt/Qt/5.9.1/android_armv7/lib/cmake
+export CMAKE_PREFIX_PATH=/opt/Qt/5.9.4/android_armv7/lib/cmake/
 
 # Absolute path to this script, e.g. /home/user/bin/foo.sh
 SCRIPT=$(readlink -f "$0")

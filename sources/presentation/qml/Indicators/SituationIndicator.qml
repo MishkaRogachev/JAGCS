@@ -5,6 +5,7 @@ Item {
     id: root
 
     property bool guided: false
+    property real heading: 0
     property real targetBearing: 0
     property real desiredHeading: 0
     property real trackError: 0

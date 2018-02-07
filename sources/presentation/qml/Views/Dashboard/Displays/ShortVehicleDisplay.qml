@@ -105,7 +105,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
                     value: vehicle.satellite.displayedGroundSpeed
                     enabled: vehicle.satellite.enabled
                     operational: vehicle.satellite.operational
-                    prefix: qsTr("GS") + ", " + vehicle.speedSuffix
+                    prefix: qsTr("Vgr") + ", " + vehicle.speedSuffix
                     Layout.alignment: Qt.AlignHCenter
                 }
 
@@ -113,7 +113,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
                     value: vehicle.barometric.displayedAltitude
                     enabled: vehicle.barometric.enabled
                     operational: vehicle.barometric.operational
-                    prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
+                    prefix: qsTr("Hbar") + ", " + vehicle.altitudeSuffix
                     Layout.alignment: Qt.AlignHCenter
                 }
             }
