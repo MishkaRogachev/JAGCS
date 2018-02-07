@@ -89,6 +89,9 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
+        <file>Views/Dashboard/Vehicles/Subsystem.qml</file>
+        <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>
+        <file>Views/Dashboard/Vehicles/AerialVehicle.qml</file>
         <file>Views/Dashboard/Displays/CommandControls/Button.qml</file>
         <file>Views/Dashboard/Displays/CommandControls/DelayButton.qml</file>
         <file>Views/Dashboard/Displays/CommandControls/ModeBox.qml</file>
