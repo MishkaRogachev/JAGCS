@@ -148,15 +148,16 @@ void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
 void CommonVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
     this->chainNode(node->childNode(domain::Telemetry::System),
-                    std::bind(&CommonVehicleDisplayPresenter::updateStatus,
+                    std::bind(&CommonVehicleDisplayPresenter::updateSystem,
                               this, std::placeholders::_1));
 }
 
-void CommonVehicleDisplayPresenter::updateStatus(const domain::Telemetry::TelemetryMap& parameters)
+void CommonVehicleDisplayPresenter::updateSystem(const domain::Telemetry::TelemetryMap& parameters)
 {
-    this->setViewProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
-    this->setViewProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
-    this->setViewProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
+    this->setVehicleProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
+    this->setVehicleProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
+    this->setVehicleProperty(PROPERTY(vehicleState), parameters.value(domain::Telemetry::State));
+    this->setVehicleProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
 
     QVariantList modes;
     for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
@@ -166,5 +167,31 @@ void CommonVehicleDisplayPresenter::updateStatus(const domain::Telemetry::Teleme
 
         modes.append(QVariant::fromValue(item));
     }
-    this->setViewProperty(PROPERTY(availableModes), modes);
+    this->setVehicleProperty(PROPERTY(availableModes), modes);
+}
+
+void CommonVehicleDisplayPresenter::setVehicleProperty(const char* name, const QVariant& value)
+{
+    this->setVehicleProperty(QString(), name, value);
+}
+
+void CommonVehicleDisplayPresenter::setVehicleProperty(const QString& group, const char* name,
+                                                       const QVariant& value)
+{
+    if (!this->view()) return;
+
+    QObject* vehicle = this->view()->findChild<QObject*>(PROPERTY(vehicle));
+    if (!vehicle) return;
+
+    if (group.isEmpty())
+    {
+        vehicle->setProperty(name, value);
+    }
+    else
+    {
+         QObject* groupObject = vehicle->findChild<QObject*>(group);
+         if (!groupObject) return;
+
+         groupObject->setProperty(name, value);
+    }
 }

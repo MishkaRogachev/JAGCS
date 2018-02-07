@@ -4,9 +4,6 @@
 // Internal
 #include "common_vehicle_display_presenter.h"
 
-// Qt
-#include <QGeoCoordinate>
-
 namespace presentation
 {
     class VibrationModel;
@@ -22,7 +19,6 @@ namespace presentation
         void connectNode(domain::Telemetry* node) override;
 
     private slots:
-        void updateSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updateAhrs(const domain::Telemetry::TelemetryMap& parameters);
         void updateCompass(const domain::Telemetry::TelemetryMap& parameters);
         void updateEkf(const domain::Telemetry::TelemetryMap& parameters);
@@ -31,21 +27,16 @@ namespace presentation
         void updateBattery(const domain::Telemetry::TelemetryMap& parameters);
         void updatePitot(const domain::Telemetry::TelemetryMap& parameters);
         void updateBarometric(const domain::Telemetry::TelemetryMap& parameters);
-        void updateRangefinder(const domain::Telemetry::TelemetryMap& parameters);
+        void updateRadalt(const domain::Telemetry::TelemetryMap& parameters);
         void updatePosition(const domain::Telemetry::TelemetryMap& parameters);
         void updateHome(const domain::Telemetry::TelemetryMap& parameters);
-        void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
         void updateFlightControl(const domain::Telemetry::TelemetryMap& parameters);
+        void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
         void updateWind(const domain::Telemetry::TelemetryMap& parameters);
 
     protected:
-        void connectView(QObject* view);
+        void connectView(QObject* view) override;
 
-    private:
-        void updateHoming();
-
-        QGeoCoordinate m_position;
-        QGeoCoordinate m_homePosition;
         VibrationModel* m_vibrationModel;
     };
 }

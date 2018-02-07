@@ -31,7 +31,7 @@ Controls.Pane {
             Layout.fillWidth: true
             Layout.minimumHeight: sizings.controlBaseSize * 1.5
             Layout.fillHeight: true
-
+            /* FIXME: segfault on destruction
             ValueAxis {
                 id: timeAxis
                 visible: false
@@ -79,7 +79,7 @@ Controls.Pane {
                     yColumn: 3
                     model: vibration
                 }
-            }
+            }*/
         }
     }
 }

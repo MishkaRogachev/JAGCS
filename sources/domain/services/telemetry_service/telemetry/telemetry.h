@@ -92,11 +92,11 @@
 //  |  |-Operational                    bool
 //  |  |-TrueAirspeed                   real
 //  |  |-IndicatedAirspeed              real
-//  |-Rangefinder
+//  |-Radalt
 //  |  |-Present                        bool
 //  |  |-Enabled                        bool
 //  |  |-Operational                    bool
-//  |  |-Elevation                      real
+//  |  |-Altitude                       real
 //  |  |-Voltage                        real
 //  |-Navigator
 //  |  |-TargetBearing                  real
@@ -174,16 +174,15 @@ namespace domain
             HomePosition = 400,
 
             Altitude = 501,
-            Height = 502,
-            Climb = 503,
-            Course = 504,
-            Heading = 505,
-            Speed = 506,
-            Groundspeed = 507,
-            Temperature = 508,
-            Voltage = 509,
-            Current = 510,
-            Percentage = 511,
+            Climb = 502,
+            Course = 503,
+            Heading = 504,
+            Speed = 505,
+            Groundspeed = 506,
+            Temperature = 507,
+            Voltage = 508,
+            Current = 509,
+            Percentage = 510,
 
             Ahrs = 1000,
             Pitch = 1001,
@@ -224,7 +223,7 @@ namespace domain
             IndicatedAirspeed = 4001,
             TrueAirspeed = 4002,
 
-            Rangefinder = 5000,
+            Radalt = 5000,
 
             Navigator = 6000,
             TargetBearing = 6001,

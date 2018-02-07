@@ -6,16 +6,18 @@ import "qrc:/JS/helper.js" as Helper
 BaseVehicle {
     id: root
 
-    Subsystem {
-        id: barometric
+    property Subsystem barometric: Subsystem {
         objectName: "barometric"
 
         property int altitude: 0
         property real climb: 0
+
+        readonly property real displayedAltitude: {
+            return altitudeRelative ? altitude - homePosition.altitude : altitude;
+        }
     }
 
-    Subsystem {
-        id: pitot
+    property Subsystem pitot: Subsystem {
         objectName: "pitot"
 
         property real indicatedAirspeed: 0.0
@@ -38,15 +40,13 @@ BaseVehicle {
         }
     }
 
-    Subsystem {
-        id: radalt
+    property Subsystem radalt: Subsystem {
         objectName: "radalt"
 
         property real altitude: 0
     }
 
-    QtObject {
-        id: flightControl
+    property QtObject flightControl: QtObject {
         objectName: "flightControl"
 
         property real desiredPitch: 0.0
@@ -54,8 +54,7 @@ BaseVehicle {
         property real desiredHeading: 0.0
     }
 
-    QtObject {
-        id: navigator
+    property QtObject navigator: QtObject {
         objectName: "navigator"
 
         property real targetBearing: 0.0
@@ -73,18 +72,17 @@ BaseVehicle {
         }
     }
 
-    QtObject {
-        id: wind
+    property QtObject wind: QtObject {
         objectName: "wind"
 
-        property real windDirection: 0
-        property real windSpeed: 0
+        property real direction: 0
+        property real speed: 0
 
-        readonly property real displayedWindSpeed: {
+        readonly property real displayedSpeed: {
             switch (speedUnits) {
             default:
-            case 0: return windSpeed;
-            case 1: return Helper.mpsToKph(windSpeed);
+            case 0: return speed;
+            case 1: return Helper.mpsToKph(speed);
             }
         }
     }

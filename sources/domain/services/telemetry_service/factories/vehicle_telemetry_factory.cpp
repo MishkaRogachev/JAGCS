@@ -26,7 +26,7 @@ Telemetry* VehicleTelemetryFactory::create()
     new Telemetry(Telemetry::Satellite, root);
     new Telemetry(Telemetry::Barometric, root);
     new Telemetry(Telemetry::Pitot, root);
-    new Telemetry(Telemetry::Rangefinder, root);
+    new Telemetry(Telemetry::Radalt, root);
     new Telemetry(Telemetry::Navigator, root);
     new Telemetry(Telemetry::FlightControl, root);
     new Telemetry(Telemetry::PowerSystem, root);

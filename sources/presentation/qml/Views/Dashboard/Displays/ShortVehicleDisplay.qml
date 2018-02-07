@@ -8,10 +8,12 @@ import "qrc:/Indicators" as Indicators
 
 import "CommandControls" as CommandControls
 
-BaseVehicleDisplay {
+import "../Vehicles"
+
+BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
     id: vehicleDisplay
 
-    property real yaw: 0.0
+    property AerialVehicle vehicle: AerialVehicle {}
 
     onUpdateCommandStatus:  {
         switch (command) {
@@ -31,13 +33,18 @@ BaseVehicleDisplay {
 
     function updateItems() {
         var items = [];
-        for (var i = 0; i < missionItems; ++i) items.push(i + 1);
+        for (var i = 0; i < vehicle.mission.count; ++i) items.push(i + 1);
         itemBox.model = items;
     }
 
+    Connections {
+        target: vehicle.mission
+
+        onCountChanged: updateItems()
+        onCurrentChanged:itemBox.currentIndex = current
+    }
+
     Component.onCompleted: updateItems()
-    onMissionItemsChanged: updateItems()
-    onCurrentItemChanged: itemBox.currentIndex = currentItem
 
     implicitWidth: pane.implicitWidth
     implicitHeight: pane.implicitHeight
@@ -54,7 +61,7 @@ BaseVehicleDisplay {
                 id: compass
                 implicitWidth: sizings.controlBaseSize * 2
                 implicitHeight: width
-                yaw: vehicleDisplay.yaw
+                yaw: vehicle.ahrs.yaw
                 Layout.rowSpan: 2
 
                 Indicators.ArtificialHorizon {
@@ -62,10 +69,10 @@ BaseVehicleDisplay {
                     anchors.centerIn: parent
                     height: parent.height - parent.size * 2
                     width: height * 0.9
-                    enabled: online && ahrsEnabled
-                    armed: vehicleDisplay.armed
-                    pitch: vehicleDisplay.pitch
-                    roll: vehicleDisplay.roll
+                    enabled: online &&  vehicle.ahrs.enabled
+                    armed: vehicle.armed
+                    pitch: vehicle.ahrs.pitch
+                    roll: vehicle.ahrs.roll
                     rollInverted: settings.boolValue("Gui/fdRollInverted")
 
                     Indicators.BarIndicator {
@@ -73,7 +80,7 @@ BaseVehicleDisplay {
                         anchors.left: parent.left
                         width: parent.width * 0.1
                         height: parent.height * 0.65
-                        value: throttle
+                        value: vehicle.powerSystem.throttle
                     }
 
                     Indicators.BarIndicator {
@@ -81,8 +88,9 @@ BaseVehicleDisplay {
                         anchors.right: parent.right
                         width: parent.width * 0.1
                         height: parent.height * 0.7
-                        value: barometricClimb
-                        fillColor: barometricClimb > 0 ? palette.skyColor : palette.groundColor
+                        value: vehicle.barometric.climb
+                        fillColor: vehicle.barometric.climb > 0 ? palette.skyColor :
+                                                                  palette.groundColor
                         minValue: -10
                         maxValue: 10 // TODO: to consts
                     }
@@ -94,18 +102,18 @@ BaseVehicleDisplay {
 
                 Indicators.FdLabel {
                     digits: 0
-                    value: displayedGroundSpeed
-                    enabled: satelliteEnabled
-                    operational: satelliteOperational
-                    prefix: qsTr("GS") + ", " + speedSuffix
+                    value: vehicle.satellite.displayedGroundSpeed
+                    enabled: vehicle.satellite.enabled
+                    operational: vehicle.satellite.operational
+                    prefix: qsTr("GS") + ", " + vehicle.speedSuffix
                     Layout.alignment: Qt.AlignHCenter
                 }
 
                 Indicators.FdLabel {
-                    value: displayedAltitude
-                    enabled: barometricEnabled
-                    operational: barometricOperational
-                    prefix: qsTr("ALT") + ", " + altitudeSuffix
+                    value: vehicle.barometric.displayedAltitude
+                    enabled: vehicle.barometric.enabled
+                    operational: vehicle.barometric.operational
+                    prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
                     Layout.alignment: Qt.AlignHCenter
                 }
             }
@@ -118,11 +126,11 @@ BaseVehicleDisplay {
 
                     Controls.ColoredIcon {
                         id: icon
-                        source: translator.imageFromVehicleState(vehicleState)
+                        source: translator.imageFromVehicleState(vehicle.vehicleState)
                         height: sizings.controlBaseSize * 0.75
                         width: height
                         color: {
-                            switch (vehicleState) {
+                            switch (vehicle.vehicleState) {
                             case Domain.Active: return palette.missionColor;
                             case Domain.Boot:
                             case Domain.Calibrating: return palette.selectionColor;
@@ -148,8 +156,8 @@ BaseVehicleDisplay {
 
                 CommandControls.ModeBox {
                     id: modeBox
-                    mode: vehicleDisplay.mode
-                    model: availableModes
+                    mode: vehicle.mode
+                    model: vehicle.availableModes
                     enabled: online
                     implicitHeight: sizings.controlBaseSize * 0.75
                     Layout.fillWidth: true
@@ -157,7 +165,7 @@ BaseVehicleDisplay {
 
                 CommandControls.WaypointBox {
                     id: itemBox
-                    enabled: online && missionItems > 0
+                    enabled: online && vehicle.mission.count > 0
                     implicitHeight: sizings.controlBaseSize * 0.75
                     Layout.fillWidth: true
                 }

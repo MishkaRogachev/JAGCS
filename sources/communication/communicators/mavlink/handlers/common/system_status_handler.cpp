@@ -99,13 +99,13 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
                          status.onboard_control_sensors_health &
                          MAV_SYS_STATUS_SENSOR_DIFFERENTIAL_PRESSURE);
 
-    portion.setParameter({ Telemetry::Rangefinder, Telemetry::Present },
+    portion.setParameter({ Telemetry::Radalt, Telemetry::Present },
                          status.onboard_control_sensors_present &
                          MAV_SYS_STATUS_SENSOR_LASER_POSITION);
-    portion.setParameter({ Telemetry::Rangefinder, Telemetry::Enabled },
+    portion.setParameter({ Telemetry::Radalt, Telemetry::Enabled },
                          status.onboard_control_sensors_enabled &
                          MAV_SYS_STATUS_SENSOR_LASER_POSITION);
-    portion.setParameter({ Telemetry::Rangefinder, Telemetry::Operational },
+    portion.setParameter({ Telemetry::Radalt, Telemetry::Operational },
                          status.onboard_control_sensors_health &
                          MAV_SYS_STATUS_SENSOR_LASER_POSITION);
 

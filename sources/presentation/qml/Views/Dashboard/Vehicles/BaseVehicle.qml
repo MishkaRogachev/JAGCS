@@ -8,12 +8,7 @@ QtObject {
     id: root
     objectName: "vehicle"
 
-    property int vehicleId: 0
-    property string vehicleName
-    property int vehicleType: Vehicle.UnknownType
-
     property int vehicleState: Domain.UnknownState
-    property bool online: false
     property bool armed: false
     property bool guided: false
 
@@ -38,16 +33,14 @@ QtObject {
     // TODO: altitude units
     property string altitudeSuffix: qsTr("m")
 
-    QtObject {
-        id: mission
+    property QtObject mission: QtObject{
         objectName: "mission"
 
         property int count: 0
         property int current: -1
     }
 
-    Subsystem {
-        id: ahrs
+    property Subsystem ahrs: Subsystem {
         objectName: "ahrs"
 
         property real pitch: 0.0
@@ -57,8 +50,7 @@ QtObject {
 
         property var vibration
 
-        QtObject {
-            id: ekf
+        property QtObject ekf: QtObject {
             objectName: "ekf"
 
             property real velocityVariance: 0.0
@@ -69,8 +61,7 @@ QtObject {
         }
     }
 
-    Subsystem {
-        id: battery
+    property Subsystem battery: Subsystem {
         objectName: "battery"
 
         property real voltage: 0
@@ -78,8 +69,7 @@ QtObject {
         property int percentage: 0
     }
 
-    Subsystem {
-        id: satellite
+    property Subsystem satellite: Subsystem {
         objectName: "satellite"
 
         property var coordinate: QtPositioning.coordinate()
@@ -100,15 +90,13 @@ QtObject {
         }
     }
 
-    Subsystem {
-        id: compass
+    property Subsystem compass: Subsystem {
         objectName: "compass"
 
         property real heading: 0.0
     }
 
-    Subsystem {
-        id: powerSystem
+    property Subsystem powerSystem: Subsystem {
         objectName: "powerSystem"
 
         property int throttle: 0

@@ -30,8 +30,8 @@ void RangefinderHandler::processMessage(const mavlink_message_t& message)
     mavlink_rangefinder_t rangefinder;
     mavlink_msg_rangefinder_decode(&message, &rangefinder);
 
-    portion.setParameter({ Telemetry::Rangefinder, Telemetry::Height },
+    portion.setParameter({ Telemetry::Radalt, Telemetry::Altitude },
                        rangefinder.distance);
-    portion.setParameter({ Telemetry::Rangefinder, Telemetry::Voltage },
+    portion.setParameter({ Telemetry::Radalt, Telemetry::Voltage },
                        rangefinder.voltage);
 }

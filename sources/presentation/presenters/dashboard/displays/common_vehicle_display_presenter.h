@@ -26,8 +26,11 @@ namespace presentation
     protected:
         void connectNode(domain::Telemetry* node) override;
 
+        void setVehicleProperty(const char* name, const QVariant& value);
+        void setVehicleProperty(const QString& group, const char* name, const QVariant& value);
+
     private slots:
-        void updateStatus(const domain::Telemetry::TelemetryMap& parameters);
+        void updateSystem(const domain::Telemetry::TelemetryMap& parameters);
 
     private:
         class Impl;
