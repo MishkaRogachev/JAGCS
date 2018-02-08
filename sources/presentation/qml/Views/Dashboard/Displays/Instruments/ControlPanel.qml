@@ -38,16 +38,16 @@ Controls.Pane {
 
         CommandControls.DelayButton {
             id: armDisarm
-            text: armed ? qsTr("DISARM") : qsTr("ARM")
-            args: [ !armed ]
+            text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
+            args: [ !vehicle.armed ]
             command: Command.ArmDisarm
             Layout.preferredWidth: sizings.controlBaseSize * 2
         }
 
         CommandControls.ModeBox {
             id: modeBox
-            mode: vehicleDisplay.mode
-            model: availableModes
+            mode: vehicle.mode
+            model: vehicle.availableModes
             Layout.fillWidth: true
         }
 
@@ -89,21 +89,25 @@ Controls.Pane {
             enabled: commandBox.currentIndex > 0
             args: {
                 switch (command) {
-                case Command.PreflightCalibration: return calibrationBox.currentItem.args;
-                case Command.NavTo: return [
-                                        latitudeBox.realValue,
-                                        longitudeBox.realValue,
-                                        fromDisplayedAltitude(altitudeBox.value)];
-                case Command.SetSpeed: return [
-                                           commandBox.currentItem.type,
-                                           fromDisplayedSpeed(speedBox.value),
-                                           -1, 0];
-                case Command.SetAltitude: return [altitudeBox.value, 0];
-                case Command.SetHome: return [2, 0, 0, 0,
-                                              latitudeBox.realValue,
-                                              longitudeBox.realValue,
-                                              fromDisplayedAltitude(altitudeBox.value)];
-                default: return [];
+                case Command.PreflightCalibration:
+                    return calibrationBox.currentItem.args;
+                case Command.NavTo:
+                    return [latitudeBox.realValue,
+                            longitudeBox.realValue,
+                            altitudeBox.value];
+                case Command.SetSpeed:
+                    return [commandBox.currentItem.type,
+                            vehicle.fromSpeed(speedBox.value),
+                            -1, 0];
+                case Command.SetAltitude:
+                    return [altitudeBox.value, 0];
+                case Command.SetHome:
+                    return [2, 0, 0, 0,
+                            latitudeBox.realValue,
+                            longitudeBox.realValue,
+                            vehicle.barometric.fromDisplayedAltitude(altitudeBox.value)];
+                default:
+                    return [];
                 }
             }
         }
@@ -122,7 +126,7 @@ Controls.Pane {
             visible: sendButton.command === Command.SetHome ||
                      sendButton.command === Command.SetAltitude ||
                      sendButton.command === Command.NavTo
-            onVisibleChanged: if (visible) value = displayedAltitude
+            onVisibleChanged: if (visible) value = vehicle.barometric.displayedAltitude
             Layout.fillWidth: true
             Layout.columnSpan: 2
         }
@@ -138,7 +142,7 @@ Controls.Pane {
         Controls.CoordSpinBox {
             id: latitudeBox
             visible: sendButton.command === Command.SetHome || sendButton.command === Command.NavTo
-            onVisibleChanged: if (visible) realValue = coordinate.latitude
+            onVisibleChanged: if (visible) realValue = vehicle.position.latitude
             Layout.fillWidth: true
         }
 
@@ -170,7 +174,7 @@ Controls.Pane {
         Controls.CoordSpinBox {
             id: longitudeBox
             visible: latitudeBox.visible
-            onVisibleChanged: if (visible) realValue = coordinate.longitude
+            onVisibleChanged: if (visible) realValue = vehicle.position.longitude
             isLongitude: true
             Layout.fillWidth: true
         }
@@ -186,7 +190,8 @@ Controls.Pane {
             id: speedBox
             visible: sendButton.command === Command.SetSpeed
             onVisibleChanged: if (visible) value = commandBox.currentItem.type ?
-                                               displayedGroundSpeed : displayedIndicatedAirspeed
+                                               vehicle.satellite.displayedGroundSpeed :
+                                               vehicle.pitot.displayedIndicatedAirspeed
             to: 999 // TODO: borderValues
             Layout.fillWidth: true
             // TODO: suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")

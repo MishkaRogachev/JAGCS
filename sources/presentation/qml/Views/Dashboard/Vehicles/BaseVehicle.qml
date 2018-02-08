@@ -33,6 +33,14 @@ QtObject {
     // TODO: altitude units
     property string altitudeSuffix: qsTr("m")
 
+    function fromSpeed(spd) {
+        switch (speedUnits) {
+        default:
+        case 0: return spd;
+        case 1: return Helper.kphToMps(spd);
+        }
+    }
+
     property QtObject mission: QtObject{
         objectName: "mission"
 
