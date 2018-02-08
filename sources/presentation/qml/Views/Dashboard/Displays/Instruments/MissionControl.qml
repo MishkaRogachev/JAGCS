@@ -8,8 +8,8 @@ import "../CommandControls" as CommandControls
 Controls.Pane {
     id: root
 
-    property int count: missionItems
-    property alias current: itemBox.currentIndex
+    property int count: vehicle.mission.count
+    property int current: vehicle.mission.current
 
     function updateCommandStatus(command, status) {
         switch (command) {
@@ -27,10 +27,15 @@ Controls.Pane {
         itemBox.model = items;
     }
 
+    function updateCurrent() {
+        itemBox.currentIndex = vehicle.mission.current;
+    }
+
     Component.onCompleted: updateItems()
+    onCurrentChanged: updateCurrent()
     onCountChanged: updateItems()
 
-    enabled: online && missionItems > 0
+    enabled: online && count > 0
 
     Timer {
         id: timer

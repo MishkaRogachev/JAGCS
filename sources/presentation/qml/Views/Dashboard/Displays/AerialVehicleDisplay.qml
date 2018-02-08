@@ -16,6 +16,11 @@ BaseVehicleDisplay {
 
     property AerialVehicle vehicle: AerialVehicle {}
 
+    function updateCommandStatus(command, status) {
+        mission.updateCommandStatus(command, status);
+        control.updateCommandStatus(command, status);
+    }
+
     implicitWidth: column.implicitWidth
     implicitHeight: column.implicitHeight
 
@@ -102,23 +107,11 @@ BaseVehicleDisplay {
         Instruments.MissionControl  {
             id: mission
             Layout.fillWidth: true
-
-            Connections {
-                target: vehicle.mission
-
-                onCurrentChanged: mission.current = currentItem
-                onUpdateCommandStatus: mission.updateCommandStatus(command, status)
-            }
         }
 
         Instruments.ControlPanel {
             id: control
             Layout.fillWidth: true
-
-            Connections {
-                target: vehicleDisplay
-                onUpdateCommandStatus: control.updateCommandStatus(command, status)
-            }
         }
     }
 }

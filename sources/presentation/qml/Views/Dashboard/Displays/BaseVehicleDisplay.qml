@@ -12,8 +12,6 @@ Item {
     property int vehicleType: Vehicle.UnknownType
     property bool online: false
 
-    signal updateCommandStatus(var command, var status)
-
     property QtObject presenter: VehicleDisplayPresenter {
         id: presenter
         view: vehicleDisplay

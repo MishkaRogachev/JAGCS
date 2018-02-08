@@ -15,7 +15,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
 
     property AerialVehicle vehicle: AerialVehicle {}
 
-    onUpdateCommandStatus:  {
+    function updateCommandStatus(command, status) {
         switch (command) {
         case Command.SetMode:
             modeBox.status = status;
@@ -41,7 +41,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
         target: vehicle.mission
 
         onCountChanged: updateItems()
-        onCurrentChanged:itemBox.currentIndex = current
+        onCurrentChanged: itemBox.currentIndex = vehicle.mission.current
     }
 
     Component.onCompleted: updateItems()
