@@ -18,8 +18,13 @@ Controls.Pane {
         }
 
         Indicators.EkfIndicator {
-            bars: [ velocityVariance, verticalVariance, horizontVariance,
-                compassVariance, terrainAltitudeVariance ]
+            bars: [
+                vehicle.ekf.velocityVariance,
+                vehicle.ekf.verticalVariance,
+                vehicle.ekf.horizontVariance,
+                vehicle.ekf.compassVariance,
+                vehicle.ekf.terrainAltitudeVariance
+            ]
         }
 
         Controls.Label {

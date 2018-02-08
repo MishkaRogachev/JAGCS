@@ -40,6 +40,16 @@ BaseVehicle {
         }
     }
 
+    property QtObject ekf: QtObject {
+        objectName: "ekf"
+
+        property real velocityVariance: 0.0
+        property real verticalVariance: 0.0
+        property real horizontVariance: 0.0
+        property real compassVariance: 0.0
+        property real terrainAltitudeVariance: 0.0
+    }
+
     property Subsystem radalt: Subsystem {
         objectName: "radalt"
 
