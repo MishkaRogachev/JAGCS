@@ -72,15 +72,12 @@ Item {
                     text: modelData.text
                     checked: modelData.instrument.visible
                     onCheckedChanged: modelData.instrument.visible = checked
+                    onClicked: settings.setValue("veh_" + vehicleId + "/" +
+                                                  modelData.setting, checked)
                     Component.onCompleted: {
                         checked = settings.boolValue("veh_" + vehicleId + "/" +
                                                      modelData.setting, true);
                         modelData.instrument.visible = checked;
-                    }
-                    Component.onDestruction: {
-                        settings.setValue("veh_" + vehicleId + "/" +
-                                          modelData.setting,
-                                          modelData.instrument.visible)
                     }
                 }
             }
