@@ -73,7 +73,7 @@ Controls.Pane {
         anchors.centerIn: parent
         height: root.height - sizings.padding
         width: root.width * 0.55
-        enabled: online && vehicle.ahrs.enabled
+        enabled: vehicle.online && vehicle.ahrs.enabled
         operational: vehicle.ahrs.operational
         armed: vehicle.armed
         guided: vehicle.guided

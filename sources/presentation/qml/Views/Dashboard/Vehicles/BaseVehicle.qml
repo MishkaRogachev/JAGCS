@@ -8,7 +8,11 @@ QtObject {
     id: root
     objectName: "vehicle"
 
+    property string vehicleName
+    property int vehicleType: Vehicle.UnknownType
+
     property int vehicleState: Domain.UnknownState
+    property bool online: false
     property bool armed: false
     property bool guided: false
 

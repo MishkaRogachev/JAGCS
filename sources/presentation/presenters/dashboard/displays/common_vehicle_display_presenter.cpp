@@ -96,15 +96,15 @@ void CommonVehicleDisplayPresenter::updateVehicle()
 {
     if (d->vehicle)
     {
-        this->setViewProperty(PROPERTY(vehicleName), d->vehicle->name());
-        this->setViewProperty(PROPERTY(vehicleType), d->vehicle->type());
-        this->setViewProperty(PROPERTY(online), d->vehicle->isOnline());
+        this->setVehicleProperty(PROPERTY(vehicleName), d->vehicle->name());
+        this->setVehicleProperty(PROPERTY(vehicleType), d->vehicle->type());
+        this->setVehicleProperty(PROPERTY(online), d->vehicle->isOnline());
     }
     else
     {
-        this->setViewProperty(PROPERTY(vehicleName), QString());
-        this->setViewProperty(PROPERTY(vehicleType), dao::Vehicle::UnknownType);
-        this->setViewProperty(PROPERTY(online), false);
+        this->setVehicleProperty(PROPERTY(vehicleName), QString());
+        this->setVehicleProperty(PROPERTY(vehicleType), dao::Vehicle::UnknownType);
+        this->setVehicleProperty(PROPERTY(online), false);
     }
 }
 

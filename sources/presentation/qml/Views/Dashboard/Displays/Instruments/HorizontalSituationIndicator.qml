@@ -48,7 +48,7 @@ Controls.Pane {
         anchors.centerIn: parent
         height: parent.height - sizings.padding
         width: height
-        mark: translator.imageFromVehicleType(vehicleType)
+        mark: translator.imageFromVehicleType(vehicle.vehicleType)
         heading: vehicle.compass.heading
         course: vehicle.satellite.course
         courseEnabled: vehicle.satellite.groundSpeed > 0.1

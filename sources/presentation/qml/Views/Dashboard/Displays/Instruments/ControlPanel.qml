@@ -8,7 +8,7 @@ import "../CommandControls" as CommandControls
 Controls.Pane {
     id: root
 
-    enabled: online
+    enabled: vehicle.online
 
     function updateCommandStatus(command, status) {
         switch (command) {

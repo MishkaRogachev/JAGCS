@@ -35,7 +35,7 @@ Controls.Pane {
     onCurrentChanged: updateCurrent()
     onCountChanged: updateItems()
 
-    enabled: online && count > 0
+    enabled: vehicle.online && count > 0
 
     Timer {
         id: timer

@@ -11,8 +11,10 @@ import "Instruments" as Instruments
 
 import "../Vehicles"
 
-BaseVehicleDisplay {
+Item {
     id: vehicleDisplay
+
+    property int vehicleId: 0
 
     property AerialVehicle vehicle: AerialVehicle {}
 
@@ -23,6 +25,12 @@ BaseVehicleDisplay {
 
     implicitWidth: column.implicitWidth
     implicitHeight: column.implicitHeight
+
+    VehicleDisplayPresenter {
+        id: presenter
+        view: vehicleDisplay
+        Component.onCompleted: setVehicle(vehicleId)
+    }
 
     Connections {
         target: displaysSettingsButton

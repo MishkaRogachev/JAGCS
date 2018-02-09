@@ -10,7 +10,7 @@ import "CommandControls" as CommandControls
 
 import "../Vehicles"
 
-BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
+Item { // FIXME: ShortAerialVehicleDisplay
     id: vehicleDisplay
 
     property AerialVehicle vehicle: AerialVehicle {}
@@ -35,6 +35,12 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
         var items = [];
         for (var i = 0; i < vehicle.mission.count; ++i) items.push(i + 1);
         itemBox.model = items;
+    }
+
+    VehicleDisplayPresenter {
+        id: presenter
+        view: vehicleDisplay
+        Component.onCompleted: setVehicle(vehicleId)
     }
 
     Connections {
@@ -69,7 +75,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
                     anchors.centerIn: parent
                     height: parent.height - parent.size * 2
                     width: height * 0.9
-                    enabled: online &&  vehicle.ahrs.enabled
+                    enabled: vehicle.online &&  vehicle.ahrs.enabled
                     armed: vehicle.armed
                     pitch: vehicle.ahrs.pitch
                     roll: vehicle.ahrs.roll
@@ -145,7 +151,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
                     }
 
                     Controls.Label {
-                        text: vehicleName
+                        text: vehicle.vehicleName
                         font.pixelSize: sizings.fontPixelSize * 0.75
                         font.bold: true
                         height: sizings.controlBaseSize * 0.75
@@ -158,14 +164,14 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
                     id: modeBox
                     mode: vehicle.mode
                     model: vehicle.availableModes
-                    enabled: online
+                    enabled: vehicle.online
                     implicitHeight: sizings.controlBaseSize * 0.75
                     Layout.fillWidth: true
                 }
 
                 CommandControls.WaypointBox {
                     id: itemBox
-                    enabled: online && vehicle.mission.count > 0
+                    enabled: vehicle.online && vehicle.mission.count > 0
                     implicitHeight: sizings.controlBaseSize * 0.75
                     Layout.fillWidth: true
                 }
@@ -185,7 +191,7 @@ BaseVehicleDisplay { // FIXME: ShortAerialVehicleDisplay
                     id: rtl
                     tipText: qsTr("Return to launch")
                     iconSource: "qrc:/icons/home.svg"
-                    enabled: online
+                    enabled: vehicle.online
                     command: Command.Return
                 }
             }
