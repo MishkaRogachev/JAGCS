@@ -19,6 +19,7 @@
 #include "location_map_presenter.h"
 #include "active_video_presenter.h"
 #include "dashboard_presenter.h"
+#include "vehicles_list_display_presenter.h"
 #include "vehicle_display_presenter.h"
 #include "link_list_presenter.h"
 #include "link_presenter.h"
@@ -76,6 +77,7 @@ static void registerTypes()
     qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
     qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "ActiveVideoPresenter");
     qmlRegisterType<DashboardPresenter>("JAGCS", 1, 0, "DashboardPresenter");
+    qmlRegisterType<VehiclesListDisplayPresenter>("JAGCS", 1, 0, "VehiclesListDisplayPresenter");
     qmlRegisterType<VehicleDisplayPresenter>("JAGCS", 1, 0, "VehicleDisplayPresenter");
     qmlRegisterType<LinkListPresenter>("JAGCS", 1, 0, "LinkListPresenter");
     qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");

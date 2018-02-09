@@ -1,5 +1,5 @@
-#ifndef DISPLAYS_MODEL_H
-#define DISPLAYS_MODEL_H
+#ifndef VEHICLES_MODEL_H
+#define VEHICLES_MODEL_H
 
 // Qt
 #include <QAbstractListModel>
@@ -9,34 +9,33 @@
 
 namespace presentation
 {
-    class DisplaysModel: public QAbstractListModel
+    class VehiclesModel: public QAbstractListModel
     {
         Q_OBJECT
 
     public:
         enum VehicleMapItemRoles
         {
-            DisplayRole = Qt::UserRole + 1,
+            VehicleTypeRole = Qt::UserRole + 1,
             VehicleIdRole
         };
 
-        DisplaysModel(QObject* parent = nullptr);
+        explicit VehiclesModel(QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
+        void setVehicles(const dao::VehiclePtrList& vehicles);
         void addVehicle(const dao::VehiclePtr& vehicle);
         void removeVehicle(const dao::VehiclePtr& vehicle);
-        void setSelectedVehicle(const dao::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
     private:
         dao::VehiclePtrList m_vehicles;
-        dao::VehiclePtr m_selectedVehicle;
     };
 }
 
-#endif // DISPLAYS_MODEL_H
+#endif // VEHICLES_MODEL_H

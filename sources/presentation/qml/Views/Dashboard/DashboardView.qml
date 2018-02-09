@@ -8,11 +8,29 @@ Item {
     id: root
 
     property var selectedVehicle
-    property var displays
 
     function selectVehicle(vehicleId) {
         presenter.selectVehicle(vehicleId);
     }
+
+    function updateDisplay() {
+        if (selectedVehicle !== undefined) {
+            switch (selectedVehicle.type) {
+            case Vehicle.FixedWing:
+            case Vehicle.FlyingWing:
+            default:
+                // TODO: Special displays for special types
+                loader.setSource("Displays/AerialVehicleDisplay.qml",
+                                 { "vehicleId": selectedVehicle.id });
+            }
+        }
+        else {
+            loader.setSource("Displays/VehiclesListDisplay.qml")
+        }
+    }
+
+    Component.onCompleted: updateDisplay()
+    onSelectedVehicleChanged: updateDisplay()
 
     DashboardPresenter {
         id: presenter
@@ -22,7 +40,7 @@ Item {
     implicitWidth: sizings.controlBaseSize * 8 // TODO: display row size
 
     RowLayout {
-        id: unitRow
+        id: row
         width: root.width
         spacing: 0
 
@@ -49,34 +67,12 @@ Item {
         }
     }
 
-    ListView {
-        y: unitRow.height + sizings.spacing
+    Loader {
+        id: loader
+        anchors.top: row.bottom
+        anchors.topMargin: sizings.spacing
         width: root.width
-        height: Math.min(parent.height - y, contentHeight + sizings.shadowSize)
-        spacing: sizings.spacing
-        flickableDirection: Flickable.AutoFlickIfNeeded
-        boundsBehavior: Flickable.StopAtBounds
+        height: Math.min(implicitHeight, root.height - sizings.spacing)
         clip: true
-        model: displays
-
-        Controls.ScrollBar.vertical: Controls.ScrollBar {
-            visible: parent.contentHeight > parent.height
-        }
-
-        delegate: Loader {
-            width: parent.width - sizings.shadowSize
-            Component.onCompleted: {
-                switch (display) {
-                case DashboardPresenter.ShortVehicleDisplay:
-                    setSource("Displays/ShortAerialVehicleDisplay.qml", { "vehicleId": vehicleId });
-                    break;
-                case DashboardPresenter.AerialVehicleDisplay:
-                    setSource("Displays/AerialVehicleDisplay.qml", { "vehicleId": vehicleId });
-                    break;
-                default:
-                    break;
-                }
-            }
-        }
     }
 }

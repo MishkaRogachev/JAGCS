@@ -11,26 +11,15 @@ namespace presentation
         Q_OBJECT
 
     public:
-        enum Display
-        {
-            ShortVehicleDisplay,
-            AerialVehicleDisplay
-        };
-
         DashboardPresenter(QObject* parent = nullptr);
         ~DashboardPresenter() override;
 
     public slots:
         void selectVehicle(int vehicleId);
 
-    protected:
-        void connectView(QObject* view);
-
     private:
         class Impl;
         QScopedPointer<Impl> const d;
-
-        Q_ENUM(Display)
     };
 }
 

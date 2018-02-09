@@ -10,7 +10,7 @@ import "CommandControls" as CommandControls
 
 import "../Vehicles"
 
-Item { // FIXME: ShortAerialVehicleDisplay
+Item {
     id: vehicleDisplay
 
     property AerialVehicle vehicle: AerialVehicle {}
