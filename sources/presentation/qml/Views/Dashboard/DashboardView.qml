@@ -68,7 +68,7 @@ Item {
             Component.onCompleted: {
                 switch (display) {
                 case DashboardPresenter.ShortVehicleDisplay:
-                    setSource("Displays/ShortVehicleDisplay.qml", { "vehicleId": vehicleId });
+                    setSource("Displays/ShortAerialVehicleDisplay.qml", { "vehicleId": vehicleId });
                     break;
                 case DashboardPresenter.AerialVehicleDisplay:
                     setSource("Displays/AerialVehicleDisplay.qml", { "vehicleId": vehicleId });
