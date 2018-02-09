@@ -24,7 +24,7 @@ Item {
     }
 
     implicitWidth: column.implicitWidth
-    implicitHeight: column.implicitHeight
+    implicitHeight: column.implicitHeight + sizings.shadowSize
 
     VehicleDisplayPresenter {
         id: presenter
@@ -84,39 +84,52 @@ Item {
         }
     }
 
-    ColumnLayout {
-        id: column
-        width: parent.width
-        spacing: sizings.spacing
+    Flickable { // ListView { spacing: sizings.spacing
+        id: list
+        width: vehicleDisplay.width - sizings.shadowSize
+        height: vehicleDisplay.height - sizings.shadowSize
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
+        contentHeight: column.height
 
-        Instruments.DiagnosticsPanel {
-            id: diagnostics
-            Layout.fillWidth: true
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
         }
 
-        Instruments.StatusPanel {
-            id: status
-            Layout.fillWidth: true
-        }
+        ColumnLayout {
+            id: column
+            width: parent.width
+            spacing: sizings.spacing
 
-        Instruments.FlightDirector {
-            id: fd
-            Layout.fillWidth: true
-        }
+            Instruments.DiagnosticsPanel {
+                id: diagnostics
+                Layout.fillWidth: true
+            }
 
-        Instruments.HorizontalSituationIndicator  {
-            id: hsi
-            Layout.fillWidth: true
-        }
+            Instruments.StatusPanel {
+                id: status
+                Layout.fillWidth: true
+            }
 
-        Instruments.MissionControl  {
-            id: mission
-            Layout.fillWidth: true
-        }
+            Instruments.FlightDirector {
+                id: fd
+                Layout.fillWidth: true
+            }
 
-        Instruments.ControlPanel {
-            id: control
-            Layout.fillWidth: true
+            Instruments.HorizontalSituationIndicator  {
+                id: hsi
+                Layout.fillWidth: true
+            }
+
+            Instruments.MissionControl  {
+                id: mission
+                Layout.fillWidth: true
+            }
+
+            Instruments.ControlPanel {
+                id: control
+                Layout.fillWidth: true
+            }
         }
     }
 }
