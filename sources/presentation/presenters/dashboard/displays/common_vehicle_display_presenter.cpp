@@ -55,6 +55,18 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
         d->assignment.clear();
         this->updateMissionItems();
     });
+    connect(d->missionService, &domain::MissionService::assignmentChanged, this,
+            [this](const dao::MissionAssignmentPtr& assignment) {
+        if (d->assignment == assignment)
+        {
+            this->updateMissionItems();
+        }
+        else if (d->vehicle && assignment->vehicleId() != d->vehicle->id())
+        {
+            d->assignment = assignment;
+            this->updateMissionItems();
+        }
+    });
 
     connect(d->missionService, &domain::MissionService::currentItemChanged, this,
             [this](int vehicleId, const dao::MissionItemPtr& item) {
