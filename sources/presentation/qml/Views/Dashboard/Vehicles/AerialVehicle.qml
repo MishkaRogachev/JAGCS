@@ -13,11 +13,12 @@ BaseVehicle {
         property real climb: 0
 
         readonly property real displayedAltitude: {
-            return altitudeRelative ? altitude - homePosition.altitude : altitude;
+            return altitudeRelative && homePosition.isValid ? altitude - homePosition.altitude :
+                                                              altitude;
         }
 
         function fromDisplayedAltitude(alt) {
-            return altitudeRelative ? alt + homePosition.altitude : alt;
+            return altitudeRelative && homePosition.isValid ? alt + homePosition.altitude : alt;
         }
     }
 
