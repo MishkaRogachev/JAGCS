@@ -8,26 +8,29 @@ import "../CommandControls" as CommandControls
 Controls.Pane {
     id: root
 
-    enabled: vehicle.online
-
-    function updateCommandStatus(command, status) {
-        switch (command) {
-        case Command.ArmDisarm:
-            armDisarm.status = status;
-            break;
-        case Command.SetMode:
-            modeBox.status = status;
-            break;
-        case Command.Return:
-            rtl.status = status;
-            break;
-        case sendButton.command:
-            sendButton.status = status;
-            break;
-        default:
-            break;
+    Connections {
+        target: vehicleDisplay
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.ArmDisarm:
+                armDisarm.status = status;
+                break;
+            case Command.SetMode:
+                modeBox.status = status;
+                break;
+            case Command.Return:
+                rtl.status = status;
+                break;
+            case sendButton.command:
+                sendButton.status = status;
+                break;
+            default:
+                break;
+            }
         }
     }
+
+    enabled: vehicle.online
 
     GridLayout {
         anchors.centerIn: parent

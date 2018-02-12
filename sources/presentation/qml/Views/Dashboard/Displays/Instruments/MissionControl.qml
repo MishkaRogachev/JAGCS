@@ -11,16 +11,6 @@ Controls.Pane {
     property int count: vehicle.mission.count
     property int current: vehicle.mission.current
 
-    function updateCommandStatus(command, status) {
-        switch (command) {
-        case Command.GoTo:
-            itemBox.status = status;
-            break;
-        default:
-            break;
-        }
-    }
-
     function updateItems() {
         var items = [];
         for (var i = 0; i < count; ++i) items.push(i + 1);
@@ -29,6 +19,19 @@ Controls.Pane {
 
     function updateCurrent() {
         itemBox.currentIndex = vehicle.mission.current;
+    }
+
+    Connections {
+        target: vehicleDisplay
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.GoTo:
+                itemBox.status = status;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     Component.onCompleted: updateItems()

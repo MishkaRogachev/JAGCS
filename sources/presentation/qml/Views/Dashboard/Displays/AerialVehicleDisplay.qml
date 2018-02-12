@@ -18,10 +18,7 @@ Item {
 
     property AerialVehicle vehicle: AerialVehicle {}
 
-    function updateCommandStatus(command, status) {
-        mission.updateCommandStatus(command, status);
-        control.updateCommandStatus(command, status);
-    }
+    signal updateCommandStatus(var command, var status)
 
     implicitWidth: list.contentWidth
     implicitHeight: list.contentHeight + sizings.shadowSize
