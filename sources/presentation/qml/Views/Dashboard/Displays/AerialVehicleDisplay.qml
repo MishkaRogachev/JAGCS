@@ -23,8 +23,8 @@ Item {
         control.updateCommandStatus(command, status);
     }
 
-    implicitWidth: column.implicitWidth
-    implicitHeight: column.implicitHeight + sizings.shadowSize
+    implicitWidth: list.contentWidth
+    implicitHeight: list.contentHeight + sizings.shadowSize
 
     VehicleDisplayPresenter {
         id: presenter
@@ -38,9 +38,50 @@ Item {
                                                    instrumentsVisibility.open()
     }
 
-//    TODO: instruments to ListModel {
-//        id: instrumentsModel
-//    }
+    ListModel {
+        id: instrumentsModel
+
+        ListElement {
+            name: qsTr("Diagnostics panel")
+            setting: "diagnosticsVisible"
+            instrument: "./Instruments/DiagnosticsPanel.qml"
+            instrumentVisible: true
+        }
+
+        ListElement {
+            name: qsTr("Status panel")
+            setting: "statusVisible"
+            instrument: "./Instruments/StatusPanel.qml"
+            instrumentVisible: true
+        }
+
+        ListElement {
+            name: qsTr("Flight instrument(FD)")
+            setting: "fdVisible"
+            instrument: "./Instruments/FlightDirector.qml"
+            instrumentVisible: true
+        }
+
+        ListElement {
+            name: qsTr("Horizontal situation indicator(HSI)")
+            setting: "hsiVisible"
+            instrument: "./Instruments/HorizontalSituationIndicator.qml"
+            instrumentVisible: true
+        }
+
+        ListElement {
+            name: qsTr("Mission control")
+            setting: "missionVisible"
+            instrument: "./Instruments/MissionControl.qml"
+            instrumentVisible: true
+        }
+        ListElement {
+            name: qsTr("Control panel")
+            setting: "controlVisible"
+            instrument: "./Instruments/ControlPanel.qml"
+            instrumentVisible: true
+        }
+    }
 
     Controls.Popup {
         id: instrumentsVisibility
@@ -53,83 +94,39 @@ Item {
             spacing: sizings.spacing
 
             Repeater {
-                model: [
-                    { text: qsTr("Diagnostics panel"), instrument: diagnostics,
-                        setting: "diagnosticsVisible" },
-                    { text: qsTr("Status panel"), instrument: status,
-                        setting: "statusVisible" },
-                    { text: qsTr("Flight instrument(FD)"), instrument: fd,
-                        setting: "fdVisible" },
-                    { text: qsTr("Horizontal situation indicator(HSI)"), instrument: hsi,
-                        setting: "hsiVisible" },
-                    { text: qsTr("Mission control"), instrument: mission,
-                        setting: "missionVisible" },
-                    { text: qsTr("Control panel"), instrument: control,
-                        setting: "controlVisible" }
-                ]
+                model: instrumentsModel
 
                 Controls.CheckBox {
-                    text: modelData.text
-                    checked: modelData.instrument.visible
-                    onCheckedChanged: modelData.instrument.visible = checked
-                    onClicked: settings.setValue("veh_" + vehicleId + "/" +
-                                                  modelData.setting, checked)
+                    text: name
+                    onCheckedChanged: instrumentVisible = checked
+                    onClicked: settings.setValue("veh_" + vehicleId + "/" + setting, checked)
                     Component.onCompleted: {
-                        checked = settings.boolValue("veh_" + vehicleId + "/" +
-                                                     modelData.setting, true);
-                        modelData.instrument.visible = checked;
+                        checked = settings.boolValue("veh_" + vehicleId + "/" + setting, true);
+                        instrumentVisible = checked;
                     }
                 }
             }
         }
     }
 
-    Flickable { // ListView { spacing: sizings.spacing
+    ListView {
         id: list
         width: vehicleDisplay.width - sizings.shadowSize
         height: vehicleDisplay.height - sizings.shadowSize
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        contentHeight: column.height
+        spacing: sizings.spacing
+        model: instrumentsModel
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
         }
 
-        ColumnLayout {
-            id: column
+        delegate: Loader {
             width: parent.width
-            spacing: sizings.spacing
-
-            Instruments.DiagnosticsPanel {
-                id: diagnostics
-                Layout.fillWidth: true
-            }
-
-            Instruments.StatusPanel {
-                id: status
-                Layout.fillWidth: true
-            }
-
-            Instruments.FlightDirector {
-                id: fd
-                Layout.fillWidth: true
-            }
-
-            Instruments.HorizontalSituationIndicator  {
-                id: hsi
-                Layout.fillWidth: true
-            }
-
-            Instruments.MissionControl  {
-                id: mission
-                Layout.fillWidth: true
-            }
-
-            Instruments.ControlPanel {
-                id: control
-                Layout.fillWidth: true
-            }
+            active: instrumentVisible
+            height: active && item ? item.implicitHeight : 0
+            source: instrument
         }
     }
 }
