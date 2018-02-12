@@ -72,7 +72,7 @@ Item {
         anchors.top: row.bottom
         anchors.topMargin: sizings.spacing
         width: root.width
-        height: Math.min(implicitHeight, root.height - sizings.spacing)
+        height: Math.min(implicitHeight, root.height - row.height - sizings.spacing)
         clip: true
     }
 }

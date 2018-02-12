@@ -125,7 +125,7 @@ Item {
         delegate: Loader {
             width: parent.width
             active: instrumentVisible
-            height: active && item ? item.implicitHeight : 0
+            height: active && item ? item.implicitHeight : -list.spacing
             source: instrument
         }
     }
