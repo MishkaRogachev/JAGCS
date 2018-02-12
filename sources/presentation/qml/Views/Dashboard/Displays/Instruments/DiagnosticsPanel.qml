@@ -8,9 +8,11 @@ import "qrc:/Indicators" as Indicators
 Controls.Pane {
     id: root
 
+    padding: 0
+
     RowLayout {
         anchors.centerIn: parent
-        width: parent.width
+        width: parent.width - sizings.padding * 2
         spacing: sizings.spacing
 
         Controls.Label {
@@ -36,18 +38,18 @@ Controls.Pane {
             Layout.fillWidth: true
             Layout.minimumHeight: sizings.controlBaseSize * 1.5
             Layout.fillHeight: true
-            /* FIXME: segfault on destruction
+            // FIXME: segfault on destruction
             ValueAxis {
                 id: timeAxis
                 visible: false
-                min: vibration.minTime
-                max: vibration.maxTime
+                min: vehicle.ahrs.vibration.minTime
+                max: vehicle.ahrs.vibration.maxTime
             }
 
             ValueAxis {
                 id: valueAxis
                 visible: false
-                max: vibration.maxValue
+                max: vehicle.ahrs.vibration.maxValue
             }
 
             LineSeries {
@@ -58,7 +60,7 @@ Controls.Pane {
                 VXYModelMapper {
                     xColumn: 0
                     yColumn: 1
-                    model: vibration
+                    model: vehicle.ahrs.vibration
                 }
             }
 
@@ -70,7 +72,7 @@ Controls.Pane {
                 VXYModelMapper {
                     xColumn: 0
                     yColumn: 2
-                    model: vibration
+                    model: vehicle.ahrs.vibration
                 }
             }
 
@@ -82,9 +84,9 @@ Controls.Pane {
                 VXYModelMapper {
                     xColumn: 0
                     yColumn: 3
-                    model: vibration
+                    model: vehicle.ahrs.vibration
                 }
-            }*/
+            }
         }
     }
 }
