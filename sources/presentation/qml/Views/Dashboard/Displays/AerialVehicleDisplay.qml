@@ -84,7 +84,7 @@ Item {
         id: instrumentsVisibility
         x: displaysSettingsButton.x
         y: -sizings.padding
-        closePolicy: Controls.Popup.NoAutoClose
+        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
         padding: sizings.padding
 
         ColumnLayout {
