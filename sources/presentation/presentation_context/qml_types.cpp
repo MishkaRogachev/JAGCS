@@ -33,6 +33,7 @@
 #include "mission_item_list_presenter.h"
 #include "mission_item_presenter.h"
 #include "mission_item_edit_presenter.h"
+#include "mission_assignment_presenter.h"
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
 #include "joystick_settings_presenter.h"
@@ -91,6 +92,7 @@ static void registerTypes()
     qmlRegisterType<MissionItemListPresenter>("JAGCS", 1, 0, "MissionItemListPresenter");
     qmlRegisterType<MissionItemPresenter>("JAGCS", 1, 0, "MissionItemPresenter");
     qmlRegisterType<MissionItemEditPresenter>("JAGCS", 1, 0, "MissionItemEditPresenter");
+    qmlRegisterType<MissionAssignmentPresenter>("JAGCS", 1, 0, "MissionAssignmentPresenter");
     qmlRegisterType<DatabasePresenter>("JAGCS", 1, 0, "DatabasePresenter");
     qmlRegisterType<GuiSettingsPresenter>("JAGCS", 1, 0, "GuiSettingsPresenter");
     qmlRegisterType<JoystickSettingsPresenter>("JAGCS", 1, 0, "JoystickSettingsPresenter");

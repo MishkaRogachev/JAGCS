@@ -118,6 +118,7 @@
         <file>Views/Menu/Planning/Missions/MissionItemListView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionItemView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionItemEditView.qml</file>
+        <file>Views/Menu/Planning/Missions/MissionAssignmentView.qml</file>
         <file>Views/Menu/Log/LogListView.qml</file>
         <file>Views/Menu/Log/LogView.qml</file>
         <file>Views/Menu/Settings/SettingsMenu.qml</file>

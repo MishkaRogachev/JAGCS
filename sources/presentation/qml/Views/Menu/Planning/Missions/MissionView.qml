@@ -8,32 +8,28 @@ Controls.Frame {
     id: missionView
 
     property int missionId: 0
+    property alias assignedVehicleId: assignment.assignedVehicleId
     property int count: 0
-    property int progress: 0
     property bool missionVisible: false
-    property bool vehicleOnline: false
-    property int assignedVehicleId: 0
-    property int status: MissionAssignment.NotActual
-
     property alias name: nameEdit.text
+
+    function updateSelectedVehicle() {
+        for (var i = 0; i < vehicles.length; ++i) {
+            if (vehicles[i].id === assignedVehicleId) {
+                vehicleBox.currentIndex = i;
+                assignment.vehicleOnline = vehicles[i].online;
+                return;
+            }
+        }
+        vehicleBox.currentIndex = -1;
+        assignment.vehicleOnline = false;
+    }
 
     onAssignedVehicleIdChanged: updateSelectedVehicle()
 
     Connections {
         target: planning
         onVehiclesChanged: updateSelectedVehicle()
-    }
-
-    function updateSelectedVehicle() {
-        for (var i = 0; i < vehicles.length; ++i) {
-            if (vehicles[i].id === assignedVehicleId) {
-                vehicleBox.currentIndex = i;
-                vehicleOnline = vehicles[i].online;
-                return;
-            }
-        }
-        vehicleBox.currentIndex = -1;
-        vehicleOnline = false;
     }
 
     MissionPresenter {
@@ -91,33 +87,6 @@ Controls.Frame {
         }
 
         Controls.Button {
-            tipText: qsTr("Download mission from MAV")
-            iconSource: "qrc:/icons/download.svg"
-            enabled: assignedVehicleId > 0 && vehicleOnline
-            highlighted: status === MissionAssignment.Downloading
-            onClicked: highlighted ? presenter.cancelSyncMission() : presenter.downloadMission()
-        }
-
-        Controls.Button {
-            tipText: qsTr("Upload mission to MAV")
-            iconSource: "qrc:/icons/upload.svg"
-            enabled: assignedVehicleId > 0 && vehicleOnline
-            highlighted: status === MissionAssignment.Uploading
-            onClicked: highlighted ? presenter.cancelSyncMission() : presenter.uploadMission()
-        }
-
-        Controls.Label {
-            text: qsTr("Commands")
-        }
-
-       Controls.ProgressBar {
-            to: count
-            value: progress
-            text: progress + "/" + count
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
             tipText: qsTr("Edit commands")
             iconSource: "qrc:/icons/edit.svg"
             enabled: missionId > 0
@@ -130,6 +99,16 @@ Controls.Frame {
             iconSource: "qrc:/icons/save.svg"
             enabled: false
             //onClicked: TODO: export()
+        }
+
+        Controls.Label {
+            text: qsTr("Assignment")
+        }
+
+        MissionAssignmentView {
+            id: assignment
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
         }
     }
 }
