@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 Controls.ComboBox {
     id: control
 
-    property int mode: Domain.None
+    property var mode: Command.UnknownCommand
     property int status: Command.Idle
 
     model: []
@@ -17,6 +17,12 @@ Controls.ComboBox {
 
     onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
+    currentIndex: {
+        for (var i = 0; i < model.length; ++i) {
+            if (mode == model[i]) return i; // works only with ==
+        }
+        return -1;
+    }
 
     Timer {
         id: timer
