@@ -11,8 +11,6 @@
 #include <QDebug>
 
 // Internal
-#include "mission_assignment.h"
-#include "mission_item.h"
 #include "vehicle.h"
 
 #include "mavlink_communicator.h"
@@ -20,7 +18,6 @@
 
 #include "service_registry.h"
 #include "vehicle_service.h"
-#include "mission_service.h"
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
@@ -94,19 +91,6 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 
     this->removeVehicleTimer(vehicleId);
     d->obtainedVehicles.append(vehicleId);
-
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
-    if (assignment.isNull()) return;
-
-    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), 0);
-    if (item.isNull()) return;
-
-    item->setLatitude(coordinate.latitude());
-    item->setLongitude(coordinate.longitude());
-    item->setAltitude(coordinate.altitude());
-    item->setStatus(dao::MissionItem::Actual);
-
-    d->missionService->missionItemChanged(item);
 }
 
 void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
