@@ -24,6 +24,8 @@ Map {
     property alias pickerVisible: picker.visible
 
     property int trackingVehicleId: 0
+    property bool trackYaw: false
+
     property int selectedItemId: 0
 
     property int activeMapTypeIndex: 0
@@ -72,12 +74,14 @@ Map {
         bearing = settings.value("Map/bearing");
         tilt = settings.value("Map/tilt");
 
-        setGesturesEnabled(true);
+        updateGestures(true);
     }
 
     Component.onDestruction: if (visible) saveViewport()
     onVisibleChanged: if (!visible) saveViewport()
-    onTrackingVehicleIdChanged: setGesturesEnabled(trackingVehicleId == 0)
+
+    onTrackingVehicleIdChanged: updateGestures()
+    onTrackYawChanged: updateGestures()
 
     function saveViewport() {
         if (width == 0 || height == 0) return;
@@ -89,14 +93,14 @@ Map {
         settings.setValue("Map/tilt", tilt);
     }
 
-    function setGesturesEnabled(enabled) {
-        gesture.acceptedGestures = enabled ? (MapGestureArea.PinchGesture |
-                                              MapGestureArea.PanGesture |
-                                              MapGestureArea.FlickGesture |
-                                              MapGestureArea.RotationGesture |
-                                              MapGestureArea.TiltGesture)
-                                           :
-                                             MapGestureArea.PinchGesture |
-                                             MapGestureArea.TiltGesture
+    function updateGestures(enabled) {
+        gesture.acceptedGestures = trackingVehicleId == 0 ?
+                    (MapGestureArea.PinchGesture | MapGestureArea.PanGesture |
+                     MapGestureArea.FlickGesture | MapGestureArea.RotationGesture |
+                     MapGestureArea.TiltGesture)
+                  : (trackYaw ?
+                         MapGestureArea.PinchGesture | MapGestureArea.TiltGesture :
+                         MapGestureArea.PinchGesture | MapGestureArea.RotationGesture |
+                         MapGestureArea.TiltGesture)
     }
 }

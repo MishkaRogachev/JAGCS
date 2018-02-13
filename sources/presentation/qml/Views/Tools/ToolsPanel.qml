@@ -40,7 +40,7 @@ ColumnLayout {
         tipText: qsTr("North")
         iconSource: "qrc:/icons/compas.svg"
         onClicked: bearingAnimation.start()
-        enabled: map.trackingVehicleId === 0
+        enabled: !map.trackYaw
         visible: map.visible
 
         RotationAnimation {
@@ -54,13 +54,23 @@ ColumnLayout {
     }
 
     Controls.Button {
+        iconSource: "qrc:/icons/track_yaw.svg"
+        tipText: qsTr("Track vehicle's yaw")
+        checkable: true
+        enabled: centerButton.checked
+        visible: map.visible
+        onEnabledChanged: if (!enabled) checked = false
+        onCheckedChanged: map.trackYaw = checked
+    }
+
+    Controls.Button {
+        id: centerButton
         iconSource: "qrc:/icons/center.svg"
         tipText: qsTr("Center vehicle on map")
         checkable: true
         enabled: dashboard.selectedVehicle !== undefined && map.visible
         visible: map.visible
-        onEnabledChanged: if (!enabled) checked = false;
-        onCheckedChanged: map.trackingVehicleId = checked ?
-                              dashboard.selectedVehicle.id : 0
+        onEnabledChanged: if (!enabled) checked = false
+        onCheckedChanged: map.trackingVehicleId = checked ? dashboard.selectedVehicle.id : 0
     }
 }

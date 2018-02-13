@@ -75,7 +75,7 @@ MapItemView {
             if (map.trackingVehicleId != vehicleId) return;
 
             if (coordinate) map.center = coordinate;
-            map.bearing = headingAnimated;
+            if (map.trackYaw) map.bearing = headingAnimated;
         }
     }
 }
