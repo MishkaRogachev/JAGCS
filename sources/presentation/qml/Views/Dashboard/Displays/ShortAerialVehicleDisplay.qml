@@ -32,7 +32,7 @@ Controls.Card {
         anchors.margins: sizings.margins
         columnSpacing: sizings.spacing
         rowSpacing: sizings.spacing
-        columns: 4
+        columns: 2
 
         Indicators.YawIndicator {
             id: compass
@@ -74,35 +74,51 @@ Controls.Card {
             }
         }
 
-        Controls.Label {
-            text: vehicle.vehicleName
-            font.bold: true
-            wrapMode: Text.NoWrap
-            Layout.alignment: Qt.AlignHCenter
-            Layout.columnSpan: 3
+        RowLayout {
+            spacing: sizings.spacing
+
+            Controls.Label {
+                text: vehicle.vehicleName
+                font.bold: true
+                wrapMode: Text.NoWrap
+            }
+
+            Controls.Label {
+                text: translator.translateVehicleMode(vehicle.mode)
+                wrapMode: Text.NoWrap
+                horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
+            }
         }
 
-        Indicators.FdLabel {
-            digits: 0
-            value: vehicle.satellite.displayedGroundSpeed
-            enabled: vehicle.satellite.enabled
-            operational: vehicle.satellite.operational
-            prefix: qsTr("GS") + ", " + vehicle.speedSuffix
-        }
+        RowLayout {
+            spacing: sizings.spacing
 
-        Indicators.FdLabel {
-            digits: 0
-            value: vehicle.pitot.displayedTrueAirspeed
-            enabled: vehicle.pitot.enabled
-            operational: vehicle.pitot.operational
-            prefix: qsTr("TAS") + ", " + vehicle.speedSuffix
-        }
+            Indicators.FdLabel {
+                digits: 0
+                value: vehicle.satellite.displayedGroundSpeed
+                enabled: vehicle.satellite.enabled
+                operational: vehicle.satellite.operational
+                prefix: qsTr("GS") + ", " + vehicle.speedSuffix
+                Layout.fillWidth: true
+            }
 
-        Indicators.FdLabel {
-            value: vehicle.barometric.displayedAltitude
-            enabled: vehicle.barometric.enabled
-            operational: vehicle.barometric.operational
-            prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
+            Indicators.FdLabel {
+                digits: 0
+                value: vehicle.pitot.displayedTrueAirspeed
+                enabled: vehicle.pitot.enabled
+                operational: vehicle.pitot.operational
+                prefix: qsTr("TAS") + ", " + vehicle.speedSuffix
+                Layout.fillWidth: true
+            }
+
+            Indicators.FdLabel {
+                value: vehicle.barometric.displayedAltitude
+                enabled: vehicle.barometric.enabled
+                operational: vehicle.barometric.operational
+                prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
+                Layout.fillWidth: true
+            }
         }
     }
 }
