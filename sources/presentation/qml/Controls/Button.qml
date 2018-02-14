@@ -3,7 +3,7 @@ import QtQuick.Templates 2.0 as T
 
 import "../Shaders" as Shaders
 
-T.Button {
+T.Button { // TODO: clickable
     id: control
 
     property string tipText

@@ -4,6 +4,7 @@
         <file>fonts/OpenSans-Italic.ttf</file>
         <file>fonts/OpenSans-Regular.ttf</file>
         <file>ui/menu_arrow.svg</file>
+        <file>ui/dots.svg</file>
         <file>ui/ok.svg</file>
         <file>ui/plus.svg</file>
         <file>ui/minus.svg</file>
@@ -26,7 +27,6 @@
         <file>indicators/states/unknown.svg</file>
         <file>icons/jagcs.svg</file>
         <file>icons/burger.svg</file>
-        <file>icons/dots.svg</file>
         <file>icons/settings.svg</file>
         <file>icons/quit.svg</file>
         <file>icons/info.svg</file>

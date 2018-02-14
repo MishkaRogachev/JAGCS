@@ -30,6 +30,7 @@
         <file>Controls/TextField.qml</file>
         <file>Controls/ItemDelegate.qml</file>
         <file>Controls/Popup.qml</file>
+        <file>Controls/Card.qml</file>
         <file>Controls/SpinBox.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
         <file>Controls/RealSpinBox.qml</file>
