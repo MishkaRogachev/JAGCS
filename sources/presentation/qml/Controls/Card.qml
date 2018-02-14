@@ -6,7 +6,6 @@ Item {
     id: control
 
     signal deepIn()
-    signal more()
 
     property alias backgroundColor: background.color
 
@@ -20,6 +19,7 @@ Item {
         anchors.fill: control
         color: palette.backgroundColor
         radius: 3
+        z: -1
 
         Shadow {
             source: parent

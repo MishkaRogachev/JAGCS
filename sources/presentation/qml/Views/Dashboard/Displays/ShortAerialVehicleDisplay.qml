@@ -10,32 +10,10 @@ import "CommandControls" as CommandControls
 
 import "../Vehicles"
 
-Item {
+Controls.Card {
     id: vehicleDisplay
 
     property AerialVehicle vehicle: AerialVehicle {}
-
-    function updateCommandStatus(command, status) {
-        switch (command) {
-        case Command.SetMode:
-            modeBox.status = status;
-            break;
-        case Command.Return:
-            rtl.status = status;
-            break;
-        case Command.GoTo:
-            itemBox.status = status;
-            break;
-        default:
-            break;
-        }
-    }
-
-    function updateItems() {
-        var items = [];
-        for (var i = 0; i < vehicle.mission.count; ++i) items.push(i + 1);
-        itemBox.model = items;
-    }
 
     VehicleDisplayPresenter {
         id: presenter
@@ -43,158 +21,88 @@ Item {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
-    Connections {
-        target: vehicle.mission
+    onDeepIn: dashboard.selectVehicle(vehicleId)
 
-        onCountChanged: updateItems()
-        onCurrentChanged: itemBox.currentIndex = vehicle.mission.current
-    }
+    implicitWidth: grid.implicitWidth + sizings.margins * 2
+    implicitHeight: grid.implicitHeight + sizings.margins * 2
 
-    Component.onCompleted: updateItems()
-
-    implicitWidth: pane.implicitWidth
-    implicitHeight: pane.implicitHeight
-
-    Controls.Pane {
-        id: pane
+    GridLayout {
+        id: grid
         anchors.fill: parent
+        anchors.margins: sizings.margins
+        columnSpacing: sizings.spacing
+        rowSpacing: sizings.spacing
+        columns: 4
 
-        RowLayout {
-            anchors.fill: parent
-            spacing: sizings.spacing
+        Indicators.YawIndicator {
+            id: compass
+            implicitWidth: sizings.controlBaseSize * 2
+            implicitHeight: width
+            yaw: vehicle.ahrs.yaw
+            Layout.rowSpan: 2
 
-            Indicators.YawIndicator {
-                id: compass
-                implicitWidth: sizings.controlBaseSize * 2
-                implicitHeight: width
-                yaw: vehicle.ahrs.yaw
-                Layout.rowSpan: 2
-
-                Indicators.ArtificialHorizon {
-                    id: ah
-                    anchors.centerIn: parent
-                    height: parent.height - parent.size * 2
-                    width: height * 0.9
-                    enabled: vehicle.online &&  vehicle.ahrs.enabled
-                    armed: vehicle.armed
-                    pitch: vehicle.ahrs.pitch
-                    roll: vehicle.ahrs.roll
-                    rollInverted: settings.boolValue("Gui/fdRollInverted")
-
-                    Indicators.BarIndicator {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        width: parent.width * 0.1
-                        height: parent.height * 0.65
-                        value: vehicle.powerSystem.throttle
-                    }
-
-                    Indicators.BarIndicator {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.right: parent.right
-                        width: parent.width * 0.1
-                        height: parent.height * 0.7
-                        value: vehicle.barometric.climb
-                        fillColor: vehicle.barometric.climb > 0 ? palette.skyColor :
-                                                                  palette.groundColor
-                        minValue: -10
-                        maxValue: 10 // TODO: to consts
-                    }
-                }
+            Indicators.BarIndicator {
+                anchors.verticalCenter: ah.verticalCenter
+                anchors.right: ah.left
+                width: ah.width * 0.1
+                height: ah.height * 0.6
+                value: vehicle.powerSystem.throttle
             }
 
-            ColumnLayout {
-                spacing: sizings.spacing
-
-                Indicators.FdLabel {
-                    digits: 0
-                    value: vehicle.satellite.displayedGroundSpeed
-                    enabled: vehicle.satellite.enabled
-                    operational: vehicle.satellite.operational
-                    prefix: qsTr("Vgr") + ", " + vehicle.speedSuffix
-                    Layout.alignment: Qt.AlignHCenter
-                }
-
-                Indicators.FdLabel {
-                    value: vehicle.barometric.displayedAltitude
-                    enabled: vehicle.barometric.enabled
-                    operational: vehicle.barometric.operational
-                    prefix: qsTr("Hbar") + ", " + vehicle.altitudeSuffix
-                    Layout.alignment: Qt.AlignHCenter
-                }
+            Indicators.ArtificialHorizon {
+                id: ah
+                anchors.centerIn: parent
+                height: parent.height - parent.size * 2
+                width: height * 0.7
+                enabled: vehicle.online &&  vehicle.ahrs.enabled
+                armed: vehicle.armed
+                pitch: vehicle.ahrs.pitch
+                roll: vehicle.ahrs.roll
+                rollInverted: settings.boolValue("Gui/fdRollInverted")
             }
 
-            ColumnLayout {
-                spacing: sizings.spacing
-
-                RowLayout {
-                    spacing: sizings.spacing
-
-                    Controls.ColoredIcon {
-                        id: icon
-                        source: translator.imageFromVehicleState(vehicle.vehicleState)
-                        height: sizings.controlBaseSize * 0.75
-                        width: height
-                        color: {
-                            switch (vehicle.vehicleState) {
-                            case Domain.Active: return palette.missionColor;
-                            case Domain.Boot:
-                            case Domain.Calibrating: return palette.selectionColor;
-                            case Domain.Critical: return palette.dangerColor;
-                            case Domain.Emergency: return palette.cautionColor;
-                            case Domain.Standby: return palette.positiveColor;
-                            case Domain.UnknownState:
-                            default: return palette.sunkenColor;
-                            }
-                        }
-                        Behavior on color { ColorAnimation { duration: 200 } }
-                    }
-
-                    Controls.Label {
-                        text: vehicle.vehicleName
-                        font.pixelSize: sizings.fontPixelSize * 0.75
-                        font.bold: true
-                        height: sizings.controlBaseSize * 0.75
-                        wrapMode: Text.NoWrap
-                        Layout.fillWidth: true
-                    }
-                }
-
-                CommandControls.ModeBox {
-                    id: modeBox
-                    mode: vehicle.mode
-                    model: vehicle.availableModes
-                    enabled: vehicle.online
-                    implicitHeight: sizings.controlBaseSize * 0.75
-                    Layout.fillWidth: true
-                }
-
-                CommandControls.WaypointBox {
-                    id: itemBox
-                    enabled: vehicle.online && vehicle.mission.count > 0
-                    implicitHeight: sizings.controlBaseSize * 0.75
-                    Layout.fillWidth: true
-                }
+            Indicators.BarIndicator {
+                anchors.verticalCenter: ah.verticalCenter
+                anchors.left: ah.right
+                width: ah.width * 0.1
+                height: ah.height * 0.6
+                value: vehicle.barometric.climb
+                fillColor: vehicle.barometric.climb > 0 ? palette.skyColor :
+                                                          palette.groundColor
+                minValue: -10
+                maxValue: 10 // TODO: to consts
             }
+        }
 
-            ColumnLayout {
-                spacing: sizings.spacing
-                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+        Controls.Label {
+            text: vehicle.vehicleName
+            font.bold: true
+            wrapMode: Text.NoWrap
+            Layout.alignment: Qt.AlignHCenter
+            Layout.columnSpan: 3
+        }
 
-                Controls.Button {
-                    flat: true
-                    iconSource: "qrc:/icons/right.svg"
-                    onClicked: dashboard.selectVehicle(vehicleId)
-                }
+        Indicators.FdLabel {
+            digits: 0
+            value: vehicle.satellite.displayedGroundSpeed
+            enabled: vehicle.satellite.enabled
+            operational: vehicle.satellite.operational
+            prefix: qsTr("GS") + ", " + vehicle.speedSuffix
+        }
 
-                CommandControls.Button {
-                    id: rtl
-                    tipText: qsTr("Return to launch")
-                    iconSource: "qrc:/icons/home.svg"
-                    enabled: vehicle.online
-                    command: Command.Return
-                }
-            }
+        Indicators.FdLabel {
+            digits: 0
+            value: vehicle.pitot.displayedTrueAirspeed
+            enabled: vehicle.pitot.enabled
+            operational: vehicle.pitot.operational
+            prefix: qsTr("TAS") + ", " + vehicle.speedSuffix
+        }
+
+        Indicators.FdLabel {
+            value: vehicle.barometric.displayedAltitude
+            enabled: vehicle.barometric.enabled
+            operational: vehicle.barometric.operational
+            prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
         }
     }
 }

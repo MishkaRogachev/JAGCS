@@ -5,7 +5,7 @@ Rectangle {
 
     property bool operational: true
     property real yaw: 0
-    property real size: width * 0.05
+    property real size: width * 0.07
 
     Behavior on yaw { RotationAnimation { duration: 100; direction: RotationAnimation.Shortest } }
 
