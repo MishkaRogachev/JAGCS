@@ -117,7 +117,7 @@ ColumnLayout {
 
                 menu.width = item.implicitWidth + sizings.margins * 2
                 item.height = Qt.binding(function() {
-                    return Math.max(item.implicitHeight, flickable.height);
+                    return item ? Math.max(item.implicitHeight, flickable.height) : 0;
                 });
             }
 
