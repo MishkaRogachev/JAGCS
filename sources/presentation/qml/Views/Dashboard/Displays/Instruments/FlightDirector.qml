@@ -41,7 +41,7 @@ Controls.Pane {
         valueStep: speedStep
         enabled: vehicle.pitot.present ? vehicle.pitot.enabled : vehicle.satellite.enabled
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
-        prefix: (vehicle.pitot.present ? qsTr("Vind") : qsTr("Vgr")) + ", " + vehicle.speedSuffix
+        prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + vehicle.speedSuffix
     }
 
     Indicators.FdLabel {
@@ -52,7 +52,7 @@ Controls.Pane {
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: speedLadder.width
-        prefix: qsTr("Vgr") + ", " + vehicle.speedSuffix
+        prefix: qsTr("GS") + ", " + vehicle.speedSuffix
         visible: vehicle.pitot.present
     }
 
@@ -64,7 +64,7 @@ Controls.Pane {
         enabled: vehicle.pitot.enabled
         operational: vehicle.pitot.operational
         width: speedLadder.width
-        prefix: qsTr("Vtr") + ", " + vehicle.speedSuffix
+        prefix: qsTr("TAS") + ", " + vehicle.speedSuffix
         visible: vehicle.pitot.present
     }
 
@@ -112,7 +112,7 @@ Controls.Pane {
         enabled: vehicle.barometric.enabled
         operational: vehicle.barometric.operational
         mirrored: true
-        prefix: qsTr("Hbar") + ", " + vehicle.altitudeSuffix
+        prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
     }
 
     Indicators.FdLabel {
@@ -122,7 +122,7 @@ Controls.Pane {
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: altitudeLadder.width
-        prefix: qsTr("Hsns") + ", " + vehicle.altitudeSuffix
+        prefix: qsTr("SAT") + ", " + vehicle.altitudeSuffix
     }
 
     Indicators.FdLabel {
@@ -134,6 +134,6 @@ Controls.Pane {
         operational: vehicle.radalt.operational
         visible: vehicle.radalt.present
         width: altitudeLadder.width
-        prefix: qsTr("Hrad") + ", " + vehicle.altitudeSuffix
+        prefix: qsTr("RAD") + ", " + vehicle.altitudeSuffix
     }
 }
