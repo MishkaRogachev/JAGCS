@@ -41,7 +41,7 @@ T.ComboBox {
 
     background: Rectangle {
         anchors.fill: parent
-        radius: 3
+        radius: 2
         color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 

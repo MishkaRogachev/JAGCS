@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-Column {
+Item {
     id: root
 
     property string prefix
@@ -8,10 +8,12 @@ Column {
     property real value: 0
     property bool operational: true
 
-    width: Math.max(defText.implicitWidth, valueText.implicitWidth)
+    implicitWidth: Math.max(defText.implicitWidth, valueText.implicitWidth)
+    implicitHeight: defText.implicitHeight + valueText.implicitHeight
 
     Text {
         id: defText
+        anchors.top: parent.top
         width: root.width
         horizontalAlignment: Text.AlignHCenter
         opacity: enabled ? 1 : 0.33
@@ -24,6 +26,7 @@ Column {
 
     Text {
         id: valueText
+        anchors.bottom: parent.bottom
         width: root.width
         horizontalAlignment: Text.AlignHCenter
         opacity: enabled ? 1 : 0.33

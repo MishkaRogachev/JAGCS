@@ -14,7 +14,7 @@ Item {
     property real valueStep: 20
 
     property real fontPixelSize: height * 0.1
-    property real fontScaleSize: fontPixelSize * 0.75
+    property real fontScaleSize: fontPixelSize
     property real minorTickSize: fontScaleSize * 0.4
     property real majorTickSize: fontScaleSize * 0.6
     property real textOrigin: fontScaleSize * 0.8
@@ -28,6 +28,7 @@ Item {
 
     clip: true
     opacity: enabled ? 1 : 0.33
+    implicitWidth: label.implicitWidth + majorTickSize * 2
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()

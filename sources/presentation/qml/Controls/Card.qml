@@ -18,7 +18,7 @@ Item {
         id: background
         anchors.fill: control
         color: palette.backgroundColor
-        radius: 3
+        radius: 2
         z: -1
 
         Shadow {

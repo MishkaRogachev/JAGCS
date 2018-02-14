@@ -6,10 +6,13 @@ import "./"
 Pane {
     id: control
 
+    padding: sizings.padding
+
     background: Rectangle {
         id: rect
         anchors.fill: parent
         color: palette.backgroundColor
+        radius: 2
 
         Shadow {
             source: parent

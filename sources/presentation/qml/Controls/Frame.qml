@@ -6,9 +6,11 @@ T.Frame {
 
     property color backgroundColor: palette.raisedColor
 
+    padding: sizings.padding
+
     background:  Rectangle {
         color: backgroundColor
-        radius: 3
+        radius: 2
 
         Shadow {
             source: parent

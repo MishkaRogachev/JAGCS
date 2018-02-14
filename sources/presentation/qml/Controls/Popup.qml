@@ -10,7 +10,7 @@ T.Popup {
 
     background:  Rectangle {
         color: backgroundColor
-        radius: 3
+        radius: 2
 
         Shadow {
             source: parent

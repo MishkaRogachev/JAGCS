@@ -14,7 +14,7 @@ T.ProgressBar {
 
     background: Rectangle {
         anchors.fill: parent
-        radius: 3
+        radius: 2
         color: palette.sunkenColor
 
         Shaders.Hatch {

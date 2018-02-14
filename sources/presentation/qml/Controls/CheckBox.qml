@@ -20,7 +20,7 @@ T.CheckBox {
         implicitHeight: sizings.controlBaseSize
         x: control.leftPadding
         y: parent.height / 2 - height / 2
-        radius: 3
+        radius: 2
         color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 

@@ -70,7 +70,7 @@ Item {
     Loader {
         id: loader
         anchors.top: row.bottom
-        anchors.topMargin: sizings.spacing
+        anchors.topMargin: sizings.margins
         width: root.width
         height: Math.min(implicitHeight, root.height - row.height - sizings.spacing)
         clip: true

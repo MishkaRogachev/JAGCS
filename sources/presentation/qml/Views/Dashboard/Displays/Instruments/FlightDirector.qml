@@ -23,16 +23,15 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
         width: speedLadder.majorTickSize + 1
-        height: parent.height * 0.7
+        height: parent.height * 0.6 // TODO: ladder dynamic width calculation
         value: vehicle.powerSystem.throttle
     }
 
     Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: fd.left
-        width: (root.width - fd.width) / 2
-        height: parent.height * 0.7
+        anchors.left: parent.left
+        height: parent.height * 0.6
         value: vehicle.pitot.present ? vehicle.pitot.displayedIndicatedAirspeed :
                                        vehicle.satellite.displayedGroundSpeed
         error: vehicle.pitot.present ? vehicle.flightControl.displayedAirspeedError : 0
@@ -70,9 +69,10 @@ Controls.Pane {
 
     Indicators.AttitudeDirectorIndicator {
         id: fd
-        anchors.centerIn: parent
-        height: root.height - sizings.padding
-        width: root.width * 0.55
+        anchors.left: speedLadder.right
+        anchors.right: altitudeLadder.left
+        anchors.verticalCenter: parent.verticalCenter
+        height: parent.height
         enabled: vehicle.online && vehicle.ahrs.enabled
         operational: vehicle.ahrs.operational
         armed: vehicle.armed
@@ -89,7 +89,7 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: altitudeLadder.left
         width: altitudeLadder.majorTickSize + 1
-        height: parent.height * 0.7
+        height: parent.height * 0.6
         value: vehicle.barometric.climb
         fillColor: vehicle.barometric.climb > 0 ? palette.skyColor : palette.groundColor
         minValue: -10
@@ -99,9 +99,8 @@ Controls.Pane {
     Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: fd.right
-        width: (root.width - fd.width) / 2
-        height: parent.height * 0.7
+        anchors.right: parent.right
+        height: parent.height * 0.6
         value: vehicle.barometric.displayedAltitude
         error: vehicle.flightControl.altitudeError
         minValue: value + minAltitude

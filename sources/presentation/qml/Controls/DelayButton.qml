@@ -24,7 +24,7 @@ T.DelayButton {
         id: backgroundItem
         anchors.fill: parent
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
-        radius: 3
+        radius: 2
         color: control.flat ? "transparent" : palette.buttonColor
 
         ContentItem {
