@@ -4,6 +4,8 @@
 #include "settings_provider.h"
 
 #include "base_presenter.h"
+
+#include "units.h"
 #include "translation_helper.h"
 
 // Qt
@@ -21,6 +23,8 @@ PresentationContext::PresentationContext()
 
     m_engine->addImportPath(":/Controls");
 
+    m_engine->rootContext()->setContextProperty(
+                "units", QVariant::fromValue(new utils::Units(qApp)));
     m_engine->rootContext()->setContextProperty(
                 "translator", QVariant::fromValue(new TranslationHelper(qApp)));
 

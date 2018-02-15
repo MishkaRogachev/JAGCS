@@ -1,8 +1,6 @@
 import QtQuick 2.6
 import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
-
 BaseVehicle {
     id: root
 
@@ -13,8 +11,9 @@ BaseVehicle {
         property real climb: 0
 
         readonly property real displayedAltitude: {
-            return altitudeRelative && homePosition.isValid ? altitude - homePosition.altitude :
-                                                              altitude;
+            return units.convertDistance(altitudeUnits,
+                                         altitudeRelative && homePosition.isValid ?
+                                             altitude - homePosition.altitude : altitude);
         }
 
         function fromDisplayedAltitude(alt) {
@@ -28,21 +27,8 @@ BaseVehicle {
         property real indicatedAirspeed: 0.0
         property real trueAirspeed: 0.0
 
-        readonly property real displayedIndicatedAirspeed: {
-            switch (speedUnits) {
-            default:
-            case 0: return indicatedAirspeed;
-            case 1: return Helper.mpsToKph(indicatedAirspeed);
-            }
-        }
-
-        readonly property real displayedTrueAirspeed: {
-            switch (speedUnits) {
-            default:
-            case 0: return trueAirspeed;
-            case 1: return Helper.mpsToKph(trueAirspeed);
-            }
-        }
+        readonly property real displayedIndicatedAirspeed: units.convertSpeed(speedUnits, indicatedAirspeed)
+        readonly property real displayedTrueAirspeed: units.convertSpeed(speedUnits, trueAirspeed)
     }
 
     property QtObject ekf: QtObject {
@@ -70,13 +56,7 @@ BaseVehicle {
         property real airspeedError: 0.0
         property real altitudeError: 0.0
 
-        readonly property real displayedAirspeedError: {
-            switch (speedUnits) {
-            default:
-            case 0: return airspeedError;
-            case 1: return Helper.mpsToKph(airspeedError);
-            }
-        }
+        readonly property real displayedAirspeedError: units.convertSpeed(speedUnits, airspeedError)
     }
 
     property QtObject navigator: QtObject {
@@ -93,12 +73,6 @@ BaseVehicle {
         property real direction: 0
         property real speed: 0
 
-        readonly property real displayedSpeed: {
-            switch (speedUnits) {
-            default:
-            case 0: return speed;
-            case 1: return Helper.mpsToKph(speed);
-            }
-        }
+        readonly property real displayedSpeed: units.convertSpeed(speedUnits, speed)
     }
 }

@@ -2,8 +2,6 @@ import QtQuick 2.6
 import QtPositioning 5.6
 import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
-
 QtObject {
     id: root
     objectName: "vehicle"
@@ -23,27 +21,11 @@ QtObject {
     property var homePosition: QtPositioning.coordinate()
 
     property int speedUnits: settings.value("Gui/fdSpeedUnits")
+    property int altitudeUnits: settings.value("Gui/fdAltitudeUnits")
     property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
 
-    // TODO: measured units enum
-    property string speedSuffix: {
-        switch (speedUnits) {
-        default:
-        case 0: return qsTr("m/s")
-        case 1: return qsTr("km/h")
-        }
-    }
-
-    // TODO: altitude units
-    property string altitudeSuffix: qsTr("m")
-
-    function fromSpeed(spd) {
-        switch (speedUnits) {
-        default:
-        case 0: return spd;
-        case 1: return Helper.kphToMps(spd);
-        }
-    }
+    property string speedSuffix: units.trSpeedUnits(speedUnits)
+    property string altitudeSuffix: units.trDistanceUnits(altitudeUnits)
 
     property QtObject mission: QtObject{
         objectName: "mission"
@@ -83,13 +65,7 @@ QtObject {
         property int altitude: 0
         property int satellitesVisible: 0
 
-        readonly property real displayedGroundSpeed: {
-            switch (speedUnits) {
-            default:
-            case 0: return groundspeed;
-            case 1: return Helper.mpsToKph(groundspeed);
-            }
-        }
+        readonly property real displayedGroundSpeed: units.convertSpeed(speedUnits, groundspeed)
     }
 
     property Subsystem compass: Subsystem {
