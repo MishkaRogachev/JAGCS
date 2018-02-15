@@ -5,7 +5,6 @@
 
 // Internal
 #include "generic_repository.h"
-#include "generic_repository_impl.h"
 
 #include "video_source.h"
 

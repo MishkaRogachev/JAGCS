@@ -12,7 +12,6 @@
 #include "link_statistics.h"
 
 #include "generic_repository.h"
-#include "generic_repository_impl.h"
 
 #include "serial_ports_service.h"
 

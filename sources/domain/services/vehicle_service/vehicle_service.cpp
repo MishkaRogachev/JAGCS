@@ -10,7 +10,6 @@
 #include "vehicle.h"
 
 #include "generic_repository.h"
-#include "generic_repository_impl.h"
 
 #include "mission_service.h"
 

@@ -45,4 +45,6 @@ namespace db
     };
 }
 
+#include "generic_repository.hpp"
+
 #endif // GENERIC_REPOSITORY_H

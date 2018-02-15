@@ -12,7 +12,6 @@
 #include "mission_assignment.h"
 
 #include "generic_repository.h"
-#include "generic_repository_impl.h"
 
 using namespace dao;
 using namespace domain;
