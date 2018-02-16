@@ -14,21 +14,11 @@
 
 namespace
 {
-    QStringList availableSpeedUnits(
-    {
-        utils::Units::trSpeedUnits(utils::Units::Mps),
-        utils::Units::trSpeedUnits(utils::Units::Kph),
-        utils::Units::trSpeedUnits(utils::Units::Knots),
-        utils::Units::trSpeedUnits(utils::Units::Mph)
-    } );
+    QList<utils::Units::SpeedUnits> availableSpeedUnits =
+    { utils::Units::Mps, utils::Units::Kph, utils::Units::Knots, utils::Units::Mph };
 
-    QStringList availableAltitudeUnits(
-    {
-        utils::Units::trDistanceUnits(utils::Units::Meters),
-        utils::Units::trDistanceUnits(utils::Units::Kilometers),
-        utils::Units::trDistanceUnits(utils::Units::Miles),
-        utils::Units::trDistanceUnits(utils::Units::Feets)
-    } );
+    QList<utils::Units::DistanceUnits> availableAltitudeUnits =
+    { utils::Units::Meters, utils::Units::Feets };
 }
 
 using namespace presentation;
@@ -48,6 +38,16 @@ GuiSettingsPresenter::GuiSettingsPresenter(QObject* parent):
 GuiSettingsPresenter::~GuiSettingsPresenter()
 {}
 
+int GuiSettingsPresenter::speedUnitFromIndex(int index)
+{
+    return ::availableSpeedUnits.at(index);
+}
+
+int GuiSettingsPresenter::altitudeUnitFromIndex(int index)
+{
+    return ::availableAltitudeUnits.at(index);
+}
+
 void GuiSettingsPresenter::updateView()
 {
     this->setViewProperty(PROPERTY(fullscreen), settings::Provider::value(settings::gui::fullscreen));
@@ -57,10 +57,30 @@ void GuiSettingsPresenter::updateView()
     this->setViewProperty(PROPERTY(locales), locales);
     this->setViewProperty(PROPERTY(localeIndex), index);
 
-    this->setViewProperty(PROPERTY(availableSpeedUnits),
-                          QVariant::fromValue(::availableSpeedUnits));
+    QStringList availableSpeedUnits;
+    for (utils::Units::SpeedUnits unit: ::availableSpeedUnits)
+    {
+        availableSpeedUnits.append(utils::Units::trSpeedUnits(unit));
+    }
+    this->setViewProperty(PROPERTY(availableSpeedUnits), QVariant::fromValue(availableSpeedUnits));
+    int speedUnitsIndex = ::availableSpeedUnits.indexOf(
+                              settings::Provider::value(
+                                  settings::gui::fdSpeedUnits).value<
+                              utils::Units::SpeedUnits>());
+    this->setViewProperty(PROPERTY(speedUnits), speedUnitsIndex);
+
+    QStringList availableAltitudeUnits;
+    for (utils::Units::DistanceUnits unit: ::availableAltitudeUnits)
+    {
+        availableAltitudeUnits.append(utils::Units::trDistanceUnits(unit));
+    }
     this->setViewProperty(PROPERTY(availableAltitudeUnits),
-                          QVariant::fromValue(::availableAltitudeUnits));
+                          QVariant::fromValue(availableAltitudeUnits));
+    int altitudeUnitsIndex = ::availableAltitudeUnits.indexOf(
+                                 settings::Provider::value(
+                                     settings::gui::fdAltitudeUnits).value<
+                                 utils::Units::DistanceUnits>());
+    this->setViewProperty(PROPERTY(altitudeUnits), altitudeUnitsIndex);
 
     this->setViewProperty(PROPERTY(uiSize),
                           settings::Provider::value(settings::gui::uiSize));
@@ -70,12 +90,8 @@ void GuiSettingsPresenter::updateView()
                           settings::Provider::value(settings::gui::fdRollInverted));
     this->setViewProperty(PROPERTY(speedStep),
                           settings::Provider::value(settings::gui::fdSpeedStep));
-    this->setViewProperty(PROPERTY(speedUnits),
-                          settings::Provider::value(settings::gui::fdSpeedUnits));
     this->setViewProperty(PROPERTY(altitudeStep),
                           settings::Provider::value(settings::gui::fdAltitudeStep));
-    this->setViewProperty(PROPERTY(altitudeUnits),
-                          settings::Provider::value(settings::gui::fdAltitudeUnits));
     this->setViewProperty(PROPERTY(relativeAltitude),
                           settings::Provider::value(settings::gui::fdRelativeAltitude));
     this->setViewProperty(PROPERTY(coordinatesDms),
@@ -97,13 +113,13 @@ void GuiSettingsPresenter::save()
     settings::Provider::setValue(settings::gui::fdSpeedStep,
                                  this->viewProperty(PROPERTY(speedStep)));
     settings::Provider::setValue(settings::gui::fdSpeedUnits,
-                                 this->viewProperty(PROPERTY(speedUnits)).value<
-                                 utils::Units::SpeedUnits>());
+                                 this->speedUnitFromIndex(
+                                     this->viewProperty(PROPERTY(speedUnits)).toInt()));
     settings::Provider::setValue(settings::gui::fdAltitudeStep,
                                  this->viewProperty(PROPERTY(altitudeStep)));
     settings::Provider::setValue(settings::gui::fdAltitudeUnits,
-                                 this->viewProperty(PROPERTY(altitudeUnits)).value<
-                                 utils::Units::DistanceUnits>());
+                                 this->altitudeUnitFromIndex(
+                                     this->viewProperty(PROPERTY(altitudeUnits)).toInt()));
     settings::Provider::setValue(settings::gui::fdRelativeAltitude,
                                  this->viewProperty(PROPERTY(relativeAltitude)));
     settings::Provider::setValue(settings::gui::coordinatesDms,

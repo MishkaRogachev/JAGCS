@@ -133,7 +133,7 @@ GridLayout {
         model: availableSpeedUnits
         Layout.fillWidth: true
         onCurrentIndexChanged: {
-            dashboard.speedUnits = currentIndex;
+            dashboard.speedUnits = presenter.speedUnitFromIndex(currentIndex);
             changed = true;
         }
     }
@@ -162,7 +162,7 @@ GridLayout {
         model: availableAltitudeUnits
         Layout.fillWidth: true
         onCurrentIndexChanged: {
-            dashboard.altitudeUnits = currentIndex;
+            dashboard.altitudeUnits = presenter.altitudeUnitFromIndex(currentIndex);
             changed = true;
         }
     }

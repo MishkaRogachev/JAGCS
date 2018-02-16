@@ -13,6 +13,9 @@ namespace presentation
         explicit GuiSettingsPresenter(QObject* parent = nullptr);
         ~GuiSettingsPresenter() override;
 
+        Q_INVOKABLE int speedUnitFromIndex(int index);
+        Q_INVOKABLE int altitudeUnitFromIndex(int index);
+
     public slots:
         void updateView();
         void save();
