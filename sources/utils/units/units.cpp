@@ -40,12 +40,12 @@ float Units::convertSpeed(SpeedUnits from, SpeedUnits to, float value)
 
 float Units::convertDistance(DistanceUnits to, float value)
 {
-    return value * ::distanceUnitCoefs[to];
+    return value / ::distanceUnitCoefs[to];
 }
 
 float Units::convertDistance(DistanceUnits from, DistanceUnits to, float value)
 {
-    return Units::convertDistance(to, value / ::distanceUnitCoefs[from]);
+    return Units::convertDistance(to, value * ::distanceUnitCoefs[from]);
 }
 
 QString Units::trSpeedUnits(SpeedUnits unit)

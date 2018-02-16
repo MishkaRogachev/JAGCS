@@ -6,7 +6,7 @@
 #include <QDebug>
 
 // Internal
-#include "settings.h"
+#include "units.h"
 
 using namespace settings;
 
@@ -67,9 +67,9 @@ public:
         settings.setValue(gui::paletteStyle, 0);
         settings.setValue(gui::fdRollInverted, 0);
         settings.setValue(gui::fdSpeedStep, 5);
-        settings.setValue(gui::fdSpeedUnits, 0);
+        settings.setValue(gui::fdSpeedUnits, utils::Units::Mps);
         settings.setValue(gui::fdAltitudeStep, 10);
-        settings.setValue(gui::fdAltitudeUnits, 0);
+        settings.setValue(gui::fdAltitudeUnits, utils::Units::Meters);
         settings.setValue(gui::fdRelativeAltitude, true);
         settings.setValue(gui::vibrationModelCount, 30);
         settings.setValue(gui::coordinatesDms, true);
