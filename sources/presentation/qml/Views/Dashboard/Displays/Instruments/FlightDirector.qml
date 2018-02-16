@@ -29,17 +29,17 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         height: parent.height * 0.6
-        value: units.convertSpeed(vehicle.speedUnits, vehicle.pitot.present ?
+        value: units.convertSpeed(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundSpeed)
         error: vehicle.pitot.present ?
-                   units.convertSpeed(vehicle.speedUnits, vehicle.flightControl.airspeedError) : 0
+                   units.convertSpeed(speedUnits, vehicle.flightControl.airspeedError) : 0
         minValue: value + minSpeed
         maxValue: value + maxSpeed
-        valueStep: dashboard.speedStep
+        valueStep: speedStep
         enabled: vehicle.pitot.present ? vehicle.pitot.enabled : vehicle.satellite.enabled
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
-        prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + dashboard.speedSuffix
+        prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
     }
 
     Indicators.FdLabel {
@@ -50,7 +50,7 @@ Controls.Pane {
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: speedLadder.width
-        prefix: qsTr("GS") + ", " + dashboard.speedSuffix
+        prefix: qsTr("GS") + ", " + speedSuffix
         visible: vehicle.pitot.present
     }
 
@@ -62,7 +62,7 @@ Controls.Pane {
         enabled: vehicle.pitot.enabled
         operational: vehicle.pitot.operational
         width: speedLadder.width
-        prefix: qsTr("TAS") + ", " + dashboard.speedSuffix
+        prefix: qsTr("TAS") + ", " + speedSuffix
         visible: vehicle.pitot.present
     }
 
@@ -104,13 +104,14 @@ Controls.Pane {
         error: vehicle.flightControl.altitudeError
         minValue: value + minAltitude
         maxValue: value + maxAltitude
-        warningValue: vehicle.altitudeRelative ? 0 : vehicle.homePosition.altitude
+        warningValue: altitudeRelative ?
+                          0 : units.convertDistance(altitudeUnits, vehicle.homeAltitude)
         warningColor: palette.groundColor
         valueStep: dashboard.altitudeStep
         enabled: vehicle.barometric.enabled
         operational: vehicle.barometric.operational
         mirrored: true
-        prefix: qsTr("ALT") + ", " + dashboard.altitudeSuffix
+        prefix: qsTr("ALT") + ", " + altitudeSuffix
     }
 
     Indicators.FdLabel {
@@ -120,7 +121,7 @@ Controls.Pane {
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: altitudeLadder.width
-        prefix: qsTr("SAT") + ", " + dashboard.altitudeSuffix
+        prefix: qsTr("SAT") + ", " + altitudeSuffix
     }
 
     Indicators.FdLabel {
@@ -132,6 +133,6 @@ Controls.Pane {
         operational: vehicle.radalt.operational
         visible: vehicle.radalt.present
         width: altitudeLadder.width
-        prefix: qsTr("RAD") + ", " + dashboard.altitudeSuffix
+        prefix: qsTr("RAD") + ", " + altitudeSuffix
     }
 }

@@ -4,16 +4,16 @@ import JAGCS 1.0
 BaseVehicle {
     id: root
 
+    readonly property real homeAltitude: homePosition.isValid ? homePosition.altitude : 0
+
     property Subsystem barometric: Subsystem {
         objectName: "barometric"
 
         property int altitude: 0
         property real climb: 0
 
-        readonly property real displayedAltitude: {
-            return dashboard.altitudeRelative && homePosition.isValid ?
-                        altitude - homePosition.altitude : altitude
-        }
+        readonly property real displayedAltitude: dashboard.altitudeRelative ?
+                                                      altitude - homeAltitude : altitude
     }
 
     property Subsystem pitot: Subsystem {

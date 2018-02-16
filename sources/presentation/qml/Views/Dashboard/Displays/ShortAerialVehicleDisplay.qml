@@ -96,7 +96,7 @@ Controls.Card {
 
             Indicators.FdLabel {
                 digits: 0
-                value: units.convertSpeed(speedUnits, vehicle.satellite.groundSpeed)
+                value: units.convertSpeed(speedUnits, vehicle.satellite.groundspeed)
                 enabled: vehicle.satellite.enabled
                 operational: vehicle.satellite.operational
                 prefix: qsTr("GS") + ", " + dashboard.speedSuffix
