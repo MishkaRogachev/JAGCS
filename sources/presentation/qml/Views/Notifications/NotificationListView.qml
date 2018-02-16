@@ -22,8 +22,8 @@ Item {
     ListView {
         id: list
         anchors.right: parent.right
-        anchors.rightMargin: sizings.shadowSize
         anchors.bottom: parent.bottom
+        anchors.margins: sizings.shadowSize
         width: Math.min(sizings.controlBaseSize * 11,
                         notificationsList.width) - sizings.shadowSize
         height: Math.min(contentHeight, parent.height)
