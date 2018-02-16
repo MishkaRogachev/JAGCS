@@ -16,7 +16,7 @@ T.Button { // TODO: clickable
 
     font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
-    implicitHeight: Math.max(sizings.controlBaseSize, content.implicitHeight)
+    implicitHeight: sizings.controlBaseSize
 
     background: Rectangle {
         id: backgroundItem

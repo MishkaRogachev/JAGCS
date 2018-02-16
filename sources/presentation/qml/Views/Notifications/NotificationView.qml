@@ -19,7 +19,7 @@ Controls.Frame {
 
     padding: sizings.padding
     implicitWidth: row.implicitWidth
-    implicitHeight: row.implicitHeight + padding * 2
+    implicitHeight: row.height + padding * 2
     backgroundColor: {
         switch (message.type) {
         case LogMessage.Positive:
