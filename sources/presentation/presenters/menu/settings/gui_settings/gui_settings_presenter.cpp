@@ -6,9 +6,30 @@
 // Internal
 #include "settings_provider.h"
 
+#include "units.h"
+
 #include "presentation_context.h"
 #include "translation_manager.h"
 #include "gui_style_manager.h"
+
+namespace
+{
+    QStringList availableSpeedUnits(
+    {
+        utils::Units::trSpeedUnits(utils::Units::Mps),
+        utils::Units::trSpeedUnits(utils::Units::Kph),
+        utils::Units::trSpeedUnits(utils::Units::Knots),
+        utils::Units::trSpeedUnits(utils::Units::Mph)
+    } );
+
+    QStringList availableAltitudeUnits(
+    {
+        utils::Units::trDistanceUnits(utils::Units::Meters),
+        utils::Units::trDistanceUnits(utils::Units::Kilometers),
+        utils::Units::trDistanceUnits(utils::Units::Miles),
+        utils::Units::trDistanceUnits(utils::Units::Feets)
+    } );
+}
 
 using namespace presentation;
 
@@ -36,6 +57,11 @@ void GuiSettingsPresenter::updateView()
     this->setViewProperty(PROPERTY(locales), locales);
     this->setViewProperty(PROPERTY(localeIndex), index);
 
+    this->setViewProperty(PROPERTY(availableSpeedUnits),
+                          QVariant::fromValue(::availableSpeedUnits));
+    this->setViewProperty(PROPERTY(availableAltitudeUnits),
+                          QVariant::fromValue(::availableAltitudeUnits));
+
     this->setViewProperty(PROPERTY(uiSize),
                           settings::Provider::value(settings::gui::uiSize));
     this->setViewProperty(PROPERTY(paletteStyle),
@@ -48,6 +74,8 @@ void GuiSettingsPresenter::updateView()
                           settings::Provider::value(settings::gui::fdSpeedUnits));
     this->setViewProperty(PROPERTY(altitudeStep),
                           settings::Provider::value(settings::gui::fdAltitudeStep));
+    this->setViewProperty(PROPERTY(altitudeUnits),
+                          settings::Provider::value(settings::gui::fdAltitudeUnits));
     this->setViewProperty(PROPERTY(relativeAltitude),
                           settings::Provider::value(settings::gui::fdRelativeAltitude));
     this->setViewProperty(PROPERTY(coordinatesDms),
@@ -69,9 +97,13 @@ void GuiSettingsPresenter::save()
     settings::Provider::setValue(settings::gui::fdSpeedStep,
                                  this->viewProperty(PROPERTY(speedStep)));
     settings::Provider::setValue(settings::gui::fdSpeedUnits,
-                                 this->viewProperty(PROPERTY(speedUnits)));
+                                 this->viewProperty(PROPERTY(speedUnits)).value<
+                                 utils::Units::SpeedUnits>());
     settings::Provider::setValue(settings::gui::fdAltitudeStep,
                                  this->viewProperty(PROPERTY(altitudeStep)));
+    settings::Provider::setValue(settings::gui::fdAltitudeUnits,
+                                 this->viewProperty(PROPERTY(altitudeUnits)).value<
+                                 utils::Units::DistanceUnits>());
     settings::Provider::setValue(settings::gui::fdRelativeAltitude,
                                  this->viewProperty(PROPERTY(relativeAltitude)));
     settings::Provider::setValue(settings::gui::coordinatesDms,

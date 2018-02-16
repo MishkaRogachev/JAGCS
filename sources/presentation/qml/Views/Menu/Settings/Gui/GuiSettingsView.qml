@@ -10,6 +10,9 @@ GridLayout {
 
     property bool changed: false
 
+    property var availableSpeedUnits
+    property var availableAltitudeUnits
+
     property int uiSize: 0
     property int speedStep: 0
     property int altitudeStep: 0
@@ -21,6 +24,7 @@ GridLayout {
     property alias rollInverted: rollBar.currentIndex
     property alias speedUnits: speedUnitsBox.currentIndex
     property alias relativeAltitude: relativeAltitudeBox.checked
+    property alias altitudeUnits: altitudeUnitsBox.currentIndex
     property alias coordinatesDms: coordinatesDmsBox.checked
 
     onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
@@ -119,7 +123,7 @@ GridLayout {
 
     Controls.ComboBox {
         id: speedUnitsBox
-        model: [ qsTr("mps"), qsTr("kph") ]
+        model: availableSpeedUnits
         Layout.fillWidth: true
         onCurrentIndexChanged: changed = true;
     }
@@ -136,6 +140,17 @@ GridLayout {
             altitudeStep = displayText;
             changed = true;
         }
+    }
+
+    Controls.Label {
+        text: qsTr("Altitude units")
+    }
+
+    Controls.ComboBox {
+        id: altitudeUnitsBox
+        model: availableAltitudeUnits
+        Layout.fillWidth: true
+        onCurrentIndexChanged: changed = true;
     }
 
     Controls.Label {
