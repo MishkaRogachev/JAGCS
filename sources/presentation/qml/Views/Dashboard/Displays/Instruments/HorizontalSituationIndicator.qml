@@ -37,8 +37,8 @@ Controls.Pane {
         width: parent.width * 0.2
         font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("WIND")
-        value: vehicle.wind.displayedSpeed
-        suffix: vehicle.speedSuffix
+        value: units.convertSpeed(dashboard.speedUnits, vehicle.wind.speed)
+        suffix: dashboard.speedSuffix
         enabled: value > 0
     }
 

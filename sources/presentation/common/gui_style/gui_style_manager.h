@@ -23,11 +23,11 @@ namespace presentation
     public slots:
         void setPalette(const Palette& palette);
         void setPalette(PaletteStyle paletteStyle);
-        void loadSavedPalette();
+        void loadSettingsPalette();
 
         void setSizings(const Sizings& sizings);
         void setSizings(int controlBaseSize);
-        void loadSavedSizings();
+        void loadSettingsSizings();
 
     private:
         Q_ENUM(PaletteStyle)

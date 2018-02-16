@@ -53,7 +53,7 @@ void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
     this->setPalette(palette);
 }
 
-void GuiStyleManager::loadSavedPalette()
+void GuiStyleManager::loadSettingsPalette()
 {
     this->setPalette(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
 }
@@ -77,7 +77,7 @@ void GuiStyleManager::setSizings(int controlBaseSize)
     this->setSizings(sizings);
 }
 
-void GuiStyleManager::loadSavedSizings()
+void GuiStyleManager::loadSettingsSizings()
 {
     this->setSizings(settings::Provider::value(settings::gui::uiSize).toInt());
 }

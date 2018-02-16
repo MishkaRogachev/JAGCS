@@ -18,6 +18,7 @@ namespace presentation
         void save();
 
         void setFullscreen(bool fullscreen);
+        void setLocale(int localeIndex);
         void setUiSize(int size);
         void setPalleteStyle(int paletteStyle);
 

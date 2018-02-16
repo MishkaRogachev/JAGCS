@@ -5,9 +5,19 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Item {
-    id: root
+    id: dashboard
 
     property var selectedVehicle
+
+    property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
+    property int speedStep: settings.value("Gui/fdSpeedStep")
+    property int speedUnits: settings.value("Gui/fdSpeedUnits")
+    property int altitudeStep: settings.value("Gui/fdAltitudeStep")
+    property int altitudeUnits: settings.value("Gui/fdAltitudeUnits")
+    property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
+
+    property string speedSuffix: units.trSpeedUnits(speedUnits)
+    property string altitudeSuffix: units.trDistanceUnits(altitudeUnits)
 
     function selectVehicle(vehicleId) {
         presenter.selectVehicle(vehicleId);
@@ -29,19 +39,19 @@ Item {
         }
     }
 
-    Component.onCompleted: updateDisplay()
+    Component.onCompleted:  updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
 
     DashboardPresenter {
         id: presenter
-        view: root
+        view: dashboard
     }
 
     implicitWidth: sizings.controlBaseSize * 8 // TODO: display row size
 
     RowLayout {
         id: row
-        width: root.width
+        width: dashboard.width
         spacing: 0
 
         Controls.Button {
@@ -71,8 +81,8 @@ Item {
         id: loader
         anchors.top: row.bottom
         anchors.topMargin: sizings.margins
-        width: root.width
-        height: Math.min(implicitHeight, root.height - row.height - sizings.spacing)
+        width: dashboard.width
+        height: Math.min(implicitHeight, dashboard.height - row.height - sizings.spacing)
         clip: true
     }
 }

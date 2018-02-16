@@ -33,6 +33,7 @@ Item {
     onHeightChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()
     onValueChanged: canvas.requestPaint()
+    onValueStepChanged: canvas.requestPaint()
 
     Shaders.OpacityBorder {
         anchors.fill: parent

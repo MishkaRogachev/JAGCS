@@ -109,22 +109,27 @@ void GuiSettingsPresenter::save()
     settings::Provider::setValue(settings::gui::coordinatesDms,
                                  this->viewProperty(PROPERTY(coordinatesDms)));
 
-    this->setViewProperty(PROPERTY(changed), false);
+    this->setLocale(this->viewProperty(PROPERTY(localeIndex)).toInt());
 
-    const QStringList& locales = d->translationManager.avalibleLocales();
-    QString locale = locales.value(this->viewProperty(PROPERTY(localeIndex)).toInt());
-    d->translationManager.setCurrentLocale(locale);
-
-    d->guiStyleManager.loadSavedSizings();
-    d->guiStyleManager.loadSavedPalette();
+    d->guiStyleManager.loadSettingsSizings();
+    d->guiStyleManager.loadSettingsPalette();
 
     PresentationContext::saveWindowedGeometry();
     PresentationContext::updateGeometry();
+
+    this->setViewProperty(PROPERTY(changed), false);
 }
 
 void GuiSettingsPresenter::setFullscreen(bool fullscreen)
 {
     PresentationContext::updateGeometry(fullscreen);
+}
+
+void GuiSettingsPresenter::setLocale(int localeIndex)
+{
+    const QStringList& locales = d->translationManager.avalibleLocales();
+    QString locale = locales.value(localeIndex);
+    d->translationManager.setCurrentLocale(locale);
 }
 
 void GuiSettingsPresenter::setUiSize(int size)

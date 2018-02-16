@@ -20,13 +20,6 @@ QtObject {
     property var position: QtPositioning.coordinate()
     property var homePosition: QtPositioning.coordinate()
 
-    property int speedUnits: settings.value("Gui/fdSpeedUnits")
-    property int altitudeUnits: settings.value("Gui/fdAltitudeUnits")
-    property bool altitudeRelative: settings.boolValue("Gui/fdRelativeAltitude")
-
-    property string speedSuffix: units.trSpeedUnits(speedUnits)
-    property string altitudeSuffix: units.trDistanceUnits(altitudeUnits)
-
     property QtObject mission: QtObject{
         objectName: "mission"
 
@@ -64,8 +57,6 @@ QtObject {
         property int epv: 0
         property int altitude: 0
         property int satellitesVisible: 0
-
-        readonly property real displayedGroundSpeed: units.convertSpeed(speedUnits, groundspeed)
     }
 
     property Subsystem compass: Subsystem {

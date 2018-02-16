@@ -11,13 +11,8 @@ BaseVehicle {
         property real climb: 0
 
         readonly property real displayedAltitude: {
-            return units.convertDistance(altitudeUnits,
-                                         altitudeRelative && homePosition.isValid ?
-                                             altitude - homePosition.altitude : altitude);
-        }
-
-        function fromDisplayedAltitude(alt) {
-            return altitudeRelative && homePosition.isValid ? alt + homePosition.altitude : alt;
+            return dashboard.altitudeRelative && homePosition.isValid ?
+                        altitude - homePosition.altitude : altitude
         }
     }
 
@@ -26,9 +21,6 @@ BaseVehicle {
 
         property real indicatedAirspeed: 0.0
         property real trueAirspeed: 0.0
-
-        readonly property real displayedIndicatedAirspeed: units.convertSpeed(speedUnits, indicatedAirspeed)
-        readonly property real displayedTrueAirspeed: units.convertSpeed(speedUnits, trueAirspeed)
     }
 
     property QtObject ekf: QtObject {
@@ -55,8 +47,6 @@ BaseVehicle {
         property real desiredHeading: 0.0
         property real airspeedError: 0.0
         property real altitudeError: 0.0
-
-        readonly property real displayedAirspeedError: units.convertSpeed(speedUnits, airspeedError)
     }
 
     property QtObject navigator: QtObject {
@@ -72,7 +62,5 @@ BaseVehicle {
 
         property real direction: 0
         property real speed: 0
-
-        readonly property real displayedSpeed: units.convertSpeed(speedUnits, speed)
     }
 }

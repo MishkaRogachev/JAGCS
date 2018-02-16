@@ -60,7 +60,10 @@ GridLayout {
     Controls.ComboBox {
         id: languageBox
         Layout.fillWidth: true
-        onCurrentIndexChanged: changed = true
+        onCurrentIndexChanged: {
+            presenter.setLocale(currentIndex);
+            changed = true;
+        }
     }
 
     Controls.Label {
@@ -100,7 +103,10 @@ GridLayout {
         id: rollBar
         model: [ qsTr("Western"), qsTr("Russian") ]
         Layout.fillWidth: true
-        onCurrentIndexChanged: changed = true;
+        onCurrentIndexChanged: {
+            dashboard.rollInverted = currentIndex;
+            changed = true;
+        }
     }
 
     Controls.Label {
@@ -113,6 +119,7 @@ GridLayout {
         Layout.fillWidth: true
         onDisplayTextChanged: {
             speedStep = displayText;
+            dashboard.speedStep = speedStep;
             changed = true;
         }
     }
@@ -125,7 +132,10 @@ GridLayout {
         id: speedUnitsBox
         model: availableSpeedUnits
         Layout.fillWidth: true
-        onCurrentIndexChanged: changed = true;
+        onCurrentIndexChanged: {
+            dashboard.speedUnits = currentIndex;
+            changed = true;
+        }
     }
 
     Controls.Label {
@@ -138,6 +148,7 @@ GridLayout {
         Layout.fillWidth: true
         onDisplayTextChanged: {
             altitudeStep = displayText;
+            dashboard.altitudeStep = altitudeStep;
             changed = true;
         }
     }
@@ -150,7 +161,10 @@ GridLayout {
         id: altitudeUnitsBox
         model: availableAltitudeUnits
         Layout.fillWidth: true
-        onCurrentIndexChanged: changed = true;
+        onCurrentIndexChanged: {
+            dashboard.altitudeUnits = currentIndex;
+            changed = true;
+        }
     }
 
     Controls.Label {
@@ -159,7 +173,10 @@ GridLayout {
 
     Controls.CheckBox {
         id: relativeAltitudeBox
-        onCheckedChanged: changed = true
+        onCheckedChanged: {
+            dashboard.altitudeRelative = checked;
+            changed = true;
+        }
     }
 
     Controls.Label {

@@ -58,7 +58,7 @@ Controls.Card {
                 armed: vehicle.armed
                 pitch: vehicle.ahrs.pitch
                 roll: vehicle.ahrs.roll
-                rollInverted: settings.boolValue("Gui/fdRollInverted")
+                rollInverted: dashboard.rollInverted
             }
 
             Indicators.BarIndicator {
@@ -96,27 +96,27 @@ Controls.Card {
 
             Indicators.FdLabel {
                 digits: 0
-                value: vehicle.satellite.displayedGroundSpeed
+                value: units.convertSpeed(speedUnits, vehicle.satellite.groundSpeed)
                 enabled: vehicle.satellite.enabled
                 operational: vehicle.satellite.operational
-                prefix: qsTr("GS") + ", " + vehicle.speedSuffix
+                prefix: qsTr("GS") + ", " + dashboard.speedSuffix
                 Layout.fillWidth: true
             }
 
             Indicators.FdLabel {
                 digits: 0
-                value: vehicle.pitot.displayedTrueAirspeed
+                value: units.convertSpeed(speedUnits, vehicle.pitot.trueAirspeed)
                 enabled: vehicle.pitot.enabled
                 operational: vehicle.pitot.operational
-                prefix: qsTr("TAS") + ", " + vehicle.speedSuffix
+                prefix: qsTr("TAS") + ", " + dashboard.speedSuffix
                 Layout.fillWidth: true
             }
 
             Indicators.FdLabel {
-                value: vehicle.barometric.displayedAltitude
+                value: units.convertDistance(altitudeUnits, vehicle.barometric.displayedAltitude)
                 enabled: vehicle.barometric.enabled
                 operational: vehicle.barometric.operational
-                prefix: qsTr("ALT") + ", " + vehicle.altitudeSuffix
+                prefix: qsTr("ALT") + ", " + dashboard.altitudeSuffix
                 Layout.fillWidth: true
             }
         }

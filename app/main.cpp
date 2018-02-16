@@ -52,8 +52,8 @@ int main(int argc, char* argv[])
     translations.initLocales();
 
     presentation::GuiStyleManager guiStyleManager;
-    guiStyleManager.loadSavedPalette();
-    guiStyleManager.loadSavedSizings();
+    guiStyleManager.loadSettingsPalette();
+    guiStyleManager.loadSettingsSizings();
 
     presentation::PresentationContext::rootContext()->setContextProperty(
                 "settings", settings::Provider::instance());

@@ -192,9 +192,11 @@ Controls.Pane {
         Controls.SpinBox {
             id: speedBox
             visible: sendButton.command === Command.SetSpeed
-            onVisibleChanged: if (visible) value = commandBox.currentItem.type ?
-                                               vehicle.satellite.displayedGroundSpeed :
-                                               vehicle.pitot.displayedIndicatedAirspeed
+            onVisibleChanged: {if (!visible) return;
+                value = units.convertSpeed(vehicle.speedUnits, commandBox.currentItem.type ?
+                                               vehicle.satellite.groundspeed :
+                                               vehicle.pitot.indicatedAirspeed);
+            }
             to: 999 // TODO: borderValues
             Layout.fillWidth: true
             // TODO: suffix: speedUnits ? qsTr("km/h") : qsTr("m/s")
