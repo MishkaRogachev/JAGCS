@@ -13,6 +13,8 @@ import "../Vehicles"
 Controls.Card {
     id: vehicleDisplay
 
+    property int vehicleId: 0
+
     property AerialVehicle vehicle: AerialVehicle {}
 
     VehicleDisplayPresenter {
@@ -21,6 +23,7 @@ Controls.Card {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
+    onVehicleIdChanged: presenter.setVehicle(vehicleId)
     onDeepIn: dashboard.selectVehicle(vehicleId)
 
     implicitWidth: grid.implicitWidth + sizings.margins * 2
@@ -54,7 +57,7 @@ Controls.Card {
                 anchors.centerIn: parent
                 height: parent.height - parent.size * 2
                 width: height * 0.7
-                enabled: vehicle.online &&  vehicle.ahrs.enabled
+                enabled: vehicle.online && vehicle.ahrs.enabled
                 armed: vehicle.armed
                 pitch: vehicle.ahrs.pitch
                 roll: vehicle.ahrs.roll
