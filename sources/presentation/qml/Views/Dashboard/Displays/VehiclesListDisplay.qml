@@ -16,6 +16,30 @@ Item {
         view: listDisplay
     }
 
+    Connections {
+        target: displaysSettingsButton
+        onClicked: filterSettings.visible ? filterSettings.close() : filterSettings.open()
+    }
+
+    Controls.Popup {
+        id: filterSettings
+        x: displaysSettingsButton.x
+        y: -sizings.padding
+        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
+        padding: sizings.padding
+        onVisibleChanged: displaysSettingsButton.enabled = !visible
+
+        ColumnLayout {
+            spacing: sizings.spacing
+
+            Controls.CheckBox {
+                text: qsTr("Show offline")
+                checked: vehicles.showOffline
+                onClicked: vehicles.setShowOffline(!vehicles.showOffline)
+            }
+        }
+    }
+
     ListView {
         id: list
         width: listDisplay.width - sizings.shadowSize

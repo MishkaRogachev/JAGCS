@@ -39,7 +39,7 @@ Item {
         }
     }
 
-    Component.onCompleted:  updateDisplay()
+    Component.onCompleted: updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
 
     DashboardPresenter {
@@ -71,8 +71,7 @@ Item {
         Controls.Button {
             id: displaysSettingsButton
             iconSource: "qrc:/icons/settings.svg"
-            tipText: qsTr("Instruments")
-            enabled: selectedVehicle !== undefined
+            tipText: qsTr("Settings")
             flat: true
         }
     }

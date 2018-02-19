@@ -10,24 +10,25 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(bool onlineOnTop READ onlineOnTop WRITE setOnlineOnTop NOTIFY onlineOnTopChanged)
+        Q_PROPERTY(bool showOffline READ showOffline WRITE setShowOffline NOTIFY showOfflineChanged)
 
     public:
         explicit VehiclesSortingModel(QObject* paret = nullptr);
 
-        bool onlineOnTop() const;
+        bool showOffline() const;
 
     public slots:
-        void setOnlineOnTop(bool onlineOnTop);
+        void setShowOffline(bool showOffline);
 
     signals:
-        void onlineOnTopChanged(bool onlineOnTop);
+        void showOfflineChanged(bool showOffline);
 
     protected:
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
+        bool filterAcceptsRow(int row, const QModelIndex& parent);
 
     private:
-        bool m_onlineOnTop;
+        bool m_showOffline;
     };
 }
 

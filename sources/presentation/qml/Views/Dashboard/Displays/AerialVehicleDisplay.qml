@@ -86,6 +86,7 @@ Item {
         y: -sizings.padding
         closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
         padding: sizings.padding
+        onVisibleChanged: displaysSettingsButton.enabled = !visible
 
         ColumnLayout {
             spacing: sizings.spacing

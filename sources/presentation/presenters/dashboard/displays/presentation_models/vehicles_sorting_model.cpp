@@ -10,35 +10,51 @@ using namespace presentation;
 
 VehiclesSortingModel::VehiclesSortingModel(QObject* paret):
     QSortFilterProxyModel(paret),
-    m_onlineOnTop(true)
-{}
-
-bool VehiclesSortingModel::onlineOnTop() const
+    m_showOffline(true)
 {
-    return m_onlineOnTop;
+    this->setFilterRole(VehiclesModel::VehicleOnlineRole);
+    this->setSortRole(VehiclesModel::VehicleOnlineRole);
+
+    this->setDynamicSortFilter(true);
+    this->sort(0, Qt::AscendingOrder);
 }
 
-void VehiclesSortingModel::setOnlineOnTop(bool onlineOnTop)
+bool VehiclesSortingModel::showOffline() const
 {
-    if (m_onlineOnTop == onlineOnTop) return;
+    return m_showOffline;
+}
 
-    m_onlineOnTop = onlineOnTop;
-    emit onlineOnTopChanged(m_onlineOnTop);
+void VehiclesSortingModel::setShowOffline(bool showOffline)
+{
+    if (m_showOffline == showOffline) return;
+
+    qDebug() << "showOffline" << showOffline;
+    m_showOffline = showOffline;
+    this->filterChanged();
+    emit showOfflineChanged(m_showOffline);
 }
 
 bool VehiclesSortingModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    QString leftName = sourceModel()->data(left, VehiclesModel::VehicleNameRole).toString();
-    QString rightName = sourceModel()->data(right, VehiclesModel::VehicleNameRole).toString();
-
-    if (m_onlineOnTop)
+    if (m_showOffline)
     {
-        bool leftOnline = sourceModel()->data(left, VehiclesModel::VehicleNameRole).toBool();
-        bool rightOnline = sourceModel()->data(right, VehiclesModel::VehicleNameRole).toBool();
+        bool leftOnline = this->sourceModel()->data(left, VehiclesModel::VehicleOnlineRole).toBool();
+        bool rightOnline = this->sourceModel()->data(right, VehiclesModel::VehicleOnlineRole).toBool();
 
         if (leftOnline && !rightOnline) return true;
         if (!leftOnline && rightOnline) return false;
     }
 
+    QString leftName = this->sourceModel()->data(left, VehiclesModel::VehicleNameRole).toString();
+    QString rightName = this->sourceModel()->data(right, VehiclesModel::VehicleNameRole).toString();
+
     return leftName < rightName;
+}
+
+bool VehiclesSortingModel::filterAcceptsRow(int row, const QModelIndex& parent)
+{
+    if (m_showOffline) return true;
+
+    return this->sourceModel()->data(this->sourceModel()->index(row, 0, parent),
+                                     VehiclesModel::VehicleOnlineRole).toBool();
 }

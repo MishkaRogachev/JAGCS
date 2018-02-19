@@ -29,11 +29,8 @@ VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->sortingModel.setSourceModel(&d->vehiclesModel);
-    d->sortingModel.setDynamicSortFilter(true);
-    d->sortingModel.sort(0);
-
     d->vehiclesModel.setVehicles(d->service->vehicles());
+    d->sortingModel.setSourceModel(&d->vehiclesModel);
 
     connect(d->service, &domain::VehicleService::vehicleAdded,
             this, [this](const dao::VehiclePtr& vehicle) {
@@ -43,7 +40,6 @@ VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
     connect(d->service, &domain::VehicleService::vehicleChanged,
             this, [this](const dao::VehiclePtr& vehicle) {
         d->vehiclesModel.updateVehicle(vehicle);
-        d->sortingModel.sort(0);
     });
 
     connect(d->service, &domain::VehicleService::vehicleRemoved,
