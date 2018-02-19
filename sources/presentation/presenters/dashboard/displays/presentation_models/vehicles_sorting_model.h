@@ -24,8 +24,8 @@ namespace presentation
         void showOfflineChanged(bool showOffline);
 
     protected:
-        bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
-        bool filterAcceptsRow(int row, const QModelIndex& parent);
+        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
+        bool filterAcceptsRow(int row, const QModelIndex& parent) const override;
 
     private:
         bool m_showOffline;

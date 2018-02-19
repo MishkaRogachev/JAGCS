@@ -28,10 +28,10 @@ void VehiclesSortingModel::setShowOffline(bool showOffline)
 {
     if (m_showOffline == showOffline) return;
 
-    qDebug() << "showOffline" << showOffline;
     m_showOffline = showOffline;
-    this->filterChanged();
     emit showOfflineChanged(m_showOffline);
+
+    this->invalidate();
 }
 
 bool VehiclesSortingModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
@@ -51,10 +51,10 @@ bool VehiclesSortingModel::lessThan(const QModelIndex &left, const QModelIndex &
     return leftName < rightName;
 }
 
-bool VehiclesSortingModel::filterAcceptsRow(int row, const QModelIndex& parent)
+bool VehiclesSortingModel::filterAcceptsRow(int row, const QModelIndex& parent) const
 {
     if (m_showOffline) return true;
 
-    return this->sourceModel()->data(this->sourceModel()->index(row, 0, parent),
-                                     VehiclesModel::VehicleOnlineRole).toBool();
+    QModelIndex index = this->sourceModel()->index(row, 0, parent);
+    return this->sourceModel()->data(index, VehiclesModel::VehicleOnlineRole).toBool();
 }
