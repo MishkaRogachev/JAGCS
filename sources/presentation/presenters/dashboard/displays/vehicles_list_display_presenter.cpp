@@ -1,6 +1,7 @@
 #include "vehicles_list_display_presenter.h"
 
 // Qt
+#include <QSortFilterProxyModel>
 #include <QVariant>
 #include <QDebug>
 
@@ -11,6 +12,7 @@
 #include "vehicle_service.h"
 
 #include "vehicles_model.h"
+#include "vehicles_sorting_model.h"
 
 using namespace presentation;
 
@@ -19,23 +21,34 @@ class VehiclesListDisplayPresenter::Impl
 public:
      domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
 
-     VehiclesModel vehicles;
+     VehiclesModel vehiclesModel;
+     VehiclesSortingModel sortingModel;
 };
 
 VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->vehicles.setVehicles(d->service->vehicles());
+    d->sortingModel.setSourceModel(&d->vehiclesModel);
+    d->sortingModel.setDynamicSortFilter(true);
+    d->sortingModel.sort(0);
+
+    d->vehiclesModel.setVehicles(d->service->vehicles());
 
     connect(d->service, &domain::VehicleService::vehicleAdded,
             this, [this](const dao::VehiclePtr& vehicle) {
-        d->vehicles.addVehicle(vehicle);
+        d->vehiclesModel.addVehicle(vehicle);
+    });
+
+    connect(d->service, &domain::VehicleService::vehicleChanged,
+            this, [this](const dao::VehiclePtr& vehicle) {
+        d->vehiclesModel.updateVehicle(vehicle);
+        d->sortingModel.sort(0);
     });
 
     connect(d->service, &domain::VehicleService::vehicleRemoved,
             this, [this](const dao::VehiclePtr& vehicle) {
-        d->vehicles.removeVehicle(vehicle);
+        d->vehiclesModel.removeVehicle(vehicle);
     });
 }
 
@@ -46,5 +59,5 @@ void VehiclesListDisplayPresenter::connectView(QObject* view)
 {
     BasePresenter::connectView(view);
 
-    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(&d->vehicles));
+    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(&d->sortingModel));
 }

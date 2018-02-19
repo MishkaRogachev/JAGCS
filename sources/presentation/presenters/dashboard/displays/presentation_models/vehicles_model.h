@@ -16,8 +16,10 @@ namespace presentation
     public:
         enum VehicleMapItemRoles
         {
-            VehicleTypeRole = Qt::UserRole + 1,
-            VehicleIdRole
+            VehicleIdRole = Qt::UserRole + 1,
+            VehicleTypeRole,
+            VehicleNameRole,
+            VehicleOnlineRole
         };
 
         explicit VehiclesModel(QObject* parent = nullptr);
@@ -28,6 +30,7 @@ namespace presentation
     public slots:
         void setVehicles(const dao::VehiclePtrList& vehicles);
         void addVehicle(const dao::VehiclePtr& vehicle);
+        void updateVehicle(const dao::VehiclePtr& vehicle);
         void removeVehicle(const dao::VehiclePtr& vehicle);
 
     protected:

@@ -6,8 +6,6 @@
 // Internal
 #include "vehicle.h"
 
-#include "dashboard_presenter.h"
-
 using namespace presentation;
 
 VehiclesModel::VehiclesModel(QObject* parent):
@@ -23,18 +21,17 @@ int VehiclesModel::rowCount(const QModelIndex& parent) const
 
 QVariant VehiclesModel::data(const QModelIndex& index, int role) const
 {
-    if (index.row() >= m_vehicles.count()) return QVariant();
+    if (!index.isValid() || index.row() >= m_vehicles.count()) return QVariant();
 
     dao::VehiclePtr vehicle = m_vehicles.at(index.row());
 
     switch (role)
     {
-        case VehicleTypeRole:
-            return vehicle->type();
-        case VehicleIdRole:
-            return vehicle->id();
-        default:
-            return QVariant();
+    case VehicleIdRole: return vehicle->id();
+    case VehicleTypeRole: return vehicle->type();
+    case VehicleNameRole: return vehicle->name();
+    case VehicleOnlineRole: return vehicle->isOnline();
+    default: return QVariant();
     }
 }
 
@@ -54,6 +51,14 @@ void VehiclesModel::addVehicle(const dao::VehiclePtr& vehicle)
     this->endInsertRows();
 }
 
+void VehiclesModel::updateVehicle(const dao::VehiclePtr& vehicle)
+{
+    QModelIndex index = this->index(m_vehicles.indexOf(vehicle));
+    if (!index.isValid()) return;
+
+    emit dataChanged(index, index, { VehicleTypeRole, VehicleNameRole, VehicleOnlineRole });
+}
+
 void VehiclesModel::removeVehicle(const dao::VehiclePtr& vehicle)
 {
     int row = m_vehicles.indexOf(vehicle);
@@ -67,8 +72,10 @@ QHash<int, QByteArray> VehiclesModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[VehicleTypeRole] = "vehicleType";
     roles[VehicleIdRole] = "vehicleId";
+    roles[VehicleTypeRole] = "vehicleType";
+    roles[VehicleNameRole] = "vehicleName";
+    roles[VehicleOnlineRole] = "vehicleOnline";
 
     return roles;
 }
