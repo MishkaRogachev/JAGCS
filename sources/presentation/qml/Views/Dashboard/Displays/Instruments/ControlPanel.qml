@@ -97,13 +97,13 @@ Controls.Pane {
                 case Command.NavTo:
                     return [latitudeBox.realValue,
                             longitudeBox.realValue,
-                            altitudeBox.value];
+                            vehicle.barometric.fromDisplayedAltitude(altitudeBox.value)];
                 case Command.SetSpeed:
                     return [commandBox.currentItem.type,
                             vehicle.fromSpeed(speedBox.value),
                             -1, 0];
                 case Command.SetAltitude:
-                    return [altitudeBox.value, 0];
+                    return [vehicle.barometric.fromDisplayedAltitude(altitudeBox.value), 0];
                 case Command.SetHome:
                     return [2, 0, 0, 0,
                             latitudeBox.realValue,
@@ -134,18 +134,11 @@ Controls.Pane {
             Layout.columnSpan: 2
         }
 
-        Controls.Label {
-            text: qsTr("Lat.")
-            font.pixelSize: sizings.fontPixelSize * 0.7
-            font.bold: true
-            visible: latitudeBox.visible
-            Layout.fillWidth: true
-        }
-
         Controls.CoordSpinBox {
             id: latitudeBox
             visible: sendButton.command === Command.SetHome || sendButton.command === Command.NavTo
             onVisibleChanged: if (visible) realValue = vehicle.position.latitude
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -165,20 +158,13 @@ Controls.Pane {
             }
         }
 
-        Controls.Label {
-            text: qsTr("Lon.")
-            font.pixelSize: sizings.fontPixelSize * 0.7
-            font.bold: true
-            visible: latitudeBox.visible
-            Layout.fillWidth: true
-        }
-
         // FIXME: lat/lot edit widget
         Controls.CoordSpinBox {
             id: longitudeBox
             visible: latitudeBox.visible
             onVisibleChanged: if (visible) realValue = vehicle.position.longitude
             isLongitude: true
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 

@@ -14,6 +14,11 @@ BaseVehicle {
 
         readonly property real displayedAltitude: dashboard.altitudeRelative ?
                                                       altitude - homeAltitude : altitude
+
+        function fromDisplayedAltitude(displayedAltitude) {
+            return dashboard.altitudeRelative ?
+                        displayedAltitude : displayedAltitude - homeAltitude;
+        }
     }
 
     property Subsystem pitot: Subsystem {
