@@ -17,7 +17,7 @@ Controls.Card {
 
     property AerialVehicle vehicle: AerialVehicle {}
 
-    VehicleDisplayPresenter {
+    AerialVehicleDisplayPresenter {
         id: presenter
         view: vehicleDisplay
         Component.onCompleted: setVehicle(vehicleId)

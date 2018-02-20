@@ -23,7 +23,7 @@ Item {
     implicitWidth: list.contentWidth
     implicitHeight: list.contentHeight + sizings.shadowSize
 
-    VehicleDisplayPresenter {
+    AerialVehicleDisplayPresenter {
         id: presenter
         view: vehicleDisplay
         Component.onCompleted: setVehicle(vehicleId)

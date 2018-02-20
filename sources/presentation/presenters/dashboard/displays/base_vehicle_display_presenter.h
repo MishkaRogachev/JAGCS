@@ -1,5 +1,5 @@
-#ifndef VEHICLE_DISPLAY_PRESENTER_H
-#define VEHICLE_DISPLAY_PRESENTER_H
+#ifndef BASE_VEHICLE_DISPLAY_PRESENTER_H
+#define BASE_VEHICLE_DISPLAY_PRESENTER_H
 
 // Internal
 #include "common_vehicle_display_presenter.h"
@@ -8,12 +8,12 @@ namespace presentation
 {
     class VibrationModel;
 
-    class VehicleDisplayPresenter: public CommonVehicleDisplayPresenter
+    class BaseVehicleDisplayPresenter: public CommonVehicleDisplayPresenter
     {
         Q_OBJECT
 
     public:
-        explicit VehicleDisplayPresenter(QObject* parent = nullptr);
+        explicit BaseVehicleDisplayPresenter(QObject* parent = nullptr);
 
     protected:
         void connectView(QObject* view) override;
@@ -22,22 +22,15 @@ namespace presentation
     private slots:
         void updateAhrs(const domain::Telemetry::TelemetryMap& parameters);
         void updateCompass(const domain::Telemetry::TelemetryMap& parameters);
-        void updateEkf(const domain::Telemetry::TelemetryMap& parameters);
         void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);
         void updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updateBattery(const domain::Telemetry::TelemetryMap& parameters);
-        void updatePitot(const domain::Telemetry::TelemetryMap& parameters);
-        void updateBarometric(const domain::Telemetry::TelemetryMap& parameters);
-        void updateRadalt(const domain::Telemetry::TelemetryMap& parameters);
         void updatePosition(const domain::Telemetry::TelemetryMap& parameters);
         void updateHome(const domain::Telemetry::TelemetryMap& parameters);
-        void updateFlightControl(const domain::Telemetry::TelemetryMap& parameters);
-        void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
-        void updateWind(const domain::Telemetry::TelemetryMap& parameters);
 
     private:
         VibrationModel* m_vibrationModel;
     };
 }
 
-#endif // VEHICLE_DISPLAY_PRESENTER_H
+#endif // BASE_VEHICLE_DISPLAY_PRESENTER_H
