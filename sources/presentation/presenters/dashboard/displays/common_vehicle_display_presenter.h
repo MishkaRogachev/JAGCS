@@ -24,6 +24,7 @@ namespace presentation
         void rejectCommand(int commandType);
 
     protected:
+        void connectView(QObject* view) override;
         void connectNode(domain::Telemetry* node) override;
 
         void setVehicleProperty(const char* name, const QVariant& value);

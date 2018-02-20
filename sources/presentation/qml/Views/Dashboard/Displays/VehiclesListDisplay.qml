@@ -59,7 +59,6 @@ Item {
 
             width: parent.width - sizings.shadowSize
 
-            onDisplayTypeChanged: setupDisplay()
             onDisplayVehicleIdChanged: setupDisplay()
             Component.onCompleted: setupDisplay()
 

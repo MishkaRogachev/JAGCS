@@ -163,6 +163,13 @@ void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
     d->commandService->cancelCommand(d->vehicle->id(), dao::Command::CommandType(commandType));
 }
 
+void CommonVehicleDisplayPresenter::connectView(QObject* view)
+{
+    BasePresenter::connectView(view);
+
+    this->updateVehicle();
+}
+
 void CommonVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
     this->chainNode(node->childNode(domain::Telemetry::System),

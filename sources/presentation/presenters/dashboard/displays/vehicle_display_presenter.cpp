@@ -16,6 +16,16 @@ VehicleDisplayPresenter::VehicleDisplayPresenter(QObject* parent):
     m_vibrationModel(new VibrationModel(this))
 {}
 
+
+void VehicleDisplayPresenter::connectView(QObject* view)
+{
+    CommonVehicleDisplayPresenter::connectView(view);
+
+    this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(vibration),
+                             QVariant::fromValue(m_vibrationModel));
+}
+
+
 void VehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
     CommonVehicleDisplayPresenter::connectNode(node);
@@ -234,13 +244,5 @@ void VehicleDisplayPresenter::updateWind(const domain::Telemetry::TelemetryMap& 
                              parameters.value(domain::Telemetry::Yaw, false));
     this->setVehicleProperty(PROPERTY(wind), PROPERTY(speed),
                              parameters.value(domain::Telemetry::Speed, false));
-}
-
-void VehicleDisplayPresenter::connectView(QObject* view)
-{
-    BasePresenter::connectView(view);
-
-    this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(vibration),
-                             QVariant::fromValue(m_vibrationModel));
 }
 

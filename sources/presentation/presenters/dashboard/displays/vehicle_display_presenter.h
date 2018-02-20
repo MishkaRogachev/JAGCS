@@ -16,6 +16,7 @@ namespace presentation
         explicit VehicleDisplayPresenter(QObject* parent = nullptr);
 
     protected:
+        void connectView(QObject* view) override;
         void connectNode(domain::Telemetry* node) override;
 
     private slots:
@@ -34,9 +35,7 @@ namespace presentation
         void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
         void updateWind(const domain::Telemetry::TelemetryMap& parameters);
 
-    protected:
-        void connectView(QObject* view) override;
-
+    private:
         VibrationModel* m_vibrationModel;
     };
 }
