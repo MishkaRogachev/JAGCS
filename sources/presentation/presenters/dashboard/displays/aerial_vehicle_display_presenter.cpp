@@ -96,9 +96,9 @@ void AerialVehicleDisplayPresenter::updateFlightControl(const domain::Telemetry:
                              parameters.value(domain::Telemetry::DesiredRoll, 0));
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(desiredHeading),
                              parameters.value(domain::Telemetry::DesiredHeading, 0));
-    this->setVehicleProperty(PROPERTY(navigator), PROPERTY(airspeedError),
+    this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(airspeedError),
                              parameters.value(domain::Telemetry::AirspeedError, false));
-    this->setVehicleProperty(PROPERTY(navigator), PROPERTY(altitudeError),
+    this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(altitudeError),
                              parameters.value(domain::Telemetry::AltitudeError, false));
 }
 

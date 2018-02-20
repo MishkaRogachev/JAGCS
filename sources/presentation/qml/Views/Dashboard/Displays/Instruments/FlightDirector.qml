@@ -101,7 +101,7 @@ Controls.Pane {
         anchors.right: parent.right
         height: parent.height * 0.6
         value: units.convertDistance(altitudeUnits, vehicle.barometric.displayedAltitude)
-        error: vehicle.flightControl.altitudeError
+        error: units.convertDistance(altitudeUnits, vehicle.flightControl.altitudeError)
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ?
