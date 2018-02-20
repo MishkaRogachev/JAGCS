@@ -51,14 +51,20 @@ namespace settings
         const QString activeVideo = "Video/activeVideo";
     }
 
-    namespace joystick
+    namespace manual
     {
-        const QString enabled = "Joystick/joystickEnabled";
-        const QString device = "Joystick/device";
-        const QString pitchAxis = "Joystick/pitchAxis";
-        const QString rollAxis = "Joystick/rollAxis";
-        const QString yawAxis = "Joystick/yawAxis";
-        const QString throttleAxis = "Joystick/throttleAxis";
+        const QString enabled = "Manual/enabled";
+        const QString interval = "Manual/interval";
+
+        namespace joystick
+        {
+            const QString enabled = "Manual/Joystick/enabled";
+            const QString device = "Manual/Joystick/device";
+            const QString pitchAxis = "Manual/Joystick/pitchAxis";
+            const QString rollAxis = "Manual/Joystick/rollAxis";
+            const QString yawAxis = "Manual/Joystick/yawAxis";
+            const QString throttleAxis = "Manual/Joystick/throttleAxis";
+        }
     }
 
     namespace gui

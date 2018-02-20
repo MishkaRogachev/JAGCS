@@ -54,12 +54,14 @@ public:
 
         settings.setValue(video::activeVideo, -1);
 
-        settings.setValue(joystick::enabled, false);
-        settings.setValue(joystick::device, 0);
-        settings.setValue(joystick::pitchAxis, 1);
-        settings.setValue(joystick::rollAxis, 2);
-        settings.setValue(joystick::yawAxis, 3);
-        settings.setValue(joystick::throttleAxis, 4);
+        settings.setValue(manual::enabled, false);
+        settings.setValue(manual::interval, 100);
+        settings.setValue(manual::joystick::enabled, false);
+        settings.setValue(manual::joystick::device, 0);
+        settings.setValue(manual::joystick::pitchAxis, 1);
+        settings.setValue(manual::joystick::rollAxis, 2);
+        settings.setValue(manual::joystick::yawAxis, 3);
+        settings.setValue(manual::joystick::throttleAxis, 4);
 
         settings.setValue(gui::fullscreen, true);
         settings.setValue(gui::locale, "en");

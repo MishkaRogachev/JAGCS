@@ -28,9 +28,11 @@ JoystickManager::JoystickManager(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->controller = new JoystickController(settings::Provider::value(settings::joystick::device).toInt(),
-                                           this);
-    connect(d->controller, &JoystickController::valueChanged, this, &JoystickManager::overrideValue);
+    d->controller = new JoystickController(
+                        settings::Provider::value(settings::manual::joystick::device).toInt(),
+                        this);
+    connect(d->controller, &JoystickController::valueChanged,
+            this, &JoystickManager::overrideValue);
 }
 
 JoystickManager::~JoystickManager()
@@ -56,10 +58,10 @@ void JoystickManager::setControlVehicle(int vehicleId)
 
 void JoystickManager::sendCurrentDeviation()
 {
-    float pitch = this->value(settings::Provider::value(settings::joystick::pitchAxis, 0).toInt());
-    float roll = this->value(settings::Provider::value(settings::joystick::rollAxis, 0).toInt());
-    float throttle = this->value(settings::Provider::value(settings::joystick::throttleAxis, 0).toInt());
-    float yaw = this->value(settings::Provider::value(settings::joystick::yawAxis, 0).toInt());
+    float pitch = this->value(settings::Provider::value(settings::manual::joystick::pitchAxis, 0).toInt());
+    float roll = this->value(settings::Provider::value(settings::manual::joystick::rollAxis, 0).toInt());
+    float throttle = this->value(settings::Provider::value(settings::manual::joystick::throttleAxis, 0).toInt());
+    float yaw = this->value(settings::Provider::value(settings::manual::joystick::yawAxis, 0).toInt());
 
     d->vehicleService->sendManualControl(d->vehicleId, pitch, roll, throttle, yaw);
 }

@@ -41,7 +41,9 @@ namespace dao
             SetAltitude,
             SetHome,
 
-            PreflightCalibration
+            PreflightCalibration,
+
+            ManualImpacts
         };
 
         enum CommandStatus
