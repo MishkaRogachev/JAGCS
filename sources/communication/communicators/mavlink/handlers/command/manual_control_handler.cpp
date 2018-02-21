@@ -8,9 +8,8 @@
 
 // Internal
 #include "service_registry.h"
+#include "command_service.h"
 #include "vehicle_service.h"
-
-#include "mavlink_communicator.h"
 
 namespace
 {
@@ -23,12 +22,11 @@ namespace
 using namespace comm;
 
 ManualControlHandler::ManualControlHandler(MavLinkCommunicator* communicator):
-    QObject(communicator),
+    AbstractCommandHandler(communicator),
     AbstractMavLinkHandler(communicator),
     m_vehicleService(domain::ServiceRegistry::vehicleService())
 {
-    connect(m_vehicleService, &domain::VehicleService::sendManualControl,
-            this, &ManualControlHandler::sendManualControl);
+    domain::ServiceRegistry::commandService()->addHandler(this);
 }
 
 void ManualControlHandler::processMessage(const mavlink_message_t& message)
@@ -36,7 +34,8 @@ void ManualControlHandler::processMessage(const mavlink_message_t& message)
     Q_UNUSED(message) // TODO: handle feedback
 }
 
-void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float roll, float thrust, float yaw)
+void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float roll,
+                                             float yaw, float thrust)
 {
     mavlink_manual_control_t mavlink_manual_control;
 
@@ -45,8 +44,8 @@ void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float 
 
     mavlink_manual_control.x = ::normalize(pitch);
     mavlink_manual_control.y = ::normalize(roll);
-    mavlink_manual_control.z = ::normalize(thrust);
     mavlink_manual_control.r = ::normalize(yaw);
+    mavlink_manual_control.z = ::normalize(thrust);
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
@@ -57,5 +56,20 @@ void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float 
                                            m_communicator->linkChannel(link),
                                            &message, &mavlink_manual_control);
     m_communicator->sendMessage(message, link);
+}
+
+void ManualControlHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, int attempt)
+{
+    Q_UNUSED(attempt)
+
+    if (command->type() != dao::Command::ManualImpacts) return;
+
+    this->sendManualControl(vehicleId,
+                            command->arguments().value(0, 0).toFloat(),
+                            command->arguments().value(1, 0).toFloat(),
+                            command->arguments().value(2, 0).toFloat(),
+                            command->arguments().value(3, 0).toFloat());
+    // TODO: wait feedback
+    this->ackCommand(vehicleId, dao::Command::ManualImpacts, dao::Command::Completed);
 }
 

@@ -139,7 +139,8 @@ void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, 
 
     if (command->type() == dao::Command::SetMode) // TODO: special command map
     {
-        this->sendSetMode(vehicle->mavId(), command->arguments().first().value<domain::vehicle::Mode>());
+        this->sendSetMode(vehicle->mavId(),
+                          command->arguments().first().value<domain::vehicle::Mode>());
     }
     else if (command->type() == dao::Command::GoTo)
     {

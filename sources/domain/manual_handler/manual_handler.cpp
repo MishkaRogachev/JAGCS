@@ -128,6 +128,8 @@ void ManualHandler::setImpact(Axis axis, float impact)
 
 void ManualHandler::sendImpacts()
 {
+    if (d->vehicleId == 0) return;
+
     dao::CommandPtr command = dao::CommandPtr::create();
 
     command->setType(dao::Command::ManualImpacts);
