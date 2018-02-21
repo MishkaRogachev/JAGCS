@@ -58,21 +58,27 @@ find_package(Qt5 COMPONENTS
     Location
     Charts
     QuickControls2
-#    Gamepad
 REQUIRED)
 
 # Common libraries
 set(LIBRARIES
 )
 
+# QGamepad option
+option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
+if (WITH_GAMEPAD)
+add_definitions(-DWITH_GAMEPAD)
+find_package(Qt5 COMPONENTS
+    Gamepad
+REQUIRED)
+endif (WITH_GAMEPAD)
+
 # Windows stuff
 if (WIN32)
-
 set(LIBRARIES
     ${LIBRARIES}
     opengl32
 )
-
 # RC compiler
 string(REPLACE "gcc" "windres" CMAKE_RC_COMPILER_INIT ${CMAKE_C_COMPILER})
 enable_language(RC)
@@ -80,21 +86,17 @@ set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -o <OBJECT> <SOURCE> -I
 
 configure_file(${CMAKE_SOURCE_DIR}/platforms/windows/jagcs.rc.in ${CMAKE_CURRENT_BINARY_DIR}/jagcs.rc)
 set(META_SOURCES jagcs.rc)
-
 endif(WIN32)
 
 # Android stuff
 if (ANDROID)
-
 find_package(Qt5AndroidExtras)
-
 set(LIBS
     ${LIBS}
     Qt5::AndroidExtras
     android
 # TODO: add to 3rd party openssl android library, avoid https://bugreports.qt.io/browse/QTBUG-57922
 )
-
 endif(ANDROID)
 
 # MAVLink includes
@@ -169,8 +171,13 @@ qt5_use_modules(${PROJECT}
     Location
     Charts
     QuickControls2
- #   Gamepad
 )
+
+if (WITH_GAMEPAD)
+qt5_use_modules(${PROJECT}
+    Gamepad
+)
+endif (WITH_GAMEPAD)
 
 if(ANDROID)
     set (QT_ANDROID_APP_NAME ${PROJECT_NAME})

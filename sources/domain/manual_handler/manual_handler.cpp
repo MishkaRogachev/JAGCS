@@ -13,7 +13,9 @@
 #include "service_registry.h"
 #include "command_service.h"
 
+#ifdef WITH_GAMEPAD
 #include "joystick_controller.h"
+# endif
 
 using namespace domain;
 
@@ -21,8 +23,11 @@ class ManualHandler::Impl
 {
 public:
     domain::CommandService* service = domain::ServiceRegistry::commandService();
+
+    #ifdef WITH_GAMEPAD
     JoystickController* controller = nullptr;
     QMap<int, ManualHandler::Axis> joystickAxes;
+    # endif
 
     int vehicleId = 0;
 
@@ -34,10 +39,12 @@ ManualHandler::ManualHandler(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
+#ifdef WITH_GAMEPAD
     if (settings::Provider::value(settings::manual::joystick::enabled).toBool())
     {
         this->setJoystick(settings::Provider::value(settings::manual::joystick::device).toInt());
     }
+# endif
 
     this->setEnabled(settings::Provider::value(settings::manual::enabled).toBool());
 }
@@ -54,7 +61,11 @@ bool ManualHandler::enabled() const
 
 bool ManualHandler::joystickEnabled() const
 {
+#ifdef WITH_GAMEPAD
     return d->controller;
+#else
+    return false;
+# endif
 }
 
 int ManualHandler::vehicleId() const
@@ -83,6 +94,7 @@ void ManualHandler::setEnabled(bool enabled)
 
 void ManualHandler::setJoystick(int deviceId)
 {
+#ifdef WITH_GAMEPAD
     if ((d->controller == nullptr) == (deviceId == -1)) return;
 
     if (deviceId > -1)
@@ -98,6 +110,9 @@ void ManualHandler::setJoystick(int deviceId)
     }
 
     emit joystickEnabledChanged(d->controller);
+#else
+    Q_UNUSED(deviceId)
+# endif
 }
 
 void ManualHandler::setVehicleId(int vehicleId)
@@ -110,12 +125,14 @@ void ManualHandler::setVehicleId(int vehicleId)
 
 void ManualHandler::updateJoystickAxes()
 {
+#ifdef WITH_GAMEPAD
     d->joystickAxes.clear();
 
     d->joystickAxes[settings::Provider::value(settings::manual::joystick::pitchAxis).toInt()] = Pitch;
     d->joystickAxes[settings::Provider::value(settings::manual::joystick::rollAxis).toInt()] = Roll;
     d->joystickAxes[settings::Provider::value(settings::manual::joystick::yawAxis).toInt()] = Yaw;
     d->joystickAxes[settings::Provider::value(settings::manual::joystick::throttleAxis).toInt()] = Throttle;
+# endif
 }
 
 void ManualHandler::setImpact(Axis axis, float impact)
@@ -145,5 +162,10 @@ void ManualHandler::sendImpacts()
 
 void ManualHandler::onControllerValueChanged(int axis, float value)
 {
+#ifdef WITH_GAMEPAD
     this->setImpact(d->joystickAxes.value(axis, NoneAxis), value);
+#else
+    Q_UNUSED(axis)
+    Q_UNUSED(value)
+# endif
 }

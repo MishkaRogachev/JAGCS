@@ -39,6 +39,8 @@ void ManualControlHandler::processMessage(const mavlink_message_t& message)
 void ManualControlHandler::sendManualControl(int vehicledId, float pitch, float roll,
                                              float yaw, float thrust)
 {
+    qDebug() << "manual:" << pitch << roll << yaw << thrust;
+
     mavlink_manual_control_t mavlink_manual_control;
 
     int mavId = m_vehicleService->mavIdByVehicleId(vehicledId);
