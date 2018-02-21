@@ -8,8 +8,10 @@
 
 // Internal
 #include "service_registry.h"
-#include "command_service.h"
 #include "vehicle_service.h"
+#include "command_service.h"
+
+#include "mavlink_communicator.h"
 
 namespace
 {
