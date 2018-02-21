@@ -40,7 +40,10 @@ GridLayout {
 
     Controls.CheckBox {
         id: joystickEnabledBox
-        onCheckedChanged: changed = true
+        onCheckedChanged: {
+            manual.setJoystickEnabled(checked);
+            changed = true;
+        }
     }
 
     Controls.Label {
@@ -50,27 +53,20 @@ GridLayout {
 
     Controls.SpinBox {
         id: deviceBox
-        onValueChanged: changed = true
-        Layout.fillWidth: true
         enabled: joystickEnabled
+        onValueChanged: {
+            manual.setJoystickDevice(value)
+            changed = true;
+        }
+        Layout.fillWidth: true
     }
-
-    //        Controls.Label { TODO: software joystick
-    //            text: qsTr("Software joystick")
-    //            Layout.fillWidth: true
-    //        }
-
-    //        Controls.CheckBox {
-    //            id: softwareJoystickBox
-    //            onCheckedChanged: changed = true
-    //            enabled: joystickEnabled
-    //        }
 
     Controls.Label {
         text: qsTr("Pitch axis")
         Layout.fillWidth: true
     }
 
+    // TODO: dynamic axes
     Controls.ComboBox {
         id: pitchAxisBox
         model: axes

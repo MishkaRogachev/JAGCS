@@ -10,7 +10,8 @@ namespace domain
         Q_OBJECT
 
         Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
-        Q_PROPERTY(bool joystickEnabled READ joystickEnabled NOTIFY joystickEnabledChanged)
+        Q_PROPERTY(bool joystickEnabled READ joystickEnabled WRITE setJoystickEnabled
+                   NOTIFY joystickEnabledChanged)
         Q_PROPERTY(int vehicleId READ vehicleId WRITE setVehicleId NOTIFY vehicleIdChanged)
 
     public:
@@ -33,7 +34,8 @@ namespace domain
 
     public slots:
         void setEnabled(bool enabled);
-        void setJoystick(int deviceId);
+        void setJoystickEnabled(bool enabled);
+        void setJoystickDevice(int deviceId);
         void setVehicleId(int vehicleId);
         void updateJoystickAxes();
 

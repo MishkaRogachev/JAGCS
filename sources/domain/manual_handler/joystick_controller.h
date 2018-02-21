@@ -12,9 +12,13 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit JoystickController(int device, QObject* parent = nullptr);
+        explicit JoystickController(QObject* parent = nullptr);
 
         float value(int axis) const;
+        int deviceId() const;
+
+    public slots:
+        void setDeviceId(int deviceId);
 
     signals:
         void valueChanged(int axis, float value);

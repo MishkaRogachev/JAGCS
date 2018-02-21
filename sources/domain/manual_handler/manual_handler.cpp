@@ -44,7 +44,8 @@ ManualHandler::ManualHandler(QObject* parent):
 #ifdef WITH_GAMEPAD
     if (settings::Provider::value(settings::manual::joystick::enabled).toBool())
     {
-        this->setJoystick(settings::Provider::value(settings::manual::joystick::device).toInt());
+        this->setJoystickEnabled(settings::Provider::value(
+                                     settings::manual::joystick::enabled).toBool());
     }
 # endif
 
@@ -94,14 +95,16 @@ void ManualHandler::setEnabled(bool enabled)
     emit enabledChanged(this->enabled());
 }
 
-void ManualHandler::setJoystick(int deviceId)
+void ManualHandler::setJoystickEnabled(bool enabled)
 {
 #ifdef WITH_GAMEPAD
-    if ((d->controller == nullptr) == (deviceId == -1)) return;
+    if ((d->controller != nullptr) == enabled) return;
 
-    if (deviceId > -1)
+    if (enabled)
     {
-        d->controller = new JoystickController(deviceId, this);
+        d->controller = new JoystickController(this);
+        d->controller->setDeviceId(settings::Provider::value(
+                                       settings::manual::joystick::device).toInt());
         connect(d->controller, &JoystickController::valueChanged,
                 this, &ManualHandler::onControllerValueChanged);
         this->updateJoystickAxes();
@@ -109,9 +112,17 @@ void ManualHandler::setJoystick(int deviceId)
     else
     {
         delete d->controller;
+        d->controller = nullptr;
     }
+#else
+    Q_UNUSED(enabled)
+# endif
+}
 
-    emit joystickEnabledChanged(d->controller);
+void ManualHandler::setJoystickDevice(int deviceId)
+{
+#ifdef WITH_GAMEPAD
+    if (d->controller) d->controller->setDeviceId(deviceId);
 #else
     Q_UNUSED(deviceId)
 # endif

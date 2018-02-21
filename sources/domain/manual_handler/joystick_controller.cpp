@@ -9,20 +9,11 @@
 
 using namespace domain;
 
-JoystickController::JoystickController(int device, QObject* parent):
+JoystickController::JoystickController(QObject* parent):
     QObject(parent)
 {
 #ifdef WITH_GAMEPAD
-    auto gamepads = QGamepadManager::instance()->connectedGamepads();
-    if (device > -1 && device < gamepads.count())
-    {
-        m_gamepad = new QGamepad(gamepads[device], this);
-        m_gamepad->setDeviceId(gamepads[device]);
-    }
-    else
-    {
-        m_gamepad = new QGamepad(0, this);
-    }
+    m_gamepad = new QGamepad(0, this);
 
     connect(m_gamepad, &QGamepad::axisLeftXChanged, this, [this](double value) {
             emit valueChanged(1, value);
@@ -51,4 +42,23 @@ float JoystickController::value(int axis) const
 # endif
     default: return 0;
     }
+}
+
+int JoystickController::deviceId() const
+{
+#ifdef WITH_GAMEPAD
+    return m_gamepad->deviceId();
+#else
+    return -1;
+# endif
+}
+
+void JoystickController::setDeviceId(int deviceId)
+{
+#ifdef WITH_GAMEPAD
+    auto gamepads = QGamepadManager::instance()->connectedGamepads();
+    m_gamepad->setDeviceId(gamepads.count() > deviceId ? gamepads[deviceId] : 0);
+#else
+    Q_UNUSED(deviceId)
+# endif
 }
