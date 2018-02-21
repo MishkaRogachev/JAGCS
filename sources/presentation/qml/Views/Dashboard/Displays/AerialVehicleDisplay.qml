@@ -23,6 +23,9 @@ Item {
     implicitWidth: list.contentWidth
     implicitHeight: list.contentHeight + sizings.shadowSize
 
+    Component.onCompleted: manual.setVehicleId(vehicleId)
+    Component.onDestruction: manual.setVehicleId(0)
+
     AerialVehicleDisplayPresenter {
         id: presenter
         view: vehicleDisplay

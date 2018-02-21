@@ -90,6 +90,8 @@ void ManualHandler::setEnabled(bool enabled)
     {
         d->timer.stop();
     }
+
+    emit enabledChanged(this->enabled());
 }
 
 void ManualHandler::setJoystick(int deviceId)

@@ -62,10 +62,20 @@ Item {
         }
 
         Controls.Label {
-            text: selectedVehicle ? selectedVehicle.name : qsTr("All MAVs")
+            text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("All MAVs")
             font.bold: true
             Layout.fillWidth: true
             clip: true
+        }
+
+        Controls.Button {
+            visible: selectedVehicle !== undefined
+            iconSource: "qrc:/icons/joystick.svg"
+            tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
+                     " " + qsTr("manual control")
+            iconColor: manual.enabled ? palette.selectionColor : palette.textColor
+            onClicked: manual.setEnabled(!manual.enabled)
+            flat: true
         }
 
         Controls.Button {
