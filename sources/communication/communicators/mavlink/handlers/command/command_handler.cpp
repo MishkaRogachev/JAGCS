@@ -46,6 +46,11 @@ namespace
         { MAV_RESULT_IN_PROGRESS, dao::Command::InProgress },
         { MAV_RESULT_ACCEPTED, dao::Command::Completed }
     };
+
+    int normalize(float value)
+    {
+        return value * 1000;
+    }
 }
 
 class CommandHandler::Impl
@@ -157,6 +162,14 @@ void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, 
                             args.at(2).toFloat());
         }
     }
+    else if (command->type() == dao::Command::ManualImpacts)
+    {
+        this->sendManualControl(vehicleId,
+                                command->arguments().value(0, 0).toFloat(),
+                                command->arguments().value(1, 0).toFloat(),
+                                command->arguments().value(2, 0).toFloat(),
+                                command->arguments().value(3, 0).toFloat());
+    }
 }
 
 void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
@@ -262,4 +275,31 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
 
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
                      dao::Command::NavTo, dao::Command::Completed); // TODO: wait nav to
+}
+
+void CommandHandler::sendManualControl(int vehicleId, float pitch, float roll,
+                                       float yaw, float thrust)
+{
+    mavlink_manual_control_t mavlink_manual_control;
+
+    int mavId = d->vehicleService->mavIdByVehicleId(vehicleId);
+    mavlink_manual_control.target = mavId;
+
+    mavlink_manual_control.x = ::normalize(pitch);
+    mavlink_manual_control.y = ::normalize(roll);
+    mavlink_manual_control.r = ::normalize(yaw);
+    mavlink_manual_control.z = ::normalize(thrust);
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_message_t message;
+    mavlink_msg_manual_control_encode_chan(m_communicator->systemId(),
+                                           m_communicator->componentId(),
+                                           m_communicator->linkChannel(link),
+                                           &message, &mavlink_manual_control);
+    m_communicator->sendMessage(message, link);
+
+    // TODO: wait feedback
+    this->ackCommand(vehicleId, dao::Command::ManualImpacts, dao::Command::Completed);
 }

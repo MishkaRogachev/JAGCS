@@ -33,6 +33,7 @@ namespace comm
         void sendSetMode(quint8 mavId, domain::vehicle::Mode mode);
         void sendCurrentItem(quint8 mavId, quint16 seq);
         void sentNavTo(quint8 mavId, double latitude, double longitude, float altitude);
+        void sendManualControl(int vehicleId, float pitch, float roll, float yaw, float thrust);
 
     private:
         class Impl;

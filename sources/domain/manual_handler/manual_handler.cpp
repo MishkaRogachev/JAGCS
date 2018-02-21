@@ -39,6 +39,8 @@ ManualHandler::ManualHandler(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
+    connect(&d->timer, &QTimer::timeout, this, &ManualHandler::sendImpacts);
+
 #ifdef WITH_GAMEPAD
     if (settings::Provider::value(settings::manual::joystick::enabled).toBool())
     {
@@ -46,13 +48,11 @@ ManualHandler::ManualHandler(QObject* parent):
     }
 # endif
 
-    this->setEnabled(settings::Provider::value(settings::manual::enabled).toBool());
+    if (settings::Provider::value(settings::manual::enabled).toBool()) this->setEnabled(true);
 }
 
 ManualHandler::~ManualHandler()
-{
-    connect(&d->timer, &QTimer::timeout, this, &ManualHandler::sendImpacts);
-}
+{}
 
 bool ManualHandler::enabled() const
 {
