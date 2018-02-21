@@ -36,7 +36,7 @@ void AbstractCommandHandler::executeCommand(int vehicleId, const dao::CommandPtr
         if (timedCommand->type() != command->type() ||
             !d->vehicleCommands.values(vehicleId).contains(timedCommand)) continue;
 
-        this->stopCommand(vehicleId, command);
+        this->stopCommand(vehicleId, timedCommand);
 
         timedCommand->setStatus(dao::Command::Canceled);
         emit commandChanged(timedCommand);
