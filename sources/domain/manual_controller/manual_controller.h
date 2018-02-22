@@ -1,11 +1,11 @@
-#ifndef MANUAL_HANDLER_H
-#define MANUAL_HANDLER_H
+#ifndef MANUAL_CONTROLLER_H
+#define MANUAL_CONTROLLER_H
 
 #include <QObject>
 
 namespace domain
 {
-    class ManualHandler: public QObject
+    class ManualController: public QObject
     {
         Q_OBJECT
 
@@ -23,8 +23,8 @@ namespace domain
             Throttle
         };
 
-        explicit ManualHandler(QObject* parent = nullptr);
-        ~ManualHandler() override;
+        explicit ManualController(QObject* parent = nullptr);
+        ~ManualController() override;
 
         bool enabled() const;
         bool joystickEnabled() const;
@@ -60,4 +60,4 @@ namespace domain
     };
 }
 
-#endif // MANUAL_HANDLER_H
+#endif // MANUAL_CONTROLLER_H

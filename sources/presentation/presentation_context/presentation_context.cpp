@@ -8,7 +8,7 @@
 #include "units.h"
 #include "translation_helper.h"
 
-#include "manual_handler.h"
+#include "manual_controller.h"
 
 // Qt
 #include <QGuiApplication>
@@ -28,7 +28,7 @@ PresentationContext::PresentationContext()
     m_engine->rootContext()->setContextProperty(
                 "units", QVariant::fromValue(new utils::Units(qApp)));
     m_engine->rootContext()->setContextProperty(
-                "manual", QVariant::fromValue(new domain::ManualHandler(qApp)));
+                "manual", QVariant::fromValue(new domain::ManualController(qApp)));
     m_engine->rootContext()->setContextProperty(
                 "translator", QVariant::fromValue(new TranslationHelper(qApp)));
 

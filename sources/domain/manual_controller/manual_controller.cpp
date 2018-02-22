@@ -1,4 +1,4 @@
-#include "manual_handler.h"
+#include "manual_controller.h"
 
 // Qt
 #include <QMap>
@@ -19,27 +19,27 @@
 
 using namespace domain;
 
-class ManualHandler::Impl
+class ManualController::Impl
 {
 public:
     domain::CommandService* service = domain::ServiceRegistry::commandService();
 
     #ifdef WITH_GAMEPAD
     JoystickController* controller = nullptr;
-    QMap<int, ManualHandler::Axis> joystickAxes;
+    QMap<int, ManualController::Axis> joystickAxes;
     # endif
 
     int vehicleId = 0;
 
     QTimer timer;
-    QMap<ManualHandler::Axis, float> impacts;
+    QMap<ManualController::Axis, float> impacts;
 };
 
-ManualHandler::ManualHandler(QObject* parent):
+ManualController::ManualController(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    connect(&d->timer, &QTimer::timeout, this, &ManualHandler::sendImpacts);
+    connect(&d->timer, &QTimer::timeout, this, &ManualController::sendImpacts);
 
 #ifdef WITH_GAMEPAD
     if (settings::Provider::value(settings::manual::joystick::enabled).toBool())
@@ -52,15 +52,15 @@ ManualHandler::ManualHandler(QObject* parent):
     if (settings::Provider::value(settings::manual::enabled).toBool()) this->setEnabled(true);
 }
 
-ManualHandler::~ManualHandler()
+ManualController::~ManualController()
 {}
 
-bool ManualHandler::enabled() const
+bool ManualController::enabled() const
 {
     return d->timer.isActive();
 }
 
-bool ManualHandler::joystickEnabled() const
+bool ManualController::joystickEnabled() const
 {
 #ifdef WITH_GAMEPAD
     return d->controller;
@@ -69,17 +69,17 @@ bool ManualHandler::joystickEnabled() const
 # endif
 }
 
-int ManualHandler::vehicleId() const
+int ManualController::vehicleId() const
 {
     return d->vehicleId;
 }
 
-float ManualHandler::impact(ManualHandler::Axis axis) const
+float ManualController::impact(ManualController::Axis axis) const
 {
     return d->impacts.value(axis, 0);
 }
 
-void ManualHandler::setEnabled(bool enabled)
+void ManualController::setEnabled(bool enabled)
 {
     if (d->timer.isActive() == enabled) return;
 
@@ -95,7 +95,7 @@ void ManualHandler::setEnabled(bool enabled)
     emit enabledChanged(this->enabled());
 }
 
-void ManualHandler::setJoystickEnabled(bool enabled)
+void ManualController::setJoystickEnabled(bool enabled)
 {
 #ifdef WITH_GAMEPAD
     if ((d->controller != nullptr) == enabled) return;
@@ -106,7 +106,7 @@ void ManualHandler::setJoystickEnabled(bool enabled)
         d->controller->setDeviceId(settings::Provider::value(
                                        settings::manual::joystick::device).toInt());
         connect(d->controller, &JoystickController::valueChanged,
-                this, &ManualHandler::onControllerValueChanged);
+                this, &ManualController::onControllerValueChanged);
         this->updateJoystickAxes();
     }
     else
@@ -119,7 +119,7 @@ void ManualHandler::setJoystickEnabled(bool enabled)
 # endif
 }
 
-void ManualHandler::setJoystickDevice(int deviceId)
+void ManualController::setJoystickDevice(int deviceId)
 {
 #ifdef WITH_GAMEPAD
     if (d->controller) d->controller->setDeviceId(deviceId);
@@ -128,7 +128,7 @@ void ManualHandler::setJoystickDevice(int deviceId)
 # endif
 }
 
-void ManualHandler::setVehicleId(int vehicleId)
+void ManualController::setVehicleId(int vehicleId)
 {
     if (d->vehicleId == vehicleId) return;
 
@@ -136,7 +136,7 @@ void ManualHandler::setVehicleId(int vehicleId)
     emit vehicleIdChanged(d->vehicleId);
 }
 
-void ManualHandler::updateJoystickAxes()
+void ManualController::updateJoystickAxes()
 {
 #ifdef WITH_GAMEPAD
     d->joystickAxes.clear();
@@ -148,7 +148,7 @@ void ManualHandler::updateJoystickAxes()
 # endif
 }
 
-void ManualHandler::setImpact(Axis axis, float impact)
+void ManualController::setImpact(Axis axis, float impact)
 {
     if (axis == NoneAxis || impact == d->impacts.value(axis, 0)) return;
 
@@ -156,7 +156,7 @@ void ManualHandler::setImpact(Axis axis, float impact)
     emit impactChanged(axis, impact);
 }
 
-void ManualHandler::sendImpacts()
+void ManualController::sendImpacts()
 {
     if (d->vehicleId == 0) return;
 
@@ -173,7 +173,7 @@ void ManualHandler::sendImpacts()
     d->service->executeCommand(d->vehicleId, command);
 }
 
-void ManualHandler::onControllerValueChanged(int axis, float value)
+void ManualController::onControllerValueChanged(int axis, float value)
 {
 #ifdef WITH_GAMEPAD
     this->setImpact(d->joystickAxes.value(axis, NoneAxis), value);
