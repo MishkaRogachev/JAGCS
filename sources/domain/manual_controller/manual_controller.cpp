@@ -167,7 +167,7 @@ void ManualController::sendImpacts()
                               d->impacts.value(Pitch, 0),
                               d->impacts.value(Roll, 0),
                               d->impacts.value(Yaw, 0),
-                              d->impacts.value(Throttle, 0),
+                              d->impacts.value(Throttle, 0)
                           });
 
     d->service->executeCommand(d->vehicleId, command);

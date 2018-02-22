@@ -108,8 +108,8 @@ Controls.Pane {
         inputEnabled: manual.enabled
         inputPitch: manual.impact(ManualController.Pitch)
         onPitchPicked: manual.setImpact(ManualController.Pitch, value)
-        inputRoll: manual.impact(ManualController.Pitch)
-        onRollPicked: manual.setImpact(ManualController.Pitch, value)
+        inputRoll: manual.impact(ManualController.Roll)
+        onRollPicked: manual.setImpact(ManualController.Roll, value)
     }
 
     Indicators.BarIndicator {

@@ -1,8 +1,6 @@
 import QtQuick 2.6
 import "qrc:/JS/helper.js" as Helper
 
-import "../Shaders" as Shaders
-
 PitchScale {
     id: root
 
@@ -11,8 +9,6 @@ PitchScale {
     property real inputMin: -1
     property real inputMax: 1
     property color inputColor: palette.cautionColor
-
-    signal picked(real value)
 
     onInputValueChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
@@ -41,12 +37,5 @@ PitchScale {
 
             ctx.restore();
         }
-    }
-
-    MouseArea {
-        anchors.fill: root
-        onMouseYChanged: root.picked(-Helper.mapFromRange(
-                                         Math.max(0, Math.min(root.height, root.height - mouseY)),
-                                         inputMin, inputMax, root.height))
     }
 }

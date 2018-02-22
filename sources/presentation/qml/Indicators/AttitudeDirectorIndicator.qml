@@ -1,4 +1,5 @@
 ﻿import QtQuick 2.6
+import "qrc:/JS/helper.js" as Helper
 
 import "../Controls" as Controls
 
@@ -41,7 +42,6 @@ AttitudeIndicator {
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
         inputEnabled: fd.inputEnabled
-        onPicked: fd.rollPicked(value)
     }
 
     PitchScalePicker {
@@ -56,7 +56,17 @@ AttitudeIndicator {
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
         inputEnabled: fd.inputEnabled
-        onPicked: fd.pitchPicked(value)
+    }
+
+    MouseArea {
+        anchors.fill: pitchScale
+        enabled: inputEnabled
+        onMouseXChanged: rollPicked(-Helper.mapFromRange(
+                                        Math.max(0, Math.min(width, width - mouseX)),
+                                        rollScale.inputMin, rollScale.inputMax, width))
+        onMouseYChanged: pitchPicked(-Helper.mapFromRange(
+                                         Math.max(0, Math.min(height, height - mouseY)),
+                                         pitchScale.inputMin, pitchScale.inputMax, height))
     }
 
     TurnIndicator {

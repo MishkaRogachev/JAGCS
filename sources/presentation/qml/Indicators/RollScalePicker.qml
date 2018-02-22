@@ -10,8 +10,6 @@ RollScale {
     property real inputMax: 1
     property color inputColor: palette.cautionColor
 
-    signal picked(real value)
-
     onInputValueChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
@@ -29,14 +27,14 @@ RollScale {
 
             ctx.save();
             ctx.translate(width / 2, height / 2);
-            var rotation = Math.max(Math.min(Helper.mapToRange(inputValue, inputMin, inputMax, height), maxRoll), minRoll);
+            var rotation = maxRoll - Helper.mapToRange(inputValue, inputMin, inputMax,
+                                                       maxRoll - minRoll);
             ctx.rotate(rotation * Math.PI / 180);
 
             ctx.beginPath();
-            ctx.moveTo(-fontPixelSize / 2, -height / 2 - fontPixelSize / 2);
-            ctx.lineTo(fontPixelSize / 2, -height / 2 + fontPixelSize / 2);
-            ctx.moveTo(fontPixelSize / 2, -height / 2 - fontPixelSize / 2);
-            ctx.lineTo(-fontPixelSize / 2, -height / 2 + fontPixelSize / 2);
+            ctx.moveTo(-fontPixelSize / 2, fontPixelSize / 2 - height / 2);
+            ctx.lineTo(0, -height / 2);
+            ctx.lineTo(fontPixelSize / 2, fontPixelSize / 2 - height / 2);
             ctx.stroke();
 
             ctx.restore();
