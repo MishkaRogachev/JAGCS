@@ -24,9 +24,12 @@ Controls.Pane {
             case ManualController.Throttle:
                 speedLadder.inputValue = impact;
                 break;
-//            case ManualController.Pitch:
-//                pitchPicker.value = impact;
-//                break;
+            case ManualController.Pitch:
+                fd.inputPitch = impact;
+                break;
+            case ManualController.Roll:
+                fd.inputRoll = impact;
+                break;
             default:
                 break;
             }
@@ -58,6 +61,7 @@ Controls.Pane {
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
         inputEnabled: manual.enabled
+        inputValue: manual.impact(ManualController.Throttle)
         onPicked: manual.setImpact(ManualController.Throttle, value)
     }
 
@@ -101,16 +105,12 @@ Controls.Pane {
         desiredPitch: vehicle.flightControl.desiredPitch
         desiredRoll: vehicle.flightControl.desiredRoll
         rollInverted: dashboard.rollInverted
+        inputEnabled: manual.enabled
+        inputPitch: manual.impact(ManualController.Pitch)
+        onPitchPicked: manual.setImpact(ManualController.Pitch, value)
+        inputRoll: manual.impact(ManualController.Pitch)
+        onRollPicked: manual.setImpact(ManualController.Pitch, value)
     }
-
-//    Indicators.LinearPicker {
-//        id: pitchPicker
-//        anchors.centerIn: fd
-//        height: fd.height
-//        width: fd.width / 3
-//        visible: manual.enabled
-//        onPicked: manual.setImpact(ManualController.Pitch, value)
-//    }
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter

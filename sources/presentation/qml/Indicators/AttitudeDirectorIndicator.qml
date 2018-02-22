@@ -18,13 +18,20 @@ AttitudeIndicator {
     property real minRoll: -maxRoll
     property real rollStep: 10
 
+    property bool inputEnabled: false
+    property alias inputPitch: pitchScale.inputValue
+    property alias inputRoll: rollScale.inputValue
+
+    signal pitchPicked(real value)
+    signal rollPicked(real value)
+
     Behavior on yawspeed { PropertyAnimation { duration: 100 } }
     Behavior on desiredPitch { PropertyAnimation { duration: 100 } }
     Behavior on desiredRoll { PropertyAnimation { duration: 100 } }
 
     effectiveHeight: height - sizings.controlBaseSize * 2
 
-    RollScale {
+    RollScalePicker {
         id: rollScale
         anchors.fill: parent
         roll: rollInverted ? -fd.roll : fd.roll
@@ -33,9 +40,11 @@ AttitudeIndicator {
         rollStep: fd.rollStep
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
+        inputEnabled: fd.inputEnabled
+        onPicked: fd.rollPicked(value)
     }
 
-    PitchScale {
+    PitchScalePicker {
         id: pitchScale
         anchors.centerIn: parent
         width: parent.width
@@ -46,6 +55,8 @@ AttitudeIndicator {
         pitchStep: fd.pitchStep
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
+        inputEnabled: fd.inputEnabled
+        onPicked: fd.pitchPicked(value)
     }
 
     TurnIndicator {

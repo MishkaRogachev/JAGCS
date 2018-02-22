@@ -16,7 +16,7 @@ Ladder {
         height: 2
         x: root.mirrored ? width : 0
         y: root.height - Helper.mapToRange(inputValue, inputMin, inputMax,
-                                           root.height - height) - height / 2
+                                           root.height - height) - height
         color: palette.selectionColor
         visible: inputEnabled
         z: -1
