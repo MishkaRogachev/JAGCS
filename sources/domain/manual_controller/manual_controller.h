@@ -30,7 +30,7 @@ namespace domain
         bool joystickEnabled() const;
         int vehicleId() const;
 
-        float impact(Axis axis) const;
+        Q_INVOKABLE float impact(Axis axis) const;
 
     public slots:
         void setEnabled(bool enabled);

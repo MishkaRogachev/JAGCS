@@ -12,6 +12,8 @@
 #include "command.h"
 #include "log_message.h"
 
+#include "manual_controller.h"
+
 #include "topbar_presenter.h"
 #include "radio_status_presenter.h"
 #include "notifications_presenter.h"
@@ -70,6 +72,9 @@ static void registerTypes()
 
     qmlRegisterUncreatableMetaObject(domain::vehicle::staticMetaObject, "JAGCS", 1, 0, "Domain",
                                      "Can't create enums in QML");
+
+    qmlRegisterUncreatableType<domain::ManualController>(
+                "JAGCS", 1, 0, "ManualController", "Can't create ManualController in QML");
 
     qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");
     qmlRegisterType<RadioStatusPresenter>("JAGCS", 1, 0, "RadioStatusPresenter");

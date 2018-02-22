@@ -51,6 +51,7 @@
         <file>Indicators/DesiredAnglesMark.qml</file>
         <file>Indicators/TurnIndicator.qml</file>
         <file>Indicators/Ladder.qml</file>
+        <file>Indicators/LadderPicker.qml</file>
         <file>Indicators/PitchScale.qml</file>
         <file>Indicators/RollScale.qml</file>
         <file>Indicators/AttitudeIndicator.qml</file>

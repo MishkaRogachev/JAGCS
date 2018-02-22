@@ -4,6 +4,10 @@ function mapToRange(value, minValue, maxValue, length) {
     return (value - minValue) / (maxValue - minValue) * length;
 }
 
+function mapFromRange(pos, minValue, maxValue, length) {
+    return pos / length * (maxValue - minValue) + minValue;
+}
+
 function decimals(num) {
     return (num.toString().split('.')[1] || []).length;
 }
