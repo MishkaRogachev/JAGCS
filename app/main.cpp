@@ -20,13 +20,15 @@
 
 int main(int argc, char* argv[])
 {
-    #ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN32
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
-    #endif
+#endif
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    
+
+#ifdef WITH_LOGGER
     qInstallMessageHandler(app::log);
+#endif
 
     QApplication app(argc, argv);
 

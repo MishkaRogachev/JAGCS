@@ -73,6 +73,12 @@ find_package(Qt5 COMPONENTS
 REQUIRED)
 endif (WITH_GAMEPAD)
 
+# Logger option
+option(WITH_LOGGER "Compile with file logger instead console output")
+if (WITH_LOGGER)
+add_definitions(-DWITH_LOGGER)
+endif (WITH_LOGGER)
+
 # Windows stuff
 if (WIN32)
 set(LIBRARIES
