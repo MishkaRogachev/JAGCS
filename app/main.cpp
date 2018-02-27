@@ -16,6 +16,8 @@
 #include "translation_manager.h"
 #include "gui_style_manager.h"
 
+#include "file_logger.h"
+
 int main(int argc, char* argv[])
 {
     #ifdef Q_OS_WIN32
@@ -23,6 +25,8 @@ int main(int argc, char* argv[])
     #endif
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    
+    qInstallMessageHandler(app::log);
 
     QApplication app(argc, argv);
 
