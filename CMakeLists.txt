@@ -79,6 +79,12 @@ if (WITH_LOGGER)
 add_definitions(-DWITH_LOGGER)
 endif (WITH_LOGGER)
 
+# Mapbox GL option
+option(WITH_MAPBOXGL "Compile with MapBox GL Qt Location plugin")
+if (WITH_MAPBOXGL)
+add_definitions(-DWITH_MAPBOXGL)
+endif (WITH_MAPBOXGL)
+
 # Windows stuff
 if (WIN32)
 set(LIBRARIES

@@ -38,7 +38,7 @@ namespace settings
         const QString tilt = "Map/tilt";
         const QString plugin = "Map/plugin";
         const QString osmActiveMapType = "Map/osmActiveMapType";
-        const QString mapBoxGlActiveMapType = "Map/mapBoxGlActiveMapType";
+        const QString mapBoxActiveMapType = "Map/mapBoxActiveMapType";
         const QString esriActiveMapType = "Map/esriActiveMapType";
         const QString tileHost = "Map/tileHost";
         const QString cacheSize = "Map/cacheSize";

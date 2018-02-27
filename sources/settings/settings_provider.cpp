@@ -35,7 +35,7 @@ namespace
         { map::tilt, 0 },
         { map::plugin, 0 },
         { map::osmActiveMapType, 0 },
-        { map::mapBoxGlActiveMapType, 5 },
+        { map::mapBoxActiveMapType, 5 },
         { map::esriActiveMapType, 0 },
         { map::tileHost, "http://a.tile.openstreetmap.org/" },
         { map::cacheSize, 52428800 },

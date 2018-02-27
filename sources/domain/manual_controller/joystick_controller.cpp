@@ -3,7 +3,7 @@
 // Qt
 #ifdef WITH_GAMEPAD
 #include <QGamepad>
-# endif
+#endif
 
 #include <QDebug>
 
@@ -27,7 +27,7 @@ JoystickController::JoystickController(QObject* parent):
     connect(m_gamepad, &QGamepad::axisRightYChanged, this, [this](double value) {
             emit valueChanged(4, value);
     });
-# endif
+#endif
 }
 
 float JoystickController::value(int axis) const
@@ -39,7 +39,7 @@ float JoystickController::value(int axis) const
     case 2: return m_gamepad->axisLeftY();
     case 3: return m_gamepad->axisRightX();
     case 4: return m_gamepad->axisRightY();
-# endif
+#endif
     default: return 0;
     }
 }
@@ -50,7 +50,7 @@ int JoystickController::deviceId() const
     return m_gamepad->deviceId();
 #else
     return -1;
-# endif
+#endif
 }
 
 void JoystickController::setDeviceId(int deviceId)
@@ -60,5 +60,5 @@ void JoystickController::setDeviceId(int deviceId)
     m_gamepad->setDeviceId(gamepads.count() > deviceId ? gamepads[deviceId] : 0);
 #else
     Q_UNUSED(deviceId)
-# endif
+#endif
 }

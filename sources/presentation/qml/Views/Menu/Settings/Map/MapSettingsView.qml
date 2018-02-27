@@ -8,11 +8,12 @@ GridLayout {
     id: mapSettings
 
     property int osmActiveMapType: -1
-    property int mapBoxGlActiveMapType: -1
+    property int mapBoxActiveMapType: -1
     property int esriActiveMapType: -1
 
     property bool changed: false
 
+    property alias plugins: pluginBox.model
     property alias plugin: pluginBox.currentIndex
     property alias cacheSize: cacheSizeBox.value
     property alias highdpiTiles: highdpiTilesBox.checked
@@ -28,7 +29,7 @@ GridLayout {
     }
 
     onOsmActiveMapTypeChanged: if (main.mapType === 0) activeMapTypeBox.currentIndex = osmActiveMapType
-    onMapBoxGlActiveMapTypeChanged: if (main.mapType === 1) activeMapTypeBox.currentIndex = mapBoxGlActiveMapType
+    onMapBoxActiveMapTypeChanged: if (main.mapType === 1) activeMapTypeBox.currentIndex = mapBoxActiveMapType
     onEsriActiveMapTypeChanged: if (main.mapType === 2) activeMapTypeBox.currentIndex = esriActiveMapType
 
     MapSettingsPresenter {
@@ -61,7 +62,6 @@ GridLayout {
 
     Controls.ComboBox {
         id: pluginBox
-        model: [ "OSM", "MapBox GL", "Esri" ]
         currentIndex: -1
         onActivated: changed = true
         Layout.fillWidth: true
@@ -80,7 +80,7 @@ GridLayout {
                 osmActiveMapType = currentIndex;
                 break;
             case 1:
-                mapBoxGlActiveMapType = currentIndex;
+                mapBoxActiveMapType = currentIndex;
                 break;
             case 2:
                 esriActiveMapType = currentIndex;
