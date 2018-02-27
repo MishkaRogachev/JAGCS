@@ -64,7 +64,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     {
         QVariantList line;
         if (!settings::Provider::value(settings::mission::visibility + "/" +
-                                       QString::number(mission->id()), true).toBool())
+                                       QString::number(mission->id())).toBool())
         {
             line.append(QVariant::fromValue(QGeoCoordinate(0, 0)));
             return line;

@@ -71,5 +71,5 @@ void VideoSourceListPresenter::setActiveVideo(int video)
 void VideoSourceListPresenter::connectView(QObject* view)
 {
     view->setProperty(PROPERTY(activeVideo),
-                      settings::Provider::value(settings::video::activeVideo, -1).toInt());
+                      settings::Provider::value(settings::video::activeVideo).toInt());
 }
