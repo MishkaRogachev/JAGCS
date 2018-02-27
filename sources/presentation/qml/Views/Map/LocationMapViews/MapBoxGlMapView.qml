@@ -9,7 +9,6 @@ BaseMapView {
         name: "mapboxgl"
 
         PluginParameter { name: "mapboxgl.mapping.cache.size"; value: settings.value("Map/cacheSize") }
-        PluginParameter { name: "mapboxgl.mapping.use_fbo"; value: false }
     }
 
     activeMapTypeIndex: settings.value("Map/mapBoxActiveMapType")
