@@ -16,16 +16,15 @@ T.RadioButton {
         implicitWidth: sizings.controlBaseSize * 0.8
         implicitHeight: sizings.controlBaseSize * 0.8
         x: control.leftPadding
-        y: parent.height / 2 - height / 2
-        radius: width / 2
+        y: parent.height * 0.5 - height * 0.5
+        radius: width * 0.5
         color: palette.sunkenColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
 
         Rectangle {
-            anchors.centerIn: parent
-            width: parent.width / 2
-            height: parent.height / 2
-            radius: width / 2
+            anchors.fill: parent
+            anchors.margins: parent.width * 0.25
+            radius: width * 0.5
             color: control.down ? palette.highlightColor : palette.selectionColor
             visible: control.checked || control.down
         }
