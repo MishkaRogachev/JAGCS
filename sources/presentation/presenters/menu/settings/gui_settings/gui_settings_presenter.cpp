@@ -145,6 +145,7 @@ void GuiSettingsPresenter::setLocale(int localeIndex)
 {
     const QStringList& locales = d->translationManager.avalibleLocales();
     QString locale = locales.value(localeIndex);
+
     d->translationManager.setCurrentLocale(locale);
 }
 
