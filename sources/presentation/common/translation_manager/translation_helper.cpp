@@ -42,6 +42,8 @@ QString TranslationHelper::translateVehicleType(dao::Vehicle::Type type)
     case dao::Vehicle::Quadcopter: return tr("Quadcopter");
     case dao::Vehicle::Tricopter: return tr("Tricopter");
     case dao::Vehicle::Hexcopter: return tr("Hexcopter");
+    case dao::Vehicle::Octocopter: return tr("Octocopter");
+    case dao::Vehicle::Helicopter: return tr("Helicopter");
     case dao::Vehicle::Coaxial: return tr("Coaxial");
     case dao::Vehicle::Vtol: return tr("Vtol");
     case dao::Vehicle::Airship: return tr("Airship");
