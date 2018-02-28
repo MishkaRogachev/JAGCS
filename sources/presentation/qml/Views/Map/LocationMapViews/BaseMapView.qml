@@ -34,6 +34,7 @@ Map {
     signal selectItem(int missionId, int itemId)
 
     activeMapType: supportedMapTypes[activeMapTypeIndex]
+    implicitWidth: height
     implicitHeight: width
     gesture.flickDeceleration: 3000
     gesture.enabled: true
