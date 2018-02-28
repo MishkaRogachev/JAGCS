@@ -37,15 +37,11 @@ Item {
                 anchors.fill: parent
                 spacing: sizings.spacing
 
-                Controls.Label {
-                    text: qsTr("No video")
-                    Layout.preferredWidth: sizings.controlBaseSize * 4.2
-                }
-
                 Controls.RadioButton {
                     checked: activeVideo == -1
+                    text: qsTr("No video")
                     Controls.ButtonGroup.group: radioGroup
-                    onCheckedChanged: if (checked) presenter.setActiveVideo(-1)
+                    onClicked: if (checked) presenter.setActiveVideo(-1)
                     Layout.fillWidth: true
                 }
             }

@@ -29,15 +29,12 @@ Controls.Frame {
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
 
-        Controls.Label {
-            text: qsTr("Video") + " " + videoId
-            Layout.fillWidth: true
-        }
-
         Controls.RadioButton {
             checked: videoSource.selected
+            text: qsTr("Video") + " " + videoId
             Controls.ButtonGroup.group: radioGroup
             onCheckedChanged: if (checked) setActiveVideo(videoId)
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 

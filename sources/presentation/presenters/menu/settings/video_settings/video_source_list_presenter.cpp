@@ -33,6 +33,8 @@ void VideoSourceListPresenter::updateVideoSources()
     }
 
     this->setViewProperty(PROPERTY(videoSourceIds), QVariant::fromValue(videoSourceIds));
+    this->setViewProperty(PROPERTY(activeVideo),
+                          settings::Provider::value(settings::video::activeVideo).toInt());
 }
 
 void VideoSourceListPresenter::updateCameraInfo()
@@ -66,10 +68,4 @@ void VideoSourceListPresenter::setActiveVideo(int video)
 {
     settings::Provider::setValue(settings::video::activeVideo, video);
     this->setViewProperty(PROPERTY(activeVideo), video);
-}
-
-void VideoSourceListPresenter::connectView(QObject* view)
-{
-    view->setProperty(PROPERTY(activeVideo),
-                      settings::Provider::value(settings::video::activeVideo).toInt());
 }
