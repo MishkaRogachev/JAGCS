@@ -16,20 +16,6 @@ Controls.Pane {
 
     implicitHeight: width * 0.75
 
-    Connections {
-        target: manual
-
-        onImpactChanged: {
-            switch (axis) {
-            case ManualController.Throttle:
-                speedLadder.inputValue = impact;
-                break;
-            default:
-                break;
-            }
-        }
-    }
-
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
@@ -55,8 +41,7 @@ Controls.Pane {
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
         inputEnabled: manual.enabled
-        inputValue: manual.impact(ManualController.Throttle)
-        onPicked: manual.addImpact(ManualController.Throttle, value)
+        onAddValue: manual.addImpact(ManualController.Throttle, value)
     }
 
     Indicators.FdLabel {
