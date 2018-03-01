@@ -20,7 +20,7 @@ T.Button { // TODO: clickable
 
     background: Rectangle {
         id: backgroundItem
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        border.color: !control.flat && control.activeFocus ? palette.highlightColor : "transparent"
         radius: 2
         color: {
             if (control.checked || control.highlighted) return palette.selectionColor;
