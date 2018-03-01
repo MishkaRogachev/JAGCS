@@ -6,6 +6,7 @@ import "../Shaders" as Shaders
 T.Button { // TODO: clickable
     id: control
 
+    property bool round: false
     property string tipText
 
     property alias iconSource: content.iconSource
@@ -21,7 +22,7 @@ T.Button { // TODO: clickable
     background: Rectangle {
         id: backgroundItem
         border.color: !control.flat && control.activeFocus ? palette.highlightColor : "transparent"
-        radius: 2
+        radius: round ? Math.min(width, height) / 2 : 2
         color: {
             if (control.checked || control.highlighted) return palette.selectionColor;
             if (control.pressed) return palette.highlightColor;

@@ -94,8 +94,9 @@ AttitudeIndicator {
         anchors.top: pitchScale.top
         anchors.horizontalCenter: pitchScale.horizontalCenter
         iconSource: "qrc:/icons/up.svg"
-        iconColor: palette.sunkenColor
+        iconColor: palette.selectedTextColor
         flat: true
+        round: true
         visible: inputEnabled
         autoRepeat: true
         onClicked: addPitch(-0.05)
@@ -105,8 +106,9 @@ AttitudeIndicator {
         anchors.bottom: pitchScale.bottom
         anchors.horizontalCenter: pitchScale.horizontalCenter
         iconSource: "qrc:/icons/down.svg"
-        iconColor: palette.sunkenColor
+        iconColor: palette.selectedTextColor
         flat: true
+        round: true
         visible: inputEnabled
         autoRepeat: true
         onClicked: addPitch(0.05)
@@ -117,8 +119,9 @@ AttitudeIndicator {
         anchors.topMargin: (fd.height - fd.width) / 2
         anchors.left: rollScale.left
         iconSource: "qrc:/icons/bank_left.svg"
-        iconColor: palette.sunkenColor
+        iconColor: palette.selectedTextColor
         flat: true
+        round: true
         visible: inputEnabled
         autoRepeat: true
         onClicked: addRoll(-0.05)
@@ -130,8 +133,9 @@ AttitudeIndicator {
 
         anchors.right: rollScale.right
         iconSource: "qrc:/icons/bank_right.svg"
-        iconColor: palette.sunkenColor
+        iconColor: palette.selectedTextColor
         flat: true
+        round: true
         visible: inputEnabled
         autoRepeat: true
         onClicked: addRoll(0.05)

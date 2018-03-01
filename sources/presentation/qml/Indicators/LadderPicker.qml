@@ -16,6 +16,7 @@ Ladder {
         anchors.horizontalCenterOffset: mirrored ? root.width / 4 : -root.width / 4
         iconSource: "qrc:/icons/up.svg"
         flat: true
+        round: true
         visible: inputEnabled
         autoRepeat: true
         onClicked: addValue(0.05)
@@ -27,6 +28,7 @@ Ladder {
         anchors.horizontalCenterOffset: mirrored ? root.width / 4 : -root.width / 4
         iconSource: "qrc:/icons/down.svg"
         flat: true
+        round: true
         visible: inputEnabled
         autoRepeat: true
         onClicked: addValue(-0.05)
