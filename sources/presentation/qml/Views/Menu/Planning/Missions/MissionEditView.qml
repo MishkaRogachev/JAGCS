@@ -48,11 +48,6 @@ ColumnLayout {
         implicitWidth: missionEdit.width
     }
 
-    MissionAssignmentView {
-        id: assignment
-        Layout.fillWidth: true
-    }
-
     RowLayout
     {
         Controls.Label {

@@ -35,8 +35,5 @@ void MissionListPresenter::updateMissions()
 
 void MissionListPresenter::addMission()
 {
-    dao::MissionPtr mission = dao::MissionPtr::create();
-    mission->setName(tr("New Mission"));
-
-    m_service->save(mission);
+    m_service->addNewMission(tr("New Mission"));
 }

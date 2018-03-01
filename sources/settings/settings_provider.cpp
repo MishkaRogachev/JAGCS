@@ -10,6 +10,66 @@
 
 using namespace settings;
 
+namespace
+{
+    QMap<QString, QVariant> defaultSettings =
+    {
+        { data_base::name, "jagcs_db" },
+
+        { communication::systemId, 255 },
+        { communication::componentId, 0 },
+        { communication::heartbeat, 1000 },
+        { communication::timeout, 5000 },
+        { communication::autoAdd, true },
+        { communication::baudRate, 57600 },
+        { communication::port, 14550 },
+        { communication::statisticsCount, 50 },
+
+        { mission::defaultAcceptanceRadius, 3 },
+        { mission::defaultTakeoffPitch, 15 },
+
+        { map::zoomLevel, 16.0 },
+        { map::centerLatitude, 55.968954 },
+        { map::centerLongitude, 37.110155 },
+        { map::bearing, 0 },
+        { map::tilt, 0 },
+        { map::plugin, 0 },
+        { map::osmActiveMapType, 0 },
+        { map::mapBoxActiveMapType, 0 },
+        { map::esriActiveMapType, 0 },
+        { map::tileHost, "http://a.tile.openstreetmap.org/" },
+        { map::cacheSize, 52428800 },
+        { map::highdpiTiles, true },
+        { map::trackLength, 100 },
+
+        { video::activeVideo, -1 },
+
+        { manual::enabled, false },
+        { manual::interval, 100 },
+        { manual::joystick::enabled, false },
+        { manual::joystick::device, 0 },
+        { manual::joystick::pitchAxis, 1 },
+        { manual::joystick::rollAxis, 2 },
+        { manual::joystick::yawAxis, 3 },
+        { manual::joystick::throttleAxis, 4 },
+
+        { gui::fullscreen, true },
+        { gui::locale, "en" },
+        { gui::uiSize, 36 },
+        { gui::paletteStyle, 0 },
+        { gui::fdRollInverted, 0 },
+        { gui::fdSpeedStep, 5 },
+        { gui::fdSpeedUnits, utils::Units::Mps },
+        { gui::fdAltitudeStep, 10 },
+        { gui::fdAltitudeUnits, utils::Units::Meters },
+        { gui::fdRelativeAltitude, true },
+        { gui::vibrationModelCount, 30 },
+        { gui::coordinatesDms, true },
+
+        { proxy::type, 0 }
+    };
+}
+
 class Provider::Impl
 {
 public:
@@ -24,59 +84,10 @@ public:
         using namespace settings;
         settings.clear();
 
-        settings.setValue(data_base::name, "jagcs_db");
-
-        settings.setValue(communication::systemId, 255);
-        settings.setValue(communication::componentId, 0);
-        settings.setValue(communication::heartbeat, 1000);
-        settings.setValue(communication::timeout, 5000);
-        settings.setValue(communication::autoAdd, true);
-        settings.setValue(communication::baudRate, 57600);
-        settings.setValue(communication::port, 14550);
-        settings.setValue(communication::statisticsCount, 50);
-
-        settings.setValue(mission::defaultAcceptanceRadius, 3);
-        settings.setValue(mission::defaultTakeoffPitch, 15);
-
-        settings.setValue(map::zoomLevel, 16.0);
-        settings.setValue(map::centerLatitude, 55.968954);
-        settings.setValue(map::centerLongitude, 37.110155);
-        settings.setValue(map::bearing, 0);
-        settings.setValue(map::tilt, 0);
-        settings.setValue(map::plugin, 0);
-        settings.setValue(map::osmActiveMapType, 0);
-        settings.setValue(map::mapBoxGlActiveMapType, 5);
-        settings.setValue(map::esriActiveMapType, 0);
-        settings.setValue(map::tileHost, "http://a.tile.openstreetmap.org/");
-        settings.setValue(map::cacheSize, 52428800);
-        settings.setValue(map::highdpiTiles, true);
-        settings.setValue(map::trackLength, 100);
-
-        settings.setValue(video::activeVideo, -1);
-
-        settings.setValue(manual::enabled, false);
-        settings.setValue(manual::interval, 100);
-        settings.setValue(manual::joystick::enabled, false);
-        settings.setValue(manual::joystick::device, 0);
-        settings.setValue(manual::joystick::pitchAxis, 1);
-        settings.setValue(manual::joystick::rollAxis, 2);
-        settings.setValue(manual::joystick::yawAxis, 3);
-        settings.setValue(manual::joystick::throttleAxis, 4);
-
-        settings.setValue(gui::fullscreen, true);
-        settings.setValue(gui::locale, "en");
-        settings.setValue(gui::uiSize, 36);
-        settings.setValue(gui::paletteStyle, 0);
-        settings.setValue(gui::fdRollInverted, 0);
-        settings.setValue(gui::fdSpeedStep, 5);
-        settings.setValue(gui::fdSpeedUnits, utils::Units::Mps);
-        settings.setValue(gui::fdAltitudeStep, 10);
-        settings.setValue(gui::fdAltitudeUnits, utils::Units::Meters);
-        settings.setValue(gui::fdRelativeAltitude, true);
-        settings.setValue(gui::vibrationModelCount, 30);
-        settings.setValue(gui::coordinatesDms, true);
-
-        settings.setValue(proxy::type, 0);
+        for (const QString& key: ::defaultSettings.keys())
+        {
+            settings.setValue(key, ::defaultSettings[key]);
+        }
     }
 };
 
@@ -97,14 +108,14 @@ Provider* Provider::instance()
     return &settings;
 }
 
-QVariant Provider::value(const QString& key, const QVariant& defaultValue)
+QVariant Provider::value(const QString& key)
 {
-    return instance()->d->settings.value(key, defaultValue);
+    return instance()->d->settings.value(key, ::defaultSettings.value(key));
 }
 
-bool Provider::boolValue(const QString& key, bool defaultValue)
+bool Provider::boolValue(const QString& key)
 {
-    return Provider::value(key, defaultValue).toBool();
+    return Provider::value(key).toBool();
 }
 
 void Provider::setValue(const QString& key, const QVariant& value)

@@ -1,9 +1,9 @@
 # CMake version string
 cmake_minimum_required(VERSION 3.0)
 
-# App sources 
-file(GLOB_RECURSE APP_SOURCES "main.cpp")
+# Internal sources and headers
+file(GLOB_RECURSE APP_SOURCES "*.cpp")
 set(SOURCES ${SOURCES} ${APP_SOURCES} PARENT_SCOPE)
 
-set(APP_INCLUDES "")
+HEADER_DIRECTORIES(APP_INCLUDES ".")
 set(INCLUDES ${INCLUDES} ${APP_INCLUDES} PARENT_SCOPE)

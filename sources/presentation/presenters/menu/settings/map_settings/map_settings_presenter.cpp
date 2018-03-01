@@ -18,8 +18,8 @@ void MapSettingsPresenter::updateView()
                           settings::Provider::value(settings::map::plugin));
     this->setViewProperty(PROPERTY(osmActiveMapType),
                           settings::Provider::value(settings::map::osmActiveMapType));
-    this->setViewProperty(PROPERTY(mapBoxGlActiveMapType),
-                          settings::Provider::value(settings::map::mapBoxGlActiveMapType));
+    this->setViewProperty(PROPERTY(mapBoxActiveMapType),
+                          settings::Provider::value(settings::map::mapBoxActiveMapType));
     this->setViewProperty(PROPERTY(esriActiveMapType),
                           settings::Provider::value(settings::map::esriActiveMapType));
     this->setViewProperty(PROPERTY(cacheSize),
@@ -38,8 +38,8 @@ void MapSettingsPresenter::save()
                                  this->viewProperty(PROPERTY(plugin)));
     settings::Provider::setValue(settings::map::osmActiveMapType,
                                  this->viewProperty(PROPERTY(osmActiveMapType)));
-    settings::Provider::setValue(settings::map::mapBoxGlActiveMapType,
-                                 this->viewProperty(PROPERTY(mapBoxGlActiveMapType)));
+    settings::Provider::setValue(settings::map::mapBoxActiveMapType,
+                                 this->viewProperty(PROPERTY(mapBoxActiveMapType)));
     settings::Provider::setValue(settings::map::esriActiveMapType,
                                  this->viewProperty(PROPERTY(esriActiveMapType)));
     settings::Provider::setValue(settings::map::cacheSize,
@@ -52,3 +52,11 @@ void MapSettingsPresenter::save()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
+void MapSettingsPresenter::connectView(QObject* view)
+{
+#ifdef WITH_MAPBOXGL
+    view->setProperty(PROPERTY(plugins), QStringList({ "OSM", "MapBox GL", "Esri" }));
+#else
+    view->setProperty(PROPERTY(plugins), QStringList({ "OSM", "MapBox", "Esri" }));
+#endif
+}

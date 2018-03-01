@@ -8,7 +8,7 @@ BaseMapView {
     plugin: Plugin {
         name: "esri"
 
-        PluginParameter { name: "esri.mapping.cache.disk.size"; value: settings.value("Map/cacheSize", 0) }
+        PluginParameter { name: "esri.mapping.cache.disk.size"; value: settings.value("Map/cacheSize") }
     }
 
     activeMapTypeIndex: settings.value("Map/esriActiveMapType")

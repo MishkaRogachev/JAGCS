@@ -27,9 +27,6 @@ namespace presentation
         void addStreamVideo();
         void setActiveVideo(int video);
 
-    protected:
-        void connectView(QObject* view) override;
-
     private:
         domain::VideoService* m_service;
     };

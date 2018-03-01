@@ -75,12 +75,12 @@ Item {
         pickButton.picking = false;
     }
 
-    onPreviousPositionChanged: updateDistAndAzimuthFromPos()
     onPositionChanged: {
         updateLatLon();
         updateDistAndAzimuthFromPos();
     }
 
+    onPreviousPositionChanged: updateDistAndAzimuthFromPos()
     onPreviousGlobalAltitudeChanged: updateAltitudeFromClimb()
     onClimbChanged: updateAltitudeFromClimb()
     onAltitudeChanged: updateClimbFromAltitude()

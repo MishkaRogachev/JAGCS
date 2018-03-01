@@ -7,7 +7,8 @@ Rectangle {
     property alias videoSource: videoOutput.source
     property real ratio: videoOutput.sourceRect.height / videoOutput.sourceRect.width
 
-    implicitHeight: width * ratio
+    implicitWidth: ratio > 0 ? height / ratio : height
+    implicitHeight: ratio > 0 ? width * ratio : width
 
     color: "black"
 

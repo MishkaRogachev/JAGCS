@@ -62,7 +62,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemVisibleRole:
     {
         return settings::Provider::value(settings::mission::visibility + "/" +
-                                         QString::number(mission->id()), true).toBool()
+                                         QString::number(mission->id())).toBool()
                 && (item->isPositionatedItem());
     }
     case ItemAcceptanceRadius:

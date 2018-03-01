@@ -56,6 +56,7 @@ void TranslationManager::setCurrentLocale(const QString& locale)
         qApp->installTranslator(d->localeTranslators.value(locale, nullptr));
     }
 
+    // TODO: Qt 5.10 QQmlEngine::retranslate
     settings::Provider::setValue(settings::gui::locale, locale);
     d->locale = locale;
 }

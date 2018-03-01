@@ -23,33 +23,37 @@ Controls.ColoredIcon {
         return palette.sunkenColor;
     }
 
-    Text {
-        id: textItem
-        text: percentage// > -1 ? percentage : "-"
-        font.pixelSize: parent.height / 3
-        font.bold: true
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: height / 4
-        color: parent.color
-    }
-
-    Rectangle {
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 4
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width - 6
-        height: (parent.height - 18) * percentageBordered / 100
-        color: parent.color
-        clip: true
+    Item {
+        id: fill
+        anchors.fill: parent
+        anchors.margins: root.width * 0.1
+        anchors.topMargin: root.width * 0.35
 
         Text {
-            text: textItem.text
-            font.pixelSize: textItem.font.pixelSize
+            id: textItem
+            text: percentage
+            font.pixelSize: fill.height * 0.75
             font.bold: true
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
+            color: root.color
+        }
+
+        Rectangle {
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: parent.anchors.bottomMargin
-            color: palette.backgroundColor
+            width: parent.width
+            height: fill.height * percentageBordered / 100
+            color: root.color
+            clip: true
+
+            Text {
+                text: textItem.text
+                font.pixelSize: textItem.font.pixelSize
+                font.bold: true
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                anchors.verticalCenterOffset: -parent.height * 0.25
+                color: palette.backgroundColor
+            }
         }
     }
 }

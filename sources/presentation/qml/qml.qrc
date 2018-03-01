@@ -82,6 +82,7 @@
         <file>Views/Map/MapFactory.qml</file>
         <file>Views/Map/LocationMapViews/BaseMapView.qml</file>
         <file>Views/Map/LocationMapViews/OsmMapView.qml</file>
+        <file>Views/Map/LocationMapViews/MapBoxMapView.qml</file>
         <file>Views/Map/LocationMapViews/MapBoxGlMapView.qml</file>
         <file>Views/Map/LocationMapViews/EsriMapView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/VehicleMapOverlayView.qml</file>

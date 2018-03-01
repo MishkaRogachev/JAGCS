@@ -48,8 +48,8 @@ Controls.ApplicationWindow  {
         anchors.right: substrate.right
         anchors.margins: sizings.margins
         width: Math.min(substrate.width - dashboard.width - sizings.margins * 2,
-                        parent.height / 2)
-        height: cornerMap ? map.implicitHeight : video.implicitHeight
+                        cornerMap ? map.implicitWidth : video.implicitWidth)
+        height: parent.height / 2
         z: cornerVisible ? 2 : -1
         onClicked: cornerMap = !cornerMap
     }

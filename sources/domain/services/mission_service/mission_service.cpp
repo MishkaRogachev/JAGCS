@@ -185,6 +185,17 @@ dao::MissionItemPtr MissionService::addNewMissionItem(int missionId,
     return item;
 }
 
+void MissionService::addNewMission(const QString& name)
+{
+    QMutexLocker locker(&d->mutex);
+
+    MissionPtr mission = MissionPtr::create();
+    mission->setName(name);
+    this->save(mission);
+
+    this->addNewMissionItem(mission->id(), MissionItem::Home, 0);
+}
+
 MissionAssignmentPtr MissionService::missionAssignment(int missionId) const
 {
     QMutexLocker locker(&d->mutex);

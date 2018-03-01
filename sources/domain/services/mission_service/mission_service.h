@@ -36,6 +36,7 @@ namespace domain
         dao::MissionItemPtr addNewMissionItem(int missionId,
                                               dao::MissionItem::Command command,
                                               int sequence);
+        void addNewMission(const QString& name);
 
     public slots:
         bool save(const dao::MissionPtr& mission);

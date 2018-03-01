@@ -25,6 +25,12 @@ PresentationContext::PresentationContext()
 
     m_engine->addImportPath(":/Controls");
 
+#ifdef WITH_MAPBOXGL
+    m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(true));
+#else
+    m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(false));
+#endif
+
     m_engine->rootContext()->setContextProperty(
                 "units", QVariant::fromValue(new utils::Units(qApp)));
     m_engine->rootContext()->setContextProperty(

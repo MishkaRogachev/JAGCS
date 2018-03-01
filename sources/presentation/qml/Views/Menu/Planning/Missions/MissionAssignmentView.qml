@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 RowLayout {
     id: missionAssignmentView
 
-    property bool vehicleOnline: true // FIXME: vehicleOnline in missionEdit
+    property bool vehicleOnline: true
 
     property int progress: 0
     property int assignedVehicleId: 0
@@ -24,7 +24,7 @@ RowLayout {
     Controls.ProgressBar {
          to: count
          value: progress
-         text: progress + "/" + count
+         text: assignedVehicleId > 0 ? (progress + "/" + count) : qsTr("None")
          Layout.fillWidth: true
      }
 

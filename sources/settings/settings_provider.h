@@ -17,8 +17,8 @@ namespace settings
         ~Provider() override;
         static Provider* instance();
 
-        Q_INVOKABLE static QVariant value(const QString& key, const QVariant& defaultValue = QVariant());
-        Q_INVOKABLE static bool boolValue(const QString& key, bool defaultValue = false);
+        Q_INVOKABLE static QVariant value(const QString& key);
+        Q_INVOKABLE static bool boolValue(const QString& key);
         Q_INVOKABLE static void setValue(const QString& key, const QVariant& value);
         Q_INVOKABLE static void remove(const QString& key);
 
