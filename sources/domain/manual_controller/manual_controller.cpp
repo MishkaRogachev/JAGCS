@@ -156,6 +156,14 @@ void ManualController::setImpact(Axis axis, float impact)
     emit impactChanged(axis, impact);
 }
 
+void ManualController::addImpact(ManualController::Axis axis, float impact)
+{
+    if (axis == NoneAxis || qFuzzyIsNull(impact)) return;
+
+    d->impacts[axis] += impact;
+    emit impactChanged(axis, d->impacts[axis]);
+}
+
 void ManualController::sendImpacts()
 {
     if (d->vehicleId == 0) return;

@@ -24,12 +24,6 @@ Controls.Pane {
             case ManualController.Throttle:
                 speedLadder.inputValue = impact;
                 break;
-            case ManualController.Pitch:
-                fd.inputPitch = impact;
-                break;
-            case ManualController.Roll:
-                fd.inputRoll = impact;
-                break;
             default:
                 break;
             }
@@ -62,7 +56,7 @@ Controls.Pane {
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
         inputEnabled: manual.enabled
         inputValue: manual.impact(ManualController.Throttle)
-        onPicked: manual.setImpact(ManualController.Throttle, value)
+        onPicked: manual.addImpact(ManualController.Throttle, value)
     }
 
     Indicators.FdLabel {
@@ -106,10 +100,8 @@ Controls.Pane {
         desiredRoll: vehicle.flightControl.desiredRoll
         rollInverted: dashboard.rollInverted
         inputEnabled: manual.enabled
-        inputPitch: manual.impact(ManualController.Pitch)
-        onPitchPicked: manual.setImpact(ManualController.Pitch, value)
-        inputRoll: manual.impact(ManualController.Roll)
-        onRollPicked: manual.setImpact(ManualController.Roll, value)
+        onAddPitch: manual.addImpact(ManualController.Pitch, value)
+        onAddRoll: manual.addImpact(ManualController.Roll, value)
     }
 
     Indicators.BarIndicator {

@@ -20,11 +20,9 @@ AttitudeIndicator {
     property real rollStep: 10
 
     property bool inputEnabled: false
-    property alias inputPitch: pitchScale.inputValue
-    property alias inputRoll: rollScale.inputValue
 
-    signal pitchPicked(real value)
-    signal rollPicked(real value)
+    signal addPitch(real value)
+    signal addRoll(real value)
 
     Behavior on yawspeed { PropertyAnimation { duration: 100 } }
     Behavior on desiredPitch { PropertyAnimation { duration: 100 } }
@@ -32,7 +30,7 @@ AttitudeIndicator {
 
     effectiveHeight: height - sizings.controlBaseSize * 2
 
-    RollScalePicker {
+    RollScale {
         id: rollScale
         anchors.fill: parent
         roll: rollInverted ? -fd.roll : fd.roll
@@ -41,10 +39,9 @@ AttitudeIndicator {
         rollStep: fd.rollStep
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
-        inputEnabled: fd.inputEnabled
     }
 
-    PitchScalePicker {
+    PitchScale {
         id: pitchScale
         anchors.centerIn: parent
         width: parent.width
@@ -55,18 +52,6 @@ AttitudeIndicator {
         pitchStep: fd.pitchStep
         opacity: enabled ? 1 : 0.33
         color: operational ? palette.textColor : palette.dangerColor
-        inputEnabled: fd.inputEnabled
-    }
-
-    MouseArea {
-        anchors.fill: pitchScale
-        enabled: inputEnabled
-        onMouseXChanged: rollPicked(-Helper.mapFromRange(
-                                        Math.max(0, Math.min(width, width - mouseX)),
-                                        rollScale.inputMin, rollScale.inputMax, width))
-        onMouseYChanged: pitchPicked(-Helper.mapFromRange(
-                                         Math.max(0, Math.min(height, height - mouseY)),
-                                         pitchScale.inputMin, pitchScale.inputMax, height))
     }
 
     TurnIndicator {
@@ -103,5 +88,52 @@ AttitudeIndicator {
         roll: rollInverted ? -fd.roll : 0
         markColor: armed ? palette.selectedTextColor : palette.dangerColor
         markWidth: 3
+    }
+
+    Controls.Button {
+        anchors.top: pitchScale.top
+        anchors.horizontalCenter: pitchScale.horizontalCenter
+        iconSource: "qrc:/icons/up.svg"
+        iconColor: palette.sunkenColor
+        flat: true
+        visible: inputEnabled
+        autoRepeat: true
+        onClicked: addPitch(-0.05)
+    }
+
+    Controls.Button {
+        anchors.bottom: pitchScale.bottom
+        anchors.horizontalCenter: pitchScale.horizontalCenter
+        iconSource: "qrc:/icons/down.svg"
+        iconColor: palette.sunkenColor
+        flat: true
+        visible: inputEnabled
+        autoRepeat: true
+        onClicked: addPitch(0.05)
+    }
+
+    Controls.Button {
+        anchors.top: rollScale.top
+        anchors.topMargin: (fd.height - fd.width) / 2
+        anchors.left: rollScale.left
+        iconSource: "qrc:/icons/bank_left.svg"
+        iconColor: palette.sunkenColor
+        flat: true
+        visible: inputEnabled
+        autoRepeat: true
+        onClicked: addRoll(-0.05)
+    }
+
+    Controls.Button {
+        anchors.top: rollScale.top
+        anchors.topMargin: (fd.height - fd.width) / 2.
+
+        anchors.right: rollScale.right
+        iconSource: "qrc:/icons/bank_right.svg"
+        iconColor: palette.sunkenColor
+        flat: true
+        visible: inputEnabled
+        autoRepeat: true
+        onClicked: addRoll(0.05)
     }
 }

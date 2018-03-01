@@ -40,6 +40,7 @@ namespace domain
         void updateJoystickAxes();
 
         void setImpact(Axis axis, float impact);
+        void addImpact(Axis axis, float impact);
         void sendImpacts();
 
     signals:

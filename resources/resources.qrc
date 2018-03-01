@@ -39,8 +39,10 @@
         <file>icons/remove.svg</file>
         <file>icons/left.svg</file>
         <file>icons/left_left.svg</file>
+        <file>icons/bank_left.svg</file>
         <file>icons/right.svg</file>
         <file>icons/right_right.svg</file>
+        <file>icons/bank_right.svg</file>
         <file>icons/up.svg</file>
         <file>icons/down.svg</file>
         <file>icons/show.svg</file>
