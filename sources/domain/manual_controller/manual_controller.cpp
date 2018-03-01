@@ -17,6 +17,11 @@
 #include "joystick_controller.h"
 # endif
 
+namespace
+{
+    const float maxImpact = 1.0;
+}
+
 using namespace domain;
 
 class ManualController::Impl
@@ -150,7 +155,9 @@ void ManualController::updateJoystickAxes()
 
 void ManualController::setImpact(Axis axis, float impact)
 {
-    if (axis == NoneAxis || impact == d->impacts.value(axis, 0)) return;
+    if (axis == NoneAxis ||
+        impact == d->impacts.value(axis, 0) ||
+        qAbs(impact) > ::maxImpact) return;
 
     d->impacts[axis] = impact;
     emit impactChanged(axis, impact);
@@ -158,10 +165,7 @@ void ManualController::setImpact(Axis axis, float impact)
 
 void ManualController::addImpact(ManualController::Axis axis, float impact)
 {
-    if (axis == NoneAxis || qFuzzyIsNull(impact)) return;
-
-    d->impacts[axis] += impact;
-    emit impactChanged(axis, d->impacts[axis]);
+    this->setImpact(axis, this->impact(axis) + impact);
 }
 
 void ManualController::sendImpacts()
@@ -171,12 +175,8 @@ void ManualController::sendImpacts()
     dao::CommandPtr command = dao::CommandPtr::create();
 
     command->setType(dao::Command::ManualImpacts);
-    command->setArguments({
-                              d->impacts.value(Pitch, 0),
-                              d->impacts.value(Roll, 0),
-                              d->impacts.value(Yaw, 0),
-                              d->impacts.value(Throttle, 0)
-                          });
+    command->setArguments({ this->impact(Pitch), this->impact(Roll),
+                            this->impact(Yaw), this->impact(Throttle) });
 
     d->service->executeCommand(d->vehicleId, command);
 }
