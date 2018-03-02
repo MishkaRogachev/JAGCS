@@ -155,12 +155,13 @@ void ManualController::updateJoystickAxes()
 
 void ManualController::setImpact(Axis axis, float impact)
 {
-    if (axis == NoneAxis ||
-        impact == d->impacts.value(axis, 0) ||
-        qAbs(impact) > ::maxImpact) return;
+    float impactScaled = qMax(qMin(impact, ::maxImpact), -::maxImpact);
 
-    d->impacts[axis] = impact;
-    emit impactChanged(axis, impact);
+    if (axis == NoneAxis ||
+        impactScaled == d->impacts.value(axis, 0)) return;
+
+    d->impacts[axis] = impactScaled;
+    emit impactChanged(axis, impactScaled);
 }
 
 void ManualController::addImpact(ManualController::Axis axis, float impact)
