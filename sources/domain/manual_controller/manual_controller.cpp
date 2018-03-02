@@ -19,7 +19,7 @@
 
 namespace
 {
-    const float maxImpact = 1.0;
+    const double maxImpact = 1.0;
 }
 
 using namespace domain;
@@ -37,7 +37,7 @@ public:
     int vehicleId = 0;
 
     QTimer timer;
-    QMap<ManualController::Axis, float> impacts;
+    QMap<ManualController::Axis, double> impacts;
 };
 
 ManualController::ManualController(QObject* parent):
@@ -79,9 +79,9 @@ int ManualController::vehicleId() const
     return d->vehicleId;
 }
 
-float ManualController::impact(ManualController::Axis axis) const
+double ManualController::impact(ManualController::Axis axis) const
 {
-    return d->impacts.value(axis, 0);
+    return d->impacts.value(axis, qQNaN());
 }
 
 void ManualController::setEnabled(bool enabled)
@@ -95,6 +95,9 @@ void ManualController::setEnabled(bool enabled)
     else
     {
         d->timer.stop();
+
+        this->clearImpacts();
+        this->sendImpacts();
     }
 
     emit enabledChanged(this->enabled());
@@ -153,20 +156,29 @@ void ManualController::updateJoystickAxes()
 # endif
 }
 
-void ManualController::setImpact(Axis axis, float impact)
+void ManualController::setImpact(Axis axis, double impact)
 {
-    float impactScaled = qMax(qMin(impact, ::maxImpact), -::maxImpact);
+    double impactScaled = qMax(qMin(impact, ::maxImpact), -::maxImpact);
 
-    if (axis == NoneAxis ||
-        impactScaled == d->impacts.value(axis, 0)) return;
+    if (axis == NoneAxis || impactScaled == d->impacts.value(axis, qQNaN())) return;
 
     d->impacts[axis] = impactScaled;
     emit impactChanged(axis, impactScaled);
 }
 
-void ManualController::addImpact(ManualController::Axis axis, float impact)
+void ManualController::addImpact(ManualController::Axis axis, double impact)
 {
     this->setImpact(axis, this->impact(axis) + impact);
+}
+
+void ManualController::clearImpacts()
+{
+    d->impacts.clear();
+
+    emit impactChanged(Pitch, this->impact(Pitch));
+    emit impactChanged(Roll, this->impact(Roll));
+    emit impactChanged(Yaw, this->impact(Yaw));
+    emit impactChanged(Throttle, this->impact(Throttle));
 }
 
 void ManualController::sendImpacts()
@@ -182,7 +194,7 @@ void ManualController::sendImpacts()
     d->service->executeCommand(d->vehicleId, command);
 }
 
-void ManualController::onControllerValueChanged(int axis, float value)
+void ManualController::onControllerValueChanged(int axis, double value)
 {
 #ifdef WITH_GAMEPAD
     this->setImpact(d->joystickAxes.value(axis, NoneAxis), value);

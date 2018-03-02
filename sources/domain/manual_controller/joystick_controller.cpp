@@ -30,7 +30,7 @@ JoystickController::JoystickController(QObject* parent):
 #endif
 }
 
-float JoystickController::value(int axis) const
+double JoystickController::value(int axis) const
 {
     switch (axis)
     {

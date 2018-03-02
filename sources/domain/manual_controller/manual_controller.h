@@ -30,7 +30,7 @@ namespace domain
         bool joystickEnabled() const;
         int vehicleId() const;
 
-        Q_INVOKABLE float impact(Axis axis) const;
+        Q_INVOKABLE double impact(Axis axis) const;
 
     public slots:
         void setEnabled(bool enabled);
@@ -39,8 +39,9 @@ namespace domain
         void setVehicleId(int vehicleId);
         void updateJoystickAxes();
 
-        void setImpact(Axis axis, float impact);
-        void addImpact(Axis axis, float impact);
+        void setImpact(Axis axis, double impact);
+        void addImpact(Axis axis, double impact);
+        void clearImpacts();
         void sendImpacts();
 
     signals:
@@ -48,10 +49,10 @@ namespace domain
         void joystickEnabledChanged(bool joystickEnabled);
         void vehicleIdChanged(int vehicleId);
 
-        void impactChanged(Axis axis, float impact);
+        void impactChanged(Axis axis, double impact);
 
     private slots:
-        void onControllerValueChanged(int axis, float value);
+        void onControllerValueChanged(int axis, double value);
 
     private:
         class Impl;

@@ -47,9 +47,9 @@ namespace
         { MAV_RESULT_ACCEPTED, dao::Command::Completed }
     };
 
-    int normalize(float value)
+    int toMavLinkImpact(double value)
     {
-        return value * 1000;
+        return qIsNaN(value) ? INT16_MAX : value * 1000;
     }
 }
 
@@ -277,18 +277,18 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
                      dao::Command::NavTo, dao::Command::Completed); // TODO: wait nav to
 }
 
-void CommandHandler::sendManualControl(int vehicleId, float pitch, float roll,
-                                       float yaw, float thrust)
+void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
+                                       double yaw, double thrust)
 {
     mavlink_manual_control_t mavlink_manual_control;
 
     int mavId = d->vehicleService->mavIdByVehicleId(vehicleId);
     mavlink_manual_control.target = mavId;
 
-    mavlink_manual_control.x = ::normalize(pitch);
-    mavlink_manual_control.y = ::normalize(roll);
-    mavlink_manual_control.r = ::normalize(yaw);
-    mavlink_manual_control.z = ::normalize(thrust);
+    mavlink_manual_control.x = ::toMavLinkImpact(pitch);
+    mavlink_manual_control.y = ::toMavLinkImpact(roll);
+    mavlink_manual_control.r = ::toMavLinkImpact(yaw);
+    mavlink_manual_control.z = ::toMavLinkImpact(thrust);
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
