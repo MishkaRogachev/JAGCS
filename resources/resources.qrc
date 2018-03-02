@@ -37,14 +37,16 @@
         <file>icons/save.svg</file>
         <file>icons/edit.svg</file>
         <file>icons/remove.svg</file>
-        <file>icons/left.svg</file>
-        <file>icons/left_left.svg</file>
-        <file>icons/bank_left.svg</file>
-        <file>icons/right.svg</file>
-        <file>icons/right_right.svg</file>
-        <file>icons/bank_right.svg</file>
         <file>icons/up.svg</file>
         <file>icons/down.svg</file>
+        <file>icons/left.svg</file>
+        <file>icons/left_left.svg</file>
+        <file>icons/right.svg</file>
+        <file>icons/right_right.svg</file>
+        <file>icons/bank_left.svg</file>
+        <file>icons/bank_right.svg</file>
+        <file>icons/yaw_left.svg</file>
+        <file>icons/yaw_right.svg</file>
         <file>icons/show.svg</file>
         <file>icons/hide.svg</file>
         <file>icons/maximize.svg</file>

@@ -120,4 +120,26 @@ Controls.Pane {
         prefix: qsTr("CRS")
         suffix: "\u00B0"
     }
+
+    Controls.Button {
+        anchors.top: parent.top
+        anchors.left: compass.left
+        iconSource: "qrc:/icons/yaw_left.svg"
+        flat: true
+        round: true
+        autoRepeat: true
+        visible: manual.enabled
+        onClicked: manual.addImpact(ManualController.Yaw, -0.05)
+    }
+
+    Controls.Button {
+        anchors.top: parent.top
+        anchors.right: compass.right
+        iconSource: "qrc:/icons/yaw_right.svg"
+        flat: true
+        round: true
+        autoRepeat: true
+        visible: manual.enabled
+        onClicked: manual.addImpact(ManualController.Yaw, 0.05)
+    }
 }
