@@ -45,7 +45,7 @@ namespace
         { video::activeVideo, -1 },
 
         { manual::enabled, false },
-        { manual::interval, 100 },
+        { manual::interval, 200 },
         { manual::joystick::enabled, false },
         { manual::joystick::device, 0 },
         { manual::joystick::pitchAxis, 1 },
