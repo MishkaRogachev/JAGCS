@@ -20,9 +20,17 @@
 namespace
 {
     const double maxImpact = 1.0;
+    const double joystickImpactFactor = 0.05;
 }
 
 using namespace domain;
+
+const QList<ManualController::Axis> ManualController::axes({
+    ManualController::Pitch,
+    ManualController::Roll,
+    ManualController::Yaw,
+    ManualController::Throttle
+});
 
 class ManualController::Impl
 {
@@ -31,7 +39,7 @@ public:
 
     #ifdef WITH_GAMEPAD
     JoystickController* controller = nullptr;
-    QMap<int, ManualController::Axis> joystickAxes;
+    QMap<ManualController::Axis, int> joystickAxes;
     # endif
 
     int vehicleId = 0;
@@ -44,7 +52,7 @@ ManualController::ManualController(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    connect(&d->timer, &QTimer::timeout, this, &ManualController::sendImpacts);
+    connect(&d->timer, &QTimer::timeout, this, &ManualController::onTimeout);
 
 #ifdef WITH_GAMEPAD
     if (settings::Provider::value(settings::manual::joystick::enabled).toBool())
@@ -111,10 +119,7 @@ void ManualController::setJoystickEnabled(bool enabled)
     if (enabled)
     {
         d->controller = new JoystickController(this);
-        d->controller->setDeviceId(settings::Provider::value(
-                                       settings::manual::joystick::device).toInt());
-        connect(d->controller, &JoystickController::valueChanged,
-                this, &ManualController::onControllerValueChanged);
+        d->controller->setDeviceId(settings::Provider::value(settings::manual::joystick::device).toInt());
         this->updateJoystickAxes();
     }
     else
@@ -149,10 +154,10 @@ void ManualController::updateJoystickAxes()
 #ifdef WITH_GAMEPAD
     d->joystickAxes.clear();
 
-    d->joystickAxes[settings::Provider::value(settings::manual::joystick::pitchAxis).toInt()] = Pitch;
-    d->joystickAxes[settings::Provider::value(settings::manual::joystick::rollAxis).toInt()] = Roll;
-    d->joystickAxes[settings::Provider::value(settings::manual::joystick::yawAxis).toInt()] = Yaw;
-    d->joystickAxes[settings::Provider::value(settings::manual::joystick::throttleAxis).toInt()] = Throttle;
+    d->joystickAxes[Pitch] = settings::Provider::value(settings::manual::joystick::pitchAxis).toInt();
+    d->joystickAxes[Roll] = settings::Provider::value(settings::manual::joystick::rollAxis).toInt();
+    d->joystickAxes[Yaw] = settings::Provider::value(settings::manual::joystick::yawAxis).toInt();
+    d->joystickAxes[Throttle] = settings::Provider::value(settings::manual::joystick::throttleAxis).toInt();
 # endif
 }
 
@@ -175,10 +180,7 @@ void ManualController::clearImpacts()
 {
     d->impacts.clear();
 
-    emit impactChanged(Pitch, this->impact(Pitch));
-    emit impactChanged(Roll, this->impact(Roll));
-    emit impactChanged(Yaw, this->impact(Yaw));
-    emit impactChanged(Throttle, this->impact(Throttle));
+    for (Axis axis: axes) emit impactChanged(axis, this->impact(axis));
 }
 
 void ManualController::sendImpacts()
@@ -186,20 +188,25 @@ void ManualController::sendImpacts()
     if (d->vehicleId == 0) return;
 
     dao::CommandPtr command = dao::CommandPtr::create();
-
     command->setType(dao::Command::ManualImpacts);
-    command->setArguments({ this->impact(Pitch), this->impact(Roll),
-                            this->impact(Yaw), this->impact(Throttle) });
+
+    for (Axis axis: axes) command->addArgument(this->impact(axis));
 
     d->service->executeCommand(d->vehicleId, command);
 }
 
-void ManualController::onControllerValueChanged(int axis, double value)
+void ManualController::onTimeout()
 {
 #ifdef WITH_GAMEPAD
-    this->setImpact(d->joystickAxes.value(axis, NoneAxis), value);
-#else
-    Q_UNUSED(axis)
-    Q_UNUSED(value)
+    if (d->controller)
+    {
+        for (Axis axis: axes)
+        {
+            double value = d->controller->value(d->joystickAxes.value(axis)) * ::joystickImpactFactor;
+            if (!qFuzzyIsNull(value)) this->addImpact(axis, value);
+        }
+    }
 # endif
+
+    this->sendImpacts();
 }

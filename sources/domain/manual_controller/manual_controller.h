@@ -23,6 +23,8 @@ namespace domain
             Throttle
         };
 
+        static const QList<Axis> axes;
+
         explicit ManualController(QObject* parent = nullptr);
         ~ManualController() override;
 
@@ -52,7 +54,7 @@ namespace domain
         void impactChanged(Axis axis, double impact);
 
     private slots:
-        void onControllerValueChanged(int axis, double value);
+        void onTimeout();
 
     private:
         class Impl;
