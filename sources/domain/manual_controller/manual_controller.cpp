@@ -60,6 +60,7 @@ ManualController::ManualController(QObject* parent):
         this->setJoystickEnabled(settings::Provider::value(
                                      settings::manual::joystick::enabled).toBool());
     }
+    this->updateJoystickAxes();
 # endif
 
     if (settings::Provider::value(settings::manual::enabled).toBool()) this->setEnabled(true);
@@ -120,7 +121,6 @@ void ManualController::setJoystickEnabled(bool enabled)
     {
         d->controller = new JoystickController(this);
         d->controller->setDeviceId(settings::Provider::value(settings::manual::joystick::device).toInt());
-        this->updateJoystickAxes();
     }
     else
     {
@@ -139,6 +139,16 @@ void ManualController::setJoystickDevice(int deviceId)
 #else
     Q_UNUSED(deviceId)
 # endif
+}
+
+void ManualController::setJoystickAxis(ManualController::Axis axis, int source)
+{
+    d->joystickAxes[axis] = source;
+}
+
+void ManualController::setJoystickFactor(ManualController::Axis axis, int factor)
+{
+    d->joystickFactors[axis] = factor * 0.01;
 }
 
 void ManualController::setVehicleId(int vehicleId)
@@ -165,13 +175,13 @@ void ManualController::updateJoystickAxes()
 
     d->joystickFactors.clear();
 
-    d->joystickAxes[Pitch] = settings::Provider::value(
+    d->joystickFactors[Pitch] = settings::Provider::value(
                                  settings::manual::joystick::pitch::factor).toInt() * 0.01;
-    d->joystickAxes[Roll] = settings::Provider::value(
+    d->joystickFactors[Roll] = settings::Provider::value(
                                 settings::manual::joystick::roll::factor).toInt() * 0.01;
-    d->joystickAxes[Yaw] = settings::Provider::value(
+    d->joystickFactors[Yaw] = settings::Provider::value(
                                settings::manual::joystick::yaw::factor).toInt() * 0.01;
-    d->joystickAxes[Throttle] = settings::Provider::value(
+    d->joystickFactors[Throttle] = settings::Provider::value(
                                     settings::manual::joystick::throttle::factor).toInt() * 0.01;
 # endif
 }

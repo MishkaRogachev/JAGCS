@@ -38,6 +38,8 @@ namespace domain
         void setEnabled(bool enabled);
         void setJoystickEnabled(bool enabled);
         void setJoystickDevice(int deviceId);
+        void setJoystickAxis(Axis axis, int source);
+        void setJoystickFactor(Axis axis, int factor);
         void setVehicleId(int vehicleId);
         void updateJoystickAxes();
 

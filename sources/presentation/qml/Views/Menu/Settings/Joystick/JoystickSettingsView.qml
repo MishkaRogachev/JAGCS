@@ -70,8 +70,14 @@ GridLayout {
         id: pitch
         source: qsTr("Pitch")
         enabled: joystickEnabled
-        onAxisChanged: changed = true
-        onFactorChanged: changed = true
+        onAxisChanged: {
+            manual.setJoystickAxis(ManualController.Pitch, axis);
+            changed = true;
+        }
+        onFactorChanged: {
+            manual.setJoystickFactor(ManualController.Pitch, factor);
+            changed = true;
+        }
         Layout.columnSpan: 2
         Layout.fillWidth: true
     }
@@ -80,8 +86,14 @@ GridLayout {
         id: roll
         source: qsTr("Roll")
         enabled: joystickEnabled
-        onAxisChanged: changed = true
-        onFactorChanged: changed = true
+        onAxisChanged: {
+            manual.setJoystickAxis(ManualController.Roll, axis);
+            changed = true;
+        }
+        onFactorChanged: {
+            manual.setJoystickFactor(ManualController.Roll, factor);
+            changed = true;
+        }
         Layout.columnSpan: 2
         Layout.fillWidth: true
     }
@@ -90,8 +102,14 @@ GridLayout {
         id: throttle
         source: qsTr("Throttle")
         enabled: joystickEnabled
-        onAxisChanged: changed = true
-        onFactorChanged: changed = true
+        onAxisChanged: {
+            manual.setJoystickAxis(ManualController.Throttle, axis);
+            changed = true;
+        }
+        onFactorChanged: {
+            manual.setJoystickFactor(ManualController.Throttle, factor);
+            changed = true;
+        }
         Layout.columnSpan: 2
         Layout.fillWidth: true
     }
@@ -100,8 +118,14 @@ GridLayout {
         id: yaw
         source: qsTr("Yaw")
         enabled: joystickEnabled
-        onAxisChanged: changed = true
-        onFactorChanged: changed = true
+        onAxisChanged: {
+            manual.setJoystickAxis(ManualController.Yaw, axis);
+            changed = true;
+        }
+        onFactorChanged: {
+            manual.setJoystickFactor(ManualController.Yaw, factor);
+            changed = true;
+        }
         Layout.columnSpan: 2
         Layout.fillWidth: true
     }
