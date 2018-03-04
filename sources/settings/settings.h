@@ -60,10 +60,30 @@ namespace settings
         {
             const QString enabled = "Manual/Joystick/enabled";
             const QString device = "Manual/Joystick/device";
-            const QString pitchAxis = "Manual/Joystick/pitchAxis";
-            const QString rollAxis = "Manual/Joystick/rollAxis";
-            const QString yawAxis = "Manual/Joystick/yawAxis";
-            const QString throttleAxis = "Manual/Joystick/throttleAxis";
+
+            namespace pitch
+            {
+                const QString axis = "Manual/Joystick/Pitch/axis";
+                const QString factor = "Manual/Joystick/Pitch/factor";
+            }
+
+            namespace roll
+            {
+                const QString axis = "Manual/Joystick/Roll/axis";
+                const QString factor = "Manual/Joystick/Roll/factor";
+            }
+
+            namespace throttle
+            {
+                const QString axis = "Manual/Joystick/Throttle/axis";
+                const QString factor = "Manual/Joystick/Throttle/factor";
+            }
+
+            namespace yaw
+            {
+                const QString axis = "Manual/Joystick/Yaw/axis";
+                const QString factor = "Manual/Joystick/Yaw/factor";
+            }
         }
     }
 

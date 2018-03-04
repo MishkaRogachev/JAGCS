@@ -14,11 +14,16 @@ GridLayout {
 
     property alias joystickEnabled: joystickEnabledBox.checked
     property alias device: deviceBox.value
-    // property alias softwareJoystick: softwareJoystickBox.checked
-    property alias pitchAxis: pitchAxisBox.currentIndex
-    property alias rollAxis: rollAxisBox.currentIndex
-    property alias yawAxis: yawAxisBox.currentIndex
-    property alias throttleAxis: throttleAxisBox.currentIndex
+
+    property alias pitchAxis: pitch.axis
+    property alias rollAxis: roll.axis
+    property alias yawAxis: yaw.axis
+    property alias throttleAxis: throttle.axis
+
+    property alias pitchFactor: pitch.factor
+    property alias rollFactor: roll.factor
+    property alias yawFactor: yaw.factor
+    property alias throttleFactor: throttle.factor
 
     signal save()
     signal restore()
@@ -61,56 +66,43 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Pitch axis")
-        Layout.fillWidth: true
-    }
-
-    // TODO: dynamic axes
-    Controls.ComboBox {
-        id: pitchAxisBox
-        model: axes
-        onCurrentIndexChanged: changed = true
+    JoystickAxisView {
+        id: pitch
+        source: qsTr("Pitch")
         enabled: joystickEnabled
+        onAxisChanged: changed = true
+        onFactorChanged: changed = true
+        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Roll axis")
-        Layout.fillWidth: true
-    }
-
-    Controls.ComboBox {
-        id: rollAxisBox
-        model: axes
-        onCurrentIndexChanged: changed = true
+    JoystickAxisView {
+        id: roll
+        source: qsTr("Roll")
         enabled: joystickEnabled
+        onAxisChanged: changed = true
+        onFactorChanged: changed = true
+        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Yaw axis")
-        Layout.fillWidth: true
-    }
-
-    Controls.ComboBox {
-        id: yawAxisBox
-        model: axes
-        onCurrentIndexChanged: changed = true
+    JoystickAxisView {
+        id: throttle
+        source: qsTr("Throttle")
         enabled: joystickEnabled
+        onAxisChanged: changed = true
+        onFactorChanged: changed = true
+        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Throttle axis")
-        Layout.fillWidth: true
-    }
-
-    Controls.ComboBox {
-        id: throttleAxisBox
-        model: axes
-        onCurrentIndexChanged: changed = true
+    JoystickAxisView {
+        id: yaw
+        source: qsTr("Yaw")
         enabled: joystickEnabled
+        onAxisChanged: changed = true
+        onFactorChanged: changed = true
+        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 

@@ -132,6 +132,7 @@
         <file>Views/Menu/Settings/Video/VideoSourceListView.qml</file>
         <file>Views/Menu/Settings/Video/VideoSourceView.qml</file>
         <file>Views/Menu/Settings/Joystick/JoystickSettingsView.qml</file>
+        <file>Views/Menu/Settings/Joystick/JoystickAxisView.qml</file>
         <file>Views/Menu/Settings/Gui/GuiSettingsView.qml</file>
         <file>Views/Menu/Settings/Network/NetworkSettingsView.qml</file>
         <file>Views/Menu/About/AboutView.qml</file>

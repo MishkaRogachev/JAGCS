@@ -20,7 +20,6 @@
 namespace
 {
     const double maxImpact = 1.0;
-    const double joystickImpactFactor = 0.05;
 }
 
 using namespace domain;
@@ -40,6 +39,7 @@ public:
     #ifdef WITH_GAMEPAD
     JoystickController* controller = nullptr;
     QMap<ManualController::Axis, int> joystickAxes;
+    QMap<ManualController::Axis, double> joystickFactors;
     # endif
 
     int vehicleId = 0;
@@ -154,10 +154,25 @@ void ManualController::updateJoystickAxes()
 #ifdef WITH_GAMEPAD
     d->joystickAxes.clear();
 
-    d->joystickAxes[Pitch] = settings::Provider::value(settings::manual::joystick::pitchAxis).toInt();
-    d->joystickAxes[Roll] = settings::Provider::value(settings::manual::joystick::rollAxis).toInt();
-    d->joystickAxes[Yaw] = settings::Provider::value(settings::manual::joystick::yawAxis).toInt();
-    d->joystickAxes[Throttle] = settings::Provider::value(settings::manual::joystick::throttleAxis).toInt();
+    d->joystickAxes[Pitch] = settings::Provider::value(
+                                 settings::manual::joystick::pitch::axis).toInt();
+    d->joystickAxes[Roll] = settings::Provider::value(
+                                settings::manual::joystick::roll::axis).toInt();
+    d->joystickAxes[Yaw] = settings::Provider::value(
+                               settings::manual::joystick::yaw::axis).toInt();
+    d->joystickAxes[Throttle] = settings::Provider::value(
+                                    settings::manual::joystick::throttle::axis).toInt();
+
+    d->joystickFactors.clear();
+
+    d->joystickAxes[Pitch] = settings::Provider::value(
+                                 settings::manual::joystick::pitch::factor).toInt() * 0.01;
+    d->joystickAxes[Roll] = settings::Provider::value(
+                                settings::manual::joystick::roll::factor).toInt() * 0.01;
+    d->joystickAxes[Yaw] = settings::Provider::value(
+                               settings::manual::joystick::yaw::factor).toInt() * 0.01;
+    d->joystickAxes[Throttle] = settings::Provider::value(
+                                    settings::manual::joystick::throttle::factor).toInt() * 0.01;
 # endif
 }
 
@@ -202,7 +217,8 @@ void ManualController::onTimeout()
     {
         for (Axis axis: axes)
         {
-            double value = d->controller->value(d->joystickAxes.value(axis)) * ::joystickImpactFactor;
+            double value = d->controller->value(d->joystickAxes.value(axis, -1)) *
+                           d->joystickFactors.value(axis, 0.0);
             if (!qFuzzyIsNull(value)) this->addImpact(axis, value);
         }
     }
