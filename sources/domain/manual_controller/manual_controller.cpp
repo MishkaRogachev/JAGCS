@@ -143,12 +143,22 @@ void ManualController::setJoystickDevice(int deviceId)
 
 void ManualController::setJoystickAxis(ManualController::Axis axis, int source)
 {
+#ifdef WITH_GAMEPAD
     d->joystickAxes[axis] = source;
+#else
+    Q_UNUSED(axis)
+    Q_UNUSED(source)
+# endif
 }
 
 void ManualController::setJoystickFactor(ManualController::Axis axis, int factor)
 {
+#ifdef WITH_GAMEPAD
     d->joystickFactors[axis] = factor * 0.01;
+#else
+    Q_UNUSED(axis)
+    Q_UNUSED(factor)
+# endif
 }
 
 void ManualController::setVehicleId(int vehicleId)
