@@ -188,7 +188,8 @@ void ManualController::setImpact(Axis axis, double impact)
 
 void ManualController::addImpact(ManualController::Axis axis, double impact)
 {
-    this->setImpact(axis, this->impact(axis) + impact);
+    double current = this->impact(axis);
+    this->setImpact(axis, qIsNaN(current) ? impact : current + impact);
 }
 
 void ManualController::clearImpacts()
