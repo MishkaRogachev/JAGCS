@@ -17,6 +17,7 @@
 #include "mavlink_communicator.h"
 #include "mode_helper_factory.h"
 
+
 using namespace comm;
 
 namespace
@@ -49,7 +50,7 @@ namespace
 
     int toMavLinkImpact(double value)
     {
-        return qIsNaN(value) ? INT16_MAX : value * 1000;
+        return qIsNaN(value) ? std::numeric_limits<std::int32_t>::max() : value * 1000;
     }
 }
 
