@@ -20,28 +20,25 @@ T.Control {
     property Item focusedItem
 
     function updateValueFromControls() {
+        console.log("updateValueFromControls -- ?");
         value = Helper.dmsToDegree(sign,
                                    Math.abs(dInput.text),
                                    Math.abs(mInput.text),
-                                   Number.fromLocaleString(locale, sInput.text));
+                                   Helper.stringToReal(sInput.text, locale.decimalPoint));
     }
 
     function updateControlsFromValue() {
-        if (isValid)
-        {
+        console.log("updateControlsFromValue -- ok", value);
+        if (isValid) {
             var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
-            sign = dms.sign;
-
             dInput.text = Helper.pad(dms.deg, dInput.maximumLength);
             mInput.text = Helper.pad(dms.min, mInput.maximumLength);
-            sInput.text = dms.sec.toLocaleString(locale, 'f', Helper.decimals(secondsPrecision));
-            //Helper.pad(dms.sec, sInput.maximumLength);
+            sInput.text = Helper.padReal(dms.sec, 2, secondsPrecision, locale.decimalPoint);
         }
-        else
-        {
-            dInput.text = 0;
-            mInput.text = 0;
-            sInput.text = 0;
+        else {
+            dInput.text = Helper.pad(0, dInput.maximumLength);
+            mInput.text = Helper.pad(0, mInput.maximumLength);
+            sInput.text = Helper.padReal(0, 2, secondsPrecision, locale.decimalPoint);
         }
     }
 
@@ -148,11 +145,8 @@ T.Control {
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
                 validator: DoubleValidator {
-                    top: 60
                     bottom: 0
-                    decimals: secondsPrecision
-                    notation: DoubleValidator.StandardNotation
-                    locale: control.locale
+                    top: 60
                 }
                 onIncreaseValue: changeValue(2, Math.pow(10, -secondsPrecision))
                 onDecreaseValue: changeValue(2, -Math.pow(10, -secondsPrecision))

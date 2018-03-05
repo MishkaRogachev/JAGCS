@@ -12,10 +12,28 @@ function decimals(num) {
     return (num.toString().split('.')[1] || []).length;
 }
 
+function stringToReal(str, decimalPoint) {
+    if (decimalPoint !== ".") return parseFloat(str.replace(decimalPoint, "."));
+    return parseFloat(str);
+}
+
+function realToString(num, decimalPoint) {
+    var str = num.toString();
+    if (decimalPoint !== ".") return str.replace(".", decimalPoint);
+    return str;
+}
+
 function pad(num, size) {
     var str = num.toString();
     while (str.length < size) str = "0" + str;
     return str;
+}
+
+function padReal(num, sizeBefore, sizeAfter, decimalPoint) {
+    var split = realToString(num, decimalPoint).split(decimalPoint, 2);
+
+    return pad(split.length > 0 ? split[0] : 0, sizeBefore) + decimalPoint +
+           pad(split.length > 1 ? split[1] : 0, sizeBefore);
 }
 
 function formatTime(time) {
@@ -47,6 +65,7 @@ function degreesToDms(degrees, lng, secondsPrecision) {
 }
 
 function dmsToDegree(sign, deg, min, sec) {
+    console.log(sign, deg, min, sec, "=", sign * (deg + min / 60.0 + sec / 3600.0), sec / 3600.0)
     return sign * (deg + min / 60.0 + sec / 3600.0);
 }
 
