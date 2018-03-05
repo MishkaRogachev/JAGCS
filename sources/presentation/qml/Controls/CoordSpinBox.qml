@@ -13,14 +13,12 @@ T.Control {
     property bool isLongitude: false
     property int secondsPrecision: 2
 
-    readonly property bool isValid: !isNaN(value)
     readonly property real scalingFactor: width / implicitWidth
 
     property int sign: 1
     property Item focusedItem
 
     function updateValueFromControls() {
-        console.log("updateValueFromControls -- ?");
         value = Helper.dmsToDegree(sign,
                                    Math.abs(dInput.text),
                                    Math.abs(mInput.text),
@@ -28,8 +26,7 @@ T.Control {
     }
 
     function updateControlsFromValue() {
-        console.log("updateControlsFromValue -- ok", value);
-        if (isValid) {
+        if (!isNaN(value)) {
             var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
             dInput.text = Helper.pad(dms.deg, dInput.maximumLength);
             mInput.text = Helper.pad(dms.min, mInput.maximumLength);
@@ -43,6 +40,11 @@ T.Control {
     }
 
     function changeValue(digit, add) {
+        if (isNaN(value)) {
+            value = 0;
+            return;
+        }
+
         var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
 
         switch (digit) {
@@ -70,7 +72,7 @@ T.Control {
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: isValid ? palette.sunkenColor : palette.dangerColor
+        color: !isNaN(value) ? palette.sunkenColor : palette.dangerColor
         border.color: scope.activeFocus ? palette.highlightColor : "transparent"
 
         Shaders.Hatch {
@@ -82,7 +84,6 @@ T.Control {
 
     contentItem: FocusScope {
         id: scope
-        focus: true
         activeFocusOnTab: true
         anchors.fill: parent
 
@@ -172,11 +173,12 @@ T.Control {
                 autoRepeat: true
                 iconSource: "qrc:/ui/plus.svg"
                 onClicked: {
-                    if (!scope.activeFocus) {
-                        dInput.forceActiveFocus();
+                    if (focusedItem) {
+                        if (focusedItem.activeFocus) focusedItem.forceActiveFocus();
+                        focusedItem.increaseValue();
                     }
                     else {
-                        if (focusedItem) focusedItem.increaseValue();
+                        dInput.forceActiveFocus();
                     }
                 }
             }

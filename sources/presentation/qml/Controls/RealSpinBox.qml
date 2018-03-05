@@ -16,7 +16,7 @@ SpinBox {
 
     Component.onCompleted: recalc()
     onRealValueChanged: recalc()
-    onValueChanged: realValue = isValid ? value * precision : 0;
+    onValueChanged: realValue = isValid ? value * precision : 0
 
     validator: DoubleValidator {
         bottom: Math.min(control.from * precision, control.to * precision)

@@ -65,7 +65,6 @@ function degreesToDms(degrees, lng, secondsPrecision) {
 }
 
 function dmsToDegree(sign, deg, min, sec) {
-    console.log(sign, deg, min, sec, "=", sign * (deg + min / 60.0 + sec / 3600.0), sec / 3600.0)
     return sign * (deg + min / 60.0 + sec / 3600.0);
 }
 

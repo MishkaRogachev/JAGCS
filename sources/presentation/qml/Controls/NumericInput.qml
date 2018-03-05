@@ -1,4 +1,4 @@
-import QtQuick 2.6
+import QtQuick 2.9
 
 TextInput {
     id: root
@@ -6,8 +6,15 @@ TextInput {
     property Item previousItem
     property Item nextItem
 
+    property bool changed: false
+
     signal decreaseValue()
     signal increaseValue()
+
+    function finish() {
+        updateValueFromControls();
+        changed = false;
+    }
 
     horizontalAlignment: Qt.AlignHCenter
     font.pixelSize: sizings.fontPixelSize
@@ -15,15 +22,19 @@ TextInput {
     selectionColor: palette.selectionColor
     selectedTextColor: palette.selectedTextColor
 
+    onTextEdited: changed = true
     onActiveFocusChanged: {
-        if (!activeFocus) return;
+        if (!activeFocus) {
+            if (changed) finish();
+            return;
+        }
 
         selectAll();
         focusedItem = root;
     }
 
     onEditingFinished: {
-        updateValueFromControls();
+        if (changed) finish();
         if (nextItem && activeFocus) nextItem.forceActiveFocus();
     }
 
