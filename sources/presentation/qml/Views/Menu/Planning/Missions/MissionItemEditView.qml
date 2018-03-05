@@ -106,8 +106,8 @@ Item {
     }
 
     function updateLatLon() {
-        latitudeBox.realValue = position.latitude;
-        longitudeBox.realValue = position.longitude;
+        latitudeBox.value = position.latitude;
+        longitudeBox.value = position.longitude;
     }
 
     property bool lockDistAndAzimuth: false
@@ -256,8 +256,8 @@ Item {
                 Controls.CoordSpinBox {
                     id: latitudeBox
                     enabled: editEnabled
-                    onRealValueChanged: {
-                        position.latitude = realValue;
+                    onValueChanged: {
+                        position.latitude = value;
                         updateDistAndAzimuthFromPos();
                         updatePicker();
 
@@ -271,8 +271,8 @@ Item {
                     enabled: editEnabled
                     Layout.rowSpan: 2
                     onPicked: {
-                        latitudeBox.realValue = coordinate.latitude;
-                        longitudeBox.realValue = coordinate.longitude;
+                        latitudeBox.value = coordinate.latitude;
+                        longitudeBox.value = coordinate.longitude;
                     }
                 }
 
@@ -280,8 +280,8 @@ Item {
                     id: longitudeBox
                     enabled: editEnabled
                     isLongitude: true
-                    onRealValueChanged: {
-                        position.longitude = realValue;
+                    onValueChanged: {
+                        position.longitude = value;
                         updateDistAndAzimuthFromPos();
                         updatePicker();
 

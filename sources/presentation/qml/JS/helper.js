@@ -24,24 +24,25 @@ function formatTime(time) {
             pad(time.getSeconds(), 2);
 }
 
-function degreesToDms(degrees, lng) {
+function degreesToDms(degrees, lng, secondsPrecision) {
     var sign = degrees < 0 ? -1 : 1
     var abs = Math.abs(degrees);
     var deg = Math.floor(abs);
     var frac = (abs - deg) * 60;
-    var min = Math.floor(frac);
-    var sec = Math.round((frac - min) * 6000) / 100;
 
-    if (sec >= 60) { sec -= 60; min++; }
-    if (min >= 60) { min -= 60; deg++; }
+    if (Math.ceil(frac) - frac <= Math.pow(10, -7)) frac = Math.ceil(frac);
+
+    var min = Math.floor(frac);
+    var sec = (frac - min) * 60;
+
     var degLimit = (lng ? 180 : 90);
-    if (deg >= degLimit) { deg -= degLimit; sign = -sign; }
+    if (deg > degLimit) deg = degLimit;
 
     return {
         sign: sign,
         deg: deg,
         min: min,
-        sec: sec.toFixed(2)
+        sec: sec.toFixed(secondsPrecision)
     }
 }
 
@@ -49,12 +50,12 @@ function dmsToDegree(sign, deg, min, sec) {
     return sign * (deg + min / 60.0 + sec / 3600.0);
 }
 
-function degreesToDmsString(degrees, lng) {
+function degreesToDmsString(degrees, lng, secondsPrecision) {
     if (isNaN(degrees)) return "NaN"
-    var dms = degreesToDms(degrees, lng);
-    return pad(dms.deg, 3) + "\u00B0" +
+    var dms = degreesToDms(degrees, lng, secondsPrecision);
+    return pad(dms.deg, lng ? 3 : 2) + "\u00B0" +
            pad(dms.min, 2) + "\'" +
-           pad(dms.sec, 5) + "\"" +
+           pad(dms.sec, 3 + secondsPrecision) + "\"" +
            (dms.sign < 0 ? lng ? "W" : "S" : lng ? "E" : "N");
 }
 

@@ -95,8 +95,8 @@ Controls.Pane {
                 case Command.PreflightCalibration:
                     return calibrationBox.currentItem.args;
                 case Command.NavTo:
-                    return [latitudeBox.realValue,
-                            longitudeBox.realValue,
+                    return [latitudeBox.value,
+                            longitudeBox.value,
                             vehicle.barometric.fromDisplayedAltitude(altitudeBox.value)];
                 case Command.SetSpeed:
                     return [commandBox.currentItem.type,
@@ -106,8 +106,8 @@ Controls.Pane {
                     return [vehicle.barometric.fromDisplayedAltitude(altitudeBox.value), 0];
                 case Command.SetHome:
                     return [2, 0, 0, 0,
-                            latitudeBox.realValue,
-                            longitudeBox.realValue,
+                            latitudeBox.value,
+                            longitudeBox.value,
                             vehicle.barometric.fromDisplayedAltitude(altitudeBox.value)];
                 default:
                     return [];
@@ -137,7 +137,7 @@ Controls.Pane {
         Controls.CoordSpinBox {
             id: latitudeBox
             visible: sendButton.command === Command.SetHome || sendButton.command === Command.NavTo
-            onVisibleChanged: if (visible) realValue = vehicle.position.latitude
+            onVisibleChanged: if (visible) value = vehicle.position.latitude
             Layout.columnSpan: 2
             Layout.fillWidth: true
         }
@@ -147,8 +147,8 @@ Controls.Pane {
             visible: latitudeBox.visible
             Layout.rowSpan: 2
             onPicked: {
-                latitudeBox.realValue = coordinate.latitude;
-                longitudeBox.realValue = coordinate.longitude;
+                latitudeBox.value = coordinate.latitude;
+                longitudeBox.value = coordinate.longitude;
 
                 map.pickerCoordinate = coordinate;
             }
@@ -162,7 +162,7 @@ Controls.Pane {
         Controls.CoordSpinBox {
             id: longitudeBox
             visible: latitudeBox.visible
-            onVisibleChanged: if (visible) realValue = vehicle.position.longitude
+            onVisibleChanged: if (visible) value = vehicle.position.longitude
             isLongitude: true
             Layout.columnSpan: 2
             Layout.fillWidth: true

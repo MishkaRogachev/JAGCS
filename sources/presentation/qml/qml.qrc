@@ -32,6 +32,7 @@
         <file>Controls/Popup.qml</file>
         <file>Controls/Card.qml</file>
         <file>Controls/SpinBox.qml</file>
+        <file>Controls/NumericInput.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
         <file>Controls/RealSpinBox.qml</file>
         <file>Controls/ScrollBar.qml</file>
