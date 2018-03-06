@@ -1,5 +1,4 @@
 import QtQuick 2.6
-
 import "../Controls" as Controls
 
 import "Tools"
@@ -36,10 +35,7 @@ Controls.ApplicationWindow  {
 
     Item {
         id: substrate
-        anchors.left: parent.left
-        anchors.top: topbar.bottom
-        width: menuDrawer.visible ? menuDrawer.x : parent.width
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
     }
 
     MouseArea {
