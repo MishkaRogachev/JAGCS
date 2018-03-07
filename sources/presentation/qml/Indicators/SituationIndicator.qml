@@ -67,7 +67,7 @@ Item {
 
             ctx.save();
             ctx.rotate(desiredHeading * Math.PI / 180);
-            ctx.translate(-Helper.mapToRange(trackError, 0, maxTrackError, width), 0);
+            ctx.translate(Helper.mapToRange(trackError, 0, maxTrackError, width), 0);
 
             ctx.beginPath();
             ctx.lineWidth = 4;
