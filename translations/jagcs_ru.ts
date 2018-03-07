@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>AboutView</name>
     <message>
@@ -244,15 +244,15 @@
     <name>BaseVehicle</name>
     <message>
         <source>m/s</source>
-        <translation type="vanished">м/с</translation>
+        <translation>м/с</translation>
     </message>
     <message>
         <source>km/h</source>
-        <translation type="vanished">км/ч</translation>
+        <translation>км/ч</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="vanished">м</translation>
+        <translation>м</translation>
     </message>
 </context>
 <context>
@@ -737,7 +737,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/ControlPanel.qml" line="78"/>
         <source>Go around</source>
-        <translation>Первать заход</translation>
+        <translation>Второй круг</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/ControlPanel.qml" line="79"/>
@@ -771,11 +771,11 @@
     </message>
     <message>
         <source>Lat.</source>
-        <translation type="vanished">Шир.</translation>
+        <translation>Шир.</translation>
     </message>
     <message>
         <source>Lon.</source>
-        <translation type="vanished">Дол.</translation>
+        <translation>Дол.</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/ControlPanel.qml" line="172"/>
@@ -882,7 +882,7 @@
     </message>
     <message>
         <source>Instruments</source>
-        <translation type="vanished">Приборы</translation>
+        <translation>Приборы</translation>
     </message>
 </context>
 <context>
@@ -1107,33 +1107,33 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="62"/>
         <source>IAS</source>
-        <translation>ПВС</translation>
+        <translation>Vпр</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="62"/>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="76"/>
         <source>GS</source>
-        <translation>ПУТ</translation>
+        <translation>W</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="88"/>
         <source>TAS</source>
-        <translation>ИВС</translation>
+        <translation>Vист</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="142"/>
         <source>ALT</source>
-        <translation>ВЫС</translation>
+        <translation>Hбар</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="152"/>
         <source>SAT</source>
-        <translation>СПУТ</translation>
+        <translation>Hснс</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/Instruments/FlightDirector.qml" line="164"/>
         <source>RAD</source>
-        <translation>РАД</translation>
+        <translation>Hрв</translation>
     </message>
     <message>
         <source>RF</source>
@@ -1250,11 +1250,11 @@
     </message>
     <message>
         <source>mps</source>
-        <translation type="vanished">м/с</translation>
+        <translation>м/с</translation>
     </message>
     <message>
         <source>kph</source>
-        <translation type="vanished">км/ч</translation>
+        <translation>км/ч</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Menu/Settings/Gui/GuiSettingsView.qml" line="142"/>
@@ -2722,17 +2722,17 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/ShortAerialVehicleDisplay.qml" line="105"/>
         <source>GS</source>
-        <translation>ПУТ</translation>
+        <translation>W</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/ShortAerialVehicleDisplay.qml" line="114"/>
         <source>TAS</source>
-        <translation>ИВС</translation>
+        <translation>Vист</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/Displays/ShortAerialVehicleDisplay.qml" line="122"/>
         <source>ALT</source>
-        <translation>ВЫС</translation>
+        <translation>Hбар</translation>
     </message>
 </context>
 <context>
@@ -3672,7 +3672,7 @@
     <message>
         <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="85"/>
         <source>CTRL BY ATT</source>
-        <translation>УПР ПО ПОЛ</translation>
+        <translation>УПР. ПОЛОЖ</translation>
     </message>
     <message>
         <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="86"/>

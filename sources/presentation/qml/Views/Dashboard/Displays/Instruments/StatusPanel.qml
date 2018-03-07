@@ -53,7 +53,7 @@ Controls.Pane {
                 font.bold: true
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
-                           Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false) :
+                           Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
             }
 
@@ -62,7 +62,7 @@ Controls.Pane {
                 font.bold: true
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
-                           Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true) :
+                           Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
             }
         }
