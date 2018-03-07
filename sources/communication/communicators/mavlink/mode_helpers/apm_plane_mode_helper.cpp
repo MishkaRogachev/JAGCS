@@ -45,11 +45,11 @@ QList<domain::vehicle::Mode> ApmPlaneModeHelper::availableModes() const
     return {
 //        domain::vehicle::Mode::Manual,
 //        domain::vehicle::Mode::Stabilize,
-//        domain::vehicle::Mode::CtrlByAttitude,
 //        domain::vehicle::Mode::CtrlByAltitude,
 //        domain::vehicle::Mode::Acro,
 //        domain::vehicle::Mode::Autotune,
 //        domain::vehicle::Mode::Cruise,
+        domain::vehicle::Mode::CtrlByAttitude,
         domain::vehicle::Mode::Mission,
         domain::vehicle::Mode::Return,
         domain::vehicle::Mode::Loiter,
