@@ -308,7 +308,7 @@ Item {
                 visible: distanceVisible
                 enabled: editEnabled
                 onRealValueChanged: updatePosFromDistAndAzimuth()
-                to: 200000 // TODO: constants to config
+                realTo: 200000 // TODO: constants to config
                 Layout.fillWidth: true
             }
 
