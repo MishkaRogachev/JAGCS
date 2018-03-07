@@ -34,6 +34,7 @@
         <file>Controls/SpinBox.qml</file>
         <file>Controls/NumericInput.qml</file>
         <file>Controls/CoordSpinBox.qml</file>
+        <file>Controls/CoordSpinBoxInput.qml</file>
         <file>Controls/RealSpinBox.qml</file>
         <file>Controls/ScrollBar.qml</file>
         <file>Controls/ColoredIcon.qml</file>

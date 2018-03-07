@@ -109,23 +109,22 @@ T.Control {
                 }
             }
 
-            NumericInput {
+            CoordSpinBoxInput {
                 id: dInput
+                focus: true
                 maximumLength: isLongitude ? 3 : 2
                 nextItem: mInput
                 inputMethodHints: Qt.ImhDigitsOnly
                 validator: IntValidator { bottom: 0; top: isLongitude ? 180 : 90 }
                 onIncreaseValue: changeValue(0, 1)
                 onDecreaseValue: changeValue(0, -1)
-                onFinished: updateValueFromControls()
-                onActiveFocusChanged: if (activeFocus) focusedItem = dInput
                 Layout.preferredWidth: sizings.controlBaseSize * (isLongitude ? 1 : 0.75)
                 Layout.fillWidth: true
             }
 
             Controls.Label { text: "\u00B0" }
 
-            NumericInput {
+            CoordSpinBoxInput {
                 id: mInput
                 maximumLength: 2
                 previousItem: dInput
@@ -134,15 +133,13 @@ T.Control {
                 validator: IntValidator { bottom: 0; top: 60 }
                 onIncreaseValue: changeValue(1, 1)
                 onDecreaseValue: changeValue(1, -1)
-                onFinished: updateValueFromControls()
-                onActiveFocusChanged: if (activeFocus) focusedItem = mInput
                 Layout.preferredWidth: sizings.controlBaseSize * 0.75
                 Layout.fillWidth: true
             }
 
             Controls.Label { text: "\'" }
 
-            NumericInput {
+            CoordSpinBoxInput {
                 id: sInput
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
@@ -150,8 +147,6 @@ T.Control {
                 validator: DoubleValidator { bottom: 0; top: 60 }
                 onIncreaseValue: changeValue(2, Math.pow(10, -secondsPrecision))
                 onDecreaseValue: changeValue(2, -Math.pow(10, -secondsPrecision))
-                onFinished: updateValueFromControls()
-                onActiveFocusChanged: if (activeFocus) focusedItem = sInput
                 Layout.preferredWidth: sizings.controlBaseSize * (0.75 + secondsPrecision / 5 * 2)
                 Layout.fillWidth: true
             }
