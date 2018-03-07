@@ -19,8 +19,8 @@ Flickable {
     boundsBehavior: Flickable.StopAtBounds
     clip: true
 
-    Component.onCompleted: menuDrawer.interactive = false
-    Component.onDestruction: menuDrawer.interactive = true
+    Component.onCompleted: drawer.interactive = false
+    Component.onDestruction: drawer.interactive = true
 
     MissionItemListPresenter {
         id: presenter

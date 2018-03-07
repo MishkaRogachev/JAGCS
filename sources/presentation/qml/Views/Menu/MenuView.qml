@@ -15,7 +15,7 @@ ColumnLayout {
     function goTo(source, text, properties) {
         if (!atHome) home();
         deepIn(source, text, properties);
-        if (!menu.visible) menuDrawer.open();
+        if (!menu.visible) drawer.open();
     }
 
     function home() {
@@ -93,7 +93,7 @@ ColumnLayout {
             tipText: qsTr("Close menu")
             iconSource: "qrc:/icons/right.svg"
             flat: true
-            onClicked: menuDrawer.close()
+            onClicked: drawer.close()
         }
     }
 
