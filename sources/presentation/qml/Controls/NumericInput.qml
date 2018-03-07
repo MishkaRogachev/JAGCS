@@ -10,11 +10,7 @@ TextInput {
 
     signal decreaseValue()
     signal increaseValue()
-
-    function finish() {
-        updateValueFromControls();
-        changed = false;
-    }
+    signal finished()
 
     horizontalAlignment: Qt.AlignHCenter
     font.pixelSize: sizings.fontPixelSize
@@ -22,19 +18,15 @@ TextInput {
     selectionColor: palette.selectionColor
     selectedTextColor: palette.selectedTextColor
 
+    onFinished: changed = false
     onTextEdited: changed = true
     onActiveFocusChanged: {
-        if (!activeFocus) {
-            if (changed) finish();
-            return;
-        }
-
-        selectAll();
-        focusedItem = root;
+        if (activeFocus) selectAll();
+        else if (changed) finished();
     }
 
     onEditingFinished: {
-        if (changed) finish();
+        if (changed) finished();
         if (nextItem && activeFocus) nextItem.forceActiveFocus();
     }
 
@@ -44,6 +36,12 @@ TextInput {
         }
         else if (event.key === Qt.Key_Right && nextItem && cursorPosition === length) {
             nextItem.forceActiveFocus();
+        }
+        else if (event.key === Qt.Key_Tab && nextItem ) {
+            nextItem.forceActiveFocus();
+        }
+        else if (event.key === Qt.Key_Backtab && previousItem ) {
+            previousItem.forceActiveFocus();
         }
         else if (event.key === Qt.Key_Plus) {
             increaseValue();

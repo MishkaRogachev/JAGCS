@@ -12,10 +12,10 @@ T.Control {
     property real value: 0
     property bool isLongitude: false
     property int secondsPrecision: 2
+    property int sign: 1
 
     readonly property real scalingFactor: width / implicitWidth
 
-    property int sign: 1
     property Item focusedItem
 
     function updateValueFromControls() {
@@ -28,6 +28,7 @@ T.Control {
     function updateControlsFromValue() {
         if (!isNaN(value)) {
             var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
+            sign = dms.sign;
             dInput.text = Helper.pad(dms.deg, dInput.maximumLength);
             mInput.text = Helper.pad(dms.min, mInput.maximumLength);
             sInput.text = Helper.padReal(dms.sec, 2, secondsPrecision, locale.decimalPoint);
@@ -93,31 +94,31 @@ T.Control {
             spacing: 1
 
             Controls.Button {
-                Layout.minimumWidth: sizings.controlBaseSize
                 flat: true
                 autoRepeat: true
+                activeFocusOnTab: false
                 iconSource: "qrc:/ui/minus.svg"
                 onClicked: {
-                    if (!scope.activeFocus) {
-                        dInput.forceActiveFocus();
+                    if (focusedItem) {
+                        if (focusedItem.activeFocus) focusedItem.forceActiveFocus();
+                        focusedItem.decreaseValue();
                     }
                     else {
-                        if (focusedItem) focusedItem.decreaseValue();
+                        dInput.forceActiveFocus();
                     }
                 }
             }
 
             NumericInput {
                 id: dInput
-                focus: true
                 maximumLength: isLongitude ? 3 : 2
                 nextItem: mInput
-                validator: IntValidator {
-                    top: isLongitude ? 180 : 90
-                    bottom: 0
-                }
+                inputMethodHints: Qt.ImhDigitsOnly
+                validator: IntValidator { bottom: 0; top: isLongitude ? 180 : 90 }
                 onIncreaseValue: changeValue(0, 1)
                 onDecreaseValue: changeValue(0, -1)
+                onFinished: updateValueFromControls()
+                onActiveFocusChanged: if (activeFocus) focusedItem = dInput
                 Layout.preferredWidth: sizings.controlBaseSize * (isLongitude ? 1 : 0.75)
                 Layout.fillWidth: true
             }
@@ -129,12 +130,12 @@ T.Control {
                 maximumLength: 2
                 previousItem: dInput
                 nextItem: sInput
-                validator: IntValidator {
-                    top: 60
-                    bottom: 0
-                }
+                inputMethodHints: Qt.ImhDigitsOnly
+                validator: IntValidator { bottom: 0; top: 60 }
                 onIncreaseValue: changeValue(1, 1)
                 onDecreaseValue: changeValue(1, -1)
+                onFinished: updateValueFromControls()
+                onActiveFocusChanged: if (activeFocus) focusedItem = mInput
                 Layout.preferredWidth: sizings.controlBaseSize * 0.75
                 Layout.fillWidth: true
             }
@@ -145,12 +146,12 @@ T.Control {
                 id: sInput
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
-                validator: DoubleValidator {
-                    bottom: 0
-                    top: 60
-                }
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                validator: DoubleValidator { bottom: 0; top: 60 }
                 onIncreaseValue: changeValue(2, Math.pow(10, -secondsPrecision))
                 onDecreaseValue: changeValue(2, -Math.pow(10, -secondsPrecision))
+                onFinished: updateValueFromControls()
+                onActiveFocusChanged: if (activeFocus) focusedItem = sInput
                 Layout.preferredWidth: sizings.controlBaseSize * (0.75 + secondsPrecision / 5 * 2)
                 Layout.fillWidth: true
             }
@@ -159,8 +160,9 @@ T.Control {
 
             Button {
                 flat: true
-                text: sign < 0 ? isLongitude ? qsTr("W") : qsTr("S") : isLongitude ?
-                                                   qsTr("E") : qsTr("N")
+                activeFocusOnTab: false
+                text: sign < 0 ? (isLongitude ? qsTr("W") : qsTr("S")) :
+                                 (isLongitude ? qsTr("E") : qsTr("N"))
                 onClicked: {
                     value = -value;
                     updateControlsFromValue();
@@ -168,9 +170,9 @@ T.Control {
             }
 
             Controls.Button {
-                Layout.minimumWidth: sizings.controlBaseSize
                 flat: true
                 autoRepeat: true
+                activeFocusOnTab: false
                 iconSource: "qrc:/ui/plus.svg"
                 onClicked: {
                     if (focusedItem) {
