@@ -14,8 +14,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit TelemetryService(domain::VehicleService* service,
-                                  QObject* parent = nullptr);
+        explicit TelemetryService(domain::VehicleService* service, QObject* parent = nullptr);
         ~TelemetryService() override;
 
         QList<Telemetry*> rootNodes() const;

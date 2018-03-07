@@ -33,8 +33,7 @@ namespace domain
         dao::MissionAssignmentPtrList missionAssignments() const;
 
         dao::MissionItemPtr currentWaypoint(int vehicleId) const;
-        dao::MissionItemPtr addNewMissionItem(int missionId,
-                                              dao::MissionItem::Command command,
+        dao::MissionItemPtr addNewMissionItem(int missionId, dao::MissionItem::Command command,
                                               int sequence);
         void addNewMission(const QString& name);
 
@@ -59,6 +58,8 @@ namespace domain
 
         void setCurrentItem(int vehicleId, const dao::MissionItemPtr& current);
         void swapItems(const dao::MissionItemPtr& first, const dao::MissionItemPtr& second);
+
+        void onVehicleChanged(const dao::VehiclePtr& vehicle);
 
     signals:
         void missionAdded(dao::MissionPtr mission);

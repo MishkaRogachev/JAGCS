@@ -10,6 +10,7 @@
 #include "mission.h"
 #include "mission_item.h"
 #include "mission_assignment.h"
+#include "vehicle.h"
 
 #include "generic_repository.h"
 
@@ -471,5 +472,18 @@ void MissionService::swapItems(const MissionItemPtr& first, const MissionItemPtr
 
     emit missionItemChanged(first);
     emit missionItemChanged(second);
+}
+
+void MissionService::onVehicleChanged(const VehiclePtr& vehicle)
+{
+    if (vehicle->isOnline()) return;
+
+    dao::MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
+    if (assignment &&
+        (assignment->status() == dao::MissionAssignment::Downloading ||
+         assignment->status() == dao::MissionAssignment::Uploading))
+    {
+        this->cancelSync(assignment);
+    }
 }
 

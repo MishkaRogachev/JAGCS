@@ -41,6 +41,8 @@ VehicleService::VehicleService(MissionService* missionService, QObject* parent):
     qRegisterMetaType<dao::VehiclePtr>("dao::VehiclePtr");
 
     d->missionService = missionService;
+    connect(this, &VehicleService::vehicleChanged, missionService,
+            &MissionService::onVehicleChanged);
 
     d->loadVehicles();
 }

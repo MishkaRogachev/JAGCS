@@ -190,6 +190,7 @@ void MissionHandler::cancelSync(const dao::MissionAssignmentPtr& assignment)
     this->enterStage(Stage::Idle, d->vehicleService->mavIdByVehicleId(assignment->vehicleId()));
 
     assignment->setStatus(dao::MissionAssignment::NotActual);
+    assignment->setProgress(0);
     d->missionService->assignmentChanged(assignment);
 }
 
