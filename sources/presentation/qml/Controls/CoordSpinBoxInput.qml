@@ -6,6 +6,9 @@ NumericInput {
     property Item previousItem
     property Item nextItem
 
+    property bool up: false
+    property bool down: false
+
     signal decreaseValue()
     signal increaseValue()
 
@@ -26,12 +29,22 @@ NumericInput {
         else if (event.key === Qt.Key_Backtab && previousItem ) {
             previousItem.forceActiveFocus();
         }
-        else if (event.key === Qt.Key_Plus) {
+        else if (event.key === Qt.Key_Up) {
+            up = true;
             increaseValue();
         }
-        else if (event.key === Qt.Key_Minus) {
+        else if (event.key === Qt.Key_Down) {
+            down = true;
             decreaseValue();
         }
+        else return;
+
+        event.accepted = true;
+    }
+
+    Keys.onReleased: {
+        if (event.key === Qt.Key_Up) up = false;
+        else if (event.key === Qt.Key_Down) down = false;
         else return;
 
         event.accepted = true;

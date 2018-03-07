@@ -10,7 +10,6 @@ T.TextField {
     color: palette.textColor
     selectionColor: palette.selectionColor
     selectedTextColor: palette.selectedTextColor
-    selectByMouse: true
     implicitWidth: sizings.controlBaseSize * 4
     implicitHeight: sizings.controlBaseSize
     leftPadding: sizings.padding

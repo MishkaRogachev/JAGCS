@@ -7,6 +7,7 @@ T.Button { // TODO: clickable
     id: control
 
     property bool round: false
+    property bool pressedImpl: false
     property string tipText
 
     property alias iconSource: content.iconSource
@@ -25,7 +26,7 @@ T.Button { // TODO: clickable
         radius: round ? Math.min(width, height) / 2 : 2
         color: {
             if (control.checked || control.highlighted) return palette.selectionColor;
-            if (control.pressed) return palette.highlightColor;
+            if (control.pressed | control.pressedImpl) return palette.highlightColor;
             return control.flat ? "transparent" : palette.buttonColor;
         }
 

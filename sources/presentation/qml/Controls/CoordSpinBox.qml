@@ -67,6 +67,7 @@ T.Control {
     onValueChanged: updateControlsFromValue()
 
     clip: true
+    opacity: enabled ? 1 : 0.33
     implicitWidth: row.implicitWidth
     implicitHeight: sizings.controlBaseSize
 
@@ -97,7 +98,9 @@ T.Control {
                 flat: true
                 autoRepeat: true
                 activeFocusOnTab: false
+                visible: enabled
                 iconSource: "qrc:/ui/minus.svg"
+                pressedImpl: focusedItem && focusedItem.down
                 onClicked: {
                     if (focusedItem) {
                         if (focusedItem.activeFocus) focusedItem.forceActiveFocus();
@@ -168,7 +171,9 @@ T.Control {
                 flat: true
                 autoRepeat: true
                 activeFocusOnTab: false
+                visible: enabled
                 iconSource: "qrc:/ui/plus.svg"
+                pressedImpl: focusedItem && focusedItem.up
                 onClicked: {
                     if (focusedItem) {
                         if (focusedItem.activeFocus) focusedItem.forceActiveFocus();

@@ -9,10 +9,12 @@ T.SpinBox {
     property bool isValid: value >= from && value <= to
     property color backgroundColor: palette.sunkenColor
 
-    font.pixelSize: sizings.fontPixelSize
-    editable: true
     implicitWidth: sizings.controlBaseSize * 5
     implicitHeight: sizings.controlBaseSize
+    leftPadding: sizings.controlBaseSize
+    rightPadding: sizings.controlBaseSize
+    font.pixelSize: sizings.fontPixelSize
+    editable: true
     opacity: enabled ? 1 : 0.33
 
     validator: IntValidator {
@@ -21,7 +23,6 @@ T.SpinBox {
     }
 
     background: Rectangle {
-        anchors.fill: parent
         radius: 3
         color: isValid ? backgroundColor : palette.dangerColor
         border.color: control.activeFocus ? palette.highlightColor : "transparent"
@@ -48,7 +49,7 @@ T.SpinBox {
         implicitHeight: sizings.controlBaseSize
         radius: 3
         color: down.pressed ? palette.highlightColor : "transparent"
-        opacity: enabled ? 1 : 0.33
+        visible: enabled
 
         ColoredIcon {
             anchors.centerIn: parent
@@ -65,7 +66,7 @@ T.SpinBox {
         implicitHeight: sizings.controlBaseSize
         radius: 3
         color: up.pressed ? palette.highlightColor : "transparent"
-        opacity: enabled ? 1 : 0.33
+        visible: enabled
 
         ColoredIcon {
             anchors.centerIn: parent
