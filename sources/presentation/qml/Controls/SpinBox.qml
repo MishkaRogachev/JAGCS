@@ -33,24 +33,17 @@ T.SpinBox {
         }
     }
 
-    contentItem: TextInput {
-        anchors.left: parent.left
-        anchors.leftMargin: sizings.padding
-        anchors.right: down.indicator.left
-        anchors.verticalCenter: parent.verticalCenter
-        text: isValid ? control.textFromValue(control.value, control.locale) : "NaN"
+    contentItem: NumericInput {
+        text: isValid ? control.textFromValue(control.value, control.locale) : "0"
         font: control.font
         readOnly: !control.editable
+        inputMethodHints: Qt.ImhDigitsOnly
         validator: control.validator
-        color: palette.textColor
-        selectionColor: palette.selectionColor
-        selectedTextColor: palette.selectedTextColor
-        selectByMouse: true
         verticalAlignment: Qt.AlignVCenter
     }
 
     down.indicator: Rectangle {
-        x: control.mirrored ? up.indicator.width : control.width - width - up.indicator.width
+        x: control.mirrored ? parent.width - width : 0
         implicitWidth: sizings.controlBaseSize
         implicitHeight: sizings.controlBaseSize
         radius: 3
@@ -67,7 +60,7 @@ T.SpinBox {
     }
 
     up.indicator: Rectangle {
-        x: control.mirrored ? 0 : control.width - width
+        x: control.mirrored ? 0 : parent.width - width
         implicitWidth: sizings.controlBaseSize
         implicitHeight: sizings.controlBaseSize
         radius: 3
