@@ -8,8 +8,8 @@ namespace db
     class InitMigration: public DbMigration
     {
     public:
-        bool up();
-        bool down();
+        bool up() override;
+        bool down() override;
 
         QDateTime version() const override;
     };
