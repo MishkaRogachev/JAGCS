@@ -2,7 +2,6 @@
 
 // Qt
 #include <QMetaEnum>
-#include <QMap>
 #include <QDebug>
 
 // Internal
@@ -141,7 +140,7 @@ QVariant MissionItem::parameter(Parameter key, const QVariant& parameter)
     return m_parameters.value(key, parameter);
 }
 
-void MissionItem::setParameter(MissionItem::Parameter key, const QVariant& parameter)
+void MissionItem::setParameter(Parameter key, const QVariant& parameter)
 {
     if (::commandParameters[m_command].contains(key)) m_parameters[key] = parameter;
 }

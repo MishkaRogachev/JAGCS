@@ -1,6 +1,20 @@
 #include "link_description.h"
 
+// Qt
+#include <QMetaEnum>
+#include <QDebug>
+
 using namespace dao;
+
+namespace
+{
+    static QMap <LinkDescription::Type, QList<LinkDescription::Parameter> > typeParameters =
+    {
+        { LinkDescription::Serial, { LinkDescription::Device, LinkDescription::BaudRate } },
+        { LinkDescription::Udp, { LinkDescription::Port } }
+    };
+}
+
 
 QString LinkDescription::name() const
 {
@@ -22,34 +36,59 @@ void LinkDescription::setType(LinkDescription::Type type)
     m_type = type;
 }
 
-int LinkDescription::port() const
+QString LinkDescription::parameters() const
 {
-    return m_port;
+    QStringList list;
+    int enumIndex = LinkDescription::staticMetaObject.indexOfEnumerator("Parameter");
+    QMetaEnum enumerator = LinkDescription::staticMetaObject.enumerator(enumIndex);
+
+    for (Parameter parameter: m_parameters.keys())
+    {
+        list.append(QString(enumerator.valueToKey(parameter)) + ":" + m_parameters.value(parameter).toString());
+    }
+
+    return list.join(";");
 }
 
-void LinkDescription::setPort(int port)
+void LinkDescription::setParameters(const QString& arguments)
 {
-    m_port = port;
+    int enumIndex = LinkDescription::staticMetaObject.indexOfEnumerator("Parameter");
+    QMetaEnum enumerator = LinkDescription::staticMetaObject.enumerator(enumIndex);
+
+    m_parameters.clear();
+    for (const QString& pairs: arguments.split(";"))
+    {
+        QStringList pairList = pairs.split(":");
+        if (pairList.count() < 2) continue;
+
+        Parameter param = static_cast<Parameter>(enumerator.keyToValue(qPrintable(pairList.at(0))));
+        if (param != UnknownParameter) m_parameters[param] = pairList.at(1);
+    }
 }
 
-QString LinkDescription::device() const
+QVariant LinkDescription::parameter(Parameter key, const QVariant& parameter)
 {
-    return m_device;
+    return m_parameters.value(key, parameter);
 }
 
-void LinkDescription::setDevice(const QString& device)
+void LinkDescription::setParameter(Parameter key, const QVariant& parameter)
 {
-    m_device = device;
+    if (::typeParameters[m_type].contains(key)) m_parameters[key] = parameter;
 }
 
-int LinkDescription::baudRate() const
+void LinkDescription::clearParameters()
 {
-    return m_baudRate;
+    m_parameters.clear();
 }
 
-void LinkDescription::setBaudRate(int baudRate)
+void LinkDescription::clearSuperfluousParameters()
 {
-    m_baudRate = baudRate;
+    for (Parameter parameter: m_parameters.keys())
+    {
+        if (::typeParameters[m_type].contains(parameter)) continue;
+
+        m_parameters.remove(parameter);
+    }
 }
 
 bool LinkDescription::isAutoConnect() const

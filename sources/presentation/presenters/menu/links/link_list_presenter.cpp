@@ -37,22 +37,24 @@ void LinkListPresenter::updateLinks()
 
 void LinkListPresenter::addUdpLink()
 {
-    auto description = dao::LinkDescriptionPtr::create();
+    dao::LinkDescriptionPtr description = dao::LinkDescriptionPtr::create();
 
     description->setName(tr("New UDP Link"));
     description->setType(dao::LinkDescription::Udp);
-    description->setPort(settings::Provider::value(settings::communication::port).toInt());
+    description->setParameter(dao::LinkDescription::Port,
+                              settings::Provider::value(settings::communication::port));
 
     m_service->save(description);
 }
 
 void LinkListPresenter::addSerialLink()
 {
-    auto description = dao::LinkDescriptionPtr::create();
+    dao::LinkDescriptionPtr description = dao::LinkDescriptionPtr::create();
 
     description->setName(tr("New Serial Link"));
     description->setType(dao::LinkDescription::Serial);
-    description->setBaudRate(settings::Provider::value(settings::communication::baudRate).toInt());
+    description->setParameter(dao::LinkDescription::BaudRate,
+                              settings::Provider::value(settings::communication::baudRate));
 
     m_service->save(description);
 }

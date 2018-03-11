@@ -143,11 +143,11 @@ void CommunicationService::init()
         d->commWorker->updateLink(description->id(),
                                   factory, description->isAutoConnect());
 
-        if (description->type() == dao::LinkDescription::Serial &&
-            !description->device().isEmpty())
+        QString device = description->parameter(dao::LinkDescription::Device).toString();
+        if (description->type() == dao::LinkDescription::Serial && device.length() > 0)
         {
-            d->serialPortService->holdDevice(description->device());
-            d->descriptedDevices[description] = description->device();
+            d->serialPortService->holdDevice(device);
+            d->descriptedDevices[description] = device;
         }
     }
 }
@@ -162,8 +162,8 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     d->commWorker->updateLink(description->id(),
                               factory, description->isAutoConnect());
 
-    if (d->descriptedDevices.contains(description) &&
-        description->device() != d->descriptedDevices[description])
+    QString device = description->parameter(dao::LinkDescription::Device).toString();
+    if (d->descriptedDevices.contains(description) && device != d->descriptedDevices[description])
     {
         d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
     }
@@ -171,10 +171,10 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     isNew ? descriptionAdded(description) : descriptionChanged(description);
 
     if (description->type() == dao::LinkDescription::Serial &&
-        !description->device().isEmpty() && !d->descriptedDevices.contains(description))
+        device.length() > 0 && !d->descriptedDevices.contains(description))
     {
-        d->serialPortService->holdDevice(description->device());
-        d->descriptedDevices[description] = description->device();
+        d->serialPortService->holdDevice(device);
+        d->descriptedDevices[description] = device;
     }
 
     return true;
@@ -273,7 +273,7 @@ void CommunicationService::onDevicesChanged()
     for (const dao::LinkDescriptionPtr& description: d->descriptedDevices.keys())
     {
         if (!description->isConnected() && description->isAutoConnect() &&
-            devices.contains(description->device()))
+            devices.contains(description->parameter(dao::LinkDescription::Device).toString()))
         {
             this->setLinkConnected(description, true);
         }

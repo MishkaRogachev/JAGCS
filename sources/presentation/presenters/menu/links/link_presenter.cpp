@@ -72,12 +72,13 @@ void LinkPresenter::updateRates()
 
 void LinkPresenter::updateLink()
 {
-    this->setViewProperty(PROPERTY(type), d->description ? d->description->type() :
-                                                           dao::LinkDescription::UnknownType);
-    this->setViewProperty(PROPERTY(name), d->description ? d->description->name() : QString());
-    this->setViewProperty(PROPERTY(port), d->description ? d->description->port() : 0);
-    this->setViewProperty(PROPERTY(device), d->description ? d->description->device() : QString());
-    this->setViewProperty(PROPERTY(baudRate), d->description ? d->description->baudRate() : 0);
+    if (d->description.isNull()) return;
+
+    this->setViewProperty(PROPERTY(type), d->description->type());
+    this->setViewProperty(PROPERTY(name), d->description->name());
+    this->setViewProperty(PROPERTY(port), d->description->parameter(dao::LinkDescription::Port));
+    this->setViewProperty(PROPERTY(device), d->description->parameter(dao::LinkDescription::Device));
+    this->setViewProperty(PROPERTY(baudRate), d->description->parameter(dao::LinkDescription::BaudRate));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -101,9 +102,10 @@ void LinkPresenter::updateDevices()
         devices.append(device);
     }
 
-    if (d->description && !devices.contains(d->description->device()))
+    QString device = d->description->parameter(dao::LinkDescription::Device).toString();
+    if (d->description && !devices.contains(device))
     {
-        devices.append(d->description->device());
+        devices.append(device);
     }
 
     this->setViewProperty(PROPERTY(devices), devices);
@@ -121,9 +123,12 @@ void LinkPresenter::save()
     if (d->description.isNull()) return;
 
     d->description->setName(this->viewProperty(PROPERTY(name)).toString());
-    d->description->setPort(this->viewProperty(PROPERTY(port)).toInt());
-    d->description->setDevice(this->viewProperty(PROPERTY(device)).toString());
-    d->description->setBaudRate(this->viewProperty(PROPERTY(baudRate)).toInt());
+    d->description->setParameter(dao::LinkDescription::Device,
+                                 this->viewProperty(PROPERTY(device)).toString());
+    d->description->setParameter(dao::LinkDescription::BaudRate,
+                                 this->viewProperty(PROPERTY(baudRate)).toInt());
+    d->description->setParameter(dao::LinkDescription::Port,
+                                 this->viewProperty(PROPERTY(port)).toInt());
 
     if (!d->commService->save(d->description)) return;
 
