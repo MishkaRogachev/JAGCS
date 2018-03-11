@@ -1,7 +1,5 @@
 #include "endpoint.h"
 
-using namespace comm;
-
 Endpoint::Endpoint(const QHostAddress& address, quint16 port):
     m_address(address),
     m_port(port)
@@ -12,19 +10,19 @@ QHostAddress Endpoint::address() const
     return m_address;
 }
 
+void Endpoint::setAddress(const QHostAddress& address)
+{
+    m_address = address;
+}
+
 quint16 Endpoint::port() const
 {
     return m_port;
 }
 
-QHostAddress& Endpoint::rAddress()
+void Endpoint::setPort(quint16 port)
 {
-    return m_address;
-}
-
-quint16& Endpoint::rPort()
-{
-    return m_port;
+    m_port = port;
 }
 
 bool Endpoint::operator ==(const Endpoint& other)

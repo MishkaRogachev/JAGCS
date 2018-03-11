@@ -116,13 +116,17 @@ void UdpLink::readPendingDatagrams()
     while (m_socket->hasPendingDatagrams())
     {
         QByteArray datagram;
-        Endpoint endpoint;
         datagram.resize(m_socket->pendingDatagramSize());
-        m_socket->readDatagram(datagram.data(), datagram.size(),
-                               &endpoint.rAddress(), &endpoint.rPort());
 
+        QHostAddress address;
+        quint16 port;
+        m_socket->readDatagram(datagram.data(), datagram.size(), &address, &port);
+
+        Endpoint endpoint(address, port);
         if (m_autoResponse && !m_endpoints.contains(endpoint))
+        {
             this->addEndpoint(endpoint);
+        }
 
         this->receiveData(datagram);
     }
