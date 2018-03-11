@@ -48,9 +48,7 @@ bool DbManager::open(const QString& dbName)
         return false;
     }
 
-    if (!exist) return m_migrator->migrate();
-
-    return true;
+    return m_migrator->migrate();
 }
 
 bool DbManager::migrateLastVersion()
