@@ -35,7 +35,7 @@ void ConnectionPresenter::updateStatus()
 {
     bool connected = false;
 
-    for (const dao::LinkDescriptionPtr& link: d->service->descriptions())
+    for (const dto::LinkDescriptionPtr& link: d->service->descriptions())
     {
         if (!link->isConnected()) continue;
 
@@ -51,7 +51,7 @@ void ConnectionPresenter::updateStatistics()
     qreal bytesRecv = 0;
     qreal bytesSent = 0;
 
-    for (const dao::LinkStatisticsPtr& stats: d->service->statistics())
+    for (const dto::LinkStatisticsPtr& stats: d->service->statistics())
     {
         bytesRecv += stats->bytesRecv();
         bytesSent += stats->bytesSent();
@@ -63,7 +63,7 @@ void ConnectionPresenter::updateStatistics()
 
 void ConnectionPresenter::setConnected(bool connected)
 {
-    for (const dao::LinkDescriptionPtr& link: d->service->descriptions())
+    for (const dto::LinkDescriptionPtr& link: d->service->descriptions())
     {
         if (link->isConnected() == connected) continue;
 

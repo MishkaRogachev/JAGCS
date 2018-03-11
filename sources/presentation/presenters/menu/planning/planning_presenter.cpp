@@ -27,9 +27,9 @@ PlanningPresenter::PlanningPresenter(QObject* parent):
 void PlanningPresenter::updateVehicles()
 {
     QVariantList vehicles;
-    vehicles.append(QVariant::fromValue(dao::Vehicle()));
+    vehicles.append(QVariant::fromValue(dto::Vehicle()));
 
-    for (const dao::VehiclePtr& vehicle: m_service->vehicles())
+    for (const dto::VehiclePtr& vehicle: m_service->vehicles())
     {
         vehicles.append(QVariant::fromValue(*vehicle));
     }

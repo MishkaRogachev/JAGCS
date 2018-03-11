@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 #include "mission_item.h"
 
 namespace domain
@@ -18,37 +18,37 @@ namespace domain
         explicit MissionService(QObject* parent = nullptr);
         ~MissionService() override;
 
-        dao::MissionPtr mission(int id) const;
-        dao::MissionItemPtr missionItem(int id) const;
-        dao::MissionAssignmentPtr assignment(int id) const;
+        dto::MissionPtr mission(int id) const;
+        dto::MissionItemPtr missionItem(int id) const;
+        dto::MissionAssignmentPtr assignment(int id) const;
 
-        dao::MissionAssignmentPtr missionAssignment(int missionId) const;
-        dao::MissionAssignmentPtr vehicleAssignment(int vehicleId) const;
+        dto::MissionAssignmentPtr missionAssignment(int missionId) const;
+        dto::MissionAssignmentPtr vehicleAssignment(int vehicleId) const;
 
-        dao::MissionItemPtrList missionItems(int missionId) const;
-        dao::MissionItemPtr missionItem(int missionId, int sequence) const;
+        dto::MissionItemPtrList missionItems(int missionId) const;
+        dto::MissionItemPtr missionItem(int missionId, int sequence) const;
 
-        dao::MissionPtrList missions() const;
-        dao::MissionItemPtrList missionItems() const;
-        dao::MissionAssignmentPtrList missionAssignments() const;
+        dto::MissionPtrList missions() const;
+        dto::MissionItemPtrList missionItems() const;
+        dto::MissionAssignmentPtrList missionAssignments() const;
 
-        dao::MissionItemPtr currentWaypoint(int vehicleId) const;
-        dao::MissionItemPtr addNewMissionItem(int missionId, dao::MissionItem::Command command,
+        dto::MissionItemPtr currentWaypoint(int vehicleId) const;
+        dto::MissionItemPtr addNewMissionItem(int missionId, dto::MissionItem::Command command,
                                               int sequence);
         void addNewMission(const QString& name);
 
     public slots:
-        bool save(const dao::MissionPtr& mission);
-        bool save(const dao::MissionItemPtr& item);
-        bool save(const dao::MissionAssignmentPtr& assignment);
+        bool save(const dto::MissionPtr& mission);
+        bool save(const dto::MissionItemPtr& item);
+        bool save(const dto::MissionAssignmentPtr& assignment);
 
-        bool remove(const dao::MissionPtr& mission);
-        bool remove(const dao::MissionItemPtr& item);
-        bool remove(const dao::MissionAssignmentPtr& assignment);
+        bool remove(const dto::MissionPtr& mission);
+        bool remove(const dto::MissionItemPtr& item);
+        bool remove(const dto::MissionAssignmentPtr& assignment);
 
-        void unload(const dao::MissionPtr& mission);
-        void unload(const dao::MissionItemPtr& item);
-        void unload(const dao::MissionAssignmentPtr& assignment);
+        void unload(const dto::MissionPtr& mission);
+        void unload(const dto::MissionItemPtr& item);
+        void unload(const dto::MissionAssignmentPtr& assignment);
 
         void fixMissionItemOrder(int missionId);
         void fixMissionItemCount(int missionId);
@@ -56,28 +56,28 @@ namespace domain
         void assign(int missionId, int vehicleId);
         void unassign(int missionId);
 
-        void setCurrentItem(int vehicleId, const dao::MissionItemPtr& current);
-        void swapItems(const dao::MissionItemPtr& first, const dao::MissionItemPtr& second);
+        void setCurrentItem(int vehicleId, const dto::MissionItemPtr& current);
+        void swapItems(const dto::MissionItemPtr& first, const dto::MissionItemPtr& second);
 
-        void onVehicleChanged(const dao::VehiclePtr& vehicle);
+        void onVehicleChanged(const dto::VehiclePtr& vehicle);
 
     signals:
-        void missionAdded(dao::MissionPtr mission);
-        void missionRemoved(dao::MissionPtr mission);
-        void missionChanged(dao::MissionPtr mission);
+        void missionAdded(dto::MissionPtr mission);
+        void missionRemoved(dto::MissionPtr mission);
+        void missionChanged(dto::MissionPtr mission);
 
-        void missionItemAdded(dao::MissionItemPtr item);
-        void missionItemRemoved(dao::MissionItemPtr item);
-        void missionItemChanged(dao::MissionItemPtr item);
-        void currentItemChanged(int vehicleId, dao::MissionItemPtr item);
+        void missionItemAdded(dto::MissionItemPtr item);
+        void missionItemRemoved(dto::MissionItemPtr item);
+        void missionItemChanged(dto::MissionItemPtr item);
+        void currentItemChanged(int vehicleId, dto::MissionItemPtr item);
 
-        void assignmentAdded(dao::MissionAssignmentPtr assignment);
-        void assignmentRemoved(dao::MissionAssignmentPtr assignment);
-        void assignmentChanged(dao::MissionAssignmentPtr assignment);
+        void assignmentAdded(dto::MissionAssignmentPtr assignment);
+        void assignmentRemoved(dto::MissionAssignmentPtr assignment);
+        void assignmentChanged(dto::MissionAssignmentPtr assignment);
 
-        void download(dao::MissionAssignmentPtr assignment);
-        void upload(dao::MissionAssignmentPtr assignment);
-        void cancelSync(dao::MissionAssignmentPtr assignment);
+        void download(dto::MissionAssignmentPtr assignment);
+        void upload(dto::MissionAssignmentPtr assignment);
+        void cancelSync(dto::MissionAssignmentPtr assignment);
 
     private:
         class Impl;

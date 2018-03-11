@@ -21,11 +21,11 @@ class MissionItemEditPresenter::Impl
 public:
     domain::MissionService* const service = domain::ServiceRegistry::missionService();
 
-    dao::MissionItemPtr item;
+    dto::MissionItemPtr item;
 
     TranslationHelper helper;
 
-    QList<dao::MissionItem::Command> availableCommands;
+    QList<dto::MissionItem::Command> availableCommands;
 
     void updateAvailableCommands()
     {
@@ -35,15 +35,15 @@ public:
 
         if (item->sequence() == 0)
         {
-            availableCommands.append(dao::MissionItem::Home);
+            availableCommands.append(dto::MissionItem::Home);
         }
         else
         {
             availableCommands.append(
-            { dao::MissionItem::Takeoff, dao::MissionItem::Waypoint, dao::MissionItem::LoiterUnlim,
-              dao::MissionItem::LoiterAltitude, dao::MissionItem::LoiterTurns, dao::MissionItem::LoiterTime,
-              dao::MissionItem::Continue, dao::MissionItem::Return, dao::MissionItem::Landing,
-              dao::MissionItem::SetSpeed });
+            { dto::MissionItem::Takeoff, dto::MissionItem::Waypoint, dto::MissionItem::LoiterUnlim,
+              dto::MissionItem::LoiterAltitude, dto::MissionItem::LoiterTurns, dto::MissionItem::LoiterTime,
+              dto::MissionItem::Continue, dto::MissionItem::Return, dto::MissionItem::Landing,
+              dto::MissionItem::SetSpeed });
         }
     }
 };
@@ -53,7 +53,7 @@ MissionItemEditPresenter::MissionItemEditPresenter(QObject* object):
     d(new Impl())
 {
     connect(d->service, &domain::MissionService::missionItemChanged, this,
-            [this](dao::MissionItemPtr item) { if (item == d->item) this->updateItem(); });
+            [this](dto::MissionItemPtr item) { if (item == d->item) this->updateItem(); });
 }
 
 MissionItemEditPresenter::~MissionItemEditPresenter()
@@ -78,20 +78,20 @@ void MissionItemEditPresenter::save()
     d->item->setCoordinate(this->viewProperty(PROPERTY(position)).value<QGeoCoordinate>());
     d->item->setAltitude(this->viewProperty(PROPERTY(altitude)).toFloat());
 
-    d->item->setParameter(dao::MissionItem::AbortAltitude, this->viewProperty(PROPERTY(abortAltitude)));
-    d->item->setParameter(dao::MissionItem::Radius, this->viewProperty(PROPERTY(radius)));
-    d->item->setParameter(dao::MissionItem::Repeats, this->viewProperty(PROPERTY(repeats)));
-    d->item->setParameter(dao::MissionItem::Time, this->viewProperty(PROPERTY(time)));
-    d->item->setParameter(dao::MissionItem::Pitch, this->viewProperty(PROPERTY(pitch)));
-    d->item->setParameter(dao::MissionItem::Yaw, this->viewProperty(PROPERTY(yaw)));
-    d->item->setParameter(dao::MissionItem::Clockwise, this->viewProperty(PROPERTY(clockwise)));
-    d->item->setParameter(dao::MissionItem::IsGroundSpeed, this->viewProperty(PROPERTY(isGroundSpeed)));
-    d->item->setParameter(dao::MissionItem::Speed, this->viewProperty(PROPERTY(speedEnabled)).toBool() ?
+    d->item->setParameter(dto::MissionItem::AbortAltitude, this->viewProperty(PROPERTY(abortAltitude)));
+    d->item->setParameter(dto::MissionItem::Radius, this->viewProperty(PROPERTY(radius)));
+    d->item->setParameter(dto::MissionItem::Repeats, this->viewProperty(PROPERTY(repeats)));
+    d->item->setParameter(dto::MissionItem::Time, this->viewProperty(PROPERTY(time)));
+    d->item->setParameter(dto::MissionItem::Pitch, this->viewProperty(PROPERTY(pitch)));
+    d->item->setParameter(dto::MissionItem::Yaw, this->viewProperty(PROPERTY(yaw)));
+    d->item->setParameter(dto::MissionItem::Clockwise, this->viewProperty(PROPERTY(clockwise)));
+    d->item->setParameter(dto::MissionItem::IsGroundSpeed, this->viewProperty(PROPERTY(isGroundSpeed)));
+    d->item->setParameter(dto::MissionItem::Speed, this->viewProperty(PROPERTY(speedEnabled)).toBool() ?
                               this->viewProperty(PROPERTY(speed)) : QVariant());
-    d->item->setParameter(dao::MissionItem::Throttle, this->viewProperty(PROPERTY(throttleEnabled)).toBool() ?
+    d->item->setParameter(dto::MissionItem::Throttle, this->viewProperty(PROPERTY(throttleEnabled)).toBool() ?
                               this->viewProperty(PROPERTY(throttle)) : QVariant());
 
-    d->item->setStatus(dao::MissionItem::NotActual);
+    d->item->setStatus(dto::MissionItem::NotActual);
 
     if (!d->service->save(d->item)) return;
 }
@@ -101,7 +101,7 @@ void MissionItemEditPresenter::updateItem()
     if (d->item)
     {
         int homeAltitude = 0;
-        dao::MissionItemPtr home = d->service->missionItem(d->item->missionId(), 0);
+        dto::MissionItemPtr home = d->service->missionItem(d->item->missionId(), 0);
 
         if (home) homeAltitude = home->altitude();
         this->setViewProperty(PROPERTY(homeAltitude), homeAltitude);
@@ -114,7 +114,7 @@ void MissionItemEditPresenter::updateItem()
 
         for (int seq = d->item->sequence() - 1; seq >= 0; --seq)
         {
-            dao::MissionItemPtr previous = d->service->missionItem(d->item->missionId(), seq);
+            dto::MissionItemPtr previous = d->service->missionItem(d->item->missionId(), seq);
             if (!previous) continue;
 
             if (updateAltitude && previous->isAltitudedItem())
@@ -144,23 +144,23 @@ void MissionItemEditPresenter::updateItem()
         this->setViewProperty(PROPERTY(savedPosition), QVariant::fromValue(d->item->coordinate()));
         this->setViewProperty(PROPERTY(position), QVariant::fromValue(d->item->coordinate()));
         this->setViewProperty(PROPERTY(altitude), d->item->altitude());
-        this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dao::MissionItem::AbortAltitude));
-        this->setViewProperty(PROPERTY(radius), d->item->parameter(dao::MissionItem::Radius));
-        this->setViewProperty(PROPERTY(repeats), d->item->parameter(dao::MissionItem::Repeats));
-        this->setViewProperty(PROPERTY(time), d->item->parameter(dao::MissionItem::Time));
-        this->setViewProperty(PROPERTY(pitch), d->item->parameter(dao::MissionItem::Pitch));
-        this->setViewProperty(PROPERTY(yaw), d->item->parameter(dao::MissionItem::Yaw));
-        this->setViewProperty(PROPERTY(clockwise), d->item->parameter(dao::MissionItem::Clockwise));
-        this->setViewProperty(PROPERTY(isGroundSpeed), d->item->parameter(dao::MissionItem::IsGroundSpeed));
-        this->setViewProperty(PROPERTY(speed), d->item->parameter(dao::MissionItem::Speed));
-        this->setViewProperty(PROPERTY(speedEnabled), d->item->parameter(dao::MissionItem::Speed).isValid());
-        this->setViewProperty(PROPERTY(throttle), d->item->parameter(dao::MissionItem::Throttle));
-        this->setViewProperty(PROPERTY(throttleEnabled), d->item->parameter(dao::MissionItem::Throttle).isValid());
+        this->setViewProperty(PROPERTY(abortAltitude), d->item->parameter(dto::MissionItem::AbortAltitude));
+        this->setViewProperty(PROPERTY(radius), d->item->parameter(dto::MissionItem::Radius));
+        this->setViewProperty(PROPERTY(repeats), d->item->parameter(dto::MissionItem::Repeats));
+        this->setViewProperty(PROPERTY(time), d->item->parameter(dto::MissionItem::Time));
+        this->setViewProperty(PROPERTY(pitch), d->item->parameter(dto::MissionItem::Pitch));
+        this->setViewProperty(PROPERTY(yaw), d->item->parameter(dto::MissionItem::Yaw));
+        this->setViewProperty(PROPERTY(clockwise), d->item->parameter(dto::MissionItem::Clockwise));
+        this->setViewProperty(PROPERTY(isGroundSpeed), d->item->parameter(dto::MissionItem::IsGroundSpeed));
+        this->setViewProperty(PROPERTY(speed), d->item->parameter(dto::MissionItem::Speed));
+        this->setViewProperty(PROPERTY(speedEnabled), d->item->parameter(dto::MissionItem::Speed).isValid());
+        this->setViewProperty(PROPERTY(throttle), d->item->parameter(dto::MissionItem::Throttle));
+        this->setViewProperty(PROPERTY(throttleEnabled), d->item->parameter(dto::MissionItem::Throttle).isValid());
     }
     else
     {
         this->setViewProperty(PROPERTY(sequence), -1);
-        this->setViewProperty(PROPERTY(command), dao::MissionItem::UnknownCommand);
+        this->setViewProperty(PROPERTY(command), dto::MissionItem::UnknownCommand);
     }
 
     this->setViewProperty(PROPERTY(changed), false);
@@ -171,7 +171,7 @@ void MissionItemEditPresenter::updateAvailableCommands()
     d->updateAvailableCommands();
 
     QStringList commands;
-    for (dao::MissionItem::Command command: d->availableCommands)
+    for (dto::MissionItem::Command command: d->availableCommands)
     {
         commands.append(d->helper.translateCommand(command));
     }

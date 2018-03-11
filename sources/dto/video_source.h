@@ -2,11 +2,11 @@
 #define VIDEO_SOURCE_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
-namespace dao
+namespace dto
 {
-    class VideoSource: public BaseDao
+    class VideoSource: public BaseDto
     {
         Q_GADGET
 

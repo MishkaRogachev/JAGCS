@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -19,8 +19,8 @@ namespace domain
         explicit VehicleService(MissionService* missionService, QObject* parent = nullptr);
         ~VehicleService() override;
 
-        dao::VehiclePtr vehicle(int vehicleId) const;
-        dao::VehiclePtrList vehicles() const;
+        dto::VehiclePtr vehicle(int vehicleId) const;
+        dto::VehiclePtrList vehicles() const;
 
         int vehicleIdByMavId(int mavId) const;
         int mavIdByVehicleId(int vehicleId) const;
@@ -28,14 +28,14 @@ namespace domain
         QList<int> employedMavIds() const;
 
     public slots:
-        bool save(const dao::VehiclePtr& vehicle);
-        bool remove(const dao::VehiclePtr& vehicle);
+        bool save(const dto::VehiclePtr& vehicle);
+        bool remove(const dto::VehiclePtr& vehicle);
         bool addNewVehicle();
 
     signals:
-        void vehicleAdded(dao::VehiclePtr vehicle);
-        void vehicleRemoved(dao::VehiclePtr vehicle);
-        void vehicleChanged(dao::VehiclePtr vehicle);
+        void vehicleAdded(dto::VehiclePtr vehicle);
+        void vehicleRemoved(dto::VehiclePtr vehicle);
+        void vehicleChanged(dto::VehiclePtr vehicle);
 
     private:
         class Impl;

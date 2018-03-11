@@ -27,7 +27,7 @@ LinkListPresenter::LinkListPresenter(QObject* parent):
 void LinkListPresenter::updateLinks()
 {
     QVariantList linkIds;
-    for (const dao::LinkDescriptionPtr& link: m_service->descriptions())
+    for (const dto::LinkDescriptionPtr& link: m_service->descriptions())
     {
         linkIds.append(link->id());
     }
@@ -37,11 +37,11 @@ void LinkListPresenter::updateLinks()
 
 void LinkListPresenter::addUdpLink()
 {
-    dao::LinkDescriptionPtr description = dao::LinkDescriptionPtr::create();
+    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
     description->setName(tr("New UDP Link"));
-    description->setType(dao::LinkDescription::Udp);
-    description->setParameter(dao::LinkDescription::Port,
+    description->setType(dto::LinkDescription::Udp);
+    description->setParameter(dto::LinkDescription::Port,
                               settings::Provider::value(settings::communication::port));
 
     m_service->save(description);
@@ -49,11 +49,11 @@ void LinkListPresenter::addUdpLink()
 
 void LinkListPresenter::addSerialLink()
 {
-    dao::LinkDescriptionPtr description = dao::LinkDescriptionPtr::create();
+    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
     description->setName(tr("New Serial Link"));
-    description->setType(dao::LinkDescription::Serial);
-    description->setParameter(dao::LinkDescription::BaudRate,
+    description->setType(dto::LinkDescription::Serial);
+    description->setParameter(dto::LinkDescription::BaudRate,
                               settings::Provider::value(settings::communication::baudRate));
 
     m_service->save(description);

@@ -1,6 +1,6 @@
 #include "command.h"
 
-using namespace dao;
+using namespace dto;
 
 Command::CommandType Command::type() const
 {

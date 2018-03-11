@@ -16,11 +16,11 @@ namespace
 {
     namespace
     {
-        const QList<dao::Vehicle::Type> availableTypes = {
-            dao::Vehicle::Auto, dao::Vehicle::FixedWing, dao::Vehicle::FlyingWing,
-            dao::Vehicle::Quadcopter, dao::Vehicle::Tricopter, dao::Vehicle::Hexcopter,
-            dao::Vehicle::Octocopter, dao::Vehicle::Helicopter, dao::Vehicle::Coaxial,
-            dao::Vehicle::Vtol, dao::Vehicle::Airship, dao::Vehicle::Kite, dao::Vehicle::Ornithopter
+        const QList<dto::Vehicle::Type> availableTypes = {
+            dto::Vehicle::Auto, dto::Vehicle::FixedWing, dto::Vehicle::FlyingWing,
+            dto::Vehicle::Quadcopter, dto::Vehicle::Tricopter, dto::Vehicle::Hexcopter,
+            dto::Vehicle::Octocopter, dto::Vehicle::Helicopter, dto::Vehicle::Coaxial,
+            dto::Vehicle::Vtol, dto::Vehicle::Airship, dto::Vehicle::Kite, dto::Vehicle::Ornithopter
         };
     }
 }
@@ -32,7 +32,7 @@ VehiclePresenter::VehiclePresenter(QObject* parent):
     m_service(domain::ServiceRegistry::vehicleService())
 {
     connect(m_service, &domain::VehicleService::vehicleChanged, this,
-            [this](const dao::VehiclePtr& vehicle) {
+            [this](const dto::VehiclePtr& vehicle) {
         if (vehicle == m_vehicle) this->updateView();
     });
 }
@@ -55,7 +55,7 @@ void VehiclePresenter::updateView()
     this->setViewProperty(PROPERTY(name), m_vehicle ? m_vehicle->name() : QString());
     this->setViewProperty(PROPERTY(mavId), m_vehicle ? m_vehicle->mavId() : 0);
     this->setViewProperty(PROPERTY(type), m_vehicle ? ::availableTypes.indexOf(m_vehicle->type()) :
-                                                      dao::Vehicle::UnknownType);
+                                                      dto::Vehicle::UnknownType);
     this->setViewProperty(PROPERTY(online), m_vehicle && m_vehicle->isOnline());
 
     this->setViewProperty(PROPERTY(changed), false);
@@ -87,7 +87,7 @@ void VehiclePresenter::connectView(QObject* view)
 {
     QStringList types;
     TranslationHelper helper;
-    for (dao::Vehicle::Type type: ::availableTypes)
+    for (dto::Vehicle::Type type: ::availableTypes)
     {
         types.append(helper.translateVehicleType(type));
     }

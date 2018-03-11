@@ -85,12 +85,12 @@ int LinkStatisticsModel::maxSent() const
     return m_maxSent * 1.2; // +20%
 }
 
-void LinkStatisticsModel::addData(const dao::LinkStatisticsPtr& statistics)
+void LinkStatisticsModel::addData(const dto::LinkStatisticsPtr& statistics)
 {
     if (m_data.isEmpty()) m_minTime = statistics->timestamp();
 
     this->beginInsertRows(QModelIndex(), m_data.count(), m_data.count() + 1);
-    m_data.append(dao::LinkStatisticsPtr(new dao::LinkStatistics(*statistics.data())));
+    m_data.append(dto::LinkStatisticsPtr(new dto::LinkStatistics(*statistics.data())));
     this->endInsertRows();
 
     if (m_maxTime < statistics->timestamp() || m_data.isEmpty()) m_maxTime = statistics->timestamp();
@@ -110,7 +110,7 @@ void LinkStatisticsModel::addData(const dao::LinkStatisticsPtr& statistics)
     emit boundsChanged();
 }
 
-void LinkStatisticsModel::resetData(const dao::LinkStatisticsPtrList& data)
+void LinkStatisticsModel::resetData(const dto::LinkStatisticsPtrList& data)
 {
     this->beginResetModel();
 
@@ -133,7 +133,7 @@ void LinkStatisticsModel::resetData(const dao::LinkStatisticsPtrList& data)
     m_maxRecv = m_data.isEmpty() ? 0 : m_data.first()->bytesRecv();
     m_maxSent = m_data.isEmpty() ? 0 : m_data.first()->bytesSent();
 
-    for (const dao::LinkStatisticsPtr& statistics: m_data)
+    for (const dto::LinkStatisticsPtr& statistics: m_data)
     {
         if (m_maxRecv < statistics->bytesRecv()) m_maxRecv = statistics->bytesRecv();
         if (m_maxSent < statistics->bytesSent()) m_maxSent = statistics->bytesSent();

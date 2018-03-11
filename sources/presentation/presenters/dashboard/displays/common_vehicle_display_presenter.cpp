@@ -23,9 +23,9 @@ using namespace presentation;
 class CommonVehicleDisplayPresenter::Impl
 {
 public:
-    dao::VehiclePtr vehicle;
-    dao::MissionAssignmentPtr assignment;
-    QList<dao::CommandPtr> commands;
+    dto::VehiclePtr vehicle;
+    dto::MissionAssignmentPtr assignment;
+    QList<dto::CommandPtr> commands;
 
     domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
     domain::MissionService* missionService = domain::ServiceRegistry::missionService();
@@ -37,26 +37,26 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
     d(new Impl())
 {
     connect(d->vehicleService, &domain::VehicleService::vehicleChanged,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         if (vehicle == d->vehicle) this->updateVehicle();
     });
 
     connect(d->missionService, &domain::MissionService::assignmentAdded, this,
-            [this](const dao::MissionAssignmentPtr& assignment) {
+            [this](const dto::MissionAssignmentPtr& assignment) {
         if (d->vehicle.isNull() || assignment->vehicleId() != d->vehicle->id()) return;
 
         d->assignment = assignment;
         this->updateMissionItems();
     });
     connect(d->missionService, &domain::MissionService::assignmentRemoved, this,
-            [this](const dao::MissionAssignmentPtr& assignment) {
+            [this](const dto::MissionAssignmentPtr& assignment) {
         if (d->assignment != assignment) return;
 
         d->assignment.clear();
         this->updateMissionItems();
     });
     connect(d->missionService, &domain::MissionService::assignmentChanged, this,
-            [this](const dao::MissionAssignmentPtr& assignment) {
+            [this](const dto::MissionAssignmentPtr& assignment) {
         if (d->assignment == assignment)
         {
             this->updateMissionItems();
@@ -69,18 +69,18 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
     });
 
     connect(d->missionService, &domain::MissionService::currentItemChanged, this,
-            [this](int vehicleId, const dao::MissionItemPtr& item) {
+            [this](int vehicleId, const dto::MissionItemPtr& item) {
         if (d->assignment && d->assignment->vehicleId() == vehicleId)
             this->setVehicleProperty(PROPERTY(mission), PROPERTY(current), item->sequence());
     });
     connect(d->missionService, &domain::MissionService::missionChanged, this,
-            [this](const dao::MissionPtr& mission) {
+            [this](const dto::MissionPtr& mission) {
         if (d->assignment && d->assignment->missionId() == mission->id())
             this->updateMissionItems();
     });
 
     connect(d->commandService, &domain::CommandService::commandChanged,
-            this, [this](const dao::CommandPtr& command) {
+            this, [this](const dto::CommandPtr& command) {
         if (!d->commands.contains(command)) return;
 
         this->invokeViewMethod(PROPERTY(updateCommandStatus), command->type(), command->status());
@@ -115,7 +115,7 @@ void CommonVehicleDisplayPresenter::updateVehicle()
     else
     {
         this->setVehicleProperty(PROPERTY(vehicleName), QString());
-        this->setVehicleProperty(PROPERTY(vehicleType), dao::Vehicle::UnknownType);
+        this->setVehicleProperty(PROPERTY(vehicleType), dto::Vehicle::UnknownType);
         this->setVehicleProperty(PROPERTY(online), false);
     }
 }
@@ -127,7 +127,7 @@ void CommonVehicleDisplayPresenter::updateMissionItems()
         this->setVehicleProperty(PROPERTY(mission), PROPERTY(count),
                                  d->missionService->mission(d->assignment->missionId())->count());
 
-        dao::MissionItemPtr current =  d->missionService->currentWaypoint(d->assignment->vehicleId());
+        dto::MissionItemPtr current =  d->missionService->currentWaypoint(d->assignment->vehicleId());
         if (current)
         {
             this->setVehicleProperty(PROPERTY(mission), PROPERTY(current), current->sequence());
@@ -148,8 +148,8 @@ void CommonVehicleDisplayPresenter::executeCommand(int commandType, const QVaria
 {
     if (d->vehicle.isNull()) return;
 
-    dao::CommandPtr command = dao::CommandPtr::create();
-    command->setType(dao::Command::CommandType(commandType));
+    dto::CommandPtr command = dto::CommandPtr::create();
+    command->setType(dto::Command::CommandType(commandType));
     command->setArguments(args.toList());
 
     d->commands.append(command);
@@ -160,7 +160,7 @@ void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
 {
     if (d->vehicle.isNull()) return;
 
-    d->commandService->cancelCommand(d->vehicle->id(), dao::Command::CommandType(commandType));
+    d->commandService->cancelCommand(d->vehicle->id(), dto::Command::CommandType(commandType));
 }
 
 void CommonVehicleDisplayPresenter::connectView(QObject* view)

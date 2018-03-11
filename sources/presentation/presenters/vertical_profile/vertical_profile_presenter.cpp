@@ -17,22 +17,22 @@ VerticalProfilePresenter::VerticalProfilePresenter(QObject* parent):
     m_service(domain::ServiceRegistry::missionService())
 {
     connect(m_service, &domain::MissionService::missionItemAdded, this, [this]
-            (const dao::MissionItemPtr& missionItem){
+            (const dto::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
     connect(m_service, &domain::MissionService::missionItemRemoved, this, [this]
-            (const dao::MissionItemPtr& missionItem){
+            (const dto::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 
     connect(m_service, &domain::MissionService::missionItemChanged, this, [this]
-            (const dao::MissionItemPtr& missionItem){
+            (const dto::MissionItemPtr& missionItem){
         if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
     });
 }
 
-void VerticalProfilePresenter::selectMission(const dao::MissionPtr& mission)
+void VerticalProfilePresenter::selectMission(const dto::MissionPtr& mission)
 {
     if (m_mission == mission) return;
 
@@ -52,7 +52,7 @@ void VerticalProfilePresenter::updateMission()
     int minAltitude = INT_MAX;
     int maxAltitude = INT_MIN;
 
-    for (const dao::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
+    for (const dto::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
     {
         if (!item->isAltitudedItem()) continue;
 

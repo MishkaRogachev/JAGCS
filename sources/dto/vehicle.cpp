@@ -3,7 +3,7 @@
 // Qt
 #include <QMap>
 
-using namespace dao;
+using namespace dto;
 
 int Vehicle::mavId() const
 {

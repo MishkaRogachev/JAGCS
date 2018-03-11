@@ -27,7 +27,7 @@ VehicleListPresenter::VehicleListPresenter(QObject* parent):
 void VehicleListPresenter::updateVehicles()
 {
     QVariantList vehicleIds;
-    for (const dao::VehiclePtr& vehicle: m_service->vehicles())
+    for (const dto::VehiclePtr& vehicle: m_service->vehicles())
     {
         vehicleIds.append(vehicle->id());
     }

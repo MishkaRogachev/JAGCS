@@ -25,7 +25,7 @@ MissionListPresenter::MissionListPresenter(QObject* parent):
 void MissionListPresenter::updateMissions()
 {
     QVariantList missionIds;
-    for (const dao::MissionPtr& mission: m_service->missions())
+    for (const dto::MissionPtr& mission: m_service->missions())
     {
         missionIds.append(mission->id());
     }

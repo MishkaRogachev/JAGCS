@@ -2,7 +2,7 @@
 #define TELEMETRY_SERVICE_H
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -24,8 +24,8 @@ namespace domain
         Telemetry* radioNode() const;
 
     private slots:
-        void onVehicleAdded(const dao::VehiclePtr& vehicle);
-        void onVehicleRemoved(const dao::VehiclePtr& vehicle);
+        void onVehicleAdded(const dto::VehiclePtr& vehicle);
+        void onVehicleRemoved(const dto::VehiclePtr& vehicle);
 
     private:
         class Impl;

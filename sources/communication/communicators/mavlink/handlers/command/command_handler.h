@@ -26,7 +26,7 @@ namespace comm
         void processHeartbeat(const mavlink_message_t& message);
 
     protected:
-        void sendCommand(int vehicleId, const dao::CommandPtr& command, int attempt = 0) override;
+        void sendCommand(int vehicleId, const dto::CommandPtr& command, int attempt = 0) override;
 
     private slots:
         void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);

@@ -2,11 +2,11 @@
 #define LINK_STATISTICS_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
-namespace dao
+namespace dto
 {
-    class LinkStatistics: public BaseDao
+    class LinkStatistics: public BaseDto
     {
         Q_GADGET
 

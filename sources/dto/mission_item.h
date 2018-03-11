@@ -2,16 +2,16 @@
 #define MISSION_ITEM_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
 // Qt
 #include <QVariant>
 #include <QGeoCoordinate>
 #include <QMap>
 
-namespace dao
+namespace dto
 {
-    class MissionItem: public BaseDao
+    class MissionItem: public BaseDto
     {
         Q_GADGET
 

@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -17,17 +17,17 @@ namespace domain
         explicit VideoService(QObject* parent = nullptr);
         ~VideoService() override;
 
-        dao::VideoSourcePtr videoSource(int id) const;
-        dao::VideoSourcePtrList videoSources() const;
+        dto::VideoSourcePtr videoSource(int id) const;
+        dto::VideoSourcePtrList videoSources() const;
 
     public slots:
-        bool save(const dao::VideoSourcePtr& videoSource);
-        bool remove(const dao::VideoSourcePtr& videoSource);
+        bool save(const dto::VideoSourcePtr& videoSource);
+        bool remove(const dto::VideoSourcePtr& videoSource);
 
     signals:
-        void videoSourceAdded(dao::VideoSourcePtr videoSource);
-        void videoSourceRemoved(dao::VideoSourcePtr videoSource);
-        void videoSourceChanged(dao::VideoSourcePtr videoSource);
+        void videoSourceAdded(dto::VideoSourcePtr videoSource);
+        void videoSourceRemoved(dto::VideoSourcePtr videoSource);
+        void videoSourceChanged(dto::VideoSourcePtr videoSource);
 
     private:
         class Impl;

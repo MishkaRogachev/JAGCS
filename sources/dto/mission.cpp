@@ -3,7 +3,7 @@
 // Internal
 #include "mission_item.h"
 
-using namespace dao;
+using namespace dto;
 
 QString Mission::name() const
 {

@@ -19,7 +19,7 @@ using namespace presentation;
 class VideoPresenter::Impl
 {
 public:
-    dao::VideoSourcePtr video;
+    dto::VideoSourcePtr video;
     VideoProvider provider;
     QMediaObject* media = nullptr;
 };
@@ -39,7 +39,7 @@ VideoPresenter::VideoPresenter(QObject* parent):
 VideoPresenter::~VideoPresenter()
 {}
 
-dao::VideoSourcePtr VideoPresenter::video() const
+dto::VideoSourcePtr VideoPresenter::video() const
 {
     return d->video;
 }
@@ -55,7 +55,7 @@ void VideoPresenter::updateSource()
     if (!d->provider.videoSurface() || d->video.isNull()) return;
 
     switch (d->video->type()) { // TODO: media factory
-    case dao::VideoSource::Device:
+    case dto::VideoSource::Device:
     {
         QCameraInfo info(d->video->source().toUtf8());
         if (!info.isNull())
@@ -67,7 +67,7 @@ void VideoPresenter::updateSource()
         }
         break;
     }
-    case dao::VideoSource::Stream:
+    case dto::VideoSource::Stream:
     {
         QMediaPlayer* player = new QMediaPlayer(this);
         player->setMedia(QUrl(d->video->source()));
@@ -88,7 +88,7 @@ void VideoPresenter::updateSource()
     }
 }
 
-void VideoPresenter::setVideo(const dao::VideoSourcePtr& video)
+void VideoPresenter::setVideo(const dto::VideoSourcePtr& video)
 {
     if (d->video == video) return;
 
@@ -114,12 +114,12 @@ void VideoPresenter::disconnectView(QObject* view)
     }
 }
 
-void VideoPresenter::onVideoSourceChanged(const dao::VideoSourcePtr& video)
+void VideoPresenter::onVideoSourceChanged(const dto::VideoSourcePtr& video)
 {
     if (d->video == video) this->updateSource();
 }
 
-void VideoPresenter::onVideoSourceRemoved(const dao::VideoSourcePtr& video)
+void VideoPresenter::onVideoSourceRemoved(const dto::VideoSourcePtr& video)
 {
     if (d->video != video) return;
 

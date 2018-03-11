@@ -223,8 +223,8 @@ void ManualController::sendImpacts()
 {
     if (d->vehicleId == 0) return;
 
-    dao::CommandPtr command = dao::CommandPtr::create();
-    command->setType(dao::Command::ManualImpacts);
+    dto::CommandPtr command = dto::CommandPtr::create();
+    command->setType(dto::Command::ManualImpacts);
 
     for (Axis axis: axes) command->addArgument(this->impact(axis));
 

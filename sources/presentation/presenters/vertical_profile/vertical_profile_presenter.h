@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -20,7 +20,7 @@ namespace presentation
         explicit VerticalProfilePresenter(QObject* parent = nullptr);
 
     public slots:
-        void selectMission(const dao::MissionPtr& mission);
+        void selectMission(const dto::MissionPtr& mission);
         void updateMission();
         void clearMission();
 
@@ -29,7 +29,7 @@ namespace presentation
 
     private:
         domain::MissionService* m_service;
-        dao::MissionPtr m_mission;
+        dto::MissionPtr m_mission;
     };
 }
 

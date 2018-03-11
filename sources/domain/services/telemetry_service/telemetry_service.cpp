@@ -43,7 +43,7 @@ TelemetryService::TelemetryService(VehicleService* service, QObject* parent):
     connect(d->service, &VehicleService::vehicleRemoved, this, &TelemetryService::onVehicleRemoved);
 
     VehicleTelemetryFactory factory;
-    for (const dao::VehiclePtr& vehicle: d->service->vehicles())
+    for (const dto::VehiclePtr& vehicle: d->service->vehicles())
     {
         d->vehicleNodes[vehicle->id()] = factory.create();
     }
@@ -77,7 +77,7 @@ Telemetry* TelemetryService::radioNode() const
     return &d->radioNode;
 }
 
-void TelemetryService::onVehicleAdded(const dao::VehiclePtr& vehicle)
+void TelemetryService::onVehicleAdded(const dto::VehiclePtr& vehicle)
 {
     if (d->vehicleNodes.contains(vehicle->id())) return;
 
@@ -85,7 +85,7 @@ void TelemetryService::onVehicleAdded(const dao::VehiclePtr& vehicle)
     d->vehicleNodes[vehicle->id()] = factory.create();
 }
 
-void TelemetryService::onVehicleRemoved(const dao::VehiclePtr& vehicle)
+void TelemetryService::onVehicleRemoved(const dto::VehiclePtr& vehicle)
 {
     if (!d->vehicleNodes.contains(vehicle->id())) return;
 

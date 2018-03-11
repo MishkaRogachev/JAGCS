@@ -2,15 +2,15 @@
 #define LINK_DESCRIPTION_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
 // Qt
 #include <QVariant>
 #include <QMap>
 
-namespace dao
+namespace dto
 {
-    class LinkDescription: public BaseDao
+    class LinkDescription: public BaseDto
     {
         Q_GADGET
 

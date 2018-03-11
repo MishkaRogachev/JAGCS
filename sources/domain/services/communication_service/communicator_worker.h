@@ -39,7 +39,7 @@ namespace domain
         void mavLinkStatisticsChanged(int linkId, int packetsReceived,
                                       int packetsDrops);
         void mavLinkProtocolChanged(int linkId,
-                                    dao::LinkDescription::Protocol protocol);
+                                    dto::LinkDescription::Protocol protocol);
 
     private slots:
         void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,

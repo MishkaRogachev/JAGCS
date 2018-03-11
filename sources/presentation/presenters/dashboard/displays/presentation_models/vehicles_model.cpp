@@ -23,7 +23,7 @@ QVariant VehiclesModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() >= m_vehicles.count()) return QVariant();
 
-    dao::VehiclePtr vehicle = m_vehicles.at(index.row());
+    dto::VehiclePtr vehicle = m_vehicles.at(index.row());
 
     switch (role)
     {
@@ -35,7 +35,7 @@ QVariant VehiclesModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void VehiclesModel::setVehicles(const dao::VehiclePtrList& vehicles)
+void VehiclesModel::setVehicles(const dto::VehiclePtrList& vehicles)
 {
     this->beginResetModel();
 
@@ -44,14 +44,14 @@ void VehiclesModel::setVehicles(const dao::VehiclePtrList& vehicles)
     this->endResetModel();
 }
 
-void VehiclesModel::addVehicle(const dao::VehiclePtr& vehicle)
+void VehiclesModel::addVehicle(const dto::VehiclePtr& vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     m_vehicles.append(vehicle);
     this->endInsertRows();
 }
 
-void VehiclesModel::updateVehicle(const dao::VehiclePtr& vehicle)
+void VehiclesModel::updateVehicle(const dto::VehiclePtr& vehicle)
 {
     QModelIndex index = this->index(m_vehicles.indexOf(vehicle));
     if (!index.isValid()) return;
@@ -59,7 +59,7 @@ void VehiclesModel::updateVehicle(const dao::VehiclePtr& vehicle)
     emit dataChanged(index, index, { VehicleTypeRole, VehicleNameRole, VehicleOnlineRole });
 }
 
-void VehiclesModel::removeVehicle(const dao::VehiclePtr& vehicle)
+void VehiclesModel::removeVehicle(const dto::VehiclePtr& vehicle)
 {
     int row = m_vehicles.indexOf(vehicle);
 

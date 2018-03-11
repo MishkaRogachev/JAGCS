@@ -17,7 +17,7 @@ MissionItemPresenter::MissionItemPresenter(QObject* parent):
     m_service(domain::ServiceRegistry::missionService())
 {
     connect(m_service, &domain::MissionService::missionItemChanged, this,
-            [this](const dao::MissionItemPtr& item) {
+            [this](const dto::MissionItemPtr& item) {
         if (m_item && m_item == item) this->updateItem();
     });
 }

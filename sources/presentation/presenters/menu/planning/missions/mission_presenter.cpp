@@ -19,7 +19,7 @@ MissionPresenter::MissionPresenter(QObject* parent):
     m_service(domain::ServiceRegistry::missionService())
 {
     connect(m_service, &domain::MissionService::missionChanged, this,
-            [this](const dao::MissionPtr& mission) {
+            [this](const dto::MissionPtr& mission) {
         if (m_missionId == mission->id()) this->updateMission();
     });
 }
@@ -33,7 +33,7 @@ void MissionPresenter::setMission(int id)
 
 void MissionPresenter::updateMission()
 {
-    dao::MissionPtr mission = m_service->mission(m_missionId);
+    dto::MissionPtr mission = m_service->mission(m_missionId);
 
     this->setViewProperty(PROPERTY(name), mission ? mission->name() : "");
     this->setViewProperty(PROPERTY(count), mission ? mission->count() : 0);
@@ -44,7 +44,7 @@ void MissionPresenter::updateMission()
 
 void MissionPresenter::rename(const QString& name)
 {
-    dao::MissionPtr mission = m_service->mission(m_missionId);
+    dto::MissionPtr mission = m_service->mission(m_missionId);
     if (mission.isNull()) return;
 
     mission->setName(name);

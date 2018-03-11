@@ -19,8 +19,8 @@ class MissionEditPresenter::Impl
 public:
     domain::MissionService* const service = domain::ServiceRegistry::missionService();
 
-    dao::MissionPtr mission;
-    dao::MissionItemPtr item;
+    dto::MissionPtr mission;
+    dto::MissionItemPtr item;
 };
 
 MissionEditPresenter::MissionEditPresenter(QObject* object):
@@ -28,7 +28,7 @@ MissionEditPresenter::MissionEditPresenter(QObject* object):
     d(new Impl())
 {
     connect(d->service, &domain::MissionService::missionChanged, this,
-            [this](const dao::MissionPtr& mission) {
+            [this](const dto::MissionPtr& mission) {
         if (mission == d->mission) this->updateCount();
     });
 }
@@ -80,7 +80,7 @@ void MissionEditPresenter::remove()
     this->selectItem(sequence - 1);
 }
 
-void MissionEditPresenter::addItem(dao::MissionItem::Command command)
+void MissionEditPresenter::addItem(dto::MissionItem::Command command)
 {
     if (d->mission.isNull()) return;
 
@@ -95,7 +95,7 @@ void MissionEditPresenter::changeSequence(int sequence)
 {
     if (d->item.isNull()) return;
 
-    dao::MissionItemPtr other = d->service->missionItem(d->mission->id(), sequence);
+    dto::MissionItemPtr other = d->service->missionItem(d->mission->id(), sequence);
     if (other.isNull()) return;
 
     d->service->swapItems(d->item, other);

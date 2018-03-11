@@ -26,7 +26,7 @@ MissionPointMapItemModel::MissionPointMapItemModel(domain::MissionService* servi
     connect(service, &domain::MissionService::missionChanged,
             this, &MissionPointMapItemModel::onMissionChanged);
 
-    for (const dao::MissionItemPtr& item: service->missionItems())
+    for (const dto::MissionItemPtr& item: service->missionItems())
     {
         this->onMissionItemAdded(item);
     }
@@ -42,10 +42,10 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
 {
     if (index.row() < 0 || index.row() >= m_items.count()) return QVariant();
 
-    const dao::MissionItemPtr& item = m_items.at(index.row());
+    const dto::MissionItemPtr& item = m_items.at(index.row());
     if (item.isNull()) return QVariant();
 
-    const dao::MissionPtr& mission = m_service->mission(item->missionId());
+    const dto::MissionPtr& mission = m_service->mission(item->missionId());
 
     switch (role)
     {
@@ -67,17 +67,17 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
     case ItemAcceptanceRadius:
     {
-        if (item->command() == dao::MissionItem::Waypoint)
-            return item->parameter(dao::MissionItem::Radius, 0);
+        if (item->command() == dto::MissionItem::Waypoint)
+            return item->parameter(dto::MissionItem::Radius, 0);
         else return 0;
     }
     case ItemRadius:
     {
-        if (item->command() == dao::MissionItem::LoiterUnlim ||
-            item->command() == dao::MissionItem::LoiterAltitude ||
-            item->command() == dao::MissionItem::LoiterTurns ||
-            item->command() == dao::MissionItem::LoiterTime)
-            return item->parameter(dao::MissionItem::Radius, 0);
+        if (item->command() == dto::MissionItem::LoiterUnlim ||
+            item->command() == dto::MissionItem::LoiterAltitude ||
+            item->command() == dto::MissionItem::LoiterTurns ||
+            item->command() == dto::MissionItem::LoiterTime)
+            return item->parameter(dto::MissionItem::Radius, 0);
         else return 0;
     }
     case ItemIndex:
@@ -87,14 +87,14 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
 }
 
-void MissionPointMapItemModel::onMissionItemAdded(const dao::MissionItemPtr& item)
+void MissionPointMapItemModel::onMissionItemAdded(const dto::MissionItemPtr& item)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     m_items.append(item);
     this->endInsertRows();
 }
 
-void MissionPointMapItemModel::onMissionItemRemoved(const dao::MissionItemPtr& item)
+void MissionPointMapItemModel::onMissionItemRemoved(const dto::MissionItemPtr& item)
 {
     int row = m_items.indexOf(item);
 
@@ -105,16 +105,16 @@ void MissionPointMapItemModel::onMissionItemRemoved(const dao::MissionItemPtr& i
     emit dataChanged(this->index(row), this->index(m_items.count() - 1), { ItemRole });
 }
 
-void MissionPointMapItemModel::onMissionItemChanged(const dao::MissionItemPtr& item)
+void MissionPointMapItemModel::onMissionItemChanged(const dto::MissionItemPtr& item)
 {
     QModelIndex index = this->itemIndex(item);
     if (!index.isValid()) return;
     emit dataChanged(index, index);
 }
 
-void MissionPointMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
+void MissionPointMapItemModel::onMissionChanged(const dto::MissionPtr& mission)
 {
-    for (const dao::MissionItemPtr& item: m_items)
+    for (const dto::MissionItemPtr& item: m_items)
     {
         if (item->missionId() != mission->id()) continue;
 
@@ -137,7 +137,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     return roles;
 }
 
-QModelIndex MissionPointMapItemModel::itemIndex(const dao::MissionItemPtr& item) const
+QModelIndex MissionPointMapItemModel::itemIndex(const dto::MissionItemPtr& item) const
 {
     return this->index(m_items.indexOf(item));
 }

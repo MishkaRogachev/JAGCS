@@ -27,7 +27,7 @@ VideoSourceListPresenter::VideoSourceListPresenter(QObject* parent):
 void VideoSourceListPresenter::updateVideoSources()
 {
     QVariantList videoSourceIds;
-    for (const dao::VideoSourcePtr& videoSource: m_service->videoSources())
+    for (const dto::VideoSourcePtr& videoSource: m_service->videoSources())
     {
         videoSourceIds.append(videoSource->id());
     }
@@ -52,15 +52,15 @@ void VideoSourceListPresenter::updateCameraInfo()
 
 void VideoSourceListPresenter::addDeviceVideo()
 {
-    dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
-    video->setType(dao::VideoSource::Device);
+    dto::VideoSourcePtr video = dto::VideoSourcePtr::create();
+    video->setType(dto::VideoSource::Device);
     m_service->save(video);
 }
 
 void VideoSourceListPresenter::addStreamVideo()
 {
-    dao::VideoSourcePtr video = dao::VideoSourcePtr::create();
-    video->setType(dao::VideoSource::Stream);
+    dto::VideoSourcePtr video = dto::VideoSourcePtr::create();
+    video->setType(dto::VideoSource::Stream);
     m_service->save(video);
 }
 

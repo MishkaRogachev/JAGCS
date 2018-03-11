@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace presentation
 {
@@ -28,16 +28,16 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void setVehicles(const dao::VehiclePtrList& vehicles);
-        void addVehicle(const dao::VehiclePtr& vehicle);
-        void updateVehicle(const dao::VehiclePtr& vehicle);
-        void removeVehicle(const dao::VehiclePtr& vehicle);
+        void setVehicles(const dto::VehiclePtrList& vehicles);
+        void addVehicle(const dto::VehiclePtr& vehicle);
+        void updateVehicle(const dto::VehiclePtr& vehicle);
+        void removeVehicle(const dto::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
     private:
-        dao::VehiclePtrList m_vehicles;
+        dto::VehiclePtrList m_vehicles;
     };
 }
 

@@ -2,7 +2,7 @@
 #define VIDEO_PRESENTER_H
 
 #include "base_presenter.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 
 
@@ -18,20 +18,20 @@ namespace presentation
         explicit VideoPresenter(QObject* parent = nullptr);
         ~VideoPresenter() override;
 
-        dao::VideoSourcePtr video() const;
+        dto::VideoSourcePtr video() const;
 
     public slots:
         void updateSource();
 
-        void setVideo(const dao::VideoSourcePtr& video);
+        void setVideo(const dto::VideoSourcePtr& video);
 
     protected:
         void connectView(QObject* view) override;
         void disconnectView(QObject* view) override;
 
     private slots:
-        void onVideoSourceChanged(const dao::VideoSourcePtr& video);
-        void onVideoSourceRemoved(const dao::VideoSourcePtr& video);
+        void onVideoSourceChanged(const dto::VideoSourcePtr& video);
+        void onVideoSourceRemoved(const dto::VideoSourcePtr& video);
 
     private:
         class Impl;

@@ -1,6 +1,6 @@
 #include "link_statistics.h"
 
-using namespace dao;
+using namespace dto;
 
 int LinkStatistics::linkId() const
 {

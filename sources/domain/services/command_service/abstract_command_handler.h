@@ -4,7 +4,7 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 #include "command.h"
 
 namespace domain
@@ -18,18 +18,18 @@ namespace domain
         ~AbstractCommandHandler() override;
 
     public slots:
-        void executeCommand(int vehicleId, const dao::CommandPtr& command);
-        void cancelCommand(int vehicleId, dao::Command::CommandType type);
+        void executeCommand(int vehicleId, const dto::CommandPtr& command);
+        void cancelCommand(int vehicleId, dto::Command::CommandType type);
 
     signals:
-        void commandChanged(dao::CommandPtr command);
+        void commandChanged(dto::CommandPtr command);
 
     protected:
-        void ackCommand(int vehicleId, dao::Command::CommandType type, dao::Command::CommandStatus status);
-        void stopCommand(int vehicleId, const dao::CommandPtr& command);
+        void ackCommand(int vehicleId, dto::Command::CommandType type, dto::Command::CommandStatus status);
+        void stopCommand(int vehicleId, const dto::CommandPtr& command);
         void timerEvent(QTimerEvent* event) override;
 
-        virtual void sendCommand(int vehicleId, const dao::CommandPtr& command, int attempt = 0) = 0;
+        virtual void sendCommand(int vehicleId, const dto::CommandPtr& command, int attempt = 0) = 0;
 
     private:
         class Impl;

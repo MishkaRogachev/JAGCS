@@ -31,30 +31,30 @@ namespace
 {
     const int interval = 2000;
 
-    const QMap<quint16, dao::MissionItem::Command> mavCommandLongMap =
+    const QMap<quint16, dto::MissionItem::Command> mavCommandLongMap =
     {
-        { MAV_CMD_NAV_TAKEOFF, dao::MissionItem::Takeoff },
-        { MAV_CMD_NAV_LAND, dao::MissionItem::Landing },
-        { MAV_CMD_NAV_WAYPOINT, dao::MissionItem::Waypoint },
-        { MAV_CMD_NAV_LOITER_UNLIM, dao::MissionItem::LoiterUnlim },
-        { MAV_CMD_NAV_LOITER_TO_ALT, dao::MissionItem::LoiterAltitude },
-        { MAV_CMD_NAV_LOITER_TURNS, dao::MissionItem::LoiterTurns },
-        { MAV_CMD_NAV_LOITER_TIME, dao::MissionItem::LoiterTime },
-        { MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT, dao::MissionItem::Continue },
-        { MAV_CMD_NAV_RETURN_TO_LAUNCH, dao::MissionItem::Return },
+        { MAV_CMD_NAV_TAKEOFF, dto::MissionItem::Takeoff },
+        { MAV_CMD_NAV_LAND, dto::MissionItem::Landing },
+        { MAV_CMD_NAV_WAYPOINT, dto::MissionItem::Waypoint },
+        { MAV_CMD_NAV_LOITER_UNLIM, dto::MissionItem::LoiterUnlim },
+        { MAV_CMD_NAV_LOITER_TO_ALT, dto::MissionItem::LoiterAltitude },
+        { MAV_CMD_NAV_LOITER_TURNS, dto::MissionItem::LoiterTurns },
+        { MAV_CMD_NAV_LOITER_TIME, dto::MissionItem::LoiterTime },
+        { MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT, dto::MissionItem::Continue },
+        { MAV_CMD_NAV_RETURN_TO_LAUNCH, dto::MissionItem::Return },
 
-        { MAV_CMD_DO_CHANGE_SPEED, dao::MissionItem::SetSpeed },
-        { MAV_CMD_DO_JUMP, dao::MissionItem::JumpTo },
+        { MAV_CMD_DO_CHANGE_SPEED, dto::MissionItem::SetSpeed },
+        { MAV_CMD_DO_JUMP, dto::MissionItem::JumpTo },
 
-        { MAV_CMD_DO_SET_SERVO, dao::MissionItem::SetServo },
-        { MAV_CMD_DO_SET_RELAY, dao::MissionItem::SetRelay },
-        { MAV_CMD_DO_REPEAT_SERVO, dao::MissionItem::RepeatServo },
-        { MAV_CMD_DO_REPEAT_RELAY, dao::MissionItem::RepeatRelay },
+        { MAV_CMD_DO_SET_SERVO, dto::MissionItem::SetServo },
+        { MAV_CMD_DO_SET_RELAY, dto::MissionItem::SetRelay },
+        { MAV_CMD_DO_REPEAT_SERVO, dto::MissionItem::RepeatServo },
+        { MAV_CMD_DO_REPEAT_RELAY, dto::MissionItem::RepeatRelay },
 
-        { MAV_CMD_DO_SET_ROI, dao::MissionItem::SetRoi },
-        { MAV_CMD_DO_MOUNT_CONTROL, dao::MissionItem::MountControl },
-        { MAV_CMD_DO_SET_CAM_TRIGG_DIST, dao::MissionItem::SetCameraTriggerDistance },
-        { MAV_CMD_DO_DIGICAM_CONTROL, dao::MissionItem::CameraControl }
+        { MAV_CMD_DO_SET_ROI, dto::MissionItem::SetRoi },
+        { MAV_CMD_DO_MOUNT_CONTROL, dto::MissionItem::MountControl },
+        { MAV_CMD_DO_SET_CAM_TRIGG_DIST, dto::MissionItem::SetCameraTriggerDistance },
+        { MAV_CMD_DO_DIGICAM_CONTROL, dto::MissionItem::CameraControl }
     };
 
     QString decodeCommandResult(int result)
@@ -143,12 +143,12 @@ void MissionHandler::processMessage(const mavlink_message_t& message)
     }
 }
 
-void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
+void MissionHandler::download(const dto::MissionAssignmentPtr& assignment)
 {
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
+    dto::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
-    assignment->setStatus(dao::MissionAssignment::Downloading);
+    assignment->setStatus(dto::MissionAssignment::Downloading);
     assignment->setProgress(0);
     d->missionService->assignmentChanged(assignment);
 
@@ -156,16 +156,16 @@ void MissionHandler::download(const dao::MissionAssignmentPtr& assignment)
     this->requestMissionCount(vehicle->mavId());
 }
 
-void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
+void MissionHandler::upload(const dto::MissionAssignmentPtr& assignment)
 {
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
+    dto::VehiclePtr vehicle = d->vehicleService->vehicle(assignment->vehicleId());
     if (vehicle.isNull()) return;
 
     d->mavSequencer[vehicle->mavId()].clear();
-    for (const dao::MissionItemPtr& item: d->missionService->missionItems(assignment->missionId()))
+    for (const dto::MissionItemPtr& item: d->missionService->missionItems(assignment->missionId()))
     {
         d->mavSequencer[vehicle->mavId()].append(item->sequence());
-        item->setStatus(dao::MissionItem::NotActual);
+        item->setStatus(dto::MissionItem::NotActual);
         d->missionService->missionItemChanged(item);
     }
 
@@ -175,7 +175,7 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     }
     else
     {
-        assignment->setStatus(dao::MissionAssignment::Uploading);
+        assignment->setStatus(dto::MissionAssignment::Uploading);
         assignment->setProgress(0);
         d->missionService->assignmentChanged(assignment);
 
@@ -185,11 +185,11 @@ void MissionHandler::upload(const dao::MissionAssignmentPtr& assignment)
     }
 }
 
-void MissionHandler::cancelSync(const dao::MissionAssignmentPtr& assignment)
+void MissionHandler::cancelSync(const dto::MissionAssignmentPtr& assignment)
 {
     this->enterStage(Stage::Idle, d->vehicleService->mavIdByVehicleId(assignment->vehicleId()));
 
-    assignment->setStatus(dao::MissionAssignment::NotActual);
+    assignment->setStatus(dto::MissionAssignment::NotActual);
     assignment->setProgress(0);
     d->missionService->assignmentChanged(assignment);
 }
@@ -214,7 +214,7 @@ void MissionHandler::requestMissionCount(quint8 mavId)
 
 void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
 {
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(
                                                d->vehicleService->vehicleIdByMavId(mavId));
     if (assignment.isNull()) return;
 
@@ -237,11 +237,11 @@ void MissionHandler::requestMissionItem(quint8 mavId, quint16 seq)
 
 void MissionHandler::sendMissionCount(quint8 mavId)
 {
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(
                                                d->vehicleService->vehicleIdByMavId(mavId));
     if (assignment.isNull()) return;
 
-    dao::MissionPtr mission = d->missionService->mission(assignment->missionId());
+    dto::MissionPtr mission = d->missionService->mission(assignment->missionId());
 
     mavlink_message_t message;
     mavlink_mission_count_t countMessage;
@@ -263,7 +263,7 @@ void MissionHandler::sendMissionCount(quint8 mavId)
 void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(mavId);
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_message_t message;
@@ -273,7 +273,7 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
     msgItem.target_component = MAV_COMP_ID_MISSIONPLANNER;
 
     // TODO: mission item to message convertor class
-    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), seq);
+    dto::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), seq);
     if (item.isNull()) return;
 
     msgItem.seq = seq;
@@ -297,47 +297,47 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
 
     if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::Pitch).toFloat();
+        msgItem.param1 = item->parameter(dto::MissionItem::Pitch).toFloat();
     }
     else if (msgItem.command == MAV_CMD_NAV_LAND)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::AbortAltitude).toFloat();
-        msgItem.param4 = item->parameter(dao::MissionItem::Yaw).toFloat();
+        msgItem.param1 = item->parameter(dto::MissionItem::AbortAltitude).toFloat();
+        msgItem.param4 = item->parameter(dto::MissionItem::Yaw).toFloat();
     }
     else if (msgItem.command == MAV_CMD_NAV_WAYPOINT)
     {
-        msgItem.param2 = item->parameter(dao::MissionItem::Radius).toFloat();
+        msgItem.param2 = item->parameter(dto::MissionItem::Radius).toFloat();
     }
     else if (msgItem.command == MAV_CMD_NAV_LOITER_UNLIM ||
              msgItem.command == MAV_CMD_NAV_LOITER_TURNS ||
              msgItem.command == MAV_CMD_NAV_LOITER_TIME)
     {
-        msgItem.param3 = item->parameter(dao::MissionItem::Clockwise).toBool() ?
-                             item->parameter(dao::MissionItem::Radius).toFloat() :
-                             -1 * item->parameter(dao::MissionItem::Radius).toFloat();
-        msgItem.param4 = item->parameter(dao::MissionItem::Yaw).toFloat();
+        msgItem.param3 = item->parameter(dto::MissionItem::Clockwise).toBool() ?
+                             item->parameter(dto::MissionItem::Radius).toFloat() :
+                             -1 * item->parameter(dto::MissionItem::Radius).toFloat();
+        msgItem.param4 = item->parameter(dto::MissionItem::Yaw).toFloat();
     }
     else if (msgItem.command == MAV_CMD_NAV_LOITER_TO_ALT)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::HeadingRequired).toBool();
-        msgItem.param2 = item->parameter(dao::MissionItem::Clockwise).toBool() ?
-                             item->parameter(dao::MissionItem::Radius).toFloat() :
-                             -1 * item->parameter(dao::MissionItem::Radius).toFloat();
+        msgItem.param1 = item->parameter(dto::MissionItem::HeadingRequired).toBool();
+        msgItem.param2 = item->parameter(dto::MissionItem::Clockwise).toBool() ?
+                             item->parameter(dto::MissionItem::Radius).toFloat() :
+                             -1 * item->parameter(dto::MissionItem::Radius).toFloat();
     }
     else if (msgItem.command == MAV_CMD_DO_CHANGE_SPEED)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::IsGroundSpeed).toBool();
-        msgItem.param2 = item->parameter(dao::MissionItem::Speed, -1).toFloat();
-        msgItem.param3 = item->parameter(dao::MissionItem::Throttle, -1).toInt();
+        msgItem.param1 = item->parameter(dto::MissionItem::IsGroundSpeed).toBool();
+        msgItem.param2 = item->parameter(dto::MissionItem::Speed, -1).toFloat();
+        msgItem.param3 = item->parameter(dto::MissionItem::Throttle, -1).toInt();
     }
 
     if (msgItem.command == MAV_CMD_NAV_LOITER_TURNS)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::Repeats).toInt();
+        msgItem.param1 = item->parameter(dto::MissionItem::Repeats).toInt();
     }
     else if (msgItem.command == MAV_CMD_NAV_LOITER_TIME)
     {
-        msgItem.param1 = item->parameter(dao::MissionItem::Time).toFloat();
+        msgItem.param1 = item->parameter(dto::MissionItem::Time).toFloat();
     }
 
 //    if (msgItem.command == MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT)
@@ -355,7 +355,7 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
                                          &message, &msgItem);
     m_communicator->sendMessage(message, link);
 
-    item->setStatus(dao::MissionItem::Actual);
+    item->setStatus(dto::MissionItem::Actual);
     d->lastSendedSequence = seq;
     d->missionService->missionItemChanged(item);
 
@@ -399,14 +399,14 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
     if (d->mavStages.value(message.sysid, Stage::Idle) != Stage::WaitingCount) return;
 
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_count_t missionCount;
     mavlink_msg_mission_count_decode(&message, &missionCount);
 
     // Remove superfluous items
-    for (const dao::MissionItemPtr& item:
+    for (const dto::MissionItemPtr& item:
          d->missionService->missionItems(assignment->missionId()))
     {
         if (item->sequence() > missionCount.count - 1) d->missionService->remove(item);
@@ -426,7 +426,7 @@ void MissionHandler::processMissionCount(const mavlink_message_t& message)
 void MissionHandler::processMissionItem(const mavlink_message_t& message)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_t msgItem;
@@ -436,17 +436,17 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
     if (d->mavStages.value(message.sysid, Stage::Idle) != Stage::WaitingItem &&
         msgItem.seq != 0) return;
 
-    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), msgItem.seq);
+    dto::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), msgItem.seq);
     if (item.isNull())
     {
-        item = dao::MissionItemPtr::create();
+        item = dto::MissionItemPtr::create();
         item->setMissionId(assignment->missionId());
         item->setSequence(msgItem.seq);
     }
 
     item->setCommand(msgItem.seq > 0 ?
-                         ::mavCommandLongMap.value(msgItem.command, dao::MissionItem::UnknownCommand) :
-                         dao::MissionItem::Home);
+                         ::mavCommandLongMap.value(msgItem.command, dto::MissionItem::UnknownCommand) :
+                         dto::MissionItem::Home);
 
     if (item->isAltitudedItem())
     {
@@ -462,45 +462,45 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
-        item->setParameter(dao::MissionItem::Pitch, msgItem.param1);
+        item->setParameter(dto::MissionItem::Pitch, msgItem.param1);
     }
     else if (msgItem.command == MAV_CMD_NAV_LAND)
     {
-        item->setParameter(dao::MissionItem::AbortAltitude, msgItem.param1);
-        item->setParameter(dao::MissionItem::Yaw, msgItem.param4);
+        item->setParameter(dto::MissionItem::AbortAltitude, msgItem.param1);
+        item->setParameter(dto::MissionItem::Yaw, msgItem.param4);
     }
     else if (msgItem.command == MAV_CMD_NAV_WAYPOINT)
     {
-        item->setParameter(dao::MissionItem::Radius, msgItem.param2);
+        item->setParameter(dto::MissionItem::Radius, msgItem.param2);
     }
     else if (msgItem.command == MAV_CMD_NAV_LOITER_UNLIM ||
              msgItem.command == MAV_CMD_NAV_LOITER_TURNS ||
              msgItem.command == MAV_CMD_NAV_LOITER_TIME)
     {
-        item->setParameter(dao::MissionItem::Radius, qAbs(msgItem.param3));
-        item->setParameter(dao::MissionItem::Clockwise, bool(msgItem.param3 > 0));
-        item->setParameter(dao::MissionItem::Yaw, msgItem.param4);
+        item->setParameter(dto::MissionItem::Radius, qAbs(msgItem.param3));
+        item->setParameter(dto::MissionItem::Clockwise, bool(msgItem.param3 > 0));
+        item->setParameter(dto::MissionItem::Yaw, msgItem.param4);
     }
     else if (msgItem.command == MAV_CMD_NAV_LOITER_TO_ALT)
     {
-        item->setParameter(dao::MissionItem::HeadingRequired, bool(msgItem.param1));
-        item->setParameter(dao::MissionItem::Radius, qAbs(msgItem.param2));
-        item->setParameter(dao::MissionItem::Clockwise, bool(msgItem.param2 > 0));
+        item->setParameter(dto::MissionItem::HeadingRequired, bool(msgItem.param1));
+        item->setParameter(dto::MissionItem::Radius, qAbs(msgItem.param2));
+        item->setParameter(dto::MissionItem::Clockwise, bool(msgItem.param2 > 0));
     }
     else if (msgItem.command == MAV_CMD_DO_CHANGE_SPEED)
     {
-        item->setParameter(dao::MissionItem::IsGroundSpeed, bool(msgItem.param1));
-        if (msgItem.param2 != -1) item->setParameter(dao::MissionItem::Speed, msgItem.param2);
-        if (msgItem.param3 != -1) item->setParameter(dao::MissionItem::Throttle, int(msgItem.param3));
+        item->setParameter(dto::MissionItem::IsGroundSpeed, bool(msgItem.param1));
+        if (msgItem.param2 != -1) item->setParameter(dto::MissionItem::Speed, msgItem.param2);
+        if (msgItem.param3 != -1) item->setParameter(dto::MissionItem::Throttle, int(msgItem.param3));
     }
 
     if (msgItem.command == MAV_CMD_NAV_LOITER_TURNS)
     {
-        item->setParameter(dao::MissionItem::Repeats, int(msgItem.param1));
+        item->setParameter(dto::MissionItem::Repeats, int(msgItem.param1));
     }
     else if (msgItem.command == MAV_CMD_NAV_LOITER_TIME)
     {
-        item->setParameter(dao::MissionItem::Time, msgItem.param1);
+        item->setParameter(dto::MissionItem::Time, msgItem.param1);
     }
 
 //    if (msgItem.command == MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT)
@@ -509,7 +509,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 //        altitude must be to target altitude for command completion.
 //    }
 
-    item->setStatus(dao::MissionItem::Actual);
+    item->setStatus(dto::MissionItem::Actual);
     d->missionService->save(item);
 
     if (d->mavSequencer[message.sysid].contains(msgItem.seq) &&
@@ -520,7 +520,7 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
         if (d->mavSequencer[message.sysid].isEmpty())
         {
-            assignment->setStatus(dao::MissionAssignment::Actual);
+            assignment->setStatus(dto::MissionAssignment::Actual);
 
             this->sendMissionAck(message.sysid);
             this->enterStage(Stage::Idle, message.sysid);
@@ -550,14 +550,14 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
         d->mavSequencer[message.sysid].removeOne(d->lastSendedSequence);
 
         int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
-        dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+        dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
         if (assignment)
         {
-            dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(),
+            dto::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(),
                                                                       d->lastSendedSequence);
             if (item)
             {
-                item->setStatus(dao::MissionItem::Actual);
+                item->setStatus(dto::MissionItem::Actual);
                 d->missionService->missionItemChanged(item);
             }
         }
@@ -569,7 +569,7 @@ void MissionHandler::processMissionRequest(const mavlink_message_t& message)
 void MissionHandler::processMissionAck(const mavlink_message_t& message)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_ack_t ack;
@@ -581,13 +581,13 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
     if (ack.type == MAV_MISSION_ACCEPTED)
     {
-        assignment->setStatus(dao::MissionAssignment::Actual);
+        assignment->setStatus(dto::MissionAssignment::Actual);
     }
     else
     {
         LogBus::instance()->log(tr("Error uploading mission item, %1").arg(
                                     ::decodeCommandResult(ack.type)));
-        assignment->setStatus(dao::MissionAssignment::NotActual);
+        assignment->setStatus(dto::MissionAssignment::NotActual);
     }
 
     d->missionService->assignmentChanged(assignment);
@@ -596,7 +596,7 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_current_t current;
@@ -609,13 +609,13 @@ void MissionHandler::processMissionCurrent(const mavlink_message_t& message)
 void MissionHandler::processMissionReached(const mavlink_message_t& message)
 {
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
-    dao::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
+    dto::MissionAssignmentPtr assignment = d->missionService->vehicleAssignment(vehicleId);
     if (assignment.isNull()) return;
 
     mavlink_mission_item_reached_t reached;
     mavlink_msg_mission_item_reached_decode(&message, &reached);
 
-    dao::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), reached.seq);
+    dto::MissionItemPtr item = d->missionService->missionItem(assignment->missionId(), reached.seq);
     if (item)
     {
         item->setReached(true);

@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 #include "command.h"
 
 namespace domain
@@ -24,10 +24,10 @@ namespace domain
         void removeHandler(AbstractCommandHandler* handler);
 
     signals:
-        void executeCommand(int vehicleId, const dao::CommandPtr& command);
-        void cancelCommand(int vehicleId, dao::Command::CommandType type);
+        void executeCommand(int vehicleId, const dto::CommandPtr& command);
+        void cancelCommand(int vehicleId, dto::Command::CommandType type);
 
-        void commandChanged(dao::CommandPtr command);
+        void commandChanged(dto::CommandPtr command);
     };
 }
 

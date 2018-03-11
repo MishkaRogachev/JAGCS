@@ -19,15 +19,15 @@ MissionItemListPresenter::MissionItemListPresenter(QObject* parent):
     m_missionId(0)
 {
     connect(m_service, &domain::MissionService::missionItemAdded, this,
-            [this](dao::MissionItemPtr item) {
+            [this](dto::MissionItemPtr item) {
         if (item->missionId() == m_missionId) this->updateMissionItems();
     });
     connect(m_service, &domain::MissionService::missionItemRemoved, this,
-            [this](dao::MissionItemPtr item) {
+            [this](dto::MissionItemPtr item) {
         if (item->missionId() == m_missionId) this->updateMissionItems();
     });
     connect(m_service, &domain::MissionService::missionItemChanged, this,
-            [this](dao::MissionItemPtr item) {
+            [this](dto::MissionItemPtr item) {
         if (item->missionId() == m_missionId) this->updateMissionItems();
     });
 }
@@ -44,7 +44,7 @@ void MissionItemListPresenter::updateMissionItems(bool selectLast)
     QVariantList itemIds;
     int selectedItemId = 0;
 
-    for (const dao::MissionItemPtr& item: m_service->missionItems(m_missionId))
+    for (const dto::MissionItemPtr& item: m_service->missionItems(m_missionId))
     {
         itemIds.append(selectedItemId = item->id());
     }

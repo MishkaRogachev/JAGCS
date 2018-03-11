@@ -1,22 +1,22 @@
-#ifndef BASE_DAO_H
-#define BASE_DAO_H
+#ifndef BASE_DTO_H
+#define BASE_DTO_H
 
 // Qt
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
-namespace dao
+namespace dto
 {
-    class BaseDao
+    class BaseDto
     {
         Q_GADGET
 
         Q_PROPERTY(int id READ id WRITE setId)
 
     public:
-        virtual ~BaseDao();
+        virtual ~BaseDto();
 
         int id() const;
         virtual void setId(int id);
@@ -26,4 +26,4 @@ namespace dao
     };
 }
 
-#endif // BASE_DAO_H
+#endif // BASE_DTO_H

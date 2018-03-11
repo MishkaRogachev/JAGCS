@@ -33,17 +33,17 @@ VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
     d->sortingModel.setSourceModel(&d->vehiclesModel);
 
     connect(d->service, &domain::VehicleService::vehicleAdded,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         d->vehiclesModel.addVehicle(vehicle);
     });
 
     connect(d->service, &domain::VehicleService::vehicleChanged,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         d->vehiclesModel.updateVehicle(vehicle);
     });
 
     connect(d->service, &domain::VehicleService::vehicleRemoved,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         d->vehiclesModel.removeVehicle(vehicle);
     });
 }

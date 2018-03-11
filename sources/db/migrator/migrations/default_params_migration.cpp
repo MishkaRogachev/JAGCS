@@ -14,12 +14,12 @@
 
 #include "generic_repository.h"
 
-using namespace dao;
+using namespace dto;
 using namespace db;
 
 bool DefaultParamsMigration::up()
 {
-    GenericRepository<dao::LinkDescription> linkRepository("links");
+    GenericRepository<dto::LinkDescription> linkRepository("links");
 
     LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
     defaultUdpLink->setType(LinkDescription::Udp);
@@ -37,7 +37,7 @@ bool DefaultParamsMigration::up()
     defaultSerialLink->setAutoConnect(true);
     linkRepository.save(defaultSerialLink);
 
-    GenericRepository<dao::Vehicle> vehicleRepository("vehicles");
+    GenericRepository<dto::Vehicle> vehicleRepository("vehicles");
 
     VehiclePtr defaultVehicle = VehiclePtr::create();
     defaultVehicle->setMavId(1);

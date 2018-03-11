@@ -13,13 +13,13 @@
 
 namespace
 {
-    dao::LinkDescription::Protocol toDaoProtocol(comm::AbstractCommunicator::Protocol protocol)
+    dto::LinkDescription::Protocol toDaoProtocol(comm::AbstractCommunicator::Protocol protocol)
     {
         switch (protocol) {
-        case comm::AbstractCommunicator::MavLink1: return dao::LinkDescription::MavLink1;
-        case comm::AbstractCommunicator::MavLink2: return dao::LinkDescription::MavLink2;
+        case comm::AbstractCommunicator::MavLink1: return dto::LinkDescription::MavLink1;
+        case comm::AbstractCommunicator::MavLink2: return dto::LinkDescription::MavLink2;
         default:
-        case comm::AbstractCommunicator::Unknown: return dao::LinkDescription::UnknownProtocol;
+        case comm::AbstractCommunicator::Unknown: return dto::LinkDescription::UnknownProtocol;
         }
     }
 }

@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 #include "mission_item.h"
 
 namespace presentation
@@ -25,7 +25,7 @@ namespace presentation
         void updateItem();
 
         void remove();
-        void addItem(dao::MissionItem::Command command);
+        void addItem(dto::MissionItem::Command command);
         void changeSequence(int sequence);
 
     private:

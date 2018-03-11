@@ -43,7 +43,7 @@ VehicleMapItemModel::VehicleMapItemModel(domain::VehicleService* vehicleService,
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &VehicleMapItemModel::onVehicleRemoved);
 
-    for (const dao::VehiclePtr& vehicle: vehicleService->vehicles())
+    for (const dto::VehiclePtr& vehicle: vehicleService->vehicles())
     {
         this->onVehicleAdded(vehicle);
     }
@@ -65,7 +65,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     int vehicleId = d->vehicleIds.at(index.row());
 
     domain::Telemetry* node = d->telemetryService->vehicleNode(vehicleId);
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
+    dto::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
     if (!node || vehicle.isNull()) return QVariant();
 
     QVariant data;
@@ -118,7 +118,7 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     return data;
 }
 
-void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
+void VehicleMapItemModel::onVehicleAdded(const dto::VehiclePtr& vehicle)
 {
     int vehicleId = vehicle->id();
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
@@ -154,7 +154,7 @@ void VehicleMapItemModel::onVehicleAdded(const dao::VehiclePtr& vehicle)
     this->endInsertRows();
 }
 
-void VehicleMapItemModel::onVehicleRemoved(const dao::VehiclePtr& vehicle)
+void VehicleMapItemModel::onVehicleRemoved(const dto::VehiclePtr& vehicle)
 {
     int row = d->vehicleIds.indexOf(vehicle->id());
     if (row == -1) return;

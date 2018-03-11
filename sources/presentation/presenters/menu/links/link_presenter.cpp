@@ -20,7 +20,7 @@ using namespace presentation;
 class LinkPresenter::Impl
 {
 public:
-    dao::LinkDescriptionPtr description;
+    dto::LinkDescriptionPtr description;
 
     domain::SerialPortService* const serialService =
             domain::ServiceRegistry::serialPortService();
@@ -38,15 +38,15 @@ LinkPresenter::LinkPresenter(QObject* parent):
             this, &LinkPresenter::updateDevices);
 
     connect(d->commService, &domain::CommunicationService::descriptionChanged, this,
-            [this](const dao::LinkDescriptionPtr& description) {
+            [this](const dto::LinkDescriptionPtr& description) {
         if (d->description == description) this->updateLink();
     });
     connect(d->commService, &domain::CommunicationService::linkStatusChanged, this,
-            [this](const dao::LinkDescriptionPtr& description) {
+            [this](const dto::LinkDescriptionPtr& description) {
         if (d->description == description) this->updateStatus();
     });
     connect(d->commService, &domain::CommunicationService::linkStatisticsChanged, this,
-            [this](const dao::LinkStatisticsPtr& statistics) {
+            [this](const dto::LinkStatisticsPtr& statistics) {
         if (d->description->id() == statistics->linkId())  d->model.addData(statistics);
     });
 }
@@ -76,9 +76,9 @@ void LinkPresenter::updateLink()
 
     this->setViewProperty(PROPERTY(type), d->description->type());
     this->setViewProperty(PROPERTY(name), d->description->name());
-    this->setViewProperty(PROPERTY(port), d->description->parameter(dao::LinkDescription::Port));
-    this->setViewProperty(PROPERTY(device), d->description->parameter(dao::LinkDescription::Device));
-    this->setViewProperty(PROPERTY(baudRate), d->description->parameter(dao::LinkDescription::BaudRate));
+    this->setViewProperty(PROPERTY(port), d->description->parameter(dto::LinkDescription::Port));
+    this->setViewProperty(PROPERTY(device), d->description->parameter(dto::LinkDescription::Device));
+    this->setViewProperty(PROPERTY(baudRate), d->description->parameter(dto::LinkDescription::BaudRate));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -89,7 +89,7 @@ void LinkPresenter::updateStatus()
                           d->description->isConnected());
     this->setViewProperty(PROPERTY(protocol), d->description ?
                               d->description->protocol() :
-                              dao::LinkDescription::UnknownProtocol);
+                              dto::LinkDescription::UnknownProtocol);
 }
 
 void LinkPresenter::updateDevices()
@@ -102,7 +102,7 @@ void LinkPresenter::updateDevices()
         devices.append(device);
     }
 
-    QString device = d->description->parameter(dao::LinkDescription::Device).toString();
+    QString device = d->description->parameter(dto::LinkDescription::Device).toString();
     if (d->description && !devices.contains(device))
     {
         devices.append(device);
@@ -123,11 +123,11 @@ void LinkPresenter::save()
     if (d->description.isNull()) return;
 
     d->description->setName(this->viewProperty(PROPERTY(name)).toString());
-    d->description->setParameter(dao::LinkDescription::Device,
+    d->description->setParameter(dto::LinkDescription::Device,
                                  this->viewProperty(PROPERTY(device)).toString());
-    d->description->setParameter(dao::LinkDescription::BaudRate,
+    d->description->setParameter(dto::LinkDescription::BaudRate,
                                  this->viewProperty(PROPERTY(baudRate)).toInt());
-    d->description->setParameter(dao::LinkDescription::Port,
+    d->description->setParameter(dto::LinkDescription::Port,
                                  this->viewProperty(PROPERTY(port)).toInt());
 
     if (!d->commService->save(d->description)) return;

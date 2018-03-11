@@ -2,11 +2,11 @@
 #define VEHICLE_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
-namespace dao
+namespace dto
 {
-    class Vehicle: public BaseDao
+    class Vehicle: public BaseDto
     {
         Q_GADGET
 

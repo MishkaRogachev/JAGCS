@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -27,7 +27,7 @@ namespace presentation
 
     private:
         domain::VideoService* const m_service;
-        dao::VideoSourcePtr m_video;
+        dto::VideoSourcePtr m_video;
     };
 }
 

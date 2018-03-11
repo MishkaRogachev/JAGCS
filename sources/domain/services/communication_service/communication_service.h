@@ -5,7 +5,7 @@
 #include <QObject>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 #include "link_description.h"
 
 namespace comm
@@ -25,26 +25,26 @@ namespace domain
         CommunicationService(SerialPortService* serialPortService, QObject* parent = nullptr);
         ~CommunicationService() override;
 
-        dao::LinkDescriptionPtr description(int id) const;
-        dao::LinkDescriptionPtrList descriptions() const;
+        dto::LinkDescriptionPtr description(int id) const;
+        dto::LinkDescriptionPtrList descriptions() const;
 
-        dao::LinkStatisticsPtr statistics(int descriptionId) const;
-        dao::LinkStatisticsPtrList statistics() const;
+        dto::LinkStatisticsPtr statistics(int descriptionId) const;
+        dto::LinkStatisticsPtrList statistics() const;
 
         void init();
 
     public slots:
-        bool save(const dao::LinkDescriptionPtr& description);
-        bool remove(const dao::LinkDescriptionPtr& description);
+        bool save(const dto::LinkDescriptionPtr& description);
+        bool remove(const dto::LinkDescriptionPtr& description);
 
-        void setLinkConnected(const dao::LinkDescriptionPtr& description, bool connected);
+        void setLinkConnected(const dto::LinkDescriptionPtr& description, bool connected);
 
     signals:
-        void descriptionAdded(dao::LinkDescriptionPtr description);
-        void descriptionRemoved(dao::LinkDescriptionPtr description);
-        void descriptionChanged(dao::LinkDescriptionPtr description);
-        void linkStatusChanged(dao::LinkDescriptionPtr description);
-        void linkStatisticsChanged(dao::LinkStatisticsPtr statistics);
+        void descriptionAdded(dto::LinkDescriptionPtr description);
+        void descriptionRemoved(dto::LinkDescriptionPtr description);
+        void descriptionChanged(dto::LinkDescriptionPtr description);
+        void linkStatusChanged(dto::LinkDescriptionPtr description);
+        void linkStatisticsChanged(dto::LinkStatisticsPtr statistics);
 
     private slots:
         void onLinkStatusChanged(int linkId, bool connected);
@@ -56,7 +56,7 @@ namespace domain
                                         int packetsReceived,
                                         int packetsDrops);
         void onMavlinkProtocolChanged(int linkId,
-                                      dao::LinkDescription::Protocol protocol);
+                                      dto::LinkDescription::Protocol protocol);
         void onDevicesChanged();
 
     private:

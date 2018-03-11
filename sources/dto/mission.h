@@ -2,11 +2,11 @@
 #define MISSION_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
-namespace dao
+namespace dto
 {
-    class Mission: public BaseDao
+    class Mission: public BaseDto
     {
         Q_GADGET
 

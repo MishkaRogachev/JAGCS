@@ -6,7 +6,7 @@
 
 // Internal
 #include "abstract_mavlink_handler.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -37,9 +37,9 @@ namespace comm
     public slots:
        void processMessage(const mavlink_message_t& message) override;
 
-       void download(const dao::MissionAssignmentPtr& assignment);
-       void upload(const dao::MissionAssignmentPtr& assignment);
-       void cancelSync(const dao::MissionAssignmentPtr& assignment);
+       void download(const dto::MissionAssignmentPtr& assignment);
+       void upload(const dto::MissionAssignmentPtr& assignment);
+       void cancelSync(const dto::MissionAssignmentPtr& assignment);
 
        void requestMissionCount(quint8 mavId);
        void requestMissionItem(quint8 mavId, quint16 seq);

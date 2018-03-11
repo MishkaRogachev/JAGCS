@@ -11,9 +11,9 @@ using namespace domain;
 CommandService::CommandService(QObject* parent):
     QObject(parent)
 {
-    qRegisterMetaType<dao::CommandPtr>("dao::CommandPtr");
-    qRegisterMetaType<dao::Command::CommandType>("dao::Command::CommandType");
-    qRegisterMetaType<dao::Command::CommandStatus>("dao::Command::CommandStatus");
+    qRegisterMetaType<dto::CommandPtr>("dto::CommandPtr");
+    qRegisterMetaType<dto::Command::CommandType>("dto::Command::CommandType");
+    qRegisterMetaType<dto::Command::CommandStatus>("dto::Command::CommandStatus");
 }
 
 void CommandService::addHandler(AbstractCommandHandler* handler)

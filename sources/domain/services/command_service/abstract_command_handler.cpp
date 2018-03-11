@@ -16,9 +16,9 @@ using namespace domain;
 class AbstractCommandHandler::Impl
 {
 public:
-    QMultiMap<int, dao::CommandPtr> vehicleCommands;
-    QMap <dao::CommandPtr, int> attemps;
-    QMap <dao::CommandPtr, int> commandTimers;
+    QMultiMap<int, dto::CommandPtr> vehicleCommands;
+    QMap <dto::CommandPtr, int> attemps;
+    QMap <dto::CommandPtr, int> commandTimers;
 };
 
 AbstractCommandHandler::AbstractCommandHandler(QObject* parent):
@@ -29,16 +29,16 @@ AbstractCommandHandler::AbstractCommandHandler(QObject* parent):
 AbstractCommandHandler::~AbstractCommandHandler()
 {}
 
-void AbstractCommandHandler::executeCommand(int vehicleId, const dao::CommandPtr& command)
+void AbstractCommandHandler::executeCommand(int vehicleId, const dto::CommandPtr& command)
 {
-    for (const dao::CommandPtr& timedCommand: d->commandTimers.keys())
+    for (const dto::CommandPtr& timedCommand: d->commandTimers.keys())
     {
         if (timedCommand->type() != command->type() ||
             !d->vehicleCommands.values(vehicleId).contains(timedCommand)) continue;
 
         this->stopCommand(vehicleId, timedCommand);
 
-        timedCommand->setStatus(dao::Command::Canceled);
+        timedCommand->setStatus(dto::Command::Canceled);
         emit commandChanged(timedCommand);
 
         break;
@@ -47,22 +47,22 @@ void AbstractCommandHandler::executeCommand(int vehicleId, const dao::CommandPtr
     d->vehicleCommands.insert(vehicleId, command);
     d->attemps[command] = 0;
     d->commandTimers[command] = this->startTimer(::interval);
-    command->setStatus(dao::Command::Sending);
+    command->setStatus(dto::Command::Sending);
 
     this->sendCommand(vehicleId, command);
 
     emit commandChanged(command);
 }
 
-void AbstractCommandHandler::cancelCommand(int vehicleId, dao::Command::CommandType type)
+void AbstractCommandHandler::cancelCommand(int vehicleId, dto::Command::CommandType type)
 {
-    this->ackCommand(vehicleId, type, dao::Command::Canceled);
+    this->ackCommand(vehicleId, type, dto::Command::Canceled);
 }
 
-void AbstractCommandHandler::ackCommand(int vehicleId, dao::Command::CommandType type,
-                                        dao::Command::CommandStatus status)
+void AbstractCommandHandler::ackCommand(int vehicleId, dto::Command::CommandType type,
+                                        dto::Command::CommandStatus status)
 {
-    for (const dao::CommandPtr& command: d->vehicleCommands.values(vehicleId))
+    for (const dto::CommandPtr& command: d->vehicleCommands.values(vehicleId))
     {
         if (command->type() != type) continue;
 
@@ -73,7 +73,7 @@ void AbstractCommandHandler::ackCommand(int vehicleId, dao::Command::CommandType
     }
 }
 
-void AbstractCommandHandler::stopCommand(int vehicleId, const dao::CommandPtr& command)
+void AbstractCommandHandler::stopCommand(int vehicleId, const dto::CommandPtr& command)
 {
     d->vehicleCommands.remove(vehicleId, command);
     d->attemps.remove(command);
@@ -85,7 +85,7 @@ void AbstractCommandHandler::stopCommand(int vehicleId, const dao::CommandPtr& c
 
 void AbstractCommandHandler::timerEvent(QTimerEvent* event)
 {
-    dao::CommandPtr command = d->commandTimers.key(event->timerId());
+    dto::CommandPtr command = d->commandTimers.key(event->timerId());
     if (command.isNull()) return QObject::timerEvent(event);
 
     int vehicleId = d->vehicleCommands.key(command, 0);
@@ -95,6 +95,6 @@ void AbstractCommandHandler::timerEvent(QTimerEvent* event)
 
     this->stopCommand(vehicleId, command);
 
-    command->setStatus(dao::Command::Rejected);
+    command->setStatus(dto::Command::Rejected);
     emit commandChanged(command);
 }

@@ -53,19 +53,19 @@ using namespace presentation;
 
 static void registerTypes()
 {
-    qmlRegisterUncreatableType<dao::Vehicle>(
+    qmlRegisterUncreatableType<dto::Vehicle>(
                 "JAGCS", 1, 0, "Vehicle", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dao::LinkDescription>(
+    qmlRegisterUncreatableType<dto::LinkDescription>(
                 "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dao::Mission>(
+    qmlRegisterUncreatableType<dto::Mission>(
                 "JAGCS", 1, 0, "Mission", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dao::MissionAssignment>(
+    qmlRegisterUncreatableType<dto::MissionAssignment>(
                 "JAGCS", 1, 0, "MissionAssignment", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dao::MissionItem>(
+    qmlRegisterUncreatableType<dto::MissionItem>(
                 "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dao::Command>(
+    qmlRegisterUncreatableType<dto::Command>(
                 "JAGCS", 1, 0, "Command", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dao::VideoSource>(
+    qmlRegisterUncreatableType<dto::VideoSource>(
                 "JAGCS", 1, 0, "VideoSource", "Can't create entities in QML");
     qmlRegisterUncreatableType<domain::LogMessage>(
                 "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");

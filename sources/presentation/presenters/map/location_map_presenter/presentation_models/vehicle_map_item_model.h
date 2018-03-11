@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 #include "telemetry.h"
 
 namespace domain
@@ -47,8 +47,8 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void onVehicleAdded(const dao::VehiclePtr& vehicle);
-        void onVehicleRemoved(const dao::VehiclePtr& vehicle);
+        void onVehicleAdded(const dto::VehiclePtr& vehicle);
+        void onVehicleRemoved(const dto::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

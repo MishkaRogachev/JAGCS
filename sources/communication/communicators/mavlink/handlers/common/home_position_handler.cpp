@@ -45,19 +45,19 @@ HomePositionHandler::HomePositionHandler(MavLinkCommunicator* communicator):
     d(new Impl())
 {
     connect(d->vehicleService, &VehicleService::vehicleAdded,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         this->sendHomePositionRequest(vehicle->mavId());
         this->addVehicleTimer(vehicle->id());
     });
 
     connect(d->vehicleService, &VehicleService::vehicleRemoved,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         d->obtainedVehicles.removeOne(vehicle->id());
         this->removeVehicleTimer(vehicle->id());
     });
 
     connect(d->vehicleService, &VehicleService::vehicleChanged,
-            this, [this](const dao::VehiclePtr& vehicle) {
+            this, [this](const dto::VehiclePtr& vehicle) {
         if (!vehicle->isOnline() || d->obtainedVehicles.contains(vehicle->id())) return;
         this->sendHomePositionRequest(vehicle->mavId());
         this->addVehicleTimer(vehicle->id());
@@ -116,7 +116,7 @@ void HomePositionHandler::sendHomePositionRequest(quint8 mavId)
 
 void HomePositionHandler::timerEvent(QTimerEvent* event)
 {
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(
+    dto::VehiclePtr vehicle = d->vehicleService->vehicle(
                                   d->vehiclesTimers.key(event->timerId(), -1));
     if (vehicle.isNull()) return QObject::timerEvent(event);
 

@@ -8,7 +8,7 @@
 
 #include "video_source.h"
 
-using namespace dao;
+using namespace dto;
 using namespace domain;
 
 class VideoService::Impl
@@ -30,7 +30,7 @@ VideoService::VideoService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<dao::VideoSourcePtr>("dao::VideoSourcePtr");
+    qRegisterMetaType<dto::VideoSourcePtr>("dto::VideoSourcePtr");
 
     d->loadVideoSources();
 }

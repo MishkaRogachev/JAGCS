@@ -1,6 +1,6 @@
 #include "mission_assignment.h"
 
-using namespace dao;
+using namespace dto;
 
 int MissionAssignment::missionId() const
 {

@@ -13,7 +13,7 @@
 
 #include "mission_service.h"
 
-using namespace dao;
+using namespace dto;
 using namespace domain;
 
 class VehicleService::Impl
@@ -38,7 +38,7 @@ VehicleService::VehicleService(MissionService* missionService, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<dao::VehiclePtr>("dao::VehiclePtr");
+    qRegisterMetaType<dto::VehiclePtr>("dto::VehiclePtr");
 
     d->missionService = missionService;
     connect(this, &VehicleService::vehicleChanged, missionService,

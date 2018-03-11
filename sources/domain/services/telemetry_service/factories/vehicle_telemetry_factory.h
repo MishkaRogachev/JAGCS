@@ -3,7 +3,7 @@
 
 // Internal
 #include "i_telemetry_factory.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {

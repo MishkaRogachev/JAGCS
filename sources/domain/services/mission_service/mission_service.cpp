@@ -14,7 +14,7 @@
 
 #include "generic_repository.h"
 
-using namespace dao;
+using namespace dto;
 using namespace domain;
 
 class MissionService::Impl
@@ -55,9 +55,9 @@ MissionService::MissionService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<dao::MissionPtr>("dao::MissionPtr");
-    qRegisterMetaType<dao::MissionItemPtr>("dao::MissionItemPtr");
-    qRegisterMetaType<dao::MissionAssignmentPtr>("dao::MissionAssignmentPtr");
+    qRegisterMetaType<dto::MissionPtr>("dto::MissionPtr");
+    qRegisterMetaType<dto::MissionItemPtr>("dto::MissionItemPtr");
+    qRegisterMetaType<dto::MissionAssignmentPtr>("dto::MissionAssignmentPtr");
 
     d->loadMissions();
     d->loadMissionItems();
@@ -116,14 +116,14 @@ MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
     return d->currentItems.value(vehicleId);
 }
 
-dao::MissionItemPtr MissionService::addNewMissionItem(int missionId,
+dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
                                                       MissionItem::Command command,
                                                       int sequence)
 {
     QMutexLocker locker(&d->mutex);
 
     MissionPtr mission = this->mission(missionId);
-    if (mission.isNull() || mission->count() < sequence) return dao::MissionItemPtr();
+    if (mission.isNull() || mission->count() < sequence) return dto::MissionItemPtr();
 
     MissionItemPtr item = MissionItemPtr::create();
     MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
@@ -163,7 +163,7 @@ dao::MissionItemPtr MissionService::addNewMissionItem(int missionId,
         break;
     }
 
-    for (const dao::MissionItemPtr& other: this->missionItems(missionId))
+    for (const dto::MissionItemPtr& other: this->missionItems(missionId))
     {
         if (other->sequence() < sequence) continue;
 
@@ -175,7 +175,7 @@ dao::MissionItemPtr MissionService::addNewMissionItem(int missionId,
     mission->setCount(mission->count() + 1);
     this->save(mission);
 
-    dao::MissionAssignmentPtr assignment = this->missionAssignment(missionId);
+    dto::MissionAssignmentPtr assignment = this->missionAssignment(missionId);
     if (assignment)
     {
         assignment->setStatus(MissionAssignment::NotActual);
@@ -322,13 +322,13 @@ bool MissionService::remove(const MissionAssignmentPtr& assignment)
 {
     QMutexLocker locker(&d->mutex);
 
-    for (const dao::MissionItemPtr& item: this->missionItems(assignment->missionId()))
+    for (const dto::MissionItemPtr& item: this->missionItems(assignment->missionId()))
     {
         item->setStatus(MissionItem::NotActual);
         emit missionItemChanged(item);
     }
 
-    for (const dao::MissionItemPtr& item: d->currentItems.values())
+    for (const dto::MissionItemPtr& item: d->currentItems.values())
     {
         if (item->missionId() != assignment->missionId()) continue;
 
@@ -420,7 +420,7 @@ void MissionService::assign(int missionId, int vehicleId)
 
     this->save(missionAssignment);
 
-    for (const dao::MissionItemPtr& item: this->missionItems(missionId))
+    for (const dto::MissionItemPtr& item: this->missionItems(missionId))
     {
         item->setStatus(MissionItem::NotActual);
         emit missionItemChanged(item);
@@ -478,10 +478,10 @@ void MissionService::onVehicleChanged(const VehiclePtr& vehicle)
 {
     if (vehicle->isOnline()) return;
 
-    dao::MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
+    dto::MissionAssignmentPtr assignment = this->vehicleAssignment(vehicle->id());
     if (assignment &&
-        (assignment->status() == dao::MissionAssignment::Downloading ||
-         assignment->status() == dao::MissionAssignment::Uploading))
+        (assignment->status() == dto::MissionAssignment::Downloading ||
+         assignment->status() == dto::MissionAssignment::Uploading))
     {
         this->cancelSync(assignment);
     }

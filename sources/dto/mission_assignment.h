@@ -2,14 +2,14 @@
 #define MISSION_ASSIGNMENT_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
 // Qt
 #include <QVector>
 
-namespace dao
+namespace dto
 {
-    class MissionAssignment: public BaseDao
+    class MissionAssignment: public BaseDto
     {
         Q_GADGET
 

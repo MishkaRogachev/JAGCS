@@ -5,7 +5,7 @@
 #include <QAbstractTableModel>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace presentation
 {
@@ -34,14 +34,14 @@ namespace presentation
         int maxSent() const;
 
     public slots:
-        void addData(const dao::LinkStatisticsPtr& statistics);
-        void resetData(const dao::LinkStatisticsPtrList& data);
+        void addData(const dto::LinkStatisticsPtr& statistics);
+        void resetData(const dto::LinkStatisticsPtrList& data);
 
     signals:
         void boundsChanged();
 
     private:
-        dao::LinkStatisticsPtrList m_data;
+        dto::LinkStatisticsPtrList m_data;
         int m_minTime = 0;
         int m_maxTime = 0;
         int m_maxRecv = 0;

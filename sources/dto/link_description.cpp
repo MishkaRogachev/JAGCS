@@ -4,7 +4,7 @@
 #include <QMetaEnum>
 #include <QDebug>
 
-using namespace dao;
+using namespace dto;
 
 namespace
 {

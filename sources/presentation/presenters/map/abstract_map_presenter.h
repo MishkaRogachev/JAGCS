@@ -3,7 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace presentation
 {

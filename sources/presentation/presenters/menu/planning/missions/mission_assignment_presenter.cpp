@@ -18,15 +18,15 @@ MissionAssignmentPresenter::MissionAssignmentPresenter(QObject* parent):
     m_missionId(0)
 {
     connect(m_service, &domain::MissionService::assignmentAdded, this,
-            [this](const dao::MissionAssignmentPtr& assignment) {
+            [this](const dto::MissionAssignmentPtr& assignment) {
         if (m_missionId == assignment->missionId()) this->updateAssignment();
     });
     connect(m_service, &domain::MissionService::assignmentRemoved, this,
-            [this](const dao::MissionAssignmentPtr& assignment) {
+            [this](const dto::MissionAssignmentPtr& assignment) {
         if (m_missionId == assignment->missionId()) this->updateAssignment();
     });
     connect(m_service, &domain::MissionService::assignmentChanged, this,
-            [this](const dao::MissionAssignmentPtr& assignment) {
+            [this](const dto::MissionAssignmentPtr& assignment) {
         if (m_missionId == assignment->missionId()) this->updateAssignment();
     });
 }
@@ -40,7 +40,7 @@ void MissionAssignmentPresenter::setMission(int id)
 
 void MissionAssignmentPresenter::updateAssignment()
 {
-    dao::MissionAssignmentPtr assignment =  m_service->missionAssignment(m_missionId);
+    dto::MissionAssignmentPtr assignment =  m_service->missionAssignment(m_missionId);
 
     if (assignment)
     {
@@ -51,14 +51,14 @@ void MissionAssignmentPresenter::updateAssignment()
     else
     {
         this->setViewProperty(PROPERTY(assignedVehicleId), 0);
-        this->setViewProperty(PROPERTY(status), dao::MissionAssignment::NotActual);
+        this->setViewProperty(PROPERTY(status), dto::MissionAssignment::NotActual);
         this->setViewProperty(PROPERTY(progress), 0);
     }
 }
 
 void MissionAssignmentPresenter::uploadMission()
 {
-    dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);
+    dto::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);
     if (assignment.isNull()) return;
 
     m_service->upload(assignment);
@@ -66,7 +66,7 @@ void MissionAssignmentPresenter::uploadMission()
 
 void MissionAssignmentPresenter::downloadMission()
 {
-    dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);
+    dto::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);
     if (assignment.isNull()) return;
 
     m_service->download(assignment);
@@ -74,7 +74,7 @@ void MissionAssignmentPresenter::downloadMission()
 
 void MissionAssignmentPresenter::cancelSyncMission()
 {
-    dao::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);
+    dto::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);
     if (assignment.isNull()) return;
 
     m_service->cancelSync(assignment);

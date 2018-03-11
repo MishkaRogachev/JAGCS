@@ -22,30 +22,30 @@ using namespace comm;
 
 namespace
 {
-    const QMap<quint16, dao::Command::CommandType> mavCommandLongMap =
+    const QMap<quint16, dto::Command::CommandType> mavCommandLongMap =
     {
-        { MAV_CMD_COMPONENT_ARM_DISARM, dao::Command::ArmDisarm },
-        { MAV_CMD_NAV_RETURN_TO_LAUNCH, dao::Command::Return },
-        { MAV_CMD_MISSION_START, dao::Command::Start },
-        { MAV_CMD_DO_LAND_START, dao::Command::Land },
-        { MAV_CMD_DO_GO_AROUND, dao::Command::GoAround },
-        { MAV_CMD_DO_PAUSE_CONTINUE, dao::Command::PauseContinue },
-        { MAV_CMD_DO_PARACHUTE, dao::Command::Parachute },
-        { MAV_CMD_DO_CHANGE_SPEED, dao::Command::SetSpeed },
-        { MAV_CMD_DO_CHANGE_ALTITUDE, dao::Command::SetAltitude },
-        { MAV_CMD_DO_SET_HOME, dao::Command::SetHome },
-        { MAV_CMD_PREFLIGHT_CALIBRATION, dao::Command::PreflightCalibration }
+        { MAV_CMD_COMPONENT_ARM_DISARM, dto::Command::ArmDisarm },
+        { MAV_CMD_NAV_RETURN_TO_LAUNCH, dto::Command::Return },
+        { MAV_CMD_MISSION_START, dto::Command::Start },
+        { MAV_CMD_DO_LAND_START, dto::Command::Land },
+        { MAV_CMD_DO_GO_AROUND, dto::Command::GoAround },
+        { MAV_CMD_DO_PAUSE_CONTINUE, dto::Command::PauseContinue },
+        { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute },
+        { MAV_CMD_DO_CHANGE_SPEED, dto::Command::SetSpeed },
+        { MAV_CMD_DO_CHANGE_ALTITUDE, dto::Command::SetAltitude },
+        { MAV_CMD_DO_SET_HOME, dto::Command::SetHome },
+        { MAV_CMD_PREFLIGHT_CALIBRATION, dto::Command::PreflightCalibration }
         // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
 
-    const QMultiMap<quint8, dao::Command::CommandStatus> mavStatusMap =
+    const QMultiMap<quint8, dto::Command::CommandStatus> mavStatusMap =
     {
-        { MAV_RESULT_DENIED, dao::Command::Rejected },
-        { MAV_RESULT_TEMPORARILY_REJECTED, dao::Command::Rejected },
-        { MAV_RESULT_UNSUPPORTED, dao::Command::Rejected },
-        { MAV_RESULT_FAILED, dao::Command::Rejected },
-        { MAV_RESULT_IN_PROGRESS, dao::Command::InProgress },
-        { MAV_RESULT_ACCEPTED, dao::Command::Completed }
+        { MAV_RESULT_DENIED, dto::Command::Rejected },
+        { MAV_RESULT_TEMPORARILY_REJECTED, dto::Command::Rejected },
+        { MAV_RESULT_UNSUPPORTED, dto::Command::Rejected },
+        { MAV_RESULT_FAILED, dto::Command::Rejected },
+        { MAV_RESULT_IN_PROGRESS, dto::Command::InProgress },
+        { MAV_RESULT_ACCEPTED, dto::Command::Completed }
     };
 
     int toMavLinkImpact(double value)
@@ -97,11 +97,11 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
     mavlink_command_ack_t ack;
     mavlink_msg_command_ack_decode(&message, &ack);
 
-    dao::Command::CommandType type = ::mavCommandLongMap.value(ack.command, dao::Command::UnknownCommand);
-    if (type == dao::Command::UnknownCommand) return;
+    dto::Command::CommandType type = ::mavCommandLongMap.value(ack.command, dto::Command::UnknownCommand);
+    if (type == dto::Command::UnknownCommand) return;
 
     this->ackCommand(d->vehicleService->vehicleIdByMavId(message.sysid),
-                     type, ::mavStatusMap.value(ack.result, dao::Command::Idle));
+                     type, ::mavStatusMap.value(ack.result, dto::Command::Idle));
 }
 
 void CommandHandler::processHeartbeat(const mavlink_message_t& message)
@@ -121,16 +121,16 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
     if (d->modes[message.sysid].isObtained())
     {
         this->ackCommand(d->vehicleService->vehicleIdByMavId(message.sysid),
-                         dao::Command::SetMode, dao::Command::Completed);
+                         dto::Command::SetMode, dto::Command::Completed);
         d->modes[message.sysid].requestedCustomMode = -1;
     }
 }
 
-void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, int attempt)
+void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, int attempt)
 {
     qDebug() << "MAV:" << vehicleId << command->type() << command->arguments() << attempt;
 
-    dao::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
+    dto::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
     if (vehicle.isNull()) return;
 
     if (::mavCommandLongMap.values().contains(command->type()))
@@ -143,16 +143,16 @@ void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, 
 
     if (command->arguments().count() < 1) return;
 
-    if (command->type() == dao::Command::SetMode) // TODO: special command map
+    if (command->type() == dto::Command::SetMode) // TODO: special command map
     {
         this->sendSetMode(vehicle->mavId(),
                           command->arguments().first().value<domain::vehicle::Mode>());
     }
-    else if (command->type() == dao::Command::GoTo)
+    else if (command->type() == dto::Command::GoTo)
     {
         this->sendCurrentItem(vehicle->mavId(), command->arguments().first().toInt());
     }
-    else if (command->type() == dao::Command::NavTo)
+    else if (command->type() == dto::Command::NavTo)
     {
         QVariantList args = command->arguments();
         if (args.count() > 2)
@@ -163,7 +163,7 @@ void CommandHandler::sendCommand(int vehicleId, const dao::CommandPtr& command, 
                             args.at(2).toFloat());
         }
     }
-    else if (command->type() == dao::Command::ManualImpacts)
+    else if (command->type() == dto::Command::ManualImpacts)
     {
         this->sendManualControl(vehicleId,
                                 command->arguments().value(0, 0).toFloat(),
@@ -246,7 +246,7 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
     m_communicator->sendMessage(message, link);
 
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dao::Command::GoTo, dao::Command::Completed); // TODO: wait current item
+                     dto::Command::GoTo, dto::Command::Completed); // TODO: wait current item
 }
 
 void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)
@@ -275,7 +275,7 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
     m_communicator->sendMessage(message, link);
 
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dao::Command::NavTo, dao::Command::Completed); // TODO: wait nav to
+                     dto::Command::NavTo, dto::Command::Completed); // TODO: wait nav to
 }
 
 void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
@@ -302,5 +302,5 @@ void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
     m_communicator->sendMessage(message, link);
 
     // TODO: wait feedback
-    this->ackCommand(vehicleId, dao::Command::ManualImpacts, dao::Command::Completed);
+    this->ackCommand(vehicleId, dto::Command::ManualImpacts, dto::Command::Completed);
 }

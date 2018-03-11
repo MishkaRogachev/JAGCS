@@ -19,9 +19,9 @@ namespace presentation
     public:
         explicit TranslationHelper(QObject* parent = nullptr);
 
-        Q_INVOKABLE QString translateCommand(dao::MissionItem::Command command);
-        Q_INVOKABLE QString translateVehicleType(dao::Vehicle::Type type);
-        Q_INVOKABLE QUrl imageFromVehicleType(dao::Vehicle::Type type);
+        Q_INVOKABLE QString translateCommand(dto::MissionItem::Command command);
+        Q_INVOKABLE QString translateVehicleType(dto::Vehicle::Type type);
+        Q_INVOKABLE QUrl imageFromVehicleType(dto::Vehicle::Type type);
 
         Q_INVOKABLE QString translateVehicleMode(domain::vehicle::Mode mode);
         Q_INVOKABLE QString translateVehicleState(domain::vehicle::SystemState state);

@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "dao_traits.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -36,18 +36,18 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void onMissionItemAdded(const dao::MissionItemPtr& item);
-        void onMissionItemRemoved(const dao::MissionItemPtr& item);
-        void onMissionItemChanged(const dao::MissionItemPtr& item);
-        void onMissionChanged(const dao::MissionPtr& mission);
+        void onMissionItemAdded(const dto::MissionItemPtr& item);
+        void onMissionItemRemoved(const dto::MissionItemPtr& item);
+        void onMissionItemChanged(const dto::MissionItemPtr& item);
+        void onMissionChanged(const dto::MissionPtr& mission);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
-        QModelIndex itemIndex(const dao::MissionItemPtr& item) const;
+        QModelIndex itemIndex(const dto::MissionItemPtr& item) const;
 
     private:
         domain::MissionService* m_service;
-        dao::MissionItemPtrList m_items;
+        dto::MissionItemPtrList m_items;
     };
 }
 

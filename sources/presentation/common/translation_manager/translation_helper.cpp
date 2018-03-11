@@ -5,69 +5,69 @@ using namespace presentation;
 TranslationHelper::TranslationHelper(QObject* parent):
     QObject(parent)
 {
-    qRegisterMetaType<dao::MissionItem::Command>("dao::MissionItem::Command");
-    qRegisterMetaType<dao::Vehicle::Type>("dao::Vehicle::Type");
+    qRegisterMetaType<dto::MissionItem::Command>("dto::MissionItem::Command");
+    qRegisterMetaType<dto::Vehicle::Type>("dto::Vehicle::Type");
 
     qRegisterMetaType<domain::vehicle::Mode>("domain::vehicle::Mode");
     qRegisterMetaType<domain::vehicle::SystemState>("domain::vehicle::SystemState");
 }
 
-QString TranslationHelper::translateCommand(dao::MissionItem::Command command)
+QString TranslationHelper::translateCommand(dto::MissionItem::Command command)
 {
     switch (command)
     {
-    case dao::MissionItem::Home: return tr("Home");
-    case dao::MissionItem::Takeoff: return tr("Takeoff");
-    case dao::MissionItem::Waypoint: return tr("Waypoint");
-    case dao::MissionItem::LoiterUnlim: return tr("Loiter unlim.");
-    case dao::MissionItem::LoiterAltitude: return tr("Loiter alt.");
-    case dao::MissionItem::LoiterTurns: return tr("Loiter turns");
-    case dao::MissionItem::LoiterTime: return tr("Loiter time");
-    case dao::MissionItem::Continue: return tr("Continue");
-    case dao::MissionItem::Return: return tr("Return");
-    case dao::MissionItem::Landing: return tr("Landing");
-    case dao::MissionItem::SetSpeed: return tr("Set speed");
-    case dao::MissionItem::UnknownCommand:
+    case dto::MissionItem::Home: return tr("Home");
+    case dto::MissionItem::Takeoff: return tr("Takeoff");
+    case dto::MissionItem::Waypoint: return tr("Waypoint");
+    case dto::MissionItem::LoiterUnlim: return tr("Loiter unlim.");
+    case dto::MissionItem::LoiterAltitude: return tr("Loiter alt.");
+    case dto::MissionItem::LoiterTurns: return tr("Loiter turns");
+    case dto::MissionItem::LoiterTime: return tr("Loiter time");
+    case dto::MissionItem::Continue: return tr("Continue");
+    case dto::MissionItem::Return: return tr("Return");
+    case dto::MissionItem::Landing: return tr("Landing");
+    case dto::MissionItem::SetSpeed: return tr("Set speed");
+    case dto::MissionItem::UnknownCommand:
     default: return tr("None");
     }
 }
 
-QString TranslationHelper::translateVehicleType(dao::Vehicle::Type type)
+QString TranslationHelper::translateVehicleType(dto::Vehicle::Type type)
 {
     switch (type)
     {
-    case dao::Vehicle::Auto: return tr("Auto");
-    case dao::Vehicle::FixedWing: return tr("Fixed wing");
-    case dao::Vehicle::FlyingWing: return tr("Flying wing");
-    case dao::Vehicle::Quadcopter: return tr("Quadcopter");
-    case dao::Vehicle::Tricopter: return tr("Tricopter");
-    case dao::Vehicle::Hexcopter: return tr("Hexcopter");
-    case dao::Vehicle::Octocopter: return tr("Octocopter");
-    case dao::Vehicle::Helicopter: return tr("Helicopter");
-    case dao::Vehicle::Coaxial: return tr("Coaxial");
-    case dao::Vehicle::Vtol: return tr("Vtol");
-    case dao::Vehicle::Airship: return tr("Airship");
-    case dao::Vehicle::Kite: return tr("Kite");
-    case dao::Vehicle::Ornithopter: return tr("Ornithopter");
-    case dao::Vehicle::UnknownType:
+    case dto::Vehicle::Auto: return tr("Auto");
+    case dto::Vehicle::FixedWing: return tr("Fixed wing");
+    case dto::Vehicle::FlyingWing: return tr("Flying wing");
+    case dto::Vehicle::Quadcopter: return tr("Quadcopter");
+    case dto::Vehicle::Tricopter: return tr("Tricopter");
+    case dto::Vehicle::Hexcopter: return tr("Hexcopter");
+    case dto::Vehicle::Octocopter: return tr("Octocopter");
+    case dto::Vehicle::Helicopter: return tr("Helicopter");
+    case dto::Vehicle::Coaxial: return tr("Coaxial");
+    case dto::Vehicle::Vtol: return tr("Vtol");
+    case dto::Vehicle::Airship: return tr("Airship");
+    case dto::Vehicle::Kite: return tr("Kite");
+    case dto::Vehicle::Ornithopter: return tr("Ornithopter");
+    case dto::Vehicle::UnknownType:
     default: return tr("Unknown");
     }
 }
 
-QUrl TranslationHelper::imageFromVehicleType(dao::Vehicle::Type type)
+QUrl TranslationHelper::imageFromVehicleType(dto::Vehicle::Type type)
 {
     switch (type) {
-    case dao::Vehicle::FixedWing:
+    case dto::Vehicle::FixedWing:
         return QUrl("qrc:/indicators/fixed_wing_mark.svg");
-    case dao::Vehicle::FlyingWing:
+    case dto::Vehicle::FlyingWing:
         return QUrl("qrc:/indicators/flying_wing_mark.svg");
-    case dao::Vehicle::Tricopter:
-    case dao::Vehicle::Quadcopter:
-    case dao::Vehicle::Hexcopter:
-    case dao::Vehicle::Octocopter:
+    case dto::Vehicle::Tricopter:
+    case dto::Vehicle::Quadcopter:
+    case dto::Vehicle::Hexcopter:
+    case dto::Vehicle::Octocopter:
         return QUrl("qrc:/indicators/quadcopter_mark.svg");
-    case dao::Vehicle::Helicopter:
-    case dao::Vehicle::Coaxial:
+    case dto::Vehicle::Helicopter:
+    case dto::Vehicle::Coaxial:
         return QUrl("qrc:/indicators/helicopter_mark.svg");
     default:
         return QUrl("qrc:/indicators/unknown_mark.svg");

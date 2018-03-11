@@ -27,13 +27,13 @@ class CommunicationService::Impl
 {
 public:
     SerialPortService* serialPortService;
-    QMap<dao::LinkDescriptionPtr, QString> descriptedDevices;
-    QMap<int, dao::LinkStatisticsPtr> linkStatistics;
+    QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
+    QMap<int, dto::LinkStatisticsPtr> linkStatistics;
 
     QThread* commThread;
     CommunicatorWorker* commWorker;
 
-    GenericRepository<dao::LinkDescription> linkRepository;
+    GenericRepository<dto::LinkDescription> linkRepository;
 
     Impl():
         linkRepository("links")
@@ -44,11 +44,11 @@ public:
         for (int id: linkRepository.selectId(condition)) linkRepository.read(id);
     }
 
-    dao::LinkStatisticsPtr getlinkStatistics(int linkId)
+    dto::LinkStatisticsPtr getlinkStatistics(int linkId)
     {
         if (!linkStatistics.contains(linkId))
         {
-            linkStatistics[linkId] = dao::LinkStatisticsPtr::create();
+            linkStatistics[linkId] = dto::LinkStatisticsPtr::create();
             linkStatistics[linkId]->setLinkId(linkId);
         }
         return linkStatistics[linkId];
@@ -59,8 +59,8 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<dao::LinkDescriptionPtr>("dao::LinkDescriptionPtr");
-    qRegisterMetaType<dao::LinkDescription::Protocol>("dao::LinkDescription::Protocol");
+    qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
+    qRegisterMetaType<dto::LinkDescription::Protocol>("dto::LinkDescription::Protocol");
     qRegisterMetaType<comm::LinkFactoryPtr>("comm::LinkFactoryPtr");
 
     d->serialPortService = serialPortService;
@@ -89,7 +89,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 
 CommunicationService::~CommunicationService()
 {
-    for (const dao::LinkDescriptionPtr& description: this->descriptions())
+    for (const dto::LinkDescriptionPtr& description: this->descriptions())
     {
         description->setAutoConnect(description->isConnected());
         this->save(description);
@@ -104,22 +104,22 @@ CommunicationService::~CommunicationService()
     d->commThread->wait();
 }
 
-dao::LinkDescriptionPtr CommunicationService::description(int id) const
+dto::LinkDescriptionPtr CommunicationService::description(int id) const
 {
     return d->linkRepository.read(id);
 }
 
-dao::LinkDescriptionPtrList CommunicationService::descriptions() const
+dto::LinkDescriptionPtrList CommunicationService::descriptions() const
 {
     return d->linkRepository.loadedEntities();
 }
 
-dao::LinkStatisticsPtr CommunicationService::statistics(int descriptionId) const
+dto::LinkStatisticsPtr CommunicationService::statistics(int descriptionId) const
 {
      return d->linkStatistics.value(descriptionId);
 }
 
-dao::LinkStatisticsPtrList CommunicationService::statistics() const
+dto::LinkStatisticsPtrList CommunicationService::statistics() const
 {
     return d->linkStatistics.values();
 }
@@ -136,15 +136,15 @@ void CommunicationService::init()
 
     d->commWorker->setCommunicator(communicator);
 
-    for (const dao::LinkDescriptionPtr& description: this->descriptions())
+    for (const dto::LinkDescriptionPtr& description: this->descriptions())
     {
         comm::LinkFactoryPtr factory(new comm::DescriptionLinkFactory(
                                          description));
         d->commWorker->updateLink(description->id(),
                                   factory, description->isAutoConnect());
 
-        QString device = description->parameter(dao::LinkDescription::Device).toString();
-        if (description->type() == dao::LinkDescription::Serial && device.length() > 0)
+        QString device = description->parameter(dto::LinkDescription::Device).toString();
+        if (description->type() == dto::LinkDescription::Serial && device.length() > 0)
         {
             d->serialPortService->holdDevice(device);
             d->descriptedDevices[description] = device;
@@ -152,7 +152,7 @@ void CommunicationService::init()
     }
 }
 
-bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
+bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
 {
     bool isNew = description->id() == 0;
     if (!d->linkRepository.save(description)) return false;
@@ -162,7 +162,7 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     d->commWorker->updateLink(description->id(),
                               factory, description->isAutoConnect());
 
-    QString device = description->parameter(dao::LinkDescription::Device).toString();
+    QString device = description->parameter(dto::LinkDescription::Device).toString();
     if (d->descriptedDevices.contains(description) && device != d->descriptedDevices[description])
     {
         d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
@@ -170,7 +170,7 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
 
     isNew ? descriptionAdded(description) : descriptionChanged(description);
 
-    if (description->type() == dao::LinkDescription::Serial &&
+    if (description->type() == dto::LinkDescription::Serial &&
         device.length() > 0 && !d->descriptedDevices.contains(description))
     {
         d->serialPortService->holdDevice(device);
@@ -180,7 +180,7 @@ bool CommunicationService::save(const dao::LinkDescriptionPtr& description)
     return true;
 }
 
-bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
+bool CommunicationService::remove(const dto::LinkDescriptionPtr& description)
 {
     if (!d->linkRepository.remove(description)) return false;
 
@@ -201,7 +201,7 @@ bool CommunicationService::remove(const dao::LinkDescriptionPtr& description)
     return true;
 }
 
-void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& description,
+void CommunicationService::setLinkConnected(const dto::LinkDescriptionPtr& description,
                                             bool connected)
 {
     d->commWorker->setLinkConnected(description->id(), connected);
@@ -211,7 +211,7 @@ void CommunicationService::setLinkConnected(const dao::LinkDescriptionPtr& descr
 
 void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
 {
-    dao::LinkDescriptionPtr description = this->description(linkId);
+    dto::LinkDescriptionPtr description = this->description(linkId);
 
     if (description->isConnected() != connected)
     {
@@ -229,7 +229,7 @@ void CommunicationService::onLinkStatisticsChanged(int linkId,
                                                    int bytesReceivedSec,
                                                    int bytesSentSec)
 {
-    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
+    dto::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
 
     statistics->setTimestamp(timestamp);
     statistics->setBytesRecv(bytesReceivedSec);
@@ -242,7 +242,7 @@ void CommunicationService::onMavLinkStatisticsChanged(int linkId,
                                                       int packetsReceived,
                                                       int packetsDrops)
 {
-    dao::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
+    dto::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
 
     statistics->setPacketsRecv(packetsReceived);
     statistics->setPacketDrops(packetsDrops);
@@ -251,14 +251,14 @@ void CommunicationService::onMavLinkStatisticsChanged(int linkId,
 }
 
 void CommunicationService::onMavlinkProtocolChanged(int linkId,
-                                                    dao::LinkDescription::Protocol protocol)
+                                                    dto::LinkDescription::Protocol protocol)
 {
-    dao::LinkDescriptionPtr description = this->description(linkId);
+    dto::LinkDescriptionPtr description = this->description(linkId);
     if (description->protocol() == protocol) return;
 
     QString msg;
-    if (protocol == dao::LinkDescription::MavLink1) msg = tr("switched on MAVLINK v.1");
-    if (protocol == dao::LinkDescription::MavLink2) msg = tr("switched on MAVLINK v.2");
+    if (protocol == dto::LinkDescription::MavLink1) msg = tr("switched on MAVLINK v.1");
+    if (protocol == dto::LinkDescription::MavLink2) msg = tr("switched on MAVLINK v.2");
 
     LogBus::log(tr("Link") + " " + description->name() + " " + msg);
     description->setProtocol(protocol);
@@ -270,10 +270,10 @@ void CommunicationService::onDevicesChanged()
 {
     QStringList devices = d->serialPortService->devices();
 
-    for (const dao::LinkDescriptionPtr& description: d->descriptedDevices.keys())
+    for (const dto::LinkDescriptionPtr& description: d->descriptedDevices.keys())
     {
         if (!description->isConnected() && description->isAutoConnect() &&
-            devices.contains(description->parameter(dao::LinkDescription::Device).toString()))
+            devices.contains(description->parameter(dto::LinkDescription::Device).toString()))
         {
             this->setLinkConnected(description, true);
         }

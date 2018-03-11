@@ -7,7 +7,7 @@
 // Internal
 #include "mission.h"
 
-using namespace dao;
+using namespace dto;
 
 namespace
 {

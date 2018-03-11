@@ -41,7 +41,7 @@ MissionLineMapItemModel::MissionLineMapItemModel(domain::MissionService* service
     connect(service, &domain::MissionService::missionItemRemoved,
             this, &MissionLineMapItemModel::onMissionItemChanged);
 
-    for (const dao::MissionPtr& item: service->missions())
+    for (const dto::MissionPtr& item: service->missions())
     {
         this->onMissionAdded(item);
     }
@@ -57,7 +57,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_missions.count()) return QVariant();
 
-    const dao::MissionPtr& mission = m_missions.at(index.row());
+    const dto::MissionPtr& mission = m_missions.at(index.row());
     switch (role)
     {
     case MissionPathRole:
@@ -70,7 +70,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
             return line;
         }
 
-        for (const dao::MissionItemPtr& item: m_service->missionItems(mission->id()))
+        for (const dto::MissionItemPtr& item: m_service->missionItems(mission->id()))
         {
             if (item->isPositionatedItem())
             {
@@ -79,7 +79,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
                     line.append(QVariant::fromValue(item->coordinate()));
                 }
             }
-            else if (item->command() == dao::MissionItem::Return && !line.isEmpty())
+            else if (item->command() == dto::MissionItem::Return && !line.isEmpty())
             {
                 line.append(line[0]); // Return to home line
             }
@@ -88,7 +88,7 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     }
     case MissionStatusRole:
     {
-        dao::MissionAssignmentPtr assignment  = m_service->missionAssignment(mission->id());
+        dto::MissionAssignmentPtr assignment  = m_service->missionAssignment(mission->id());
         if (assignment.isNull()) return -1;
 
         return assignment->status();
@@ -98,14 +98,14 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void MissionLineMapItemModel::onMissionAdded(const dao::MissionPtr& mission)
+void MissionLineMapItemModel::onMissionAdded(const dto::MissionPtr& mission)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     m_missions.append(mission);
     this->endInsertRows();
 }
 
-void MissionLineMapItemModel::onMissionRemoved(const dao::MissionPtr& mission)
+void MissionLineMapItemModel::onMissionRemoved(const dto::MissionPtr& mission)
 {
     int row = m_missions.indexOf(mission);
 
@@ -114,13 +114,13 @@ void MissionLineMapItemModel::onMissionRemoved(const dao::MissionPtr& mission)
     this->endRemoveRows();
 }
 
-void MissionLineMapItemModel::onMissionChanged(const dao::MissionPtr& mission)
+void MissionLineMapItemModel::onMissionChanged(const dto::MissionPtr& mission)
 {
     QModelIndex index = this->index(m_missions.indexOf(mission));
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }
 
-void MissionLineMapItemModel::onAssignmentChanged(const dao::MissionAssignmentPtr& assignment)
+void MissionLineMapItemModel::onAssignmentChanged(const dto::MissionAssignmentPtr& assignment)
 {
     for (int row = 0 ; row < m_missions.count(); ++row)
     {
@@ -132,9 +132,9 @@ void MissionLineMapItemModel::onAssignmentChanged(const dao::MissionAssignmentPt
     }
 }
 
-void MissionLineMapItemModel::onMissionItemChanged(const dao::MissionItemPtr& item)
+void MissionLineMapItemModel::onMissionItemChanged(const dto::MissionItemPtr& item)
 {
-    dao::MissionPtr mission = m_service->mission(item->missionId());
+    dto::MissionPtr mission = m_service->mission(item->missionId());
     QModelIndex index = this->index(m_missions.indexOf(mission));
     if (index.isValid()) emit dataChanged(index, index, { MissionPathRole });
 }
@@ -149,7 +149,7 @@ QHash<int, QByteArray> MissionLineMapItemModel::roleNames() const
     return roles;
 }
 
-QModelIndex MissionLineMapItemModel::missionIndex(const dao::MissionPtr& mission) const
+QModelIndex MissionLineMapItemModel::missionIndex(const dto::MissionPtr& mission) const
 {
     return this->index(m_missions.indexOf(mission));
 }

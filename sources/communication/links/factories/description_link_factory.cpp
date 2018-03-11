@@ -6,7 +6,7 @@
 #include "udp_link.h"
 #include "serial_link.h"
 
-using namespace dao;
+using namespace dto;
 using namespace comm;
 
 DescriptionLinkFactory::DescriptionLinkFactory(
@@ -22,10 +22,10 @@ AbstractLink* DescriptionLinkFactory::create()
     switch (m_description->type())
     {
     case LinkDescription::Udp:
-        return new UdpLink(m_description->parameter(dao::LinkDescription::Port).toInt());
+        return new UdpLink(m_description->parameter(dto::LinkDescription::Port).toInt());
     case LinkDescription::Serial:
-        return new SerialLink(m_description->parameter(dao::LinkDescription::Device).toString(),
-                              m_description->parameter(dao::LinkDescription::BaudRate).toInt());
+        return new SerialLink(m_description->parameter(dto::LinkDescription::Device).toString(),
+                              m_description->parameter(dto::LinkDescription::BaudRate).toInt());
     default:
         return nullptr;
     }
@@ -42,7 +42,7 @@ void DescriptionLinkFactory::update(AbstractLink* link)
        UdpLink* udpLink = qobject_cast<UdpLink*>(link);
        if (!udpLink) return;
 
-       udpLink->setPort(m_description->parameter(dao::LinkDescription::Port).toInt());
+       udpLink->setPort(m_description->parameter(dto::LinkDescription::Port).toInt());
 
        break;
     }
@@ -51,8 +51,8 @@ void DescriptionLinkFactory::update(AbstractLink* link)
         SerialLink* serialLink = qobject_cast<SerialLink*>(link);
         if (!serialLink) return;
 
-        serialLink->setDevice(m_description->parameter(dao::LinkDescription::Device).toString());
-        serialLink->setBaudRate(m_description->parameter(dao::LinkDescription::BaudRate).toInt());
+        serialLink->setDevice(m_description->parameter(dto::LinkDescription::Device).toString());
+        serialLink->setBaudRate(m_description->parameter(dto::LinkDescription::BaudRate).toInt());
 
         break;
     }

@@ -2,14 +2,14 @@
 #define COMMAND_H
 
 // Internal
-#include "base_dao.h"
+#include "base_dto.h"
 
 // Qt
 #include <QVariant>
 
-namespace dao
+namespace dto
 {
-    class Command: public BaseDao
+    class Command: public BaseDto
     {
         Q_GADGET
 

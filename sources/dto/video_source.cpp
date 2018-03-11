@@ -1,6 +1,6 @@
 #include "video_source.h"
 
-using namespace dao;
+using namespace dto;
 
 VideoSource::Type VideoSource::type() const
 {

@@ -1,11 +1,12 @@
-#ifndef DAO_TRAITS_H
-#define DAO_TRAITS_H
+#ifndef DTO_TRAITS_H
+#define DTO_TRAITS_H
 
 // Qt
 #include <QSharedPointer>
 #include <QList>
 
-namespace dao
+namespace dto
+
 {
     class Mission;
     class MissionItem;

@@ -17,7 +17,7 @@ ActiveVideoPresenter::ActiveVideoPresenter(QObject* parent):
 
 void ActiveVideoPresenter::updateActiveVideo()
 {
-    dao::VideoSourcePtr video;
+    dto::VideoSourcePtr video;
     int videoId = settings::Provider::value(settings::video::activeVideo).toInt();
     if (videoId > -1)
     {
