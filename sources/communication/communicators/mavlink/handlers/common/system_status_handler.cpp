@@ -19,7 +19,7 @@ using namespace domain;
 
 SystemStatusHandler::SystemStatusHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void SystemStatusHandler::processMessage(const mavlink_message_t& message)

@@ -19,7 +19,7 @@ using namespace domain;
 
 HighLatencyHandler::HighLatencyHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void HighLatencyHandler::processMessage(const mavlink_message_t& message)

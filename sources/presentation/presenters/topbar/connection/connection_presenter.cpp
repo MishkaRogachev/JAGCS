@@ -15,7 +15,7 @@ using namespace presentation;
 class ConnectionPresenter::Impl
 {
 public:
-    domain::CommunicationService* service = domain::ServiceRegistry::communicationService();
+    domain::CommunicationService* service = serviceRegistry->communicationService();
 };
 
 ConnectionPresenter::ConnectionPresenter(QObject* parent):

@@ -17,7 +17,7 @@ using namespace domain;
 
 AltitudeHandler::AltitudeHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void AltitudeHandler::processMessage(const mavlink_message_t& message)

@@ -23,9 +23,9 @@ public:
     dto::LinkDescriptionPtr description;
 
     domain::SerialPortService* const serialService =
-            domain::ServiceRegistry::serialPortService();
+            serviceRegistry->serialPortService();
     domain::CommunicationService* const commService =
-            domain::ServiceRegistry::communicationService();
+            serviceRegistry->communicationService();
 
     LinkStatisticsModel model;
 };

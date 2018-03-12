@@ -83,8 +83,8 @@ namespace
 class HeartbeatHandler::Impl
 {
 public:
-    VehicleService* vehicleService = ServiceRegistry::vehicleService();
-    domain::TelemetryService* telemetryService = ServiceRegistry::telemetryService();
+    VehicleService* vehicleService = serviceRegistry->vehicleService();
+    domain::TelemetryService* telemetryService = serviceRegistry->telemetryService();
 
     QMap <int, QBasicTimer*> vehicleTimers;
     int sendTimer;

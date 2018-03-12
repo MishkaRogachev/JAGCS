@@ -32,8 +32,8 @@ using namespace domain;
 class HomePositionHandler::Impl
 {
 public:
-    domain::VehicleService* vehicleService = ServiceRegistry::vehicleService();
-    domain::MissionService* missionService = ServiceRegistry::missionService();
+    domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
+    domain::MissionService* missionService = serviceRegistry->missionService();
 
     QList<int> obtainedVehicles;
     QMap<int, int> vehiclesTimers;
@@ -71,7 +71,7 @@ void HomePositionHandler::processMessage(const mavlink_message_t& message)
 {
     if (message.msgid != MAVLINK_MSG_ID_HOME_POSITION) return;
 
-    TelemetryPortion port(ServiceRegistry::telemetryService()->mavNode(message.sysid));
+    TelemetryPortion port(serviceRegistry->telemetryService()->mavNode(message.sysid));
 
     mavlink_home_position_t home;
     mavlink_msg_home_position_decode(&message, &home);

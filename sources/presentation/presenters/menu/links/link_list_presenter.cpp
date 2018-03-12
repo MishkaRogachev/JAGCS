@@ -16,7 +16,7 @@ using namespace presentation;
 
 LinkListPresenter::LinkListPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::communicationService())
+    m_service(serviceRegistry->communicationService())
 {
     connect(m_service, &domain::CommunicationService::descriptionAdded,
             this, &LinkListPresenter::updateLinks);

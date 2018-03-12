@@ -16,7 +16,7 @@ using namespace presentation;
 
 VehicleListPresenter::VehicleListPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::vehicleService())
+    m_service(serviceRegistry->vehicleService())
 {
     connect(m_service, &domain::VehicleService::vehicleAdded,
             this, &VehicleListPresenter::updateVehicles);

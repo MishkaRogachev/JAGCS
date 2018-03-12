@@ -22,15 +22,13 @@ namespace domain
 
         static ServiceRegistry* instance();
 
-        void init(const QString& dataBaseName);
-
-        static MissionService* missionService();
-        static VehicleService* vehicleService();
-        static TelemetryService* telemetryService();
-        static VideoService* videoService();
-        static CommandService* commandService();
-        static SerialPortService* serialPortService();
-        static CommunicationService* communicationService();
+        MissionService* missionService();
+        VehicleService* vehicleService();
+        TelemetryService* telemetryService();
+        VideoService* videoService();
+        CommandService* commandService();
+        SerialPortService* serialPortService();
+        CommunicationService* communicationService();
 
     private:
         class Impl;

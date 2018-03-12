@@ -16,7 +16,7 @@ using namespace domain;
 
 WindHandler::WindHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void WindHandler::processMessage(const mavlink_message_t& message)

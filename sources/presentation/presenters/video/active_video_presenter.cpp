@@ -21,7 +21,7 @@ void ActiveVideoPresenter::updateActiveVideo()
     int videoId = settings::Provider::value(settings::video::activeVideo).toInt();
     if (videoId > -1)
     {
-        video = domain::ServiceRegistry::videoService()->videoSource(
+        video = serviceRegistry->videoService()->videoSource(
                     settings::Provider::value(settings::video::activeVideo).toInt());
     }
     this->setVideo(video);

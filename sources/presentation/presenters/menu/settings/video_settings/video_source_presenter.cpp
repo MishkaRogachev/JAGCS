@@ -14,7 +14,7 @@ using namespace presentation;
 
 VideoSourcePresenter::VideoSourcePresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::videoService())
+    m_service(serviceRegistry->videoService())
 {
     connect(m_service, &domain::VideoService::videoSourceChanged, this,
             [this](const dto::VideoSourcePtr& video) {

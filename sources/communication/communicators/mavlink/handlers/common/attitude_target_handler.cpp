@@ -16,7 +16,7 @@ using namespace comm;
 
 AttitudeTargetHandler::AttitudeTargetHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_vehicleService(domain::ServiceRegistry::vehicleService())
+    m_vehicleService(serviceRegistry->vehicleService())
 {
 //    connect(d->vehicleService, &domain::VehicleService::sendManualControl,
 //            this, &AttitudeTargetHandler::sendAttitude);

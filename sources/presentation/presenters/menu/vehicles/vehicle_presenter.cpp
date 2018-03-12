@@ -29,7 +29,7 @@ using namespace presentation;
 
 VehiclePresenter::VehiclePresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::vehicleService())
+    m_service(serviceRegistry->vehicleService())
 {
     connect(m_service, &domain::VehicleService::vehicleChanged, this,
             [this](const dto::VehiclePtr& vehicle) {

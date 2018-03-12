@@ -93,9 +93,9 @@ using namespace domain;
 class MissionHandler::Impl
 {
 public:
-    VehicleService* vehicleService = ServiceRegistry::vehicleService();
-    TelemetryService* telemetryService = ServiceRegistry::telemetryService();
-    MissionService* missionService = ServiceRegistry::missionService();
+    VehicleService* vehicleService = serviceRegistry->vehicleService();
+    TelemetryService* telemetryService = serviceRegistry->telemetryService();
+    MissionService* missionService = serviceRegistry->missionService();
 
     QMap <quint8, MissionHandler::Stage> mavStages;
     QMap <quint8, int> mavTimers;

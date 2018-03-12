@@ -16,7 +16,7 @@ using namespace presentation;
 
 VideoSourceListPresenter::VideoSourceListPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::videoService())
+    m_service(serviceRegistry->videoService())
 {
     connect(m_service, &domain::VideoService::videoSourceAdded,
             this, &VideoSourceListPresenter::updateVideoSources);

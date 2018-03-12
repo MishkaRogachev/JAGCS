@@ -19,7 +19,7 @@ using namespace domain;
 
 SystemTimeHandler::SystemTimeHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void SystemTimeHandler::processMessage(const mavlink_message_t& message)

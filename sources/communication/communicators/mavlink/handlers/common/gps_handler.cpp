@@ -22,7 +22,7 @@ using namespace domain;
 
 GpsHandler::GpsHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {
     qRegisterMetaType<SatelliteInfo>("SatelliteInfo");
 }

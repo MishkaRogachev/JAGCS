@@ -57,7 +57,7 @@ namespace
 class CommandHandler::Impl
 {
 public:
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
 
     QScopedPointer<IModeHelper> modeHelper;
 
@@ -80,7 +80,7 @@ CommandHandler::CommandHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
-    domain::ServiceRegistry::commandService()->addHandler(this);
+    serviceRegistry->commandService()->addHandler(this);
 }
 
 CommandHandler::~CommandHandler()

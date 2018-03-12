@@ -18,7 +18,7 @@ using namespace domain;
 
 FlightHandler::FlightHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void FlightHandler::processMessage(const mavlink_message_t& message)

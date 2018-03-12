@@ -18,7 +18,7 @@ using namespace domain;
 
 RadioHandler::RadioHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void RadioHandler::processMessage(const mavlink_message_t& message)

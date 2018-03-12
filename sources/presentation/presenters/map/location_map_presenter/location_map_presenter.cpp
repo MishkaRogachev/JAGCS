@@ -22,10 +22,10 @@ public:
     VehicleMapItemModel vehicleModel;
 
     Impl():
-        pointModel(domain::ServiceRegistry::missionService()),
-        lineModel(domain::ServiceRegistry::missionService()),
-        vehicleModel(domain::ServiceRegistry::vehicleService(),
-                     domain::ServiceRegistry::telemetryService())
+        pointModel(serviceRegistry->missionService()),
+        lineModel(serviceRegistry->missionService()),
+        vehicleModel(serviceRegistry->vehicleService(),
+                     serviceRegistry->telemetryService())
     {}
 };
 

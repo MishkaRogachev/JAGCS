@@ -14,7 +14,7 @@ using namespace presentation;
 
 MissionListPresenter::MissionListPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::missionService())
+    m_service(serviceRegistry->missionService())
 {
     connect(m_service, &domain::MissionService::missionAdded,
             this, &MissionListPresenter::updateMissions);

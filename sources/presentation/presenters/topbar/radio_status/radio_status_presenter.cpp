@@ -14,7 +14,7 @@ using namespace presentation;
 class RadioStatusPresenter::Impl
 {
 public:
-    domain::Telemetry* node = domain::ServiceRegistry::telemetryService()->radioNode();
+    domain::Telemetry* node = serviceRegistry->telemetryService()->radioNode();
 };
 
 RadioStatusPresenter::RadioStatusPresenter(QObject* parent):

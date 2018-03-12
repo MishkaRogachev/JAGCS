@@ -16,7 +16,7 @@ using namespace domain;
 
 EkfStatusHandler::EkfStatusHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void EkfStatusHandler::processMessage(const mavlink_message_t& message)

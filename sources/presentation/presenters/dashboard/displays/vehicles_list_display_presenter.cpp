@@ -19,7 +19,7 @@ using namespace presentation;
 class VehiclesListDisplayPresenter::Impl
 {
 public:
-     domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
+     domain::VehicleService* service = serviceRegistry->vehicleService();
 
      VehiclesModel vehiclesModel;
      VehiclesSortingModel sortingModel;

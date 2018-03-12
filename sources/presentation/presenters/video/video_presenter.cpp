@@ -28,10 +28,10 @@ VideoPresenter::VideoPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    connect(domain::ServiceRegistry::videoService(),
+    connect(serviceRegistry->videoService(),
             &domain::VideoService::videoSourceChanged,
             this, &VideoPresenter::onVideoSourceChanged);
-    connect(domain::ServiceRegistry::videoService(),
+    connect(serviceRegistry->videoService(),
             &domain::VideoService::videoSourceRemoved,
             this, &VideoPresenter::onVideoSourceRemoved);
 }

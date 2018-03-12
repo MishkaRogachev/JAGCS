@@ -14,7 +14,7 @@ using namespace presentation;
 
 PlanningPresenter::PlanningPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::vehicleService())
+    m_service(serviceRegistry->vehicleService())
 {
     connect(m_service, &domain::VehicleService::vehicleAdded,
             this, &PlanningPresenter::updateVehicles);

@@ -18,7 +18,7 @@ using namespace domain;
 
 NavControllerHandler::NavControllerHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void NavControllerHandler::processMessage(const mavlink_message_t& message)

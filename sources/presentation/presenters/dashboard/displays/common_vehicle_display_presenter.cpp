@@ -27,9 +27,9 @@ public:
     dto::MissionAssignmentPtr assignment;
     QList<dto::CommandPtr> commands;
 
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
-    domain::CommandService* commandService = domain::ServiceRegistry::commandService();
+    domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
+    domain::MissionService* missionService = serviceRegistry->missionService();
+    domain::CommandService* commandService = serviceRegistry->commandService();
 };
 
 CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
@@ -101,7 +101,7 @@ void CommonVehicleDisplayPresenter::setVehicle(int vehicleId)
     d->assignment = d->missionService->vehicleAssignment(vehicleId);
     this->updateMissionItems();
 
-    this->setNode(domain::ServiceRegistry::telemetryService()->vehicleNode(vehicleId));
+    this->setNode(serviceRegistry->telemetryService()->vehicleNode(vehicleId));
 }
 
 void CommonVehicleDisplayPresenter::updateVehicle()

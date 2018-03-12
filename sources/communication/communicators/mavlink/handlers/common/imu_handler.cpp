@@ -17,7 +17,7 @@ using namespace domain;
 
 ImuHandler::ImuHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void ImuHandler::processMessage(const mavlink_message_t& message)

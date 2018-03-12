@@ -14,7 +14,7 @@ using namespace presentation;
 
 MissionItemPresenter::MissionItemPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::missionService())
+    m_service(serviceRegistry->missionService())
 {
     connect(m_service, &domain::MissionService::missionItemChanged, this,
             [this](const dto::MissionItemPtr& item) {

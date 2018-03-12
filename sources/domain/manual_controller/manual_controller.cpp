@@ -34,7 +34,7 @@ const QList<ManualController::Axis> ManualController::axes({
 class ManualController::Impl
 {
 public:
-    domain::CommandService* service = domain::ServiceRegistry::commandService();
+    domain::CommandService* service = serviceRegistry->commandService();
 
     #ifdef WITH_GAMEPAD
     JoystickController* controller = nullptr;

@@ -10,6 +10,7 @@
 #include "common.h"
 #include "settings_provider.h"
 
+#include "db_manager.h"
 #include "service_registry.h"
 #include "proxy_manager.h"
 
@@ -55,8 +56,15 @@ int main(int argc, char* argv[])
         domain::ProxyManager proxy;
         proxy.load();
 
+        db::DbManager dbManager;
+        if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
+        {
+            qFatal("Unable to establish DB connection");
+            app.quit();
+        }
+
         domain::ServiceRegistry registy;
-        registy.init(settings::Provider::value(settings::data_base::name).toString());
+        Q_UNUSED(registy);
 
         presentation::TranslationManager translations;
         translations.initLocales();

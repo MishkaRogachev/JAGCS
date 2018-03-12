@@ -16,7 +16,7 @@ class DashboardPresenter::Impl
 {
 public:
     dto::VehiclePtr selectedVehicle;
-    domain::VehicleService* service = domain::ServiceRegistry::vehicleService();
+    domain::VehicleService* service = serviceRegistry->vehicleService();
 };
 
 DashboardPresenter::DashboardPresenter(QObject* parent):

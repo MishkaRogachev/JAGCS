@@ -18,7 +18,7 @@ using namespace domain;
 
 LandTargetHandler::LandTargetHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void LandTargetHandler::processMessage(const mavlink_message_t& message)

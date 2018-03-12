@@ -14,7 +14,7 @@ using namespace presentation;
 
 VerticalProfilePresenter::VerticalProfilePresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(domain::ServiceRegistry::missionService())
+    m_service(serviceRegistry->missionService())
 {
     connect(m_service, &domain::MissionService::missionItemAdded, this, [this]
             (const dto::MissionItemPtr& missionItem){

@@ -20,7 +20,7 @@ using namespace domain;
 
 PositionHandler::PositionHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void PositionHandler::processMessage(const mavlink_message_t& message)

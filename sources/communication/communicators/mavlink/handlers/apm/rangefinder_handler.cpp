@@ -18,7 +18,7 @@ using namespace domain;
 
 RangefinderHandler::RangefinderHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
-    m_telemetryService(ServiceRegistry::telemetryService())
+    m_telemetryService(serviceRegistry->telemetryService())
 {}
 
 void RangefinderHandler::processMessage(const mavlink_message_t& message)
