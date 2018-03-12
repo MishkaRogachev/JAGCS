@@ -2,9 +2,11 @@
 
 // Qt
 #include <QVariant>
+#include <QApplication>
 #include <QDateTime>
 
 // Internal
+#include "common.h"
 #include "settings_provider.h"
 
 using namespace presentation;
@@ -43,13 +45,15 @@ void DatabasePresenter::savePath()
 {
     QString path = this->viewProperty(PROPERTY(path)).toString();
 
-    if (settings::Provider::value(settings::data_base::name) != path)
-    {
-        settings::Provider::setValue(settings::data_base::name, path);
-        this->tryConnect();
-    }
+    if (settings::Provider::value(settings::data_base::name) == path) return;
 
-    this->setViewProperty(PROPERTY(changed), false);
+    settings::Provider::setValue(settings::data_base::name, path);
+
+    qApp->exit(RESETART_CODE);
+
+    // TODO: soft database reconnection
+    //this->tryConnect();
+    // this->setViewProperty(PROPERTY(changed), false);
 }
 
 void DatabasePresenter::migrate()

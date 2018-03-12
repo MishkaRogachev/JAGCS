@@ -16,29 +16,32 @@
 
 using namespace domain;
 
+ServiceRegistry* ServiceRegistry::lastCreatedRegistry = nullptr;
+
 class ServiceRegistry::Impl
 {
 public:
-    MissionService* missionService;
-    VehicleService* vehicleService;
-    TelemetryService* telemetryService;
-    VideoService* videoService;
-    CommandService* commandService;
-    SerialPortService serialPortService;
-    CommunicationService* communicationService;
+    QScopedPointer<MissionService> missionService;
+    QScopedPointer<VehicleService> vehicleService;
+    QScopedPointer<TelemetryService> telemetryService;
+    QScopedPointer<VideoService> videoService;
+    QScopedPointer<CommandService> commandService;
+    QScopedPointer<SerialPortService> serialPortService;
+    QScopedPointer<CommunicationService> communicationService;
 };
 
 ServiceRegistry::ServiceRegistry():
     d(new Impl())
-{}
+{
+    ServiceRegistry::lastCreatedRegistry = this;
+}
 
 ServiceRegistry::~ServiceRegistry()
 {}
 
 ServiceRegistry* ServiceRegistry::instance()
 {
-    static ServiceRegistry registry;
-    return &registry;
+    return ServiceRegistry::lastCreatedRegistry;
 }
 
 void ServiceRegistry::init(const QString& dataBaseName)
@@ -50,56 +53,47 @@ void ServiceRegistry::init(const QString& dataBaseName)
         qApp->quit();
     }
 
-    d->missionService = new MissionService(qApp);
-    d->vehicleService = new VehicleService(d->missionService, qApp);
-    d->telemetryService = new TelemetryService(d->vehicleService, qApp);
-    d->videoService = new VideoService(qApp);
-    d->commandService = new CommandService(qApp);
-    d->communicationService = new CommunicationService(&d->serialPortService, qApp);
+    d->missionService.reset(new MissionService(qApp));
+    d->vehicleService.reset(new VehicleService(d->missionService.data(), qApp));
+    d->telemetryService.reset(new TelemetryService(d->vehicleService.data(), qApp));
+    d->videoService.reset(new VideoService(qApp));
+    d->commandService.reset(new CommandService(qApp));
+    d->communicationService.reset(new CommunicationService(d->serialPortService.data(), qApp));
 
     d->communicationService->init();
-
-    QObject::connect(qApp, &QCoreApplication::aboutToQuit, [this]() {
-        delete d->communicationService;
-        delete d->commandService;
-        delete d->videoService;
-        delete d->telemetryService;
-        delete d->vehicleService;
-        delete d->missionService;
-    });
 }
 
 MissionService* ServiceRegistry::missionService()
 {
-    return instance()->d->missionService;
+    return instance()->d->missionService.data();
 }
 
 VehicleService* ServiceRegistry::vehicleService()
 {
-    return instance()->d->vehicleService;
+    return instance()->d->vehicleService.data();
 }
 
 TelemetryService* ServiceRegistry::telemetryService()
 {
-    return instance()->d->telemetryService;
+    return instance()->d->telemetryService.data();
 }
 
 VideoService* ServiceRegistry::videoService()
 {
-    return instance()->d->videoService;
+    return instance()->d->videoService.data();
 }
 
 CommandService* ServiceRegistry::commandService()
 {
-    return instance()->d->commandService;
+    return instance()->d->commandService.data();
 }
 
 CommunicationService* ServiceRegistry::communicationService()
 {
-    return instance()->d->communicationService;
+    return instance()->d->communicationService.data();
 }
 
 SerialPortService* ServiceRegistry::serialPortService()
 {
-    return &instance()->d->serialPortService;
+    return instance()->d->serialPortService.data();
 }

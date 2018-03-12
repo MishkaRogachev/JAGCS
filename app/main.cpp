@@ -7,6 +7,7 @@
 #include <QDebug>
 
 // Internal
+#include "common.h"
 #include "settings_provider.h"
 
 #include "service_registry.h"
@@ -20,6 +21,12 @@
 
 int main(int argc, char* argv[])
 {
+    QLockFile lock("JAGCS");
+    if (!lock.tryLock())
+    {
+        qFatal("Application JAGCS is locked");
+    }
+
 #ifdef Q_OS_WIN32
     QApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
@@ -30,41 +37,41 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(app::log);
 #endif
 
-    QApplication app(argc, argv);
-
-    app.setApplicationName("JAGCS");
-    app.setOrganizationName("JAGCS");
-
-    QLockFile lock("JAGCS");
-    if (!lock.tryLock())
+    int result = 0;
+    do
     {
-        qFatal("Application JAGCS is locked");
-    }
+        QApplication app(argc, argv);
 
-    QFontDatabase::addApplicationFont(":/fonts/OpenSans-Bold.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/OpenSans-Italic.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/OpenSans-Regular.ttf");
+        app.setApplicationName("JAGCS");
+        app.setOrganizationName("JAGCS");
 
-    app.setFont(QFont("OpenSans"));
-    app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
+        QFontDatabase::addApplicationFont(":/fonts/OpenSans-Bold.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/OpenSans-Italic.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/OpenSans-Regular.ttf");
 
-    domain::ProxyManager proxy;
-    proxy.load();
+        app.setFont(QFont("OpenSans"));
+        app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
-    domain::ServiceRegistry::instance()->init(
-                settings::Provider::value(settings::data_base::name).toString());
+        domain::ProxyManager proxy;
+        proxy.load();
 
-    presentation::TranslationManager translations;
-    translations.initLocales();
+        domain::ServiceRegistry registy;
+        registy.init(settings::Provider::value(settings::data_base::name).toString());
 
-    presentation::GuiStyleManager guiStyleManager;
-    guiStyleManager.loadSettingsPalette();
-    guiStyleManager.loadSettingsSizings();
+        presentation::TranslationManager translations;
+        translations.initLocales();
 
-    presentation::PresentationContext::rootContext()->setContextProperty(
-                "settings", settings::Provider::instance());
+        presentation::GuiStyleManager guiStyleManager;
+        guiStyleManager.loadSettingsPalette();
+        guiStyleManager.loadSettingsSizings();
 
-    presentation::PresentationContext::start();
+        presentation::PresentationContext::rootContext()->setContextProperty(
+                    "settings", settings::Provider::instance());
 
-    return app.exec();
+        presentation::PresentationContext::start();
+
+        result = app.exec();
+    } while (result == RESETART_CODE);
+
+    return result;
 }

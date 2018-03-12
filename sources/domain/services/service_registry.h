@@ -16,10 +16,9 @@ namespace domain
 
     class ServiceRegistry
     {
-        ServiceRegistry();
-
     public:
-        ~ServiceRegistry();
+        ServiceRegistry();
+        virtual ~ServiceRegistry();
 
         static ServiceRegistry* instance();
 
@@ -37,8 +36,13 @@ namespace domain
         class Impl;
         QScopedPointer<Impl> const d;
 
+        static ServiceRegistry* lastCreatedRegistry;
+
         Q_DISABLE_COPY(ServiceRegistry)
     };
+
 }
+
+#define serviceRegistry (domain::ServiceRegistry::instance())
 
 #endif // SERVICE_REGISTRY_H
