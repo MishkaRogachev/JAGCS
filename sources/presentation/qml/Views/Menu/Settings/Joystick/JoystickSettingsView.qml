@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Views/Common"
 
 GridLayout {
     id: joystickSettings
@@ -135,24 +136,10 @@ GridLayout {
         Layout.fillHeight: true
     }
 
-    RowLayout {
+    SaveRestore {
+        enabled: changed
+        onSave: presenter.save()
+        onRestore: presenter.restore()
         Layout.columnSpan: 2
-        spacing: sizings.spacing
-
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            onClicked: presenter.updateView()
-            enabled: changed
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            text: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            onClicked: presenter.save()
-            enabled: changed
-            Layout.fillWidth: true
-        }
     }
 }

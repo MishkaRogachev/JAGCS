@@ -7,9 +7,7 @@ using namespace db;
 
 bool AlterLinkDescriptionMigration::up()
 {
-    qDebug() << "1";
     if (!m_query.prepare("DROP TABLE links") || !m_query.exec()) return false;
-    qDebug() << "2";
 
     if (!m_query.prepare("CREATE TABLE links ("
                          "id INTEGER PRIMARY KEY NOT NULL,"

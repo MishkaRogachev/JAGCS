@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Views/Common"
 
 GridLayout {
     id: database
@@ -107,20 +108,12 @@ GridLayout {
         Layout.columnSpan: 2
     }
 
-    Controls.Button {
-        text: qsTr("Restore")
-        iconSource: "qrc:/icons/restore.svg"
-        onClicked: presenter.updatePath()
+    SaveRestore {
         enabled: changed
-        Layout.fillWidth: true
-    }
-
-    Controls.Button {
-        text: qsTr("Save")
-        iconSource: "qrc:/icons/save.svg"
-        onClicked: presenter.savePath()
-        enabled: changed
-        Layout.fillWidth: true
+        message: changed ? qsTr("Application will restart") : ""
+        onSave: presenter.savePath()
+        onRestore: presenter.updatePath()
+        Layout.columnSpan: 2
     }
 
     RowLayout {

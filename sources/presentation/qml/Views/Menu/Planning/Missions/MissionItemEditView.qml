@@ -4,6 +4,7 @@ import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Views/Common"
 
 Item {
     id: itemEdit
@@ -148,7 +149,7 @@ Item {
 
     Flickable {
         anchors.fill: parent
-        anchors.bottomMargin: saveRow.height
+        anchors.bottomMargin: saveRestore.height
         contentHeight: grid.height
         clip: true
 
@@ -466,27 +467,13 @@ Item {
         }
     }
 
-    RowLayout {
-        id: saveRow
+    SaveRestore {
+        id: saveRestore
         width: parent.width
         anchors.bottom: parent.bottom
-        spacing: sizings.spacing
-
-        Controls.Button {
-            text: qsTr("Restore")
-            iconSource: "qrc:/icons/restore.svg"
-            enabled: changed && editEnabled
-            onClicked: presenter.updateItem()
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            text: qsTr("Save")
-            iconSource: "qrc:/icons/save.svg"
-            enabled: changed && editEnabled
-            onClicked: presenter.save()
-            Layout.fillWidth: true
-        }
+        enabled: changed && editEnabled
+        onSave: presenter.save()
+        onRestore: presenter.updateItem()
     }
 }
 

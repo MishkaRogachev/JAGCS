@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Views/Common"
 
 ColumnLayout {
     id: networkSettings
@@ -109,22 +110,9 @@ ColumnLayout {
         Layout.fillHeight: true
     }
 
-    RowLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: sizings.spacing
-
-        Controls.Button {
-            Layout.fillWidth: true
-            text: qsTr("Restore")
-            enabled: changed
-            onClicked: presenter.updateView()
-        }
-
-       Controls.Button {
-            Layout.fillWidth: true
-            text: qsTr("Save")
-            enabled: changed
-            onClicked: presenter.save()
-        }
+    SaveRestore {
+        enabled: changed
+        onSave: presenter.save()
+        onRestore: presenter.updateView()
     }
 }
