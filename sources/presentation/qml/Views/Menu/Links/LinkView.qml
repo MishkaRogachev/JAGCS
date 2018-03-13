@@ -65,14 +65,14 @@ Controls.Frame {
         }
 
         Controls.Label {
-            text: qsTr("Recv:") + bytesRecv.toFixed(1) + " " + qsTr("B/s")
+            text: qsTr("Recv") + ": " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
             color: palette.positiveColor
             Layout.fillWidth: true
         }
 
         Controls.Label {
-            text: qsTr("Sent:") + bytesSent.toFixed(1) + " " + qsTr("B/s")
+            text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
             color: palette.skyColor
             Layout.fillWidth: true

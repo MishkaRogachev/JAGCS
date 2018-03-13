@@ -5,6 +5,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
+import "qrc:/Views/Common"
 
 Controls.Frame {
     id: linkView
@@ -27,6 +28,9 @@ Controls.Frame {
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
     contentHeight: grid.height
 
+    implicitWidth: sizings.controlBaseSize * 11
+    implicitHeight: grid.implicitHeight
+
     LinkEditPresenter {
         id: presenter
         view: linkView
@@ -39,8 +43,7 @@ Controls.Frame {
 
     GridLayout {
         id: grid
-        anchors.centerIn: parent
-        width: parent.width
+        anchors.fill: parent
         columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
@@ -139,108 +142,86 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Indicators.MiniPlot {
-            id: plot
-            Layout.fillWidth: true
+        Item {
+            Layout.fillHeight: true
             Layout.columnSpan: 2
-            implicitHeight: width / 3
-            visible: false
+            Layout.fillWidth: true
 
-            ValueAxis {
-                id: timeAxis
-                visible: false
-                min: statistics.minTime
-                max: statistics.maxTime
-            }
+            Indicators.MiniPlot {
+                id: plot
+                width: parent.width
+                height: Math.min(width / 2, parent.height)
+                anchors.bottom: parent.bottom
 
-            AreaSeries {
-                color: palette.positiveColor
-                borderColor: palette.positiveColor
-                borderWidth: 3
-                opacity: 0.33
-                axisX: timeAxis
-                axisY: ValueAxis {
-                    titleText: qsTr("Recv.")
-                    titleFont.pixelSize: sizings.fontPixelSize * 0.5
-                    labelsFont.pixelSize: 1
-                    labelsVisible: false
-                    color: palette.positiveColor
-                    max: statistics.maxRecv
+                ValueAxis {
+                    id: timeAxis
+                    visible: false
+                    min: statistics.minTime
+                    max: statistics.maxTime
                 }
-                upperSeries: LineSeries {
-                    VXYModelMapper {
-                        xColumn: 0
-                        yColumn: 1
-                        model: statistics
+
+                AreaSeries {
+                    color: palette.positiveColor
+                    borderColor: palette.positiveColor
+                    borderWidth: 3
+                    opacity: 0.33
+                    axisX: timeAxis
+                    axisY: ValueAxis {
+                        titleText: qsTr("Recv.")
+                        titleFont.pixelSize: sizings.fontPixelSize * 0.5
+                        labelsFont.pixelSize: 1
+                        labelsVisible: false
+                        color: palette.positiveColor
+                        max: statistics.maxRecv
+                    }
+                    upperSeries: LineSeries {
+                        VXYModelMapper {
+                            xColumn: 0
+                            yColumn: 1
+                            model: statistics
+                        }
                     }
                 }
-            }
 
-            AreaSeries {
-                color: palette.skyColor
-                borderColor: palette.skyColor
-                borderWidth: 3
-                opacity: 0.33
-                axisX: timeAxis
-                axisYRight: ValueAxis {
-                    titleText: qsTr("Sent")
-                    titleFont.pixelSize: sizings.fontPixelSize * 0.5
-                    labelsVisible: false
-                    labelsFont.pixelSize: 1
+                AreaSeries {
                     color: palette.skyColor
-                    max: statistics.maxSent
-                }
-                upperSeries: LineSeries {
-                    VXYModelMapper {
-                        xColumn: 0
-                        yColumn: 2
-                        model: statistics
+                    borderColor: palette.skyColor
+                    borderWidth: 3
+                    opacity: 0.33
+                    axisX: timeAxis
+                    axisYRight: ValueAxis {
+                        titleText: qsTr("Sent")
+                        titleFont.pixelSize: sizings.fontPixelSize * 0.5
+                        labelsVisible: false
+                        labelsFont.pixelSize: 1
+                        color: palette.skyColor
+                        max: statistics.maxSent
+                    }
+                    upperSeries: LineSeries {
+                        VXYModelMapper {
+                            xColumn: 0
+                            yColumn: 2
+                            model: statistics
+                        }
                     }
                 }
             }
         }
 
-        Controls.Label {
-            text: qsTr("Actions")
+        Controls.Button {
+            enabled: !changed
+            text: connected ? qsTr("Disconnect") : qsTr("Connect")
+            iconSource: connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"
+            onClicked: presenter.setConnected(!connected)
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
-        RowLayout {
-            enabled: linkId > 0
-
-            Controls.Button {
-                iconSource: plot.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: plot.visible = !plot.visible
-            }
-
-            Controls.Button {
-                enabled: !changed
-                tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
-                iconSource: connected ? "qrc:/icons/disconnect.svg" :
-                                        "qrc:/icons/connect.svg"
-                onClicked: presenter.setConnected(!connected)
-            }
-
-            Controls.Button {
-                tipText: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: presenter.save()
-                enabled: changed
-            }
-
-            Controls.Button {
-                tipText: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: presenter.updateLink()
-                enabled: changed
-            }
-
-            Controls.DelayButton {
-                tipText: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                iconColor: palette.dangerColor
-                onActivated: presenter.remove()
-            }
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.save()
+            onRestore: presenter.updateLink()
+            Layout.columnSpan: 2
         }
     }
 }
