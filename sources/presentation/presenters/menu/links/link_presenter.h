@@ -7,7 +7,6 @@
 
 namespace domain
 {
-    class SerialPortService;
     class CommunicationService;
 }
 
@@ -18,25 +17,21 @@ namespace presentation
         Q_OBJECT
 
     public:
-        LinkPresenter(QObject* parent = nullptr);
-        ~LinkPresenter() override;
+        explicit LinkPresenter(QObject* parent = nullptr);
 
     public slots:
-        void setLink(int id);
-        void updateRates();
-        void updateDevices();
-        void updateLink();
+        virtual void setLink(int id);
+        virtual void updateLink();
         void updateStatus();
         void setConnected(bool connected);
-        void save();
         void remove();
 
-    protected:
-        void connectView(QObject* view) override;
+    protected slots:
+        virtual void updateStatistics(const dto::LinkStatisticsPtr& statistics);
 
-    private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+    protected:
+        domain::CommunicationService* const m_service;
+        dto::LinkDescriptionPtr m_description;
     };
 }
 

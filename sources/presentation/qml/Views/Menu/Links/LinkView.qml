@@ -1,40 +1,27 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import QtCharts 2.0
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "qrc:/Indicators" as Indicators
 
 Controls.Frame {
     id: linkView
 
     property int linkId: 0
     property bool connected: false
+    property string name
     property int type: LinkDescription.UnknownType
-    property alias name: nameField.text
-    property alias port: portBox.value
     property int protocol: LinkDescription.UnknownProtocol
-    property string device
-    property alias devices: deviceBox.model
-    property int baudRate
-    property alias baudRates: baudBox.model
-    property bool changed: false
+    property real bytesRecv: 0.0
+    property real bytesSent: 0.0
 
-    property var statistics
-
-    onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
-    onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
     contentHeight: grid.height
 
     LinkPresenter {
         id: presenter
         view: linkView
 
-        Component.onCompleted: {
-            updateRates();
-            setLink(linkId);
-        }
+        Component.onCompleted: setLink(linkId)
     }
 
     GridLayout {
@@ -46,7 +33,9 @@ Controls.Frame {
         columnSpacing: sizings.spacing
 
         Controls.Label {
-            text: qsTr("Type")
+            text: name
+            horizontalAlignment: Text.AlignHCenter
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -58,11 +47,7 @@ Controls.Frame {
                 default: return qsTr("Unknown");
                 }
             }
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Protocol")
+            horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
 
@@ -75,129 +60,22 @@ Controls.Frame {
                 default: return qsTr("Unknown");
                 }
             }
+            horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
 
         Controls.Label {
-            text: qsTr("Name")
-            Layout.fillWidth: true
-        }
-
-        Controls.TextField {
-            id: nameField
-            placeholderText: qsTr("Enter name")
-            onEditingFinished: changed = true
+            text: qsTr("Recv:") + bytesRecv.toFixed(1) + " " + qsTr("B/s")
+            horizontalAlignment: Text.AlignHCenter
+            color: palette.positiveColor
             Layout.fillWidth: true
         }
 
         Controls.Label {
-            text: qsTr("Port")
-            visible: type == LinkDescription.Udp
+            text: qsTr("Sent:") + bytesSent.toFixed(1) + " " + qsTr("B/s")
+            horizontalAlignment: Text.AlignHCenter
+            color: palette.skyColor
             Layout.fillWidth: true
-        }
-
-        Controls.SpinBox {
-            id: portBox
-            from: 0
-            to: 65535
-            visible: type == LinkDescription.Udp
-            onValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Device")
-            visible: type == LinkDescription.Serial
-            Layout.fillWidth: true
-        }
-
-        Controls.ComboBox {
-            id: deviceBox
-            visible: type == LinkDescription.Serial
-            model: []
-            onDisplayTextChanged: {
-                device = displayText;
-                changed = true;
-            }
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Baud rate")
-            visible: type == LinkDescription.Serial
-            Layout.fillWidth: true
-        }
-
-        Controls.ComboBox {
-            id: baudBox
-            visible: type == LinkDescription.Serial
-            model: []
-            onDisplayTextChanged: {
-                baudRate = displayText;
-                changed = true;
-            }
-            Layout.fillWidth: true
-        }
-
-        Indicators.MiniPlot {
-            id: plot
-            Layout.fillWidth: true
-            Layout.columnSpan: 2
-            implicitHeight: width / 3
-            visible: false
-
-            ValueAxis {
-                id: timeAxis
-                visible: false
-                min: statistics.minTime
-                max: statistics.maxTime
-            }
-
-            AreaSeries {
-                color: palette.positiveColor
-                borderColor: palette.positiveColor
-                borderWidth: 3
-                opacity: 0.33
-                axisX: timeAxis
-                axisY: ValueAxis {
-                    titleText: qsTr("Recv.")
-                    titleFont.pixelSize: sizings.fontPixelSize * 0.5
-                    labelsFont.pixelSize: 1
-                    labelsVisible: false
-                    color: palette.positiveColor
-                    max: statistics.maxRecv
-                }
-                upperSeries: LineSeries {
-                    VXYModelMapper {
-                        xColumn: 0
-                        yColumn: 1
-                        model: statistics
-                    }
-                }
-            }
-
-            AreaSeries {
-                color: palette.skyColor
-                borderColor: palette.skyColor
-                borderWidth: 3
-                opacity: 0.33
-                axisX: timeAxis
-                axisYRight: ValueAxis {
-                    titleText: qsTr("Sent")
-                    titleFont.pixelSize: sizings.fontPixelSize * 0.5
-                    labelsVisible: false
-                    labelsFont.pixelSize: 1
-                    color: palette.skyColor
-                    max: statistics.maxSent
-                }
-                upperSeries: LineSeries {
-                    VXYModelMapper {
-                        xColumn: 0
-                        yColumn: 2
-                        model: statistics
-                    }
-                }
-            }
         }
 
         Controls.Label {
@@ -206,15 +84,10 @@ Controls.Frame {
         }
 
         RowLayout {
+            Layout.alignment: Qt.AlignRight
             enabled: linkId > 0
 
             Controls.Button {
-                iconSource: plot.visible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: plot.visible = !plot.visible
-            }
-
-            Controls.Button {
-                enabled: !changed
                 tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
                 iconSource: connected ? "qrc:/icons/disconnect.svg" :
                                         "qrc:/icons/connect.svg"
@@ -222,17 +95,11 @@ Controls.Frame {
             }
 
             Controls.Button {
-                tipText: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: presenter.save()
-                enabled: changed
-            }
-
-            Controls.Button {
-                tipText: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: presenter.updateLink()
-                enabled: changed
+                tipText: qsTr("Edit link")
+                iconSource: "qrc:/icons/edit.svg"
+                enabled: linkId > 0
+                onClicked: deepIn("qrc:/Views/Menu/Links/LinkEditView.qml",
+                                  name, { "linkId": linkId });
             }
 
             Controls.DelayButton {
