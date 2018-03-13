@@ -11,25 +11,31 @@ namespace presentation
 {
     class PresentationContext
     {
-        PresentationContext();
 
     public:
+        PresentationContext();
+        virtual ~PresentationContext();
+
         static PresentationContext* instance();
 
-        static QObject* rootView();
-        static QQmlContext* rootContext();
+        QObject* rootView();
+        QQmlContext* rootContext();
 
-        static void start();
+        void start();
 
-        static void updateGeometry();
-        static void updateGeometry(bool fullscreen);
-        static void saveWindowedGeometry();
+        void updateGeometry();
+        void updateGeometry(bool fullscreen);
+        void saveWindowedGeometry();
 
     private:
         QQmlApplicationEngine* m_engine;
 
+        static PresentationContext* lastCreatedContext;
+
         Q_DISABLE_COPY(PresentationContext)
     };
 }
+
+#define presentationContext (presentation::PresentationContext::instance())
 
 #endif // PRESENTATION_CONTEXT_H

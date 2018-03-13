@@ -16,7 +16,7 @@ GuiStyleManager::GuiStyleManager(QObject* parent): QObject(parent)
 
 void GuiStyleManager::setPalette(const Palette& palette)
 {
-    PresentationContext::rootContext()->setContextProperty("palette", QVariant::fromValue(palette));
+    presentationContext->rootContext()->setContextProperty("palette", QVariant::fromValue(palette));
 }
 
 void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
@@ -60,7 +60,7 @@ void GuiStyleManager::loadSettingsPalette()
 
 void GuiStyleManager::setSizings(const Sizings& sizings)
 {
-    PresentationContext::rootContext()->setContextProperty("sizings", QVariant::fromValue(sizings));
+    presentationContext->rootContext()->setContextProperty("sizings", QVariant::fromValue(sizings));
 }
 
 void GuiStyleManager::setSizings(int controlBaseSize)

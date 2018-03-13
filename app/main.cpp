@@ -70,14 +70,14 @@ int main(int argc, char* argv[])
 
         translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
+        presentation::PresentationContext context;
+
         presentation::GuiStyleManager guiStyleManager;
         guiStyleManager.loadSettingsPalette();
         guiStyleManager.loadSettingsSizings();
 
-        presentation::PresentationContext::rootContext()->setContextProperty(
-                    "settings", settings::Provider::instance());
-
-        presentation::PresentationContext::start();
+        context.rootContext()->setContextProperty("settings", settings::Provider::instance());
+        context.start();
 
         result = app.exec();
     } while (result == RESETART_CODE);

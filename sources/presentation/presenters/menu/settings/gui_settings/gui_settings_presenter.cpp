@@ -129,15 +129,15 @@ void GuiSettingsPresenter::save()
     d->guiStyleManager.loadSettingsSizings();
     d->guiStyleManager.loadSettingsPalette();
 
-    PresentationContext::saveWindowedGeometry();
-    PresentationContext::updateGeometry();
+    presentationContext->saveWindowedGeometry();
+    presentationContext->updateGeometry();
 
     this->setViewProperty(PROPERTY(changed), false);
 }
 
 void GuiSettingsPresenter::setFullscreen(bool fullscreen)
 {
-    PresentationContext::updateGeometry(fullscreen);
+    presentationContext->updateGeometry(fullscreen);
 }
 
 void GuiSettingsPresenter::setLocale(int localeIndex, bool save)

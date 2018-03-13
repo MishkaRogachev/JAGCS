@@ -19,9 +19,13 @@
 
 using namespace presentation;
 
+PresentationContext* PresentationContext::lastCreatedContext = nullptr;
+
 PresentationContext::PresentationContext()
 {
-    m_engine = new QQmlApplicationEngine(qApp);
+    PresentationContext::lastCreatedContext = this;
+
+    m_engine = new QQmlApplicationEngine();
 
     m_engine->addImportPath(":/Controls");
 
@@ -32,11 +36,11 @@ PresentationContext::PresentationContext()
 #endif
 
     m_engine->rootContext()->setContextProperty(
-                "units", QVariant::fromValue(new utils::Units(qApp)));
+                "units", QVariant::fromValue(new utils::Units(m_engine)));
     m_engine->rootContext()->setContextProperty(
-                "manual", QVariant::fromValue(new domain::ManualController(qApp)));
+                "manual", QVariant::fromValue(new domain::ManualController(m_engine)));
     m_engine->rootContext()->setContextProperty(
-                "translator", QVariant::fromValue(new TranslationHelper(qApp)));
+                "translator", QVariant::fromValue(new TranslationHelper(m_engine)));
 
     QObject::connect(m_engine, &QQmlEngine::quit, qApp, &QGuiApplication::quit);
     QObject::connect(qApp, &QGuiApplication::aboutToQuit, qApp, [this]() {
@@ -44,10 +48,14 @@ PresentationContext::PresentationContext()
     });
 }
 
+PresentationContext::~PresentationContext()
+{
+    delete m_engine;
+}
+
 PresentationContext* PresentationContext::instance()
 {
-    static PresentationContext context;
-    return &context;
+    return lastCreatedContext;
 }
 
 QObject* PresentationContext::rootView()
