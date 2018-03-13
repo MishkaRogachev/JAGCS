@@ -13,18 +13,24 @@ namespace presentation
         TranslationManager();
         ~TranslationManager();
 
+        static TranslationManager* instance();
+
         QStringList avalibleLocales();
         QString currentLocale();
 
-        void setCurrentLocale(const QString& locale);
+        void setLocale(const QString& locale);
 
-        void loadLocales();
-        void initLocales();
+        void clearLocales();
+        void reloadLocales();
 
     private:
+        static TranslationManager* lastCreatedManager;
+
         class Impl;
         QScopedPointer<Impl> const d;
     };
 }
+
+#define translationManager (presentation::TranslationManager::instance())
 
 #endif // TRANSLATION_MANAGER_H

@@ -26,7 +26,6 @@ using namespace presentation;
 class GuiSettingsPresenter::Impl
 {
 public:
-    TranslationManager translationManager;
     GuiStyleManager guiStyleManager;
 };
 
@@ -52,8 +51,8 @@ void GuiSettingsPresenter::updateView()
 {
     this->setViewProperty(PROPERTY(fullscreen), settings::Provider::value(settings::gui::fullscreen));
 
-    const QStringList& locales = d->translationManager.avalibleLocales();
-    int index = locales.indexOf(d->translationManager.currentLocale());
+    const QStringList& locales = translationManager->avalibleLocales();
+    int index = locales.indexOf(translationManager->currentLocale());
     this->setViewProperty(PROPERTY(locales), locales);
     this->setViewProperty(PROPERTY(localeIndex), index);
 
@@ -125,7 +124,7 @@ void GuiSettingsPresenter::save()
     settings::Provider::setValue(settings::gui::coordinatesDms,
                                  this->viewProperty(PROPERTY(coordinatesDms)));
 
-    this->setLocale(this->viewProperty(PROPERTY(localeIndex)).toInt());
+    this->setLocale(this->viewProperty(PROPERTY(localeIndex)).toInt(), true);
 
     d->guiStyleManager.loadSettingsSizings();
     d->guiStyleManager.loadSettingsPalette();
@@ -141,12 +140,13 @@ void GuiSettingsPresenter::setFullscreen(bool fullscreen)
     PresentationContext::updateGeometry(fullscreen);
 }
 
-void GuiSettingsPresenter::setLocale(int localeIndex)
+void GuiSettingsPresenter::setLocale(int localeIndex, bool save)
 {
-    const QStringList& locales = d->translationManager.avalibleLocales();
+    const QStringList& locales = translationManager->avalibleLocales();
     QString locale = locales.value(localeIndex);
 
-    d->translationManager.setCurrentLocale(locale);
+    translationManager->setLocale(locale);
+    if (save) settings::Provider::setValue(settings::gui::locale, locale);
 }
 
 void GuiSettingsPresenter::setUiSize(int size)

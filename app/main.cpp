@@ -38,6 +38,8 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(app::log);
 #endif
 
+    presentation::TranslationManager translator;
+
     int result = 0;
     do
     {
@@ -66,8 +68,7 @@ int main(int argc, char* argv[])
         domain::ServiceRegistry registy;
         Q_UNUSED(registy);
 
-        presentation::TranslationManager translations;
-        translations.initLocales();
+        translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
         presentation::GuiStyleManager guiStyleManager;
         guiStyleManager.loadSettingsPalette();

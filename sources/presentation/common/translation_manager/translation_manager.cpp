@@ -5,32 +5,40 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QTranslator>
+#include <QPointer>
 #include <QDebug>
 
-// Internal
-#include "settings.h"
-#include "settings_provider.h"
-
 using namespace presentation;
+
+TranslationManager* TranslationManager::lastCreatedManager = nullptr;
 
 class TranslationManager::Impl
 {
 public:
-    static QMap<QString, QTranslator*> localeTranslators;
-
-    QString locale;
+    QMap<QString, QTranslator*> localeTranslators;
+    QPointer<QTranslator> activeTranslator;
 };
-
-QMap<QString, QTranslator*> TranslationManager::Impl::localeTranslators = {};
 
 TranslationManager::TranslationManager():
     d(new Impl())
 {
-    d->locale = settings::Provider::value(settings::gui::locale).toString();
+    TranslationManager::lastCreatedManager = this;
+
+    this->reloadLocales();
 }
 
 TranslationManager::~TranslationManager()
-{}
+{
+    for (QTranslator* translator: d->localeTranslators)
+    {
+        delete translator;
+    }
+}
+
+TranslationManager* TranslationManager::instance()
+{
+    return TranslationManager::lastCreatedManager;
+}
 
 QStringList TranslationManager::avalibleLocales()
 {
@@ -39,34 +47,39 @@ QStringList TranslationManager::avalibleLocales()
 
 QString TranslationManager::currentLocale()
 {
-    return d->locale;
+    return d->localeTranslators.key(d->activeTranslator);
 }
 
-void TranslationManager::setCurrentLocale(const QString& locale)
+void TranslationManager::setLocale(const QString& locale)
 {
-    if (d->locale == locale) return;
+    QTranslator* translator = d->localeTranslators.value(locale, nullptr);
+    if (d->activeTranslator == translator) return;
 
-    if (!d->locale.isEmpty())
+    if (d->activeTranslator)
     {
-        qApp->removeTranslator(d->localeTranslators.value(d->locale, nullptr));
+        qApp->removeTranslator(d->activeTranslator);
     }
 
-    if (!locale.isEmpty())
+    d->activeTranslator = translator;
+    if (d->activeTranslator)
     {
-        qApp->installTranslator(d->localeTranslators.value(locale, nullptr));
+        qApp->installTranslator(d->activeTranslator);
     }
 
     // TODO: Qt 5.10 QQmlEngine::retranslate
-    settings::Provider::setValue(settings::gui::locale, locale);
-    d->locale = locale;
 }
 
-void TranslationManager::loadLocales()
+void TranslationManager::clearLocales()
 {
     while (!d->localeTranslators.isEmpty())
     {
         delete d->localeTranslators.take(d->localeTranslators.firstKey());
     }
+}
+
+void TranslationManager::reloadLocales()
+{
+    this->clearLocales();
 
     QDir dir(":/");
     for (const QString& fileName: dir.entryList(QStringList("jagcs_*.qm")))
@@ -75,14 +88,8 @@ void TranslationManager::loadLocales()
         locale.remove(0, locale.indexOf('_') + 1);
         locale.chop(3);
 
-        d->localeTranslators[locale] = new QTranslator(qApp);
+        d->localeTranslators[locale] = new QTranslator();
         d->localeTranslators[locale]->load(fileName, ":/");
     }
 }
 
-void TranslationManager::initLocales()
-{
-    this->loadLocales();
-
-    qApp->installTranslator(d->localeTranslators.value(d->locale, nullptr));
-}
