@@ -45,7 +45,11 @@ void DatabasePresenter::savePath()
 {
     QString path = this->viewProperty(PROPERTY(path)).toString();
 
-    if (settings::Provider::value(settings::data_base::name) == path) return;
+    if (settings::Provider::value(settings::data_base::name) == path)
+    {
+        this->setViewProperty(PROPERTY(changed), false);
+        return;
+    }
 
     settings::Provider::setValue(settings::data_base::name, path);
 
