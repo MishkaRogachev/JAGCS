@@ -11,7 +11,6 @@ namespace presentation
 {
     class PresentationContext
     {
-
     public:
         PresentationContext();
         virtual ~PresentationContext();

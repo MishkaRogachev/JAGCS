@@ -8,7 +8,7 @@ namespace comm
 {
     class MavLinkCommunicator;
 
-    class AbstractMavLinkHandler
+    class AbstractMavLinkHandler // To Processor
     {
     public:
         explicit AbstractMavLinkHandler(MavLinkCommunicator* communicator);
