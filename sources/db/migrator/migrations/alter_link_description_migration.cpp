@@ -1,8 +1,17 @@
 #include "alter_link_description_migration.h"
 
 // Qt
+#include <QCoreApplication>
 #include <QDebug>
 
+// Internal
+#include "settings_provider.h"
+
+#include "link_description.h"
+
+#include "generic_repository.h"
+
+using namespace dto;
 using namespace db;
 
 bool AlterLinkDescriptionMigration::up()
@@ -15,6 +24,24 @@ bool AlterLinkDescriptionMigration::up()
                          "type SMALLINT,"
                          "parameters TEXT,"
                          "autoConnect BOOLEAN)") || !m_query.exec()) return false;
+
+    GenericRepository<dto::LinkDescription> linkRepository("links");
+
+    LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
+    defaultUdpLink->setType(LinkDescription::Udp);
+    defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "Default UDP Link"));
+    defaultUdpLink->setParameter(LinkDescription::Port,
+                                 settings::Provider::value(settings::communication::port).toInt());
+    defaultUdpLink->setAutoConnect(true);
+    linkRepository.save(defaultUdpLink);
+
+    LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
+    defaultSerialLink->setType(LinkDescription::Serial);
+    defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Default Serial Link"));
+    defaultSerialLink->setParameter(LinkDescription::BaudRate,
+                                    settings::Provider::value(settings::communication::baudRate).toInt());
+    defaultSerialLink->setAutoConnect(true);
+    linkRepository.save(defaultSerialLink);
 
     return DbMigration::up();
 }
