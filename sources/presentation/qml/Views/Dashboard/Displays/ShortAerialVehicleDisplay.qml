@@ -83,12 +83,13 @@ Controls.Card {
             Controls.Label {
                 text: vehicle.vehicleName
                 font.bold: true
-                wrapMode: Text.NoWrap
+                Layout.maximumWidth: sizings.controlBaseSize * 3
             }
 
             Controls.Label {
                 text: translator.translateVehicleMode(vehicle.mode)
-                wrapMode: Text.NoWrap
+                font.bold: true
+                font.pixelSize: sizings.fontPixelSize * 0.6
                 horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
             }

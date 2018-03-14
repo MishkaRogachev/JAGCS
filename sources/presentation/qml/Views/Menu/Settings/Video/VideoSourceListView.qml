@@ -40,6 +40,7 @@ Item {
                 Controls.RadioButton {
                     checked: activeVideo == -1
                     text: qsTr("No video")
+                    horizontalAlignment: Text.AlignHCenter
                     Controls.ButtonGroup.group: radioGroup
                     onClicked: if (checked) presenter.setActiveVideo(-1)
                     Layout.fillWidth: true

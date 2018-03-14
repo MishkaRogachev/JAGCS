@@ -7,6 +7,6 @@ T.Label {
     // TODO: fix dynamic width calculation
     font.pixelSize: sizings.fontPixelSize
     color: palette.textColor
-    verticalAlignment: Qt.AlignVCenter
+    verticalAlignment: Text.AlignVCenter
     elide: Text.ElideRight
 }

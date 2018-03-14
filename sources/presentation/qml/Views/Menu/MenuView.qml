@@ -59,6 +59,7 @@ ColumnLayout {
     ListModel { id: contextModel }
 
     RowLayout {
+        Layout.maximumWidth: parent.width
         spacing: 0
 
         Controls.Button {
@@ -83,9 +84,6 @@ ColumnLayout {
         Controls.Label {
             text: contextText
             font.bold: true
-        }
-
-        Item {
             Layout.fillWidth: true
         }
 

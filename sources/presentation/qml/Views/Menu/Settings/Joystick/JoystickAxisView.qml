@@ -4,7 +4,6 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-
 Controls.Frame {
     id: joysticAxis
 
@@ -22,6 +21,7 @@ Controls.Frame {
 
         Controls.Label {
             text: source
+            horizontalAlignment: Text.AlignHCenter
             Layout.columnSpan: 2
             Layout.fillWidth: true
         }

@@ -6,6 +6,8 @@ import "../Shaders" as Shaders
 T.RadioButton {
     id: control
 
+    property alias horizontalAlignment: label.horizontalAlignment
+
     font.pixelSize: sizings.fontPixelSize
     height: sizings.controlBaseSize
     leftPadding: 0
@@ -37,6 +39,7 @@ T.RadioButton {
     }
 
     contentItem: Label {
+        id: label
         text: control.text
         font: control.font
         leftPadding: indicator.width + spacing

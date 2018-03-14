@@ -32,6 +32,7 @@ Controls.Frame {
         Controls.RadioButton {
             checked: videoSource.selected
             text: qsTr("Video") + " " + videoId
+            horizontalAlignment: Text.AlignHCenter
             Controls.ButtonGroup.group: radioGroup
             onCheckedChanged: if (checked) setActiveVideo(videoId)
             Layout.columnSpan: 2
