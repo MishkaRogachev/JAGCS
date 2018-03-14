@@ -40,7 +40,7 @@ Controls.Frame {
 
     GridLayout {
         anchors.fill: parent
-        columns: 4
+        columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
 
@@ -52,19 +52,6 @@ Controls.Frame {
             id: nameEdit
             onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
-            iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-            onClicked: presenter.setMissionVisible(!missionVisible)
-        }
-
-        Controls.DelayButton {
-            tipText: qsTr("Remove")
-            iconSource: "qrc:/icons/remove.svg"
-            onActivated: presenter.remove()
-            iconColor: palette.dangerColor
         }
 
         Controls.Label {
@@ -86,29 +73,50 @@ Controls.Frame {
             }
         }
 
-        Controls.Button {
-            tipText: qsTr("Edit commands")
-            iconSource: "qrc:/icons/edit.svg"
-            enabled: missionId > 0
-            onClicked: deepIn("qrc:/Views/Menu/Planning/Missions/MissionEditView.qml",
-                              name, { "missionId": missionId });
-        }
-
-        Controls.Button {
-            tipText: qsTr("Export mission")
-            iconSource: "qrc:/icons/save.svg"
-            enabled: false
-            //onClicked: TODO: export()
-        }
-
         Controls.Label {
             text: qsTr("Assignment")
         }
 
         MissionAssignmentView {
             id: assignment
-            Layout.columnSpan: 3
             Layout.fillWidth: true
+        }
+
+        Controls.Label {
+            text: qsTr("Actions")
+            Layout.fillWidth: true
+        }
+
+        RowLayout {
+            Layout.alignment: Qt.AlignRight
+
+            Controls.Button {
+                tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
+                iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+                onClicked: presenter.setMissionVisible(!missionVisible)
+            }
+
+            Controls.Button {
+                tipText: qsTr("Export mission")
+                iconSource: "qrc:/icons/save.svg"
+                enabled: false
+                //onClicked: TODO: export()
+            }
+
+            Controls.Button {
+                tipText: qsTr("Edit commands")
+                iconSource: "qrc:/icons/edit.svg"
+                enabled: missionId > 0
+                onClicked: deepIn("qrc:/Views/Menu/Planning/Missions/MissionEditView.qml",
+                                  name, { "missionId": missionId });
+            }
+
+            Controls.DelayButton {
+                tipText: qsTr("Remove")
+                iconSource: "qrc:/icons/remove.svg"
+                onActivated: presenter.remove()
+                iconColor: palette.dangerColor
+            }
         }
     }
 }

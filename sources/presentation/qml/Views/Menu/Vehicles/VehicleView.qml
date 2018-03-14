@@ -91,6 +91,8 @@ Controls.Frame {
         }
 
         RowLayout {
+            Layout.alignment: Qt.AlignRight
+
             Controls.Button {
                 tipText: qsTr("Save")
                 iconSource: "qrc:/icons/save.svg"
