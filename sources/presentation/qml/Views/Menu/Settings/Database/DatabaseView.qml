@@ -110,7 +110,7 @@ GridLayout {
 
     SaveRestore {
         enabled: changed
-        message: changed ? qsTr("Application will restart") : ""
+        message: changed ? qsTr("Application will be restarted") : ""
         onSave: presenter.savePath()
         onRestore: presenter.updatePath()
         Layout.columnSpan: 2
