@@ -255,9 +255,13 @@ bool MissionService::save(const MissionPtr& mission)
     {
         settings::Provider::setValue(settings::mission::visibility + "/" +
                                      QString::number(mission->id()), true);
+        emit missionAdded(mission);
+    }
+    else
+    {
+        emit missionChanged(mission);
     }
 
-    emit (isNew ? missionAdded(mission) : missionChanged(mission));
     return true;
 }
 

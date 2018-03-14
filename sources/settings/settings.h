@@ -113,7 +113,20 @@ namespace settings
         const QString password = "NetworkProxy/password";
     }
 
-    const QString vehicle = "veh_";
+    namespace vehicle
+    {
+        const QString vehicle = "veh_";
+
+        namespace visibility
+        {
+            const QString control = "controlVisible";
+            const QString diagnostics = "diagnosticsVisible";
+            const QString fd = "fdVisible";
+            const QString hsi = "hsiVisible";
+            const QString mission = "missionVisible";
+            const QString status = "statusVisible";
+        }
+    }
 }
 
 #endif // SETTINGS_H

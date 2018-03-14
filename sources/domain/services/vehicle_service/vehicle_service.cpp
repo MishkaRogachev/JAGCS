@@ -101,7 +101,27 @@ bool VehicleService::save(const VehiclePtr& vehicle)
     bool isNew = vehicle->id() == 0;
     if (!d->vehicleRepository.save(vehicle)) return false;
 
-    emit (isNew ? vehicleAdded(vehicle) : vehicleChanged(vehicle));
+    if (isNew)
+    {
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::diagnostics, false);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::status, true);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::fd, true);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::hsi, true);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::mission, true);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::control, true);
+        emit vehicleAdded(vehicle);
+    }
+    else
+    {
+        emit vehicleChanged(vehicle);
+    }
+
     return true;
 }
 
@@ -114,7 +134,7 @@ bool VehicleService::remove(const VehiclePtr& vehicle)
 
     if (!d->vehicleRepository.remove(vehicle)) return false;
 
-    settings::Provider::remove(settings::vehicle + QString::number(vehicle->id()));
+    settings::Provider::remove(settings::vehicle::vehicle + QString::number(vehicle->id()));
 
     emit vehicleRemoved(vehicle);
     return true;
