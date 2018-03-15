@@ -48,8 +48,11 @@ void LinkEditPresenter::updateLink()
     this->setViewProperty(PROPERTY(device), m_description->parameter(dto::LinkDescription::Device));
     this->setViewProperty(PROPERTY(baudRate),
                           m_description->parameter(dto::LinkDescription::BaudRate));
-    this->setViewProperty(PROPERTY(endpoints), m_description->parameter(
-                              dto::LinkDescription::Endpoints).toString().split(::separator));
+    QString endpoints = m_description->parameter(dto::LinkDescription::Endpoints).toString();
+    this->setViewProperty(PROPERTY(endpoints), endpoints.isEmpty() ?
+                              QStringList() : endpoints.split(::separator));
+    this->setViewProperty(PROPERTY(autoAddEndpoint),
+                          m_description->parameter(dto::LinkDescription::AutoAddEndpoint));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -91,8 +94,13 @@ void LinkEditPresenter::save()
                                 this->viewProperty(PROPERTY(baudRate)).toInt());
     m_description->setParameter(dto::LinkDescription::Port,
                                 this->viewProperty(PROPERTY(port)).toInt());
-    m_description->setParameter(dto::LinkDescription::Endpoints, this->viewProperty(
-                                    PROPERTY(endpoints)).toStringList().join(::separator));
+
+    QStringList endpoints = this->viewProperty(PROPERTY(endpoints)).toStringList();
+    endpoints = endpoints.toSet().toList(); // remove dublicates
+    this->setViewProperty(PROPERTY(endpoints), endpoints);
+    m_description->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
+    m_description->setParameter(dto::LinkDescription::AutoAddEndpoint,
+                                this->viewProperty(PROPERTY(autoAddEndpoint)).toBool());
 
     if (!m_service->save(m_description)) return;
 

@@ -7,6 +7,8 @@ import "../Shaders" as Shaders
 T.CheckBox {
     id: control
 
+    property alias horizontalAlignment: label.horizontalAlignment
+
     font.pixelSize: sizings.fontPixelSize
     height: sizings.controlBaseSize
     leftPadding: 0
@@ -40,6 +42,7 @@ T.CheckBox {
     }
 
     contentItem: Label {
+        id: label
         text: control.text
         font: control.font
         leftPadding: indicator.width + spacing

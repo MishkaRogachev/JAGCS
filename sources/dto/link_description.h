@@ -41,7 +41,8 @@ namespace dto
             Device,
             BaudRate,
             Port,
-            Endpoints
+            Endpoints,
+            AutoAddEndpoint
         };
 
         QString name() const;

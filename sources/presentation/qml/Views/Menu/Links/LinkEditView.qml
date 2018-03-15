@@ -25,14 +25,14 @@ Controls.Frame {
     property alias baudRates: baudBox.model
     property alias port: portBox.value
     property alias endpoints: endpointList.endpoints
+    property alias autoAddEndpoint: autoAddEndpointBox.checked
 
     onChangedChanged: if (!changed) endpointList.updateEndpoints(false)
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
 
-    contentHeight: grid.height
-    implicitWidth: sizings.controlBaseSize * 11
     implicitHeight: grid.implicitHeight
+    implicitWidth: sizings.controlBaseSize * 11
 
     LinkEditPresenter {
         id: presenter
@@ -149,6 +149,17 @@ Controls.Frame {
             id: endpointList
             visible: type == LinkDescription.Udp
             onChanged: linkEditView.changed = true;
+            Layout.maximumHeight: sizings.controlBaseSize * 6
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
+
+        Controls.CheckBox {
+            id: autoAddEndpointBox
+            text: qsTr("Auto add endpoints")
+            visible: type == LinkDescription.Udp
+            horizontalAlignment: Text.AlignHCenter
+            onCheckedChanged: changed = true
             Layout.fillWidth: true
             Layout.columnSpan: 2
         }
@@ -162,6 +173,7 @@ Controls.Frame {
                 id: plot
                 width: parent.width
                 height: Math.min(width / 2, parent.height)
+                visible: parent.height > 5
                 anchors.bottom: parent.bottom
 
                 ValueAxis {

@@ -11,7 +11,8 @@ namespace
     static QMap <LinkDescription::Type, QList<LinkDescription::Parameter> > typeParameters =
     {
         { LinkDescription::Serial, { LinkDescription::Device, LinkDescription::BaudRate } },
-        { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints } }
+        { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints,
+                                  LinkDescription::AutoAddEndpoint } }
     };
 }
 

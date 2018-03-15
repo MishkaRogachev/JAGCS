@@ -15,35 +15,27 @@ Controls.Frame {
         if (update) changed();
     }
 
+    padding: sizings.padding
+    implicitWidth: column.implicitWidth + padding * 2
+    implicitHeight: column.height + padding * 2
     backgroundColor: palette.sunkenColor
 
-    ColumnLayout {
+    Flickable {
+        id: flickable
         anchors.fill: parent
-        spacing: sizings.spacing
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
+        contentHeight: column.height
+        clip: true
 
-        RowLayout {
-            spacing: sizings.spacing
-
-            Controls.Label {
-                text: qsTr("Address")
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            Controls.Label {
-                text: qsTr("Port")
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            Item {
-                Layout.minimumWidth: sizings.controlBaseSize
-            }
+        function toBottom() {
+            contentY = contentHeight - height;
         }
 
-        Repeater {
-            id: repeater
-            model: root.endpoints
+        ColumnLayout {
+            id: column
+            width: parent.width
+            spacing: sizings.spacing
 
             RowLayout {
                 spacing: sizings.spacing
@@ -59,29 +51,55 @@ Controls.Frame {
                     horizontalAlignment: Text.AlignHCenter
                     Layout.fillWidth: true
                 }
-            }
 
-            EndpointView {
-                endpoint: modelData
-                onRemove: {
-                    endpoints.splice(index, 1);
-                    updateEndpoints(true);
-                }
-                onChanged: {
-                    endpoints[index] = endpoint;
-                    updateEndpoints(true);
+                Item {
+                    Layout.minimumWidth: sizings.controlBaseSize
                 }
             }
-        }
 
-        Controls.Button {
-            text: qsTr("Add Link")
-            iconSource: "qrc:/icons/add.svg"
-            onClicked: {
-                endpoints.push("127.0.0.1/8080");
-                updateEndpoints(true);
+            Repeater {
+                id: repeater
+                model: root.endpoints
+
+                RowLayout {
+                    spacing: sizings.spacing
+
+                    Controls.Label {
+                        text: qsTr("Address")
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.fillWidth: true
+                    }
+
+                    Controls.Label {
+                        text: qsTr("Port")
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.fillWidth: true
+                    }
+                }
+
+                EndpointView {
+                    endpoint: modelData
+                    onRemove: {
+                        endpoints.splice(index, 1);
+                        updateEndpoints(true);
+                    }
+                    onChanged: {
+                        endpoints[index] = endpoint;
+                        updateEndpoints(true);
+                    }
+                }
             }
-            Layout.fillWidth: true
+
+            Controls.Button {
+                text: qsTr("Add Link")
+                iconSource: "qrc:/icons/add.svg"
+                onClicked: {
+                    endpoints.push("127.0.0.1/8080");
+                    updateEndpoints(true);
+                    flickable.toBottom();
+                }
+                Layout.fillWidth: true
+            }
         }
     }
 }
