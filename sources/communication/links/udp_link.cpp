@@ -73,7 +73,9 @@ void UdpLink::disconnectLink()
 void UdpLink::sendDataImpl(const QByteArray& data)
 {
     for (const Endpoint& endpoint: m_endpoints)
+    {
         m_socket->writeDatagram(data, endpoint.address(), endpoint.port());
+    }
 }
 
 void UdpLink::setPort(int port)
@@ -100,6 +102,12 @@ void UdpLink::addEndpoint(const Endpoint& endpoint)
 void UdpLink::removeEndpoint(const Endpoint& endpoint)
 {
     m_endpoints.removeOne(endpoint);
+    emit endpointsChanged(m_endpoints);
+}
+
+void UdpLink::clearEndpoints()
+{
+    m_endpoints.clear();
     emit endpointsChanged(m_endpoints);
 }
 

@@ -14,7 +14,7 @@ namespace comm
         Q_OBJECT
 
     public:
-        UdpLink(int port, QObject* parent = nullptr);
+        UdpLink(int port = 0, QObject* parent = nullptr);
 
         bool isConnected() const override;
 
@@ -34,6 +34,7 @@ namespace comm
         void setPort(int port);
         void addEndpoint(const Endpoint& endpoint);
         void removeEndpoint(const Endpoint& endpoint);
+        void clearEndpoints();
         void setAutoResponse(bool autoResponse);
 
     signals:

@@ -9,6 +9,34 @@
 using namespace dto;
 using namespace comm;
 
+namespace
+{
+    UdpLink* updateUdpLink(UdpLink* udpLink, const LinkDescriptionPtr& description)
+    {
+        udpLink->setPort(description->parameter(dto::LinkDescription::Port).toInt());
+
+        udpLink->setAutoResponse(
+                    description->parameter(dto::LinkDescription::UdpAutoResponse).toBool());
+
+        udpLink->clearEndpoints();
+        QString endpoints = description->parameter(dto::LinkDescription::Endpoints).toString();
+        if (!endpoints.isEmpty())
+        {
+            for (const QString& endpoint: endpoints.split(","))
+            {
+                QStringList split = endpoint.split("/");
+                QHostAddress address = split.count() > 0 ? QHostAddress(split.first()) :
+                                                           QHostAddress();
+                qDebug() << split;
+                quint16 port =split.count() > 1 ? split.at(1).toUInt() : 0;
+                udpLink->addEndpoint(Endpoint(address, port));
+            }
+        }
+
+        return udpLink;
+    }
+}
+
 DescriptionLinkFactory::DescriptionLinkFactory(
         const LinkDescriptionPtr& description):
     ILinkFactory(),
@@ -21,8 +49,9 @@ AbstractLink* DescriptionLinkFactory::create()
 
     switch (m_description->type())
     {
-    case LinkDescription::Udp:
-        return new UdpLink(m_description->parameter(dto::LinkDescription::Port).toInt());
+    case LinkDescription::Udp:{
+        return ::updateUdpLink(new UdpLink(), m_description);
+    }
     case LinkDescription::Serial:
         return new SerialLink(m_description->parameter(dto::LinkDescription::Device).toString(),
                               m_description->parameter(dto::LinkDescription::BaudRate).toInt());
@@ -40,9 +69,7 @@ void DescriptionLinkFactory::update(AbstractLink* link)
     case LinkDescription::Udp:
     {
        UdpLink* udpLink = qobject_cast<UdpLink*>(link);
-       if (!udpLink) return;
-
-       udpLink->setPort(m_description->parameter(dto::LinkDescription::Port).toInt());
+       if (udpLink) ::updateUdpLink(udpLink, m_description);
 
        break;
     }

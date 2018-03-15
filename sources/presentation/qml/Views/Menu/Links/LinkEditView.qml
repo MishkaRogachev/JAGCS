@@ -25,7 +25,7 @@ GridLayout {
     property alias baudRates: baudBox.model
     property alias port: portBox.value
     property alias endpoints: endpointList.endpoints
-    property alias autoAddEndpoint: autoAddEndpointBox.checked
+    property alias autoResponse: autoResponseBox.checked
 
     onChangedChanged: if (!changed) endpointList.updateEndpoints(false)
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
@@ -150,8 +150,8 @@ GridLayout {
     }
 
     Controls.CheckBox {
-        id: autoAddEndpointBox
-        text: qsTr("Auto add endpoints")
+        id: autoResponseBox
+        text: qsTr("Autoresponse on get data")
         visible: type == LinkDescription.Udp
         horizontalAlignment: Text.AlignHCenter
         onCheckedChanged: changed = true

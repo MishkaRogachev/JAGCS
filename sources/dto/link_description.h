@@ -42,7 +42,7 @@ namespace dto
             BaudRate,
             Port,
             Endpoints,
-            AutoAddEndpoint
+            UdpAutoResponse
         };
 
         QString name() const;

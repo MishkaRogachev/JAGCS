@@ -51,8 +51,8 @@ void LinkEditPresenter::updateLink()
     QString endpoints = m_description->parameter(dto::LinkDescription::Endpoints).toString();
     this->setViewProperty(PROPERTY(endpoints), endpoints.isEmpty() ?
                               QStringList() : endpoints.split(::separator));
-    this->setViewProperty(PROPERTY(autoAddEndpoint),
-                          m_description->parameter(dto::LinkDescription::AutoAddEndpoint));
+    this->setViewProperty(PROPERTY(autoResponse),
+                          m_description->parameter(dto::LinkDescription::UdpAutoResponse));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -99,8 +99,8 @@ void LinkEditPresenter::save()
     endpoints = endpoints.toSet().toList(); // remove dublicates
     this->setViewProperty(PROPERTY(endpoints), endpoints);
     m_description->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
-    m_description->setParameter(dto::LinkDescription::AutoAddEndpoint,
-                                this->viewProperty(PROPERTY(autoAddEndpoint)).toBool());
+    m_description->setParameter(dto::LinkDescription::UdpAutoResponse,
+                                this->viewProperty(PROPERTY(autoResponse)).toBool());
 
     if (!m_service->save(m_description)) return;
 
