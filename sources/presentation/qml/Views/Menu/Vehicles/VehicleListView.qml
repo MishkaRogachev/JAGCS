@@ -20,6 +20,7 @@ Item {
 
     ListView {
         anchors.fill: parent
+        anchors.rightMargin: sizings.shadowSize
         anchors.bottomMargin: addRow.height
         spacing: sizings.spacing
         model: vehicleIds

@@ -81,6 +81,7 @@ GridLayout {
         }
         Layout.columnSpan: 2
         Layout.fillWidth: true
+        Layout.rightMargin: sizings.shadowSize
     }
 
     JoystickAxisView {
@@ -97,6 +98,7 @@ GridLayout {
         }
         Layout.columnSpan: 2
         Layout.fillWidth: true
+        Layout.rightMargin: sizings.shadowSize
     }
 
     JoystickAxisView {
@@ -113,6 +115,7 @@ GridLayout {
         }
         Layout.columnSpan: 2
         Layout.fillWidth: true
+        Layout.rightMargin: sizings.shadowSize
     }
 
     JoystickAxisView {
@@ -129,6 +132,7 @@ GridLayout {
         }
         Layout.columnSpan: 2
         Layout.fillWidth: true
+        Layout.rightMargin: sizings.shadowSize
     }
 
     Item {
@@ -141,5 +145,6 @@ GridLayout {
         onSave: presenter.save()
         onRestore: presenter.restore()
         Layout.columnSpan: 2
+        Layout.rightMargin: sizings.shadowSize
     }
 }

@@ -24,6 +24,7 @@ ColumnLayout {
 
         MissionView {
             Layout.fillWidth: true
+            Layout.rightMargin: sizings.shadowSize
             missionId: modelData
         }
     }

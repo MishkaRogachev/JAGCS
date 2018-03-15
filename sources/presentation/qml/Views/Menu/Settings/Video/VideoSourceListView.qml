@@ -31,6 +31,7 @@ Item {
 
         Controls.Frame {
             Layout.fillWidth: true
+            Layout.rightMargin: sizings.shadowSize
 
             RowLayout {
                 id: grid
@@ -49,16 +50,16 @@ Item {
         }
 
         ListView {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
             spacing: sizings.spacing
             model: videoSourceIds
             clip: true
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
             Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
             delegate: VideoSourceView {
-                width: parent.width
+                width: parent.width - sizings.shadowSize
                 videoId: modelData
                 selected: activeVideo == videoId
                 onSetActiveVideo: presenter.setActiveVideo(videoId)
@@ -66,7 +67,7 @@ Item {
 
             Controls.Frame {
                 visible: parent.count === 0
-                width: parent.width
+                width: parent.width - sizings.shadowSize
                 height: label.height + sizings.margins * 2
 
                 Controls.Label {
