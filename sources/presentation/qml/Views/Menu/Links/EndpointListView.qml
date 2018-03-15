@@ -8,6 +8,13 @@ Controls.Frame {
 
     property var endpoints
 
+    signal changed()
+
+    function updateEndpoints(update) {
+        repeater.model = endpoints;
+        if (update) changed();
+    }
+
     backgroundColor: palette.sunkenColor
 
     ColumnLayout {
@@ -28,9 +35,14 @@ Controls.Frame {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
             }
+
+            Item {
+                Layout.minimumWidth: sizings.controlBaseSize
+            }
         }
 
         Repeater {
+            id: repeater
             model: root.endpoints
 
             RowLayout {
@@ -51,8 +63,25 @@ Controls.Frame {
 
             EndpointView {
                 endpoint: modelData
-                onRemove: endpoints.remove(index)
+                onRemove: {
+                    endpoints.splice(index, 1);
+                    updateEndpoints(true);
+                }
+                onChanged: {
+                    endpoints[index] = endpoint;
+                    updateEndpoints(true);
+                }
             }
+        }
+
+        Controls.Button {
+            text: qsTr("Add Link")
+            iconSource: "qrc:/icons/add.svg"
+            onClicked: {
+                endpoints.push("127.0.0.1/8080");
+                updateEndpoints(true);
+            }
+            Layout.fillWidth: true
         }
     }
 }

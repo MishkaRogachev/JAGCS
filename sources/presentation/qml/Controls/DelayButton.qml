@@ -7,6 +7,7 @@ T.DelayButton {
     id: control
 
     property string tipText
+    property bool flat: false
 
     property alias iconSource: content.iconSource
     property alias textColor: content.textColor

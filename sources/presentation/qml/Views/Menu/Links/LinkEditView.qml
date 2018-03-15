@@ -8,7 +8,7 @@ import "qrc:/Indicators" as Indicators
 import "qrc:/Views/Common"
 
 Controls.Frame {
-    id: linkView
+    id: linkEditView
 
     property int linkId: 0
     property bool connected: false
@@ -26,16 +26,17 @@ Controls.Frame {
     property alias port: portBox.value
     property alias endpoints: endpointList.endpoints
 
+    onChangedChanged: if (!changed) endpointList.updateEndpoints(false)
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
-    contentHeight: grid.height
 
+    contentHeight: grid.height
     implicitWidth: sizings.controlBaseSize * 11
     implicitHeight: grid.implicitHeight
 
     LinkEditPresenter {
         id: presenter
-        view: linkView
+        view: linkEditView
 
         Component.onCompleted: {
             updateRates();
@@ -147,6 +148,7 @@ Controls.Frame {
         EndpointListView {
             id: endpointList
             visible: type == LinkDescription.Udp
+            onChanged: linkEditView.changed = true;
             Layout.fillWidth: true
             Layout.columnSpan: 2
         }
