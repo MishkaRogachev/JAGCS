@@ -21,6 +21,7 @@ MenuItem 1.0 MenuItem.qml
 ProgressBar 1.0 ProgressBar.qml
 Slider 1.0 Slider.qml
 ComboBox 1.0 ComboBox.qml
+TextInput 1.0 TextInput.qml
 TextField 1.0 TextField.qml
 ItemDelegate 1.0 ItemDelegate.qml
 Popup 1.0 Popup.qml

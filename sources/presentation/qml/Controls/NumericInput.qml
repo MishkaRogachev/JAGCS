@@ -1,24 +1,16 @@
 import QtQuick 2.9
 
-TextInput {
+import "./" as Controls
+
+Controls.TextInput {
     id: root
 
     property bool changed: false
 
     signal finished()
 
-    horizontalAlignment: Qt.AlignHCenter
-    font.pixelSize: sizings.fontPixelSize
-    color: palette.textColor
-    selectionColor: palette.selectionColor
-    selectedTextColor: palette.selectedTextColor
-
     onFinished: changed = false
     onTextEdited: changed = true
-    onActiveFocusChanged: {
-        if (activeFocus) selectAll();
-        else if (changed) finished();
-    }
-
+    onActiveFocusChanged:  if (!activeFocus && changed) finished()
     onEditingFinished: if (changed) finished()
 }
