@@ -20,6 +20,7 @@ Item {
     ListView {
         anchors.fill: parent
         anchors.bottomMargin: addButton.height
+        anchors.rightMargin: sizings.shadowSize
         spacing: sizings.spacing
         model: linkIds
 

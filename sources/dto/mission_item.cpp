@@ -16,11 +16,16 @@ namespace
         { MissionItem::Takeoff, { MissionItem::Pitch } },
         { MissionItem::Landing, { MissionItem::AbortAltitude, MissionItem::Yaw } },
         { MissionItem::Waypoint, { MissionItem::Radius } },
-        { MissionItem::LoiterUnlim, {  MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw } },
-        { MissionItem::LoiterTime, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw, MissionItem::Time } },
-        { MissionItem::LoiterTurns, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::Yaw, MissionItem::Repeats } },
-        { MissionItem::LoiterAltitude, { MissionItem::Radius, MissionItem::Clockwise, MissionItem::HeadingRequired } },
-        { MissionItem::SetSpeed, { MissionItem::Speed, MissionItem::IsGroundSpeed, MissionItem::Throttle } },
+        { MissionItem::LoiterUnlim, {  MissionItem::Radius, MissionItem::Clockwise,
+                                       MissionItem::Yaw } },
+        { MissionItem::LoiterTime, { MissionItem::Radius, MissionItem::Clockwise,
+                                     MissionItem::Yaw, MissionItem::Time } },
+        { MissionItem::LoiterTurns, { MissionItem::Radius, MissionItem::Clockwise,
+                                      MissionItem::Yaw, MissionItem::Repeats } },
+        { MissionItem::LoiterAltitude, { MissionItem::Radius, MissionItem::Clockwise,
+                                         MissionItem::HeadingRequired } },
+        { MissionItem::SetSpeed, { MissionItem::Speed, MissionItem::IsGroundSpeed,
+                                   MissionItem::Throttle } },
         { MissionItem::TargetPoint, { MissionItem::Radius } },
     };
 }
@@ -113,7 +118,8 @@ QString MissionItem::parameters() const
 
     for (Parameter parameter: m_parameters.keys())
     {
-        list.append(QString(enumerator.valueToKey(parameter)) + ":" + m_parameters.value(parameter).toString());
+        list.append(QString(enumerator.valueToKey(parameter)) + ":" +
+                    m_parameters.value(parameter).toString());
     }
 
     return list.join(";");

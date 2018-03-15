@@ -15,6 +15,11 @@
 
 #include "link_statistics_model.h"
 
+namespace
+{
+    const QString separator = ",";
+}
+
 using namespace presentation;
 
 LinkEditPresenter::LinkEditPresenter(QObject* parent):
@@ -41,7 +46,10 @@ void LinkEditPresenter::updateLink()
 
     this->setViewProperty(PROPERTY(port), m_description->parameter(dto::LinkDescription::Port));
     this->setViewProperty(PROPERTY(device), m_description->parameter(dto::LinkDescription::Device));
-    this->setViewProperty(PROPERTY(baudRate), m_description->parameter(dto::LinkDescription::BaudRate));
+    this->setViewProperty(PROPERTY(baudRate),
+                          m_description->parameter(dto::LinkDescription::BaudRate));
+    this->setViewProperty(PROPERTY(endpoints), m_description->parameter(
+                              dto::LinkDescription::Endpoints).toString().split(::separator));
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -78,11 +86,13 @@ void LinkEditPresenter::save()
 
     m_description->setName(this->viewProperty(PROPERTY(name)).toString());
     m_description->setParameter(dto::LinkDescription::Device,
-                                 this->viewProperty(PROPERTY(device)).toString());
+                                this->viewProperty(PROPERTY(device)).toString());
     m_description->setParameter(dto::LinkDescription::BaudRate,
-                                 this->viewProperty(PROPERTY(baudRate)).toInt());
+                                this->viewProperty(PROPERTY(baudRate)).toInt());
     m_description->setParameter(dto::LinkDescription::Port,
-                                 this->viewProperty(PROPERTY(port)).toInt());
+                                this->viewProperty(PROPERTY(port)).toInt());
+    m_description->setParameter(dto::LinkDescription::Endpoints, this->viewProperty(
+                                    PROPERTY(endpoints)).toStringList().join(::separator));
 
     if (!m_service->save(m_description)) return;
 

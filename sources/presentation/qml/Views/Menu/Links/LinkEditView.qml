@@ -12,17 +12,19 @@ Controls.Frame {
 
     property int linkId: 0
     property bool connected: false
-    property int type: LinkDescription.UnknownType
-    property alias name: nameField.text
-    property alias port: portBox.value
-    property int protocol: LinkDescription.UnknownProtocol
-    property string device
-    property alias devices: deviceBox.model
-    property int baudRate
-    property alias baudRates: baudBox.model
     property bool changed: false
 
+    property int type: LinkDescription.UnknownType
+    property int protocol: LinkDescription.UnknownProtocol
+    property string device
+    property int baudRate
     property var statistics
+
+    property alias name: nameField.text
+    property alias devices: deviceBox.model
+    property alias baudRates: baudBox.model
+    property alias port: portBox.value
+    property alias endpoints: endpointList.endpoints
 
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
@@ -94,21 +96,6 @@ Controls.Frame {
         }
 
         Controls.Label {
-            text: qsTr("Port")
-            visible: type == LinkDescription.Udp
-            Layout.fillWidth: true
-        }
-
-        Controls.SpinBox {
-            id: portBox
-            from: 0
-            to: 65535
-            visible: type == LinkDescription.Udp
-            onValueChanged: changed = true
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
             text: qsTr("Device")
             visible: type == LinkDescription.Serial
             Layout.fillWidth: true
@@ -142,10 +129,32 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
+        Controls.Label {
+            text: qsTr("Port")
+            visible: type == LinkDescription.Udp
+            Layout.fillWidth: true
+        }
+
+        Controls.SpinBox {
+            id: portBox
+            from: 0
+            to: 65535
+            visible: type == LinkDescription.Udp
+            onValueChanged: changed = true
+            Layout.fillWidth: true
+        }
+
+        EndpointListView {
+            id: endpointList
+            visible: type == LinkDescription.Udp
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
+
         Item {
             Layout.fillHeight: true
-            Layout.columnSpan: 2
             Layout.fillWidth: true
+            Layout.columnSpan: 2
 
             Indicators.MiniPlot {
                 id: plot

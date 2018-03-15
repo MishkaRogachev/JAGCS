@@ -11,10 +11,9 @@ namespace
     static QMap <LinkDescription::Type, QList<LinkDescription::Parameter> > typeParameters =
     {
         { LinkDescription::Serial, { LinkDescription::Device, LinkDescription::BaudRate } },
-        { LinkDescription::Udp, { LinkDescription::Port } }
+        { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints } }
     };
 }
-
 
 QString LinkDescription::name() const
 {
@@ -44,7 +43,8 @@ QString LinkDescription::parameters() const
 
     for (Parameter parameter: m_parameters.keys())
     {
-        list.append(QString(enumerator.valueToKey(parameter)) + ":" + m_parameters.value(parameter).toString());
+        list.append(QString(enumerator.valueToKey(parameter)) + ":" +
+                    m_parameters.value(parameter).toString());
     }
 
     return list.join(";");

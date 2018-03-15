@@ -120,6 +120,8 @@
         <file>Views/Menu/Links/LinkListView.qml</file>
         <file>Views/Menu/Links/LinkView.qml</file>
         <file>Views/Menu/Links/LinkEditView.qml</file>
+        <file>Views/Menu/Links/EndpointListView.qml</file>
+        <file>Views/Menu/Links/EndpointView.qml</file>
         <file>Views/Menu/Planning/PlanningView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionListView.qml</file>
         <file>Views/Menu/Planning/Missions/MissionView.qml</file>
