@@ -12,8 +12,8 @@ namespace comm
         Q_OBJECT
 
     public:
-        SerialLink(const QString& device, qint32 baudRate,
-                   QObject* parent = nullptr);
+        SerialLink(const QString& device = QString(),
+                   qint32 baudRate = 0, QObject* parent = nullptr);
 
         bool isConnected() const override;
 
