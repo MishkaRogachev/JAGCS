@@ -91,7 +91,7 @@ Controls.Frame {
             }
 
             Controls.Button {
-                text: qsTr("Add Link")
+                text: qsTr("Add endpoint")
                 iconSource: "qrc:/icons/add.svg"
                 onClicked: {
                     endpoints.push("127.0.0.1/8080");
