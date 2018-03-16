@@ -119,12 +119,11 @@ namespace settings
 
         namespace visibility
         {
-            const QString control = "controlVisible";
             const QString diagnostics = "diagnosticsVisible";
+            const QString status = "statusVisible";
             const QString fd = "fdVisible";
             const QString hsi = "hsiVisible";
-            const QString mission = "missionVisible";
-            const QString status = "statusVisible";
+            const QString control = "controlVisible";
         }
     }
 }

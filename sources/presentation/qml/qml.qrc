@@ -109,7 +109,6 @@
         <file>Views/Dashboard/Displays/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/Displays/Instruments/FlightDirector.qml</file>
         <file>Views/Dashboard/Displays/Instruments/HorizontalSituationIndicator.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/MissionControl.qml</file>
         <file>Views/Dashboard/Displays/Instruments/ControlPanel.qml</file>
         <file>Views/Dashboard/Displays/VehiclesListDisplay.qml</file>
         <file>Views/Dashboard/Displays/ShortAerialVehicleDisplay.qml</file>

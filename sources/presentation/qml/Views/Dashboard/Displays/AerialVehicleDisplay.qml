@@ -70,12 +70,6 @@ Item {
         }
 
         ListElement {
-            name: qsTr("Mission control")
-            setting: "missionVisible"
-            instrument: "./Instruments/MissionControl.qml"
-            instrumentVisible: true
-        }
-        ListElement {
             name: qsTr("Control panel")
             setting: "controlVisible"
             instrument: "./Instruments/ControlPanel.qml"
