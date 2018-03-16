@@ -5,22 +5,48 @@
 
 namespace
 {
+    enum ApmPlaneMode: quint32
+    {
+        MANUAL          = 0,
+        CIRCLE          = 1,
+        STABILIZE       = 2,
+        TRAINING        = 3,
+        ACRO            = 4,
+        FBWA            = 5,
+        FBWB            = 6,
+        CRUISE          = 7,
+        AUTOTUNE        = 8,
+        RESERVED_9      = 9,
+        AUTO            = 10,
+        RTL             = 11,
+        LOITER          = 12,
+        RESERVED_13     = 13,
+        AVOID           = 14,
+        GUIDED          = 15,
+        INITIALIZING    = 16,
+        QSTABILIZE      = 17,
+        QHOVER          = 18,
+        QLOITER         = 19,
+        QLAND           = 20,
+        QRTL            = 21
+    };
+
     QMap<quint32, domain::vehicle::Mode> modeMap =
     {
-        { 0, domain::vehicle::Mode::Manual },
-        { 1, domain::vehicle::Mode::Circle },
-        { 2, domain::vehicle::Mode::Stabilize },
-        { 4, domain::vehicle::Mode::Acro },
-        { 5, domain::vehicle::Mode::CtrlByAttitude },
-        { 6, domain::vehicle::Mode::CtrlByAltitude },
-        { 7, domain::vehicle::Mode::Cruise },
-        { 8, domain::vehicle::Mode::Autotune },
-        { 10, domain::vehicle::Mode::Mission },
-        { 11, domain::vehicle::Mode::Return },
-        { 12, domain::vehicle::Mode::Loiter },
-        { 14, domain::vehicle::Mode::Avoid },
-        { 15, domain::vehicle::Mode::Guided },
-        { 16, domain::vehicle::Mode::Init }
+        { MANUAL,       domain::vehicle::Mode::Manual },
+        { CIRCLE,       domain::vehicle::Mode::Circle },
+        { STABILIZE,    domain::vehicle::Mode::Stabilize },
+        { ACRO,         domain::vehicle::Mode::Acro },
+        { FBWA,         domain::vehicle::Mode::Fbwa },
+        { FBWB,         domain::vehicle::Mode::Fbwb },
+        { CRUISE,       domain::vehicle::Mode::Cruise },
+        { AUTOTUNE,     domain::vehicle::Mode::Autotune },
+        { AUTO,         domain::vehicle::Mode::Mission },
+        { RTL,          domain::vehicle::Mode::Return },
+        { LOITER,       domain::vehicle::Mode::Loiter },
+        { AVOID,        domain::vehicle::Mode::Avoid },
+        { GUIDED,       domain::vehicle::Mode::NavTo },
+        { INITIALIZING, domain::vehicle::Mode::Init }
     };
 }
 
@@ -45,15 +71,15 @@ QList<domain::vehicle::Mode> ApmPlaneModeHelper::availableModes() const
     return {
 //        domain::vehicle::Mode::Manual,
 //        domain::vehicle::Mode::Stabilize,
-//        domain::vehicle::Mode::CtrlByAltitude,
 //        domain::vehicle::Mode::Acro,
 //        domain::vehicle::Mode::Autotune,
-//        domain::vehicle::Mode::Cruise,
-        domain::vehicle::Mode::CtrlByAttitude,
-        domain::vehicle::Mode::Mission,
-        domain::vehicle::Mode::Return,
-        domain::vehicle::Mode::Loiter,
         domain::vehicle::Mode::Circle,
-        domain::vehicle::Mode::Guided
+        domain::vehicle::Mode::Loiter,
+        domain::vehicle::Mode::Fbwa,
+        domain::vehicle::Mode::Fbwb,
+        domain::vehicle::Mode::Cruise,
+        domain::vehicle::Mode::Mission,
+        domain::vehicle::Mode::NavTo,
+        domain::vehicle::Mode::Return
     };
 }

@@ -83,10 +83,14 @@ QString TranslationHelper::translateVehicleMode(domain::vehicle::Mode mode)
     case domain::vehicle::Mode::Avoid: return tr("AVOID");
     case domain::vehicle::Mode::Circle: return tr("CIRCLE");
     case domain::vehicle::Mode::Cruise: return tr("CRUISE");
-    case domain::vehicle::Mode::CtrlByAltitude: return tr("CTRL BY ALT");
-    case domain::vehicle::Mode::CtrlByAttitude: return tr("CTRL BY ATT");
+    case domain::vehicle::Mode::Fbwa: return tr("FBWA");
+    case domain::vehicle::Mode::Fbwb: return tr("FBWB");
+    case domain::vehicle::Mode::Rattitude: return tr("RATT");
+    case domain::vehicle::Mode::PosCtrl: return tr("POS CTRL");
+    case domain::vehicle::Mode::AltCtrl: return tr("ALT CTRL");
+    case domain::vehicle::Mode::AltHold: return tr("ALT HOLD");
     case domain::vehicle::Mode::Follow: return tr("FOLLOW");
-    case domain::vehicle::Mode::Guided: return tr("GUIDED");
+    case domain::vehicle::Mode::NavTo: return tr("NAV TO");
     case domain::vehicle::Mode::HoldPosition: return tr("HOLD");
     case domain::vehicle::Mode::Init: return tr("INIT");
     case domain::vehicle::Mode::Landing: return tr("LAND");
