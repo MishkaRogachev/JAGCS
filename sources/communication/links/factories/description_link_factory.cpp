@@ -27,13 +27,20 @@ namespace
                 QStringList split = endpoint.split("/");
                 QHostAddress address = split.count() > 0 ? QHostAddress(split.first()) :
                                                            QHostAddress();
-                qDebug() << split;
                 quint16 port =split.count() > 1 ? split.at(1).toUInt() : 0;
                 udpLink->addEndpoint(Endpoint(address, port));
             }
         }
 
         return udpLink;
+    }
+
+    SerialLink* updateSerialLink(SerialLink* serialLink, const LinkDescriptionPtr& description)
+    {
+        serialLink->setDevice(description->parameter(dto::LinkDescription::Device).toString());
+        serialLink->setBaudRate(description->parameter(dto::LinkDescription::BaudRate).toInt());
+
+        return serialLink;
     }
 }
 
@@ -49,12 +56,8 @@ AbstractLink* DescriptionLinkFactory::create()
 
     switch (m_description->type())
     {
-    case LinkDescription::Udp:{
-        return ::updateUdpLink(new UdpLink(), m_description);
-    }
-    case LinkDescription::Serial:
-        return new SerialLink(m_description->parameter(dto::LinkDescription::Device).toString(),
-                              m_description->parameter(dto::LinkDescription::BaudRate).toInt());
+    case LinkDescription::Udp: return ::updateUdpLink(new UdpLink(), m_description);
+    case LinkDescription::Serial: return ::updateSerialLink(new SerialLink(), m_description);
     default:
         return nullptr;
     }
@@ -68,18 +71,19 @@ void DescriptionLinkFactory::update(AbstractLink* link)
     {
     case LinkDescription::Udp:
     {
-       UdpLink* udpLink = qobject_cast<UdpLink*>(link);
-       if (udpLink) ::updateUdpLink(udpLink, m_description);
+       if (UdpLink* udpLink = qobject_cast<UdpLink*>(link))
+       {
+           ::updateUdpLink(udpLink, m_description);
+       }
 
        break;
     }
     case LinkDescription::Serial:
     {
-        SerialLink* serialLink = qobject_cast<SerialLink*>(link);
-        if (!serialLink) return;
-
-        serialLink->setDevice(m_description->parameter(dto::LinkDescription::Device).toString());
-        serialLink->setBaudRate(m_description->parameter(dto::LinkDescription::BaudRate).toInt());
+        if (SerialLink* serialLink = qobject_cast<SerialLink*>(link))
+        {
+            ::updateSerialLink(serialLink, m_description);
+        }
 
         break;
     }
