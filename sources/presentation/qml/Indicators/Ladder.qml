@@ -86,14 +86,6 @@ Item {
             ctx.clearRect(mirrored ? 1 : -1, height / 2 - markHeight / 2,
                           mirrored ? width : -width, markHeight);
 
-            // Arrow for current value
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(mirrored ? majorTickSize : -majorTickSize, height / 2 - markHeight / 2);
-            ctx.lineTo(mirrored ? 2 : -2, height / 2);
-            ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
-            ctx.stroke();
-
             // Error mark
             if (error) {
                 ctx.lineWidth = 4;
@@ -105,6 +97,15 @@ Item {
                 ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, errorPos);
                 ctx.stroke();
             }
+
+            // Arrow for current value
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(mirrored ? majorTickSize : -majorTickSize, height / 2 - markHeight / 2);
+            ctx.lineTo(mirrored ? 2 : -2, height / 2);
+            ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
+            ctx.stroke();
 
             ctx.restore();
         }
