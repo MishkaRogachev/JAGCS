@@ -6,7 +6,7 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-import "CommandControls" as CommandControls
+import "DisplayControls" as DisplayControls
 import "Instruments" as Instruments
 
 import "../Vehicles"

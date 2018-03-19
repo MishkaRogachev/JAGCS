@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../CommandControls" as CommandControls
+import "../DisplayControls" as DisplayControls
 
 Controls.Pane {
     id: root
@@ -59,7 +59,7 @@ Controls.Pane {
         RowLayout {
              spacing: sizings.spacing
 
-             CommandControls.DelayButton {
+             DisplayControls.DelayCommandButton {
                  id: armDisarm
                  text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
                  args: [ !vehicle.armed ]
@@ -67,14 +67,14 @@ Controls.Pane {
                  Layout.preferredWidth: sizings.controlBaseSize * 2
              }
 
-             CommandControls.ModeBox {
+             DisplayControls.ModeBox {
                  id: modeBox
                  mode: vehicle.mode
                  model: vehicle.availableModes
                  Layout.fillWidth: true
              }
 
-             CommandControls.Button {
+             DisplayControls.DelayButton {
                  id: rtl
                  tipText: qsTr("Return to launch")
                  iconSource: "qrc:/icons/home.svg"
@@ -102,7 +102,7 @@ Controls.Pane {
                 onClicked: itemBox.goTo(current - 1)
             }
 
-            CommandControls.WaypointBox {
+            DisplayControls.WaypointBox {
                 id: itemBox
                 Layout.preferredWidth: sizings.controlBaseSize * 3
             }
@@ -154,7 +154,7 @@ Controls.Pane {
                 }
             }
 
-            CommandControls.Button {
+            DisplayControls.DelayButton {
                 id: sendButton
                 command: Command.NavTo
                 iconSource: "qrc:/icons/play.svg"

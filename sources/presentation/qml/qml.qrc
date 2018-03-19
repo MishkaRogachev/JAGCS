@@ -101,10 +101,11 @@
         <file>Views/Dashboard/Vehicles/Subsystem.qml</file>
         <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>
         <file>Views/Dashboard/Vehicles/AerialVehicle.qml</file>
-        <file>Views/Dashboard/Displays/CommandControls/Button.qml</file>
-        <file>Views/Dashboard/Displays/CommandControls/DelayButton.qml</file>
-        <file>Views/Dashboard/Displays/CommandControls/ModeBox.qml</file>
-        <file>Views/Dashboard/Displays/CommandControls/WaypointBox.qml</file>
+        <file>Views/Dashboard/Displays/DisplayControls/Label.qml</file>
+        <file>Views/Dashboard/Displays/DisplayControls/CommandButton.qml</file>
+        <file>Views/Dashboard/Displays/DisplayControls/DelayCommandButton.qml</file>
+        <file>Views/Dashboard/Displays/DisplayControls/ModeBox.qml</file>
+        <file>Views/Dashboard/Displays/DisplayControls/WaypointBox.qml</file>
         <file>Views/Dashboard/Displays/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/Displays/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/Displays/Instruments/FlightDirector.qml</file>
