@@ -157,10 +157,16 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
         QVariantList args = command->arguments();
         if (args.count() > 2)
         {
-            this->sentNavTo(vehicle->mavId(),
-                            args.at(0).toDouble(),
-                            args.at(1).toDouble(),
-                            args.at(2).toFloat());
+            this->sendNavTo(vehicle->mavId(), args.at(0).toDouble(),
+                            args.at(1).toDouble(), args.at(2).toFloat());
+        }
+    }
+    else if (command->type() == dto::Command::ChangeAltitude)
+    {
+        QVariantList args = command->arguments();
+        if (args.count() > 0)
+        {
+            this->sendChangeAltitude(vehicle->mavId(), args.at(0).toDouble());
         }
     }
     else if (command->type() == dto::Command::ManualImpacts)
@@ -249,7 +255,7 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
                      dto::Command::GoTo, dto::Command::Completed); // TODO: wait current item
 }
 
-void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)
+void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, float altitude)
 {
     mavlink_message_t message;
     mavlink_mission_item_t item;
@@ -275,7 +281,34 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
     m_communicator->sendMessage(message, link);
 
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dto::Command::NavTo, dto::Command::Completed); // TODO: wait nav to
+                     dto::Command::NavTo, dto::Command::Completed); // TODO: wait ack
+}
+
+void CommandHandler::sendChangeAltitude(quint8 mavId, double altitude)
+{
+    mavlink_message_t message;
+    mavlink_mission_item_t item;
+
+    item.target_system = mavId;
+    item.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    item.frame = MAV_FRAME_GLOBAL_RELATIVE_ALT;
+    item.command = MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
+    item.current = 3; // guided
+    item.seq = 0;
+    item.autocontinue = false;
+    item.z = altitude;
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_item_encode_chan(m_communicator->systemId(),
+                                         m_communicator->componentId(),
+                                         m_communicator->linkChannel(link),
+                                         &message, &item);
+    m_communicator->sendMessage(message, link);
+
+    this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
+                     dto::Command::ChangeAltitude, dto::Command::Completed); // TODO: wait ack
 }
 
 void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
@@ -304,3 +337,4 @@ void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
     // TODO: wait feedback
     this->ackCommand(vehicleId, dto::Command::ManualImpacts, dto::Command::Completed);
 }
+

@@ -13,7 +13,6 @@ GridLayout {
     rowSpacing: sizings.spacing
     columnSpacing: sizings.spacing
     columns: 3
-    visible: vehicle.mode === Domain.NavTo
 
     onVisibleChanged: updateLatLonAlt()
     Component.onCompleted: updateLatLonAlt()
@@ -28,6 +27,7 @@ GridLayout {
 
     Controls.SpinBox {
         id: altitudeBox
+        from: -200
         to: 20000 // TODO: borderValues
         font.bold: true
         font.pixelSize: sizings.fontPixelSize * 0.6
@@ -38,7 +38,7 @@ GridLayout {
         id: sendButton
         command: Command.NavTo
         iconSource: "qrc:/icons/play.svg"
-        tipText: qsTr("Send point")
+        tipText: qsTr("Nav to")
         args: [ latitudeBox.value, longitudeBox.value,
             vehicle.barometric.fromDisplayedAltitude(altitudeBox.value) ]
     }

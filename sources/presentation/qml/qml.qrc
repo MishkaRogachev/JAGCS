@@ -105,6 +105,7 @@
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
         <file>Views/Dashboard/CommandWidgets/GoTo.qml</file>
         <file>Views/Dashboard/CommandWidgets/NavTo.qml</file>
+        <file>Views/Dashboard/CommandWidgets/ChangeAlt.qml</file>
         <file>Views/Dashboard/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/Instruments/FlightDirector.qml</file>

@@ -29,10 +29,12 @@ namespace comm
         void sendCommand(int vehicleId, const dto::CommandPtr& command, int attempt = 0) override;
 
     private slots:
+        // TODO: move command to processors/handlers/senders
         void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);
         void sendSetMode(quint8 mavId, domain::vehicle::Mode mode);
         void sendCurrentItem(quint8 mavId, quint16 seq);
-        void sentNavTo(quint8 mavId, double latitude, double longitude, float altitude);
+        void sendNavTo(quint8 mavId, double latitude, double longitude, float altitude);
+        void sendChangeAltitude(quint8 mavId, double altitude);
         void sendManualControl(int vehicleId, double pitch, double roll, double yaw, double thrust);
 
     private:

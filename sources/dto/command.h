@@ -26,6 +26,7 @@ namespace dto
             SetMode,
             GoTo,
             NavTo,
+            ChangeAltitude,
 
             ArmDisarm,
 

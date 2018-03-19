@@ -28,7 +28,6 @@ RowLayout {
 
     enabled: count > 0
     spacing: sizings.spacing
-    visible: vehicle.mode === Domain.Mission
 
     DashboardControls.Label {
         text: qsTr("WP")
@@ -36,7 +35,7 @@ RowLayout {
     }
 
     Controls.Button {
-        tipText: qsTr("Goto left")
+        tipText: qsTr("Go to backward")
         iconSource: "qrc:/icons/left.svg"
         enabled: current > 1
         onClicked: itemBox.goTo(current - 1)
@@ -48,7 +47,7 @@ RowLayout {
     }
 
     Controls.Button {
-        tipText: qsTr("Goto right")
+        tipText: qsTr("Go to forward")
         iconSource: "qrc:/icons/right.svg"
         enabled: current < count - 1
         onClicked: itemBox.goTo(current + 1)

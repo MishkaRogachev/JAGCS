@@ -28,6 +28,9 @@ Controls.Pane {
             case Command.NavTo:
                 navTo.status = status;
                 break;
+            case Command.ChangeAltitude:
+                changeAlt.status = status;
+                break;
             default:
                 break;
             }
@@ -75,6 +78,14 @@ Controls.Pane {
         CommandWidgets.NavTo {
             id: navTo
             visible: vehicle.mode === Domain.NavTo
+        }
+
+        CommandWidgets.ChangeAlt {
+            id: changeAlt
+            visible: vehicle.mode === Domain.Circle ||
+                     vehicle.mode === Domain.Loiter ||
+//                     vehicle.mode === Domain.Mission ||
+                     vehicle.mode === Domain.Return
         }
     }
 }
