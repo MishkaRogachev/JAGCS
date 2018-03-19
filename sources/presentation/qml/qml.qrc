@@ -103,6 +103,7 @@
         <file>Views/Dashboard/DashboardControls/DelayCommandButton.qml</file>
         <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
+        <file>Views/Dashboard/CommandWidgets/GoTo.qml</file>
         <file>Views/Dashboard/CommandWidgets/NavTo.qml</file>
         <file>Views/Dashboard/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/Instruments/StatusPanel.qml</file>

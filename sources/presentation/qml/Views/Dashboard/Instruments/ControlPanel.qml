@@ -9,23 +9,6 @@ import "../CommandWidgets" as CommandWidgets
 Controls.Pane {
     id: root
 
-    property int count: vehicle.mission.count
-    property int current: vehicle.mission.current
-
-    Component.onCompleted: updateItems()
-    onCurrentChanged: updateCurrent()
-    onCountChanged: updateItems()
-
-    function updateItems() {
-        var items = [];
-        for (var i = 0; i < count; ++i) items.push(i + 1);
-        itemBox.model = items;
-    }
-
-    function updateCurrent() {
-        itemBox.currentIndex = vehicle.mission.current;
-    }
-
     Connections {
         target: vehicleDisplay
         onUpdateCommandStatus: {
@@ -40,7 +23,7 @@ Controls.Pane {
                 rtl.status = status;
                 break;
             case Command.GoTo:
-                itemBox.status = status;
+                goTo.status = status;
                 break;
             case Command.NavTo:
                 navTo.status = status;
@@ -84,34 +67,9 @@ Controls.Pane {
              }
         }
 
-        RowLayout {
-            enabled: count > 0
-            spacing: sizings.spacing
+        CommandWidgets.GoTo {
+            id: goTo
             visible: vehicle.mode === Domain.Mission
-
-            DashboardControls.Label {
-                text: qsTr("WP")
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                tipText: qsTr("Goto left")
-                iconSource: "qrc:/icons/left.svg"
-                enabled: current > 1
-                onClicked: itemBox.goTo(current - 1)
-            }
-
-            DashboardControls.WaypointBox {
-                id: itemBox
-                Layout.preferredWidth: sizings.controlBaseSize * 3
-            }
-
-            Controls.Button {
-                tipText: qsTr("Goto right")
-                iconSource: "qrc:/icons/right.svg"
-                enabled: current < count - 1
-                onClicked: itemBox.goTo(current + 1)
-            }
         }
 
         CommandWidgets.NavTo {
