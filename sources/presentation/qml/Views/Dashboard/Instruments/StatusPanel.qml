@@ -6,7 +6,7 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-import "../DisplayControls" as DisplayControls
+import "../DashboardControls" as DashboardControls
 
 Controls.Pane {
     id: root
@@ -50,14 +50,14 @@ Controls.Pane {
             Layout.fillWidth: true
             spacing: sizings.spacing
 
-            DisplayControls.Label {
+            DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
             }
 
-            DisplayControls.Label {
+            DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
@@ -77,12 +77,12 @@ Controls.Pane {
         ColumnLayout {
             Layout.alignment: Qt.AlignRight
 
-            DisplayControls.Label {
+            DashboardControls.Label {
                 color: vehicle.battery.voltage > 0.01 ? palette.textColor : palette.sunkenColor
                 text: vehicle.battery.voltage.toFixed(2) + qsTr(" V")
             }
 
-            DisplayControls.Label {
+            DashboardControls.Label {
                 color: {
                     if (vehicle.battery.current < -0.01) return palette.positiveColor;
                     if (vehicle.battery.current > 0.0) return palette.textColor;

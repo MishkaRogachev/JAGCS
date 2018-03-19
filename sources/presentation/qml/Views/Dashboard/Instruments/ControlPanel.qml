@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../DisplayControls" as DisplayControls
+import "../DashboardControls" as DashboardControls
+import "../CommandWidgets" as CommandWidgets
 
 Controls.Pane {
     id: root
@@ -41,8 +42,8 @@ Controls.Pane {
             case Command.GoTo:
                 itemBox.status = status;
                 break;
-            case sendButton.command:
-                sendButton.status = status;
+            case Command.NavTo:
+                navTo.status = status;
                 break;
             default:
                 break;
@@ -59,7 +60,7 @@ Controls.Pane {
         RowLayout {
              spacing: sizings.spacing
 
-             DisplayControls.DelayCommandButton {
+             DashboardControls.DelayCommandButton {
                  id: armDisarm
                  text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
                  args: [ !vehicle.armed ]
@@ -67,14 +68,14 @@ Controls.Pane {
                  Layout.preferredWidth: sizings.controlBaseSize * 2
              }
 
-             DisplayControls.ModeBox {
+             DashboardControls.ModeBox {
                  id: modeBox
                  mode: vehicle.mode
                  model: vehicle.availableModes
                  Layout.fillWidth: true
              }
 
-             DisplayControls.DelayCommandButton {
+             DashboardControls.CommandButton {
                  id: rtl
                  tipText: qsTr("Return to launch")
                  iconSource: "qrc:/icons/home.svg"
@@ -88,7 +89,7 @@ Controls.Pane {
             spacing: sizings.spacing
             visible: vehicle.mode === Domain.Mission
 
-            DisplayControls.Label {
+            DashboardControls.Label {
                 text: qsTr("WP")
                 Layout.fillWidth: true
             }
@@ -100,7 +101,7 @@ Controls.Pane {
                 onClicked: itemBox.goTo(current - 1)
             }
 
-            DisplayControls.WaypointBox {
+            DashboardControls.WaypointBox {
                 id: itemBox
                 Layout.preferredWidth: sizings.controlBaseSize * 3
             }
@@ -113,66 +114,9 @@ Controls.Pane {
             }
         }
 
-        GridLayout { // TODO: NavTo Item
-            rowSpacing: sizings.spacing
-            columnSpacing: sizings.spacing
-            columns: 4
+        CommandWidgets.NavTo {
+            id: navTo
             visible: vehicle.mode === Domain.NavTo
-            onVisibleChanged: updateLatLonAlt()
-            Component.onCompleted: updateLatLonAlt()
-
-            function updateLatLonAlt() {
-                altitudeBox.value = vehicle.barometric.displayedAltitude;
-                latitudeBox.value = vehicle.position.latitude;
-                longitudeBox.value =vehicle.position.longitude;
-            }
-
-            DisplayControls.Label { text: qsTr("Alt.") }
-
-            Controls.SpinBox {
-                id: altitudeBox
-                to: 20000 // TODO: borderValues
-                Layout.fillWidth: true
-            }
-
-            Controls.MapPickButton {
-                id: pickButton
-                onPicked: {
-                    latitudeBox.value = coordinate.latitude;
-                    longitudeBox.value = coordinate.longitude;
-                    map.pickerCoordinate = coordinate;
-                }
-                onVisibleChanged: {
-                    map.pickerVisible = visible;
-                    picking = false;
-                }
-            }
-
-            DisplayControls.CommandButton {
-                id: sendButton
-                command: Command.NavTo
-                iconSource: "qrc:/icons/play.svg"
-                tipText: qsTr("Send point")
-                args: [ latitudeBox.value, longitudeBox.value,
-                    vehicle.barometric.fromDisplayedAltitude(altitudeBox.value) ]
-            }
-
-            DisplayControls.Label { text: qsTr("Lat.") }
-
-            Controls.CoordSpinBox {
-                id: latitudeBox
-                Layout.fillWidth: true
-                Layout.columnSpan: 3
-            }
-
-            DisplayControls.Label { text: qsTr("Lon.") }
-
-            Controls.CoordSpinBox {
-                id: longitudeBox
-                isLongitude: true
-                Layout.fillWidth: true
-                Layout.columnSpan: 3
-            }
         }
     }
 }

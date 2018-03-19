@@ -2,12 +2,10 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-import "DisplayControls" as DisplayControls
-
+import "../DashboardControls" as DashboardControls
 import "../Vehicles"
 
 Controls.Card {
@@ -86,7 +84,7 @@ Controls.Card {
                 Layout.maximumWidth: sizings.controlBaseSize * 3
             }
 
-            DisplayControls.Label {
+            DashboardControls.Label {
                 text: translator.translateVehicleMode(vehicle.mode)
                 horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true

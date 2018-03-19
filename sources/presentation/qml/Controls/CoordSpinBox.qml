@@ -115,6 +115,7 @@ T.Control {
             CoordSpinBoxInput {
                 id: dInput
                 focus: true
+                font: control.font
                 maximumLength: isLongitude ? 3 : 2
                 nextItem: mInput
                 inputMethodHints: Qt.ImhDigitsOnly
@@ -125,10 +126,14 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label { text: "\u00B0" }
+            Controls.Label {
+                font: control.font
+                text: "\u00B0"
+            }
 
             CoordSpinBoxInput {
                 id: mInput
+                font: control.font
                 maximumLength: 2
                 previousItem: dInput
                 nextItem: sInput
@@ -140,10 +145,14 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label { text: "\'" }
+            Controls.Label {
+                font: control.font
+                text: "\'"
+            }
 
             CoordSpinBoxInput {
                 id: sInput
+                font: control.font
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -154,10 +163,14 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label { text: "\"" }
+            Controls.Label {
+                font: control.font
+                text: "\""
+            }
 
             Button {
                 flat: true
+                font: control.font
                 activeFocusOnTab: false
                 text: sign < 0 ? (isLongitude ? qsTr("W") : qsTr("S")) :
                                  (isLongitude ? qsTr("E") : qsTr("N"))

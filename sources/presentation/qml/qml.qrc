@@ -98,19 +98,20 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
+        <file>Views/Dashboard/DashboardControls/Label.qml</file>
+        <file>Views/Dashboard/DashboardControls/CommandButton.qml</file>
+        <file>Views/Dashboard/DashboardControls/DelayCommandButton.qml</file>
+        <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
+        <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
+        <file>Views/Dashboard/CommandWidgets/NavTo.qml</file>
+        <file>Views/Dashboard/Instruments/DiagnosticsPanel.qml</file>
+        <file>Views/Dashboard/Instruments/StatusPanel.qml</file>
+        <file>Views/Dashboard/Instruments/FlightDirector.qml</file>
+        <file>Views/Dashboard/Instruments/HorizontalSituationIndicator.qml</file>
+        <file>Views/Dashboard/Instruments/ControlPanel.qml</file>
         <file>Views/Dashboard/Vehicles/Subsystem.qml</file>
         <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>
         <file>Views/Dashboard/Vehicles/AerialVehicle.qml</file>
-        <file>Views/Dashboard/Displays/DisplayControls/Label.qml</file>
-        <file>Views/Dashboard/Displays/DisplayControls/CommandButton.qml</file>
-        <file>Views/Dashboard/Displays/DisplayControls/DelayCommandButton.qml</file>
-        <file>Views/Dashboard/Displays/DisplayControls/ModeBox.qml</file>
-        <file>Views/Dashboard/Displays/DisplayControls/WaypointBox.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/DiagnosticsPanel.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/StatusPanel.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/FlightDirector.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/HorizontalSituationIndicator.qml</file>
-        <file>Views/Dashboard/Displays/Instruments/ControlPanel.qml</file>
         <file>Views/Dashboard/Displays/VehiclesListDisplay.qml</file>
         <file>Views/Dashboard/Displays/ShortAerialVehicleDisplay.qml</file>
         <file>Views/Dashboard/Displays/AerialVehicleDisplay.qml</file>
