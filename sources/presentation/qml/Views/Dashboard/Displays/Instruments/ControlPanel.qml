@@ -74,7 +74,7 @@ Controls.Pane {
                  Layout.fillWidth: true
              }
 
-             DisplayControls.DelayButton {
+             DisplayControls.DelayCommandButton {
                  id: rtl
                  tipText: qsTr("Return to launch")
                  iconSource: "qrc:/icons/home.svg"
@@ -148,7 +148,7 @@ Controls.Pane {
                 }
             }
 
-            DisplayControls.DelayButton {
+            DisplayControls.CommandButton {
                 id: sendButton
                 command: Command.NavTo
                 iconSource: "qrc:/icons/play.svg"
