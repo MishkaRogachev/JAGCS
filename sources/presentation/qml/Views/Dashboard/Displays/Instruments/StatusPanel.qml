@@ -6,6 +6,8 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
+import "../DisplayControls" as DisplayControls
+
 Controls.Pane {
     id: root
 
@@ -48,44 +50,20 @@ Controls.Pane {
             Layout.fillWidth: true
             spacing: sizings.spacing
 
-            Controls.Label {
-                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
-                font.bold: true
+            DisplayControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
             }
 
-            Controls.Label {
-                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
-                font.bold: true
+            DisplayControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
             }
         }
-
-//        ColumnLayout { TODO: to satellites tooltip
-//            Layout.alignment: Qt.AlignRight
-
-//            Controls.Label {
-//                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
-//                font.bold: true
-//                opacity: enabled ? 1 : 0.33
-//                color: satelliteOperational ? palette.textColor : palette.dangerColor
-//                text: qsTr("HDOP: ") + eph
-//            }
-
-//            Controls.Label {
-//                font.pixelSize: Math.max(root.width * 0.04, sizings.fontPixelSize * 0.5)
-//                font.bold: true
-//                opacity: enabled ? 1 : 0.33
-//                color: satelliteOperational ? palette.textColor : palette.dangerColor
-//                text: qsTr("VDOP: ") + epv
-//            }
-//        }
 
         Item {
             Layout.fillWidth: true
@@ -99,16 +77,12 @@ Controls.Pane {
         ColumnLayout {
             Layout.alignment: Qt.AlignRight
 
-            Controls.Label {
-                font.pixelSize: sizings.fontPixelSize * 0.6
-                font.bold: true
+            DisplayControls.Label {
                 color: vehicle.battery.voltage > 0.01 ? palette.textColor : palette.sunkenColor
                 text: vehicle.battery.voltage.toFixed(2) + qsTr(" V")
             }
 
-            Controls.Label {
-                font.pixelSize: sizings.fontPixelSize * 0.6
-                font.bold: true
+            DisplayControls.Label {
                 color: {
                     if (vehicle.battery.current < -0.01) return palette.positiveColor;
                     if (vehicle.battery.current > 0.0) return palette.textColor;

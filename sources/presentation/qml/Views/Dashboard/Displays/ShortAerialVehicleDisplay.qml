@@ -86,10 +86,8 @@ Controls.Card {
                 Layout.maximumWidth: sizings.controlBaseSize * 3
             }
 
-            Controls.Label {
+            DisplayControls.Label {
                 text: translator.translateVehicleMode(vehicle.mode)
-                font.bold: true
-                font.pixelSize: sizings.fontPixelSize * 0.6
                 horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
             }

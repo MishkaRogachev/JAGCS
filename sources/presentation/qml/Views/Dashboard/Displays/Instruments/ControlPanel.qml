@@ -88,10 +88,8 @@ Controls.Pane {
             spacing: sizings.spacing
             visible: vehicle.mode === Domain.Mission
 
-            Controls.Label {
+            DisplayControls.Label {
                 text: qsTr("WP")
-                font.pixelSize: sizings.fontPixelSize * 0.7
-                font.bold: true
                 Layout.fillWidth: true
             }
 
@@ -129,11 +127,7 @@ Controls.Pane {
                 longitudeBox.value =vehicle.position.longitude;
             }
 
-            Controls.Label {
-                text: qsTr("Alt.")
-                font.pixelSize: sizings.fontPixelSize * 0.7
-                font.bold: true
-            }
+            DisplayControls.Label { text: qsTr("Alt.") }
 
             Controls.SpinBox {
                 id: altitudeBox
@@ -163,11 +157,7 @@ Controls.Pane {
                     vehicle.barometric.fromDisplayedAltitude(altitudeBox.value) ]
             }
 
-            Controls.Label {
-                text: qsTr("Lat.")
-                font.pixelSize: sizings.fontPixelSize * 0.7
-                font.bold: true
-            }
+            DisplayControls.Label { text: qsTr("Lat.") }
 
             Controls.CoordSpinBox {
                 id: latitudeBox
@@ -175,11 +165,7 @@ Controls.Pane {
                 Layout.columnSpan: 3
             }
 
-            Controls.Label {
-                text: qsTr("Lon.")
-                font.pixelSize: sizings.fontPixelSize * 0.7
-                font.bold: true
-            }
+            DisplayControls.Label { text: qsTr("Lon.") }
 
             Controls.CoordSpinBox {
                 id: longitudeBox
