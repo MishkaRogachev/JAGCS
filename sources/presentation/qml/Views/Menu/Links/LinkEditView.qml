@@ -140,6 +140,14 @@ GridLayout {
         Layout.fillWidth: true
     }
 
+    Controls.Label {
+        text: qsTr("Setted endpoints")
+        visible: type == LinkDescription.Udp
+        horizontalAlignment: Text.AlignHCenter
+        Layout.columnSpan: 2
+        Layout.fillWidth: true
+    }
+
     EndpointListView {
         id: endpointList
         visible: type == LinkDescription.Udp

@@ -29,7 +29,7 @@ bool AlterLinkDescriptionMigration::up()
 
     LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
     defaultUdpLink->setType(LinkDescription::Udp);
-    defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "Default UDP Link"));
+    defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "UDP Link"));
     defaultUdpLink->setParameter(LinkDescription::Port,
                                  settings::Provider::value(settings::communication::port).toInt());
     defaultUdpLink->setAutoConnect(true);
@@ -37,7 +37,7 @@ bool AlterLinkDescriptionMigration::up()
 
     LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
     defaultSerialLink->setType(LinkDescription::Serial);
-    defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Default Serial Link"));
+    defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Radiomodem"));
     defaultSerialLink->setParameter(LinkDescription::BaudRate,
                                     settings::Provider::value(settings::communication::baudRate).toInt());
     defaultSerialLink->setAutoConnect(true);
