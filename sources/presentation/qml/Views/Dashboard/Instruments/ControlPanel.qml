@@ -96,5 +96,11 @@ Controls.Pane {
             visible: vehicle.mode === Domain.Mission ||
                      vehicle.mode === Domain.NavTo
         }
+
+
+        CommandWidgets.LandControl {
+            id: land
+            visible: vehicle.mode === Domain.Mission
+        }
     }
 }
