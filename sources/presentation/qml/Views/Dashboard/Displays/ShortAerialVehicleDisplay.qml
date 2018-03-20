@@ -96,7 +96,7 @@ Controls.Card {
 
             Indicators.FdLabel {
                 digits: 0
-                value: units.convertSpeed(speedUnits, vehicle.satellite.groundspeed)
+                value: units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed)
                 enabled: vehicle.satellite.enabled
                 operational: vehicle.satellite.operational
                 prefix: qsTr("GS") + ", " + dashboard.speedSuffix
@@ -105,7 +105,7 @@ Controls.Card {
 
             Indicators.FdLabel {
                 digits: 0
-                value: units.convertSpeed(speedUnits, vehicle.pitot.trueAirspeed)
+                value: units.convertSpeedTo(speedUnits, vehicle.pitot.trueAirspeed)
                 enabled: vehicle.pitot.enabled
                 operational: vehicle.pitot.operational
                 prefix: qsTr("TAS") + ", " + dashboard.speedSuffix
@@ -113,7 +113,7 @@ Controls.Card {
             }
 
             Indicators.FdLabel {
-                value: units.convertDistance(altitudeUnits, vehicle.barometric.displayedAltitude)
+                value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
                 enabled: vehicle.barometric.enabled
                 operational: vehicle.barometric.operational
                 prefix: qsTr("ALT") + ", " + dashboard.altitudeSuffix

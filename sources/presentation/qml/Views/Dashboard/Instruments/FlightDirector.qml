@@ -29,11 +29,11 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         height: parent.height * 0.6
-        value: units.convertSpeed(speedUnits, vehicle.pitot.present ?
+        value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundSpeed)
         error: vehicle.pitot.present ?
-                   units.convertSpeed(speedUnits, vehicle.flightControl.airspeedError) : 0
+                   units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError) : 0
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -48,7 +48,7 @@ Controls.Pane {
         anchors.top: parent.top
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
-        value: units.convertSpeed(speedUnits, vehicle.satellite.groundspeed)
+        value: units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed)
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: speedLadder.width
@@ -60,7 +60,7 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
-        value: units.convertSpeed(speedUnits, vehicle.pitot.trueAirspeed)
+        value: units.convertSpeedTo(speedUnits, vehicle.pitot.trueAirspeed)
         enabled: vehicle.pitot.enabled
         operational: vehicle.pitot.operational
         width: speedLadder.width
@@ -105,12 +105,12 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         height: parent.height * 0.6
-        value: units.convertDistance(altitudeUnits, vehicle.barometric.displayedAltitude)
-        error: units.convertDistance(altitudeUnits, vehicle.flightControl.altitudeError)
+        value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
+        error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ?
-                          0 : units.convertDistance(altitudeUnits, vehicle.homeAltitude)
+                          0 : units.convertDistanceTo(altitudeUnits, vehicle.homeAltitude)
         warningColor: palette.groundColor
         valueStep: dashboard.altitudeStep
         enabled: vehicle.barometric.enabled
@@ -122,7 +122,7 @@ Controls.Pane {
     Indicators.FdLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        value: units.convertDistance(altitudeUnits, vehicle.satellite.altitude)
+        value: units.convertDistanceTo(altitudeUnits, vehicle.satellite.altitude)
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: altitudeLadder.width
@@ -132,7 +132,7 @@ Controls.Pane {
     Indicators.FdLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        value: units.convertDistance(altitudeUnits, vehicle.radalt.altitude)
+        value: units.convertDistanceTo(altitudeUnits, vehicle.radalt.altitude)
         digits: 2
         enabled: vehicle.radalt.enabled
         operational: vehicle.radalt.operational

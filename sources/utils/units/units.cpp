@@ -28,24 +28,35 @@ Units::Units(QObject* parent):
     QObject(parent)
 {}
 
-float Units::convertSpeed(SpeedUnits to, float value)
+float Units::convertSpeedTo(SpeedUnits to, float value)
 {
     return value * ::speedUnitCoefs[to];
 }
 
-float Units::convertSpeed(SpeedUnits from, SpeedUnits to, float value)
+float Units::convertSpeedFrom(Units::SpeedUnits from, float value)
 {
-    return Units::convertSpeed(to, value / ::speedUnitCoefs[from]);
+    return value / ::speedUnitCoefs[from];
 }
 
-float Units::convertDistance(DistanceUnits to, float value)
+float Units::convertSpeed(SpeedUnits from, SpeedUnits to, float value)
+{
+    return Units::convertSpeedTo(to, convertSpeedFrom(from, value));
+}
+
+// distance and speed coefs are inverted(historicaly)
+float Units::convertDistanceTo(DistanceUnits to, float value)
 {
     return value / ::distanceUnitCoefs[to];
 }
 
+float Units::convertDistanceFrom(Units::DistanceUnits from, float value)
+{
+    return value * ::distanceUnitCoefs[from];
+}
+
 float Units::convertDistance(DistanceUnits from, DistanceUnits to, float value)
 {
-    return Units::convertDistance(to, value * ::distanceUnitCoefs[from]);
+    return Units::convertDistanceTo(to, convertDistanceFrom(from, value));
 }
 
 QString Units::trSpeedUnits(SpeedUnits unit)

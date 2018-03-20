@@ -16,10 +16,13 @@ RowLayout {
     Component.onCompleted: updateAlt()
 
     function updateAlt() {
-        altitudeBox.value = vehicle.barometric.displayedAltitude;
+        altitudeBox.value = units.convertDistanceTo(altitudeUnits,
+                                                    vehicle.barometric.displayedAltitude);
     }
 
-    DashboardControls.Label { text: qsTr("Chg. alt.") } // TODO: dim units
+    DashboardControls.Label {
+        text: qsTr("Chg. ALT") + ", " + altitudeSuffix
+    }
 
     Controls.SpinBox {
         id: altitudeBox
@@ -35,7 +38,8 @@ RowLayout {
         command: Command.ChangeAltitude
         iconSource: "qrc:/icons/play.svg"
         tipText: qsTr("Change altitude")
-        args: [ altitudeBox.value ]
+        args: [ vehicle.barometric.fromDisplayedAltitude(units.convertDistanceFrom(
+                                                             altitudeUnits, altitudeBox.value)) ]
         Layout.rowSpan: 2
     }
 }
