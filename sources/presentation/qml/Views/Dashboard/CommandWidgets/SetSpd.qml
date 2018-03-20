@@ -8,10 +8,20 @@ import "../DashboardControls" as DashboardControls
 RowLayout {
     id: root
 
-    property alias command: sendButton.command
-    property alias status: sendButton.status
-
     spacing: sizings.spacing
+
+    Connections {
+        target: vehicleDisplay
+        onUpdateCommandStatus: {
+            switch (command) {
+            case sendButton.command:
+                sendButton.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
 
     onVisibleChanged: updateSpd()
     Component.onCompleted: updateSpd()
@@ -30,8 +40,6 @@ RowLayout {
     Controls.RealSpinBox {
         id: spdBox
         realTo: 1000 // TODO: borderValues
-        font.bold: true
-        font.pixelSize: sizings.fontPixelSize * 0.6
         Layout.fillWidth: true
     }
 

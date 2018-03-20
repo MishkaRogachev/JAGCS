@@ -103,6 +103,7 @@
         <file>Views/Dashboard/DashboardControls/DelayCommandButton.qml</file>
         <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
+        <file>Views/Dashboard/CommandWidgets/ModeControl.qml</file>
         <file>Views/Dashboard/CommandWidgets/GoTo.qml</file>
         <file>Views/Dashboard/CommandWidgets/NavTo.qml</file>
         <file>Views/Dashboard/CommandWidgets/ChangeAlt.qml</file>

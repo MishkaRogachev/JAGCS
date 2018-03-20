@@ -8,8 +8,6 @@ import "../DashboardControls" as DashboardControls
 RowLayout {
     id: root
 
-    property alias status: sendButton.status
-
     spacing: sizings.spacing
 
     onVisibleChanged: updateAlt()
@@ -20,6 +18,19 @@ RowLayout {
                                                     vehicle.barometric.displayedAltitude);
     }
 
+    Connections {
+        target: vehicleDisplay
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.ChangeAltitude:
+                sendButton.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     DashboardControls.Label {
         text: qsTr("Chg. ALT") + ", " + altitudeSuffix
     }
@@ -28,8 +39,6 @@ RowLayout {
         id: altitudeBox
         from: -200
         to: 20000 // TODO: borderValues
-        font.bold: true
-        font.pixelSize: sizings.fontPixelSize * 0.6
         Layout.fillWidth: true
     }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "../DashboardControls" as DashboardControls
@@ -9,8 +10,6 @@ RowLayout {
 
     property int count: vehicle.mission.count
     property int current: vehicle.mission.current
-
-    property alias status: itemBox.status
 
     Component.onCompleted: updateItems()
     onCurrentChanged: updateCurrent()
@@ -24,6 +23,19 @@ RowLayout {
 
     function updateCurrent() {
         itemBox.currentIndex = vehicle.mission.current;
+    }
+
+    Connections {
+        target: vehicleDisplay
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.GoTo:
+                itemBox.status = status;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     enabled: count > 0

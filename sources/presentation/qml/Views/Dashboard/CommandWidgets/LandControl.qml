@@ -8,6 +8,8 @@ import "../DashboardControls" as DashboardControls
 RowLayout {
     id: root
 
+    spacing: sizings.spacing
+
     Connections {
         target: vehicleDisplay
         onUpdateCommandStatus: {
@@ -23,8 +25,6 @@ RowLayout {
             }
         }
     }
-
-    spacing: sizings.spacing
 
     DashboardControls.CommandButton {
         id: landButton

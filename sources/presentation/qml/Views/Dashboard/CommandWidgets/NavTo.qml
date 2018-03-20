@@ -8,8 +8,6 @@ import "../DashboardControls" as DashboardControls
 GridLayout {
     id: root
 
-    property alias status: sendButton.status
-
     rowSpacing: sizings.spacing
     columnSpacing: sizings.spacing
     columns: 3
@@ -21,6 +19,19 @@ GridLayout {
         altitudeBox.value = vehicle.barometric.displayedAltitude;
         latitudeBox.value = vehicle.position.latitude;
         longitudeBox.value = vehicle.position.longitude;
+    }
+
+    Connections {
+        target: vehicleDisplay
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.NavTo:
+                sendButton.status = status;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     DashboardControls.Label { text: qsTr("Alt.") }
