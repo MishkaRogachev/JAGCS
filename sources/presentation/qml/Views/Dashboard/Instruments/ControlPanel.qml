@@ -31,6 +31,9 @@ Controls.Pane {
             case Command.ChangeAltitude:
                 changeAlt.status = status;
                 break;
+            case setSpeed.command:
+                setSpeed.status = status;
+                break;
             default:
                 break;
             }
@@ -86,6 +89,12 @@ Controls.Pane {
                      vehicle.mode === Domain.Loiter ||
 //                     vehicle.mode === Domain.Mission ||
                      vehicle.mode === Domain.Return
+        }
+
+        CommandWidgets.SetSpd {
+            id: setSpeed
+            visible: vehicle.mode === Domain.Mission ||
+                     vehicle.mode === Domain.NavTo
         }
     }
 }

@@ -35,7 +35,7 @@ namespace comm
         void sendCurrentItem(quint8 mavId, quint16 seq);
         void sendNavTo(quint8 mavId, double latitude, double longitude, float altitude);
         void sendChangeAltitude(quint8 mavId, float altitude);
-        void sendManualControl(int vehicleId, float pitch, float roll, float yaw, float thrust);
+        void sendManualControl(quint8 mavId, float pitch, float roll, float yaw, float thrust);
 
     private:
         class Impl;
