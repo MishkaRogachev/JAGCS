@@ -71,7 +71,7 @@ namespace dto
         QString m_name;
         Type m_type = UnknownType;
         QMap<Parameter, QVariant> m_parameters;
-        bool m_autoConnect = false;
+        bool m_autoConnect = true;
 
         Protocol m_protocol = UnknownProtocol;
         bool m_connected = false;
