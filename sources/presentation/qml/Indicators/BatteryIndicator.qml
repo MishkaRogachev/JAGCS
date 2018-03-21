@@ -27,7 +27,7 @@ Controls.ColoredIcon {
         id: fill
         anchors.fill: parent
         anchors.margins: root.width * 0.1
-        anchors.topMargin: root.width * 0.3
+        anchors.topMargin: root.width * 0.33
 
         Text {
             id: textItem

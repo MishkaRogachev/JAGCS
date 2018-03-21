@@ -27,24 +27,25 @@ Item {
     property alias warningColor: hatch.color
 
     clip: true
-    opacity: enabled ? 1 : 0.33
     implicitWidth: label.implicitWidth + majorTickSize * 2
-    onWidthChanged: canvas.requestPaint()
-    onHeightChanged: canvas.requestPaint()
-    onColorChanged: canvas.requestPaint()
-    onValueChanged: canvas.requestPaint()
-    onValueStepChanged: canvas.requestPaint()
+    onWidthChanged: ladderCanvas.requestPaint()
+    onHeightChanged: ladderCanvas.requestPaint()
+    onColorChanged: ladderCanvas.requestPaint()
+    onValueStepChanged: ladderCanvas.requestPaint()
+    onValueChanged: { ladderCanvas.requestPaint(); errorCanvas.requestPaint() }
+    onErrorChanged: errorCanvas.requestPaint()
 
     Shaders.OpacityBorder {
         anchors.fill: parent
-        sourceItem: canvas
+        sourceItem: ladderCanvas
     }
 
     Canvas {
-        id: canvas
+        id: ladderCanvas
+        opacity: enabled ? 1 : 0.33
         anchors.fill: parent
         onPaint: {
-            var ctx = canvas.getContext('2d');
+            var ctx = getContext('2d');
 
             ctx.clearRect(0, 0, width, height);
 
@@ -54,10 +55,11 @@ Item {
             ctx.textAlign = mirrored ? 'left' : 'right';
             ctx.textBaseline = 'middle';
 
-            // Vertical line
             ctx.save();
-            ctx.lineWidth = 1;
             ctx.translate(mirrored ? ctx.lineWidth : width - ctx.lineWidth, 0);
+
+            // Vertical line
+            ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(0, height);
@@ -82,31 +84,8 @@ Item {
             }
 
             // Clear rect for current value
-            var markHeight = label.height;
-            ctx.clearRect(mirrored ? 1 : -1, height / 2 - markHeight / 2,
-                          mirrored ? width : -width, markHeight);
-
-            // Error mark
-            if (error) {
-                ctx.lineWidth = 4;
-                ctx.strokeStyle = palette.activeMissionColor;
-                var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
-
-                ctx.beginPath();
-                ctx.moveTo(0, errorPos);
-                ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, errorPos);
-                ctx.stroke();
-            }
-
-            // Arrow for current value
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = color;
-            ctx.beginPath();
-            ctx.moveTo(mirrored ? majorTickSize : -majorTickSize, height / 2 - markHeight / 2);
-            ctx.lineTo(mirrored ? 2 : -2, height / 2);
-            ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height / 2 + markHeight / 2);
-            ctx.stroke();
-
+            ctx.clearRect(mirrored ? 1 : -1, height / 2 - label.height / 2,
+                                     mirrored ? width : -width, label.height);
             ctx.restore();
         }
 
@@ -121,6 +100,70 @@ Item {
             xFactor: yFactor * height / width
             yFactor: 35
             z: -1
+        }
+    }
+
+    Canvas { // Error mark
+        id: errorCanvas
+        anchors.fill: parent
+        onPaint: {
+            var ctx = getContext('2d');
+
+            ctx.clearRect(0, 0, width, height);
+
+            if (!error) return;
+
+            ctx.save();
+            ctx.translate(mirrored ? ctx.lineWidth : width - ctx.lineWidth, 0);
+
+            var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
+
+            if (errorPos > height) {
+                ctx.fillStyle = palette.activeMissionColor;
+                ctx.moveTo((mirrored ? majorTickSize : -majorTickSize) / 2, height);
+                ctx.lineTo(0, height - majorTickSize);
+                ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height - majorTickSize);
+                ctx.fill();
+            }
+            else if (errorPos < 0) {
+                ctx.fillStyle = palette.activeMissionColor;
+                ctx.moveTo((mirrored ? majorTickSize : -majorTickSize) / 2, 0);
+                ctx.lineTo(0, majorTickSize);
+                ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, majorTickSize);
+                ctx.fill();
+            }
+            else {
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = palette.activeMissionColor;
+                ctx.beginPath();
+                ctx.moveTo(0, errorPos);
+                ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, errorPos);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+    }
+
+    Canvas { // Arrow for current value
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: mirrored ? label.left : undefined
+        anchors.left: mirrored ? undefined : label.right
+        anchors.margins: -2
+        width: majorTickSize
+        height: label.height
+        onPaint: {
+            var ctx = getContext('2d');
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.lineWidth = 2;
+
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(mirrored ? width : 0, 0);
+            ctx.lineTo(mirrored ? 0 : width, height / 2);
+            ctx.lineTo(mirrored ? width : 0, height);
+            ctx.stroke();
         }
     }
 
