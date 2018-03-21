@@ -63,8 +63,8 @@
         <file>Indicators/ArtificialHorizon.qml</file>
         <file>Indicators/AttitudeDirectorIndicator.qml</file>
         <file>Indicators/YawIndicator.qml</file>
-        <file>Indicators/InstrumentLabel.qml</file>
-        <file>Indicators/FdLabel.qml</file>
+        <file>Indicators/ValueLabel.qml</file>
+        <file>Indicators/ValueLabel2.qml</file>
         <file>Indicators/DistanceLabel.qml</file>
         <file>Indicators/SpeedArrow.qml</file>
         <file>Indicators/Compass.qml</file>

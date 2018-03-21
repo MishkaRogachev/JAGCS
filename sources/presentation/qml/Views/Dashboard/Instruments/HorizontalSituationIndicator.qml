@@ -29,7 +29,7 @@ Controls.Pane {
         enabled: distance > 0
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
@@ -82,7 +82,7 @@ Controls.Pane {
         }
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.right: parent.right
         color: vehicle.guided ? palette.activeMissionColor : palette.textColor
@@ -93,7 +93,7 @@ Controls.Pane {
         suffix: "\u00B0"
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         value: vehicle.compass.heading
@@ -104,7 +104,7 @@ Controls.Pane {
         suffix: "\u00B0"
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         value: vehicle.satellite.course

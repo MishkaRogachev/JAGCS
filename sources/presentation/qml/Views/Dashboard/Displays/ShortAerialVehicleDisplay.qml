@@ -94,7 +94,7 @@ Controls.Card {
         RowLayout {
             spacing: sizings.spacing
 
-            Indicators.FdLabel {
+            Indicators.ValueLabel2 {
                 digits: 0
                 value: units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed)
                 enabled: vehicle.satellite.enabled
@@ -103,7 +103,7 @@ Controls.Card {
                 Layout.fillWidth: true
             }
 
-            Indicators.FdLabel {
+            Indicators.ValueLabel2 {
                 digits: 0
                 value: units.convertSpeedTo(speedUnits, vehicle.pitot.trueAirspeed)
                 enabled: vehicle.pitot.enabled
@@ -112,7 +112,7 @@ Controls.Card {
                 Layout.fillWidth: true
             }
 
-            Indicators.FdLabel {
+            Indicators.ValueLabel2 {
                 value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
                 enabled: vehicle.barometric.enabled
                 operational: vehicle.barometric.operational

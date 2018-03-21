@@ -10,7 +10,7 @@ Controls.Pane {
 
     implicitHeight: width * 0.6
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DEV X")
@@ -18,7 +18,7 @@ Controls.Pane {
         width: parent.width * 0.2
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         prefix: qsTr("DEV Y")
@@ -26,7 +26,7 @@ Controls.Pane {
         width: parent.width * 0.2
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.right: parent.right
         prefix: qsTr("SIZE X")
@@ -34,7 +34,7 @@ Controls.Pane {
         width: parent.width * 0.2
     }
 
-    Indicators.InstrumentLabel {
+    Indicators.ValueLabel {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         prefix: qsTr("SIZE Y")

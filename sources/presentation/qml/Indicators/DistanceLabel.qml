@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-InstrumentLabel {
+ValueLabel {
     id: root
 
     property real distance: 0
