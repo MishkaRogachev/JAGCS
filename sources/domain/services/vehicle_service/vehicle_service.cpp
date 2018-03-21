@@ -112,6 +112,8 @@ bool VehicleService::save(const VehiclePtr& vehicle)
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                      "/" + settings::vehicle::visibility::hsi, true);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::visibility::landing, false);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                      "/" + settings::vehicle::visibility::control, true);
         emit vehicleAdded(vehicle);
     }

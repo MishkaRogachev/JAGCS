@@ -62,6 +62,16 @@ BaseVehicle {
         property int targetDistance: 0
     }
 
+    property QtObject landingSystem: QtObject {
+        objectName: "landingSystem"
+
+        property real distance: 0.0
+        property real deviationX: 0.0
+        property real deviationY: 0.0
+        property real sizeX: 0.0
+        property real sizeY: 0.0
+    }
+
     property QtObject wind: QtObject {
         objectName: "wind"
 

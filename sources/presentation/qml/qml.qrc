@@ -69,6 +69,7 @@
         <file>Indicators/SpeedArrow.qml</file>
         <file>Indicators/Compass.qml</file>
         <file>Indicators/SituationIndicator.qml</file>
+        <file>Indicators/LandingIndicator.qml</file>
         <file>Views/Common/SaveRestore.qml</file>
         <file>Views/Common/PointView.qml</file>
         <file>Views/MainView.qml</file>
@@ -113,6 +114,7 @@
         <file>Views/Dashboard/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/Instruments/FlightDirector.qml</file>
         <file>Views/Dashboard/Instruments/HorizontalSituationIndicator.qml</file>
+        <file>Views/Dashboard/Instruments/LandingIndicator.qml</file>
         <file>Views/Dashboard/Instruments/ControlPanel.qml</file>
         <file>Views/Dashboard/Vehicles/Subsystem.qml</file>
         <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>

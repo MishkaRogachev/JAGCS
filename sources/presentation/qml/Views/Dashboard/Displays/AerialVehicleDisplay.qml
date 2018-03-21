@@ -65,6 +65,13 @@ Item {
         }
 
         ListElement {
+            name: qsTr("Landing indicator")
+            setting: "landingVisible"
+            instrument: "../Instruments/LandingIndicator.qml"
+            instrumentVisible: true
+        }
+
+        ListElement {
             name: qsTr("Control panel")
             setting: "controlVisible"
             instrument: "../Instruments/ControlPanel.qml"

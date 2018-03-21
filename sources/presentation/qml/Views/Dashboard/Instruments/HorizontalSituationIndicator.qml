@@ -12,7 +12,6 @@ Controls.Pane {
     Indicators.DistanceLabel {
         anchors.top: parent.top
         anchors.left: parent.left
-        font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("DIST")
         color: vehicle.guided ? palette.activeMissionColor : palette.textColor
         opacity: vehicle.guided ? 1 : 0.33
@@ -24,7 +23,6 @@ Controls.Pane {
         id: homeLabel
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("HOME")
         distance: vehicle.position.distanceTo(vehicle.homePosition)
         width: parent.width * 0.2
@@ -35,7 +33,6 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
-        font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("WIND")
         value: units.convertSpeedTo(dashboard.speedUnits, vehicle.wind.speed)
         suffix: dashboard.speedSuffix
@@ -92,7 +89,6 @@ Controls.Pane {
         opacity: vehicle.guided ? 1 : 0.33
         value: vehicle.navigator.targetBearing
         width: parent.width * 0.2
-        font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("TRG")
         suffix: "\u00B0"
     }
@@ -104,7 +100,6 @@ Controls.Pane {
         width: parent.width * 0.2
         enabled: vehicle.compass.enabled
         operational: vehicle.compass.operational
-        font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("HDG")
         suffix: "\u00B0"
     }
@@ -116,7 +111,6 @@ Controls.Pane {
         width: parent.width * 0.2
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
-        font.pixelSize: Math.max(compass.height * 0.08, sizings.fontPixelSize * 0.5)
         prefix: qsTr("CRS")
         suffix: "\u00B0"
     }

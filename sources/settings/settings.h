@@ -123,6 +123,7 @@ namespace settings
             const QString status = "statusVisible";
             const QString fd = "fdVisible";
             const QString hsi = "hsiVisible";
+            const QString landing = "landingVisible";
             const QString control = "controlVisible";
         }
     }
