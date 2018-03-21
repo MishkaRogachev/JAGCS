@@ -14,8 +14,6 @@ Controls.ComboBox {
     contentZ: 10
     horizontalAlignment: Text.AlignHCenter
     tipText: qsTr("Go to")
-    font.pixelSize: sizings.fontPixelSize * 0.75
-    font.bold: true
 
     onActivated: goTo(index)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()

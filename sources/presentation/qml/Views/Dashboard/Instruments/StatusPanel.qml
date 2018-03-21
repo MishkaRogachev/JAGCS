@@ -6,8 +6,6 @@ import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-import "../DashboardControls" as DashboardControls
-
 Controls.Pane {
     id: root
 
@@ -50,14 +48,14 @@ Controls.Pane {
             Layout.fillWidth: true
             spacing: sizings.spacing
 
-            DashboardControls.Label {
+            Indicators.ValueLabel {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
             }
 
-            DashboardControls.Label {
+            Indicators.ValueLabel {
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
@@ -77,12 +75,14 @@ Controls.Pane {
         ColumnLayout {
             Layout.alignment: Qt.AlignRight
 
-            DashboardControls.Label {
+            Indicators.ValueLabel {
                 color: vehicle.battery.voltage > 0.01 ? palette.textColor : palette.sunkenColor
-                text: vehicle.battery.voltage.toFixed(2) + qsTr(" V")
+                value: vehicle.battery.voltage
+                digits: 2
+                suffix: qsTr("V")
             }
 
-            DashboardControls.Label {
+            Indicators.ValueLabel {
                 color: {
                     if (vehicle.battery.current < -0.01) return palette.positiveColor;
                     if (vehicle.battery.current > 0.0) return palette.textColor;
@@ -91,7 +91,9 @@ Controls.Pane {
 
                     return palette.sunkenColor;
                 }
-                text: vehicle.battery.current.toFixed(2) + qsTr(" A")
+                value: vehicle.battery.current
+                digits: 2
+                suffix: qsTr("A")
             }
         }
     }

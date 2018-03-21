@@ -40,8 +40,6 @@ GridLayout {
         id: altitudeBox
         from: -200
         to: 20000 // TODO: borderValues
-        font.bold: true
-        font.pixelSize: sizings.fontPixelSize * 0.6
         Layout.fillWidth: true
     }
 
@@ -58,8 +56,7 @@ GridLayout {
 
     Controls.CoordSpinBox {
         id: latitudeBox
-        font.bold: true
-        font.pixelSize: sizings.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.7
         Layout.fillWidth: true
     }
 
@@ -82,8 +79,7 @@ GridLayout {
     Controls.CoordSpinBox {
         id: longitudeBox
         isLongitude: true
-        font.bold: true
-        font.pixelSize: sizings.fontPixelSize * 0.6
+        font.pixelSize: sizings.fontPixelSize * 0.7
         Layout.fillWidth: true
     }
 }

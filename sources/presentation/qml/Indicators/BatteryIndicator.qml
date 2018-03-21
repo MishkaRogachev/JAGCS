@@ -27,7 +27,7 @@ Controls.ColoredIcon {
         id: fill
         anchors.fill: parent
         anchors.margins: root.width * 0.1
-        anchors.topMargin: root.width * 0.35
+        anchors.topMargin: root.width * 0.3
 
         Text {
             id: textItem
@@ -51,7 +51,8 @@ Controls.ColoredIcon {
                 font.bold: true
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                anchors.verticalCenterOffset: -parent.height * 0.25
+                anchors.bottomMargin: -1
+                //anchors.verticalCenterOffset: -parent.height * 0.25
                 color: palette.backgroundColor
             }
         }

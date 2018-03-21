@@ -49,7 +49,7 @@ RowLayout {
     Controls.Button {
         tipText: qsTr("Go to backward")
         iconSource: "qrc:/icons/left.svg"
-        enabled: current > 1
+        enabled: current > 0
         onClicked: itemBox.goTo(current - 1)
     }
 
