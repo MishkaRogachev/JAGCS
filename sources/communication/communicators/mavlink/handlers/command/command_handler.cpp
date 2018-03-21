@@ -274,8 +274,9 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
                                          &message, &item);
     m_communicator->sendMessage(message, link);
 
+    // TODO: wait feedback from mission ack
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dto::Command::NavTo, dto::Command::Completed); // TODO: wait nav to
+                     dto::Command::NavTo, dto::Command::Completed);
 }
 
 void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
@@ -301,6 +302,6 @@ void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
                                            &message, &mavlink_manual_control);
     m_communicator->sendMessage(message, link);
 
-    // TODO: wait feedback
+    // TODO: wait feedback from mission ack
     this->ackCommand(vehicleId, dto::Command::ManualImpacts, dto::Command::Completed);
 }
