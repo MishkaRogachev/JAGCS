@@ -18,7 +18,7 @@ Item {
     }
 
     RowLayout {
-        anchors.right: parent.right
+        anchors.left: parent.left
         spacing: sizings.spacing
 
         RadioStatusView {

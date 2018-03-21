@@ -40,8 +40,11 @@ Controls.ApplicationWindow  {
 
     MouseArea {
         id: corner
-        y: sizings.margins
-        x: (drawer.visible ? drawer.x : parent.width) - width - sizings.margins
+        anchors.top: parent.top
+        anchors.left: drawer.right
+        anchors.margins: sizings.margins
+        //y: sizings.margins
+        //x: drawer.x + sizings.margins
         width: Math.min(substrate.width - dashboard.width - sizings.margins * 2,
                         cornerMap ? map.implicitWidth : video.implicitWidth)
         height: parent.height / 2
@@ -70,7 +73,7 @@ Controls.ApplicationWindow  {
         id: dashboard
         anchors.top: topbar.top
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
+        anchors.right: parent.right
         z: 1
     }
 
@@ -98,13 +101,12 @@ Controls.ApplicationWindow  {
         y: topbar.height
         width: menu.width
         height: parent.height - y
-        edge: Qt.RightEdge
 
         MenuView {
             id: menu
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.left: parent.left
+            anchors.right: parent.right
             visible: drawer.position > 0
         }
 
