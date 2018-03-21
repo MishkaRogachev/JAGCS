@@ -36,18 +36,18 @@ T.ComboBox {
         width: sizings.controlBaseSize / 2
         height: width
         source: "qrc:/ui/menu_arrow.svg"
-        color: control.down ? palette.highlightColor : palette.selectionColor
+        color: control.down ? customPalette.highlightColor : customPalette.selectionColor
     }
 
     background: Rectangle {
         anchors.fill: parent
         radius: 2
-        color: palette.sunkenColor
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        color: customPalette.sunkenColor
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }

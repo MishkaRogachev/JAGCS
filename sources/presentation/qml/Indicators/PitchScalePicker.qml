@@ -8,7 +8,7 @@ PitchScale {
     property real inputValue: 0
     property real inputMin: -1
     property real inputMax: 1
-    property color inputColor: palette.cautionColor
+    property color inputColor: customPalette.cautionColor
 
     onInputValueChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()

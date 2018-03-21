@@ -56,7 +56,7 @@ Controls.Frame {
             enabled: !online
             from: 1
             to: 255
-            backgroundColor: mavIdIsCorrect ? palette.sunkenColor : palette.dangerColor
+            backgroundColor: mavIdIsCorrect ? customPalette.sunkenColor : customPalette.dangerColor
             onValueChanged: changed = true
             Layout.fillWidth: true
         }
@@ -112,7 +112,7 @@ Controls.Frame {
                 iconSource: "qrc:/icons/remove.svg"
                 onActivated: presenter.remove()
                 enabled: !online
-                iconColor: palette.dangerColor
+                iconColor: customPalette.dangerColor
             }
         }
     }

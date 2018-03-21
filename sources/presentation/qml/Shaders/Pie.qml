@@ -3,7 +3,7 @@ import QtQuick 2.6
 ShaderEffect {
     id: shader
 
-    property color color: palette.highlightColor
+    property color color: customPalette.highlightColor
     property real angle: 0
     property real pi: Math.PI
 

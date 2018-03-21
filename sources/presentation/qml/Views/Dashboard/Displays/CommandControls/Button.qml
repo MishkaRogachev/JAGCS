@@ -35,16 +35,16 @@ Controls.Button {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return palette.dangerColor;
-        if (status == Command.Sending) return palette.cautionColor;
-        if (status == Command.Completed) return palette.positiveColor;
-        if (control.pressed) return palette.highlightColor;
-        return control.flat ? "transparent" : palette.buttonColor;
+        if (status == Command.Rejected) return customPalette.dangerColor;
+        if (status == Command.Sending) return customPalette.cautionColor;
+        if (status == Command.Completed) return customPalette.positiveColor;
+        if (control.pressed) return customPalette.highlightColor;
+        return control.flat ? "transparent" : customPalette.buttonColor;
     }
 
     iconColor: control.pressed || status == Command.Rejected ||
                status == Command.Sending || status == Command.Completed ?
-                   palette.selectedTextColor: palette.textColor
+                   customPalette.selectedTextColor: customPalette.textColor
 
     font.pixelSize: sizings.fontPixelSize * 0.75
     font.bold: true

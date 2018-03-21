@@ -22,17 +22,17 @@ T.Button { // TODO: clickable
 
     background: Rectangle {
         id: backgroundItem
-        border.color: !control.flat && control.activeFocus ? palette.highlightColor : "transparent"
+        border.color: !control.flat && control.activeFocus ? customPalette.highlightColor : "transparent"
         radius: round ? Math.min(width, height) / 2 : 2
         color: {
-            if (control.checked || control.highlighted) return palette.selectionColor;
-            if (control.pressed | control.pressedImpl) return palette.highlightColor;
-            return control.flat ? "transparent" : palette.buttonColor;
+            if (control.checked || control.highlighted) return customPalette.selectionColor;
+            if (control.pressed | control.pressedImpl) return customPalette.highlightColor;
+            return control.flat ? "transparent" : customPalette.buttonColor;
         }
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled && !control.flat
         }
 
@@ -49,7 +49,7 @@ T.Button { // TODO: clickable
             height: parent.height
             text: control.text
             font: control.font
-            textColor: pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor
+            textColor: pressed || checked || highlighted ? customPalette.selectedTextColor: customPalette.textColor
         }
     }
 

@@ -16,7 +16,7 @@ GuiStyleManager::GuiStyleManager(QObject* parent): QObject(parent)
 
 void GuiStyleManager::setPalette(const Palette& palette)
 {
-    presentationContext->rootContext()->setContextProperty("palette", QVariant::fromValue(palette));
+    presentationContext->rootContext()->setContextProperty("customPalette", QVariant::fromValue(palette));
 }
 
 void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)

@@ -9,7 +9,7 @@ ChartView {
 
     animationOptions: ChartView.NoAnimation
     theme: ChartView.ChartThemeDark
-    backgroundColor: palette.sunkenColor
+    backgroundColor: customPalette.sunkenColor
     legend.visible: false
     margins.top: 0
     margins.bottom: 0

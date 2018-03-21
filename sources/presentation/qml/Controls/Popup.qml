@@ -6,7 +6,7 @@ import "./"
 T.Popup {
     id: control
 
-    property color backgroundColor: palette.backgroundColor
+    property color backgroundColor: customPalette.backgroundColor
 
     background:  Rectangle {
         color: backgroundColor

@@ -17,7 +17,7 @@ Item {
         width: root.width
         horizontalAlignment: Text.AlignHCenter
         opacity: enabled ? 1 : 0.33
-        color: operational ? palette.textColor : palette.dangerColor
+        color: operational ? customPalette.textColor : customPalette.dangerColor
         font.bold: true
         font.pixelSize: sizings.fontPixelSize * 0.6
         visible: prefix.length > 0
@@ -30,7 +30,7 @@ Item {
         width: root.width
         horizontalAlignment: Text.AlignHCenter
         opacity: enabled ? 1 : 0.33
-        color: operational ? palette.textColor : palette.dangerColor
+        color: operational ? customPalette.textColor : customPalette.dangerColor
         font.bold: true
         font.pixelSize: sizings.fontPixelSize * 0.75
         text: enabled ? value.toFixed(digits) : "-"

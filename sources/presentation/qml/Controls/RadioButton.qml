@@ -20,20 +20,20 @@ T.RadioButton {
         x: control.leftPadding
         y: parent.height * 0.5 - height * 0.5
         radius: width * 0.5
-        color: palette.sunkenColor
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        color: customPalette.sunkenColor
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
 
         Rectangle {
             anchors.fill: parent
             anchors.margins: parent.width * 0.25
             radius: width * 0.5
-            color: control.down ? palette.highlightColor : palette.selectionColor
+            color: control.down ? customPalette.highlightColor : customPalette.selectionColor
             visible: control.checked || control.down
         }
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }

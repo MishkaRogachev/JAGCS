@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 RowLayout {
     id: content
 
-    property color textColor: palette.textColor
+    property color textColor: customPalette.textColor
     property color iconColor: textColor
     property real iconScaling: 0.6
 
@@ -17,7 +17,7 @@ RowLayout {
 
     ColoredIcon {
         id: icon
-        color: enabled ? iconColor : palette.sunkenColor
+        color: enabled ? iconColor : customPalette.sunkenColor
         implicitHeight: content.height * iconScaling
         implicitWidth: height
         visible: source != ""
@@ -27,7 +27,7 @@ RowLayout {
     Text {
         id: label
         font.pixelSize: sizings.fontPixelSize
-        color: enabled ? textColor : palette.sunkenColor
+        color: enabled ? textColor : customPalette.sunkenColor
         verticalAlignment: Text.AlignVCenter
         visible: text.length > 0
         Layout.alignment: Qt.AlignVCenter

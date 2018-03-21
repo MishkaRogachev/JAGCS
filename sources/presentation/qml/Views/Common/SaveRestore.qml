@@ -18,7 +18,7 @@ GridLayout {
 
     Controls.Frame {
         id: frame
-        backgroundColor: palette.cautionColor
+        backgroundColor: customPalette.cautionColor
         visible: message.length > 0
         padding: sizings.padding
         Layout.preferredHeight: messageLabel.implicitHeight + padding * 2
@@ -27,7 +27,7 @@ GridLayout {
 
         Controls.Label {
             id: messageLabel
-            color: palette.selectedTextColor
+            color: customPalette.selectedTextColor
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent
         }

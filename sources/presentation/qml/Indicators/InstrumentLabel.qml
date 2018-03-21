@@ -10,7 +10,7 @@ Text {
     property bool operational: true
 
     opacity: enabled ? 1 : 0.33
-    color: operational ? palette.textColor : palette.dangerColor
+    color: operational ? customPalette.textColor : customPalette.dangerColor
     horizontalAlignment: Text.AlignHCenter
     font.bold: true
     font.pixelSize: sizings.fontPixelSize * 0.75

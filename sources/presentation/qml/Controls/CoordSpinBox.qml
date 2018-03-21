@@ -74,12 +74,12 @@ T.Control {
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: !isNaN(value) ? palette.sunkenColor : palette.dangerColor
-        border.color: scope.activeFocus ? palette.highlightColor : "transparent"
+        color: !isNaN(value) ? customPalette.sunkenColor : customPalette.dangerColor
+        border.color: scope.activeFocus ? customPalette.highlightColor : "transparent"
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }
@@ -192,7 +192,7 @@ T.Control {
         width: focusedItem ? focusedItem.width + 5 : 0
         height: control.height * 0.1
         x: focusedItem ? focusedItem.x : 0
-        color: scope.activeFocus ? palette.highlightColor : "transparent"
+        color: scope.activeFocus ? customPalette.highlightColor : "transparent"
         Behavior on x { NumberAnimation { duration: 150 } }
     }
 }

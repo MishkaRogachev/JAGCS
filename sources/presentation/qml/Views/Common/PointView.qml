@@ -22,16 +22,16 @@ Rectangle {
     implicitHeight: sizings.controlBaseSize
     radius: height / 2
     border.width: sizings.controlBaseSize / 10
-    color: selected ? palette.selectionColor : palette.raisedColor
+    color: selected ? customPalette.selectionColor : customPalette.raisedColor
     border.color: {
-        if (current) return palette.activeMissionColor; // TODO: highlight current only in mission
-        if (reached) return palette.positiveColor;
+        if (current) return customPalette.activeMissionColor; // TODO: highlight current only in mission
+        if (reached) return customPalette.positiveColor;
 
         switch (status) {
-        case MissionItem.Actual: return palette.missionColor;
-//        case MissionItem.StatusNone: return palette.sunkenColor;
+        case MissionItem.Actual: return customPalette.missionColor;
+//        case MissionItem.StatusNone: return customPalette.sunkenColor;
         case MissionItem.NotActual:
-        default: return palette.dangerColor;
+        default: return customPalette.dangerColor;
         }
     }
 
@@ -52,7 +52,7 @@ Rectangle {
                 return "";
             }
         }
-        color: palette.textColor
+        color: customPalette.textColor
         visible: source != ""
         width: parent.width * 0.6
         height: parent.height * 0.6
@@ -61,7 +61,7 @@ Rectangle {
     Controls.Label {
         visible: !icon.visible
         text: sequence + 1
-        color: palette.textColor
+        color: customPalette.textColor
         anchors.centerIn: parent
         font.bold: true
     }

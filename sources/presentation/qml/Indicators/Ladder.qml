@@ -23,7 +23,7 @@ Item {
     property bool operational: false
     property string prefix
     property string suffix
-    property color color: operational ? palette.textColor : palette.dangerColor
+    property color color: operational ? customPalette.textColor : customPalette.dangerColor
     property alias warningColor: hatch.color
 
     clip: true
@@ -97,7 +97,7 @@ Item {
             // Error mark
             if (error) {
                 ctx.lineWidth = 4;
-                ctx.strokeStyle = palette.activeMissionColor;
+                ctx.strokeStyle = customPalette.activeMissionColor;
                 var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
 
                 ctx.beginPath();

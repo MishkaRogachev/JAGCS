@@ -55,7 +55,7 @@ Controls.Pane {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: palette.positiveColor
+                color: customPalette.positiveColor
 
                 VXYModelMapper {
                     xColumn: 0
@@ -67,7 +67,7 @@ Controls.Pane {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: palette.cautionColor
+                color: customPalette.cautionColor
 
                 VXYModelMapper {
                     xColumn: 0
@@ -79,7 +79,7 @@ Controls.Pane {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: palette.dangerColor
+                color: customPalette.dangerColor
 
                 VXYModelMapper {
                     xColumn: 0

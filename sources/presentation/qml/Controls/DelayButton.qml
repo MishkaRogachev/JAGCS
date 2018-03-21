@@ -24,9 +24,9 @@ T.DelayButton {
     background: Rectangle {
         id: backgroundItem
         anchors.fill: parent
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
         radius: 2
-        color: control.flat ? "transparent" : palette.buttonColor
+        color: control.flat ? "transparent" : customPalette.buttonColor
 
         ContentItem {
             id: content
@@ -34,14 +34,14 @@ T.DelayButton {
             height: parent.height
             text: control.text
             font: control.font
-            textColor: palette.textColor
+            textColor: customPalette.textColor
         }
 
         Rectangle {
             radius: parent.radius
             height: parent.height
             width: parent.width * control.progress
-            color: palette.selectionColor
+            color: customPalette.selectionColor
             clip: true
 
             ContentItem {
@@ -51,13 +51,13 @@ T.DelayButton {
                 text: control.text
                 font: control.font
                 iconSource: control.iconSource
-                textColor: palette.selectedTextColor
+                textColor: customPalette.selectedTextColor
             }
         }
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled && !control.flat
         }
 

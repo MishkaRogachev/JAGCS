@@ -24,13 +24,13 @@ RowLayout {
         text: log ? log.message : ""
         font.pixelSize: sizings.fontPixelSize * 0.6
         color: {
-            if (!log) return palette.backgroundColor;
+            if (!log) return customPalette.backgroundColor;
 
             switch (log.type) {
-            case LogMessage.Common: return palette.textColor;
-            case LogMessage.Positive: return palette.positiveColor;
-            case LogMessage.Warning: return palette.cautionColor;
-            case LogMessage.Critical: return palette.dangerColor;
+            case LogMessage.Common: return customPalette.textColor;
+            case LogMessage.Positive: return customPalette.positiveColor;
+            case LogMessage.Warning: return customPalette.cautionColor;
+            case LogMessage.Critical: return customPalette.dangerColor;
             }
         }
         Layout.fillWidth: true

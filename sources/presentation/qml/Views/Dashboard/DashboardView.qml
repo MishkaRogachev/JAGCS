@@ -73,7 +73,7 @@ Item {
             iconSource: "qrc:/icons/joystick.svg"
             tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
                      " " + qsTr("manual control")
-            iconColor: manual.enabled ? palette.selectionColor : palette.textColor
+            iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
             onClicked: manual.setEnabled(!manual.enabled)
             flat: true
         }

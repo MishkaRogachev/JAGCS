@@ -9,14 +9,14 @@ MapItemView {
         line.color: {
             switch (missionStatus) {
             case MissionAssignment.Actual:
-                return palette.missionColor;
+                return customPalette.missionColor;
             case MissionAssignment.Downloading:
             case MissionAssignment.Uploading:
-                return palette.cautionColor;
+                return customPalette.cautionColor;
             case MissionAssignment.NotActual:
-                return palette.dangerColor;
+                return customPalette.dangerColor;
             default:
-                return palette.backgroundColor;
+                return customPalette.backgroundColor;
             }
         }
         path: missionPath

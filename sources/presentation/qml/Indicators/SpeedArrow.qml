@@ -10,11 +10,11 @@ Item {
     property color color: {
         switch (fix) {
         case -1:
-        case 0: return palette.sunkenColor;
-        case 1: return palette.dangerColor;
-        case 2: return palette.cautionColor;
+        case 0: return customPalette.sunkenColor;
+        case 1: return customPalette.dangerColor;
+        case 2: return customPalette.cautionColor;
         case 3:
-        default: return palette.positiveColor;
+        default: return customPalette.positiveColor;
         }
     }
 

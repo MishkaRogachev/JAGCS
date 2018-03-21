@@ -10,8 +10,8 @@ T.ScrollBar {
     background: Item { }
 
     contentItem: Rectangle {
-        color: control.active ? palette.selectionColor : "transparent"
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        color: control.active ? customPalette.selectionColor : "transparent"
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
         radius: width / 2
     }
 }
