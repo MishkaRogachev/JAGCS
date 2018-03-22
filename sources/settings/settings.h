@@ -26,6 +26,12 @@ namespace settings
     {
         const QString defaultAcceptanceRadius = "Parameters/defaultAcceptanceRadius";
         const QString defaultTakeoffPitch = "Parameters/defaultTakeoffPitch";
+        const QString minAltitude = "Parameters/minAltitude";
+        const QString maxAltitude = "Parameters/maxAltitude";
+        const QString minSpeed = "Parameters/minSpeed";
+        const QString maxSpeed= "Parameters/maxSpeed";
+        const QString maxDistance = "Parameters/maxDistance";
+        const QString maxRadius = "Parameters/maxRadius";
     }
 
     namespace map

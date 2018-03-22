@@ -16,7 +16,7 @@ GridLayout {
     Component.onCompleted: updateLatLonAlt()
 
     function updateLatLonAlt() {
-        altitudeBox.value = vehicle.barometric.displayedAltitude;
+        altitudeBox.realValue = vehicle.barometric.displayedAltitude;
         latitudeBox.value = vehicle.position.latitude;
         longitudeBox.value = vehicle.position.longitude;
     }
@@ -36,10 +36,10 @@ GridLayout {
 
     DashboardControls.Label { text: qsTr("Alt.") }
 
-    Controls.SpinBox {
+    Controls.RealSpinBox {
         id: altitudeBox
-        from: -200
-        to: 20000 // TODO: borderValues
+        realFrom: settings.value("Parameters/minAltitude")
+        realTo: settings.value("Parameters/maxAltitude")
         Layout.fillWidth: true
     }
 
@@ -49,7 +49,7 @@ GridLayout {
         iconSource: "qrc:/icons/play.svg"
         tipText: qsTr("Nav to")
         args: [ latitudeBox.value, longitudeBox.value,
-            vehicle.barometric.fromDisplayedAltitude(altitudeBox.value) ]
+            vehicle.barometric.fromDisplayedAltitude(altitudeBox.realValue) ]
     }
 
     DashboardControls.Label { text: qsTr("Lat.") }

@@ -14,8 +14,8 @@ RowLayout {
     Component.onCompleted: updateAlt()
 
     function updateAlt() {
-        altitudeBox.value = units.convertDistanceTo(altitudeUnits,
-                                                    vehicle.barometric.displayedAltitude);
+        altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
+                                                        vehicle.barometric.displayedAltitude);
     }
 
     Connections {
@@ -35,10 +35,10 @@ RowLayout {
         text: qsTr("Chg. ALT") + ", " + altitudeSuffix
     }
 
-    Controls.SpinBox {
+    Controls.RealSpinBox {
         id: altitudeBox
-        from: -200
-        to: 20000 // TODO: borderValues
+        realFrom: settings.value("Parameters/minAltitude")
+        realTo: settings.value("Parameters/maxAltitude")
         Layout.fillWidth: true
     }
 
@@ -48,7 +48,7 @@ RowLayout {
         iconSource: "qrc:/icons/play.svg"
         tipText: qsTr("Change altitude")
         args: [ vehicle.barometric.fromDisplayedAltitude(units.convertDistanceFrom(
-                                                             altitudeUnits, altitudeBox.value)) ]
+                                                             altitudeUnits, altitudeBox.realValue)) ]
         Layout.rowSpan: 2
     }
 }

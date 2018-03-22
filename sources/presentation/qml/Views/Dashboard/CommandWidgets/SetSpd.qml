@@ -39,7 +39,8 @@ RowLayout {
 
     Controls.RealSpinBox {
         id: spdBox
-        realTo: 1000 // TODO: borderValues
+        realFrom: settings.value("Parameters/minSpeed")
+        realTo: settings.value("Parameters/maxSpeed")
         Layout.fillWidth: true
     }
 
