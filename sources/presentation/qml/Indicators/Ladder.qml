@@ -118,6 +118,7 @@ Item {
 
             var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
 
+            ctx.beginPath();
             if (errorPos > height) {
                 ctx.fillStyle = customPalette.activeMissionColor;
                 ctx.moveTo((mirrored ? majorTickSize : -majorTickSize) / 2, height);
@@ -135,7 +136,6 @@ Item {
             else {
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = customPalette.activeMissionColor;
-                ctx.beginPath();
                 ctx.moveTo(0, errorPos);
                 ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, errorPos);
                 ctx.stroke();

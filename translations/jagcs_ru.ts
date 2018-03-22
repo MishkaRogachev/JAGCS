@@ -2958,7 +2958,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Menu/Planning/PlanningView.qml" line="65"/>
         <source>Add Mission</source>
-        <translation></translation>
+        <translation>Добавить задание</translation>
     </message>
 </context>
 <context>
