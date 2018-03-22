@@ -18,7 +18,9 @@
 #include "translation_manager.h"
 #include "gui_style_manager.h"
 
+#ifdef WITH_LOGGER
 #include "file_logger.h"
+#endif
 
 int main(int argc, char* argv[])
 {

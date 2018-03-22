@@ -32,6 +32,7 @@ bool AlterLinkDescriptionMigration::up()
     defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "UDP Link"));
     defaultUdpLink->setParameter(LinkDescription::Port,
                                  settings::Provider::value(settings::communication::port).toInt());
+    defaultUdpLink->setParameter(LinkDescription::UdpAutoResponse, true);
     linkRepository.save(defaultUdpLink);
 
     LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
