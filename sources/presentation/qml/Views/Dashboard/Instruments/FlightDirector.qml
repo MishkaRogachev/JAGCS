@@ -32,8 +32,8 @@ Controls.Pane {
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundSpeed)
-        error: vehicle.pitot.present ?
-                   units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError) : 0
+        error: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
+                                      vehicle.flightControl.airspeedError : 0)
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep

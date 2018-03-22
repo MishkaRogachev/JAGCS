@@ -73,6 +73,12 @@ namespace comm
         return indicatedAirspeed + (indicatedAirspeed * 0.02 * altitude / 1000);
     }
 
+    inline float fixAirspeedError(float aspdError)
+    {
+        // APM ISSUE: https://github.com/ArduPilot/ardupilot/issues/335
+        return aspdError * 0.01;
+    }
+
     inline float fromCentidegrees(float centidegrees)
     {
         return centidegrees / 100;

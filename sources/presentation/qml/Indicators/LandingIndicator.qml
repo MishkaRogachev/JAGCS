@@ -10,7 +10,7 @@ Canvas {
     property real sizeX: 90.0
     property real sizeY: 90.0
 
-    property color color: palette.textColor
+    property color color: customPalette.textColor
 
     onWidthChanged: requestPaint()
     onHeightChanged: requestPaint()

@@ -109,9 +109,9 @@ void AerialVehicleDisplayPresenter::updateFlightControl(
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(desiredHeading),
                              parameters.value(domain::Telemetry::DesiredHeading, 0));
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(airspeedError),
-                             parameters.value(domain::Telemetry::AirspeedError, false));
+                             parameters.value(domain::Telemetry::AirspeedError, 0));
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(altitudeError),
-                             parameters.value(domain::Telemetry::AltitudeError, false));
+                             parameters.value(domain::Telemetry::AltitudeError, 0));
 }
 
 void AerialVehicleDisplayPresenter::updateNavigator(
