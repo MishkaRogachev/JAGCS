@@ -40,8 +40,6 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(app::log);
 #endif
 
-    presentation::TranslationManager translator;
-
     int result = 0;
     do
     {
@@ -57,8 +55,13 @@ int main(int argc, char* argv[])
         app.setFont(QFont("OpenSans"));
         app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
-        domain::ProxyManager proxy;
-        proxy.load();
+        presentation::TranslationManager translator;
+        translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
+
+        {
+            domain::ProxyManager proxy;
+            proxy.load();
+        }
 
         db::DbManager dbManager;
         if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
@@ -69,8 +72,6 @@ int main(int argc, char* argv[])
 
         domain::ServiceRegistry registy;
         Q_UNUSED(registy);
-
-        translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
         presentation::PresentationContext context;
 
