@@ -21,17 +21,17 @@ T.TabButton {
         anchors.fill: parent
         implicitWidth: sizings.controlBaseSize
         implicitHeight: sizings.controlBaseSize
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
         radius: 3
         color: {
-            if (control.checked || control.highlighted) return palette.selectionColor;
-            if (control.pressed) return palette.highlightColor;
-            return control.flat ? "transparent" : palette.buttonColor;
+            if (control.checked || control.highlighted) return customPalette.selectionColor;
+            if (control.pressed) return customPalette.highlightColor;
+            return control.flat ? "transparent" : customPalette.buttonColor;
         }
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }
@@ -40,7 +40,7 @@ T.TabButton {
         id: content
         text: control.text
         font: control.font
-        textColor: pressed || checked ? palette.selectedTextColor: palette.textColor
+        textColor: pressed || checked ? customPalette.selectedTextColor: customPalette.textColor
     }
 }
 

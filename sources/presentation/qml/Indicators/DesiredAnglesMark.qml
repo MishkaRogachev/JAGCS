@@ -8,7 +8,7 @@ Item {
     property real roll: 0.0
     property real effectiveHeight: height
 
-    property color markColor: palette.activeMissionColor
+    property color markColor: customPalette.activeMissionColor
     property real markWidth: 5
 
     onWidthChanged: canvas.requestPaint()

@@ -7,6 +7,6 @@ ToolBar {
     id: control
 
     background: Rectangle {
-        color: palette.raisedColor
+        color: customPalette.raisedColor
     }
 }

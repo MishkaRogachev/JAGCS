@@ -294,9 +294,10 @@ void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, 
                                          m_communicator->linkChannel(link),
                                          &message, &item);
     m_communicator->sendMessage(message, link);
-
+ 
+    // TODO: wait mission ack
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dto::Command::NavTo, dto::Command::Completed); // TODO: wait ack
+                     dto::Command::NavTo, dto::Command::Completed);
 }
 
 void CommandHandler::sendChangeAltitude(quint8 mavId, float altitude)
@@ -322,7 +323,7 @@ void CommandHandler::sendChangeAltitude(quint8 mavId, float altitude)
                                          &message, &item);
     m_communicator->sendMessage(message, link);
 
-    // TODO: wait ack
+    // TODO: wait mission ack
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
                      dto::Command::ChangeAltitude, dto::Command::Completed);
 }
@@ -333,6 +334,7 @@ void CommandHandler::sendManualControl(quint8 mavId, float pitch, float roll,
     mavlink_manual_control_t mavlink_manual_control;
 
     mavlink_manual_control.target = mavId;
+
     mavlink_manual_control.x = ::toMavLinkImpact(pitch);
     mavlink_manual_control.y = ::toMavLinkImpact(roll);
     mavlink_manual_control.r = ::toMavLinkImpact(yaw);

@@ -23,7 +23,7 @@ Item {
     property bool operational: false
     property string prefix
     property string suffix
-    property color color: operational ? palette.textColor : palette.dangerColor
+    property color color: operational ? customPalette.textColor : customPalette.dangerColor
     property alias warningColor: hatch.color
 
     clip: true
@@ -119,14 +119,14 @@ Item {
             var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
 
             if (errorPos > height) {
-                ctx.fillStyle = palette.activeMissionColor;
+                ctx.fillStyle = customPalette.activeMissionColor;
                 ctx.moveTo((mirrored ? majorTickSize : -majorTickSize) / 2, height);
                 ctx.lineTo(0, height - majorTickSize);
                 ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, height - majorTickSize);
                 ctx.fill();
             }
             else if (errorPos < 0) {
-                ctx.fillStyle = palette.activeMissionColor;
+                ctx.fillStyle = customPalette.activeMissionColor;
                 ctx.moveTo((mirrored ? majorTickSize : -majorTickSize) / 2, 0);
                 ctx.lineTo(0, majorTickSize);
                 ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, majorTickSize);
@@ -134,7 +134,7 @@ Item {
             }
             else {
                 ctx.lineWidth = 4;
-                ctx.strokeStyle = palette.activeMissionColor;
+                ctx.strokeStyle = customPalette.activeMissionColor;
                 ctx.beginPath();
                 ctx.moveTo(0, errorPos);
                 ctx.lineTo(mirrored ? majorTickSize : -majorTickSize, errorPos);

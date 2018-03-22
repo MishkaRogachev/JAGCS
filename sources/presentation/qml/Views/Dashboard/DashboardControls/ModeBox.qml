@@ -33,9 +33,9 @@ Controls.ComboBox {
         anchors.fill: parent
         radius: 3
         color: {
-            if (status == Command.Rejected) return palette.dangerColor;
-            if (status == Command.Sending) return palette.cautionColor;
-            if (status == Command.Completed) return palette.positiveColor;
+            if (status == Command.Rejected) return customPalette.dangerColor;
+            if (status == Command.Sending) return customPalette.cautionColor;
+            if (status == Command.Completed) return customPalette.positiveColor;
             return "transparent";
         }
     }
@@ -52,7 +52,7 @@ Controls.ComboBox {
         id: content
         font: control.font
         text: translator.translateVehicleMode(mode)
-        color: status == Command.Idle ? palette.textColor: palette.selectedTextColor
+        color: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
         verticalAlignment: Text.AlignVCenter
         z: 10
     }

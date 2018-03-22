@@ -7,6 +7,6 @@ T.Menu {
     background: Rectangle {
         implicitWidth: sizings.controlBaseSize * 6
         implicitHeight: sizings.controlBaseSize
-        color: palette.raisedColor
+        color: customPalette.raisedColor
     }
 }

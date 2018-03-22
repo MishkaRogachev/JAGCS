@@ -10,7 +10,7 @@ Item {
     property real minPitch: -25.0
     property real maxPitch: 25.0
     property real pitchStep: 10
-    property color color: palette.textColor
+    property color color: customPalette.textColor
     property real fontPixelSize: Math.max(height * 0.1, 9)
 
     onMinPitchChanged: canvas.requestPaint()

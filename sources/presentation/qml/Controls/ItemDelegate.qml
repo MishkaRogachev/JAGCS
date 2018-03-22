@@ -15,7 +15,7 @@ T.ItemDelegate {
 
     background: Rectangle {
         visible: control.highlighted
-        color: palette.selectionColor
+        color: customPalette.selectionColor
         anchors.fill: parent
     }
 
@@ -23,6 +23,6 @@ T.ItemDelegate {
         id: content
         font: control.font
         text: control.text
-        textColor: control.highlighted ? palette.selectedTextColor : palette.textColor
+        textColor: control.highlighted ? customPalette.selectedTextColor : customPalette.textColor
     }
 }

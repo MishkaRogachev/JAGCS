@@ -95,7 +95,7 @@ Controls.Pane {
         width: altitudeLadder.majorTickSize + 1
         height: parent.height * 0.6
         value: vehicle.barometric.climb
-        fillColor: vehicle.barometric.climb > 0 ? palette.skyColor : palette.groundColor
+        fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
         minValue: -10
         maxValue: 10
     }
@@ -111,7 +111,7 @@ Controls.Pane {
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ?
                           0 : units.convertDistanceTo(altitudeUnits, vehicle.homeAltitude)
-        warningColor: palette.groundColor
+        warningColor: customPalette.groundColor
         valueStep: dashboard.altitudeStep
         enabled: vehicle.barometric.enabled
         operational: vehicle.barometric.operational

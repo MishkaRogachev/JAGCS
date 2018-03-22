@@ -27,6 +27,7 @@ namespace comm
             Idle,
             WaitingCount,
             WaitingItem,
+            WaitongAck,
             SendingCount,
             SendingItem
         };

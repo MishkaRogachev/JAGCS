@@ -17,18 +17,18 @@ Rectangle {
     implicitWidth: sizings.controlBaseSize
     implicitHeight: sizings.controlBaseSize
     radius: 3
-    color: area.pressed ? palette.highlightColor : "transparent"
+    color: area.pressed ? customPalette.highlightColor : "transparent"
 
     Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
         height: sizings.controlBaseSize / 8
-        color: activeEntry ? palette.selectionColor : palette.sunkenColor
+        color: activeEntry ? customPalette.selectionColor : customPalette.sunkenColor
     }
 
     Controls.ColoredIcon {
         id: icon
-        color: activeEntry ? palette.selectionColor : palette.textColor
+        color: activeEntry ? customPalette.selectionColor : customPalette.textColor
         anchors.centerIn: parent
         width: parent.width * iconScaling
         height: width

@@ -13,6 +13,6 @@ MapQuickItem {
         width: sizings.controlBaseSize
         height: width
         source: "qrc:/indicators/pick_aim.svg"
-        color: palette.activeMissionColor
+        color: customPalette.activeMissionColor
     }
 }

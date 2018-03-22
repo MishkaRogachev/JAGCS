@@ -20,17 +20,17 @@ Controls.DelayButton {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return palette.dangerColor;
-        if (status == Command.Sending) return palette.cautionColor;
-        if (status == Command.Completed) return palette.positiveColor;
-        return control.flat ? "transparent" : palette.buttonColor;
+        if (status == Command.Rejected) return customPalette.dangerColor;
+        if (status == Command.Sending) return customPalette.cautionColor;
+        if (status == Command.Completed) return customPalette.positiveColor;
+        return control.flat ? "transparent" : customPalette.buttonColor;
     }
 
     textColor: {
         if (status == Command.Rejected ||
             status == Command.Sending ||
-            status == Command.Completed) return palette.selectedTextColor;
-        return palette.textColor;
+            status == Command.Completed) return customPalette.selectedTextColor;
+        return customPalette.textColor;
     }
 
     Timer {

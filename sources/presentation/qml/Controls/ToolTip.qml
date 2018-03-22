@@ -14,8 +14,8 @@ T.ToolTip {
     }
 
     background: Rectangle {
-        color: palette.raisedColor
-        border.color: palette.highlightColor
+        color: customPalette.raisedColor
+        border.color: customPalette.highlightColor
         radius: 3
     }
 }

@@ -23,14 +23,14 @@ Controls.Frame {
     backgroundColor: {
         switch (message.type) {
         case LogMessage.Positive:
-            return palette.positiveColor;
+            return customPalette.positiveColor;
         case LogMessage.Warning:
-            return palette.cautionColor;
+            return customPalette.cautionColor;
         case LogMessage.Critical:
-            return palette.dangerColor;
+            return customPalette.dangerColor;
         case LogMessage.Common:
         default:
-            return palette.textColor;
+            return customPalette.textColor;
         }
     }
 
@@ -69,14 +69,14 @@ Controls.Frame {
         Controls.Label {
             id: label
             text: message.message
-            color: palette.selectedTextColor
+            color: customPalette.selectedTextColor
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.selectedTextColor
+            iconColor: customPalette.selectedTextColor
             flat: true
             onClicked: drop()
         }

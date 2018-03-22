@@ -117,7 +117,7 @@ Controls.Frame {
                     if (selected) setActiveVideo(-1);
                     presenter.remove();
                 }
-                iconColor: palette.dangerColor
+                iconColor: customPalette.dangerColor
             }
         }
     }

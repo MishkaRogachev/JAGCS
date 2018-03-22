@@ -33,9 +33,11 @@ LinkEditPresenter::LinkEditPresenter(QObject* parent):
 
 void LinkEditPresenter::setLink(int id)
 {
-    LinkPresenter::setLink(id);
+    m_description = m_service->description(id);
 
     this->updateDevices();
+    this->updateLink();
+    this->updateStatus();
 }
 
 void LinkEditPresenter::updateLink()

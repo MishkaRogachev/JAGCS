@@ -14,13 +14,13 @@ Controls.ColoredIcon {
     implicitHeight: width
     color: {
         if (percentage > 50)
-            return palette.positiveColor;
+            return customPalette.positiveColor;
         if (percentage > 15)
-            return palette.cautionColor;
+            return customPalette.cautionColor;
         if (percentage > 0)
-            return palette.dangerColor;
+            return customPalette.dangerColor;
 
-        return palette.sunkenColor;
+        return customPalette.sunkenColor;
     }
 
     Item {
@@ -52,8 +52,7 @@ Controls.ColoredIcon {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: -1
-                //anchors.verticalCenterOffset: -parent.height * 0.25
-                color: palette.backgroundColor
+                color: customPalette.backgroundColor
             }
         }
     }

@@ -25,8 +25,8 @@ T.Switch {
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: height / 2
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
-        color: control.inputChecked ? palette.selectionColor : palette.sunkenColor;
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
+        color: control.inputChecked ? customPalette.selectionColor : customPalette.sunkenColor;
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
@@ -34,11 +34,11 @@ T.Switch {
             width: sizings.controlBaseSize / 1.5
             height: sizings.controlBaseSize / 1.5
             radius: height / 2
-            color: control.pressed ? palette.highlightColor : palette.buttonColor;
+            color: control.pressed ? customPalette.highlightColor : customPalette.buttonColor;
 
             Shaders.Hatch {
                 anchors.fill: parent
-                color: palette.sunkenColor
+                color: customPalette.sunkenColor
                 visible: !control.enabled
             }
         }
@@ -50,7 +50,7 @@ T.Switch {
         verticalAlignment: Text.AlignVCenter
         text: control.text
         font: control.font
-        color: palette.textColor
+        color: customPalette.textColor
         leftPadding: indicator.width + control.spacing
     }
 

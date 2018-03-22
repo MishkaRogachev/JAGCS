@@ -68,8 +68,8 @@ Controls.Card {
                 width: ah.width * 0.1
                 height: ah.height * 0.6
                 value: vehicle.barometric.climb
-                fillColor: vehicle.barometric.climb > 0 ? palette.skyColor :
-                                                          palette.groundColor
+                fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor :
+                                                          customPalette.groundColor
                 minValue: -10
                 maxValue: 10 // TODO: to consts
             }

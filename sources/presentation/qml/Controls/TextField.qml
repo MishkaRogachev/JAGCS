@@ -7,9 +7,9 @@ T.TextField {
     id: control
 
     font.pixelSize: sizings.fontPixelSize
-    color: palette.textColor
-    selectionColor: palette.selectionColor
-    selectedTextColor: palette.selectedTextColor
+    color: customPalette.textColor
+    selectionColor: customPalette.selectionColor
+    selectedTextColor: customPalette.selectedTextColor
     implicitWidth: sizings.controlBaseSize * 4
     implicitHeight: sizings.controlBaseSize
     leftPadding: sizings.padding
@@ -19,12 +19,12 @@ T.TextField {
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: palette.sunkenColor
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        color: customPalette.sunkenColor
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }

@@ -17,7 +17,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: control
-        color: palette.backgroundColor
+        color: customPalette.backgroundColor
         radius: 2
         z: -1
 
@@ -38,7 +38,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         source: "qrc:/ui/menu_arrow.svg"
-        color: area.pressed ? palette.highlightColor : palette.buttonColor
+        color: area.pressed ? customPalette.highlightColor : customPalette.buttonColor
         width: sizings.controlBaseSize * 0.75
         height: width
 

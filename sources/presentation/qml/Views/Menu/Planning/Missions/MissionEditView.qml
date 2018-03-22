@@ -58,7 +58,7 @@ ColumnLayout {
         Controls.DelayButton {
             tipText: qsTr("Remove")
             iconSource: "qrc:/icons/remove.svg"
-            iconColor: palette.dangerColor
+            iconColor: customPalette.dangerColor
             enabled: sequence > -1
             onActivated: presenter.remove()
         }

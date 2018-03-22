@@ -60,7 +60,7 @@ GridLayout {
     }
 
     Controls.Frame {
-        backgroundColor: palette.sunkenColor
+        backgroundColor: customPalette.sunkenColor
         Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.columnSpan: 2

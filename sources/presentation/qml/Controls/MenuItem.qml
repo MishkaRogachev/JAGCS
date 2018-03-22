@@ -15,19 +15,19 @@ T.MenuItem {
     background: Rectangle {
         implicitWidth: sizings.controlBaseSize
         implicitHeight: implicitWidth
-        color: control.pressed ? palette.highlightColor : "transparent"
-        border.color: control.activeFocus ? palette.selectionColor : "transparent"
+        color: control.pressed ? customPalette.highlightColor : "transparent"
+        border.color: control.activeFocus ? customPalette.selectionColor : "transparent"
     }
 
     Shaders.Hatch {
         anchors.fill: parent
-        color: palette.sunkenColor
+        color: customPalette.sunkenColor
         visible: !control.enabled
     }
 
     indicator: ColoredIcon {
         id: icon
-        color: enabled ? iconColor : palette.sunkenColor
+        color: enabled ? iconColor : customPalette.sunkenColor
         source: control.checked ? "qrc:/ui/ok.svg" : ""
         anchors.verticalCenter: parent.verticalCenter
         width: sizings.controlBaseSize * 0.6
@@ -39,8 +39,8 @@ T.MenuItem {
         font: control.font
         text: control.text
         color: {
-            if (!enabled) return palette.sunkenColor;
-            pressed || checked || highlighted ? palette.selectedTextColor: palette.textColor;
+            if (!enabled) return customPalette.sunkenColor;
+            pressed || checked || highlighted ? customPalette.selectedTextColor: customPalette.textColor;
         }
     }
 }

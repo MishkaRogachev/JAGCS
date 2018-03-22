@@ -4,7 +4,7 @@ import QtQuick.Controls 2.2 as T
 T.Frame {
     id: control
 
-    property color backgroundColor: palette.raisedColor
+    property color backgroundColor: customPalette.raisedColor
 
     padding: sizings.padding
 

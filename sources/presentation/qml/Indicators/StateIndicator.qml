@@ -15,14 +15,14 @@ Rectangle {
     radius: Math.max(width, height) / 2
     color: {
         switch (state) {
-        case Domain.Active: return palette.missionColor;
+        case Domain.Active: return customPalette.missionColor;
         case Domain.Boot:
-        case Domain.Calibrating: return palette.selectionColor;
-        case Domain.Critical: return palette.dangerColor;
-        case Domain.Emergency: return palette.cautionColor;
-        case Domain.Standby: return palette.positiveColor;
+        case Domain.Calibrating: return customPalette.selectionColor;
+        case Domain.Critical: return customPalette.dangerColor;
+        case Domain.Emergency: return customPalette.cautionColor;
+        case Domain.Standby: return customPalette.positiveColor;
         case Domain.UnknownState:
-        default: return palette.sunkenColor;
+        default: return customPalette.sunkenColor;
         }
     }
     Behavior on color { ColorAnimation { duration: 200 } }

@@ -364,7 +364,7 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
         d->mavSequencer[mavId].removeOne(seq);
         assignment->addProgress();
 
-        if (d->mavSequencer[mavId].isEmpty()) this->enterStage(Stage::Idle, mavId);
+        if (d->mavSequencer[mavId].isEmpty()) this->enterStage(Stage::WaitongAck, mavId);
 
         d->missionService->assignmentChanged(assignment);
     }
@@ -581,7 +581,10 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
 
     if (ack.type == MAV_MISSION_ACCEPTED)
     {
-        assignment->setStatus(dto::MissionAssignment::Actual);
+        if (d->mavStages.value(message.sysid, Stage::Idle) == Stage::WaitongAck)
+        {
+            assignment->setStatus(dto::MissionAssignment::Actual);
+        }
     }
     else
     {
@@ -632,7 +635,8 @@ void MissionHandler::enterStage(Stage stage, quint8 mavId)
 
     d->mavStages[mavId] = stage;
     if (stage != Stage::Idle &&
-        stage != Stage::SendingItem)
+        stage != Stage::SendingItem &&
+        stage != Stage::WaitongAck)
     {
         d->mavTimers[mavId] = this->startTimer(::interval);
     }

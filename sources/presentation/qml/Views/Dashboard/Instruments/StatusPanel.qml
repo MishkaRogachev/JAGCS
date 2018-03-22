@@ -21,11 +21,11 @@ Controls.Pane {
             color: {
                 switch (vehicle.satellite.fix) {
                 case -1:
-                case 0: return palette.sunkenColor;
-                case 1: return palette.dangerColor;
-                case 2: return palette.cautionColor;
+                case 0: return customPalette.sunkenColor;
+                case 1: return customPalette.dangerColor;
+                case 2: return customPalette.cautionColor;
                 case 3:
-                default: return palette.positiveColor;
+                default: return customPalette.positiveColor;
                 }
             }
             source: "qrc:/icons/gps.svg"
@@ -76,7 +76,7 @@ Controls.Pane {
             Layout.alignment: Qt.AlignRight
 
             Indicators.ValueLabel {
-                color: vehicle.battery.voltage > 0.01 ? palette.textColor : palette.sunkenColor
+                color: vehicle.battery.voltage > 0.01 ? customPalette.textColor : customPalette.sunkenColor
                 value: vehicle.battery.voltage
                 digits: 2
                 suffix: qsTr("V")
@@ -84,12 +84,12 @@ Controls.Pane {
 
             Indicators.ValueLabel {
                 color: {
-                    if (vehicle.battery.current < -0.01) return palette.positiveColor;
-                    if (vehicle.battery.current > 0.0) return palette.textColor;
-                    if (vehicle.battery.current > 5.0) return palette.cautionColor;
-                    if (vehicle.battery.current > 10.0) return palette.dangerColor;
+                    if (vehicle.battery.current < -0.01) return customPalette.positiveColor;
+                    if (vehicle.battery.current > 0.0) return customPalette.textColor;
+                    if (vehicle.battery.current > 5.0) return customPalette.cautionColor;
+                    if (vehicle.battery.current > 10.0) return customPalette.dangerColor;
 
-                    return palette.sunkenColor;
+                    return customPalette.sunkenColor;
                 }
                 value: vehicle.battery.current
                 digits: 2

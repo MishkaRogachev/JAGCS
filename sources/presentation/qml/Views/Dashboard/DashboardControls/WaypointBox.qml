@@ -10,7 +10,7 @@ Controls.ComboBox {
     property int status: Command.Idle
 
     currentIndex: -1
-    contentColor: status == Command.Idle ? palette.textColor: palette.selectedTextColor
+    contentColor: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
     contentZ: 10
     horizontalAlignment: Text.AlignHCenter
     tipText: qsTr("Go to")
@@ -31,9 +31,9 @@ Controls.ComboBox {
         anchors.fill: parent
         radius: 3
         color: {
-            if (status == Command.Rejected) return palette.dangerColor;
-            if (status == Command.Sending) return palette.cautionColor;
-            if (status == Command.Completed) return palette.positiveColor;
+            if (status == Command.Rejected) return customPalette.dangerColor;
+            if (status == Command.Sending) return customPalette.cautionColor;
+            if (status == Command.Completed) return customPalette.positiveColor;
             return "transparent";
         }
     }

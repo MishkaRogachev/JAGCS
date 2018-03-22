@@ -18,14 +18,14 @@ Item {
         width: 10000
         height: 10000
         rotation: -roll
-        color: palette.textColor
+        color: customPalette.textColor
 
         Rectangle {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height / 2 - 0.5
-            color: enabled ? palette.skyColor : "#c6c9d1" // TODO: palette
+            color: enabled ? customPalette.skyColor : "#c6c9d1" // TODO: customPalette
             Behavior on color { ColorAnimation { duration: 200 } }
         }
 
@@ -34,7 +34,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: parent.height / 2 - 0.5
-            color: enabled ? palette.groundColor : "#798f99" // TODO: palette
+            color: enabled ? customPalette.groundColor : "#798f99" // TODO: customPalette
             Behavior on color { ColorAnimation { duration: 200 } }
         }
     }
