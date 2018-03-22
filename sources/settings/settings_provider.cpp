@@ -25,8 +25,8 @@ namespace
         { communication::port, 14550 },
         { communication::statisticsCount, 50 },
 
-        { mission::defaultAcceptanceRadius, 3 },
-        { mission::defaultTakeoffPitch, 15 },
+        { parameters::defaultAcceptanceRadius, 3 },
+        { parameters::defaultTakeoffPitch, 15 },
 
         { map::zoomLevel, 16.0 },
         { map::centerLatitude, 55.968954 },

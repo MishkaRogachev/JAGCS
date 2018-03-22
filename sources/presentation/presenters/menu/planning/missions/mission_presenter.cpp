@@ -38,8 +38,8 @@ void MissionPresenter::updateMission()
     this->setViewProperty(PROPERTY(name), mission ? mission->name() : "");
     this->setViewProperty(PROPERTY(count), mission ? mission->count() : 0);
     this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
-                              settings::mission::visibility + "/" +
-                              QString::number(m_missionId)));
+                              settings::mission::mission + QString::number(
+                                  mission->id()) + "/" + settings::mission::visibility));
 }
 
 void MissionPresenter::rename(const QString& name)
@@ -63,8 +63,8 @@ void MissionPresenter::assignVehicle(int vehicleId)
 
 void MissionPresenter::setMissionVisible(bool visible)
 {
-    settings::Provider::setValue(settings::mission::visibility + "/" +
-                                 QString::number(m_missionId), visible);
+    settings::Provider::setValue(settings::mission::mission + QString::number(
+                                     m_missionId) + "/" + settings::mission::visibility, visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
 
     m_service->missionChanged(m_service->mission(m_missionId));

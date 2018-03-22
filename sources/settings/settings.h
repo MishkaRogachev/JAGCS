@@ -22,11 +22,10 @@ namespace settings
         const QString statisticsCount = "Communication/statisticsCount";
     }
 
-    namespace mission
+    namespace parameters
     {
-        const QString defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
-        const QString defaultTakeoffPitch = "Mission/defaultTakeoffPitch";
-        const QString visibility = "Mission/visibility";
+        const QString defaultAcceptanceRadius = "Parameters/defaultAcceptanceRadius";
+        const QString defaultTakeoffPitch = "Parameters/defaultTakeoffPitch";
     }
 
     namespace map
@@ -111,6 +110,12 @@ namespace settings
         const QString port = "NetworkProxy/port";
         const QString user = "NetworkProxy/user";
         const QString password = "NetworkProxy/password";
+    }
+
+    namespace mission
+    {
+        const QString mission = "mis_";
+        const QString visibility = "visibility";
     }
 
     namespace vehicle
