@@ -12,7 +12,8 @@ Item {
     property int activeVideo: -1
 
     implicitWidth: sizings.controlBaseSize * 11
-    onActiveVideoChanged: video.updateActiveVideo()
+
+    onActiveVideoChanged: video.setActiveVideo(activeVideo)
 
     VideoSourceListPresenter {
         id: presenter
@@ -21,6 +22,7 @@ Item {
             updateCameraInfo();
             updateVideoSources();
         }
+        Component.onDestruction: saveActiveVideo(activeVideo)
     }
 
     Controls.ButtonGroup { id: radioGroup }
@@ -62,7 +64,7 @@ Item {
                 width: parent.width - sizings.shadowSize
                 videoId: modelData
                 selected: activeVideo == videoId
-                onSetActiveVideo: presenter.setActiveVideo(videoId)
+                onSetActiveVideo: activeVideo = videoId
             }
 
             Controls.Frame {

@@ -8,6 +8,10 @@ VideoView {
         presenter.updateActiveVideo();
     }
 
+    function setActiveVideo(videoId) {
+        presenter.setActiveVideo(videoId);
+    }
+
     ActiveVideoPresenter {
         id: presenter
         view: video
