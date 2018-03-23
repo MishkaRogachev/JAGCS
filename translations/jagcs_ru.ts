@@ -1831,7 +1831,7 @@
     <message>
         <location filename="../sources/presentation/qml/Views/Menu/Links/LinkView.qml" line="75"/>
         <source>Sent</source>
-        <translation>Отправить</translation>
+        <translation>Отпр.</translation>
     </message>
     <message>
         <source>Recv.</source>

@@ -32,8 +32,8 @@ Controls.Pane {
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundSpeed)
-        error: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
-                                      vehicle.flightControl.airspeedError : 0)
+        errorVisible: vehicle.guided && vehicle.pitot.present
+        error: units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -77,10 +77,10 @@ Controls.Pane {
         enabled: vehicle.online && vehicle.ahrs.enabled
         operational: vehicle.ahrs.operational
         armed: vehicle.armed
-        guided: vehicle.guided
         pitch: vehicle.ahrs.pitch
         roll: vehicle.ahrs.roll
         yawspeed: vehicle.ahrs.yawspeed
+        desiredVisible: vehicle.stab
         desiredPitch: vehicle.flightControl.desiredPitch
         desiredRoll: vehicle.flightControl.desiredRoll
         rollInverted: dashboard.rollInverted
@@ -106,6 +106,7 @@ Controls.Pane {
         anchors.right: parent.right
         height: parent.height * 0.6
         value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
+        errorVisible: vehicle.guided
         error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
         minValue: value + minAltitude
         maxValue: value + maxAltitude

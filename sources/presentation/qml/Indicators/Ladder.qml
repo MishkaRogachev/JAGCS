@@ -8,6 +8,7 @@ Item {
 
     property real value: 0
     property real error: 0
+    property bool errorVisible: false
     property real warningValue: minValue
     property real minValue: 0
     property real maxValue: 100
@@ -32,8 +33,11 @@ Item {
     onHeightChanged: ladderCanvas.requestPaint()
     onColorChanged: ladderCanvas.requestPaint()
     onValueStepChanged: ladderCanvas.requestPaint()
-    onValueChanged: { ladderCanvas.requestPaint(); errorCanvas.requestPaint() }
-    onErrorChanged: errorCanvas.requestPaint()
+    onValueChanged: {
+        ladderCanvas.requestPaint()
+        if (errorVisible) errorCanvas.requestPaint()
+    }
+    onErrorChanged: if (errorVisible) errorCanvas.requestPaint()
 
     Shaders.OpacityBorder {
         anchors.fill: parent
@@ -106,12 +110,11 @@ Item {
     Canvas { // Error mark
         id: errorCanvas
         anchors.fill: parent
+        visible: errorVisible
         onPaint: {
             var ctx = getContext('2d');
 
             ctx.clearRect(0, 0, width, height);
-
-            if (!error) return;
 
             ctx.save();
             ctx.translate(mirrored ? ctx.lineWidth : width - ctx.lineWidth, 0);

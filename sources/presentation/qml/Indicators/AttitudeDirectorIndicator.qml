@@ -7,7 +7,6 @@ AttitudeIndicator {
     id: fd
 
     property bool armed: false
-    property bool guided: false
     property bool operational: false
 
     property real yawspeed: 0.0
@@ -20,6 +19,8 @@ AttitudeIndicator {
     property real rollStep: 10
 
     property bool inputEnabled: false
+
+    property alias desiredVisible: desiredMark.visible
 
     signal addPitch(real value)
     signal addRoll(real value)
@@ -74,7 +75,6 @@ AttitudeIndicator {
         anchors.fill: parent
         anchors.margins: sizings.margins
         effectiveHeight: fd.effectiveHeight
-        visible: guided
         pitch: pitchInverted ? fd.pitch - desiredPitch : -desiredPitch
         roll: rollInverted ? -desiredRoll : fd.roll - desiredRoll
     }

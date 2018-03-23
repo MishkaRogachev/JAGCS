@@ -39,15 +39,15 @@ void HighLatencyHandler::processMessage(const mavlink_message_t& message)
     mavlink_msg_high_latency_decode(&message, &high);
 
     portion.setParameter({ Telemetry::System, Telemetry::Armed },
-                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+                         bool(high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY));
     portion.setParameter({ Telemetry::System, Telemetry::Auto },
-                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
+                         bool(high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO));
     portion.setParameter({ Telemetry::System, Telemetry::Guided },
-                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
+                         bool(high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED));
     portion.setParameter({ Telemetry::System, Telemetry::Stabilized },
-                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
+                         bool(high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE));
     portion.setParameter({ Telemetry::System, Telemetry::Manual },
-                         high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
+                         bool(high.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL));
 
     QGeoCoordinate coordinate(decodeLatLon(high.latitude), decodeLatLon(high.longitude),
                               decodeAltitude(high.altitude_amsl));

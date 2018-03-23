@@ -158,15 +158,15 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     TelemetryPortion portion(d->telemetryService->mavNode(message.sysid));
 
     portion.setParameter({ Telemetry::System, Telemetry::Armed },
-                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY);
+                         bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_SAFETY));
     portion.setParameter({ Telemetry::System, Telemetry::Auto },
-                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO);
+                         bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_AUTO));
     portion.setParameter({ Telemetry::System, Telemetry::Guided },
-                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED);
+                         bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_GUIDED));
     portion.setParameter({ Telemetry::System, Telemetry::Stabilized },
-                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE);
+                         bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE));
     portion.setParameter({ Telemetry::System, Telemetry::Manual },
-                         heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL);
+                         bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL));
 
     if (d->modeHelper.isNull())
     {

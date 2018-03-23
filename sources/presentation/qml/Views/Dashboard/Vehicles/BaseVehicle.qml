@@ -9,10 +9,11 @@ QtObject {
     property string vehicleName
     property int vehicleType: Vehicle.UnknownType
 
-    property int vehicleState: Domain.UnknownState
     property bool online: false
     property bool armed: false
     property bool guided: false
+    property bool stab: false
+    property int vehicleState: Domain.UnknownState
 
     property int mode: Domain.None
     property var availableModes: []
