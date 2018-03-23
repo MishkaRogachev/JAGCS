@@ -239,7 +239,7 @@
 <context>
     <name>AttitudeDirectorIndicator</name>
     <message>
-        <location filename="../sources/presentation/qml/Indicators/AttitudeDirectorIndicator.qml" line="66"/>
+        <location filename="../sources/presentation/qml/Indicators/AttitudeDirectorIndicator.qml" line="67"/>
         <source>DISARMED</source>
         <translation>РАЗРЯЖЕН</translation>
     </message>
@@ -273,12 +273,16 @@
 <context>
     <name>ChangeAlt</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/ChangeAlt.qml" line="35"/>
         <source>Chg. ALT</source>
-        <translation>Уст. ВЫС</translation>
+        <translation type="obsolete">Уст. ВЫС</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/ChangeAlt.qml" line="49"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/ChangeAlt.qml" line="34"/>
+        <source>Alt.</source>
+        <translation>Выс.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/ChangeAlt.qml" line="48"/>
         <source>Change altitude</source>
         <translation>Установить высоту</translation>
     </message>
@@ -394,91 +398,91 @@
     <name>CommandPanel</name>
     <message>
         <source>DISARM</source>
-        <translation>РАЗРЯДИТЬ</translation>
+        <translation type="obsolete">РАЗРЯДИТЬ</translation>
     </message>
     <message>
         <source>ARM</source>
-        <translation>ЗАРЯДИТЬ</translation>
+        <translation type="obsolete">ЗАРЯДИТЬ</translation>
     </message>
     <message>
         <source>Return to launch</source>
-        <translation>Возват домой</translation>
+        <translation type="obsolete">Возват домой</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Команда</translation>
+        <translation type="obsolete">Команда</translation>
     </message>
     <message>
         <source>Preflight</source>
-        <translation>Предполёт.</translation>
+        <translation type="obsolete">Предполёт.</translation>
     </message>
     <message>
         <source>Start mission</source>
-        <translation>Старт задания</translation>
+        <translation type="obsolete">Старт задания</translation>
     </message>
     <message>
         <source>Land</source>
-        <translation>Посадка</translation>
+        <translation type="obsolete">Посадка</translation>
     </message>
     <message>
         <source>Go around</source>
-        <translation>Второй круг</translation>
+        <translation type="obsolete">Второй круг</translation>
     </message>
     <message>
         <source>Nav to</source>
-        <translation>Навигация на</translation>
+        <translation type="obsolete">Навигация на</translation>
     </message>
     <message>
         <source>Set airspeed</source>
-        <translation>Уст. возд. ск-сть</translation>
+        <translation type="obsolete">Уст. возд. ск-сть</translation>
     </message>
     <message>
         <source>Set groundspeed</source>
-        <translation>Уст. пут. ск-сть</translation>
+        <translation type="obsolete">Уст. пут. ск-сть</translation>
     </message>
     <message>
         <source>Set altitude</source>
-        <translation>Уст. высоту</translation>
+        <translation type="obsolete">Уст. высоту</translation>
     </message>
     <message>
         <source>Set home</source>
-        <translation>Уст. дом</translation>
+        <translation type="obsolete">Уст. дом</translation>
     </message>
     <message>
         <source>Alt.</source>
-        <translation>Выс.</translation>
+        <translation type="obsolete">Выс.</translation>
     </message>
     <message>
         <source>Spd.</source>
-        <translation>Скр.</translation>
+        <translation type="obsolete">Скр.</translation>
     </message>
     <message>
         <source>Cal.</source>
-        <translation>Кал.</translation>
+        <translation type="obsolete">Кал.</translation>
     </message>
     <message>
         <source>Accelerometer</source>
-        <translation>Акселерометр</translation>
+        <translation type="obsolete">Акселерометр</translation>
     </message>
     <message>
         <source>Board level</source>
-        <translation>Уровень горизонта</translation>
+        <translation type="obsolete">Уровень горизонта</translation>
     </message>
     <message>
         <source>Gyroscope</source>
-        <translation>Гироскоп</translation>
+        <translation type="obsolete">Гироскоп</translation>
     </message>
     <message>
         <source>Magnetometer</source>
-        <translation>Магнетометр</translation>
+        <translation type="obsolete">Магнетометр</translation>
     </message>
     <message>
         <source>Static pressure</source>
-        <translation>Давление отсчёта</translation>
+        <translation type="obsolete">Давление отсчёта</translation>
     </message>
     <message>
         <source>Temperature</source>
-        <translation>Температура</translation>
+        <translation type="obsolete">Температура</translation>
     </message>
 </context>
 <context>
@@ -809,27 +813,27 @@
     <name>ControlPanel</name>
     <message>
         <source>DISARM</source>
-        <translation>РАЗРЯД</translation>
+        <translation type="obsolete">РАЗРЯД</translation>
     </message>
     <message>
         <source>ARM</source>
-        <translation>ЗАРЯД</translation>
+        <translation type="obsolete">ЗАРЯД</translation>
     </message>
     <message>
         <source>Return to launch</source>
-        <translation>Возват домой</translation>
+        <translation type="obsolete">Возват домой</translation>
     </message>
     <message>
         <source>WP</source>
-        <translation>ППМ</translation>
+        <translation type="obsolete">ППМ</translation>
     </message>
     <message>
         <source>Goto left</source>
-        <translation>Перейти на предыдущую</translation>
+        <translation type="obsolete">Перейти на предыдущую</translation>
     </message>
     <message>
         <source>Goto right</source>
-        <translation>Перейти на следующую</translation>
+        <translation type="obsolete">Перейти на следующую</translation>
     </message>
     <message>
         <source>Command</source>
@@ -873,19 +877,19 @@
     </message>
     <message>
         <source>Alt.</source>
-        <translation>Выс.</translation>
+        <translation type="obsolete">Выс.</translation>
     </message>
     <message>
         <source>Send point</source>
-        <translation>Лететь на точку</translation>
+        <translation type="obsolete">Лететь на точку</translation>
     </message>
     <message>
         <source>Lat.</source>
-        <translation>Шир.</translation>
+        <translation type="obsolete">Шир.</translation>
     </message>
     <message>
         <source>Lon.</source>
-        <translation>Дол.</translation>
+        <translation type="obsolete">Дол.</translation>
     </message>
     <message>
         <source>Spd.</source>
@@ -954,22 +958,22 @@
 <context>
     <name>CoordSpinBox</name>
     <message>
-        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="175"/>
+        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="176"/>
         <source>W</source>
         <translation>з.д</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="175"/>
+        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="176"/>
         <source>S</source>
         <translation>ю.ш</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="176"/>
+        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="177"/>
         <source>E</source>
         <translation>в.д</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="176"/>
+        <location filename="../sources/presentation/qml/Controls/CoordSpinBox.qml" line="177"/>
         <source>N</source>
         <translation>с.ш</translation>
     </message>
@@ -1291,17 +1295,17 @@
         <translation>Vист</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/Instruments/FlightDirector.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/Instruments/FlightDirector.qml" line="120"/>
         <source>ALT</source>
         <translation>Hбар</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/Instruments/FlightDirector.qml" line="129"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/Instruments/FlightDirector.qml" line="130"/>
         <source>SAT</source>
         <translation>Hснс</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/Instruments/FlightDirector.qml" line="141"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/Instruments/FlightDirector.qml" line="142"/>
         <source>RAD</source>
         <translation>Hрв</translation>
     </message>
@@ -2194,15 +2198,15 @@
     <name>MissionControl</name>
     <message>
         <source>WP</source>
-        <translation>ППМ</translation>
+        <translation type="obsolete">ППМ</translation>
     </message>
     <message>
         <source>Goto left</source>
-        <translation>Перейти на предыдущую</translation>
+        <translation type="obsolete">Перейти на предыдущую</translation>
     </message>
     <message>
         <source>Goto right</source>
-        <translation>Перейти на следующую</translation>
+        <translation type="obsolete">Перейти на следующую</translation>
     </message>
 </context>
 <context>
@@ -2369,87 +2373,87 @@
         <translation>Высота</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="205"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="206"/>
         <source>Rel.</source>
         <translation>Отн.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="223"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="225"/>
         <source>Abort alt.</source>
         <translation>Прерв. выс.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="229"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="231"/>
         <source>Climb</source>
         <translation>Подъём</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="244"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="247"/>
         <source>Latitude</source>
         <translation>Широта</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="295"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="298"/>
         <source>Longitude</source>
         <translation>Долгота</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="301"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="304"/>
         <source>Distance</source>
         <translation>Дистанция</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="316"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="319"/>
         <source>Azimuth</source>
         <translation>Азимут</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="332"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="335"/>
         <source>Radius</source>
         <translation>Радиус</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="351"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="354"/>
         <source>CW</source>
         <translation>ПЧС</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="360"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="363"/>
         <source>Pitch</source>
         <translation>Тангаж</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="376"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="379"/>
         <source>Yaw</source>
         <translation>Курс</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="392"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="395"/>
         <source>Repeats</source>
         <translation>Повторов</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="405"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="408"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="423"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="426"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="440"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="444"/>
         <source>Ground speed</source>
         <translation>Путевая скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="443"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="447"/>
         <source>Air speed</source>
         <translation>Воздушная скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="458"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Planning/Missions/MissionItemEditView.qml" line="462"/>
         <source>Throttle</source>
         <translation>Газ</translation>
     </message>
@@ -2809,17 +2813,17 @@
         <translation>Выс.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/NavTo.qml" line="50"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/NavTo.qml" line="51"/>
         <source>Nav to</source>
         <translation>Навигация на</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/NavTo.qml" line="55"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/NavTo.qml" line="56"/>
         <source>Lat.</source>
         <translation>Шир.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/NavTo.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/NavTo.qml" line="78"/>
         <source>Lon.</source>
         <translation>Дол.</translation>
     </message>
@@ -2981,6 +2985,29 @@
     </message>
 </context>
 <context>
+    <name>PreparationControl</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/PreparationControl.qml" line="28"/>
+        <source>Alt.</source>
+        <translation>Выс.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/PreparationControl.qml" line="40"/>
+        <source>Set return point</source>
+        <translation>Установить точку возврата</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/PreparationControl.qml" line="46"/>
+        <source>Lat.</source>
+        <translation>Шир.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/PreparationControl.qml" line="68"/>
+        <source>Lon.</source>
+        <translation>Дол.</translation>
+    </message>
+</context>
+<context>
     <name>QuitView</name>
     <message>
         <location filename="../sources/presentation/qml/Views/Menu/Quit/QuitView.qml" line="20"/>
@@ -3059,12 +3086,12 @@
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/SetSpd.qml" line="51"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/SetSpd.qml" line="52"/>
         <source>Set Airspeed</source>
         <translation>Установить воздушную скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/SetSpd.qml" line="51"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/CommandWidgets/SetSpd.qml" line="52"/>
         <source>Set Groundspeed</source>
         <translation>Установть путевую скорость</translation>
     </message>
@@ -3264,11 +3291,11 @@
     </message>
     <message>
         <source> V</source>
-        <translation> В</translation>
+        <translation type="obsolete"> В</translation>
     </message>
     <message>
         <source> A</source>
-        <translation> А</translation>
+        <translation type="obsolete"> А</translation>
     </message>
 </context>
 <context>
@@ -3651,27 +3678,27 @@
 <context>
     <name>VideoSourceListView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="43"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="45"/>
         <source>No video</source>
         <translation>Нет видео</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="77"/>
         <source>No video sources present</source>
         <translation>Нет источников видео</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="88"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="90"/>
         <source>Add video source</source>
         <translation>Добавить источник видео</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="98"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="100"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Menu/Settings/Video/VideoSourceListView.qml" line="106"/>
         <source>Stream</source>
         <translation>Поток</translation>
     </message>
@@ -3752,7 +3779,7 @@
     <name>WaypointBox</name>
     <message>
         <source>Go to mission item</source>
-        <translation>Перейти на ППМ</translation>
+        <translation type="obsolete">Перейти на ППМ</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/DashboardControls/WaypointBox.qml" line="16"/>
@@ -3880,11 +3907,11 @@
     <name>presentation::LinkListPresenter</name>
     <message>
         <source>New UDP Link</source>
-        <translation>Новое UDP соединение</translation>
+        <translation type="obsolete">Новое UDP соединение</translation>
     </message>
     <message>
         <source>New Serial Link</source>
-        <translation>Новое последовательное соединение</translation>
+        <translation type="obsolete">Новое последовательное соединение</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/menu/links/link_list_presenter.cpp" line="42"/>
@@ -4125,12 +4152,12 @@
     <message>
         <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="86"/>
         <source>FBWA</source>
-        <translation>FBWA</translation>
+        <translation>ЭДСУ А</translation>
     </message>
     <message>
         <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="87"/>
         <source>FBWB</source>
-        <translation>FBWB</translation>
+        <translation>ЭДСУ Б</translation>
     </message>
     <message>
         <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="88"/>

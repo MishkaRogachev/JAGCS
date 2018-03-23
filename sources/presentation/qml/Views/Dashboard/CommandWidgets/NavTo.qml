@@ -34,7 +34,7 @@ GridLayout {
         }
     }
 
-    DashboardControls.Label { text: qsTr("Alt.") }
+    DashboardControls.Label { text: qsTr("Alt.") + ", " + altitudeSuffix }
 
     Controls.RealSpinBox {
         id: altitudeBox

@@ -70,6 +70,7 @@ T.Control {
     opacity: enabled ? 1 : 0.33
     implicitWidth: row.implicitWidth
     implicitHeight: sizings.controlBaseSize
+    font.pixelSize: sizings.fontPixelSize
 
     background: Rectangle {
         anchors.fill: parent

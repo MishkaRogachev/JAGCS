@@ -31,9 +31,7 @@ RowLayout {
         }
     }
 
-    DashboardControls.Label {
-        text: qsTr("Chg. ALT") + ", " + altitudeSuffix
-    }
+    DashboardControls.Label { text: qsTr("Alt.") + ", " + altitudeSuffix }
 
     Controls.RealSpinBox {
         id: altitudeBox
