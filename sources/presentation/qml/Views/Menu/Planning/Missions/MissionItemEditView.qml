@@ -196,6 +196,7 @@ Item {
                     enabled: editEnabled
                     realFrom: settings.value("Parameters/minAltitude")
                     realTo: settings.value("Parameters/maxAltitude")
+                    precision: settings.value("Parameters/precisionAltitude")
                     onRealValueChanged: changed = true;
                     Layout.fillWidth: true
                 }
@@ -214,6 +215,7 @@ Item {
                     enabled: editEnabled
                     realFrom: settings.value("Parameters/minAltitude")
                     realTo: settings.value("Parameters/maxAltitude")
+                    precision: settings.value("Parameters/precisionAltitude")
                     onRealValueChanged: changed = true;
                     Layout.fillWidth: true
                 }
@@ -237,6 +239,7 @@ Item {
                 enabled: editEnabled
                 realFrom: settings.value("Parameters/minAltitude")
                 realTo: settings.value("Parameters/maxAltitude")
+                precision: settings.value("Parameters/precisionAltitude")
                 Layout.fillWidth: true
             }
 
@@ -429,6 +432,7 @@ Item {
                 enabled: editEnabled && speedEnabled
                 realFrom: settings.value("Parameters/minSpeed")
                 realTo: settings.value("Parameters/maxSpeed")
+                precision: settings.value("Parameters/precisionSpeed")
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }

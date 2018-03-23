@@ -41,6 +41,7 @@ RowLayout {
         id: spdBox
         realFrom: settings.value("Parameters/minSpeed")
         realTo: settings.value("Parameters/maxSpeed")
+        precision: settings.value("Parameters/precisionSpeed")
         Layout.fillWidth: true
     }
 

@@ -40,6 +40,7 @@ GridLayout {
         id: altitudeBox
         realFrom: settings.value("Parameters/minAltitude")
         realTo: settings.value("Parameters/maxAltitude")
+        precision: settings.value("Parameters/precisionAltitude")
         Layout.fillWidth: true
     }
 

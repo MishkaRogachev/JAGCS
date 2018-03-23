@@ -28,8 +28,10 @@ namespace settings
         const QString defaultTakeoffPitch = "Parameters/defaultTakeoffPitch";
         const QString minAltitude = "Parameters/minAltitude";
         const QString maxAltitude = "Parameters/maxAltitude";
+        const QString precisionAltitude = "Parameters/precisionAltitude";
         const QString minSpeed = "Parameters/minSpeed";
         const QString maxSpeed= "Parameters/maxSpeed";
+        const QString precisionSpeed = "Parameters/precisionSpeed";
         const QString maxDistance = "Parameters/maxDistance";
         const QString maxRadius = "Parameters/maxRadius";
     }
