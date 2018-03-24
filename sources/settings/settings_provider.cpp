@@ -8,6 +8,13 @@
 // Internal
 #include "units.h"
 
+#ifndef INT16_MAX
+// Std
+#include <limits.h>
+
+#define INT16_MAX std::numeric_limits<std::int16_t>::max()
+#endif
+
 using namespace settings;
 
 namespace
