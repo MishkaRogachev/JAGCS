@@ -61,7 +61,7 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    Controls.MapPickButton {
+    Controls.MapPickButton { // FIXME: unified picker with plnning mode
         id: pickButton
         onPicked: {
             latitudeBox.value = coordinate.latitude;

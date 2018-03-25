@@ -313,6 +313,7 @@ void CommandHandler::sendChangeAltitude(quint8 mavId, float altitude)
     item.seq = 0;
     item.autocontinue = false;
     item.z = altitude;
+    item.param1 = 0;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
     if (!link) return;
