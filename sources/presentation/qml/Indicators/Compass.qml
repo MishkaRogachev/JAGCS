@@ -7,8 +7,8 @@ Canvas {
     property real course: 0
 
     property bool courseEnabled: true
-    property color headingColor: palette.textColor
-    property color courseColor: palette.positiveColor
+    property color headingColor: customPalette.textColor
+    property color courseColor: customPalette.positiveColor
     property url mark
     property int tickFactor: 5
     property real scalesRatio: 0.08

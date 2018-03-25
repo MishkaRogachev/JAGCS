@@ -10,9 +10,10 @@ namespace presentation
         Q_OBJECT
 
     public:
-        ActiveVideoPresenter(QObject* parent = nullptr);
+        explicit ActiveVideoPresenter(QObject* parent = nullptr);
 
     public slots:
+        void setActiveVideo(int videoId);
         void updateActiveVideo();
     };
 }

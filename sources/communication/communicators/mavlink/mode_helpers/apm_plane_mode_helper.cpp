@@ -73,11 +73,11 @@ QList<domain::vehicle::Mode> ApmPlaneModeHelper::availableModes() const
 //        domain::vehicle::Mode::Stabilize,
 //        domain::vehicle::Mode::Acro,
 //        domain::vehicle::Mode::Autotune,
+//       domain::vehicle::Mode::Cruise,
         domain::vehicle::Mode::Circle,
         domain::vehicle::Mode::Loiter,
         domain::vehicle::Mode::Fbwa,
         domain::vehicle::Mode::Fbwb,
-        domain::vehicle::Mode::Cruise,
         domain::vehicle::Mode::Mission,
         domain::vehicle::Mode::NavTo,
         domain::vehicle::Mode::Return

@@ -32,8 +32,8 @@ Item {
         TopbarButton {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" :
                                                "qrc:/icons/disconnect.svg"
-            iconColor: connection.connected ? palette.textColor :
-                                              palette.dangerColor
+            iconColor: connection.connected ? customPalette.textColor :
+                                              customPalette.dangerColor
             tipText: qsTr("Links")
             entry: "qrc:/Views/Menu/Links/LinkListView.qml"
         }

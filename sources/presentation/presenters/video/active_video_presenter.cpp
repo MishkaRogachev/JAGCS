@@ -15,14 +15,12 @@ ActiveVideoPresenter::ActiveVideoPresenter(QObject* parent):
     VideoPresenter(parent)
 {}
 
+void ActiveVideoPresenter::setActiveVideo(int videoId)
+{
+    this->setVideo(serviceRegistry->videoService()->videoSource(videoId));
+}
+
 void ActiveVideoPresenter::updateActiveVideo()
 {
-    dto::VideoSourcePtr video;
-    int videoId = settings::Provider::value(settings::video::activeVideo).toInt();
-    if (videoId > -1)
-    {
-        video = serviceRegistry->videoService()->videoSource(
-                    settings::Provider::value(settings::video::activeVideo).toInt());
-    }
-    this->setVideo(video);
+    this->setActiveVideo(settings::Provider::value(settings::video::activeVideo).toInt());
 }

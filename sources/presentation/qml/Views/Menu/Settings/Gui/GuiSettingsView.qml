@@ -30,6 +30,7 @@ GridLayout {
     onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
+    Component.onDestruction: if (changed) presenter.updateView()
 
     columns: 2
     rowSpacing: sizings.spacing

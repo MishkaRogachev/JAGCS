@@ -31,8 +31,6 @@ namespace
         { MAV_CMD_DO_GO_AROUND, dto::Command::GoAround },
         { MAV_CMD_DO_PAUSE_CONTINUE, dto::Command::PauseContinue },
         { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute },
-        { MAV_CMD_DO_CHANGE_SPEED, dto::Command::SetSpeed },
-        { MAV_CMD_DO_CHANGE_ALTITUDE, dto::Command::SetAltitude },
         { MAV_CMD_DO_SET_HOME, dto::Command::SetHome },
         { MAV_CMD_PREFLIGHT_CALIBRATION, dto::Command::PreflightCalibration }
         // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
@@ -48,7 +46,7 @@ namespace
         { MAV_RESULT_ACCEPTED, dto::Command::Completed }
     };
 
-    int toMavLinkImpact(double value)
+    int toMavLinkImpact(float value)
     {
         return qIsNaN(value) ? std::numeric_limits<std::int32_t>::max() : value * 1000;
     }
@@ -97,11 +95,28 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
     mavlink_command_ack_t ack;
     mavlink_msg_command_ack_decode(&message, &ack);
 
-    dto::Command::CommandType type = ::mavCommandLongMap.value(ack.command, dto::Command::UnknownCommand);
+    int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
+
+    switch (ack.command)
+    {
+    case MAV_CMD_DO_CHANGE_SPEED:
+        // FIXME: separae ack on speed commands
+        this->ackCommand(vehicleId, dto::Command::SetAirspeed,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        this->ackCommand(vehicleId, dto::Command::SetGroundspeed,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        this->ackCommand(vehicleId, dto::Command::SetThrottle,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        break;
+    default:
+        break;
+    }
+
+    dto::Command::CommandType type = ::mavCommandLongMap.value(
+                                         ack.command, dto::Command::UnknownCommand);
     if (type == dto::Command::UnknownCommand) return;
 
-    this->ackCommand(d->vehicleService->vehicleIdByMavId(message.sysid),
-                     type, ::mavStatusMap.value(ack.result, dto::Command::Idle));
+    this->ackCommand(vehicleId, type, ::mavStatusMap.value(ack.result, dto::Command::Idle));
 }
 
 void CommandHandler::processHeartbeat(const mavlink_message_t& message)
@@ -133,43 +148,49 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
     dto::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
     if (vehicle.isNull()) return;
 
+    // TODO: to common command sender
     if (::mavCommandLongMap.values().contains(command->type()))
     {
-        this->sendCommandLong(vehicle->mavId(),
-                              ::mavCommandLongMap.key(command->type()),
+        this->sendCommandLong(vehicle->mavId(), ::mavCommandLongMap.key(command->type()),
                               command->arguments(), attempt);
         return;
     }
 
-    if (command->arguments().count() < 1) return;
-
-    if (command->type() == dto::Command::SetMode) // TODO: special command map
+    QVariantList args = command->arguments();
+    switch (command->type())  // TODO: special command sender classes
     {
-        this->sendSetMode(vehicle->mavId(),
-                          command->arguments().first().value<domain::vehicle::Mode>());
-    }
-    else if (command->type() == dto::Command::GoTo)
-    {
-        this->sendCurrentItem(vehicle->mavId(), command->arguments().first().toInt());
-    }
-    else if (command->type() == dto::Command::NavTo)
-    {
-        QVariantList args = command->arguments();
-        if (args.count() > 2)
-        {
-            this->sentNavTo(vehicle->mavId(),
-                            args.at(0).toDouble(),
-                            args.at(1).toDouble(),
-                            args.at(2).toFloat());
-        }
-    }
-    else if (command->type() == dto::Command::ManualImpacts)
-    {
-        this->sendManualControl(vehicleId,
-                                command->arguments().value(0, 0).toFloat(),
-                                command->arguments().value(1, 0).toFloat(),
-                                command->arguments().value(2, 0).toFloat(),
-                                command->arguments().value(3, 0).toFloat());
+    case dto::Command::SetMode:
+            this->sendSetMode(vehicle->mavId(), args.value(0).value<domain::vehicle::Mode>());
+        break;
+    case dto::Command::GoTo:
+            this->sendCurrentItem(vehicle->mavId(), args.value(0, 0).toInt());
+        break;
+    case dto::Command::NavTo:
+        this->sendNavTo(vehicle->mavId(), args.value(0, 0).toDouble(),
+                        args.value(1, 0).toDouble(), args.value(2, 0).toFloat());
+        break;
+    case dto::Command::ChangeAltitude:
+        this->sendChangeAltitude(vehicle->mavId(), args.value(0, 0).toFloat());
+        break;
+    case dto::Command::SetAirspeed:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
+                              { 0, args.value(0, 0).toFloat(), -1, 0 }, attempt);
+        break;
+    case dto::Command::SetGroundspeed:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
+                              { 1, args.value(0, 0).toFloat(), -1, 0 }, attempt);
+        break;
+    case dto::Command::SetThrottle:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
+                              { 0, -1, args.value(0, 0).toInt(), 0 }, attempt);
+        break;
+    case dto::Command::ManualImpacts:
+        this->sendManualControl(vehicle->mavId(), args.value(0, 0).toFloat(),
+                                args.value(1, 0).toFloat(), args.value(2, 0).toFloat(),
+                                args.value(3, 0).toFloat());
+        break;
+    default:
+        break;
     }
 }
 
@@ -249,7 +270,7 @@ void CommandHandler::sendCurrentItem(quint8 mavId, quint16 seq)
                      dto::Command::GoTo, dto::Command::Completed); // TODO: wait current item
 }
 
-void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, float altitude)
+void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, float altitude)
 {
     mavlink_message_t message;
     mavlink_mission_item_t item;
@@ -273,17 +294,46 @@ void CommandHandler::sentNavTo(quint8 mavId, double latitude, double longitude, 
                                          m_communicator->linkChannel(link),
                                          &message, &item);
     m_communicator->sendMessage(message, link);
-
+ 
+    // TODO: wait mission ack
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dto::Command::NavTo, dto::Command::Completed); // TODO: wait nav to
+                     dto::Command::NavTo, dto::Command::Completed);
 }
 
-void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
-                                       double yaw, double thrust)
+void CommandHandler::sendChangeAltitude(quint8 mavId, float altitude)
+{
+    mavlink_message_t message;
+    mavlink_mission_item_t item;
+
+    item.target_system = mavId;
+    item.target_component = MAV_COMP_ID_MISSIONPLANNER;
+    item.frame = MAV_FRAME_GLOBAL_RELATIVE_ALT;
+    item.command = MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT;
+    item.current = 3; // guided
+    item.seq = 0;
+    item.autocontinue = false;
+    item.z = altitude;
+    item.param1 = 0;
+
+    AbstractLink* link = m_communicator->mavSystemLink(mavId);
+    if (!link) return;
+
+    mavlink_msg_mission_item_encode_chan(m_communicator->systemId(),
+                                         m_communicator->componentId(),
+                                         m_communicator->linkChannel(link),
+                                         &message, &item);
+    m_communicator->sendMessage(message, link);
+
+    // TODO: wait mission ack
+    this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
+                     dto::Command::ChangeAltitude, dto::Command::Completed);
+}
+
+void CommandHandler::sendManualControl(quint8 mavId, float pitch, float roll,
+                                       float yaw, float thrust)
 {
     mavlink_manual_control_t mavlink_manual_control;
 
-    int mavId = d->vehicleService->mavIdByVehicleId(vehicleId);
     mavlink_manual_control.target = mavId;
 
     mavlink_manual_control.x = ::toMavLinkImpact(pitch);
@@ -301,6 +351,8 @@ void CommandHandler::sendManualControl(int vehicleId, double pitch, double roll,
                                            &message, &mavlink_manual_control);
     m_communicator->sendMessage(message, link);
 
-    // TODO: wait feedback
-    this->ackCommand(vehicleId, dto::Command::ManualImpacts, dto::Command::Completed);
+    // TODO: wait ack
+    this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
+                     dto::Command::ManualImpacts, dto::Command::Completed);
 }
+

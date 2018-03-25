@@ -7,7 +7,7 @@ Canvas {
     property real value: minValue
     property real minValue: 0
     property real maxValue: 100
-    property color fillColor: palette.selectionColor
+    property color fillColor: customPalette.selectionColor
 
     Behavior on value { PropertyAnimation { duration: 100 } }
 
@@ -21,7 +21,7 @@ Canvas {
 
         ctx.clearRect(0, 0, width, height);
 
-        ctx.fillStyle = palette.sunkenColor;
+        ctx.fillStyle = customPalette.sunkenColor;
         ctx.fillRect(0, 0, width, height);
 
         var offset = Helper.mapToRange(value, minValue, maxValue, height);

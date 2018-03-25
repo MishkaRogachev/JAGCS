@@ -2,12 +2,10 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-import "CommandControls" as CommandControls
-
+import "../DashboardControls" as DashboardControls
 import "../Vehicles"
 
 Controls.Card {
@@ -70,8 +68,8 @@ Controls.Card {
                 width: ah.width * 0.1
                 height: ah.height * 0.6
                 value: vehicle.barometric.climb
-                fillColor: vehicle.barometric.climb > 0 ? palette.skyColor :
-                                                          palette.groundColor
+                fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor :
+                                                          customPalette.groundColor
                 minValue: -10
                 maxValue: 10 // TODO: to consts
             }
@@ -86,10 +84,8 @@ Controls.Card {
                 Layout.maximumWidth: sizings.controlBaseSize * 3
             }
 
-            Controls.Label {
+            DashboardControls.Label {
                 text: translator.translateVehicleMode(vehicle.mode)
-                font.bold: true
-                font.pixelSize: sizings.fontPixelSize * 0.6
                 horizontalAlignment: Text.AlignRight
                 Layout.fillWidth: true
             }
@@ -98,26 +94,26 @@ Controls.Card {
         RowLayout {
             spacing: sizings.spacing
 
-            Indicators.FdLabel {
+            Indicators.ValueLabel2 {
                 digits: 0
-                value: units.convertSpeed(speedUnits, vehicle.satellite.groundspeed)
+                value: units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed)
                 enabled: vehicle.satellite.enabled
                 operational: vehicle.satellite.operational
                 prefix: qsTr("GS") + ", " + dashboard.speedSuffix
                 Layout.fillWidth: true
             }
 
-            Indicators.FdLabel {
+            Indicators.ValueLabel2 {
                 digits: 0
-                value: units.convertSpeed(speedUnits, vehicle.pitot.trueAirspeed)
+                value: units.convertSpeedTo(speedUnits, vehicle.pitot.trueAirspeed)
                 enabled: vehicle.pitot.enabled
                 operational: vehicle.pitot.operational
                 prefix: qsTr("TAS") + ", " + dashboard.speedSuffix
                 Layout.fillWidth: true
             }
 
-            Indicators.FdLabel {
-                value: units.convertDistance(altitudeUnits, vehicle.barometric.displayedAltitude)
+            Indicators.ValueLabel2 {
+                value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
                 enabled: vehicle.barometric.enabled
                 operational: vehicle.barometric.operational
                 prefix: qsTr("ALT") + ", " + dashboard.altitudeSuffix

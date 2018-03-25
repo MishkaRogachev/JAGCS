@@ -26,8 +26,7 @@ GridLayout {
     property alias yawFactor: yaw.factor
     property alias throttleFactor: throttle.factor
 
-    signal save()
-    signal restore()
+    Component.onDestruction: if (changed) presenter.updateView()
 
     columns: 2
     rowSpacing: sizings.spacing
@@ -143,7 +142,7 @@ GridLayout {
     SaveRestore {
         enabled: changed
         onSave: presenter.save()
-        onRestore: presenter.restore()
+        onRestore: presenter.updateView()
         Layout.columnSpan: 2
         Layout.rightMargin: sizings.shadowSize
     }

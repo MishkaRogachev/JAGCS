@@ -194,8 +194,9 @@ Item {
                 Controls.RealSpinBox {
                     id: altitudeBox
                     enabled: editEnabled
-                    realFrom: -20000 // 418 m Dead Sea shore
-                    realTo: 20000 // TODO: constants to config
+                    realFrom: settings.value("Parameters/minAltitude")
+                    realTo: settings.value("Parameters/maxAltitude")
+                    precision: settings.value("Parameters/precisionAltitude")
                     onRealValueChanged: changed = true;
                     Layout.fillWidth: true
                 }
@@ -212,8 +213,9 @@ Item {
                     id: abortAltitudeBox
                     visible: abortAltitudeVisible
                     enabled: editEnabled
-                    realFrom: -20000 // 418 m Daed Sea shore
-                    realTo: 20000 // TODO: constants to config
+                    realFrom: settings.value("Parameters/minAltitude")
+                    realTo: settings.value("Parameters/maxAltitude")
+                    precision: settings.value("Parameters/precisionAltitude")
                     onRealValueChanged: changed = true;
                     Layout.fillWidth: true
                 }
@@ -235,9 +237,9 @@ Item {
                 id: climbBox
                 visible: altitudeVisible
                 enabled: editEnabled
-                realFrom: -20000
-                realValue: 0
-                realTo: 20000 // TODO: constants to config
+                realFrom: settings.value("Parameters/minAltitude")
+                realTo: settings.value("Parameters/maxAltitude")
+                precision: settings.value("Parameters/precisionAltitude")
                 Layout.fillWidth: true
             }
 
@@ -309,7 +311,7 @@ Item {
                 visible: distanceVisible
                 enabled: editEnabled
                 onRealValueChanged: updatePosFromDistAndAzimuth()
-                realTo: 200000 // TODO: constants to config
+                realTo: settings.value("Parameters/maxDistance")
                 Layout.fillWidth: true
             }
 
@@ -342,7 +344,7 @@ Item {
                 Controls.RealSpinBox {
                     id: radiusBox
                     enabled: editEnabled
-                    realTo: 5000 // TODO: constants to config
+                    realTo: settings.value("Parameters/maxRadius")
                     onRealValueChanged: changed = true
                     Layout.fillWidth: true
                 }
@@ -368,7 +370,7 @@ Item {
                 visible: pitchVisible
                 enabled: editEnabled
                 realFrom: -90
-                realTo: 90 // TODO: constants to config
+                realTo: 90
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }
@@ -384,7 +386,7 @@ Item {
                 visible: yawVisible
                 enabled: editEnabled
                 realFrom: -180
-                realTo: 360 // TODO: constants to config
+                realTo: 360
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }
@@ -428,6 +430,9 @@ Item {
                 id: speedBox
                 visible: speedVisible
                 enabled: editEnabled && speedEnabled
+                realFrom: settings.value("Parameters/minSpeed")
+                realTo: settings.value("Parameters/maxSpeed")
+                precision: settings.value("Parameters/precisionSpeed")
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }
@@ -461,6 +466,8 @@ Item {
                 id: throttleBox
                 visible: speedVisible
                 enabled: editEnabled && throttleEnabled
+                from: 0
+                to: 100
                 onValueChanged: changed = true
                 Layout.fillWidth: true
             }

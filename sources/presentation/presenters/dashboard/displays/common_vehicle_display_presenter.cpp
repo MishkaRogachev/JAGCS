@@ -181,6 +181,7 @@ void CommonVehicleDisplayPresenter::updateSystem(const domain::Telemetry::Teleme
 {
     this->setVehicleProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
     this->setVehicleProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
+    this->setVehicleProperty(PROPERTY(stab), parameters.value(domain::Telemetry::Stabilized));
     this->setVehicleProperty(PROPERTY(vehicleState), parameters.value(domain::Telemetry::State));
     this->setVehicleProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
 

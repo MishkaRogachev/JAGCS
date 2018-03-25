@@ -22,11 +22,18 @@ namespace settings
         const QString statisticsCount = "Communication/statisticsCount";
     }
 
-    namespace mission
+    namespace parameters
     {
-        const QString defaultAcceptanceRadius = "Mission/defaultAcceptanceRadius";
-        const QString defaultTakeoffPitch = "Mission/defaultTakeoffPitch";
-        const QString visibility = "Mission/visibility";
+        const QString defaultAcceptanceRadius = "Parameters/defaultAcceptanceRadius";
+        const QString defaultTakeoffPitch = "Parameters/defaultTakeoffPitch";
+        const QString minAltitude = "Parameters/minAltitude";
+        const QString maxAltitude = "Parameters/maxAltitude";
+        const QString precisionAltitude = "Parameters/precisionAltitude";
+        const QString minSpeed = "Parameters/minSpeed";
+        const QString maxSpeed= "Parameters/maxSpeed";
+        const QString precisionSpeed = "Parameters/precisionSpeed";
+        const QString maxDistance = "Parameters/maxDistance";
+        const QString maxRadius = "Parameters/maxRadius";
     }
 
     namespace map
@@ -113,6 +120,12 @@ namespace settings
         const QString password = "NetworkProxy/password";
     }
 
+    namespace mission
+    {
+        const QString mission = "mis_";
+        const QString visibility = "visibility";
+    }
+
     namespace vehicle
     {
         const QString vehicle = "veh_";
@@ -123,6 +136,7 @@ namespace settings
             const QString status = "statusVisible";
             const QString fd = "fdVisible";
             const QString hsi = "hsiVisible";
+            const QString landing = "landingVisible";
             const QString control = "controlVisible";
         }
     }

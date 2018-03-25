@@ -29,11 +29,11 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         height: parent.height * 0.6
-        value: units.convertSpeed(speedUnits, vehicle.pitot.present ?
+        value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundSpeed)
-        error: vehicle.pitot.present ?
-                   units.convertSpeed(speedUnits, vehicle.flightControl.airspeedError) : 0
+        errorVisible: vehicle.guided && vehicle.pitot.present
+        error: units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -44,11 +44,11 @@ Controls.Pane {
         onAddValue: manual.addImpact(ManualController.Throttle, value)
     }
 
-    Indicators.FdLabel {
+    Indicators.ValueLabel2 {
         anchors.top: parent.top
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
-        value: units.convertSpeed(speedUnits, vehicle.satellite.groundspeed)
+        value: units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed)
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: speedLadder.width
@@ -56,11 +56,11 @@ Controls.Pane {
         visible: vehicle.pitot.present
     }
 
-    Indicators.FdLabel {
+    Indicators.ValueLabel2 {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
-        value: units.convertSpeed(speedUnits, vehicle.pitot.trueAirspeed)
+        value: units.convertSpeedTo(speedUnits, vehicle.pitot.trueAirspeed)
         enabled: vehicle.pitot.enabled
         operational: vehicle.pitot.operational
         width: speedLadder.width
@@ -77,10 +77,10 @@ Controls.Pane {
         enabled: vehicle.online && vehicle.ahrs.enabled
         operational: vehicle.ahrs.operational
         armed: vehicle.armed
-        guided: vehicle.guided
         pitch: vehicle.ahrs.pitch
         roll: vehicle.ahrs.roll
         yawspeed: vehicle.ahrs.yawspeed
+        desiredVisible: vehicle.stab
         desiredPitch: vehicle.flightControl.desiredPitch
         desiredRoll: vehicle.flightControl.desiredRoll
         rollInverted: dashboard.rollInverted
@@ -95,7 +95,7 @@ Controls.Pane {
         width: altitudeLadder.majorTickSize + 1
         height: parent.height * 0.6
         value: vehicle.barometric.climb
-        fillColor: vehicle.barometric.climb > 0 ? palette.skyColor : palette.groundColor
+        fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
         minValue: -10
         maxValue: 10
     }
@@ -105,13 +105,14 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         height: parent.height * 0.6
-        value: units.convertDistance(altitudeUnits, vehicle.barometric.displayedAltitude)
-        error: units.convertDistance(altitudeUnits, vehicle.flightControl.altitudeError)
+        value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
+        errorVisible: vehicle.guided
+        error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ?
-                          0 : units.convertDistance(altitudeUnits, vehicle.homeAltitude)
-        warningColor: palette.groundColor
+                          0 : units.convertDistanceTo(altitudeUnits, vehicle.homeAltitude)
+        warningColor: customPalette.groundColor
         valueStep: dashboard.altitudeStep
         enabled: vehicle.barometric.enabled
         operational: vehicle.barometric.operational
@@ -119,20 +120,20 @@ Controls.Pane {
         prefix: qsTr("ALT") + ", " + altitudeSuffix
     }
 
-    Indicators.FdLabel {
+    Indicators.ValueLabel2 {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        value: units.convertDistance(altitudeUnits, vehicle.satellite.altitude)
+        value: units.convertDistanceTo(altitudeUnits, vehicle.satellite.altitude)
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         width: altitudeLadder.width
         prefix: qsTr("SAT") + ", " + altitudeSuffix
     }
 
-    Indicators.FdLabel {
+    Indicators.ValueLabel2 {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
-        value: units.convertDistance(altitudeUnits, vehicle.radalt.altitude)
+        value: units.convertDistanceTo(altitudeUnits, vehicle.radalt.altitude)
         digits: 2
         enabled: vehicle.radalt.enabled
         operational: vehicle.radalt.operational

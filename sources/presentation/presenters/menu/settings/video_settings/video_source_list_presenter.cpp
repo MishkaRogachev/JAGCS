@@ -64,8 +64,7 @@ void VideoSourceListPresenter::addStreamVideo()
     m_service->save(video);
 }
 
-void VideoSourceListPresenter::setActiveVideo(int video)
+void VideoSourceListPresenter::saveActiveVideo(int video)
 {
     settings::Provider::setValue(settings::video::activeVideo, video);
-    this->setViewProperty(PROPERTY(activeVideo), video);
 }

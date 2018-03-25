@@ -42,21 +42,21 @@ Item {
             id: distanceAxis
             min: minDistance - (maxDistance - minDistance) * 0.01
             max: maxDistance + (maxDistance - minDistance) * 0.01
-            labelsColor: palette.textColor
+            labelsColor: customPalette.textColor
         }
 
         ValueAxis {
             id: altitudeAxis
             min: minAltitude - (maxAltitude - minAltitude) * 0.1
             max: maxAltitude + (maxAltitude - minAltitude) * 0.1
-            labelsColor: palette.textColor
+            labelsColor: customPalette.textColor
         }
 
         LineSeries {
             id: paths
             axisX: distanceAxis
             axisY: altitudeAxis
-            color: palette.missionColor
+            color: customPalette.missionColor
             width: 2
         }
 
@@ -64,7 +64,7 @@ Item {
             id: waypoints
             axisX: distanceAxis
             axisY: altitudeAxis
-            color: palette.missionColor
+            color: customPalette.missionColor
             // TODO: border color selected
         }
     }

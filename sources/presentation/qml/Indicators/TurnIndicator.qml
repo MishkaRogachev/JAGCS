@@ -26,13 +26,13 @@ Item {
 
             ctx.beginPath();
             ctx.lineCap = 'round';
-            ctx.strokeStyle = palette.backgroundColor;
+            ctx.strokeStyle = customPalette.backgroundColor;
             ctx.lineWidth = canvas.height * 0.06;
             ctx.arc(x, y, radius, 0.4 * Math.PI, 0.6 * Math.PI, false);
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.strokeStyle = palette.textColor;
+            ctx.strokeStyle = customPalette.textColor;
             ctx.lineWidth = canvas.height * 0.05;
             var angle = Helper.mapToRange(value, -border, border, 0.2);
             ctx.arc(x, y, radius, (0.399 + angle) * Math.PI, (0.401 + angle) * Math.PI, false);

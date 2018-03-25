@@ -8,6 +8,13 @@
 // Internal
 #include "units.h"
 
+#ifndef INT16_MAX
+// Std
+#include <limits.h>
+
+#define INT16_MAX std::numeric_limits<std::int16_t>::max()
+#endif
+
 using namespace settings;
 
 namespace
@@ -25,8 +32,16 @@ namespace
         { communication::port, 14550 },
         { communication::statisticsCount, 50 },
 
-        { mission::defaultAcceptanceRadius, 3 },
-        { mission::defaultTakeoffPitch, 15 },
+        { parameters::defaultAcceptanceRadius, 3 },
+        { parameters::defaultTakeoffPitch, 15 },
+        { parameters::minAltitude, -500 }, // 418 m Daed Sea shore
+        { parameters::maxAltitude, 50000 },
+        { parameters::precisionAltitude, 1 },
+        { parameters::minSpeed, 0 },
+        { parameters::maxSpeed, 5000 },
+        { parameters::precisionSpeed, 1 },
+        { parameters::maxRadius, INT16_MAX },
+        { parameters::maxDistance, INT16_MAX },
 
         { map::zoomLevel, 16.0 },
         { map::centerLatitude, 55.968954 },

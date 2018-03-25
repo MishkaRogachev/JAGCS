@@ -7,7 +7,6 @@ AttitudeIndicator {
     id: fd
 
     property bool armed: false
-    property bool guided: false
     property bool operational: false
 
     property real yawspeed: 0.0
@@ -20,6 +19,8 @@ AttitudeIndicator {
     property real rollStep: 10
 
     property bool inputEnabled: false
+
+    property alias desiredVisible: desiredMark.visible
 
     signal addPitch(real value)
     signal addRoll(real value)
@@ -38,7 +39,7 @@ AttitudeIndicator {
         maxRoll: fd.maxRoll
         rollStep: fd.rollStep
         opacity: enabled ? 1 : 0.33
-        color: operational ? palette.textColor : palette.dangerColor
+        color: operational ? customPalette.textColor : customPalette.dangerColor
     }
 
     PitchScale {
@@ -51,7 +52,7 @@ AttitudeIndicator {
         maxPitch: pitchInverted ? fd.pitch + fd.maxPitch : fd.maxPitch
         pitchStep: fd.pitchStep
         opacity: enabled ? 1 : 0.33
-        color: operational ? palette.textColor : palette.dangerColor
+        color: operational ? customPalette.textColor : customPalette.dangerColor
     }
 
     TurnIndicator {
@@ -66,7 +67,7 @@ AttitudeIndicator {
         text: qsTr("DISARMED")
         font.pixelSize: fd.height * 0.1
         font.bold: true
-        color: armed ? "transparent" : palette.dangerColor
+        color: armed ? "transparent" : customPalette.dangerColor
     }
 
     DesiredAnglesMark {
@@ -74,7 +75,6 @@ AttitudeIndicator {
         anchors.fill: parent
         anchors.margins: sizings.margins
         effectiveHeight: fd.effectiveHeight
-        visible: guided
         pitch: pitchInverted ? fd.pitch - desiredPitch : -desiredPitch
         roll: rollInverted ? -desiredRoll : fd.roll - desiredRoll
     }
@@ -86,7 +86,7 @@ AttitudeIndicator {
         effectiveHeight: fd.effectiveHeight
         pitch: pitchInverted ? 0 : -fd.pitch
         roll: rollInverted ? -fd.roll : 0
-        markColor: armed ? palette.selectedTextColor : palette.dangerColor
+        markColor: armed ? customPalette.selectedTextColor : customPalette.dangerColor
         markWidth: 3
     }
 
@@ -94,7 +94,7 @@ AttitudeIndicator {
         anchors.top: pitchScale.top
         anchors.horizontalCenter: pitchScale.horizontalCenter
         iconSource: "qrc:/icons/up.svg"
-        iconColor: palette.selectedTextColor
+        iconColor: customPalette.selectedTextColor
         flat: true
         round: true
         visible: inputEnabled
@@ -106,7 +106,7 @@ AttitudeIndicator {
         anchors.bottom: pitchScale.bottom
         anchors.horizontalCenter: pitchScale.horizontalCenter
         iconSource: "qrc:/icons/down.svg"
-        iconColor: palette.selectedTextColor
+        iconColor: customPalette.selectedTextColor
         flat: true
         round: true
         visible: inputEnabled
@@ -119,7 +119,7 @@ AttitudeIndicator {
         anchors.topMargin: (fd.height - fd.width) / 2
         anchors.left: rollScale.left
         iconSource: "qrc:/icons/bank_left.svg"
-        iconColor: palette.selectedTextColor
+        iconColor: customPalette.selectedTextColor
         flat: true
         round: true
         visible: inputEnabled
@@ -133,7 +133,7 @@ AttitudeIndicator {
 
         anchors.right: rollScale.right
         iconSource: "qrc:/icons/bank_right.svg"
-        iconColor: palette.selectedTextColor
+        iconColor: customPalette.selectedTextColor
         flat: true
         round: true
         visible: inputEnabled

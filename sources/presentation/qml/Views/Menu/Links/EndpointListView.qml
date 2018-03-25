@@ -18,7 +18,7 @@ Controls.Frame {
     padding: sizings.padding
     implicitWidth: column.implicitWidth + padding * 2
     implicitHeight: column.height + padding * 2
-    backgroundColor: palette.sunkenColor
+    backgroundColor: customPalette.sunkenColor
 
     Flickable {
         id: flickable

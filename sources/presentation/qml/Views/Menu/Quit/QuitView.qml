@@ -23,7 +23,7 @@ Item {
             Controls.Button {
                 text: qsTr("Yes")
                 iconSource: "qrc:/icons/quit.svg"
-                iconColor: palette.dangerColor
+                iconColor: customPalette.dangerColor
                 onClicked: Qt.quit()
                 Layout.fillWidth: true
             }

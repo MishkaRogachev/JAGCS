@@ -25,7 +25,7 @@ namespace presentation
 
         void addDeviceVideo();
         void addStreamVideo();
-        void setActiveVideo(int video);
+        void saveActiveVideo(int video);
 
     private:
         domain::VideoService* m_service;

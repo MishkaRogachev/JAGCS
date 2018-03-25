@@ -49,6 +49,7 @@ Controls.ApplicationWindow  {
                         cornerMap ? map.implicitWidth : video.implicitWidth)
         height: parent.height / 2
         z: cornerVisible ? 2 : -1
+        enabled: cornerVisible
         onClicked: cornerMap = !cornerMap
     }
 

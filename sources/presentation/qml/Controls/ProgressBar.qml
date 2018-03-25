@@ -15,11 +15,11 @@ T.ProgressBar {
     background: Rectangle {
         anchors.fill: parent
         radius: 2
-        color: palette.sunkenColor
+        color: customPalette.sunkenColor
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled && !control.flat
         }
     }
@@ -32,7 +32,7 @@ T.ProgressBar {
             width: control.visualPosition * background.width
             height: parent.height
             radius: 2
-            color: palette.selectionColor
+            color: customPalette.selectionColor
         }
 
         Label {

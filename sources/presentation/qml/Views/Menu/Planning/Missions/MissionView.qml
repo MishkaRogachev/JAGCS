@@ -115,7 +115,7 @@ Controls.Frame {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
                 onActivated: presenter.remove()
-                iconColor: palette.dangerColor
+                iconColor: customPalette.dangerColor
             }
         }
     }

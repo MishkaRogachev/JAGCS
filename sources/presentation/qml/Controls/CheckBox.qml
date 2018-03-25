@@ -23,20 +23,20 @@ T.CheckBox {
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: 2
-        color: palette.sunkenColor
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        color: customPalette.sunkenColor
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
 
         ColoredIcon {
             anchors.fill: parent
             anchors.margins: parent.width * 0.1
             source: "qrc:/ui/ok.svg"
-            color: control.down ? palette.highlightColor : palette.textColor
+            color: control.down ? customPalette.highlightColor : customPalette.textColor
             visible: control.checked || control.down
         }
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }

@@ -2,12 +2,7 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
-import "qrc:/Indicators" as Indicators
-
-import "CommandControls" as CommandControls
-import "Instruments" as Instruments
 
 import "../Vehicles"
 
@@ -44,35 +39,42 @@ Item {
         ListElement {
             name: qsTr("Diagnostics panel")
             setting: "diagnosticsVisible"
-            instrument: "./Instruments/DiagnosticsPanel.qml"
+            instrument: "../Instruments/DiagnosticsPanel.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Status panel")
             setting: "statusVisible"
-            instrument: "./Instruments/StatusPanel.qml"
+            instrument: "../Instruments/StatusPanel.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Flight instrument(FD)")
             setting: "fdVisible"
-            instrument: "./Instruments/FlightDirector.qml"
+            instrument: "../Instruments/FlightDirector.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Horizontal situation indicator(HSI)")
             setting: "hsiVisible"
-            instrument: "./Instruments/HorizontalSituationIndicator.qml"
+            instrument: "../Instruments/HorizontalSituationIndicator.qml"
+            instrumentVisible: true
+        }
+
+        ListElement {
+            name: qsTr("Landing indicator")
+            setting: "landingVisible"
+            instrument: "../Instruments/LandingIndicator.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Control panel")
             setting: "controlVisible"
-            instrument: "./Instruments/ControlPanel.qml"
+            instrument: "../Instruments/ControlPanel.qml"
             instrumentVisible: true
         }
     }

@@ -18,20 +18,30 @@ void AerialVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 
     domain::Telemetry* ahrs = node->childNode(domain::Telemetry::Ahrs);
     this->chainNode(ahrs->childNode(domain::Telemetry::Ekf),
-                    std::bind(&AerialVehicleDisplayPresenter::updateEkf, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updateEkf,
+                              this, std::placeholders::_1));
 
     this->chainNode(node->childNode(domain::Telemetry::Pitot),
-                    std::bind(&AerialVehicleDisplayPresenter::updatePitot, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updatePitot,
+                              this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Barometric),
-                    std::bind(&AerialVehicleDisplayPresenter::updateBarometric, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updateBarometric,
+                              this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Radalt),
-                    std::bind(&AerialVehicleDisplayPresenter::updateRadalt, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updateRadalt,
+                              this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::FlightControl),
-                    std::bind(&AerialVehicleDisplayPresenter::updateFlightControl, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updateFlightControl,
+                              this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Navigator),
-                    std::bind(&AerialVehicleDisplayPresenter::updateNavigator, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updateNavigator,
+                              this, std::placeholders::_1));
+    this->chainNode(node->childNode(domain::Telemetry::LandingSystem),
+                    std::bind(&AerialVehicleDisplayPresenter::updateLandingSystem,
+                              this, std::placeholders::_1));
     this->chainNode(node->childNode(domain::Telemetry::Wind),
-                    std::bind(&AerialVehicleDisplayPresenter::updateWind, this, std::placeholders::_1));
+                    std::bind(&AerialVehicleDisplayPresenter::updateWind,
+                              this, std::placeholders::_1));
 }
 
 void AerialVehicleDisplayPresenter::updateEkf(const domain::Telemetry::TelemetryMap& parameters)
@@ -62,7 +72,8 @@ void AerialVehicleDisplayPresenter::updatePitot(const domain::Telemetry::Telemet
                              parameters.value(domain::Telemetry::IndicatedAirspeed, 0));
 }
 
-void AerialVehicleDisplayPresenter::updateBarometric(const domain::Telemetry::TelemetryMap& parameters)
+void AerialVehicleDisplayPresenter::updateBarometric(
+        const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(barometric), PROPERTY(present),
                              parameters.value(domain::Telemetry::Present, false));
@@ -88,7 +99,8 @@ void AerialVehicleDisplayPresenter::updateRadalt(const domain::Telemetry::Teleme
                              parameters.value(domain::Telemetry::Altitude, 0));
 }
 
-void AerialVehicleDisplayPresenter::updateFlightControl(const domain::Telemetry::TelemetryMap& parameters)
+void AerialVehicleDisplayPresenter::updateFlightControl(
+        const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(desiredPitch),
                              parameters.value(domain::Telemetry::DesiredPitch, 0));
@@ -97,12 +109,13 @@ void AerialVehicleDisplayPresenter::updateFlightControl(const domain::Telemetry:
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(desiredHeading),
                              parameters.value(domain::Telemetry::DesiredHeading, 0));
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(airspeedError),
-                             parameters.value(domain::Telemetry::AirspeedError, false));
+                             parameters.value(domain::Telemetry::AirspeedError, 0));
     this->setVehicleProperty(PROPERTY(flightControl), PROPERTY(altitudeError),
-                             parameters.value(domain::Telemetry::AltitudeError, false));
+                             parameters.value(domain::Telemetry::AltitudeError, 0));
 }
 
-void AerialVehicleDisplayPresenter::updateNavigator(const domain::Telemetry::TelemetryMap& parameters)
+void AerialVehicleDisplayPresenter::updateNavigator(
+        const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(navigator), PROPERTY(targetBearing),
                              parameters.value(domain::Telemetry::TargetBearing, 0));
@@ -110,6 +123,21 @@ void AerialVehicleDisplayPresenter::updateNavigator(const domain::Telemetry::Tel
                              parameters.value(domain::Telemetry::Distance, 0));
     this->setVehicleProperty(PROPERTY(navigator), PROPERTY(trackError),
                              parameters.value(domain::Telemetry::TrackError, 0));
+}
+
+void AerialVehicleDisplayPresenter::updateLandingSystem(
+        const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setVehicleProperty(PROPERTY(landingSystem), PROPERTY(distance),
+                             parameters.value(domain::Telemetry::Distance, 0));
+    this->setVehicleProperty(PROPERTY(landingSystem), PROPERTY(deviationX),
+                             parameters.value(domain::Telemetry::DeviationX, 0));
+    this->setVehicleProperty(PROPERTY(landingSystem), PROPERTY(deviationY),
+                             parameters.value(domain::Telemetry::DeviationY, 0));
+    this->setVehicleProperty(PROPERTY(landingSystem), PROPERTY(sizeX),
+                             parameters.value(domain::Telemetry::SizeX, 0));
+    this->setVehicleProperty(PROPERTY(landingSystem), PROPERTY(sizeY),
+                             parameters.value(domain::Telemetry::SizeY, 0));
 }
 
 void AerialVehicleDisplayPresenter::updateWind(const domain::Telemetry::TelemetryMap& parameters)

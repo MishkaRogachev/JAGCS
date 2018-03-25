@@ -8,7 +8,7 @@ Item {
     property real minRoll: -25.0
     property real maxRoll: 25.0
     property real rollStep: 5.0
-    property color color: palette.textColor
+    property color color: customPalette.textColor
     property real fontPixelSize: height > 0 ? height * 0.1 : 1
 
     onRollChanged: canvas.requestPaint()

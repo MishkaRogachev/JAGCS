@@ -23,6 +23,7 @@ namespace presentation
         void updateRadalt(const domain::Telemetry::TelemetryMap& parameters);
         void updateFlightControl(const domain::Telemetry::TelemetryMap& parameters);
         void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
+        void updateLandingSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updateWind(const domain::Telemetry::TelemetryMap& parameters);
     };
 }

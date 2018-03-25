@@ -14,20 +14,20 @@ Controls.ColoredIcon {
     implicitHeight: width
     color: {
         if (percentage > 50)
-            return palette.positiveColor;
+            return customPalette.positiveColor;
         if (percentage > 15)
-            return palette.cautionColor;
+            return customPalette.cautionColor;
         if (percentage > 0)
-            return palette.dangerColor;
+            return customPalette.dangerColor;
 
-        return palette.sunkenColor;
+        return customPalette.sunkenColor;
     }
 
     Item {
         id: fill
         anchors.fill: parent
         anchors.margins: root.width * 0.1
-        anchors.topMargin: root.width * 0.35
+        anchors.topMargin: root.width * 0.33
 
         Text {
             id: textItem
@@ -51,8 +51,8 @@ Controls.ColoredIcon {
                 font.bold: true
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                anchors.verticalCenterOffset: -parent.height * 0.25
-                color: palette.backgroundColor
+                anchors.bottomMargin: -1
+                color: customPalette.backgroundColor
             }
         }
     }

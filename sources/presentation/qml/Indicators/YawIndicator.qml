@@ -16,7 +16,7 @@ Rectangle {
     onOperationalChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
-    color: palette.sunkenColor
+    color: customPalette.sunkenColor
 
     Canvas {
         id: canvas
@@ -29,7 +29,7 @@ Rectangle {
 
             ctx.save();
 
-            ctx.fillStyle = operational ? palette.textColor : palette.dangerColor;
+            ctx.fillStyle = operational ? customPalette.textColor : customPalette.dangerColor;
 
             ctx.translate(width / 2, 0);
 

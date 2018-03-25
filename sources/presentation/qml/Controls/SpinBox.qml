@@ -7,7 +7,7 @@ T.SpinBox {
     id: control
 
     property bool isValid: value >= from && value <= to
-    property color backgroundColor: palette.sunkenColor
+    property color backgroundColor: customPalette.sunkenColor
 
     implicitWidth: sizings.controlBaseSize * 5
     implicitHeight: sizings.controlBaseSize
@@ -24,12 +24,12 @@ T.SpinBox {
 
     background: Rectangle {
         radius: 3
-        color: isValid ? backgroundColor : palette.dangerColor
-        border.color: control.activeFocus ? palette.highlightColor : "transparent"
+        color: isValid ? backgroundColor : customPalette.dangerColor
+        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }
@@ -48,13 +48,13 @@ T.SpinBox {
         implicitWidth: sizings.controlBaseSize
         implicitHeight: sizings.controlBaseSize
         radius: 3
-        color: down.pressed ? palette.highlightColor : "transparent"
+        color: down.pressed ? customPalette.highlightColor : "transparent"
         visible: enabled
 
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/minus.svg"
-            color: palette.textColor
+            color: customPalette.textColor
             height: parent.height * 0.6
             width: height
         }
@@ -65,7 +65,7 @@ T.SpinBox {
         implicitWidth: sizings.controlBaseSize
         implicitHeight: sizings.controlBaseSize
         radius: 3
-        color: up.pressed ? palette.highlightColor : "transparent"
+        color: up.pressed ? customPalette.highlightColor : "transparent"
         visible: enabled
 
         ColoredIcon {
@@ -73,7 +73,7 @@ T.SpinBox {
             source: "qrc:/ui/plus.svg"
             height: parent.height * 0.6
             width: height
-            color: palette.textColor
+            color: customPalette.textColor
         }
     }
 }

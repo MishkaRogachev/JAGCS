@@ -39,10 +39,11 @@ void LinkListPresenter::addUdpLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
-    description->setName(tr("New UDP Link"));
+    description->setName(tr("UDP Link"));
     description->setType(dto::LinkDescription::Udp);
     description->setParameter(dto::LinkDescription::Port,
                               settings::Provider::value(settings::communication::port));
+    description->setParameter(dto::LinkDescription::UdpAutoResponse, true);
 
     m_service->save(description);
 }
@@ -51,7 +52,7 @@ void LinkListPresenter::addSerialLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
-    description->setName(tr("New Serial Link"));
+    description->setName(tr("Serial Link"));
     description->setType(dto::LinkDescription::Serial);
     description->setParameter(dto::LinkDescription::BaudRate,
                               settings::Provider::value(settings::communication::baudRate));

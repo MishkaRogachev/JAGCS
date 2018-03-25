@@ -1,14 +1,15 @@
 #ifndef MAVLINK_PROTOCOL_HELPERS_H
 #define MAVLINK_PROTOCOL_HELPERS_H
 
-// Std
-#include <limits.h>
 
 // Qt
 #include <QGeoCoordinate>
 
 #ifndef UINT16_MAX
-#define UINT16_MAX std::numeric_limits<std::uint32_t>::max()
+// Std
+#include <limits.h>
+
+#define UINT16_MAX std::numeric_limits<std::uint16_t>::max()
 #endif
 
 namespace comm
@@ -71,6 +72,12 @@ namespace comm
     inline float getTrueAirspeed(float indicatedAirspeed, float altitude)
     {
         return indicatedAirspeed + (indicatedAirspeed * 0.02 * altitude / 1000);
+    }
+
+    inline float fixAirspeedError(float aspdError)
+    {
+        // APM ISSUE: https://github.com/ArduPilot/ardupilot/issues/335
+        return aspdError * 0.01;
     }
 
     inline float fromCentidegrees(float centidegrees)

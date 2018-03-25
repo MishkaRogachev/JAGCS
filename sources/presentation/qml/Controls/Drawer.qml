@@ -9,6 +9,6 @@ T.Drawer {
     modal: false
 
     background: Rectangle {
-        color: palette.backgroundColor
+        color: customPalette.backgroundColor
     }
 }

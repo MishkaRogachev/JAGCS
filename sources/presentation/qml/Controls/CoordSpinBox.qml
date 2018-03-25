@@ -70,16 +70,17 @@ T.Control {
     opacity: enabled ? 1 : 0.33
     implicitWidth: row.implicitWidth
     implicitHeight: sizings.controlBaseSize
+    font.pixelSize: sizings.fontPixelSize
 
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: !isNaN(value) ? palette.sunkenColor : palette.dangerColor
-        border.color: scope.activeFocus ? palette.highlightColor : "transparent"
+        color: !isNaN(value) ? customPalette.sunkenColor : customPalette.dangerColor
+        border.color: scope.activeFocus ? customPalette.highlightColor : "transparent"
 
         Shaders.Hatch {
             anchors.fill: parent
-            color: palette.sunkenColor
+            color: customPalette.sunkenColor
             visible: !control.enabled
         }
     }
@@ -115,6 +116,7 @@ T.Control {
             CoordSpinBoxInput {
                 id: dInput
                 focus: true
+                font: control.font
                 maximumLength: isLongitude ? 3 : 2
                 nextItem: mInput
                 inputMethodHints: Qt.ImhDigitsOnly
@@ -125,10 +127,14 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label { text: "\u00B0" }
+            Controls.Label {
+                font: control.font
+                text: "\u00B0"
+            }
 
             CoordSpinBoxInput {
                 id: mInput
+                font: control.font
                 maximumLength: 2
                 previousItem: dInput
                 nextItem: sInput
@@ -140,10 +146,14 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label { text: "\'" }
+            Controls.Label {
+                font: control.font
+                text: "\'"
+            }
 
             CoordSpinBoxInput {
                 id: sInput
+                font: control.font
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -154,10 +164,14 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label { text: "\"" }
+            Controls.Label {
+                font: control.font
+                text: "\""
+            }
 
             Button {
                 flat: true
+                font: control.font
                 activeFocusOnTab: false
                 text: sign < 0 ? (isLongitude ? qsTr("W") : qsTr("S")) :
                                  (isLongitude ? qsTr("E") : qsTr("N"))
@@ -192,7 +206,7 @@ T.Control {
         width: focusedItem ? focusedItem.width + 5 : 0
         height: control.height * 0.1
         x: focusedItem ? focusedItem.x : 0
-        color: scope.activeFocus ? palette.highlightColor : "transparent"
+        color: scope.activeFocus ? customPalette.highlightColor : "transparent"
         Behavior on x { NumberAnimation { duration: 150 } }
     }
 }

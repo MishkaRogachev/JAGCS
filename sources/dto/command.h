@@ -23,11 +23,9 @@ namespace dto
         {
             UnknownCommand,
 
-            SetMode,
-            GoTo,
-            NavTo,
-
             ArmDisarm,
+
+            SetMode,
 
             Return,
             Start,
@@ -35,15 +33,21 @@ namespace dto
             GoAround,
             PauseContinue,
 
+            GoTo,
+            NavTo,
+
+            ChangeAltitude,
+            SetAirspeed,
+            SetGroundspeed,
+            SetThrottle,
+
+            ManualImpacts,
+
             Parachute,
 
-            SetSpeed, //TODO: separate throttle, airspeed and groundspeed commands
-            SetAltitude,
             SetHome,
 
-            PreflightCalibration,
-
-            ManualImpacts
+            PreflightCalibration
         };
 
         enum CommandStatus

@@ -26,7 +26,7 @@ Item {
                  width: root.width / repeater.count - row.spacing
                  height: root.height
                  radius: 2
-                 color: palette.sunkenColor
+                 color: customPalette.sunkenColor
 
                  Rectangle {
                      anchors.bottom: parent.bottom
@@ -34,9 +34,9 @@ Item {
                      height: modelData <= 0 ? 0 : root.height * Math.min(modelData, 1.0)
                      radius: 1
                      color: {
-                         if (modelData < caution) return palette.positiveColor;
-                         if (modelData < danger) return palette.cautionColor;
-                         return palette.dangerColor
+                         if (modelData < caution) return customPalette.positiveColor;
+                         if (modelData < danger) return customPalette.cautionColor;
+                         return customPalette.dangerColor
                      }
                  }
              }

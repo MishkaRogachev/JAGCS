@@ -140,6 +140,14 @@ GridLayout {
         Layout.fillWidth: true
     }
 
+    Controls.Label {
+        text: qsTr("Setted endpoints")
+        visible: type == LinkDescription.Udp
+        horizontalAlignment: Text.AlignHCenter
+        Layout.columnSpan: 2
+        Layout.fillWidth: true
+    }
+
     EndpointListView {
         id: endpointList
         visible: type == LinkDescription.Udp
@@ -179,8 +187,8 @@ GridLayout {
             }
 
             AreaSeries {
-                color: palette.positiveColor
-                borderColor: palette.positiveColor
+                color: customPalette.positiveColor
+                borderColor: customPalette.positiveColor
                 borderWidth: 3
                 opacity: 0.33
                 axisX: timeAxis
@@ -189,7 +197,7 @@ GridLayout {
                     titleFont.pixelSize: sizings.fontPixelSize * 0.5
                     labelsFont.pixelSize: 1
                     labelsVisible: false
-                    color: palette.positiveColor
+                    color: customPalette.positiveColor
                     max: statistics.maxRecv
                 }
                 upperSeries: LineSeries {
@@ -202,8 +210,8 @@ GridLayout {
             }
 
             AreaSeries {
-                color: palette.skyColor
-                borderColor: palette.skyColor
+                color: customPalette.skyColor
+                borderColor: customPalette.skyColor
                 borderWidth: 3
                 opacity: 0.33
                 axisX: timeAxis
@@ -212,7 +220,7 @@ GridLayout {
                     titleFont.pixelSize: sizings.fontPixelSize * 0.5
                     labelsVisible: false
                     labelsFont.pixelSize: 1
-                    color: palette.skyColor
+                    color: customPalette.skyColor
                     max: statistics.maxSent
                 }
                 upperSeries: LineSeries {

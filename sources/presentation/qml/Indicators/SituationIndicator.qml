@@ -38,8 +38,8 @@ Item {
             ctx.rotate(-heading * Math.PI / 180);
 
             ctx.lineWidth = 1;
-            ctx.strokeStyle = palette.activeMissionColor;
-            ctx.fillStyle = palette.activeMissionColor;
+            ctx.strokeStyle = customPalette.activeMissionColor;
+            ctx.fillStyle = customPalette.activeMissionColor;
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
 

@@ -8,6 +8,6 @@ T.TabBar { // TODO: replace with model-based bar
     implicitHeight: sizings.controlBaseSize
 
     background: Rectangle {
-        color: palette.backgroundColor
+        color: customPalette.backgroundColor
     }
 }

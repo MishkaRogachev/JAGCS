@@ -67,14 +67,14 @@ Controls.Frame {
         Controls.Label {
             text: qsTr("Recv") + ": " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
-            color: palette.positiveColor
+            color: customPalette.positiveColor
             Layout.fillWidth: true
         }
 
         Controls.Label {
             text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
-            color: palette.skyColor
+            color: customPalette.skyColor
             Layout.fillWidth: true
         }
 
@@ -105,7 +105,7 @@ Controls.Frame {
             Controls.DelayButton {
                 tipText: qsTr("Remove")
                 iconSource: "qrc:/icons/remove.svg"
-                iconColor: palette.dangerColor
+                iconColor: customPalette.dangerColor
                 onActivated: presenter.remove()
             }
         }
