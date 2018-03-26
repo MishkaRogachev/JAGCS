@@ -21,14 +21,6 @@ Item {
         anchors.left: parent.left
         spacing: sizings.spacing
 
-        RadioStatusView {
-            id: radioStatus
-        }
-
-        ConnectionView {
-            id: connection
-        }
-
         TopbarButton {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" :
                                                "qrc:/icons/disconnect.svg"
@@ -66,6 +58,18 @@ Item {
             iconSource: "qrc:/icons/quit.svg"
             tipText: qsTr("Quit")
             entry: "qrc:/Views/Menu/Quit/QuitView.qml"
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
+
+        ConnectionView {
+            id: connection
+        }
+
+        RadioStatusView {
+            id: radioStatus
         }
     }
 }

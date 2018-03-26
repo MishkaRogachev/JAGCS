@@ -29,7 +29,7 @@ Controls.ApplicationWindow  {
 
     header: TopbarView {
         id: topbar
-        anchors.left: dashboard.right
+        anchors.left: parent.left
         anchors.right: parent.right
     }
 
@@ -80,8 +80,9 @@ Controls.ApplicationWindow  {
 
     ToolsPanel {
         id: tools
-        x: (drawer.visible ? drawer.x : parent.width) - width - sizings.margins
+        //x: (menu.visible ? drawer.width : 0) + sizings.margins//- width - sizings.margins
         anchors.top: topbar.bottom
+        anchors.left: menu.visible ? menu.width : parent.left
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
         z: 3
@@ -90,9 +91,9 @@ Controls.ApplicationWindow  {
     NotificationListView {
         id: notifications
         anchors.top: corner.bottom
-        anchors.right: tools.left
+        anchors.right: dashboard.left
         anchors.bottom: parent.bottom
-        anchors.left: dashboard.right
+        anchors.left: tools.right
         anchors.margins: sizings.margins
         z: 3
     }
