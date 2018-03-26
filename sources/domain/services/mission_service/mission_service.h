@@ -33,7 +33,8 @@ namespace domain
         dto::MissionAssignmentPtrList missionAssignments() const;
 
         dto::MissionItemPtr currentWaypoint(int vehicleId) const;
-        dto::MissionItemPtr addNewMissionItem(int missionId, dto::MissionItem::Command command,
+        dto::MissionItemPtr addNewMissionItem(int missionId,
+                                              dto::MissionItem::Command command,
                                               int sequence);
         void addNewMission(const QString& name);
 

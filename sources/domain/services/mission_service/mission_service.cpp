@@ -117,42 +117,40 @@ MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
 }
 
 dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
-                                                      MissionItem::Command command,
+                                                      dto::MissionItem::Command command,
                                                       int sequence)
 {
     QMutexLocker locker(&d->mutex);
 
-    MissionPtr mission = this->mission(missionId);
+    dto::MissionPtr mission = this->mission(missionId);
     if (mission.isNull() || mission->count() < sequence) return dto::MissionItemPtr();
 
-    MissionItemPtr item = MissionItemPtr::create();
-    MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
+    dto::MissionItemPtr item = dto::MissionItemPtr::create();
+    dto::MissionItemPtr lastItem = this->missionItem(missionId, sequence - 1);
 
     item->setMissionId(missionId);
     item->setCommand(command);
     item->setSequence(sequence);
 
     switch (command) { // TODO: to MissionItemFactory
-    case MissionItem::Home:
+    case dto::MissionItem::Home:
         item->setAltitude(0);
         item->setAltitudeRelative(false);
         break;
-    case MissionItem::Waypoint:
+    case dto::MissionItem::Waypoint:
         if (lastItem)
         {
             item->setAltitudeRelative(lastItem->isAltitudeRelative());
             item->setAltitude(lastItem->altitude());
         }
         break;
-    case MissionItem::Takeoff:
-        if (lastItem)
-        {
-            item->setAltitude(50); // TODO: default parms to settings
-            item->setAltitudeRelative(true);
-        }
-        item->setParameter(MissionItem::Pitch, 15);
+    case dto::MissionItem::Takeoff:
+        if (lastItem) item->setAltitudeRelative(true);
+            item->setAltitude(settings::Provider::value(
+                                  settings::parameters::defaultTakeoffAltitude).toReal());
+        item->setParameter(dto::MissionItem::Pitch, 15);
         break;
-    case MissionItem::Landing:
+    case dto::MissionItem::Landing:
         if (lastItem)
         {
             item->setAltitude(0);
@@ -163,17 +161,17 @@ dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
         break;
     }
 
+    // TODO: querry by sequence
     for (const dto::MissionItemPtr& other: this->missionItems(missionId))
     {
         if (other->sequence() < sequence) continue;
 
         other->setSequence(other->sequence() + 1);
-        other->setStatus(MissionItem::NotActual);
+        other->setStatus(dto::MissionItem::NotActual);
         this->save(other);
     }
 
-    mission->setCount(mission->count() + 1);
-    this->save(mission);
+    if (!this->save(item)) return dto::MissionItemPtr();
 
     dto::MissionAssignmentPtr assignment = this->missionAssignment(missionId);
     if (assignment)
@@ -182,7 +180,6 @@ dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
         emit assignmentChanged(assignment);
     }
 
-    Q_ASSERT(this->save(item)); // FIXME: handle if can not save
     return item;
 }
 

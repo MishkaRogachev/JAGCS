@@ -34,6 +34,7 @@ namespace
 
         { parameters::defaultAcceptanceRadius, 3 },
         { parameters::defaultTakeoffPitch, 15 },
+        { parameters::defaultTakeoffAltitude, 50 },
         { parameters::minAltitude, -500 }, // 418 m Daed Sea shore
         { parameters::maxAltitude, 50000 },
         { parameters::precisionAltitude, 1 },
