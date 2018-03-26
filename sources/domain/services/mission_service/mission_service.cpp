@@ -148,7 +148,8 @@ dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
         if (lastItem) item->setAltitudeRelative(true);
             item->setAltitude(settings::Provider::value(
                                   settings::parameters::defaultTakeoffAltitude).toReal());
-        item->setParameter(dto::MissionItem::Pitch, 15);
+        item->setParameter(dto::MissionItem::Pitch, settings::Provider::value(
+                               settings::parameters::defaultTakeoffPitch).toReal());
         break;
     case dto::MissionItem::Landing:
         if (lastItem)

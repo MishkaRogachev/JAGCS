@@ -130,7 +130,11 @@ Provider* Provider::instance()
 
 QVariant Provider::value(const QString& key)
 {
-    return instance()->d->settings.value(key, ::defaultSettings.value(key));
+    if (!instance()->d->settings.contains(key))
+    {
+        instance()->d->settings.setValue(key, ::defaultSettings.value(key));
+    }
+    return instance()->d->settings.value(key);
 }
 
 bool Provider::boolValue(const QString& key)

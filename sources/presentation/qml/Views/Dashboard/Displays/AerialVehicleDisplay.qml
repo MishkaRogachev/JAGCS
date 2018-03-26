@@ -93,6 +93,7 @@ Item {
             Repeater {
                 model: instrumentsModel
 
+                // Replace with Qt 5.10 Action
                 Controls.CheckBox {
                     text: name
                     onCheckedChanged: instrumentVisible = checked
