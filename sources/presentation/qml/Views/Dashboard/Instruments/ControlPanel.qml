@@ -39,5 +39,9 @@ Controls.Pane {
         CommandWidgets.LandControl {
             visible: vehicle.mode === Domain.Mission
         }
+
+//        CommandWidgets.PreparationControl {
+//             visible: !vehicle.armed // TODO: to preparation panel
+//        }
     }
 }

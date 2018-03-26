@@ -110,6 +110,7 @@
         <file>Views/Dashboard/CommandWidgets/ChangeAlt.qml</file>
         <file>Views/Dashboard/CommandWidgets/SetSpd.qml</file>
         <file>Views/Dashboard/CommandWidgets/LandControl.qml</file>
+        <file>Views/Dashboard/CommandWidgets/PreparationControl.qml</file>
         <file>Views/Dashboard/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/Instruments/FlightDirector.qml</file>

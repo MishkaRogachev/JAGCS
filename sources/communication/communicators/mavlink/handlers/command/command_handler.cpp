@@ -31,7 +31,6 @@ namespace
         { MAV_CMD_DO_GO_AROUND, dto::Command::GoAround },
         { MAV_CMD_DO_PAUSE_CONTINUE, dto::Command::PauseContinue },
         { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute },
-        { MAV_CMD_DO_SET_HOME, dto::Command::SetHome },
         { MAV_CMD_PREFLIGHT_CALIBRATION, dto::Command::PreflightCalibration }
         // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
@@ -188,6 +187,11 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
         this->sendManualControl(vehicle->mavId(), args.value(0, 0).toFloat(),
                                 args.value(1, 0).toFloat(), args.value(2, 0).toFloat(),
                                 args.value(3, 0).toFloat());
+        break;
+    case dto::Command::SetReturn:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_SET_HOME,
+                              { 1, 0, 0, 0, args.value(0, 0).toDouble(),
+                                args.value(1, 0).toDouble(), args.value(2, 0).toFloat() }, attempt);
         break;
     default:
         break;
