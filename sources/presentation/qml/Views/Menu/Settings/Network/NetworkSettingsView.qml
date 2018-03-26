@@ -18,12 +18,11 @@ ColumnLayout {
 
     property alias typeModel: typeItem.model
 
-    signal apply()
-    signal restore()
-
     function setProxyType(proxyType) {
         typeItem.currentIndex = typeModel.indexOf(proxyType);
     }
+
+    Component.onDestruction: if (changed) presenter.updateView()
 
     spacing: sizings.spacing
 

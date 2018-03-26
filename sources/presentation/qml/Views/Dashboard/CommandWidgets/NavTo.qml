@@ -53,15 +53,16 @@ GridLayout {
             vehicle.barometric.fromDisplayedAltitude(altitudeBox.realValue) ]
     }
 
-    DashboardControls.Label { text: qsTr("Lat.") }
+    //DashboardControls.Label { text: qsTr("Lat.") }
 
     Controls.CoordSpinBox {
         id: latitudeBox
         font.pixelSize: sizings.fontPixelSize * 0.7
         Layout.fillWidth: true
+        Layout.columnSpan: 2
     }
 
-    Controls.MapPickButton {
+    Controls.MapPickButton { // FIXME: unified picker with plnning mode
         id: pickButton
         onPicked: {
             latitudeBox.value = coordinate.latitude;
@@ -75,12 +76,13 @@ GridLayout {
         Layout.rowSpan: 2
     }
 
-    DashboardControls.Label { text: qsTr("Lon.") }
+    //DashboardControls.Label { text: qsTr("Lon.") }
 
     Controls.CoordSpinBox {
         id: longitudeBox
         isLongitude: true
         font.pixelSize: sizings.fontPixelSize * 0.7
         Layout.fillWidth: true
+        Layout.columnSpan: 2
     }
 }

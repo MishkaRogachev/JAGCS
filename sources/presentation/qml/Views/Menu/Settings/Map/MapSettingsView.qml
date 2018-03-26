@@ -32,6 +32,7 @@ GridLayout {
     onOsmActiveMapTypeChanged: if (main.mapType === 0) activeMapTypeBox.currentIndex = osmActiveMapType
     onMapBoxActiveMapTypeChanged: if (main.mapType === 1) activeMapTypeBox.currentIndex = mapBoxActiveMapType
     onEsriActiveMapTypeChanged: if (main.mapType === 2) activeMapTypeBox.currentIndex = esriActiveMapType
+    Component.onDestruction: if (changed) presenter.updateView()
 
     MapSettingsPresenter {
         id: presenter

@@ -45,7 +45,7 @@ Item {
                     text: qsTr("No video")
                     horizontalAlignment: Text.AlignHCenter
                     Controls.ButtonGroup.group: radioGroup
-                    onClicked: if (checked) presenter.setActiveVideo(-1)
+                    onClicked: activeVideo = -1
                     Layout.fillWidth: true
                 }
             }

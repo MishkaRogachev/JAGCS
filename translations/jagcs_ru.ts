@@ -4182,7 +4182,7 @@
     <message>
         <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="93"/>
         <source>NAV TO</source>
-        <translation>НАВ НА</translation>
+        <translation>НАВИГАЦИЯ</translation>
     </message>
     <message>
         <source>CTRL BY ALT</source>
