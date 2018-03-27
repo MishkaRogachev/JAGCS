@@ -81,7 +81,6 @@ Item {
 
     Controls.Popup {
         id: instrumentsVisibility
-        x: displaysSettingsButton.x
         y: -sizings.padding
         closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
         padding: sizings.padding

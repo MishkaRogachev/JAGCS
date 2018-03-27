@@ -55,7 +55,8 @@ Item {
         spacing: 0
 
         Controls.Button {
-            iconSource: "qrc:/icons/left.svg"
+            iconSource: "qrc:/icons/fleet.svg"
+            tipText: qsTr("Show fleet")
             enabled: selectedVehicle !== undefined
             onClicked: selectVehicle(0)
             flat: true

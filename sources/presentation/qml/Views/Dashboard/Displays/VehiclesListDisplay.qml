@@ -23,7 +23,6 @@ Item {
 
     Controls.Popup {
         id: filterSettings
-        x: displaysSettingsButton.x
         y: -sizings.padding
         closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
         padding: sizings.padding
