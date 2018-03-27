@@ -42,7 +42,8 @@ Controls.ApplicationWindow  {
         id: corner
         anchors.top: tools.top
         anchors.left: tools.left
-        width: Math.min(substrate.width - dashboard.width - sizings.margins * 2,
+        width: Math.min(parent.width - dashboard.width -
+                        drawer.position * drawer.width - sizings.margins * 2,
                         cornerMap ? map.implicitWidth : video.implicitWidth)
         height: parent.height / 2
         z: cornerVisible ? 2 : -1

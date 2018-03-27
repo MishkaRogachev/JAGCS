@@ -77,7 +77,6 @@
         <file>Views/Notifications/NotificationListView.qml</file>
         <file>Views/Notifications/NotificationView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
-        <file>Views/Topbar/TopbarButton.qml</file>
         <file>Views/Topbar/RadioStatus/RadioStatusView.qml</file>
         <file>Views/Topbar/Connection/ConnectionView.qml</file>
         <file>Views/VerticalProfile/VerticalProfileView.qml</file>

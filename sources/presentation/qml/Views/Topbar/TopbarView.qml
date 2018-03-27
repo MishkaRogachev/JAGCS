@@ -24,8 +24,8 @@ Item {
 
         Controls.Button {
             iconSource: "qrc:/icons/burger.svg"
-            flat: true
             tipText: qsTr("Menu")
+            flat: true
             onClicked: menu.home()
         }
 
@@ -33,13 +33,14 @@ Item {
             Layout.fillWidth: true
         }
 
-        TopbarButton {
+        Controls.Button {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" :
                                                "qrc:/icons/disconnect.svg"
             iconColor: connection.connected ? customPalette.textColor :
                                               customPalette.dangerColor
             tipText: qsTr("Links")
-            entry: "qrc:/Views/Menu/Links/LinkListView.qml"
+            flat: true
+            // TODO: connection settings popup
         }
 
         ConnectionView {
