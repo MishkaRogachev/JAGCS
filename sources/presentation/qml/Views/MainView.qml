@@ -40,11 +40,8 @@ Controls.ApplicationWindow  {
 
     MouseArea {
         id: corner
-        anchors.top: parent.top
-        anchors.left: drawer.right
-        anchors.margins: sizings.margins
-        //y: sizings.margins
-        //x: drawer.x + sizings.margins
+        anchors.top: tools.top
+        anchors.left: tools.left
         width: Math.min(substrate.width - dashboard.width - sizings.margins * 2,
                         cornerMap ? map.implicitWidth : video.implicitWidth)
         height: parent.height / 2
@@ -80,9 +77,8 @@ Controls.ApplicationWindow  {
 
     ToolsPanel {
         id: tools
-        //x: (menu.visible ? drawer.width : 0) + sizings.margins//- width - sizings.margins
+        x: drawer.position * drawer.width + sizings.margins
         anchors.top: topbar.bottom
-        anchors.left: menu.visible ? menu.width : parent.left
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
         z: 3
@@ -100,7 +96,6 @@ Controls.ApplicationWindow  {
 
     Controls.Drawer {
         id: drawer
-        y: topbar.height
         width: menu.width
         height: parent.height - y
 

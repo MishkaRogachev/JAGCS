@@ -18,8 +18,20 @@ Item {
     }
 
     RowLayout {
-        anchors.left: parent.left
+        anchors.fill: parent
+        anchors.rightMargin: dashboard.width
         spacing: sizings.spacing
+
+        Controls.Button {
+            iconSource: "qrc:/icons/burger.svg"
+            flat: true
+            tipText: qsTr("Menu")
+            onClicked: menu.home()
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
 
         TopbarButton {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" :
@@ -30,46 +42,13 @@ Item {
             entry: "qrc:/Views/Menu/Links/LinkListView.qml"
         }
 
-        TopbarButton {
-            iconSource: "qrc:/icons/flight.svg"
-            tipText: qsTr("Vehicles")
-            entry: "qrc:/Views/Menu/Vehicles/VehicleListView.qml"
-        }
-
-        TopbarButton {
-            iconSource: "qrc:/icons/planning.svg"
-            tipText: qsTr("Planning")
-            entry: "qrc:/Views/Menu/Planning/PlanningView.qml"
-        }
-
-        TopbarButton {
-            iconSource: "qrc:/icons/burger.svg"
-            tipText: qsTr("Settings")
-            entry: "qrc:/Views/Menu/Settings/SettingsMenu.qml"
-        }
-
-        TopbarButton {
-            iconSource: "qrc:/icons/info.svg"
-            tipText: qsTr("About")
-            entry: "qrc:/Views/Menu/About/AboutView.qml"
-        }
-
-        TopbarButton {
-            iconSource: "qrc:/icons/quit.svg"
-            tipText: qsTr("Quit")
-            entry: "qrc:/Views/Menu/Quit/QuitView.qml"
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
         ConnectionView {
             id: connection
         }
 
         RadioStatusView {
             id: radioStatus
+            Layout.preferredWidth: sizings.controlBaseSize * 2
         }
     }
 }

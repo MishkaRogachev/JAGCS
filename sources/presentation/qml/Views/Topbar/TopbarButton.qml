@@ -47,12 +47,3 @@ Rectangle {
         delay: 1000
     }
 }
-
-/*
-Controls.Button {
-    iconSource: "qrc:/icons/settings.svg"
-    flat: true
-    tipText: qsTr("Vehicles")
-    onClicked: menu.goTo("Vehicles/VehicleListView.qml", tipText, {})
-}
-*/

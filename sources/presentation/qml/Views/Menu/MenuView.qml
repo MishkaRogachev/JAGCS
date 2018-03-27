@@ -15,13 +15,13 @@ ColumnLayout {
     function goTo(source, text, properties) {
         if (!atHome) home();
         deepIn(source, text, properties);
-        if (!menu.visible) drawer.open();
     }
 
     function home() {
         loader.setSource(homeContext);
         contextText = "";
         contextModel.clear();
+        if (!menu.visible) drawer.open();
     }
 
     function deepIn(source, text, properties) {
@@ -63,6 +63,13 @@ ColumnLayout {
         spacing: 0
 
         Controls.Button {
+            tipText: qsTr("Close menu")
+            iconSource: "qrc:/icons/left.svg"
+            flat: true
+            onClicked: drawer.close()
+        }
+
+        Controls.Button {
             tipText: qsTr("Home")
             iconSource: "qrc:/icons/home.svg"
             flat: true
@@ -85,13 +92,6 @@ ColumnLayout {
             text: contextText
             font.bold: true
             Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Close menu")
-            iconSource: "qrc:/icons/right.svg"
-            flat: true
-            onClicked: drawer.close()
         }
     }
 
