@@ -50,6 +50,8 @@
         <file>icons/yaw_right.svg</file>
         <file>icons/show.svg</file>
         <file>icons/hide.svg</file>
+        <file>icons/show_dashboard.svg</file>
+        <file>icons/hide_dashboard.svg</file>
         <file>icons/maximize.svg</file>
         <file>icons/minimize.svg</file>
         <file>icons/lock.svg</file>

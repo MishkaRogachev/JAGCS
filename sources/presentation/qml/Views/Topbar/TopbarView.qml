@@ -65,5 +65,12 @@ Item {
             id: radioStatus
             Layout.preferredWidth: sizings.controlBaseSize * 2
         }
+
+        Controls.Button {
+            iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" : "qrc:/icons/show_dashboard.svg"
+            tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) + " " + qsTr("dashboard")
+            flat: true
+            onClicked: dashboardVisible = !dashboardVisible
+        }
     }
 }

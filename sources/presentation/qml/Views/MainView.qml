@@ -15,6 +15,7 @@ Controls.ApplicationWindow  {
     property bool fullscreen: false
     property bool cornerMap: false
     property bool cornerVisible: false
+    property bool dashboardVisible: true
     property int mapType: -1
 
     property QtObject map
@@ -72,9 +73,13 @@ Controls.ApplicationWindow  {
         id: dashboard
         anchors.top: topbar.top
         anchors.right: parent.right
+        anchors.rightMargin: dashboardVisible ? 0 : -width
         width: sizings.controlBaseSize * 8
         height: Math.min(implicitHeight, main.height)
         z: 1
+        visible: anchors.rightMargin != -width
+
+        Behavior on anchors.rightMargin { PropertyAnimation { duration: 200 } }
     }
 
     ToolsPanel {
