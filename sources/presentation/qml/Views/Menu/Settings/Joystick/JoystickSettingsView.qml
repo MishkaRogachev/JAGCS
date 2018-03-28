@@ -28,6 +28,7 @@ GridLayout {
 
     Component.onDestruction: if (changed) presenter.updateView()
 
+    enabled: with_gamepad
     columns: 2
     rowSpacing: sizings.spacing
     columnSpacing: sizings.spacing

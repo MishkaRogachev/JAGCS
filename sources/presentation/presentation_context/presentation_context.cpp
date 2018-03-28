@@ -35,6 +35,12 @@ PresentationContext::PresentationContext()
     m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(false));
 #endif
 
+#ifdef WITH_GAMEPAD
+    m_engine->rootContext()->setContextProperty("with_gamepad", QVariant(true));
+#else
+    m_engine->rootContext()->setContextProperty("with_gamepad", QVariant(false));
+#endif
+
     m_engine->rootContext()->setContextProperty(
                 "units", QVariant::fromValue(new utils::Units(m_engine)));
     m_engine->rootContext()->setContextProperty(
