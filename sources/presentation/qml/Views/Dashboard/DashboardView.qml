@@ -80,8 +80,8 @@ ColumnLayout {
 
         Controls.Button {
             id: displaysSettingsButton
-            iconSource: "qrc:/icons/settings.svg"
-            tipText: qsTr("Settings")
+            iconSource: "qrc:/icons/service.svg"
+            tipText: qsTr("Service")
             flat: true
         }
     }

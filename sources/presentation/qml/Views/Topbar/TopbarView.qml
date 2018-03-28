@@ -29,8 +29,18 @@ Item {
             onClicked: menu.home()
         }
 
-        Item {
-            Layout.fillWidth: true
+        Controls.Button {
+            iconSource: "qrc:/icons/planning.svg"
+            tipText: qsTr("Planning")
+            flat: true
+            onClicked: menu.goTo("qrc:/Views/Menu/Planning/PlanningView.qml", qsTr("Planning"), {})
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/flight.svg"
+            tipText: qsTr("Vehicles")
+            flat: true
+            onClicked: menu.goTo("qrc:/Views/Menu/Vehicles/VehicleListView.qml", qsTr("Vehicles"), {})
         }
 
         Controls.Button {
@@ -40,7 +50,11 @@ Item {
                                               customPalette.dangerColor
             tipText: qsTr("Links")
             flat: true
-            // TODO: connection settings popup
+            onClicked: menu.goTo("qrc:/Views/Menu/Links/LinkListView.qml", qsTr("Links"), {})
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         ConnectionView {
