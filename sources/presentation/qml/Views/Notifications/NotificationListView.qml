@@ -24,8 +24,7 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: sizings.shadowSize
-        width: Math.min(sizings.controlBaseSize * 11,
-                        notificationsList.width) - sizings.shadowSize
+        width: Math.min(sizings.controlBaseSize * 11, notificationsList.width)
         height: Math.min(contentHeight, parent.height)
         spacing: sizings.spacing
         model: ListModel { id: messages }
@@ -39,7 +38,7 @@ Item {
 
         delegate: NotificationView {
             message: msg
-            width: parent.width
+            width: parent.width - sizings.shadowSize
             onDropped: messages.remove(index, 1)
         }
     }

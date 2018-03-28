@@ -89,9 +89,9 @@ Controls.ApplicationWindow  {
     NotificationListView {
         id: notifications
         anchors.top: corner.bottom
-        anchors.right: dashboard.left
-        anchors.bottom: parent.bottom
         anchors.left: tools.right
+        anchors.bottom: parent.bottom
+        anchors.right: corner.height < dashboard.height ? dashboard.left : parent.right
         anchors.margins: sizings.margins
         z: 3
     }
