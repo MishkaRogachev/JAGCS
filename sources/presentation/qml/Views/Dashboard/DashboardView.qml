@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Item {
+ColumnLayout {
     id: dashboard
 
     property var selectedVehicle
@@ -42,16 +42,15 @@ Item {
     Component.onCompleted: updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
 
+    spacing: sizings.spacing
+
     DashboardPresenter {
         id: presenter
         view: dashboard
     }
 
-    implicitWidth: sizings.controlBaseSize * 8 // TODO: display row size
-
     RowLayout {
         id: row
-        width: dashboard.width
         spacing: 0
 
         Controls.Button {
@@ -89,10 +88,9 @@ Item {
 
     Loader {
         id: loader
-        anchors.top: row.bottom
-        anchors.topMargin: sizings.margins
-        width: dashboard.width
-        height: Math.min(implicitHeight, dashboard.height - row.height - sizings.spacing)
+        //height: dashboard.height - row.height - sizings.spacing//Math.min(implicitHeight, dashboard.height - row.height - sizings.spacing)
         clip: true
+        Layout.fillWidth: true
+        Layout.fillHeight: true
     }
 }

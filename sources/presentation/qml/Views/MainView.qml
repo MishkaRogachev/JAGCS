@@ -71,8 +71,9 @@ Controls.ApplicationWindow  {
     DashboardView {
         id: dashboard
         anchors.top: topbar.top
-        anchors.bottom: parent.bottom
         anchors.right: parent.right
+        width: sizings.controlBaseSize * 8
+        height: Math.min(implicitHeight, main.height)
         z: 1
     }
 
