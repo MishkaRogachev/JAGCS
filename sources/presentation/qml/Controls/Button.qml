@@ -13,8 +13,9 @@ T.Button { // TODO: clickable
     property alias iconSource: content.iconSource
     property alias iconScaling: content.iconScaling
     property alias iconColor: content.iconColor
-    property alias backgroundColor: backgroundItem.color
     property alias textColor: content.textColor
+    property alias contentWidth: content.width
+    property alias backgroundColor: backgroundItem.color
 
     font.pixelSize: sizings.fontPixelSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)

@@ -1,8 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 
-import "qrc:/Controls" as Controls
-
 ColumnLayout {
     id: control
 
@@ -20,10 +18,11 @@ ColumnLayout {
         id: repeater
         model: menuModel
 
-        Controls.Button {
+        Button {
             text: modelData.text ? modelData.text : ""
             iconSource: modelData.icon ? modelData.icon : ""
-            iconColor: modelData.iconColor ? modelData.iconColor : iconColor
+            iconColor: modelData.iconColor ? modelData.iconColor : customPalette.textColor
+            flat: true
             onClicked: {
                 if (modelData.source) {
                     reqestComponent(modelData.source, text,
@@ -34,7 +33,8 @@ ColumnLayout {
                     repeater.model = modelData.menu;
                 }
             }
-            Layout.preferredWidth: sizings.controlBaseSize * 7
+            contentWidth: width - sizings.controlBaseSize
+            implicitWidth: sizings.controlBaseSize * 7
             Layout.fillWidth: true
         }
     }

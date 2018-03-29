@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg2"
+   width="24"
+   version="1.1"
+   height="24">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs16" />
+  <g
+     transform="matrix(-1,0,0,-1,24.012712,18.846183)"
+     id="g4189">
+    <path
+       style="opacity:1;fill:#f6f5f0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 12,2.4414062 C 6.3559407,2.4413454 1.7801741,3.8255266 1.7792969,5.5331953 l 0,2.8152301 C 2.8616033,7.0773652 6.5340996,5.8202812 12.177966,5.8215709 17.822046,5.8214414 21.272943,7.0519952 22.27155,8.2848661 L 22.258839,5.5077716 C 22.257962,3.8001029 17.644059,2.4413454 12,2.4414062 Z"
+       id="path4137" />
+    <path
+       style="opacity:1;fill:#f6f5f0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 12.050848,7.0175451 C 6.4067882,7.0174841 1.8310216,8.4016651 1.8301444,10.109334 l 0,2.81523 c 8.769e-4,1.707669 4.5766436,3.091851 10.2207036,3.09179 5.644059,6.1e-5 10.219826,-1.384121 10.220703,-3.09179 l 0,-2.81523 C 22.270674,8.4016651 17.694907,7.0174841 12.050848,7.0175451 Z"
+       id="path4137-6" />
+    <path
+       style="opacity:1;fill:#f6f5f0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 11.974577,-2.323988 C 6.3305172,-2.3240488 1.7547506,-0.93986757 1.7538734,0.76780113 l 0,2.81523007 C 2.8361798,2.311971 6.5086761,1.054887 12.152543,1.0561767 17.796623,1.0560472 21.24752,2.286601 22.246127,3.5194719 L 22.233416,0.74237743 C 22.232539,-0.96529127 17.618636,-2.3240488 11.974577,-2.323988 Z"
+       id="path4137-7" />
+  </g>
+</svg>

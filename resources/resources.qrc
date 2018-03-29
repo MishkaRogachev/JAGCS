@@ -32,6 +32,8 @@
         <file>icons/quit.svg</file>
         <file>icons/info.svg</file>
         <file>icons/planning.svg</file>
+        <file>icons/db.svg</file>
+        <file>icons/logbook.svg</file>
         <file>icons/notify.svg</file>
         <file>icons/restore.svg</file>
         <file>icons/add.svg</file>
@@ -56,6 +58,7 @@
         <file>icons/minimize.svg</file>
         <file>icons/lock.svg</file>
         <file>icons/unlock.svg</file>
+        <file>icons/map.svg</file>
         <file>icons/map-marker.svg</file>
         <file>icons/center.svg</file>
         <file>icons/track_yaw.svg</file>

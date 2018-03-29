@@ -4,7 +4,6 @@ import QtQuick.Templates 2.2 as T
 
 import "../Shaders" as Shaders
 import "../JS/helper.js" as Helper
-import "./" as Controls
 
 T.Control {
     id: control
@@ -95,7 +94,7 @@ T.Control {
             anchors.fill: parent
             spacing: 1
 
-            Controls.Button {
+            Button {
                 flat: true
                 autoRepeat: true
                 activeFocusOnTab: false
@@ -127,7 +126,7 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
+            Label {
                 font: control.font
                 text: "\u00B0"
             }
@@ -146,7 +145,7 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
+            Label {
                 font: control.font
                 text: "\'"
             }
@@ -164,7 +163,7 @@ T.Control {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
+            Label {
                 font: control.font
                 text: "\""
             }
@@ -181,7 +180,7 @@ T.Control {
                 }
             }
 
-            Controls.Button {
+            Button {
                 flat: true
                 autoRepeat: true
                 activeFocusOnTab: false
