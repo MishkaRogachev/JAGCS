@@ -19,7 +19,6 @@ Item {
 
     RowLayout {
         anchors.fill: parent
-        anchors.rightMargin: dashboard.width
         spacing: sizings.spacing
 
         Controls.Button {
@@ -37,7 +36,7 @@ Item {
         }
 
         Controls.Button {
-            iconSource: "qrc:/icons/flight.svg"
+            iconSource: "qrc:/icons/fleet.svg"
             tipText: qsTr("Vehicles")
             flat: true
             onClicked: menu.goTo("qrc:/Views/Menu/Vehicles/VehicleListView.qml", qsTr("Vehicles"), {})
@@ -64,6 +63,10 @@ Item {
         RadioStatusView {
             id: radioStatus
             Layout.preferredWidth: sizings.controlBaseSize * 2
+        }
+
+        Item {
+            Layout.minimumWidth: dashboardVisible ? dashboard.width : 0
         }
 
         Controls.Button {

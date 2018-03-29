@@ -54,18 +54,11 @@ ColumnLayout {
         spacing: 0
 
         Controls.Button {
-            iconSource: "qrc:/icons/fleet.svg"
-            tipText: qsTr("Show fleet")
+            iconSource: "qrc:/icons/left.svg"
+            tipText: qsTr("Overview")
             enabled: selectedVehicle !== undefined
             onClicked: selectVehicle(0)
             flat: true
-        }
-
-        Controls.Label {
-            text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("All MAVs")
-            font.bold: true
-            Layout.fillWidth: true
-            clip: true
         }
 
         Controls.Button {
@@ -84,11 +77,17 @@ ColumnLayout {
             tipText: qsTr("Service")
             flat: true
         }
+
+        Controls.Label {
+            text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("All MAVs")
+            font.bold: true
+            Layout.fillWidth: true
+            clip: true
+        }
     }
 
     Loader {
         id: loader
-        //height: dashboard.height - row.height - sizings.spacing//Math.min(implicitHeight, dashboard.height - row.height - sizings.spacing)
         clip: true
         Layout.fillWidth: true
         Layout.fillHeight: true
