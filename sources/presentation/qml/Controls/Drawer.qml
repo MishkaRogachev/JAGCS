@@ -10,5 +10,9 @@ T.Drawer {
 
     background: Rectangle {
         color: customPalette.backgroundColor
+
+        Shadow {
+            source: parent
+        }
     }
 }
