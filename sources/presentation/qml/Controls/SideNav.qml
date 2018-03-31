@@ -21,7 +21,6 @@ ColumnLayout {
         Button {
             text: modelData.text ? modelData.text : ""
             iconSource: modelData.icon ? modelData.icon : ""
-            iconColor: modelData.iconColor ? modelData.iconColor : customPalette.textColor
             flat: true
             onClicked: {
                 if (modelData.source) {

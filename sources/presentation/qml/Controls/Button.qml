@@ -26,8 +26,9 @@ T.Button { // TODO: clickable
         border.color: !control.flat && control.activeFocus ? customPalette.highlightColor : "transparent"
         radius: round ? Math.min(width, height) / 2 : 2
         color: {
-            if (control.checked || control.highlighted) return customPalette.selectionColor;
             if (control.pressed | control.pressedImpl) return customPalette.highlightColor;
+            if (control.checked || control.highlighted) return customPalette.selectionColor;
+            if (control.hovered) return control.flat ? customPalette.raisedColor : customPalette.buttonColor;
             return control.flat ? "transparent" : customPalette.buttonColor;
         }
 
@@ -50,7 +51,9 @@ T.Button { // TODO: clickable
             height: parent.height
             text: control.text
             font: control.font
-            textColor: pressed || checked || highlighted ? customPalette.selectedTextColor: customPalette.textColor
+            textColor: control.pressed || control.checked ||
+                       control.highlighted || control.pressedImpl ?
+                           customPalette.selectedTextColor: customPalette.textColor
         }
     }
 

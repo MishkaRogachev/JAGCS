@@ -38,12 +38,18 @@ Item {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         source: "qrc:/ui/menu_arrow.svg"
-        color: area.pressed ? customPalette.highlightColor : customPalette.buttonColor
+        color: {
+            if (area.pressed) return customPalette.highlightColor;
+            if (area.containsMouse) return customPalette.selectionColor;
+            return customPalette.buttonColor
+        }
+
         width: sizings.controlBaseSize * 0.75
         height: width
 
         MouseArea {
             id: area
+            hoverEnabled: true
             anchors.fill: parent
             onClicked: deepIn()
         }
