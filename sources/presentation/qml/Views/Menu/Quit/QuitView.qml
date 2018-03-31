@@ -3,37 +3,33 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-Item {
-    id: quit
+ColumnLayout {
+    id: root
+    spacing: sizings.spacing
 
-    implicitWidth: frame.width
-    implicitHeight: frame.height
+    Controls.Label {
+        text: qsTr("Realy quit?")
+        Layout.alignment: Qt.AlignHCenter
+    }
 
-    Controls.Frame {
-        id: frame
-        width: parent.width
+    Controls.Button {
+        text: qsTr("Yes")
+        iconSource: "qrc:/icons/quit.svg"
+        iconColor: customPalette.dangerColor
+        flat: true
+        onClicked: Qt.quit()
+        Layout.fillWidth: true
+    }
 
-        ColumnLayout {
-            anchors.fill: parent
+    Controls.Button {
+        text: qsTr("No")
+        iconSource: "qrc:/icons/remove.svg"
+        flat: true
+        onClicked: menu.home()
+        Layout.fillWidth: true
+    }
 
-            Controls.Label {
-                text: qsTr("Realy quit?")
-            }
-
-            Controls.Button {
-                text: qsTr("Yes")
-                iconSource: "qrc:/icons/quit.svg"
-                iconColor: customPalette.dangerColor
-                onClicked: Qt.quit()
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                text: qsTr("No")
-                iconSource: "qrc:/icons/remove.svg"
-                onClicked: menu.home()
-                Layout.fillWidth: true
-            }
-        }
+    Item {
+        Layout.fillHeight: true
     }
 }

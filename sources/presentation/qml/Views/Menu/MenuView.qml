@@ -113,7 +113,8 @@ ColumnLayout {
             onItemChanged: {
                 if (!item || typeof(item) === "undefined") return;
 
-                menu.width = item.implicitWidth + sizings.margins * 2
+                menu.width = Math.max(sizings.controlBaseSize * 7,
+                                      item.implicitWidth + sizings.margins * 2)
                 item.height = Qt.binding(function() {
                     return item ? Math.max(item.implicitHeight, flickable.height) : 0;
                 });
