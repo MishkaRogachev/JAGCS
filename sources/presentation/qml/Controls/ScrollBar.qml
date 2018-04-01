@@ -4,14 +4,14 @@ import QtQuick.Templates 2.2 as T
 T.ScrollBar {
     id: control
 
+    interactive: false
     implicitWidth: sizings.controlBaseSize / 6
     implicitHeight: sizings.controlBaseSize / 6
 
     background: Item { }
 
     contentItem: Rectangle {
-        color: control.active ? customPalette.selectionColor : "transparent"
-        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
+        color: active && enabled ? customPalette.selectionColor : "transparent"
         radius: width / 2
     }
 }
