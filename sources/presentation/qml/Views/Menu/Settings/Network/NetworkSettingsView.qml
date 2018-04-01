@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-ColumnLayout {
+GridLayout {
     id: networkSettings
 
     property bool changed: false
@@ -24,7 +24,10 @@ ColumnLayout {
 
     Component.onDestruction: if (changed) presenter.updateView()
 
-    spacing: sizings.spacing
+    columns: 2
+    anchors.fill: parent
+    rowSpacing: sizings.spacing
+    columnSpacing: sizings.spacing
 
     NetworkSettingsPresenter {
         id: presenter
@@ -32,77 +35,67 @@ ColumnLayout {
         Component.onCompleted: updateView()
     }
 
-    Controls.Frame {
+
+    Controls.Label {
         Layout.fillWidth: true
+        text: qsTr("Proxy type")
+    }
 
-        GridLayout {
-            columns: 2
-            anchors.fill: parent
-            rowSpacing: sizings.spacing
-            columnSpacing: sizings.spacing
+    Controls.ComboBox {
+        id: typeItem
+        Layout.fillWidth: true
+        model: typeModel
+        onActivated: changed = true
+    }
 
-            Controls.Label {
-                Layout.fillWidth: true
-                text: qsTr("Proxy type")
-            }
+    Controls.Label {
+        Layout.fillWidth: true
+        text: qsTr("Host name")
+    }
 
-            Controls.ComboBox {
-                id: typeItem
-                Layout.fillWidth: true
-                model: typeModel
-                onActivated: changed = true
-            }
+    Controls.TextField {
+        id: hostNameItem
+        Layout.fillWidth: true
+        placeholderText: qsTr("Enter hostname")
+        onEditingFinished: changed = true
+    }
 
-            Controls.Label {
-                Layout.fillWidth: true
-                text: qsTr("Host name")
-            }
+    Controls.Label {
+        Layout.fillWidth: true
+        text: qsTr("Port")
+    }
 
-            Controls.TextField {
-                id: hostNameItem
-                Layout.fillWidth: true
-                placeholderText: qsTr("Enter hostname")
-                onEditingFinished: changed = true
-            }
+    Controls.SpinBox {
+        id: portItem
+        Layout.fillWidth: true
+        from: 0
+        to: 99999
+        onValueChanged: changed = true
+    }
 
-            Controls.Label {
-                Layout.fillWidth: true
-                text: qsTr("Port")
-            }
+    Controls.Label {
+        Layout.fillWidth: true
+        text: qsTr("User name")
+    }
 
-            Controls.SpinBox {
-                id: portItem
-                Layout.fillWidth: true
-                from: 0
-                to: 99999
-                onValueChanged: changed = true
-            }
+    Controls.TextField {
+        id: userItem
+        Layout.fillWidth: true
+        placeholderText: qsTr("Enter user name")
+        onEditingFinished: changed = true
+    }
 
-            Controls.Label {
-                Layout.fillWidth: true
-                text: qsTr("User name")
-            }
+    Controls.Label {
+        Layout.fillWidth: true
+        text: qsTr("User password")
+    }
 
-            Controls.TextField {
-                id: userItem
-                Layout.fillWidth: true
-                placeholderText: qsTr("Enter user name")
-                onEditingFinished: changed = true
-            }
-
-            Controls.Label {
-                Layout.fillWidth: true
-                text: qsTr("User password")
-            }
-
-            Controls.TextField {
-                id: passwordItem
-                Layout.fillWidth: true
-                placeholderText: qsTr("Enter password")
-                echoMode: TextInput.Password
-                onEditingFinished: changed = true
-            }
-        }
+    Controls.TextField {
+        id: passwordItem
+        Layout.fillWidth: true
+        placeholderText: qsTr("Enter password")
+        echoMode: TextInput.Password
+        onEditingFinished: changed = true
     }
 
     Item {
@@ -113,5 +106,6 @@ ColumnLayout {
         enabled: changed
         onSave: presenter.save()
         onRestore: presenter.updateView()
+        Layout.columnSpan: 2
     }
 }
