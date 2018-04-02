@@ -1,10 +1,9 @@
 import QtQuick 2.6
-import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout {
+Item {
     id: dashboard
 
     property var selectedVehicle
@@ -42,70 +41,16 @@ ColumnLayout {
     Component.onCompleted: updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
 
-    spacing: sizings.spacing
-
     DashboardPresenter {
         id: presenter
         view: dashboard
     }
 
-    RowLayout {
-        id: row
-        spacing: 0
-
-        Controls.Button {
-            iconSource: "qrc:/icons/left.svg"
-            tipText: qsTr("Overview")
-            enabled: selectedVehicle !== undefined
-            onClicked: selectVehicle(0)
-            flat: true
-        }
-
-        Controls.Button {
-            visible: selectedVehicle !== undefined
-            iconSource: "qrc:/icons/joystick.svg"
-            tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
-                     " " + qsTr("manual control")
-            iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
-            onClicked: manual.setEnabled(!manual.enabled)
-            flat: true
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/service.svg"
-            tipText: qsTr("Service")
-            flat: true
-            enabled: !serviceMenu.visible
-            onClicked: serviceMenu.open()
-
-            Controls.Menu {
-                id: serviceMenu
-                y: parent.height
-
-                function addMenuItem(item) {
-                    if (serviceMenu.width < item.width) serviceMenu.width = item.width;
-                    else item.width = serviceMenu.width;
-                    addItem(item);
-                }
-
-                function clearMenuItems() {
-                    while (contentData.count > 0) removeItem(0);
-                }
-            }
-        }
-
-        Controls.Label {
-            text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("All MAVs")
-            font.bold: true
-            Layout.fillWidth: true
-            clip: true
-        }
-    }
-
     Loader {
         id: loader
         clip: true
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        anchors.right: parent.right
+        width: parent.width / 2
+        height: parent.height
     }
 }

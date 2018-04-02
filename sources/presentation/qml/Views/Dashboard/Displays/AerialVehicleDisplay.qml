@@ -10,6 +10,7 @@ Item {
     id: vehicleDisplay
 
     property int vehicleId: 0
+    property bool instrumentsUnlocked: true
 
     property AerialVehicle vehicle: AerialVehicle {}
 
@@ -18,7 +19,11 @@ Item {
     implicitWidth: list.contentWidth
     implicitHeight: list.contentHeight + sizings.shadowSize
 
-    Component.onCompleted: manual.setVehicleId(vehicleId)
+    Component.onCompleted: {
+         // TODO 5.10 cascading menus
+        serviceMenu.addMenuItem(lockInstruments);
+        manual.setVehicleId(vehicleId)
+    }
 
     Component.onDestruction: {
         serviceMenu.clearMenuItems();
@@ -31,7 +36,14 @@ Item {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
-    ListModel { // TODO 5.10 cascading menus
+    Controls.MenuItem {
+        id: lockInstruments
+        text: (checked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("instruments")
+        checked: !instrumentsUnlocked
+        onClicked: instrumentsUnlocked = !instrumentsUnlocked
+    }
+
+    ListModel {
         id: instrumentsModel
 
         ListElement {

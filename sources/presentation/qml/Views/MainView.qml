@@ -71,15 +71,13 @@ Controls.ApplicationWindow  {
 
     DashboardView {
         id: dashboard
-        anchors.top: topbar.top
+        anchors.top: topbar.bottom
         anchors.right: parent.right
-        anchors.rightMargin: dashboardVisible ? 0 : -width
-        width: sizings.controlBaseSize * 8
-        height: Math.min(implicitHeight, main.height)
+        anchors.left: tools.right
+        anchors.bottom: parent.bottom
+        anchors.margins: sizings.margins
+        visible: dashboardVisible
         z: 1
-        visible: anchors.rightMargin != -width
-
-        Behavior on anchors.rightMargin { PropertyAnimation { duration: 200 } }
     }
 
     ToolsPanel {
