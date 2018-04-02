@@ -19,7 +19,11 @@ Item {
     implicitHeight: list.contentHeight + sizings.shadowSize
 
     Component.onCompleted: manual.setVehicleId(vehicleId)
-    Component.onDestruction: manual.setVehicleId(0)
+
+    Component.onDestruction: {
+        serviceMenu.clearMenuItems();
+        manual.setVehicleId(0);
+    }
 
     AerialVehicleDisplayPresenter {
         id: presenter
@@ -27,13 +31,7 @@ Item {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
-    Connections {
-        target: displaysSettingsButton
-        onClicked: instrumentsVisibility.visible ? instrumentsVisibility.close() :
-                                                   instrumentsVisibility.open()
-    }
-
-    ListModel {
+    ListModel { // TODO 5.10 cascading menus
         id: instrumentsModel
 
         ListElement {
@@ -79,28 +77,19 @@ Item {
         }
     }
 
-    Controls.Popup {
-        id: instrumentsVisibility
-        y: -sizings.padding
-        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
-        padding: sizings.padding
-        onVisibleChanged: displaysSettingsButton.enabled = !visible
+    Repeater {
+        model: instrumentsModel
 
-        ColumnLayout {
-            spacing: sizings.spacing
-
-            Repeater {
-                model: instrumentsModel
-
-                Controls.CheckBox {
-                    text: name
-                    onCheckedChanged: instrumentVisible = checked
-                    onClicked: settings.setValue("veh_" + vehicleId + "/" + setting, checked)
-                    Component.onCompleted: {
-                        checked = settings.boolValue("veh_" + vehicleId + "/" + setting, true);
-                        instrumentVisible = checked;
-                    }
-                }
+        Controls.MenuItem {
+            id: visibilityItem
+            text: name
+            checkable: true
+            onCheckedChanged: instrumentVisible = checked
+            onClicked: settings.setValue("veh_" + vehicleId + "/" + setting, checked)
+            Component.onCompleted: {
+                checked = settings.boolValue("veh_" + vehicleId + "/" + setting, true);
+                instrumentVisible = checked;
+                serviceMenu.addMenuItem(visibilityItem)
             }
         }
     }

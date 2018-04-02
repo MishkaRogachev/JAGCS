@@ -72,10 +72,26 @@ ColumnLayout {
         }
 
         Controls.Button {
-            id: displaysSettingsButton
             iconSource: "qrc:/icons/service.svg"
             tipText: qsTr("Service")
             flat: true
+            enabled: !serviceMenu.visible
+            onClicked: serviceMenu.open()
+
+            Controls.Menu {
+                id: serviceMenu
+                y: parent.height
+
+                function addMenuItem(item) {
+                    if (serviceMenu.width < item.width) serviceMenu.width = item.width;
+                    else item.width = serviceMenu.width;
+                    addItem(item);
+                }
+
+                function clearMenuItems() {
+                    while (contentData.count > 0) removeItem(0);
+                }
+            }
         }
 
         Controls.Label {

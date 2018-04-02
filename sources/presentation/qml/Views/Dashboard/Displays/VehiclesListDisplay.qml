@@ -11,32 +11,19 @@ Item {
 
     implicitHeight: list.contentHeight + sizings.shadowSize
 
+    Component.onCompleted: serviceMenu.addMenuItem(showOffline)
+    Component.onDestruction: serviceMenu.clearMenuItems()
+
     VehiclesListDisplayPresenter {
         id: presenter
         view: listDisplay
     }
 
-    Connections {
-        target: displaysSettingsButton
-        onClicked: filterSettings.visible ? filterSettings.close() : filterSettings.open()
-    }
-
-    Controls.Popup {
-        id: filterSettings
-        y: -sizings.padding
-        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
-        padding: sizings.padding
-        onVisibleChanged: displaysSettingsButton.enabled = !visible
-
-        ColumnLayout {
-            spacing: sizings.spacing
-
-            Controls.CheckBox {
-                text: qsTr("Show offline")
-                checked: vehicles.showOffline
-                onClicked: vehicles.setShowOffline(!vehicles.showOffline)
-            }
-        }
+    Controls.MenuItem {
+        id: showOffline
+        text: qsTr("Show offline")
+        checked: vehicles.showOffline
+        onClicked: vehicles.setShowOffline(!vehicles.showOffline)
     }
 
     ListView {
