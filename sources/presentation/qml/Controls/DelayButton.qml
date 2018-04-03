@@ -28,6 +28,14 @@ T.DelayButton {
         radius: 2
         color: control.flat ? "transparent" : customPalette.buttonColor
 
+        Rectangle {
+            anchors.fill: parent
+            color: customPalette.textColor
+            radius: parent.radius
+            opacity: 0.1
+            visible: control.hovered
+        }
+
         ContentItem {
             id: content
             anchors.centerIn: parent
