@@ -48,9 +48,7 @@ Item {
 
     Loader {
         id: loader
+        anchors.fill: parent
         clip: true
-        anchors.right: parent.right
-        width: parent.width / 2
-        height: parent.height
     }
 }

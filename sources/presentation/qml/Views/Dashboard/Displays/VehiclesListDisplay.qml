@@ -11,8 +11,8 @@ Item {
 
     implicitHeight: list.contentHeight + sizings.shadowSize
 
-    Component.onCompleted: serviceMenu.addMenuItem(showOffline)
-    Component.onDestruction: serviceMenu.clearMenuItems()
+    Component.onCompleted: topbar.serviceMenu.addMenuItem(showOffline)
+    Component.onDestruction: topbar.serviceMenu.clearMenuItems()
 
     VehiclesListDisplayPresenter {
         id: presenter
@@ -28,8 +28,10 @@ Item {
 
     ListView {
         id: list
-        width: listDisplay.width - sizings.shadowSize
-        height: parent.height
+        anchors.top: parent.top
+        anchors.right: parent.right
+        width: sizings.controlBaseSize * 9
+        height: Math.min(parent.height, contentHeight)
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds

@@ -10,6 +10,8 @@ import "Connection"
 Item {
     id: topbar
 
+    property alias serviceMenu: serviceMenu
+
     height: sizings.controlBaseSize
 
     TopbarPresenter {

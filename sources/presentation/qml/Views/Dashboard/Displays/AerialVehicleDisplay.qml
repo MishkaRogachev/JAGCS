@@ -21,12 +21,12 @@ Item {
 
     Component.onCompleted: {
          // TODO 5.10 cascading menus
-        serviceMenu.addMenuItem(lockInstruments);
+        topbar.serviceMenu.addMenuItem(lockInstruments);
         manual.setVehicleId(vehicleId)
     }
 
     Component.onDestruction: {
-        serviceMenu.clearMenuItems();
+        topbar.serviceMenu.clearMenuItems();
         manual.setVehicleId(0);
     }
 
@@ -101,15 +101,17 @@ Item {
             Component.onCompleted: {
                 checked = settings.boolValue("veh_" + vehicleId + "/" + setting, true);
                 instrumentVisible = checked;
-                serviceMenu.addMenuItem(visibilityItem)
+                topbar.serviceMenu.addMenuItem(visibilityItem)
             }
         }
     }
 
     ListView {
         id: list
-        width: vehicleDisplay.width - sizings.shadowSize
-        height: vehicleDisplay.height - sizings.shadowSize
+        anchors.top: parent.top
+        anchors.right: parent.right
+        width: sizings.controlBaseSize * 9
+        height: Math.min(parent.height, contentHeight)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
         spacing: sizings.spacing
