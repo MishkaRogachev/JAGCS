@@ -45,42 +45,42 @@ Item {
 
         ListElement {
             name: qsTr("Diagnostics panel")
-            setting: "diagnosticsVisible"
+            setting: "diagnostics"
             instrument: "../Instruments/DiagnosticsPanel.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Status panel")
-            setting: "statusVisible"
+            setting: "status"
             instrument: "../Instruments/StatusPanel.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Flight instrument(FD)")
-            setting: "fdVisible"
+            setting: "fd"
             instrument: "../Instruments/FlightDirector.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Horizontal situation indicator(HSI)")
-            setting: "hsiVisible"
+            setting: "hsi"
             instrument: "../Instruments/HorizontalSituationIndicator.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Landing indicator")
-            setting: "landingVisible"
+            setting: "landing"
             instrument: "../Instruments/LandingIndicator.qml"
             instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Control panel")
-            setting: "controlVisible"
+            setting: "control"
             instrument: "../Instruments/ControlPanel.qml"
             instrumentVisible: true
         }
@@ -94,9 +94,9 @@ Item {
             text: name
             checkable: true
             onCheckedChanged: instrumentVisible = checked
-            onClicked: settings.setValue("veh_" + vehicleId + "/" + setting, checked)
+            onClicked: settings.setValue("veh_" + vehicleId + "/" + setting + "/visibility", checked)
             Component.onCompleted: {
-                checked = settings.boolValue("veh_" + vehicleId + "/" + setting, true);
+                checked = settings.boolValue("veh_" + vehicleId + "/" + setting + "/visibility", true);
                 instrumentVisible = checked;
                 topbar.serviceMenu.addMenuItem(visibilityItem)
             }

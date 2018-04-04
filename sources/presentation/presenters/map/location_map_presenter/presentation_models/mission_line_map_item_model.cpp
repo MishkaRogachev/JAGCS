@@ -63,9 +63,8 @@ QVariant MissionLineMapItemModel::data(const QModelIndex& index, int role) const
     case MissionPathRole:
     {
         QVariantList line;
-        if (!settings::Provider::value(settings::mission::mission +
-                                       QString::number(mission->id()) + "/" +
-                                       settings::mission::visibility).toBool())
+        if (!settings::Provider::value(settings::mission::mission + QString::number(mission->id()) +
+                                       "/" + settings::visibility).toBool())
         {
             line.append(QVariant::fromValue(QGeoCoordinate(0, 0)));
             return line;

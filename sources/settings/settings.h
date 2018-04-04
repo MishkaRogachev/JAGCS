@@ -123,23 +123,24 @@ namespace settings
     namespace mission
     {
         const QString mission = "mis_";
-        const QString visibility = "visibility";
     }
 
     namespace vehicle
     {
         const QString vehicle = "veh_";
 
-        namespace visibility
+        namespace instruments
         {
-            const QString diagnostics = "diagnosticsVisible";
-            const QString status = "statusVisible";
-            const QString fd = "fdVisible";
-            const QString hsi = "hsiVisible";
-            const QString landing = "landingVisible";
-            const QString control = "controlVisible";
+            const QString diagnostics = "diagnostics";
+            const QString status = "status";
+            const QString fd = "fd";
+            const QString hsi = "hsi";
+            const QString landing = "landing";
+            const QString control = "control";
         }
     }
+
+    const QString visibility = "visibility";
 }
 
 #endif // SETTINGS_H
