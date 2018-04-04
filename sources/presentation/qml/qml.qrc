@@ -41,6 +41,7 @@
         <file>Controls/ColoredIcon.qml</file>
         <file>Controls/ToolTip.qml</file>
         <file>Controls/Drawer.qml</file>
+        <file>Controls/Dragger.qml</file>
         <file>Controls/SideNav.qml</file>
         <file>Controls/MapPickButton.qml</file>
         <file>Indicators/BarIndicator.qml</file>

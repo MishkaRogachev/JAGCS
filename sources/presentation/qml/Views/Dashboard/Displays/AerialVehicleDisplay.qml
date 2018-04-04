@@ -10,14 +10,11 @@ Item {
     id: vehicleDisplay
 
     property int vehicleId: 0
-    property bool instrumentsUnlocked: true
+    property bool instrumentsUnlocked: false
 
     property AerialVehicle vehicle: AerialVehicle {}
 
     signal updateCommandStatus(var command, var status)
-
-    implicitWidth: list.contentWidth
-    implicitHeight: list.contentHeight + sizings.shadowSize
 
     Component.onCompleted: {
          // TODO 5.10 cascading menus
@@ -39,7 +36,7 @@ Item {
     Controls.MenuItem {
         id: lockInstruments
         text: (checked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("instruments")
-        checked: !instrumentsUnlocked
+        checked: instrumentsUnlocked
         onClicked: instrumentsUnlocked = !instrumentsUnlocked
     }
 
@@ -106,26 +103,24 @@ Item {
         }
     }
 
-    ListView {
-        id: list
-        anchors.top: parent.top
-        anchors.right: parent.right
-        width: sizings.controlBaseSize * 9
-        height: Math.min(parent.height, contentHeight)
-        flickableDirection: Flickable.AutoFlickIfNeeded
-        boundsBehavior: Flickable.StopAtBounds
-        spacing: sizings.spacing
+    Repeater {
         model: instrumentsModel
 
-        Controls.ScrollBar.vertical: Controls.ScrollBar {
-            visible: parent.contentHeight > parent.height
-        }
+        Controls.Dragger {
+//            x: instrumentX
+//            y: instrumentY
+            width: sizings.controlBaseSize * 9
+            height: loader.height
+            visible: instrumentVisible
+            dragEnabled: instrumentsUnlocked
 
-        delegate: Loader {
-            width: parent.width
-            active: instrumentVisible
-            height: active && item ? item.implicitHeight : -list.spacing
-            source: instrument
+            Loader {
+                id: loader
+                anchors.centerIn: parent
+                width: parent.width
+                active: instrumentVisible
+                source: instrument
+            }
         }
     }
 }

@@ -9,8 +9,6 @@ Item {
 
     property var vehicles
 
-    implicitHeight: list.contentHeight + sizings.shadowSize
-
     Component.onCompleted: topbar.serviceMenu.addMenuItem(showOffline)
     Component.onDestruction: topbar.serviceMenu.clearMenuItems()
 
