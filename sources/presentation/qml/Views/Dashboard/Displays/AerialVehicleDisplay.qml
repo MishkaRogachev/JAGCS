@@ -41,100 +41,100 @@ Item {
     }
 
     ListModel {
-        id: instrumentsModel
+        id: instruments
 
         ListElement {
             name: qsTr("Diagnostics panel")
             setting: "diagnostics"
             instrument: "../Instruments/DiagnosticsPanel.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Status panel")
             setting: "status"
             instrument: "../Instruments/StatusPanel.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Flight instrument(FD)")
             setting: "fd"
             instrument: "../Instruments/FlightDirector.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Horizontal situation indicator(HSI)")
             setting: "hsi"
             instrument: "../Instruments/HorizontalSituationIndicator.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Landing indicator")
             setting: "landing"
             instrument: "../Instruments/LandingIndicator.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Control panel")
             setting: "control"
             instrument: "../Instruments/ControlPanel.qml"
-            instrumentVisible: true
         }
     }
 
     Repeater {
-        model: instrumentsModel
+        model: instruments
 
         Controls.MenuItem {
             id: visibilityItem
             text: name
             checkable: true
-            onCheckedChanged: instrumentVisible = checked
-            onClicked: settings.setValue("veh_" + vehicleId + "/" + setting + "/visibility", checked)
-            Component.onCompleted: {
-                checked = settings.boolValue("veh_" + vehicleId + "/" + setting + "/visibility", true);
-                instrumentVisible = checked;
-                topbar.serviceMenu.addMenuItem(visibilityItem)
+            checked: settings.boolValue("veh_" + vehicleId + "/" + setting + "/visibility", true)
+            onCheckedChanged: {
+                if (checked) {
+                    for (var i = 0; i < instruments.count; ++i) {
+                        var addItem = instruments.get(i);
+                        if (addItem.setting !== setting) continue;
+
+                        var order = settings.value("veh_" + vehicleId + "/" +
+                                                   addItem.setting + "/order", i);
+                        if (order < listModel.count) listModel.insert(order, addItem);
+                        else listModel.append(addItem);
+                    }
+                }
+                else {
+                    for (var j = 0; j < listModel.count; ++j) {
+                        var remItem = listModel.get(j);
+                        if (remItem.setting !== setting) continue;
+
+                        listModel.remove(j);
+                    }
+                }
+                settings.setValue("veh_" + vehicleId + "/" + setting + "/visibility", checked);
             }
+            Component.onCompleted: topbar.serviceMenu.addMenuItem(visibilityItem)
         }
     }
 
-    Repeater {
-        model: instrumentsModel
+    ListView {
+        id: list
+        anchors.top: parent.top
+        anchors.right: parent.right
+        width: sizings.controlBaseSize * 9
+        height: Math.min(contentHeight, vehicleDisplay.height)
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
+        spacing: sizings.spacing
+        model: ListModel { id: listModel }
 
-        Controls.Dragger {
-            id: dragger
+        delegate: Controls.Dragger {
+            width: parent.width
             height: loader.height
-            visible: instrumentVisible
             dragEnabled: instrumentsUnlocked
-            Component.onCompleted: {
-                x = settings.value("veh_" + vehicleId + "/" + setting + "/x", 0);
-                y = settings.value("veh_" + vehicleId + "/" + setting + "/y", 0);
-                width = sizings.controlBaseSize * settings.value(
-                            "veh_" + vehicleId + "/" + setting + "/size", 9);
-            }
-
-            function savePosition() {
-                settings.setValue("veh_" + vehicleId + "/" + setting + "/x", x)
-                settings.setValue("veh_" + vehicleId + "/" + setting + "/y", y)
-                settings.setValue("veh_" + vehicleId + "/" + setting + "/size",
-                                  width / sizings.controlBaseSize)
-            }
-
-            Connections {
-                target: vehicleDisplay
-                onInstrumentsUnlockedChanged: if (!instrumentsUnlocked) dragger.savePosition()
-            }
+            onDropped: console.log("dropped")
 
             Loader {
                 id: loader
                 anchors.centerIn: parent
                 width: parent.width
-                active: instrumentVisible
                 source: instrument
             }
         }
