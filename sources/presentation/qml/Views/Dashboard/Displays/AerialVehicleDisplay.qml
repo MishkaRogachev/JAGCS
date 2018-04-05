@@ -107,12 +107,28 @@ Item {
         model: instrumentsModel
 
         Controls.Dragger {
-//            x: instrumentX
-//            y: instrumentY
-            width: sizings.controlBaseSize * 9
+            id: dragger
             height: loader.height
             visible: instrumentVisible
             dragEnabled: instrumentsUnlocked
+            Component.onCompleted: {
+                x = settings.value("veh_" + vehicleId + "/" + setting + "/x", 0);
+                y = settings.value("veh_" + vehicleId + "/" + setting + "/y", 0);
+                width = sizings.controlBaseSize * settings.value(
+                            "veh_" + vehicleId + "/" + setting + "/size", 9);
+            }
+
+            function savePosition() {
+                settings.setValue("veh_" + vehicleId + "/" + setting + "/x", x)
+                settings.setValue("veh_" + vehicleId + "/" + setting + "/y", y)
+                settings.setValue("veh_" + vehicleId + "/" + setting + "/size",
+                                  width / sizings.controlBaseSize)
+            }
+
+            Connections {
+                target: vehicleDisplay
+                onInstrumentsUnlockedChanged: if (!instrumentsUnlocked) dragger.savePosition()
+            }
 
             Loader {
                 id: loader
