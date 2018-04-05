@@ -6,7 +6,13 @@ Item {
     id: control
 
     property alias dragEnabled: area.enabled
+    property real savedY : 0
 
+    function cancel() {
+       y = savedY;
+    }
+
+    signal dragged()
     signal dropped()
 
     Drag.active: area.drag.active
@@ -21,8 +27,9 @@ Item {
         drag.minimumY: 0
         drag.maximumY: control.parent.height - control.height
         drag.axis: Drag.YAxis
-        drag.smoothed: false
         z: 10
+        onPressed: savedY = control.y
         onReleased: if (drag.active) dropped()
+        onPositionChanged: if (drag.active) dragged()
     }
 }

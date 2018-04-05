@@ -96,8 +96,12 @@ Item {
 
                         var order = settings.value("veh_" + vehicleId + "/" +
                                                    addItem.setting + "/order", i);
-                        if (order < listModel.count) listModel.insert(order, addItem);
+                        if (order < listModel.count)
+                        {
+                            listModel.insert(order, addItem);
+                        }
                         else listModel.append(addItem);
+                        settings.setValue("veh_" + vehicleId + "/" + setting + "/order", order);
                     }
                 }
                 else {
@@ -125,11 +129,31 @@ Item {
         spacing: sizings.spacing
         model: ListModel { id: listModel }
 
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
+        }
+
         delegate: Controls.Dragger {
             width: parent.width
             height: loader.height
             dragEnabled: instrumentsUnlocked
-            onDropped: console.log("dropped")
+            onDropped: cancel()
+            onDragged: {
+                if (index > 0) {
+                    var previousItem = list.contentItem.children[index - 1];
+
+                    if (y < (previousItem.y + previousItem.height / 2)) {
+                        listModel.move(index, index - 1, 1);
+                    }
+                }
+                if (index < list.count -1) {
+                    var nextItem = list.contentItem.children[index + 1];
+
+                    if (y > (nextItem.y + nextItem.height / 2)) {
+                        listModel.move(index, index + 1, 1);
+                    }
+                }
+            }
 
             Loader {
                 id: loader
