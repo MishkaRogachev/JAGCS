@@ -10,15 +10,12 @@ Item {
     id: vehicleDisplay
 
     property int vehicleId: 0
-    property bool instrumentsUnlocked: false
 
     property AerialVehicle vehicle: AerialVehicle {}
 
     signal updateCommandStatus(var command, var status)
 
     Component.onCompleted: {
-         // TODO 5.10 cascading menus
-        topbar.serviceMenu.addMenuItem(lockInstruments);
         manual.setVehicleId(vehicleId)
     }
 
@@ -31,13 +28,6 @@ Item {
         id: presenter
         view: vehicleDisplay
         Component.onCompleted: setVehicle(vehicleId)
-    }
-
-    Controls.MenuItem {
-        id: lockInstruments
-        text: (checked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("instruments")
-        checked: instrumentsUnlocked
-        onClicked: instrumentsUnlocked = !instrumentsUnlocked
     }
 
     ListModel {
@@ -80,7 +70,7 @@ Item {
         }
     }
 
-    Repeater {
+    Repeater {         // TODO 5.10 cascading menus
         model: instruments
 
         Controls.MenuItem {
@@ -130,51 +120,13 @@ Item {
         spacing: sizings.spacing
         model: ListModel { id: listModel }
 
-        property var dropItem: null
-
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
         }
 
-        delegate: Controls.Dragger {
-            id: dragger
-            readonly property int indexImpl: index
+        delegate: Loader {
             width: parent.width
-            height: loader.height
-            dragEnabled: instrumentsUnlocked
-            maxY: vehicleDisplay.height
-            z: dragActive ? 2 : 1
-
-            onDropped: {
-                if (list.dropItem) {
-                    var newIndex = list.dropItem.indexImpl;
-                    list.dropItem == null;
-                    listModel.move(index, newIndex, 1);
-                    list.forceLayout();
-                }
-                else cancel();
-            }
-            onDragged: {
-                var previousItem = list.itemAt(x, y - 1);
-                if (previousItem && y < (previousItem.y + previousItem.height / 2)) {
-                    list.dropItem = previousItem;
-                    return;
-                }
-
-                var nextItem = list.itemAt(x, y + height + 1);
-                if (nextItem && y + height > (nextItem.y + nextItem.height / 2)) {
-                    list.dropItem = nextItem;
-                    return;
-                }
-                list.dropItem = null;
-            }
-
-            Loader {
-                id: loader
-                anchors.centerIn: parent
-                width: parent.width
-                source: instrument
-            }
+            source: instrument
         }
     }
 }
