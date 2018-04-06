@@ -126,33 +126,47 @@ Item {
         height: Math.min(contentHeight, vehicleDisplay.height)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
+        snapMode: ListView.SnapToItem
         spacing: sizings.spacing
         model: ListModel { id: listModel }
+
+        property var dropItem: null
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
         }
 
         delegate: Controls.Dragger {
+            id: dragger
+            readonly property int indexImpl: index
             width: parent.width
             height: loader.height
             dragEnabled: instrumentsUnlocked
-            onDropped: cancel()
+            maxY: vehicleDisplay.height
+            z: dragActive ? 2 : 1
+
+            onDropped: {
+                if (list.dropItem) {
+                    var newIndex = list.dropItem.indexImpl;
+                    list.dropItem == null;
+                    listModel.move(index, newIndex, 1);
+                    list.forceLayout();
+                }
+                else cancel();
+            }
             onDragged: {
-                if (index > 0) {
-                    var previousItem = list.contentItem.children[index - 1];
-
-                    if (y < (previousItem.y + previousItem.height / 2)) {
-                        listModel.move(index, index - 1, 1);
-                    }
+                var previousItem = list.itemAt(x, y - 1);
+                if (previousItem && y < (previousItem.y + previousItem.height / 2)) {
+                    list.dropItem = previousItem;
+                    return;
                 }
-                if (index < list.count -1) {
-                    var nextItem = list.contentItem.children[index + 1];
 
-                    if (y > (nextItem.y + nextItem.height / 2)) {
-                        listModel.move(index, index + 1, 1);
-                    }
+                var nextItem = list.itemAt(x, y + height + 1);
+                if (nextItem && y + height > (nextItem.y + nextItem.height / 2)) {
+                    list.dropItem = nextItem;
+                    return;
                 }
+                list.dropItem = null;
             }
 
             Loader {
