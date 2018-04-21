@@ -4,8 +4,8 @@ ShaderEffect {
     id: shader
 
     property color color: customPalette.dangerColor
-    property real xFactor: 35
-    property real yFactor: xFactor * width / height
+    property real xFactor: height
+    property real yFactor: width
 
     fragmentShader:"
     varying highp vec2 qt_TexCoord0;

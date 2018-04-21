@@ -15,11 +15,14 @@ Item {
 
     signal updateCommandStatus(var command, var status)
 
-    implicitWidth: list.contentWidth
-    implicitHeight: list.contentHeight + sizings.shadowSize
+    Component.onCompleted: {
+        manual.setVehicleId(vehicleId)
+    }
 
-    Component.onCompleted: manual.setVehicleId(vehicleId)
-    Component.onDestruction: manual.setVehicleId(0)
+    Component.onDestruction: {
+        topbar.serviceMenu.clearMenuItems();
+        manual.setVehicleId(0);
+    }
 
     AerialVehicleDisplayPresenter {
         id: presenter
@@ -27,92 +30,95 @@ Item {
         Component.onCompleted: setVehicle(vehicleId)
     }
 
-    Connections {
-        target: displaysSettingsButton
-        onClicked: instrumentsVisibility.visible ? instrumentsVisibility.close() :
-                                                   instrumentsVisibility.open()
-    }
-
     ListModel {
-        id: instrumentsModel
+        id: instruments
 
         ListElement {
             name: qsTr("Diagnostics panel")
-            setting: "diagnosticsVisible"
+            setting: "diagnostics"
             instrument: "../Instruments/DiagnosticsPanel.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Status panel")
-            setting: "statusVisible"
+            setting: "status"
             instrument: "../Instruments/StatusPanel.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Flight instrument(FD)")
-            setting: "fdVisible"
+            setting: "fd"
             instrument: "../Instruments/FlightDirector.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Horizontal situation indicator(HSI)")
-            setting: "hsiVisible"
+            setting: "hsi"
             instrument: "../Instruments/HorizontalSituationIndicator.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Landing indicator")
-            setting: "landingVisible"
+            setting: "landing"
             instrument: "../Instruments/LandingIndicator.qml"
-            instrumentVisible: true
         }
 
         ListElement {
             name: qsTr("Control panel")
-            setting: "controlVisible"
+            setting: "control"
             instrument: "../Instruments/ControlPanel.qml"
-            instrumentVisible: true
         }
     }
 
-    Controls.Popup {
-        id: instrumentsVisibility
-        y: -sizings.padding
-        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
-        padding: sizings.padding
-        onVisibleChanged: displaysSettingsButton.enabled = !visible
+    Repeater {         // TODO 5.10 cascading menus
+        model: instruments
 
-        ColumnLayout {
-            spacing: sizings.spacing
+        Controls.MenuItem {
+            id: visibilityItem
+            text: name
+            checkable: true
+            checked: settings.boolValue("veh_" + vehicleId + "/" + setting + "/visibility", true)
+            onCheckedChanged: {
+                if (checked) {
+                    for (var i = 0; i < instruments.count; ++i) {
+                        var addItem = instruments.get(i);
+                        if (addItem.setting !== setting) continue;
 
-            Repeater {
-                model: instrumentsModel
-
-                Controls.CheckBox {
-                    text: name
-                    onCheckedChanged: instrumentVisible = checked
-                    onClicked: settings.setValue("veh_" + vehicleId + "/" + setting, checked)
-                    Component.onCompleted: {
-                        checked = settings.boolValue("veh_" + vehicleId + "/" + setting, true);
-                        instrumentVisible = checked;
+                        var order = settings.value("veh_" + vehicleId + "/" +
+                                                   addItem.setting + "/order", i);
+                        if (order < listModel.count)
+                        {
+                            listModel.insert(order, addItem);
+                        }
+                        else listModel.append(addItem);
+                        settings.setValue("veh_" + vehicleId + "/" + setting + "/order", order);
                     }
                 }
+                else {
+                    for (var j = 0; j < listModel.count; ++j) {
+                        var remItem = listModel.get(j);
+                        if (remItem.setting !== setting) continue;
+
+                        listModel.remove(j);
+                    }
+                }
+                settings.setValue("veh_" + vehicleId + "/" + setting + "/visibility", checked);
             }
+            Component.onCompleted: topbar.serviceMenu.addMenuItem(visibilityItem)
         }
     }
 
     ListView {
         id: list
-        width: vehicleDisplay.width - sizings.shadowSize
-        height: vehicleDisplay.height - sizings.shadowSize
+        anchors.top: parent.top
+        anchors.right: parent.right
+        width: sizings.controlBaseSize * 9
+        height: Math.min(contentHeight, vehicleDisplay.height)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
+        snapMode: ListView.SnapToItem
         spacing: sizings.spacing
-        model: instrumentsModel
+        model: ListModel { id: listModel }
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
@@ -120,8 +126,6 @@ Item {
 
         delegate: Loader {
             width: parent.width
-            active: instrumentVisible
-            height: active && item ? item.implicitHeight : -list.spacing
             source: instrument
         }
     }

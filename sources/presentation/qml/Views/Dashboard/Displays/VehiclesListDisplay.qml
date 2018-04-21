@@ -9,40 +9,27 @@ Item {
 
     property var vehicles
 
-    implicitHeight: list.contentHeight + sizings.shadowSize
+    Component.onCompleted: topbar.serviceMenu.addMenuItem(showOffline)
+    Component.onDestruction: topbar.serviceMenu.clearMenuItems()
 
     VehiclesListDisplayPresenter {
         id: presenter
         view: listDisplay
     }
 
-    Connections {
-        target: displaysSettingsButton
-        onClicked: filterSettings.visible ? filterSettings.close() : filterSettings.open()
-    }
-
-    Controls.Popup {
-        id: filterSettings
-        y: -sizings.padding
-        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
-        padding: sizings.padding
-        onVisibleChanged: displaysSettingsButton.enabled = !visible
-
-        ColumnLayout {
-            spacing: sizings.spacing
-
-            Controls.CheckBox {
-                text: qsTr("Show offline")
-                checked: vehicles.showOffline
-                onClicked: vehicles.setShowOffline(!vehicles.showOffline)
-            }
-        }
+    Controls.MenuItem {
+        id: showOffline
+        text: qsTr("Show offline")
+        checked: vehicles.showOffline
+        onClicked: vehicles.setShowOffline(!vehicles.showOffline)
     }
 
     ListView {
         id: list
-        width: listDisplay.width - sizings.shadowSize
-        height: parent.height
+        anchors.top: parent.top
+        anchors.right: parent.right
+        width: sizings.controlBaseSize * 9
+        height: Math.min(parent.height, contentHeight)
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds

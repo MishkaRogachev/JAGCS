@@ -104,17 +104,23 @@ bool VehicleService::save(const VehiclePtr& vehicle)
     if (isNew)
     {
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::visibility::diagnostics, false);
+                                     "/" + settings::vehicle::instruments::diagnostics +
+                                     "/" + settings::visibility, false);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::visibility::status, true);
+                                     "/" + settings::vehicle::instruments::status +
+                                     "/" + settings::visibility, true);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::visibility::fd, true);
+                                     "/" + settings::vehicle::instruments::fd +
+                                     "/" + settings::visibility, true);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::visibility::hsi, true);
+                                     "/" + settings::vehicle::instruments::hsi +
+                                     "/" + settings::visibility, true);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::visibility::landing, false);
+                                     "/" + settings::vehicle::instruments::landing +
+                                     "/" + settings::visibility, false);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::visibility::control, true);
+                                     "/" + settings::vehicle::instruments::control +
+                                     "/" + settings::visibility, true);
         emit vehicleAdded(vehicle);
     }
     else

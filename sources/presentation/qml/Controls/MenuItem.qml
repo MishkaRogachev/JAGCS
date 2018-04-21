@@ -9,7 +9,7 @@ T.MenuItem {
     property alias iconSource: icon.source
     property color iconColor: label.color
 
-    leftPadding: icon.width
+    leftPadding: icon.visible ? icon.width + sizings.padding * 2 : 0
     font.pixelSize: sizings.fontPixelSize
 
     background: Rectangle {
@@ -26,6 +26,7 @@ T.MenuItem {
     }
 
     indicator: ColoredIcon {
+        x: sizings.padding
         id: icon
         color: enabled ? iconColor : customPalette.sunkenColor
         source: control.checked ? "qrc:/ui/ok.svg" : ""
@@ -40,7 +41,8 @@ T.MenuItem {
         text: control.text
         color: {
             if (!enabled) return customPalette.sunkenColor;
-            pressed || checked || highlighted ? customPalette.selectedTextColor: customPalette.textColor;
+            if (pressed || highlighted) return customPalette.selectedTextColor;
+            return customPalette.textColor;
         }
     }
 }

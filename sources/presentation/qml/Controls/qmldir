@@ -32,6 +32,7 @@ CoordSpinBox 1.0 CoordSpinBox.qml
 ScrollBar 1.0 ScrollBar.qml
 ColoredIcon 1.0 ColoredIcon.qml
 ToolTip 1.0 ToolTip.qml
+Dragger 1.0 Dragger.qml
 Drawer 1.0 Drawer.qml
 SideNav 1.0 SideNav.qml
 MapPickButton 1.0 MapPickButton.qml

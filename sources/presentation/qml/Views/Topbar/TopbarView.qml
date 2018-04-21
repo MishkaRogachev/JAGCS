@@ -10,6 +10,8 @@ import "Connection"
 Item {
     id: topbar
 
+    property alias serviceMenu: serviceMenu
+
     height: sizings.controlBaseSize
 
     TopbarPresenter {
@@ -18,7 +20,8 @@ Item {
     }
 
     RowLayout {
-        anchors.fill: parent
+        anchors.left: parent.left
+        height: parent.height
         spacing: sizings.spacing
 
         Controls.Button {
@@ -51,10 +54,12 @@ Item {
             flat: true
             onClicked: menu.goTo("qrc:/Views/Menu/Links/LinkListView.qml", qsTr("Links"), {})
         }
+    }
 
-        Item {
-            Layout.fillWidth: true
-        }
+    RowLayout {
+        anchors.right: parent.right
+        height: parent.height
+        spacing: sizings.spacing
 
         ConnectionView {
             id: connection
@@ -62,16 +67,61 @@ Item {
 
         RadioStatusView {
             id: radioStatus
-            Layout.preferredWidth: sizings.controlBaseSize * 2
-        }
-
-        Item {
-            Layout.minimumWidth: dashboardVisible ? dashboard.width : 0
+            Layout.preferredWidth: sizings.controlBaseSize * 5
         }
 
         Controls.Button {
-            iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" : "qrc:/icons/show_dashboard.svg"
-            tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) + " " + qsTr("dashboard")
+            iconSource: "qrc:/icons/left.svg"
+            tipText: qsTr("Overview")
+            enabled: dashboard.selectedVehicle !== undefined
+            flat: true
+            onClicked: dashboard.selectVehicle(0)
+        }
+
+        Controls.Button {
+            visible: dashboard.selectedVehicle !== undefined
+            iconSource: "qrc:/icons/joystick.svg"
+            tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
+                     " " + qsTr("manual control")
+            iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
+            flat: true
+            onClicked: manual.setEnabled(!manual.enabled)
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/service.svg"
+            tipText: qsTr("Service")
+            enabled: !serviceMenu.visible
+            flat: true
+            onClicked: serviceMenu.open()
+
+            Controls.Menu {
+                id: serviceMenu
+                y: parent.height
+
+                function addMenuItem(item) {
+                    if (serviceMenu.width < item.width) serviceMenu.width = item.width;
+                    else item.width = serviceMenu.width;
+                    addItem(item);
+                }
+
+                function clearMenuItems() {
+                    while (contentData.count > 0) removeItem(0);
+                }
+            }
+        }
+
+        Controls.Label {
+            text: dashboard.selectedVehicle !== undefined ?
+                      dashboard.selectedVehicle.name : qsTr("All MAVs")
+            font.bold: true
+        }
+
+        Controls.Button {
+            iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" :
+                                           "qrc:/icons/show_dashboard.svg"
+            tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) +
+                     " " + qsTr("dashboard")
             flat: true
             onClicked: dashboardVisible = !dashboardVisible
         }

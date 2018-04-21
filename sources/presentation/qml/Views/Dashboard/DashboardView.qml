@@ -1,10 +1,9 @@
 import QtQuick 2.6
-import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-ColumnLayout {
+Item {
     id: dashboard
 
     property var selectedVehicle
@@ -42,54 +41,14 @@ ColumnLayout {
     Component.onCompleted: updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
 
-    spacing: sizings.spacing
-
     DashboardPresenter {
         id: presenter
         view: dashboard
     }
 
-    RowLayout {
-        id: row
-        spacing: 0
-
-        Controls.Button {
-            iconSource: "qrc:/icons/left.svg"
-            tipText: qsTr("Overview")
-            enabled: selectedVehicle !== undefined
-            onClicked: selectVehicle(0)
-            flat: true
-        }
-
-        Controls.Button {
-            visible: selectedVehicle !== undefined
-            iconSource: "qrc:/icons/joystick.svg"
-            tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
-                     " " + qsTr("manual control")
-            iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
-            onClicked: manual.setEnabled(!manual.enabled)
-            flat: true
-        }
-
-        Controls.Button {
-            id: displaysSettingsButton
-            iconSource: "qrc:/icons/service.svg"
-            tipText: qsTr("Service")
-            flat: true
-        }
-
-        Controls.Label {
-            text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("All MAVs")
-            font.bold: true
-            Layout.fillWidth: true
-            clip: true
-        }
-    }
-
     Loader {
         id: loader
+        anchors.fill: parent
         clip: true
-        Layout.fillWidth: true
-        Layout.fillHeight: true
     }
 }

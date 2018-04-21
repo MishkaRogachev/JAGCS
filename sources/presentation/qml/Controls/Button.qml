@@ -28,8 +28,15 @@ T.Button { // TODO: clickable
         color: {
             if (control.pressed | control.pressedImpl) return customPalette.highlightColor;
             if (control.checked || control.highlighted) return customPalette.selectionColor;
-            if (control.hovered) return control.flat ? customPalette.raisedColor : customPalette.buttonColor;
             return control.flat ? "transparent" : customPalette.buttonColor;
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: customPalette.textColor
+            radius: parent.radius
+            opacity: 0.1
+            visible: control.hovered
         }
 
         Shaders.Hatch {

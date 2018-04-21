@@ -127,14 +127,14 @@ Provider* Provider::instance()
     return &settings;
 }
 
-QVariant Provider::value(const QString& key)
+QVariant Provider::value(const QString& key, const QVariant& defaultValue)
 {
-    return instance()->d->settings.value(key, ::defaultSettings.value(key));
+    return instance()->d->settings.value(key, ::defaultSettings.value(key, defaultValue));
 }
 
-bool Provider::boolValue(const QString& key)
+bool Provider::boolValue(const QString& key, bool defaultValue)
 {
-    return Provider::value(key).toBool();
+    return Provider::value(key, defaultValue).toBool();
 }
 
 void Provider::setValue(const QString& key, const QVariant& value)

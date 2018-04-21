@@ -51,6 +51,14 @@ T.SpinBox {
         color: down.pressed ? customPalette.highlightColor : "transparent"
         visible: enabled
 
+        Rectangle {
+            anchors.fill: parent
+            color: customPalette.textColor
+            radius: parent.radius
+            opacity: 0.1
+            visible: down.hovered
+        }
+
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/minus.svg"
@@ -67,6 +75,14 @@ T.SpinBox {
         radius: 3
         color: up.pressed ? customPalette.highlightColor : "transparent"
         visible: enabled
+
+        Rectangle {
+            anchors.fill: parent
+            color: customPalette.textColor
+            radius: parent.radius
+            opacity: 0.1
+            visible: up.hovered
+        }
 
         ColoredIcon {
             anchors.centerIn: parent

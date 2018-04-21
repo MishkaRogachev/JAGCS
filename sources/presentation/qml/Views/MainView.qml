@@ -43,9 +43,7 @@ Controls.ApplicationWindow  {
         id: corner
         anchors.top: tools.top
         anchors.left: tools.left
-        width: Math.min(parent.width - dashboard.width -
-                        drawer.position * drawer.width - sizings.margins * 2,
-                        cornerMap ? map.implicitWidth : video.implicitWidth)
+        width: cornerMap ? map.implicitWidth : video.implicitWidth
         height: parent.height / 2
         z: cornerVisible ? 2 : -1
         enabled: cornerVisible
@@ -71,15 +69,13 @@ Controls.ApplicationWindow  {
 
     DashboardView {
         id: dashboard
-        anchors.top: topbar.top
+        anchors.top: topbar.bottom
         anchors.right: parent.right
-        anchors.rightMargin: dashboardVisible ? 0 : -width
-        width: sizings.controlBaseSize * 8
-        height: Math.min(implicitHeight, main.height)
+        anchors.left: tools.right
+        anchors.bottom: parent.bottom
+        anchors.margins: sizings.margins
+        visible: dashboardVisible
         z: 1
-        visible: anchors.rightMargin != -width
-
-        Behavior on anchors.rightMargin { PropertyAnimation { duration: 200 } }
     }
 
     ToolsPanel {
@@ -96,7 +92,7 @@ Controls.ApplicationWindow  {
         anchors.top: corner.bottom
         anchors.left: tools.right
         anchors.bottom: parent.bottom
-        anchors.right: corner.height < dashboard.height ? dashboard.left : parent.right
+        anchors.right: parent.right
         anchors.margins: sizings.margins
         z: 3
     }
