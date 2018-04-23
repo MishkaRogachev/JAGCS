@@ -38,14 +38,15 @@ Item {
     }
     onErrorChanged: if (errorVisible) errorCanvas.requestPaint()
 
-//    Shaders.OpacityBorder {
-//        anchors.fill: parent
-//        sourceItem: ladderCanvas
-//    }
+    Shaders.OpacityBorder {
+        anchors.fill: ladderCanvas
+        opacity: enabled ? 1 : 0.33
+        source: ladderCanvas
+    }
 
     Canvas {
         id: ladderCanvas
-        opacity: enabled ? 1 : 0.33
+        visible: false
         anchors.fill: parent
         onPaint: {
             var ctx = getContext('2d');
