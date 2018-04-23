@@ -112,7 +112,7 @@ Item {
         id: list
         anchors.top: parent.top
         anchors.right: parent.right
-        width: sizings.controlBaseSize * 9
+        width: sizings.controlBaseSize * 8
         height: Math.min(contentHeight, vehicleDisplay.height)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds

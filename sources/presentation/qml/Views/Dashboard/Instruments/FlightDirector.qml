@@ -20,7 +20,7 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
         width: speedLadder.majorTickSize + 1
-        height: parent.height * 0.6 // TODO: ladder dynamic width calculation
+        height: fd.sideHeight
         value: vehicle.powerSystem.throttle
     }
 
@@ -28,7 +28,7 @@ Controls.Pane {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        height: parent.height * 0.6
+        height: fd.sideHeight
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundSpeed)
@@ -93,7 +93,7 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: altitudeLadder.left
         width: altitudeLadder.majorTickSize + 1
-        height: parent.height * 0.6
+        height: fd.sideHeight
         value: vehicle.barometric.climb
         fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
         minValue: -10
@@ -104,7 +104,7 @@ Controls.Pane {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        height: parent.height * 0.6
+        height: fd.sideHeight
         value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
         errorVisible: vehicle.guided
         error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)

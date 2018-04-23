@@ -50,8 +50,7 @@ Controls.Pane {
         courseEnabled: vehicle.satellite.groundSpeed > 0.1
         opacity: vehicle.compass.enabled ? 1 : 0.33
         headingColor: vehicle.compass.operational ? customPalette.textColor : customPalette.dangerColor
-        courseColor: vehicle.satellite.enabled ?
-                         (vehicle.satellite.operational ?
+        courseColor: vehicle.satellite.enabled ? (vehicle.satellite.operational ?
                               customPalette.positiveColor : customPalette.dangerColor) : "transparent"
 
         Indicators.SituationIndicator {
@@ -122,6 +121,7 @@ Controls.Pane {
         flat: true
         round: true
         autoRepeat: true
+        enabled: vehicle.online && vehicle.ahrs.enabled
         visible: manual.enabled
         onClicked: manual.addImpact(ManualController.Yaw, -0.05)
     }
@@ -133,6 +133,7 @@ Controls.Pane {
         flat: true
         round: true
         autoRepeat: true
+        enabled: vehicle.online && vehicle.ahrs.enabled
         visible: manual.enabled
         onClicked: manual.addImpact(ManualController.Yaw, 0.05)
     }

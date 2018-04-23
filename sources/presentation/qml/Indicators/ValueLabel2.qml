@@ -8,11 +8,14 @@ Item {
     property real value: 0
     property bool operational: true
 
-    implicitWidth: Math.max(defText.implicitWidth, valueText.implicitWidth)
-    implicitHeight: defText.implicitHeight + valueText.implicitHeight
+    property alias prefixFont: prefixText.font
+    property alias valueFont: valueText.font
+
+    implicitWidth: Math.max(prefixText.implicitWidth, valueText.implicitWidth)
+    implicitHeight: prefixText.implicitHeight + valueText.implicitHeight
 
     Text {
-        id: defText
+        id: prefixText
         anchors.top: parent.top
         width: root.width
         horizontalAlignment: Text.AlignHCenter
