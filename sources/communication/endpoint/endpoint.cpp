@@ -1,5 +1,7 @@
 #include "endpoint.h"
 
+using namespace comm;
+
 Endpoint::Endpoint(const QHostAddress& address, quint16 port):
     m_address(address),
     m_port(port)
