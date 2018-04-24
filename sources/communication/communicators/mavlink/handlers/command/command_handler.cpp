@@ -32,7 +32,6 @@ namespace
         { MAV_CMD_DO_PAUSE_CONTINUE, dto::Command::PauseContinue },
         { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute },
         { MAV_CMD_DO_SET_HOME, dto::Command::SetHome },
-        { MAV_CMD_PREFLIGHT_CALIBRATION, dto::Command::PreflightCalibration }
         // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
 
@@ -106,6 +105,14 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
         this->ackCommand(vehicleId, dto::Command::SetGroundspeed,
                          ::mavStatusMap.value(ack.result, dto::Command::Idle));
         this->ackCommand(vehicleId, dto::Command::SetThrottle,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        break;
+    case MAV_CMD_PREFLIGHT_CALIBRATION:
+        this->ackCommand(vehicleId, dto::Command::CalibrateAirspeed,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        this->ackCommand(vehicleId, dto::Command::CalibrateReferencePressure,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        this->ackCommand(vehicleId, dto::Command::CalibrateTemperature,
                          ::mavStatusMap.value(ack.result, dto::Command::Idle));
         break;
     default:
@@ -188,6 +195,18 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
         this->sendManualControl(vehicle->mavId(), args.value(0, 0).toFloat(),
                                 args.value(1, 0).toFloat(), args.value(2, 0).toFloat(),
                                 args.value(3, 0).toFloat());
+        break;
+    case dto::Command::CalibrateAirspeed:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
+                              { 0, 0, 0, 0, 0, 2, 0 }, attempt);
+        break;
+    case dto::Command::CalibrateTemperature:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
+                              { 3, 0, 0, 0, 3, 0, 3 }, attempt);
+        break;
+    case dto::Command::CalibrateReferencePressure:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
+                              { 0, 0, 1, 0, 0, 0, 0 }, attempt);
         break;
     default:
         break;

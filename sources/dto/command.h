@@ -46,8 +46,9 @@ namespace dto
             Parachute,
 
             SetHome,
-
-            PreflightCalibration
+            CalibrateAirspeed,
+            CalibrateTemperature,
+            CalibrateReferencePressure
         };
 
         enum CommandStatus

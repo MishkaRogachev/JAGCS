@@ -72,7 +72,6 @@ Item {
         height: Math.min(contentHeight, vehicleDisplay.height)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        snapMode: ListView.SnapToItem
         spacing: sizings.spacing
         footerPositioning: ListView.OverlayFooter
         model: ListModel { id: listModel }
