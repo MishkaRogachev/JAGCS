@@ -31,7 +31,7 @@ Controls.Pane {
         height: fd.sideHeight
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
-                                      vehicle.satellite.groundSpeed)
+                                      vehicle.satellite.groundspeed)
         errorVisible: vehicle.guided && vehicle.pitot.present
         error: units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
         minValue: value + minSpeed

@@ -91,8 +91,19 @@ Item {
             z: 10
 
             Controls.Button {
+                id: lockButton
+                anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                width: parent.width
+                checkable: true
+                iconSource: checked ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg"
+                tipText: (checked ? qsTr("Unlock") : qsTr("Lock")) + " " + qsTr("indicators")
+            }
+
+            Controls.Button {
+                enabled: !lockButton.checked
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                width: parent.width - sizings.controlBaseSize
                 iconSource: "qrc:/icons/service.svg"
                 text: qsTr("Instruments")
                 onClicked: instrumentsMenu.open()
