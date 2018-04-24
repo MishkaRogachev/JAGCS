@@ -10,8 +10,6 @@ import "Connection"
 Item {
     id: topbar
 
-    property alias serviceMenu: serviceMenu
-
     height: sizings.controlBaseSize
 
     TopbarPresenter {
@@ -86,29 +84,6 @@ Item {
             iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
             flat: true
             onClicked: manual.setEnabled(!manual.enabled)
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/service.svg"
-            tipText: qsTr("Service")
-            enabled: !serviceMenu.visible
-            flat: true
-            onClicked: serviceMenu.open()
-
-            Controls.Menu {
-                id: serviceMenu
-                y: parent.height
-
-                function addMenuItem(item) {
-                    if (serviceMenu.width < item.width) serviceMenu.width = item.width;
-                    else item.width = serviceMenu.width;
-                    addItem(item);
-                }
-
-                function clearMenuItems() {
-                    while (contentData.count > 0) removeItem(0);
-                }
-            }
         }
 
         Controls.Label {
