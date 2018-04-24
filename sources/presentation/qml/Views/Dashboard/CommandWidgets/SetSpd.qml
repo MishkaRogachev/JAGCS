@@ -23,13 +23,28 @@ RowLayout {
         }
     }
 
-    onVisibleChanged: updateSpd()
-    Component.onCompleted: updateSpd()
+    Connections {
+         target: vehicle.pitot
+         enabled: vehicle.pitot.present
+         onIndicatedAirspeedChanged: {
+             if (spdBox.isValid) return;
+             spdBox.realValue = units.convertSpeedTo(speedUnits, vehicle.pitot.indicatedAirspeed);
+         }
+    }
 
-    function updateSpd() {
+    Connections {
+         target: vehicle.satellite
+         enabled: !vehicle.pitot.present
+         onGroundspeedChanged: {
+             if (spdBox.isValid) return;
+             spdBox.realValue = units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed);
+         }
+    }
+
+    onVisibleChanged: {
         spdBox.realValue = units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                                     vehicle.pitot.indicatedAirspeed :
-                                                    vehicle.satellite.groundSpeed);
+                                                    vehicle.satellite.groundspeed);
     }
 
     DashboardControls.Label {
