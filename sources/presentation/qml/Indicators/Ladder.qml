@@ -170,7 +170,7 @@ Item {
         }
     }
 
-    ValueLabel2 {
+    ValueLabel {
         id: label
         anchors.centerIn: parent
         anchors.horizontalCenterOffset: mirrored ? majorTickSize * 0.5 : -majorTickSize * 0.5

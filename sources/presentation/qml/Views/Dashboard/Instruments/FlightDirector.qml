@@ -44,7 +44,7 @@ Controls.Pane {
         onAddValue: manual.addImpact(ManualController.Throttle, value)
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
@@ -56,7 +56,7 @@ Controls.Pane {
         visible: vehicle.pitot.present
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
@@ -120,7 +120,7 @@ Controls.Pane {
         prefix: qsTr("ALT") + ", " + altitudeSuffix
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
         value: units.convertDistanceTo(altitudeUnits, vehicle.satellite.altitude)
@@ -130,7 +130,7 @@ Controls.Pane {
         prefix: qsTr("SAT") + ", " + altitudeSuffix
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
         value: units.convertDistanceTo(altitudeUnits, vehicle.radalt.altitude)

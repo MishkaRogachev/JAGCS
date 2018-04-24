@@ -12,9 +12,9 @@ Controls.Pane {
     Indicators.DistanceLabel {
         anchors.top: parent.top
         anchors.left: parent.left
-        prefix: qsTr("DIST")
+        prefix: qsTr("DIST") + ", " + distancePrefix
         color: vehicle.guided ? customPalette.activeMissionColor : customPalette.textColor
-        opacity: vehicle.guided ? 1 : 0.33
+        enabled: vehicle.guided
         distance: vehicle.navigator.targetDistance
         width: parent.width * 0.2
     }
@@ -23,7 +23,7 @@ Controls.Pane {
         id: homeLabel
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        prefix: qsTr("HOME")
+        prefix: qsTr("HOME") + ", " + distancePrefix
         distance: vehicle.position.distanceTo(vehicle.homePosition)
         width: parent.width * 0.2
         enabled: distance > 0
@@ -33,9 +33,8 @@ Controls.Pane {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: parent.width * 0.2
-        prefix: qsTr("WIND")
+        prefix: qsTr("WIND") + ", " + dashboard.speedSuffix
         value: units.convertSpeedTo(dashboard.speedUnits, vehicle.wind.speed)
-        suffix: dashboard.speedSuffix
         enabled: value > 0
     }
 
@@ -88,8 +87,7 @@ Controls.Pane {
         opacity: vehicle.guided ? 1 : 0.33
         value: vehicle.navigator.targetBearing
         width: parent.width * 0.2
-        prefix: qsTr("TRG")
-        suffix: "\u00B0"
+        prefix: qsTr("TRG") + ", \u00B0"
     }
 
     Indicators.ValueLabel {
@@ -99,8 +97,7 @@ Controls.Pane {
         width: parent.width * 0.2
         enabled: vehicle.compass.enabled
         operational: vehicle.compass.operational
-        prefix: qsTr("HDG")
-        suffix: "\u00B0"
+        prefix: qsTr("HDG") + ", \u00B0"
     }
 
     Indicators.ValueLabel {
@@ -110,8 +107,7 @@ Controls.Pane {
         width: parent.width * 0.2
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
-        prefix: qsTr("CRS")
-        suffix: "\u00B0"
+        prefix: qsTr("CRS") + ", \u00B0"
     }
 
     Controls.Button {

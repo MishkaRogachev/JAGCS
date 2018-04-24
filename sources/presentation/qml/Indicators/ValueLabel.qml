@@ -1,21 +1,43 @@
 import QtQuick 2.6
 
-Text {
+Item {
     id: root
 
     property string prefix
-    property string suffix
     property int digits: 0
     property real value: 0
     property bool operational: true
+    property color color: operational ? customPalette.textColor : customPalette.dangerColor
 
-    opacity: enabled ? 1 : 0.33
-    color: operational ? customPalette.textColor : customPalette.dangerColor
-    horizontalAlignment: Text.AlignHCenter
-    font.bold: true
-    font.pixelSize: sizings.fontPixelSize * 0.6
-    wrapMode: Text.WordWrap
-    text: (prefix.length > 0 ? prefix + "\n" : "") +
-          (enabled ? value.toFixed(digits) + " " + suffix : "-")
+    property alias prefixFont: prefixText.font
+    property alias valueFont: valueText.font
+
+    implicitWidth: Math.max(prefixText.implicitWidth, valueText.implicitWidth)
+    implicitHeight: prefixText.implicitHeight + valueText.implicitHeight
+
+    Text {
+        id: prefixText
+        anchors.top: parent.top
+        width: root.width
+        horizontalAlignment: Text.AlignHCenter
+        opacity: enabled ? 1 : 0.33
+        color: root.color
+        font.bold: true
+        font.pixelSize: sizings.fontPixelSize * 0.6
+        visible: prefix.length > 0
+        text: prefix
+    }
+
+    Text {
+        id: valueText
+        anchors.bottom: parent.bottom
+        width: root.width
+        horizontalAlignment: Text.AlignHCenter
+        opacity: enabled ? 1 : 0.33
+        color: root.color
+        font.bold: true
+        font.pixelSize: sizings.fontPixelSize * 0.75
+        text: enabled ? value.toFixed(digits) : "-"
+    }
 }
 
