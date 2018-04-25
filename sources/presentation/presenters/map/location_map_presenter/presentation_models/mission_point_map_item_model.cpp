@@ -45,8 +45,6 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     const dto::MissionItemPtr& item = m_items.at(index.row());
     if (item.isNull()) return QVariant();
 
-    const dto::MissionPtr& mission = m_service->mission(item->missionId());
-
     switch (role)
     {
     case ItemRole:
@@ -62,7 +60,7 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     case ItemVisibleRole:
     {
         return settings::Provider::value(settings::mission::mission +
-                                         QString::number(mission->id()) + "/" +
+                                         QString::number(item->missionId()) + "/" +
                                          settings::visibility).toBool()
                 && (item->isPositionatedItem());
     }

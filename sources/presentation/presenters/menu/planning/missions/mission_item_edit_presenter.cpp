@@ -70,7 +70,7 @@ void MissionItemEditPresenter::setItem(int id)
 void MissionItemEditPresenter::save()
 {
     int commandIndex = this->viewProperty(PROPERTY(commandIndex)).toInt();
-    if (commandIndex < d->availableCommands.count())
+    if (commandIndex >= 0 && commandIndex < d->availableCommands.count())
     {
         d->item->setCommand(d->availableCommands.at(commandIndex));
     }

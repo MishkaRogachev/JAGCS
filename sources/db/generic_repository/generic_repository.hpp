@@ -169,7 +169,9 @@ template<class T>
 bool GenericRepository<T>::runQuerry()
 {
     if (m_query.exec()) return true;
-    qWarning() << m_query.lastError() << m_query.executedQuery();
+
+    // TODO: log with db log level
+    qDebug() << m_query.lastError() << m_query.executedQuery();
     return false;
 }
 

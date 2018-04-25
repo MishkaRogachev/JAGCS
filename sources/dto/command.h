@@ -45,7 +45,7 @@ namespace dto
 
             Parachute,
 
-            SetHome,
+            SetReturn,
             CalibrateAirspeed,
             CalibrateTemperature,
             CalibrateReferencePressure

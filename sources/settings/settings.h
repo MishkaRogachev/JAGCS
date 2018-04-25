@@ -26,6 +26,7 @@ namespace settings
     {
         const QString defaultAcceptanceRadius = "Parameters/defaultAcceptanceRadius";
         const QString defaultTakeoffPitch = "Parameters/defaultTakeoffPitch";
+        const QString defaultTakeoffAltitude = "Parameters/defaultTakeoffAltitude";
         const QString minAltitude = "Parameters/minAltitude";
         const QString maxAltitude = "Parameters/maxAltitude";
         const QString precisionAltitude = "Parameters/precisionAltitude";

@@ -103,6 +103,7 @@ Item {
                     id: instrumentsMenu
                     width: parent.width
                     y: parent.height - height
+                    closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
 
                     ColumnLayout {
                         anchors.fill: parent
@@ -122,7 +123,8 @@ Item {
                                             if (addItem.setting !== setting) continue;
 
                                             var order = settings.value("veh_" + vehicleId + "/" +
-                                                                       addItem.setting + "/order", i);
+                                                                       addItem.setting + "/order");
+                                            if (order === undefined) order = i;
                                             if (order < listModel.count)
                                             {
                                                 listModel.insert(order, addItem);

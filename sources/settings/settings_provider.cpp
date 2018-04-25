@@ -34,6 +34,7 @@ namespace
 
         { parameters::defaultAcceptanceRadius, 3 },
         { parameters::defaultTakeoffPitch, 15 },
+        { parameters::defaultTakeoffAltitude, 50 },
         { parameters::minAltitude, -500 }, // 418 m Daed Sea shore
         { parameters::maxAltitude, 50000 },
         { parameters::precisionAltitude, 1 },
@@ -127,14 +128,18 @@ Provider* Provider::instance()
     return &settings;
 }
 
-QVariant Provider::value(const QString& key, const QVariant& defaultValue)
+QVariant Provider::value(const QString& key)
 {
-    return instance()->d->settings.value(key, ::defaultSettings.value(key, defaultValue));
+    if (!instance()->d->settings.contains(key))
+    {
+        instance()->d->settings.setValue(key, ::defaultSettings.value(key));
+    }
+    return instance()->d->settings.value(key);
 }
 
-bool Provider::boolValue(const QString& key, bool defaultValue)
+bool Provider::boolValue(const QString& key)
 {
-    return Provider::value(key, defaultValue).toBool();
+    return Provider::value(key).toBool();
 }
 
 void Provider::setValue(const QString& key, const QVariant& value)
