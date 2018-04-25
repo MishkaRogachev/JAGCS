@@ -66,27 +66,27 @@ set(LIBRARIES
 
 # QGamepad option
 option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
-if (WITH_GAMEPAD)
+if(WITH_GAMEPAD)
 add_definitions(-DWITH_GAMEPAD)
 find_package(Qt5 COMPONENTS
     Gamepad
 REQUIRED)
-endif (WITH_GAMEPAD)
+endif(WITH_GAMEPAD)
 
 # Logger option
 option(WITH_LOGGER "Compile with file logger instead console output")
 if (WITH_LOGGER)
 add_definitions(-DWITH_LOGGER)
-endif (WITH_LOGGER)
+endif(WITH_LOGGER)
 
 # Mapbox GL option
 option(WITH_MAPBOXGL "Compile with MapBox GL Qt Location plugin")
-if (WITH_MAPBOXGL)
+if(WITH_MAPBOXGL)
 add_definitions(-DWITH_MAPBOXGL)
-endif (WITH_MAPBOXGL)
+endif(WITH_MAPBOXGL)
 
 # Windows stuff
-if (WIN32)
+if(WIN32)
 set(LIBRARIES
     ${LIBRARIES}
     opengl32
@@ -101,7 +101,7 @@ set(META_SOURCES jagcs.rc)
 endif(WIN32)
 
 # Android stuff
-if (ANDROID)
+if(ANDROID)
 find_package(Qt5AndroidExtras)
 set(LIBS
     ${LIBS}
@@ -113,14 +113,14 @@ endif(ANDROID)
 
 # MAVLink includes
 option(WITH_MAVLINK_V2 "MAVLink version 2 includes")
-if (WITH_MAVLINK_V2)
+if(WITH_MAVLINK_V2)
     include_directories("3rdparty/mavlink_v2")
     include_directories("3rdparty/mavlink_v2/ardupilotmega")
     add_definitions(-DMAVLINK_V2)
-else (WITH_MAVLINK_V2)
+else(WITH_MAVLINK_V2)
     include_directories("3rdparty/mavlink_v1")
     include_directories("3rdparty/mavlink_v1/ardupilotmega")
-endif (WITH_MAVLINK_V2)
+endif(WITH_MAVLINK_V2)
 
 # Internal sources
 add_subdirectory(sources)
@@ -167,7 +167,7 @@ else(ANDROID)
 endif()
 
 # Link Libraries
-target_link_libraries (${PROJECT} ${LIBRARIES})
+target_link_libraries(${PROJECT} ${LIBRARIES})
 
 # Use qt5 modules
 qt5_use_modules(${PROJECT}
@@ -185,14 +185,14 @@ qt5_use_modules(${PROJECT}
     QuickControls2
 )
 
-if (WITH_GAMEPAD)
+if(WITH_GAMEPAD)
 qt5_use_modules(${PROJECT}
     Gamepad
 )
-endif (WITH_GAMEPAD)
+endif(WITH_GAMEPAD)
 
 if(ANDROID)
-    set (QT_ANDROID_APP_NAME ${PROJECT_NAME})
+    set(QT_ANDROID_APP_NAME ${PROJECT_NAME})
     include(3rdparty/qt-android-cmake/AddQtAndroidApk.cmake)
     add_qt_android_apk(${PROJECT_NAME}_apk.
                         ${PROJECT_NAME}
@@ -206,12 +206,12 @@ endif()
 
 # CPack Debian package
 option(WITH_DEBIAN "Include instructions to make Debian package")
-if (WITH_DEBIAN)
+if(WITH_DEBIAN)
     # https://cmake.org/Bug/view.php?id=14444
     install(TARGETS ${PROJECT} DESTINATION "/usr/local/bin/")
 
     add_subdirectory(platforms/debian)
-endif (WITH_DEBIAN)
+endif(WITH_DEBIAN)
 
 # Tests
 option(WITH_TESTS "Include tests")

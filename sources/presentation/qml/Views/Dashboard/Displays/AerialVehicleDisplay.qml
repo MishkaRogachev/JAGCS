@@ -157,7 +157,6 @@ Item {
                 iconSource: checked ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg"
                 tipText: (checked ? qsTr("Unlock") : qsTr("Lock")) + " " + qsTr("indicators")
             }
-
         }
     }
 }
