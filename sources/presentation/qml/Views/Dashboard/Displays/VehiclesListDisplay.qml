@@ -9,19 +9,9 @@ Item {
 
     property var vehicles
 
-    Component.onCompleted: topbar.serviceMenu.addMenuItem(showOffline)
-    Component.onDestruction: topbar.serviceMenu.clearMenuItems()
-
     VehiclesListDisplayPresenter {
         id: presenter
         view: listDisplay
-    }
-
-    Controls.MenuItem {
-        id: showOffline
-        text: qsTr("Show offline")
-        checked: vehicles.showOffline
-        onClicked: vehicles.setShowOffline(!vehicles.showOffline)
     }
 
     ListView {
@@ -33,10 +23,32 @@ Item {
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
+        snapMode: ListView.SnapToItem
+        headerPositioning: ListView.OverlayHeader
         model: vehicles
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
+        }
+
+        header: Item {
+            width: parent.width
+            height: pane.height + list.spacing
+            z: 10
+
+            Controls.Pane {
+                id: pane
+                width: parent.width
+                height: sizings.controlBaseSize + padding * 2
+
+                Controls.CheckBox {
+                    anchors.centerIn: parent
+                    width: parent.width - padding * 2
+                    text: qsTr("Show offline")
+                    checked: vehicles.showOffline
+                    onClicked: vehicles.setShowOffline(!vehicles.showOffline)
+                }
+            }
         }
 
         delegate: Loader {

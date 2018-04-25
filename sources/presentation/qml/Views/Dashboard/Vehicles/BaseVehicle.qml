@@ -51,7 +51,7 @@ QtObject {
         objectName: "satellite"
 
         property var coordinate: QtPositioning.coordinate()
-        property real groundspeed: 0
+        property real groundspeed: NaN
         property real course: 0
         property int fix: -1
         property int eph: 0

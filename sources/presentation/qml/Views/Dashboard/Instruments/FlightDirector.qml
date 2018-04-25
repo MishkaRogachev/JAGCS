@@ -20,7 +20,7 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
         width: speedLadder.majorTickSize + 1
-        height: parent.height * 0.6 // TODO: ladder dynamic width calculation
+        height: fd.sideHeight
         value: vehicle.powerSystem.throttle
     }
 
@@ -28,10 +28,10 @@ Controls.Pane {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        height: parent.height * 0.6
+        height: fd.sideHeight
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
-                                      vehicle.satellite.groundSpeed)
+                                      vehicle.satellite.groundspeed)
         errorVisible: vehicle.guided && vehicle.pitot.present
         error: units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
         minValue: value + minSpeed
@@ -44,7 +44,7 @@ Controls.Pane {
         onAddValue: manual.addImpact(ManualController.Throttle, value)
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
@@ -56,7 +56,7 @@ Controls.Pane {
         visible: vehicle.pitot.present
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: speedLadder.horizontalCenter
         digits: 1
@@ -93,7 +93,7 @@ Controls.Pane {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: altitudeLadder.left
         width: altitudeLadder.majorTickSize + 1
-        height: parent.height * 0.6
+        height: fd.sideHeight
         value: vehicle.barometric.climb
         fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
         minValue: -10
@@ -104,7 +104,7 @@ Controls.Pane {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        height: parent.height * 0.6
+        height: fd.sideHeight
         value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
         errorVisible: vehicle.guided
         error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
@@ -120,7 +120,7 @@ Controls.Pane {
         prefix: qsTr("ALT") + ", " + altitudeSuffix
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
         value: units.convertDistanceTo(altitudeUnits, vehicle.satellite.altitude)
@@ -130,7 +130,7 @@ Controls.Pane {
         prefix: qsTr("SAT") + ", " + altitudeSuffix
     }
 
-    Indicators.ValueLabel2 {
+    Indicators.ValueLabel {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
         value: units.convertDistanceTo(altitudeUnits, vehicle.radalt.altitude)

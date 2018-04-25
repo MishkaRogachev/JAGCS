@@ -13,8 +13,8 @@ Item {
     property bool pitchInverted: true
     property bool rollInverted: false
 
-    property real ratio: height / width
     property real effectiveHeight: height
+    readonly property real sideHeight: Math.sqrt(Math.pow(height, 2) - Math.pow(width, 2))
 
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }

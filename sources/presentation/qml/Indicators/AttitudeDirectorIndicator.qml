@@ -115,9 +115,9 @@ AttitudeIndicator {
     }
 
     Controls.Button {
-        anchors.top: rollScale.top
-        anchors.topMargin: (fd.height - fd.width) / 2
-        anchors.left: rollScale.left
+        anchors.top: parent.top
+        anchors.topMargin: (fd.height - fd.sideHeight) / 2
+        anchors.left: parent.left
         iconSource: "qrc:/icons/bank_left.svg"
         iconColor: customPalette.selectedTextColor
         flat: true
@@ -128,10 +128,9 @@ AttitudeIndicator {
     }
 
     Controls.Button {
-        anchors.top: rollScale.top
-        anchors.topMargin: (fd.height - fd.width) / 2.
-
-        anchors.right: rollScale.right
+        anchors.top: parent.top
+        anchors.topMargin: (fd.height - fd.sideHeight) / 2
+        anchors.right: parent.right
         iconSource: "qrc:/icons/bank_right.svg"
         iconColor: customPalette.selectedTextColor
         flat: true

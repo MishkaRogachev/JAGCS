@@ -6,7 +6,6 @@
 #include <QList>
 
 namespace dto
-
 {
     class Mission;
     class MissionItem;
@@ -36,4 +35,4 @@ namespace dto
     using VideoSourcePtrList = QList<VideoSourcePtr>;
 }
 
-#endif // DAO_TRAITS_H
+#endif // DTO_TRAITS_H

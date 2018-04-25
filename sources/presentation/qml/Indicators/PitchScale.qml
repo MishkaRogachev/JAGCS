@@ -13,6 +13,7 @@ Item {
     property color color: customPalette.textColor
     property real fontPixelSize: Math.max(height * 0.1, 9)
 
+    onRollChanged: canvas.requestPaint()
     onMinPitchChanged: canvas.requestPaint()
     onMaxPitchChanged: canvas.requestPaint()
     onColorChanged: canvas.requestPaint()
@@ -21,13 +22,13 @@ Item {
 
     Shaders.OpacityBorder {
         anchors.fill: parent
-        sourceItem: canvas
-        rotation: -roll
+        source: canvas
     }
 
     Canvas {
         id: canvas
         anchors.fill: parent
+        visible: false
         onPaint: {
             var ctx = canvas.getContext('2d');
 
@@ -39,18 +40,20 @@ Item {
             ctx.textBaseline = 'middle';
 
             ctx.save();
+            ctx.translate(width / 2, height / 2);
+            ctx.rotate(-roll * Math.PI / 180);
 
             for (var pitch = minPitch - (minPitch % (pitchStep * 2)); pitch <= maxPitch;
                  pitch += pitchStep) {
                 if (pitch == 0) continue;
 
                 var major = (pitch % (pitchStep * 2)) == 0;
-                var yPos = height - Helper.mapToRange(pitch, minPitch, maxPitch, height);
+                var yPos = height / 2 - Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
                 ctx.lineWidth = major ? 2 : 1;
                 ctx.beginPath();
                 ctx.save();
-                ctx.translate(width / 2, yPos);
+                ctx.translate(0, yPos);
 
                 var tickLength = major ? Math.min(width / 14 + Math.abs(pitch) * 2, width / 4) :
                                          width / 16

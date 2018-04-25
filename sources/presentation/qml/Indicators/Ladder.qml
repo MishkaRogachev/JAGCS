@@ -14,8 +14,7 @@ Item {
     property real maxValue: 100
     property real valueStep: 20
 
-    property real fontPixelSize: height * 0.1
-    property real fontScaleSize: fontPixelSize
+    property alias fontScaleSize: label.prefixFont.pixelSize
     property real minorTickSize: fontScaleSize * 0.4
     property real majorTickSize: fontScaleSize * 0.6
     property real textOrigin: fontScaleSize * 0.8
@@ -40,13 +39,14 @@ Item {
     onErrorChanged: if (errorVisible) errorCanvas.requestPaint()
 
     Shaders.OpacityBorder {
-        anchors.fill: parent
-        sourceItem: ladderCanvas
+        anchors.fill: ladderCanvas
+        opacity: enabled ? 1 : 0.33
+        source: ladderCanvas
     }
 
     Canvas {
         id: ladderCanvas
-        opacity: enabled ? 1 : 0.33
+        visible: false
         anchors.fill: parent
         onPaint: {
             var ctx = getContext('2d');
@@ -170,7 +170,7 @@ Item {
         }
     }
 
-    ValueLabel2 {
+    ValueLabel {
         id: label
         anchors.centerIn: parent
         anchors.horizontalCenterOffset: mirrored ? majorTickSize * 0.5 : -majorTickSize * 0.5

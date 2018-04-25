@@ -5,6 +5,7 @@ import JAGCS 1.0
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
+import "../DashboardControls" as DashboardControls
 
 Controls.Pane {
     id: root
@@ -48,18 +49,20 @@ Controls.Pane {
             Layout.fillWidth: true
             spacing: sizings.spacing
 
-            Indicators.ValueLabel {
+            DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
+                font.pixelSize: sizings.fontPixelSize * 0.6
             }
 
-            Indicators.ValueLabel {
+            DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
+                font.pixelSize: sizings.fontPixelSize * 0.6
             }
         }
 
@@ -75,14 +78,14 @@ Controls.Pane {
         ColumnLayout {
             Layout.alignment: Qt.AlignRight
 
-            Indicators.ValueLabel {
-                color: vehicle.battery.voltage > 0.01 ? customPalette.textColor : customPalette.sunkenColor
-                value: vehicle.battery.voltage
-                digits: 2
-                suffix: qsTr("V")
+            DashboardControls.Label {
+                color: vehicle.battery.voltage > 0.01 ? customPalette.textColor :
+                                                        customPalette.sunkenColor
+                text: vehicle.battery.voltage.toFixed(2) + " " + qsTr("V")
+                font.pixelSize: sizings.fontPixelSize * 0.6
             }
 
-            Indicators.ValueLabel {
+            DashboardControls.Label {
                 color: {
                     if (vehicle.battery.current < -0.01) return customPalette.positiveColor;
                     if (vehicle.battery.current > 0.0) return customPalette.textColor;
@@ -91,9 +94,8 @@ Controls.Pane {
 
                     return customPalette.sunkenColor;
                 }
-                value: vehicle.battery.current
-                digits: 2
-                suffix: qsTr("A")
+                text: vehicle.battery.current.toFixed(2) + " " + qsTr("A")
+                font.pixelSize: sizings.fontPixelSize * 0.6
             }
         }
     }

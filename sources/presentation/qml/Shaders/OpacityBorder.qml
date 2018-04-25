@@ -3,17 +3,19 @@ import QtQuick 2.6
 ShaderEffect {
     id: shader
 
-    property alias sourceItem: sourceEffect.sourceItem
+    //property alias sourceItem: sourceEffect.sourceItem
     property real pi: Math.PI
 
-    property variant source: ShaderEffectSource {
-        id: sourceEffect
-        hideSource: true
-    }
+//    property variant source: ShaderEffectSource {
+//        id: sourceEffect
+//        hideSource: true
+//    }
+
+    property var source
 
     fragmentShader:"
         varying highp vec2 qt_TexCoord0;
-        uniform highp sampler2D source;
+        uniform sampler2D source;
         uniform highp float pi;
 
         void main(void)

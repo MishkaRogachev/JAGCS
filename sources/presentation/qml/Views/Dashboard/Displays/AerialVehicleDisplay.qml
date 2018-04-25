@@ -15,14 +15,8 @@ Item {
 
     signal updateCommandStatus(var command, var status)
 
-    Component.onCompleted: {
-        manual.setVehicleId(vehicleId)
-    }
-
-    Component.onDestruction: {
-        topbar.serviceMenu.clearMenuItems();
-        manual.setVehicleId(0);
-    }
+    Component.onCompleted: manual.setVehicleId(vehicleId)
+    Component.onDestruction: manual.setVehicleId(0)
 
     AerialVehicleDisplayPresenter {
         id: presenter
@@ -70,54 +64,16 @@ Item {
         }
     }
 
-    Repeater {         // TODO 5.10 cascading menus
-        model: instruments
-
-        Controls.MenuItem {
-            id: visibilityItem
-            text: name
-            checkable: true
-            checked: settings.boolValue("veh_" + vehicleId + "/" + setting + "/visibility", true)
-            onCheckedChanged: {
-                if (checked) {
-                    for (var i = 0; i < instruments.count; ++i) {
-                        var addItem = instruments.get(i);
-                        if (addItem.setting !== setting) continue;
-
-                        var order = settings.value("veh_" + vehicleId + "/" +
-                                                   addItem.setting + "/order", i);
-                        if (order < listModel.count)
-                        {
-                            listModel.insert(order, addItem);
-                        }
-                        else listModel.append(addItem);
-                        settings.setValue("veh_" + vehicleId + "/" + setting + "/order", order);
-                    }
-                }
-                else {
-                    for (var j = 0; j < listModel.count; ++j) {
-                        var remItem = listModel.get(j);
-                        if (remItem.setting !== setting) continue;
-
-                        listModel.remove(j);
-                    }
-                }
-                settings.setValue("veh_" + vehicleId + "/" + setting + "/visibility", checked);
-            }
-            Component.onCompleted: topbar.serviceMenu.addMenuItem(visibilityItem)
-        }
-    }
-
     ListView {
         id: list
         anchors.top: parent.top
         anchors.right: parent.right
-        width: sizings.controlBaseSize * 9
+        width: sizings.controlBaseSize * 8
         height: Math.min(contentHeight, vehicleDisplay.height)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        snapMode: ListView.SnapToItem
         spacing: sizings.spacing
+        footerPositioning: ListView.OverlayFooter
         model: ListModel { id: listModel }
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
@@ -127,6 +83,76 @@ Item {
         delegate: Loader {
             width: parent.width
             source: instrument
+        }
+
+        footer: Item {
+            width: parent.width
+            height: sizings.controlBaseSize + list.spacing
+            z: 10
+
+            Controls.Button {
+                id: lockButton
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                checkable: true
+                iconSource: checked ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg"
+                tipText: (checked ? qsTr("Unlock") : qsTr("Lock")) + " " + qsTr("indicators")
+            }
+
+            Controls.Button {
+                enabled: !lockButton.checked
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                width: parent.width - sizings.controlBaseSize
+                iconSource: "qrc:/icons/service.svg"
+                text: qsTr("Instruments")
+                onClicked: instrumentsMenu.open()
+
+                Controls.Menu {
+                    id: instrumentsMenu
+                    width: parent.width
+                    y: parent.height
+
+                    Repeater { // TODO 5.10 cascading menus
+                        model: instruments
+
+                        Controls.MenuItem {
+                            text: name
+                            checkable: true
+                            checked: settings.boolValue("veh_" + vehicleId + "/" +
+                                                        setting + "/visibility", true)
+                            onCheckedChanged: {
+                                if (checked) {
+                                    for (var i = 0; i < instruments.count; ++i) {
+                                        var addItem = instruments.get(i);
+                                        if (addItem.setting !== setting) continue;
+
+                                        var order = settings.value("veh_" + vehicleId + "/" +
+                                                                   addItem.setting + "/order", i);
+                                        if (order < listModel.count)
+                                        {
+                                            listModel.insert(order, addItem);
+                                        }
+                                        else listModel.append(addItem);
+                                        settings.setValue("veh_" + vehicleId + "/" +
+                                                          setting + "/order", order);
+                                    }
+                                }
+                                else {
+                                    for (var j = 0; j < listModel.count; ++j) {
+                                        var remItem = listModel.get(j);
+                                        if (remItem.setting !== setting) continue;
+
+                                        listModel.remove(j);
+                                    }
+                                }
+                                settings.setValue("veh_" + vehicleId + "/" +
+                                                  setting + "/visibility", checked);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -14,6 +14,10 @@ Controls.Pane {
         anchors.fill: parent
         spacing: sizings.spacing
 
+        CommandWidgets.Preparation {
+            visible: !vehicle.armed
+        }
+
         CommandWidgets.ModeControl {}
 
         CommandWidgets.GoTo {

@@ -65,7 +65,6 @@
         <file>Indicators/AttitudeDirectorIndicator.qml</file>
         <file>Indicators/YawIndicator.qml</file>
         <file>Indicators/ValueLabel.qml</file>
-        <file>Indicators/ValueLabel2.qml</file>
         <file>Indicators/DistanceLabel.qml</file>
         <file>Indicators/SpeedArrow.qml</file>
         <file>Indicators/Compass.qml</file>
@@ -104,6 +103,7 @@
         <file>Views/Dashboard/DashboardControls/DelayCommandButton.qml</file>
         <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
+        <file>Views/Dashboard/CommandWidgets/Preparation.qml</file>
         <file>Views/Dashboard/CommandWidgets/ModeControl.qml</file>
         <file>Views/Dashboard/CommandWidgets/GoTo.qml</file>
         <file>Views/Dashboard/CommandWidgets/NavTo.qml</file>
