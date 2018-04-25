@@ -91,15 +91,6 @@ Item {
             z: 10
 
             Controls.Button {
-                id: lockButton
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                checkable: true
-                iconSource: checked ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg"
-                tipText: (checked ? qsTr("Unlock") : qsTr("Lock")) + " " + qsTr("indicators")
-            }
-
-            Controls.Button {
                 enabled: !lockButton.checked
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
@@ -108,51 +99,65 @@ Item {
                 text: qsTr("Instruments")
                 onClicked: instrumentsMenu.open()
 
-                Controls.Menu {
+                Controls.Popup {
                     id: instrumentsMenu
                     width: parent.width
-                    y: parent.height
+                    y: parent.height - height
 
-                    Repeater { // TODO 5.10 cascading menus
-                        model: instruments
+                    ColumnLayout {
+                        anchors.fill: parent
 
-                        Controls.MenuItem {
-                            text: name
-                            checkable: true
-                            checked: settings.boolValue("veh_" + vehicleId + "/" +
-                                                        setting + "/visibility", true)
-                            onCheckedChanged: {
-                                if (checked) {
-                                    for (var i = 0; i < instruments.count; ++i) {
-                                        var addItem = instruments.get(i);
-                                        if (addItem.setting !== setting) continue;
+                        Repeater {
+                            model: instruments
 
-                                        var order = settings.value("veh_" + vehicleId + "/" +
-                                                                   addItem.setting + "/order", i);
-                                        if (order < listModel.count)
-                                        {
-                                            listModel.insert(order, addItem);
+                            Controls.CheckBox {
+                                text: name
+                                Layout.fillWidth: true
+                                checked: settings.boolValue("veh_" + vehicleId + "/" +
+                                                            setting + "/visibility", true)
+                                onCheckedChanged: {
+                                    if (checked) {
+                                        for (var i = 0; i < instruments.count; ++i) {
+                                            var addItem = instruments.get(i);
+                                            if (addItem.setting !== setting) continue;
+
+                                            var order = settings.value("veh_" + vehicleId + "/" +
+                                                                       addItem.setting + "/order", i);
+                                            if (order < listModel.count)
+                                            {
+                                                listModel.insert(order, addItem);
+                                            }
+                                            else listModel.append(addItem);
+                                            settings.setValue("veh_" + vehicleId + "/" +
+                                                              setting + "/order", order);
                                         }
-                                        else listModel.append(addItem);
-                                        settings.setValue("veh_" + vehicleId + "/" +
-                                                          setting + "/order", order);
                                     }
-                                }
-                                else {
-                                    for (var j = 0; j < listModel.count; ++j) {
-                                        var remItem = listModel.get(j);
-                                        if (remItem.setting !== setting) continue;
+                                    else {
+                                        for (var j = 0; j < listModel.count; ++j) {
+                                            var remItem = listModel.get(j);
+                                            if (remItem.setting !== setting) continue;
 
-                                        listModel.remove(j);
+                                            listModel.remove(j);
+                                        }
                                     }
+                                    settings.setValue("veh_" + vehicleId + "/" +
+                                                      setting + "/visibility", checked);
                                 }
-                                settings.setValue("veh_" + vehicleId + "/" +
-                                                  setting + "/visibility", checked);
                             }
                         }
                     }
                 }
             }
+
+            Controls.Button {
+                id: lockButton
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                checkable: true
+                iconSource: checked ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg"
+                tipText: (checked ? qsTr("Unlock") : qsTr("Lock")) + " " + qsTr("indicators")
+            }
+
         }
     }
 }
