@@ -5,7 +5,7 @@ Item {
 
     property string prefix
     property int digits: 0
-    property real value: 0
+    property real value: NaN
     property bool operational: true
     property color color: operational ? customPalette.textColor : customPalette.dangerColor
 
@@ -37,7 +37,7 @@ Item {
         color: root.color
         font.bold: true
         font.pixelSize: sizings.fontPixelSize * 0.75
-        text: enabled ? value.toFixed(digits) : "-"
+        text: isNaN(value) ? "-" : value.toFixed(digits)
     }
 }
 

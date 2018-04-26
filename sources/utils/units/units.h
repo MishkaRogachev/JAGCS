@@ -28,12 +28,13 @@ namespace utils
             Feets
         };
         
-        Q_INVOKABLE static float convertSpeedTo(SpeedUnits to, float value);
-        Q_INVOKABLE static float convertSpeedFrom(SpeedUnits from, float value);
-        Q_INVOKABLE static float convertSpeed(SpeedUnits from, SpeedUnits to, float value);
-        Q_INVOKABLE static float convertDistanceTo(DistanceUnits to, float value);
-        Q_INVOKABLE static float convertDistanceFrom(DistanceUnits from, float value);
-        Q_INVOKABLE static float convertDistance(DistanceUnits from, DistanceUnits to, float value);
+        Q_INVOKABLE static double convertSpeedTo(SpeedUnits to, double value);
+        Q_INVOKABLE static double convertSpeedFrom(SpeedUnits from, double value);
+        Q_INVOKABLE static double convertSpeed(SpeedUnits from, SpeedUnits to, double value);
+        Q_INVOKABLE static double convertDistanceTo(DistanceUnits to, double value);
+        Q_INVOKABLE static double convertDistanceFrom(DistanceUnits from, double value);
+        Q_INVOKABLE static double convertDistance(DistanceUnits from, DistanceUnits to,
+                                                  double value);
 
         Q_INVOKABLE static QString trSpeedUnits(SpeedUnits unit);
         Q_INVOKABLE static QString trDistanceUnits(DistanceUnits unit);

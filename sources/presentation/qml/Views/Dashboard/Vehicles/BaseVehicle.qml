@@ -31,10 +31,10 @@ QtObject {
     property Subsystem ahrs: Subsystem {
         objectName: "ahrs"
 
-        property real pitch: 0.0
-        property real roll: 0.0
-        property real yaw: 0.0
-        property real yawspeed: 0.0
+        property real pitch: NaN
+        property real roll: NaN
+        property real yaw: NaN
+        property real yawspeed: NaN
 
         property var vibration
     }
@@ -42,8 +42,8 @@ QtObject {
     property Subsystem battery: Subsystem {
         objectName: "battery"
 
-        property real voltage: 0
-        property real current: 0
+        property real voltage: NaN
+        property real current: NaN
         property int percentage: 0
     }
 
@@ -52,18 +52,18 @@ QtObject {
 
         property var coordinate: QtPositioning.coordinate()
         property real groundspeed: NaN
-        property real course: 0
+        property real course: NaN
+        property real altitude: NaN
         property int fix: -1
         property int eph: 0
         property int epv: 0
-        property int altitude: 0
         property int satellitesVisible: 0
     }
 
     property Subsystem compass: Subsystem {
         objectName: "compass"
 
-        property real heading: 0.0
+        property real heading: NaN
     }
 
     property Subsystem powerSystem: Subsystem {

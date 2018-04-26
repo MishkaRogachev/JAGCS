@@ -60,7 +60,7 @@ Item {
             ctx.stroke();
 
             ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
-            ctx.fillText(Math.round(roll), 0, -height / 2 + fontPixelSize);
+            ctx.fillText(isNaN(roll) ? "-" : Math.floor(roll), 0, -height / 2 + fontPixelSize);
 
             ctx.restore();
             ctx.restore();

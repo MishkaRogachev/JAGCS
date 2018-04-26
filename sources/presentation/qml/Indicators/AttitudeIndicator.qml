@@ -29,8 +29,8 @@ Item {
         height: width
         visible: false
         effectiveHeight: ai.effectiveHeight
-        pitch: pitchInverted ? ai.pitch : 0
-        roll: rollInverted ? 0 : ai.roll
+        pitch: pitchInverted && !isNaN(ai.pitch) ? ai.pitch : 0
+        roll: !rollInverted && !isNaN(ai.roll) ? ai.roll : 0
         minPitch: ai.minPitch
         maxPitch: ai.maxPitch
     }

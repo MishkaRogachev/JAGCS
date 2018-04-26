@@ -30,7 +30,10 @@ Item {
     implicitWidth: label.implicitWidth + majorTickSize * 2
     onWidthChanged: ladderCanvas.requestPaint()
     onHeightChanged: ladderCanvas.requestPaint()
-    onColorChanged: ladderCanvas.requestPaint()
+    onColorChanged: {
+        ladderCanvas.requestPaint()
+        arrowCanvas.requestPaint()
+    }
     onValueStepChanged: ladderCanvas.requestPaint()
     onValueChanged: {
         ladderCanvas.requestPaint()
@@ -68,6 +71,11 @@ Item {
             ctx.moveTo(0, 0);
             ctx.lineTo(0, height);
             ctx.stroke();
+
+//            if (isNaN(value)) {
+//                ctx.restore();
+//                return;
+//            }
 
             // Ticks
             var counter = 0;
@@ -149,6 +157,7 @@ Item {
     }
 
     Canvas { // Arrow for current value
+        id: arrowCanvas
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: mirrored ? label.left : undefined
         anchors.left: mirrored ? undefined : label.right

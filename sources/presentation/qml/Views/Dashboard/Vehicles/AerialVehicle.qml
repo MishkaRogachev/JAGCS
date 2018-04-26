@@ -4,13 +4,13 @@ import JAGCS 1.0
 BaseVehicle {
     id: root
 
-    readonly property real homeAltitude: homePosition.isValid ? homePosition.altitude : 0
+    readonly property real homeAltitude: homePosition.isValid ? homePosition.altitude : NaN
 
     property Subsystem barometric: Subsystem {
         objectName: "barometric"
 
-        property int altitude: 0
-        property real climb: 0
+        property real altitude: NaN
+        property real climb: NaN
 
         readonly property real displayedAltitude: dashboard.altitudeRelative ?
                                                       altitude - homeAltitude : altitude
@@ -24,58 +24,58 @@ BaseVehicle {
     property Subsystem pitot: Subsystem {
         objectName: "pitot"
 
-        property real indicatedAirspeed: 0.0
-        property real trueAirspeed: 0.0
+        property real indicatedAirspeed: NaN
+        property real trueAirspeed: NaN
     }
 
     property QtObject ekf: QtObject {
         objectName: "ekf"
 
-        property real velocityVariance: 0.0
-        property real verticalVariance: 0.0
-        property real horizontVariance: 0.0
-        property real compassVariance: 0.0
-        property real terrainAltitudeVariance: 0.0
+        property real velocityVariance: NaN
+        property real verticalVariance: NaN
+        property real horizontVariance: NaN
+        property real compassVariance: NaN
+        property real terrainAltitudeVariance: NaN
     }
 
     property Subsystem radalt: Subsystem {
         objectName: "radalt"
 
-        property real altitude: 0
+        property real altitude: NaN
     }
 
     property QtObject flightControl: QtObject {
         objectName: "flightControl"
 
-        property real desiredPitch: 0.0
-        property real desiredRoll: 0.0
-        property real desiredHeading: 0.0
-        property real airspeedError: 0.0
-        property real altitudeError: 0.0
+        property real desiredPitch: NaN
+        property real desiredRoll: NaN
+        property real desiredHeading: NaN
+        property real airspeedError: NaN
+        property real altitudeError: NaN
     }
 
     property QtObject navigator: QtObject {
         objectName: "navigator"
 
-        property real targetBearing: 0.0
-        property real trackError: 0.0
+        property real targetBearing: NaN
+        property real trackError: NaN
         property int targetDistance: 0
     }
 
     property QtObject landingSystem: QtObject {
         objectName: "landingSystem"
 
-        property real distance: 0.0
-        property real deviationX: 0.0
-        property real deviationY: 0.0
-        property real sizeX: 0.0
-        property real sizeY: 0.0
+        property int distance: 0
+        property real deviationX: NaN
+        property real deviationY: NaN
+        property real sizeX: NaN
+        property real sizeY: NaN
     }
 
     property QtObject wind: QtObject {
         objectName: "wind"
 
-        property real direction: 0
-        property real speed: 0
+        property real direction: NaN
+        property real speed: NaN
     }
 }

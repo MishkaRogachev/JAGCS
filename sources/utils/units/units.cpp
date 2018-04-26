@@ -7,7 +7,7 @@ using namespace utils;
 
 namespace
 {
-    QMap<Units::SpeedUnits, float> speedUnitCoefs =
+    QMap<Units::SpeedUnits, double> speedUnitCoefs =
     {
         { Units::Mps, 1.0 },
         { Units::Kph, 3.6 },
@@ -15,7 +15,7 @@ namespace
         { Units::Mph, 2.236936 }
     };
 
-    QMap<Units::DistanceUnits, float> distanceUnitCoefs =
+    QMap<Units::DistanceUnits, double> distanceUnitCoefs =
     {
         { Units::Meters, 1.0 },
         { Units::Kilometers, 1000.0 },
@@ -28,33 +28,37 @@ Units::Units(QObject* parent):
     QObject(parent)
 {}
 
-float Units::convertSpeedTo(SpeedUnits to, float value)
+double Units::convertSpeedTo(SpeedUnits to, double value)
 {
+    if (qIsNaN(value)) return qQNaN();
     return value * ::speedUnitCoefs[to];
 }
 
-float Units::convertSpeedFrom(Units::SpeedUnits from, float value)
+double Units::convertSpeedFrom(Units::SpeedUnits from, double value)
 {
+    if (qIsNaN(value)) return qQNaN();
     return value / ::speedUnitCoefs[from];
 }
 
-float Units::convertSpeed(SpeedUnits from, SpeedUnits to, float value)
+double Units::convertSpeed(SpeedUnits from, SpeedUnits to, double value)
 {
     return Units::convertSpeedTo(to, convertSpeedFrom(from, value));
 }
 
 // distance and speed coefs are inverted(historicaly)
-float Units::convertDistanceTo(DistanceUnits to, float value)
+double Units::convertDistanceTo(DistanceUnits to, double value)
 {
+    if (qIsNaN(value)) return qQNaN();
     return value / ::distanceUnitCoefs[to];
 }
 
-float Units::convertDistanceFrom(Units::DistanceUnits from, float value)
+double Units::convertDistanceFrom(Units::DistanceUnits from, double value)
 {
+    if (qIsNaN(value)) return qQNaN();
     return value * ::distanceUnitCoefs[from];
 }
 
-float Units::convertDistance(DistanceUnits from, DistanceUnits to, float value)
+double Units::convertDistance(DistanceUnits from, DistanceUnits to, double value)
 {
     return Units::convertDistanceTo(to, convertDistanceFrom(from, value));
 }
