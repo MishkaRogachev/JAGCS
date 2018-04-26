@@ -8,13 +8,13 @@ Controls.Pane {
     id: root
 
     implicitHeight: width * 0.6
+    enabled: vehicle.online
 
     Indicators.DistanceLabel {
         anchors.top: parent.top
         anchors.left: parent.left
         prefix: qsTr("DIST") + ", " + distancePrefix
-        color: vehicle.guided ? customPalette.activeMissionColor : customPalette.textColor
-        enabled: vehicle.guided
+        active: vehicle.guided
         distance: vehicle.navigator.targetDistance
         width: parent.width * 0.2
     }
@@ -26,7 +26,6 @@ Controls.Pane {
         prefix: qsTr("HOME") + ", " + distancePrefix
         distance: vehicle.position.distanceTo(vehicle.homePosition)
         width: parent.width * 0.2
-        enabled: distance > 0
     }
 
     Indicators.ValueLabel {
@@ -47,16 +46,17 @@ Controls.Pane {
         heading: vehicle.compass.heading
         course: vehicle.satellite.course
         courseEnabled: vehicle.satellite.groundSpeed > 0.1
-        opacity: vehicle.compass.enabled ? 1 : 0.33
-        headingColor: vehicle.compass.operational ? customPalette.textColor : customPalette.dangerColor
+        enabled: vehicle.compass.enabled
+        operational: vehicle.compass.operational
         courseColor: vehicle.satellite.enabled ? (vehicle.satellite.operational ?
-                              customPalette.positiveColor : customPalette.dangerColor) : "transparent"
+                              customPalette.positiveColor : customPalette.dangerColor) :
+                                                 "transparent"
 
         Indicators.SituationIndicator {
             id: hsi
             anchors.fill: parent
             guided: vehicle.guided
-            heading: vehicle.compass.heading
+            heading: compass.safeHeading
             targetBearing: vehicle.navigator.targetBearing
             desiredHeading: vehicle.flightControl.desiredHeading
             trackError: vehicle.navigator.trackError
@@ -83,8 +83,7 @@ Controls.Pane {
     Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.right: parent.right
-        color: vehicle.guided ? customPalette.activeMissionColor : customPalette.textColor
-        opacity: vehicle.guided ? 1 : 0.33
+        active: vehicle.guided
         value: vehicle.navigator.targetBearing
         width: parent.width * 0.2
         prefix: qsTr("TRG") + ", \u00B0"
@@ -95,6 +94,7 @@ Controls.Pane {
         anchors.right: parent.right
         value: vehicle.compass.heading
         width: parent.width * 0.2
+        visible: vehicle.compass.present
         enabled: vehicle.compass.enabled
         operational: vehicle.compass.operational
         prefix: qsTr("HDG") + ", \u00B0"
@@ -105,6 +105,7 @@ Controls.Pane {
         anchors.right: parent.right
         value: vehicle.satellite.course
         width: parent.width * 0.2
+        visible: vehicle.satellite.present
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
         prefix: qsTr("CRS") + ", \u00B0"

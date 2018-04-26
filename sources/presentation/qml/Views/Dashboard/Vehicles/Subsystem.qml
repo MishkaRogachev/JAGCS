@@ -4,7 +4,7 @@ import JAGCS 1.0
 QtObject {
     id: root
 
-    property bool present: false
+    property bool present: true
     property bool enabled: false
     property bool operational: false
 }

@@ -56,7 +56,7 @@ void BaseVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 void BaseVehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(operational),
@@ -81,7 +81,7 @@ void BaseVehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryM
 void BaseVehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(operational),
@@ -93,7 +93,7 @@ void BaseVehicleDisplayPresenter::updateCompass(const domain::Telemetry::Telemet
 void BaseVehicleDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(operational),
@@ -126,7 +126,7 @@ void BaseVehicleDisplayPresenter::updatePowerSystem(const domain::Telemetry::Tel
 void BaseVehicleDisplayPresenter::updateBattery(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(operational),

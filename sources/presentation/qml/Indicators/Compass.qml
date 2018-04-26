@@ -4,10 +4,17 @@ Canvas {
     id: root
 
     property real heading: 0
+    readonly property real safeHeading: isNaN(heading) ? 0 : heading
     property real course: 0
 
+    property bool operational: false
+    property color headingColor: {
+        if (!enabled) return customPalette.sunkenColor;
+        if (!operational) return customPalette.dangerColor;
+        return customPalette.textColor;
+    }
+
     property bool courseEnabled: true
-    property color headingColor: customPalette.textColor
     property color courseColor: customPalette.positiveColor
     property url mark
     property int tickFactor: 5
@@ -48,7 +55,7 @@ Canvas {
             ctx.lineWidth = i % 30 ? 1 : 2;
             ctx.beginPath();
             ctx.save();
-            ctx.rotate((i - heading) * Math.PI / 180);
+            ctx.rotate((i - safeHeading) * Math.PI / 180);
             ctx.translate(0, -height / 2);
 
             if (i % 10) {
@@ -63,7 +70,7 @@ Canvas {
             if (!(i % 30)) {
                 ctx.save();
                 ctx.translate(0, textOffset / 2);
-                ctx.rotate((-i + heading) * Math.PI / 180);
+                ctx.rotate((-i + safeHeading) * Math.PI / 180);
 
                 ctx.font = 'bold ' + scalesOffset * 1.2 + 'px "Open Sans"';
                 if (i == 0) ctx.fillText(qsTr("N"), 0, 2);
@@ -92,7 +99,7 @@ Canvas {
         if (courseEnabled) {
             ctx.fillStyle = courseColor;
             ctx.save();
-            ctx.rotate((course - heading) * Math.PI / 180);
+            ctx.rotate((course - safeHeading) * Math.PI / 180);
             ctx.beginPath();
             ctx.moveTo(0, textOffset + majorTickOffset - height / 2);
             ctx.lineTo(minorTickOffset, textOffset + majorTickOffset - minorTickOffset - height / 2);

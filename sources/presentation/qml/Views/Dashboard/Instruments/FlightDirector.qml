@@ -15,6 +15,7 @@ Controls.Pane {
     property int maxAltitude: dashboard.altitudeStep * scalingFactor
 
     implicitHeight: width * 0.75
+    enabled: vehicle.online
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
@@ -50,10 +51,10 @@ Controls.Pane {
         digits: 1
         value: units.convertSpeedTo(speedUnits, vehicle.satellite.groundspeed)
         enabled: vehicle.satellite.enabled
+        visible: vehicle.pitot.present
         operational: vehicle.satellite.operational
         width: speedLadder.width
         prefix: qsTr("GS") + ", " + speedSuffix
-        visible: vehicle.pitot.present
     }
 
     Indicators.ValueLabel {
@@ -126,6 +127,7 @@ Controls.Pane {
         value: units.convertDistanceTo(altitudeUnits, vehicle.satellite.altitude)
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational
+        visible: vehicle.satellite.present
         width: altitudeLadder.width
         prefix: qsTr("SAT") + ", " + altitudeSuffix
     }

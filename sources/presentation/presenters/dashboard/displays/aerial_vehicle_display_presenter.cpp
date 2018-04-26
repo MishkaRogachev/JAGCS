@@ -61,7 +61,7 @@ void AerialVehicleDisplayPresenter::updateEkf(const domain::Telemetry::Telemetry
 void AerialVehicleDisplayPresenter::updatePitot(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(pitot), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(pitot), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(pitot), PROPERTY(operational),
@@ -76,7 +76,7 @@ void AerialVehicleDisplayPresenter::updateBarometric(
         const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(barometric), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(barometric), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(barometric), PROPERTY(operational),
@@ -90,7 +90,7 @@ void AerialVehicleDisplayPresenter::updateBarometric(
 void AerialVehicleDisplayPresenter::updateRadalt(const domain::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(radalt), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, false));
+                             parameters.value(domain::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(radalt), PROPERTY(enabled),
                              parameters.value(domain::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(radalt), PROPERTY(operational),

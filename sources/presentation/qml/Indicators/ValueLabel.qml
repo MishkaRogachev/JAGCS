@@ -7,7 +7,13 @@ Item {
     property int digits: 0
     property real value: NaN
     property bool operational: true
-    property color color: operational ? customPalette.textColor : customPalette.dangerColor
+    property bool active: false
+    property color color: {
+        if (!enabled) return customPalette.sunkenColor;
+        if (!operational) return customPalette.dangerColor;
+        if (active) return customPalette.activeMissionColor;
+        return customPalette.textColor;
+    }
 
     property alias prefixFont: prefixText.font
     property alias valueFont: valueText.font
@@ -20,7 +26,6 @@ Item {
         anchors.top: parent.top
         width: root.width
         horizontalAlignment: Text.AlignHCenter
-        opacity: enabled ? 1 : 0.33
         color: root.color
         font.bold: true
         font.pixelSize: sizings.fontPixelSize * 0.6
@@ -33,11 +38,10 @@ Item {
         anchors.bottom: parent.bottom
         width: root.width
         horizontalAlignment: Text.AlignHCenter
-        opacity: enabled ? 1 : 0.33
         color: root.color
         font.bold: true
         font.pixelSize: sizings.fontPixelSize * 0.75
-        text: isNaN(value) ? "-" : value.toFixed(digits)
+        text: isNaN(value) ? "-" : (digits > 0 ? value.toFixed(digits) : Math.floor(value))
     }
 }
 
