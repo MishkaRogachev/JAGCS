@@ -45,6 +45,19 @@ Item {
         anchors.fill: ladderCanvas
         opacity: enabled ? 1 : 0.33
         source: ladderCanvas
+
+        Shaders.Hatch {
+            id: hatch
+            anchors.left: parent.left
+            anchors.leftMargin: mirrored ? 10 : 0
+            anchors.right: parent.right
+            anchors.rightMargin: mirrored ? 0 : 10
+            anchors.bottom: parent.bottom
+            height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
+            xFactor: yFactor * height / width
+            yFactor: 35
+            z: -1
+        }
     }
 
     Canvas {
@@ -99,19 +112,6 @@ Item {
             ctx.clearRect(mirrored ? 1 : -1, height / 2 - label.height / 2,
                                      mirrored ? width : -width, label.height);
             ctx.restore();
-        }
-
-        Shaders.Hatch {
-            id: hatch
-            anchors.left: parent.left
-            anchors.leftMargin: mirrored ? 10 : 0
-            anchors.right: parent.right
-            anchors.rightMargin: mirrored ? 0 : 10
-            anchors.bottom: parent.bottom
-            height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
-            xFactor: yFactor * height / width
-            yFactor: 35
-            z: -1
         }
     }
 
