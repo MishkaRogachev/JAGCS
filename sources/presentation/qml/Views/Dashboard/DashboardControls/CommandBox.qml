@@ -7,34 +7,31 @@ import "qrc:/Controls" as Controls
 Controls.ComboBox {
     id: control
 
-    property var mode: Command.UnknownCommand
     property int status: Command.Idle
+    property string processingText: qsTr("Processing")
 
-    model: []
-    tipText: qsTr("Select mode")
+    function updateCommandStatus(command, status) {
+        for (var i = 0; i < model.length; ++i) {
+            if (command == model[i].command) {
+                control.status = status;
+                return;
+            }
+        }
+    }
+
+    currentIndex: -1
     font.pixelSize: sizings.fontPixelSize * 0.75
     font.bold: true
 
-    onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])
+    onActivated: presenter.executeCommand(model[index].command, [])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
-    currentIndex: {
-        for (var i = 0; i < model.length; ++i) {
-            if (mode == model[i]) return i; // works only with ==
-        }
-        return -1;
-    }
 
     Timer {
         id: timer
-        onTriggered: status = Command.Idle
-    }
-
-    delegate: Controls.ItemDelegate {
-        width: control.width
-        horizontalAlignment: control.horizontalAlignment
-        text: translator.translateVehicleMode(modelData)
-        font: control.font
-        highlighted: control.highlightedIndex === index
+        onTriggered: {
+            status = Command.Idle;
+            currentIndex = -1;
+        }
     }
 
     Rectangle {
@@ -51,9 +48,10 @@ Controls.ComboBox {
     contentItem: Text {
         id: content
         font: control.font
-        text: translator.translateVehicleMode(mode)
+        text: processingText
         color: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
         verticalAlignment: Text.AlignVCenter
+        visible: currentIndex != -1
         z: 10
     }
 }
