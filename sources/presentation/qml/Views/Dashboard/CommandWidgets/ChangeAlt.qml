@@ -10,14 +10,6 @@ RowLayout {
 
     spacing: sizings.spacing
 
-    onVisibleChanged: updateAlt()
-    Component.onCompleted: updateAlt()
-
-    function updateAlt() {
-        altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
-                                                        vehicle.barometric.displayedAltitude);
-    }
-
     Connections {
         target: vehicleDisplay
         onUpdateCommandStatus: {
@@ -29,6 +21,21 @@ RowLayout {
                 break;
             }
         }
+    }
+
+    Connections {
+        target: vehicle.barometric
+        enabled: vehicle.barometric.present
+        onDisplayedAltitudeChanged: {
+            if (altitudeBox.isValid) return;
+            altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
+                                                            vehicle.barometric.displayedAltitude);
+        }
+    }
+
+    onVisibleChanged: {
+        altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
+                                                        vehicle.barometric.displayedAltitude);
     }
 
     DashboardControls.Label { text: qsTr("Alt.") + ", " + altitudeSuffix }

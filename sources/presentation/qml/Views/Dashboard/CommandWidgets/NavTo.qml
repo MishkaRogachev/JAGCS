@@ -12,15 +12,6 @@ GridLayout {
     columnSpacing: sizings.spacing
     columns: 3
 
-    onVisibleChanged: updateLatLonAlt()
-    Component.onCompleted: updateLatLonAlt()
-
-    function updateLatLonAlt() {
-        altitudeBox.realValue = vehicle.barometric.displayedAltitude;
-        latitudeBox.value = vehicle.position.latitude;
-        longitudeBox.value = vehicle.position.longitude;
-    }
-
     Connections {
         target: vehicleDisplay
         onUpdateCommandStatus: {
@@ -32,6 +23,31 @@ GridLayout {
                 break;
             }
         }
+    }
+
+    Connections {
+        target: vehicle.barometric
+        enabled: vehicle.barometric.present
+        onDisplayedAltitudeChanged: {
+            if (altitudeBox.isValid) return;
+            altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
+                                                            vehicle.barometric.displayedAltitude);
+        }
+    }
+
+    Connections {
+        target: vehicle
+        onPositionChanged: {
+            if (!latitudeBox.isValid) latitudeBox.value = vehicle.position.latitude;
+            if (!longitudeBox.isValid) longitudeBox.value = vehicle.position.longitude;
+        }
+    }
+
+    onVisibleChanged: {
+        altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
+                                                        vehicle.barometric.displayedAltitude);
+        latitudeBox.value = vehicle.position.latitude;
+        longitudeBox.value = vehicle.position.longitude;
     }
 
     DashboardControls.Label { text: qsTr("Alt.") + ", " + altitudeSuffix }

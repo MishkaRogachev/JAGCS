@@ -13,6 +13,7 @@ T.Control {
     property int secondsPrecision: 2
     property int sign: 1
 
+    readonly property bool isValid: !isNaN(value)
     readonly property real scalingFactor: width / implicitWidth
 
     property Item focusedItem
@@ -25,7 +26,7 @@ T.Control {
     }
 
     function updateControlsFromValue() {
-        if (!isNaN(value)) {
+        if (isValid) {
             var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
             sign = dms.sign;
             dInput.text = Helper.pad(dms.deg, dInput.maximumLength);
@@ -40,7 +41,7 @@ T.Control {
     }
 
     function changeValue(digit, add) {
-        if (isNaN(value)) {
+        if (!isValid) {
             value = 0;
             return;
         }
@@ -74,7 +75,7 @@ T.Control {
     background: Rectangle {
         anchors.fill: parent
         radius: 3
-        color: !isNaN(value) ? customPalette.sunkenColor : customPalette.dangerColor
+        color: isValid ? customPalette.sunkenColor : customPalette.dangerColor
         border.color: scope.activeFocus ? customPalette.highlightColor : "transparent"
 
         Shaders.Hatch {
