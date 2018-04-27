@@ -4,7 +4,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Controls.Pane {
+BaseInstrument {
     id: root
 
     property real scalingFactor: 2.7
@@ -15,7 +15,6 @@ Controls.Pane {
     property int maxAltitude: dashboard.altitudeStep * scalingFactor
 
     implicitHeight: width * 0.75
-    enabled: vehicle.online
 
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter

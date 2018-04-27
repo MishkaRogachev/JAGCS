@@ -111,6 +111,7 @@
         <file>Views/Dashboard/CommandWidgets/ChangeAlt.qml</file>
         <file>Views/Dashboard/CommandWidgets/LandControl.qml</file>
         <file>Views/Dashboard/CommandWidgets/Calibrations.qml</file>
+        <file>Views/Dashboard/Instruments/BaseInstrument.qml</file>
         <file>Views/Dashboard/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/Instruments/FlightDirector.qml</file>

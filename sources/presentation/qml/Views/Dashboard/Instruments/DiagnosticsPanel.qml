@@ -5,7 +5,7 @@ import QtCharts 2.0
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Controls.Pane {
+BaseInstrument {
     id: root
 
     padding: 0

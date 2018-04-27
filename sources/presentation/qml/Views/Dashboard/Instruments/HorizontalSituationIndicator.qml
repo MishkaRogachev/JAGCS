@@ -4,11 +4,10 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 
-Controls.Pane {
+BaseInstrument {
     id: root
 
     implicitHeight: width * 0.6
-    enabled: vehicle.online
 
     Indicators.DistanceLabel {
         anchors.top: parent.top

@@ -5,10 +5,8 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "../CommandWidgets" as CommandWidgets
 
-Controls.Pane {
+BaseInstrument {
     id: root
-
-    enabled: vehicle.online
 
     ColumnLayout {
         anchors.fill: parent

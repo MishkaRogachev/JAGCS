@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 import "../DashboardControls" as DashboardControls
 
-Controls.Pane {
+BaseInstrument {
     id: root
 
     property bool dmsFormat: settings.boolValue("Gui/coordinatesDms")
