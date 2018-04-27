@@ -123,6 +123,7 @@ BaseInstrument {
     Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.horizontalCenter: altitudeLadder.horizontalCenter
+        anchors.horizontalCenterOffset: -itemMenuButton.width / 2
         value: units.convertDistanceTo(altitudeUnits, vehicle.satellite.altitude)
         enabled: vehicle.satellite.enabled
         operational: vehicle.satellite.operational

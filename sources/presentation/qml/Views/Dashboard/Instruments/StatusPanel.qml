@@ -77,6 +77,7 @@ BaseInstrument {
 
         ColumnLayout {
             Layout.alignment: Qt.AlignRight
+            Layout.rightMargin: itemMenuButton.width
 
             DashboardControls.Label {
                 color: vehicle.battery.voltage > 0.01 ? customPalette.textColor :

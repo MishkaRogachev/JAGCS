@@ -11,8 +11,10 @@ BaseInstrument {
     padding: 0
 
     RowLayout {
-        anchors.centerIn: parent
-        width: parent.width - sizings.padding * 2
+        anchors.left: parent.left
+        anchors.leftMargin: sizings.padding
+        anchors.right: parent.right
+        anchors.rightMargin: itemMenuButton.width
         spacing: sizings.spacing
 
         Controls.Label {

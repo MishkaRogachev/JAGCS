@@ -12,7 +12,9 @@ BaseInstrument {
         anchors.fill: parent
         spacing: sizings.spacing
 
-        CommandWidgets.ModeControl {}
+        CommandWidgets.ModeControl {
+            Layout.rightMargin: itemMenuButton.width
+        }
 
         CommandWidgets.GoTo {
             visible: vehicle.mode === Domain.Mission

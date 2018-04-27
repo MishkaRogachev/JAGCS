@@ -14,6 +14,7 @@ BaseInstrument {
 
         CommandWidgets.Calibrations {
             enabled: !vehicle.armed
+            Layout.rightMargin: itemMenuButton.width
         }
 
         CommandWidgets.SetPoint {

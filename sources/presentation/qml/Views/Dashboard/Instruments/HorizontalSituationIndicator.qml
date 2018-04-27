@@ -82,6 +82,7 @@ BaseInstrument {
     Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.right: parent.right
+        anchors.rightMargin: itemMenuButton.width / 2
         active: vehicle.guided
         value: vehicle.navigator.targetBearing
         width: parent.width * 0.2

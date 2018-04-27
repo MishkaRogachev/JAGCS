@@ -29,6 +29,7 @@ BaseInstrument {
     Indicators.ValueLabel {
         anchors.top: parent.top
         anchors.right: parent.right
+        anchors.rightMargin: itemMenuButton.width
         prefix: qsTr("SIZE X")
         value: vehicle.landingSystem.sizeX
         width: parent.width * 0.2

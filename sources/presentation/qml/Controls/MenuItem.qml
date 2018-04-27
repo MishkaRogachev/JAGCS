@@ -13,6 +13,7 @@ T.MenuItem {
     font.pixelSize: sizings.fontPixelSize
 
     background: Rectangle {
+        anchors.fill: control
         implicitWidth: sizings.controlBaseSize
         implicitHeight: implicitWidth
         color: control.pressed ? customPalette.highlightColor : "transparent"
