@@ -62,6 +62,12 @@ Item {
             setting: "control"
             instrument: "../Instruments/ControlPanel.qml"
         }
+
+        ListElement {
+            name: qsTr("Preparation panel")
+            setting: "preparation"
+            instrument: "../Instruments/PreparationPanel.qml"
+        }
     }
 
     ListView {

@@ -14,17 +14,15 @@ Controls.Pane {
         anchors.fill: parent
         spacing: sizings.spacing
 
-        CommandWidgets.Preparation {
-            visible: !vehicle.armed
-        }
-
         CommandWidgets.ModeControl {}
 
         CommandWidgets.GoTo {
             visible: vehicle.mode === Domain.Mission
         }
 
-        CommandWidgets.NavTo {
+        CommandWidgets.SetPoint {
+            command: Command.NavTo
+            tipText: qsTr("Nav to")
             visible: vehicle.mode === Domain.NavTo
         }
 
@@ -35,6 +33,8 @@ Controls.Pane {
                      vehicle.mode === Domain.Return
         }
 
+        // TODO: Change WP_LOITER_RAD
+
         CommandWidgets.SetSpd {
             visible: vehicle.mode === Domain.Mission ||
                      vehicle.mode === Domain.NavTo
@@ -43,9 +43,5 @@ Controls.Pane {
         CommandWidgets.LandControl {
             visible: vehicle.mode === Domain.Mission
         }
-
-//        CommandWidgets.PreparationControl {
-//             visible: !vehicle.armed // TODO: to preparation panel
-//        }
     }
 }

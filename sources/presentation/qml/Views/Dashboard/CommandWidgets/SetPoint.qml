@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
@@ -8,21 +9,17 @@ import "../DashboardControls" as DashboardControls
 GridLayout {
     id: root
 
+    property int command: Command.UnknownCommand
+
+    property alias tipText: sendButton.tipText
+
     rowSpacing: sizings.spacing
     columnSpacing: sizings.spacing
     columns: 3
 
     Connections {
         target: vehicleDisplay
-        onUpdateCommandStatus: {
-            switch (command) {
-            case Command.NavTo:
-                sendButton.status = status;
-                break;
-            default:
-                break;
-            }
-        }
+        onUpdateCommandStatus: if (command == root.command) sendButton.status = status;
     }
 
     Connections {
@@ -30,8 +27,8 @@ GridLayout {
         enabled: vehicle.barometric.present
         onDisplayedAltitudeChanged: {
             if (altitudeBox.isValid) return;
-            altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
-                                                            vehicle.barometric.displayedAltitude);
+            altitudeBox.realValue = units.convertDistanceTo(
+                        altitudeUnits, vehicle.barometric.displayedAltitude);
         }
     }
 
@@ -44,8 +41,8 @@ GridLayout {
     }
 
     onVisibleChanged: {
-        altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
-                                                        vehicle.barometric.displayedAltitude);
+        altitudeBox.realValue = units.convertDistanceTo(
+                    altitudeUnits, vehicle.barometric.displayedAltitude);
         latitudeBox.value = vehicle.position.latitude;
         longitudeBox.value = vehicle.position.longitude;
     }
@@ -62,7 +59,7 @@ GridLayout {
 
     DashboardControls.CommandButton {
         id: sendButton
-        command: Command.NavTo
+        command: root.command
         iconSource: "qrc:/icons/play.svg"
         tipText: qsTr("Nav to")
         args: [ latitudeBox.value, longitudeBox.value,
@@ -78,16 +75,11 @@ GridLayout {
         Layout.columnSpan: 2
     }
 
-    Controls.MapPickButton { // FIXME: unified picker with plnning mode
+    Controls.MapPickButton { // FIXME: unified picker with planning mode
         id: pickButton
         onPicked: {
             latitudeBox.value = coordinate.latitude;
             longitudeBox.value = coordinate.longitude;
-            map.pickerCoordinate = coordinate;
-        }
-        onVisibleChanged: {
-            map.pickerVisible = visible;
-            picking = false;
         }
         Layout.rowSpan: 2
     }
