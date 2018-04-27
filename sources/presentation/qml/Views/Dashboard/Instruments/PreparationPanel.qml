@@ -20,6 +20,7 @@ Controls.Pane {
 
         CommandWidgets.SetPoint {
             command: Command.SetReturn
+            enabled: vehicle.mode !== Domain.Return
             tipText: qsTr("Set return point")
         }
     }

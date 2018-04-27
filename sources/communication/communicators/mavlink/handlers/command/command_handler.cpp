@@ -31,7 +31,6 @@ namespace
         { MAV_CMD_DO_GO_AROUND, dto::Command::GoAround },
         { MAV_CMD_DO_PAUSE_CONTINUE, dto::Command::PauseContinue },
         { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute },
-        { MAV_CMD_DO_SET_HOME, dto::Command::SetReturn },
         
         // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
@@ -116,6 +115,9 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
         this->ackCommand(vehicleId, dto::Command::CalibrateTemperature,
                          ::mavStatusMap.value(ack.result, dto::Command::Idle));
         break;
+    case MAV_CMD_DO_SET_HOME:
+        this->ackCommand(vehicleId, dto::Command::SetReturn,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
     default:
         break;
     }
@@ -176,6 +178,11 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
     case dto::Command::NavTo:
         this->sendNavTo(vehicle->mavId(), args.value(0, 0).toDouble(),
                         args.value(1, 0).toDouble(), args.value(2, 0).toFloat());
+        break;
+    case dto::Command::SetReturn:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_SET_HOME,
+                              { args.isEmpty() ? 1 : 0, 0, 0, 0, args.value(0, 0).toDouble(),
+                                args.value(1, 0).toDouble(), args.value(2, 0).toFloat() }, attempt);
         break;
     case dto::Command::ChangeAltitude:
         this->sendChangeAltitude(vehicle->mavId(), args.value(0, 0).toFloat());
