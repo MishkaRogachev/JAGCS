@@ -3,25 +3,22 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Button {
+Controls.RealSpinBox {
     id: control
 
     property int command: Command.UnknownCommand
     property int status: Command.Idle
-    property var args: []
+    property var args: [ realValue ]
 
-    signal beforeSended()
+    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.bold: true
 
-    onClicked: {
+    onValueModified: {
         if (status == Command.Sending)
         {
             presenter.rejectCommand(command);
         }
-        else
-        {
-            beforeSended();
-            presenter.executeCommand(command, args);
-        }
+        presenter.executeCommand(command, args);
     }
     onStatusChanged: {
         if (status == Command.Completed ||
@@ -37,18 +34,17 @@ Controls.Button {
         onTriggered: status = Command.Idle
     }
 
+    color: {
+        if (status == Command.Rejected) return customPalette.selectedTextColor;
+        if (status == Command.Sending) return customPalette.selectedTextColor;
+        if (status == Command.Completed) return customPalette.selectedTextColor;
+        return customPalette.textColor;
+    }
+
     backgroundColor: {
         if (status == Command.Rejected) return customPalette.dangerColor;
         if (status == Command.Sending) return customPalette.cautionColor;
         if (status == Command.Completed) return customPalette.positiveColor;
-        if (control.pressed) return customPalette.highlightColor;
-        return control.flat ? "transparent" : customPalette.buttonColor;
+        return customPalette.sunkenColor;
     }
-
-    iconColor: control.pressed || status == Command.Rejected ||
-               status == Command.Sending || status == Command.Completed ?
-                   customPalette.selectedTextColor: customPalette.textColor
-    textColor: iconColor
-    font.pixelSize: sizings.fontPixelSize * 0.75
-    font.bold: true
 }

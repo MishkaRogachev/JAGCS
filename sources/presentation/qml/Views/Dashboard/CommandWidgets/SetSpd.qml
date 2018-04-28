@@ -14,8 +14,8 @@ RowLayout {
         target: vehicleDisplay
         onUpdateCommandStatus: {
             switch (command) {
-            case sendButton.command:
-                sendButton.status = status;
+            case spdBox.command:
+                spdBox.status = status;
                 break;
             default:
                 break;
@@ -52,20 +52,14 @@ RowLayout {
               ", " + speedSuffix
     }
 
-    Controls.RealSpinBox {
+    DashboardControls.CommandRealSpinBox {
         id: spdBox
+        command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
+        args: [ units.convertSpeedFrom(speedUnits, realValue) ]
+        tipText: vehicle.pitot.present ? qsTr("Set Airspeed") : qsTr("Set Groundspeed")
         realFrom: settings.value("Parameters/minSpeed")
         realTo: settings.value("Parameters/maxSpeed")
         precision: settings.value("Parameters/precisionSpeed")
         Layout.fillWidth: true
-    }
-
-    DashboardControls.CommandButton {
-        id: sendButton
-        command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
-        iconSource: "qrc:/icons/play.svg"
-        tipText: vehicle.pitot.present ? qsTr("Set Airspeed") : qsTr("Set Groundspeed")
-        args: [ units.convertSpeedFrom(speedUnits, spdBox.realValue) ]
-        Layout.rowSpan: 2
     }
 }

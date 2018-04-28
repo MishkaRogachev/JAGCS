@@ -35,8 +35,9 @@ BaseInstrument {
 
         CommandWidgets.SetRadius {
             command: Command.SetLoiterRadius
-            tipText: qsTr("Set loiter radius")
-            visible: vehicle.mode === Domain.Loiter
+            tipText: qsTr("Set radius")
+            visible: vehicle.mode === Domain.Loiter ||
+                     vehicle.mode === Domain.NavTo
         }
 
         CommandWidgets.SetSpd {
