@@ -36,7 +36,8 @@ namespace dto
             GoTo,
             NavTo,
 
-            ChangeAltitude,
+            SetAltitude,
+            SetLoiterRadius,
             SetAirspeed,
             SetGroundspeed,
             SetThrottle,

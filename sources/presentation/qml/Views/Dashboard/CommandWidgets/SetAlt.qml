@@ -14,7 +14,7 @@ RowLayout {
         target: vehicleDisplay
         onUpdateCommandStatus: {
             switch (command) {
-            case Command.ChangeAltitude:
+            case Command.SetAltitude:
                 sendButton.status = status;
                 break;
             default:
@@ -50,9 +50,9 @@ RowLayout {
 
     DashboardControls.CommandButton {
         id: sendButton
-        command: Command.ChangeAltitude
+        command: Command.SetAltitude
         iconSource: "qrc:/icons/play.svg"
-        tipText: qsTr("Change altitude")
+        tipText: qsTr("Set altitude")
         args: [ vehicle.barometric.fromDisplayedAltitude(units.convertDistanceFrom(
                                                              altitudeUnits, altitudeBox.realValue)) ]
         Layout.rowSpan: 2

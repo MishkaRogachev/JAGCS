@@ -158,7 +158,6 @@ Item {
                 Controls.Menu {
                     id: addMenu
                     width: parent.width
-                    y: parent.height - height
 
                     Repeater {
                         model: instruments

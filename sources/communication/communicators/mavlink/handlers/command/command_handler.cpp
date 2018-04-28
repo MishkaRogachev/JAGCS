@@ -184,8 +184,11 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
                               { args.isEmpty() ? 1 : 0, 0, 0, 0, args.value(0, 0).toDouble(),
                                 args.value(1, 0).toDouble(), args.value(2, 0).toFloat() }, attempt);
         break;
-    case dto::Command::ChangeAltitude:
-        this->sendChangeAltitude(vehicle->mavId(), args.value(0, 0).toFloat());
+    case dto::Command::SetAltitude:
+        this->sendSetAltitude(vehicle->mavId(), args.value(0, 0).toFloat());
+        break;
+    case dto::Command::SetLoiterRadius:
+        this->sendSetLoiterRadius(vehicle->mavId(), args.value(0, 0).toFloat());
         break;
     case dto::Command::SetAirspeed:
         this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
@@ -327,7 +330,7 @@ void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, 
                      dto::Command::NavTo, dto::Command::Completed);
 }
 
-void CommandHandler::sendChangeAltitude(quint8 mavId, float altitude)
+void CommandHandler::sendSetAltitude(quint8 mavId, float altitude)
 {
     mavlink_message_t message;
     mavlink_mission_item_t item;
@@ -353,7 +356,31 @@ void CommandHandler::sendChangeAltitude(quint8 mavId, float altitude)
 
     // TODO: wait mission ack
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
-                     dto::Command::ChangeAltitude, dto::Command::Completed);
+                     dto::Command::SetAltitude, dto::Command::Completed);
+}
+
+void CommandHandler::sendSetLoiterRadius(quint8 mavId, float radius)
+{
+     mavlink_param_set_t setParam;
+
+     setParam.target_system = mavId;
+     strncpy(setParam.param_id, "WP_LOITER_RAD", sizeof("WP_LOITER_RAD")); //LOITER_RAD
+     setParam.param_value = radius;
+
+     AbstractLink* link = m_communicator->mavSystemLink(mavId);
+     if (!link) return;
+
+     mavlink_message_t message;
+     mavlink_msg_param_set_encode_chan(m_communicator->systemId(),
+                                       m_communicator->componentId(),
+                                       m_communicator->linkChannel(link),
+                                       &message, &setParam);
+     m_communicator->sendMessage(message, link);
+
+     // TODO: wait ack
+     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
+                      dto::Command::SetLoiterRadius
+                      , dto::Command::Completed);
 }
 
 void CommandHandler::sendManualControl(quint8 mavId, float pitch, float roll,

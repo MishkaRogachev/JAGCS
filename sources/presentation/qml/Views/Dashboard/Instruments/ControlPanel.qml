@@ -26,14 +26,18 @@ BaseInstrument {
             visible: vehicle.mode === Domain.NavTo
         }
 
-        CommandWidgets.ChangeAlt {
+        CommandWidgets.SetAlt {
             visible: vehicle.mode === Domain.Circle ||
                      vehicle.mode === Domain.Loiter ||
 //                     vehicle.mode === Domain.Mission ||
                      vehicle.mode === Domain.Return
         }
 
-        // TODO: Change WP_LOITER_RAD
+        CommandWidgets.SetRadius {
+            command: Command.SetLoiterRadius
+            tipText: qsTr("Set loiter radius")
+            visible: vehicle.mode === Domain.Loiter
+        }
 
         CommandWidgets.SetSpd {
             visible: vehicle.mode === Domain.Mission ||

@@ -108,7 +108,8 @@
         <file>Views/Dashboard/CommandWidgets/GoTo.qml</file>
         <file>Views/Dashboard/CommandWidgets/SetPoint.qml</file>
         <file>Views/Dashboard/CommandWidgets/SetSpd.qml</file>
-        <file>Views/Dashboard/CommandWidgets/ChangeAlt.qml</file>
+        <file>Views/Dashboard/CommandWidgets/SetAlt.qml</file>
+        <file>Views/Dashboard/CommandWidgets/SetRadius.qml</file>
         <file>Views/Dashboard/CommandWidgets/LandControl.qml</file>
         <file>Views/Dashboard/CommandWidgets/Calibrations.qml</file>
         <file>Views/Dashboard/Instruments/BaseInstrument.qml</file>

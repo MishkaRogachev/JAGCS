@@ -61,7 +61,6 @@ GridLayout {
         id: sendButton
         command: root.command
         iconSource: "qrc:/icons/play.svg"
-        tipText: qsTr("Nav to")
         args: [ latitudeBox.value, longitudeBox.value,
             vehicle.barometric.fromDisplayedAltitude(altitudeBox.realValue) ]
     }
