@@ -7,7 +7,9 @@ T.SpinBox {
     id: control
 
     property bool isValid: value >= from && value <= to
+    property color color: customPalette.textColor
     property color backgroundColor: customPalette.sunkenColor
+    property string tipText
 
     implicitWidth: sizings.controlBaseSize * 5
     implicitHeight: sizings.controlBaseSize
@@ -36,6 +38,7 @@ T.SpinBox {
 
     contentItem: NumericInput {
         text: isValid ? control.textFromValue(control.value, control.locale) : "0"
+        color: isValid ? control.color : customPalette.selectedTextColor
         font: control.font
         readOnly: !control.editable
         inputMethodHints: Qt.ImhDigitsOnly
@@ -62,7 +65,7 @@ T.SpinBox {
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/minus.svg"
-            color: customPalette.textColor
+            color: isValid ? control.color : customPalette.selectedTextColor
             height: parent.height * 0.6
             width: height
         }
@@ -87,9 +90,15 @@ T.SpinBox {
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/plus.svg"
+            color: isValid ? control.color : customPalette.selectedTextColor
             height: parent.height * 0.6
             width: height
-            color: customPalette.textColor
         }
+    }
+
+    ToolTip {
+        visible: (hovered) && tipText
+        text: tipText
+        delay: 1000
     }
 }

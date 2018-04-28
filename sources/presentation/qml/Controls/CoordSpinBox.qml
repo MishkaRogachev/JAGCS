@@ -10,6 +10,7 @@ T.Control {
 
     property real value: 0
     property bool isLongitude: false
+    property color color: customPalette.textColor
     property int secondsPrecision: 2
     property int sign: 1
 
@@ -100,6 +101,7 @@ T.Control {
                 autoRepeat: true
                 activeFocusOnTab: false
                 visible: enabled
+                iconColor: control.isValid ? control.color : customPalette.selectedTextColor
                 iconSource: "qrc:/ui/minus.svg"
                 pressedImpl: focusedItem && focusedItem.down
                 onClicked: {
@@ -117,6 +119,7 @@ T.Control {
                 id: dInput
                 focus: true
                 font: control.font
+                color: control.isValid ? control.color : customPalette.selectedTextColor
                 maximumLength: isLongitude ? 3 : 2
                 nextItem: mInput
                 inputMethodHints: Qt.ImhDigitsOnly
@@ -129,12 +132,14 @@ T.Control {
 
             Label {
                 font: control.font
+                color: control.isValid ? control.color : customPalette.selectedTextColor
                 text: "\u00B0"
             }
 
             CoordSpinBoxInput {
                 id: mInput
                 font: control.font
+                color: control.isValid ? control.color : customPalette.selectedTextColor
                 maximumLength: 2
                 previousItem: dInput
                 nextItem: sInput
@@ -148,12 +153,14 @@ T.Control {
 
             Label {
                 font: control.font
+                color: control.isValid ? control.color : customPalette.selectedTextColor
                 text: "\'"
             }
 
             CoordSpinBoxInput {
                 id: sInput
                 font: control.font
+                color: control.isValid ? control.color : customPalette.selectedTextColor
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -166,6 +173,7 @@ T.Control {
 
             Label {
                 font: control.font
+                color: control.isValid ? control.color : customPalette.selectedTextColor
                 text: "\""
             }
 
@@ -173,6 +181,7 @@ T.Control {
                 flat: true
                 font: control.font
                 activeFocusOnTab: false
+                textColor: control.isValid ? control.color : customPalette.selectedTextColor
                 text: sign < 0 ? (isLongitude ? qsTr("W") : qsTr("S")) :
                                  (isLongitude ? qsTr("E") : qsTr("N"))
                 onClicked: {
@@ -186,6 +195,7 @@ T.Control {
                 autoRepeat: true
                 activeFocusOnTab: false
                 visible: enabled
+                iconColor: control.isValid ? control.color : customPalette.selectedTextColor
                 iconSource: "qrc:/ui/plus.svg"
                 pressedImpl: focusedItem && focusedItem.up
                 onClicked: {

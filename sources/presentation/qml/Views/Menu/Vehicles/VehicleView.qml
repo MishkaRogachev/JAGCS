@@ -56,7 +56,7 @@ Controls.Frame {
             enabled: !online
             from: 1
             to: 255
-            backgroundColor: mavIdIsCorrect ? customPalette.sunkenColor : customPalette.dangerColor
+            isValid: mavIdIsCorrect
             onValueChanged: changed = true
             Layout.fillWidth: true
         }
