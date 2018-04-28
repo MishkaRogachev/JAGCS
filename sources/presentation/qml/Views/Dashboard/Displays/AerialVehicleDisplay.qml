@@ -10,7 +10,6 @@ Item {
     id: vehicleDisplay
 
     property int vehicleId: 0
-    property bool instrumentsLocked: false
 
     property AerialVehicle vehicle: AerialVehicle {}
 
@@ -23,6 +22,7 @@ Item {
             var item = instruments.get(i);
             item.visibility = settings.boolValue("veh_" + vehicleId + "/" +
                                                  item.setting + "/visibility");
+            if (item.visibility) instruments.visibleItems++;
         }
     }
     Component.onDestruction: manual.setVehicleId(0)
@@ -35,6 +35,8 @@ Item {
 
     ListModel {
         id: instruments
+
+        property int visibleItems: 0
 
         ListElement {
             name: qsTr("Diagnostics panel")
@@ -113,7 +115,7 @@ Item {
                 id: itemMenuButton
                 anchors.top: parent.top
                 anchors.right: parent.right
-                enabled: !instrumentsLocked
+                enabled: topbar.instrumentsUnlocked
                 iconSource: "qrc:/ui/dots.svg"
                 flat: true
                 width: sizings.controlBaseSize * 0.5
@@ -129,7 +131,12 @@ Item {
                         width: parent.width
                         iconSource: "qrc:/icons/hide.svg"
                         text: qsTr("Hide")
-                        onClicked: visibility = false
+                        onClicked: {
+                            visibility = false;
+                            settings.setValue("veh_" + vehicleId + "/" +
+                                              setting + "/visibility", false);
+                            instruments.visibleItems--;
+                        }
                     }
                 }
             }
@@ -137,14 +144,13 @@ Item {
 
         footer: Item {
             width: parent.width
-            height: sizings.controlBaseSize + list.spacing
+            visible: topbar.instrumentsUnlocked && instruments.visibleItems < instruments.count
+            height: visible ? sizings.controlBaseSize + list.spacing : 0
             z: 10
 
             Controls.Button {
-                enabled: !instrumentsLocked
-                anchors.left: parent.left
+                width: parent.width
                 anchors.bottom: parent.bottom
-                width: parent.width - sizings.controlBaseSize
                 iconSource: "qrc:/icons/add.svg"
                 text: qsTr("Add")
                 onClicked: addMenu.open()
@@ -162,19 +168,15 @@ Item {
                             visible: !visibility
                             height: visible ? implicitHeight : 0
                             text: name
-                            onClicked: visibility = true
+                            onClicked: {
+                                visibility = true;
+                                settings.setValue("veh_" + vehicleId + "/" +
+                                                  setting + "/visibility", true);
+                                instruments.visibleItems++;
+                            }
                         }
                     }
                 }
-            }
-
-            Controls.Button {
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                checkable: true
-                iconSource: checked ? "qrc:/icons/unlock.svg" : "qrc:/icons/lock.svg"
-                tipText: (checked ? qsTr("Unlock") : qsTr("Lock")) + " " + qsTr("indicators")
-                onCheckedChanged: instrumentsLocked = checked
             }
         }
     }

@@ -10,6 +10,8 @@ import "Connection"
 Item {
     id: topbar
 
+    property bool instrumentsUnlocked: false
+
     height: sizings.controlBaseSize
 
     TopbarPresenter {
@@ -74,6 +76,15 @@ Item {
             enabled: dashboard.selectedVehicle !== undefined
             flat: true
             onClicked: dashboard.selectVehicle(0)
+        }
+
+        Controls.Button {
+            id: lockButton
+            visible: dashboard.selectedVehicle !== undefined
+            iconSource: instrumentsUnlocked ? "qrc:/icons/lock.svg" : "qrc:/icons/unlock.svg"
+            tipText: (instrumentsUnlocked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("indicators")
+            flat: true
+            onClicked: instrumentsUnlocked = !instrumentsUnlocked
         }
 
         Controls.Button {
