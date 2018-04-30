@@ -9,29 +9,32 @@ import "../DashboardControls" as DashboardControls
 RowLayout {
     id: root
 
-    property int command: Command.UnknownCommand
-
-    property alias tipText: sendButton.tipText
+    property alias command: radiusBox.command
+    property alias tipText: radiusBox.tipText
 
     spacing: sizings.spacing
 
     Connections {
         target: vehicleDisplay
-        onUpdateCommandStatus: if (command == root.command) sendButton.status = status;
+        onUpdateCommandStatus: if (command == root.command) radiusBox.status = status;
     }
+
+    Connections {
+         target: vehicle.navigator
+         onTargetDistanceChanged: {
+             if (radiusBox.isValid) return;
+             radiusBox.realValue = vehicle.navigator.targetDistance;
+         }
+    }
+
+    Component.onCompleted: radiusBox.realValue = vehicle.navigator.targetDistance
 
     DashboardControls.Label { text: qsTr("Rad. m") }
 
-    Controls.SpinBox {
+    DashboardControls.CommandRealSpinBox {
         id: radiusBox
-        to: settings.value("Parameters/maxRadius")
+        realTo: settings.value("Parameters/maxRadius")
+        precision: 1 // TODO: radius precision to settings
         Layout.fillWidth: true
-    }
-
-    DashboardControls.CommandButton {
-        id: sendButton
-        command: root.command
-        iconSource: "qrc:/icons/play.svg"
-        args: [ radiusBox.value ]
     }
 }

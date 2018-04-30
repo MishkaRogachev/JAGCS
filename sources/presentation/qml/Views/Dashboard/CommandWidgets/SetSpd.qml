@@ -41,11 +41,10 @@ RowLayout {
          }
     }
 
-    onVisibleChanged: {
-        spdBox.realValue = units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
+    Component.onCompleted: spdBox.realValue =
+                           units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                                     vehicle.pitot.indicatedAirspeed :
                                                     vehicle.satellite.groundspeed);
-    }
 
     DashboardControls.Label {
         text: qsTr("Set") + " " + (vehicle.pitot.present ?qsTr("IAS") : qsTr("GS")) +
