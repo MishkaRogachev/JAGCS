@@ -12,15 +12,7 @@ RowLayout {
 
     Connections {
         target: vehicleDisplay
-        onUpdateCommandStatus: {
-            switch (command) {
-            case Command.SetAltitude:
-                sendButton.status = status;
-                break;
-            default:
-                break;
-            }
-        }
+        onUpdateCommandStatus: if (command == altitudeBox.command) altitudeBox.status = status;
     }
 
     Connections {
@@ -33,28 +25,23 @@ RowLayout {
         }
     }
 
-    onVisibleChanged: {
-        altitudeBox.realValue = units.convertDistanceTo(altitudeUnits,
-                                                        vehicle.barometric.displayedAltitude);
-    }
+    onVisibleChanged: altitudeBox.realValue = units.convertDistanceTo(
+                          altitudeUnits, vehicle.barometric.displayedAltitude)
 
-    DashboardControls.Label { text: qsTr("Alt.") + ", " + altitudeSuffix }
-
-    Controls.RealSpinBox {
-        id: altitudeBox
-        realFrom: settings.value("Parameters/minAltitude")
-        realTo: settings.value("Parameters/maxAltitude")
-        precision: settings.value("Parameters/precisionAltitude")
+    DashboardControls.Label {
+        text: qsTr("Alt") + ", " + altitudeSuffix
         Layout.fillWidth: true
     }
 
-    DashboardControls.CommandButton {
-        id: sendButton
+    DashboardControls.CommandRealSpinBox {
+        id: altitudeBox
         command: Command.SetAltitude
-        iconSource: "qrc:/icons/play.svg"
-        tipText: qsTr("Set altitude")
         args: [ vehicle.barometric.fromDisplayedAltitude(units.convertDistanceFrom(
                                                              altitudeUnits, altitudeBox.realValue)) ]
-        Layout.rowSpan: 2
+        tipText: qsTr("Set altitude")
+        realFrom: settings.value("Parameters/minAltitude")
+        realTo: settings.value("Parameters/maxAltitude")
+        precision: settings.value("Parameters/precisionAltitude")
+        Layout.preferredWidth: sizings.controlBaseSize * 4
     }
 }

@@ -12,15 +12,7 @@ RowLayout {
 
     Connections {
         target: vehicleDisplay
-        onUpdateCommandStatus: {
-            switch (command) {
-            case spdBox.command:
-                spdBox.status = status;
-                break;
-            default:
-                break;
-            }
-        }
+        onUpdateCommandStatus: if (command == spdBox.command) spdBox.status = status;
     }
 
     Connections {
@@ -41,24 +33,24 @@ RowLayout {
          }
     }
 
-    Component.onCompleted: spdBox.realValue =
-                           units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
-                                                    vehicle.pitot.indicatedAirspeed :
-                                                    vehicle.satellite.groundspeed);
+    onVisibleChanged: spdBox.realValue = units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
+                                                                  vehicle.pitot.indicatedAirspeed :
+                                                                  vehicle.satellite.groundspeed);
 
     DashboardControls.Label {
         text: qsTr("Set") + " " + (vehicle.pitot.present ?qsTr("IAS") : qsTr("GS")) +
               ", " + speedSuffix
+        Layout.fillWidth: true
     }
 
     DashboardControls.CommandRealSpinBox {
         id: spdBox
         command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
         args: [ units.convertSpeedFrom(speedUnits, realValue) ]
-        tipText: vehicle.pitot.present ? qsTr("Set Airspeed") : qsTr("Set Groundspeed")
+        tipText: vehicle.pitot.present ? qsTr("Set airspeed") : qsTr("Set groundspeed")
         realFrom: settings.value("Parameters/minSpeed")
         realTo: settings.value("Parameters/maxSpeed")
         precision: settings.value("Parameters/precisionSpeed")
-        Layout.fillWidth: true
+        Layout.preferredWidth: sizings.controlBaseSize * 4
     }
 }

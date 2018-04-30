@@ -46,22 +46,28 @@ RowLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Button {
-        tipText: qsTr("Go to backward")
-        iconSource: "qrc:/icons/left.svg"
-        enabled: current > 0
-        onClicked: itemBox.goTo(current - 1)
-    }
-
     DashboardControls.WaypointBox {
         id: itemBox
-        Layout.preferredWidth: sizings.controlBaseSize * 3
-    }
+        Layout.preferredWidth: sizings.controlBaseSize * 4
 
-    Controls.Button {
-        tipText: qsTr("Go to forward")
-        iconSource: "qrc:/icons/right.svg"
-        enabled: current < count - 1
-        onClicked: itemBox.goTo(current + 1)
+        Controls.Button {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            flat: true
+            tipText: qsTr("Go to backward")
+            iconSource: "qrc:/icons/left.svg"
+            enabled: current > 0
+            onClicked: itemBox.goTo(current - 1)
+        }
+
+        Controls.Button {
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            flat: true
+            tipText: qsTr("Go to forward")
+            iconSource: "qrc:/icons/right.svg"
+            enabled: current < count - 1
+            onClicked: itemBox.goTo(current + 1)
+        }
     }
 }

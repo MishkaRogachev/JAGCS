@@ -16,7 +16,7 @@ RowLayout {
 
     Connections {
         target: vehicleDisplay
-        onUpdateCommandStatus: if (command == root.command) radiusBox.status = status;
+        onUpdateCommandStatus: if (command == radiusBox.command) radiusBox.status = status;
     }
 
     Connections {
@@ -27,14 +27,17 @@ RowLayout {
          }
     }
 
-    Component.onCompleted: radiusBox.realValue = vehicle.navigator.targetDistance
+    onVisibleChanged: radiusBox.realValue = vehicle.navigator.targetDistance
 
-    DashboardControls.Label { text: qsTr("Rad. m") }
+    DashboardControls.Label {
+        text: qsTr("Rad") + ", " + qsTr("m") // TODO: radius units
+        Layout.fillWidth: true
+    }
 
     DashboardControls.CommandRealSpinBox {
         id: radiusBox
         realTo: settings.value("Parameters/maxRadius")
         precision: 1 // TODO: radius precision to settings
-        Layout.fillWidth: true
+        Layout.preferredWidth: sizings.controlBaseSize * 4
     }
 }
