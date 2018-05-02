@@ -107,8 +107,11 @@ Controls.Frame {
                 tipText: qsTr("Edit commands")
                 iconSource: "qrc:/icons/edit.svg"
                 enabled: missionId > 0
-                onClicked: deepIn("qrc:/Views/Menu/Planning/Missions/MissionEditView.qml",
-                                  name, { "missionId": missionId });
+                onClicked: {
+                    if (!missionVisible) presenter.setMissionVisible(true);
+                    deepIn("qrc:/Views/Menu/Planning/Missions/MissionEditView.qml",
+                           name, { "missionId": missionId });
+                }
             }
 
             Controls.DelayButton {
