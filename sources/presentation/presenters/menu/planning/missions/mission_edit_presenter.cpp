@@ -81,13 +81,14 @@ void MissionEditPresenter::removeItem()
     {
         this->selectItem(sequence - 1);
     }
-    else if (d->mission->count() > 0)
-    {
-        this->selectItem(sequence);
-    }
     else
     {
-        this->selectItem(-1);
+        this->selectItem(d->mission->count() > 0 ? sequence : -1);
+        if (d->item && d->item->command() != dto::MissionItem::Home)
+        {
+            d->item->setCommand(dto::MissionItem::Home);
+            d->service->save(d->item);
+        }
     }
 }
 

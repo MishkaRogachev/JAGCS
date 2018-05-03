@@ -11,6 +11,7 @@ T.MenuItem {
 
     leftPadding: icon.visible ? icon.width + sizings.padding * 2 : 0
     font.pixelSize: sizings.fontPixelSize
+    width: parent.width
 
     background: Rectangle {
         anchors.fill: control
