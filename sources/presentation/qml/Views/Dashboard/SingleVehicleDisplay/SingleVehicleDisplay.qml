@@ -41,49 +41,49 @@ Item {
         ListElement {
             name: qsTr("Diagnostics panel")
             setting: "diagnostics"
-            instrument: "../Instruments/DiagnosticsPanel.qml"
+            instrument: "Instruments/DiagnosticsPanel.qml"
             visibility: false
         }
 
         ListElement {
             name: qsTr("Status panel")
             setting: "status"
-            instrument: "../Instruments/StatusPanel.qml"
+            instrument: "Instruments/StatusPanel.qml"
             visibility: false
         }
 
         ListElement {
             name: qsTr("Flight instrument(FD)")
             setting: "fd"
-            instrument: "../Instruments/FlightDirector.qml"
+            instrument: "Instruments/FlightDirector.qml"
             visibility: false
         }
 
         ListElement {
             name: qsTr("Horizontal situation indicator(HSI)")
             setting: "hsi"
-            instrument: "../Instruments/HorizontalSituationIndicator.qml"
+            instrument: "Instruments/HorizontalSituationIndicator.qml"
             visibility: false
         }
 
         ListElement {
             name: qsTr("Landing indicator")
             setting: "landing"
-            instrument: "../Instruments/LandingIndicator.qml"
+            instrument: "Instruments/LandingIndicator.qml"
             visibility: false
         }
 
         ListElement {
             name: qsTr("Control panel")
             setting: "control"
-            instrument: "../Instruments/ControlPanel.qml"
+            instrument: "Instruments/ControlPanel.qml"
             visibility: false
         }
 
         ListElement {
             name: qsTr("Preparation panel")
             setting: "preparation"
-            instrument: "../Instruments/PreparationPanel.qml"
+            instrument: "Instruments/PreparationPanel.qml"
             visibility: false
         }
     }

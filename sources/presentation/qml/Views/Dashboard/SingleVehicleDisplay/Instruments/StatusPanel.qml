@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/JS/helper.js" as Helper
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
-import "../DashboardControls" as DashboardControls
+import "../../DashboardControls" as DashboardControls
 
 BaseInstrument {
     id: root

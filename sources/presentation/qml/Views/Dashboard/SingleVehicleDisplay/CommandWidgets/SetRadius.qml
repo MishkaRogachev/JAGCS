@@ -4,7 +4,7 @@ import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "../DashboardControls" as DashboardControls
+import "../../DashboardControls" as DashboardControls
 
 RowLayout {
     id: root

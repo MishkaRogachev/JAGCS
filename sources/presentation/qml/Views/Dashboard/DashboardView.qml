@@ -24,17 +24,10 @@ Item {
 
     function updateDisplay() {
         if (selectedVehicle !== undefined) {
-            switch (selectedVehicle.type) {
-            case Vehicle.FixedWing:
-            case Vehicle.FlyingWing:
-            default:
-                // TODO: Special displays for special types
-                loader.setSource("Displays/AerialVehicleDisplay.qml",
-                                 { "vehicleId": selectedVehicle.id });
-            }
-        }
-        else {
-            loader.setSource("Displays/VehiclesListDisplay.qml")
+            loader.setSource("SingleVehicleDisplay/SingleVehicleDisplay.qml",
+                             { "vehicleId": selectedVehicle.id })
+        } else {
+            loader.setSource("MultiVehicleDisplay/MultiVehicleDisplay.qml")
         }
     }
 

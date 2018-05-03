@@ -65,8 +65,8 @@ Item {
                 case Vehicle.FixedWing:
                 case Vehicle.FlyingWing:
                 default:
-                    // TODO: Special short displays for special types
-                    return setSource("ShortAerialVehicleDisplay.qml",
+                    // TODO: Special widgets for different vehicles
+                    return setSource("AerialVehicleWidget.qml",
                                      { "vehicleId": displayVehicleId });
                 }
             }
