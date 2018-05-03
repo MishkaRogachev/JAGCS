@@ -60,7 +60,7 @@ ColumnLayout {
             iconSource: "qrc:/icons/remove.svg"
             iconColor: customPalette.dangerColor
             enabled: sequence > -1
-            onActivated: presenter.remove()
+            onActivated: presenter.removeItem()
         }
 
         Controls.Button {

@@ -24,7 +24,7 @@ namespace presentation
         void updateCount();
         void updateItem();
 
-        void remove();
+        void removeItem();
         void addItem(dto::MissionItem::Command command);
         void changeSequence(int sequence);
 

@@ -70,14 +70,25 @@ void MissionEditPresenter::updateItem()
     this->setViewProperty(PROPERTY(sequence), d->item ? d->item->sequence() : -1);
 }
 
-void MissionEditPresenter::remove()
+void MissionEditPresenter::removeItem()
 {
     if (d->item.isNull()) return;
 
     int sequence = d->item->sequence();
     d->service->remove(d->item);
 
-    this->selectItem(sequence - 1);
+    if (sequence > 0)
+    {
+        this->selectItem(sequence - 1);
+    }
+    else if (d->mission->count() > 0)
+    {
+        this->selectItem(sequence);
+    }
+    else
+    {
+        this->selectItem(-1);
+    }
 }
 
 void MissionEditPresenter::addItem(dto::MissionItem::Command command)
