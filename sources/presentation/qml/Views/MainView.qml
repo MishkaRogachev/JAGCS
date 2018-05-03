@@ -15,7 +15,6 @@ Controls.ApplicationWindow  {
     property bool fullscreen: false
     property bool cornerMap: false
     property bool cornerVisible: false
-    property bool dashboardVisible: true
     property int mapType: -1
 
     property QtObject map
@@ -74,7 +73,6 @@ Controls.ApplicationWindow  {
         anchors.left: tools.right
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
-        visible: dashboardVisible
         z: 1
     }
 

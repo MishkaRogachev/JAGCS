@@ -31,25 +31,25 @@ Item {
             visible: parent.contentHeight > parent.height
         }
 
-        header: Item {
-            width: parent.width
-            height: pane.height + list.spacing
-            z: 10
+//        header: Item {
+//            width: parent.width
+//            height: pane.height + list.spacing
+//            z: 10
 
-            Controls.Pane {
-                id: pane
-                width: parent.width
-                height: sizings.controlBaseSize + padding * 2
+//            Controls.Pane {
+//                id: pane
+//                width: parent.width
+//                height: sizings.controlBaseSize + padding * 2
 
-                Controls.CheckBox {
-                    anchors.centerIn: parent
-                    width: parent.width - padding * 2
-                    text: qsTr("Show offline")
-                    checked: vehicles.showOffline
-                    onClicked: vehicles.setShowOffline(!vehicles.showOffline)
-                }
-            }
-        }
+//                Controls.CheckBox {
+//                    anchors.centerIn: parent
+//                    width: parent.width - padding * 2
+//                    text: qsTr("Show offline")
+//                    checked: vehicles.showOffline
+//                    onClicked: vehicles.setShowOffline(!vehicles.showOffline)
+//                }
+//            }
+//        }
 
         delegate: Loader {
             property int displayType: vehicleType

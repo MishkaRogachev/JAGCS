@@ -98,6 +98,7 @@
         <file>Views/Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
+        <file>Views/Dashboard/TopBarDelegateBase.qml</file>
         <file>Views/Dashboard/Vehicles/Subsystem.qml</file>
         <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>
         <file>Views/Dashboard/Vehicles/AerialVehicle.qml</file>
@@ -109,6 +110,7 @@
         <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml</file>
+        <file>Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/ModeControl.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/GoTo.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/SetPoint.qml</file>
@@ -126,6 +128,7 @@
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/ControlPanel.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/PreparationPanel.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/MultiVehicleDisplay.qml</file>
+        <file>Views/Dashboard/MultiVehicleDisplay/TopBarDelegate.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml</file>
         <file>Views/Menu/MenuView.qml</file>
         <file>Views/Menu/TopMenu.qml</file>

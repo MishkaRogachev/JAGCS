@@ -18,6 +18,9 @@ Item {
     property string speedSuffix: units.trSpeedUnits(speedUnits)
     property string altitudeSuffix: units.trDistanceUnits(altitudeUnits)
 
+    property alias dashboardVisible: loader.visible
+    property alias display: loader.item
+
     function selectVehicle(vehicleId) {
         presenter.selectVehicle(vehicleId);
     }
@@ -26,8 +29,10 @@ Item {
         if (selectedVehicle !== undefined) {
             loader.setSource("SingleVehicleDisplay/SingleVehicleDisplay.qml",
                              { "vehicleId": selectedVehicle.id })
+            topbar.delegate = "SingleVehicleDisplay/TopBarDelegate.qml"
         } else {
             loader.setSource("MultiVehicleDisplay/MultiVehicleDisplay.qml")
+            topbar.delegate = "MultiVehicleDisplay/TopBarDelegate.qml"
         }
     }
 

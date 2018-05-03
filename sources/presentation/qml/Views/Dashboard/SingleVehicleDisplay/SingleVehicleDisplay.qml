@@ -9,7 +9,8 @@ import "../Vehicles"
 Item {
     id: vehicleDisplay
 
-    property int vehicleId: 0
+    readonly property int vehicleId: 0
+    property bool instrumentsUnlocked: false
 
     property AerialVehicle vehicle: AerialVehicle {}
 
@@ -115,7 +116,7 @@ Item {
                 id: itemMenuButton
                 anchors.top: parent.top
                 anchors.right: parent.right
-                enabled: topbar.instrumentsUnlocked
+                enabled: instrumentsUnlocked
                 iconSource: "qrc:/ui/dots.svg"
                 flat: true
                 width: sizings.controlBaseSize * 0.5
@@ -144,7 +145,7 @@ Item {
 
         footer: Item {
             width: parent.width
-            visible: topbar.instrumentsUnlocked && instruments.visibleItems < instruments.count
+            visible: instrumentsUnlocked && instruments.visibleItems < instruments.count
             height: visible ? sizings.controlBaseSize + list.spacing : 0
             z: 10
 
