@@ -27,7 +27,7 @@ T.Control {
     }
 
     function updateControlsFromValue() {
-        if (isValid) {
+        if (!isNaN(value)) {
             var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
             sign = dms.sign;
             dInput.text = Helper.pad(dms.deg, dInput.maximumLength);
