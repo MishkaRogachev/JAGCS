@@ -24,7 +24,7 @@ BaseInstrument {
         value: vehicle.powerSystem.throttle
     }
 
-    Indicators.LadderPicker {
+    Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -40,8 +40,12 @@ BaseInstrument {
         enabled: vehicle.pitot.present ? vehicle.pitot.enabled : vehicle.satellite.enabled
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
-        inputEnabled: manual.enabled
-        onAddValue: manual.addImpact(ManualController.Throttle, value)
+
+        Indicators.LadderButtons {
+            anchors.fill: parent
+            inputEnabled: manual.enabled
+            onAddValue: manual.addImpact(ManualController.Throttle, value)
+        }
     }
 
     Indicators.ValueLabel {

@@ -55,11 +55,10 @@
         <file>Indicators/DesiredAnglesMark.qml</file>
         <file>Indicators/TurnIndicator.qml</file>
         <file>Indicators/Ladder.qml</file>
+        <file>Indicators/LadderButtons.qml</file>
         <file>Indicators/LadderPicker.qml</file>
         <file>Indicators/PitchScale.qml</file>
-        <file>Indicators/PitchScalePicker.qml</file>
         <file>Indicators/RollScale.qml</file>
-        <file>Indicators/RollScalePicker.qml</file>
         <file>Indicators/AttitudeIndicator.qml</file>
         <file>Indicators/ArtificialHorizon.qml</file>
         <file>Indicators/AttitudeDirectorIndicator.qml</file>
