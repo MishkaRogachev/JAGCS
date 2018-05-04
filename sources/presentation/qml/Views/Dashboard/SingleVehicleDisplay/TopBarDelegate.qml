@@ -1,25 +1,65 @@
 import QtQuick 2.6
+import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/Controls" as Controls    
-import "../"
+import "qrc:/Controls" as Controls
 
-TopBarDelegateBase {
+import "../"
+import "../DashboardControls" as DashboardControls
+
+RowLayout {
     id: topbarDelegate
 
-    Controls.Button {
-        id: lockButton
-        visible: dashboard.selectedVehicle !== undefined
-        iconSource: dashboard.display.instrumentsUnlocked ? "qrc:/icons/lock.svg" :
-                                                            "qrc:/icons/unlock.svg"
-        tipText: (dashboard.display.instrumentsUnlocked ?
-                      qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("indicators")
-        flat: true
-        onClicked: dashboard.display.instrumentsUnlocked = !dashboard.display.instrumentsUnlocked
+    spacing: sizings.spacing
+
+    Connections {
+        target: display
+        ignoreUnknownSignals: true
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.SetMode:
+                modeBox.status = status;
+                break;
+            case Command.ArmDisarm:
+                armDisarm.status = status;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     Controls.Button {
-        visible: dashboard.selectedVehicle !== undefined
+        iconSource: "qrc:/icons/left.svg"
+        tipText: qsTr("Overview")
+        flat: true
+        onClicked: dashboard.selectVehicle(0)
+    }
+
+    Controls.Label {
+        text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("No vehicle")
+        font.bold: true
+    }
+
+    DashboardControls.ModeBox {
+        id: modeBox
+        enabled: vehicle.online
+        mode: vehicle.mode
+        model: vehicle.availableModes
+        Layout.preferredWidth: sizings.controlBaseSize * 3
+    }
+
+    DashboardControls.DelayCommandButton {
+        id: armDisarm
+        flat: true
+        enabled: vehicle.online
+        text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
+        args: [ !vehicle.armed ]
+        command: Command.ArmDisarm
+        Layout.preferredWidth: sizings.controlBaseSize * 2
+    }
+
+    Controls.Button {
         iconSource: "qrc:/icons/joystick.svg"
         tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
                 " " + qsTr("manual control")
@@ -28,17 +68,20 @@ TopBarDelegateBase {
         onClicked: manual.setEnabled(!manual.enabled)
     }
 
-    Controls.Label {
-        text: dashboard.selectedVehicle !== undefined ?
-                dashboard.selectedVehicle.name : qsTr("All MAVs")
-        font.bold: true
+    Controls.Button {
+        id: lockButton
+        iconSource: instrumentsUnlocked ? "qrc:/icons/lock.svg" : "qrc:/icons/unlock.svg"
+        tipText: (instrumentsUnlocked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("indicators")
+        flat: true
+        onClicked: instrumentsUnlocked = !instrumentsUnlocked
     }
 
     Controls.Button {
-        iconSource: "qrc:/icons/left.svg"
-        tipText: qsTr("Overview")
-        enabled: dashboard.selectedVehicle !== undefined
+        iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" :
+                                       "qrc:/icons/show_dashboard.svg"
+        tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) +
+                 " " + qsTr("dashboard")
         flat: true
-        onClicked: dashboard.selectVehicle(0)
+        onClicked: dashboardVisible = !dashboardVisible
     }
 }

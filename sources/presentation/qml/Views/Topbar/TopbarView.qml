@@ -10,7 +10,7 @@ import "Connection"
 Item {
     id: topbar
 
-    property alias delegate: delegateLoader.source
+    property alias delegate: delegateLoader
 
     height: sizings.controlBaseSize
 
@@ -58,6 +58,7 @@ Item {
 
     RowLayout {
         anchors.right: parent.right
+        anchors.rightMargin: dashboard.width
         height: parent.height
         spacing: sizings.spacing
 

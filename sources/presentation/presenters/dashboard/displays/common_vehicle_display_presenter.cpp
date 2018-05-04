@@ -190,8 +190,6 @@ void CommonVehicleDisplayPresenter::updateSystem(const domain::Telemetry::Teleme
     for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
          QList<domain::vehicle::Mode> >())
     {
-        if (item == domain::vehicle::Mode::Return) continue; // special button for return
-
         modes.append(QVariant::fromValue(item));
     }
     this->setVehicleProperty(PROPERTY(availableModes), modes);

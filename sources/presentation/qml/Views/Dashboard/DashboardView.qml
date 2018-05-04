@@ -18,9 +18,6 @@ Item {
     property string speedSuffix: units.trSpeedUnits(speedUnits)
     property string altitudeSuffix: units.trDistanceUnits(altitudeUnits)
 
-    property alias dashboardVisible: loader.visible
-    property alias display: loader.item
-
     function selectVehicle(vehicleId) {
         presenter.selectVehicle(vehicleId);
     }
@@ -28,16 +25,17 @@ Item {
     function updateDisplay() {
         if (selectedVehicle !== undefined) {
             loader.setSource("SingleVehicleDisplay/SingleVehicleDisplay.qml",
-                             { "vehicleId": selectedVehicle.id })
-            topbar.delegate = "SingleVehicleDisplay/TopBarDelegate.qml"
+                             { "vehicleId": selectedVehicle.id });
         } else {
-            loader.setSource("MultiVehicleDisplay/MultiVehicleDisplay.qml")
-            topbar.delegate = "MultiVehicleDisplay/TopBarDelegate.qml"
+            loader.setSource("MultiVehicleDisplay/MultiVehicleDisplay.qml");
         }
     }
 
     Component.onCompleted: updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
+
+    implicitWidth: loader.implicitWidth
+    implicitHeight: loader.implicitHeight
 
     DashboardPresenter {
         id: presenter
@@ -46,7 +44,7 @@ Item {
 
     Loader {
         id: loader
-        anchors.fill: parent
+        height: parent.height
         clip: true
     }
 }

@@ -8,18 +8,32 @@ Item {
     id: listDisplay
 
     property var vehicles
+    property bool showOffline: true
+
+    property alias dashboardVisible: list.visible
+
+    onShowOfflineChanged: vehicles.showOffline = showOffline
+
+    implicitWidth: list.width + sizings.margins
 
     VehiclesListDisplayPresenter {
         id: presenter
         view: listDisplay
     }
 
+    TopBarDelegate {
+        id: topBarDelegate
+        width: parent.width
+    }
+
     ListView {
         id: list
-        anchors.top: parent.top
+        anchors.top: topBarDelegate.bottom
+        anchors.topMargin: sizings.spacing
         anchors.right: parent.right
+        anchors.rightMargin: sizings.margins
         width: sizings.controlBaseSize * 9
-        height: Math.min(parent.height, contentHeight)
+        height: Math.min(parent.height - topBarDelegate.height - sizings.spacing, contentHeight)
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
@@ -30,26 +44,6 @@ Item {
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height
         }
-
-//        header: Item {
-//            width: parent.width
-//            height: pane.height + list.spacing
-//            z: 10
-
-//            Controls.Pane {
-//                id: pane
-//                width: parent.width
-//                height: sizings.controlBaseSize + padding * 2
-
-//                Controls.CheckBox {
-//                    anchors.centerIn: parent
-//                    width: parent.width - padding * 2
-//                    text: qsTr("Show offline")
-//                    checked: vehicles.showOffline
-//                    onClicked: vehicles.setShowOffline(!vehicles.showOffline)
-//                }
-//            }
-//        }
 
         delegate: Loader {
             property int displayType: vehicleType

@@ -9,10 +9,12 @@ import "../Vehicles"
 Item {
     id: display
 
-    readonly property int vehicleId: 0
+    property int vehicleId: 0
     property bool instrumentsUnlocked: false
 
     property AerialVehicle vehicle: AerialVehicle {}
+
+    property alias dashboardVisible: list.visible
 
     signal updateCommandStatus(var command, var status)
 
@@ -28,10 +30,17 @@ Item {
     }
     Component.onDestruction: manual.setVehicleId(0)
 
+    implicitWidth: Math.max(topBarDelegate.width, list.width + sizings.margins)
+
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
         Component.onCompleted: setVehicle(vehicleId)
+    }
+
+    TopBarDelegate {
+        id: topBarDelegate
+        anchors.right: parent.right
     }
 
     ListModel {
@@ -91,10 +100,12 @@ Item {
 
     ListView {
         id: list
-        anchors.top: parent.top
+        anchors.top: topBarDelegate.bottom
+        anchors.topMargin: sizings.spacing
         anchors.right: parent.right
+        anchors.rightMargin: sizings.margins
         width: sizings.controlBaseSize * 8
-        height: Math.min(contentHeight, display.height)
+        height: Math.min(parent.height - topBarDelegate.height - sizings.spacing, contentHeight)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
         spacing: sizings.spacing
