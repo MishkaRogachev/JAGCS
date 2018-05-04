@@ -15,7 +15,7 @@ RowLayout {
     spacing: sizings.spacing
 
     Connections {
-        target: vehicleDisplay
+        target: display
         onUpdateCommandStatus: if (command == radiusBox.command) radiusBox.status = status;
     }
 

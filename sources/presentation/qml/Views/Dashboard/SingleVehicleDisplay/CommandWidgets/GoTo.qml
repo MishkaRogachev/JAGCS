@@ -26,7 +26,7 @@ RowLayout {
     }
 
     Connections {
-        target: vehicleDisplay
+        target: display
         onUpdateCommandStatus: {
             switch (command) {
             case Command.GoTo:

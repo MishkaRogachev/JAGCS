@@ -11,7 +11,7 @@ RowLayout {
     spacing: sizings.spacing
 
     Connections {
-        target: vehicleDisplay
+        target: display
         onUpdateCommandStatus: {
             switch (command) {
             case Command.Land:

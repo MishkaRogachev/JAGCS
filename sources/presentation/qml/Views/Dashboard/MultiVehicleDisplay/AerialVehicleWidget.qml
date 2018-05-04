@@ -9,7 +9,7 @@ import "../DashboardControls" as DashboardControls
 import "../Vehicles"
 
 Controls.Card {
-    id: vehicleDisplay
+    id: display
 
     property int vehicleId: 0
 
@@ -17,7 +17,7 @@ Controls.Card {
 
     AerialVehicleDisplayPresenter {
         id: presenter
-        view: vehicleDisplay
+        view: display
         Component.onCompleted: setVehicle(vehicleId)
     }
 

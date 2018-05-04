@@ -9,7 +9,7 @@ RowLayout {
     id: root
 
     Connections {
-        target: vehicleDisplay
+        target: display
         onUpdateCommandStatus: commandBox.updateCommandStatus(command, status)
     }
 

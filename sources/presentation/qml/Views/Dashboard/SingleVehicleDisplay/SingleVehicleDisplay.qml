@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 import "../Vehicles"
 
 Item {
-    id: vehicleDisplay
+    id: display
 
     readonly property int vehicleId: 0
     property bool instrumentsUnlocked: false
@@ -30,7 +30,7 @@ Item {
 
     AerialVehicleDisplayPresenter {
         id: presenter
-        view: vehicleDisplay
+        view: display
         Component.onCompleted: setVehicle(vehicleId)
     }
 
@@ -94,7 +94,7 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         width: sizings.controlBaseSize * 8
-        height: Math.min(contentHeight, vehicleDisplay.height)
+        height: Math.min(contentHeight, display.height)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
         spacing: sizings.spacing

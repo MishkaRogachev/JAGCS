@@ -18,7 +18,7 @@ GridLayout {
     columns: 3
 
     Connections {
-        target: vehicleDisplay
+        target: display
         onUpdateCommandStatus: if (command == root.command) sendButton.status = status;
     }
 
