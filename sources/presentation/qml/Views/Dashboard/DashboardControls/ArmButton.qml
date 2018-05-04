@@ -9,15 +9,16 @@ Controls.Button {
     property alias status: armDisarm.status
 
     flat: true
-    enabled: !popup.visible && vehicle.online
+    enabled: vehicle.online
     iconSource: vehicle.armed ? "qrc:/icons/armed.svg" : "qrc:/icons/disarmed.svg"
-    iconColor: vehicle.armed ? customPalette.cautionColor : customPalette.textColor
+    iconColor: vehicle.armed ? customPalette.selectionColor : customPalette.textColor
     tipText: vehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")
-    onClicked: popup.open()
+    onClicked: popup.visible ? popup.close() : popup.open()
 
     Controls.Popup {
         id: popup
         y: control.height
+        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
         DelayCommandButton {
             id: armDisarm
