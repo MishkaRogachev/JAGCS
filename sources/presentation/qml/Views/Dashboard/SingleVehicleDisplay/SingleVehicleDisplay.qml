@@ -111,6 +111,7 @@ Item {
         spacing: sizings.spacing
         footerPositioning: ListView.OverlayFooter
         model: instruments
+        clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height

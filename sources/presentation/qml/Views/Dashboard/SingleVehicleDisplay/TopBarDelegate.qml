@@ -49,15 +49,7 @@ RowLayout {
         Layout.preferredWidth: sizings.controlBaseSize * 3
     }
 
-    DashboardControls.DelayCommandButton {
-        id: armDisarm
-        flat: true
-        enabled: vehicle.online
-        text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
-        args: [ !vehicle.armed ]
-        command: Command.ArmDisarm
-        Layout.preferredWidth: sizings.controlBaseSize * 2
-    }
+    DashboardControls.ArmButton { id: armDisarm }
 
     Controls.Button {
         iconSource: "qrc:/icons/joystick.svg"

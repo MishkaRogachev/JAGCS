@@ -40,6 +40,7 @@ Item {
         snapMode: ListView.SnapToItem
         headerPositioning: ListView.OverlayHeader
         model: vehicles
+        clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
             visible: parent.contentHeight > parent.height

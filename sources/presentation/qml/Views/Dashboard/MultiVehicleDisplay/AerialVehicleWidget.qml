@@ -15,6 +15,23 @@ Controls.Card {
 
     property AerialVehicle vehicle: AerialVehicle {}
 
+    Connections {
+        target: display
+        ignoreUnknownSignals: true
+        onUpdateCommandStatus: {
+            switch (command) {
+//            case Command.SetMode:
+//                modeBox.status = status;
+//                break;
+            case Command.ArmDisarm:
+                armDisarm.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
@@ -83,6 +100,8 @@ Controls.Card {
                 font.bold: true
                 Layout.maximumWidth: sizings.controlBaseSize * 3
             }
+
+            DashboardControls.ArmButton { id: armDisarm }
 
             DashboardControls.Label {
                 text: translator.translateVehicleMode(vehicle.mode)

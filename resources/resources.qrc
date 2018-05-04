@@ -56,6 +56,8 @@
         <file>icons/hide_dashboard.svg</file>
         <file>icons/maximize.svg</file>
         <file>icons/minimize.svg</file>
+        <file>icons/armed.svg</file>
+        <file>icons/disarmed.svg</file>
         <file>icons/lock.svg</file>
         <file>icons/unlock.svg</file>
         <file>icons/map.svg</file>
