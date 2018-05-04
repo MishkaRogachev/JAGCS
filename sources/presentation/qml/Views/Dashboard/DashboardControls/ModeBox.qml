@@ -7,10 +7,11 @@ import "qrc:/Controls" as Controls
 Controls.ComboBox {
     id: control
 
-    property var mode: Command.UnknownCommand
+    property var mode: vehicle.mode
     property int status: Command.Idle
 
-    model: []
+    enabled: vehicle.online
+    model: vehicle.availableModes
     tipText: qsTr("Select mode")
     font.pixelSize: sizings.fontPixelSize * 0.75
     font.bold: true

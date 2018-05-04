@@ -43,9 +43,6 @@ RowLayout {
 
     DashboardControls.ModeBox {
         id: modeBox
-        enabled: vehicle.online
-        mode: vehicle.mode
-        model: vehicle.availableModes
         Layout.preferredWidth: sizings.controlBaseSize * 3
     }
 

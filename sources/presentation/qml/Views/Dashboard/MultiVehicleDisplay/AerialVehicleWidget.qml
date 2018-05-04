@@ -20,11 +20,8 @@ Controls.Card {
         ignoreUnknownSignals: true
         onUpdateCommandStatus: {
             switch (command) {
-//            case Command.SetMode:
-//                modeBox.status = status;
-//                break;
-            case Command.ArmDisarm:
-                armDisarm.status = status;
+            case Command.SetMode:
+                modeBox.status = status;
                 break;
             default:
                 break;
@@ -98,15 +95,12 @@ Controls.Card {
             Controls.Label {
                 text: vehicle.vehicleName
                 font.bold: true
-                Layout.maximumWidth: sizings.controlBaseSize * 3
+                Layout.fillWidth: true
             }
 
-            DashboardControls.ArmButton { id: armDisarm }
-
-            DashboardControls.Label {
-                text: translator.translateVehicleMode(vehicle.mode)
-                horizontalAlignment: Text.AlignRight
-                Layout.fillWidth: true
+            DashboardControls.ModeBox {
+                id: modeBox
+                Layout.preferredWidth: sizings.controlBaseSize * 3
             }
         }
 
