@@ -14,6 +14,22 @@ BaseInstrument {
     property int minAltitude: -dashboard.altitudeStep * scalingFactor
     property int maxAltitude: dashboard.altitudeStep * scalingFactor
 
+    Connections {
+        target: display
+        onUpdateCommandStatus: {
+            switch (command) {
+            case spdPicker.command:
+                spdPicker.status = status;
+                break;
+            case altPicker.command:
+                altPicker.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     implicitHeight: width * 0.75
 
     Indicators.AttitudeDirectorIndicator {
@@ -74,7 +90,10 @@ BaseInstrument {
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
 
         Indicators.LadderPicker {
+            id: spdPicker
             anchors.fill: parent
+            command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
+            args: [ units.convertSpeedFrom(speedUnits, inputValue) ]
         }
 
         Indicators.LadderButtons {
@@ -104,7 +123,11 @@ BaseInstrument {
         prefix: qsTr("ALT") + ", " + altitudeSuffix
 
         Indicators.LadderPicker {
+            id: altPicker
             anchors.fill: parent
+            command: Command.SetAltitude
+            args: [ vehicle.barometric.fromDisplayedAltitude(
+                    units.convertDistanceFrom(altitudeUnits, inputValue)) ]
         }
     }
 

@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import JAGCS 1.0
 
 import "../Controls" as Controls
 
@@ -8,17 +9,27 @@ Item {
     property bool mirrored: parent.mirrored
     property color color: customPalette.activeMissionColor
     property real inputValue: 0
-    readonly property real offset: Math.min(Math.max(area.mouseY - area.oldY, -height / 2), height / 2)
+    property int command: Command.UnknownCommand
+    property int status: Command.Idle
+    property var args: [ inputValue ]
+    readonly property real offset: Math.min(Math.max(area.mouseY - area.oldY, -height / 2),
+                                            height / 2)
 
-    onOffsetChanged: inputValue = -root.parent.mapFromRange(offset + height / 2)
+    onOffsetChanged: inputValue = root.parent.mapFromRange(height / 2 - offset)
 
     MouseArea {
         id: area
         property real oldY: 0
         anchors.fill: parent
         preventStealing: true
-        onPressed: oldY = mouseY
-        onReleased: oldY = 0
+        onPressed: {
+            if (status == Command.Sending) presenter.rejectCommand(command);
+            oldY = mouseY;
+        }
+        onReleased: {
+            if (inputValue !== root.parent.value) presenter.executeCommand(command, args);
+            oldY = 0;
+        }
     }
 
     Item {
