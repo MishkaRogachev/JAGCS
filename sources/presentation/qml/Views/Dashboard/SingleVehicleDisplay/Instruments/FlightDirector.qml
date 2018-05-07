@@ -16,12 +16,44 @@ BaseInstrument {
 
     implicitHeight: width * 0.75
 
+    Indicators.AttitudeDirectorIndicator {
+        id: fd
+        anchors.left: speedLadder.right
+        anchors.right: altitudeLadder.left
+        anchors.verticalCenter: parent.verticalCenter
+        height: parent.height
+        enabled: vehicle.online && vehicle.ahrs.enabled
+        operational: vehicle.ahrs.operational
+        armed: vehicle.armed
+        pitch: vehicle.ahrs.pitch
+        roll: vehicle.ahrs.roll
+        yawspeed: vehicle.ahrs.yawspeed
+        desiredVisible: vehicle.stab
+        desiredPitch: vehicle.flightControl.desiredPitch
+        desiredRoll: vehicle.flightControl.desiredRoll
+        rollInverted: dashboard.rollInverted
+        inputEnabled: manual.enabled
+        onAddPitch: manual.addImpact(ManualController.Pitch, value)
+        onAddRoll: manual.addImpact(ManualController.Roll, value)
+    }
+
     Indicators.BarIndicator {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: speedLadder.right
         width: speedLadder.majorTickSize + 1
         height: fd.sideHeight
         value: vehicle.powerSystem.throttle
+    }
+
+    Indicators.BarIndicator {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: altitudeLadder.left
+        width: altitudeLadder.majorTickSize + 1
+        height: fd.sideHeight
+        value: vehicle.barometric.climb
+        fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
+        minValue: -10
+        maxValue: 10
     }
 
     Indicators.Ladder {
@@ -41,10 +73,38 @@ BaseInstrument {
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
 
+        Indicators.LadderPicker {
+            anchors.fill: parent
+        }
+
         Indicators.LadderButtons {
             anchors.fill: parent
             inputEnabled: manual.enabled
             onAddValue: manual.addImpact(ManualController.Throttle, value)
+        }
+    }
+
+    Indicators.Ladder {
+        id: altitudeLadder
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        height: fd.sideHeight
+        value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
+        errorVisible: vehicle.guided
+        error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
+        minValue: value + minAltitude
+        maxValue: value + maxAltitude
+        warningValue: altitudeRelative ?
+                          0 : units.convertDistanceTo(altitudeUnits, vehicle.homeAltitude)
+        warningColor: customPalette.groundColor
+        valueStep: dashboard.altitudeStep
+        enabled: vehicle.barometric.enabled
+        operational: vehicle.barometric.operational
+        mirrored: true
+        prefix: qsTr("ALT") + ", " + altitudeSuffix
+
+        Indicators.LadderPicker {
+            anchors.fill: parent
         }
     }
 
@@ -70,58 +130,6 @@ BaseInstrument {
         width: speedLadder.width
         prefix: qsTr("TAS") + ", " + speedSuffix
         visible: vehicle.pitot.present
-    }
-
-    Indicators.AttitudeDirectorIndicator {
-        id: fd
-        anchors.left: speedLadder.right
-        anchors.right: altitudeLadder.left
-        anchors.verticalCenter: parent.verticalCenter
-        height: parent.height
-        enabled: vehicle.online && vehicle.ahrs.enabled
-        operational: vehicle.ahrs.operational
-        armed: vehicle.armed
-        pitch: vehicle.ahrs.pitch
-        roll: vehicle.ahrs.roll
-        yawspeed: vehicle.ahrs.yawspeed
-        desiredVisible: vehicle.stab
-        desiredPitch: vehicle.flightControl.desiredPitch
-        desiredRoll: vehicle.flightControl.desiredRoll
-        rollInverted: dashboard.rollInverted
-        inputEnabled: manual.enabled
-        onAddPitch: manual.addImpact(ManualController.Pitch, value)
-        onAddRoll: manual.addImpact(ManualController.Roll, value)
-    }
-
-    Indicators.BarIndicator {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: altitudeLadder.left
-        width: altitudeLadder.majorTickSize + 1
-        height: fd.sideHeight
-        value: vehicle.barometric.climb
-        fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
-        minValue: -10
-        maxValue: 10
-    }
-
-    Indicators.Ladder {
-        id: altitudeLadder
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        height: fd.sideHeight
-        value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
-        errorVisible: vehicle.guided
-        error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
-        minValue: value + minAltitude
-        maxValue: value + maxAltitude
-        warningValue: altitudeRelative ?
-                          0 : units.convertDistanceTo(altitudeUnits, vehicle.homeAltitude)
-        warningColor: customPalette.groundColor
-        valueStep: dashboard.altitudeStep
-        enabled: vehicle.barometric.enabled
-        operational: vehicle.barometric.operational
-        mirrored: true
-        prefix: qsTr("ALT") + ", " + altitudeSuffix
     }
 
     Indicators.ValueLabel {

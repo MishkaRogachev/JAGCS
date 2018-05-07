@@ -5,7 +5,7 @@ import "../Controls" as Controls
 Item {
     id: root
 
-    property bool mirrored: false
+    property bool mirrored: parent.mirrored
     property bool inputEnabled: false
 
     signal addValue(real value)

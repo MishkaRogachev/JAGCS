@@ -26,7 +26,14 @@ Item {
     property color color: operational ? customPalette.textColor : customPalette.dangerColor
     property alias warningColor: hatch.color
 
-    clip: true
+    function mapToRange(val) {
+        return Helper.mapToRange(val, minValue, maxValue, height);
+    }
+
+    function mapFromRange(pos) {
+        return Helper.mapFromRange(pos, minValue, maxValue, height);
+    }
+
     implicitWidth: label.implicitWidth + majorTickSize * 2
     onWidthChanged: ladderCanvas.requestPaint()
     onHeightChanged: ladderCanvas.requestPaint()
@@ -53,7 +60,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: mirrored ? 0 : 10
             anchors.bottom: parent.bottom
-            height: Helper.mapToRange(warningValue, minValue, maxValue, parent.height)
+            height: mapToRange(warningValue)
             xFactor: yFactor * height / width
             yFactor: 35
             z: -1
@@ -85,18 +92,13 @@ Item {
             ctx.lineTo(0, height);
             ctx.stroke();
 
-//            if (isNaN(value)) {
-//                ctx.restore();
-//                return;
-//            }
-
             // Ticks
             var counter = 0;
             for (var i = minValue - (minValue % valueStep); i <= maxValue;
                  i += (valueStep / 2)) {
 
                 var major = (counter++ % 2) == 0;
-                var pos = height - Helper.mapToRange(i, minValue, maxValue, height)
+                var pos = height - mapToRange(i)
                 var tick = major ? majorTickSize : minorTickSize;
 
                 ctx.lineWidth = major ? 2 : 1;
@@ -127,7 +129,7 @@ Item {
             ctx.save();
             ctx.translate(mirrored ? ctx.lineWidth : width - ctx.lineWidth, 0);
 
-            var errorPos = height - Helper.mapToRange(value + error, minValue, maxValue, height);
+            var errorPos = height - mapToRange(value + error);
 
             ctx.beginPath();
             if (errorPos > height) {
