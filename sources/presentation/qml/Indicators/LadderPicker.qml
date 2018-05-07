@@ -32,6 +32,17 @@ Item {
         }
     }
 
+    Timer {
+        id: timer
+        repeat: true
+        running: Math.abs(offset) == height / 2
+        onRunningChanged: interval = 500
+        onTriggered: {
+            offset > 0 ? inputValue-- : inputValue++;
+            if (interval > 10) interval = interval / 2;
+        }
+    }
+
     Item {
         id: pickerItem
         anchors.left: mirrored ? undefined : parent.right
