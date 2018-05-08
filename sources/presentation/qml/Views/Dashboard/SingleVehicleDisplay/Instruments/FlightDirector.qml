@@ -3,6 +3,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
+import "qrc:/Indicators/Ladders" as Ladders
 
 BaseInstrument {
     id: root
@@ -72,7 +73,7 @@ BaseInstrument {
         maxValue: 10
     }
 
-    Indicators.Ladder {
+    Ladders.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -80,8 +81,6 @@ BaseInstrument {
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
                                       vehicle.pitot.indicatedAirspeed :
                                       vehicle.satellite.groundspeed)
-        errorVisible: vehicle.guided && vehicle.pitot.present
-        error: units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -89,28 +88,33 @@ BaseInstrument {
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
 
-        Indicators.LadderPicker {
+        Ladders.LadderMark {
+            anchors.fill: parent
+            visible: vehicle.guided && vehicle.pitot.present
+            color: spdPicker.color
+            value: parent.value + units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
+        }
+
+        Ladders.LadderPicker {
             id: spdPicker
             anchors.fill: parent
             command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
             args: [ units.convertSpeedFrom(speedUnits, inputValue) ]
         }
 
-        Indicators.LadderButtons {
+        Ladders.LadderButtons {
             anchors.fill: parent
             inputEnabled: manual.enabled
             onAddValue: manual.addImpact(ManualController.Throttle, value)
         }
     }
 
-    Indicators.Ladder {
+    Ladders.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         height: fd.sideHeight
         value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
-        errorVisible: vehicle.guided
-        error: units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
         minValue: value + minAltitude
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ?
@@ -122,7 +126,15 @@ BaseInstrument {
         mirrored: true
         prefix: qsTr("ALT") + ", " + altitudeSuffix
 
-        Indicators.LadderPicker {
+        Ladders.LadderMark {
+            anchors.fill: parent
+            visible: vehicle.guided
+            color: altPicker.color
+            value: parent.value +
+                   units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
+        }
+
+        Ladders.LadderPicker {
             id: altPicker
             anchors.fill: parent
             command: Command.SetAltitude

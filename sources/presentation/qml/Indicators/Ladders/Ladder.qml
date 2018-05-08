@@ -1,7 +1,8 @@
 import QtQuick 2.6
 import "qrc:/JS/helper.js" as Helper
 
-import "../Shaders" as Shaders
+import "qrc:/Shaders" as Shaders
+import ".."
 
 Item {
     id: root

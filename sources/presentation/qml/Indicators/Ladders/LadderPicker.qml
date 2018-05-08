@@ -1,21 +1,42 @@
 import QtQuick 2.6
 import JAGCS 1.0
 
-import "../Controls" as Controls
+import "qrc:/Controls" as Controls
+import ".."
 
 Item {
     id: root
 
     property bool mirrored: parent.mirrored
-    property color color: customPalette.activeMissionColor
     property real inputValue: 0
     property int command: Command.UnknownCommand
     property int status: Command.Idle
     property var args: [ inputValue ]
     readonly property real offset: Math.min(Math.max(area.mouseY - area.oldY, -height / 2),
                                             height / 2)
+    property color color: {
+        if (status == Command.Rejected) return customPalette.dangerColor;
+        if (status == Command.Sending) return customPalette.cautionColor;
+        if (status == Command.Completed) return customPalette.positiveColor;
+        return customPalette.activeMissionColor;
+    }
 
+    onColorChanged: arrowCanvas.requestPaint()
     onOffsetChanged: inputValue = root.parent.mapFromRange(height / 2 - offset)
+
+    onStatusChanged: {
+        if (status == Command.Completed ||
+            status == Command.Rejected) timer.start()
+    }
+    onCommandChanged: {
+        if (timer.running) timer.stop();
+        status = Command.Idle;
+    }
+
+    Timer {
+        id: timer
+        onTriggered: status = Command.Idle
+    }
 
     MouseArea {
         id: area
@@ -34,7 +55,6 @@ Item {
     }
 
     Timer {
-        id: timer
         repeat: true
         running: Math.abs(offset) == height / 2
         onRunningChanged: interval = 500
