@@ -24,6 +24,7 @@ Item {
         preventStealing: true
         onPressed: {
             if (status == Command.Sending) presenter.rejectCommand(command);
+            inputValue = root.parent.value;
             oldY = mouseY;
         }
         onReleased: {
@@ -49,7 +50,7 @@ Item {
         anchors.right: mirrored ? parent.left : undefined
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: offset
-        width: parent.width
+        width: arrowCanvas.width + label.width + sizings.padding
         height: label.height
         visible: area.pressed
 
@@ -83,7 +84,9 @@ Item {
 
         ValueLabel {
             id: label
-            width: parent.width
+            anchors.right: mirrored ? undefined : parent.right
+            anchors.left: mirrored ? parent.left : undefined
+            anchors.margins: sizings.padding / 2
             value: inputValue
             color: customPalette.selectedTextColor
         }
