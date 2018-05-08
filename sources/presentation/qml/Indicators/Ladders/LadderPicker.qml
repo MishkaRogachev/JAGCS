@@ -74,6 +74,11 @@ Item {
         height: label.height
         visible: area.pressed
 
+        Controls.Shadow {
+            anchors.fill: rect
+            source: parent
+        }
+
         Canvas {
             id: arrowCanvas
             width: root.parent.majorTickSize
@@ -96,6 +101,7 @@ Item {
         }
 
         Rectangle {
+            id: rect
             anchors.fill: parent
             anchors.rightMargin: mirrored ? arrowCanvas.width : 0
             anchors.leftMargin: mirrored ? 0 : arrowCanvas.width - 1

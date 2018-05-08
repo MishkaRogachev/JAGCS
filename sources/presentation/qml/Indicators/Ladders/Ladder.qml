@@ -176,7 +176,7 @@ Item {
             ctx.strokeStyle = color;
             ctx.beginPath();
             ctx.moveTo(mirrored ? width : 0, 0);
-            ctx.lineTo(mirrored ? 0 : width, height / 2);
+            ctx.lineTo(mirrored ? 1 : width - 1, height / 2);
             ctx.lineTo(mirrored ? width : 0, height);
             ctx.stroke();
         }

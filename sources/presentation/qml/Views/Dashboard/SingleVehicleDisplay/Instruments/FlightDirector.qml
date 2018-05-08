@@ -35,8 +35,8 @@ BaseInstrument {
 
     Indicators.AttitudeDirectorIndicator {
         id: fd
-        anchors.left: speedLadder.right
-        anchors.right: altitudeLadder.left
+        anchors.left: throttleBar.right
+        anchors.right: climbBar.left
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
         enabled: vehicle.online && vehicle.ahrs.enabled
@@ -55,17 +55,19 @@ BaseInstrument {
     }
 
     Indicators.BarIndicator {
+        id: throttleBar
         anchors.verticalCenter: parent.verticalCenter
-        anchors.right: speedLadder.right
-        width: speedLadder.majorTickSize + 1
+        anchors.left: speedLadder.right
+        width: speedLadder.minorTickSize
         height: fd.sideHeight
         value: vehicle.powerSystem.throttle
     }
 
     Indicators.BarIndicator {
+        id: climbBar
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: altitudeLadder.left
-        width: altitudeLadder.majorTickSize + 1
+        anchors.right: altitudeLadder.left
+        width: altitudeLadder.minorTickSize
         height: fd.sideHeight
         value: vehicle.barometric.climb
         fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
