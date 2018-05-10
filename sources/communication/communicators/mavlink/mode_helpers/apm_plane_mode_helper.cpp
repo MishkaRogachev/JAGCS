@@ -48,6 +48,22 @@ namespace
         { GUIDED,       domain::vehicle::Mode::NavTo },
         { INITIALIZING, domain::vehicle::Mode::Init }
     };
+
+    const QList<domain::vehicle::Mode> availableModes
+    {
+        //        domain::vehicle::Mode::Manual,
+        //        domain::vehicle::Mode::Stabilize,
+        //        domain::vehicle::Mode::Acro,
+        //        domain::vehicle::Mode::Autotune,
+        //        domain::vehicle::Mode::Cruise,
+        domain::vehicle::Mode::Return,
+        domain::vehicle::Mode::Mission,
+        domain::vehicle::Mode::Circle,
+        domain::vehicle::Mode::Loiter,
+        domain::vehicle::Mode::NavTo,
+        domain::vehicle::Mode::Fbwa,
+        domain::vehicle::Mode::Fbwb
+    };
 }
 
 using namespace comm;
@@ -68,18 +84,5 @@ domain::vehicle::Mode ApmPlaneModeHelper::customModeToMode(quint32 mode)
 
 QList<domain::vehicle::Mode> ApmPlaneModeHelper::availableModes() const
 {
-    return {
-//        domain::vehicle::Mode::Manual,
-//        domain::vehicle::Mode::Stabilize,
-//        domain::vehicle::Mode::Acro,
-//        domain::vehicle::Mode::Autotune,
-//       domain::vehicle::Mode::Cruise,
-        domain::vehicle::Mode::Circle,
-        domain::vehicle::Mode::Loiter,
-        domain::vehicle::Mode::Fbwa,
-        domain::vehicle::Mode::Fbwb,
-        domain::vehicle::Mode::Mission,
-        domain::vehicle::Mode::NavTo,
-        domain::vehicle::Mode::Return
-    };
+    return ::availableModes;
 }

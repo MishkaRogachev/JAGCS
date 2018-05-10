@@ -50,6 +50,15 @@ namespace
         { THROW,        domain::vehicle::Mode::Throw },
         { AVOID_ADSB,   domain::vehicle::Mode::Avoid }
     };
+
+    const QList<domain::vehicle::Mode> availableModes
+    {
+        domain::vehicle::Mode::Return,
+        domain::vehicle::Mode::Mission,
+        domain::vehicle::Mode::Loiter,
+        domain::vehicle::Mode::AltHold,
+        domain::vehicle::Mode::Stabilize
+    };
 }
 
 using namespace comm;
@@ -70,11 +79,5 @@ domain::vehicle::Mode ApmCopterModeHelper::customModeToMode(quint32 mode)
 
 QList<domain::vehicle::Mode> ApmCopterModeHelper::availableModes() const
 {
-    return {
-        domain::vehicle::Mode::Stabilize,
-        domain::vehicle::Mode::AltHold,
-        domain::vehicle::Mode::Loiter,
-        domain::vehicle::Mode::Return,
-        domain::vehicle::Mode::Mission
-    };
+     return ::availableModes;
 }
