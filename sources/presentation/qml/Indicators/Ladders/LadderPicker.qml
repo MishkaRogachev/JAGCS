@@ -8,12 +8,13 @@ Item {
     id: root
 
     property bool mirrored: parent.mirrored
+    property bool overboardEnabled: false
     property real inputValue: 0
     property int command: Command.UnknownCommand
     property int status: Command.Idle
     property var args: [ inputValue ]
-    readonly property real offset: Math.min(Math.max(area.mouseY - area.oldY, -height / 2),
-                                            height / 2)
+    readonly property real offset: area.mouseY - area.oldY
+    readonly property real offsetBordered: Math.min(Math.max(offset, -height / 2), height / 2)
     property color color: {
         if (status == Command.Rejected) return customPalette.dangerColor;
         if (status == Command.Sending) return customPalette.cautionColor;
@@ -22,7 +23,7 @@ Item {
     }
 
     onColorChanged: arrowCanvas.requestPaint()
-    onOffsetChanged: inputValue = root.parent.mapFromRange(height / 2 - offset)
+    onOffsetBorderedChanged: inputValue = root.parent.mapFromRange(height / 2 - offsetBordered)
 
     onStatusChanged: {
         if (status == Command.Completed ||
@@ -55,29 +56,17 @@ Item {
     }
 
     Timer {
-        repeat: true
-        running: Math.abs(offset) == height / 2
-        onRunningChanged: interval = 500
-        onTriggered: {
-            offset > 0 ? inputValue-- : inputValue++;
-            if (interval > 10) interval = interval / 2;
+        property int multiplier: {
+            if (Math.abs(offset) > 100) return 100;
+            if (Math.abs(offset) > 10) return 10;
+            return 1;
         }
+        repeat: true
+        interval: 400
+        running: offset != offsetBordered && overboardEnabled
+        onTriggered: inputValue = Math.floor(inputValue / multiplier +
+                                             (offset > 0 ? -1 : 1)) * multiplier
     }
-
-//    Rectangle {
-//        anchors.verticalCenter: parent.verticalCenter
-//        anchors.horizontalCenter: mirrored ? parent.right : parent.left
-//        width: sizings.controlBaseSize / 6
-//        height: width
-//        radius: width / 2
-//        visible: enabled
-//        color: root.color
-
-//        Controls.Shadow {
-//            anchors.fill: parent
-//            source: parent
-//        }
-//    }
 
     Controls.ColoredIcon {
         anchors.left: mirrored ? undefined : parent.left
@@ -104,7 +93,7 @@ Item {
         anchors.left: mirrored ? undefined : parent.right
         anchors.right: mirrored ? parent.left : undefined
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: offset
+        anchors.verticalCenterOffset: offsetBordered
         width: arrowCanvas.width + label.width + sizings.padding
         height: label.height
         visible: area.pressed

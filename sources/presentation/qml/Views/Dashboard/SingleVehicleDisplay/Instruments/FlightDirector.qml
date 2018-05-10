@@ -145,6 +145,7 @@ BaseInstrument {
                       vehicle.mode === Domain.NavTo ||
                       vehicle.mode === Domain.Mission ||
                       vehicle.mode === Domain.Return
+            overboardEnabled: true
             command: Command.SetAltitude
             args: [ vehicle.barometric.fromDisplayedAltitude(
                     units.convertDistanceFrom(altitudeUnits, inputValue)) ]
