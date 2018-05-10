@@ -64,19 +64,39 @@ Item {
         }
     }
 
-    Rectangle {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: mirrored ? parent.right : parent.left
-        width: sizings.controlBaseSize / 6
-        height: width
-        radius: width / 2
-        visible: enabled
-        color: root.color
+//    Rectangle {
+//        anchors.verticalCenter: parent.verticalCenter
+//        anchors.horizontalCenter: mirrored ? parent.right : parent.left
+//        width: sizings.controlBaseSize / 6
+//        height: width
+//        radius: width / 2
+//        visible: enabled
+//        color: root.color
 
-        Controls.Shadow {
-            anchors.fill: parent
-            source: parent
-        }
+//        Controls.Shadow {
+//            anchors.fill: parent
+//            source: parent
+//        }
+//    }
+
+    Controls.ColoredIcon {
+        anchors.left: mirrored ? undefined : parent.left
+        anchors.right: mirrored ? parent.right : undefined
+        anchors.verticalCenter: root.verticalCenter
+        anchors.verticalCenterOffset: -root.height / 5
+        source: "qrc:/icons/min_up.svg"
+        color: root.color
+        visible: enabled
+    }
+
+    Controls.ColoredIcon {
+        anchors.left: mirrored ? undefined : parent.left
+        anchors.right: mirrored ? parent.right : undefined
+        anchors.verticalCenter: root.verticalCenter
+        anchors.verticalCenterOffset: root.height / 5
+        source: "qrc:/icons/min_down.svg"
+        color: root.color
+        visible: enabled
     }
 
     Item {
