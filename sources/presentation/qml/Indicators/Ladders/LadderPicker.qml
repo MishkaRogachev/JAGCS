@@ -64,6 +64,21 @@ Item {
         }
     }
 
+    Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: mirrored ? parent.right : parent.left
+        width: sizings.controlBaseSize / 6
+        height: width
+        radius: width / 2
+        visible: enabled
+        color: root.color
+
+        Controls.Shadow {
+            anchors.fill: parent
+            source: parent
+        }
+    }
+
     Item {
         id: pickerItem
         anchors.left: mirrored ? undefined : parent.right

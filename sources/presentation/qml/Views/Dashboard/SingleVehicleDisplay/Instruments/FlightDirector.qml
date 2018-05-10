@@ -100,6 +100,7 @@ BaseInstrument {
         Ladders.LadderPicker {
             id: spdPicker
             anchors.fill: parent
+            enabled: vehicle.mode === Domain.Mission || vehicle.mode === Domain.NavTo
             command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
             args: [ units.convertSpeedFrom(speedUnits, inputValue) ]
         }
@@ -139,6 +140,11 @@ BaseInstrument {
         Ladders.LadderPicker {
             id: altPicker
             anchors.fill: parent
+            enabled:  vehicle.mode === Domain.Circle ||
+                      vehicle.mode === Domain.Loiter ||
+                      vehicle.mode === Domain.NavTo ||
+                      vehicle.mode === Domain.Mission ||
+                      vehicle.mode === Domain.Return
             command: Command.SetAltitude
             args: [ vehicle.barometric.fromDisplayedAltitude(
                     units.convertDistanceFrom(altitudeUnits, inputValue)) ]
