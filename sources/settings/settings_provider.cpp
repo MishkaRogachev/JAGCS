@@ -73,7 +73,7 @@ namespace
         { manual::joystick::yaw::axis, 4 },
         { manual::joystick::yaw::factor, 5 },
 
-        { gui::fullscreen, true },
+        { gui::fullscreen, false },
         { gui::locale, "en" },
         { gui::uiSize, 36 },
         { gui::paletteStyle, 0 },

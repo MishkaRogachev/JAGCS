@@ -104,9 +104,6 @@ bool VehicleService::save(const VehiclePtr& vehicle)
     if (isNew)
     {
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::instruments::diagnostics +
-                                     "/" + settings::visibility, false);
-        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                      "/" + settings::vehicle::instruments::status +
                                      "/" + settings::visibility, true);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
@@ -115,9 +112,6 @@ bool VehicleService::save(const VehiclePtr& vehicle)
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                      "/" + settings::vehicle::instruments::hsi +
                                      "/" + settings::visibility, true);
-        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                     "/" + settings::vehicle::instruments::landing +
-                                     "/" + settings::visibility, false);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                      "/" + settings::vehicle::instruments::control +
                                      "/" + settings::visibility, true);

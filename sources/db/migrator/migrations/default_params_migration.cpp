@@ -21,29 +21,42 @@ bool DefaultParamsMigration::up()
 {
     GenericRepository<dto::LinkDescription> linkRepository("links");
 
-    LinkDescriptionPtr defaultUdpLink = LinkDescriptionPtr::create();
-    defaultUdpLink->setType(LinkDescription::Udp);
-    defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "Default UDP Link"));
-    defaultUdpLink->setParameter(LinkDescription::Port,
-                                 settings::Provider::value(settings::communication::port).toInt());
-    defaultUdpLink->setAutoConnect(true);
-    linkRepository.save(defaultUdpLink);
+    LinkDescriptionPtr udpLink = LinkDescriptionPtr::create();
+    udpLink->setType(LinkDescription::Udp);
+    udpLink->setName(qApp->translate("DefaultParamsMigration", "UDP Link"));
+    udpLink->setParameter(LinkDescription::Port,
+                          settings::Provider::value(settings::communication::port).toInt());
+    udpLink->setAutoConnect(true);
+    linkRepository.save(udpLink);
 
-    LinkDescriptionPtr defaultSerialLink = LinkDescriptionPtr::create();
-    defaultSerialLink->setType(LinkDescription::Serial);
-    defaultSerialLink->setName(qApp->translate("DefaultParamsMigration", "Default Serial Link"));
-    defaultSerialLink->setParameter(LinkDescription::BaudRate,
-                                    settings::Provider::value(settings::communication::baudRate).toInt());
-    defaultSerialLink->setAutoConnect(true);
-    linkRepository.save(defaultSerialLink);
+    LinkDescriptionPtr serialLink = LinkDescriptionPtr::create();
+    serialLink->setType(LinkDescription::Serial);
+    serialLink->setName(qApp->translate("DefaultParamsMigration", "Serial Link"));
+    serialLink->setParameter(LinkDescription::BaudRate,
+                             settings::Provider::value(settings::communication::baudRate).toInt());
+    serialLink->setAutoConnect(true);
+    linkRepository.save(serialLink);
 
     GenericRepository<dto::Vehicle> vehicleRepository("vehicles");
 
-    VehiclePtr defaultVehicle = VehiclePtr::create();
-    defaultVehicle->setMavId(1);
-    defaultVehicle->setName(qApp->translate("DefaultParamsMigration", "Default"));
-    defaultVehicle->setType(Vehicle::Auto);
-    vehicleRepository.save(defaultVehicle);
+    VehiclePtr vehicle = VehiclePtr::create();
+    vehicle->setMavId(1);
+    vehicle->setName(qApp->translate("DefaultParamsMigration", "MAV 1"));
+    vehicle->setType(Vehicle::Auto);
+    vehicleRepository.save(vehicle);
+
+    settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                 "/" + settings::vehicle::instruments::status +
+                                 "/" + settings::visibility, true);
+    settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                 "/" + settings::vehicle::instruments::fd +
+                                 "/" + settings::visibility, true);
+    settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                 "/" + settings::vehicle::instruments::hsi +
+                                 "/" + settings::visibility, true);
+    settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                 "/" + settings::vehicle::instruments::control +
+                                 "/" + settings::visibility, true);
 
     return DbMigration::up();
 }
