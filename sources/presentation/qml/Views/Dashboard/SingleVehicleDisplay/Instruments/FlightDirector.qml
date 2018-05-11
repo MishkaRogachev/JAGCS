@@ -100,7 +100,8 @@ BaseInstrument {
         Ladders.LadderPicker {
             id: spdPicker
             anchors.fill: parent
-            enabled: vehicle.mode === Domain.Mission || vehicle.mode === Domain.NavTo
+            enabled: (vehicle.mode === Domain.Mission || vehicle.mode === Domain.NavTo) &&
+                     !manual.enabled
             command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
             args: [ units.convertSpeedFrom(speedUnits, inputValue) ]
         }

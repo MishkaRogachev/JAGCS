@@ -13,6 +13,7 @@ Item {
     property int command: Command.UnknownCommand
     property int status: Command.Idle
     property var args: [ inputValue ]
+    readonly property bool mouseInLadder: area.mouseX > 0 && area.mouseX < width
     readonly property real offset: area.mouseY - area.oldY
     readonly property real offsetBordered: Math.min(Math.max(offset, -height / 2), height / 2)
     property color color: {
@@ -50,7 +51,7 @@ Item {
             oldY = mouseY;
         }
         onReleased: {
-            if (inputValue !== root.parent.value) presenter.executeCommand(command, args);
+            if (mouseInLadder) presenter.executeCommand(command, args);
             oldY = 0;
         }
     }
@@ -68,24 +69,27 @@ Item {
                                              (offset > 0 ? -1 : 1)) * multiplier
     }
 
-    Controls.ColoredIcon {
+    Item {
         anchors.left: mirrored ? undefined : parent.left
         anchors.right: mirrored ? parent.right : undefined
-        anchors.verticalCenter: root.verticalCenter
-        anchors.verticalCenterOffset: -root.height / 5
-        source: "qrc:/icons/min_up.svg"
-        color: root.color
-        visible: enabled
-    }
+        width: sizings.controlBaseSize
+        height: parent.height
 
-    Controls.ColoredIcon {
-        anchors.left: mirrored ? undefined : parent.left
-        anchors.right: mirrored ? parent.right : undefined
-        anchors.verticalCenter: root.verticalCenter
-        anchors.verticalCenterOffset: root.height / 5
-        source: "qrc:/icons/min_down.svg"
-        color: root.color
-        visible: enabled
+        Controls.ColoredIcon {
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: -parent.height / 5
+            source: "qrc:/icons/min_up.svg"
+            color: status == Command.Idle ? customPalette.textColor : root.color
+            visible: enabled
+        }
+
+        Controls.ColoredIcon {
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: parent.height / 5
+            source: "qrc:/icons/min_down.svg"
+            color: status == Command.Idle ? customPalette.textColor : root.color
+            visible: enabled
+        }
     }
 
     Item {
@@ -96,7 +100,7 @@ Item {
         anchors.verticalCenterOffset: offsetBordered
         width: arrowCanvas.width + label.width + sizings.padding
         height: label.height
-        visible: area.pressed
+        visible: area.pressed && mouseInLadder
 
         Controls.Shadow {
             anchors.fill: rect
