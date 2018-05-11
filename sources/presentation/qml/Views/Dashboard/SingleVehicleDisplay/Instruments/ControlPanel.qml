@@ -13,7 +13,7 @@ BaseInstrument {
         spacing: sizings.spacing
 
         CommandWidgets.GoTo {
-            visible: vehicle.mode === Domain.Mission
+            Layout.rightMargin: itemMenuButton.width
         }
 
         CommandWidgets.SetPoint {
@@ -22,22 +22,10 @@ BaseInstrument {
             visible: vehicle.mode === Domain.NavTo
         }
 
-        CommandWidgets.SetAlt {
-            visible: vehicle.mode === Domain.Circle ||
-                     vehicle.mode === Domain.Loiter ||
-//                     vehicle.mode === Domain.Mission ||
-                     vehicle.mode === Domain.Return
-        }
-
         CommandWidgets.SetRadius {
             command: Command.SetLoiterRadius
             tipText: qsTr("Set radius")
             visible: vehicle.mode === Domain.Loiter ||
-                     vehicle.mode === Domain.NavTo
-        }
-
-        CommandWidgets.SetSpd {
-            visible: vehicle.mode === Domain.Mission ||
                      vehicle.mode === Domain.NavTo
         }
 

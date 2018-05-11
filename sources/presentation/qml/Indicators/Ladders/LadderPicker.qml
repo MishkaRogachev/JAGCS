@@ -8,14 +8,12 @@ Item {
     id: root
 
     property bool mirrored: parent.mirrored
-    property bool overboardEnabled: false
-    property real inputValue: 0
+
     property int command: Command.UnknownCommand
     property int status: Command.Idle
+    property real value: 0
+    property real inputValue: 0
     property var args: [ inputValue ]
-    readonly property bool mouseInLadder: area.mouseX > 0 && area.mouseX < width
-    readonly property real offset: area.mouseY - area.oldY
-    readonly property real offsetBordered: Math.min(Math.max(offset, -height / 2), height / 2)
     property color color: {
         if (status == Command.Rejected) return customPalette.dangerColor;
         if (status == Command.Sending) return customPalette.cautionColor;
@@ -24,8 +22,6 @@ Item {
     }
 
     onColorChanged: arrowCanvas.requestPaint()
-    onOffsetBorderedChanged: inputValue = root.parent.mapFromRange(height / 2 - offsetBordered)
-
     onStatusChanged: {
         if (status == Command.Completed ||
             status == Command.Rejected) timer.start()
@@ -43,30 +39,26 @@ Item {
     MouseArea {
         id: area
         property real oldY: 0
+        readonly property bool mouseXInLadder: area.mouseX > 0 && area.mouseX < width
         anchors.fill: parent
         preventStealing: true
         onPressed: {
             if (status == Command.Sending) presenter.rejectCommand(command);
-            inputValue = root.parent.value;
+            inputValue = root.value;
             oldY = mouseY;
         }
+        onPositionChanged: {
+            var newValue = root.parent.mapFromRange(height - mouseY) +
+                    root.value - root.parent.mapFromRange(height - oldY);
+            inputValue = newValue;
+            // TODO: integral scale for overboard values
+        }
         onReleased: {
-            if (mouseInLadder) presenter.executeCommand(command, args);
+            if (mouseXInLadder && inputValue !== root.value) {
+                presenter.executeCommand(command, args);
+            }
             oldY = 0;
         }
-    }
-
-    Timer {
-        property int multiplier: {
-            if (Math.abs(offset) > 100) return 100;
-            if (Math.abs(offset) > 10) return 10;
-            return 1;
-        }
-        repeat: true
-        interval: 400
-        running: offset != offsetBordered && overboardEnabled
-        onTriggered: inputValue = Math.floor(inputValue / multiplier +
-                                             (offset > 0 ? -1 : 1)) * multiplier
     }
 
     Item {
@@ -96,11 +88,11 @@ Item {
         id: pickerItem
         anchors.left: mirrored ? undefined : parent.right
         anchors.right: mirrored ? parent.left : undefined
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: offsetBordered
+        y: root.height - Math.min(Math.max(root.parent.mapToRange(
+                                               inputValue), 0), root.height) - height / 2
         width: arrowCanvas.width + label.width + sizings.padding
         height: label.height
-        visible: area.pressed && mouseInLadder
+        visible: area.pressed && area.mouseXInLadder
 
         Controls.Shadow {
             anchors.fill: rect

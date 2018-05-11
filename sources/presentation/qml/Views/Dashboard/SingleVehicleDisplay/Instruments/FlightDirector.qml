@@ -91,10 +91,12 @@ BaseInstrument {
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
 
         Ladders.LadderMark {
+            id: spdMark
             anchors.fill: parent
             visible: vehicle.guided && vehicle.pitot.present
             color: spdPicker.color
-            value: parent.value + units.convertSpeedTo(speedUnits, vehicle.flightControl.airspeedError)
+            value: parent.value + units.convertSpeedTo(speedUnits,
+                                                       vehicle.flightControl.airspeedError)
         }
 
         Ladders.LadderPicker {
@@ -104,6 +106,7 @@ BaseInstrument {
                      !manual.enabled
             command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
             args: [ units.convertSpeedFrom(speedUnits, inputValue) ]
+            value: spdMark.value
         }
 
         Ladders.LadderButtons {
@@ -131,6 +134,7 @@ BaseInstrument {
         prefix: qsTr("ALT") + ", " + altitudeSuffix
 
         Ladders.LadderMark {
+            id: altMark
             anchors.fill: parent
             visible: vehicle.guided
             color: altPicker.color
@@ -146,10 +150,10 @@ BaseInstrument {
                       vehicle.mode === Domain.NavTo ||
                       vehicle.mode === Domain.Mission ||
                       vehicle.mode === Domain.Return
-            overboardEnabled: true
             command: Command.SetAltitude
             args: [ vehicle.barometric.fromDisplayedAltitude(
                     units.convertDistanceFrom(altitudeUnits, inputValue)) ]
+            value: altMark.value
         }
     }
 
