@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
         context.start();
 
         result = app.exec();
-    } while (result == RESETART_CODE);
+    } while (result == RESTART_CODE);
 
     return result;
 }

@@ -53,7 +53,7 @@ void DatabasePresenter::savePath()
 
     settings::Provider::setValue(settings::data_base::name, path);
 
-    qApp->exit(RESETART_CODE);
+    qApp->exit(RESTART_CODE);
 
     // TODO: soft database reconnection
     //this->tryConnect();
