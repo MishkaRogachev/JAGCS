@@ -20,8 +20,8 @@ MapItemView {
             status: itemPtr.status
             command: itemPtr.command
             sequence: itemPtr.sequence
-            selectionAvalible: !picking
-            onSelectionRequest: map.selectItem(itemPtr.missionId, itemPtr.id)
+            mouseEnabled: !picking
+            onPressed: map.selectItem(itemPtr.missionId, itemPtr.id)
         }
     }
 }

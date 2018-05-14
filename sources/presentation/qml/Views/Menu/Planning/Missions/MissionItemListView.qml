@@ -45,7 +45,7 @@ Flickable {
              MissionItemView {
                  itemId: modelData
                  selected: selectedItemId == itemId
-                 onSelectionRequest: missionItemList.selectionRequest(itemId)
+                 onPressed: missionItemList.selectionRequest(itemId)
              }
         }
     }

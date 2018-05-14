@@ -5,6 +5,11 @@
 #include "base_presenter.h"
 #include "dto_traits.h"
 
+namespace domain
+{
+    class CommandService;
+}
+
 namespace presentation
 {
     class AbstractMapPresenter: public BasePresenter
@@ -21,6 +26,11 @@ namespace presentation
     public slots:
         virtual void setMapCenter(double latitude, double longitude) = 0;
         virtual void setZoomLevel(float zoomLevel) = 0;
+
+        void navTo(int vehicleId, double latitude, double longitude, float altitude);
+
+    private:
+        domain::CommandService* const m_commandService;
     };
 }
 

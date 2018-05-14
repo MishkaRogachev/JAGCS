@@ -42,6 +42,7 @@ Map {
     copyrightsVisible: false
 
     MapPresenter {
+        id: presenter
         view: map
     }
 

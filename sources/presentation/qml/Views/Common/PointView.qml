@@ -4,7 +4,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 Rectangle {
-    id: pointView
+    id: point
 
     property bool selected: false
     property bool current: false
@@ -13,10 +13,12 @@ Rectangle {
     property int status: MissionItem.NotActual
     property int command: MissionItem.UnknownCommand
 
-    property alias selectionAvalible: area.visible
+    property bool dragEnabled: false
+    property alias mouseEnabled: area.visible
 
-    signal selectionRequest()
+    signal pressed()
     signal holded()
+    signal dragged(real dx, real dy)
 
     implicitWidth: sizings.controlBaseSize
     implicitHeight: sizings.controlBaseSize
@@ -66,10 +68,29 @@ Rectangle {
         font.bold: true
     }
 
+    Controls.ColoredIcon {
+        id: picker
+        width: parent.width
+        height: parent.height
+        source: "qrc:/icons/aim.svg";
+        color: customPalette.activeMissionColor
+        visible: area.drag.active
+    }
+
     MouseArea {
         id: area
         anchors.fill: parent
-        onPressed: selectionRequest()
+        drag.target: dragEnabled ? picker : undefined
+        drag.axis: Drag.XAndYAxis
+        onPressed: point.pressed()
+        onPressAndHold: point.holded()
+        onReleased: {
+            if (!dragEnabled) return;
+
+            dragged(picker.x, picker.y);
+            picker.x = 0;
+            picker.y = 0;
+        }
     }
 }
 
