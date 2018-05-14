@@ -4,7 +4,7 @@ import QtPositioning 5.6
 
 MapItemView {
     delegate: MapPolyline {
-        line.width: 4
+        line.width: 3
         line.color: customPalette.trackColor
         path: track
         smooth: true

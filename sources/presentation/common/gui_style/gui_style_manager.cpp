@@ -24,7 +24,7 @@ void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
     // TODO: store palette in files
     Palette palette;
 
-    palette.setTrackColor("#ff173c");
+    palette.setTrackColor("#64adf6");
     palette.setMissionColor("#1ce9a5");
     palette.setActiveMissionColor("#fd00fd");
 

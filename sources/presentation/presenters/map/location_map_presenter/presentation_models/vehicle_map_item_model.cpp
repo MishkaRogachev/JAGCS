@@ -25,8 +25,6 @@ public:
 
     QList<int> vehicleIds;
     QMap<int, QVariantList> tracks;
-
-    int trackLength = settings::Provider::value(settings::map::trackLength).toInt();
 };
 
 VehicleMapItemModel::VehicleMapItemModel(domain::VehicleService* vehicleService,
@@ -218,8 +216,14 @@ void VehicleMapItemModel::onPositionParametersChanged(
     if (parameters.contains(domain::Telemetry::Coordinate))
     {
         d->tracks[vehicleId].append(parameters[domain::Telemetry::Coordinate]);
-        if (d->trackLength > -1 &&
-            d->tracks[vehicleId].length() > d->trackLength) d->tracks[vehicleId].removeFirst();
+
+        int trackLength = settings::Provider::value(settings::map::trackLength).toInt();
+        if (trackLength > -1)
+        {
+            while (d->tracks[vehicleId].length() > trackLength) {
+                d->tracks[vehicleId].removeFirst();
+            }
+        }
     }
 
     emit dataChanged(index, index, { CoordinateRole });
