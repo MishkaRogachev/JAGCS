@@ -26,6 +26,8 @@ namespace presentation
         enum VehicleMapItemRoles
         {
             CoordinateRole = Qt::UserRole + 1,
+            HomeCoordinateRole,
+            TargetCoordinateRole,
             HeadingRole,
             CourseRole,
             GroundspeedRole,
@@ -34,8 +36,7 @@ namespace presentation
             VehicleIdRole,
             MavIdRole,
             TrackRole,
-            HdopRadius,
-            TargetCoordinateRole
+            HdopRadius
         };
 
         VehicleMapItemModel(domain::VehicleService* vehicleService,
@@ -58,11 +59,13 @@ namespace presentation
     private slots:
         void onPositionParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+        void onHomeParametersChanged(
+                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+        void onTargetParametersChanged(
+                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
         void onAhrsParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
         void onSatelliteParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
-        void onTargetParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
 
     private:

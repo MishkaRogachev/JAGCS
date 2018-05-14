@@ -26,7 +26,7 @@ MapItemView {
                 point.y += dy;
                 var coordinate = map.toCoordinate(point);
                 presenter.navTo(vehicleId, coordinate.latitude, coordinate.longitude,
-                                targetPosition.altitude);
+                                targetPosition.altitude - homePosition.altitude);
             }
         }
     }
