@@ -16,12 +16,6 @@ BaseInstrument {
             Layout.rightMargin: itemMenuButton.width
         }
 
-        CommandWidgets.SetPoint {
-            command: Command.NavTo
-            tipText: qsTr("Nav to")
-            visible: vehicle.mode === Domain.NavTo
-        }
-
         CommandWidgets.SetRadius {
             command: Command.SetLoiterRadius
             tipText: qsTr("Set radius")

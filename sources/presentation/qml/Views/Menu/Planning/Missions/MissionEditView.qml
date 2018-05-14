@@ -147,4 +147,3 @@ ColumnLayout {
         Layout.fillHeight: true
     }
 }
-
