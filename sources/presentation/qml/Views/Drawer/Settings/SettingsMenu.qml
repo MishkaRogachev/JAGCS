@@ -1,8 +1,8 @@
 import QtQuick 2.6
 
-import "qrc:/Controls" as Controls
+import ".."
 
-Controls.DrawerMenu {
+DrawerMenu {
     menuModel: [
         { text: qsTr("Database"), icon: "qrc:/icons/db.svg",
             source: "qrc:/Views/Drawer/Settings/Database/DatabaseView.qml" },

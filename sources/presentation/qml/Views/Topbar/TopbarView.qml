@@ -28,31 +28,29 @@ Item {
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Menu")
             flat: true
-            onClicked: menu.home()
+            onClicked: menu.goHome()
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/planning.svg"
             tipText: qsTr("Planning")
             flat: true
-            onClicked: menu.goTo("qrc:/Views/Drawer/Planning/PlanningView.qml", qsTr("Planning"), {})
+            onClicked: menu.goPlanning()
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/fleet.svg"
             tipText: qsTr("Vehicles")
             flat: true
-            onClicked: menu.goTo("qrc:/Views/Drawer/Vehicles/VehicleListView.qml", qsTr("Vehicles"), {})
+            onClicked: menu.goVehicles()
         }
 
         Controls.Button {
-            iconSource: connection.connected ? "qrc:/icons/connect.svg" :
-                                               "qrc:/icons/disconnect.svg"
-            iconColor: connection.connected ? customPalette.textColor :
-                                              customPalette.dangerColor
+            iconSource: connection.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
+            iconColor: connection.connected ? customPalette.textColor : customPalette.dangerColor
             tipText: qsTr("Links")
             flat: true
-            onClicked: menu.goTo("qrc:/Views/Drawer/Links/LinkListView.qml", qsTr("Links"), {})
+            onClicked: menu.goLinks();
         }
     }
 
