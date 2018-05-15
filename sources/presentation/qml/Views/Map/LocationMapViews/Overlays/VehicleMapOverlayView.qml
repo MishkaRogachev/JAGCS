@@ -41,6 +41,7 @@ MapItemView {
         onCoordinateChanged: tryCenterVehicle()
         sourceItem: Item {
             rotation: -map.bearing
+            opacity: vehicleOnline ? 1 : 0.5
 
             Indicators.SpeedArrow {
                 anchors.centerIn: parent
@@ -55,19 +56,19 @@ MapItemView {
             Image {
                 anchors.centerIn: parent
                 rotation: headingAnimated
-                source: translator.imageFromVehicleType(type)
+                source: translator.imageFromVehicleType(vehicleType)
                 width: sizings.controlBaseSize * 3
                 height: width
             }
 
             Controls.Label {
-                text: mavId
-                anchors.centerIn: parent
+                text: vehicleName
+                anchors.top: parent.bottom
+                anchors.left: parent.right
+                anchors.margins: sizings.controlBaseSize
                 rotation: map.bearing
                 font.pixelSize: sizings.fontPixelSize * 0.75
                 font.bold: true
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
             }
         }
 

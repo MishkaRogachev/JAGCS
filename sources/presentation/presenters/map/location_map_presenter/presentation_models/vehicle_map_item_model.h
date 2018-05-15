@@ -25,18 +25,19 @@ namespace presentation
     public:
         enum VehicleMapItemRoles
         {
-            CoordinateRole = Qt::UserRole + 1,
+            VehicleIdRole = Qt::UserRole + 1,
+            VehicleNameRole,
+            VehicleTypeRole,
+            VehicleOnlineRole,
+            CoordinateRole,
             HomeCoordinateRole,
             TargetCoordinateRole,
             HeadingRole,
             CourseRole,
             GroundspeedRole,
             SnsFixRole,
-            TypeRole,
-            VehicleIdRole,
-            MavIdRole,
-            TrackRole,
-            HdopRadius
+            HdopRadiusRole,
+            TrackRole
         };
 
         VehicleMapItemModel(domain::VehicleService* vehicleService,
@@ -50,6 +51,7 @@ namespace presentation
     public slots:
         void onVehicleAdded(const dto::VehiclePtr& vehicle);
         void onVehicleRemoved(const dto::VehiclePtr& vehicle);
+        void onVehicleChanged(const dto::VehiclePtr& vehicle);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;

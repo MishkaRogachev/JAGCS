@@ -40,6 +40,8 @@ VehicleMapItemModel::VehicleMapItemModel(domain::VehicleService* vehicleService,
             this, &VehicleMapItemModel::onVehicleAdded);
     connect(vehicleService, &domain::VehicleService::vehicleRemoved,
             this, &VehicleMapItemModel::onVehicleRemoved);
+    connect(vehicleService, &domain::VehicleService::vehicleChanged,
+            this, &VehicleMapItemModel::onVehicleChanged);
 
     for (const dto::VehiclePtr& vehicle: vehicleService->vehicles())
     {
@@ -70,6 +72,18 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
 
     switch (role)
     {
+    case VehicleIdRole:
+        data = vehicleId;
+        break;
+    case VehicleNameRole:
+        data = vehicle->name();
+        break;
+    case VehicleTypeRole:
+        data = vehicle->type();
+        break;
+    case VehicleOnlineRole:
+        data = vehicle->isOnline();
+        break;
     case CoordinateRole:
         data = node->childNode(domain::Telemetry::Position)->parameter(
                    domain::Telemetry::Coordinate);
@@ -106,22 +120,13 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
                    domain::Telemetry::Fix);
         if (!data.isValid()) data = -1;
         break;
-    case TypeRole:
-        data = vehicle->type();
-        break;
-    case VehicleIdRole:
-        data = vehicleId;
-        break;
-    case MavIdRole:
-        data = vehicle->mavId();
-        break;
-    case TrackRole:
-        data = d->tracks[vehicleId];
-        break;
-    case HdopRadius:
+    case HdopRadiusRole:
         data = node->childNode(domain::Telemetry::Satellite)->parameter(
                    domain::Telemetry::Eph);
         if (!data.isValid()) data = 0;
+        break;
+    case TrackRole:
+        data = d->tracks[vehicleId];
         break;
     }
 
@@ -182,22 +187,31 @@ void VehicleMapItemModel::onVehicleRemoved(const dto::VehiclePtr& vehicle)
     this->endRemoveRows();
 }
 
+void VehicleMapItemModel::onVehicleChanged(const dto::VehiclePtr& vehicle)
+{
+    QModelIndex index = this->vehicleIndex(vehicle->id());
+    if (!index.isValid()) return;
+
+    emit dataChanged(index, index, { VehicleNameRole, VehicleTypeRole, VehicleOnlineRole });
+}
+
 QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
+    roles[VehicleIdRole] = "vehicleId";
+    roles[VehicleNameRole] = "vehicleName";
+    roles[VehicleTypeRole] = "vehicleType";
+    roles[VehicleOnlineRole] = "vehicleOnline";
     roles[CoordinateRole] = "position";
     roles[HomeCoordinateRole] = "homePosition";
     roles[TargetCoordinateRole] = "targetPosition";
-    roles[CourseRole] = "course";
     roles[HeadingRole] = "heading";
+    roles[CourseRole] = "course";
     roles[GroundspeedRole] = "groundspeed";
     roles[SnsFixRole] = "snsFix";
-    roles[TypeRole] = "type";
-    roles[VehicleIdRole] = "vehicleId";
-    roles[MavIdRole] = "mavId";
+    roles[HdopRadiusRole] = "hdopRadius";
     roles[TrackRole] = "track";
-    roles[HdopRadius] = "hdopRadius";
 
     return roles;
 }
@@ -271,5 +285,5 @@ void VehicleMapItemModel::onSatelliteParametersChanged(
     QModelIndex index = this->vehicleIndex(vehicleId);
     if (!index.isValid()) return;
 
-    emit dataChanged(index, index, { CourseRole, SnsFixRole, GroundspeedRole, HdopRadius });
+    emit dataChanged(index, index, { CourseRole, GroundspeedRole, SnsFixRole, HdopRadiusRole });
 }

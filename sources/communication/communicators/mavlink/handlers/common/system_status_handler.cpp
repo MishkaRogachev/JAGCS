@@ -33,7 +33,6 @@ void SystemStatusHandler::processMessage(const mavlink_message_t& message)
 
     portion.setParameter({ Telemetry::Ahrs, Telemetry::Present },
                          status.onboard_control_sensors_present & MAV_SYS_STATUS_AHRS);
-
     portion.setParameter({ Telemetry::Ahrs, Telemetry::Enabled },
                          status.onboard_control_sensors_enabled & MAV_SYS_STATUS_AHRS);
     portion.setParameter({ Telemetry::Ahrs, Telemetry::Operational },

@@ -37,7 +37,7 @@ MapItemView {
                 closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
                 SetPoint {
-                    title: qsTr("Nav to MAV") + " " + mavId
+                    title: qsTr("Nav to") + " " + vehicleName
                     onVisibleChanged: {
                         if (!visible) return;
 
