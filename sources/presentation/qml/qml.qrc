@@ -72,6 +72,7 @@
         <file>Indicators/LandingIndicator.qml</file>
         <file>Views/Common/SaveRestore.qml</file>
         <file>Views/Common/PointView.qml</file>
+        <file>Views/Common/SetPoint.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Tools/ToolsPanel.qml</file>
         <file>Views/Notifications/NotificationListView.qml</file>
