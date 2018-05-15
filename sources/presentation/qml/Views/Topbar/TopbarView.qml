@@ -35,14 +35,14 @@ Item {
             iconSource: "qrc:/icons/planning.svg"
             tipText: qsTr("Planning")
             flat: true
-            onClicked: menu.goTo("qrc:/Views/Menu/Planning/PlanningView.qml", qsTr("Planning"), {})
+            onClicked: menu.goTo("qrc:/Views/Drawer/Planning/PlanningView.qml", qsTr("Planning"), {})
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/fleet.svg"
             tipText: qsTr("Vehicles")
             flat: true
-            onClicked: menu.goTo("qrc:/Views/Menu/Vehicles/VehicleListView.qml", qsTr("Vehicles"), {})
+            onClicked: menu.goTo("qrc:/Views/Drawer/Vehicles/VehicleListView.qml", qsTr("Vehicles"), {})
         }
 
         Controls.Button {
@@ -52,7 +52,7 @@ Item {
                                               customPalette.dangerColor
             tipText: qsTr("Links")
             flat: true
-            onClicked: menu.goTo("qrc:/Views/Menu/Links/LinkListView.qml", qsTr("Links"), {})
+            onClicked: menu.goTo("qrc:/Views/Drawer/Links/LinkListView.qml", qsTr("Links"), {})
         }
     }
 

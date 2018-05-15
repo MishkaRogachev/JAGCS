@@ -98,7 +98,7 @@ Controls.Frame {
                 tipText: qsTr("Edit link")
                 iconSource: "qrc:/icons/edit.svg"
                 enabled: linkId > 0
-                onClicked: deepIn("qrc:/Views/Menu/Links/LinkEditView.qml",
+                onClicked: deepIn("qrc:/Views/Drawer/Links/LinkEditView.qml",
                                   name, { "linkId": linkId });
             }
 

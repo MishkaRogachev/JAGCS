@@ -109,7 +109,7 @@ Controls.Frame {
                 enabled: missionId > 0
                 onClicked: {
                     if (!missionVisible) presenter.setMissionVisible(true);
-                    deepIn("qrc:/Views/Menu/Planning/Missions/MissionEditView.qml",
+                    deepIn("qrc:/Views/Drawer/Planning/Missions/MissionEditView.qml",
                            name, { "missionId": missionId });
                 }
             }

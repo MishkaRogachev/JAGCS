@@ -7,7 +7,7 @@ import "Topbar"
 import "Video"
 import "Map"
 import "Dashboard"
-import "Menu"
+import "Drawer"
 
 Controls.ApplicationWindow  {
     id: main
@@ -98,7 +98,7 @@ Controls.ApplicationWindow  {
         width: menu.width
         height: parent.height - y
 
-        MenuView {
+        DrawerView {
             id: menu
             anchors.top: parent.top
             anchors.bottom: parent.bottom

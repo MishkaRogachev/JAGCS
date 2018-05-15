@@ -7,7 +7,7 @@ ColumnLayout {
     id: menu
 
     property string contextText
-    property url homeContext: "qrc:/Views/Menu/TopMenu.qml"
+    property url homeContext: "qrc:/Views/Drawer/TopMenu.qml"
 
     readonly property alias currentContext: loader.source
     readonly property bool atHome: currentContext == homeContext
