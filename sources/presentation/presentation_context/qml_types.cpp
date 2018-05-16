@@ -23,6 +23,7 @@
 #include "dashboard_presenter.h"
 #include "vehicles_list_display_presenter.h"
 #include "aerial_vehicle_display_presenter.h"
+#include "drawer_presenter.h"
 #include "link_list_presenter.h"
 #include "link_presenter.h"
 #include "link_edit_presenter.h"
@@ -86,6 +87,7 @@ static void registerTypes()
     qmlRegisterType<DashboardPresenter>("JAGCS", 1, 0, "DashboardPresenter");
     qmlRegisterType<VehiclesListDisplayPresenter>("JAGCS", 1, 0, "VehiclesListDisplayPresenter");
     qmlRegisterType<AerialVehicleDisplayPresenter>("JAGCS", 1, 0, "AerialVehicleDisplayPresenter");
+    qmlRegisterType<DrawerPresenter>("JAGCS", 1, 0, "DrawerPresenter");
     qmlRegisterType<LinkListPresenter>("JAGCS", 1, 0, "LinkListPresenter");
     qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");
     qmlRegisterType<LinkEditPresenter>("JAGCS", 1, 0, "LinkEditPresenter");

@@ -104,6 +104,7 @@ Controls.ApplicationWindow  {
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             visible: drawer.position > 0
+            onOpen: drawer.open()
         }
 
         Behavior on width { PropertyAnimation { duration: 200 } }

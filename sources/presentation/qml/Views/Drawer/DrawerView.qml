@@ -1,90 +1,30 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
+import JAGCS 1.0
 
 import "../../Controls" as Controls
 
 ColumnLayout {
     id: menu
-    
-    property string contextText
-    property url homeContext: "qrc:/Views/Drawer/TopMenu.qml"
 
-    readonly property alias currentContext: loader.source
-    readonly property bool atHome: currentContext == homeContext
-    
-    function deepIn(source, text, properties) {
-        loader.setSource(source, properties);
-        contextModel.append({ "source": source.toString(), "text": text, "properties": properties });
-        contextText = text;
-        return loader.item;
-    }
+    property int mode: DrawerPresenter.UnknownMode
+    property var nestedModes: []
+    property var parentModes: []
 
-    function backOut(index) {
-        var source = contextModel.get(index).source;
-        var properties = contextModel.get(index).properties;
-        loader.setSource(source, properties);
-        contextText = contextModel.get(index).text;
+    signal open()
 
-        if (index + 1 < contextModel.count) {
-            contextModel.remove(index + 1, contextModel.count - index - 1);
-        }
-    }
-    
-    function goTo(source, text, properties) {
-        if (!atHome) goHome();
-        deepIn(source, text, properties);
-    }
-    
-    function goHome() {
-        loader.setSource(homeContext);
-        contextText = "";
-        contextModel.clear();
-        if (!menu.visible) drawer.open();
-    }
+    function home() { presenter.home(); }
+    function setMode(mode) { presenter.setMode(mode); }
 
-    function goPlanning() {
-        goTo("qrc:/Views/Drawer/Planning/PlanningView.qml", qsTr("Planning"), {})
-    }
-
-    function goVehicles() {
-        goTo("qrc:/Views/Drawer/Vehicles/VehicleListView.qml", qsTr("Vehicles"), {})
-    }
-
-    function goLinks() {
-        goTo("qrc:/Views/Drawer/Links/LinkListView.qml", qsTr("Links"), {})
-    }
-
-    function goLogbook() {
-        goTo("qrc:/Views/Drawer/Links/LinkListView.qml", qsTr("Logbook"), {})
-    }
-
-    function goSettings() {
-        goTo("qrc:/Views/Drawer/Settings/SettingsMenu.qml", qsTr("Logbook"), {})
-    }
-
-    function goAbout() {
-        goTo("qrc:/Views/Drawer/About/AboutView.qml", qsTr("Logbook"), {})
-    }
-
-    function goQuit() {
-        goTo("qrc:/Views/Drawer/Quit/QuitView.qml", qsTr("Logbook"), {})
-    }
-    
+    onModeChanged: if (!menu.visible) open()
     spacing: sizings.spacing
-    onVisibleChanged: {
-        if (visible)
-        {
-            if (currentContext == "") goHome();
-        }
-        else
-        {
-            loader.source = "";
-            contextText = "";
-            contextModel.clear();
-        }
-    }
+    width: Math.max(loader.item ? Math.min(loader.implicitWidth + sizings.margins * 2,
+                                           main.width / 2) : 0, sizings.controlBaseSize * 7)
 
-    ListModel { id: contextModel }
+    DrawerPresenter {
+        id: presenter
+        view: menu
+    }
 
     RowLayout {
         Layout.maximumWidth: parent.width
@@ -101,23 +41,23 @@ ColumnLayout {
             tipText: qsTr("Home")
             iconSource: "qrc:/icons/home.svg"
             flat: true
-            enabled: !atHome
-            onClicked: goHome()
+            enabled: mode != DrawerPresenter.Home
+            onClicked: home()
         }
 
         Repeater {
-            model: contextModel
+            model: parentModes
 
             Controls.Button {
-                text: model.text + ", "
+                text: presenter.modeString(modelData)
                 flat: true
-                visible: index + 1 < contextModel.count
-                onClicked: backOut(index)
+                visible: index + 1 < parentModes.count
+                onClicked: setMode(modelData)
             }
         }
 
         Controls.Label {
-            text: contextText
+            text: presenter.modeString(mode)
             font.bold: true
             Layout.fillWidth: true
         }
@@ -125,7 +65,7 @@ ColumnLayout {
 
     Flickable {
         id: flickable
-        contentHeight: loader.height
+        contentHeight: contents.height
         flickableDirection: Flickable.AutoFlickIfNeeded
         clip: true
         Layout.fillWidth: true
@@ -134,24 +74,32 @@ ColumnLayout {
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-        // TODO: heal loader to use qml components instead raw sources
-        Loader {
-            id: loader
-            width: parent.width
-            onItemChanged: {
-                if (!item || typeof(item) === "undefined") return;
+        DrawerMenu {
+            id: contents
+            menuModel: nestedModes
+            Layout.fillWidth: true
 
-                menu.width = Math.max(sizings.controlBaseSize * 7,
-                                      item.implicitWidth + sizings.margins * 2)
-                item.height = Qt.binding(function() {
-                    return item ? Math.max(item.implicitHeight, flickable.height) : 0;
-                });
-            }
-
-            Connections {
-                target: loader.item
-                ignoreUnknownSignals: true
-                onImplicitWidthChanged: menu.width = implicitWidth + sizings.margins * 2
+            Loader {
+                id: loader
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                source: {
+                    switch (mode) {
+                    case DrawerPresenter.Planning: return "Planning/PlanningView.qml";
+                    case DrawerPresenter.Vehicles: return "Vehicles/VehicleListView.qml";
+                    case DrawerPresenter.Links: return "Links/LinkListView.qml";
+                    case DrawerPresenter.Logbook: return "Logbook/LogListView.qml";
+                    case DrawerPresenter.Database: return "Settings/Database/DatabaseView.qml";
+                    case DrawerPresenter.Map: return "Settings/Map/MapSettingsView.qml";
+                    case DrawerPresenter.Video: return "Settings/Video/VideoSourceListView.qml";
+                    case DrawerPresenter.Joystick: return "Settings/Joystick/JoystickSettingsView.qml";
+                    case DrawerPresenter.Gui: return "Settings/Gui/GuiSettingsView.qml";
+                    case DrawerPresenter.Networking: return "Settings/Network/NetworkSettingsView.qml";
+                    case DrawerPresenter.About: return "About/AboutView.qml";
+                    case DrawerPresenter.Quit: return "Quit/QuitView.qml";
+                    default: return "";
+                    }
+                }
             }
         }
     }

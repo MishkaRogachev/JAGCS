@@ -14,15 +14,15 @@ ColumnLayout {
         id: repeater
 
         Controls.Button {
-            text: modelData.text ? modelData.text : ""
-            iconSource: modelData.icon ? modelData.icon : ""
+            text: presenter.modeString(modelData)
+            iconSource: presenter.modeIcon(modelData)
             flat: true
-            onClicked: menuModel[index].action()
             contentWidth: width - sizings.controlBaseSize
             implicitWidth: sizings.controlBaseSize * 7
+            onClicked: presenter.setMode(modelData)
             Layout.fillWidth: true
         }
     }
 
-    Item { Layout.fillHeight: true }
+//    Item { Layout.fillHeight: true }
 }

@@ -28,21 +28,21 @@ Item {
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Menu")
             flat: true
-            onClicked: menu.goHome()
+            onClicked: menu.home()
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/planning.svg"
             tipText: qsTr("Planning")
             flat: true
-            onClicked: menu.goPlanning()
+            onClicked: menu.setMode(DrawerPresenter.Planning)
         }
 
         Controls.Button {
             iconSource: "qrc:/icons/fleet.svg"
             tipText: qsTr("Vehicles")
             flat: true
-            onClicked: menu.goVehicles()
+            onClicked: menu.setMode(DrawerPresenter.Vehicles)
         }
 
         Controls.Button {
@@ -50,7 +50,7 @@ Item {
             iconColor: connection.connected ? customPalette.textColor : customPalette.dangerColor
             tipText: qsTr("Links")
             flat: true
-            onClicked: menu.goLinks();
+            onClicked: menu.setMode(DrawerPresenter.Links)
         }
     }
 
