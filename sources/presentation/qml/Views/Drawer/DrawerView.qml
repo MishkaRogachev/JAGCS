@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "../../Controls" as Controls
 
-ColumnLayout {
+Item {
     id: menu
 
     property int mode: DrawerPresenter.UnknownMode
@@ -17,9 +17,7 @@ ColumnLayout {
     function setMode(mode) { presenter.setMode(mode); }
 
     onModeChanged: if (!menu.visible) open()
-    spacing: sizings.spacing
-    width: Math.max(loader.item ? Math.min(loader.implicitWidth + sizings.margins * 2,
-                                           main.width / 2) : 0, sizings.controlBaseSize * 7)
+    implicitWidth: sizings.controlBaseSize * 7
 
     DrawerPresenter {
         id: presenter
@@ -27,7 +25,9 @@ ColumnLayout {
     }
 
     RowLayout {
-        Layout.maximumWidth: parent.width
+        id: drawerHeader
+        anchors.top: parent.top
+        width: parent.width
         spacing: 0
 
         Controls.Button {
@@ -65,19 +65,21 @@ ColumnLayout {
 
     Flickable {
         id: flickable
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width - sizings.padding * 2
+        height: parent.height - drawerHeader.height - sizings.spacing
         contentHeight: contents.height
         flickableDirection: Flickable.AutoFlickIfNeeded
         clip: true
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        Layout.margins: sizings.margins
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
         DrawerMenu {
             id: contents
             menuModel: nestedModes
-            Layout.fillWidth: true
+            width: parent.width
+            height: Math.max(contents.implicitHeight, flickable.height - sizings.margins);
 
             Loader {
                 id: loader
@@ -100,6 +102,8 @@ ColumnLayout {
                     default: return "";
                     }
                 }
+                onItemChanged: menu.width = item ? item.implicitWidth + sizings.margins * 2 :
+                                                   menu.implicitWidth
             }
         }
     }
