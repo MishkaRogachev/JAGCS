@@ -7,9 +7,10 @@ import "qrc:/Controls" as Controls
 Item {
     id: logList
 
-    property var logs: []
+    property alias logs: list.model
 
     implicitWidth: sizings.controlBaseSize * 11
+    implicitHeight: list.height
 
     LogListPresenter {
         id: presenter
@@ -18,9 +19,9 @@ Item {
     }
 
     ListView {
+        id: list
         anchors.fill: parent
         spacing: sizings.spacing
-        model: logs
         onCountChanged: positionViewAtEnd()
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
