@@ -12,7 +12,6 @@ Item {
 
     property alias delegate: delegateLoader
     property alias burgerHovered: burger.hovered // NOTE: QTBUG-59141
-    onBurgerHoveredChanged: console.log(burgerHovered)
 
     height: sizings.controlBaseSize
 

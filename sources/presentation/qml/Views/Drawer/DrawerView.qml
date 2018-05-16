@@ -50,9 +50,9 @@ Item {
             model: parentModes
 
             Controls.Button {
-                text: presenter.modeString(modelData)
+                text: presenter.modeString(modelData) + ", "
                 flat: true
-                //visible: index < parentModes.count
+                visible: modelData != DrawerPresenter.Home
                 onClicked: setMode(modelData)
             }
         }

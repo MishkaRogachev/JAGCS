@@ -30,6 +30,7 @@ namespace
     const QMap<DrawerPresenter::Mode, QString> modeStrings
     {
         { DrawerPresenter::UnknownMode, DrawerPresenter::tr("UnknownMode") },
+        { DrawerPresenter::Home, DrawerPresenter::tr("Home") },
         { DrawerPresenter::Planning, DrawerPresenter::tr("Planning") },
         { DrawerPresenter::Vehicles, DrawerPresenter::tr("Vehicles") },
         { DrawerPresenter::Links, DrawerPresenter::tr("Links") },
@@ -104,7 +105,7 @@ void DrawerPresenter::setMode(Mode mode)
     QVariantList parentModes;
     for (Mode parentMode: ::parentModes(mode))
     {
-        parentModes.append(QVariant::fromValue(parentMode));
+        parentModes.prepend(QVariant::fromValue(parentMode));
     }
     this->setViewProperty(PROPERTY(parentModes), parentModes);
 
