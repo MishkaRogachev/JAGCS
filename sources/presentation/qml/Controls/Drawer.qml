@@ -6,7 +6,6 @@ T.Drawer {
 
     closePolicy: T.Popup.NoAutoClose
     modal: false
-//    dragMargin: 1 // NOTE: QTBUG-59141
 
     background: Rectangle {
         color: customPalette.backgroundColor

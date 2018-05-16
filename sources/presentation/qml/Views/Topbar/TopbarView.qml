@@ -11,6 +11,8 @@ Item {
     id: topbar
 
     property alias delegate: delegateLoader
+    property alias burgerHovered: burger.hovered // NOTE: QTBUG-59141
+    onBurgerHoveredChanged: console.log(burgerHovered)
 
     height: sizings.controlBaseSize
 
@@ -25,10 +27,11 @@ Item {
         spacing: sizings.spacing
 
         Controls.Button {
+            id: burger
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Menu")
             flat: true
-            onClicked: menu.home()
+            onPressed: menu.home()
         }
 
         Controls.Button {

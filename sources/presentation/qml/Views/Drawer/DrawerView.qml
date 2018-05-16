@@ -15,8 +15,9 @@ Item {
 
     function home() { presenter.home(); }
     function setMode(mode) { presenter.setMode(mode); }
+    function close() { setMode(DrawerPresenter.UnknownMode) }
 
-    onModeChanged: if (!menu.visible) open()
+    onModeChanged: if (!menu.visible && mode != DrawerPresenter.UnknownMode) open()
     implicitWidth: sizings.controlBaseSize * 7
 
     DrawerPresenter {
@@ -51,7 +52,7 @@ Item {
             Controls.Button {
                 text: presenter.modeString(modelData)
                 flat: true
-                visible: index + 1 < parentModes.count
+                //visible: index < parentModes.count
                 onClicked: setMode(modelData)
             }
         }

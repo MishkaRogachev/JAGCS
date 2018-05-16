@@ -96,7 +96,9 @@ Controls.ApplicationWindow  {
     Controls.Drawer {
         id: drawer
         width: menu.width
-        height: parent.height - y
+        height: parent.height
+        onClosed: menu.close()
+        interactive: !topbar.burgerHovered // NOTE: QTBUG-59141
 
         DrawerView {
             id: menu
