@@ -47,22 +47,17 @@ Item {
         }
 
         delegate: Loader {
-            property int displayType: vehicleType
             property int displayVehicleId: vehicleId
 
             width: parent.width - sizings.shadowSize
-
-            onDisplayVehicleIdChanged: setupDisplay()
-            Component.onCompleted: setupDisplay()
-
-            function setupDisplay() {
-                switch (displayType) {
+            onDisplayVehicleIdChanged: {
+                setSource("");
+                switch (vehicleType) {
                 case Vehicle.FixedWing:
                 case Vehicle.FlyingWing:
                 default:
                     // TODO: Special widgets for different vehicles
-                    return setSource("AerialVehicleWidget.qml",
-                                     { "vehicleId": displayVehicleId });
+                    return setSource("AerialVehicleWidget.qml", { "vehicleId": displayVehicleId });
                 }
             }
         }

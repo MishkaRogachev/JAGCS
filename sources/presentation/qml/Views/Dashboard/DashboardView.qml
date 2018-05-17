@@ -18,7 +18,7 @@ Item {
     property string speedSuffix: units.trSpeedUnits(speedUnits)
     property string altitudeSuffix: units.trDistanceUnits(altitudeUnits)
 
-    function selectVehicle(vehicleId) {
+    function selectVehicle(vehicleId) { // TODO: to vehicle controller
         presenter.selectVehicle(vehicleId);
     }
 

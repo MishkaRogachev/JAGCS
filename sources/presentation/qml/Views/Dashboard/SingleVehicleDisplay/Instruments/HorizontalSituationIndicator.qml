@@ -23,7 +23,7 @@ BaseInstrument {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         prefix: qsTr("HOME") + ", " + distancePrefix
-        distance: vehicle.position.distanceTo(vehicle.homePosition)
+        distance: vehicle.position.distanceTo(vehicle.home.position)
         width: parent.width * 0.2
     }
 
@@ -64,7 +64,7 @@ BaseInstrument {
 
         Item {
             anchors.fill: parent
-            rotation: vehicle.position.azimuthTo(vehicle.homePosition) - vehicle.compass.heading
+            rotation: vehicle.position.azimuthTo(vehicle.home.position) - vehicle.compass.heading
             visible: homeLabel.distance > 0
             z: -1
 

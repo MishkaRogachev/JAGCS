@@ -32,9 +32,9 @@ Controls.Card {
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
+        Component.onCompleted: presenter.setVehicle(vehicleId)
     }
 
-    onVehicleIdChanged: presenter.setVehicle(vehicleId)
     onDeepIn: dashboard.selectVehicle(vehicleId)
 
     implicitWidth: grid.implicitWidth + sizings.margins * 2
