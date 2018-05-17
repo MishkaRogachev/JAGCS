@@ -18,8 +18,14 @@ QtObject {
     property int mode: Domain.None
     property var availableModes: []
 
-    property var position: QtPositioning.coordinate()
-    property var homePosition: QtPositioning.coordinate()
+    property variant position: QtPositioning.coordinate()
+
+    property QtObject home: QtObject{
+        objectName: "home"
+
+        property variant position: QtPositioning.coordinate()
+        property real altitude: NaN
+    }
 
     property QtObject mission: QtObject{
         objectName: "mission"

@@ -32,7 +32,6 @@ Controls.Card {
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
-        Component.onCompleted: setVehicle(vehicleId)
     }
 
     onVehicleIdChanged: presenter.setVehicle(vehicleId)
@@ -129,7 +128,7 @@ Controls.Card {
                 value: units.convertDistanceTo(altitudeUnits, vehicle.barometric.displayedAltitude)
                 enabled: vehicle.barometric.enabled
                 operational: vehicle.barometric.operational
-                prefix: qsTr("ALT") + ", " + dashboard.altitudeSuffix
+                prefix: qsTr("Hbar") + ", " + dashboard.altitudeSuffix
                 Layout.fillWidth: true
             }
         }

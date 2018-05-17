@@ -148,8 +148,11 @@ void BaseVehicleDisplayPresenter::updatePosition(const domain::Telemetry::Teleme
 
 void BaseVehicleDisplayPresenter::updateHome(const domain::Telemetry::TelemetryMap& parameters)
 {
-    this->setVehicleProperty(PROPERTY(homePosition),
+    this->setVehicleProperty(PROPERTY(home), PROPERTY(position),
                              parameters.value(domain::Telemetry::Coordinate,
                                               QVariant::fromValue(QGeoCoordinate())));
+
+    this->setVehicleProperty(PROPERTY(home), PROPERTY(altitude),
+                             parameters.value(domain::Telemetry::Altitude, qQNaN()));
 }
 

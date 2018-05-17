@@ -15,7 +15,7 @@ namespace presentation
         ~CommonVehicleDisplayPresenter() override;
 
     public slots:
-        virtual void setVehicle(int vehicleId);
+        void setVehicle(int vehicleId);
 
         void updateVehicle();
         void updateMissionItems();

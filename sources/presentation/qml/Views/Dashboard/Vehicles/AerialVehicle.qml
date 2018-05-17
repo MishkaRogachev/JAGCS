@@ -4,8 +4,6 @@ import JAGCS 1.0
 BaseVehicle {
     id: root
 
-    readonly property real homeAltitude: homePosition.isValid ? homePosition.altitude : NaN
-
     property Subsystem barometric: Subsystem {
         objectName: "barometric"
 
@@ -13,11 +11,11 @@ BaseVehicle {
         property real climb: NaN
 
         readonly property real displayedAltitude: dashboard.altitudeRelative ?
-                                                      altitude - homeAltitude : altitude
+                                                      altitude - home.altitude : altitude
 
         function fromDisplayedAltitude(displayedAltitude) {
             return dashboard.altitudeRelative ?
-                        displayedAltitude : displayedAltitude - homeAltitude;
+                        displayedAltitude : displayedAltitude - home.altitude;
         }
     }
 
