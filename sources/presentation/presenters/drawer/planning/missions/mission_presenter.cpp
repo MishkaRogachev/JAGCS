@@ -56,11 +56,6 @@ void MissionPresenter::remove()
     m_service->remove(m_service->mission(m_missionId));
 }
 
-void MissionPresenter::assignVehicle(int vehicleId)
-{
-    vehicleId ? m_service->assign(m_missionId, vehicleId) : m_service->unassign(m_missionId);
-}
-
 void MissionPresenter::setMissionVisible(bool visible)
 {
     settings::Provider::setValue(settings::mission::mission + QString::number(

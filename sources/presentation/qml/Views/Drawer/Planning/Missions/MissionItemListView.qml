@@ -8,7 +8,7 @@ Flickable {
     id: missionItemList
 
     property int missionId: 0
-    property int selectedItemId: 0
+    property int selectedItemId: -1
     property var itemIds: []
 
     signal selectionRequest(int itemId)

@@ -20,8 +20,10 @@ namespace presentation
 
     public slots:
         void setMission(int id);
+
         void updateAssignment();
 
+        void assignVehicle(int vehicleId);
         void uploadMission();
         void downloadMission();
         void cancelSyncMission();

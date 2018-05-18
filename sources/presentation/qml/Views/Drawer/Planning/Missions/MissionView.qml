@@ -4,32 +4,63 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Frame {
+Controls.Card {
     id: missionView
 
     property int missionId: 0
-    property alias assignedVehicleId: assignment.assignedVehicleId
-    property int count: 0
     property bool missionVisible: false
     property alias name: nameEdit.text
 
-    function updateSelectedVehicle() {
-        for (var i = 0; i < vehicles.length; ++i) {
-            if (vehicles[i].id === assignedVehicleId) {
-                vehicleBox.currentIndex = i;
-                assignment.vehicleOnline = vehicles[i].online;
-                return;
-            }
-        }
-        vehicleBox.currentIndex = -1;
-        assignment.vehicleOnline = false;
+    function edit() {
+        if (!missionVisible) presenter.setMissionVisible(true);
+        selectedMissionId = missionId;
     }
 
-    onAssignedVehicleIdChanged: updateSelectedVehicle()
+    function toggleMissionVisibility() {
+        presenter.setMissionVisible(!missionVisible);
+    }
 
-    Connections {
-        target: planning
-        onVehiclesChanged: updateSelectedVehicle()
+    implicitWidth: grid.implicitWidth + sizings.margins * 2
+    implicitHeight: grid.implicitHeight + sizings.margins * 2
+
+    onDeepIn: edit()
+    Component.onCompleted: {
+        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+
+        var visibilityItem = menu.addEntry();
+        visibilityItem.triggered.connect(toggleMissionVisibility);
+        visibilityItem.text = Qt.binding(function() {
+            return missionVisible ? qsTr("Hide mission") : qsTr("Show mission"); });
+        visibilityItem.iconSource = Qt.binding(function() {
+            return missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"; });
+
+        var downloadItem = menu.addEntry(qsTr("Download"), "qrc:/icons/download.svg");
+        downloadItem.enabled = Qt.binding(function() {
+            return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
+                   assignment.status !== MissionAssignment.Downloading &&
+                   assignment.status !== MissionAssignment.Uploading });
+        downloadItem.triggered.connect(assignment.download);
+
+        var uploadItem = menu.addEntry(qsTr("Upload"), "qrc:/icons/upload.svg");
+        uploadItem.enabled = Qt.binding(function() {
+            return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
+                   assignment.status !== MissionAssignment.Downloading &&
+                   assignment.status !== MissionAssignment.Uploading });
+        uploadItem.triggered.connect(assignment.upload);
+
+        var uploadItem = menu.addEntry(qsTr("Cancel sync"), "qrc:/icons/cancel.svg");
+        uploadItem.enabled = Qt.binding(function() {
+            return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
+                   (assignment.status === MissionAssignment.Downloading ||
+                   assignment.status === MissionAssignment.Uploading) });
+        uploadItem.triggered.connect(assignment.cancelSync);
+
+        // TODO: export mission to file
+        menu.addEntry(qsTr("Export mission"), "qrc:/icons/save.svg").enabled = false;
+
+        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
+        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.triggered.connect(presenter.remove);
     }
 
     MissionPresenter {
@@ -39,38 +70,22 @@ Controls.Frame {
     }
 
     GridLayout {
+        id: grid
         anchors.fill: parent
+        anchors.margins: sizings.margins
+        anchors.rightMargin: parent.margin
         columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
 
         Controls.Label {
-            text: qsTr("Name")
+            text: qsTr("Mission")
         }
 
         Controls.TextField {
             id: nameEdit
             onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Vehicle")
-        }
-
-        RowLayout {
-            Controls.ComboBox {
-                id: vehicleBox
-                model: vehicles
-                textRole: "name"
-                onActivated: presenter.assignVehicle(vehicles[currentIndex].id)
-                Layout.fillWidth: true
-            }
-
-            Controls.ComboBox { // NOTE: for mission slot
-                enabled: false
-                Layout.maximumWidth: sizings.controlBaseSize
-            }
         }
 
         Controls.Label {
@@ -82,44 +97,11 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        Controls.Label {
-            text: qsTr("Actions")
+        MissionItemListView {
+            id: listView
+            missionId: missionView.missionId
+            Layout.columnSpan: 2
             Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
-
-            Controls.Button {
-                tipText: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
-                iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
-                onClicked: presenter.setMissionVisible(!missionVisible)
-            }
-
-            Controls.Button {
-                tipText: qsTr("Export mission")
-                iconSource: "qrc:/icons/save.svg"
-                enabled: false
-                //onClicked: TODO: export()
-            }
-
-            Controls.Button {
-                tipText: qsTr("Edit commands")
-                iconSource: "qrc:/icons/edit.svg"
-                enabled: missionId > 0
-                onClicked: {
-                    if (!missionVisible) presenter.setMissionVisible(true);
-                    deepIn("qrc:/Views/Drawer/Planning/Missions/MissionEditView.qml",
-                           name, { "missionId": missionId });
-                }
-            }
-
-            Controls.DelayButton {
-                tipText: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onActivated: presenter.remove()
-                iconColor: customPalette.dangerColor
-            }
         }
     }
 }

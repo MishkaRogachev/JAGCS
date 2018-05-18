@@ -35,15 +35,16 @@ Controls.Card {
         Component.onCompleted: presenter.setVehicle(vehicleId)
     }
 
-    onDeepIn: dashboard.selectVehicle(vehicleId)
-
     implicitWidth: grid.implicitWidth + sizings.margins * 2
     implicitHeight: grid.implicitHeight + sizings.margins * 2
+
+    onDeepIn: dashboard.selectVehicle(vehicleId)
 
     GridLayout {
         id: grid
         anchors.fill: parent
         anchors.margins: sizings.margins
+        anchors.rightMargin: parent.margin
         columnSpacing: sizings.spacing
         rowSpacing: sizings.spacing
         columns: 2

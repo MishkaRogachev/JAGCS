@@ -25,7 +25,6 @@ namespace presentation
         void rename(const QString& name);
         void setMissionVisible(bool visible);
         void remove();
-        void assignVehicle(int vehicleId);
 
     private:
         domain::MissionService* const m_service;

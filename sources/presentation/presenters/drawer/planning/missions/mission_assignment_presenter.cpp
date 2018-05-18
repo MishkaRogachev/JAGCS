@@ -56,6 +56,13 @@ void MissionAssignmentPresenter::updateAssignment()
     }
 }
 
+
+void MissionAssignmentPresenter::assignVehicle(int vehicleId)
+{
+    vehicleId ? m_service->assign(m_missionId, vehicleId) : m_service->unassign(m_missionId);
+}
+
+
 void MissionAssignmentPresenter::uploadMission()
 {
     dto::MissionAssignmentPtr assignment = m_service->missionAssignment(m_missionId);

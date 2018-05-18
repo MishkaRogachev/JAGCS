@@ -13,7 +13,38 @@ RowLayout {
     property int assignedVehicleId: 0
     property int status: MissionAssignment.NotActual
 
+    function updateSelectedVehicle() {
+        for (var i = 0; i < vehicles.length; ++i) {
+            if (vehicles[i].id === assignedVehicleId) {
+                vehicleBox.currentIndex = i;
+                vehicleOnline = vehicles[i].online;
+                return;
+            }
+        }
+        vehicleBox.currentIndex = -1;
+        vehicleOnline = false;
+    }
+
+    function download() {
+        presenter.downloadMission()
+    }
+
+    function upload() {
+        presenter.uploadMission()
+    }
+
+    function cancelSync() {
+        presenter.cancelSyncMission()
+    }
+
+    onAssignedVehicleIdChanged: updateSelectedVehicle()
+
     spacing: sizings.spacing
+
+    Connections {
+        target: planning
+        onVehiclesChanged: updateSelectedVehicle()
+    }
 
     MissionAssignmentPresenter {
         id: presenter
@@ -21,26 +52,16 @@ RowLayout {
         Component.onCompleted: setMission(missionId)
     }
 
-    Controls.ProgressBar {
-         to: count
-         value: progress
-         text: assignedVehicleId > 0 ? (progress + "/" + count) : qsTr("None")
-         Layout.fillWidth: true
-     }
-
-    Controls.Button {
-        tipText: qsTr("Download mission from MAV")
-        iconSource: "qrc:/icons/download.svg"
-        enabled: assignedVehicleId > 0 && vehicleOnline
-        highlighted: status === MissionAssignment.Downloading
-        onClicked: highlighted ? presenter.cancelSyncMission() : presenter.downloadMission()
+    Controls.ComboBox {
+        id: vehicleBox
+        model: vehicles
+        textRole: "name"
+        onActivated: presenter.assignVehicle(vehicles[currentIndex].id)
+        Layout.fillWidth: true
     }
 
-    Controls.Button {
-        tipText: qsTr("Upload mission to MAV")
-        iconSource: "qrc:/icons/upload.svg"
-        enabled: assignedVehicleId > 0 && vehicleOnline
-        highlighted: status === MissionAssignment.Uploading
-        onClicked: highlighted ? presenter.cancelSyncMission() : presenter.uploadMission()
+    Controls.ComboBox { // NOTE: for mission slot
+        enabled: false
+        Layout.maximumWidth: sizings.controlBaseSize * 2
     }
 }

@@ -10,6 +10,7 @@ Item {
     id: planning
 
     property var vehicles: []
+    property int selectedMissionId: 0
 
     implicitWidth: sizings.controlBaseSize * 11
 
@@ -23,35 +24,45 @@ Item {
         anchors.fill: parent
         anchors.bottomMargin: addRow.height
         contentHeight: Math.max(column.height, frame.height)
+        visible: selectedMissionId == 0
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-        Controls.Frame {
-            id: frame
-            visible: missionList.missionIds.count === 0
-            width: parent.width
-            height: label.height + sizings.margins * 2
-
-            Controls.Label {
-                id: label
-                text: qsTr("No items present")
-                width: parent.width
-                anchors.centerIn: parent
-                horizontalAlignment: Text.AlignHCenter
-            }
-        }
-
         ColumnLayout {
             id: column
-            width: parent.width
-            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - sizings.shadowSize * 2
+            height: implicitHeight + sizings.shadowSize
             spacing: sizings.spacing
+
+            Controls.Frame {
+                id: frame
+                visible: missionList.missionIds.count === 0
+                width: parent.width
+                height: label.height + sizings.margins * 2
+
+                Controls.Label {
+                    id: label
+                    text: qsTr("No items present")
+                    width: parent.width
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
 
             MissionListView {
                 id: missionList
+                Layout.fillWidth: true
             }
         }
+    }
+
+    MissionEditView {
+        anchors.fill: parent
+        anchors.bottomMargin: addRow.height
+        missionId: selectedMissionId
+        visible: missionId > 0
     }
 
     RowLayout {
