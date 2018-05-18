@@ -10,7 +10,6 @@ import "Connection"
 Item {
     id: topbar
 
-    property alias delegate: delegateLoader
     property alias burgerHovered: burger.hovered // NOTE: QTBUG-59141
 
     height: sizings.controlBaseSize
@@ -21,6 +20,7 @@ Item {
     }
 
     RowLayout {
+        id: buttonRow
         anchors.left: parent.left
         height: parent.height
         spacing: sizings.spacing
@@ -57,10 +57,12 @@ Item {
     }
 
     RowLayout {
+        anchors.left: buttonRow.right
         anchors.right: parent.right
         anchors.rightMargin: dashboard.width
         height: parent.height
         spacing: sizings.spacing
+        clip: true
 
         ConnectionView {
             id: connection
@@ -68,12 +70,6 @@ Item {
 
         RadioStatusView {
             id: radioStatus
-            Layout.preferredWidth: sizings.controlBaseSize * 5
-        }
-
-        Loader {
-            id: delegateLoader
-            height: parent.height
         }
     }
 }

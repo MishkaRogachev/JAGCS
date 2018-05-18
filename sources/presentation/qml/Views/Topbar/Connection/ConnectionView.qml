@@ -11,8 +11,8 @@ Item {
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
 
-    width: sizings.controlBaseSize * 2
-    height: sizings.controlBaseSize
+    implicitWidth: sizings.controlBaseSize * 2
+    implicitHeight: sizings.controlBaseSize
 
     ConnectionPresenter {
         id: presenter
