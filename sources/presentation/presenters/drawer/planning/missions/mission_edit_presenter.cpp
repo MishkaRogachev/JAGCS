@@ -29,7 +29,7 @@ MissionEditPresenter::MissionEditPresenter(QObject* object):
 {
     connect(d->service, &domain::MissionService::missionChanged, this,
             [this](const dto::MissionPtr& mission) {
-        if (mission == d->mission) this->updateCount();
+        if (mission == d->mission) this->updateMission();
     });
 }
 
@@ -40,7 +40,7 @@ void MissionEditPresenter::setMission(int id)
 {
     d->mission = d->service->mission(id);
 
-    this->updateCount();
+    this->updateMission();
 }
 
 void MissionEditPresenter::setItem(int id)
@@ -59,9 +59,10 @@ void MissionEditPresenter::selectItem(int sequence)
     this->updateItem();
 }
 
-void MissionEditPresenter::updateCount()
+void MissionEditPresenter::updateMission()
 {
     this->setViewProperty(PROPERTY(count), d->mission ? d->mission->count() : 0);
+    this->setViewProperty(PROPERTY(name), d->mission ? d->mission->name() : tr("None"));
 }
 
 void MissionEditPresenter::updateItem()

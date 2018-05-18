@@ -7,16 +7,21 @@ import "qrc:/Controls" as Controls
 ColumnLayout {
     id: missionEdit
 
+    property int missionId: 0
+
     property int sequence: -1
     property int count: 0
 
-    property alias missionId: itemList.missionId
+    property alias name: nameLabel.text
     property alias selectedItemId: itemList.selectedItemId
-    property alias picking: itemEdit.picking
 
     implicitWidth: sizings.controlBaseSize * 11
     spacing: sizings.spacing
 
+    onMissionIdChanged: {
+        presenter.setMission(missionId);
+        presenter.selectItem(0);
+    }
     onSelectedItemIdChanged: {
         presenter.setItem(selectedItemId);
         if (map) map.selectedItemId = selectedItemId;
@@ -37,7 +42,22 @@ ColumnLayout {
     MissionEditPresenter {
         id: presenter
         view: missionEdit
-        Component.onCompleted: setMission(missionId)
+    }
+
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.Button {
+            tipText: qsTr("Back to planning list")
+            iconSource: "qrc:/icons/left.svg"
+            flat: true
+            onClicked: selectedMissionId = 0
+        }
+
+        Controls.Label {
+            id: nameLabel
+            text: qsTr("Unknown mission")
+        }
     }
 
     MissionItemListView {
@@ -45,11 +65,11 @@ ColumnLayout {
         missionId: missionEdit.missionId
         onSelectionRequest: missionEdit.selectedItemId = itemId
         Layout.fillWidth: true
-        implicitWidth: missionEdit.width
     }
 
-    RowLayout
-    {
+    RowLayout {
+        spacing: sizings.spacing
+
         Controls.Label {
             text: qsTr("Item")
             Layout.fillWidth: true

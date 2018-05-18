@@ -89,7 +89,7 @@ Controls.Card {
         }
 
         Controls.Label {
-            text: qsTr("Assignment")
+            text: qsTr("Vehicle")
         }
 
         MissionAssignmentView {

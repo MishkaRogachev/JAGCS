@@ -20,7 +20,7 @@ Item {
         Component.onCompleted: updateVehicles()
     }
 
-    Flickable {
+    Flickable { // TODO: to listView
         anchors.fill: parent
         anchors.bottomMargin: addRow.height
         contentHeight: Math.max(column.height, frame.height)
@@ -60,7 +60,6 @@ Item {
 
     MissionEditView {
         anchors.fill: parent
-        anchors.bottomMargin: addRow.height
         missionId: selectedMissionId
         visible: missionId > 0
     }
@@ -71,6 +70,7 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         spacing: sizings.spacing
+        visible: selectedMissionId == 0
 
         Controls.Button {
             text: qsTr("Add Mission")

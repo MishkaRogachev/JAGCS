@@ -57,6 +57,7 @@
         <file>icons/hide.svg</file>
         <file>icons/show_dashboard.svg</file>
         <file>icons/hide_dashboard.svg</file>
+        <file>icons/hide_drawer.svg</file>
         <file>icons/maximize.svg</file>
         <file>icons/minimize.svg</file>
         <file>icons/armed.svg</file>

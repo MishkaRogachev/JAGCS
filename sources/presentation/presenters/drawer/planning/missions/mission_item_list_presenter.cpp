@@ -34,21 +34,19 @@ MissionItemListPresenter::MissionItemListPresenter(QObject* parent):
 
 void MissionItemListPresenter::setMission(int id)
 {
-    m_missionId = id;
+    if (m_missionId == id) return;
 
-    this->updateMissionItems(true);
+    m_missionId = id;
+    this->updateMissionItems();
 }
 
-void MissionItemListPresenter::updateMissionItems(bool selectLast)
+void MissionItemListPresenter::updateMissionItems()
 {
     QVariantList itemIds;
-    int selectedItemId = 0;
 
     for (const dto::MissionItemPtr& item: m_service->missionItems(m_missionId))
     {
-        itemIds.append(selectedItemId = item->id());
+        itemIds.append(item->id());
     }
-
     this->setViewProperty(PROPERTY(itemIds), itemIds);
-    if (selectLast) this->setViewProperty(PROPERTY(selectedItemId), selectedItemId);
 }

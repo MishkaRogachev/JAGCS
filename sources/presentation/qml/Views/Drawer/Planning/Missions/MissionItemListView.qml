@@ -8,7 +8,7 @@ Flickable {
     id: missionItemList
 
     property int missionId: 0
-    property int selectedItemId: -1
+    property int selectedItemId: 0
     property var itemIds: []
 
     signal selectionRequest(int itemId)
@@ -19,13 +19,11 @@ Flickable {
     boundsBehavior: Flickable.StopAtBounds
     clip: true
 
-    Component.onCompleted: drawer.interactive = false
-    Component.onDestruction: drawer.interactive = true
+    onMissionIdChanged: presenter.setMission(missionId)
 
     MissionItemListPresenter {
         id: presenter
         view: missionItemList
-        Component.onCompleted: setMission(missionId)
     }
 
     RowLayout {

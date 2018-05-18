@@ -32,8 +32,8 @@ Item {
         spacing: 0
 
         Controls.Button {
-            tipText: qsTr("Close menu")
-            iconSource: "qrc:/icons/left.svg"
+            tipText: qsTr("Close drawer")
+            iconSource: "qrc:/icons/hide_drawer.svg"
             flat: true
             onClicked: drawer.close()
         }

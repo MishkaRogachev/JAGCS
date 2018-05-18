@@ -21,7 +21,7 @@ namespace presentation
         void setItem(int id);
         void selectItem(int index);
 
-        void updateCount();
+        void updateMission();
         void updateItem();
 
         void removeItem();

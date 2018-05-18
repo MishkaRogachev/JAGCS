@@ -9,7 +9,7 @@ import "qrc:/Views/Common"
 Item {
     id: itemEdit
 
-    property bool editEnabled: false
+    property bool editEnabled: true
     property bool changed: false
     property int itemId: 0
     property int command: MissionItem.UnknownCommand

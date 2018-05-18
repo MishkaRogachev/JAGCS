@@ -20,7 +20,7 @@ namespace presentation
 
     public slots:
         void setMission(int id);
-        void updateMissionItems(bool selectLast = false);
+        void updateMissionItems();
 
     private:
         domain::MissionService* const m_service;
