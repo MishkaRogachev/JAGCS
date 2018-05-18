@@ -7,7 +7,10 @@ Item {
 
     signal deepIn()
 
+    property alias menuEnabled: menuButton.enabled
+    property alias menu: menu
     property alias backgroundColor: background.color
+    readonly property int margin: menuButton.width
 
     property Item contentItem: Item {}
 
@@ -26,13 +29,34 @@ Item {
         }
     }
 
-//    Button {
-//        anchors.top: parent.top
-//        anchors.right: parent.right
-//        iconSource: "qrc:/ui/dots.svg"
-//        flat: true
-//        onClicked: more()
-//    }
+    Button {
+        id: menuButton
+        anchors.top: parent.top
+        anchors.right: parent.right
+        iconSource: "qrc:/ui/dots.svg"
+        flat: true
+        enabled: false
+        width: sizings.controlBaseSize * 0.5
+        height: sizings.controlBaseSize * 0.75
+        onClicked: menu.open()
+
+        Menu {
+            id: menu
+            y: parent.height
+
+            function addEntry(text, iconSource) {
+                var item = menuItem.createObject(null, { text: text, iconSource: iconSource });
+                menu.addItem(item);
+                menuButton.enabled = true;
+                return item;
+            }
+
+            Component {
+                id: menuItem
+                MenuItem {}
+            }
+        }
+    }
 
     ColoredIcon {
         anchors.bottom: parent.bottom
