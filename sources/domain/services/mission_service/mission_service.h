@@ -33,12 +33,13 @@ namespace domain
         dto::MissionAssignmentPtrList missionAssignments() const;
 
         dto::MissionItemPtr currentWaypoint(int vehicleId) const;
+        int isCurrentForVehicle(const dto::MissionItemPtr& item) const;
+
         dto::MissionItemPtr addNewMissionItem(int missionId,
                                               dto::MissionItem::Command command,
                                               int sequence);
         void addNewMission(const QString& name);
 
-    public slots:
         bool save(const dto::MissionPtr& mission);
         bool save(const dto::MissionItemPtr& item);
         bool save(const dto::MissionAssignmentPtr& assignment);
@@ -47,6 +48,7 @@ namespace domain
         bool remove(const dto::MissionItemPtr& item);
         bool remove(const dto::MissionAssignmentPtr& assignment);
 
+public slots:
         void unload(const dto::MissionPtr& mission);
         void unload(const dto::MissionItemPtr& item);
         void unload(const dto::MissionAssignmentPtr& assignment);
@@ -70,7 +72,9 @@ namespace domain
         void missionItemAdded(dto::MissionItemPtr item);
         void missionItemRemoved(dto::MissionItemPtr item);
         void missionItemChanged(dto::MissionItemPtr item);
-        void currentItemChanged(int vehicleId, dto::MissionItemPtr item);
+        void currentItemChanged(int vehicleId,
+                                dto::MissionItemPtr oldOne,
+                                dto::MissionItemPtr newOne);
 
         void assignmentAdded(dto::MissionAssignmentPtr assignment);
         void assignmentRemoved(dto::MissionAssignmentPtr assignment);

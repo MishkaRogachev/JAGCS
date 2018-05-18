@@ -26,7 +26,8 @@ namespace presentation
             ItemVisibleRole,
             ItemAcceptanceRadius,
             ItemRadius,
-            ItemIndex
+            ItemIndex,
+            ItemCurrent
         };
 
         explicit MissionPointMapItemModel(domain::MissionService* service,
@@ -39,6 +40,9 @@ namespace presentation
         void onMissionItemAdded(const dto::MissionItemPtr& item);
         void onMissionItemRemoved(const dto::MissionItemPtr& item);
         void onMissionItemChanged(const dto::MissionItemPtr& item);
+        void onCurrentItemChanged(int vehicleId,
+                                  const dto::MissionItemPtr& old,
+                                  const dto::MissionItemPtr& item);
         void onMissionChanged(const dto::MissionPtr& mission);
 
     protected:

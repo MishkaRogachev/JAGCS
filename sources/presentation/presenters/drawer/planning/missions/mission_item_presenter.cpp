@@ -20,6 +20,12 @@ MissionItemPresenter::MissionItemPresenter(QObject* parent):
             [this](const dto::MissionItemPtr& item) {
         if (m_item && m_item == item) this->updateItem();
     });
+
+    connect(m_service, &domain::MissionService::currentItemChanged, this,
+            [this](int vehicleId, const dto::MissionItemPtr& old, const dto::MissionItemPtr& item) {
+        Q_UNUSED(vehicleId)
+        if (m_item && (m_item == old || m_item == item)) this->updateItem();
+    });
 }
 
 void MissionItemPresenter::setItem(int id)
@@ -31,7 +37,8 @@ void MissionItemPresenter::setItem(int id)
 
 void MissionItemPresenter::updateItem()
 {
-    this->setViewProperty(PROPERTY(current), m_item ? m_item->isCurrent() : false);
+    this->setViewProperty(PROPERTY(current), m_item ? m_service->isCurrentForVehicle(m_item) > 0 :
+                                                      false);
     this->setViewProperty(PROPERTY(reached), m_item ? m_item->isReached() : false);
     this->setViewProperty(PROPERTY(sequence), m_item ? m_item->sequence() : -1);
     this->setViewProperty(PROPERTY(status), m_item ? m_item->status() : false);

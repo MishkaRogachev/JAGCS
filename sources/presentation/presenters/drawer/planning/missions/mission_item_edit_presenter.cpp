@@ -135,8 +135,6 @@ void MissionItemEditPresenter::updateItem()
         this->setViewProperty(PROPERTY(previousGlobalAltitude), previousGlobalAltitude);
         this->setViewProperty(PROPERTY(previousPosition), QVariant::fromValue(previousPosition));
 
-        this->setViewProperty(PROPERTY(editEnabled), !d->item->isCurrent() ||
-                              d->item->sequence() == 0);
         this->setViewProperty(PROPERTY(sequence), d->item->sequence());
         this->setViewProperty(PROPERTY(command), d->item->command());
         this->setViewProperty(PROPERTY(commandIndex), d->availableCommands.indexOf(d->item->command()));

@@ -15,7 +15,7 @@ MapItemView {
 
         sourceItem: PointView {
             selected: itemSelected
-            current: itemPtr.current
+            current: itemCurrent
             reached: itemPtr.reached
             status: itemPtr.status
             command: itemPtr.command

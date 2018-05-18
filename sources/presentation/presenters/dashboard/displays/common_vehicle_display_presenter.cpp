@@ -69,7 +69,9 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
     });
 
     connect(d->missionService, &domain::MissionService::currentItemChanged, this,
-            [this](int vehicleId, const dto::MissionItemPtr& item) {
+            [this](int vehicleId, const dto::MissionItemPtr& oldItem,
+            const dto::MissionItemPtr& item) {
+        Q_UNUSED(oldItem)
         if (d->assignment && d->assignment->vehicleId() == vehicleId)
             this->setVehicleProperty(PROPERTY(mission), PROPERTY(current),
                                      item ? item->sequence() : -1);

@@ -116,6 +116,11 @@ MissionItemPtr MissionService::currentWaypoint(int vehicleId) const
     return d->currentItems.value(vehicleId);
 }
 
+int MissionService::isCurrentForVehicle(const MissionItemPtr& item) const
+{
+    return d->currentItems.key(item, 0);
+}
+
 dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
                                                       dto::MissionItem::Command command,
                                                       int sequence)
@@ -406,7 +411,7 @@ void MissionService::assign(int missionId, int vehicleId)
     {
         if (vehicleAssignment->missionId() == missionId) return;
 
-        if (!this->remove(vehicleAssignment)) return;
+        this->unassign(vehicleAssignment->missionId());
     }
 
     // Read current mission assignment, if exist
@@ -434,7 +439,11 @@ void MissionService::unassign(int missionId)
     QMutexLocker locker(&d->mutex);
 
     MissionAssignmentPtr assignment = this->missionAssignment(missionId);
-    if (!assignment.isNull()) this->remove(assignment);
+    if (assignment.isNull()) return;
+
+    MissionItemPtr oldOne =d->currentItems.take(assignment->vehicleId());
+    emit currentItemChanged(assignment->vehicleId(), oldOne, MissionItemPtr());
+    this->remove(assignment);
 }
 
 void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& current)
@@ -444,21 +453,14 @@ void MissionService::setCurrentItem(int vehicleId, const MissionItemPtr& current
     MissionItemPtr oldCurrent = d->currentItems.value(vehicleId);
     if (oldCurrent == current) return;
 
-    if (oldCurrent)
-    {
-        oldCurrent->setCurrent(false);
-        emit missionItemChanged(oldCurrent);
-    }
-
     if (current)
     {
-        current->setCurrent(true);
         d->currentItems[vehicleId] = current;
         emit missionItemChanged(current);
     }
     else if (oldCurrent) d->currentItems.remove(vehicleId);
 
-    emit currentItemChanged(vehicleId, current);
+    emit currentItemChanged(vehicleId, oldCurrent, current);
 }
 
 void MissionService::swapItems(const MissionItemPtr& first, const MissionItemPtr& second)

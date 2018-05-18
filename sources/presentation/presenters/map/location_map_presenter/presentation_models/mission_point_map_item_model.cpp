@@ -23,6 +23,8 @@ MissionPointMapItemModel::MissionPointMapItemModel(domain::MissionService* servi
             this, &MissionPointMapItemModel::onMissionItemRemoved);
     connect(service, &domain::MissionService::missionItemChanged,
             this, &MissionPointMapItemModel::onMissionItemChanged);
+    connect(service, &domain::MissionService::currentItemChanged,
+            this, &MissionPointMapItemModel::onCurrentItemChanged);
     connect(service, &domain::MissionService::missionChanged,
             this, &MissionPointMapItemModel::onMissionChanged);
 
@@ -81,6 +83,8 @@ QVariant MissionPointMapItemModel::data(const QModelIndex& index, int role) cons
     }
     case ItemIndex:
         return index.row();
+    case ItemCurrent:
+        return m_service->isCurrentForVehicle(item) > 0;
     default:
         return QVariant();
     }
@@ -111,6 +115,19 @@ void MissionPointMapItemModel::onMissionItemChanged(const dto::MissionItemPtr& i
     emit dataChanged(index, index);
 }
 
+void MissionPointMapItemModel::onCurrentItemChanged(int vehicleId,
+                                                    const dto::MissionItemPtr& old,
+                                                    const dto::MissionItemPtr& item)
+{
+    Q_UNUSED(vehicleId)
+
+    QModelIndex index = this->itemIndex(old);
+    if (index.isValid()) emit dataChanged(index, index, { ItemCurrent } );
+
+    index = this->itemIndex(item);
+    if (index.isValid()) emit dataChanged(index, index, { ItemCurrent } );
+}
+
 void MissionPointMapItemModel::onMissionChanged(const dto::MissionPtr& mission)
 {
     for (const dto::MissionItemPtr& item: m_items)
@@ -132,6 +149,7 @@ QHash<int, QByteArray> MissionPointMapItemModel::roleNames() const
     roles[ItemAcceptanceRadius] = "itemAcceptanceRadius";
     roles[ItemRadius] = "itemRadius";
     roles[ItemIndex] = "itemIndex";
+    roles[ItemCurrent] = "itemCurrent";
 
     return roles;
 }
