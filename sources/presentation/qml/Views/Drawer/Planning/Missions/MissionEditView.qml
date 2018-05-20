@@ -62,6 +62,7 @@ ColumnLayout {
     }
 
     Flickable {
+        id: flickable
         contentWidth: itemList.width
         clip: true
         boundsBehavior: Flickable.StopAtBounds
@@ -75,6 +76,15 @@ ColumnLayout {
             height: parent.height
             missionId: missionEdit.missionId
             onSelectionRequest: missionEdit.selectedItemId = itemId
+            onCheckItemX: {
+                var dX = x - flickable.contentX;
+                if (dX < 0) {
+                    flickable.contentX = x;
+                }
+                else if (dX > flickable.width - sizings.controlBaseSize) {
+                    flickable.contentX = x - flickable.width + sizings.controlBaseSize;
+                }
+            }
         }
     }
 

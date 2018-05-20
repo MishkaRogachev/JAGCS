@@ -13,6 +13,7 @@ Row {
     property alias itemIds: repeater.model
 
     signal selectionRequest(int itemId)
+    signal checkItemX(real x)
 
     onMissionIdChanged: presenter.setMission(missionId)
 
@@ -41,6 +42,7 @@ Row {
                 anchors.centerIn: parent
                 itemId: modelData
                 selected: selectedItemId == itemId
+                onSelectedChanged: if (selected) checkItemX(parent.x)
                 onPressed: missionItemList.selectionRequest(itemId)
             }
         }
