@@ -1,23 +1,18 @@
 import QtQuick 2.6
-import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Flickable {
+Row {
     id: missionItemList
 
     property int missionId: 0
     property int selectedItemId: 0
-    property var itemIds: []
+    width: sizings.controlBaseSize * repeater.count
+
+    property alias itemIds: repeater.model
 
     signal selectionRequest(int itemId)
-
-    contentWidth: row.width
-    implicitWidth: row.width
-    implicitHeight: row.height
-    boundsBehavior: Flickable.StopAtBounds
-    clip: true
 
     onMissionIdChanged: presenter.setMission(missionId)
 
@@ -26,25 +21,28 @@ Flickable {
         view: missionItemList
     }
 
-    RowLayout {
-        id: row
-        spacing: 1
+    Controls.Label {
+        id: label
+        visible: repeater.count == 0
+        text: qsTr("No waypoints")
+        horizontalAlignment: Qt.AlignHCenter
+        width: parent.width
+    }
 
-        Controls.Label {
-            visible: itemIds.length === 0
-            text: qsTr("No waypoints")
-            horizontalAlignment: Text.AlignHCenter
-            Layout.preferredWidth: missionItemList.width
-        }
+    Repeater {
+        id: repeater
 
-        Repeater {
-            model: itemIds
+        Item {
+            width: Math.min(itemView.implicitWidth, missionItemList.width / repeater.count)
+            height: itemView.implicitHeight
 
-             MissionItemView {
-                 itemId: modelData
-                 selected: selectedItemId == itemId
-                 onPressed: missionItemList.selectionRequest(itemId)
-             }
+            MissionItemView {
+                id: itemView
+                anchors.centerIn: parent
+                itemId: modelData
+                selected: selectedItemId == itemId
+                onPressed: missionItemList.selectionRequest(itemId)
+            }
         }
     }
 }

@@ -73,7 +73,7 @@ Controls.Card {
         id: grid
         anchors.fill: parent
         anchors.margins: sizings.margins
-        anchors.rightMargin: parent.margin
+        anchors.rightMargin: missionView.margin
         columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing

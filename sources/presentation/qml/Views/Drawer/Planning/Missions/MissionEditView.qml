@@ -14,6 +14,7 @@ ColumnLayout {
 
     property alias name: nameLabel.text
     property alias selectedItemId: itemList.selectedItemId
+    property alias picking: itemEdit.picking
 
     implicitWidth: sizings.controlBaseSize * 11
     spacing: sizings.spacing
@@ -60,11 +61,21 @@ ColumnLayout {
         }
     }
 
-    MissionItemListView {
-        id: itemList
-        missionId: missionEdit.missionId
-        onSelectionRequest: missionEdit.selectedItemId = itemId
+    Flickable {
+        contentWidth: itemList.width
+        clip: true
+        boundsBehavior: Flickable.StopAtBounds
+        onMovementStarted: drawer.interactive = false
+        onMovementEnded: drawer.interactive = true
+        Layout.minimumHeight: sizings.controlBaseSize
         Layout.fillWidth: true
+
+        MissionItemListView {
+            id: itemList
+            height: parent.height
+            missionId: missionEdit.missionId
+            onSelectionRequest: missionEdit.selectedItemId = itemId
+        }
     }
 
     RowLayout {
