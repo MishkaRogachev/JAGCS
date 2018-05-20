@@ -18,6 +18,7 @@ Item {
     function close() { setMode(DrawerPresenter.UnknownMode) }
 
     onModeChanged: if (!menu.visible && mode != DrawerPresenter.UnknownMode) open()
+    onVisibleChanged: if (mode == DrawerPresenter.UnknownMode) setMode(DrawerPresenter.Home)
     implicitWidth: sizings.controlBaseSize * 7
 
     DrawerPresenter {
@@ -71,7 +72,9 @@ Item {
         width: parent.width - sizings.padding * 2
         height: parent.height - drawerHeader.height - sizings.spacing
         contentHeight: contents.height
+        boundsBehavior: Flickable.OvershootBounds
         flickableDirection: Flickable.AutoFlickIfNeeded
+
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}

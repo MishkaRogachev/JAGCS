@@ -30,7 +30,7 @@ Item {
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Menu")
             flat: true
-            onPressed: menu.home()
+            onPressed: menu.open()
         }
 
         Controls.Button {
