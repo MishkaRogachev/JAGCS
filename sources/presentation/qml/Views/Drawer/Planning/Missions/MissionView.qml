@@ -94,6 +94,7 @@ Controls.Card {
 
         MissionAssignmentView {
             id: assignment
+            missionId: missionView.missionId
             Layout.fillWidth: true
         }
 

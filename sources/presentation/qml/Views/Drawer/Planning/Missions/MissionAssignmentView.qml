@@ -9,8 +9,9 @@ RowLayout {
 
     property bool vehicleOnline: true
 
-    property int progress: 0
+    property int missionId: 0
     property int assignedVehicleId: 0
+    property int progress: 0
     property int status: MissionAssignment.NotActual
 
     function updateSelectedVehicle() {
@@ -37,6 +38,7 @@ RowLayout {
         presenter.cancelSyncMission()
     }
 
+    onMissionIdChanged: presenter.setMission(missionId)
     onAssignedVehicleIdChanged: updateSelectedVehicle()
 
     spacing: sizings.spacing
@@ -49,7 +51,6 @@ RowLayout {
     MissionAssignmentPresenter {
         id: presenter
         view: missionAssignmentView
-        Component.onCompleted: setMission(missionId)
     }
 
     Controls.ComboBox {
@@ -60,8 +61,8 @@ RowLayout {
         Layout.fillWidth: true
     }
 
-    Controls.ComboBox { // NOTE: for mission slot
-        enabled: false
-        Layout.maximumWidth: sizings.controlBaseSize * 2
-    }
+//    Controls.ComboBox { // NOTE: for mission slot
+//        enabled: false
+//        Layout.maximumWidth: sizings.controlBaseSize * 2
+//    }
 }

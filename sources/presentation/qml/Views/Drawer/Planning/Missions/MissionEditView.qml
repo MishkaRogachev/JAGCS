@@ -59,6 +59,28 @@ ColumnLayout {
             id: nameLabel
             text: qsTr("Unknown mission")
         }
+
+        MissionAssignmentView {
+            id: assignment
+            missionId: missionEdit.missionId
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            tipText: highlighted ? qsTr("Cancel sync") : qsTr("Download mission")
+            iconSource: "qrc:/icons/download.svg"
+            highlighted: assignment.status === MissionAssignment.Downloading
+            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
+            onClicked: highlighted ? assignment.cancelSync() : assignment.download()
+        }
+
+        Controls.Button {
+            tipText: highlighted ? qsTr("Cancel sync") : qsTr("Upload mission")
+            iconSource: "qrc:/icons/upload.svg"
+            highlighted: assignment.status === MissionAssignment.Uploading
+            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
+            onClicked: highlighted ? assignment.cancelSync() : assignment.upload()
+        }
     }
 
     Flickable {
