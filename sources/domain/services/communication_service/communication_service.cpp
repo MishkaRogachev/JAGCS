@@ -217,7 +217,7 @@ void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
     {
         LogBus::log(tr("Link") + " " + description->name() + " " +
                     (connected ? tr("connected") : tr("disconnected")),
-                    connected ? LogMessage::Positive : LogMessage::Warning);
+                    connected ? dto::LogMessage::Positive : dto::LogMessage::Warning);
         description->setConnected(connected);
 
         emit linkStatusChanged(description);

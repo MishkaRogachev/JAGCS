@@ -15,7 +15,7 @@ NotificationsPresenter::NotificationsPresenter(QObject* parent):
             this, &NotificationsPresenter::onLogAdded);
 }
 
-void NotificationsPresenter::onLogAdded(const domain::LogMessage& message)
+void NotificationsPresenter::onLogAdded(const dto::LogMessage& message)
 {
     this->invokeViewMethod(PROPERTY(addLog), QVariant::fromValue(message));
 }

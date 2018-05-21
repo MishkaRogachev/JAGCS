@@ -1,6 +1,6 @@
 #include "log_message.h"
 
-using namespace domain;
+using namespace dto;
 
 LogMessage::LogMessage(const QTime& timestamp, const QString& message, LogMessage::LogType type):
     m_timestamp(timestamp),

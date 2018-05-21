@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTime>
 
-namespace domain
+namespace dto
 {
     class LogMessage
     {
@@ -45,6 +45,6 @@ namespace domain
     };
 }
 
-Q_DECLARE_METATYPE(domain::LogMessage)
+//Q_DECLARE_METATYPE(dto::LogMessage)
 
 #endif // LOG_MESSAGE_H

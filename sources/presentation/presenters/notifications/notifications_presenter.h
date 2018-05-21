@@ -4,7 +4,7 @@
 // Internal
 #include "base_presenter.h"
 
-namespace domain
+namespace dto
 {
     class LogMessage;
 }
@@ -19,7 +19,7 @@ namespace presentation
         explicit NotificationsPresenter(QObject* parent = nullptr);
 
     private slots:
-        void onLogAdded(const domain::LogMessage& message);
+        void onLogAdded(const dto::LogMessage& message);
     };
 }
 
