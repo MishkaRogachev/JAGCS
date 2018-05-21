@@ -51,65 +51,61 @@
 #include <QCoreApplication>
 #include <QQmlEngine>
 
+#define QML_TYPE(T) qmlRegisterType<T>("JAGCS", 1, 0, # T);
+#define QML_UNCREATABLE_TYPE(T) qmlRegisterUncreatableType<T>("JAGCS", 1, 0, # T, QString(# T) + " is not available in QML.");
+
+using namespace dto;
+using namespace domain;
 using namespace presentation;
 
 static void registerTypes()
 {
-    qmlRegisterUncreatableType<dto::Vehicle>(
-                "JAGCS", 1, 0, "Vehicle", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dto::LinkDescription>(
-                "JAGCS", 1, 0, "LinkDescription", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dto::Mission>(
-                "JAGCS", 1, 0, "Mission", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dto::MissionAssignment>(
-                "JAGCS", 1, 0, "MissionAssignment", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dto::MissionItem>(
-                "JAGCS", 1, 0, "MissionItem", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dto::Command>(
-                "JAGCS", 1, 0, "Command", "Can't create entities in QML");
-    qmlRegisterUncreatableType<dto::VideoSource>(
-                "JAGCS", 1, 0, "VideoSource", "Can't create entities in QML");
-    qmlRegisterUncreatableType<domain::LogMessage>(
-                "JAGCS", 1, 0, "LogMessage", "Can't create log messages in QML");
+    QML_UNCREATABLE_TYPE(Vehicle);
+    QML_UNCREATABLE_TYPE(LinkDescription);
+    QML_UNCREATABLE_TYPE(Mission);
+    QML_UNCREATABLE_TYPE(MissionAssignment);
+    QML_UNCREATABLE_TYPE(MissionItem);
+    QML_UNCREATABLE_TYPE(Command);
+    QML_UNCREATABLE_TYPE(VideoSource);
+    QML_UNCREATABLE_TYPE(LogMessage);
 
     qmlRegisterUncreatableMetaObject(domain::vehicle::staticMetaObject, "JAGCS", 1, 0, "Domain",
                                      "Can't create enums in QML");
 
-    qmlRegisterUncreatableType<domain::ManualController>(
-                "JAGCS", 1, 0, "ManualController", "Can't create ManualController in QML");
+    QML_UNCREATABLE_TYPE(ManualController);
 
-    qmlRegisterType<TopbarPresenter>("JAGCS", 1, 0, "TopbarPresenter");
-    qmlRegisterType<RadioStatusPresenter>("JAGCS", 1, 0, "RadioStatusPresenter");
-    qmlRegisterType<NotificationsPresenter>("JAGCS", 1, 0, "NotificationsPresenter");
-    qmlRegisterType<ConnectionPresenter>("JAGCS", 1, 0, "ConnectionPresenter");
-    qmlRegisterType<LocationMapPresenter>("JAGCS", 1, 0, "MapPresenter");
-    qmlRegisterType<ActiveVideoPresenter>("JAGCS", 1, 0, "ActiveVideoPresenter");
-    qmlRegisterType<DashboardPresenter>("JAGCS", 1, 0, "DashboardPresenter");
-    qmlRegisterType<VehiclesListDisplayPresenter>("JAGCS", 1, 0, "VehiclesListDisplayPresenter");
-    qmlRegisterType<AerialVehicleDisplayPresenter>("JAGCS", 1, 0, "AerialVehicleDisplayPresenter");
-    qmlRegisterType<DrawerPresenter>("JAGCS", 1, 0, "DrawerPresenter");
-    qmlRegisterType<LinkListPresenter>("JAGCS", 1, 0, "LinkListPresenter");
-    qmlRegisterType<LinkPresenter>("JAGCS", 1, 0, "LinkPresenter");
-    qmlRegisterType<LinkEditPresenter>("JAGCS", 1, 0, "LinkEditPresenter");
-    qmlRegisterType<VehicleListPresenter>("JAGCS", 1, 0, "VehicleListPresenter");
-    qmlRegisterType<VehiclePresenter>("JAGCS", 1, 0, "VehiclePresenter");
-    qmlRegisterType<LogListPresenter>("JAGCS", 1, 0, "LogListPresenter");
-    qmlRegisterType<PlanningPresenter>("JAGCS", 1, 0, "PlanningPresenter");
-    qmlRegisterType<MissionListPresenter>("JAGCS", 1, 0, "MissionListPresenter");
-    qmlRegisterType<MissionPresenter>("JAGCS", 1, 0, "MissionPresenter");
-    qmlRegisterType<MissionEditPresenter>("JAGCS", 1, 0, "MissionEditPresenter");
-    qmlRegisterType<MissionItemListPresenter>("JAGCS", 1, 0, "MissionItemListPresenter");
-    qmlRegisterType<MissionItemPresenter>("JAGCS", 1, 0, "MissionItemPresenter");
-    qmlRegisterType<MissionItemEditPresenter>("JAGCS", 1, 0, "MissionItemEditPresenter");
-    qmlRegisterType<MissionAssignmentPresenter>("JAGCS", 1, 0, "MissionAssignmentPresenter");
-    qmlRegisterType<DatabasePresenter>("JAGCS", 1, 0, "DatabasePresenter");
-    qmlRegisterType<GuiSettingsPresenter>("JAGCS", 1, 0, "GuiSettingsPresenter");
-    qmlRegisterType<JoystickSettingsPresenter>("JAGCS", 1, 0, "JoystickSettingsPresenter");
-    qmlRegisterType<MapSettingsPresenter>("JAGCS", 1, 0, "MapSettingsPresenter");
-    qmlRegisterType<NetworkSettingsPresenter>("JAGCS", 1, 0, "NetworkSettingsPresenter");
-    qmlRegisterType<VideoSourceListPresenter>("JAGCS", 1, 0, "VideoSourceListPresenter");
-    qmlRegisterType<VideoSourcePresenter>("JAGCS", 1, 0, "VideoSourcePresenter");
-    qmlRegisterType<AboutPresenter>("JAGCS", 1, 0, "AboutPresenter");
+    QML_TYPE(TopbarPresenter);
+    QML_TYPE(RadioStatusPresenter);
+    QML_TYPE(NotificationsPresenter);
+    QML_TYPE(ConnectionPresenter);
+    QML_TYPE(LocationMapPresenter);
+    QML_TYPE(ActiveVideoPresenter);
+    QML_TYPE(DashboardPresenter);
+    QML_TYPE(VehiclesListDisplayPresenter);
+    QML_TYPE(AerialVehicleDisplayPresenter);
+    QML_TYPE(DrawerPresenter);
+    QML_TYPE(LinkListPresenter);
+    QML_TYPE(LinkPresenter);
+    QML_TYPE(LinkEditPresenter);
+    QML_TYPE(VehicleListPresenter);
+    QML_TYPE(VehiclePresenter);
+    QML_TYPE(LogListPresenter);
+    QML_TYPE(PlanningPresenter);
+    QML_TYPE(MissionListPresenter);
+    QML_TYPE(MissionPresenter);
+    QML_TYPE(MissionEditPresenter);
+    QML_TYPE(MissionItemListPresenter);
+    QML_TYPE(MissionItemPresenter);
+    QML_TYPE(MissionItemEditPresenter);
+    QML_TYPE(MissionAssignmentPresenter);
+    QML_TYPE(DatabasePresenter);
+    QML_TYPE(GuiSettingsPresenter);
+    QML_TYPE(JoystickSettingsPresenter);
+    QML_TYPE(MapSettingsPresenter);
+    QML_TYPE(NetworkSettingsPresenter);
+    QML_TYPE(VideoSourceListPresenter);
+    QML_TYPE(VideoSourcePresenter);
+    QML_TYPE(AboutPresenter);
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerTypes)

@@ -41,7 +41,7 @@ Map {
     gesture.preventStealing: true
     copyrightsVisible: false
 
-    MapPresenter {
+    LocationMapPresenter {
         id: presenter
         view: map
     }
