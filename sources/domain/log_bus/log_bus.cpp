@@ -32,4 +32,6 @@ void LogBus::log(const QString& message, dto::LogMessage::LogType type)
 
 LogBus::LogBus():
     m_mutex(QMutex::Recursive)
-{}
+{
+    qRegisterMetaType<dto::LogMessage>("dto::LogMessage");
+}

@@ -50,9 +50,13 @@
 // Qt
 #include <QCoreApplication>
 #include <QQmlEngine>
+#include <QDebug>
 
-#define QML_TYPE(T) qmlRegisterType<T>("JAGCS", 1, 0, # T);
-#define QML_UNCREATABLE_TYPE(T) qmlRegisterUncreatableType<T>("JAGCS", 1, 0, # T, QString(# T) + " is not available in QML.");
+#define POINTERIZE(A) #A"*"
+#define META_TYPE(T) qRegisterMetaType<T*>(POINTERIZE(T));
+#define QML_TYPE(T) qmlRegisterType<T>("JAGCS", 1, 0, #T);
+#define QML_TYPE2(T) META_TYPE(T) QML_TYPE(T)
+#define QML_UNCREATABLE_TYPE(T) qmlRegisterUncreatableType<T>("JAGCS", 1, 0, #T, QString(#T) + " is not available in QML.");
 
 using namespace dto;
 using namespace domain;
@@ -90,14 +94,16 @@ static void registerTypes()
     QML_TYPE(VehicleListPresenter);
     QML_TYPE(VehiclePresenter);
     QML_TYPE(LogListPresenter);
+
     QML_TYPE(PlanningPresenter);
-    QML_TYPE(MissionListPresenter);
-    QML_TYPE(MissionPresenter);
-    QML_TYPE(MissionEditPresenter);
-    QML_TYPE(MissionItemListPresenter);
-    QML_TYPE(MissionItemPresenter);
-    QML_TYPE(MissionItemEditPresenter);
-    QML_TYPE(MissionAssignmentPresenter);
+    QML_TYPE2(MissionListPresenter);
+    QML_TYPE2(MissionPresenter);
+    QML_TYPE2(MissionEditPresenter);
+    QML_TYPE2(MissionItemListPresenter);
+    QML_TYPE2(MissionItemPresenter);
+    QML_TYPE2(MissionItemEditPresenter);
+    QML_TYPE2(MissionAssignmentPresenter);
+
     QML_TYPE(DatabasePresenter);
     QML_TYPE(GuiSettingsPresenter);
     QML_TYPE(JoystickSettingsPresenter);
