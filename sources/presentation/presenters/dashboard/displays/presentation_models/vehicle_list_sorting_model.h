@@ -1,19 +1,19 @@
-#ifndef VEHICLES_SORTING_MODEL_H
-#define VEHICLES_SORTING_MODEL_H
+#ifndef VEHICLE_LIST_SORTING_MODEL_H
+#define VEHICLE_LIST_SORTING_MODEL_H
 
 // Qt
 #include <QSortFilterProxyModel>
 
 namespace presentation
 {
-    class VehiclesSortingModel: public QSortFilterProxyModel
+    class VehicleListSortingModel: public QSortFilterProxyModel
     {
         Q_OBJECT
 
         Q_PROPERTY(bool showOffline READ showOffline WRITE setShowOffline NOTIFY showOfflineChanged)
 
     public:
-        explicit VehiclesSortingModel(QObject* paret = nullptr);
+        explicit VehicleListSortingModel(QObject* paret = nullptr);
 
         bool showOffline() const;
 
@@ -32,4 +32,4 @@ namespace presentation
     };
 }
 
-#endif // VEHICLES_SORTING_MODEL_H
+#endif // VEHICLE_LIST_SORTING_MODEL_H

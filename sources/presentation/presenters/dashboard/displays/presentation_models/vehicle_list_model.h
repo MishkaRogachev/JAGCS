@@ -1,5 +1,5 @@
-#ifndef VEHICLES_MODEL_H
-#define VEHICLES_MODEL_H
+#ifndef VEHICLE_LIST_MODEL_H
+#define VEHICLE_LIST_MODEL_H
 
 // Qt
 #include <QAbstractListModel>
@@ -9,12 +9,12 @@
 
 namespace presentation
 {
-    class VehiclesModel: public QAbstractListModel
+    class VehicleListModel: public QAbstractListModel
     {
         Q_OBJECT
 
     public:
-        enum VehicleMapItemRoles
+        enum VehicleListRoles
         {
             VehicleIdRole = Qt::UserRole + 1,
             VehicleTypeRole,
@@ -22,7 +22,7 @@ namespace presentation
             VehicleOnlineRole
         };
 
-        explicit VehiclesModel(QObject* parent = nullptr);
+        explicit VehicleListModel(QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
         QVariant data(const QModelIndex& index, int role) const override;
@@ -41,4 +41,4 @@ namespace presentation
     };
 }
 
-#endif // VEHICLES_MODEL_H
+#endif // VEHICLE_LIST_MODEL_H

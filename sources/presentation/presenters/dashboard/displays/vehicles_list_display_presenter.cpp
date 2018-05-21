@@ -11,8 +11,8 @@
 #include "service_registry.h"
 #include "vehicle_service.h"
 
-#include "vehicles_model.h"
-#include "vehicles_sorting_model.h"
+#include "vehicle_list_model.h"
+#include "vehicle_list_sorting_model.h"
 
 using namespace presentation;
 
@@ -21,8 +21,8 @@ class VehiclesListDisplayPresenter::Impl
 public:
      domain::VehicleService* service = serviceRegistry->vehicleService();
 
-     VehiclesModel vehiclesModel;
-     VehiclesSortingModel sortingModel;
+     VehicleListModel vehiclesModel;
+     VehicleListSortingModel sortingModel;
 };
 
 VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):

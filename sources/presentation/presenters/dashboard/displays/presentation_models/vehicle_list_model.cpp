@@ -1,4 +1,4 @@
-#include "vehicles_model.h"
+#include "vehicle_list_model.h"
 
 // Qt
 #include <QDebug>
@@ -8,18 +8,18 @@
 
 using namespace presentation;
 
-VehiclesModel::VehiclesModel(QObject* parent):
+VehicleListModel::VehicleListModel(QObject* parent):
     QAbstractListModel(parent)
 {}
 
-int VehiclesModel::rowCount(const QModelIndex& parent) const
+int VehicleListModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
 
     return m_vehicles.count();
 }
 
-QVariant VehiclesModel::data(const QModelIndex& index, int role) const
+QVariant VehicleListModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() >= m_vehicles.count()) return QVariant();
 
@@ -35,7 +35,7 @@ QVariant VehiclesModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void VehiclesModel::setVehicles(const dto::VehiclePtrList& vehicles)
+void VehicleListModel::setVehicles(const dto::VehiclePtrList& vehicles)
 {
     this->beginResetModel();
 
@@ -44,14 +44,14 @@ void VehiclesModel::setVehicles(const dto::VehiclePtrList& vehicles)
     this->endResetModel();
 }
 
-void VehiclesModel::addVehicle(const dto::VehiclePtr& vehicle)
+void VehicleListModel::addVehicle(const dto::VehiclePtr& vehicle)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     m_vehicles.append(vehicle);
     this->endInsertRows();
 }
 
-void VehiclesModel::updateVehicle(const dto::VehiclePtr& vehicle)
+void VehicleListModel::updateVehicle(const dto::VehiclePtr& vehicle)
 {
     QModelIndex index = this->index(m_vehicles.indexOf(vehicle));
     if (!index.isValid()) return;
@@ -59,7 +59,7 @@ void VehiclesModel::updateVehicle(const dto::VehiclePtr& vehicle)
     emit dataChanged(index, index, { VehicleTypeRole, VehicleNameRole, VehicleOnlineRole });
 }
 
-void VehiclesModel::removeVehicle(const dto::VehiclePtr& vehicle)
+void VehicleListModel::removeVehicle(const dto::VehiclePtr& vehicle)
 {
     int row = m_vehicles.indexOf(vehicle);
 
@@ -68,7 +68,7 @@ void VehiclesModel::removeVehicle(const dto::VehiclePtr& vehicle)
     this->endRemoveRows();
 }
 
-QHash<int, QByteArray> VehiclesModel::roleNames() const
+QHash<int, QByteArray> VehicleListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
