@@ -37,8 +37,6 @@ Item {
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        snapMode: ListView.SnapToItem
-        headerPositioning: ListView.OverlayHeader
         model: vehicles
         clip: true
 

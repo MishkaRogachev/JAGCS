@@ -37,7 +37,7 @@ void MissionItemListPresenter::setMission(int id)
     if (m_missionId == id) return;
 
     m_missionId = id;
-    this->updateMissionItems();
+    if (this->view()) this->updateMissionItems();
 }
 
 void MissionItemListPresenter::updateMissionItems()
@@ -49,4 +49,11 @@ void MissionItemListPresenter::updateMissionItems()
         itemIds.append(item->id());
     }
     this->setViewProperty(PROPERTY(itemIds), itemIds);
+}
+
+void MissionItemListPresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->updateMissionItems();
 }

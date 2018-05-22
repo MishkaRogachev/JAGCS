@@ -28,7 +28,7 @@ void MissionPresenter::setMission(int id)
 {
     m_missionId = id;
 
-    this->updateMission();
+    if (this->view()) this->updateMission();
 }
 
 void MissionPresenter::updateMission()
@@ -48,12 +48,19 @@ void MissionPresenter::rename(const QString& name)
     if (mission.isNull()) return;
 
     mission->setName(name);
-    if (m_service->save(mission)) this->setViewProperty(PROPERTY(name), mission->name());
+    m_service->save(mission);
 }
 
 void MissionPresenter::remove()
 {
     m_service->remove(m_service->mission(m_missionId));
+}
+
+void MissionPresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->updateMission();
 }
 
 void MissionPresenter::setMissionVisible(bool visible)

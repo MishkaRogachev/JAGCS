@@ -10,30 +10,46 @@
 #include "service_registry.h"
 #include "mission_service.h"
 
+#include "mission_list_model.h"
+#include "mission_list_filter_model.h"
+
 using namespace presentation;
+
+class MissionListPresenter::Impl
+{
+public:
+    domain::MissionService* const service = serviceRegistry->missionService();
+
+    MissionListModel missionsModel;
+    MissionListFilterModel sortingModel;
+};
 
 MissionListPresenter::MissionListPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(serviceRegistry->missionService())
+    d(new Impl())
 {
-    connect(m_service, &domain::MissionService::missionAdded,
-            this, &MissionListPresenter::updateMissions);
-    connect(m_service, &domain::MissionService::missionRemoved,
-            this, &MissionListPresenter::updateMissions);
+    d->missionsModel.setMissions(d->service->missions());
+    d->sortingModel.setSourceModel(&d->missionsModel);
+
+    connect(d->service, &domain::MissionService::missionAdded,
+            &d->missionsModel, &MissionListModel::addMission);
+    connect(d->service, &domain::MissionService::missionRemoved,
+            &d->missionsModel, &MissionListModel::removeMission);
+    connect(d->service, &domain::MissionService::missionChanged,
+            &d->missionsModel, &MissionListModel::updateMission);
 }
 
-void MissionListPresenter::updateMissions()
-{
-    QVariantList missionIds;
-    for (const dto::MissionPtr& mission: m_service->missions())
-    {
-        missionIds.append(mission->id());
-    }
-
-    this->setViewProperty(PROPERTY(missionIds), missionIds);
-}
+MissionListPresenter::~MissionListPresenter()
+{}
 
 void MissionListPresenter::addMission()
 {
-    m_service->addNewMission(tr("New Mission"));
+    d->service->addNewMission(tr("New Mission"));
+}
+
+void MissionListPresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->setViewProperty(PROPERTY(missions), QVariant::fromValue(&d->sortingModel));
 }

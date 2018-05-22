@@ -24,6 +24,7 @@ Controls.Card {
     implicitHeight: grid.implicitHeight + sizings.margins * 2
 
     onDeepIn: edit()
+
     Component.onCompleted: {
         menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
 
@@ -48,12 +49,12 @@ Controls.Card {
                    assignment.status !== MissionAssignment.Uploading });
         uploadItem.triggered.connect(assignment.upload);
 
-        var uploadItem = menu.addEntry(qsTr("Cancel sync"), "qrc:/icons/cancel.svg");
-        uploadItem.enabled = Qt.binding(function() {
+        var cancelItem = menu.addEntry(qsTr("Cancel sync"), "qrc:/icons/cancel.svg");
+        cancelItem.enabled = Qt.binding(function() {
             return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
                    (assignment.status === MissionAssignment.Downloading ||
                    assignment.status === MissionAssignment.Uploading) });
-        uploadItem.triggered.connect(assignment.cancelSync);
+        cancelItem.triggered.connect(assignment.cancelSync);
 
         // TODO: export mission to file
         menu.addEntry(qsTr("Export mission"), "qrc:/icons/save.svg").enabled = false;
@@ -62,11 +63,11 @@ Controls.Card {
         removeItem.iconColor = customPalette.dangerColor;
         removeItem.triggered.connect(presenter.remove);
     }
+    onMissionIdChanged: presenter.setMission(missionId)
 
     MissionPresenter {
         id: presenter
         view: missionView
-        Component.onCompleted: setMission(missionId)
     }
 
     GridLayout {

@@ -29,6 +29,9 @@ namespace presentation
         void cancelSyncMission();
 
     protected:
+        void connectView(QObject* view);
+
+    protected:
         domain::MissionService* const m_service;
         int m_missionId;
     };

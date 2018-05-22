@@ -35,7 +35,7 @@ void MissionAssignmentPresenter::setMission(int id)
 {
     m_missionId = id;
 
-    this->updateAssignment();
+    if (this->view()) this->updateAssignment();
 }
 
 void MissionAssignmentPresenter::updateAssignment()
@@ -55,7 +55,6 @@ void MissionAssignmentPresenter::updateAssignment()
         this->setViewProperty(PROPERTY(progress), 0);
     }
 }
-
 
 void MissionAssignmentPresenter::assignVehicle(int vehicleId)
 {
@@ -85,4 +84,11 @@ void MissionAssignmentPresenter::cancelSyncMission()
     if (assignment.isNull()) return;
 
     m_service->cancelSync(assignment);
+}
+
+void MissionAssignmentPresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->updateAssignment();
 }

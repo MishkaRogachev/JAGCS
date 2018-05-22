@@ -26,6 +26,9 @@ namespace presentation
         void setMissionVisible(bool visible);
         void remove();
 
+    protected:
+        void connectView(QObject* view);
+
     private:
         domain::MissionService* const m_service;
         int m_missionId;
