@@ -37,30 +37,34 @@ Item {
         }
     }
 
-    ListView {
-        id: list
+    Item {
         anchors.fill: parent
         anchors.topMargin: headerRow.height + sizings.spacing
-        spacing: sizings.spacing
-        flickableDirection: Flickable.AutoFlickIfNeeded
-        boundsBehavior: Flickable.StopAtBounds
         clip: true
 
-        Controls.ScrollBar.vertical: Controls.ScrollBar {
-            visible: parent.contentHeight > parent.height
-        }
+        ListView {
+            id: list
+            anchors.fill: parent
+            anchors.margins: sizings.shadowSize
+            spacing: sizings.spacing
+            flickableDirection: Flickable.AutoFlickIfNeeded
+            boundsBehavior: Flickable.StopAtBounds
 
-        delegate: MissionView {
-            width: parent.width
-            missionId: model.missionId
+            Controls.ScrollBar.vertical: Controls.ScrollBar {
+                visible: parent.contentHeight > parent.height
+            }
+
+            delegate: MissionView {
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                missionId: model.missionId
+            }
         }
 
         Controls.Label {
-            id: label
+            anchors.centerIn: parent
             text: qsTr("No items present")
             visible: list.count === 0
-            horizontalAlignment: Text.AlignHCenter
-            width: parent.width
         }
     }
 }

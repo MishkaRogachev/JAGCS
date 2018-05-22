@@ -13,6 +13,7 @@ Item {
     property int selectedMissionId: 0
 
     implicitWidth: sizings.controlBaseSize * 11
+    implicitHeight: selectedMissionId > 0 ? missionEdit.implicitHeight : missionList.implicitHeight
 
     PlanningPresenter {
         id: presenter
@@ -23,11 +24,13 @@ Item {
     MissionListView {
         id: missionList
         anchors.fill: parent
+        visible: selectedMissionId == 0
     }
 
     MissionEditView {
+        id: missionEdit
         anchors.fill: parent
         missionId: selectedMissionId
-        visible: missionId > 0
+        visible: selectedMissionId > 0
     }
 }
