@@ -22,7 +22,7 @@ Item {
         width: parent.width
         spacing: sizings.spacing
 
-        Controls.TextField {
+        Controls.TextField { // TODO: filter field
             id: hostNameItem
             placeholderText: qsTr("Type filter here")
             onTextChanged: missions.filter(text)

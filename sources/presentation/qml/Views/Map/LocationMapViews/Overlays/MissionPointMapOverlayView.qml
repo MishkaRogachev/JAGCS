@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
+import JAGCS 1.0
 
 import "qrc:/Views/Common"
 
@@ -21,7 +22,11 @@ MapItemView {
             command: itemPtr.command
             sequence: itemPtr.sequence
             mouseEnabled: !picking
-            onPressed: map.selectItem(itemPtr.missionId, itemPtr.id)
+            onClicked: map.selectItem(itemPtr.missionId, itemPtr.id)
+            onHolded: {
+                menu.setMode(DrawerPresenter.Planning);
+                map.selectItem(itemPtr.missionId, itemPtr.id)
+            }
         }
     }
 }

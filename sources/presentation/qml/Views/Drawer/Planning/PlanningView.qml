@@ -15,6 +15,18 @@ Item {
     implicitWidth: sizings.controlBaseSize * 11
     implicitHeight: selectedMissionId > 0 ? missionEdit.implicitHeight : missionList.implicitHeight
 
+    Connections {
+        target: map
+        ignoreUnknownSignals: true
+
+        onSelectItem: {
+            if (selectedMissionId != missionId) selectedMissionId = missionId;
+
+            missionEdit.selectedItemId = itemId;
+        }
+    }
+
+
     PlanningPresenter {
         id: presenter
         view: planning

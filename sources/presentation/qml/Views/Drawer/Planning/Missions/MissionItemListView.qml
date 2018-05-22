@@ -43,7 +43,7 @@ Row {
                 itemId: modelData
                 selected: selectedItemId == itemId
                 onSelectedChanged: if (selected) checkItemX(parent.x)
-                onPressed: missionItemList.selectionRequest(itemId)
+                onClicked: missionItemList.selectionRequest(itemId)
             }
         }
     }

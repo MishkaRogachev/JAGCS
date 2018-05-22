@@ -30,16 +30,6 @@ ColumnLayout {
 
     Component.onDestruction: if (map) map.selectedItemId = 0
 
-    Connections {
-        target: map
-        ignoreUnknownSignals: true
-
-        onSelectItem: {
-            if (missionEdit.missionId !== missionId) return;
-            selectedItemId = itemId;
-        }
-    }
-
     MissionEditPresenter {
         id: presenter
         view: missionEdit

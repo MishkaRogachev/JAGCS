@@ -16,7 +16,7 @@ Rectangle {
     property bool dragEnabled: false
     property alias mouseEnabled: area.visible
 
-    signal pressed()
+    signal clicked()
     signal holded()
     signal dragged(real dx, real dy)
 
@@ -82,7 +82,7 @@ Rectangle {
         anchors.fill: parent
         drag.target: dragEnabled ? picker : undefined
         drag.axis: Drag.XAndYAxis
-        onPressed: point.pressed()
+        onClicked: point.clicked()
         onPressAndHold: point.holded()
         onReleased: {
             if (!dragEnabled) return;
