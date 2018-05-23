@@ -93,12 +93,14 @@ void MissionEditPresenter::removeItem()
     }
 }
 
-void MissionEditPresenter::addItem(dto::MissionItem::Command command)
+void MissionEditPresenter::addItem(dto::MissionItem::Command command,
+                                   const QGeoCoordinate& coordinate)
 {
     if (d->mission.isNull()) return;
 
-    d->item = d->service->addNewMissionItem(d->mission->id(), command,
-                                            d->item ? d->item->sequence() + 1 : 0);
+    int seq = d->item ? d->item->sequence() + 1 : 0;
+    d->item = d->service->addNewMissionItem(d->mission->id(), command, seq, coordinate);
+
 
     this->updateItem();
 }

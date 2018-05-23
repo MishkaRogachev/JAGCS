@@ -123,7 +123,8 @@ int MissionService::isCurrentForVehicle(const MissionItemPtr& item) const
 
 dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
                                                       dto::MissionItem::Command command,
-                                                      int sequence)
+                                                      int sequence,
+                                                      const QGeoCoordinate& coordinate)
 {
     QMutexLocker locker(&d->mutex);
 
@@ -165,6 +166,12 @@ dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
         break;
     default:
         break;
+    }
+
+    if (item->isPositionatedItem())
+    {
+        item->setLatitude(coordinate.latitude());
+        item->setLongitude(coordinate.longitude());
     }
 
     // TODO: querry by sequence

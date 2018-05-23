@@ -25,7 +25,7 @@ namespace presentation
         void updateItem();
 
         void removeItem();
-        void addItem(dto::MissionItem::Command command);
+        void addItem(dto::MissionItem::Command command, const QGeoCoordinate& coordinate);
         void changeSequence(int sequence);
 
     private:

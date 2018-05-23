@@ -37,7 +37,8 @@ namespace domain
 
         dto::MissionItemPtr addNewMissionItem(int missionId,
                                               dto::MissionItem::Command command,
-                                              int sequence);
+                                              int sequence,
+                                              const QGeoCoordinate& coordinate = QGeoCoordinate());
         void addNewMission(const QString& name);
 
         bool save(const dto::MissionPtr& mission);
