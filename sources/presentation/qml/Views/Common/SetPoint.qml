@@ -30,8 +30,6 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    // TODO: picker
-
     Controls.Label { text: qsTr("Lon.") }
 
     Controls.CoordSpinBox {

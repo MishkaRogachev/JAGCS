@@ -85,7 +85,7 @@ Rectangle {
         onClicked: point.clicked()
         onPressAndHold: point.holded()
         onReleased: {
-            if (!dragEnabled) return;
+            if (!drag.active) return;
 
             dragged(picker.x, picker.y);
             picker.x = 0;

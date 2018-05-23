@@ -42,7 +42,8 @@ Row {
                 anchors.centerIn: parent
                 itemId: modelData
                 selected: selectedItemId == itemId
-                onSelectedChanged: if (selected) checkItemX(parent.x)
+                onSelectedChanged: if (visible && selected) checkItemX(parent.x)
+                onVisibleChanged: if (visible && selected) checkItemX(parent.x)
                 onClicked: missionItemList.selectionRequest(itemId)
             }
         }

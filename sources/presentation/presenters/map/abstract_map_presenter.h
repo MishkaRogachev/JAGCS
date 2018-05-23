@@ -18,6 +18,7 @@ namespace presentation
 
     public:
         AbstractMapPresenter(QObject* object = nullptr);
+        ~AbstractMapPresenter() override;
 
         virtual double centerLatitude() const = 0;
         virtual double centerLongitude() const = 0;
@@ -27,10 +28,12 @@ namespace presentation
         virtual void setMapCenter(double latitude, double longitude) = 0;
         virtual void setZoomLevel(float zoomLevel) = 0;
 
+        void moveItem(int itemId, double latitude, double longitude);
         void navTo(int vehicleId, double latitude, double longitude, float altitude);
 
     private:
-        domain::CommandService* const m_commandService;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

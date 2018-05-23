@@ -101,7 +101,6 @@ void MissionEditPresenter::addItem(dto::MissionItem::Command command)
                                             d->item ? d->item->sequence() + 1 : 0);
 
     this->updateItem();
-    if (d->item && d->item->isPositionatedItem()) this->setViewProperty(PROPERTY(picking), true);
 }
 
 void MissionEditPresenter::changeSequence(int sequence)

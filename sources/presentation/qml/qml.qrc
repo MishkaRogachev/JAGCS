@@ -42,7 +42,6 @@
         <file>Controls/ToolTip.qml</file>
         <file>Controls/Drawer.qml</file>
         <file>Controls/Dragger.qml</file>
-        <file>Controls/MapPickButton.qml</file>
         <file>Indicators/BatteryIndicator.qml</file>
         <file>Indicators/BarIndicator.qml</file>
         <file>Indicators/StateIndicator.qml</file>
@@ -82,7 +81,6 @@
         <file>Views/VerticalProfile/VerticalProfileView.qml</file>
         <file>Views/Video/VideoView.qml</file>
         <file>Views/Video/ActiveVideoView.qml</file>
-        <file>Views/Map/MapPicker.qml</file>
         <file>Views/Map/MapFactory.qml</file>
         <file>Views/Map/LocationMapViews/BaseMapView.qml</file>
         <file>Views/Map/LocationMapViews/OsmMapView.qml</file>

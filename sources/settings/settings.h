@@ -137,7 +137,7 @@ namespace settings
             const QString fd = "fd";
             const QString hsi = "hsi";
             const QString landing = "landing";
-            const QString control = "control";
+            const QString mission = "mission";
         }
     }
 

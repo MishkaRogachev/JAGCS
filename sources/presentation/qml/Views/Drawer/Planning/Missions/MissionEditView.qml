@@ -14,7 +14,6 @@ ColumnLayout {
 
     property alias name: nameLabel.text
     property alias selectedItemId: itemList.selectedItemId
-    property alias picking: itemEdit.picking
 
     implicitWidth: sizings.controlBaseSize * 11
     spacing: sizings.spacing

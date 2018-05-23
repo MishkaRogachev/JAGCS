@@ -19,10 +19,6 @@ Map {
     property bool trackVisible: true
     property bool hdopVisible: true
 
-    property bool picking: false
-    property alias pickerCoordinate: picker.coordinate
-    property alias pickerVisible: picker.visible
-
     property int trackingVehicleId: 0
     property bool trackYaw: false
 
@@ -30,8 +26,8 @@ Map {
 
     property int activeMapTypeIndex: 0
 
-    signal picked(var coordinate)
     signal selectItem(int missionId, int itemId)
+    signal itemDragged(int itemId, var coordinate);
 
     activeMapType: supportedMapTypes[activeMapTypeIndex]
     implicitWidth: height
@@ -54,20 +50,6 @@ Map {
     VehicleMapOverlayView { model: vehicleVisible ? vehicleModel : 0 }
     TrackMapOverlayView { model: trackVisible ? vehicleModel : 0 }
     HdopRadiusMapOverlayView { model: hdopVisible ? vehicleModel : 0 }
-
-    MapPicker {
-        id: picker
-        z: 10000
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-        enabled: picking
-        onClicked: map.picked(map.toCoordinate(Qt.point(mouseX, mouseY)));
-        cursorShape: picking ? Qt.CrossCursor : Qt.ArrowCursor
-    }
 
     Component.onCompleted: {
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),

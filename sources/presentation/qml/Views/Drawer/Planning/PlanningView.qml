@@ -17,7 +17,6 @@ Item {
 
     Connections {
         target: map
-        ignoreUnknownSignals: true
 
         onSelectItem: {
             if (selectedMissionId != missionId) selectedMissionId = missionId;
@@ -25,7 +24,6 @@ Item {
             missionEdit.selectedItemId = itemId;
         }
     }
-
 
     PlanningPresenter {
         id: presenter

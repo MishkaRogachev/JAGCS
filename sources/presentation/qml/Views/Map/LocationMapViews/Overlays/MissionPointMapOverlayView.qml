@@ -16,16 +16,23 @@ MapItemView {
 
         sourceItem: PointView {
             selected: itemSelected
+            dragEnabled: itemSelected
             current: itemCurrent
             reached: itemPtr.reached
             status: itemPtr.status
             command: itemPtr.command
             sequence: itemPtr.sequence
-            mouseEnabled: !picking
             onClicked: map.selectItem(itemPtr.missionId, itemPtr.id)
             onHolded: {
                 menu.setMode(DrawerPresenter.Planning);
                 map.selectItem(itemPtr.missionId, itemPtr.id)
+            }
+            onDragged: {
+                var point = map.fromCoordinate(itemCoordinate);
+                point.x += dx;
+                point.y += dy;
+                var coordinate = map.toCoordinate(point);
+                presenter.moveItem(itemPtr.id, coordinate.latitude, coordinate.longitude);
             }
         }
     }

@@ -25,7 +25,6 @@ Item {
     property alias altitudeRelative: altitudeRelativeBox.checked
 
     property var previousPosition: QtPositioning.coordinate()
-    property var savedPosition: QtPositioning.coordinate();
     property var position: QtPositioning.coordinate();
 
     property alias radius: radiusBox.realValue
@@ -63,18 +62,9 @@ Item {
     property bool repeatsVisible: command === MissionItem.LoiterTurns
     property bool speedVisible: command === MissionItem.SetSpeed
 
-    property alias picking: pickButton.picking
-
     implicitWidth: sizings.controlBaseSize * 11
 
     onItemIdChanged: presenter.setItem(itemId)
-
-    onChangedChanged: {
-        if (changed) return;
-
-        updatePicker();
-        pickButton.picking = false;
-    }
 
     onPositionChanged: {
         updateLatLon();
@@ -86,7 +76,6 @@ Item {
     onClimbChanged: updateAltitudeFromClimb()
     onAltitudeChanged: updateClimbFromAltitude()
     onAltitudeRelativeChanged: updateClimbFromAltitude()
-    onCommandChanged: updatePicker()
 
     // TODO: refactor mission item params view and presenter
     property bool lockAltitude: false
@@ -129,16 +118,6 @@ Item {
         position.latitude = newPosition.latitude;
         position.longitude = newPosition.longitude;
         updateLatLon();
-    }
-
-    function updatePicker() {
-        map.pickerVisible = positionVisible && position.isValid &&
-                (!savedPosition.isValid ||
-                 Math.abs(savedPosition.latitude - position.latitude) > 0.0000015 ||
-                 Math.abs(savedPosition.longitude - position.longitude) > 0.0000015)
-        if (!map.pickerVisible) return;
-
-        map.pickerCoordinate = position;
     }
 
     MissionItemEditPresenter {
@@ -249,54 +228,35 @@ Item {
                 Layout.fillWidth: true
             }
 
-            GridLayout {
-                rowSpacing: sizings.spacing
-                columnSpacing: sizings.spacing
-                columns: 2
-                Layout.rowSpan: 2
+            Controls.CoordSpinBox {
+                id: latitudeBox
+                enabled: editEnabled
                 visible: positionVisible
+                onValueChanged: {
+                    position.latitude = value;
+                    updateDistAndAzimuthFromPos();
 
-                Controls.CoordSpinBox {
-                    id: latitudeBox
-                    enabled: editEnabled
-                    onValueChanged: {
-                        position.latitude = value;
-                        updateDistAndAzimuthFromPos();
-                        updatePicker();
-
-                        changed = true;
-                    }
-                    Layout.fillWidth: true
+                    changed = true;
                 }
-
-                Controls.MapPickButton {
-                    id: pickButton
-                    enabled: editEnabled
-                    Layout.rowSpan: 2
-                    onPicked: {
-                        latitudeBox.value = coordinate.latitude;
-                        longitudeBox.value = coordinate.longitude;
-                    }
-                }
-
-                Controls.CoordSpinBox {
-                    id: longitudeBox
-                    enabled: editEnabled
-                    isLongitude: true
-                    onValueChanged: {
-                        position.longitude = value;
-                        updateDistAndAzimuthFromPos();
-                        updatePicker();
-
-                        changed = true;
-                    }
-                    Layout.fillWidth: true
-                }
+                Layout.fillWidth: true
             }
 
             Controls.Label {
                 text: qsTr("Longitude")
                 visible: positionVisible
+                Layout.fillWidth: true
+            }
+
+            Controls.CoordSpinBox {
+                id: longitudeBox
+                enabled: editEnabled
+                isLongitude: true
+                onValueChanged: {
+                    position.longitude = value;
+                    updateDistAndAzimuthFromPos();
+
+                    changed = true;
+                }
                 Layout.fillWidth: true
             }
 
