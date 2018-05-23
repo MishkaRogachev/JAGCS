@@ -103,13 +103,13 @@
         <file>Views/Dashboard/DashboardControls/Label.qml</file>
         <file>Views/Dashboard/DashboardControls/CommandButton.qml</file>
         <file>Views/Dashboard/DashboardControls/DelayCommandButton.qml</file>
-        <file>Views/Dashboard/DashboardControls/ArmButton.qml</file>
         <file>Views/Dashboard/DashboardControls/CommandBox.qml</file>
         <file>Views/Dashboard/DashboardControls/CommandRealSpinBox.qml</file>
         <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml</file>
+        <file>Views/Dashboard/SingleVehicleDisplay/PreparationPanel.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/BaseInstrument.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/StatusPanel.qml</file>
@@ -117,7 +117,6 @@
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/HorizontalSituationIndicator.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/LandingIndicator.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/MissionIndicator.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/Instruments/PreparationPanel.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/MultiVehicleDisplay.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/TopBarDelegate.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml</file>

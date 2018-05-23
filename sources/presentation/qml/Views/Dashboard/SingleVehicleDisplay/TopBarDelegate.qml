@@ -4,7 +4,6 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-import "../"
 import "../DashboardControls" as DashboardControls
 
 RowLayout {
@@ -15,18 +14,7 @@ RowLayout {
     Connections {
         target: display
         ignoreUnknownSignals: true
-        onUpdateCommandStatus: {
-            switch (command) {
-            case Command.SetMode:
-                modeBox.status = status;
-                break;
-            case Command.ArmDisarm:
-                armDisarm.status = status;
-                break;
-            default:
-                break;
-            }
-        }
+        onUpdateCommandStatus: if (command == Command.SetMode) modeBox.status = status
     }
 
     Controls.Button {
@@ -41,14 +29,26 @@ RowLayout {
         font.bold: true
     }
 
+    Controls.Button {
+        id: preparationButton
+        iconSource: "qrc:/icons/calibrate.svg"
+        tipText: (preparationPanel.visible ? qsTr("Close") : qsTr("Open")) + " " +
+                 qsTr("preparation panel")
+        flat: true
+        onClicked: preparationPanel.visible ? preparationPanel.close() : preparationPanel.open()
+
+        PreparationPanel {
+            id: preparationPanel
+            y: preparationButton.height
+            x: preparationButton.width - width
+            closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
+        }
+    }
+
     DashboardControls.ModeBox {
         id: modeBox
         Layout.preferredWidth: sizings.controlBaseSize * 3
     }
-
-
-    // TODO: preparation panel
-    DashboardControls.ArmButton { id: armDisarm }
 
     Controls.Button {
         iconSource: "qrc:/icons/joystick.svg"
