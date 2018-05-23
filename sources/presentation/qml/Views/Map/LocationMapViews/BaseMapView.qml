@@ -28,6 +28,7 @@ Map {
 
     signal selectItem(int missionId, int itemId)
     signal itemDragged(int itemId, var coordinate);
+    signal holded(var coordinate)
 
     activeMapType: supportedMapTypes[activeMapTypeIndex]
     implicitWidth: height
@@ -40,6 +41,11 @@ Map {
     LocationMapPresenter {
         id: presenter
         view: map
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onPressAndHold: holded(map.toCoordinate(Qt.point(mouseX, mouseY)))
     }
 
     MissionLineMapOverlayView { model: missionLinesVisible ? lineModel : 0 }

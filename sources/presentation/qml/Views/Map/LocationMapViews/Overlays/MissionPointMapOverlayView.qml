@@ -34,6 +34,14 @@ MapItemView {
                 var coordinate = map.toCoordinate(point);
                 presenter.moveItem(itemPtr.id, coordinate.latitude, coordinate.longitude);
             }
+
+            Connections {
+                target: map
+                onHolded: {
+                    if (!itemSelected) return;
+                    presenter.moveItem(itemPtr.id, coordinate.latitude, coordinate.longitude);
+                }
+            }
         }
     }
 }

@@ -20,7 +20,6 @@ Item {
 
         onSelectItem: {
             if (selectedMissionId != missionId) selectedMissionId = missionId;
-
             missionEdit.selectedItemId = itemId;
         }
     }
