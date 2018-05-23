@@ -35,7 +35,11 @@ Controls.ApplicationWindow  {
 
     Item {
         id: substrate
-        anchors.fill: parent
+        anchors.top: topbar.bottom
+        anchors.left: parent.left
+        anchors.leftMargin: drawer.position > 0 ? drawer.x + drawer.width : 0
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
     }
 
     MouseArea {

@@ -43,6 +43,11 @@ Map {
         view: map
     }
 
+    Behavior on center {
+        enabled: trackingVehicleId == 0
+        CoordinateAnimation { duration: 200 }
+    }
+
     MouseArea {
         anchors.fill: parent
         onPressAndHold: holded(map.toCoordinate(Qt.point(mouseX, mouseY)))
