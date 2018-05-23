@@ -46,6 +46,8 @@ RowLayout {
         Layout.preferredWidth: sizings.controlBaseSize * 3
     }
 
+
+    // TODO: preparation panel
     DashboardControls.ArmButton { id: armDisarm }
 
     Controls.Button {

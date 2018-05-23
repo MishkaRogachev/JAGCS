@@ -112,21 +112,13 @@
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/ModeControl.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/GoTo.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/SetPoint.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/SetSpd.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/SetAlt.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/SetRadius.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/LandControl.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/CommandWidgets/Calibrations.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/BaseInstrument.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/DiagnosticsPanel.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/StatusPanel.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/FlightDirector.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/HorizontalSituationIndicator.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/LandingIndicator.qml</file>
-        <file>Views/Dashboard/SingleVehicleDisplay/Instruments/ControlPanel.qml</file>
+        <file>Views/Dashboard/SingleVehicleDisplay/Instruments/MissionIndicator.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/Instruments/PreparationPanel.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/MultiVehicleDisplay.qml</file>
         <file>Views/Dashboard/MultiVehicleDisplay/TopBarDelegate.qml</file>

@@ -84,16 +84,9 @@ Item {
         }
 
         ListElement {
-            name: qsTr("Control panel")
-            setting: "control"
-            instrument: "Instruments/ControlPanel.qml"
-            visibility: false
-        }
-
-        ListElement {
-            name: qsTr("Preparation panel")
-            setting: "preparation"
-            instrument: "Instruments/PreparationPanel.qml"
+            name: qsTr("Mission indicator")
+            setting: "mission"
+            instrument: "Instruments/MissionIndicator.qml"
             visibility: false
         }
     }
