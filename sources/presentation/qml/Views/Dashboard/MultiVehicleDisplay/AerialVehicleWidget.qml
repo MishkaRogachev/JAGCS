@@ -92,9 +92,8 @@ Controls.Card {
         RowLayout {
             spacing: sizings.spacing
 
-            Controls.Label {
-                text: vehicle.vehicleName
-                font.bold: true
+            DashboardControls.VehicleLabel {
+                name: vehicle.vehicleName
                 Layout.fillWidth: true
             }
 

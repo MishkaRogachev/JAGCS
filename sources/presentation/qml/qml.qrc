@@ -101,6 +101,7 @@
         <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>
         <file>Views/Dashboard/Vehicles/AerialVehicle.qml</file>
         <file>Views/Dashboard/DashboardControls/Label.qml</file>
+        <file>Views/Dashboard/DashboardControls/VehicleLabel.qml</file>
         <file>Views/Dashboard/DashboardControls/CommandButton.qml</file>
         <file>Views/Dashboard/DashboardControls/DelayCommandButton.qml</file>
         <file>Views/Dashboard/DashboardControls/CommandBox.qml</file>

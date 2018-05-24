@@ -24,9 +24,9 @@ RowLayout {
         onClicked: dashboard.selectVehicle(0)
     }
 
-    Controls.Label {
-        text: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("No vehicle")
-        font.bold: true
+    DashboardControls.VehicleLabel {
+        name: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("No vehicle")
+        Layout.fillWidth: true
     }
 
     Controls.Button {
@@ -39,40 +39,45 @@ RowLayout {
 
         PreparationPanel {
             id: preparationPanel
-            y: preparationButton.height
             x: preparationButton.width - width
+            y: preparationButton.height + sizings.spacing
             closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
         }
     }
 
-    DashboardControls.ModeBox {
-        id: modeBox
-        Layout.preferredWidth: sizings.controlBaseSize * 3
-    }
+    RowLayout {
+        spacing: sizings.spacing
+        Layout.preferredWidth: list.width + sizings.margins
 
-    Controls.Button {
-        iconSource: "qrc:/icons/joystick.svg"
-        tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
-                " " + qsTr("manual control")
-        iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
-        flat: true
-        onClicked: manual.setEnabled(!manual.enabled)
-    }
+        DashboardControls.ModeBox {
+            id: modeBox
+            Layout.fillWidth: true
+        }
 
-    Controls.Button {
-        id: lockButton
-        iconSource: instrumentsUnlocked ? "qrc:/icons/lock.svg" : "qrc:/icons/unlock.svg"
-        tipText: (instrumentsUnlocked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("indicators")
-        flat: true
-        onClicked: instrumentsUnlocked = !instrumentsUnlocked
-    }
+        Controls.Button {
+            iconSource: "qrc:/icons/joystick.svg"
+            tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
+                     " " + qsTr("manual control")
+            iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
+            flat: true
+            onClicked: manual.setEnabled(!manual.enabled)
+        }
 
-    Controls.Button {
-        iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" :
-                                       "qrc:/icons/show_dashboard.svg"
-        tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) +
-                 " " + qsTr("dashboard")
-        flat: true
-        onClicked: dashboardVisible = !dashboardVisible
+        Controls.Button {
+            id: lockButton
+            iconSource: instrumentsUnlocked ? "qrc:/icons/lock.svg" : "qrc:/icons/unlock.svg"
+            tipText: (instrumentsUnlocked ? qsTr("Lock") : qsTr("Unlock")) + " " + qsTr("indicators")
+            flat: true
+            onClicked: instrumentsUnlocked = !instrumentsUnlocked
+        }
+
+        Controls.Button {
+            iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" :
+                                           "qrc:/icons/show_dashboard.svg"
+            tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) +
+                     " " + qsTr("dashboard")
+            flat: true
+            onClicked: dashboardVisible = !dashboardVisible
+        }
     }
 }

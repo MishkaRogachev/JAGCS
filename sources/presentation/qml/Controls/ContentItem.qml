@@ -15,13 +15,18 @@ RowLayout {
 
     spacing: sizings.spacing
 
-    ColoredIcon {
-        id: icon
-        color: enabled ? iconColor : customPalette.sunkenColor
-        implicitHeight: content.height * iconScaling
-        implicitWidth: height
-        visible: source != ""
-        Layout.alignment: Qt.AlignCenter
+    Item {
+        Layout.preferredWidth: icon.width
+        Layout.fillHeight: true
+        visible: iconSource != ""
+
+        ColoredIcon {
+            id: icon
+            anchors.centerIn: parent
+            width: parent.height * iconScaling
+            height: width
+            color: enabled ? iconColor : customPalette.sunkenColor
+        }
     }
 
     Text {
