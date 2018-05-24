@@ -41,7 +41,7 @@ RowLayout {
             id: preparationPanel
             x: preparationButton.width - width
             y: preparationButton.height + sizings.spacing
-            closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
+            closePolicy: Controls.Popup.NoAutoClose
         }
     }
 

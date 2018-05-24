@@ -18,20 +18,16 @@ namespace presentation
         void setVehicle(int vehicleId);
 
         void updateVehicle();
-        void updateMissionItems();
+        void updateMission();
 
         void executeCommand(int commandType, const QVariant& args);
         void rejectCommand(int commandType);
 
     protected:
         void connectView(QObject* view) override;
-        void connectNode(domain::Telemetry* node) override;
 
         void setVehicleProperty(const char* name, const QVariant& value);
         void setVehicleProperty(const QString& group, const char* name, const QVariant& value);
-
-    private slots:
-        void updateSystem(const domain::Telemetry::TelemetryMap& parameters);
 
     private:
         class Impl;

@@ -108,6 +108,7 @@
         <file>Views/Dashboard/DashboardControls/CommandRealSpinBox.qml</file>
         <file>Views/Dashboard/DashboardControls/ModeBox.qml</file>
         <file>Views/Dashboard/DashboardControls/WaypointBox.qml</file>
+        <file>Views/Dashboard/DashboardControls/ChecklistItem.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml</file>
         <file>Views/Dashboard/SingleVehicleDisplay/PreparationPanel.qml</file>

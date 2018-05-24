@@ -9,6 +9,8 @@
 // Internal
 #include "vibration_model.h"
 
+#include "vehicle_types.h"
+
 using namespace presentation;
 
 BaseVehicleDisplayPresenter::BaseVehicleDisplayPresenter(QObject* parent):
@@ -24,10 +26,11 @@ void BaseVehicleDisplayPresenter::connectView(QObject* view)
                              QVariant::fromValue(m_vibrationModel));
 }
 
-
 void BaseVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
 {
-    CommonVehicleDisplayPresenter::connectNode(node);
+    this->chainNode(node->childNode(domain::Telemetry::System),
+                    std::bind(&BaseVehicleDisplayPresenter::updateSystem,
+                              this, std::placeholders::_1));
 
     domain::Telemetry* ahrs = node->childNode(domain::Telemetry::Ahrs);
     this->chainNode(ahrs, std::bind(&BaseVehicleDisplayPresenter::updateAhrs,
@@ -51,6 +54,23 @@ void BaseVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
     this->chainNode(node->childNode(domain::Telemetry::Position),
                     std::bind(&BaseVehicleDisplayPresenter::updatePosition,
                               this, std::placeholders::_1));
+}
+
+void BaseVehicleDisplayPresenter::updateSystem(const domain::Telemetry::TelemetryMap& parameters)
+{
+    this->setVehicleProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
+    this->setVehicleProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
+    this->setVehicleProperty(PROPERTY(stab), parameters.value(domain::Telemetry::Stabilized));
+    this->setVehicleProperty(PROPERTY(vehicleState), parameters.value(domain::Telemetry::State));
+    this->setVehicleProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
+
+    QVariantList modes;
+    for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
+         QList<domain::vehicle::Mode> >())
+    {
+        modes.append(QVariant::fromValue(item));
+    }
+    this->setVehicleProperty(PROPERTY(availableModes), modes);
 }
 
 void BaseVehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)

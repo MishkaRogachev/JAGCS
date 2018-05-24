@@ -20,6 +20,7 @@ namespace presentation
         void connectNode(domain::Telemetry* node) override;
 
     private slots:
+        void updateSystem(const domain::Telemetry::TelemetryMap& parameters);
         void updateAhrs(const domain::Telemetry::TelemetryMap& parameters);
         void updateCompass(const domain::Telemetry::TelemetryMap& parameters);
         void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);

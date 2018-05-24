@@ -16,8 +16,6 @@
 #include "command_service.h"
 #include "telemetry_service.h"
 
-#include "vehicle_types.h"
-
 using namespace presentation;
 
 class CommonVehicleDisplayPresenter::Impl
@@ -46,25 +44,25 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
         if (d->vehicle.isNull() || assignment->vehicleId() != d->vehicle->id()) return;
 
         d->assignment = assignment;
-        this->updateMissionItems();
+        this->updateMission();
     });
     connect(d->missionService, &domain::MissionService::assignmentRemoved, this,
             [this](const dto::MissionAssignmentPtr& assignment) {
         if (d->assignment != assignment) return;
 
         d->assignment.clear();
-        this->updateMissionItems();
+        this->updateMission();
     });
     connect(d->missionService, &domain::MissionService::assignmentChanged, this,
             [this](const dto::MissionAssignmentPtr& assignment) {
         if (d->assignment == assignment)
         {
-            this->updateMissionItems();
+            this->updateMission();
         }
         else if (d->vehicle && assignment->vehicleId() != d->vehicle->id())
         {
             d->assignment = assignment;
-            this->updateMissionItems();
+            this->updateMission();
         }
     });
 
@@ -79,7 +77,7 @@ CommonVehicleDisplayPresenter::CommonVehicleDisplayPresenter(QObject* parent):
     connect(d->missionService, &domain::MissionService::missionChanged, this,
             [this](const dto::MissionPtr& mission) {
         if (d->assignment && d->assignment->missionId() == mission->id())
-            this->updateMissionItems();
+            this->updateMission();
     });
 
     connect(d->commandService, &domain::CommandService::commandChanged,
@@ -102,7 +100,7 @@ void CommonVehicleDisplayPresenter::setVehicle(int vehicleId)
     this->updateVehicle();
 
     d->assignment = d->missionService->vehicleAssignment(vehicleId);
-    this->updateMissionItems();
+    this->updateMission();
 
     this->setNode(serviceRegistry->telemetryService()->vehicleNode(vehicleId));
 }
@@ -123,10 +121,13 @@ void CommonVehicleDisplayPresenter::updateVehicle()
     }
 }
 
-void CommonVehicleDisplayPresenter::updateMissionItems()
+void CommonVehicleDisplayPresenter::updateMission()
 {
     if (d->assignment)
     {
+        this->setVehicleProperty(PROPERTY(mission), PROPERTY(assigned), true);
+        this->setVehicleProperty(PROPERTY(mission), PROPERTY(status), d->assignment->status());
+
         this->setVehicleProperty(PROPERTY(mission), PROPERTY(count),
                                  d->missionService->mission(d->assignment->missionId())->count());
 
@@ -142,6 +143,10 @@ void CommonVehicleDisplayPresenter::updateMissionItems()
     }
     else
     {
+        this->setVehicleProperty(PROPERTY(mission), PROPERTY(assigned), false);
+        this->setVehicleProperty(PROPERTY(mission), PROPERTY(status),
+                                 dto::MissionAssignment::NotActual);
+
         this->setVehicleProperty(PROPERTY(mission), PROPERTY(count), 0);
         this->setVehicleProperty(PROPERTY(mission), PROPERTY(current), -1);
     }
@@ -171,30 +176,6 @@ void CommonVehicleDisplayPresenter::connectView(QObject* view)
     BasePresenter::connectView(view);
 
     this->updateVehicle();
-}
-
-void CommonVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
-{
-    this->chainNode(node->childNode(domain::Telemetry::System),
-                    std::bind(&CommonVehicleDisplayPresenter::updateSystem,
-                              this, std::placeholders::_1));
-}
-
-void CommonVehicleDisplayPresenter::updateSystem(const domain::Telemetry::TelemetryMap& parameters)
-{
-    this->setVehicleProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
-    this->setVehicleProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
-    this->setVehicleProperty(PROPERTY(stab), parameters.value(domain::Telemetry::Stabilized));
-    this->setVehicleProperty(PROPERTY(vehicleState), parameters.value(domain::Telemetry::State));
-    this->setVehicleProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
-
-    QVariantList modes;
-    for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
-         QList<domain::vehicle::Mode> >())
-    {
-        modes.append(QVariant::fromValue(item));
-    }
-    this->setVehicleProperty(PROPERTY(availableModes), modes);
 }
 
 void CommonVehicleDisplayPresenter::setVehicleProperty(const char* name, const QVariant& value)

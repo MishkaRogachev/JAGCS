@@ -30,6 +30,9 @@ QtObject {
     property QtObject mission: QtObject{
         objectName: "mission"
 
+        property bool assigned: false
+        property int status: MissionAssignment.NotActual
+
         property int count: 0
         property int current: -1
     }

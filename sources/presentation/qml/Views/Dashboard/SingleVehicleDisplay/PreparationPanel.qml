@@ -39,35 +39,36 @@ Controls.Popup {
                 { text: qsTr("Battery"), subsystem: vehicle.battery }
             ]
 
-            RowLayout {
-                DashboardControls.Label {
-                    text: modelData.text
-                    Layout.fillWidth: true
-                }
-
-                Controls.ColoredIcon {
-                    source: {
-                        if (modelData.subsystem.present) {
-                            if (modelData.subsystem.operational) return "qrc:/ui/ok.svg";
-                            else return "qrc:/icons/remove.svg"
-                        }
-                        else {
-                            return "qrc:/icons/cancel.svg"
-                        }
+            DashboardControls.ChecklistItem {
+                Layout.fillWidth: true
+                text: modelData.text
+                state: {
+                    if (modelData.subsystem.present) {
+                        if (modelData.subsystem.operational) return "OK";
+                        else return "BAD";
                     }
-
-                    color: {
-                        if (modelData.subsystem.present) {
-                            if (modelData.subsystem.operational) return customPalette.positiveColor;
-                            else return customPalette.dangerColor;
-                        }
-                        else {
-                            return customPalette.sunkenColor;
-                        }
+                    else {
+                        return "UNACTIVE";
                     }
                 }
             }
         }
+
+        DashboardControls.ChecklistItem {
+            text: qsTr("Mission")
+            state: {
+                if (!vehicle.mission.assigned) return "UNACTIVE";
+
+                switch (vehicle.mission.status) {
+                case MissionAssignment.Actual: return "OK";
+                case MissionAssignment.Downloading: return "INPROCESS";
+                case MissionAssignment.Uploading: return "INPROCESS";
+                case MissionAssignment.NotActual:
+                default: return "BAD";
+                }
+            }
+        }
+
 
         DashboardControls.DelayCommandButton {
             id: armDisarm
