@@ -23,12 +23,20 @@ Controls.Popup {
         }
     }
 
-    DashboardControls.DelayCommandButton {
-        id: armDisarm
-        text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
-        args: [ !vehicle.armed ]
-        command: Command.ArmDisarm
-        implicitWidth: sizings.controlBaseSize * 3
+    GridLayout {
+        anchors.fill: parent
+        rowSpacing: sizings.spacing
+        columnSpacing: sizings.spacing
+        columns: 2
+
+        DashboardControls.DelayCommandButton {
+            id: armDisarm
+            text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")
+            args: [ !vehicle.armed ]
+            command: Command.ArmDisarm
+            Layout.fillWidth: true
+            Layout.columnSpan: 2
+        }
     }
 }
 

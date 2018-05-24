@@ -7,12 +7,17 @@ import "qrc:/Controls" as Controls
 import "RadioStatus"
 import "Connection"
 
-Item {
+Rectangle {
     id: topbar
 
     property alias burgerHovered: burger.hovered // NOTE: QTBUG-59141
 
+    color: customPalette.backgroundColor
     height: sizings.controlBaseSize
+
+    Controls.Shadow {
+        source: parent
+    }
 
     TopbarPresenter {
         id: presenter
