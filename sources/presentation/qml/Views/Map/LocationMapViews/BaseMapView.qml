@@ -26,6 +26,8 @@ Map {
 
     property int activeMapTypeIndex: 0
 
+    property real xCenterOffset: 0
+
     signal selectItem(int missionId, int itemId)
     signal itemDragged(int itemId, var coordinate);
     signal holded(var coordinate)
@@ -97,5 +99,12 @@ Map {
                          MapGestureArea.PinchGesture | MapGestureArea.TiltGesture :
                          MapGestureArea.PinchGesture | MapGestureArea.RotationGesture |
                          MapGestureArea.TiltGesture)
+    }
+
+    // NOTE: Qt 5.10 alignCoordinateToPoint
+    function setCenterOffsetted(coordinate) {
+        var point = fromCoordinate(coordinate, false);
+        point.x += xCenterOffset;
+        center = toCoordinate(point, false);
     }
 }

@@ -27,6 +27,10 @@ Item {
                                                  item.setting + "/visibility");
             if (item.visibility) instruments.visibleItems++;
         }
+
+        map.xCenterOffset = Qt.binding(function() {
+            return cornerMap || !dashboardVisible ? 0 : list.width / 2;
+        });
     }
     Component.onDestruction: manual.setVehicleId(0)
 

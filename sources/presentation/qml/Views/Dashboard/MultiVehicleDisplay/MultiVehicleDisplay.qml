@@ -13,6 +13,11 @@ Item {
     property alias dashboardVisible: list.visible
 
     onShowOfflineChanged: vehicles.showOffline = showOffline
+    Component.onCompleted: {
+        map.xCenterOffset = Qt.binding(function() {
+            return cornerMap || !dashboardVisible ? 0 : list.width / 2;
+        });
+    }
 
     implicitWidth: list.width + sizings.margins
 

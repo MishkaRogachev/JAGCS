@@ -75,7 +75,7 @@ MapItemView {
         function tryCenterVehicle() {
             if (map.trackingVehicleId != vehicleId) return;
 
-            if (coordinate) map.center = coordinate;
+            if (coordinate) map.setCenterOffsetted(coordinate);
             if (map.trackYaw) map.bearing = headingAnimated;
         }
     }

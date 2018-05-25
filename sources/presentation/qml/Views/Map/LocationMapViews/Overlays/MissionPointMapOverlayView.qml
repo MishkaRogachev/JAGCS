@@ -26,7 +26,7 @@ MapItemView {
             onHolded: {
                 menu.setMode(DrawerPresenter.Planning);
                 map.selectItem(itemPtr.missionId, itemPtr.id);
-                if (trackingVehicleId == 0) map.center = itemCoordinate;
+                if (trackingVehicleId == 0) map.setCenterOffsetted(itemCoordinate);
             }
             onDragged: {
                 var point = map.fromCoordinate(itemCoordinate);
