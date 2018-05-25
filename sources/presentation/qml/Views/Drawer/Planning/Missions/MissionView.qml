@@ -20,11 +20,7 @@ Controls.Card {
         presenter.setMissionVisible(!missionVisible);
     }
 
-    implicitWidth: grid.implicitWidth + sizings.margins * 2
-    implicitHeight: grid.implicitHeight + sizings.margins * 2
-
     onDeepIn: edit()
-
     Component.onCompleted: {
         menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
 
@@ -64,6 +60,9 @@ Controls.Card {
         removeItem.triggered.connect(presenter.remove);
     }
     onMissionIdChanged: presenter.setMission(missionId)
+
+    implicitWidth: grid.implicitWidth + sizings.margins * 2
+    implicitHeight: grid.implicitHeight + sizings.margins * 2
 
     MissionPresenter {
         id: presenter

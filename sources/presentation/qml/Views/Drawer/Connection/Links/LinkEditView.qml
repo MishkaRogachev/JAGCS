@@ -30,6 +30,7 @@ GridLayout {
     onChangedChanged: if (!changed) endpointList.updateEndpoints(false)
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
+    onLinkIdChanged: setLink(linkId);
 
     implicitWidth: sizings.controlBaseSize * 11
     columns: 2
@@ -40,10 +41,7 @@ GridLayout {
         id: presenter
         view: linkEditView
 
-        Component.onCompleted: {
-            updateRates();
-            setLink(linkId);
-        }
+        Component.onCompleted: updateRates();
     }
 
     Controls.Label {

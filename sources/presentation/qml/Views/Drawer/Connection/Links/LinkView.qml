@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Frame {
+Controls.Card {
     id: linkView
 
     property int linkId: 0
@@ -15,7 +15,32 @@ Controls.Frame {
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
 
-    contentHeight: grid.height
+    function edit() {
+        selectedLinkId = linkId;
+    }
+
+    function toggleConnection() {
+        presenter.setConnected(!connected)
+    }
+
+    onDeepIn: edit()
+    Component.onCompleted: {
+        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+
+        var connectItem = menu.addEntry();
+        connectItem.triggered.connect(toggleConnection);
+        connectItem.text = Qt.binding(function() {
+            return connected ? qsTr("Disconnect") : qsTr("Connect"); });
+        connectItem.iconSource = Qt.binding(function() {
+            return connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
+
+        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
+        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.triggered.connect(presenter.remove);
+    }
+
+    implicitWidth: grid.implicitWidth + sizings.margins * 2
+    implicitHeight: grid.implicitHeight + sizings.margins * 2
 
     LinkPresenter {
         id: presenter
@@ -26,8 +51,9 @@ Controls.Frame {
 
     GridLayout {
         id: grid
-        anchors.centerIn: parent
-        width: parent.width
+        anchors.fill: parent
+        anchors.margins: sizings.margins
+        anchors.rightMargin: linkView.margin
         columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
@@ -76,38 +102,6 @@ Controls.Frame {
             horizontalAlignment: Text.AlignHCenter
             color: customPalette.skyColor
             Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Actions")
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
-            enabled: linkId > 0
-
-            Controls.Button {
-                tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
-                iconSource: connected ? "qrc:/icons/disconnect.svg" :
-                                        "qrc:/icons/connect.svg"
-                onClicked: presenter.setConnected(!connected)
-            }
-
-            Controls.Button {
-                tipText: qsTr("Edit link")
-                iconSource: "qrc:/icons/edit.svg"
-                enabled: linkId > 0
-                onClicked: deepIn("qrc:/Views/Drawer/Links/LinkEditView.qml",
-                                  name, { "linkId": linkId });
-            }
-
-            Controls.DelayButton {
-                tipText: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                iconColor: customPalette.dangerColor
-                onActivated: presenter.remove()
-            }
         }
     }
 }

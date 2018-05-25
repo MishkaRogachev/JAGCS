@@ -55,9 +55,9 @@ Rectangle {
         Controls.Button {
             iconSource: connection.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
             iconColor: connection.connected ? customPalette.textColor : customPalette.dangerColor
-            tipText: qsTr("Links")
+            tipText: qsTr("Connection")
             flat: true
-            onClicked: menu.setMode(DrawerPresenter.Links)
+            onClicked: menu.setMode(DrawerPresenter.Connection)
         }
     }
 

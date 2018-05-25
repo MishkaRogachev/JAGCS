@@ -28,7 +28,8 @@ LinkPresenter::LinkPresenter(QObject* parent):
     });
     connect(m_service, &domain::CommunicationService::linkStatisticsChanged, this,
             [this](const dto::LinkStatisticsPtr& statistics) {
-        if (m_description->id() == statistics->linkId()) this->updateStatistics(statistics);
+        if (m_description &&
+            m_description->id() == statistics->linkId()) this->updateStatistics(statistics);
     });
 }
 

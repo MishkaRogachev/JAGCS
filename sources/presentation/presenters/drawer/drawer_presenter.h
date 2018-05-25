@@ -16,7 +16,7 @@ namespace presentation
             Home,
                 Planning,
                 Vehicles,
-                Links,
+                Connection,
                 Logbook,
                 Settings,
                     Database,

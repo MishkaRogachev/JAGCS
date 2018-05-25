@@ -125,11 +125,12 @@
         <file>Views/Drawer/DrawerMenu.qml</file>
         <file>Views/Drawer/Vehicles/VehicleListView.qml</file>
         <file>Views/Drawer/Vehicles/VehicleView.qml</file>
-        <file>Views/Drawer/Links/LinkListView.qml</file>
-        <file>Views/Drawer/Links/LinkView.qml</file>
-        <file>Views/Drawer/Links/LinkEditView.qml</file>
-        <file>Views/Drawer/Links/EndpointListView.qml</file>
-        <file>Views/Drawer/Links/EndpointView.qml</file>
+        <file>Views/Drawer/Connection/ConnectionView.qml</file>
+        <file>Views/Drawer/Connection/Links/LinkListView.qml</file>
+        <file>Views/Drawer/Connection/Links/LinkView.qml</file>
+        <file>Views/Drawer/Connection/Links/LinkEditView.qml</file>
+        <file>Views/Drawer/Connection/Links/EndpointListView.qml</file>
+        <file>Views/Drawer/Connection/Links/EndpointView.qml</file>
         <file>Views/Drawer/Planning/PlanningView.qml</file>
         <file>Views/Drawer/Planning/Missions/MissionListView.qml</file>
         <file>Views/Drawer/Planning/Missions/MissionView.qml</file>
