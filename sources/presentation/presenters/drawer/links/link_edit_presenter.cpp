@@ -68,6 +68,8 @@ void LinkEditPresenter::updateRates()
 
 void LinkEditPresenter::updateDevices()
 {
+    if (!this->view()) return;
+
     QStringList devices;
     devices.append(QString());
 
@@ -76,10 +78,13 @@ void LinkEditPresenter::updateDevices()
         devices.append(device);
     }
 
-    QString device = m_description->parameter(dto::LinkDescription::Device).toString();
-    if (m_description && !devices.contains(device))
+    if (m_description)
     {
-        devices.append(device);
+        QString device = m_description->parameter(dto::LinkDescription::Device).toString();
+        if (m_description && !devices.contains(device))
+        {
+            devices.append(device);
+        }
     }
 
     this->setViewProperty(PROPERTY(devices), devices);
