@@ -12,8 +12,8 @@ Item {
     property var vehicles: []
     property int selectedMissionId: 0
 
-    implicitWidth: sizings.controlBaseSize * 11
-    implicitHeight: selectedMissionId > 0 ? missionEdit.implicitHeight : missionList.implicitHeight
+    implicitWidth: sizings.controlBaseSize * 10
+    //implicitHeight: selectedMissionId > 0 ? missionEdit.implicitHeight : missionList.implicitHeight
 
     Connections {
         target: map

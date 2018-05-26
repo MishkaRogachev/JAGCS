@@ -7,9 +7,10 @@ import "qrc:/Controls" as Controls
 Item {
     id: linkList
 
-    property var linkIds: []
+    property alias linkIds: list.model // TODO: change on links
 
-    implicitWidth: sizings.controlBaseSize * 11
+    implicitWidth: headerRow.height + sizings.spacing + list.contentWidth
+    implicitHeight: list.contentHeight
 
     LinkListPresenter {
         id: presenter
@@ -17,60 +18,73 @@ Item {
         Component.onCompleted: updateLinks()
     }
 
-    ListView {
-        anchors.fill: parent
-        anchors.bottomMargin: addButton.height
-        anchors.rightMargin: sizings.shadowSize
+    RowLayout {
+        id: headerRow
+        width: parent.width
         spacing: sizings.spacing
-        model: linkIds
 
-        Controls.ScrollBar.vertical: Controls.ScrollBar {}
-
-        delegate: LinkView {
-            width: parent.width
-            linkId: modelData
+        Controls.TextField {
+            enabled: false// TODO: filter field
+            id: hostNameItem
+            placeholderText: qsTr("Type filter here")
+            onTextChanged: missions.filter(text)
+            Layout.fillWidth: true
         }
 
-        Controls.Frame {
-            visible: parent.count === 0
-            width: parent.width
-            height: label.height + sizings.margins * 2
+        Controls.Button {
+            iconSource: "qrc:/icons/add.svg"
+            tipText: qsTr("Add Link")
+            onClicked: if (!addMenu.visible) addMenu.open()
 
-            Controls.Label {
-                id: label
-                text: qsTr("No links present")
-                width: parent.width
-                anchors.centerIn: parent
-                horizontalAlignment: Text.AlignHCenter
+            Controls.Menu {
+                id: addMenu
+                implicitWidth: parent.width
+                y: parent.height
+
+                Controls.MenuItem {
+                    text: qsTr("Udp")
+                    implicitWidth: parent.width
+                    onTriggered: presenter.addUdpLink()
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Serial")
+                    implicitWidth: parent.width
+                    onTriggered: presenter.addSerialLink()
+                }
             }
+            Layout.alignment: Qt.AlignRight
         }
     }
 
-    Controls.Button {
-        id: addButton
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        text: qsTr("Add Link")
-        iconSource: "qrc:/icons/add.svg"
-        onClicked: if (!addMenu.visible) addMenu.open()
+    Item {
+        anchors.fill: parent
+        anchors.topMargin: headerRow.height + sizings.spacing
+        clip: true
 
-        Controls.Menu {
-            id: addMenu
-            implicitWidth: parent.width
-            y: parent.height
+        ListView {
+            id: list
+            anchors.fill: parent
+            anchors.margins: sizings.shadowSize
+            spacing: sizings.spacing
+            flickableDirection: Flickable.AutoFlickIfNeeded
+            boundsBehavior: Flickable.StopAtBounds
 
-            Controls.MenuItem {
-                text: qsTr("Udp")
-                implicitWidth: parent.width
-                onTriggered: presenter.addUdpLink()
+            Controls.ScrollBar.vertical: Controls.ScrollBar {
+                visible: parent.contentHeight > parent.height
             }
 
-            Controls.MenuItem {
-                text: qsTr("Serial")
-                implicitWidth: parent.width
-                onTriggered: presenter.addSerialLink()
+            delegate: LinkView {
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                linkId: modelData//model.missionId
             }
+        }
+
+        Controls.Label {
+            anchors.centerIn: parent
+            text: qsTr("No links present")
+            visible: list.count === 0
         }
     }
 }

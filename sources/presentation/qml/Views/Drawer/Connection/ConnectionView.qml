@@ -11,8 +11,8 @@ Item {
 
     property int selectedLinkId: 0
 
-    implicitWidth: sizings.controlBaseSize * 11
-    implicitHeight: selectedLinkId > 0 ? linkEdit.implicitHeight : linkList.implicitHeight
+    implicitWidth: sizings.controlBaseSize * 10
+    //implicitHeight: selectedLinkId > 0 ? linkEdit.implicitHeight : linkList.implicitHeight
 
     Connections {
         target: map

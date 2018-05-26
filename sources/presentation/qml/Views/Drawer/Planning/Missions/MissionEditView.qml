@@ -15,9 +15,6 @@ ColumnLayout {
     property alias name: nameLabel.text
     property alias selectedItemId: itemList.selectedItemId
 
-    implicitWidth: sizings.controlBaseSize * 11
-    spacing: sizings.spacing
-
     onMissionIdChanged: {
         presenter.setMission(missionId);
         presenter.selectItem(0);
@@ -26,8 +23,9 @@ ColumnLayout {
         presenter.setItem(selectedItemId);
         if (map) map.selectedItemId = selectedItemId;
     }
-
     Component.onDestruction: if (map) map.selectedItemId = 0
+
+    spacing: sizings.spacing
 
     MissionEditPresenter {
         id: presenter
