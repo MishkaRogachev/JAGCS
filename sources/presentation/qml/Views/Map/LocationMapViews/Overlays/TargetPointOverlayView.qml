@@ -17,7 +17,6 @@ MapItemView {
 
         sourceItem: WaypointItem {
             id: pointView
-            height: width
             current: true
             sequence: vehicleId
             dragEnabled: true
