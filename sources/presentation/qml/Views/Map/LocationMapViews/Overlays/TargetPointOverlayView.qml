@@ -5,6 +5,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
+import "../../MapItems"
 
 MapItemView {
     delegate: MapQuickItem {
@@ -14,7 +15,7 @@ MapItemView {
         anchorPoint.y: sourceItem.height / 2
         z: 50
 
-        sourceItem: PointView {
+        sourceItem: WaypointItem {
             id: pointView
             height: width
             current: true

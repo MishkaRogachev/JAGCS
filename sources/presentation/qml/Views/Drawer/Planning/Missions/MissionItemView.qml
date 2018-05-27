@@ -10,10 +10,17 @@ PointView {
 
     property int itemId: 0
 
+    signal clicked()
+
     MissionItemPresenter {
         id: presenter
         view: missionItem
         Component.onCompleted: setItem(itemId)
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: missionItem.clicked()
     }
 }
 

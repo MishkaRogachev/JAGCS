@@ -13,25 +13,18 @@ Rectangle {
     property int status: MissionItem.NotActual
     property int command: MissionItem.UnknownCommand
 
-    property bool dragEnabled: false
-    property alias mouseEnabled: area.visible
-
-    signal clicked()
-    signal holded()
-    signal dragged(real dx, real dy)
-
     implicitWidth: sizings.controlBaseSize
     implicitHeight: sizings.controlBaseSize
     radius: height / 2
     border.width: sizings.controlBaseSize / 10
     color: selected ? customPalette.selectionColor : customPalette.raisedColor
     border.color: {
-        if (current) return customPalette.activeMissionColor; // TODO: highlight current only in mission
+        if (current) return customPalette.activeMissionColor;
         if (reached) return customPalette.positiveColor;
 
         switch (status) {
         case MissionItem.Actual: return customPalette.missionColor;
-//        case MissionItem.StatusNone: return customPalette.sunkenColor;
+        case MissionItem.StatusNone: return customPalette.textColor;
         case MissionItem.NotActual:
         default: return customPalette.dangerColor;
         }
@@ -66,31 +59,6 @@ Rectangle {
         color: customPalette.textColor
         anchors.centerIn: parent
         font.bold: true
-    }
-
-    Controls.ColoredIcon {
-        id: picker
-        width: parent.width
-        height: parent.height
-        source: "qrc:/icons/aim.svg";
-        color: customPalette.activeMissionColor
-        visible: area.drag.active
-    }
-
-    MouseArea {
-        id: area
-        anchors.fill: parent
-        drag.target: dragEnabled ? picker : undefined
-        drag.axis: Drag.XAndYAxis
-        onClicked: point.clicked()
-        onPressAndHold: point.holded()
-        onReleased: {
-            if (!drag.active) return;
-
-            dragged(picker.x, picker.y);
-            picker.x = 0;
-            picker.y = 0;
-        }
     }
 }
 

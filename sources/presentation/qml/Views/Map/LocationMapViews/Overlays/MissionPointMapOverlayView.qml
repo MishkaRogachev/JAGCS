@@ -4,6 +4,7 @@ import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Views/Common"
+import "../../MapItems"
 
 MapItemView {
     delegate: MapQuickItem {
@@ -14,7 +15,7 @@ MapItemView {
         anchorPoint.y: sourceItem.height / 2
         z: itemSelected ? 999 : 500
 
-        sourceItem: PointView {
+        sourceItem: WaypointItem {
             selected: itemSelected
             dragEnabled: itemSelected
             current: itemCurrent
