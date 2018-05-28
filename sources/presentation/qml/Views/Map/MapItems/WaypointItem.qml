@@ -13,8 +13,8 @@ PointView  {
     signal holded()
     signal dragged(real dx, real dy)
 
-    width: area.pressed ? area.width : implicitWidth
-    height: area.pressed ? area.height : implicitHeight
+    width: dragEnabled && area.pressed ? area.width : implicitWidth
+    height: dragEnabled && area.pressed ? area.height : implicitHeight
 
     Behavior on width { PropertyAnimation { duration: 200 } }
     Behavior on height { PropertyAnimation { duration: 200 } }
