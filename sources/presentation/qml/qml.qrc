@@ -137,7 +137,6 @@
         <file>Views/Drawer/Planning/Missions/MissionView.qml</file>
         <file>Views/Drawer/Planning/Missions/MissionEditView.qml</file>
         <file>Views/Drawer/Planning/Missions/MissionItemListView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionItemView.qml</file>
         <file>Views/Drawer/Planning/Missions/MissionItemEditView.qml</file>
         <file>Views/Drawer/Planning/Missions/MissionAssignmentView.qml</file>
         <file>Views/Drawer/Log/LogListView.qml</file>

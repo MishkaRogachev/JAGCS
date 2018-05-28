@@ -1,6 +1,7 @@
 #include "mission_item_list_presenter.h"
 
 // Qt
+#include <QSortFilterProxyModel>
 #include <QVariant>
 #include <QDebug>
 
@@ -11,49 +12,50 @@
 #include "service_registry.h"
 #include "mission_service.h"
 
+#include "mission_item_list_model.h"
+
 using namespace presentation;
+
+class MissionItemListPresenter::Impl
+{
+public:
+    domain::MissionService* const service = serviceRegistry->missionService();
+    int missionId = 0;
+
+    MissionItemListModel model;
+    QSortFilterProxyModel sortModel;
+};
 
 MissionItemListPresenter::MissionItemListPresenter(QObject* parent):
     BasePresenter(parent),
-    m_service(serviceRegistry->missionService()),
-    m_missionId(0)
+    d(new Impl())
 {
-    connect(m_service, &domain::MissionService::missionItemAdded, this,
-            [this](dto::MissionItemPtr item) {
-        if (item->missionId() == m_missionId) this->updateMissionItems();
-    });
-    connect(m_service, &domain::MissionService::missionItemRemoved, this,
-            [this](dto::MissionItemPtr item) {
-        if (item->missionId() == m_missionId) this->updateMissionItems();
-    });
-    connect(m_service, &domain::MissionService::missionItemChanged, this,
-            [this](dto::MissionItemPtr item) {
-        if (item->missionId() == m_missionId) this->updateMissionItems();
-    });
+    d->sortModel.setSourceModel(&d->model);
+
+    d->sortModel.setSortRole(MissionItemListModel::SequenceRole);
+    d->sortModel.setDynamicSortFilter(true);
+    d->sortModel.sort(0, Qt::AscendingOrder);
+
+    connect(d->service, &domain::MissionService::missionItemAdded,
+            &d->model, &MissionItemListModel::addMissionItem);
+    connect(d->service, &domain::MissionService::missionItemRemoved,
+            &d->model, &MissionItemListModel::removeMissionItem);
+    connect(d->service, &domain::MissionService::missionItemChanged,
+            &d->model, &MissionItemListModel::updateMissionItem);
 }
+
+MissionItemListPresenter::~MissionItemListPresenter()
+{}
 
 void MissionItemListPresenter::setMission(int id)
 {
-    if (m_missionId == id) return;
+    if (d->missionId == id) return;
 
-    m_missionId = id;
-    if (this->view()) this->updateMissionItems();
-}
-
-void MissionItemListPresenter::updateMissionItems()
-{
-    QVariantList itemIds;
-
-    for (const dto::MissionItemPtr& item: m_service->missionItems(m_missionId))
-    {
-        itemIds.append(item->id());
-    }
-    this->setViewProperty(PROPERTY(itemIds), itemIds);
+    d->missionId = id;
+    d->model.setMissionItems(d->service->missionItems(d->missionId));
 }
 
 void MissionItemListPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
-
-    this->updateMissionItems();
+    view->setProperty(PROPERTY(items), QVariant::fromValue(&d->sortModel));
 }

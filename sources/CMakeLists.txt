@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Internal sources and headers
-file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp")
+file(GLOB_RECURSE INTERNAL_SOURCES "*.h" "*.cpp" "*.hpp")
 set(SOURCES ${SOURCES} ${INTERNAL_SOURCES} PARENT_SCOPE)
 
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ".")

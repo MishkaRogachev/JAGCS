@@ -17,17 +17,17 @@ namespace presentation
 
     public:
         explicit MissionItemListPresenter(QObject* parent = nullptr);
+        ~MissionItemListPresenter() override;
 
     public slots:
         void setMission(int id);
-        void updateMissionItems();
 
     protected:
         void connectView(QObject* view);
 
     private:
-        domain::MissionService* const m_service;
-        int m_missionId;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
