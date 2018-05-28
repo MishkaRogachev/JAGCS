@@ -46,14 +46,19 @@ Row {
                 command: model.command
                 reached: model.reached
                 status: model.status
-                onSelectedChanged: if (visible && selected) checkItemX(parent.x)
-                onVisibleChanged: if (visible && selected) checkItemX(parent.x)
+                onSelectedChanged: checkX()
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: missionItemList.selectionRequest(model.itemId)
                 }
+
+                function checkX() {
+                    if (visible && selected) checkItemX(parent.x);
+                }
             }
+
+            onXChanged: if (x > 0) itemView.checkX()
         }
     }
 }

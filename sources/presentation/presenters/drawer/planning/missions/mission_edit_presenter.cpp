@@ -101,7 +101,6 @@ void MissionEditPresenter::addItem(dto::MissionItem::Command command,
     int seq = d->item ? d->item->sequence() + 1 : 0;
     d->item = d->service->addNewMissionItem(d->mission->id(), command, seq, coordinate);
 
-
     this->updateItem();
 }
 
