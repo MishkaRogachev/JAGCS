@@ -27,6 +27,11 @@ Map {
     property int activeMapTypeIndex: 0
 
     property real xCenterOffset: 0
+    readonly property var centerOffsetted: {
+        var point = fromCoordinate(center, false);
+        point.x -= xCenterOffset;
+        return toCoordinate(point, false);
+    }
 
     signal selectItem(int missionId, int itemId)
     signal itemDragged(int itemId, var coordinate);
@@ -94,8 +99,8 @@ Map {
         gesture.acceptedGestures = trackingVehicleId == 0 ?
                     (MapGestureArea.PinchGesture | MapGestureArea.PanGesture |
                      MapGestureArea.FlickGesture | MapGestureArea.RotationGesture |
-                     MapGestureArea.TiltGesture)
-                  : (trackYaw ?
+                     MapGestureArea.TiltGesture) :
+                    (trackYaw ?
                          MapGestureArea.PinchGesture | MapGestureArea.TiltGesture :
                          MapGestureArea.PinchGesture | MapGestureArea.RotationGesture |
                          MapGestureArea.TiltGesture)

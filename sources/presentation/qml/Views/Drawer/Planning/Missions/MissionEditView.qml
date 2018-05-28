@@ -163,28 +163,28 @@ ColumnLayout {
                     text: qsTr("Home")
                     iconSource: "qrc:/icons/home.svg"
                     enabled: sequence == -1
-                    onTriggered: presenter.addItem(MissionItem.Home, map.center)
+                    onTriggered: presenter.addItem(MissionItem.Home, map.centerOffsetted)
                 }
 
                 Controls.MenuItem {
                     text: qsTr("Waypoint")
                     iconSource: "qrc:/icons/map-marker.svg"
                     enabled: sequence >= 0
-                    onTriggered: presenter.addItem(MissionItem.Waypoint, map.center)
+                    onTriggered: presenter.addItem(MissionItem.Waypoint, map.centerOffsetted)
                 }
 
                 Controls.MenuItem {
                     text: qsTr("Takeoff")
                     iconSource: "qrc:/icons/takeoff.svg"
                     enabled: sequence >= 0
-                    onTriggered: presenter.addItem(MissionItem.Takeoff, map.center)
+                    onTriggered: presenter.addItem(MissionItem.Takeoff, map.centerOffsetted)
                 }
 
                 Controls.MenuItem {
                     text: qsTr("Landing")
                     iconSource: "qrc:/icons/landing.svg"
                     enabled: sequence >= 0
-                    onTriggered: presenter.addItem(MissionItem.Landing)
+                    onTriggered: presenter.addItem(MissionItem.Landing, map.centerOffsetted)
                 }
             }
         }
