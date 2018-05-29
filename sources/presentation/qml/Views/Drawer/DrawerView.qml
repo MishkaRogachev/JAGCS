@@ -10,8 +10,10 @@ Item {
     property int mode: DrawerPresenter.UnknownMode
     property var nestedModes: []
     property var parentModes: []
+    property string submode
 
     signal open()
+    signal closeSubmode()
 
     function home() { presenter.home(); }
     function setMode(mode) { presenter.setMode(mode); }
@@ -30,36 +32,48 @@ Item {
         id: drawerHeader
         anchors.top: parent.top
         width: parent.width
-        spacing: 0
+        spacing: sizings.spacing
 
-        Controls.Button {
-            tipText: qsTr("Close drawer")
-            iconSource: "qrc:/icons/hide_drawer.svg"
-            flat: true
-            onClicked: drawer.close()
-        }
+        RowLayout {
+            spacing: 0
 
-        Controls.Button {
-            tipText: qsTr("Home")
-            iconSource: "qrc:/icons/home.svg"
-            flat: true
-            enabled: mode != DrawerPresenter.Home
-            onClicked: home()
+            Controls.Button {
+                tipText: qsTr("Close drawer")
+                iconSource: "qrc:/icons/left.svg"
+                flat: true
+                onClicked: drawer.close()
+            }
+
+            Controls.Button {
+                tipText: qsTr("Home")
+                iconSource: "qrc:/icons/home.svg"
+                flat: true
+                enabled: mode != DrawerPresenter.Home
+                onClicked: home()
+            }
         }
 
         Repeater {
             model: parentModes
 
             Controls.Button {
-                text: presenter.modeString(modelData) + ", "
+                text: presenter.modeString(modelData)
                 flat: true
                 visible: modelData != DrawerPresenter.Home
                 onClicked: setMode(modelData)
             }
         }
 
-        Controls.Label {
+        Controls.Button {
             text: presenter.modeString(mode)
+            flat: true
+            visible: submode.length > 0
+            onClicked: closeSubmode()
+        }
+
+        // TODO: ComboBox to select current submode without returning to root
+        Controls.Label {
+            text: submode.length > 0 ? submode : presenter.modeString(mode)
             font.bold: true
             Layout.fillWidth: true
         }

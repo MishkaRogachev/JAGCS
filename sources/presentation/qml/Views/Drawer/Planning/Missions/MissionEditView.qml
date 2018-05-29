@@ -12,18 +12,29 @@ ColumnLayout {
     property int sequence: -1
     property int count: 0
 
-    property alias name: nameLabel.text
+    property string name
     property alias selectedItemId: itemList.selectedItemId
 
     onMissionIdChanged: {
         presenter.setMission(missionId);
-        presenter.selectItem(0);
+        if (missionId) presenter.selectItem(0);
+    }
+    onNameChanged: {
+        if (missionId > 0)
+        {
+            if (name.length > 0) menu.submode = name;
+            else menu.submode = qsTr("Mission");
+        }
+        else menu.submode = "";
     }
     onSelectedItemIdChanged: {
         presenter.setItem(selectedItemId);
         if (map) map.selectedItemId = selectedItemId;
     }
-    Component.onDestruction: if (map) map.selectedItemId = 0
+    Component.onDestruction: {
+        menu.submode = "";
+        if (map) map.selectedItemId = 0;
+    }
 
     spacing: sizings.spacing
 
@@ -35,16 +46,9 @@ ColumnLayout {
     RowLayout {
         spacing: sizings.spacing
 
-        Controls.Button {
-            tipText: qsTr("Back to planning list")
-            iconSource: "qrc:/icons/left.svg"
-            flat: true
-            onClicked: selectedMissionId = 0
-        }
-
         Controls.Label {
             id: nameLabel
-            text: qsTr("Unknown mission")
+            text: qsTr("Vehicle")
         }
 
         MissionAssignmentView {

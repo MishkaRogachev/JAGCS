@@ -13,15 +13,18 @@ Item {
     property int selectedMissionId: 0
 
     implicitWidth: sizings.controlBaseSize * 10
-    //implicitHeight: selectedMissionId > 0 ? missionEdit.implicitHeight : missionList.implicitHeight
 
     Connections {
         target: map
-
         onSelectItem: {
             if (selectedMissionId != missionId) selectedMissionId = missionId;
             missionEdit.selectedItemId = itemId;
         }
+    }
+
+    Connections {
+        target: menu
+        onCloseSubmode: selectedMissionId = 0
     }
 
     PlanningPresenter {

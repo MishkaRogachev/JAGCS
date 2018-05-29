@@ -62,7 +62,7 @@ void MissionEditPresenter::selectItem(int sequence)
 void MissionEditPresenter::updateMission()
 {
     this->setViewProperty(PROPERTY(count), d->mission ? d->mission->count() : 0);
-    this->setViewProperty(PROPERTY(name), d->mission ? d->mission->name() : tr("None"));
+    this->setViewProperty(PROPERTY(name), d->mission ? d->mission->name() : QString());
 }
 
 void MissionEditPresenter::updateItem()

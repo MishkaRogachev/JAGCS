@@ -47,8 +47,15 @@ void MissionPresenter::rename(const QString& name)
     dto::MissionPtr mission = m_service->mission(m_missionId);
     if (mission.isNull()) return;
 
-    mission->setName(name);
-    m_service->save(mission);
+    if (name.length() > 0) // TODO: name validator
+    {
+        mission->setName(name);
+        m_service->save(mission);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(name), mission->name());
+    }
 }
 
 void MissionPresenter::remove()
