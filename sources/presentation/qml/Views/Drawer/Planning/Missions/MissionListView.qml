@@ -25,7 +25,7 @@ Item {
         Controls.TextField { // TODO: filter field
             id: hostNameItem
             placeholderText: qsTr("Type filter here")
-            onTextChanged: missions.filter(text)
+            onTextChanged: presenter.filter(text)
             Layout.fillWidth: true
         }
 

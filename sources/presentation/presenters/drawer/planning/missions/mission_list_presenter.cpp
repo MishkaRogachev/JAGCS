@@ -1,6 +1,7 @@
 #include "mission_list_presenter.h"
 
 // Qt
+#include <QSortFilterProxyModel>
 #include <QVariant>
 #include <QDebug>
 
@@ -11,7 +12,6 @@
 #include "mission_service.h"
 
 #include "mission_list_model.h"
-#include "mission_list_filter_model.h"
 
 using namespace presentation;
 
@@ -21,15 +21,20 @@ public:
     domain::MissionService* const service = serviceRegistry->missionService();
 
     MissionListModel missionsModel;
-    MissionListFilterModel sortingModel;
+    QSortFilterProxyModel sortModel;
 };
 
 MissionListPresenter::MissionListPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
+    d->sortModel.setSourceModel(&d->missionsModel);
+    d->sortModel.setFilterRole(MissionListModel::MissionNameRole);
+    d->sortModel.setSortRole(MissionListModel::MissionNameRole);
+    d->sortModel.setDynamicSortFilter(true);
+    d->sortModel.sort(0, Qt::AscendingOrder);
+
     d->missionsModel.setMissions(d->service->missions());
-    d->sortingModel.setSourceModel(&d->missionsModel);
 
     connect(d->service, &domain::MissionService::missionAdded,
             &d->missionsModel, &MissionListModel::addMission);
@@ -47,9 +52,14 @@ void MissionListPresenter::addMission()
     d->service->addNewMission(tr("New Mission"));
 }
 
+void MissionListPresenter::filter(const QString& filterString)
+{
+    d->sortModel.setFilterFixedString(filterString);
+}
+
 void MissionListPresenter::connectView(QObject* view)
 {
     Q_UNUSED(view)
 
-    this->setViewProperty(PROPERTY(missions), QVariant::fromValue(&d->sortingModel));
+    this->setViewProperty(PROPERTY(missions), QVariant::fromValue(&d->sortModel));
 }

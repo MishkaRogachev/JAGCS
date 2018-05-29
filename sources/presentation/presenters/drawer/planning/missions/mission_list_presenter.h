@@ -21,6 +21,7 @@ namespace presentation
 
     public slots:
         void addMission();
+        void filter(const QString& filterString);
 
     protected:
         void connectView(QObject* view);
