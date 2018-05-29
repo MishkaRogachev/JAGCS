@@ -10,6 +10,7 @@
         <file>ui/minus.svg</file>
         <file>ui/up.svg</file>
         <file>ui/down.svg</file>
+        <file>ui/erase.svg</file>
         <file>indicators/battery.svg</file>
         <file>indicators/pick_aim.svg</file>
         <file>indicators/unknown_mark.svg</file>

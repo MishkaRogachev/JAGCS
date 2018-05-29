@@ -23,6 +23,7 @@ Slider 1.0 Slider.qml
 ComboBox 1.0 ComboBox.qml
 TextInput 1.0 TextInput.qml
 TextField 1.0 TextField.qml
+FilterField 1.0 FilterField.qml
 ItemDelegate 1.0 ItemDelegate.qml
 Popup 1.0 Popup.qml
 SpinBox 1.0 SpinBox.qml

@@ -29,6 +29,7 @@
         <file>Controls/ComboBox.qml</file>
         <file>Controls/TextInput.qml</file>
         <file>Controls/TextField.qml</file>
+        <file>Controls/FilterField.qml</file>
         <file>Controls/ItemDelegate.qml</file>
         <file>Controls/Popup.qml</file>
         <file>Controls/Card.qml</file>

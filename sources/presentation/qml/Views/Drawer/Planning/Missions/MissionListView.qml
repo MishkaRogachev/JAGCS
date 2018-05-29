@@ -22,9 +22,8 @@ Item {
         width: parent.width
         spacing: sizings.spacing
 
-        Controls.TextField { // TODO: filter field
+        Controls.FilterField {
             id: hostNameItem
-            placeholderText: qsTr("Type filter here")
             onTextChanged: presenter.filter(text)
             Layout.fillWidth: true
         }
