@@ -196,7 +196,7 @@ dto::MissionItemPtr MissionService::addNewMissionItem(int missionId,
     return item;
 }
 
-void MissionService::addNewMission(const QString& name)
+void MissionService::addNewMission(const QString& name, const QGeoCoordinate& coordinate)
 {
     QMutexLocker locker(&d->mutex);
 
@@ -204,7 +204,7 @@ void MissionService::addNewMission(const QString& name)
     mission->setName(name);
     this->save(mission);
 
-    this->addNewMissionItem(mission->id(), MissionItem::Home, 0);
+    this->addNewMissionItem(mission->id(), MissionItem::Home, 0, coordinate);
 }
 
 MissionAssignmentPtr MissionService::missionAssignment(int missionId) const

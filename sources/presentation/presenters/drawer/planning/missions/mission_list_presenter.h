@@ -4,6 +4,9 @@
 // Internal
 #include "base_presenter.h"
 
+// Qt
+#include <QGeoCoordinate>
+
 namespace domain
 {
     class MissionService;
@@ -20,7 +23,7 @@ namespace presentation
         ~MissionListPresenter() override;
 
     public slots:
-        void addMission();
+        void addMission(const QGeoCoordinate& coordinate);
         void filter(const QString& filterString);
 
     protected:

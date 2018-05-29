@@ -47,9 +47,9 @@ MissionListPresenter::MissionListPresenter(QObject* parent):
 MissionListPresenter::~MissionListPresenter()
 {}
 
-void MissionListPresenter::addMission()
+void MissionListPresenter::addMission(const QGeoCoordinate& coordinate)
 {
-    d->service->addNewMission(tr("New Mission"));
+    d->service->addNewMission(tr("New Mission"), coordinate);
 }
 
 void MissionListPresenter::filter(const QString& filterString)

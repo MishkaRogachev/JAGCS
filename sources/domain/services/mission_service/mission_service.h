@@ -39,7 +39,7 @@ namespace domain
                                               dto::MissionItem::Command command,
                                               int sequence,
                                               const QGeoCoordinate& coordinate = QGeoCoordinate());
-        void addNewMission(const QString& name);
+        void addNewMission(const QString& name, const QGeoCoordinate& coordinate);
 
         bool save(const dto::MissionPtr& mission);
         bool save(const dto::MissionItemPtr& item);

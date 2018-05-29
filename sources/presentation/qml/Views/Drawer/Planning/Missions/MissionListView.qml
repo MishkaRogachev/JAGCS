@@ -48,6 +48,6 @@ Item {
         anchors.bottom: parent.bottom
         iconSource: "qrc:/icons/add.svg"
         tipText: qsTr("Add Mission")
-        onClicked: presenter.addMission()
+        onClicked: presenter.addMission(map.centerOffsetted)
     }
 }
