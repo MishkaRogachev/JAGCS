@@ -12,6 +12,7 @@
         <file>Controls/ContentItem.qml</file>
         <file>Controls/Button.qml</file>
         <file>Controls/DelayButton.qml</file>
+        <file>Controls/RoundButton.qml</file>
         <file>Controls/ButtonGroup.qml</file>
         <file>Controls/ButtonBar.qml</file>
         <file>Controls/TabButton.qml</file>

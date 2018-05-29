@@ -9,7 +9,6 @@ Row {
 
     property int missionId: 0
     property int selectedItemId: 0
-    width: sizings.controlBaseSize * repeater.count
 
     property alias items: repeater.model
 
@@ -17,6 +16,9 @@ Row {
     signal checkItemX(real x)
 
     onMissionIdChanged: presenter.setMission(missionId)
+
+    width: sizings.controlBaseSize * repeater.count
+    clip: true
 
     MissionItemListPresenter {
         id: presenter

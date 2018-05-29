@@ -42,6 +42,8 @@
         <file>icons/edit.svg</file>
         <file>icons/remove.svg</file>
         <file>icons/cancel.svg</file>
+        <file>icons/find.svg</file>
+        <file>icons/filter.svg</file>
         <file>icons/up.svg</file>
         <file>icons/down.svg</file>
         <file>icons/min_up.svg</file>

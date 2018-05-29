@@ -9,61 +9,45 @@ Item {
 
     property alias missions: list.model
 
-    implicitWidth: headerRow.height + sizings.spacing + list.contentWidth
-    implicitHeight: list.contentHeight
+    onVisibleChanged: menu.filterEnabled = visible
+    Component.onCompleted: menu.filterEnabled = true;
+
+    Connections{
+        target: menu
+        onFilter: presenter.filter(text)
+    }
 
     MissionListPresenter {
         id: presenter
         view: missionList
     }
 
-    RowLayout {
-        id: headerRow
-        width: parent.width
+    ListView {
+        id: list
+        anchors.fill: parent
+        anchors.margins: sizings.shadowSize
+        anchors.bottomMargin: addButton.height
         spacing: sizings.spacing
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
 
-        Controls.FilterField {
-            id: hostNameItem
-            onTextChanged: presenter.filter(text)
-            Layout.fillWidth: true
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
         }
 
-        Controls.Button {
-            iconSource: "qrc:/icons/add.svg"
-            tipText: qsTr("Add Mission")
-            onClicked: presenter.addMission()
-            Layout.alignment: Qt.AlignRight
+        delegate: MissionView {
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            missionId: model.missionId
         }
     }
 
-    Item {
-        anchors.fill: parent
-        anchors.topMargin: headerRow.height + sizings.spacing
-        clip: true
-
-        ListView {
-            id: list
-            anchors.fill: parent
-            anchors.margins: sizings.shadowSize
-            spacing: sizings.spacing
-            flickableDirection: Flickable.AutoFlickIfNeeded
-            boundsBehavior: Flickable.StopAtBounds
-
-            Controls.ScrollBar.vertical: Controls.ScrollBar {
-                visible: parent.contentHeight > parent.height
-            }
-
-            delegate: MissionView {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                missionId: model.missionId
-            }
-        }
-
-        Controls.Label {
-            anchors.centerIn: parent
-            text: qsTr("No items present")
-            visible: list.count === 0
-        }
+    Controls.RoundButton {
+        id: addButton
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        iconSource: "qrc:/icons/add.svg"
+        tipText: qsTr("Add Mission")
+        onClicked: presenter.addMission()
     }
 }

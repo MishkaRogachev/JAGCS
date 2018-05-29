@@ -10,10 +10,13 @@ Item {
     property int mode: DrawerPresenter.UnknownMode
     property var nestedModes: []
     property var parentModes: []
+
     property string submode
+    property bool filterEnabled: false
 
     signal open()
     signal closeSubmode()
+    signal filter(string text)
 
     function home() { presenter.home(); }
     function setMode(mode) { presenter.setMode(mode); }
@@ -28,67 +31,86 @@ Item {
         view: menu
     }
 
-    RowLayout {
+    ColumnLayout {
         id: drawerHeader
-        anchors.top: parent.top
         width: parent.width
         spacing: sizings.spacing
 
         RowLayout {
-            spacing: 0
+            spacing: sizings.spacing
 
-            Controls.Button {
-                tipText: qsTr("Close drawer")
-                iconSource: "qrc:/icons/left.svg"
-                flat: true
-                onClicked: drawer.close()
+            RowLayout {
+                spacing: 0
+
+                Controls.Button {
+                    tipText: qsTr("Close drawer")
+                    iconSource: "qrc:/icons/left.svg"
+                    flat: true
+                    onClicked: drawer.close()
+                }
+
+                Controls.Button {
+                    tipText: qsTr("Home")
+                    iconSource: "qrc:/icons/home.svg"
+                    flat: true
+                    enabled: mode != DrawerPresenter.Home
+                    onClicked: home()
+                }
+            }
+
+            Repeater {
+                model: parentModes
+
+                Controls.Button {
+                    text: presenter.modeString(modelData)
+                    flat: true
+                    visible: modelData != DrawerPresenter.Home
+                    onClicked: setMode(modelData)
+                }
             }
 
             Controls.Button {
-                tipText: qsTr("Home")
-                iconSource: "qrc:/icons/home.svg"
+                text: presenter.modeString(mode)
                 flat: true
-                enabled: mode != DrawerPresenter.Home
-                onClicked: home()
+                visible: submode.length > 0
+                onClicked: closeSubmode()
             }
-        }
 
-        Repeater {
-            model: parentModes
+            // TODO: ComboBox to select current submode without returning to root
+            Controls.Label {
+                text: submode.length > 0 ? submode : presenter.modeString(mode)
+                font.bold: true
+                Layout.fillWidth: true
+            }
 
             Controls.Button {
-                text: presenter.modeString(modelData)
+                id: filterButton
+                tipText: checked ? qsTr("Close filter") : qsTr("Open filter")
+                iconSource: "qrc:/icons/find.svg"
+                checkable: true
+                visible: filterEnabled
                 flat: true
-                visible: modelData != DrawerPresenter.Home
-                onClicked: setMode(modelData)
+                onVisibleChanged: if (!visible) checked = false
             }
         }
 
-        Controls.Button {
-            text: presenter.modeString(mode)
-            flat: true
-            visible: submode.length > 0
-            onClicked: closeSubmode()
-        }
-
-        // TODO: ComboBox to select current submode without returning to root
-        Controls.Label {
-            text: submode.length > 0 ? submode : presenter.modeString(mode)
-            font.bold: true
+        Controls.FilterField {
+            visible: filterButton.checked
+            onVisibleChanged: visible ? forceActiveFocus() : clear()
+            onTextChanged: filter(text)
             Layout.fillWidth: true
+            Layout.margins: sizings.padding
         }
     }
 
     Flickable {
         id: flickable
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width - sizings.padding * 2
-        height: parent.height - drawerHeader.height - sizings.spacing
+        anchors.fill: parent
+        anchors.margins: sizings.padding
+        anchors.topMargin: drawerHeader.height + sizings.spacing
         contentHeight: contents.height
         boundsBehavior: Flickable.OvershootBounds
         flickableDirection: Flickable.AutoFlickIfNeeded
-
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}

@@ -8,9 +8,10 @@ TextField {
     Button {
         anchors.right: parent.right
         anchors.verticalCenter: parent.VerticalCenter
+        iconSource: "qrc:/ui/erase.svg"
+        tipText: qsTr("Clear filter")
         flat: true
         visible: control.text.length > 0
-        iconSource: "qrc:/ui/erase.svg"
         onClicked: control.clear()
     }
 }
