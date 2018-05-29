@@ -37,11 +37,17 @@ MissionItemListPresenter::MissionItemListPresenter(QObject* parent):
     d->sortModel.sort(0, Qt::AscendingOrder);
 
     connect(d->service, &domain::MissionService::missionItemAdded,
-            &d->model, &MissionItemListModel::addMissionItem);
+            this, [this](dto::MissionItemPtr item) {
+        if (item->missionId() == d->missionId) d->model.addMissionItem(item);
+    });
     connect(d->service, &domain::MissionService::missionItemRemoved,
-            &d->model, &MissionItemListModel::removeMissionItem);
+            this, [this](dto::MissionItemPtr item) {
+        if (item->missionId() == d->missionId) d->model.removeMissionItem(item);
+    });
     connect(d->service, &domain::MissionService::missionItemChanged,
-            &d->model, &MissionItemListModel::updateMissionItem);
+            this, [this](dto::MissionItemPtr item) {
+        if (item->missionId() == d->missionId) d->model.updateMissionItem(item);
+    });
 }
 
 MissionItemListPresenter::~MissionItemListPresenter()
