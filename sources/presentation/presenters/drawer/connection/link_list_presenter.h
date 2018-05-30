@@ -17,14 +17,19 @@ namespace presentation
 
     public:
         explicit LinkListPresenter(QObject* parent = nullptr);
+        ~LinkListPresenter() override;
 
     public slots:
-        void updateLinks();
         void addUdpLink();
         void addSerialLink();
+        void filter(const QString& filterString);
+
+    protected:
+        void connectView(QObject* view) override;
 
     private:
-        domain::CommunicationService* const m_service;
+         class Impl;
+         QScopedPointer<Impl> const d;
     };
 }
 

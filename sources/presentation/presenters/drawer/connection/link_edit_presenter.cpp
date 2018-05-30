@@ -33,7 +33,10 @@ LinkEditPresenter::LinkEditPresenter(QObject* parent):
 
 void LinkEditPresenter::setLink(int id)
 {
-    m_description = m_service->description(id);
+    m_link = m_service->description(id);
+
+    // TODO: read old statistics
+    m_statisticsModel->resetData(dto::LinkStatisticsPtrList());
 
     this->updateDevices();
     this->updateLink();
@@ -42,19 +45,20 @@ void LinkEditPresenter::setLink(int id)
 
 void LinkEditPresenter::updateLink()
 {
-    if (m_description.isNull()) return;
-
     LinkPresenter::updateLink();
 
-    this->setViewProperty(PROPERTY(port), m_description->parameter(dto::LinkDescription::Port));
-    this->setViewProperty(PROPERTY(device), m_description->parameter(dto::LinkDescription::Device));
+    this->setViewProperty(PROPERTY(port),
+                          m_link ? m_link->parameter(dto::LinkDescription::Port) : 0);
+    this->setViewProperty(PROPERTY(device),
+                          m_link ? m_link->parameter(dto::LinkDescription::Device) : QString());
     this->setViewProperty(PROPERTY(baudRate),
-                          m_description->parameter(dto::LinkDescription::BaudRate));
-    QString endpoints = m_description->parameter(dto::LinkDescription::Endpoints).toString();
+                          m_link ? m_link->parameter(dto::LinkDescription::BaudRate) : 0);
+    QString endpoints;
+    if (m_link) endpoints = m_link->parameter(dto::LinkDescription::Endpoints).toString();
     this->setViewProperty(PROPERTY(endpoints), endpoints.isEmpty() ?
                               QStringList() : endpoints.split(::separator));
     this->setViewProperty(PROPERTY(autoResponse),
-                          m_description->parameter(dto::LinkDescription::UdpAutoResponse));
+                          m_link ? m_link->parameter(dto::LinkDescription::UdpAutoResponse) : false);
 
     this->setViewProperty(PROPERTY(changed), false);
 }
@@ -78,10 +82,10 @@ void LinkEditPresenter::updateDevices()
         devices.append(device);
     }
 
-    if (m_description)
+    if (m_link)
     {
-        QString device = m_description->parameter(dto::LinkDescription::Device).toString();
-        if (m_description && !devices.contains(device))
+        QString device = m_link->parameter(dto::LinkDescription::Device).toString();
+        if (m_link && !devices.contains(device))
         {
             devices.append(device);
         }
@@ -92,24 +96,24 @@ void LinkEditPresenter::updateDevices()
 
 void LinkEditPresenter::save()
 {
-    if (m_description.isNull()) return;
+    if (m_link.isNull()) return;
 
-    m_description->setName(this->viewProperty(PROPERTY(name)).toString());
-    m_description->setParameter(dto::LinkDescription::Device,
+    m_link->setName(this->viewProperty(PROPERTY(name)).toString());
+    m_link->setParameter(dto::LinkDescription::Device,
                                 this->viewProperty(PROPERTY(device)).toString());
-    m_description->setParameter(dto::LinkDescription::BaudRate,
+    m_link->setParameter(dto::LinkDescription::BaudRate,
                                 this->viewProperty(PROPERTY(baudRate)).toInt());
-    m_description->setParameter(dto::LinkDescription::Port,
+    m_link->setParameter(dto::LinkDescription::Port,
                                 this->viewProperty(PROPERTY(port)).toInt());
 
     QStringList endpoints = this->viewProperty(PROPERTY(endpoints)).toStringList();
     endpoints = endpoints.toSet().toList(); // remove dublicates
     this->setViewProperty(PROPERTY(endpoints), endpoints);
-    m_description->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
-    m_description->setParameter(dto::LinkDescription::UdpAutoResponse,
+    m_link->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
+    m_link->setParameter(dto::LinkDescription::UdpAutoResponse,
                                 this->viewProperty(PROPERTY(autoResponse)).toBool());
 
-    if (!m_service->save(m_description)) return;
+    if (!m_service->save(m_link)) return;
 
     this->setViewProperty(PROPERTY(changed), false);
 }

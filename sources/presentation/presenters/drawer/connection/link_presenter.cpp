@@ -20,22 +20,21 @@ LinkPresenter::LinkPresenter(QObject* parent):
 {
     connect(m_service, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (m_description == description) this->updateLink();
+        if (m_link == description) this->updateLink();
     });
     connect(m_service, &domain::CommunicationService::linkStatusChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (m_description == description) this->updateStatus();
+        if (m_link == description) this->updateStatus();
     });
     connect(m_service, &domain::CommunicationService::linkStatisticsChanged, this,
             [this](const dto::LinkStatisticsPtr& statistics) {
-        if (m_description &&
-            m_description->id() == statistics->linkId()) this->updateStatistics(statistics);
+        if (m_link && m_link->id() == statistics->linkId()) this->updateStatistics(statistics);
     });
 }
 
 void LinkPresenter::setLink(int id)
 {
-    m_description = m_service->description(id);
+    m_link = m_service->description(id);
 
     this->updateLink();
     this->updateStatus();
@@ -43,31 +42,26 @@ void LinkPresenter::setLink(int id)
 
 void LinkPresenter::updateLink()
 {
-    if (m_description.isNull()) return;
-
-    this->setViewProperty(PROPERTY(type), m_description->type());
-    this->setViewProperty(PROPERTY(name), m_description->name());
+    this->setViewProperty(PROPERTY(type), m_link ? m_link->type() :
+                                                   dto::LinkDescription::UnknownType);
+    this->setViewProperty(PROPERTY(name), m_link ? m_link->name() : QString());
 }
 
 void LinkPresenter::updateStatus()
 {
-    this->setViewProperty(PROPERTY(connected), m_description && m_description->isConnected());
-    this->setViewProperty(PROPERTY(protocol), m_description ? m_description->protocol() :
-                                                              dto::LinkDescription::UnknownProtocol);
+    this->setViewProperty(PROPERTY(connected), m_link && m_link->isConnected());
+    this->setViewProperty(PROPERTY(protocol), m_link ? m_link->protocol() :
+                                                       dto::LinkDescription::UnknownProtocol);
 }
 
 void LinkPresenter::setConnected(bool connected)
 {
-    if (m_description.isNull()) return;
-
-    m_service->setLinkConnected(m_description, connected);
+    if (m_link) m_service->setLinkConnected(m_link, connected);
 }
 
 void LinkPresenter::remove()
 {
-    if (m_description.isNull()) return;
-
-    m_service->remove(m_description);
+    if (m_link) m_service->remove(m_link);
 }
 
 void LinkPresenter::updateStatistics(const dto::LinkStatisticsPtr& statistics)

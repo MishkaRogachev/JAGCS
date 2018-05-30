@@ -59,7 +59,5 @@ void MissionListPresenter::filter(const QString& filterString)
 
 void MissionListPresenter::connectView(QObject* view)
 {
-    Q_UNUSED(view)
-
-    this->setViewProperty(PROPERTY(missions), QVariant::fromValue(&d->sortModel));
+    view->setProperty(PROPERTY(missions), QVariant::fromValue(&d->sortModel));
 }

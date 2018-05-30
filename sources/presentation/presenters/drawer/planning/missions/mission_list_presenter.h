@@ -27,7 +27,7 @@ namespace presentation
         void filter(const QString& filterString);
 
     protected:
-        void connectView(QObject* view);
+        void connectView(QObject* view) override;
 
     private:
          class Impl;

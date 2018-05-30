@@ -7,84 +7,72 @@ import "qrc:/Controls" as Controls
 Item {
     id: linkList
 
-    property alias linkIds: list.model // TODO: change on links
+    property alias links: list.model
 
-    implicitWidth: headerRow.height + sizings.spacing + list.contentWidth
-    implicitHeight: list.contentHeight
+    onVisibleChanged: menu.filterEnabled = visible
+    Component.onCompleted: menu.filterEnabled = true
+
+    Connections{
+        target: menu
+        onFilter: presenter.filter(text)
+    }
 
     LinkListPresenter {
         id: presenter
         view: linkList
-        Component.onCompleted: updateLinks()
     }
 
-    RowLayout {
-        id: headerRow
-        width: parent.width
-        spacing: sizings.spacing
-
-        Controls.TextField {
-            enabled: false// TODO: filter field
-            id: hostNameItem
-            placeholderText: qsTr("Type filter here")
-            onTextChanged: missions.filter(text)
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            iconSource: "qrc:/icons/add.svg"
-            tipText: qsTr("Add Link")
-            onClicked: if (!addMenu.visible) addMenu.open()
-
-            Controls.Menu {
-                id: addMenu
-                implicitWidth: parent.width
-                y: parent.height
-
-                Controls.MenuItem {
-                    text: qsTr("Udp")
-                    implicitWidth: parent.width
-                    onTriggered: presenter.addUdpLink()
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Serial")
-                    implicitWidth: parent.width
-                    onTriggered: presenter.addSerialLink()
-                }
-            }
-            Layout.alignment: Qt.AlignRight
-        }
-    }
-
-    Item {
+    ListView {
+        id: list
         anchors.fill: parent
-        anchors.topMargin: headerRow.height + sizings.spacing
-        clip: true
+        anchors.margins: sizings.shadowSize
+        anchors.bottomMargin: addButton.height
+        spacing: sizings.spacing
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
 
-        ListView {
-            id: list
-            anchors.fill: parent
-            anchors.margins: sizings.shadowSize
-            spacing: sizings.spacing
-            flickableDirection: Flickable.AutoFlickIfNeeded
-            boundsBehavior: Flickable.StopAtBounds
-
-            Controls.ScrollBar.vertical: Controls.ScrollBar {
-                visible: parent.contentHeight > parent.height
-            }
-
-            delegate: LinkView {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                linkId: modelData//model.missionId
-            }
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
         }
 
-        Controls.Label {
-            anchors.centerIn: parent
-            text: qsTr("No links present")
-            visible: list.count === 0
+        delegate: LinkView {
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            linkId: model.linkId
+        }
+    }
+
+    Controls.Label {
+        anchors.centerIn: parent
+        text: qsTr("No links present")
+        visible: list.count === 0
+    }
+
+    Controls.RoundButton {
+        id: addButton
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        iconSource: "qrc:/icons/add.svg"
+        tipText: qsTr("Add Mission")
+        onClicked: if (!addMenu.visible) addMenu.open()
+
+        Controls.Menu {
+            id: addMenu
+            x: (parent.width - width) / 2
+            y: parent.height - height
+            width: list.width
+
+            Controls.MenuItem {
+                text: qsTr("Udp")
+                implicitWidth: parent.width
+                onTriggered: presenter.addUdpLink()
+            }
+
+            Controls.MenuItem {
+                text: qsTr("Serial")
+                implicitWidth: parent.width
+                onTriggered: presenter.addSerialLink()
+            }
         }
     }
 }

@@ -12,21 +12,10 @@ Item {
     property int selectedLinkId: 0
 
     implicitWidth: sizings.controlBaseSize * 10
-    //implicitHeight: selectedLinkId > 0 ? linkEdit.implicitHeight : linkList.implicitHeight
 
     Connections {
-        target: map
-
-        onSelectItem: {
-            if (selectedLinkId != missionId) selectedLinkId = missionId;
-            linkEdit.selectedItemId = itemId;
-        }
-    }
-
-    PlanningPresenter {
-        id: presenter
-        view: connection
-        Component.onCompleted: updateVehicles()
+        target: menu
+        onCloseSubmode: selectedLinkId = 0
     }
 
     LinkListView {

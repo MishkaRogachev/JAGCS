@@ -42,6 +42,12 @@ Item {
         }
     }
 
+    Controls.Label {
+        anchors.centerIn: parent
+        text: qsTr("No missions present")
+        visible: list.count === 0
+    }
+
     Controls.RoundButton {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter

@@ -27,10 +27,30 @@ GridLayout {
     property alias endpoints: endpointList.endpoints
     property alias autoResponse: autoResponseBox.checked
 
-    onChangedChanged: if (!changed) endpointList.updateEndpoints(false)
+    onChangedChanged: {
+        if (changed) return;
+
+        endpointList.updateEndpoints(false);
+
+        if (linkId > 0)
+        {
+            if (name.length > 0) menu.submode = name;
+            else menu.submode = qsTr("Link");
+        }
+        else menu.submode = "";
+    }
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
     onLinkIdChanged: presenter.setLink(linkId);
+//    onNameChanged: {
+//        if (linkId > 0)
+//        {
+//            if (name.length > 0) menu.submode = name;
+//            else menu.submode = qsTr("Link");
+//        }
+//        else menu.submode = "";
+//    }
+    Component.onDestruction: menu.submode = ""
 
     columns: 2
     rowSpacing: sizings.spacing

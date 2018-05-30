@@ -31,7 +31,7 @@ namespace presentation
 
     protected:
         domain::CommunicationService* const m_service;
-        dto::LinkDescriptionPtr m_description;
+        dto::LinkDescriptionPtr m_link;
     };
 }
 
