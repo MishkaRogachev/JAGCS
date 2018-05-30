@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 Item {
     id: vehicleList
 
-    property var vehicleIds: []
+    property alias vehicles: list.model
     property alias autoAdd: autoAdd.checked
 
     implicitWidth: sizings.controlBaseSize * 10
@@ -15,56 +15,53 @@ Item {
     VehicleListPresenter {
         id: presenter
         view: vehicleList
-        Component.onCompleted: updateVehicles()
     }
 
     ListView {
+        id: list
         anchors.fill: parent
-        anchors.rightMargin: sizings.shadowSize
-        anchors.bottomMargin: addRow.height
+        anchors.margins: sizings.shadowSize
+        anchors.bottomMargin: addButton.height
         spacing: sizings.spacing
-        model: vehicleIds
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
 
-        Controls.ScrollBar.vertical: Controls.ScrollBar {}
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
+        }
 
         delegate: VehicleView {
             width: parent.width
-            vehicleId: modelData
-        }
-
-        Controls.Frame {
-            visible: parent.count === 0
-            width: parent.width
-            height: label.height + sizings.margins * 2
-
-            Controls.Label {
-                id: label
-                text: qsTr("No vehicles present")
-                width: parent.width
-                anchors.centerIn: parent
-                horizontalAlignment: Text.AlignHCenter
-            }
+            vehicleId: model.vehicleId
         }
     }
 
-    RowLayout {
-        id: addRow
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        spacing: sizings.spacing
+    Controls.Label {
+        anchors.centerIn: parent
+        text: qsTr("No vehicles present")
+        visible: list.count === 0
+    }
 
-        Controls.Button {
-            text: qsTr("Add Vehicle")
-            iconSource: "qrc:/icons/add.svg"
-            onClicked: presenter.addVehicle()
-            Layout.fillWidth: true
-        }
+    Rectangle { // TODO: bottom navigation bar control
+        width: parent.width
+        height: sizings.controlBaseSize
+        color: customPalette.sunkenColor
+        anchors.bottom: parent.bottom
 
         Controls.CheckBox {
             id: autoAdd
             text: qsTr("Autoadd")
             onCheckedChanged: presenter.setAutoAdd(checked)
         }
+    }
+
+    Controls.RoundButton {
+        id: addButton
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: parent.width / 3
+        anchors.bottom: parent.bottom
+        iconSource: "qrc:/icons/add.svg"
+        tipText: qsTr("Add Vehicle")
+        onClicked: presenter.addVehicle()
     }
 }

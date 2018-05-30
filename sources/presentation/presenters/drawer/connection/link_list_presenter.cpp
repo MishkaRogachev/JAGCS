@@ -23,18 +23,18 @@ public:
     domain::CommunicationService* const service = serviceRegistry->communicationService();
 
     LinkListModel linksModel;
-    QSortFilterProxyModel sortModel;
+    QSortFilterProxyModel sortingModel;
 };
 
 LinkListPresenter::LinkListPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->sortModel.setSourceModel(&d->linksModel);
-    d->sortModel.setFilterRole(LinkListModel::LinkNameRole);
-    d->sortModel.setSortRole(LinkListModel::LinkNameRole);
-    d->sortModel.setDynamicSortFilter(true);
-    d->sortModel.sort(0, Qt::AscendingOrder);
+    d->sortingModel.setSourceModel(&d->linksModel);
+    d->sortingModel.setFilterRole(LinkListModel::LinkNameRole);
+    d->sortingModel.setSortRole(LinkListModel::LinkNameRole);
+    d->sortingModel.setDynamicSortFilter(true);
+    d->sortingModel.sort(0, Qt::AscendingOrder);
 
     d->linksModel.setLinks(d->service->descriptions());
 
@@ -76,10 +76,10 @@ void LinkListPresenter::addSerialLink()
 
 void LinkListPresenter::filter(const QString& filterString)
 {
-    d->sortModel.setFilterFixedString(filterString);
+    d->sortingModel.setFilterFixedString(filterString);
 }
 
 void LinkListPresenter::connectView(QObject* view)
 {
-    view->setProperty(PROPERTY(links), QVariant::fromValue(&d->sortModel));
+    view->setProperty(PROPERTY(links), QVariant::fromValue(&d->sortingModel));
 }

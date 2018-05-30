@@ -21,18 +21,18 @@ public:
     domain::MissionService* const service = serviceRegistry->missionService();
 
     MissionListModel missionsModel;
-    QSortFilterProxyModel sortModel;
+    QSortFilterProxyModel sortingModel;
 };
 
 MissionListPresenter::MissionListPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->sortModel.setSourceModel(&d->missionsModel);
-    d->sortModel.setFilterRole(MissionListModel::MissionNameRole);
-    d->sortModel.setSortRole(MissionListModel::MissionNameRole);
-    d->sortModel.setDynamicSortFilter(true);
-    d->sortModel.sort(0, Qt::AscendingOrder);
+    d->sortingModel.setSourceModel(&d->missionsModel);
+    d->sortingModel.setFilterRole(MissionListModel::MissionNameRole);
+    d->sortingModel.setSortRole(MissionListModel::MissionNameRole);
+    d->sortingModel.setDynamicSortFilter(true);
+    d->sortingModel.sort(0, Qt::AscendingOrder);
 
     d->missionsModel.setMissions(d->service->missions());
 
@@ -54,10 +54,10 @@ void MissionListPresenter::addMission(const QGeoCoordinate& coordinate)
 
 void MissionListPresenter::filter(const QString& filterString)
 {
-    d->sortModel.setFilterFixedString(filterString);
+    d->sortingModel.setFilterFixedString(filterString);
 }
 
 void MissionListPresenter::connectView(QObject* view)
 {
-    view->setProperty(PROPERTY(missions), QVariant::fromValue(&d->sortModel));
+    view->setProperty(PROPERTY(missions), QVariant::fromValue(&d->sortingModel));
 }

@@ -23,18 +23,18 @@ public:
     int missionId = 0;
 
     MissionItemListModel model;
-    QSortFilterProxyModel sortModel;
+    QSortFilterProxyModel sortingModel;
 };
 
 MissionItemListPresenter::MissionItemListPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->sortModel.setSourceModel(&d->model);
+    d->sortingModel.setSourceModel(&d->model);
 
-    d->sortModel.setSortRole(MissionItemListModel::SequenceRole);
-    d->sortModel.setDynamicSortFilter(true);
-    d->sortModel.sort(0, Qt::AscendingOrder);
+    d->sortingModel.setSortRole(MissionItemListModel::SequenceRole);
+    d->sortingModel.setDynamicSortFilter(true);
+    d->sortingModel.sort(0, Qt::AscendingOrder);
 
     connect(d->service, &domain::MissionService::missionItemAdded,
             this, [this](dto::MissionItemPtr item) {
@@ -63,5 +63,5 @@ void MissionItemListPresenter::setMission(int id)
 
 void MissionItemListPresenter::connectView(QObject* view)
 {
-    view->setProperty(PROPERTY(items), QVariant::fromValue(&d->sortModel));
+    view->setProperty(PROPERTY(items), QVariant::fromValue(&d->sortingModel));
 }

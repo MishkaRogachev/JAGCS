@@ -17,18 +17,19 @@ namespace presentation
 
     public:
         explicit VehicleListPresenter(QObject* parent = nullptr);
+        ~VehicleListPresenter() override;
 
     public slots:
-        void updateVehicles();
-
         void addVehicle();
         void setAutoAdd(bool add);
+        void filter(const QString& filterString);
 
     protected:
         void connectView(QObject* view) override;
 
     private:
-        domain::VehicleService* const m_service;
+         class Impl;
+         QScopedPointer<Impl> const d;
     };
 }
 
