@@ -24,7 +24,6 @@ Item {
 
     onModeChanged: if (!menu.visible && mode != DrawerPresenter.UnknownMode) open()
     onVisibleChanged: if (mode == DrawerPresenter.UnknownMode) setMode(DrawerPresenter.Home)
-    implicitWidth: sizings.controlBaseSize * 7
 
     DrawerPresenter {
         id: presenter
@@ -103,48 +102,39 @@ Item {
         }
     }
 
-    Flickable {
-        id: flickable
+    Loader {
+        id: loader
         anchors.fill: parent
         anchors.margins: sizings.padding
         anchors.topMargin: drawerHeader.height + sizings.spacing
-        contentHeight: contents.height
-        boundsBehavior: Flickable.OvershootBounds
-        flickableDirection: Flickable.AutoFlickIfNeeded
         clip: true
-
-        Controls.ScrollBar.vertical: Controls.ScrollBar {}
-
-        DrawerMenu {
-            id: contents
-            menuModel: nestedModes
-            width: parent.width
-            height: Math.max(contents.implicitHeight, flickable.height - sizings.margins);
-
-            Loader {
-                id: loader
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                source: {
-                    switch (mode) {
-                    case DrawerPresenter.Planning: return "Planning/PlanningView.qml";
-                    case DrawerPresenter.Vehicles: return "Vehicles/VehicleListView.qml";
-                    case DrawerPresenter.Connection: return "Connection/ConnectionView.qml";
-                    case DrawerPresenter.Logbook: return "Log/LogListView.qml";
-                    case DrawerPresenter.Database: return "Settings/Database/DatabaseView.qml";
-                    case DrawerPresenter.Map: return "Settings/Map/MapSettingsView.qml";
-                    case DrawerPresenter.Video: return "Settings/Video/VideoSourceListView.qml";
-                    case DrawerPresenter.Joystick: return "Settings/Joystick/JoystickSettingsView.qml";
-                    case DrawerPresenter.Gui: return "Settings/Gui/GuiSettingsView.qml";
-                    case DrawerPresenter.Networking: return "Settings/Network/NetworkSettingsView.qml";
-                    case DrawerPresenter.About: return "About/AboutView.qml";
-                    case DrawerPresenter.Quit: return "Quit/QuitView.qml";
-                    default: return "";
-                    }
-                }
-                onItemChanged: menu.width = item ? item.implicitWidth + sizings.margins * 2 :
-                                                   menu.implicitWidth
+        source: {
+            switch (mode) {
+            case DrawerPresenter.Planning: return "Planning/PlanningView.qml";
+            case DrawerPresenter.Vehicles: return "Vehicles/VehicleListView.qml";
+            case DrawerPresenter.Connection: return "Connection/ConnectionView.qml";
+            case DrawerPresenter.Logbook: return "Log/LogListView.qml";
+            case DrawerPresenter.Database: return "Settings/Database/DatabaseView.qml";
+            case DrawerPresenter.Map: return "Settings/Map/MapSettingsView.qml";
+            case DrawerPresenter.Video: return "Settings/Video/VideoSourceListView.qml";
+            case DrawerPresenter.Joystick: return "Settings/Joystick/JoystickSettingsView.qml";
+            case DrawerPresenter.Gui: return "Settings/Gui/GuiSettingsView.qml";
+            case DrawerPresenter.Networking: return "Settings/Network/NetworkSettingsView.qml";
+            case DrawerPresenter.About: return "About/AboutView.qml";
+            case DrawerPresenter.Quit: return "Quit/QuitView.qml";
+            case DrawerPresenter.Home:
+            case DrawerPresenter.Settings:
+                return "DrawerMenu.qml";
+            default:
+                return "";
             }
+        }
+        onItemChanged: {
+            if (!item) return;
+
+            menu.width = Qt.binding(function() {
+                return item ? item.implicitWidth + sizings.margins * 2 : 0;
+            });
         }
     }
 }

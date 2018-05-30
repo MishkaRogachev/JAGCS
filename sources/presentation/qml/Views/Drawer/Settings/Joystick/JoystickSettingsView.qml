@@ -67,77 +67,82 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    JoystickAxisView {
-        id: pitch
-        source: qsTr("Pitch")
-        enabled: joystickEnabled
-        onAxisChanged: {
-            manual.setJoystickAxis(ManualController.Pitch, axis);
-            changed = true;
-        }
-        onFactorChanged: {
-            manual.setJoystickFactor(ManualController.Pitch, factor);
-            changed = true;
-        }
+    Flickable {
+        contentHeight: contents.height
+        boundsBehavior: Flickable.OvershootBounds
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        clip: true
         Layout.columnSpan: 2
         Layout.fillWidth: true
-        Layout.rightMargin: sizings.shadowSize
-    }
-
-    JoystickAxisView {
-        id: roll
-        source: qsTr("Roll")
-        enabled: joystickEnabled
-        onAxisChanged: {
-            manual.setJoystickAxis(ManualController.Roll, axis);
-            changed = true;
-        }
-        onFactorChanged: {
-            manual.setJoystickFactor(ManualController.Roll, factor);
-            changed = true;
-        }
-        Layout.columnSpan: 2
-        Layout.fillWidth: true
-        Layout.rightMargin: sizings.shadowSize
-    }
-
-    JoystickAxisView {
-        id: throttle
-        source: qsTr("Throttle")
-        enabled: joystickEnabled
-        onAxisChanged: {
-            manual.setJoystickAxis(ManualController.Throttle, axis);
-            changed = true;
-        }
-        onFactorChanged: {
-            manual.setJoystickFactor(ManualController.Throttle, factor);
-            changed = true;
-        }
-        Layout.columnSpan: 2
-        Layout.fillWidth: true
-        Layout.rightMargin: sizings.shadowSize
-    }
-
-    JoystickAxisView {
-        id: yaw
-        source: qsTr("Yaw")
-        enabled: joystickEnabled
-        onAxisChanged: {
-            manual.setJoystickAxis(ManualController.Yaw, axis);
-            changed = true;
-        }
-        onFactorChanged: {
-            manual.setJoystickFactor(ManualController.Yaw, factor);
-            changed = true;
-        }
-        Layout.columnSpan: 2
-        Layout.fillWidth: true
-        Layout.rightMargin: sizings.shadowSize
-    }
-
-    Item {
-        Layout.columnSpan: 2
         Layout.fillHeight: true
+
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
+
+        ColumnLayout {
+            id: contents
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - sizings.shadowSize * 2
+
+            JoystickAxisView {
+                id: pitch
+                source: qsTr("Pitch")
+                enabled: joystickEnabled
+                onAxisChanged: {
+                    manual.setJoystickAxis(ManualController.Pitch, axis);
+                    changed = true;
+                }
+                onFactorChanged: {
+                    manual.setJoystickFactor(ManualController.Pitch, factor);
+                    changed = true;
+                }
+                Layout.fillWidth: true
+            }
+
+            JoystickAxisView {
+                id: roll
+                source: qsTr("Roll")
+                enabled: joystickEnabled
+                onAxisChanged: {
+                    manual.setJoystickAxis(ManualController.Roll, axis);
+                    changed = true;
+                }
+                onFactorChanged: {
+                    manual.setJoystickFactor(ManualController.Roll, factor);
+                    changed = true;
+                }
+                Layout.fillWidth: true
+            }
+
+            JoystickAxisView {
+                id: throttle
+                source: qsTr("Throttle")
+                enabled: joystickEnabled
+                onAxisChanged: {
+                    manual.setJoystickAxis(ManualController.Throttle, axis);
+                    changed = true;
+                }
+                onFactorChanged: {
+                    manual.setJoystickFactor(ManualController.Throttle, factor);
+                    changed = true;
+                }
+                Layout.fillWidth: true
+            }
+
+            JoystickAxisView {
+                id: yaw
+                source: qsTr("Yaw")
+                enabled: joystickEnabled
+                onAxisChanged: {
+                    manual.setJoystickAxis(ManualController.Yaw, axis);
+                    changed = true;
+                }
+                onFactorChanged: {
+                    manual.setJoystickFactor(ManualController.Yaw, factor);
+                    changed = true;
+                }
+                Layout.fillWidth: true
+            }
+        }
     }
 
     SaveRestore {

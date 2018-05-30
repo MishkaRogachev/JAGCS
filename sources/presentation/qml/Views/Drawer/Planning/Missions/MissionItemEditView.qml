@@ -62,8 +62,6 @@ Item {
     property bool repeatsVisible: command === MissionItem.LoiterTurns
     property bool speedVisible: command === MissionItem.SetSpeed
 
-    implicitWidth: sizings.controlBaseSize * 11
-
     onItemIdChanged: presenter.setItem(itemId)
 
     onPositionChanged: {

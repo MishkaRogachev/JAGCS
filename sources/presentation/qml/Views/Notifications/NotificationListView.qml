@@ -24,7 +24,7 @@ Item {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: sizings.shadowSize
-        width: Math.min(sizings.controlBaseSize * 11, notificationsList.width)
+        width: Math.min(sizings.controlBaseSize * 10, notificationsList.width)
         height: Math.min(contentHeight, parent.height)
         spacing: sizings.spacing
         model: ListModel { id: messages }

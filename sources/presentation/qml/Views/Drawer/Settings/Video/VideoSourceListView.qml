@@ -11,7 +11,7 @@ Item {
     property var videoDevices: []
     property int activeVideo: -1
 
-    implicitWidth: sizings.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 10
 
     onActiveVideoChanged: video.setActiveVideo(activeVideo)
 

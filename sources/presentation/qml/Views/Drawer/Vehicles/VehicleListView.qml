@@ -10,7 +10,7 @@ Item {
     property var vehicleIds: []
     property alias autoAdd: autoAdd.checked
 
-    implicitWidth: sizings.controlBaseSize * 11
+    implicitWidth: sizings.controlBaseSize * 10
 
     VehicleListPresenter {
         id: presenter

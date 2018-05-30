@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-GridLayout {
+Item {
     id: gui
 
     property bool changed: false
@@ -32,171 +32,190 @@ GridLayout {
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
     Component.onDestruction: if (changed) presenter.updateView()
 
-    columns: 2
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    implicitWidth: contents.implicitWidth
 
-    GuiSettingsPresenter {
-        id: presenter
-        view: gui
-        Component.onCompleted: updateView()
-    }
+    Flickable {
+        anchors.fill: parent
+        anchors.bottomMargin: buttons.height
+        contentHeight: contents.height
+        boundsBehavior: Flickable.OvershootBounds
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        clip: true
 
-    Controls.Label {
-        text: qsTr("Fullscreen")
-    }
+        Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-    Controls.CheckBox {
-        id: fullscreenBox
-        onCheckedChanged: {
-            presenter.setFullscreen(checked);
-            changed = true;
+        GridLayout {
+            id: contents
+            width: parent.width
+            columns: 2
+            rowSpacing: sizings.spacing
+            columnSpacing: sizings.spacing
+
+            GuiSettingsPresenter {
+                id: presenter
+                view: gui
+                Component.onCompleted: updateView()
+            }
+
+            Controls.Label {
+                text: qsTr("Fullscreen")
+            }
+
+            Controls.CheckBox {
+                id: fullscreenBox
+                onCheckedChanged: {
+                    presenter.setFullscreen(checked);
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Language")
+            }
+
+            Controls.ComboBox {
+                id: languageBox
+                Layout.fillWidth: true
+                onCurrentIndexChanged: {
+                    presenter.setLocale(currentIndex);
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("UI size")
+            }
+
+            Controls.ComboBox {
+                id: uiSizeBox
+                model: [24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64]
+                Layout.fillWidth: true
+                onDisplayTextChanged: {
+                    uiSize = displayText;
+                    presenter.setUiSize(uiSize);
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Palette")
+            }
+
+            Controls.ComboBox {
+                id: paletteBox
+                model: [ qsTr("Outdoor"), qsTr("Indoor") ]
+                Layout.fillWidth: true
+                onCurrentIndexChanged: {
+                    presenter.setPalleteStyle(currentIndex);
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Artificial horizon")
+            }
+
+            Controls.ComboBox {
+                id: rollBar
+                model: [ qsTr("Western"), qsTr("Russian") ]
+                Layout.fillWidth: true
+                onCurrentIndexChanged: {
+                    dashboard.rollInverted = currentIndex;
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Speed scale step")
+            }
+
+            Controls.ComboBox {
+                id: speedBox
+                model: [5, 10, 25, 50, 100]
+                Layout.fillWidth: true
+                onDisplayTextChanged: {
+                    speedStep = displayText;
+                    dashboard.speedStep = speedStep;
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Speed units")
+            }
+
+            Controls.ComboBox {
+                id: speedUnitsBox
+                model: availableSpeedUnits
+                Layout.fillWidth: true
+                onCurrentIndexChanged: {
+                    dashboard.speedUnits = presenter.speedUnitFromIndex(currentIndex);
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Altitude scale step")
+            }
+
+            Controls.ComboBox {
+                id: altitudeBox
+                model: [5, 10, 25, 50, 100]
+                Layout.fillWidth: true
+                onDisplayTextChanged: {
+                    altitudeStep = displayText;
+                    dashboard.altitudeStep = altitudeStep;
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Altitude units")
+            }
+
+            Controls.ComboBox {
+                id: altitudeUnitsBox
+                model: availableAltitudeUnits
+                Layout.fillWidth: true
+                onCurrentIndexChanged: {
+                    dashboard.altitudeUnits = presenter.altitudeUnitFromIndex(currentIndex);
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Relative altitude")
+            }
+
+            Controls.CheckBox {
+                id: relativeAltitudeBox
+                onCheckedChanged: {
+                    dashboard.altitudeRelative = checked;
+                    changed = true;
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Coordinates in DMS")
+            }
+
+            Controls.CheckBox {
+                id: coordinatesDmsBox
+                onCheckedChanged: changed = true
+            }
+
+            Item {
+                Layout.fillHeight: true
+            }
         }
-    }
-
-    Controls.Label {
-        text: qsTr("Language")
-    }
-
-    Controls.ComboBox {
-        id: languageBox
-        Layout.fillWidth: true
-        onCurrentIndexChanged: {
-            presenter.setLocale(currentIndex);
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("UI size")
-    }
-
-    Controls.ComboBox {
-        id: uiSizeBox
-        model: [24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64]
-        Layout.fillWidth: true
-        onDisplayTextChanged: {
-            uiSize = displayText;
-            presenter.setUiSize(uiSize);
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Palette")
-    }
-
-    Controls.ComboBox {
-        id: paletteBox
-        model: [ qsTr("Outdoor"), qsTr("Indoor") ]
-        Layout.fillWidth: true
-        onCurrentIndexChanged: {
-            presenter.setPalleteStyle(currentIndex);
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Artificial horizon")
-    }
-
-    Controls.ComboBox {
-        id: rollBar
-        model: [ qsTr("Western"), qsTr("Russian") ]
-        Layout.fillWidth: true
-        onCurrentIndexChanged: {
-            dashboard.rollInverted = currentIndex;
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Speed scale step")
-    }
-
-    Controls.ComboBox {
-        id: speedBox
-        model: [5, 10, 25, 50, 100]
-        Layout.fillWidth: true
-        onDisplayTextChanged: {
-            speedStep = displayText;
-            dashboard.speedStep = speedStep;
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Speed units")
-    }
-
-    Controls.ComboBox {
-        id: speedUnitsBox
-        model: availableSpeedUnits
-        Layout.fillWidth: true
-        onCurrentIndexChanged: {
-            dashboard.speedUnits = presenter.speedUnitFromIndex(currentIndex);
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Altitude scale step")
-    }
-
-    Controls.ComboBox {
-        id: altitudeBox
-        model: [5, 10, 25, 50, 100]
-        Layout.fillWidth: true
-        onDisplayTextChanged: {
-            altitudeStep = displayText;
-            dashboard.altitudeStep = altitudeStep;
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Altitude units")
-    }
-
-    Controls.ComboBox {
-        id: altitudeUnitsBox
-        model: availableAltitudeUnits
-        Layout.fillWidth: true
-        onCurrentIndexChanged: {
-            dashboard.altitudeUnits = presenter.altitudeUnitFromIndex(currentIndex);
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Relative altitude")
-    }
-
-    Controls.CheckBox {
-        id: relativeAltitudeBox
-        onCheckedChanged: {
-            dashboard.altitudeRelative = checked;
-            changed = true;
-        }
-    }
-
-    Controls.Label {
-        text: qsTr("Coordinates in DMS")
-    }
-
-    Controls.CheckBox {
-        id: coordinatesDmsBox
-        onCheckedChanged: changed = true
-    }
-
-    Item {
-        Layout.fillHeight: true
     }
 
     SaveRestore {
+        id: buttons
+        anchors.bottom: parent.bottom
+        width: parent.width
         enabled: changed
         onSave: presenter.save()
         onRestore: presenter.updateView()
-        Layout.columnSpan: 2
     }
 }

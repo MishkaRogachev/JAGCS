@@ -9,8 +9,7 @@ Item {
 
     property alias logs: list.model
 
-    implicitWidth: sizings.controlBaseSize * 11
-    implicitHeight: list.height
+    implicitWidth: sizings.controlBaseSize * 10
 
     LogListPresenter {
         id: presenter
@@ -22,6 +21,8 @@ Item {
         id: list
         anchors.fill: parent
         spacing: sizings.spacing
+        boundsBehavior: Flickable.OvershootBounds
+        flickableDirection: Flickable.AutoFlickIfNeeded
         onCountChanged: positionViewAtEnd()
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}

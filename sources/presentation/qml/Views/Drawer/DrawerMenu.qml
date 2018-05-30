@@ -3,24 +3,34 @@ import QtQuick.Layouts 1.3
 
 import "../../Controls" as Controls
 
-ColumnLayout {
+Flickable {
     id: menu
 
-    property alias menuModel: repeater.model
+    implicitWidth: sizings.controlBaseSize * 7
+    contentHeight: contents.height
+    boundsBehavior: Flickable.OvershootBounds
+    flickableDirection: Flickable.AutoFlickIfNeeded
 
-    spacing: sizings.spacing
+    Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-    Repeater {
-        id: repeater
+    ColumnLayout {
+        id: contents
+        spacing: sizings.spacing
+        width: parent.width
 
-        Controls.Button {
-            text: presenter.modeString(modelData)
-            iconSource: presenter.modeIcon(modelData)
-            flat: true
-            contentWidth: width - sizings.controlBaseSize
-            implicitWidth: sizings.controlBaseSize * 7
-            onClicked: presenter.setMode(modelData)
-            Layout.fillWidth: true
+        Repeater {
+            id: repeater
+            model: nestedModes
+
+            Controls.Button {
+                text: presenter.modeString(modelData)
+                iconSource: presenter.modeIcon(modelData)
+                flat: true
+                contentWidth: width - sizings.controlBaseSize
+                implicitWidth: sizings.controlBaseSize * 7
+                onClicked: presenter.setMode(modelData)
+                Layout.fillWidth: true
+            }
         }
     }
 }
