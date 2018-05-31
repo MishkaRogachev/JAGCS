@@ -5,12 +5,12 @@
 #include <QDebug>
 
 // Internal
-#include "vehicle.h"
-
 #include "service_registry.h"
 #include "vehicle_service.h"
 
 #include "translation_helper.h"
+
+#include "vehicle.h"
 
 namespace
 {
@@ -33,7 +33,7 @@ VehiclePresenter::VehiclePresenter(QObject* parent):
 {
     connect(m_service, &domain::VehicleService::vehicleChanged, this,
             [this](const dto::VehiclePtr& vehicle) {
-        if (vehicle == m_vehicle) this->updateView();
+        if (vehicle == m_vehicle) this->updateVehicle();
     });
 }
 
@@ -47,33 +47,61 @@ void VehiclePresenter::setVehicle(int id)
 {
     m_vehicle = m_service->vehicle(id);
 
-    this->updateView();
+    if (this->view()) this->updateVehicle();
 }
 
-void VehiclePresenter::updateView()
+void VehiclePresenter::updateVehicle()
 {
     this->setViewProperty(PROPERTY(name), m_vehicle ? m_vehicle->name() : QString());
     this->setViewProperty(PROPERTY(mavId), m_vehicle ? m_vehicle->mavId() : 0);
     this->setViewProperty(PROPERTY(type), m_vehicle ? ::availableTypes.indexOf(m_vehicle->type()) :
                                                       dto::Vehicle::UnknownType);
     this->setViewProperty(PROPERTY(online), m_vehicle && m_vehicle->isOnline());
-
-    this->setViewProperty(PROPERTY(changed), false);
 }
 
-void VehiclePresenter::save()
+void VehiclePresenter::rename(const QString& name)
 {
     if (m_vehicle.isNull()) return;
 
-    m_vehicle->setName(this->viewProperty(PROPERTY(name)).toString());
-    m_vehicle->setMavId(this->viewProperty(PROPERTY(mavId)).toInt());
-    int type = this->viewProperty(PROPERTY(type)).toInt();
+    if (name.length() > 0) // TODO: name validator
+    {
+        m_vehicle->setName(name);
+        m_service->save(m_vehicle);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(name), m_vehicle->name());
+    }
+}
+
+void VehiclePresenter::setMavId(int mavId)
+{
+    if (m_vehicle.isNull()) return;
+
+    if (this->checkMavId(mavId))
+    {
+        m_vehicle->setMavId(mavId);
+        m_service->save(m_vehicle);
+    }
+    else
+    {
+        this->setViewProperty(PROPERTY(mavId), m_vehicle->mavId());
+    }
+}
+
+void VehiclePresenter::setType(int type)
+{
+    if (m_vehicle.isNull()) return;
+
     if (type >= 0 && type < ::availableTypes.count())
     {
-        m_vehicle->setType(::availableTypes.at(this->viewProperty(PROPERTY(type)).toInt()));
+        m_vehicle->setType(::availableTypes.at(type));
+        m_service->save(m_vehicle);
     }
-
-    if (m_service->save(m_vehicle)) this->setViewProperty(PROPERTY(changed), false);
+    else
+    {
+        this->setViewProperty(PROPERTY(type), ::availableTypes.indexOf(m_vehicle->type()));
+    }
 }
 
 void VehiclePresenter::remove()
@@ -92,6 +120,8 @@ void VehiclePresenter::connectView(QObject* view)
         types.append(helper.translateVehicleType(type));
     }
     view->setProperty(PROPERTY(types), QVariant::fromValue(types));
+
+    this->updateVehicle();
 }
 
 

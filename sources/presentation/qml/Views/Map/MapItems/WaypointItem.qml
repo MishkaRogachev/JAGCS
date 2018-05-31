@@ -16,8 +16,8 @@ PointView  {
     width: dragEnabled && area.pressed ? area.width : implicitWidth
     height: dragEnabled && area.pressed ? area.height : implicitHeight
 
-    Behavior on width { PropertyAnimation { duration: 200 } }
-    Behavior on height { PropertyAnimation { duration: 200 } }
+    Behavior on width { PropertyAnimation { duration: 100 } }
+    Behavior on height { PropertyAnimation { duration: 100 } }
 
     MouseArea {
         id: area

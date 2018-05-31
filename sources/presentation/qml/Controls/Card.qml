@@ -7,10 +7,11 @@ Item {
 
     signal deepIn()
 
+    property alias deepEnabled: deepButton.visible
     property alias menuEnabled: menuButton.enabled
     property alias menu: menu
     property alias backgroundColor: background.color
-    readonly property int margin: menuButton.width
+    readonly property alias margin: menuButton.width
 
     property Item contentItem: Item {}
 
@@ -59,8 +60,12 @@ Item {
     }
 
     ColoredIcon {
+        id: deepButton
         anchors.bottom: parent.bottom
         anchors.right: parent.right
+        width: sizings.controlBaseSize * 0.75
+        height: width
+
         source: "qrc:/ui/menu_arrow.svg"
         color: {
             if (area.pressed) return customPalette.highlightColor;
@@ -68,14 +73,13 @@ Item {
             return customPalette.buttonColor
         }
 
-        width: sizings.controlBaseSize * 0.75
-        height: width
-
         MouseArea {
             id: area
+            anchors.centerIn: parent
+            width: sizings.controlBaseSize
+            height: width
             hoverEnabled: true
-            anchors.fill: parent
-            onClicked: deepIn()
+            onPressed: deepIn()
         }
     }
 }

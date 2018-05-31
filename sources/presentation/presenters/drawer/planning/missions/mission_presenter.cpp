@@ -20,47 +20,45 @@ MissionPresenter::MissionPresenter(QObject* parent):
 {
     connect(m_service, &domain::MissionService::missionChanged, this,
             [this](const dto::MissionPtr& mission) {
-        if (m_missionId == mission->id()) this->updateMission();
+        if (m_mission == mission) this->updateMission();
     });
 }
 
 void MissionPresenter::setMission(int id)
 {
-    m_missionId = id;
+    m_mission = m_service->mission(id);
 
     if (this->view()) this->updateMission();
 }
 
 void MissionPresenter::updateMission()
 {
-    dto::MissionPtr mission = m_service->mission(m_missionId);
-
-    this->setViewProperty(PROPERTY(name), mission ? mission->name() : "");
-    this->setViewProperty(PROPERTY(count), mission ? mission->count() : 0);
-    this->setViewProperty(PROPERTY(missionVisible), settings::Provider::value(
-                              settings::mission::mission + QString::number(
-                                  mission->id()) + "/" + settings::visibility));
+    this->setViewProperty(PROPERTY(name), m_mission ? m_mission->name() : "");
+    this->setViewProperty(PROPERTY(count), m_mission ? m_mission->count() : 0);
+    this->setViewProperty(PROPERTY(missionVisible),
+                          m_mission ? settings::Provider::value(
+                                          settings::mission::mission + QString::number(
+                                          m_mission->id()) + "/" + settings::visibility) : false);
 }
 
 void MissionPresenter::rename(const QString& name)
 {
-    dto::MissionPtr mission = m_service->mission(m_missionId);
-    if (mission.isNull()) return;
+    if (m_mission.isNull()) return;
 
     if (name.length() > 0) // TODO: name validator
     {
-        mission->setName(name);
-        m_service->save(mission);
+        m_mission->setName(name);
+        m_service->save(m_mission);
     }
     else
     {
-        this->setViewProperty(PROPERTY(name), mission->name());
+        this->setViewProperty(PROPERTY(name), m_mission->name());
     }
 }
 
 void MissionPresenter::remove()
 {
-    m_service->remove(m_service->mission(m_missionId));
+    if (m_mission) m_service->remove(m_mission);
 }
 
 void MissionPresenter::connectView(QObject* view)
@@ -72,9 +70,11 @@ void MissionPresenter::connectView(QObject* view)
 
 void MissionPresenter::setMissionVisible(bool visible)
 {
+    if (m_mission.isNull()) return;
+
     settings::Provider::setValue(settings::mission::mission + QString::number(
-                                     m_missionId) + "/" + settings::visibility, visible);
+                                     m_mission->id()) + "/" + settings::visibility, visible);
     this->setViewProperty(PROPERTY(missionVisible), visible);
 
-    m_service->missionChanged(m_service->mission(m_missionId));
+    m_service->missionChanged(m_service->mission(m_mission->id()));
 }

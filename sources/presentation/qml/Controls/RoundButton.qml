@@ -11,4 +11,5 @@ Button {
     implicitWidth: sizings.controlBaseSize * 1.2
     implicitHeight: implicitWidth
     round: true
+    highlighted: true
 }

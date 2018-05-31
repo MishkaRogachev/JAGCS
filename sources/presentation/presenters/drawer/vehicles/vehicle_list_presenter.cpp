@@ -30,8 +30,13 @@ VehicleListPresenter::VehicleListPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->vehiclesModel.setVehicles(d->service->vehicles());
     d->sortingModel.setSourceModel(&d->vehiclesModel);
+    d->sortingModel.setFilterRole(VehicleListModel::VehicleNameRole);
+    d->sortingModel.setSortRole(VehicleListModel::VehicleNameRole);
+    d->sortingModel.setDynamicSortFilter(true);
+    d->sortingModel.sort(0, Qt::AscendingOrder);
+
+    d->vehiclesModel.setVehicles(d->service->vehicles());
 
     connect(d->service, &domain::VehicleService::vehicleAdded,
             &d->vehiclesModel, &VehicleListModel::addVehicle);

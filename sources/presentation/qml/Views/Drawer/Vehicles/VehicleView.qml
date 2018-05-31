@@ -4,13 +4,11 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Frame {
+Controls.Card {
     id: vehicleView
 
     property int vehicleId: 0
     property bool online: false
-    property bool mavIdIsCorrect: false
-    property bool changed: false
     property int type: Vehicle.UnknownType
 
     property alias name: nameField.text
@@ -18,18 +16,30 @@ Controls.Frame {
     property alias types: typeBox.model
 
     onTypeChanged: typeBox.currentIndex = type
+    onVehicleIdChanged: presenter.setVehicle(vehicleId)
+    // onDeepIn: TODO: edit vehicle
+    Component.onCompleted: {
+        //menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+
+        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
+        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.triggered.connect(presenter.remove);
+    }
+
+    deepEnabled: false
+    implicitWidth: grid.implicitWidth + sizings.margins * 2
+    implicitHeight: grid.implicitHeight + sizings.margins * 2
 
     VehiclePresenter {
         id: presenter
         view: vehicleView
-        Component.onCompleted: {
-            setVehicle(vehicleId);
-            mavIdIsCorrect = Qt.binding(function () { return checkMavId(mavId); });
-        }
     }
 
     GridLayout {
+        id: grid
         anchors.fill: parent
+        anchors.margins: sizings.margins
+        anchors.rightMargin: vehicleView.margin
         columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
@@ -42,7 +52,7 @@ Controls.Frame {
         Controls.TextField {
             id: nameField
             placeholderText: qsTr("Enter name")
-            onEditingFinished: changed = true
+            onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
         }
 
@@ -56,8 +66,8 @@ Controls.Frame {
             enabled: !online
             from: 1
             to: 255
-            isValid: mavIdIsCorrect
-            onValueChanged: changed = true
+            isValid: presenter.checkMavId(value)
+            onValueModified: presenter.setMavId(value)
             Layout.fillWidth: true
         }
 
@@ -68,10 +78,7 @@ Controls.Frame {
 
         Controls.ComboBox {
             id: typeBox
-            onCurrentIndexChanged: {
-                type = currentIndex;
-                changed = true;
-            }
+            onActivated: presenter.setType(currentIndex)
             Layout.fillWidth: true
         }
 
@@ -83,37 +90,6 @@ Controls.Frame {
         Controls.Label {
             text: online ? qsTr("Online") : qsTr("Offline")
             Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Actions")
-            Layout.fillWidth: true
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
-
-            Controls.Button {
-                tipText: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: presenter.save()
-                enabled: mavIdIsCorrect && changed
-            }
-
-            Controls.Button {
-                tipText: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: presenter.updateView()
-                enabled: changed
-            }
-
-            Controls.DelayButton {
-                tipText: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onActivated: presenter.remove()
-                enabled: !online
-                iconColor: customPalette.dangerColor
-            }
         }
     }
 }

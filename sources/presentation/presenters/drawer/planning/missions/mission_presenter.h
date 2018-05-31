@@ -3,6 +3,7 @@
 
 // Internal
 #include "base_presenter.h"
+#include "dto_traits.h"
 
 namespace domain
 {
@@ -31,7 +32,7 @@ namespace presentation
 
     private:
         domain::MissionService* const m_service;
-        int m_missionId;
+        dto::MissionPtr m_mission;
     };
 }
 

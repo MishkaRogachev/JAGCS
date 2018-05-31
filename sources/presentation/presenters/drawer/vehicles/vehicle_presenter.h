@@ -23,8 +23,11 @@ namespace presentation
 
     public slots:
         void setVehicle(int id);
-        void updateView();
-        void save();
+        void updateVehicle();
+
+        void rename(const QString& name);
+        void setMavId(int mavId);
+        void setType(int type);
         void remove();
 
     protected:
