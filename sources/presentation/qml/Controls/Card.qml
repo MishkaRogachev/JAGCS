@@ -21,7 +21,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: control
-        color: customPalette.backgroundColor
+        color: customPalette.raisedColor
         radius: 2
         z: -1
 

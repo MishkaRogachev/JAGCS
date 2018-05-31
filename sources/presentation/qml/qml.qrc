@@ -17,6 +17,7 @@
         <file>Controls/ButtonBar.qml</file>
         <file>Controls/TabButton.qml</file>
         <file>Controls/TabBar.qml</file>
+        <file>Controls/BottomBar.qml</file>
         <file>Controls/CheckBox.qml</file>
         <file>Controls/Switch.qml</file>
         <file>Controls/RadioButton.qml</file>
