@@ -23,18 +23,18 @@ public:
     domain::VehicleService* const service = serviceRegistry->vehicleService();
 
     VehicleListModel vehiclesModel;
-    QSortFilterProxyModel sortingModel;
+    QSortFilterProxyModel filterModel;
 };
 
 VehicleListPresenter::VehicleListPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    d->sortingModel.setSourceModel(&d->vehiclesModel);
-    d->sortingModel.setFilterRole(VehicleListModel::VehicleNameRole);
-    d->sortingModel.setSortRole(VehicleListModel::VehicleNameRole);
-    d->sortingModel.setDynamicSortFilter(true);
-    d->sortingModel.sort(0, Qt::AscendingOrder);
+    d->filterModel.setSourceModel(&d->vehiclesModel);
+    d->filterModel.setFilterRole(VehicleListModel::VehicleNameRole);
+    d->filterModel.setSortRole(VehicleListModel::VehicleNameRole);
+    d->filterModel.setDynamicSortFilter(true);
+    d->filterModel.sort(0, Qt::AscendingOrder);
 
     d->vehiclesModel.setVehicles(d->service->vehicles());
 
@@ -61,12 +61,12 @@ void VehicleListPresenter::setAutoAdd(bool add)
 
 void VehicleListPresenter::filter(const QString& filterString)
 {
-    d->sortingModel.setFilterFixedString(filterString);
+    d->filterModel.setFilterFixedString(filterString);
 }
 
 void VehicleListPresenter::connectView(QObject* view)
 {
-    view->setProperty(PROPERTY(vehicles), QVariant::fromValue(&d->sortingModel));
+    view->setProperty(PROPERTY(vehicles), QVariant::fromValue(&d->filterModel));
     view->setProperty(PROPERTY(autoAdd),
                       settings::Provider::value(settings::communication::autoAdd));
 }

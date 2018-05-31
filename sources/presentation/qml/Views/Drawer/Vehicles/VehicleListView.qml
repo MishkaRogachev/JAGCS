@@ -10,7 +10,15 @@ Item {
     property alias vehicles: list.model
     property alias autoAdd: autoAdd.checked
 
+    onVisibleChanged: menu.filterEnabled = visible
+    Component.onCompleted: menu.filterEnabled = true
+
     implicitWidth: sizings.controlBaseSize * 10
+
+    Connections{
+        target: menu
+        onFilter: presenter.filter(text)
+    }
 
     VehicleListPresenter {
         id: presenter
@@ -42,10 +50,8 @@ Item {
         visible: list.count === 0
     }
 
-    Rectangle { // TODO: bottom navigation bar control
+    Controls.BottomBar {
         width: parent.width
-        height: sizings.controlBaseSize
-        color: customPalette.sunkenColor
         anchors.bottom: parent.bottom
 
         Controls.CheckBox {

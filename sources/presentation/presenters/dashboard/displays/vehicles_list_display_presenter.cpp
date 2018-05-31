@@ -22,7 +22,7 @@ public:
      domain::VehicleService* service = serviceRegistry->vehicleService();
 
      VehicleListModel vehiclesModel;
-     VehicleListSortingModel sortingModel;
+     VehicleListSortingModel filterModel;
 };
 
 VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
@@ -30,7 +30,7 @@ VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
     d(new Impl())
 {
     d->vehiclesModel.setVehicles(d->service->vehicles());
-    d->sortingModel.setSourceModel(&d->vehiclesModel);
+    d->filterModel.setSourceModel(&d->vehiclesModel);
 
     connect(d->service, &domain::VehicleService::vehicleAdded,
             &d->vehiclesModel, &VehicleListModel::addVehicle);
@@ -47,5 +47,5 @@ void VehiclesListDisplayPresenter::connectView(QObject* view)
 {
     BasePresenter::connectView(view);
 
-    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(&d->sortingModel));
+    this->setViewProperty(PROPERTY(vehicles), QVariant::fromValue(&d->filterModel));
 }

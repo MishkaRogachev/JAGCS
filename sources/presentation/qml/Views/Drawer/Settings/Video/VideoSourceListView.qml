@@ -7,106 +7,95 @@ import "qrc:/Controls" as Controls
 Item {
     id: videoSourceList
 
-    property var videoSourceIds: []
     property var videoDevices: []
     property int activeVideo: -1
 
+    property alias videos: list.model
+
+//    onVisibleChanged: menu.filterEnabled = visible
+//    Component.onCompleted: menu.filterEnabled = true
+
     implicitWidth: sizings.controlBaseSize * 10
 
-    onActiveVideoChanged: video.setActiveVideo(activeVideo)
+//    Connections{
+//        target: menu
+//        onFilter: presenter.filter(text)
+//    }
 
     VideoSourceListPresenter {
         id: presenter
         view: videoSourceList
-        Component.onCompleted: {
-            updateCameraInfo();
-            updateVideoSources();
-        }
-        Component.onDestruction: saveActiveVideo(activeVideo)
     }
 
     Controls.ButtonGroup { id: radioGroup }
 
-    ColumnLayout {
+    ListView {
+        id: list
         anchors.fill: parent
+        anchors.margins: sizings.shadowSize
+        anchors.topMargin: noVideo.height + spacing + sizings.shadowSize
+        anchors.bottomMargin: addButton.height
         spacing: sizings.spacing
+        flickableDirection: Flickable.AutoFlickIfNeeded
+        boundsBehavior: Flickable.StopAtBounds
 
-        Controls.Frame {
-            Layout.fillWidth: true
-            Layout.rightMargin: sizings.shadowSize
-
-            RowLayout {
-                id: grid
-                anchors.fill: parent
-                spacing: sizings.spacing
-
-                Controls.RadioButton {
-                    checked: activeVideo == -1
-                    text: qsTr("No video")
-                    horizontalAlignment: Text.AlignHCenter
-                    Controls.ButtonGroup.group: radioGroup
-                    onClicked: activeVideo = -1
-                    Layout.fillWidth: true
-                }
-            }
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
+            visible: parent.contentHeight > parent.height
         }
 
-        ListView {
-            spacing: sizings.spacing
-            model: videoSourceIds
-            clip: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            Controls.ScrollBar.vertical: Controls.ScrollBar {}
-
-            delegate: VideoSourceView {
-                width: parent.width - sizings.shadowSize
-                videoId: modelData
-                selected: activeVideo == videoId
-                onSetActiveVideo: activeVideo = videoId
-            }
-
-            Controls.Frame {
-                visible: parent.count === 0
-                width: parent.width - sizings.shadowSize
-                height: label.height + sizings.margins * 2
-
-                Controls.Label {
-                    id: label
-                    text: qsTr("No video sources present")
-                    width: parent.width
-                    anchors.centerIn: parent
-                    horizontalAlignment: Text.AlignHCenter
-                }
-            }
+        delegate: VideoSourceView {
+            width: parent.width
+            videoId: model.videoId
+            selected: activeVideo == videoId
+            onSetActiveVideo: activeVideo = videoId
         }
+    }
 
-        Controls.Button {
-            id: addButton
+    Controls.Label {
+        anchors.centerIn: parent
+        text: qsTr("No video present")
+        visible: list.count === 0
+    }
+
+    Controls.BottomBar {
+        width: parent.width
+        anchors.bottom: parent.bottom
+
+        Controls.RadioButton {
             anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            text: qsTr("Add video source")
-            iconSource: "qrc:/icons/add.svg"
-            onClicked: if (!addMenu.visible) addMenu.open()
+            anchors.margins: sizings.margins
+            text: qsTr("No video")
+            Controls.ButtonGroup.group: radioGroup
+            checked: activeVideo == -1
+            onClicked: activeVideo = -1
+        }
+    }
 
-            Controls.Menu {
-                id: addMenu
+    Controls.RoundButton {
+        id: addButton
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: parent.width / 3
+        anchors.bottom: parent.bottom
+        iconSource: "qrc:/icons/add.svg"
+        tipText: qsTr("Add video source")
+        onClicked: if (!addMenu.visible) addMenu.open()
+
+        Controls.Menu {
+            id: addMenu
+            x: (parent.width - width) / 2
+            y: parent.height - height
+            width: list.width
+
+            Controls.MenuItem {
+                text: qsTr("Device")
                 implicitWidth: parent.width
-                y: parent.height
+                onTriggered: presenter.addDeviceVideo()
+            }
 
-                Controls.MenuItem {
-                    text: qsTr("Device")
-                    implicitWidth: parent.width
-                    onTriggered: presenter.addDeviceVideo()
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Stream")
-                    implicitWidth: parent.width
-                    onTriggered: presenter.addStreamVideo()
-                }
+            Controls.MenuItem {
+                text: qsTr("Stream")
+                implicitWidth: parent.width
+                onTriggered: presenter.addStreamVideo()
             }
         }
     }

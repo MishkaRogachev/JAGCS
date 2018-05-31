@@ -1,5 +1,5 @@
-#ifndef VIDEO_SETTINGS_PRESENTER_H
-#define VIDEO_SETTINGS_PRESENTER_H
+#ifndef VIDEO_SOURCE_LIST_PRESENTER_H
+#define VIDEO_SOURCE_LIST_PRESENTER_H
 
 // Internal
 #include "base_presenter.h"
@@ -18,18 +18,24 @@ namespace presentation
 
     public:
         explicit VideoSourceListPresenter(QObject* parent = nullptr);
+        ~VideoSourceListPresenter() override;
 
     public slots:
-        void updateVideoSources();
         void updateCameraInfo();
 
         void addDeviceVideo();
         void addStreamVideo();
         void saveActiveVideo(int video);
 
+        void filter(const QString& filterString);
+
+    protected:
+        void connectView(QObject* view) override;
+
     private:
-        domain::VideoService* m_service;
+         class Impl;
+         QScopedPointer<Impl> const d;
     };
 }
 
-#endif // VIDEO_SETTINGS_PRESENTER_H
+#endif // VIDEO_SOURCE_LIST_PRESENTER_H
