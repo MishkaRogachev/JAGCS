@@ -55,7 +55,7 @@ T.Button { // TODO: clickable
             ContentItem {
             id: content
             anchors.centerIn: parent
-            height: parent.height
+            height: sizings.controlBaseSize
             text: control.text
             font: control.font
             textColor: control.pressed || control.checked ||

@@ -15,7 +15,6 @@ T.ComboBox {
     property alias labelColor: background.textColor
     property alias backgroundColor: background.color
     property alias contentColor: content.textColor
-    property alias contentZ: content.z
     property alias horizontalAlignment: content.horizontalAlignment
 
     implicitWidth: background.implicitWidth

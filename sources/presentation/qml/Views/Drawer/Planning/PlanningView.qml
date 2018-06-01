@@ -12,7 +12,7 @@ Item {
     property var vehicles: []
     property int selectedMissionId: 0
 
-    implicitWidth: sizings.controlBaseSize * 10
+    implicitWidth: sizings.controlBaseSize * 8
 
     Connections {
         target: map

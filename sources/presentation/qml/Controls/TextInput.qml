@@ -8,6 +8,7 @@ TextInput {
     horizontalAlignment: Qt.AlignHCenter
     font.pixelSize: sizings.fontSize
     color: customPalette.textColor
+    selectByMouse: true
     selectionColor: customPalette.selectionColor
     selectedTextColor: customPalette.selectedTextColor
 }

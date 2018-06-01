@@ -46,11 +46,6 @@ ColumnLayout {
     RowLayout {
         spacing: sizings.spacing
 
-        Controls.Label {
-            id: nameLabel
-            text: qsTr("Vehicle")
-        }
-
         MissionAssignmentView {
             id: assignment
             missionId: missionEdit.missionId
@@ -104,26 +99,6 @@ ColumnLayout {
     RowLayout {
         spacing: sizings.spacing
 
-        Controls.Label {
-            text: qsTr("Item")
-            Layout.fillWidth: true
-        }
-
-        Controls.DelayButton {
-            tipText: qsTr("Remove")
-            iconSource: "qrc:/icons/remove.svg"
-            iconColor: customPalette.dangerColor
-            enabled: sequence > -1
-            onActivated: presenter.removeItem()
-        }
-
-        Controls.Button {
-            tipText: qsTr("Move left")
-            iconSource: "qrc:/icons/left_left.svg"
-            enabled: sequence > 1
-            onClicked: presenter.changeSequence(sequence - 1)
-        }
-
         Controls.Button {
             tipText: qsTr("Left")
             iconSource: "qrc:/icons/left.svg"
@@ -144,13 +119,6 @@ ColumnLayout {
             enabled: sequence + 1 < count
             onClicked: presenter.selectItem(sequence + 1)
             onPressAndHold: presenter.selectItem(count - 1)
-        }
-
-        Controls.Button {
-            tipText: qsTr("Move right")
-            iconSource: "qrc:/icons/right_right.svg"
-            enabled: sequence > 0 && sequence + 1 < count
-            onClicked: presenter.changeSequence(sequence + 1)
         }
 
         Controls.Button {
@@ -189,6 +157,39 @@ ColumnLayout {
                     iconSource: "qrc:/icons/landing.svg"
                     enabled: sequence >= 0
                     onTriggered: presenter.addItem(MissionItem.Landing, itemEdit.position)
+                }
+            }
+        }
+
+        Controls.Button {
+            tipText: qsTr("More")
+            iconSource: "qrc:/ui/dots.svg"
+            enabled: sequence > -1
+            onClicked: if (!dangerMenu.visible) dangerMenu.open()
+
+            Controls.Menu {
+                id: dangerMenu
+                y: parent.height
+
+                Controls.MenuItem {
+                    text: qsTr("Move right")
+                    iconSource: "qrc:/icons/right_right.svg"
+                    enabled: sequence > 0 && sequence + 1 < count
+                    onTriggered: presenter.changeSequence(sequence + 1)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Move left")
+                    iconSource: "qrc:/icons/left_left.svg"
+                    enabled: sequence > 1
+                    onTriggered: presenter.changeSequence(sequence - 1)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Remove")
+                    iconSource: "qrc:/icons/remove.svg"
+                    iconColor: customPalette.dangerColor
+                    onTriggered: presenter.removeItem()
                 }
             }
         }

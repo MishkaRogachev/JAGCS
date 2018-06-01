@@ -9,6 +9,8 @@ NumericInput {
     property bool up: false
     property bool down: false
 
+    property alias sign: signItem.text
+
     signal decreaseValue()
     signal increaseValue()
 
@@ -51,4 +53,14 @@ NumericInput {
     }
 
     verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
+
+    Label {
+        id: signItem
+        height: parent.height
+        anchors.right: parent.right
+        anchors.rightMargin: Math.max(0, (parent.width - parent.implicitWidth) / 2 - width - 1)
+        font: parent.font
+        color: parent.color
+        verticalAlignment: parent.verticalAlignment
+    }
 }

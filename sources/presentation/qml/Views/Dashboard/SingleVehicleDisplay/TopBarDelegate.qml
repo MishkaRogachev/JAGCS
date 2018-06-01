@@ -52,6 +52,7 @@ RowLayout {
         DashboardControls.ModeBox {
             id: modeBox
             Layout.fillWidth: true
+            Layout.maximumHeight: sizings.controlBaseSize
         }
 
         Controls.Button {

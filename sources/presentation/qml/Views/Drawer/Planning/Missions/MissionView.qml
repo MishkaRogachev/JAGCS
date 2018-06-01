@@ -60,35 +60,26 @@ Controls.Card {
         removeItem.iconColor = customPalette.dangerColor;
         removeItem.triggered.connect(presenter.remove);
     }
-    implicitWidth: grid.implicitWidth + sizings.margins * 2
-    implicitHeight: grid.implicitHeight + sizings.margins * 2
+    implicitWidth: col.implicitWidth + sizings.margins * 2
+    implicitHeight: col.implicitHeight + sizings.margins * 2
 
     MissionPresenter {
         id: presenter
         view: missionView
     }
 
-    GridLayout {
-        id: grid
+    ColumnLayout {
+        id: col
         anchors.fill: parent
         anchors.margins: sizings.margins
         anchors.rightMargin: missionView.margin
-        columns: 2
-        rowSpacing: sizings.spacing
-        columnSpacing: sizings.spacing
-
-        Controls.Label {
-            text: qsTr("Mission")
-        }
+        spacing: sizings.spacing
 
         Controls.TextField {
             id: nameEdit
+            labelText: qsTr("Mission name")
             onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Vehicle")
         }
 
         MissionAssignmentView {
@@ -100,7 +91,6 @@ Controls.Card {
         MissionItemListView {
             id: listView
             missionId: missionView.missionId
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
     }

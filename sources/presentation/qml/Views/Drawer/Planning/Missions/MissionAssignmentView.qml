@@ -56,6 +56,7 @@ RowLayout {
     Controls.ComboBox {
         id: vehicleBox
         model: vehicles
+        labelText: qsTr("Assigned vehicle")
         textRole: "name"
         onActivated: presenter.assignVehicle(vehicles[currentIndex].id)
         Layout.fillWidth: true

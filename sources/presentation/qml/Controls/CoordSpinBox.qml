@@ -80,13 +80,14 @@ T.Control {
         anchors.fill: parent
         leftPadding: sizings.controlBaseSize + sizings.padding
         color: isValid ? customPalette.sunkenColor : customPalette.dangerColor
-        highlighted: control.activeFocus
+        textColor: focusedItem ? customPalette.highlightColor : customPalette.secondaryTextColor
     }
 
     contentItem: FocusScope {
         id: scope
         activeFocusOnTab: true
         anchors.fill: parent
+        onActiveFocusChanged: if (!activeFocus) focusedItem = null
 
         RowLayout {
             id: row
@@ -119,6 +120,7 @@ T.Control {
                 focus: true
                 font: control.font
                 color: control.isValid ? control.color : customPalette.selectedTextColor
+                sign: "\u00B0"
                 maximumLength: isLongitude ? 3 : 2
                 nextItem: mInput
                 inputMethodHints: Qt.ImhDigitsOnly
@@ -131,19 +133,11 @@ T.Control {
                 Layout.bottomMargin: background.offset
             }
 
-            Label {
-                font: control.font
-                color: control.isValid ? control.color : customPalette.selectedTextColor
-                text: "\u00B0"
-                verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
-                Layout.fillHeight: true
-                Layout.bottomMargin: background.offset
-            }
-
             CoordSpinBoxInput {
                 id: mInput
                 font: control.font
                 color: control.isValid ? control.color : customPalette.selectedTextColor
+                sign: "\'"
                 maximumLength: 2
                 previousItem: dInput
                 nextItem: sInput
@@ -157,19 +151,11 @@ T.Control {
                 Layout.bottomMargin: background.offset
             }
 
-            Label {
-                font: control.font
-                color: control.isValid ? control.color : customPalette.selectedTextColor
-                text: "\'"
-                verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
-                Layout.fillHeight: true
-                Layout.bottomMargin: background.offset
-            }
-
             CoordSpinBoxInput {
                 id: sInput
                 font: control.font
                 color: control.isValid ? control.color : customPalette.selectedTextColor
+                sign: "\""
                 maximumLength: 3 + secondsPrecision
                 previousItem: mInput
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -178,15 +164,6 @@ T.Control {
                 onDecreaseValue: changeValue(2, -Math.pow(10, -secondsPrecision))
                 Layout.preferredWidth: sizings.controlBaseSize * (0.75 + secondsPrecision / 5 * 2)
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.bottomMargin: background.offset
-            }
-
-            Label {
-                font: control.font
-                color: control.isValid ? control.color : customPalette.selectedTextColor
-                text: "\""
-                verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
                 Layout.fillHeight: true
                 Layout.bottomMargin: background.offset
             }

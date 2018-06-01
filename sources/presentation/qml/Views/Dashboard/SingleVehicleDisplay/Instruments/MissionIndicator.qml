@@ -64,7 +64,7 @@ BaseInstrument {
 
             Controls.Button {
                 anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
+                height: parent.height
                 flat: true
                 tipText: qsTr("Go to backward")
                 iconSource: "qrc:/icons/left.svg"
@@ -74,7 +74,7 @@ BaseInstrument {
 
             Controls.Button {
                 anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
+                height: parent.height
                 flat: true
                 tipText: qsTr("Go to forward")
                 iconSource: "qrc:/icons/right.svg"

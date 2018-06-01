@@ -48,7 +48,7 @@ Controls.ComboBox {
 
     delegate: Controls.ItemDelegate {
         width: control.width
-        horizontalAlignment: control.horizontalAlignment
+        horizontalAlignment: Text.AlignHCenter
         text: translator.translateVehicleMode(modelData)
         font: control.font
         highlighted: control.highlightedIndex === index
@@ -59,7 +59,7 @@ Controls.ComboBox {
         font: control.font
         text: displayText
         color: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
-        horizontalAlignment: control.horizontalAlignment
+        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignBottom
     }
 }

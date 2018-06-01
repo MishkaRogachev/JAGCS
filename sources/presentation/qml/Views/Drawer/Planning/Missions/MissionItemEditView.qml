@@ -127,26 +127,21 @@ Item {
     Flickable {
         anchors.fill: parent
         anchors.bottomMargin: saveRestore.height
-        contentHeight: grid.height
+        contentHeight: col.height
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-        GridLayout {
-            id: grid
+        ColumnLayout {
+            id: col
             width: parent.width
-            rowSpacing: sizings.spacing
-            columnSpacing: sizings.spacing
-            columns: 2
-
-            Controls.Label {
-                text: qsTr("Command")
-                Layout.fillWidth: true
-            }
+            spacing: sizings.spacing
 
             Controls.ComboBox {
                 id: commandBox
+                labelText: qsTr("Command")
                 enabled: editEnabled
+                visible: itemId > 0
                 currentIndex: 0
                 onCurrentIndexChanged: {
                     presenter.updateCommand(currentIndex);
@@ -155,21 +150,15 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Altitude")
-                visible: altitudeVisible
-                Layout.fillWidth: true
-            }
-
             GridLayout {
                 rowSpacing: sizings.spacing
                 columnSpacing: sizings.spacing
                 visible: altitudeVisible
                 columns: 2
-                Layout.rowSpan: abortAltitudeVisible ? 2 : 1
 
                 Controls.RealSpinBox {
                     id: altitudeBox
+                    labelText: qsTr("Altitude")
                     enabled: editEnabled
                     realFrom: settings.value("Parameters/minAltitude")
                     realTo: settings.value("Parameters/maxAltitude")
@@ -188,6 +177,7 @@ Item {
 
                 Controls.RealSpinBox {
                     id: abortAltitudeBox
+                    labelText: qsTr("Abort alt.")
                     visible: abortAltitudeVisible
                     enabled: editEnabled
                     realFrom: settings.value("Parameters/minAltitude")
@@ -198,20 +188,9 @@ Item {
                 }
             }
 
-            Controls.Label {
-                text: qsTr("Abort alt.")
-                visible: abortAltitudeVisible
-                Layout.fillWidth: true
-            }
-
-            Controls.Label {
-                text: qsTr("Climb")
-                visible: altitudeVisible
-                Layout.fillWidth: true
-            }
-
             Controls.RealSpinBox {
                 id: climbBox
+                labelText:qsTr("Climb")
                 visible: altitudeVisible
                 enabled: editEnabled
                 realFrom: settings.value("Parameters/minAltitude")
@@ -220,14 +199,9 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Latitude")
-                visible: positionVisible
-                Layout.fillWidth: true
-            }
-
             Controls.CoordSpinBox {
                 id: latitudeBox
+                labelText: qsTr("Latitude")
                 enabled: editEnabled
                 visible: positionVisible
                 onValueChanged: {
@@ -239,15 +213,11 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Longitude")
-                visible: positionVisible
-                Layout.fillWidth: true
-            }
-
             Controls.CoordSpinBox {
                 id: longitudeBox
+                labelText: qsTr("Longitude")
                 enabled: editEnabled
+                visible: positionVisible
                 isLongitude: true
                 onValueChanged: {
                     position.longitude = value;
@@ -258,14 +228,9 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Distance")
-                visible: distanceVisible
-                Layout.fillWidth: true
-            }
-
             Controls.RealSpinBox {
                 id: distanceBox
+                labelText: qsTr("Distance")
                 visible: distanceVisible
                 enabled: editEnabled
                 onRealValueChanged: updatePosFromDistAndAzimuth()
@@ -273,25 +238,14 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Azimuth")
-                visible: azimuthVisible
-                Layout.fillWidth: true
-            }
-
             Controls.RealSpinBox {
                 id: azimuthBox
+                labelText: qsTr("Azimuth")
                 visible: azimuthVisible
                 enabled: editEnabled
                 onRealValueChanged: updatePosFromDistAndAzimuth()
                 realFrom: -180
                 realTo: 360
-                Layout.fillWidth: true
-            }
-
-            Controls.Label {
-                text: qsTr("Radius")
-                visible: radiusVisible
                 Layout.fillWidth: true
             }
 
@@ -301,6 +255,7 @@ Item {
 
                 Controls.RealSpinBox {
                     id: radiusBox
+                    labelText: qsTr("Radius")
                     enabled: editEnabled
                     realTo: settings.value("Parameters/maxRadius")
                     onRealValueChanged: changed = true
@@ -317,14 +272,9 @@ Item {
                 }
             }
 
-            Controls.Label {
-                text: qsTr("Pitch")
-                visible: pitchVisible
-                Layout.fillWidth: true
-            }
-
             Controls.RealSpinBox {
                 id: pitchBox
+                labelText: qsTr("Pitch")
                 visible: pitchVisible
                 enabled: editEnabled
                 realFrom: -90
@@ -333,14 +283,9 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Yaw")
-                visible: yawVisible
-                Layout.fillWidth: true
-            }
-
             Controls.RealSpinBox {
                 id: yawBox
+                labelText: qsTr("Yaw")
                 visible: yawVisible
                 enabled: editEnabled
                 realFrom: -180
@@ -349,50 +294,43 @@ Item {
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Repeats")
-                visible: repeatsVisible
-                Layout.fillWidth: true
-            }
-
             Controls.SpinBox {
                 id: repeatsBox
+                labelText: qsTr("Repeats")
                 visible: repeatsVisible
                 onValueChanged: changed = true
                 Layout.fillWidth: true
             }
 
-            Controls.Label {
-                text: qsTr("Time")
-                visible: timeVisible
-                Layout.fillWidth: true
-            }
-
             Controls.RealSpinBox {
                 id: timeBox
+                labelText: qsTr("Time")
                 visible: timeVisible
                 enabled: editEnabled
                 onRealValueChanged: changed = true
                 Layout.fillWidth: true
             }
 
-            Controls.CheckBox {
-                id: speedEnabledBox
+            RowLayout {
+                spacing: sizings.spacing
                 visible: speedVisible
-                enabled: editEnabled
-                onCheckedChanged: changed = true
-                text: qsTr("Speed")
-            }
 
-            Controls.RealSpinBox {
-                id: speedBox
-                visible: speedVisible
-                enabled: editEnabled && speedEnabled
-                realFrom: settings.value("Parameters/minSpeed")
-                realTo: settings.value("Parameters/maxSpeed")
-                precision: settings.value("Parameters/precisionSpeed")
-                onRealValueChanged: changed = true
-                Layout.fillWidth: true
+                Controls.CheckBox {
+                    id: speedEnabledBox
+                    enabled: editEnabled
+                    onCheckedChanged: changed = true
+                }
+
+                Controls.RealSpinBox {
+                    id: speedBox
+                    labelText: qsTr("Speed")
+                    enabled: editEnabled && speedEnabled
+                    realFrom: settings.value("Parameters/minSpeed")
+                    realTo: settings.value("Parameters/maxSpeed")
+                    precision: settings.value("Parameters/precisionSpeed")
+                    onRealValueChanged: changed = true
+                    Layout.fillWidth: true
+                }
             }
 
             Controls.TabBar {
@@ -409,25 +347,27 @@ Item {
                 visible: speedVisible
                 onCurrentIndexChanged: changed = true
                 Layout.fillWidth: true
-                Layout.columnSpan: 2
             }
 
-            Controls.CheckBox {
-                id: throttleEnabledBox
+            RowLayout {
+                spacing: sizings.spacing
                 visible: speedVisible
-                enabled: editEnabled
-                onCheckedChanged: changed = true
-                text: qsTr("Throttle")
-            }
 
-            Controls.SpinBox {
-                id: throttleBox
-                visible: speedVisible
-                enabled: editEnabled && throttleEnabled
-                from: 0
-                to: 100
-                onValueChanged: changed = true
-                Layout.fillWidth: true
+                Controls.CheckBox {
+                    id: throttleEnabledBox
+                    enabled: editEnabled
+                    onCheckedChanged: changed = true
+                }
+
+                Controls.SpinBox {
+                    id: throttleBox
+                    labelText: qsTr("Throttle")
+                    enabled: editEnabled && throttleEnabled
+                    from: 0
+                    to: 100
+                    onValueChanged: changed = true
+                    Layout.fillWidth: true
+                }
             }
         }
     }

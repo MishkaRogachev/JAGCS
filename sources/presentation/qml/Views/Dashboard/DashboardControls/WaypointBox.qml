@@ -11,8 +11,12 @@ Controls.ComboBox {
 
     currentIndex: -1
     contentColor: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
-    contentZ: 10
-    horizontalAlignment: Text.AlignHCenter
+    backgroundColor: {
+        if (status == Command.Rejected) return customPalette.dangerColor;
+        if (status == Command.Sending) return customPalette.cautionColor;
+        if (status == Command.Completed) return customPalette.positiveColor;
+        return "transparent";
+    }
 
     onActivated: goTo(index)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
@@ -24,16 +28,5 @@ Controls.ComboBox {
     Timer {
         id: timer
         onTriggered: status = Command.Idle
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        radius: 3
-        color: {
-            if (status == Command.Rejected) return customPalette.dangerColor;
-            if (status == Command.Sending) return customPalette.cautionColor;
-            if (status == Command.Completed) return customPalette.positiveColor;
-            return "transparent";
-        }
     }
 }
