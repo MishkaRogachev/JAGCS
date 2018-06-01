@@ -32,8 +32,11 @@ void PositionHandler::processMessage(const mavlink_message_t& message)
     mavlink_global_position_int_t position;
     mavlink_msg_global_position_int_decode(&message, &position);
 
-    QGeoCoordinate coordinate(decodeLatLon(position.lat), decodeLatLon(position.lon),
-                              decodeAltitude(position.alt));
+    QGeoCoordinate coordinate;
+    if (position.lat != 0) coordinate.setLatitude(decodeLatLon(position.lat));
+    if (position.lon != 0) coordinate.setLongitude(decodeLatLon(position.lon));
+    coordinate.setAltitude(decodeAltitude(position.alt));
+
     QVector3D direction(position.vx, position.vy, position.vz);
 
     portion.setParameter({ Telemetry::Position, Telemetry::Coordinate },

@@ -229,7 +229,10 @@ void VehicleMapItemModel::onPositionParametersChanged(
 
     if (parameters.contains(domain::Telemetry::Coordinate))
     {
-        d->tracks[vehicleId].append(parameters[domain::Telemetry::Coordinate]);
+        auto coordinate = parameters[domain::Telemetry::Coordinate].value<QGeoCoordinate>();
+        if (!coordinate.isValid()) return;
+
+        d->tracks[vehicleId].append(QVariant::fromValue(coordinate));
 
         int trackLength = settings::Provider::value(settings::map::trackLength).toInt();
         if (trackLength > -1)
