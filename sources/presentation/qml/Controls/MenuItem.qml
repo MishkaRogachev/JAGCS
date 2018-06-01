@@ -21,6 +21,13 @@ T.MenuItem {
         border.color: control.activeFocus ? customPalette.selectionColor : "transparent"
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: customPalette.textColor
+        opacity: 0.1
+        visible: control.hovered
+    }
+
     Shaders.Hatch {
         anchors.fill: parent
         color: customPalette.sunkenColor

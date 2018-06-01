@@ -27,42 +27,31 @@ Controls.Card {
     }
 
     deepEnabled: false
-    implicitWidth: grid.implicitWidth + sizings.margins * 2
-    implicitHeight: grid.implicitHeight + sizings.margins * 2
+    implicitWidth: col.implicitWidth + sizings.margins * 2
+    implicitHeight: col.implicitHeight + sizings.margins * 2
 
     VehiclePresenter {
         id: presenter
         view: vehicleView
     }
 
-    GridLayout {
-        id: grid
+    ColumnLayout {
+        id: col
         anchors.fill: parent
         anchors.margins: sizings.margins
         anchors.rightMargin: vehicleView.margin
-        columns: 2
-        rowSpacing: sizings.spacing
-        columnSpacing: sizings.spacing
-
-        Controls.Label {
-            text: qsTr("Name:")
-            Layout.fillWidth: true
-        }
+        spacing: sizings.spacing
 
         Controls.TextField {
             id: nameField
-            placeholderText: qsTr("Enter name")
+            labelText: qsTr("Vehicle name")
             onEditingFinished: presenter.rename(text)
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("MAV Id:")
             Layout.fillWidth: true
         }
 
         Controls.SpinBox {
             id: idBox
+            labelText: qsTr("MAVLink identifier")
             enabled: !online
             from: 1
             to: 255
@@ -71,24 +60,15 @@ Controls.Card {
             Layout.fillWidth: true
         }
 
-        Controls.Label {
-            text: qsTr("Type:")
-            Layout.fillWidth: true
-        }
-
         Controls.ComboBox {
             id: typeBox
+            labelText: qsTr("Frame type")
             onActivated: presenter.setType(currentIndex)
             Layout.fillWidth: true
         }
 
         Controls.Label {
-            text: qsTr("Status")
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: online ? qsTr("Online") : qsTr("Offline")
+            text: qsTr("Status") + ": " + (online ? qsTr("Online") : qsTr("Offline"))
             Layout.fillWidth: true
         }
     }

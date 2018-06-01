@@ -13,7 +13,7 @@ Item {
     onVisibleChanged: menu.filterEnabled = visible
     Component.onCompleted: menu.filterEnabled = true
 
-    implicitWidth: sizings.controlBaseSize * 10
+    implicitWidth: sizings.controlBaseSize * 8
 
     Connections{
         target: menu

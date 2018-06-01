@@ -7,7 +7,7 @@ import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
 import "qrc:/Views/Common"
 
-GridLayout {
+ColumnLayout {
     id: linkEditView
 
     property int linkId: 0
@@ -52,70 +52,50 @@ GridLayout {
 //    }
     Component.onDestruction: menu.submode = ""
 
-    columns: 2
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    spacing: sizings.spacing
 
     LinkEditPresenter {
         id: presenter
         view: linkEditView
-
         Component.onCompleted: updateRates()
     }
 
     Controls.Label {
-        text: qsTr("Type")
-        Layout.fillWidth: true
-    }
-
-    Controls.Label {
         text: {
+            var str = qsTr("Type");
             switch (type) {
-            case LinkDescription.Udp: return qsTr("UDP");
-            case LinkDescription.Serial: return qsTr("Serial");
-            default: return qsTr("Unknown");
+            case LinkDescription.Udp: return str + ": " + qsTr("UDP");
+            case LinkDescription.Serial: return str + ": " + qsTr("Serial");
+            default: return str + ": " + qsTr("Unknown");
             }
         }
-        Layout.fillWidth: true
-    }
-
-    Controls.Label {
-        text: qsTr("Protocol")
         Layout.fillWidth: true
     }
 
     Controls.Label {
         text: {
+            var str = qsTr("Protocol");
             switch (protocol) {
-            case LinkDescription.MavLink1: return "MAVLink v1";
-            case LinkDescription.MavLink2: return "MAVLink v2";
-            case LinkDescription.UnknownProtocol: return qsTr("Unknown");
-            default: return qsTr("Unknown");
+            case LinkDescription.MavLink1: return str + ": " + "MAVLink v1";
+            case LinkDescription.MavLink2: return str + ": " + "MAVLink v2";
+            case LinkDescription.UnknownProtocol:
+            default: return str + ": " + qsTr("Unknown");
             }
         }
-        Layout.fillWidth: true
-    }
-
-    Controls.Label {
-        text: qsTr("Name")
         Layout.fillWidth: true
     }
 
     Controls.TextField {
         id: nameField
+        labelText: qsTr("Name")
         placeholderText: qsTr("Enter name")
         onEditingFinished: changed = true
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Device")
-        visible: type == LinkDescription.Serial
-        Layout.fillWidth: true
-    }
-
     Controls.ComboBox {
         id: deviceBox
+        labelText: qsTr("Device")
         visible: type == LinkDescription.Serial
         model: []
         onDisplayTextChanged: {
@@ -125,14 +105,9 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Baud rate")
-        visible: type == LinkDescription.Serial
-        Layout.fillWidth: true
-    }
-
     Controls.ComboBox {
         id: baudBox
+        labelText: qsTr("Baud rate")
         visible: type == LinkDescription.Serial
         model: []
         onDisplayTextChanged: {
@@ -142,14 +117,9 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Port")
-        visible: type == LinkDescription.Udp
-        Layout.fillWidth: true
-    }
-
     Controls.SpinBox {
         id: portBox
+        labelText: qsTr("Port")
         from: 0
         to: 65535
         visible: type == LinkDescription.Udp
@@ -161,7 +131,6 @@ GridLayout {
         text: qsTr("Setted endpoints")
         visible: type == LinkDescription.Udp
         horizontalAlignment: Text.AlignHCenter
-        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
@@ -171,7 +140,6 @@ GridLayout {
         onChanged: linkEditView.changed = true;
         Layout.maximumHeight: sizings.controlBaseSize * 6
         Layout.fillWidth: true
-        Layout.columnSpan: 2
     }
 
     Controls.CheckBox {
@@ -181,13 +149,11 @@ GridLayout {
         horizontalAlignment: Text.AlignHCenter
         onCheckedChanged: changed = true
         Layout.fillWidth: true
-        Layout.columnSpan: 2
     }
 
     Item {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        Layout.columnSpan: 2
 
         Indicators.MiniPlot {
             id: plot
@@ -256,7 +222,6 @@ GridLayout {
         text: connected ? qsTr("Disconnect") : qsTr("Connect")
         iconSource: connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"
         onClicked: presenter.setConnected(!connected)
-        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
@@ -264,7 +229,6 @@ GridLayout {
         enabled: changed
         onSave: presenter.save()
         onRestore: presenter.updateLink()
-        Layout.columnSpan: 2
     }
 }
 

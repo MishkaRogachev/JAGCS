@@ -59,7 +59,6 @@ Item {
         Controls.Menu {
             id: addMenu
             x: (parent.width - width) / 2
-            y: parent.height - height
             width: list.width
 
             Controls.MenuItem {

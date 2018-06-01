@@ -8,5 +8,10 @@ T.Menu {
         implicitWidth: sizings.controlBaseSize * 6
         implicitHeight: sizings.controlBaseSize
         color: customPalette.raisedColor
+
+        Shadow {
+            visible: !control.flat
+            source: parent
+        }
     }
 }

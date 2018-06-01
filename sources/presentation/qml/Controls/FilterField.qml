@@ -3,11 +3,11 @@ import QtQuick 2.6
 TextField {
     id: control
 
-    placeholderText: qsTr("Type filter here")
+    labelText: qsTr("Filter")
 
     Button {
         anchors.right: parent.right
-        anchors.verticalCenter: parent.VerticalCenter
+        height: parent.height
         iconSource: "qrc:/ui/erase.svg"
         tipText: qsTr("Clear filter")
         flat: true
