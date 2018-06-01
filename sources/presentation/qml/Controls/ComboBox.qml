@@ -2,25 +2,24 @@ import QtQuick 2.6
 import QtQuick.Templates 2.1 as T
 import QtQuick.Layouts 1.3
 
-import "../Shaders" as Shaders
-
 T.ComboBox {
     id: control
 
     property var currentItem: model && model[currentIndex] ? model[currentIndex] : undefined
-    property string tipText
     property string iconRole: "icon"
     property string displayIcon: currentItem && currentItem[control.iconRole] !== undefined ?
                                       currentItem[control.iconRole] : ""
 
     // TODO: move all features to special comboboxes
+    property alias labelText: background.text
+    property alias labelColor: background.textColor
+    property alias backgroundColor: background.color
     property alias contentColor: content.textColor
     property alias contentZ: content.z
     property alias horizontalAlignment: content.horizontalAlignment
 
-    font.pixelSize: sizings.primaryFontSize
-    implicitWidth: sizings.controlBaseSize * 4
-    implicitHeight: sizings.controlBaseSize
+    implicitWidth: background.implicitWidth
+    implicitHeight: background.implicitHeight
     padding: sizings.padding
     opacity: enabled ? 1 : 0.33
     clip: true
@@ -29,26 +28,23 @@ T.ComboBox {
                      currentItem[control.textRole] : currentItem
 
     indicator: ColoredIcon {
-        visible: control.focus
         x: control.width - width
         y: control.height - height
         width: sizings.controlBaseSize / 2
         height: width
         source: "qrc:/ui/menu_arrow.svg"
-        color: control.down ? customPalette.highlightColor : customPalette.selectionColor
+        color: {
+            if (control.down) return customPalette.highlightColor;
+            if (control.activeFocus) return customPalette.selectionColor;
+            return customPalette.buttonColor;
+        }
     }
 
-    background: Rectangle {
+    background: BackgroundItem {
+        id: background
         anchors.fill: parent
-        radius: 2
-        color: customPalette.sunkenColor
-        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
-
-        Shaders.Hatch {
-            anchors.fill: parent
-            color: customPalette.sunkenColor
-            visible: !control.enabled
-        }
+        inputed: displayText.length > 0
+        highlighted: control.activeFocus
     }
 
     delegate: ItemDelegate {
@@ -64,9 +60,13 @@ T.ComboBox {
 
     contentItem: ContentItem {
         id: content
+        anchors.fill: parent
+        anchors.bottomMargin: background.offset
         font: control.font
         text: displayText
         iconSource: displayIcon
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
     }
 
     popup: Popup {
@@ -83,11 +83,5 @@ T.ComboBox {
             boundsBehavior: Flickable.StopAtBounds
             ScrollBar.vertical: ScrollBar {}
         }
-    }
-
-    ToolTip {
-        visible: hovered && tipText
-        text: tipText
-        delay: 1000
     }
 }

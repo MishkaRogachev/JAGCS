@@ -66,7 +66,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.horizontalCenterOffset: parent.width / 3
         anchors.bottom: parent.bottom
-        iconSource: "qrc:/icons/add.svg"
+        iconSource: "qrc:/ui/plus.svg"
         tipText: qsTr("Add Vehicle")
         onClicked: presenter.addVehicle()
     }

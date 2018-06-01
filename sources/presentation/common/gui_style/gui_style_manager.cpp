@@ -37,6 +37,7 @@ void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
     palette.setButtonColor(paletteStyle ? "#f6f5f0" : "#54646b");
 
     palette.setTextColor(paletteStyle ? "#30393d" : "#f6f5f0");
+    palette.setSecondaryTextColor(paletteStyle ? "#435056" : "#aeb0b3");
     palette.setSelectedTextColor("#070707");
 
     palette.setHighlightColor("#1effb4");
@@ -68,7 +69,8 @@ void GuiStyleManager::setSizings(int controlBaseSize)
     Sizings sizings;
 
     sizings.setControlBaseSize(controlBaseSize);
-    sizings.setFontPixelSize(controlBaseSize / 2);
+    sizings.setInputControlHeight(controlBaseSize * 1.25);
+    sizings.setFontSize(controlBaseSize / 2);
     sizings.setSecondaryFontSize(controlBaseSize / 2.5);
     sizings.setSpacing(controlBaseSize / 6);
     sizings.setMargins(controlBaseSize / 4);

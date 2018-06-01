@@ -155,7 +155,7 @@ ColumnLayout {
 
         Controls.Button {
             tipText: qsTr("Add mission item")
-            iconSource: "qrc:/icons/add.svg"
+            iconSource: "qrc:/ui/plus.svg"
             enabled: missionId > 0
             onClicked: if (!addMenu.visible) addMenu.open()
 

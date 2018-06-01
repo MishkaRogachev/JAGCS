@@ -17,7 +17,7 @@ T.Button { // TODO: clickable
     property alias contentWidth: content.width
     property alias backgroundColor: backgroundItem.color
 
-    font.pixelSize: sizings.primaryFontSize
+    font.pixelSize: sizings.fontSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
     implicitHeight: sizings.controlBaseSize
 

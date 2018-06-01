@@ -1,21 +1,20 @@
 import QtQuick 2.6
 import QtQuick.Templates 2.2 as T
 
-import "../Shaders" as Shaders
-
 T.SpinBox {
     id: control
 
     property bool isValid: value >= from && value <= to
     property color color: customPalette.textColor
-    property color backgroundColor: customPalette.sunkenColor
-    property string tipText
 
-    implicitWidth: sizings.controlBaseSize * 5
-    implicitHeight: sizings.controlBaseSize
+    property alias backgroundColor: background.color
+    property alias labelText: background.text
+
+    implicitWidth: background.implicitWidth
+    implicitHeight: background.implicitHeight
     leftPadding: sizings.controlBaseSize
     rightPadding: sizings.controlBaseSize
-    font.pixelSize: sizings.primaryFontSize
+    font.pixelSize: sizings.fontSize
     editable: true
     opacity: enabled ? 1 : 0.33
 
@@ -24,16 +23,12 @@ T.SpinBox {
         top: Math.max(control.from, control.to)
     }
 
-    background: Rectangle {
-        radius: 3
-        color: isValid ? backgroundColor : customPalette.dangerColor
-        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
-
-        Shaders.Hatch {
-            anchors.fill: parent
-            color: customPalette.sunkenColor
-            visible: !control.enabled
-        }
+    background: BackgroundItem {
+        id: background
+        anchors.fill: parent
+        leftPadding: sizings.controlBaseSize + sizings.padding
+        color: isValid ? customPalette.sunkenColor : customPalette.dangerColor
+        highlighted: control.activeFocus
     }
 
     contentItem: NumericInput {
@@ -43,13 +38,15 @@ T.SpinBox {
         readOnly: !control.editable
         inputMethodHints: Qt.ImhDigitsOnly
         validator: control.validator
-        verticalAlignment: Qt.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
+        bottomPadding: background.offset
     }
 
     down.indicator: Rectangle {
         x: control.mirrored ? parent.width - width : 0
-        implicitWidth: sizings.controlBaseSize
-        implicitHeight: sizings.controlBaseSize
+        width: sizings.controlBaseSize
+        height: parent.height - background.radius
         radius: 3
         color: down.pressed ? customPalette.highlightColor : "transparent"
         visible: enabled
@@ -66,15 +63,15 @@ T.SpinBox {
             anchors.centerIn: parent
             source: "qrc:/ui/minus.svg"
             color: isValid ? control.color : customPalette.selectedTextColor
-            height: parent.height * 0.6
-            width: height
+            width: parent.width * 0.6
+            height: width
         }
     }
 
     up.indicator: Rectangle {
         x: control.mirrored ? 0 : parent.width - width
-        implicitWidth: sizings.controlBaseSize
-        implicitHeight: sizings.controlBaseSize
+        width: sizings.controlBaseSize
+        height: parent.height - background.radius
         radius: 3
         color: up.pressed ? customPalette.highlightColor : "transparent"
         visible: enabled
@@ -91,14 +88,8 @@ T.SpinBox {
             anchors.centerIn: parent
             source: "qrc:/ui/plus.svg"
             color: isValid ? control.color : customPalette.selectedTextColor
-            height: parent.height * 0.6
-            width: height
+            width: parent.width * 0.6
+            height: width
         }
-    }
-
-    ToolTip {
-        visible: (hovered) && tipText
-        text: tipText
-        delay: 1000
     }
 }

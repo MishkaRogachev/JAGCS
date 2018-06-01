@@ -11,7 +11,7 @@ T.TabButton {
     property alias textColor: content.textColor
     property alias backgroundColor: backgroundItem.color
 
-    font.pixelSize: sizings.primaryFontSize
+    font.pixelSize: sizings.fontSize
     implicitWidth: Math.max(backgroundItem.implicitWidth, content.implicitWidth)
     implicitHeight: Math.max(backgroundItem.implicitHeight, content.implicitHeight)
     clip: true

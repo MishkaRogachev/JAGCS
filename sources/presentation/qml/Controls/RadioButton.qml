@@ -8,7 +8,7 @@ T.RadioButton {
 
     property alias horizontalAlignment: label.horizontalAlignment
 
-    font.pixelSize: sizings.primaryFontSize
+    font.pixelSize: sizings.fontSize
     height: sizings.controlBaseSize
     leftPadding: 0
     spacing: sizings.spacing

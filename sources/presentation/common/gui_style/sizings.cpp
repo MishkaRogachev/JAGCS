@@ -12,14 +12,24 @@ void Sizings::setControlBaseSize(int controlBaseSize)
     m_controlBaseSize = controlBaseSize;
 }
 
-int Sizings::primaryFontSize() const
+int Sizings::inputControlHeight() const
 {
-    return m_primaryFontSize;
+    return m_inputControlHeight;
 }
 
-void Sizings::setFontPixelSize(int primaryFontSize)
+void Sizings::setInputControlHeight(int inputControlHeight)
 {
-    m_primaryFontSize = primaryFontSize;
+    m_inputControlHeight = inputControlHeight;
+}
+
+int Sizings::fontSize() const
+{
+    return m_fontSize;
+}
+
+void Sizings::setFontSize(int fontSize)
+{
+    m_fontSize = fontSize;
 }
 
 int Sizings::secondaryFontSize() const

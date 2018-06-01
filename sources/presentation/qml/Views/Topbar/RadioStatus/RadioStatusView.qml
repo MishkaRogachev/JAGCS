@@ -38,13 +38,13 @@ Item {
 
         Controls.Label {
             text: qsTr("RSSI: ") + rssi.toFixed(1) + qsTr(" dBm")
-            font.pixelSize: sizings.primaryFontSize * 0.5
+            font.pixelSize: sizings.fontSize * 0.5
             font.bold: true
         }
 
         Controls.Label {
             text: qsTr("Rem. RSSI: ") + remoteRssi.toFixed(1) + qsTr(" dBm")
-            font.pixelSize: sizings.primaryFontSize * 0.5
+            font.pixelSize: sizings.fontSize * 0.5
             font.bold: true
         }
     }

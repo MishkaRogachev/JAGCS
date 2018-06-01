@@ -49,4 +49,6 @@ NumericInput {
 
         event.accepted = true;
     }
+
+    verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
 }

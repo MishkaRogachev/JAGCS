@@ -16,6 +16,7 @@ namespace presentation
         Q_PROPERTY(QColor raisedColor READ raisedColor WRITE setRaisedColor)
         Q_PROPERTY(QColor buttonColor READ buttonColor WRITE setButtonColor)
         Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor)
+        Q_PROPERTY(QColor secondaryTextColor READ secondaryTextColor WRITE setSecondaryTextColor)
         Q_PROPERTY(QColor selectedTextColor READ selectedTextColor WRITE setSelectedTextColor)
         Q_PROPERTY(QColor highlightColor READ highlightColor WRITE setHighlightColor)
         Q_PROPERTY(QColor selectionColor READ selectionColor WRITE setSelectionColor)
@@ -34,55 +35,58 @@ namespace presentation
 
     public:
         QColor backgroundColor() const;
-        void setBackgroundColor(QColor backgroundColor);
+        void setBackgroundColor(const QColor& backgroundColor);
 
         QColor sunkenColor() const;
-        void setSunkenColor(QColor sunkenColor);
+        void setSunkenColor(const QColor& sunkenColor);
 
         QColor raisedColor() const;
-        void setRaisedColor(QColor raisedColor);
+        void setRaisedColor(const QColor& raisedColor);
 
         QColor buttonColor() const;
-        void setButtonColor(QColor buttonColor);
+        void setButtonColor(const QColor& buttonColor);
 
         QColor textColor() const;
-        void setTextColor(QColor textColor);
+        void setTextColor(const QColor& textColor);
+
+        QColor secondaryTextColor() const;
+        void setSecondaryTextColor(const QColor& secondaryTextColor);
 
         QColor selectedTextColor() const;
-        void setSelectedTextColor(QColor selectedTextColor);
+        void setSelectedTextColor(const QColor& selectedTextColor);
 
         QColor highlightColor() const;
-        void setHighlightColor(QColor highlightColor);
+        void setHighlightColor(const QColor& highlightColor);
 
         QColor selectionColor() const;
-        void setSelectionColor(QColor selectionColor);
+        void setSelectionColor(const QColor& selectionColor);
 
         QColor linkColor() const;
-        void setLinkColor(QColor linkColor);
+        void setLinkColor(const QColor& linkColor);
 
         QColor dangerColor() const;
-        void setDangerColor(QColor dangerColor);
+        void setDangerColor(const QColor& dangerColor);
 
         QColor cautionColor() const;
-        void setCautionColor(QColor cautionColor);
+        void setCautionColor(const QColor& cautionColor);
 
         QColor positiveColor() const;
-        void setPositiveColor(QColor positiveColor);
+        void setPositiveColor(const QColor& positiveColor);
 
         QColor trackColor() const;
-        void setTrackColor(QColor trackColor);
+        void setTrackColor(const QColor& trackColor);
 
         QColor missionColor() const;
-        void setMissionColor(QColor missionColor);
+        void setMissionColor(const QColor& missionColor);
 
         QColor activeMissionColor() const;
-        void setActiveMissionColor(QColor activeMissionColor);
+        void setActiveMissionColor(const QColor& activeMissionColor);
 
         QColor skyColor() const;
-        void setSkyColor(QColor skyColor);
+        void setSkyColor(const QColor& skyColor);
 
         QColor groundColor() const;
-        void setGroundColor(QColor groundColor);
+        void setGroundColor(const QColor& groundColor);
 
     private:
         QColor m_backgroundColor;
@@ -90,6 +94,7 @@ namespace presentation
         QColor m_raisedColor;
         QColor m_buttonColor;
         QColor m_textColor;
+        QColor m_secondaryTextColor;
         QColor m_selectedTextColor;
         QColor m_highlightColor;
         QColor m_selectionColor;

@@ -161,7 +161,7 @@ Item {
             Controls.Button {
                 width: parent.width
                 anchors.bottom: parent.bottom
-                iconSource: "qrc:/icons/add.svg"
+                iconSource: "qrc:/ui/plus.svg"
                 text: qsTr("Add")
                 onClicked: addMenu.open()
 

@@ -52,7 +52,7 @@ Item {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        iconSource: "qrc:/icons/add.svg"
+        iconSource: "qrc:/ui/plus.svg"
         tipText: qsTr("Add Mission")
         onClicked: if (!addMenu.visible) addMenu.open()
 

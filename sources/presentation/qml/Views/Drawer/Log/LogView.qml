@@ -14,7 +14,7 @@ RowLayout {
         id: timestamp
         anchors.verticalCenter: parent.verticalCenter
         text: log ? "[" + Helper.formatTime(log.timestamp) + "]" : ""
-        font.pixelSize: sizings.primaryFontSize * 0.6
+        font.pixelSize: sizings.fontSize * 0.6
         font.bold: true
         color: label.color
     }
@@ -22,7 +22,7 @@ RowLayout {
     Controls.Label {
         id: label
         text: log ? log.message : ""
-        font.pixelSize: sizings.primaryFontSize * 0.6
+        font.pixelSize: sizings.fontSize * 0.6
         color: {
             if (!log) return customPalette.backgroundColor;
 

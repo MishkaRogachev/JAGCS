@@ -13,7 +13,6 @@ Controls.ComboBox {
     contentColor: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
     contentZ: 10
     horizontalAlignment: Text.AlignHCenter
-    tipText: qsTr("Go to")
 
     onActivated: goTo(index)
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()

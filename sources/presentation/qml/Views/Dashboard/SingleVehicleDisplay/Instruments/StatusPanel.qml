@@ -54,7 +54,7 @@ BaseInstrument {
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
-                font.pixelSize: sizings.primaryFontSize * 0.6
+                font.pixelSize: sizings.fontSize * 0.6
             }
 
             DashboardControls.Label {
@@ -62,7 +62,7 @@ BaseInstrument {
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
                            Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
-                font.pixelSize: sizings.primaryFontSize * 0.6
+                font.pixelSize: sizings.fontSize * 0.6
             }
         }
 
@@ -83,7 +83,7 @@ BaseInstrument {
                 color: vehicle.battery.voltage > 0.01 ? customPalette.textColor :
                                                         customPalette.sunkenColor
                 text: vehicle.battery.voltage.toFixed(2) + " " + qsTr("V")
-                font.pixelSize: sizings.primaryFontSize * 0.6
+                font.pixelSize: sizings.fontSize * 0.6
             }
 
             DashboardControls.Label {
@@ -96,7 +96,7 @@ BaseInstrument {
                     return customPalette.sunkenColor;
                 }
                 text: vehicle.battery.current.toFixed(2) + " " + qsTr("A")
-                font.pixelSize: sizings.primaryFontSize * 0.6
+                font.pixelSize: sizings.fontSize * 0.6
             }
         }
     }

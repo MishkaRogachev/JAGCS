@@ -211,7 +211,7 @@ GridLayout {
                 axisX: timeAxis
                 axisY: ValueAxis {
                     titleText: qsTr("Recv.")
-                    titleFont.pixelSize: sizings.primaryFontSize * 0.5
+                    titleFont.pixelSize: sizings.fontSize * 0.5
                     labelsFont.pixelSize: 1
                     labelsVisible: false
                     color: customPalette.positiveColor
@@ -234,7 +234,7 @@ GridLayout {
                 axisX: timeAxis
                 axisYRight: ValueAxis {
                     titleText: qsTr("Sent")
-                    titleFont.pixelSize: sizings.primaryFontSize * 0.5
+                    titleFont.pixelSize: sizings.fontSize * 0.5
                     labelsVisible: false
                     labelsFont.pixelSize: 1
                     color: customPalette.skyColor

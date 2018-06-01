@@ -12,6 +12,7 @@ RowLayout {
     property alias font: label.font
     property alias text: label.text
     property alias horizontalAlignment: label.horizontalAlignment
+    property alias verticalAlignment: label.verticalAlignment
 
     spacing: sizings.spacing
 
@@ -31,11 +32,12 @@ RowLayout {
 
     Text {
         id: label
-        font.pixelSize: sizings.primaryFontSize
+        font.pixelSize: sizings.fontSize
         color: enabled ? textColor : customPalette.sunkenColor
         verticalAlignment: Text.AlignVCenter
         visible: text.length > 0
         Layout.alignment: Qt.AlignVCenter
         Layout.fillWidth: true
+        Layout.fillHeight: true
     }
 }

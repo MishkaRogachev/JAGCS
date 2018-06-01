@@ -6,7 +6,7 @@ TextInput {
     onActiveFocusChanged: if (activeFocus) selectAll()
 
     horizontalAlignment: Qt.AlignHCenter
-    font.pixelSize: sizings.primaryFontSize
+    font.pixelSize: sizings.fontSize
     color: customPalette.textColor
     selectionColor: customPalette.selectionColor
     selectedTextColor: customPalette.selectedTextColor

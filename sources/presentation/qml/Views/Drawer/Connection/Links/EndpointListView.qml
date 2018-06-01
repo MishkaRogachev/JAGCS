@@ -92,7 +92,7 @@ Controls.Frame {
 
             Controls.Button {
                 text: qsTr("Add endpoint")
-                iconSource: "qrc:/icons/add.svg"
+                iconSource: "qrc:/ui/plus.svg"
                 onClicked: {
                     endpoints.push("127.0.0.1/8080");
                     updateEndpoints(true);

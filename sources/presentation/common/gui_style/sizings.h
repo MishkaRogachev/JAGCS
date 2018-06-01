@@ -11,7 +11,8 @@ namespace presentation
         Q_GADGET
 
         Q_PROPERTY(int controlBaseSize READ controlBaseSize WRITE setControlBaseSize)
-        Q_PROPERTY(int primaryFontSize READ primaryFontSize WRITE setFontPixelSize)
+        Q_PROPERTY(int inputControlHeight READ inputControlHeight WRITE setInputControlHeight)
+        Q_PROPERTY(int fontSize READ fontSize WRITE setFontSize)
         Q_PROPERTY(int secondaryFontSize READ secondaryFontSize WRITE setSecondaryFontSize)
         Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
         Q_PROPERTY(int margins READ margins WRITE setMargins)
@@ -22,8 +23,11 @@ namespace presentation
         int controlBaseSize() const;
         void setControlBaseSize(int controlBaseSize);
 
-        int primaryFontSize() const;
-        void setFontPixelSize(int primaryFontSize);
+        int inputControlHeight() const;
+        void setInputControlHeight(int inputControlHeight);
+
+        int fontSize() const;
+        void setFontSize(int fontSize);
 
         int secondaryFontSize() const;
         void setSecondaryFontSize(int secondaryFontSize);
@@ -42,7 +46,8 @@ namespace presentation
 
     private:
         int m_controlBaseSize;
-        int m_primaryFontSize;
+        int m_inputControlHeight;
+        int m_fontSize;
         int m_secondaryFontSize;
         int m_spacing;
         int m_margins;

@@ -15,19 +15,18 @@ Controls.Card {
 
     property AerialVehicle vehicle: AerialVehicle {}
 
-    Connections {
-        target: display
-        ignoreUnknownSignals: true
-        onUpdateCommandStatus: {
-            switch (command) {
-            case Command.SetMode:
-                modeBox.status = status;
-                break;
-            default:
-                break;
-            }
+    signal updateCommandStatus(var command, var status)
+
+    onUpdateCommandStatus: {
+        switch (command) {
+        case Command.SetMode:
+            modeBox.status = status;
+            break;
+        default:
+            break;
         }
     }
+
 
     AerialVehicleDisplayPresenter {
         id: presenter
@@ -51,7 +50,7 @@ Controls.Card {
 
         Indicators.YawIndicator {
             id: compass
-            implicitWidth: sizings.controlBaseSize * 2
+            implicitWidth: sizings.controlBaseSize * 2.25
             implicitHeight: width
             yaw: vehicle.ahrs.yaw
             Layout.rowSpan: 2

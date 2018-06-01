@@ -2,7 +2,6 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import QtQuick.Templates 2.2 as T
 
-import "../Shaders" as Shaders
 import "../JS/helper.js" as Helper
 
 T.Control {
@@ -16,6 +15,9 @@ T.Control {
 
     readonly property bool isValid: !isNaN(value)
     readonly property real scalingFactor: width / implicitWidth
+
+    property alias backgroundColor: background.color
+    property alias labelText: background.text
 
     property Item focusedItem
 
@@ -69,21 +71,16 @@ T.Control {
 
     clip: true
     opacity: enabled ? 1 : 0.33
-    implicitWidth: row.implicitWidth
-    implicitHeight: sizings.controlBaseSize
-    font.pixelSize: sizings.primaryFontSize
+    implicitWidth: Math.max(row.implicitWidth, background.implicitWidth)
+    implicitHeight: background.implicitHeight
+    font.pixelSize: sizings.fontSize
 
-    background: Rectangle {
+    background: BackgroundItem {
+        id: background
         anchors.fill: parent
-        radius: 3
+        leftPadding: sizings.controlBaseSize + sizings.padding
         color: isValid ? customPalette.sunkenColor : customPalette.dangerColor
-        border.color: scope.activeFocus ? customPalette.highlightColor : "transparent"
-
-        Shaders.Hatch {
-            anchors.fill: parent
-            color: customPalette.sunkenColor
-            visible: !control.enabled
-        }
+        highlighted: control.activeFocus
     }
 
     contentItem: FocusScope {
@@ -113,6 +110,8 @@ T.Control {
                         dInput.forceActiveFocus();
                     }
                 }
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.radius
             }
 
             CoordSpinBoxInput {
@@ -128,12 +127,17 @@ T.Control {
                 onDecreaseValue: changeValue(0, -1)
                 Layout.preferredWidth: sizings.controlBaseSize * (isLongitude ? 1 : 0.75)
                 Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.offset
             }
 
             Label {
                 font: control.font
                 color: control.isValid ? control.color : customPalette.selectedTextColor
                 text: "\u00B0"
+                verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.offset
             }
 
             CoordSpinBoxInput {
@@ -149,12 +153,17 @@ T.Control {
                 onDecreaseValue: changeValue(1, -1)
                 Layout.preferredWidth: sizings.controlBaseSize * 0.75
                 Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.offset
             }
 
             Label {
                 font: control.font
                 color: control.isValid ? control.color : customPalette.selectedTextColor
                 text: "\'"
+                verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.offset
             }
 
             CoordSpinBoxInput {
@@ -169,12 +178,17 @@ T.Control {
                 onDecreaseValue: changeValue(2, -Math.pow(10, -secondsPrecision))
                 Layout.preferredWidth: sizings.controlBaseSize * (0.75 + secondsPrecision / 5 * 2)
                 Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.offset
             }
 
             Label {
                 font: control.font
                 color: control.isValid ? control.color : customPalette.selectedTextColor
                 text: "\""
+                verticalAlignment: labelText.length > 0 ? Text.AlignBottom : Text.AlignVCenter
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.offset
             }
 
             Button {
@@ -188,6 +202,8 @@ T.Control {
                     value = -value;
                     updateControlsFromValue();
                 }
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.radius
             }
 
             Button {
@@ -207,6 +223,8 @@ T.Control {
                         dInput.forceActiveFocus();
                     }
                 }
+                Layout.fillHeight: true
+                Layout.bottomMargin: background.radius
             }
         }
     }
@@ -214,7 +232,7 @@ T.Control {
     Rectangle {
         anchors.bottom: control.bottom
         width: focusedItem ? focusedItem.width + 5 : 0
-        height: control.height * 0.1
+        height: background.radius
         x: focusedItem ? focusedItem.x : 0
         color: scope.activeFocus ? customPalette.highlightColor : "transparent"
         Behavior on x { NumberAnimation { duration: 150 } }

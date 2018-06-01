@@ -10,6 +10,7 @@
         <file>Controls/Pane.qml</file>
         <file>Controls/Frame.qml</file>
         <file>Controls/ContentItem.qml</file>
+        <file>Controls/BackgroundItem.qml</file>
         <file>Controls/Button.qml</file>
         <file>Controls/DelayButton.qml</file>
         <file>Controls/RoundButton.qml</file>

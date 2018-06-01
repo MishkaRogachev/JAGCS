@@ -28,7 +28,7 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         color: root.color
         font.bold: true
-        font.pixelSize: sizings.primaryFontSize * 0.6
+        font.pixelSize: sizings.fontSize * 0.6
         visible: prefix.length > 0
         text: prefix
     }
