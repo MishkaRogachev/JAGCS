@@ -12,38 +12,27 @@ Controls.Frame {
     property alias axis: axisBox.currentIndex
     property alias factor: factorBox.value
 
-    GridLayout {
+    ColumnLayout {
         id: grid
         anchors.fill: parent
-        columns: 2
-        rowSpacing: sizings.spacing
-        columnSpacing: sizings.spacing
+        spacing: sizings.spacing
 
         Controls.Label {
             text: source
             horizontalAlignment: Text.AlignHCenter
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Axis")
             Layout.fillWidth: true
         }
 
         Controls.ComboBox {
             id: axisBox
+            labelText: qsTr("Axis")
             model: axes
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Factor")
             Layout.fillWidth: true
         }
 
         Controls.SpinBox {
             id: factorBox
+            labelText: qsTr("Factor")
             //suffix: "%"
             from: -100
             to: 100

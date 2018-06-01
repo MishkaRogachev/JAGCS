@@ -13,7 +13,7 @@ Rectangle {
     property alias text: textItem.text
     property alias textColor: textItem.color
 
-    implicitWidth: sizings.controlBaseSize * 4
+    implicitWidth: Math.max(sizings.controlBaseSize * 4, textItem.implicitWidth)
     implicitHeight: sizings.inputControlHeight
     radius: 3
     color: customPalette.sunkenColor

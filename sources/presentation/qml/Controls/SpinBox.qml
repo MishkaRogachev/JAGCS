@@ -49,7 +49,7 @@ T.SpinBox {
         height: parent.height - background.radius
         radius: 3
         color: down.pressed ? customPalette.highlightColor : "transparent"
-        visible: enabled
+        opacity: enabled ? 1 : 0.33
 
         Rectangle {
             anchors.fill: parent
@@ -74,7 +74,7 @@ T.SpinBox {
         height: parent.height - background.radius
         radius: 3
         color: up.pressed ? customPalette.highlightColor : "transparent"
-        visible: enabled
+        opacity: enabled ? 1 : 0.33
 
         Rectangle {
             anchors.fill: parent

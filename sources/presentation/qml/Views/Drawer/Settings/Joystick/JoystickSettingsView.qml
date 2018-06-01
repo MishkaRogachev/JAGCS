@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-GridLayout {
+ColumnLayout {
     id: joystickSettings
 
     property bool changed: false
@@ -29,9 +29,7 @@ GridLayout {
     Component.onDestruction: if (changed) presenter.updateView()
 
     enabled: with_gamepad
-    columns: 2
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    spacing: sizings.spacing
 
     JoystickSettingsPresenter {
         id: presenter
@@ -39,26 +37,18 @@ GridLayout {
         Component.onCompleted: updateView()
     }
 
-    Controls.Label {
-        text: qsTr("Enabled")
-        Layout.fillWidth: true
-    }
-
     Controls.CheckBox {
         id: joystickEnabledBox
+        text: qsTr("Enabled")
         onCheckedChanged: {
             manual.setJoystickEnabled(checked);
             changed = true;
         }
     }
 
-    Controls.Label {
-        text: qsTr("Device")
-        Layout.fillWidth: true
-    }
-
     Controls.SpinBox {
         id: deviceBox
+        labelText: qsTr("Device")
         enabled: joystickEnabled
         onValueChanged: {
             manual.setJoystickDevice(value)
@@ -72,7 +62,6 @@ GridLayout {
         boundsBehavior: Flickable.OvershootBounds
         flickableDirection: Flickable.AutoFlickIfNeeded
         clip: true
-        Layout.columnSpan: 2
         Layout.fillWidth: true
         Layout.fillHeight: true
 
@@ -149,7 +138,6 @@ GridLayout {
         enabled: changed
         onSave: presenter.save()
         onRestore: presenter.updateView()
-        Layout.columnSpan: 2
         Layout.rightMargin: sizings.shadowSize
     }
 }

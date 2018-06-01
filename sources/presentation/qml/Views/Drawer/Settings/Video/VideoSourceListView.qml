@@ -80,24 +80,23 @@ Item {
         iconSource: "qrc:/ui/plus.svg"
         tipText: qsTr("Add video source")
         onClicked: if (!addMenu.visible) addMenu.open()
+    }
 
-        Controls.Menu {
-            id: addMenu
-            x: (parent.width - width) / 2
-            y: parent.height - height
-            width: list.width
+    Controls.Menu {
+        id: addMenu
+        y: addButton.y - height
+        width: list.width
 
-            Controls.MenuItem {
-                text: qsTr("Device")
-                implicitWidth: parent.width
-                onTriggered: presenter.addDeviceVideo()
-            }
+        Controls.MenuItem {
+            text: qsTr("Device")
+            implicitWidth: parent.width
+            onTriggered: presenter.addDeviceVideo()
+        }
 
-            Controls.MenuItem {
-                text: qsTr("Stream")
-                implicitWidth: parent.width
-                onTriggered: presenter.addStreamVideo()
-            }
+        Controls.MenuItem {
+            text: qsTr("Stream")
+            implicitWidth: parent.width
+            onTriggered: presenter.addStreamVideo()
         }
     }
 }

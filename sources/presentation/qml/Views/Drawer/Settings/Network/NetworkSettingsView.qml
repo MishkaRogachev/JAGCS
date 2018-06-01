@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-GridLayout {
+ColumnLayout {
     id: networkSettings
 
     property bool changed: false
@@ -24,10 +24,8 @@ GridLayout {
 
     Component.onDestruction: if (changed) presenter.updateView()
 
-    columns: 2
     anchors.fill: parent
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    spacing: sizings.spacing
 
     NetworkSettingsPresenter {
         id: presenter
@@ -35,63 +33,42 @@ GridLayout {
         Component.onCompleted: updateView()
     }
 
-
-    Controls.Label {
-        Layout.fillWidth: true
-        text: qsTr("Proxy type")
-    }
-
     Controls.ComboBox {
         id: typeItem
-        Layout.fillWidth: true
+        labelText: qsTr("Proxy type")
         model: typeModel
         onActivated: changed = true
-    }
-
-    Controls.Label {
         Layout.fillWidth: true
-        text: qsTr("Host name")
     }
 
     Controls.TextField {
         id: hostNameItem
+        labelText: qsTr("Host name")
         Layout.fillWidth: true
         placeholderText: qsTr("Enter hostname")
         onEditingFinished: changed = true
     }
 
-    Controls.Label {
-        Layout.fillWidth: true
-        text: qsTr("Port")
-    }
-
     Controls.SpinBox {
         id: portItem
+        labelText: qsTr("Port")
         Layout.fillWidth: true
         from: 0
         to: 99999
         onValueChanged: changed = true
     }
 
-    Controls.Label {
-        Layout.fillWidth: true
-        text: qsTr("User name")
-    }
-
     Controls.TextField {
         id: userItem
+        labelText: qsTr("User name")
         Layout.fillWidth: true
         placeholderText: qsTr("Enter user name")
         onEditingFinished: changed = true
     }
 
-    Controls.Label {
-        Layout.fillWidth: true
-        text: qsTr("User password")
-    }
-
     Controls.TextField {
         id: passwordItem
+        labelText: qsTr("User password")
         Layout.fillWidth: true
         placeholderText: qsTr("Enter password")
         echoMode: TextInput.Password
@@ -106,6 +83,5 @@ GridLayout {
         enabled: changed
         onSave: presenter.save()
         onRestore: presenter.updateView()
-        Layout.columnSpan: 2
     }
 }

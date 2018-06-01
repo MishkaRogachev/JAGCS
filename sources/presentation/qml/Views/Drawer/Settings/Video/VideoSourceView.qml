@@ -31,22 +31,20 @@ Controls.Card {
     }
 
     deepEnabled: false
-    implicitWidth: grid.implicitWidth + sizings.margins * 2
-    implicitHeight: grid.implicitHeight + sizings.margins * 2
+    implicitWidth: col.implicitWidth + sizings.margins * 2
+    implicitHeight: col.implicitHeight + sizings.margins * 2
 
     VideoSourcePresenter{
         id: presenter
         view: videoView
     }
 
-    GridLayout {
-        id: grid
+    ColumnLayout {
+        id: col
         anchors.fill: parent
         anchors.margins: sizings.margins
         anchors.rightMargin: videoView.margin
-        columns: 2
-        rowSpacing: sizings.spacing
-        columnSpacing: sizings.spacing
+        spacing: sizings.spacing
 
         Controls.RadioButton {
             checked: videoView.selected
@@ -54,33 +52,18 @@ Controls.Card {
             horizontalAlignment: Text.AlignHCenter
             Controls.ButtonGroup.group: radioGroup
             onCheckedChanged: if (checked) setActiveVideo(videoId)
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Type")
             Layout.fillWidth: true
         }
 
         Controls.Label {
             id: typeLabel
             text: {
+                var str = qsTr("Type");
                 switch (type) {
-                case VideoSource.Stream: return qsTr("Stream video")
-                case VideoSource.Device: return qsTr("Device")
-                default: return qsTr("Unknown")
-                }
-            }
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: {
-                switch (type) {
-                case VideoSource.Stream: return qsTr("Stream URL:")
-                case VideoSource.Device: return qsTr("Device file:")
-                default: return qsTr("Unknown:")
+                case VideoSource.Stream: return str + ": " + qsTr("Stream video")
+                case VideoSource.Device: return str + ": " + qsTr("Device")
+                case VideoSource.UnknownType:
+                default: return str + ": " + qsTr("Unknown")
                 }
             }
             Layout.fillWidth: true
@@ -88,14 +71,15 @@ Controls.Card {
 
         Controls.TextField {
             visible: type == VideoSource.Stream
+            labelText: qsTr("Stream URL")
             text: source
-            placeholderText: qsTr("Enter stream url")
             onEditingFinished: presenter.setSource(text)
             Layout.fillWidth: true
         }
 
         Controls.ComboBox {
             visible: type == VideoSource.Device
+            labelText: qsTr("Device file")
             model: videoDevices
             currentIndex: videoDevices.indexOf(source);
             onActivated: presenter.setSource(text)

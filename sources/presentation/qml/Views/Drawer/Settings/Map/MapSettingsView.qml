@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-GridLayout {
+ColumnLayout {
     id: mapSettings
 
     property int osmActiveMapType: -1
@@ -20,9 +20,7 @@ GridLayout {
     property alias highdpiTiles: highdpiTilesBox.checked
     property alias trackLength: trackLengthSlider.value
 
-    columns: 2
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    spacing: sizings.spacing
 
     onPluginChanged: {
         if (main.mapType !== plugin) main.reloadMap(plugin);
@@ -57,25 +55,17 @@ GridLayout {
         activeMapTypeBox.currentIndex = map.activeMapTypeIndex;
     }
 
-    Controls.Label {
-        text: qsTr("Map provider")
-        Layout.fillWidth: true
-    }
-
     Controls.ComboBox {
         id: pluginBox
+        labelText: qsTr("Map provider")
         currentIndex: -1
         onActivated: changed = true
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Map type")
-        Layout.fillWidth: true
-    }
-
     Controls.ComboBox {
         id: activeMapTypeBox
+        labelText: qsTr("Map type")
         onCurrentIndexChanged: {
             switch (plugin) {
             case 0:
@@ -98,50 +88,33 @@ GridLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("Cache size")
-        Layout.fillWidth: true
-    }
-
     Controls.SpinBox {
         id: cacheSizeBox
+        labelText: qsTr("Cache size")
         Layout.fillWidth: true
         onValueChanged: changed = true
         to: 2147483647 // TODO: to helper
     }
 
-    Controls.Label {
-        text: qsTr("High DPI tiles")
-        Layout.fillWidth: true
-    }
-
     Controls.CheckBox {
+        text: qsTr("High DPI tiles")
         id: highdpiTilesBox
         onCheckedChanged: changed = true
     }
 
     Controls.Label {
-        text: qsTr("Track length")
+        horizontalAlignment: Text.AlignHCenter
+        text: qsTr("Track length") + ": " + (trackLengthSlider.visualValue > -1 ?
+                                     trackLengthSlider.visualValue.toFixed(0) : qsTr("Infinite"))
         Layout.fillWidth: true
     }
 
-    RowLayout {
-        spacing: sizings.spacing
-
-        Controls.Slider {
-            id: trackLengthSlider
-            from: -1
-            to: 1000
-            Layout.fillWidth: true
-            onPressedChanged: if (!pressed) changed = true
-        }
-
-        Controls.Label {
-            Layout.preferredWidth: 86
-            horizontalAlignment: Text.AlignHCenter
-            text: trackLengthSlider.visualValue > -1 ?
-                      trackLengthSlider.visualValue.toFixed(0) : qsTr("Infinite")
-        }
+    Controls.Slider {
+        id: trackLengthSlider
+        from: -1
+        to: 1000
+        onPressedChanged: if (!pressed) changed = true
+        Layout.fillWidth: true
     }
 
     Item {

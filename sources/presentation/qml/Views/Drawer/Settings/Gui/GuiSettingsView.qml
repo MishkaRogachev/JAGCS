@@ -32,7 +32,7 @@ Item {
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
     Component.onDestruction: if (changed) presenter.updateView()
 
-    implicitWidth: contents.implicitWidth
+    implicitWidth: Math.max(contents.implicitWidth, buttons.implicitWidth)
 
     Flickable {
         anchors.fill: parent
@@ -44,12 +44,10 @@ Item {
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
-        GridLayout {
+        ColumnLayout {
             id: contents
             width: parent.width
-            columns: 2
-            rowSpacing: sizings.spacing
-            columnSpacing: sizings.spacing
+            spacing: sizings.spacing
 
             GuiSettingsPresenter {
                 id: presenter
@@ -57,151 +55,121 @@ Item {
                 Component.onCompleted: updateView()
             }
 
-            Controls.Label {
-                text: qsTr("Fullscreen")
-            }
-
             Controls.CheckBox {
                 id: fullscreenBox
+                text: qsTr("Fullscreen")
                 onCheckedChanged: {
                     presenter.setFullscreen(checked);
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Language")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: languageBox
-                Layout.fillWidth: true
+                labelText: qsTr("Language")
                 onCurrentIndexChanged: {
                     presenter.setLocale(currentIndex);
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("UI size")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: uiSizeBox
+                labelText: qsTr("UI size")
                 model: [24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64]
-                Layout.fillWidth: true
                 onDisplayTextChanged: {
                     uiSize = displayText;
                     presenter.setUiSize(uiSize);
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Palette")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: paletteBox
+                labelText: qsTr("Palette")
                 model: [ qsTr("Outdoor"), qsTr("Indoor") ]
-                Layout.fillWidth: true
                 onCurrentIndexChanged: {
                     presenter.setPalleteStyle(currentIndex);
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Artificial horizon")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: rollBar
+                labelText: qsTr("Artificial horizon")
                 model: [ qsTr("Western"), qsTr("Russian") ]
-                Layout.fillWidth: true
                 onCurrentIndexChanged: {
                     dashboard.rollInverted = currentIndex;
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Speed scale step")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: speedBox
+                labelText: qsTr("Speed scale step")
                 model: [5, 10, 25, 50, 100]
-                Layout.fillWidth: true
                 onDisplayTextChanged: {
                     speedStep = displayText;
                     dashboard.speedStep = speedStep;
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Speed units")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: speedUnitsBox
+                labelText: qsTr("Speed units")
                 model: availableSpeedUnits
-                Layout.fillWidth: true
                 onCurrentIndexChanged: {
                     dashboard.speedUnits = presenter.speedUnitFromIndex(currentIndex);
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Altitude scale step")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: altitudeBox
+                labelText: qsTr("Altitude scale step")
                 model: [5, 10, 25, 50, 100]
-                Layout.fillWidth: true
                 onDisplayTextChanged: {
                     altitudeStep = displayText;
                     dashboard.altitudeStep = altitudeStep;
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Altitude units")
+                Layout.fillWidth: true
             }
 
             Controls.ComboBox {
                 id: altitudeUnitsBox
+                labelText: qsTr("Altitude units")
                 model: availableAltitudeUnits
-                Layout.fillWidth: true
                 onCurrentIndexChanged: {
                     dashboard.altitudeUnits = presenter.altitudeUnitFromIndex(currentIndex);
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Relative altitude")
+                Layout.fillWidth: true
             }
 
             Controls.CheckBox {
                 id: relativeAltitudeBox
+                text: qsTr("Relative altitude")
                 onCheckedChanged: {
                     dashboard.altitudeRelative = checked;
                     changed = true;
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Coordinates in DMS")
+                Layout.fillWidth: true
             }
 
             Controls.CheckBox {
                 id: coordinatesDmsBox
+                text: qsTr("Coordinates in DMS")
                 onCheckedChanged: changed = true
+                Layout.fillWidth: true
             }
 
             Item {

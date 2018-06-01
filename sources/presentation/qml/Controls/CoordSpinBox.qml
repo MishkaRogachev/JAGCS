@@ -98,7 +98,7 @@ T.Control {
                 flat: true
                 autoRepeat: true
                 activeFocusOnTab: false
-                visible: enabled
+                opacity: enabled ? 1 : 0.33
                 iconColor: control.isValid ? control.color : customPalette.selectedTextColor
                 iconSource: "qrc:/ui/minus.svg"
                 pressedImpl: focusedItem && focusedItem.down
@@ -187,7 +187,7 @@ T.Control {
                 flat: true
                 autoRepeat: true
                 activeFocusOnTab: false
-                visible: enabled
+                opacity: enabled ? 1 : 0.33
                 iconColor: control.isValid ? control.color : customPalette.selectedTextColor
                 iconSource: "qrc:/ui/plus.svg"
                 pressedImpl: focusedItem && focusedItem.up

@@ -5,19 +5,17 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-GridLayout {
+ColumnLayout {
     id: database
 
     property bool changed: false
+    property string migration
     property bool connected: false
     property var log: []
 
     property alias path: pathField.text
-    property alias migration: migrationLabel.text
 
-    columns: 2
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    spacing: sizings.spacing
 
     DatabasePresenter {
         id: presenter
@@ -29,41 +27,29 @@ GridLayout {
         }
     }
 
-    Controls.Label {
-        text: qsTr("Data base:")
-    }
-
     Controls.ComboBox {
+        labelText: qsTr("Data base")
         model: [ "SQLite" ]
         enabled: false // TODO: other data base providers
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: qsTr("SQLite data base file:")
-    }
-
     Controls.TextField {
         id: pathField
+        labelText: qsTr("SQLite data base file")
         placeholderText: qsTr("Enter filepath")
         onEditingFinished: changed = true
         Layout.fillWidth: true
     }
 
     Controls.Label {
-        text: qsTr("Migration:")
-    }
-
-    Controls.Label {
-        id: migrationLabel
-        text: qsTr("Migration not specified")
+        text: qsTr("Migration") + ": " + migration
     }
 
     Controls.Frame {
         backgroundColor: customPalette.sunkenColor
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.columnSpan: 2
 
         Flickable {
             anchors.fill: parent
@@ -105,7 +91,6 @@ GridLayout {
         onClicked: presenter.clearLog()
         enabled: log.length > 0
         Layout.fillWidth: true
-        Layout.columnSpan: 2
     }
 
     SaveRestore {
@@ -113,11 +98,10 @@ GridLayout {
         message: changed ? qsTr("Application will be restarted") : ""
         onSave: presenter.savePath()
         onRestore: presenter.updatePath()
-        Layout.columnSpan: 2
     }
 
     RowLayout {
-        Layout.columnSpan: 2
+        spacing: sizings.spacing
 
         Controls.Button {
             text: qsTr("Migrate")
