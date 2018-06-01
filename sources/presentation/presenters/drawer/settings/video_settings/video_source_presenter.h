@@ -17,13 +17,17 @@ namespace presentation
         Q_OBJECT
 
     public:
-        VideoSourcePresenter(QObject* parent = nullptr);
+        explicit VideoSourcePresenter(QObject* parent = nullptr);
 
     public slots:
         void setVideo(int id);
-        void updateView();
-        void save();
+        void updateLink();
+
+        void setSource(const QString& source);
         void remove();
+
+    protected:
+        void connectView(QObject* view) override;
 
     private:
         domain::VideoService* const m_service;

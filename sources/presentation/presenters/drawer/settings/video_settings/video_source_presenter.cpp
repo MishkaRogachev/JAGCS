@@ -18,7 +18,7 @@ VideoSourcePresenter::VideoSourcePresenter(QObject* parent):
 {
     connect(m_service, &domain::VideoService::videoSourceChanged, this,
             [this](const dto::VideoSourcePtr& video) {
-        if (video == m_video) this->updateView();
+        if (video == m_video) this->updateLink();
     });
 }
 
@@ -26,10 +26,10 @@ void VideoSourcePresenter::setVideo(int id)
 {
     m_video = m_service->videoSource(id);
 
-    this->updateView();
+    this->updateLink();
 }
 
-void VideoSourcePresenter::updateView()
+void VideoSourcePresenter::updateLink()
 {
     this->setViewProperty(PROPERTY(type), m_video ? m_video->type() : dto::VideoSource::UnknownType);
     this->setViewProperty(PROPERTY(source), m_video ? m_video->source() : "");
@@ -37,16 +37,22 @@ void VideoSourcePresenter::updateView()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void VideoSourcePresenter::save()
+void VideoSourcePresenter::setSource(const QString& source)
 {
     if (m_video.isNull()) return;
 
-    m_video->setSource(this->viewProperty(PROPERTY(source)).toString());
-
-    if (m_service->save(m_video)) this->setViewProperty(PROPERTY(changed), false);
+    m_video->setSource(source);
+    m_service->save(m_video);
 }
 
 void VideoSourcePresenter::remove()
 {
     if (m_video) m_service->remove(m_video);
+}
+
+void VideoSourcePresenter::connectView(QObject* view)
+{
+    Q_UNUSED(view)
+
+    this->updateLink();
 }

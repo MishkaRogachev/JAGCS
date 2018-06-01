@@ -8,12 +8,13 @@ Item {
     id: videoSourceList
 
     property var videoDevices: []
-    property int activeVideo: -1
+    property int activeVideo: 0
 
     property alias videos: list.model
 
 //    onVisibleChanged: menu.filterEnabled = visible
 //    Component.onCompleted: menu.filterEnabled = true
+    onActiveVideoChanged: presenter.saveActiveVideo(activeVideo)
 
     implicitWidth: sizings.controlBaseSize * 10
 
@@ -33,7 +34,7 @@ Item {
         id: list
         anchors.fill: parent
         anchors.margins: sizings.shadowSize
-        anchors.topMargin: noVideo.height + spacing + sizings.shadowSize
+        anchors.topMargin: spacing + sizings.shadowSize
         anchors.bottomMargin: addButton.height
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
@@ -66,8 +67,8 @@ Item {
             anchors.margins: sizings.margins
             text: qsTr("No video")
             Controls.ButtonGroup.group: radioGroup
-            checked: activeVideo == -1
-            onClicked: activeVideo = -1
+            checked: activeVideo == 0
+            onClicked: activeVideo = 0
         }
     }
 

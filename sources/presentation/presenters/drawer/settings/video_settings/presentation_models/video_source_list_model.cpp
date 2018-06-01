@@ -70,8 +70,8 @@ QHash<int, QByteArray> VideoSourceListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[VideoIdRole] = "VideoId";
-    roles[VideoNameRole] = "VideoName";
+    roles[VideoIdRole] = "videoId";
+    roles[VideoNameRole] = "videoName";
 
     return roles;
 }

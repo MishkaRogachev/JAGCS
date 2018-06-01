@@ -4,33 +4,52 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Frame {
-    id: videoSource
+Controls.Card {
+    id: videoView
 
-    property int videoId: -1
+    property int videoId: 0
     property int type: VideoSource.UnknownType
     property string source
 
     property bool selected: false
-    property bool changed: false
 
     signal setActiveVideo(int videoId)
 
+    function remove() {
+        if (selected) setActiveVideo(0);
+        presenter.remove();
+    }
+
+    onVideoIdChanged: presenter.setVideo(videoId)
+    // onDeepIn: TODO: edit video
+    Component.onCompleted: {
+        //menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+
+        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
+        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.triggered.connect(videoView.remove);
+    }
+
+    deepEnabled: false
+    implicitWidth: grid.implicitWidth + sizings.margins * 2
+    implicitHeight: grid.implicitHeight + sizings.margins * 2
+
     VideoSourcePresenter{
         id: presenter
-        view: videoSource
-        Component.onCompleted: setVideo(videoId)
+        view: videoView
     }
 
     GridLayout {
         id: grid
         anchors.fill: parent
+        anchors.margins: sizings.margins
+        anchors.rightMargin: videoView.margin
         columns: 2
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
 
         Controls.RadioButton {
-            checked: videoSource.selected
+            checked: videoView.selected
             text: qsTr("Video") + " " + videoId
             horizontalAlignment: Text.AlignHCenter
             Controls.ButtonGroup.group: radioGroup
@@ -71,10 +90,7 @@ Controls.Frame {
             visible: type == VideoSource.Stream
             text: source
             placeholderText: qsTr("Enter stream url")
-            onTextChanged: {
-                source = text;
-                changed = true;
-            }
+            onEditingFinished: presenter.setSource(text)
             Layout.fillWidth: true
         }
 
@@ -82,43 +98,8 @@ Controls.Frame {
             visible: type == VideoSource.Device
             model: videoDevices
             currentIndex: videoDevices.indexOf(source);
-            onDisplayTextChanged: {
-                source = displayText;
-                changed = true;
-            }
+            onActivated: presenter.setSource(text)
             Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Actions")
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
-
-            Controls.Button {
-                tipText: qsTr("Save")
-                iconSource: "qrc:/icons/save.svg"
-                onClicked: presenter.save()
-                enabled: changed
-            }
-
-            Controls.Button {
-                tipText: qsTr("Restore")
-                iconSource: "qrc:/icons/restore.svg"
-                onClicked: presenter.updateView()
-                enabled: changed
-            }
-
-            Controls.DelayButton {
-                tipText: qsTr("Remove")
-                iconSource: "qrc:/icons/remove.svg"
-                onActivated: {
-                    if (selected) setActiveVideo(-1);
-                    presenter.remove();
-                }
-                iconColor: customPalette.dangerColor
-            }
         }
     }
 }
