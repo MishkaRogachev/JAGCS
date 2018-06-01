@@ -15,7 +15,7 @@ T.SpinBox {
     implicitHeight: sizings.controlBaseSize
     leftPadding: sizings.controlBaseSize
     rightPadding: sizings.controlBaseSize
-    font.pixelSize: sizings.fontPixelSize
+    font.pixelSize: sizings.primaryFontSize
     editable: true
     opacity: enabled ? 1 : 0.33
 

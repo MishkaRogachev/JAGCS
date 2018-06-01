@@ -4,5 +4,5 @@ import "qrc:/Controls" as Controls
 
 Controls.Label {
     font.bold: true
-    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.pixelSize: sizings.secondaryFontSize
 }

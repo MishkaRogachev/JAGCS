@@ -20,7 +20,7 @@ Controls.ComboBox {
     }
 
     currentIndex: -1
-    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.pixelSize: sizings.secondaryFontSize
     font.bold: true
 
     onActivated: presenter.executeCommand(model[index].command, [])

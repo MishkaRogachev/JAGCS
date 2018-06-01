@@ -9,7 +9,7 @@ Item {
     property real maxRoll: 25.0
     property real rollStep: 5.0
     property color color: customPalette.textColor
-    property real fontPixelSize: height > 0 ? height * 0.1 : 1
+    property real textSize: height > 0 ? height * 0.1 : 1
 
     onRollChanged: canvas.requestPaint()
     onMinRollChanged: canvas.requestPaint()
@@ -42,7 +42,7 @@ Item {
                 ctx.save();
                 ctx.rotate(i * Math.PI / 180);
                 ctx.moveTo(0, -height / 2);
-                ctx.lineTo(0, -height / 2 + (i == 0 ? fontPixelSize / 2 : fontPixelSize / 4));
+                ctx.lineTo(0, -height / 2 + (i == 0 ? textSize / 2 : textSize / 4));
                 ctx.restore();
             }
             ctx.stroke();
@@ -52,15 +52,15 @@ Item {
             ctx.rotate(rotation * Math.PI / 180);
 
             ctx.beginPath();
-            ctx.moveTo(-fontPixelSize / 2,
-                       -height / 2 + fontPixelSize / 2);
+            ctx.moveTo(-textSize / 2,
+                       -height / 2 + textSize / 2);
             ctx.lineTo(0, 2 - height / 2);
-            ctx.lineTo(fontPixelSize / 2,
-                       -height / 2 + fontPixelSize / 2);
+            ctx.lineTo(textSize / 2,
+                       -height / 2 + textSize / 2);
             ctx.stroke();
 
-            ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
-            ctx.fillText(isNaN(roll) ? "-" : Math.floor(roll), 0, -height / 2 + fontPixelSize);
+            ctx.font = 'bold ' + textSize + 'px "Open Sans"';
+            ctx.fillText(isNaN(roll) ? "-" : Math.floor(roll), 0, -height / 2 + textSize);
 
             ctx.restore();
             ctx.restore();

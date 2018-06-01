@@ -4,6 +4,7 @@ ApplicationWindow 1.0 ApplicationWindow.qml
 Pane 1.0 Pane.qml
 Frame 1.0 Frame.qml
 ContentItem 1.0 ContentItem.qml
+BackgroundItem 1.0 BackgroundItem.qml
 Button 1.0 Button.qml
 DelayButton 1.0 DelayButton.qml
 ButtonGroup 1.0 ButtonGroup.qml

@@ -10,7 +10,7 @@ Controls.RealSpinBox {
     property int status: Command.Idle
     property var args: [ realValue ]
 
-    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.pixelSize: sizings.secondaryFontSize
     font.bold: true
 
     onValueModified: {

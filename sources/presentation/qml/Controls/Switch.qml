@@ -12,7 +12,7 @@ T.Switch {
     property string tipText
 
     spacing: sizings.spacing
-    font.pixelSize: sizings.fontPixelSize
+    font.pixelSize: sizings.primaryFontSize
     implicitWidth: contentItem.implicitWidth
     implicitHeight: sizings.controlBaseSize
 

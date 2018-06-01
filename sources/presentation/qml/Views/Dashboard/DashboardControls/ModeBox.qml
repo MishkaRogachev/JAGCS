@@ -13,7 +13,7 @@ Controls.ComboBox {
     enabled: vehicle.online
     model: vehicle.availableModes
     tipText: qsTr("Select mode")
-    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.pixelSize: sizings.secondaryFontSize
     font.bold: true
 
     onActivated: presenter.executeCommand(Command.SetMode, [ model[index] ])

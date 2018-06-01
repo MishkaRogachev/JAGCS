@@ -11,7 +11,7 @@ Item {
     property real maxPitch: 25.0
     property real pitchStep: 10
     property color color: customPalette.textColor
-    property real fontPixelSize: Math.max(height * 0.1, 9)
+    property real textSize: Math.max(height * 0.1, 9)
 
     onRollChanged: canvas.requestPaint()
     onMinPitchChanged: canvas.requestPaint()
@@ -36,7 +36,7 @@ Item {
 
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
-            ctx.font = 'bold ' + fontPixelSize + 'px "Open Sans"';
+            ctx.font = 'bold ' + textSize + 'px "Open Sans"';
             ctx.textBaseline = 'middle';
 
             ctx.save();

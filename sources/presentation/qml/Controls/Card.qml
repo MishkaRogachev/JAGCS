@@ -1,7 +1,5 @@
 import QtQuick 2.6
 
-import "./"
-
 Item {
     id: control
 

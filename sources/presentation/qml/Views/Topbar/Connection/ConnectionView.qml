@@ -24,7 +24,7 @@ Item {
         anchors.top: parent.top
         iconSource: "qrc:/icons/up.svg"
         text: bytesSent.toFixed(1) + " " + qsTr("B/s")
-        font.pixelSize: sizings.fontPixelSize * 0.5
+        font.pixelSize: sizings.primaryFontSize * 0.5
         font.bold: true
         horizontalAlignment: Text.AlignLeft
         width: parent.width
@@ -35,7 +35,7 @@ Item {
         anchors.bottom: parent.bottom
         iconSource: "qrc:/icons/down.svg"
         text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
-        font.pixelSize: sizings.fontPixelSize * 0.5
+        font.pixelSize: sizings.primaryFontSize * 0.5
         font.bold: true
         horizontalAlignment: Text.AlignLeft
         width: parent.width

@@ -10,7 +10,7 @@ T.MenuItem {
     property color iconColor: label.color
 
     leftPadding: icon.visible ? icon.width + sizings.padding * 2 : 0
-    font.pixelSize: sizings.fontPixelSize
+    font.pixelSize: sizings.primaryFontSize
     width: parent.width
 
     background: Rectangle {

@@ -8,7 +8,7 @@ T.ItemDelegate {
     property alias horizontalAlignment: content.horizontalAlignment
     property alias iconSource: content.iconSource
 
-    font.pixelSize: sizings.fontPixelSize
+    font.pixelSize: sizings.primaryFontSize
     implicitWidth: content.implicitWidth
     implicitHeight: sizings.controlBaseSize
     padding: sizings.padding

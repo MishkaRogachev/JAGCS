@@ -38,6 +38,6 @@ Controls.DelayButton {
         onTriggered: status = Command.Idle
     }
 
-    font.pixelSize: sizings.fontPixelSize * 0.75
+    font.pixelSize: sizings.secondaryFontSize
     font.bold: true
 }

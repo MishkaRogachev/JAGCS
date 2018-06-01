@@ -12,14 +12,24 @@ void Sizings::setControlBaseSize(int controlBaseSize)
     m_controlBaseSize = controlBaseSize;
 }
 
-int Sizings::fontPixelSize() const
+int Sizings::primaryFontSize() const
 {
-    return m_fontPixelSize;
+    return m_primaryFontSize;
 }
 
-void Sizings::setFontPixelSize(int fontPixelSize)
+void Sizings::setFontPixelSize(int primaryFontSize)
 {
-    m_fontPixelSize = fontPixelSize;
+    m_primaryFontSize = primaryFontSize;
+}
+
+int Sizings::secondaryFontSize() const
+{
+    return m_secondaryFontSize;
+}
+
+void Sizings::setSecondaryFontSize(int secondaryFontSize)
+{
+    m_secondaryFontSize = secondaryFontSize;
 }
 
 int Sizings::spacing() const

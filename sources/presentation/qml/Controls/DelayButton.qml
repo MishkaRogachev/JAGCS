@@ -17,7 +17,7 @@ T.DelayButton {
     onActivated: progress = 0
 
     delay: 1000
-    font.pixelSize: sizings.fontPixelSize
+    font.pixelSize: sizings.primaryFontSize
     implicitWidth: Math.max(sizings.controlBaseSize, content.implicitWidth)
     implicitHeight: Math.max(sizings.controlBaseSize, content.implicitHeight)
 

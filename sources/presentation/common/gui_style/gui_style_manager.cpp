@@ -69,6 +69,7 @@ void GuiStyleManager::setSizings(int controlBaseSize)
 
     sizings.setControlBaseSize(controlBaseSize);
     sizings.setFontPixelSize(controlBaseSize / 2);
+    sizings.setSecondaryFontSize(controlBaseSize / 2.5);
     sizings.setSpacing(controlBaseSize / 6);
     sizings.setMargins(controlBaseSize / 4);
     sizings.setPadding(controlBaseSize / 6);

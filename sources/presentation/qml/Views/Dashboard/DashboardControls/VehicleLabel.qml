@@ -31,7 +31,7 @@ Item {
             }
         }
         font.bold: true
-        font.pixelSize: sizings.fontPixelSize * 0.75
+        font.pixelSize: sizings.secondaryFontSize
     }
 
     MouseArea {

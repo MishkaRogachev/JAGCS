@@ -67,7 +67,7 @@ MapItemView {
                 anchors.left: parent.right
                 anchors.margins: sizings.controlBaseSize
                 rotation: map.bearing
-                font.pixelSize: sizings.fontPixelSize * 0.75
+                font.pixelSize: sizings.secondaryFontSize
                 font.bold: true
             }
         }

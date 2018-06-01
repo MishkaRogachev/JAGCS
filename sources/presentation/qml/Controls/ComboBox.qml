@@ -18,7 +18,7 @@ T.ComboBox {
     property alias contentZ: content.z
     property alias horizontalAlignment: content.horizontalAlignment
 
-    font.pixelSize: sizings.fontPixelSize
+    font.pixelSize: sizings.primaryFontSize
     implicitWidth: sizings.controlBaseSize * 4
     implicitHeight: sizings.controlBaseSize
     padding: sizings.padding

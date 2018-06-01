@@ -31,7 +31,7 @@ RowLayout {
 
     Text {
         id: label
-        font.pixelSize: sizings.fontPixelSize
+        font.pixelSize: sizings.primaryFontSize
         color: enabled ? textColor : customPalette.sunkenColor
         verticalAlignment: Text.AlignVCenter
         visible: text.length > 0
