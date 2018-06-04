@@ -25,6 +25,7 @@
         <file>Controls/ToolBar.qml</file>
         <file>Controls/Label.qml</file>
         <file>Controls/Link.qml</file>
+        <file>Controls/MenuIndicator.qml</file>
         <file>Controls/Menu.qml</file>
         <file>Controls/MenuItem.qml</file>
         <file>Controls/ProgressBar.qml</file>

@@ -44,7 +44,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: sizings.spacing
+        spacing: 0
 
         MissionAssignmentView {
             id: assignment
@@ -55,6 +55,7 @@ ColumnLayout {
         Controls.Button {
             tipText: highlighted ? qsTr("Cancel sync") : qsTr("Download mission")
             iconSource: "qrc:/icons/download.svg"
+            flat: true
             highlighted: assignment.status === MissionAssignment.Downloading
             enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
             onClicked: highlighted ? assignment.cancelSync() : assignment.download()
@@ -63,69 +64,51 @@ ColumnLayout {
         Controls.Button {
             tipText: highlighted ? qsTr("Cancel sync") : qsTr("Upload mission")
             iconSource: "qrc:/icons/upload.svg"
+            flat: true
             highlighted: assignment.status === MissionAssignment.Uploading
             enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
             onClicked: highlighted ? assignment.cancelSync() : assignment.upload()
         }
     }
 
-    Flickable {
-        id: flickable
-        contentWidth: itemList.width
-        clip: true
-        boundsBehavior: Flickable.StopAtBounds
-        onMovementStarted: drawer.interactive = false
-        onMovementEnded: drawer.interactive = true
-        Layout.minimumHeight: sizings.controlBaseSize
-        Layout.fillWidth: true
+    RowLayout {
+        spacing: 0
 
-        MissionItemListView {
-            id: itemList
-            height: parent.height
-            missionId: missionEdit.missionId
-            onSelectionRequest: missionEdit.selectedItemId = itemId
-            onCheckItemX: {
-                var dX = x - flickable.contentX;
-                if (dX < 0) {
-                    flickable.contentX = x;
-                }
-                else if (dX > flickable.width - sizings.controlBaseSize) {
-                    flickable.contentX = x - flickable.width + sizings.controlBaseSize;
+        Flickable {
+            id: flickable
+            contentWidth: itemList.width
+            clip: true
+            boundsBehavior: Flickable.StopAtBounds
+            onMovementStarted: drawer.interactive = false
+            onMovementEnded: drawer.interactive = true
+            Layout.minimumHeight: sizings.controlBaseSize
+            Layout.fillWidth: true
+
+            MissionItemListView {
+                id: itemList
+                height: parent.height
+                missionId: missionEdit.missionId
+                onSelectionRequest: missionEdit.selectedItemId = itemId
+                onCheckItemX: {
+                    var dX = x - flickable.contentX;
+                    if (dX < 0) {
+                        flickable.contentX = x;
+                    }
+                    else if (dX > flickable.width - sizings.controlBaseSize) {
+                        flickable.contentX = x - flickable.width + sizings.controlBaseSize;
+                    }
                 }
             }
-        }
-    }
-
-    RowLayout {
-        spacing: sizings.spacing
-
-        Controls.Button {
-            tipText: qsTr("Left")
-            iconSource: "qrc:/icons/left.svg"
-            enabled: sequence > 0
-            onClicked: presenter.selectItem(sequence - 1)
-            onPressAndHold: presenter.selectItem(0)
-        }
-
-        Controls.Label {
-            text: sequence >= 0 ? ((sequence + 1) + "/" + count) : "-"
-            horizontalAlignment: Text.AlignHCenter
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Right")
-            iconSource: "qrc:/icons/right.svg"
-            enabled: sequence + 1 < count
-            onClicked: presenter.selectItem(sequence + 1)
-            onPressAndHold: presenter.selectItem(count - 1)
         }
 
         Controls.Button {
             tipText: qsTr("Add mission item")
             iconSource: "qrc:/ui/plus.svg"
+            flat: true
+            hasMenu: true
+            menuOpened: addMenu.visible
             enabled: missionId > 0
-            onClicked: if (!addMenu.visible) addMenu.open()
+            onClicked: if (!menuOpened) addMenu.open()
 
             Controls.Menu {
                 id: addMenu
@@ -160,16 +143,53 @@ ColumnLayout {
                 }
             }
         }
+    }
+
+    RowLayout {
+        spacing: 0
+
+        Controls.Button {
+            tipText: qsTr("Left")
+            iconSource: "qrc:/icons/left.svg"
+            flat: true
+            enabled: sequence > 0
+            onClicked: presenter.selectItem(sequence - 1)
+            onPressAndHold: presenter.selectItem(0)
+        }
+
+        Controls.Label {
+            text: qsTr("WP") + ": " + (sequence >= 0 ? ((sequence + 1) + "/" + count) : "-")
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            tipText: qsTr("Right")
+            iconSource: "qrc:/icons/right.svg"
+            flat: true
+            enabled: sequence + 1 < count
+            onClicked: presenter.selectItem(sequence + 1)
+            onPressAndHold: presenter.selectItem(count - 1)
+        }
 
         Controls.Button {
             tipText: qsTr("More")
             iconSource: "qrc:/ui/dots.svg"
+            flat: true
+            hasMenu: true
+            menuOpened: moreMenu.visible
             enabled: sequence > -1
-            onClicked: if (!dangerMenu.visible) dangerMenu.open()
+            onClicked: if (!menuOpened) moreMenu.open()
 
             Controls.Menu {
-                id: dangerMenu
+                id: moreMenu
                 y: parent.height
+
+                Controls.MenuItem {
+                    text: qsTr("Center on map")
+                    iconSource: "qrc:/icons/center.svg"
+                    onTriggered: map.setCenterOffsetted(itemEdit.position);
+                }
 
                 Controls.MenuItem {
                     text: qsTr("Move right")

@@ -14,6 +14,8 @@ T.Button { // TODO: clickable
     property alias iconScaling: content.iconScaling
     property alias iconColor: content.iconColor
     property alias textColor: content.textColor
+    property alias hasMenu: menuIndicator.visible
+    property alias menuOpened: menuIndicator.opened
     property alias contentWidth: content.width
     property alias backgroundColor: backgroundItem.color
 
@@ -29,6 +31,14 @@ T.Button { // TODO: clickable
             if (control.pressed | control.pressedImpl) return customPalette.highlightColor;
             if (control.checked || control.highlighted) return customPalette.selectionColor;
             return control.flat ? "transparent" : customPalette.buttonColor;
+        }
+
+        MenuIndicator {
+            id: menuIndicator
+            x: parent.width - width
+            y: parent.height - height
+            visible: false
+            focused: control.activeFocus
         }
 
         Rectangle {
