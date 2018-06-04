@@ -31,12 +31,8 @@ Rectangle {
             id: connection
         }
 
-//        ConnectionView {
-//            id: connection
-//        }
-
-//        RadioStatusView {
-//            id: radioStatus
-//        }
+        RadioStatusButton {
+            id: radioStatus
+        }
     }
 }
