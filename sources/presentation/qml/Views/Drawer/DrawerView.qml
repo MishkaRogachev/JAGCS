@@ -20,7 +20,7 @@ Item {
 
     function home() { presenter.home(); }
     function setMode(mode) { presenter.setMode(mode); }
-    function close() { setMode(DrawerPresenter.UnknownMode) }
+    function close() { setMode(DrawerPresenter.UnknownMode); }
 
     onModeChanged: if (!menu.visible && mode != DrawerPresenter.UnknownMode) open()
     onVisibleChanged: if (mode == DrawerPresenter.UnknownMode) setMode(DrawerPresenter.Home)
@@ -43,7 +43,7 @@ Item {
 
                 Controls.Button {
                     tipText: qsTr("Close drawer")
-                    iconSource: "qrc:/icons/left.svg"
+                    iconSource: "qrc:/icons/arrow_left.svg"
                     flat: true
                     onClicked: drawer.close()
                 }

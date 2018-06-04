@@ -93,7 +93,7 @@ AttitudeIndicator {
     Controls.Button {
         anchors.top: pitchScale.top
         anchors.horizontalCenter: pitchScale.horizontalCenter
-        iconSource: "qrc:/icons/up.svg"
+        iconSource: "qrc:/icons/arrow_up.svg"
         iconColor: customPalette.selectedTextColor
         flat: true
         round: true
@@ -105,7 +105,7 @@ AttitudeIndicator {
     Controls.Button {
         anchors.bottom: pitchScale.bottom
         anchors.horizontalCenter: pitchScale.horizontalCenter
-        iconSource: "qrc:/icons/down.svg"
+        iconSource: "qrc:/icons/arrow_down.svg"
         iconColor: customPalette.selectedTextColor
         flat: true
         round: true

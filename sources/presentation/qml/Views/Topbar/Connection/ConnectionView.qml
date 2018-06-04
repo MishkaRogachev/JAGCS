@@ -22,7 +22,7 @@ Item {
 
     Controls.ContentItem {
         anchors.top: parent.top
-        iconSource: "qrc:/icons/up.svg"
+        iconSource: "qrc:/icons/arrow_up.svg"
         text: bytesSent.toFixed(1) + " " + qsTr("B/s")
         font.pixelSize: sizings.fontSize * 0.5
         font.bold: true
@@ -33,7 +33,7 @@ Item {
 
     Controls.ContentItem {
         anchors.bottom: parent.bottom
-        iconSource: "qrc:/icons/down.svg"
+        iconSource: "qrc:/icons/arrow_down.svg"
         text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
         font.pixelSize: sizings.fontSize * 0.5
         font.bold: true

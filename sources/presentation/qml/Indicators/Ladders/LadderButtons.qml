@@ -15,7 +15,7 @@ Item {
         anchors.right: mirrored ? parent.right : undefined
         anchors.verticalCenter: root.verticalCenter
         anchors.verticalCenterOffset: -root.height / 3
-        iconSource: "qrc:/icons/up.svg"
+        iconSource: "qrc:/icons/arrow_up.svg"
         flat: true
         round: true
         visible: inputEnabled
@@ -28,7 +28,7 @@ Item {
         anchors.right: mirrored ? parent.right : undefined
         anchors.verticalCenter: root.verticalCenter
         anchors.verticalCenterOffset: root.height / 3
-        iconSource: "qrc:/icons/down.svg"
+        iconSource: "qrc:/icons/arrow_down.svg"
         flat: true
         round: true
         visible: inputEnabled

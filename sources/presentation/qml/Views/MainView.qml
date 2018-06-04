@@ -31,6 +31,13 @@ Controls.ApplicationWindow  {
         id: topbar
         anchors.left: parent.left
         anchors.right: parent.right
+
+        Controls.RoundButton {
+            id: burger
+            iconSource: "qrc:/icons/burger.svg"
+            tipText: qsTr("Open drawer")
+            onPressed: menu.open()
+        }
     }
 
     Item {
@@ -114,5 +121,29 @@ Controls.ApplicationWindow  {
         }
 
         Behavior on width { PropertyAnimation { duration: 200 } }
+    }
+
+    MouseArea { // NOTE: drawer workaround
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: sizings.controlBaseSize * 0.5
+        drag.target: highlight
+        drag.axis: Drag.XAxis
+        drag.minimumX: -highlight.width / 2
+        drag.maximumX: 0
+        onReleased: highlight.x = drag.minimumX
+
+        Rectangle {
+            id: highlight
+            x: -width / 2
+            width: sizings.controlBaseSize
+            height: parent.height
+            color: customPalette.highlightColor
+            opacity: parent.pressed ? 0.33 : 0.0
+            onXChanged: if (x == 0) drawer.open()
+
+            Behavior on opacity { PropertyAnimation { duration: 100 } }
+        }
     }
 }
