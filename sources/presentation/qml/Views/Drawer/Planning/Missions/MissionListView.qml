@@ -10,7 +10,7 @@ Item {
     property alias missions: list.model
 
     onVisibleChanged: menu.filterEnabled = visible
-    Component.onCompleted: menu.filterEnabled = true;
+    Component.onCompleted: if (visible) menu.filterEnabled = true
 
     Connections{
         target: menu
