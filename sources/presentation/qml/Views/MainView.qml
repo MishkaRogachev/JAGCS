@@ -34,6 +34,9 @@ Controls.ApplicationWindow  {
 
         Controls.RoundButton {
             id: burger
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: -width * 0.25
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Open drawer")
             onPressed: menu.open()

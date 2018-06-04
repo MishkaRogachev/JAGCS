@@ -44,7 +44,7 @@ Item {
 
     Loader {
         id: loader
-        height: parent.height
+        height: parent.height - y
         clip: true
     }
 }

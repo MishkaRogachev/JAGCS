@@ -11,7 +11,7 @@ Rectangle {
     id: topbar
 
     color: customPalette.backgroundColor
-    height: sizings.controlBaseSize
+    height: sizings.controlBaseSize * 0.75
 
     Controls.Shadow {
         source: parent
@@ -23,18 +23,20 @@ Rectangle {
     }
 
     RowLayout {
-        anchors.right: parent.right
-        anchors.rightMargin: dashboard.width
-        height: parent.height
+        anchors.fill: parent
+        anchors.leftMargin: burger.width
         spacing: sizings.spacing
-        clip: true
 
-        ConnectionView {
+        ConnectionButton {
             id: connection
         }
 
-        RadioStatusView {
-            id: radioStatus
-        }
+//        ConnectionView {
+//            id: connection
+//        }
+
+//        RadioStatusView {
+//            id: radioStatus
+//        }
     }
 }

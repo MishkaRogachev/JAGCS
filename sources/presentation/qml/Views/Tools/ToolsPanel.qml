@@ -8,16 +8,16 @@ ColumnLayout {
 
     spacing: sizings.spacing
 
+    Item {
+        Layout.fillHeight: true
+    }
+
     Controls.Button {
         id: maxMinButton
         tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
         iconSource: cornerVisible ? "qrc:/icons/hide_window.svg" :
                                     "qrc:/icons/show_window.svg"
         onClicked: cornerVisible = !cornerVisible
-    }
-
-    Item {
-        Layout.fillHeight: true
     }
 
     Controls.Button {
