@@ -19,7 +19,7 @@
 #include "mavlink_communicator_factory.h"
 #include "communicator_worker.h"
 
-#include "log_bus.h"
+#include "notification_bus.h"
 
 using namespace domain;
 
@@ -215,9 +215,9 @@ void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
 
     if (description->isConnected() != connected)
     {
-        LogBus::log(tr("Link") + " " + description->name() + " " +
+        NotificationBus::log(tr("Link") + " " + description->name() + " " +
                     (connected ? tr("connected") : tr("disconnected")),
-                    connected ? dto::LogMessage::Positive : dto::LogMessage::Warning);
+                    connected ? dto::Notification::Positive : dto::Notification::Warning);
         description->setConnected(connected);
 
         emit linkStatusChanged(description);
@@ -260,7 +260,7 @@ void CommunicationService::onMavlinkProtocolChanged(int linkId,
     if (protocol == dto::LinkDescription::MavLink1) msg = tr("switched on MAVLINK v.1");
     if (protocol == dto::LinkDescription::MavLink2) msg = tr("switched on MAVLINK v.2");
 
-    LogBus::log(tr("Link") + " " + description->name() + " " + msg);
+    NotificationBus::log(tr("Link") + " " + description->name() + " " + msg);
     description->setProtocol(protocol);
 
     emit linkStatusChanged(description);

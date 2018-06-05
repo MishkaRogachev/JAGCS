@@ -10,7 +10,7 @@
 #include "video_source.h"
 #include "vehicle_types.h"
 #include "command.h"
-#include "log_message.h"
+#include "notification.h"
 
 #include "manual_controller.h"
 
@@ -71,7 +71,7 @@ static void registerTypes()
     QML_UNCREATABLE_TYPE(MissionItem);
     QML_UNCREATABLE_TYPE(Command);
     QML_UNCREATABLE_TYPE(VideoSource);
-    QML_UNCREATABLE_TYPE(LogMessage);
+    QML_UNCREATABLE_TYPE(Notification);
 
     qmlRegisterUncreatableMetaObject(domain::vehicle::staticMetaObject, "JAGCS", 1, 0, "Domain",
                                      "Can't create enums in QML");

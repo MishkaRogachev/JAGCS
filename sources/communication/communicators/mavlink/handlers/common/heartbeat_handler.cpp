@@ -20,7 +20,7 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
-#include "log_bus.h"
+#include "notification_bus.h"
 
 #include "mavlink_communicator.h"
 #include "mode_helper_factory.h"
@@ -136,8 +136,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         {
             vehicle->setOnline(true);
             changed = true;
-            LogBus::log(tr("Vehicle %1 online").arg(vehicle->name()),
-                        dto::LogMessage::Positive);
+            NotificationBus::log(tr("Vehicle %1 online").arg(vehicle->name()),
+                        dto::Notification::Positive);
         }
 
         if (!d->vehicleTimers.contains(vehicleId))
@@ -231,8 +231,8 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
             vehicle->setOnline(false);
             d->vehicleService->save(vehicle);
 
-            LogBus::log(tr("Vehicle %1 gone offline").arg(vehicle->name()),
-                        dto::LogMessage::Warning);
+            NotificationBus::log(tr("Vehicle %1 gone offline").arg(vehicle->name()),
+                        dto::Notification::Warning);
         }
     }
 }

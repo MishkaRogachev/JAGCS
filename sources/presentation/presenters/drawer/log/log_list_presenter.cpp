@@ -17,7 +17,7 @@ void LogListPresenter::updateLog() // TODO: to QAbstractListModel
 {
     QVariantList logs;
 
-    for (const dto::LogMessage& message: domain::LogBus::logs())
+    for (const dto::Notification& message: domain::LogBus::logs())
     {
         logs.append(QVariant::fromValue(message));
     }

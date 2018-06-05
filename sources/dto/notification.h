@@ -1,21 +1,22 @@
-#ifndef LOG_MESSAGE_H
-#define LOG_MESSAGE_H
+#ifndef NOTIFICATION_H
+#define NOTIFICATION_H
 
 #include <QObject>
 #include <QTime>
 
 namespace dto
 {
-    class LogMessage
+    class Notification
     {
         Q_GADGET
 
         Q_PROPERTY(QTime timestamp READ timestamp WRITE setTimestamp)
         Q_PROPERTY(QString message READ message WRITE setMessage)
-        Q_PROPERTY(LogType type READ type WRITE setType)
+        Q_PROPERTY(Urgency urgency READ urgency WRITE setUrgency)
+        Q_PROPERTY(int time READ time WRITE setTime)
 
     public:
-        enum LogType
+        enum Urgency
         {
             Common,
             Positive,
@@ -23,9 +24,10 @@ namespace dto
             Critical
         };
 
-        LogMessage(const QTime& timestamp = QTime(),
+        Notification(const QTime& timestamp = QTime::currentTime(),
                    const QString& message = QString(),
-                   LogType type = Common);
+                   Urgency urgency = Common,
+                   int time = 0);
 
         QTime timestamp() const;
         void setTimestamp(const QTime& timestamp);
@@ -33,18 +35,20 @@ namespace dto
         QString message() const;
         void setMessage(const QString& message);
 
-        LogType type() const;
-        void setType(LogType type);
+        Urgency urgency() const;
+        void setUrgency(Urgency urgency);
+
+        int time() const;
+        void setTime(int time);
 
     private:
         QTime m_timestamp;
         QString m_message;
-        LogType m_type;
+        Urgency m_urgency;
+        int m_time;
 
-        Q_ENUM(LogType)
+        Q_ENUM(Urgency)
     };
 }
 
-//Q_DECLARE_METATYPE(dto::LogMessage)
-
-#endif // LOG_MESSAGE_H
+#endif // NOTIFICATION_H

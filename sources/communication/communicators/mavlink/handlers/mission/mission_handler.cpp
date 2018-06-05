@@ -25,7 +25,7 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
-#include "log_bus.h"
+#include "notification_bus.h"
 
 namespace
 {
@@ -588,7 +588,7 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     }
     else
     {
-        LogBus::instance()->log(tr("Error uploading mission item, %1").arg(
+        NotificationBus::instance()->log(tr("Error uploading mission item, %1").arg(
                                     ::decodeCommandResult(ack.type)));
         assignment->setStatus(dto::MissionAssignment::NotActual);
     }
