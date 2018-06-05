@@ -7,22 +7,13 @@ import "qrc:/Controls" as Controls
 ListView {
     id: list
 
-    function addLog(message) {
-        messages.append({ "msg": message });
-        list.positionViewAtEnd();
-    }
+    property ListModel messages: ListModel {}
+    property bool running: true
 
-    NotificationsPresenter {
-        id: presenter
-        view: list
-    }
-
-    model: ListModel { id: messages }
-
+    model: messages
     width: sizings.controlBaseSize * 10
-    height: Math.min(main.height / 2, contentHeight)
+    implicitHeight: contentHeight + sizings.shadowSize
     spacing: sizings.spacing
-    verticalLayoutDirection: ListView.BottomToTop
     flickableDirection: Flickable.AutoFlickIfNeeded
     boundsBehavior: Flickable.StopAtBounds
     clip: true
@@ -34,6 +25,7 @@ ListView {
     delegate: NotificationView {
         message: msg
         width: parent.width - sizings.shadowSize
+        running: list.running
         onDropped: messages.remove(index, 1)
     }
 }

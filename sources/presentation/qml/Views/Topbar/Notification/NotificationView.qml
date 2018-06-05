@@ -8,6 +8,7 @@ Controls.Frame {
     id: notification
 
     property var message
+    property alias running: timer.running
 
     signal dropped()
 
@@ -18,10 +19,9 @@ Controls.Frame {
     }
 
     padding: sizings.padding
-    implicitWidth: row.implicitWidth
-    implicitHeight: row.height + padding * 2
+    height: row.height + padding * 2
     backgroundColor: {
-        switch (message.type) {
+        switch (message.urgency) {
         case Notification.Positive:
             return customPalette.positiveColor;
         case Notification.Warning:
@@ -36,8 +36,7 @@ Controls.Frame {
 
     Timer {
         id: timer
-        interval: 5000
-        running: true
+        interval: message.time
         onTriggered: fadeAnimation.start()
     }
 

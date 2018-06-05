@@ -7,7 +7,25 @@ import "../"
 TopbarButton {
     id: notification
 
-    clickEnabled: false
+    clickEnabled: false// info.messages.count > 0
+
+    onClicked: info.visible ? info.close() : info.open()
+
+    function addLog(message) {
+        list.messages.append({ "msg": message });
+        list.positionViewAtEnd();
+
+//        //if (message.urgency == Notification.Critical || message.time == 0)
+//        {
+//            info.messages.append({ "msg": message });
+
+//        }
+    }
+
+    NotificationsPresenter {
+        id: presenter
+        view: notification
+    }
 
     Controls.ColoredIcon {
         anchors.centerIn: parent
@@ -21,5 +39,8 @@ TopbarButton {
         visible: count > 0
     }
 
-
+    NotificationInfo {
+        id: info
+        y: parent.height + sizings.margins
+    }
 }

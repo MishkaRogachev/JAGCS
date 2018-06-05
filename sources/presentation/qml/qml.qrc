@@ -82,6 +82,7 @@
         <file>Views/Topbar/Notification/NotificationButton.qml</file>
         <file>Views/Topbar/Notification/NotificationListView.qml</file>
         <file>Views/Topbar/Notification/NotificationView.qml</file>
+        <file>Views/Topbar/Notification/NotificationInfo.qml</file>
         <file>Views/Topbar/Clocks/ClocksButton.qml</file>
         <file>Views/Topbar/Connection/ConnectionButton.qml</file>
         <file>Views/Topbar/Connection/ConnectionInfo.qml</file>
