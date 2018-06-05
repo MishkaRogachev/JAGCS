@@ -22,13 +22,13 @@ Controls.Frame {
     implicitHeight: row.height + padding * 2
     backgroundColor: {
         switch (message.type) {
-        case LogMessage.Positive:
+        case Notification.Positive:
             return customPalette.positiveColor;
-        case LogMessage.Warning:
+        case Notification.Warning:
             return customPalette.cautionColor;
-        case LogMessage.Critical:
+        case Notification.Critical:
             return customPalette.dangerColor;
-        case LogMessage.Common:
+        case Notification.Common:
         default:
             return customPalette.textColor;
         }

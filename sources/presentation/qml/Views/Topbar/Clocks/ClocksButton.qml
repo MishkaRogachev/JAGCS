@@ -10,7 +10,7 @@ TopbarButton {
     property date currentDateTime
 
     implicitWidth: clock.implicitWidth
-    enabled: false
+    clickEnabled: false
 
     ClockPresenter {
         id: presenter

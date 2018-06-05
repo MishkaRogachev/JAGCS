@@ -13,14 +13,6 @@ ColumnLayout {
     }
 
     Controls.Button {
-        id: maxMinButton
-        tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
-        iconSource: cornerVisible ? "qrc:/icons/hide_window.svg" :
-                                    "qrc:/icons/show_window.svg"
-        onClicked: cornerVisible = !cornerVisible
-    }
-
-    Controls.Button {
         iconSource: "qrc:/ui/plus.svg"
         tipText: qsTr("Zoom in")
         visible: map.visible
@@ -53,6 +45,7 @@ ColumnLayout {
         }
     }
 
+    // TODO: track buttons to dashboard
     Controls.Button {
         iconSource: "qrc:/icons/track_yaw.svg"
         tipText: qsTr("Track vehicle's yaw")
@@ -72,5 +65,13 @@ ColumnLayout {
         visible: map.visible
         onEnabledChanged: if (!enabled) checked = false
         onCheckedChanged: map.trackingVehicleId = checked ? dashboard.selectedVehicle.id : 0
+    }
+
+    Controls.Button {
+        id: maxMinButton
+        tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
+        iconSource: cornerVisible ? "qrc:/icons/hide_window.svg" :
+                                    "qrc:/icons/show_window.svg"
+        onClicked: cornerVisible = !cornerVisible
     }
 }

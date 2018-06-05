@@ -4,6 +4,8 @@ import JAGCS 1.0
 Rectangle {
     id: button
 
+    property alias clickEnabled: area.enabled
+
     signal clicked()
 
     implicitWidth: sizings.controlBaseSize * 0.75

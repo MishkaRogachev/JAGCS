@@ -20,13 +20,14 @@ TopbarButton {
     }
 
     Controls.ColoredIcon {
-        anchors.fill: parent
+        anchors.centerIn: parent
         source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
         color: connected ? customPalette.textColor : customPalette.dangerColor
     }
 
     ConnectionInfo {
         id: info
+        x: parent.width - width
         y: parent.height + sizings.margins
     }
 }

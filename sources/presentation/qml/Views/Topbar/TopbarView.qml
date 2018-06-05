@@ -4,6 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
+import "Notification"
 import "Clocks"
 
 Rectangle {
@@ -23,9 +24,14 @@ Rectangle {
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: burger.width
+        anchors.leftMargin: drawer.position > 0 ? drawer.x + drawer.width + sizings.margins :
+                                                  burger.width
         anchors.rightMargin: sizings.margins
         spacing: sizings.spacing
+
+        NotificationButton {
+            id: notification
+        }
 
         ClocksButton {
             Layout.fillWidth: true
@@ -33,8 +39,8 @@ Rectangle {
 
         Repeater {
             model: [
-                "Connection/ConnectionButton.qml",
-                "RadioStatus/RadioStatusButton.qml"
+                "RadioStatus/RadioStatusButton.qml",
+                "Connection/ConnectionButton.qml"
             ]
 
             Loader { source: modelData }

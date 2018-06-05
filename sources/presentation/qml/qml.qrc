@@ -77,10 +77,11 @@
         <file>Views/Common/SetPoint.qml</file>
         <file>Views/MainView.qml</file>
         <file>Views/Tools/ToolsPanel.qml</file>
-        <file>Views/Notifications/NotificationListView.qml</file>
-        <file>Views/Notifications/NotificationView.qml</file>
         <file>Views/Topbar/TopbarView.qml</file>
         <file>Views/Topbar/TopbarButton.qml</file>
+        <file>Views/Topbar/Notification/NotificationButton.qml</file>
+        <file>Views/Topbar/Notification/NotificationListView.qml</file>
+        <file>Views/Topbar/Notification/NotificationView.qml</file>
         <file>Views/Topbar/Clocks/ClocksButton.qml</file>
         <file>Views/Topbar/Connection/ConnectionButton.qml</file>
         <file>Views/Topbar/Connection/ConnectionInfo.qml</file>

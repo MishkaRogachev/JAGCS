@@ -27,10 +27,10 @@ RowLayout {
             if (!log) return customPalette.backgroundColor;
 
             switch (log.type) {
-            case LogMessage.Common: return customPalette.textColor;
-            case LogMessage.Positive: return customPalette.positiveColor;
-            case LogMessage.Warning: return customPalette.cautionColor;
-            case LogMessage.Critical: return customPalette.dangerColor;
+            case Notification.Common: return customPalette.textColor;
+            case Notification.Positive: return customPalette.positiveColor;
+            case Notification.Warning: return customPalette.cautionColor;
+            case Notification.Critical: return customPalette.dangerColor;
             }
         }
         Layout.fillWidth: true

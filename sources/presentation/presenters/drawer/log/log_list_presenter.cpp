@@ -5,7 +5,7 @@
 #include <QDebug>
 
 // Internal
-#include "log_bus.h"
+#include "notification_bus.h"
 
 using namespace presentation;
 
@@ -17,7 +17,7 @@ void LogListPresenter::updateLog() // TODO: to QAbstractListModel
 {
     QVariantList logs;
 
-    for (const dto::Notification& message: domain::LogBus::logs())
+    for (const dto::Notification& message: domain::NotificationBus::logs())
     {
         logs.append(QVariant::fromValue(message));
     }
@@ -31,6 +31,6 @@ void LogListPresenter::connectView(QObject* view)
 
     this->updateLog();
 
-    connect(domain::LogBus::instance(), &domain::LogBus::logAdded,
+    connect(domain::NotificationBus::instance(), &domain::NotificationBus::logAdded,
             this, &LogListPresenter::updateLog);
 }

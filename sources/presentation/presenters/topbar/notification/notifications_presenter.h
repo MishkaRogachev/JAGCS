@@ -6,7 +6,7 @@
 
 namespace dto
 {
-    class LogMessage;
+    class Notification;
 }
 
 namespace presentation
@@ -19,7 +19,7 @@ namespace presentation
         explicit NotificationsPresenter(QObject* parent = nullptr);
 
     private slots:
-        void onLogAdded(const dto::LogMessage& message);
+        void onLogAdded(const dto::Notification& message);
     };
 }
 

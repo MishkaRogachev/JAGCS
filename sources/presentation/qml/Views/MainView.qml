@@ -2,7 +2,6 @@ import QtQuick 2.6
 import "../Controls" as Controls
 
 import "Tools"
-import "Notifications"
 import "Topbar"
 import "Video"
 import "Map"
@@ -54,8 +53,9 @@ Controls.ApplicationWindow  {
 
     MouseArea {
         id: corner
-        anchors.top: tools.top
-        anchors.left: tools.left
+        anchors.bottom: parent.bottom
+        anchors.left: tools.right
+        anchors.margins: sizings.margins
         width: cornerMap ? map.implicitWidth : video.implicitWidth
         height: parent.height / 2
         z: cornerVisible ? 2 : -1
@@ -82,7 +82,7 @@ Controls.ApplicationWindow  {
 
     DashboardView {
         id: dashboard
-        anchors.top: topbar.top
+        anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         z: 1
@@ -93,16 +93,6 @@ Controls.ApplicationWindow  {
         x: drawer.position * drawer.width + sizings.margins
         anchors.top: topbar.bottom
         anchors.bottom: parent.bottom
-        anchors.margins: sizings.margins
-        z: 3
-    }
-
-    NotificationListView {
-        id: notifications
-        anchors.top: corner.bottom
-        anchors.left: tools.right
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
         anchors.margins: sizings.margins
         z: 3
     }
