@@ -5,7 +5,7 @@ import "qrc:/Indicators" as Indicators
 import "../"
 
 TopbarButton {
-    id: button
+    id: radioStatus
 
     property alias rssi: rssiItem.rssi
     property alias remoteRssi: remoteRssiItem.rssi
@@ -27,12 +27,12 @@ TopbarButton {
 
         Indicators.RssiIndicator {
             id: rssiItem
-            height: button.height
+            height: radioStatus.height
         }
 
         Indicators.RssiIndicator {
             id: remoteRssiItem
-            height: button.height
+            height: radioStatus.height
         }
     }
 

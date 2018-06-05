@@ -4,8 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-import "RadioStatus"
-import "Connection"
+import "Clocks"
 
 Rectangle {
     id: topbar
@@ -25,14 +24,20 @@ Rectangle {
     RowLayout {
         anchors.fill: parent
         anchors.leftMargin: burger.width
+        anchors.rightMargin: sizings.margins
         spacing: sizings.spacing
 
-        ConnectionButton {
-            id: connection
+        ClocksButton {
+            Layout.fillWidth: true
         }
 
-        RadioStatusButton {
-            id: radioStatus
+        Repeater {
+            model: [
+                "Connection/ConnectionButton.qml",
+                "RadioStatus/RadioStatusButton.qml"
+            ]
+
+            Loader { source: modelData }
         }
     }
 }

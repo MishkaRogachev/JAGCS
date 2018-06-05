@@ -5,7 +5,7 @@ import "qrc:/Controls" as Controls
 import "../"
 
 TopbarButton {
-    id: button
+    id: connection
 
     property bool connected: false
     property real bytesRecv: 0.0
@@ -21,8 +21,8 @@ TopbarButton {
 
     Controls.ColoredIcon {
         anchors.fill: parent
-        source: connection.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        color: connection.connected ? customPalette.textColor : customPalette.dangerColor
+        source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
+        color: connected ? customPalette.textColor : customPalette.dangerColor
     }
 
     ConnectionInfo {

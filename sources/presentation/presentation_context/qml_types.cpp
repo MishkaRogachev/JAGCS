@@ -15,9 +15,10 @@
 #include "manual_controller.h"
 
 #include "topbar_presenter.h"
+#include "clock_presenter.h"
 #include "radio_status_presenter.h"
-#include "notifications_presenter.h"
 #include "connection_presenter.h"
+#include "notifications_presenter.h"
 #include "location_map_presenter.h"
 #include "active_video_presenter.h"
 #include "dashboard_presenter.h"
@@ -78,6 +79,7 @@ static void registerTypes()
     QML_UNCREATABLE_TYPE(ManualController);
 
     QML_TYPE(TopbarPresenter);
+    QML_TYPE(ClockPresenter);
     QML_TYPE(RadioStatusPresenter);
     QML_TYPE(NotificationsPresenter);
     QML_TYPE(ConnectionPresenter);
