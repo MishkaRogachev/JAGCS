@@ -38,7 +38,6 @@ namespace domain
 
         Q_DISABLE_COPY(ServiceRegistry)
     };
-
 }
 
 #define serviceRegistry (domain::ServiceRegistry::instance())

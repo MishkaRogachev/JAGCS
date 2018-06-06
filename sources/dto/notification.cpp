@@ -3,10 +3,12 @@
 using namespace dto;
 
 Notification::Notification(const QTime& timestamp,
-                       const QString& message,
-                       Notification::Urgency type,
-                       int time):
+                           const QString& head,
+                           const QString& message,
+                           Notification::Urgency type,
+                           int time):
     m_timestamp(timestamp),
+    m_head(head),
     m_message(message),
     m_urgency(type),
     m_time(time)
@@ -20,6 +22,16 @@ QTime Notification::timestamp() const
 void Notification::setTimestamp(const QTime& timestamp)
 {
     m_timestamp = timestamp;
+}
+
+QString Notification::head() const
+{
+    return m_head;
+}
+
+void Notification::setHead(const QString& head)
+{
+    m_head = head;
 }
 
 QString Notification::message() const

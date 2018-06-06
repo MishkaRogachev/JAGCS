@@ -4,9 +4,6 @@
 // Internal
 #include "notification.h"
 
-// Qt
-#include <QMutex>
-
 namespace domain
 {
     class NotificationBus: public QObject
@@ -14,24 +11,32 @@ namespace domain
         Q_OBJECT
 
     public:
+        explicit NotificationBus(QObject* parent = nullptr);
+        ~NotificationBus() override;
+
         static NotificationBus* instance();
 
-        static const QList<dto::Notification>& logs();
+        QList<dto::Notification> notifications();
+        QList<dto::Notification> notifications(const QString& head);
 
-        static void log(const dto::Notification& message);
-        static void log(const QString& message,
-                        dto::Notification::Urgency type = dto::Notification::Common,
-                        int time = 5000);
+        void notify(const dto::Notification& message);
+        void notify(const QString& head, const QString& message,
+                 dto::Notification::Urgency type = dto::Notification::Common,
+                 int time = 5000);
 
     signals:
-        void logAdded(dto::Notification message);
+        void notificated(dto::Notification message);
 
     private:
-        NotificationBus();
+        class Impl;
+        QScopedPointer<Impl> const d;
 
-        QList<dto::Notification> m_messages;
-        QMutex m_mutex;
+        static NotificationBus* lastCreatedBus;
+
+        Q_DISABLE_COPY(NotificationBus)
     };
 }
+
+#define notificationBus (domain::NotificationBus::instance())
 
 #endif // NOTIFICATION_BUS_H

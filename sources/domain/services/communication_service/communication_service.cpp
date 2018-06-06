@@ -215,9 +215,9 @@ void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
 
     if (description->isConnected() != connected)
     {
-        NotificationBus::log(tr("Link") + " " + description->name() + " " +
-                    (connected ? tr("connected") : tr("disconnected")),
-                    connected ? dto::Notification::Positive : dto::Notification::Warning);
+        notificationBus->notify(tr("Link") + " " + description->name(),
+                             connected ? tr("Connection established") : tr("Connection lost"),
+                             connected ? dto::Notification::Positive : dto::Notification::Warning);
         description->setConnected(connected);
 
         emit linkStatusChanged(description);
@@ -256,11 +256,11 @@ void CommunicationService::onMavlinkProtocolChanged(int linkId,
     dto::LinkDescriptionPtr description = this->description(linkId);
     if (description->protocol() == protocol) return;
 
-    QString msg;
-    if (protocol == dto::LinkDescription::MavLink1) msg = tr("switched on MAVLINK v.1");
-    if (protocol == dto::LinkDescription::MavLink2) msg = tr("switched on MAVLINK v.2");
+    QString msg = tr("Unknown");
+    if (protocol == dto::LinkDescription::MavLink1) msg = tr("Switched on MAVLINK v.1");
+    if (protocol == dto::LinkDescription::MavLink2) msg = tr("Switched on MAVLINK v.2");
 
-    NotificationBus::log(tr("Link") + " " + description->name() + " " + msg);
+    notificationBus->notify(tr("Link") + " " + description->name(), msg);
     description->setProtocol(protocol);
 
     emit linkStatusChanged(description);

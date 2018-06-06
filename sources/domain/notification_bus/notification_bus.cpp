@@ -1,37 +1,65 @@
 #include "notification_bus.h"
 
 // Qt
+#include <QMultiHash>
 #include <QMutexLocker>
 #include <QDebug>
 
 using namespace domain;
 
-NotificationBus* NotificationBus::instance()
-{
-    static NotificationBus bus;
-    return &bus;
-}
+NotificationBus* NotificationBus::lastCreatedBus = nullptr;
 
-const QList<dto::Notification>& NotificationBus::logs()
+class NotificationBus::Impl
 {
-    QMutexLocker locker(&instance()->m_mutex);
-    return instance()->m_messages;
-}
+public:
+    QMultiHash<QString, dto::Notification> messages;
+    QMutex mutex;
 
-void NotificationBus::log(const dto::Notification& message)
-{
-    QMutexLocker locker(&instance()->m_mutex);
-    instance()->m_messages.append(message);
-    emit instance()->logAdded(message);
-}
+    Impl():
+        mutex(QMutex::Recursive)
+    {}
+};
 
-void NotificationBus::log(const QString& message, dto::Notification::Urgency type, int time)
+NotificationBus::NotificationBus(QObject* parent):
+    QObject(parent),
+    d(new Impl())
 {
-    NotificationBus::log(dto::Notification(QTime::currentTime(), message, type, time));
-}
+    NotificationBus::lastCreatedBus = this;
 
-NotificationBus::NotificationBus():
-    m_mutex(QMutex::Recursive)
-{
     qRegisterMetaType<dto::Notification>("dto::Notification");
 }
+
+NotificationBus::~NotificationBus()
+{}
+
+NotificationBus* NotificationBus::instance()
+{
+    return NotificationBus::lastCreatedBus;
+}
+
+QList<dto::Notification> NotificationBus::notifications()
+{
+    QMutexLocker locker(&d->mutex);
+    return d->messages.values();
+}
+
+QList<dto::Notification> NotificationBus::notifications(const QString& head)
+{
+    QMutexLocker locker(&d->mutex);
+    return d->messages.values(head);
+}
+
+void NotificationBus::notify(const dto::Notification& message)
+{
+    QMutexLocker locker(&d->mutex);
+
+    d->messages.insertMulti(message.head(), message);
+    emit notificated(message);
+}
+
+void NotificationBus::notify(const QString& head, const QString& message,
+                          dto::Notification::Urgency type, int time)
+{
+    this->notify(dto::Notification(QTime::currentTime(), head, message, type, time));
+}
+

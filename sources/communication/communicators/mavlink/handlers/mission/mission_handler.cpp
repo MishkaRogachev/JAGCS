@@ -588,8 +588,9 @@ void MissionHandler::processMissionAck(const mavlink_message_t& message)
     }
     else
     {
-        NotificationBus::instance()->log(tr("Error uploading mission item, %1").arg(
-                                    ::decodeCommandResult(ack.type)));
+        notificationBus->notify(tr("Mission"), tr("Error uploading waypoint %1").arg(
+                                 ::decodeCommandResult(ack.type)),
+                             dto::Notification::Warning);
         assignment->setStatus(dto::MissionAssignment::NotActual);
     }
 

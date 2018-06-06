@@ -11,6 +11,7 @@ namespace dto
         Q_GADGET
 
         Q_PROPERTY(QTime timestamp READ timestamp WRITE setTimestamp)
+        Q_PROPERTY(QString head READ head WRITE setHead)
         Q_PROPERTY(QString message READ message WRITE setMessage)
         Q_PROPERTY(Urgency urgency READ urgency WRITE setUrgency)
         Q_PROPERTY(int time READ time WRITE setTime)
@@ -25,12 +26,16 @@ namespace dto
         };
 
         Notification(const QTime& timestamp = QTime::currentTime(),
-                   const QString& message = QString(),
-                   Urgency urgency = Common,
-                   int time = 0);
+                     const QString& head = QString(),
+                     const QString& message = QString(),
+                     Urgency urgency = Common,
+                     int time = 0);
 
         QTime timestamp() const;
         void setTimestamp(const QTime& timestamp);
+
+        QString head() const;
+        void setHead(const QString& head);
 
         QString message() const;
         void setMessage(const QString& message);
@@ -43,6 +48,7 @@ namespace dto
 
     private:
         QTime m_timestamp;
+        QString m_head;
         QString m_message;
         Urgency m_urgency;
         int m_time;

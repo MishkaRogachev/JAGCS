@@ -136,8 +136,8 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         {
             vehicle->setOnline(true);
             changed = true;
-            NotificationBus::log(tr("Vehicle %1 online").arg(vehicle->name()),
-                        dto::Notification::Positive);
+            notificationBus->notify(tr("Vehicle %1").arg(vehicle->name()), tr("Online"),
+                                 dto::Notification::Positive);
         }
 
         if (!d->vehicleTimers.contains(vehicleId))
@@ -231,8 +231,8 @@ void HeartbeatHandler::timerEvent(QTimerEvent* event)
             vehicle->setOnline(false);
             d->vehicleService->save(vehicle);
 
-            NotificationBus::log(tr("Vehicle %1 gone offline").arg(vehicle->name()),
-                        dto::Notification::Warning);
+            notificationBus->notify(tr("Vehicle %1").arg(vehicle->name()), tr("Offline"),
+                                 dto::Notification::Critical);
         }
     }
 }

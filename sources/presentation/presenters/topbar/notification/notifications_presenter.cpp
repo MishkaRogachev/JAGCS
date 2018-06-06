@@ -11,7 +11,7 @@ using namespace presentation;
 NotificationsPresenter::NotificationsPresenter(QObject* parent):
     BasePresenter(parent)
 {
-    connect(domain::NotificationBus::instance(), &domain::NotificationBus::logAdded,
+    connect(notificationBus, &domain::NotificationBus::notificated,
             this, &NotificationsPresenter::onLogAdded);
 }
 

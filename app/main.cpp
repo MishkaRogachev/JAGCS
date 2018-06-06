@@ -10,6 +10,7 @@
 #include "common.h"
 #include "settings_provider.h"
 
+#include "notification_bus.h"
 #include "db_manager.h"
 #include "service_registry.h"
 #include "proxy_manager.h"
@@ -69,6 +70,9 @@ int main(int argc, char* argv[])
             qFatal("Unable to establish DB connection");
             app.quit();
         }
+
+        domain::NotificationBus bus;
+        Q_UNUSED(bus);
 
         domain::ServiceRegistry registy;
         Q_UNUSED(registy);
