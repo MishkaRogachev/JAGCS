@@ -32,6 +32,16 @@ void Palette::setRaisedColor(const QColor& raisedColor)
     m_raisedColor = raisedColor;
 }
 
+QColor Palette::controlColor() const
+{
+    return m_controlColor;
+}
+
+void Palette::setControlColor(QColor controlColor)
+{
+    m_controlColor = controlColor;
+}
+
 QColor Palette::buttonColor() const
 {
     return m_buttonColor;

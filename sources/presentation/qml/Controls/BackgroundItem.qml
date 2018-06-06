@@ -15,14 +15,14 @@ Rectangle {
 
     implicitWidth: Math.max(sizings.controlBaseSize * 4, textItem.implicitWidth)
     implicitHeight: sizings.inputControlHeight
-    radius: 3
-    color: customPalette.sunkenColor
+    color: "transparent"
 
     Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
-        height: parent.radius
-        color: highlighted ? customPalette.highlightColor : customPalette.buttonColor
+        height: highlighted ? 2 : 1
+        // TODO: controlColor
+        color: highlighted ? customPalette.highlightColor : customPalette.controlColor
         visible: enabled
     }
 

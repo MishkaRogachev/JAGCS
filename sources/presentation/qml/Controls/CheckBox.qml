@@ -23,8 +23,8 @@ T.CheckBox {
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: 2
-        color: customPalette.sunkenColor
-        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
+        color: "transparent"
+        border.color: control.activeFocus ? customPalette.highlightColor : customPalette.controlColor
 
         ColoredIcon {
             anchors.fill: parent

@@ -12,6 +12,6 @@ ColoredIcon {
     color: {
         if (opened) return customPalette.highlightColor;
         if (focused) return customPalette.selectionColor;
-        return customPalette.buttonColor;
+        return customPalette.controlColor;
     }
 }

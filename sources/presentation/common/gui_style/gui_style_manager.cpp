@@ -31,9 +31,10 @@ void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
     palette.setSkyColor(paletteStyle ? "#61ffff" : "#00d4ff");
     palette.setGroundColor(paletteStyle ? "#4bda63" : "#7b4837");
 
-    palette.setBackgroundColor(paletteStyle ? "#ced1da" : "#30393d");
     palette.setSunkenColor(paletteStyle ? "#c3c6ce" : "#262e31");
+    palette.setBackgroundColor(paletteStyle ? "#ced1da" : "#30393d");
     palette.setRaisedColor(paletteStyle ? "#e1e5ee" : "#384348");
+    palette.setControlColor(paletteStyle ? "#91a1ad" : "#465763");
     palette.setButtonColor(paletteStyle ? "#f6f5f0" : "#54646b");
 
     palette.setTextColor(paletteStyle ? "#30393d" : "#f6f5f0");

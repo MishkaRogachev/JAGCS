@@ -27,7 +27,7 @@ T.SpinBox {
         id: background
         anchors.fill: parent
         leftPadding: sizings.controlBaseSize + sizings.padding
-        color: isValid ? customPalette.sunkenColor : customPalette.dangerColor
+        color: isValid ? "transparent" : customPalette.dangerColor
         highlighted: control.activeFocus
     }
 

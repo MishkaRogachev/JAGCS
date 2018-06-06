@@ -13,12 +13,10 @@ T.Slider {
         x: control.leftPadding
         y: control.topPadding + control.availableHeight / 2 - height / 2
         implicitWidth: sizings.controlBaseSize * 6
-        implicitHeight: sizings.controlBaseSize / 4
         width: control.availableWidth
-        height: implicitHeight
+        height: 2
         radius: height / 2
-        color: customPalette.sunkenColor
-        border.color: control.activeFocus ? customPalette.highlightColor : "transparent"
+        color: customPalette.controlColor
 
         Rectangle {
             width: control.visualPosition * parent.width
@@ -26,8 +24,6 @@ T.Slider {
             color: customPalette.selectionColor
             radius: height / 2
         }
-
-        // TODO: Shaders.Hatch
     }
 
     handle: Rectangle {
@@ -36,8 +32,12 @@ T.Slider {
         implicitWidth: sizings.controlBaseSize / 1.5
         implicitHeight: implicitWidth
         radius: width / 2
-        color: customPalette.highlightColor
+        color: control.activeFocus ? customPalette.highlightColor : customPalette.buttonColor
         visible: enabled
+
+        Shadow {
+            source: parent
+        }
 
         Rectangle {
             anchors.centerIn: parent

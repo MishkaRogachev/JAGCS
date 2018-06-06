@@ -79,7 +79,7 @@ T.Control {
         id: background
         anchors.fill: parent
         leftPadding: sizings.controlBaseSize + sizings.padding
-        color: isValid ? customPalette.sunkenColor : customPalette.dangerColor
+        color: isValid ? "transparent" : customPalette.dangerColor
         textColor: focusedItem ? customPalette.highlightColor : customPalette.secondaryTextColor
     }
 
@@ -87,7 +87,12 @@ T.Control {
         id: scope
         activeFocusOnTab: true
         anchors.fill: parent
-        onActiveFocusChanged: if (!activeFocus) focusedItem = null
+        onActiveFocusChanged: {
+            if (activeFocus) return;
+
+            focusedItem = null;
+            dInput.focus = true;
+        }
 
         RowLayout {
             id: row
@@ -209,7 +214,7 @@ T.Control {
     Rectangle {
         anchors.bottom: control.bottom
         width: focusedItem ? focusedItem.width + 5 : 0
-        height: background.radius
+        height: 2
         x: focusedItem ? focusedItem.x : 0
         color: scope.activeFocus ? customPalette.highlightColor : "transparent"
         Behavior on x { NumberAnimation { duration: 150 } }
