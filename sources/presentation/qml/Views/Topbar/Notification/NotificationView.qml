@@ -7,8 +7,11 @@ import "qrc:/Controls" as Controls
 Controls.Frame {
     id: notification
 
-    property var message
-    property alias running: timer.running
+    property string header
+    property int urgency: Notification.Common
+    property var messages
+
+    property alias time: timer.interval
 
     signal dropped()
 
@@ -21,7 +24,7 @@ Controls.Frame {
     padding: sizings.padding
     height: row.height + padding * 2
     backgroundColor: {
-        switch (message.urgency) {
+        switch (urgency) {
         case Notification.Positive:
             return customPalette.positiveColor;
         case Notification.Warning:
@@ -36,8 +39,12 @@ Controls.Frame {
 
     Timer {
         id: timer
-        interval: message.time
+        running: true
         onTriggered: fadeAnimation.start()
+        onIntervalChanged: {
+            stop();
+            start();
+        }
     }
 
     MouseArea {
@@ -59,25 +66,36 @@ Controls.Frame {
         onStopped: if (!opacity) drop()
     }
 
-    RowLayout {
+    ColumnLayout {
         id: row
         width: parent.width
-        spacing: sizings.spacing
         clip: true
 
-        Controls.Label {
-            id: label
-            text: message.message
-            color: customPalette.selectedTextColor
-            wrapMode: Text.WordWrap
-            Layout.fillWidth: true
+        RowLayout {
+            Controls.Label {
+                text: header
+                color: customPalette.selectedTextColor
+                Layout.fillWidth: true
+            }
+
+            Controls.Button {
+                iconSource: "qrc:/icons/remove.svg"
+                iconColor: customPalette.selectedTextColor
+                flat: true
+                onClicked: drop()
+            }
         }
 
-        Controls.Button {
-            iconSource: "qrc:/icons/remove.svg"
-            iconColor: customPalette.selectedTextColor
-            flat: true
-            onClicked: drop()
+        Repeater {
+            model: messages
+
+            Controls.Label {
+                text: modelData
+                color: customPalette.selectedTextColor
+                font.pixelSize: sizings.secondaryFontSize
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
         }
     }
 }

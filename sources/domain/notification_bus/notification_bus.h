@@ -16,13 +16,13 @@ namespace domain
 
         static NotificationBus* instance();
 
-        QList<dto::Notification> notifications();
-        QList<dto::Notification> notifications(const QString& head);
+        const QList<dto::Notification>& notifications();
 
-        void notify(const dto::Notification& message);
+    public slots:
+        void notify(const dto::Notification& notification);
         void notify(const QString& head, const QString& message,
-                 dto::Notification::Urgency type = dto::Notification::Common,
-                 int time = 5000);
+                    dto::Notification::Urgency urgency = dto::Notification::Common,
+                    int time = 5000);
 
     signals:
         void notificated(dto::Notification message);

@@ -1,4 +1,4 @@
-#include "video_source_list_model.h".h"
+#include "video_source_list_model.h"
 
 // Qt
 #include <QDebug>

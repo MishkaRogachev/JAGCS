@@ -62,6 +62,7 @@ void VehicleListModel::updateVehicle(const dto::VehiclePtr& vehicle)
 void VehicleListModel::removeVehicle(const dto::VehiclePtr& vehicle)
 {
     int row = m_vehicles.indexOf(vehicle);
+    if (row == -1) return;
 
     this->beginRemoveRows(QModelIndex(), row, row);
     m_vehicles.removeOne(vehicle);

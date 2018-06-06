@@ -5,17 +5,24 @@
 
 // Internal
 #include "notification_bus.h"
+#include "notification_list_model.h"
 
 using namespace presentation;
 
 NotificationsPresenter::NotificationsPresenter(QObject* parent):
-    BasePresenter(parent)
+    BasePresenter(parent),
+    m_model(new NotificationListModel(this))
 {
     connect(notificationBus, &domain::NotificationBus::notificated,
-            this, &NotificationsPresenter::onLogAdded);
+            this, &NotificationsPresenter::addNotification);
 }
 
-void NotificationsPresenter::onLogAdded(const dto::Notification& message)
+void NotificationsPresenter::addNotification(const dto::Notification& notification)
 {
-    this->invokeViewMethod(PROPERTY(addLog), QVariant::fromValue(message));
+    m_model->addNotification(notification);
+}
+
+void NotificationsPresenter::connectView(QObject* view)
+{
+    view->setProperty(PROPERTY(notifications), QVariant::fromValue(m_model));
 }

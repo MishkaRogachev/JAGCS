@@ -23,7 +23,7 @@ namespace presentation
         void setMission(int id);
 
     protected:
-        void connectView(QObject* view);
+        void connectView(QObject* view) override;
 
     private:
         class Impl;

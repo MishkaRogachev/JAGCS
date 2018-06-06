@@ -29,7 +29,7 @@ namespace presentation
         void cancelSyncMission();
 
     protected:
-        void connectView(QObject* view);
+        void connectView(QObject* view) override;
 
     protected:
         domain::MissionService* const m_service;

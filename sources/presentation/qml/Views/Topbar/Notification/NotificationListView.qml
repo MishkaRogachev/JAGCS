@@ -7,10 +7,8 @@ import "qrc:/Controls" as Controls
 ListView {
     id: list
 
-    property ListModel messages: ListModel {}
-    property bool running: true
+    signal remove(string header)
 
-    model: messages
     width: sizings.controlBaseSize * 10
     implicitHeight: contentHeight + sizings.shadowSize
     spacing: sizings.spacing
@@ -23,9 +21,13 @@ ListView {
     }
 
     delegate: NotificationView {
-        message: msg
+        property bool last: index == list.count - 1
+        onLastChanged: if (last) notification.urgency = urgency
         width: parent.width - sizings.shadowSize
-        running: list.running
-        onDropped: messages.remove(index, 1)
+        header: model.header
+        messages: model.messages
+        urgency: model.urgency
+        time: model.time
+        onDropped: remove(header)
     }
 }

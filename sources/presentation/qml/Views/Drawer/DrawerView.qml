@@ -113,7 +113,6 @@ Item {
             case DrawerPresenter.Planning: return "Planning/PlanningView.qml";
             case DrawerPresenter.Vehicles: return "Vehicles/VehicleListView.qml";
             case DrawerPresenter.Connection: return "Connection/ConnectionView.qml";
-            case DrawerPresenter.Logbook: return "Log/LogListView.qml";
             case DrawerPresenter.Database: return "Settings/Database/DatabaseView.qml";
             case DrawerPresenter.Map: return "Settings/Map/MapSettingsView.qml";
             case DrawerPresenter.Video: return "Settings/Video/VideoSourceListView.qml";

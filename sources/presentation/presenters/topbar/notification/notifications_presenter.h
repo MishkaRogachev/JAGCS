@@ -11,6 +11,8 @@ namespace dto
 
 namespace presentation
 {
+    class NotificationListModel;
+
     class NotificationsPresenter: public BasePresenter
     {
         Q_OBJECT
@@ -18,8 +20,14 @@ namespace presentation
     public:
         explicit NotificationsPresenter(QObject* parent = nullptr);
 
-    private slots:
-        void onLogAdded(const dto::Notification& message);
+    public slots:
+        void addNotification(const dto::Notification& notification);
+
+    protected:
+        void connectView(QObject* view) override;
+
+    private:
+        NotificationListModel* m_model;
     };
 }
 

@@ -28,7 +28,7 @@ namespace presentation
         void remove();
 
     protected:
-        void connectView(QObject* view);
+        void connectView(QObject* view) override;
 
     private:
         domain::MissionService* const m_service;

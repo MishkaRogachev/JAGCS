@@ -17,7 +17,6 @@ namespace presentation
                 Planning,
                 Vehicles,
                 Connection,
-                Logbook,
                 Settings,
                     Database,
                     Map,

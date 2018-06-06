@@ -12,7 +12,7 @@ NotificationBus* NotificationBus::lastCreatedBus = nullptr;
 class NotificationBus::Impl
 {
 public:
-    QMultiHash<QString, dto::Notification> messages;
+    QList<dto::Notification> notifications;
     QMutex mutex;
 
     Impl():
@@ -37,24 +37,18 @@ NotificationBus* NotificationBus::instance()
     return NotificationBus::lastCreatedBus;
 }
 
-QList<dto::Notification> NotificationBus::notifications()
+const QList<dto::Notification>& NotificationBus::notifications()
 {
     QMutexLocker locker(&d->mutex);
-    return d->messages.values();
+    return d->notifications;
 }
 
-QList<dto::Notification> NotificationBus::notifications(const QString& head)
-{
-    QMutexLocker locker(&d->mutex);
-    return d->messages.values(head);
-}
-
-void NotificationBus::notify(const dto::Notification& message)
+void NotificationBus::notify(const dto::Notification& notification)
 {
     QMutexLocker locker(&d->mutex);
 
-    d->messages.insertMulti(message.head(), message);
-    emit notificated(message);
+    d->notifications.append(notification);
+    emit notificated(notification);
 }
 
 void NotificationBus::notify(const QString& head, const QString& message,

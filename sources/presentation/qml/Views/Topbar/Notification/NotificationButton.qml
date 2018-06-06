@@ -5,42 +5,57 @@ import "qrc:/Controls" as Controls
 import "../"
 
 TopbarButton {
-    id: notification
+    id: notificationView
 
-    clickEnabled: false// info.messages.count > 0
+    property int urgency: Notification.Common
+    property var notifications
 
-    onClicked: info.visible ? info.close() : info.open()
-
-    function addLog(message) {
-        list.messages.append({ "msg": message });
-        list.positionViewAtEnd();
-
-//        //if (message.urgency == Notification.Critical || message.time == 0)
-//        {
-//            info.messages.append({ "msg": message });
-
-//        }
-    }
+    clickEnabled: list.count > 0
+    onClicked: notifications.removeLast()
 
     NotificationsPresenter {
         id: presenter
-        view: notification
+        view: notificationView
     }
 
     Controls.ColoredIcon {
         anchors.centerIn: parent
         source: "qrc:/icons/info.svg"
-        color: clickEnabled ? customPalette.textColor : customPalette.sunkenColor
+        color: customPalette.textColor
+        visible: list.count == 0
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        anchors.margins: 2
+        radius: height / 2
+        visible: list.count > 0
+        color: {
+            switch (urgency) {
+            case Notification.Positive:
+                return customPalette.positiveColor;
+            case Notification.Warning:
+                return customPalette.cautionColor;
+            case Notification.Critical:
+                return customPalette.dangerColor;
+            case Notification.Common:
+            default:
+                return customPalette.textColor;
+            }
+        }
+
+        Controls.Label {
+            anchors.centerIn: parent
+            color: customPalette.selectedTextColor
+            text: list.count
+        }
     }
 
     NotificationListView {
         id: list
         y: parent.height + sizings.margins
+        model: notifications
         visible: count > 0
-    }
-
-    NotificationInfo {
-        id: info
-        y: parent.height + sizings.margins
+        onRemove: notifications.remove(header)
     }
 }
