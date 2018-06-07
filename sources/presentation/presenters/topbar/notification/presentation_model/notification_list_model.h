@@ -3,7 +3,7 @@
 
 // Qt
 #include <QAbstractListModel>
-#include <QMap>
+#include <QMultiMap>
 
 // Internal
 #include "notification.h"
@@ -38,7 +38,7 @@ namespace presentation
 
     private:
         QStringList m_headers;
-        QMap<QString, dto::Notification> m_notifications;
+        QMultiMap<QString, dto::Notification> m_notifications;
     };
 }
 

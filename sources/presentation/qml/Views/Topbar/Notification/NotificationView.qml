@@ -15,11 +15,20 @@ Controls.Frame {
 
     signal dropped()
 
+    function restart() {
+        notification.opacity = 1.0;
+        if (fadeAnimation.running) fadeAnimation.stop();
+        if (timer.running) timer.stop();
+        timer.start();
+    }
+
     function drop() {
         if (fadeAnimation.running) fadeAnimation.stop();
         if (timer.running) timer.stop();
         dropped();
     }
+
+    onMessagesChanged: restart()
 
     padding: sizings.padding
     height: row.height + padding * 2
@@ -41,20 +50,11 @@ Controls.Frame {
         id: timer
         running: true
         onTriggered: fadeAnimation.start()
-        onIntervalChanged: {
-            stop();
-            start();
-        }
     }
 
     MouseArea {
         anchors.fill: parent
-        onPressed: {
-            notification.opacity = 1.0;
-            if (fadeAnimation.running) fadeAnimation.stop();
-            if (timer.running) timer.stop();
-            timer.start();
-        }
+        onPressed: restart()
     }
 
     PropertyAnimation on opacity {

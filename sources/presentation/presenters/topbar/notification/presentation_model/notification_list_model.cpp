@@ -4,6 +4,11 @@
 #include <QVariant>
 #include <QDebug>
 
+namespace
+{
+    const int maxHeadMessages = 5;
+}
+
 using namespace presentation;
 
 NotificationListModel::NotificationListModel(QObject* parent):
@@ -46,17 +51,24 @@ QVariant NotificationListModel::data(const QModelIndex& index, int role) const
 
 void NotificationListModel::addNotification(const dto::Notification& notification)
 {
-    m_notifications.insertMulti(notification.head(), notification);
+    QString head = notification.head();
+    m_notifications.insertMulti(head, notification);
 
-    if (m_headers.contains(notification.head()))
+    if (m_headers.contains(head))
     {
-        QModelIndex index = this->index(m_headers.indexOf(notification.head()));
+        if (m_notifications.count(head) > ::maxHeadMessages)
+        {
+            dto::Notification firstNotification = m_notifications.values(head).first();
+            m_notifications.remove(head, firstNotification);
+        }
+
+        QModelIndex index = this->index(m_headers.indexOf(head));
         emit dataChanged(index, index, { MessagesRole, UrgencyRole, TimeRole });
     }
     else
     {
         this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
-        m_headers.append(notification.head());
+        m_headers.append(head);
         this->endInsertRows();
     }
 }

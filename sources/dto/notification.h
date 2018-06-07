@@ -46,6 +46,8 @@ namespace dto
         int time() const;
         void setTime(int time);
 
+        bool operator ==(const Notification& other);
+
     private:
         QTime m_timestamp;
         QString m_head;

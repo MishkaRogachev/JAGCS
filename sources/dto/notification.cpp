@@ -63,3 +63,12 @@ void Notification::setTime(int time)
 {
     m_time = time;
 }
+
+bool Notification::operator ==(const Notification& other)
+{
+    return m_timestamp == other.m_timestamp &&
+            m_head == other.m_head &&
+            m_message == other.m_message &&
+            m_urgency == other.m_urgency &&
+            m_time == other.m_time;
+}
