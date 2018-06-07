@@ -49,7 +49,7 @@ T.DelayButton {
             radius: parent.radius
             height: parent.height
             width: parent.width * control.progress
-            color: customPalette.selectionColor
+            color: customPalette.highlightColor
             clip: true
 
             ContentItem {

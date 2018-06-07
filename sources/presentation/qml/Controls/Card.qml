@@ -66,8 +66,8 @@ Item {
 
         source: "qrc:/ui/menu_arrow.svg"
         color: {
-            if (area.pressed) return customPalette.highlightColor;
-            if (area.containsMouse) return customPalette.selectionColor;
+            if (area.pressed) return customPalette.selectionColor;
+            if (area.containsMouse) return customPalette.highlightColor;
             return customPalette.buttonColor
         }
 

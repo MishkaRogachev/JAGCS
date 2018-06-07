@@ -10,11 +10,6 @@ Palette AbstractPaletteFactory::create()
     palette.setMissionColor("#1ce9a5");
     palette.setActiveMissionColor("#fd00fd");
 
-    palette.setHighlightColor("#1effb4");
-    palette.setSelectedTextColor("#070707");
-
-    palette.setHighlightColor("#1effb4");
-    palette.setSelectionColor("#1ce9a5");
     palette.setLinkColor("#64adf6");
 
     palette.setDangerColor("#e53535");

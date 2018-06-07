@@ -27,7 +27,7 @@ T.RadioButton {
             anchors.fill: parent
             anchors.margins: parent.width * 0.25
             radius: width * 0.5
-            color: control.down ? customPalette.highlightColor : customPalette.selectionColor
+            color: control.down ? customPalette.highlightColor : customPalette.textColor
             visible: control.checked || control.down
         }
 
