@@ -2,7 +2,6 @@
 #define GUI_STYLE_MANAGER_H
 
 // Internal
-#include "palette.h"
 #include "sizings.h"
 
 namespace presentation
@@ -14,15 +13,14 @@ namespace presentation
     public:
         enum PaletteStyle
         {
-            Outdoor,
-            Indoor
+            Night,
+            Day
         };
 
         explicit GuiStyleManager(QObject* parent = nullptr);
 
     public slots:
-        void setPalette(const Palette& palette);
-        void setPalette(PaletteStyle paletteStyle);
+        void setPaletteStyle(PaletteStyle paletteStyle);
         void loadSettingsPalette();
 
         void setSizings(const Sizings& sizings);

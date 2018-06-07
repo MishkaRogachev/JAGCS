@@ -8,56 +8,38 @@
 #include "settings_provider.h"
 
 #include "presentation_context.h"
+#include "day_palette_factory.h"
+#include "night_palette_factory.h"
 
 using namespace presentation;
 
 GuiStyleManager::GuiStyleManager(QObject* parent): QObject(parent)
 {}
 
-void GuiStyleManager::setPalette(const Palette& palette)
+void GuiStyleManager::setPaletteStyle(PaletteStyle paletteStyle)
 {
-    presentationContext->rootContext()->setContextProperty("customPalette", QVariant::fromValue(palette));
-}
+    QScopedPointer<AbstractPaletteFactory> factory;
 
-void GuiStyleManager::setPalette(GuiStyleManager::PaletteStyle paletteStyle)
-{
-    // TODO: store palette in files
-    Palette palette;
+    switch (paletteStyle) {
+    case Day:
+        factory.reset(new DayPaletteFactory());
+        break;
+    case Night:
+        factory.reset(new NightPaletteFactory());
+        break;
+    default:
+        break;
+    }
 
-    palette.setTrackColor("#64adf6");
-    palette.setMissionColor("#1ce9a5");
-    palette.setActiveMissionColor("#fd00fd");
+    if (!factory) return;
 
-    palette.setSkyColor(paletteStyle ? "#61ffff" : "#00d4ff");
-    palette.setGroundColor(paletteStyle ? "#4bda63" : "#7b4837");
-
-    palette.setSunkenColor(paletteStyle ? "#c3c6ce" : "#262e31");
-    palette.setBackgroundColor(paletteStyle ? "#ced1da" : "#30393d");
-    palette.setRaisedColor(paletteStyle ? "#e1e5ee" : "#384348");
-    palette.setControlColor(paletteStyle ? "#91a1ad" : "#465763");
-    palette.setButtonColor(paletteStyle ? "#f6f5f0" : "#54646b");
-
-    palette.setTextColor(paletteStyle ? "#30393d" : "#f6f5f0");
-    palette.setSecondaryTextColor(paletteStyle ? "#435056" : "#aeb0b3");
-    palette.setSelectedTextColor("#070707");
-
-    palette.setHighlightColor("#1effb4");
-    palette.setSelectedTextColor("#070707");
-
-    palette.setHighlightColor("#1effb4");
-    palette.setSelectionColor("#1ce9a5");
-    palette.setLinkColor("#64adf6");
-
-    palette.setDangerColor("#e53535");
-    palette.setCautionColor("#ff9800");
-    palette.setPositiveColor("#86c34a");
-
-    this->setPalette(palette);
+    presentationContext->rootContext()->setContextProperty(
+                "customPalette", QVariant::fromValue(factory->create()));
 }
 
 void GuiStyleManager::loadSettingsPalette()
 {
-    this->setPalette(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
+    this->setPaletteStyle(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
 }
 
 void GuiStyleManager::setSizings(const Sizings& sizings)

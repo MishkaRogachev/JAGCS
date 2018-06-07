@@ -156,5 +156,5 @@ void GuiSettingsPresenter::setUiSize(int size)
 
 void GuiSettingsPresenter::setPalleteStyle(int paletteStyle)
 {
-    d->guiStyleManager.setPalette(static_cast<GuiStyleManager::PaletteStyle>(paletteStyle));
+    d->guiStyleManager.setPaletteStyle(static_cast<GuiStyleManager::PaletteStyle>(paletteStyle));
 }

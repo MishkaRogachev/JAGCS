@@ -90,7 +90,7 @@ Item {
             Controls.ComboBox {
                 id: paletteBox
                 labelText: qsTr("Palette")
-                model: [ qsTr("Outdoor"), qsTr("Indoor") ]
+                model: [ qsTr("Night"), qsTr("Day") ]
                 onCurrentIndexChanged: {
                     presenter.setPalleteStyle(currentIndex);
                     changed = true;
