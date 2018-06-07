@@ -62,7 +62,8 @@ T.SpinBox {
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/minus.svg"
-            color: isValid ? control.color : customPalette.selectedTextColor
+            color: isValid && !down.pressed ? control.color :
+                                              customPalette.selectedTextColor
             width: parent.width * 0.6
             height: width
         }
@@ -87,7 +88,8 @@ T.SpinBox {
         ColoredIcon {
             anchors.centerIn: parent
             source: "qrc:/ui/plus.svg"
-            color: isValid ? control.color : customPalette.selectedTextColor
+            color: isValid && !up.pressed ? control.color :
+                                            customPalette.selectedTextColor
             width: parent.width * 0.6
             height: width
         }

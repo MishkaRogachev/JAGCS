@@ -142,6 +142,26 @@ void Palette::setPositiveColor(const QColor& positiveColor)
     m_positiveColor = positiveColor;
 }
 
+QColor Palette::balloonColor() const
+{
+    return m_balloonColor;
+}
+
+void Palette::setBalloonColor(const QColor& balloonColor)
+{
+    m_balloonColor = balloonColor;
+}
+
+QColor Palette::balloonTextColor() const
+{
+    return m_balloonTextColor;
+}
+
+void Palette::setBalloonTextColor(const QColor& balloonTextColor)
+{
+    m_balloonTextColor = balloonTextColor;
+}
+
 QColor Palette::trackColor() const
 {
     return m_trackColor;

@@ -15,7 +15,7 @@ T.ItemDelegate {
 
     background: Rectangle {
         visible: control.highlighted
-        color: customPalette.selectionColor
+        color: customPalette.highlightColor
         anchors.fill: parent
     }
 

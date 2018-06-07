@@ -27,6 +27,8 @@ namespace presentation
         Q_PROPERTY(QColor dangerColor READ dangerColor WRITE setDangerColor)
         Q_PROPERTY(QColor cautionColor READ cautionColor WRITE setCautionColor)
         Q_PROPERTY(QColor positiveColor READ positiveColor WRITE setPositiveColor)
+        Q_PROPERTY(QColor balloonColor READ balloonColor WRITE setBalloonColor)
+        Q_PROPERTY(QColor balloonTextColor READ balloonTextColor WRITE setBalloonTextColor)
 
         Q_PROPERTY(QColor trackColor READ trackColor WRITE setTrackColor)
         Q_PROPERTY(QColor missionColor READ missionColor WRITE setMissionColor)
@@ -78,6 +80,12 @@ namespace presentation
         QColor positiveColor() const;
         void setPositiveColor(const QColor& positiveColor);
 
+        QColor balloonColor() const;
+        void setBalloonColor(const QColor& balloonColor);
+
+        QColor balloonTextColor() const;
+        void setBalloonTextColor(const QColor& balloonTextColor);
+
         QColor trackColor() const;
         void setTrackColor(const QColor& trackColor);
 
@@ -108,6 +116,8 @@ namespace presentation
         QColor m_dangerColor;
         QColor m_cautionColor;
         QColor m_positiveColor;
+        QColor m_balloonColor;
+        QColor m_balloonTextColor;
         QColor m_trackColor;
         QColor m_missionColor;
         QColor m_activeMissionColor;

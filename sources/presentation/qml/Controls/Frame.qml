@@ -8,7 +8,7 @@ T.Frame {
 
     padding: sizings.padding
 
-    background:  Rectangle {
+    background: Rectangle {
         color: backgroundColor
         radius: 2
 

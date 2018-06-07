@@ -42,7 +42,7 @@ Controls.Frame {
             return customPalette.dangerColor;
         case Notification.Common:
         default:
-            return customPalette.textColor;
+            return customPalette.balloonColor;
         }
     }
 
@@ -74,13 +74,13 @@ Controls.Frame {
         RowLayout {
             Controls.Label {
                 text: header
-                color: customPalette.selectedTextColor
+                color: customPalette.balloonTextColor
                 Layout.fillWidth: true
             }
 
             Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
-                iconColor: customPalette.selectedTextColor
+                iconColor: customPalette.balloonTextColor
                 flat: true
                 onClicked: drop()
             }
@@ -91,7 +91,7 @@ Controls.Frame {
 
             Controls.Label {
                 text: modelData
-                color: customPalette.selectedTextColor
+                color: customPalette.balloonTextColor
                 font.pixelSize: sizings.secondaryFontSize
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true

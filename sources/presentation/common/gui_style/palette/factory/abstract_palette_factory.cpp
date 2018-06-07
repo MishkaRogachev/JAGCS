@@ -15,6 +15,8 @@ Palette AbstractPaletteFactory::create()
     palette.setDangerColor("#e53535");
     palette.setCautionColor("#ff9800");
     palette.setPositiveColor("#86c34a");
+    palette.setBalloonColor("#e8ece8");
+    palette.setBalloonTextColor("#000000");
 
     return palette;
 }

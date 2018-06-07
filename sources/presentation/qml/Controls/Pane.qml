@@ -11,7 +11,7 @@ Pane {
     background: Rectangle {
         id: rect
         anchors.fill: parent
-        color: customPalette.backgroundColor
+        color: customPalette.raisedColor
         radius: 2
 
         Shadow {

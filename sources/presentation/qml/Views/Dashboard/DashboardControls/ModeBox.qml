@@ -37,7 +37,7 @@ Controls.ComboBox {
         case Command.Rejected: return customPalette.dangerColor;
         case Command.Sending: return customPalette.cautionColor;
         case Command.Completed: return customPalette.positiveColor;
-        default: return customPalette.sunkenColor;
+        default: return "transparent"
         }
     }
 
@@ -58,7 +58,12 @@ Controls.ComboBox {
         id: content
         font: control.font
         text: displayText
-        color: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
+        color: {
+            if (status != Command.Idle) return customPalette.balloonTextColor;
+            return customPalette.textColor;
+        }
+            /*status == Command.Idle ? customPalette.textColor:
+                                        customPalette.balloonTextColor*/
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignBottom
     }

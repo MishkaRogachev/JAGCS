@@ -16,7 +16,7 @@ Rectangle {
     onOperationalChanged: canvas.requestPaint()
     onWidthChanged: canvas.requestPaint()
     onHeightChanged: canvas.requestPaint()
-    color: customPalette.sunkenColor
+    color: customPalette.backgroundColor
 
     Canvas {
         id: canvas

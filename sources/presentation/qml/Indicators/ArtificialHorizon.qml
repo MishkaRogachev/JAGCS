@@ -12,7 +12,7 @@ AttitudeIndicator {
         effectiveHeight: ah.effectiveHeight
         pitch: pitchInverted ? 0 : -ah.pitch
         roll: rollInverted ? -ah.roll : 0
-        markColor: armed ? customPalette.selectedTextColor : customPalette.dangerColor
+        markColor: armed ? customPalette.balloonTextColor : customPalette.dangerColor
         markWidth: 1.5
     }
 }

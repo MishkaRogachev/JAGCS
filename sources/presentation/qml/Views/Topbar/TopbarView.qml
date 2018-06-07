@@ -24,8 +24,7 @@ Rectangle {
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: drawer.position > 0 ? drawer.x + drawer.width + sizings.margins :
-                                                  burger.width
+        anchors.leftMargin: tools.x + tools.width + sizings.margins
         anchors.rightMargin: sizings.margins
         spacing: sizings.spacing
 

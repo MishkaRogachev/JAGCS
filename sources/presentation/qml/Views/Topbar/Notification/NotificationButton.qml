@@ -40,13 +40,13 @@ TopbarButton {
                 return customPalette.dangerColor;
             case Notification.Common:
             default:
-                return customPalette.textColor;
+                return customPalette.balloonColor;
             }
         }
 
         Controls.Label {
             anchors.centerIn: parent
-            color: customPalette.selectedTextColor
+            color: customPalette.balloonTextColor
             text: list.count
         }
     }

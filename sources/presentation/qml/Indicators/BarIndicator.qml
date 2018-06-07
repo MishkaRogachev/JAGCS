@@ -21,7 +21,7 @@ Canvas {
 
         ctx.clearRect(0, 0, width, height);
 
-        ctx.fillStyle = customPalette.sunkenColor;
+        ctx.fillStyle = customPalette.backgroundColor;
         ctx.fillRect(0, 0, width, height);
 
         var offset = Helper.mapToRange(value, minValue, maxValue, height);

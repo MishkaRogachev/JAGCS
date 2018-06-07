@@ -21,7 +21,6 @@ Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
         height: highlighted ? 2 : 1
-        // TODO: controlColor
         color: highlighted ? customPalette.highlightColor : customPalette.controlColor
         visible: enabled
     }

@@ -39,7 +39,7 @@ AttitudeIndicator {
         maxRoll: fd.maxRoll
         rollStep: fd.rollStep
         opacity: enabled ? 1 : 0.33
-        color: operational ? customPalette.textColor : customPalette.dangerColor
+        color: operational ? customPalette.balloonColor : customPalette.dangerColor
     }
 
     PitchScale {
@@ -52,7 +52,7 @@ AttitudeIndicator {
         maxPitch: pitchInverted ? fd.pitch + fd.maxPitch : fd.maxPitch
         pitchStep: fd.pitchStep
         opacity: enabled ? 1 : 0.33
-        color: operational ? customPalette.textColor : customPalette.dangerColor
+        color: operational ? customPalette.balloonColor : customPalette.dangerColor
     }
 
     TurnIndicator {
@@ -86,7 +86,7 @@ AttitudeIndicator {
         effectiveHeight: fd.effectiveHeight
         pitch: pitchInverted ? 0 : -fd.pitch
         roll: rollInverted ? -fd.roll : 0
-        markColor: armed ? customPalette.selectedTextColor : customPalette.dangerColor
+        markColor: armed ? customPalette.balloonTextColor : customPalette.dangerColor
         markWidth: 3
     }
 

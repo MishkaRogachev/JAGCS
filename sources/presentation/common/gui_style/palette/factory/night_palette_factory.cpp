@@ -9,8 +9,8 @@ Palette NightPaletteFactory::create()
     palette.setSkyColor("#00d4ff");
     palette.setGroundColor("#7b4837");
 
-    palette.setSunkenColor("#203038");
-    palette.setBackgroundColor("#304448");
+    palette.setSunkenColor("#102027");
+    palette.setBackgroundColor("#2d373e");
     palette.setRaisedColor("#37474f");
     palette.setControlColor("#4f5b62");
     palette.setButtonColor("#607C88");

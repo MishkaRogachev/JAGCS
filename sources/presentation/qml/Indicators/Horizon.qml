@@ -18,7 +18,7 @@ Item {
         width: 10000
         height: 10000
         rotation: -roll
-        color: customPalette.textColor
+        color: customPalette.balloonColor
 
         Rectangle {
             anchors.top: parent.top
