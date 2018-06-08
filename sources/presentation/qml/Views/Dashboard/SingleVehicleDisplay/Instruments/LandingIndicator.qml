@@ -4,9 +4,26 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 import "qrc:/Indicators" as Indicators
+import "../../DashboardControls" as DashboardControls
 
 BaseInstrument {
     id: root
+
+    Connections {
+        target: display
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.Land:
+                landButton.status = status;
+                break;
+            case Command.GoAround:
+                goAroundButton.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
 
     implicitHeight: width * 0.6
 
@@ -59,5 +76,29 @@ BaseInstrument {
         prefix: qsTr("DIST")
         distance: vehicle.landingSystem.distance
         width: parent.width * 0.2
+    }
+
+    RowLayout {
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        spacing: 0
+
+        DashboardControls.CommandButton {
+            id: landButton
+            command: Command.Land
+            iconSource: "qrc:/icons/landing.svg"
+            tipText: qsTr("Landing")
+            flat: true
+            args: []
+        }
+
+        DashboardControls.CommandButton {
+            id: goAroundButton
+            command: Command.GoAround
+            iconSource: "qrc:/icons/go_around.svg"
+            tipText: qsTr("Go around")
+            flat: true
+            args: []
+        }
     }
 }

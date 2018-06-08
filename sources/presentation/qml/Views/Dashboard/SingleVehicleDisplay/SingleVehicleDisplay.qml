@@ -86,13 +86,6 @@ Item {
             instrument: "Instruments/LandingIndicator.qml"
             visibility: false
         }
-
-        ListElement {
-            name: qsTr("Mission indicator")
-            setting: "mission"
-            instrument: "Instruments/MissionIndicator.qml"
-            visibility: false
-        }
     }
 
     ListView {

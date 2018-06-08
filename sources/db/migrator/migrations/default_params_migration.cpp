@@ -54,9 +54,6 @@ bool DefaultParamsMigration::up()
     settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                  "/" + settings::vehicle::instruments::hsi +
                                  "/" + settings::visibility, true);
-    settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
-                                 "/" + settings::vehicle::instruments::mission +
-                                 "/" + settings::visibility, true);
 
     return DbMigration::up();
 }
