@@ -86,10 +86,10 @@ public:
     VehicleService* vehicleService = serviceRegistry->vehicleService();
     domain::TelemetryService* telemetryService = serviceRegistry->telemetryService();
 
-    QMap <int, QBasicTimer*> vehicleTimers;
     int sendTimer;
 
-    QScopedPointer<IModeHelper> modeHelper;
+    QMap <int, QBasicTimer*> vehicleTimers;
+    QMap<int, QSharedPointer<IModeHelper> > modeHelpers;
 };
 
 HeartbeatHandler::HeartbeatHandler(MavLinkCommunicator* communicator):
@@ -169,20 +169,20 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
     portion.setParameter({ Telemetry::System, Telemetry::Manual },
                          bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL));
 
-    if (d->modeHelper.isNull())
+    if (d->modeHelpers[message.sysid].isNull())
     {
         ModeHelperFactory f;
-        d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
+        d->modeHelpers[message.sysid].reset(f.create(heartbeat.autopilot, heartbeat.type));
 
         portion.setParameter({ Telemetry::System, Telemetry::AvailableModes },
-                             qVariantFromValue(d->modeHelper->availableModes()));
+                             qVariantFromValue(d->modeHelpers[message.sysid]->availableModes()));
     }
 
-    if (d->modeHelper)
+    if (d->modeHelpers[message.sysid])
     {
         portion.setParameter({ Telemetry::System, Telemetry::Mode },
-                             QVariant::fromValue(d->modeHelper->customModeToMode(
-                                                     heartbeat.custom_mode)));
+                             QVariant::fromValue(d->modeHelpers[message.sysid]->customModeToMode(
+                                 heartbeat.custom_mode)));
     }
 
     portion.setParameter({ Telemetry::System, Telemetry::State },

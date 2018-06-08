@@ -56,10 +56,9 @@ class CommandHandler::Impl
 public:
     domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
 
-    QScopedPointer<IModeHelper> modeHelper;
-
     struct ModeAgregator
     {
+        QSharedPointer<IModeHelper> helper;
         quint8 baseMode = 0;
         int customMode = -1;
         int requestedCustomMode = -1;
@@ -134,10 +133,10 @@ void CommandHandler::processHeartbeat(const mavlink_message_t& message)
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
 
-    if (d->modeHelper.isNull())
+    if (d->modes[message.sysid].helper.isNull())
     {
         ModeHelperFactory f;
-        d->modeHelper.reset(f.create(heartbeat.autopilot, heartbeat.type));
+        d->modes[message.sysid].helper.reset(f.create(heartbeat.autopilot, heartbeat.type));
     }
 
     d->modes[message.sysid].baseMode = heartbeat.base_mode;
@@ -255,7 +254,7 @@ void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
 
 void CommandHandler::sendSetMode(quint8 mavId, domain::vehicle::Mode mode)
 {
-    if (d->modeHelper.isNull()) return;
+    if (d->modes[mavId].helper.isNull()) return;
 
     mavlink_message_t message;
     mavlink_set_mode_t setMode;
@@ -263,7 +262,7 @@ void CommandHandler::sendSetMode(quint8 mavId, domain::vehicle::Mode mode)
     setMode.target_system = mavId;
     setMode.base_mode = d->modes[mavId].baseMode;
 
-    d->modes[mavId].requestedCustomMode = d->modeHelper->modeToCustomMode(mode);
+    d->modes[mavId].requestedCustomMode = d->modes[mavId].helper->modeToCustomMode(mode);
     if (d->modes[mavId].requestedCustomMode < 0) return;
 
     setMode.custom_mode = d->modes[mavId].requestedCustomMode;
