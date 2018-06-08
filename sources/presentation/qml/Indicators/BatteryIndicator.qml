@@ -52,7 +52,7 @@ Controls.ColoredIcon {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: -1
-                color: customPalette.balloonColor
+                color: customPalette.raisedColor
             }
         }
     }

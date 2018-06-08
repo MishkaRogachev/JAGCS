@@ -21,7 +21,7 @@ TopbarButton {
     Controls.ColoredIcon {
         anchors.centerIn: parent
         source: "qrc:/icons/info.svg"
-        color: customPalette.textColor
+        color: customPalette.sunkenColor
         visible: list.count == 0
     }
 
@@ -47,6 +47,8 @@ TopbarButton {
         Controls.Label {
             anchors.centerIn: parent
             color: customPalette.balloonTextColor
+            font.pixelSize: sizings.secondaryFontSize
+            font.bold: true
             text: list.count
         }
     }

@@ -28,7 +28,7 @@ Item {
 
     TopBarDelegate {
         id: topBarDelegate
-        width: parent.width
+        anchors.right: parent.right
     }
 
     ListView {

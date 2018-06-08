@@ -27,7 +27,6 @@ TopbarButton {
 
     ConnectionInfo {
         id: info
-        x: parent.width - width
         y: parent.height + sizings.margins
     }
 }

@@ -6,48 +6,46 @@ import "qrc:/Controls" as Controls
 
 import "../DashboardControls" as DashboardControls
 
-RowLayout {
+Controls.Pane {
     id: topbarDelegate
 
-    spacing: sizings.spacing
-
-    Connections {
-        target: display
-        ignoreUnknownSignals: true
-        onUpdateCommandStatus: if (command == Command.SetMode) modeBox.status = status
-    }
-
-    Controls.Button {
-        iconSource: "qrc:/icons/left.svg"
-        tipText: qsTr("Overview")
-        flat: true
-        onClicked: dashboard.selectVehicle(0)
-    }
-
-    DashboardControls.VehicleLabel {
-        name: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("No vehicle")
-        Layout.fillWidth: true
-    }
-
-    Controls.Button {
-        id: preparationButton
-        iconSource: "qrc:/icons/calibrate.svg"
-        tipText: (preparationPanel.visible ? qsTr("Close") : qsTr("Open")) + " " +
-                 qsTr("preparation panel")
-        flat: true
-        onClicked: preparationPanel.visible ? preparationPanel.close() : preparationPanel.open()
-
-        PreparationPanel {
-            id: preparationPanel
-            x: preparationButton.width - width
-            y: preparationButton.height + sizings.spacing
-            closePolicy: Controls.Popup.NoAutoClose
-        }
-    }
+    padding: 0
 
     RowLayout {
-        spacing: sizings.spacing
-        Layout.preferredWidth: list.width + sizings.margins
+        spacing: 0
+
+        Connections {
+            target: display
+            ignoreUnknownSignals: true
+            onUpdateCommandStatus: if (command == Command.SetMode) modeBox.status = status
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/left.svg"
+            tipText: qsTr("Overview")
+            flat: true
+            onClicked: dashboard.selectVehicle(0)
+        }
+
+        DashboardControls.VehicleLabel {
+            name: selectedVehicle !== undefined ? selectedVehicle.name : qsTr("No vehicle")
+        }
+
+        Controls.Button {
+            id: preparationButton
+            iconSource: "qrc:/icons/calibrate.svg"
+            tipText: (preparationPanel.visible ? qsTr("Close") : qsTr("Open")) + " " +
+                     qsTr("preparation panel")
+            flat: true
+            onClicked: preparationPanel.visible ? preparationPanel.close() : preparationPanel.open()
+
+            PreparationPanel {
+                id: preparationPanel
+                x: preparationButton.width - width
+                y: preparationButton.height + sizings.spacing
+                closePolicy: Controls.Popup.NoAutoClose
+            }
+        }
 
         DashboardControls.ModeBox {
             id: modeBox

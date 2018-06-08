@@ -28,21 +28,19 @@ Rectangle {
         anchors.rightMargin: sizings.margins
         spacing: sizings.spacing
 
-        NotificationButton {
-            id: notification
+        Repeater {
+            model: [
+                "Notification/NotificationButton.qml",
+                "Connection/ConnectionButton.qml",
+                "RadioStatus/RadioStatusButton.qml"
+                // TODO: topbar plugins
+            ]
+
+            Loader { source: modelData }
         }
 
         ClocksButton {
             Layout.fillWidth: true
-        }
-
-        Repeater {
-            model: [
-                "RadioStatus/RadioStatusButton.qml",
-                "Connection/ConnectionButton.qml"
-            ]
-
-            Loader { source: modelData }
         }
     }
 }

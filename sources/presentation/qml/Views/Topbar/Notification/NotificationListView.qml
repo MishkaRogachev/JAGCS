@@ -22,8 +22,8 @@ ListView {
 
     delegate: NotificationView {
         property bool last: index == list.count - 1
-        onLastChanged: if (last) notification.urgency = urgency
-        onUrgencyChanged: if (last) notification.urgency = urgency
+        onLastChanged: if (last) notificationView.urgency = urgency
+        onUrgencyChanged: if (last) notificationView.urgency = urgency
         width: parent.width - sizings.shadowSize
         header: model.header
         messages: model.messages

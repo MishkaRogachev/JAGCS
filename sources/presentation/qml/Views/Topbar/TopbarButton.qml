@@ -18,7 +18,7 @@ Rectangle {
         color: customPalette.textColor
         radius: parent.radius
         opacity: 0.1
-        visible: area.containsMouse
+        visible: area.containsMouse && clickEnabled
     }
 
     MouseArea {
