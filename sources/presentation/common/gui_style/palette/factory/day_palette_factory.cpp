@@ -6,7 +6,7 @@ Palette DayPaletteFactory::create()
 {
     Palette palette = AbstractPaletteFactory::create();
 
-    palette.setSkyColor("#61ffff");
+    palette.setSkyColor("#00d4ff");
     palette.setGroundColor("#4bda63");
 
     palette.setSunkenColor("#babdbe");
