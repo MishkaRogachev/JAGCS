@@ -13,7 +13,9 @@ Controls.DelayButton {
     delay: status == Command.Sending ? 0 : 1000
     onActivated: status == Command.Sending ? presenter.rejectCommand(command):
                                              presenter.executeCommand(command, args);
-    onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
+    onStatusChanged: if (status == Command.Completed ||
+                         status == Command.Rejected ||
+                         status == Command.Canceled) timer.start()
     onCommandChanged: {
         if (timer.running) timer.stop();
         status = Command.Idle;

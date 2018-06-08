@@ -102,6 +102,8 @@ Controls.Pane {
             Controls.Button {
                 id: centerButton
                 iconSource: "qrc:/icons/center.svg"
+                iconColor: map.trackingVehicleId === vehicleId ? customPalette.highlightColor :
+                                                                 customPalette.textColor
                 tipText: qsTr("Track vehicle")
                 flat: true
                 enabled: map.visible
@@ -116,7 +118,7 @@ Controls.Pane {
                         iconSource: "qrc:/icons/center.svg"
                         text: qsTr("Center vehicle")
                         checkable: true
-                        checked: map.trackingVehicleId == vehicleId
+                        checked: map.trackingVehicleId === vehicleId
                         onEnabledChanged: if (!enabled) checked = false
                         onCheckedChanged: {
                             if (map.trackYaw && !checked) map.trackYaw = false;
@@ -131,7 +133,7 @@ Controls.Pane {
                         checked: map.trackYaw
                         onEnabledChanged: if (!enabled) checked = false
                         onCheckedChanged: {
-                            if (checked && map.trackingVehicleId == 0) {
+                            if (checked && map.trackingVehicleId === 0) {
                                 map.trackingVehicleId = vehicleId;
                             }
                             map.trackYaw = checked;
@@ -144,7 +146,7 @@ Controls.Pane {
                 iconSource: "qrc:/icons/joystick.svg"
                 tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
                          " " + qsTr("manual control")
-                iconColor: manual.enabled ? customPalette.selectionColor : customPalette.textColor
+                iconColor: manual.enabled ? customPalette.highlightColor : customPalette.textColor
                 flat: true
                 onClicked: manual.setEnabled(!manual.enabled)
             }

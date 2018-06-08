@@ -28,10 +28,8 @@ T.Button { // TODO: clickable
         border.color: !control.flat && control.activeFocus ? customPalette.highlightColor : "transparent"
         radius: round ? Math.min(width, height) / 2 : 2
         color: {
-            if (control.pressed || control.pressedImpl || control.highlighted)
+            if (control.pressed || control.pressedImpl || control.highlighted || control.checked)
                 return customPalette.highlightColor;
-            if (control.checked)
-                return customPalette.selectionColor;
             return control.flat ? "transparent" : customPalette.buttonColor;
         }
 
