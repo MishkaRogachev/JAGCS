@@ -10,10 +10,9 @@ Item {
     property var vehicles
     property bool showOffline: true
 
-    property alias dashboardVisible: list.visible
-
     onShowOfflineChanged: vehicles.showOffline = showOffline
     Component.onCompleted: {
+        topbarOffset = topBarDelegate.width;
         map.xCenterOffset = Qt.binding(function() {
             return cornerMap || !dashboardVisible ? 0 : list.width / 2;
         });
@@ -42,6 +41,7 @@ Item {
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
+        visible: dashboardVisible
         model: vehicles
         clip: true
 

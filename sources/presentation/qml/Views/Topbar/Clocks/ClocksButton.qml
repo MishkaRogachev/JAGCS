@@ -20,9 +20,11 @@ TopbarButton {
 
     Controls.Label {
         id: clock
-        anchors.centerIn: parent
-        font.pixelSize: sizings.fontSize * 0.75
+        anchors.verticalCenter: parent.verticalCenter
+        width: clocks.width
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: sizings.secondaryFontSize
         font.bold: true
-        text: Qt.formatDateTime(currentDateTime, "ddd MMMM d yyyy - hh:mm:ss")
+        text: Qt.formatDateTime(currentDateTime, "ddd d MMMM yyyy - hh:mm:ss")
     }
 }

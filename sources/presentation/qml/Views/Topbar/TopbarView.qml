@@ -24,9 +24,11 @@ Rectangle {
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: tools.x + tools.width + sizings.margins
-        anchors.rightMargin: sizings.margins
+        anchors.leftMargin: Math.max(tools.x + sizings.margins, burger.width)
+        anchors.rightMargin: dashboard.topbarOffset
         spacing: sizings.spacing
+
+        Behavior on anchors.rightMargin { PropertyAnimation { duration: 200 } }
 
         Repeater {
             model: [

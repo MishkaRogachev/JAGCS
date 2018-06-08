@@ -9,7 +9,11 @@ Controls.ComboBox {
 
     property int status: Command.Idle
 
+    enabled: vehicle.online
     currentIndex: -1
+    labelText: qsTr("Waypoint")
+    font.pixelSize: sizings.secondaryFontSize
+    font.bold: true
     contentColor: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
     backgroundColor: {
         if (status == Command.Rejected) return customPalette.dangerColor;

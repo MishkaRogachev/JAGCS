@@ -8,6 +8,9 @@ Item {
 
     property var selectedVehicle
 
+    property int topbarOffset: 0
+    property bool dashboardVisible: true
+
     property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int speedStep: settings.value("Gui/fdSpeedStep")
     property int speedUnits: settings.value("Gui/fdSpeedUnits")

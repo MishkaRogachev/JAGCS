@@ -45,28 +45,6 @@ ColumnLayout {
         }
     }
 
-    // TODO: track buttons to dashboard
-    Controls.Button {
-        iconSource: "qrc:/icons/track_yaw.svg"
-        tipText: qsTr("Track vehicle's yaw")
-        checkable: true
-        enabled: centerButton.checked
-        visible: map.visible
-        onEnabledChanged: if (!enabled) checked = false
-        onCheckedChanged: map.trackYaw = checked
-    }
-
-    Controls.Button {
-        id: centerButton
-        iconSource: "qrc:/icons/center.svg"
-        tipText: qsTr("Center vehicle on map")
-        checkable: true
-        enabled: dashboard.selectedVehicle !== undefined && map.visible
-        visible: map.visible
-        onEnabledChanged: if (!enabled) checked = false
-        onCheckedChanged: map.trackingVehicleId = checked ? dashboard.selectedVehicle.id : 0
-    }
-
     Controls.Button {
         id: maxMinButton
         tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")

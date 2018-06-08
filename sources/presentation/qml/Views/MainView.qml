@@ -82,7 +82,7 @@ Controls.ApplicationWindow  {
 
     DashboardView {
         id: dashboard
-        anchors.top: parent.top
+        anchors.top: topbar.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         z: 1

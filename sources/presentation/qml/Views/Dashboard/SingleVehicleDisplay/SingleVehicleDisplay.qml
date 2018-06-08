@@ -14,11 +14,10 @@ Item {
 
     property AerialVehicle vehicle: AerialVehicle {}
 
-    property alias dashboardVisible: list.visible
-
     signal updateCommandStatus(var command, var status)
 
     Component.onCompleted: {
+        topbarOffset = topBarDelegate.width;
         manual.setVehicleId(vehicleId);
 
         for (var i = 0; i < instruments.count; ++i) {
@@ -34,7 +33,7 @@ Item {
     }
     Component.onDestruction: manual.setVehicleId(0)
 
-    implicitWidth: Math.max(topBarDelegate.width, list.width + sizings.margins)
+    implicitWidth: list.width + sizings.margins
 
     AerialVehicleDisplayPresenter {
         id: presenter
@@ -45,6 +44,7 @@ Item {
     TopBarDelegate {
         id: topBarDelegate
         anchors.right: parent.right
+        width: parent.width
     }
 
     ListModel {
@@ -107,6 +107,7 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
         spacing: sizings.spacing
         footerPositioning: ListView.OverlayFooter
+        visible: dashboardVisible
         model: instruments
         clip: true
 

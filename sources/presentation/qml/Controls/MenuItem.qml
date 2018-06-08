@@ -17,7 +17,7 @@ T.MenuItem {
         anchors.fill: control
         implicitWidth: sizings.controlBaseSize
         implicitHeight: implicitWidth
-        color: control.pressed ? customPalette.highlightColor : "transparent"
+        color: control.pressed || control.checked ? customPalette.highlightColor : "transparent"
         border.color: control.activeFocus ? customPalette.selectionColor : "transparent"
     }
 
@@ -50,7 +50,7 @@ T.MenuItem {
         text: control.text
         color: {
             if (!enabled) return customPalette.sunkenColor;
-            if (pressed || highlighted) return customPalette.selectedTextColor;
+            if (control.pressed || control.checked) return customPalette.selectedTextColor;
             return customPalette.textColor;
         }
     }

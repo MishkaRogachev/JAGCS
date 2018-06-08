@@ -4,30 +4,27 @@ import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
 
-Controls.Pane {
-    id: topbarDelegate
+RowLayout {
+    spacing: 0
+    height: topbar.height
 
-    padding: 0
+    Controls.Button {
+        flat: true
+        visible: dashboardVisible
+        font.pixelSize: sizings.secondaryFontSize
+        font.bold: true
+        text: vehicles.showOffline ? qsTr("All vehicles") : qsTr("Online vehicles")
+        onClicked: vehicles.showOffline = !vehicles.showOffline
+        Layout.fillHeight: true
+    }
 
-    RowLayout {
-        spacing: 0
-
-        Controls.Button {
-            flat: true
-            visible: dashboardVisible
-            text: vehicles.showOffline ? qsTr("All vehicles") : qsTr("Online vehicles")
-            onClicked: vehicles.showOffline = !vehicles.showOffline
-            Layout.preferredWidth: sizings.controlBaseSize * 4
-        }
-
-        Controls.Button {
-            iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" :
-                                           "qrc:/icons/show_dashboard.svg"
-            tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) +
-                     " " + qsTr("dashboard")
-            flat: true
-            onClicked: dashboardVisible = !dashboardVisible
-            Layout.alignment: Qt.AlignRight
-        }
+    Controls.Button {
+        iconSource: dashboardVisible ? "qrc:/icons/hide_dashboard.svg" :
+                                       "qrc:/icons/show_dashboard.svg"
+        tipText: (dashboardVisible ? qsTr("Hide") : qsTr("Show")) +
+                 " " + qsTr("dashboard")
+        flat: true
+        onClicked: dashboardVisible = !dashboardVisible
+        Layout.fillHeight: true
     }
 }

@@ -27,7 +27,6 @@ Controls.Card {
         }
     }
 
-
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
@@ -91,8 +90,8 @@ Controls.Card {
         RowLayout {
             spacing: sizings.spacing
 
-            DashboardControls.VehicleLabel {
-                name: vehicle.vehicleName
+            DashboardControls.Label {
+                text: vehicle.vehicleName
                 Layout.fillWidth: true
             }
 
