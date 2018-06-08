@@ -23,23 +23,24 @@ T.Control {
 
     function updateValueFromControls() {
         value = Helper.dmsToDegree(sign,
-                                   Math.abs(dInput.text),
-                                   Math.abs(mInput.text),
-                                   Helper.stringToReal(sInput.text, locale.decimalPoint));
+                                   Math.abs(dInput.input.text),
+                                   Math.abs(mInput.input.text),
+                                   Helper.stringToReal(sInput.input.text,
+                                                       locale.decimalPoint));
     }
 
     function updateControlsFromValue() {
         if (!isNaN(value)) {
             var dms = Helper.degreesToDms(value, isLongitude, secondsPrecision);
             sign = dms.sign;
-            dInput.text = Helper.pad(dms.deg, dInput.maximumLength);
-            mInput.text = Helper.pad(dms.min, mInput.maximumLength);
-            sInput.text = Helper.padReal(dms.sec, 2, secondsPrecision, locale.decimalPoint);
+            dInput.input.text = Helper.pad(dms.deg, dInput.maximumLength);
+            mInput.input.text = Helper.pad(dms.min, mInput.maximumLength);
+            sInput.input.text = Helper.padReal(dms.sec, 2, secondsPrecision, locale.decimalPoint);
         }
         else {
-            dInput.text = Helper.pad(0, dInput.maximumLength);
-            mInput.text = Helper.pad(0, mInput.maximumLength);
-            sInput.text = Helper.padReal(0, 2, secondsPrecision, locale.decimalPoint);
+            dInput.input.text = Helper.pad(0, dInput.maximumLength);
+            mInput.input.text = Helper.pad(0, mInput.maximumLength);
+            sInput.input.text = Helper.padReal(0, 2, secondsPrecision, locale.decimalPoint);
         }
     }
 
@@ -91,7 +92,6 @@ T.Control {
             if (activeFocus) return;
 
             focusedItem = null;
-            dInput.focus = true;
         }
 
         RowLayout {
@@ -122,14 +122,11 @@ T.Control {
 
             CoordSpinBoxInput {
                 id: dInput
-                focus: true
-                font: control.font
-                color: control.isValid ? control.color : customPalette.selectedTextColor
+                input.focus: true
+                input.maximumLength: isLongitude ? 3 : 2
+                input.validator: IntValidator { bottom: 0; top: isLongitude ? 180 : 90 }
+                nextItem: mInput.input
                 sign: "\u00B0"
-                maximumLength: isLongitude ? 3 : 2
-                nextItem: mInput
-                inputMethodHints: Qt.ImhDigitsOnly
-                validator: IntValidator { bottom: 0; top: isLongitude ? 180 : 90 }
                 onIncreaseValue: changeValue(0, 1)
                 onDecreaseValue: changeValue(0, -1)
                 Layout.preferredWidth: sizings.controlBaseSize * (isLongitude ? 1 : 0.75)
@@ -140,14 +137,11 @@ T.Control {
 
             CoordSpinBoxInput {
                 id: mInput
-                font: control.font
-                color: control.isValid ? control.color : customPalette.selectedTextColor
+                input.maximumLength: 2
+                input.validator: IntValidator { bottom: 0; top: 60 }
+                previousItem: dInput.input
+                nextItem: sInput.input
                 sign: "\'"
-                maximumLength: 2
-                previousItem: dInput
-                nextItem: sInput
-                inputMethodHints: Qt.ImhDigitsOnly
-                validator: IntValidator { bottom: 0; top: 60 }
                 onIncreaseValue: changeValue(1, 1)
                 onDecreaseValue: changeValue(1, -1)
                 Layout.preferredWidth: sizings.controlBaseSize * 0.75
@@ -158,13 +152,10 @@ T.Control {
 
             CoordSpinBoxInput {
                 id: sInput
-                font: control.font
-                color: control.isValid ? control.color : customPalette.selectedTextColor
+                input.maximumLength: 3 + secondsPrecision
+                input.validator: DoubleValidator { bottom: 0; top: 60 }
+                previousItem: mInput.input
                 sign: "\""
-                maximumLength: 3 + secondsPrecision
-                previousItem: mInput
-                inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator { bottom: 0; top: 60 }
                 onIncreaseValue: changeValue(2, Math.pow(10, -secondsPrecision))
                 onDecreaseValue: changeValue(2, -Math.pow(10, -secondsPrecision))
                 Layout.preferredWidth: sizings.controlBaseSize * (0.75 + secondsPrecision / 5 * 2)

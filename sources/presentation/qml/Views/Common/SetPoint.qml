@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/Controls" as Controls
 
-GridLayout {
+ColumnLayout {
     id: root
 
     property alias title: titleLabel.text
@@ -13,35 +13,29 @@ GridLayout {
 
     signal setPoint(real latitude, real longitude, real altitude)
 
-    columns: 2
-    rowSpacing: sizings.spacing
-    columnSpacing: sizings.spacing
+    spacing: sizings.spacing
 
     Controls.Label {
         id: titleLabel
-        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 
-    Controls.Label { text: qsTr("Lat.") }
-
     Controls.CoordSpinBox {
+        labelText: qsTr("Lat.")
         id: latitudeBox
         Layout.fillWidth: true
     }
 
-    Controls.Label { text: qsTr("Lon.") }
-
     Controls.CoordSpinBox {
+        labelText: qsTr("Lon.")
         id: longitudeBox
         isLongitude: true
         Layout.fillWidth: true
     }
 
-    Controls.Label { text: qsTr("Alt, m") } // TODO: global dimentional units
-
     Controls.RealSpinBox {
         id: altitudeBox
+        labelText: qsTr("Alt, m")// TODO: global dimentional units
         realFrom: settings.value("Parameters/minAltitude")
         realTo: settings.value("Parameters/maxAltitude")
         precision: settings.value("Parameters/precisionAltitude")
@@ -52,7 +46,6 @@ GridLayout {
         id: button
         text: qsTr("Set point")
         onClicked: setPoint(latitude, longitude, altitude)
-        Layout.columnSpan: 2
         Layout.fillWidth: true
     }
 }

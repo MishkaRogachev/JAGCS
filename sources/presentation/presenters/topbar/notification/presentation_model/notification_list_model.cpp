@@ -88,6 +88,8 @@ void NotificationListModel::remove(const QString& header)
 
 void NotificationListModel::removeLast()
 {
+    if (m_headers.isEmpty()) return;
+
     this->remove(m_headers.last());
 }
 

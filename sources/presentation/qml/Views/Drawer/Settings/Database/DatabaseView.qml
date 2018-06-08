@@ -47,8 +47,8 @@ ColumnLayout {
     }
 
     Controls.Frame {
-        backgroundColor: customPalette.sunkenColor
         Layout.fillWidth: true
+        Layout.margins: sizings.padding
         Layout.fillHeight: true
 
         Flickable {
@@ -91,6 +91,8 @@ ColumnLayout {
         onClicked: presenter.clearLog()
         enabled: log.length > 0
         Layout.fillWidth: true
+        Layout.leftMargin: sizings.padding
+        Layout.rightMargin: sizings.padding
     }
 
     SaveRestore {
@@ -98,10 +100,16 @@ ColumnLayout {
         message: changed ? qsTr("Application will be restarted") : ""
         onSave: presenter.savePath()
         onRestore: presenter.updatePath()
+        Layout.fillWidth: true
+        Layout.leftMargin: sizings.padding
+        Layout.rightMargin: sizings.padding
     }
 
     RowLayout {
         spacing: sizings.spacing
+        Layout.fillWidth: true
+        Layout.leftMargin: sizings.padding
+        Layout.rightMargin: sizings.padding
 
         Controls.Button {
             text: qsTr("Migrate")

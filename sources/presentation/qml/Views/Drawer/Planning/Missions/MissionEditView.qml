@@ -188,6 +188,7 @@ ColumnLayout {
                 Controls.MenuItem {
                     text: qsTr("Center on map")
                     iconSource: "qrc:/icons/center.svg"
+                    enabled: map.trackingVehicleId === 0
                     onTriggered: map.setCenterOffsetted(itemEdit.position);
                 }
 
