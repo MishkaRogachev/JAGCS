@@ -95,15 +95,17 @@ Canvas {
         }
         ctx.restore();
 
+        var tY = textOffset + majorTickOffset - height / 2;
         // Course Mark
         if (courseEnabled) {
             ctx.fillStyle = courseColor;
             ctx.save();
             ctx.rotate((course - safeHeading) * Math.PI / 180);
             ctx.beginPath();
-            ctx.moveTo(0, textOffset + majorTickOffset - height / 2);
-            ctx.lineTo(minorTickOffset, textOffset + majorTickOffset - minorTickOffset - height / 2);
-            ctx.lineTo(-minorTickOffset, textOffset + majorTickOffset - minorTickOffset - height / 2);
+            ctx.moveTo(0, tY);
+            ctx.lineTo(minorTickOffset, tY + majorTickOffset);
+            ctx.lineTo(0, tY + minorTickOffset);
+            ctx.lineTo(-minorTickOffset, tY + majorTickOffset);
             ctx.closePath();
             ctx.fill();
             ctx.restore();
@@ -112,10 +114,10 @@ Canvas {
         // Current Arrow
         ctx.fillStyle = headingColor;
         ctx.beginPath();
-        ctx.moveTo(0, textOffset + majorTickOffset - height / 2);
-        ctx.lineTo(minorTickOffset, textOffset + majorTickOffset * 2 - height / 2);
-        ctx.lineTo(0, textOffset + majorTickOffset - height / 2 + minorTickOffset);
-        ctx.lineTo(-minorTickOffset, textOffset + majorTickOffset * 2 - height / 2);
+        ctx.moveTo(0, tY);
+        ctx.lineTo(minorTickOffset, tY - majorTickOffset);
+        ctx.lineTo(0, tY - minorTickOffset);
+        ctx.lineTo(-minorTickOffset, tY - majorTickOffset);
         ctx.closePath();
         ctx.fill();
 
