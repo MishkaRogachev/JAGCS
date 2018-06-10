@@ -157,7 +157,6 @@ Controls.Pane {
 
             DashboardControls.WaypointBox {
                 id: itemBox
-                enabled: waypointCount > 0
                 Layout.preferredWidth: sizings.controlBaseSize * 4
                 Layout.maximumHeight: sizings.controlBaseSize
             }

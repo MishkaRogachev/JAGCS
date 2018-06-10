@@ -9,7 +9,7 @@ Controls.ComboBox {
 
     property int status: Command.Idle
 
-    enabled: vehicle.online
+    enabled: waypointCount > 0 && vehicle.online
     currentIndex: -1
     labelText: qsTr("Waypoint")
     font.pixelSize: sizings.secondaryFontSize

@@ -15,24 +15,27 @@ Controls.Popup {
         Controls.ContentItem {
             iconSource: "qrc:/icons/arrow_down.svg"
             text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
-            font.pixelSize: sizings.fontSize * 0.75
+            font.pixelSize: sizings.secondaryFontSize
             font.bold: true
-            horizontalAlignment: Text.AlignLeft
+            horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
 
         Controls.ContentItem {
             iconSource: "qrc:/icons/arrow_up.svg"
             text: bytesSent.toFixed(1) + " " + qsTr("B/s")
-            font.pixelSize: sizings.fontSize * 0.75
+            font.pixelSize: sizings.secondaryFontSize
             font.bold: true
-            horizontalAlignment: Text.AlignLeft
+            horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
 
         Controls.Button {
             text: qsTr("Connection")
-            onClicked: menu.setMode(DrawerPresenter.Connection)
+            onClicked: {
+                menu.setMode(DrawerPresenter.Connection);
+                info.close();
+            }
             Layout.fillWidth: true
         }
     }

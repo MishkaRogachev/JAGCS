@@ -21,6 +21,8 @@ TopbarButton {
 
     Controls.ColoredIcon {
         anchors.centerIn: parent
+        width: parent.height * 0.8
+        height: parent.height * 0.8
         source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
         color: connected ? customPalette.textColor : customPalette.dangerColor
     }

@@ -98,6 +98,7 @@ Controls.Card {
             DashboardControls.ModeBox {
                 id: modeBox
                 Layout.preferredWidth: sizings.controlBaseSize * 3
+                Layout.maximumHeight: sizings.controlBaseSize
             }
         }
 

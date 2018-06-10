@@ -20,6 +20,8 @@ TopbarButton {
 
     Controls.ColoredIcon {
         anchors.centerIn: parent
+        width: parent.height * 0.8
+        height: parent.height * 0.8
         source: "qrc:/icons/info.svg"
         color: customPalette.sunkenColor
         visible: list.count == 0
