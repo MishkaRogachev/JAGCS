@@ -7,14 +7,17 @@ import "qrc:/Controls" as Controls
 Item {
     id: videoSourceList
 
-    property var videoDevices: []
+    property var videoDevices
     property int activeVideo: 0
 
     property alias videos: list.model
 
 //    onVisibleChanged: menu.filterEnabled = visible
 //    Component.onCompleted: menu.filterEnabled = true
-    onActiveVideoChanged: presenter.saveActiveVideo(activeVideo)
+    onActiveVideoChanged: {
+        presenter.saveActiveVideo(activeVideo);
+        video.updateActiveVideo();
+    }
 
     implicitWidth: sizings.controlBaseSize * 10
 

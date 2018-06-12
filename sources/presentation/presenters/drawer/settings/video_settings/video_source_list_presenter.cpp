@@ -54,7 +54,8 @@ void VideoSourceListPresenter::updateCameraInfo()
     QStringList videoDevices;
     videoDevices.append(QString());
 
-    for (const QCameraInfo& info: QCameraInfo::availableCameras())
+    QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
+    for (const QCameraInfo& info: cameras)
     {
         videoDevices.append(info.deviceName());
     }

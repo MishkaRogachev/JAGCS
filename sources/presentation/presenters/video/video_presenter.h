@@ -4,8 +4,6 @@
 #include "base_presenter.h"
 #include "dto_traits.h"
 
-
-
 namespace presentation
 {
     class VideoProvider;

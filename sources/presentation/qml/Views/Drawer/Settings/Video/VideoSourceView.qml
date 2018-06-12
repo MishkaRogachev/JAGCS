@@ -73,7 +73,10 @@ Controls.Card {
             visible: type == VideoSource.Stream
             labelText: qsTr("Stream URL")
             text: source
-            onEditingFinished: presenter.setSource(text)
+            onEditingFinished: {
+                presenter.setSource(text);
+                if (videoView.selected) video.updateActiveVideo();
+            }
             Layout.fillWidth: true
         }
 
@@ -82,7 +85,10 @@ Controls.Card {
             labelText: qsTr("Device file")
             model: videoDevices
             currentIndex: videoDevices.indexOf(source);
-            onActivated: presenter.setSource(text)
+            onActivated: {
+                presenter.setSource(displayText);
+                if (videoView.selected) video.updateActiveVideo();
+            }
             Layout.fillWidth: true
         }
     }

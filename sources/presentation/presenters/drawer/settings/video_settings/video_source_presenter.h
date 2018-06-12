@@ -21,7 +21,7 @@ namespace presentation
 
     public slots:
         void setVideo(int id);
-        void updateLink();
+        void updateSource();
 
         void setSource(const QString& source);
         void remove();
