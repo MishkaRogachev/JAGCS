@@ -108,7 +108,7 @@ ColumnLayout {
             hasMenu: true
             menuOpened: addMenu.visible
             enabled: missionId > 0
-            onClicked: if (!menuOpened) addMenu.open()
+            onClicked: addMenu.visible ? addMenu.close() : addMenu.open()
 
             Controls.Menu {
                 id: addMenu
@@ -179,7 +179,7 @@ ColumnLayout {
             hasMenu: true
             menuOpened: moreMenu.visible
             enabled: sequence > -1
-            onClicked: if (!menuOpened) moreMenu.open()
+            onClicked: moreMenu.visible ? moreMenu.close() : moreMenu.open()
 
             Controls.Menu {
                 id: moreMenu

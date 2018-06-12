@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2 as T
 
 T.Menu {
     id: control
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
 
     background: Rectangle {
         implicitWidth: sizings.controlBaseSize * 6
