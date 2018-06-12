@@ -36,7 +36,7 @@ Item {
         anchors.topMargin: sizings.spacing
         anchors.right: parent.right
         anchors.rightMargin: sizings.margins
-        width: sizings.controlBaseSize * 9
+        width: dashboardWidth
         height: Math.min(parent.height - topBarDelegate.height - sizings.spacing, contentHeight)
         spacing: sizings.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded

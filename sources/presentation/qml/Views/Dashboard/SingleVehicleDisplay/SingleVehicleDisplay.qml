@@ -94,7 +94,7 @@ Item {
         anchors.topMargin: sizings.spacing
         anchors.right: parent.right
         anchors.rightMargin: sizings.margins
-        width: sizings.controlBaseSize * 8
+        width: dashboardWidth
         height: Math.min(parent.height - topBarDelegate.height - sizings.spacing, contentHeight)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
