@@ -22,6 +22,7 @@ TopbarButton {
         id: clock
         anchors.verticalCenter: parent.verticalCenter
         width: clocks.width
+        visible: width > 0
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: sizings.secondaryFontSize
         font.bold: true
