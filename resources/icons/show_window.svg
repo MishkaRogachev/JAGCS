@@ -5,10 +5,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   height="24"
-   version="1.1"
+   id="svg2"
    width="24"
-   id="svg2">
+   version="1.1"
+   height="24">
   <metadata
      id="metadata18">
     <rdf:RDF>
@@ -23,20 +23,12 @@
   </metadata>
   <defs
      id="defs16" />
-  <rect
-     ry="1.2925336"
-     y="4.752584"
-     x="2.7525845"
-     height="14.494832"
-     width="18.494831"
+  <path
      id="rect4135"
-     style="fill:none;stroke:#ecf0f1;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
-  <rect
-     ry="0"
-     y="6.7270503"
-     x="4.5826197"
-     height="5.7576499"
-     width="7.7552028"
-     id="rect4156"
-     style="fill:#ecf0f1;stroke:none;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
+     d="m 4.1621094,2.0878906 c -1.1546197,0 -2.0742188,0.9859826 -2.0742188,2.1210938 l 0,15.5820316 c 0,1.135111 0.9195988,2.121093 2.0742188,2.121093 l 15.6757816,0 c 1.15462,0 2.074218,-0.985982 2.074218,-2.121093 l 0,-15.5820316 c 0,-1.1351112 -0.919599,-2.1210938 -2.074218,-2.1210938 l -15.6757816,0 z m 0,2 15.6757816,0 c 0.03533,0 0.07422,0.01539 0.07422,0.1210938 l 0,15.5820316 c 0,0.105703 -0.03888,0.121093 -0.07422,0.121093 l -15.6757816,0 c -0.035335,0 -0.074219,-0.01539 -0.074219,-0.121093 l 0,-15.5820316 c 0,-0.1057042 0.038884,-0.1210938 0.074219,-0.1210938 z"
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#f6f5f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+  <path
+     id="rect4175"
+     d="m 5.8281093,11.829981 6.4123877,0 0,6.412388 -6.4123877,0 z"
+     style="opacity:1;fill:#f6f5f0;fill-opacity:1;fill-rule:evenodd;stroke:#f6f5f0;stroke-width:1.58761227;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
 </svg>

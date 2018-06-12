@@ -163,6 +163,7 @@ Controls.Pane {
 
             Controls.Button {
                 id: lockButton
+                enabled: dashboardVisible
                 iconSource: instrumentsUnlocked ? "qrc:/icons/lock.svg" : "qrc:/icons/unlock.svg"
                 tipText: (instrumentsUnlocked ? qsTr("Lock") : qsTr("Unlock")) + " " +
                          qsTr("indicators")

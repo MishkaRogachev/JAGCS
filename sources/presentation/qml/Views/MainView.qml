@@ -56,8 +56,9 @@ Controls.ApplicationWindow  {
         anchors.bottom: parent.bottom
         anchors.left: tools.right
         anchors.margins: sizings.margins
-        width: cornerMap ? map.implicitWidth : video.implicitWidth
-        height: parent.height / 2
+        width: Math.max(0, Math.min(substrate.height / 2, substrate.width -
+                                    dashboard.width - tools.width - sizings.margins * 3))
+        height: cornerMap ? width : video.implicitHeight
         z: cornerVisible ? 2 : -1
         enabled: cornerVisible
         onClicked: cornerMap = !cornerMap

@@ -18,7 +18,7 @@ Item {
         });
     }
 
-    implicitWidth: list.width + sizings.margins
+    implicitWidth: Math.max(list.width + sizings.margins, topBarDelegate.width)
 
     VehiclesListDisplayPresenter {
         id: presenter

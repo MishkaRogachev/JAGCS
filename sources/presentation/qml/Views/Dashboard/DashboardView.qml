@@ -10,7 +10,7 @@ Item {
 
     property int topbarOffset: 0
     property bool dashboardVisible: true
-    property int dashboardWidth: sizings.controlBaseSize * 8
+    property int dashboardWidth: dashboardVisible ? sizings.controlBaseSize * 8 : 0
 
     property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int speedStep: settings.value("Gui/fdSpeedStep")
@@ -38,8 +38,7 @@ Item {
     Component.onCompleted: updateDisplay()
     onSelectedVehicleChanged: updateDisplay()
 
-    implicitWidth: loader.implicitWidth
-    implicitHeight: loader.implicitHeight
+    width: loader.implicitWidth
 
     DashboardPresenter {
         id: presenter
