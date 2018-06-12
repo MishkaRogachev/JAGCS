@@ -33,7 +33,7 @@ Item {
     }
     Component.onDestruction: manual.setVehicleId(0)
 
-    implicitWidth: Math.max(list.width + sizings.margins, topBarDelegate.width)
+    implicitWidth: list.width + sizings.margins
 
     AerialVehicleDisplayPresenter {
         id: presenter
