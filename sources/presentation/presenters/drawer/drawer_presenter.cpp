@@ -26,24 +26,6 @@ namespace
         { DrawerPresenter::Settings, DrawerPresenter::Networking }
     };
 
-    const QMap<DrawerPresenter::Mode, QString> modeStrings
-    {
-        { DrawerPresenter::UnknownMode, DrawerPresenter::tr("UnknownMode") },
-        { DrawerPresenter::Home, DrawerPresenter::tr("Home") },
-        { DrawerPresenter::Planning, DrawerPresenter::tr("Planning") },
-        { DrawerPresenter::Vehicles, DrawerPresenter::tr("Vehicles") },
-        { DrawerPresenter::Connection, DrawerPresenter::tr("Connection") },
-        { DrawerPresenter::Settings, DrawerPresenter::tr("Settings") },
-        { DrawerPresenter::Database, DrawerPresenter::tr("Database") },
-        { DrawerPresenter::Map, DrawerPresenter::tr("Map") },
-        { DrawerPresenter::Video, DrawerPresenter::tr("Video") },
-        { DrawerPresenter::Joystick, DrawerPresenter::tr("Joystick") },
-        { DrawerPresenter::Gui, DrawerPresenter::tr("Gui") },
-        { DrawerPresenter::Networking, DrawerPresenter::tr("Networking") },
-        { DrawerPresenter::About, DrawerPresenter::tr("About") },
-        { DrawerPresenter::Quit, DrawerPresenter::tr("Quit") },
-    };
-
     const QMap<DrawerPresenter::Mode, QUrl> modeIcons
     {
         { DrawerPresenter::UnknownMode, QUrl() },
@@ -82,7 +64,25 @@ DrawerPresenter::DrawerPresenter(QObject* parent):
 
 QString DrawerPresenter::modeString(Mode mode) const
 {
-    return ::modeStrings.value(mode);
+    static const QMap<DrawerPresenter::Mode, QString> modeStrings
+    {
+        { DrawerPresenter::UnknownMode, tr("UnknownMode") },
+        { DrawerPresenter::Home, tr("Home") },
+        { DrawerPresenter::Planning, tr("Planning") },
+        { DrawerPresenter::Vehicles, tr("Vehicles") },
+        { DrawerPresenter::Connection, tr("Connection") },
+        { DrawerPresenter::Settings, tr("Settings") },
+        { DrawerPresenter::Database, tr("Database") },
+        { DrawerPresenter::Map, tr("Map") },
+        { DrawerPresenter::Video, tr("Video") },
+        { DrawerPresenter::Joystick, tr("Joystick") },
+        { DrawerPresenter::Gui, tr("Gui") },
+        { DrawerPresenter::Networking, tr("Networking") },
+        { DrawerPresenter::About, tr("About") },
+        { DrawerPresenter::Quit, tr("Quit") },
+    };
+
+    return modeStrings.value(mode);
 }
 
 QUrl DrawerPresenter::modeIcon(DrawerPresenter::Mode mode) const
