@@ -14,5 +14,10 @@ T.ToolTip {
         color: customPalette.raisedColor
         border.color: customPalette.highlightColor
         radius: 3
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: control.close()
+        }
     }
 }
