@@ -30,13 +30,14 @@ Item {
     onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
+    onChangedChanged: saveRestore.message = ""
     Component.onDestruction: if (changed) presenter.updateView()
 
-    implicitWidth: Math.max(contents.implicitWidth, buttons.implicitWidth)
+    implicitWidth: Math.max(contents.implicitWidth, saveRestore.implicitWidth)
 
     Flickable {
         anchors.fill: parent
-        anchors.bottomMargin: buttons.height
+        anchors.bottomMargin: saveRestore.height
         contentHeight: contents.height
         boundsBehavior: Flickable.OvershootBounds
         flickableDirection: Flickable.AutoFlickIfNeeded
@@ -68,9 +69,10 @@ Item {
             Controls.ComboBox {
                 id: languageBox
                 labelText: qsTr("Language")
-                onCurrentIndexChanged: {
+                onActivated: {
                     presenter.setLocale(currentIndex);
                     changed = true;
+                    saveRestore.message = qsTr("Language will be changed after restart");
                 }
                 Layout.fillWidth: true
             }
@@ -179,7 +181,7 @@ Item {
     }
 
     SaveRestore {
-        id: buttons
+        id: saveRestore
         anchors.bottom: parent.bottom
         width: parent.width
         enabled: changed

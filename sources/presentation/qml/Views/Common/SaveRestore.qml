@@ -23,12 +23,15 @@ GridLayout {
         padding: sizings.padding
         Layout.preferredHeight: messageLabel.implicitHeight + padding * 2
         Layout.fillWidth: true
+        Layout.preferredWidth: 0
         Layout.columnSpan: 2
 
         Controls.Label {
             id: messageLabel
             color: customPalette.selectedTextColor
             horizontalAlignment: Text.AlignHCenter
+            elide: Text.ElideNone
+            wrapMode: Text.WordWrap
             anchors.fill: parent
         }
     }

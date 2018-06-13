@@ -53,6 +53,7 @@ QString TranslationManager::currentLocale()
 void TranslationManager::setLocale(const QString& locale)
 {
     QTranslator* translator = d->localeTranslators.value(locale, nullptr);
+
     if (d->activeTranslator == translator) return;
 
     if (d->activeTranslator)
