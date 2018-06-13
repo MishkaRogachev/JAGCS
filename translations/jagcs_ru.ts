@@ -95,17 +95,37 @@
 <context>
     <name>AerialVehicleWidget</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="113"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="36"/>
+        <source>Detailed</source>
+        <translation>Расширенный</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="38"/>
+        <source>Center vehicle</source>
+        <translation>Центрировать</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="42"/>
+        <source>Track yaw</source>
+        <translation>Курс карты</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="47"/>
+        <source>Edit</source>
+        <translation>Редактировать</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="133"/>
         <source>GS</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="122"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="142"/>
         <source>TAS</source>
         <translation>Vист</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="130"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="150"/>
         <source>Hbar</source>
         <translation>Hбар</translation>
     </message>
@@ -1346,22 +1366,22 @@
 <context>
     <name>DrawerView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="45"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="64"/>
         <source>Close drawer</source>
         <translation>Закрыть ящик</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="52"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="71"/>
         <source>Home</source>
         <translation>Домой</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="87"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="107"/>
         <source>Close filter</source>
         <translation>Закрыть фильтр</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="87"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="107"/>
         <source>Open filter</source>
         <translation>Открыть фильтр</translation>
     </message>
@@ -1537,12 +1557,12 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="80"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="82"/>
         <source>UI size</source>
         <translation>Размер интерфейса</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="92"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="94"/>
         <source>Palette</source>
         <translation>Палитра</translation>
     </message>
@@ -1551,37 +1571,42 @@
         <translation type="vanished">Дневная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="75"/>
+        <source>Language will be changed after restart</source>
+        <translation>Язык будет изменён после перезапуска</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="95"/>
         <source>Night</source>
         <translation>Ночная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="95"/>
         <source>Day</source>
         <translation>Дневная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="103"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="105"/>
         <source>Artificial horizon</source>
         <translation>Авиагоризонт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="106"/>
         <source>Western</source>
         <translation>Западный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="106"/>
         <source>Russian</source>
         <translation>Отечественный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="114"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="116"/>
         <source>Speed scale step</source>
         <translation>Шаг шкалы скорости</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="128"/>
         <source>Speed units</source>
         <translation>Единицы скорости</translation>
     </message>
@@ -1594,22 +1619,22 @@
         <translation type="obsolete">км/ч</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="139"/>
         <source>Altitude scale step</source>
         <translation>Шаг шкалы высоты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="149"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="151"/>
         <source>Altitude units</source>
         <translation>Единицы высоты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="160"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="162"/>
         <source>Relative altitude</source>
         <translation>Относительная высота</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="172"/>
         <source>Coordinates in DMS</source>
         <translation>Координаты в ГМС</translation>
     </message>
@@ -1626,12 +1651,12 @@
         <translation type="vanished">Ночная</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="61"/>
         <source>Fullscreen</source>
         <translation>Полноэкранный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="71"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -3343,12 +3368,12 @@
 <context>
     <name>SaveRestore</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="40"/>
         <source>Restore</source>
         <translation>Восстановить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="44"/>
+        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="47"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
@@ -3502,37 +3527,37 @@
 <context>
     <name>SingleVehicleDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="57"/>
         <source>Diagnostics panel</source>
         <translation>Панель диагностики</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="64"/>
         <source>Status panel</source>
         <translation>Панель состояния</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="71"/>
         <source>Flight instrument(FD)</source>
         <translation>Командно-пилотажный прибор(FD)</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="78"/>
         <source>Horizontal situation indicator(HSI)</source>
         <translation>Индикатор горизонтальной обстановки(HSI)</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="84"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="85"/>
         <source>Landing indicator</source>
         <translation>Посадочный индикатор</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="138"/>
         <source>Hide</source>
         <translation>Скрыть</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="159"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="160"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
@@ -3641,12 +3666,12 @@
 <context>
     <name>ToolsPanel</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="50"/>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="58"/>
         <source>Hide window</source>
         <translation>Убрать окно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="50"/>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="58"/>
         <source>Show window</source>
         <translation>Показать окно</translation>
     </message>
@@ -3661,7 +3686,12 @@
         <translation>Отдалить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="32"/>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="33"/>
+        <source>Cancel track</source>
+        <translation>Отменить слежение</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="40"/>
         <source>North</source>
         <translation>Север</translation>
     </message>
@@ -3740,37 +3770,41 @@
         <translation>Центрировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="131"/>
-        <source>Track vehicle&apos;s yaw</source>
-        <translation>Отслеживать курс</translation>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="126"/>
+        <source>Track yaw</source>
+        <translation>Курс карты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="147"/>
+        <source>Track vehicle&apos;s yaw</source>
+        <translation type="vanished">Отслеживать курс</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="135"/>
         <source>Disable</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="147"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="135"/>
         <source>Enable</source>
         <translation>Включить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="148"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="136"/>
         <source>manual control</source>
         <translation>ручное управление</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="168"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="156"/>
         <source>Lock</source>
         <translation>Заблокировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="168"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="156"/>
         <source>Unlock</source>
         <translation>Разблокировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="169"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="157"/>
         <source>indicators</source>
         <translation>приборы</translation>
     </message>
@@ -4401,18 +4435,25 @@
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="70"/>
         <source>Home</source>
-        <translation>Дом
-</translation>
+        <translation>Дом</translation>
+    </message>
+    <message>
+        <source>Planning</source>
+        <translation type="vanished">Планирование</translation>
+    </message>
+    <message>
+        <source>Vehicles</source>
+        <translation type="vanished">Аппараты</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
-        <source>Planning</source>
-        <translation>Планирование</translation>
+        <source>Plan</source>
+        <translation>План</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="72"/>
-        <source>Vehicles</source>
-        <translation>Аппараты</translation>
+        <source>Fleet</source>
+        <translation>Флот</translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="73"/>

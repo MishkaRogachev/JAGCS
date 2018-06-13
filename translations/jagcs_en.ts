@@ -48,17 +48,37 @@
 <context>
     <name>AerialVehicleWidget</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="113"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="36"/>
+        <source>Detailed</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="38"/>
+        <source>Center vehicle</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="42"/>
+        <source>Track yaw</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="47"/>
+        <source>Edit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="133"/>
         <source>GS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="122"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="142"/>
         <source>TAS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="130"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml" line="150"/>
         <source>Hbar</source>
         <translation></translation>
     </message>
@@ -245,22 +265,22 @@
 <context>
     <name>DrawerView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="45"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="64"/>
         <source>Close drawer</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="52"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="71"/>
         <source>Home</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="87"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="107"/>
         <source>Close filter</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="87"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/DrawerView.qml" line="107"/>
         <source>Open filter</source>
         <translation></translation>
     </message>
@@ -347,77 +367,82 @@
 <context>
     <name>GuiSettingsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="80"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="75"/>
+        <source>Language will be changed after restart</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="82"/>
         <source>UI size</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="92"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="94"/>
         <source>Palette</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="95"/>
         <source>Night</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="95"/>
         <source>Day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="103"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="105"/>
         <source>Artificial horizon</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="106"/>
         <source>Western</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="104"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="106"/>
         <source>Russian</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="114"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="116"/>
         <source>Speed scale step</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="128"/>
         <source>Speed units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="139"/>
         <source>Altitude scale step</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="149"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="151"/>
         <source>Altitude units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="160"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="162"/>
         <source>Relative altitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="170"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="172"/>
         <source>Coordinates in DMS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="60"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="61"/>
         <source>Fullscreen</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Settings/Gui/GuiSettingsView.qml" line="71"/>
         <source>Language</source>
         <translation></translation>
     </message>
@@ -1219,12 +1244,12 @@
 <context>
     <name>SaveRestore</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="40"/>
         <source>Restore</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="44"/>
+        <location filename="../sources/presentation/qml/Views/Common/SaveRestore.qml" line="47"/>
         <source>Save</source>
         <translation></translation>
     </message>
@@ -1255,37 +1280,37 @@
 <context>
     <name>SingleVehicleDisplay</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="57"/>
         <source>Diagnostics panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="63"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="64"/>
         <source>Status panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="70"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="71"/>
         <source>Flight instrument(FD)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="78"/>
         <source>Horizontal situation indicator(HSI)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="84"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="85"/>
         <source>Landing indicator</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="137"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="138"/>
         <source>Hide</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="159"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/SingleVehicleDisplay.qml" line="160"/>
         <source>Add</source>
         <translation></translation>
     </message>
@@ -1324,12 +1349,12 @@
 <context>
     <name>ToolsPanel</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="50"/>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="58"/>
         <source>Hide window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="50"/>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="58"/>
         <source>Show window</source>
         <translation></translation>
     </message>
@@ -1344,7 +1369,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="32"/>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="33"/>
+        <source>Cancel track</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Tools/ToolsPanel.qml" line="40"/>
         <source>North</source>
         <translation></translation>
     </message>
@@ -1415,37 +1445,37 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="131"/>
-        <source>Track vehicle&apos;s yaw</source>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="126"/>
+        <source>Track yaw</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="147"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="135"/>
         <source>Disable</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="147"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="135"/>
         <source>Enable</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="148"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="136"/>
         <source>manual control</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="168"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="156"/>
         <source>Lock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="168"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="156"/>
         <source>Unlock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="169"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="157"/>
         <source>indicators</source>
         <translation></translation>
     </message>
@@ -1716,12 +1746,12 @@
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
-        <source>Planning</source>
+        <source>Plan</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="72"/>
-        <source>Vehicles</source>
+        <source>Fleet</source>
         <translation></translation>
     </message>
     <message>
