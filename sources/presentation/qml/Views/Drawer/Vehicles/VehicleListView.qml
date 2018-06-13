@@ -10,13 +10,13 @@ Item {
     property alias vehicles: list.model
     property alias autoAdd: autoAdd.checked
 
-    onVisibleChanged: menu.filterEnabled = visible
-    Component.onCompleted: menu.filterEnabled = true
+    onVisibleChanged: drawer.filterEnabled = visible
+    Component.onCompleted: drawer.filterEnabled = true
 
     implicitWidth: sizings.controlBaseSize * 8
 
     Connections{
-        target: menu
+        target: drawer
         onFilter: presenter.filter(text)
     }
 

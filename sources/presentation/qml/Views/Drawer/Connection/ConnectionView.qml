@@ -14,7 +14,7 @@ Item {
     implicitWidth: sizings.controlBaseSize * 10
 
     Connections {
-        target: menu
+        target: drawer
         onCloseSubmode: selectedLinkId = 0
     }
 

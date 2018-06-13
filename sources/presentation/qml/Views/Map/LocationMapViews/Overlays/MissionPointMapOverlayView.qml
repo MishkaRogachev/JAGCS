@@ -25,7 +25,7 @@ MapItemView {
             sequence: itemPtr.sequence
             onClicked: map.selectItem(itemPtr.missionId, itemPtr.id)
             onHolded: {
-                menu.setMode(DrawerPresenter.Plan);
+                drawer.setMode(DrawerPresenter.Plan);
                 map.selectItem(itemPtr.missionId, itemPtr.id);
                 if (trackingVehicleId == 0) map.setCenterOffsetted(itemCoordinate);
             }

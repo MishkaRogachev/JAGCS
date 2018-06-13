@@ -12,8 +12,8 @@ Item {
 
     property alias videos: list.model
 
-//    onVisibleChanged: menu.filterEnabled = visible
-//    Component.onCompleted: menu.filterEnabled = true
+//    onVisibleChanged: drawer.filterEnabled = visible
+//    Component.onCompleted: drawer.filterEnabled = true
     onActiveVideoChanged: {
         presenter.saveActiveVideo(activeVideo);
         video.updateActiveVideo();
@@ -22,7 +22,7 @@ Item {
     implicitWidth: sizings.controlBaseSize * 10
 
 //    Connections{
-//        target: menu
+//        target: drawer
 //        onFilter: presenter.filter(text)
 //    }
 

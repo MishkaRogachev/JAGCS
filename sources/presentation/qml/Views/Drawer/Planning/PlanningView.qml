@@ -23,7 +23,7 @@ Item {
     }
 
     Connections {
-        target: menu
+        target: drawer
         onCloseSubmode: selectedMissionId = 0
     }
 

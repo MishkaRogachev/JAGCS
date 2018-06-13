@@ -33,7 +33,7 @@ Controls.Popup {
         Controls.Button {
             text: qsTr("Connection")
             onClicked: {
-                menu.setMode(DrawerPresenter.Connection);
+                drawer.setMode(DrawerPresenter.Connection);
                 info.close();
             }
             Layout.fillWidth: true

@@ -9,11 +9,11 @@ Item {
 
     property alias links: list.model
 
-    onVisibleChanged: menu.filterEnabled = visible
-    Component.onCompleted: menu.filterEnabled = true
+    onVisibleChanged: drawer.filterEnabled = visible
+    Component.onCompleted: drawer.filterEnabled = true
 
     Connections{
-        target: menu
+        target: drawer
         onFilter: presenter.filter(text)
     }
 

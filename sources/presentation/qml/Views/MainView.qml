@@ -38,7 +38,7 @@ Controls.ApplicationWindow  {
             anchors.leftMargin: y
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Open drawer")
-            onPressed: menu.open()
+            onPressed: drawer.open()
         }
     }
 
@@ -99,23 +99,10 @@ Controls.ApplicationWindow  {
         z: 3
     }
 
-    Controls.Drawer {
+    DrawerView {
         id: drawer
-        width: menu.width
         height: parent.height
-        onClosed: menu.close()
         interactive: !topbar.burgerHovered // NOTE: QTBUG-59141
-
-        DrawerView {
-            id: menu
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            visible: drawer.position > 0
-            onOpen: drawer.open()
-        }
-
-        Behavior on width { PropertyAnimation { duration: 200 } }
     }
 
     MouseArea { // NOTE: drawer workaround

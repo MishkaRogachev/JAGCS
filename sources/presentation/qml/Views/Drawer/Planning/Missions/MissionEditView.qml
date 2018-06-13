@@ -22,17 +22,17 @@ ColumnLayout {
     onNameChanged: {
         if (missionId > 0)
         {
-            if (name.length > 0) menu.submode = name;
-            else menu.submode = qsTr("Mission");
+            if (name.length > 0) drawer.submode = name;
+            else drawer.submode = qsTr("Mission");
         }
-        else menu.submode = "";
+        else drawer.submode = "";
     }
     onSelectedItemIdChanged: {
         presenter.setItem(selectedItemId);
         if (map) map.selectedItemId = selectedItemId;
     }
     Component.onDestruction: {
-        menu.submode = "";
+        drawer.submode = "";
         if (map) map.selectedItemId = 0;
     }
 

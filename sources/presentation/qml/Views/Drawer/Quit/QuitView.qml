@@ -25,7 +25,7 @@ ColumnLayout {
         text: qsTr("No")
         iconSource: "qrc:/icons/remove.svg"
         flat: true
-        onClicked: menu.home()
+        onClicked: drawer.home()
         Layout.fillWidth: true
     }
 

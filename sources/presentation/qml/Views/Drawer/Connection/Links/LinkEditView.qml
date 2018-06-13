@@ -34,10 +34,10 @@ ColumnLayout {
 
         if (linkId > 0)
         {
-            if (name.length > 0) menu.submode = name;
-            else menu.submode = qsTr("Link");
+            if (name.length > 0) drawer.submode = name;
+            else drawer.submode = qsTr("Link");
         }
-        else menu.submode = "";
+        else drawer.submode = "";
     }
     onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
@@ -45,12 +45,12 @@ ColumnLayout {
 //    onNameChanged: {
 //        if (linkId > 0)
 //        {
-//            if (name.length > 0) menu.submode = name;
-//            else menu.submode = qsTr("Link");
+//            if (name.length > 0) drawer.submode = name;
+//            else drawer.submode = qsTr("Link");
 //        }
-//        else menu.submode = "";
+//        else drawer.submode = "";
 //    }
-    Component.onDestruction: menu.submode = ""
+    Component.onDestruction: drawer.submode = ""
 
     spacing: sizings.spacing
 

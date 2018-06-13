@@ -9,11 +9,11 @@ Item {
 
     property alias missions: list.model
 
-    onVisibleChanged: menu.filterEnabled = visible
-    Component.onCompleted: if (visible) menu.filterEnabled = true
+    onVisibleChanged: drawer.filterEnabled = visible
+    Component.onCompleted: if (visible) drawer.filterEnabled = true
 
     Connections{
-        target: menu
+        target: drawer
         onFilter: presenter.filter(text)
     }
 
