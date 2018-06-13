@@ -14,8 +14,8 @@ namespace presentation
         {
             UnknownMode,
             Home,
-                Planning,
-                Vehicles,
+                Plan,
+                Fleet,
                 Connection,
                 Settings,
                     Database,

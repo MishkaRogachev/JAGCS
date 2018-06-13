@@ -11,8 +11,8 @@ namespace
 {
     const QMultiMap<DrawerPresenter::Mode, DrawerPresenter::Mode> nestedModes
     {
-        { DrawerPresenter::Home, DrawerPresenter::Planning },
-        { DrawerPresenter::Home, DrawerPresenter::Vehicles },
+        { DrawerPresenter::Home, DrawerPresenter::Plan },
+        { DrawerPresenter::Home, DrawerPresenter::Fleet },
         { DrawerPresenter::Home, DrawerPresenter::Connection },
         { DrawerPresenter::Home, DrawerPresenter::Settings },
         { DrawerPresenter::Home, DrawerPresenter::About },
@@ -29,8 +29,8 @@ namespace
     const QMap<DrawerPresenter::Mode, QUrl> modeIcons
     {
         { DrawerPresenter::UnknownMode, QUrl() },
-        { DrawerPresenter::Planning, QUrl("qrc:/icons/planning.svg") },
-        { DrawerPresenter::Vehicles, QUrl("qrc:/icons/fleet.svg") },
+        { DrawerPresenter::Plan, QUrl("qrc:/icons/planning.svg") },
+        { DrawerPresenter::Fleet, QUrl("qrc:/icons/fleet.svg") },
         { DrawerPresenter::Connection, QUrl("qrc:/icons/connect.svg") },
         { DrawerPresenter::Settings, QUrl("qrc:/icons/settings.svg") },
         { DrawerPresenter::Database, QUrl("qrc:/icons/db.svg") },
@@ -68,8 +68,8 @@ QString DrawerPresenter::modeString(Mode mode) const
     {
         { DrawerPresenter::UnknownMode, tr("UnknownMode") },
         { DrawerPresenter::Home, tr("Home") },
-        { DrawerPresenter::Planning, tr("Planning") },
-        { DrawerPresenter::Vehicles, tr("Vehicles") },
+        { DrawerPresenter::Plan, tr("Plan") },
+        { DrawerPresenter::Fleet, tr("Fleet") },
         { DrawerPresenter::Connection, tr("Connection") },
         { DrawerPresenter::Settings, tr("Settings") },
         { DrawerPresenter::Database, tr("Database") },

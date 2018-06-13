@@ -79,6 +79,7 @@ Item {
             Controls.Label {
                 text: submode.length > 0 ? submode : presenter.modeString(mode)
                 font.bold: true
+                visible: mode != DrawerPresenter.Home
                 Layout.fillWidth: true
             }
 
@@ -110,8 +111,8 @@ Item {
         clip: true
         source: {
             switch (mode) {
-            case DrawerPresenter.Planning: return "Planning/PlanningView.qml";
-            case DrawerPresenter.Vehicles: return "Vehicles/VehicleListView.qml";
+            case DrawerPresenter.Plan: return "Planning/PlanningView.qml";
+            case DrawerPresenter.Fleet: return "Vehicles/VehicleListView.qml";
             case DrawerPresenter.Connection: return "Connection/ConnectionView.qml";
             case DrawerPresenter.Database: return "Settings/Database/DatabaseView.qml";
             case DrawerPresenter.Map: return "Settings/Map/MapSettingsView.qml";
