@@ -70,6 +70,7 @@
         <file>icons/map-marker.svg</file>
         <file>icons/center.svg</file>
         <file>icons/track_yaw.svg</file>
+        <file>icons/cancel_track.svg</file>
         <file>icons/aim.svg</file>
         <file>icons/command.svg</file>
         <file>icons/layers.svg</file>

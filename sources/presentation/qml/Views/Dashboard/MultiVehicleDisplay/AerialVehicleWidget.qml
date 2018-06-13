@@ -17,6 +17,11 @@ Controls.Card {
 
     signal updateCommandStatus(var command, var status)
 
+    function edit() {
+        drawer.setMode(DrawerPresenter.Fleet);
+        // TODO: deep in concrete vehicle
+    }
+
     onUpdateCommandStatus: {
         switch (command) {
         case Command.SetMode:
@@ -27,6 +32,23 @@ Controls.Card {
         }
     }
 
+    Component.onCompleted: {
+        menu.addEntry(qsTr("Detailed"), "qrc:/icons/flight.svg").triggered.connect(deepIn);
+
+        var center = menu.addEntry(qsTr("Center vehicle"), "qrc:/icons/center.svg");
+        center.highlighted = Qt.binding(function() { return map.trackingVehicleId == vehicleId; });
+        center.triggered.connect(function() { toggleCentered(vehicleId) });
+
+        var track = menu.addEntry(qsTr("Track yaw"), "qrc:/icons/track_yaw.svg");
+        track.highlighted = Qt.binding(function() { return map.trackingVehicleId == vehicleId &&
+                                                           map.trackYaw; });
+        track.triggered.connect(function() { toggleTracked(vehicleId) });
+
+        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+    }
+
+    onDeepIn: dashboard.selectVehicle(vehicleId)
+
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
@@ -35,8 +57,6 @@ Controls.Card {
 
     implicitWidth: grid.implicitWidth + sizings.margins * 2
     implicitHeight: grid.implicitHeight + sizings.margins * 2
-
-    onDeepIn: dashboard.selectVehicle(vehicleId)
 
     GridLayout {
         id: grid

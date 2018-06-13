@@ -29,6 +29,14 @@ ColumnLayout {
     }
 
     Controls.Button {
+        id: cancelTrackButton
+        tipText: qsTr("Cancel track")
+        iconSource: "qrc:/icons/cancel_track.svg"
+        visible: map.trackingVehicleId != 0
+        onClicked: map.trackingVehicleId = 0
+    }
+
+    Controls.Button {
         tipText: qsTr("North")
         iconSource: "qrc:/icons/compas.svg"
         onClicked: bearingAnimation.start()

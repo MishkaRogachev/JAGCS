@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "../"
 
-Item {
+BaseDisplay {
     id: listDisplay
 
     property var vehicles

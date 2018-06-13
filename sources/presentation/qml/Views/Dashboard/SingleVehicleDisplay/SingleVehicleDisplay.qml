@@ -5,8 +5,9 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 
 import "../Vehicles"
+import "../"
 
-Item {
+BaseDisplay {
     id: display
 
     property int vehicleId: 0

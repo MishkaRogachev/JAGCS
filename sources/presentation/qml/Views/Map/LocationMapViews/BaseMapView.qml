@@ -82,7 +82,10 @@ Map {
     Component.onDestruction: if (visible) saveViewport()
     onVisibleChanged: if (!visible) saveViewport()
 
-    onTrackingVehicleIdChanged: updateGestures()
+    onTrackingVehicleIdChanged: {
+        if (trackingVehicleId == 0) trackYaw = false;
+        updateGestures();
+    }
     onTrackYawChanged: updateGestures()
 
     function saveViewport() {

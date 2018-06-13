@@ -117,27 +117,15 @@ Controls.Pane {
                     Controls.MenuItem {
                         iconSource: "qrc:/icons/center.svg"
                         text: qsTr("Center vehicle")
-                        checkable: true
-                        checked: map.trackingVehicleId === vehicleId
-                        onEnabledChanged: if (!enabled) checked = false
-                        onCheckedChanged: {
-                            if (map.trackYaw && !checked) map.trackYaw = false;
-                            map.trackingVehicleId = checked ? vehicleId : 0;
-                        }
+                        highlighted: map.trackingVehicleId == vehicleId
+                        onTriggered: toggleCentered(vehicleId)
                     }
 
                     Controls.MenuItem {
                         iconSource: "qrc:/icons/track_yaw.svg"
-                        text: qsTr("Track vehicle's yaw")
-                        checkable: true
-                        checked: map.trackYaw
-                        onEnabledChanged: if (!enabled) checked = false
-                        onCheckedChanged: {
-                            if (checked && map.trackingVehicleId === 0) {
-                                map.trackingVehicleId = vehicleId;
-                            }
-                            map.trackYaw = checked;
-                        }
+                        text: qsTr("Track yaw")
+                        highlighted: map.trackingVehicleId == vehicleId && map.trackYaw
+                        onTriggered: toggleTracked(vehicleId)
                     }
                 }
             }

@@ -107,6 +107,7 @@
         <file>Views/Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Views/Map/LocationMapViews/Overlays/TargetRadiusOverlayView.qml</file>
         <file>Views/Dashboard/DashboardView.qml</file>
+        <file>Views/Dashboard/BaseDisplay.qml</file>
         <file>Views/Dashboard/Vehicles/Subsystem.qml</file>
         <file>Views/Dashboard/Vehicles/BaseVehicle.qml</file>
         <file>Views/Dashboard/Vehicles/AerialVehicle.qml</file>
