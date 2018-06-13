@@ -4,7 +4,7 @@ Item {
     id: display
 
     function toggleCentered(vehicleId) {
-        map.trackingVehicleId = map.trackingVehicleId == vehicleId ? vehicleId : 0;
+        map.trackingVehicleId = (map.trackingVehicleId == vehicleId) ? 0 : vehicleId;
     }
 
     function toggleTracked(vehicleId) {
