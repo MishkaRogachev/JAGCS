@@ -40,33 +40,41 @@ MapItemView {
 
         onCoordinateChanged: tryCenterVehicle()
         sourceItem: Item {
-            rotation: -map.bearing
+
             opacity: vehicleOnline ? 1 : 0.5
 
-            Indicators.SpeedArrow {
+            MouseArea {
+                id: area
                 anchors.centerIn: parent
-                fix: snsFix
-                rotation: courseAnimated
-                speed: groundspeed
-                visible: groundspeed > 0.1
-                width: sizings.controlBaseSize * 4
-                height: width
+                height: sizings.inputControlHeight
+                width: height
+
+                rotation: -map.bearing
+
+                Indicators.SpeedArrow {
+                    anchors.centerIn: parent
+                    fix: snsFix
+                    rotation: courseAnimated
+                    speed: groundspeed
+                    visible: groundspeed > 0.1
+                    width: sizings.controlBaseSize * 4
+                    height: width
+                }
+
+                Image {
+                    anchors.centerIn: parent
+                    rotation: headingAnimated
+                    source: translator.imageFromVehicleType(vehicleType)
+                    width: sizings.controlBaseSize * 3
+                    height: width
+                }
             }
 
-            Image {
-                anchors.centerIn: parent
-                rotation: headingAnimated
-                source: translator.imageFromVehicleType(vehicleType)
-                width: sizings.controlBaseSize * 3
-                height: width
-            }
-
-            Controls.Label {
+            Controls.ToolTip {
                 text: vehicleName
-                anchors.top: parent.bottom
-                anchors.left: parent.right
-                anchors.margins: sizings.controlBaseSize
-                rotation: map.bearing
+                visible: area.pressed
+                y: sizings.controlBaseSize
+                x: sizings.controlBaseSize
                 font.pixelSize: sizings.secondaryFontSize
                 font.bold: true
             }
