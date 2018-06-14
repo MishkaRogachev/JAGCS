@@ -2912,6 +2912,19 @@
     </message>
 </context>
 <context>
+    <name>MissionPointMapOverlayView</name>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/LocationMapViews/Overlays/MissionPointMapOverlayView.qml" line="46"/>
+        <source>Go to</source>
+        <translation>Переход на</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Map/LocationMapViews/Overlays/MissionPointMapOverlayView.qml" line="53"/>
+        <source>Edit point</source>
+        <translation>Редактировать</translation>
+    </message>
+</context>
+<context>
     <name>MissionView</name>
     <message>
         <source>Mission</source>
@@ -3718,59 +3731,59 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/TopBarDelegate.qml" line="24"/>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="80"/>
         <source>Hide</source>
         <translation>Скрыть</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/TopBarDelegate.qml" line="24"/>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="75"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="80"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Views/Dashboard/MultiVehicleDisplay/TopBarDelegate.qml" line="25"/>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="76"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="81"/>
         <source>dashboard</source>
         <translation>приборы</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="56"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="61"/>
         <source>Overview</source>
         <translation>Обзор</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="62"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="67"/>
         <source>No vehicle</source>
         <translation>Нет аппарата</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="89"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="94"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="89"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="94"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="90"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="95"/>
         <source>preparation panel</source>
         <translation>панель подготовки</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="107"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="112"/>
         <source>Track vehicle</source>
         <translation>Отслеживать аппарат</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="119"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="124"/>
         <source>Center vehicle</source>
         <translation>Центрировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="126"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="131"/>
         <source>Track yaw</source>
         <translation>Курс карты</translation>
     </message>
@@ -3779,32 +3792,32 @@
         <translation type="vanished">Отслеживать курс</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="140"/>
         <source>Disable</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="140"/>
         <source>Enable</source>
         <translation>Включить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="136"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="141"/>
         <source>manual control</source>
         <translation>ручное управление</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="156"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="161"/>
         <source>Lock</source>
         <translation>Заблокировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="156"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="161"/>
         <source>Unlock</source>
         <translation>Разблокировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="157"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="162"/>
         <source>indicators</source>
         <translation>приборы</translation>
     </message>

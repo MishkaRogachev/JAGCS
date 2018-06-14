@@ -36,6 +36,7 @@ Map {
     signal selectItem(int missionId, int itemId)
     signal itemDragged(int itemId, var coordinate);
     signal holded(var coordinate)
+    signal goTo(int index)
 
     activeMapType: supportedMapTypes[activeMapTypeIndex]
     implicitWidth: height

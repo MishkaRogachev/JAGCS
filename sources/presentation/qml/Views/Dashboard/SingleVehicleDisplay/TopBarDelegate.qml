@@ -21,11 +21,11 @@ Controls.Pane {
     function updateItems() {
         var items = [];
         for (var i = 0; i < waypointCount; ++i) items.push(i + 1);
-        itemBox.model = items;
+        waypointBox.model = items;
     }
 
     function updatewaypointCurrent() {
-        itemBox.currentIndex = waypointCurrent;
+        waypointBox.currentIndex = waypointCurrent;
     }
 
     Connections {
@@ -36,12 +36,17 @@ Controls.Pane {
                 modeBox.status = status;
                 break;
             case Command.GoTo:
-                itemBox.status = status;
+                waypointBox.status = status;
                 break;
             default:
                 break;
             }
         }
+    }
+
+    Connections {
+        target: map
+        onGoTo: waypointBox.goTo(index)
     }
 
     ColumnLayout {
@@ -144,7 +149,7 @@ Controls.Pane {
             }
 
             DashboardControls.WaypointBox {
-                id: itemBox
+                id: waypointBox
                 Layout.preferredWidth: sizings.controlBaseSize * 4
                 Layout.maximumHeight: sizings.controlBaseSize
             }
