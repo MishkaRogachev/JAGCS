@@ -100,7 +100,6 @@ Controls.Pane {
                 PreparationPanel {
                     id: preparationPanel
                     x: -width - sizings.spacing
-                    closePolicy: Controls.Popup.NoAutoClose
                 }
             }
 
