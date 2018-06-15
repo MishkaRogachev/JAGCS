@@ -30,8 +30,10 @@ void AbstractLink::setConnected(bool connected)
 
 void AbstractLink::sendData(const QByteArray& data)
 {
+    if (!this->sendDataImpl(data)) return;
+
     m_bytesSent += data.size();
-    this->sendDataImpl(data);
+    emit dataSent();
 }
 
 void AbstractLink::receiveData(const QByteArray& data)

@@ -7,26 +7,28 @@ import "qrc:/Controls" as Controls
 Controls.Popup {
     id: info
 
+    width: sizings.controlBaseSize * 5
     closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
     ColumnLayout {
+        anchors.fill: parent
         spacing: sizings.spacing
 
         Controls.ContentItem {
             iconSource: "qrc:/icons/arrow_down.svg"
-            text: bytesRecv.toFixed(1) + " " + qsTr("B/s")
+            text: qsTr("Recv.:") + " " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
+            textColor: customPalette.positiveColor
             font.pixelSize: sizings.secondaryFontSize
             font.bold: true
-            horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
 
         Controls.ContentItem {
             iconSource: "qrc:/icons/arrow_up.svg"
-            text: bytesSent.toFixed(1) + " " + qsTr("B/s")
+            text: qsTr("Sent:") + " " + bytesSent.toFixed(1) + " " + qsTr("B/s")
+            textColor: customPalette.skyColor
             font.pixelSize: sizings.secondaryFontSize
             font.bold: true
-            horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
 
