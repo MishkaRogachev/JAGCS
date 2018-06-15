@@ -83,6 +83,10 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
             this, &CommunicationService::onMavLinkStatisticsChanged);
     connect(d->commWorker, &CommunicatorWorker::mavLinkProtocolChanged,
             this, &CommunicationService::onMavlinkProtocolChanged);
+    connect(d->commWorker, &CommunicatorWorker::linkSent,
+            this, &CommunicationService::linkSent);
+    connect(d->commWorker, &CommunicatorWorker::linkRecv,
+            this, &CommunicationService::linkRecv);
 
     d->loadDescriptions();
 }

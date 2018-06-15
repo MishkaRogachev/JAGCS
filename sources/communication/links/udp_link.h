@@ -29,8 +29,6 @@ namespace comm
         void connectLink() override;
         void disconnectLink() override;
 
-        void sendDataImpl(const QByteArray& data) override;
-
         void setPort(int port);
         void addEndpoint(const Endpoint& endpoint);
         void removeEndpoint(const Endpoint& endpoint);
@@ -41,6 +39,9 @@ namespace comm
         void portChanged(int port);
         void endpointsChanged(const EndpointList& endpoints);
         void autoResponseChanged(bool autoResponse);
+
+    protected:
+        bool sendDataImpl(const QByteArray& data) override;
 
     private slots:
         void readPendingDatagrams();

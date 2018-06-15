@@ -58,7 +58,7 @@ void UdpLink::connectLink()
     }
     else
     {
-        emit upChanged(true);
+        emit connectedChanged(true);
     }
 }
 
@@ -67,15 +67,7 @@ void UdpLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_socket->close();
-    emit upChanged(false);
-}
-
-void UdpLink::sendDataImpl(const QByteArray& data)
-{
-    for (const Endpoint& endpoint: m_endpoints)
-    {
-        m_socket->writeDatagram(data, endpoint.address(), endpoint.port());
-    }
+    emit connectedChanged(false);
 }
 
 void UdpLink::setPort(int port)
@@ -117,6 +109,16 @@ void UdpLink::setAutoResponse(bool autoResponse)
 
     m_autoResponse = autoResponse;
     emit autoResponseChanged(autoResponse);
+}
+
+bool UdpLink::sendDataImpl(const QByteArray& data)
+{
+    bool ok = false;
+    for (const Endpoint& endpoint: m_endpoints)
+    {
+         if (m_socket->writeDatagram(data, endpoint.address(), endpoint.port()) > 0) ok = true;
+    }
+    return ok;
 }
 
 void UdpLink::readPendingDatagrams()

@@ -47,7 +47,7 @@ void SerialLink::connectLink()
     }
     else
     {
-        emit upChanged(true);
+        emit connectedChanged(true);
     }
 }
 
@@ -56,12 +56,7 @@ void SerialLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_port->close();
-    emit upChanged(false);
-}
-
-void SerialLink::sendDataImpl(const QByteArray& data)
-{
-    m_port->write(data.data(), data.size());
+    emit connectedChanged(false);
 }
 
 void SerialLink::setDevice(QString device)
@@ -79,6 +74,12 @@ void SerialLink::setBaudRate(qint32 baudRate)
     m_port->setBaudRate(baudRate);
     emit baudRateChanged(m_port->baudRate());
 }
+
+bool SerialLink::sendDataImpl(const QByteArray& data)
+{
+    return m_port->write(data.data(), data.size()) > 0;
+}
+
 
 void SerialLink::readSerialData()
 {

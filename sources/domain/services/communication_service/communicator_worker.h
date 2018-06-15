@@ -40,6 +40,8 @@ namespace domain
                                       int packetsDrops);
         void mavLinkProtocolChanged(int linkId,
                                     dto::LinkDescription::Protocol protocol);
+        void linkSent(int linkId);
+        void linkRecv(int linkId);
 
     private slots:
         void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,

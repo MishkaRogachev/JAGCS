@@ -24,14 +24,15 @@ namespace comm
         void connectLink() override;
         void disconnectLink() override;
 
-        void sendDataImpl(const QByteArray& data) override;
-
         void setDevice(QString device);
         void setBaudRate(qint32 baudRate);
 
     signals:
         void deviceChanged(QString device);
         void baudRateChanged(qint32 baudRate);
+
+    protected:
+        bool sendDataImpl(const QByteArray& data) override;
 
     private slots:
         void readSerialData();

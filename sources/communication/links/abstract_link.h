@@ -26,11 +26,12 @@ namespace comm
         void sendData(const QByteArray& data);
 
     signals:
-        void upChanged(bool isConnected);
+        void connectedChanged(bool connected);
         void dataReceived(const QByteArray& data);
+        void dataSent();
 
     protected:
-        virtual void sendDataImpl(const QByteArray& data) = 0;
+        virtual bool sendDataImpl(const QByteArray& data) = 0;
 
     protected slots:
         void receiveData(const QByteArray& data);

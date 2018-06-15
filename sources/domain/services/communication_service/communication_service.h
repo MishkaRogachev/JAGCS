@@ -45,6 +45,8 @@ namespace domain
         void descriptionChanged(dto::LinkDescriptionPtr description);
         void linkStatusChanged(dto::LinkDescriptionPtr description);
         void linkStatisticsChanged(dto::LinkStatisticsPtr statistics);
+        void linkSent(int linkId);
+        void linkRecv(int linkId);
 
     private slots:
         void onLinkStatusChanged(int linkId, bool connected);
