@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Controls.Card {
     id: linkView
@@ -14,6 +15,8 @@ Controls.Card {
     property int protocol: LinkDescription.UnknownProtocol
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
+    property bool sent: false
+    property bool recv: false
 
     function edit() {
         selectedLinkId = linkId;
@@ -42,6 +45,18 @@ Controls.Card {
     implicitWidth: grid.implicitWidth + sizings.margins * 2
     implicitHeight: grid.implicitHeight + sizings.margins * 2
 
+    Timer {
+        running: sent
+        interval: 100
+        onTriggered: sent = false
+    }
+
+    Timer {
+        running: recv
+        interval: 100
+        onTriggered: recv = false
+    }
+
     LinkPresenter {
         id: presenter
         view: linkView
@@ -54,14 +69,14 @@ Controls.Card {
         anchors.fill: parent
         anchors.margins: sizings.margins
         anchors.rightMargin: linkView.margin
-        columns: 2
+        columns: 4
         rowSpacing: sizings.spacing
         columnSpacing: sizings.spacing
 
         Controls.Label {
             text: name
             horizontalAlignment: Text.AlignHCenter
-            Layout.columnSpan: 2
+            Layout.columnSpan: 4
             Layout.fillWidth: true
         }
 
@@ -74,6 +89,7 @@ Controls.Card {
                 }
             }
             horizontalAlignment: Text.AlignHCenter
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -87,7 +103,12 @@ Controls.Card {
                 }
             }
             horizontalAlignment: Text.AlignHCenter
+            Layout.columnSpan: 2
             Layout.fillWidth: true
+        }
+
+        Indicators.Led {
+            color: recv ? customPalette.positiveColor : customPalette.sunkenColor
         }
 
         Controls.Label {
@@ -95,6 +116,10 @@ Controls.Card {
             horizontalAlignment: Text.AlignHCenter
             color: customPalette.positiveColor
             Layout.fillWidth: true
+        }
+
+        Indicators.Led {
+            color: sent ? customPalette.skyColor : customPalette.sunkenColor
         }
 
         Controls.Label {

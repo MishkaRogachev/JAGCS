@@ -2,7 +2,6 @@ import QtQuick 2.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "qrc:/Indicators" as Indicators
 import "../"
 
 TopbarButton {
@@ -41,20 +40,6 @@ TopbarButton {
         height: parent.height * 0.8
         source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
         color: connected ? customPalette.textColor : customPalette.dangerColor
-
-        Indicators.Led {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            width: parent.width * 0.2
-            color: recv ? customPalette.positiveColor : customPalette.sunkenColor
-        }
-
-        Indicators.Led {
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            width: parent.width * 0.2
-            color: sent ? customPalette.skyColor : customPalette.sunkenColor
-        }
     }
 
     ConnectionInfo {

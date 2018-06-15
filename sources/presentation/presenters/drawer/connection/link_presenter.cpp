@@ -30,6 +30,14 @@ LinkPresenter::LinkPresenter(QObject* parent):
             [this](const dto::LinkStatisticsPtr& statistics) {
         if (m_link && m_link->id() == statistics->linkId()) this->updateStatistics(statistics);
     });
+    connect(m_service, &domain::CommunicationService::linkSent,
+            this, [this](int linkId) {
+        if (m_link && m_link->id() == linkId) this->setViewProperty(PROPERTY(sent), true);
+    });
+    connect(m_service, &domain::CommunicationService::linkRecv,
+            this, [this](int linkId) {
+        if (m_link && m_link->id() == linkId) this->setViewProperty(PROPERTY(recv), true);
+    });
 }
 
 void LinkPresenter::setLink(int id)

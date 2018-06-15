@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Controls.Popup {
     id: info
@@ -10,23 +11,30 @@ Controls.Popup {
     width: sizings.controlBaseSize * 5
     closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
-    ColumnLayout {
+    GridLayout {
         anchors.fill: parent
-        spacing: sizings.spacing
+        columns: 2
+        rowSpacing: sizings.spacing
 
-        Controls.ContentItem {
-            iconSource: "qrc:/icons/arrow_down.svg"
-            text: qsTr("Recv.:") + " " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
-            textColor: customPalette.positiveColor
+        Indicators.Led {
+            color: recv ? customPalette.positiveColor : customPalette.sunkenColor
+        }
+
+        Controls.Label {
+            text: qsTr("Recv") + ": " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
+            color: customPalette.positiveColor
             font.pixelSize: sizings.secondaryFontSize
             font.bold: true
             Layout.fillWidth: true
         }
 
-        Controls.ContentItem {
-            iconSource: "qrc:/icons/arrow_up.svg"
-            text: qsTr("Sent:") + " " + bytesSent.toFixed(1) + " " + qsTr("B/s")
-            textColor: customPalette.skyColor
+        Indicators.Led {
+            color: sent ? customPalette.skyColor : customPalette.sunkenColor
+        }
+
+        Controls.Label {
+            text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
+            color: customPalette.skyColor
             font.pixelSize: sizings.secondaryFontSize
             font.bold: true
             Layout.fillWidth: true
@@ -38,6 +46,7 @@ Controls.Popup {
                 drawer.setMode(DrawerPresenter.Connection);
                 info.close();
             }
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
     }
