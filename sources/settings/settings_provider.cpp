@@ -29,7 +29,9 @@ namespace
         { communication::timeout, 5000 },
         { communication::autoAdd, true },
         { communication::baudRate, 57600 },
-        { communication::port, 14550 },
+        { communication::udpPort, 14550 },
+        { communication::tcpPort, 5760 },
+        { communication::tcpAddress, "127.0.0.1" },
         { communication::statisticsCount, 50 },
 
         { parameters::defaultAcceptanceRadius, 3 },

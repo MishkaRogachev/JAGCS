@@ -11,8 +11,7 @@ UdpLink::UdpLink(int port, QObject* parent):
     m_port(port),
     m_autoResponse(true)
 {
-    QObject::connect(m_socket, &QUdpSocket::readyRead,
-                     this, &UdpLink::readPendingDatagrams);
+    QObject::connect(m_socket, &QUdpSocket::readyRead, this, &UdpLink::onReadyRead);
 }
 
 bool UdpLink::isConnected() const
@@ -121,7 +120,7 @@ bool UdpLink::sendDataImpl(const QByteArray& data)
     return ok;
 }
 
-void UdpLink::readPendingDatagrams()
+void UdpLink::onReadyRead()
 {
     while (m_socket->hasPendingDatagrams())
     {

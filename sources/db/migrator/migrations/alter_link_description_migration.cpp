@@ -31,7 +31,7 @@ bool AlterLinkDescriptionMigration::up()
     defaultUdpLink->setType(LinkDescription::Udp);
     defaultUdpLink->setName(qApp->translate("DefaultParamsMigration", "UDP Link"));
     defaultUdpLink->setParameter(LinkDescription::Port,
-                                 settings::Provider::value(settings::communication::port).toInt());
+                                 settings::Provider::value(settings::communication::udpPort).toInt());
     defaultUdpLink->setParameter(LinkDescription::UdpAutoResponse, true);
     linkRepository.save(defaultUdpLink);
 

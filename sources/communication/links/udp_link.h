@@ -44,7 +44,7 @@ namespace comm
         bool sendDataImpl(const QByteArray& data) override;
 
     private slots:
-        void readPendingDatagrams();
+        void onReadyRead();
 
     private:
         QUdpSocket* m_socket;

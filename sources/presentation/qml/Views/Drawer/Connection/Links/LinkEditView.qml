@@ -23,6 +23,7 @@ ColumnLayout {
     property alias name: nameField.text
     property alias devices: deviceBox.model
     property alias baudRates: baudBox.model
+    property alias address: addressField.text
     property alias port: portBox.value
     property alias endpoints: endpointList.endpoints
     property alias autoResponse: autoResponseBox.checked
@@ -64,8 +65,9 @@ ColumnLayout {
         text: {
             var str = qsTr("Type");
             switch (type) {
-            case LinkDescription.Udp: return str + ": " + qsTr("UDP");
             case LinkDescription.Serial: return str + ": " + qsTr("Serial");
+            case LinkDescription.Udp: return str + ": " + qsTr("UDP");
+            case LinkDescription.Tcp: return str + ": " + qsTr("TCP");
             default: return str + ": " + qsTr("Unknown");
             }
         }
@@ -88,7 +90,6 @@ ColumnLayout {
     Controls.TextField {
         id: nameField
         labelText: qsTr("Name")
-        placeholderText: qsTr("Enter name")
         onEditingFinished: changed = true
         Layout.fillWidth: true
     }
@@ -117,12 +118,20 @@ ColumnLayout {
         Layout.fillWidth: true
     }
 
+    Controls.TextField {
+        id: addressField
+        labelText: qsTr("Address")
+        visible: type == LinkDescription.Tcp
+        onEditingFinished: changed = true
+        Layout.fillWidth: true
+    }
+
     Controls.SpinBox {
         id: portBox
         labelText: qsTr("Port")
         from: 0
         to: 65535
-        visible: type == LinkDescription.Udp
+        visible: type == LinkDescription.Udp || type == LinkDescription.Tcp
         onValueChanged: changed = true
         Layout.fillWidth: true
     }

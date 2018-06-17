@@ -83,8 +83,9 @@ Controls.Card {
         Controls.Label {
             text: {
                 switch (type) {
-                case LinkDescription.Udp: return qsTr("UDP");
                 case LinkDescription.Serial: return qsTr("Serial");
+                case LinkDescription.Udp: return qsTr("UDP");
+                case LinkDescription.Tcp: return qsTr("TCP");
                 default: return qsTr("Unknown");
                 }
             }

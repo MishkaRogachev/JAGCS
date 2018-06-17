@@ -62,15 +62,21 @@ Item {
             width: list.width
 
             Controls.MenuItem {
+                text: qsTr("Serial")
+                implicitWidth: parent.width
+                onTriggered: presenter.addSerialLink()
+            }
+
+            Controls.MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
                 onTriggered: presenter.addUdpLink()
             }
 
             Controls.MenuItem {
-                text: qsTr("Serial")
+                text: qsTr("Tcp")
                 implicitWidth: parent.width
-                onTriggered: presenter.addSerialLink()
+                onTriggered: presenter.addTcpLink()
             }
         }
     }

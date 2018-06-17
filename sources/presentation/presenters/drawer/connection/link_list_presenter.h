@@ -20,8 +20,10 @@ namespace presentation
         ~LinkListPresenter() override;
 
     public slots:
-        void addUdpLink();
         void addSerialLink();
+        void addUdpLink();
+        void addTcpLink();
+
         void filter(const QString& filterString);
 
     protected:

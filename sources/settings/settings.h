@@ -18,7 +18,9 @@ namespace settings
         const QString timeout = "Communication/timeout";
         const QString autoAdd = "Communication/autoAdd";
         const QString baudRate = "Communication/baudRate";
-        const QString port = "Communication/port";
+        const QString udpPort = "Communication/udpPort";
+        const QString tcpPort = "Communication/tcpPort";
+        const QString tcpAddress = "Communication/tcpAddress";
         const QString statisticsCount = "Communication/statisticsCount";
     }
 

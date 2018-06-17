@@ -12,7 +12,8 @@ namespace
     {
         { LinkDescription::Serial, { LinkDescription::Device, LinkDescription::BaudRate } },
         { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints,
-                                  LinkDescription::UdpAutoResponse } }
+                                  LinkDescription::UdpAutoResponse } },
+        { LinkDescription::Tcp, { LinkDescription::Address, LinkDescription::Port } }
     };
 }
 

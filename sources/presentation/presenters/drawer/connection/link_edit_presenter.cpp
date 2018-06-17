@@ -47,6 +47,8 @@ void LinkEditPresenter::updateLink()
 {
     LinkPresenter::updateLink();
 
+    this->setViewProperty(PROPERTY(address),
+                          m_link ? m_link->parameter(dto::LinkDescription::Address) : 0);
     this->setViewProperty(PROPERTY(port),
                           m_link ? m_link->parameter(dto::LinkDescription::Port) : 0);
     this->setViewProperty(PROPERTY(device),
@@ -55,8 +57,8 @@ void LinkEditPresenter::updateLink()
                           m_link ? m_link->parameter(dto::LinkDescription::BaudRate) : 0);
     QString endpoints;
     if (m_link) endpoints = m_link->parameter(dto::LinkDescription::Endpoints).toString();
-    this->setViewProperty(PROPERTY(endpoints), endpoints.isEmpty() ?
-                              QStringList() : endpoints.split(::separator));
+    this->setViewProperty(PROPERTY(endpoints),
+                          endpoints.isEmpty() ? QStringList() : endpoints.split(::separator));
     this->setViewProperty(PROPERTY(autoResponse),
                           m_link ? m_link->parameter(dto::LinkDescription::UdpAutoResponse) : false);
 
@@ -103,6 +105,8 @@ void LinkEditPresenter::save()
                                 this->viewProperty(PROPERTY(device)).toString());
     m_link->setParameter(dto::LinkDescription::BaudRate,
                                 this->viewProperty(PROPERTY(baudRate)).toInt());
+    m_link->setParameter(dto::LinkDescription::Address,
+                                this->viewProperty(PROPERTY(address)).toString());
     m_link->setParameter(dto::LinkDescription::Port,
                                 this->viewProperty(PROPERTY(port)).toInt());
 

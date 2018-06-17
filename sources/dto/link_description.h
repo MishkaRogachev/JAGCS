@@ -24,7 +24,8 @@ namespace dto
         {
             UnknownType = 0,
             Serial,
-            Udp
+            Udp,
+            Tcp
         };
 
         enum Protocol: quint8
@@ -40,6 +41,7 @@ namespace dto
 
             Device,
             BaudRate,
+            Address,
             Port,
             Endpoints,
             UdpAutoResponse

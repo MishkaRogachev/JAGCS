@@ -49,19 +49,6 @@ LinkListPresenter::LinkListPresenter(QObject* parent):
 LinkListPresenter::~LinkListPresenter()
 {}
 
-void LinkListPresenter::addUdpLink()
-{
-    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
-
-    description->setName(tr("UDP Link"));
-    description->setType(dto::LinkDescription::Udp);
-    description->setParameter(dto::LinkDescription::Port,
-                              settings::Provider::value(settings::communication::port));
-    description->setParameter(dto::LinkDescription::UdpAutoResponse, true);
-
-    d->service->save(description);
-}
-
 void LinkListPresenter::addSerialLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
@@ -70,6 +57,33 @@ void LinkListPresenter::addSerialLink()
     description->setType(dto::LinkDescription::Serial);
     description->setParameter(dto::LinkDescription::BaudRate,
                               settings::Provider::value(settings::communication::baudRate));
+
+    d->service->save(description);
+}
+
+void LinkListPresenter::addUdpLink()
+{
+    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
+
+    description->setName(tr("UDP Link"));
+    description->setType(dto::LinkDescription::Udp);
+    description->setParameter(dto::LinkDescription::Port,
+                              settings::Provider::value(settings::communication::udpPort));
+    description->setParameter(dto::LinkDescription::UdpAutoResponse, true);
+
+    d->service->save(description);
+}
+
+void LinkListPresenter::addTcpLink()
+{
+    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
+
+    description->setName(tr("TCP Link"));
+    description->setType(dto::LinkDescription::Tcp);
+    description->setParameter(dto::LinkDescription::Address,
+                              settings::Provider::value(settings::communication::tcpAddress));
+    description->setParameter(dto::LinkDescription::Port,
+                              settings::Provider::value(settings::communication::tcpPort));
 
     d->service->save(description);
 }
