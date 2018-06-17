@@ -1,7 +1,11 @@
 # JAGCS
-Just another ground control station. Checkout stable branch for stable version, master branch is under reconstruction;)
+Joint architecture ground control station. Or just another ground control station:)
 
 [![Build Status](https://travis-ci.org/MishkaRogachev/JAGCS.svg?branch=master)](https://travis-ci.org/MishkaRogachev/JAGCS)
+
+Can be used as ground software for the MAVLink compatible drones, but other information protocols can be integrated.
+Build with Qt and works on Windows/Linux/Android(Mac support will be later).
+
 
 ### Source code
 Clone using git with command
