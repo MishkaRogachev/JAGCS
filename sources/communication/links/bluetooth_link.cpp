@@ -4,6 +4,8 @@
 #include <QtBluetooth/QBluetoothSocket>
 #include <QDebug>
 
+// TODO: QBluetoothDeviceDiscoveryAgent service
+
 using namespace comm;
 
 BluetoothLink::BluetoothLink(const QString& address, QObject* parent):
