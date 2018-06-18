@@ -13,7 +13,8 @@ namespace
         { LinkDescription::Serial, { LinkDescription::Device, LinkDescription::BaudRate } },
         { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints,
                                   LinkDescription::UdpAutoResponse } },
-        { LinkDescription::Tcp, { LinkDescription::Address, LinkDescription::Port } }
+        { LinkDescription::Tcp, { LinkDescription::Address, LinkDescription::Port } },
+        { LinkDescription::Bluetooth, { LinkDescription::Address } }
     };
 }
 

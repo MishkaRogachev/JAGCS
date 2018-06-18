@@ -48,6 +48,7 @@ find_package(Qt5 COMPONENTS
     Core
     Network
     SerialPort
+    Bluetooth
     Sql
     Svg
     Gui
@@ -174,6 +175,7 @@ qt5_use_modules(${PROJECT}
     Core
     Network
     SerialPort
+    Bluetooth
     Sql
     Svg
     Gui

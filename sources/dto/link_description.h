@@ -25,7 +25,8 @@ namespace dto
             UnknownType = 0,
             Serial,
             Udp,
-            Tcp
+            Tcp,
+            Bluetooth
         };
 
         enum Protocol: quint8

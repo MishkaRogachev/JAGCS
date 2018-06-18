@@ -86,6 +86,7 @@ Controls.Card {
                 case LinkDescription.Serial: return qsTr("Serial");
                 case LinkDescription.Udp: return qsTr("UDP");
                 case LinkDescription.Tcp: return qsTr("TCP");
+                case LinkDescription.Bluetooth: return qsTr("Bluetooth");
                 default: return qsTr("Unknown");
                 }
             }

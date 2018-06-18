@@ -80,7 +80,6 @@ bool SerialLink::sendDataImpl(const QByteArray& data)
     return m_port->write(data.data(), data.size()) > 0;
 }
 
-
 void SerialLink::readSerialData()
 {
     this->receiveData(m_port->readAll());

@@ -6,13 +6,14 @@
 #include "serial_link.h"
 #include "udp_link.h"
 #include "tcp_link.h"
+#include "bluetooth_link.h"
 
 using namespace dto;
 using namespace comm;
 
 namespace
 {
-    SerialLink* updateSerialLink(SerialLink* serialLink, const LinkDescriptionPtr& description)
+    SerialLink* updateSerial(SerialLink* serialLink, const LinkDescriptionPtr& description)
     {
         serialLink->setDevice(description->parameter(dto::LinkDescription::Device).toString());
         serialLink->setBaudRate(description->parameter(dto::LinkDescription::BaudRate).toInt());
@@ -20,7 +21,7 @@ namespace
         return serialLink;
     }
 
-    UdpLink* updateUdpLink(UdpLink* udpLink, const LinkDescriptionPtr& description)
+    UdpLink* updateUdp(UdpLink* udpLink, const LinkDescriptionPtr& description)
     {
         udpLink->setPort(description->parameter(dto::LinkDescription::Port).toInt());
 
@@ -44,7 +45,7 @@ namespace
         return udpLink;
     }
 
-    TcpLink* updateTcpLink(TcpLink* tcpLink, const LinkDescriptionPtr& description)
+    TcpLink* updateTcp(TcpLink* tcpLink, const LinkDescriptionPtr& description)
     {
         Endpoint endpoint;
 
@@ -54,6 +55,13 @@ namespace
         tcpLink->setEndpoint(endpoint);
 
         return tcpLink;
+    }
+
+    BluetoothLink* updateBluetooth(BluetoothLink* link, const LinkDescriptionPtr& description)
+    {
+        link->setAddress(description->parameter(LinkDescription::Address).toString());
+
+        return link;
     }
 }
 
@@ -69,9 +77,10 @@ AbstractLink* DescriptionLinkFactory::create()
 
     switch (m_description->type())
     {
-    case LinkDescription::Serial: return ::updateSerialLink(new SerialLink(), m_description);
-    case LinkDescription::Udp: return ::updateUdpLink(new UdpLink(), m_description);
-    case LinkDescription::Tcp: return ::updateTcpLink(new TcpLink(), m_description);
+    case LinkDescription::Serial: return ::updateSerial(new SerialLink(), m_description);
+    case LinkDescription::Udp: return ::updateUdp(new UdpLink(), m_description);
+    case LinkDescription::Tcp: return ::updateTcp(new TcpLink(), m_description);
+    case LinkDescription::Bluetooth: return ::updateBluetooth(new BluetoothLink(), m_description);
     default:
         return nullptr;
     }
@@ -87,7 +96,7 @@ void DescriptionLinkFactory::update(AbstractLink* link)
     {
         if (SerialLink* serialLink = qobject_cast<SerialLink*>(link))
         {
-            ::updateSerialLink(serialLink, m_description);
+            ::updateSerial(serialLink, m_description);
         }
         break;
     }
@@ -95,7 +104,7 @@ void DescriptionLinkFactory::update(AbstractLink* link)
     {
        if (UdpLink* udpLink = qobject_cast<UdpLink*>(link))
        {
-           ::updateUdpLink(udpLink, m_description);
+           ::updateUdp(udpLink, m_description);
        }
        break;
     }
@@ -103,7 +112,15 @@ void DescriptionLinkFactory::update(AbstractLink* link)
     {
        if (TcpLink* tcpLink = qobject_cast<TcpLink*>(link))
        {
-           ::updateTcpLink(tcpLink, m_description);
+           ::updateTcp(tcpLink, m_description);
+       }
+       break;
+    }
+    case LinkDescription::Bluetooth:
+    {
+       if (BluetoothLink* bluetoothLink = qobject_cast<BluetoothLink*>(link))
+       {
+           ::updateBluetooth(bluetoothLink, m_description);
        }
        break;
     }

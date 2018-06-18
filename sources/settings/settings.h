@@ -21,6 +21,7 @@ namespace settings
         const QString udpPort = "Communication/udpPort";
         const QString tcpPort = "Communication/tcpPort";
         const QString tcpAddress = "Communication/tcpAddress";
+        const QString bluetoothAddress = "Communication/bluetoothAddress";
         const QString statisticsCount = "Communication/statisticsCount";
     }
 

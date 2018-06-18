@@ -68,6 +68,7 @@ ColumnLayout {
             case LinkDescription.Serial: return str + ": " + qsTr("Serial");
             case LinkDescription.Udp: return str + ": " + qsTr("UDP");
             case LinkDescription.Tcp: return str + ": " + qsTr("TCP");
+            case LinkDescription.Bluetooth: return str + ": " + qsTr("Bluetooth");
             default: return str + ": " + qsTr("Unknown");
             }
         }
@@ -121,7 +122,7 @@ ColumnLayout {
     Controls.TextField {
         id: addressField
         labelText: qsTr("Address")
-        visible: type == LinkDescription.Tcp
+        visible: type == LinkDescription.Tcp || type == LinkDescription.Bluetooth
         onEditingFinished: changed = true
         Layout.fillWidth: true
     }

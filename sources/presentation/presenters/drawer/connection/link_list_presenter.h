@@ -23,6 +23,7 @@ namespace presentation
         void addSerialLink();
         void addUdpLink();
         void addTcpLink();
+        void addBluetoothLink();
 
         void filter(const QString& filterString);
 

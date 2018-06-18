@@ -78,6 +78,12 @@ Item {
                 implicitWidth: parent.width
                 onTriggered: presenter.addTcpLink()
             }
+
+            Controls.MenuItem {
+                text: qsTr("Bluetooth")
+                implicitWidth: parent.width
+                onTriggered: presenter.addBluetoothLink()
+            }
         }
     }
 }

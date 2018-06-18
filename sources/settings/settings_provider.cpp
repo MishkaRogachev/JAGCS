@@ -32,6 +32,7 @@ namespace
         { communication::udpPort, 14550 },
         { communication::tcpPort, 5760 },
         { communication::tcpAddress, "127.0.0.1" },
+        { communication::bluetoothAddress, "HC-06" },
         { communication::statisticsCount, 50 },
 
         { parameters::defaultAcceptanceRadius, 3 },

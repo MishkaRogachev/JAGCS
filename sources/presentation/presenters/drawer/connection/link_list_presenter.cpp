@@ -88,6 +88,18 @@ void LinkListPresenter::addTcpLink()
     d->service->save(description);
 }
 
+void LinkListPresenter::addBluetoothLink()
+{
+    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
+
+    description->setName(tr("Bluetooth"));
+    description->setType(dto::LinkDescription::Bluetooth);
+    description->setParameter(dto::LinkDescription::Address,
+                              settings::Provider::value(settings::communication::bluetoothAddress));
+
+    d->service->save(description);
+}
+
 void LinkListPresenter::filter(const QString& filterString)
 {
     d->filterModel.setFilterFixedString(filterString);
