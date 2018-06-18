@@ -742,13 +742,23 @@
 <context>
     <name>ConnectionInfo</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="17"/>
-        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="26"/>
+        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="24"/>
+        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="36"/>
         <source>B/s</source>
         <translation>Б/с</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="34"/>
+        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="24"/>
+        <source>Recv</source>
+        <translation>Получ.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="36"/>
+        <source>Sent</source>
+        <translation>Отпр.</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Topbar/Connection/ConnectionInfo.qml" line="44"/>
         <source>Connection</source>
         <translation>Связь</translation>
     </message>
@@ -1841,12 +1851,12 @@
 <context>
     <name>LinkEditView</name>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="66"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="67"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="69"/>
         <source>UDP</source>
         <translation>UDP</translation>
     </message>
@@ -1856,73 +1866,87 @@
         <translation>Последовательный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="69"/>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="82"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="72"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="85"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="77"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="80"/>
         <source>Protocol</source>
         <translation>Протокол</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="90"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="93"/>
         <source>Name</source>
         <translation>Наименование</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="91"/>
         <source>Enter name</source>
-        <translation>Введите наименование</translation>
+        <translation type="vanished">Введите наименование</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="122"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="132"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="98"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="100"/>
         <source>Device</source>
         <translation>Устройство</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="38"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="39"/>
         <source>Link</source>
         <translation>Связь</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="110"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="70"/>
+        <source>TCP</source>
+        <translation>TCP</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="71"/>
+        <source>Bluetooth</source>
+        <translation>Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="112"/>
         <source>Baud rate</source>
         <translation>Символьная скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="131"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="124"/>
+        <source>Address</source>
+        <translation>Адрес</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="141"/>
         <source>Setted endpoints</source>
         <translation>Заданые узлы</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="147"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="157"/>
         <source>Autoresponse on get data</source>
         <translation>Отвечать на данные</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="179"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="189"/>
         <source>Recv.</source>
         <translation>Получ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="202"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="212"/>
         <source>Sent</source>
         <translation>Отпр.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="222"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="232"/>
         <source>Disconnect</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="222"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkEditView.qml" line="232"/>
         <source>Connect</source>
         <translation>Подключить</translation>
     </message>
@@ -1944,12 +1968,22 @@
         <translation>Добавить задание</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkListView.qml" line="65"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkListView.qml" line="71"/>
         <source>Udp</source>
         <translation>Udp</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkListView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkListView.qml" line="77"/>
+        <source>Tcp</source>
+        <translation>Tcp</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkListView.qml" line="83"/>
+        <source>Bluetooth</source>
+        <translation>Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkListView.qml" line="65"/>
         <source>Serial</source>
         <translation>Последовательный</translation>
     </message>
@@ -1961,35 +1995,45 @@
         <translation type="obsolete">Тип</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="28"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="31"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="71"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="87"/>
         <source>UDP</source>
         <translation>UDP</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="72"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="86"/>
         <source>Serial</source>
         <translation>Последовательный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="73"/>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="85"/>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="86"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="88"/>
+        <source>TCP</source>
+        <translation>TCP</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="89"/>
+        <source>Bluetooth</source>
+        <translation>Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="90"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="103"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="104"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="94"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="117"/>
         <source>Recv</source>
         <translation>Получ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="94"/>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="101"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="117"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="128"/>
         <source>B/s</source>
         <translation>Б/с</translation>
     </message>
@@ -2022,7 +2066,7 @@
         <translation type="obsolete">Символьная скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="101"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="128"/>
         <source>Sent</source>
         <translation>Отпр.</translation>
     </message>
@@ -2035,12 +2079,12 @@
         <translation type="vanished">Действия</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="36"/>
         <source>Disconnect</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="33"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="36"/>
         <source>Connect</source>
         <translation>Подключить</translation>
     </message>
@@ -2053,7 +2097,7 @@
         <translation type="obsolete">Восстановить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="37"/>
+        <location filename="../sources/presentation/qml/Views/Drawer/Connection/Links/LinkView.qml" line="40"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -3773,17 +3817,17 @@
         <translation>панель подготовки</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="112"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="111"/>
         <source>Track vehicle</source>
         <translation>Отслеживать аппарат</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="124"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="123"/>
         <source>Center vehicle</source>
         <translation>Центрировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="131"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="130"/>
         <source>Track yaw</source>
         <translation>Курс карты</translation>
     </message>
@@ -3792,32 +3836,32 @@
         <translation type="vanished">Отслеживать курс</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="140"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="139"/>
         <source>Disable</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="140"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="139"/>
         <source>Enable</source>
         <translation>Включить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="141"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="140"/>
         <source>manual control</source>
         <translation>ручное управление</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="161"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="160"/>
         <source>Lock</source>
         <translation>Заблокировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="161"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="160"/>
         <source>Unlock</source>
         <translation>Разблокировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="162"/>
+        <location filename="../sources/presentation/qml/Views/Dashboard/SingleVehicleDisplay/TopBarDelegate.qml" line="161"/>
         <source>indicators</source>
         <translation>приборы</translation>
     </message>
@@ -4372,33 +4416,33 @@
 <context>
     <name>domain::CommunicationService</name>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="218"/>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="263"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="222"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="267"/>
         <source>Link</source>
         <translation>Связь</translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="219"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="223"/>
         <source>Connection established</source>
         <translation>Соединение установлено</translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="219"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="223"/>
         <source>Connection lost</source>
         <translation>Потеря связи</translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="259"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="263"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="260"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="264"/>
         <source>Switched on MAVLINK v.1</source>
         <translation>Переключена на MAVLINK v.1</translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="261"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="265"/>
         <source>Switched on MAVLINK v.2</source>
         <translation>Переключена на MAVLINK v.2</translation>
     </message>
@@ -4530,12 +4574,22 @@
         <translation type="obsolete">Новое последовательное соединение</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/connection/link_list_presenter.cpp" line="56"/>
+        <location filename="../sources/presentation/presenters/drawer/connection/link_list_presenter.cpp" line="68"/>
         <source>UDP Link</source>
         <translation>UDP Связь</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/connection/link_list_presenter.cpp" line="69"/>
+        <location filename="../sources/presentation/presenters/drawer/connection/link_list_presenter.cpp" line="81"/>
+        <source>TCP Link</source>
+        <translation>TCP Связь</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/drawer/connection/link_list_presenter.cpp" line="95"/>
+        <source>Bluetooth</source>
+        <translation>Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/drawer/connection/link_list_presenter.cpp" line="56"/>
         <source>Serial Link</source>
         <translation>Послед. связь</translation>
     </message>
