@@ -1,65 +1,82 @@
 #include "bluetooth_link.h"
 
 // Qt
-#include <QtBluetooth/QBluetoothSocket>
+#include <QBluetoothServiceDiscoveryAgent> // TODO: to service bluetooth service
+#include <QBluetoothSocket>
 #include <QDebug>
-
-// TODO: QBluetoothDeviceDiscoveryAgent service
 
 using namespace comm;
 
+class BluetoothLink::Impl
+{
+public:
+    QString address;
+
+    QBluetoothServiceDiscoveryAgent* discovery;
+    QBluetoothSocket* socket = nullptr;
+};
+
 BluetoothLink::BluetoothLink(const QString& address, QObject* parent):
     AbstractLink(parent),
-    m_address(address),
-    m_socket(new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this))
+    d(new Impl())
 {
-    connect(m_socket, &QBluetoothSocket::readyRead, this, &BluetoothLink::onReadyRead);
+    d->address = address;
 
-    connect(m_socket, &QBluetoothSocket::connected, this, [this]() { emit connectedChanged(true); });
-    connect(m_socket, &QBluetoothSocket::disconnected, this, [this]() { emit connectedChanged(false); });
+    d->discovery = new QBluetoothServiceDiscoveryAgent(this);
+    QObject::connect(d->discovery, &QBluetoothServiceDiscoveryAgent::serviceDiscovered,
+                     this, [this](const QBluetoothServiceInfo& info) {
+        if (d->address == info.device().name()) d->socket->connectToService(info);
+    });
+
+    d->socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
+
+    connect(d->socket, &QBluetoothSocket::readyRead, this, &BluetoothLink::onReadyRead);
+    connect(d->socket, &QBluetoothSocket::connected, this, [this]() { emit connectedChanged(true); });
+    connect(d->socket, &QBluetoothSocket::disconnected, this, [this]() { emit connectedChanged(false); });
 
 // TODO: AbstractSocketLink
-//    connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
+//    connect(d->socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
 //         [=](QAbstractSocket::SocketError socketError){
 //    });
 }
 
+BluetoothLink::~BluetoothLink()
+{}
+
 bool BluetoothLink::isConnected() const
 {
-    return m_socket->state() == QBluetoothSocket::ConnectedState;
+    return d->socket->state() == QBluetoothSocket::ConnectedState;
 }
 
 QString BluetoothLink::address() const
 {
-    return m_address;
+    return d->address;
 }
 
 void BluetoothLink::connectLink()
 {
-    if (this->isConnected()) return;
-
-    m_socket->connectToService(QBluetoothAddress(m_address),
-                               QBluetoothUuid(QBluetoothUuid::SerialPort));
+    if (d->discovery->isActive()) d->discovery->stop();
+    d->discovery->start();
 }
 
 void BluetoothLink::disconnectLink()
 {
-    if (!this->isConnected()) return;
+    if (this->isConnected()) d->socket->disconnectFromService();
 
-    m_socket->disconnectFromService();
+    if (d->discovery->isActive()) d->discovery->stop();
 }
 
 void BluetoothLink::setAddress(QString address)
 {
-    if (m_address == address) return;
+    if (d->address == address) return;
 
-    m_address = address;
+    d->address = address;
 
     if (this->isConnected())
     {
-        m_socket->disconnectFromService();
-        m_socket->connectToService(QBluetoothAddress(m_address),
-                                   QBluetoothUuid(QBluetoothUuid::SerialPort));
+        d->socket->disconnectFromService();
+        if (d->discovery->isActive()) d->discovery->stop();
+        d->discovery->start();
     }
 
     emit addressChanged(address);
@@ -67,10 +84,10 @@ void BluetoothLink::setAddress(QString address)
 
 bool BluetoothLink::sendDataImpl(const QByteArray& data)
 {
-    return m_socket->write(data) > 0;
+    return d->socket->write(data) > 0;
 }
 
 void BluetoothLink::onReadyRead()
 {
-    while (m_socket->bytesAvailable()) this->receiveData(m_socket->readAll());
+    while (d->socket->bytesAvailable()) this->receiveData(d->socket->readAll());
 }

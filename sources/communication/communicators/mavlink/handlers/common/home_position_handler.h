@@ -23,7 +23,7 @@ namespace comm
         void sendHomePositionRequest(quint8 mavId);
 
     protected:
-        void timerEvent(QTimerEvent* event);
+        void timerEvent(QTimerEvent* event) override;
 
     private slots:
         void addVehicleTimer(int vehicleId);

@@ -58,7 +58,7 @@ namespace comm
         void processMissionReached(const mavlink_message_t& message);
 
         void enterStage(Stage stage, quint8 mavId);
-        void timerEvent(QTimerEvent* event);
+        void timerEvent(QTimerEvent* event) override;
 
     private:
         class Impl;
