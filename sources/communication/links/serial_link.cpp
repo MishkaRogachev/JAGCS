@@ -79,7 +79,8 @@ void SerialLink::readSerialData()
 
 void SerialLink::onError(int error)
 {
-    switch (error) {
+    switch (error)
+    {
     case QSerialPort::NoError:
         break;
     case QSerialPort::DeviceNotFoundError:

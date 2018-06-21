@@ -3,6 +3,8 @@
 
 #include "abstract_link.h"
 
+class QBluetoothSocket;
+
 namespace comm
 {
     class BluetoothLink: public AbstractLink
@@ -11,7 +13,6 @@ namespace comm
 
     public:
         explicit BluetoothLink(const QString& address = QString(), QObject* parent = nullptr);
-        ~BluetoothLink() override;
 
         bool isConnected() const override;
 
@@ -21,7 +22,7 @@ namespace comm
         void connectLink() override;
         void disconnectLink() override;
 
-        void setAddress(QString address);
+        void setAddress(const QString& address);
 
     signals:
         void addressChanged(QString address);
@@ -31,10 +32,11 @@ namespace comm
 
     private slots:
         void onReadyRead();
+        void onError(int error);
 
     private:
-        class Impl;
-        QScopedPointer<Impl> const d;
+        QString m_address;
+        QBluetoothSocket* m_socket = nullptr;
     };
 }
 

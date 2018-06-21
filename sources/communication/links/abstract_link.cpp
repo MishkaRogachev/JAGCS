@@ -45,7 +45,8 @@ void AbstractLink::receiveData(const QByteArray& data)
 
 void AbstractLink::onSocketError(int error)
 {
-    switch (error) {
+    switch (error)
+    {
     case QAbstractSocket::ConnectionRefusedError:
         emit errored("The connection was refused by the peer (or timed out)");
         break;
