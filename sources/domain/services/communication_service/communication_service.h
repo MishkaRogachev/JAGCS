@@ -59,6 +59,7 @@ namespace domain
                                         int packetsDrops);
         void onMavlinkProtocolChanged(int linkId,
                                       dto::LinkDescription::Protocol protocol);
+        void onLinkErrored(int linkId, const QString& error);
         void onDevicesChanged();
 
     private:

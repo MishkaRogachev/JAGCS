@@ -42,6 +42,7 @@ namespace domain
                                     dto::LinkDescription::Protocol protocol);
         void linkSent(int linkId);
         void linkRecv(int linkId);
+        void linkErrored(int linkId, QString error);
 
     private slots:
         void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,

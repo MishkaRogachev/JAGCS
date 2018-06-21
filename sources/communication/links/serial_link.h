@@ -36,7 +36,7 @@ namespace comm
 
     private slots:
         void readSerialData();
-        void onError();
+        void onError(int error);
 
     private:
         QSerialPort* m_port;

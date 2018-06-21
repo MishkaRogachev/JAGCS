@@ -136,6 +136,8 @@ void CommunicatorWorker::updateLinkImpl(int linkId,
         link->setParent(this);
         connect(link, &AbstractLink::dataReceived, this, [this, linkId]() { emit linkRecv(linkId); });
         connect(link, &AbstractLink::dataSent, this, [this, linkId]() { emit linkSent(linkId); });
+        connect(link, &AbstractLink::errored, this,
+                [this, linkId](const QString& error) { emit linkErrored(linkId, error); });
 
         d->descriptedLinks[linkId] = link;
         if (d->communicator) d->communicator->addLink(link);
