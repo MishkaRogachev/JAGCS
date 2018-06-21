@@ -92,8 +92,6 @@ void MavLinkCommunicator::addLink(AbstractLink* link)
     d->linkChannels[link] = d->avalibleChannels.takeFirst();
     if (d->avalibleChannels.isEmpty()) emit addLinkEnabledChanged(false);
 
-    this->switchLinkProtocol(link, MavLink1); // By default, use MavLink v1
-
     AbstractCommunicator::addLink(link);
 }
 
