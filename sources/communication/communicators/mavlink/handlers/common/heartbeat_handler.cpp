@@ -174,8 +174,11 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
         ModeHelperFactory f;
         d->modeHelpers[message.sysid].reset(f.create(heartbeat.autopilot, heartbeat.type));
 
-        portion.setParameter({ Telemetry::System, Telemetry::AvailableModes },
-                             qVariantFromValue(d->modeHelpers[message.sysid]->availableModes()));
+        if (d->modeHelpers[message.sysid])
+        {
+            portion.setParameter({ Telemetry::System, Telemetry::AvailableModes },
+                                 qVariantFromValue(d->modeHelpers[message.sysid]->availableModes()));
+        }
     }
 
     if (d->modeHelpers[message.sysid])
