@@ -59,7 +59,7 @@ namespace
 
     BluetoothLink* updateBluetooth(BluetoothLink* link, const LinkDescriptionPtr& description)
     {
-        link->setAddress(description->parameter(LinkDescription::Address).toString());
+        link->setAddress(description->parameter(LinkDescription::Device).toString());
 
         return link;
     }

@@ -8,7 +8,6 @@ import "qrc:/Indicators" as Indicators
 Controls.Popup {
     id: info
 
-    width: sizings.controlBaseSize * 5
     closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
     GridLayout {
@@ -41,7 +40,10 @@ Controls.Popup {
         }
 
         Controls.Button {
-            text: qsTr("Connection")
+            text: qsTr("Open connection menu")
+            flat: true
+            font.pixelSize: sizings.secondaryFontSize
+            font.bold: true
             onClicked: {
                 drawer.setMode(DrawerPresenter.Connection);
                 info.close();

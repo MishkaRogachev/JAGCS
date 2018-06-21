@@ -11,6 +11,7 @@
 
 #include "service_registry.h"
 #include "serial_ports_service.h"
+#include "bluetooth_service.h"
 #include "communication_service.h"
 
 #include "link_statistics_model.h"
@@ -25,10 +26,15 @@ using namespace presentation;
 LinkEditPresenter::LinkEditPresenter(QObject* parent):
     LinkPresenter(parent),
     m_serialService(serviceRegistry->serialPortService()),
+    m_bluetoothService(serviceRegistry->bluetoothService()),
     m_statisticsModel(new LinkStatisticsModel(this))
 {
     connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
             this, &LinkEditPresenter::updateDevices);
+    connect(m_bluetoothService, &domain::BluetoothService::deviceAdded,
+            this, &LinkEditPresenter::updateDevices);
+    connect(m_bluetoothService, &domain::BluetoothService::stopped,
+            this, [this](){ this->setViewProperty(PROPERTY(discoveringBluetooth), false);});
 }
 
 void LinkEditPresenter::setLink(int id)
@@ -74,26 +80,40 @@ void LinkEditPresenter::updateRates()
 
 void LinkEditPresenter::updateDevices()
 {
-    if (!this->view()) return;
+    if (m_link.isNull()) return;
 
     QStringList devices;
     devices.append(QString());
 
-    for (const QString& device: m_serialService->availableDevices())
+    if (m_link->type() == dto::LinkDescription::Serial)
     {
-        devices.append(device);
+        for (const QString& device: m_serialService->availableDevices()) devices.append(device);
+    }
+    else if (m_link->type() == dto::LinkDescription::Bluetooth)
+    {
+        this->setViewProperty(PROPERTY(discoveringBluetooth), m_bluetoothService->isDiscoveryActive());
+
+        for (const QString& device: m_bluetoothService->devices()) devices.append(device);
     }
 
-    if (m_link)
-    {
-        QString device = m_link->parameter(dto::LinkDescription::Device).toString();
-        if (m_link && !devices.contains(device))
-        {
-            devices.append(device);
-        }
-    }
+    QString device = m_link->parameter(dto::LinkDescription::Device).toString();
+    if (!devices.contains(device)) devices.append(device);
 
     this->setViewProperty(PROPERTY(devices), devices);
+}
+
+void LinkEditPresenter::startBluetoothDiscovery()
+{
+    m_bluetoothService->startDiscovery();
+
+    this->setViewProperty(PROPERTY(discoveringBluetooth), m_bluetoothService->isDiscoveryActive());
+}
+
+void LinkEditPresenter::stopBluetoothDiscovery()
+{
+    m_bluetoothService->stopDiscovery();
+
+    this->setViewProperty(PROPERTY(discoveringBluetoothBluetooth), m_bluetoothService->isDiscoveryActive());
 }
 
 void LinkEditPresenter::save()

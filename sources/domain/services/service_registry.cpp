@@ -10,6 +10,7 @@
 #include "video_service.h"
 #include "command_service.h"
 #include "serial_ports_service.h"
+#include "bluetooth_service.h"
 #include "communication_service.h"
 
 using namespace domain;
@@ -25,6 +26,7 @@ public:
     VideoService videoService;
     CommandService commandService;
     SerialPortService serialPortService;
+    BluetoothService bluetoothService;
     CommunicationService communicationService;
 
     Impl():
@@ -83,4 +85,9 @@ CommunicationService* ServiceRegistry::communicationService()
 SerialPortService* ServiceRegistry::serialPortService()
 {
     return &d->serialPortService;
+}
+
+BluetoothService*ServiceRegistry::bluetoothService()
+{
+    return &d->bluetoothService;
 }

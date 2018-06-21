@@ -7,6 +7,7 @@
 namespace domain
 {
     class SerialPortService;
+    class BluetoothService;
 }
 
 namespace presentation
@@ -25,6 +26,8 @@ namespace presentation
         void updateLink() override;
         void updateRates();
         void updateDevices();
+        void startBluetoothDiscovery();
+        void stopBluetoothDiscovery();
         void save();
 
     protected:
@@ -35,6 +38,8 @@ namespace presentation
 
     private:
         domain::SerialPortService* const m_serialService;
+        domain::BluetoothService* const m_bluetoothService;
+
         LinkStatisticsModel* const m_statisticsModel;
     };
 }

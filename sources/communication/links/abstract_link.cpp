@@ -88,6 +88,7 @@ void AbstractLink::onSocketError(int error)
         break;
     default:
     case QAbstractSocket::UnknownSocketError:
+        qDebug() << QAbstractSocket::SocketError(error);
         emit errored("An unidentified error occurred");
         break;
     }

@@ -12,6 +12,7 @@ namespace domain
     class VideoService;
     class CommandService;
     class SerialPortService;
+    class BluetoothService;
     class CommunicationService;
 
     class ServiceRegistry
@@ -28,6 +29,7 @@ namespace domain
         VideoService* videoService();
         CommandService* commandService();
         SerialPortService* serialPortService();
+        BluetoothService* bluetoothService();
         CommunicationService* communicationService();
 
     private:

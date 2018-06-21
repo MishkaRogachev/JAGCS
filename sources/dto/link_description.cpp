@@ -14,7 +14,7 @@ namespace
         { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints,
                                   LinkDescription::UdpAutoResponse } },
         { LinkDescription::Tcp, { LinkDescription::Address, LinkDescription::Port } },
-        { LinkDescription::Bluetooth, { LinkDescription::Address } }
+        { LinkDescription::Bluetooth, { LinkDescription::Device } }
     };
 }
 

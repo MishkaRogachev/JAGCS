@@ -94,6 +94,7 @@ void BluetoothLink::onError(int error)
 //            break;
     default:
     case QBluetoothSocket::UnknownSocketError:
+        qDebug() << QBluetoothSocket::SocketError(error);
         emit errored("An unknown error has occurred");
         break;
     }

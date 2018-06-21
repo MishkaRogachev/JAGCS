@@ -18,6 +18,7 @@ ColumnLayout {
     property int protocol: LinkDescription.UnknownProtocol
     property string device
     property int baudRate
+    property bool discoveringBluetooth: false
     property var statistics
 
     property alias name: nameField.text
@@ -98,13 +99,31 @@ ColumnLayout {
     Controls.ComboBox {
         id: deviceBox
         labelText: qsTr("Device")
-        visible: type == LinkDescription.Serial
+        visible: type == LinkDescription.Serial || type == LinkDescription.Bluetooth
         model: []
         onDisplayTextChanged: {
             device = displayText;
             changed = true;
         }
         Layout.fillWidth: true
+    }
+
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.Button {
+            text: qsTr("Start")
+            enabled: !discoveringBluetooth
+            onClicked: presenter.startBluetoothDiscovery()
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: qsTr("Stop")
+            enabled: discoveringBluetooth
+            onClicked: presenter.stopBluetoothDiscovery()
+            Layout.fillWidth: true
+        }
     }
 
     Controls.ComboBox {
@@ -122,7 +141,7 @@ ColumnLayout {
     Controls.TextField {
         id: addressField
         labelText: qsTr("Address")
-        visible: type == LinkDescription.Tcp || type == LinkDescription.Bluetooth
+        visible: type == LinkDescription.Tcp
         onEditingFinished: changed = true
         Layout.fillWidth: true
     }
