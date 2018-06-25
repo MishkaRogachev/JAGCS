@@ -31,7 +31,7 @@ LinkEditPresenter::LinkEditPresenter(QObject* parent):
 {
     connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
             this, &LinkEditPresenter::updateDevices);
-    connect(m_bluetoothService, &domain::BluetoothService::deviceAdded,
+    connect(m_bluetoothService, &domain::BluetoothService::deviceDiscovered,
             this, &LinkEditPresenter::updateDevices);
     connect(m_bluetoothService, &domain::BluetoothService::stopped,
             this, [this](){ this->setViewProperty(PROPERTY(discoveringBluetooth), false);});
@@ -93,7 +93,7 @@ void LinkEditPresenter::updateDevices()
     {
         this->setViewProperty(PROPERTY(discoveringBluetooth), m_bluetoothService->isDiscoveryActive());
 
-        for (const QString& device: m_bluetoothService->devices()) devices.append(device);
+        for (const QString& device: m_bluetoothService->discoveredDevices()) devices.append(device);
     }
 
     QString device = m_link->parameter(dto::LinkDescription::Device).toString();

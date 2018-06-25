@@ -3,10 +3,11 @@
 
 #include <QObject>
 
+class QBluetoothDeviceInfo;
+
 namespace domain
 {
-    // TODO: serial device service
-    class BluetoothService : public QObject
+    class BluetoothService: public QObject
     {
         Q_OBJECT
 
@@ -14,7 +15,9 @@ namespace domain
         explicit BluetoothService(QObject* parent = nullptr);
         ~BluetoothService() override;
 
-        QStringList devices() const;
+        bool isAvailable() const;
+
+        QStringList discoveredDevices() const;
         bool isDiscoveryActive() const;
 
     public:
@@ -22,12 +25,13 @@ namespace domain
         void stopDiscovery();
 
     signals:
-        void deviceAdded(QString device);
+        void deviceDiscovered(QString device);
         void stopped();
 
     private slots:
+        void onDeviceDiscovered(const QBluetoothDeviceInfo& info);
         void onStopped();
-        void onEroor(int error);
+        void onError(int error);
 
     private:
         class Impl;

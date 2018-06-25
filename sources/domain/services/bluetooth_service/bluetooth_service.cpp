@@ -2,6 +2,7 @@
 
 // Qt
 #include <QPointer>
+#include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QDebug>
 
@@ -13,25 +14,33 @@ using namespace domain;
 class BluetoothService::Impl
 {
 public:
+    QBluetoothLocalDevice* device;
     QPointer<QBluetoothDeviceDiscoveryAgent> agent;
-    QList<QBluetoothDeviceInfo> devices;
+    QList<QBluetoothDeviceInfo> infos;
 };
 
 BluetoothService::BluetoothService(QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    d->device = new QBluetoothLocalDevice(this);
+}
 
 BluetoothService::~BluetoothService()
 {
     this->stopDiscovery();
 }
 
-QStringList BluetoothService::devices() const
+bool BluetoothService::isAvailable() const
+{
+    return d->device->isValid();
+}
+
+QStringList BluetoothService::discoveredDevices() const
 {
     QStringList list;
 
-    for (const QBluetoothDeviceInfo& device: d->devices)
+    for (const QBluetoothDeviceInfo& device: d->infos)
     {
         list.append(device.address().toString());
     }
@@ -50,21 +59,14 @@ void BluetoothService::startDiscovery()
 
     d->agent = new QBluetoothDeviceDiscoveryAgent(this);
 
+    connect(d->agent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+            this, &BluetoothService::onDeviceDiscovered);
     connect(d->agent, &QBluetoothDeviceDiscoveryAgent::finished,
             this, &BluetoothService::onStopped);
     connect(d->agent, &QBluetoothDeviceDiscoveryAgent::canceled,
             this, &BluetoothService::onStopped);
-
-    connect(d->agent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-            this, [this](const QBluetoothDeviceInfo& info) {
-        if (!info.isValid()) return;
-
-        d->devices.append(info);
-        emit deviceAdded(info.address().toString());
-    });
-
     connect(d->agent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(
-                &QBluetoothDeviceDiscoveryAgent::error), this, &BluetoothService::onEroor);
+                &QBluetoothDeviceDiscoveryAgent::error), this, &BluetoothService::onError);
 
     d->agent->setInquiryType(QBluetoothDeviceDiscoveryAgent::GeneralUnlimitedInquiry);
     d->agent->start();
@@ -75,6 +77,14 @@ void BluetoothService::stopDiscovery()
     if (d->agent) d->agent->stop();
 }
 
+void BluetoothService::onDeviceDiscovered(const QBluetoothDeviceInfo& info)
+{
+    if (!info.isValid() || d->infos.contains(info)) return;
+
+    d->infos.append(info);
+    emit deviceDiscovered(info.address().toString());
+}
+
 void BluetoothService::onStopped()
 {
     d->agent->deleteLater();
@@ -82,7 +92,7 @@ void BluetoothService::onStopped()
     emit stopped();
 }
 
-void BluetoothService::onEroor(int error)
+void BluetoothService::onError(int error)
 {
     switch (error)
     {
