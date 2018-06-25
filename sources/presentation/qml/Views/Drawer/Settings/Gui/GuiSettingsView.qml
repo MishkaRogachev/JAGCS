@@ -17,6 +17,7 @@ Item {
     property int speedStep: 0
     property int altitudeStep: 0
 
+    property alias fullscreenVisible: fullscreenBox.visible
     property alias fullscreen: fullscreenBox.checked
     property alias locales: languageBox.model
     property alias localeIndex: languageBox.currentIndex

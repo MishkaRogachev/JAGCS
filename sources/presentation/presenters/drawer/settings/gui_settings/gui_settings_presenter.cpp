@@ -49,6 +49,12 @@ int GuiSettingsPresenter::altitudeUnitFromIndex(int index)
 
 void GuiSettingsPresenter::updateView()
 {
+#ifdef Q_OS_ANDROID
+    this->setViewProperty(PROPERTY(fullscreenVisible), false);
+#else
+    this->setViewProperty(PROPERTY(fullscreenVisible), true);
+#endif
+
     this->setViewProperty(PROPERTY(fullscreen), settings::Provider::value(settings::gui::fullscreen));
 
     const QStringList& locales = translationManager->avalibleLocales();
