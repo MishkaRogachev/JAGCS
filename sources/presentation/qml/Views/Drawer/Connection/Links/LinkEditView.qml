@@ -62,18 +62,30 @@ ColumnLayout {
         Component.onCompleted: updateRates()
     }
 
-    Controls.Label {
-        text: {
-            var str = qsTr("Type");
-            switch (type) {
-            case LinkDescription.Serial: return str + ": " + qsTr("Serial");
-            case LinkDescription.Udp: return str + ": " + qsTr("UDP");
-            case LinkDescription.Tcp: return str + ": " + qsTr("TCP");
-            case LinkDescription.Bluetooth: return str + ": " + qsTr("Bluetooth");
-            default: return str + ": " + qsTr("Unknown");
+    RowLayout {
+        spacing: 0
+
+        Controls.Label {
+            text: {
+                var str = qsTr("Type");
+                switch (type) {
+                case LinkDescription.Serial: return str + ": " + qsTr("Serial");
+                case LinkDescription.Udp: return str + ": " + qsTr("UDP");
+                case LinkDescription.Tcp: return str + ": " + qsTr("TCP");
+                case LinkDescription.Bluetooth: return str + ": " + qsTr("Bluetooth");
+                default: return str + ": " + qsTr("Unknown");
+                }
             }
+            Layout.fillWidth: true
         }
-        Layout.fillWidth: true
+
+        Controls.Button {
+            iconSource: connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"
+            tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
+            flat:true
+            enabled: !changed
+            onClicked: presenter.setConnected(!connected)
+        }
     }
 
     Controls.Label {
@@ -110,6 +122,7 @@ ColumnLayout {
 
     RowLayout {
         spacing: sizings.spacing
+        visible: type == LinkDescription.Bluetooth
 
         Controls.Button {
             text: qsTr("Start")
@@ -244,14 +257,6 @@ ColumnLayout {
                 }
             }
         }
-    }
-
-    Controls.Button {
-        enabled: !changed
-        text: connected ? qsTr("Disconnect") : qsTr("Connect")
-        iconSource: connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"
-        onClicked: presenter.setConnected(!connected)
-        Layout.fillWidth: true
     }
 
     SaveRestore {

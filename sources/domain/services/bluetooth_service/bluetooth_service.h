@@ -25,6 +25,10 @@ namespace domain
         void deviceAdded(QString device);
         void stopped();
 
+    private slots:
+        void onStopped();
+        void onEroor(int error);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
