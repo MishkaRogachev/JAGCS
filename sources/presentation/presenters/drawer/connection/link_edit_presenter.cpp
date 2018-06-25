@@ -59,6 +59,7 @@ void LinkEditPresenter::updateLink()
                           m_link ? m_link->parameter(dto::LinkDescription::Port) : 0);
     this->setViewProperty(PROPERTY(device),
                           m_link ? m_link->parameter(dto::LinkDescription::Device) : QString());
+    this->setViewProperty(PROPERTY(bluetoothAddress), QString());
     this->setViewProperty(PROPERTY(baudRate),
                           m_link ? m_link->parameter(dto::LinkDescription::BaudRate) : 0);
     QString endpoints;
@@ -84,6 +85,7 @@ void LinkEditPresenter::updateDevices()
 
     QStringList devices;
     devices.append(QString());
+    QString device = m_link->parameter(dto::LinkDescription::Device).toString();
 
     if (m_link->type() == dto::LinkDescription::Serial)
     {
@@ -92,11 +94,11 @@ void LinkEditPresenter::updateDevices()
     else if (m_link->type() == dto::LinkDescription::Bluetooth)
     {
         this->setViewProperty(PROPERTY(discoveringBluetooth), m_bluetoothService->isDiscoveryActive());
+        this->setViewProperty(PROPERTY(bluetoothAddress), m_bluetoothService->deviceAddress(device));
 
         for (const QString& device: m_bluetoothService->discoveredDevices()) devices.append(device);
     }
 
-    QString device = m_link->parameter(dto::LinkDescription::Device).toString();
     if (!devices.contains(device)) devices.append(device);
 
     this->setViewProperty(PROPERTY(devices), devices);

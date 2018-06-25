@@ -17,6 +17,7 @@ ColumnLayout {
     property int type: LinkDescription.UnknownType
     property int protocol: LinkDescription.UnknownProtocol
     property string device
+    property string bluetoothAddress
     property int baudRate
     property bool discoveringBluetooth: false
     property var statistics
@@ -117,6 +118,15 @@ ColumnLayout {
             device = displayText;
             changed = true;
         }
+        Layout.fillWidth: true
+    }
+
+    Controls.Label {
+        text: bluetoothAddress
+        visible: text.length > 0
+        font.bold: true
+        font.pixelSize: sizings.secondaryFontSize
+        horizontalAlignment: Text.AlignHCenter
         Layout.fillWidth: true
     }
 

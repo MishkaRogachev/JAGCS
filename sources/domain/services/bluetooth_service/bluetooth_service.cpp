@@ -1,9 +1,10 @@
 #include "bluetooth_service.h"
 
 // Qt
-#include <QPointer>
 #include <QBluetoothLocalDevice>
+#include <QPointer>
 #include <QBluetoothDeviceDiscoveryAgent>
+#include <QMap>
 #include <QDebug>
 
 // Internal
@@ -14,16 +15,16 @@ using namespace domain;
 class BluetoothService::Impl
 {
 public:
-    QBluetoothLocalDevice* device;
+    QBluetoothLocalDevice* localDevice;
     QPointer<QBluetoothDeviceDiscoveryAgent> agent;
-    QList<QBluetoothDeviceInfo> infos;
+    QMap<QString, QBluetoothDeviceInfo> deviceInfos;
 };
 
 BluetoothService::BluetoothService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->device = new QBluetoothLocalDevice(this);
+    d->localDevice = new QBluetoothLocalDevice(this);
 }
 
 BluetoothService::~BluetoothService()
@@ -33,24 +34,22 @@ BluetoothService::~BluetoothService()
 
 bool BluetoothService::isAvailable() const
 {
-    return d->device->isValid();
+    return d->localDevice->isValid();
 }
 
 QStringList BluetoothService::discoveredDevices() const
 {
-    QStringList list;
-
-    for (const QBluetoothDeviceInfo& device: d->infos)
-    {
-        list.append(device.address().toString());
-    }
-
-    return list;
+    return d->deviceInfos.keys();
 }
 
 bool BluetoothService::isDiscoveryActive() const
 {
     return d->agent && d->agent->isActive();
+}
+
+QString BluetoothService::deviceAddress(const QString& name) const
+{
+    return d->deviceInfos.value(name).address().toString();
 }
 
 void BluetoothService::startDiscovery()
@@ -79,10 +78,10 @@ void BluetoothService::stopDiscovery()
 
 void BluetoothService::onDeviceDiscovered(const QBluetoothDeviceInfo& info)
 {
-    if (!info.isValid() || d->infos.contains(info)) return;
+    if (!info.isValid()) return;
 
-    d->infos.append(info);
-    emit deviceDiscovered(info.address().toString());
+    d->deviceInfos[info.name()] = info;
+    emit deviceDiscovered(info.name());
 }
 
 void BluetoothService::onStopped()

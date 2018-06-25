@@ -20,6 +20,8 @@ namespace domain
         QStringList discoveredDevices() const;
         bool isDiscoveryActive() const;
 
+        QString deviceAddress(const QString& name) const;
+
     public:
         void startDiscovery();
         void stopDiscovery();

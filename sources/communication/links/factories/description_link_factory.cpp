@@ -8,6 +8,10 @@
 #include "tcp_link.h"
 #include "bluetooth_link.h"
 
+// FIXME: temporary
+#include "service_registry.h"
+#include "bluetooth_service.h"
+
 using namespace dto;
 using namespace comm;
 
@@ -59,7 +63,8 @@ namespace
 
     BluetoothLink* updateBluetooth(BluetoothLink* link, const LinkDescriptionPtr& description)
     {
-        link->setAddress(description->parameter(LinkDescription::Device).toString());
+        link->setAddress(serviceRegistry->bluetoothService()->deviceAddress(
+                             description->parameter(LinkDescription::Device).toString()));
 
         return link;
     }
