@@ -4,7 +4,6 @@ import QtPositioning 5.6
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
-import "qrc:/Views/Common"
 
 ColumnLayout {
     id: itemEdit
@@ -76,6 +75,16 @@ ColumnLayout {
     onAltitudeRelativeChanged: updateClimbFromAltitude()
 
     // TODO: refactor mission item params view and presenter
+
+
+    function save() {
+        presenter.save();
+    }
+
+    function update() {
+        presenter.updateItem();
+    }
+
     property bool lockAltitude: false
     function updateAltitudeFromClimb() {
         if (lockAltitude) return;
@@ -126,27 +135,17 @@ ColumnLayout {
         Component.onCompleted: setItem(itemId)
     }
 
-    RowLayout {
-        spacing: sizings.spacing
-
-        Controls.ComboBox {
-            id: commandBox
-            labelText: qsTr("Command")
-            enabled: editEnabled
-            visible: itemId > 0
-            currentIndex: 0
-            onCurrentIndexChanged: {
-                presenter.updateCommand(currentIndex);
-                changed = true;
-            }
-            Layout.fillWidth: true
+    Controls.ComboBox {
+        id: commandBox
+        labelText: qsTr("Command")
+        enabled: editEnabled
+        visible: itemId > 0
+        currentIndex: 0
+        onCurrentIndexChanged: {
+            presenter.updateCommand(currentIndex);
+            changed = true;
         }
-
-        SaveRestore {
-            enabled: changed && editEnabled
-            onSave: presenter.save()
-            onRestore: presenter.updateItem()
-        }
+        Layout.fillWidth: true
     }
 
     Flickable {

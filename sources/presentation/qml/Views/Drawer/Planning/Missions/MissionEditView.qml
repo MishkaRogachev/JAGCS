@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Views/Common"
 
 ColumnLayout {
     id: missionEdit
@@ -52,27 +53,83 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
-        Controls.Button {
-            tipText: highlighted ? qsTr("Cancel sync") : qsTr("Download mission")
-            iconSource: "qrc:/icons/download.svg"
-            flat: true
-            highlighted: assignment.status === MissionAssignment.Downloading
-            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
-            onClicked: highlighted ? assignment.cancelSync() : assignment.download()
+        SaveRestore {
+            enabled: itemEdit.changed && itemEdit.editEnabled
+            onSave: itemEdit.save()
+            onRestore: itemEdit.update()
         }
 
         Controls.Button {
-            tipText: highlighted ? qsTr("Cancel sync") : qsTr("Upload mission")
-            iconSource: "qrc:/icons/upload.svg"
+            tipText: qsTr("More")
+            iconSource: "qrc:/ui/dots.svg"
             flat: true
-            highlighted: assignment.status === MissionAssignment.Uploading
-            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
-            onClicked: highlighted ? assignment.cancelSync() : assignment.upload()
+            hasMenu: true
+            menuOpened: moreMenu.visible
+            enabled: sequence > -1
+            onClicked: moreMenu.visible ? moreMenu.close() : moreMenu.open()
+
+            Controls.Menu {
+                id: moreMenu
+                y: parent.height
+
+                Controls.MenuItem {
+                    text: qsTr("Center on map")
+                    iconSource: "qrc:/icons/center.svg"
+                    enabled: map.trackingVehicleId === 0
+                    onTriggered: map.setCenterOffsetted(itemEdit.position);
+                }
+
+                Controls.MenuItem {
+                    text: highlighted ? qsTr("Cancel sync") : qsTr("Download mission")
+                    iconSource: "qrc:/icons/download.svg"
+                    highlighted: assignment.status === MissionAssignment.Downloading
+                    enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
+                    onTriggered: highlighted ? assignment.cancelSync() : assignment.download()
+                }
+
+                Controls.MenuItem {
+                    text: highlighted ? qsTr("Cancel sync") : qsTr("Upload mission")
+                    iconSource: "qrc:/icons/upload.svg"
+                    highlighted: assignment.status === MissionAssignment.Uploading
+                    enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
+                    onTriggered: highlighted ? assignment.cancelSync() : assignment.upload()
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Move right")
+                    iconSource: "qrc:/icons/right_right.svg"
+                    enabled: sequence > 0 && sequence + 1 < count
+                    onTriggered: presenter.changeSequence(sequence + 1)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Move left")
+                    iconSource: "qrc:/icons/left_left.svg"
+                    enabled: sequence > 1
+                    onTriggered: presenter.changeSequence(sequence - 1)
+                }
+
+                Controls.MenuItem {
+                    text: qsTr("Remove")
+                    iconSource: "qrc:/icons/remove.svg"
+                    iconColor: customPalette.dangerColor
+                    onTriggered: presenter.removeItem()
+                }
+            }
         }
     }
 
     RowLayout {
         spacing: 0
+
+        Controls.Button {
+            tipText: qsTr("Left")
+            iconSource: "qrc:/icons/left.svg"
+            flat: true
+            enabled: sequence > 0
+            onClicked: presenter.selectItem(sequence - 1)
+            onPressAndHold: presenter.selectItem(0)
+        }
 
         Flickable {
             id: flickable
@@ -99,6 +156,15 @@ ColumnLayout {
                     }
                 }
             }
+        }
+
+        Controls.Button {
+            tipText: qsTr("Right")
+            iconSource: "qrc:/icons/right.svg"
+            flat: true
+            enabled: sequence + 1 < count
+            onClicked: presenter.selectItem(sequence + 1)
+            onPressAndHold: presenter.selectItem(count - 1)
         }
 
         Controls.Button {
@@ -140,77 +206,6 @@ ColumnLayout {
                     iconSource: "qrc:/icons/landing.svg"
                     enabled: sequence >= 0
                     onTriggered: presenter.addItem(MissionItem.Landing, itemEdit.position)
-                }
-            }
-        }
-    }
-
-    RowLayout {
-        spacing: 0
-
-        Controls.Button {
-            tipText: qsTr("Left")
-            iconSource: "qrc:/icons/left.svg"
-            flat: true
-            enabled: sequence > 0
-            onClicked: presenter.selectItem(sequence - 1)
-            onPressAndHold: presenter.selectItem(0)
-        }
-
-        Controls.Label {
-            text: qsTr("WP") + ": " + (sequence >= 0 ? ((sequence + 1) + "/" + count) : "-")
-            horizontalAlignment: Text.AlignHCenter
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            tipText: qsTr("Right")
-            iconSource: "qrc:/icons/right.svg"
-            flat: true
-            enabled: sequence + 1 < count
-            onClicked: presenter.selectItem(sequence + 1)
-            onPressAndHold: presenter.selectItem(count - 1)
-        }
-
-        Controls.Button {
-            tipText: qsTr("More")
-            iconSource: "qrc:/ui/dots.svg"
-            flat: true
-            hasMenu: true
-            menuOpened: moreMenu.visible
-            enabled: sequence > -1
-            onClicked: moreMenu.visible ? moreMenu.close() : moreMenu.open()
-
-            Controls.Menu {
-                id: moreMenu
-                y: parent.height
-
-                Controls.MenuItem {
-                    text: qsTr("Center on map")
-                    iconSource: "qrc:/icons/center.svg"
-                    enabled: map.trackingVehicleId === 0
-                    onTriggered: map.setCenterOffsetted(itemEdit.position);
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Move right")
-                    iconSource: "qrc:/icons/right_right.svg"
-                    enabled: sequence > 0 && sequence + 1 < count
-                    onTriggered: presenter.changeSequence(sequence + 1)
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Move left")
-                    iconSource: "qrc:/icons/left_left.svg"
-                    enabled: sequence > 1
-                    onTriggered: presenter.changeSequence(sequence - 1)
-                }
-
-                Controls.MenuItem {
-                    text: qsTr("Remove")
-                    iconSource: "qrc:/icons/remove.svg"
-                    iconColor: customPalette.dangerColor
-                    onTriggered: presenter.removeItem()
                 }
             }
         }
