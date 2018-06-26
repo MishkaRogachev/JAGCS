@@ -1,9 +1,8 @@
 #include "bluetooth_service.h"
 
 // Qt
-#include <QBluetoothLocalDevice>
-#include <QPointer>
 #include <QBluetoothDeviceDiscoveryAgent>
+#include <QPointer>
 #include <QMap>
 #include <QDebug>
 
@@ -15,7 +14,6 @@ using namespace domain;
 class BluetoothService::Impl
 {
 public:
-    QBluetoothLocalDevice* localDevice;
     QPointer<QBluetoothDeviceDiscoveryAgent> agent;
     QMap<QString, QBluetoothDeviceInfo> deviceInfos;
 };
@@ -23,18 +21,11 @@ public:
 BluetoothService::BluetoothService(QObject* parent):
     QObject(parent),
     d(new Impl())
-{
-    d->localDevice = new QBluetoothLocalDevice(this);
-}
+{}
 
 BluetoothService::~BluetoothService()
 {
     this->stopDiscovery();
-}
-
-bool BluetoothService::isAvailable() const
-{
-    return d->localDevice->isValid();
 }
 
 QStringList BluetoothService::discoveredDevices() const

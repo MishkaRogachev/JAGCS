@@ -15,8 +15,6 @@ namespace domain
         explicit BluetoothService(QObject* parent = nullptr);
         ~BluetoothService() override;
 
-        bool isAvailable() const;
-
         QStringList discoveredDevices() const;
         bool isDiscoveryActive() const;
 
