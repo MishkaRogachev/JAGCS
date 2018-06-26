@@ -42,16 +42,9 @@ ColumnLayout {
         else drawer.submode = "";
     }
     onDeviceChanged: deviceBox.currentIndex = devices.indexOf(device)
+    onDevicesChanged: deviceBox.currentIndex = devices.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudRates.indexOf(baudRate)
     onLinkIdChanged: presenter.setLink(linkId);
-//    onNameChanged: {
-//        if (linkId > 0)
-//        {
-//            if (name.length > 0) drawer.submode = name;
-//            else drawer.submode = qsTr("Link");
-//        }
-//        else drawer.submode = "";
-//    }
     Component.onDestruction: drawer.submode = ""
 
     spacing: sizings.spacing
