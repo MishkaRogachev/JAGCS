@@ -74,6 +74,7 @@
         <file>Indicators/SituationIndicator.qml</file>
         <file>Indicators/LandingIndicator.qml</file>
         <file>Views/Common/SaveRestore.qml</file>
+        <file>Views/Common/Info.qml</file>
         <file>Views/Common/PointView.qml</file>
         <file>Views/Common/SetPoint.qml</file>
         <file>Views/MainView.qml</file>

@@ -5,7 +5,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-Item {
+ColumnLayout {
     id: gui
 
     property bool changed: false
@@ -31,18 +31,50 @@ Item {
     onUiSizeChanged: uiSizeBox.currentIndex = uiSizeBox.model.indexOf(uiSize)
     onSpeedStepChanged: speedBox.currentIndex = speedBox.model.indexOf(speedStep)
     onAltitudeStepChanged: altitudeBox.currentIndex = altitudeBox.model.indexOf(altitudeStep)
-    onChangedChanged: saveRestore.message = ""
+    onChangedChanged: info.message = ""
     Component.onDestruction: if (changed) presenter.updateView()
 
-    implicitWidth: Math.max(contents.implicitWidth, saveRestore.implicitWidth)
+    spacing: sizings.spacing
+
+    GuiSettingsPresenter {
+        id: presenter
+        view: gui
+        Component.onCompleted: updateView()
+    }
+
+    Info {
+        id: info
+        Layout.fillWidth: true
+    }
+
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.CheckBox {
+            id: fullscreenBox
+            text: qsTr("Fullscreen")
+            onCheckedChanged: {
+                presenter.setFullscreen(checked);
+                changed = true;
+            }
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            id: saveRestore
+            enabled: changed
+            onSave: presenter.save()
+            onRestore: presenter.updateView()
+        }
+    }
 
     Flickable {
-        anchors.fill: parent
-        anchors.bottomMargin: saveRestore.height
         contentHeight: contents.height
         boundsBehavior: Flickable.OvershootBounds
         flickableDirection: Flickable.AutoFlickIfNeeded
         clip: true
+        Layout.fillWidth: true
+        Layout.fillHeight: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
@@ -51,29 +83,13 @@ Item {
             width: parent.width
             spacing: sizings.spacing
 
-            GuiSettingsPresenter {
-                id: presenter
-                view: gui
-                Component.onCompleted: updateView()
-            }
-
-            Controls.CheckBox {
-                id: fullscreenBox
-                text: qsTr("Fullscreen")
-                onCheckedChanged: {
-                    presenter.setFullscreen(checked);
-                    changed = true;
-                }
-                Layout.fillWidth: true
-            }
-
             Controls.ComboBox {
                 id: languageBox
                 labelText: qsTr("Language")
                 onActivated: {
                     presenter.setLocale(currentIndex);
                     changed = true;
-                    saveRestore.message = qsTr("Language will be changed after restart");
+                    info.message = qsTr("Language will be changed after restart");
                 }
                 Layout.fillWidth: true
             }
@@ -174,19 +190,6 @@ Item {
                 onCheckedChanged: changed = true
                 Layout.fillWidth: true
             }
-
-            Item {
-                Layout.fillHeight: true
-            }
         }
-    }
-
-    SaveRestore {
-        id: saveRestore
-        anchors.bottom: parent.bottom
-        width: parent.width
-        enabled: changed
-        onSave: presenter.save()
-        onRestore: presenter.updateView()
     }
 }

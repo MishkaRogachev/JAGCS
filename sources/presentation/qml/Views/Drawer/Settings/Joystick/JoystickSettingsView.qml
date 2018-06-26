@@ -37,12 +37,23 @@ ColumnLayout {
         Component.onCompleted: updateView()
     }
 
-    Controls.CheckBox {
-        id: joystickEnabledBox
-        text: qsTr("Enabled")
-        onCheckedChanged: {
-            manual.setJoystickEnabled(checked);
-            changed = true;
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.CheckBox {
+            id: joystickEnabledBox
+            text: qsTr("Enabled")
+            onCheckedChanged: {
+                manual.setJoystickEnabled(checked);
+                changed = true;
+            }
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.save()
+            onRestore: presenter.updateView()
         }
     }
 
@@ -132,12 +143,5 @@ ColumnLayout {
                 Layout.fillWidth: true
             }
         }
-    }
-
-    SaveRestore {
-        enabled: changed
-        onSave: presenter.save()
-        onRestore: presenter.updateView()
-        Layout.rightMargin: sizings.shadowSize
     }
 }

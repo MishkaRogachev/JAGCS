@@ -55,12 +55,22 @@ ColumnLayout {
         activeMapTypeBox.currentIndex = map.activeMapTypeIndex;
     }
 
-    Controls.ComboBox {
-        id: pluginBox
-        labelText: qsTr("Map provider")
-        currentIndex: -1
-        onActivated: changed = true
-        Layout.fillWidth: true
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.ComboBox {
+            id: pluginBox
+            labelText: qsTr("Map provider")
+            currentIndex: -1
+            onActivated: changed = true
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.save()
+            onRestore: presenter.updateView()
+        }
     }
 
     Controls.ComboBox {
@@ -117,14 +127,5 @@ ColumnLayout {
         Layout.fillWidth: true
     }
 
-    Item {
-        Layout.fillHeight: true
-    }
-
-    SaveRestore {
-        enabled: changed
-        onSave: presenter.save()
-        onRestore: presenter.updateView()
-        Layout.columnSpan: 2
-    }
+    Item { Layout.fillHeight: true }
 }

@@ -79,6 +79,12 @@ ColumnLayout {
             Layout.fillWidth: true
         }
 
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.save()
+            onRestore: presenter.updateLink()
+        }
+
         Controls.Button {
             iconSource: connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"
             tipText: connected ? qsTr("Disconnect") : qsTr("Connect")
@@ -264,12 +270,6 @@ ColumnLayout {
                 }
             }
         }
-    }
-
-    SaveRestore {
-        enabled: changed
-        onSave: presenter.save()
-        onRestore: presenter.updateLink()
     }
 }
 

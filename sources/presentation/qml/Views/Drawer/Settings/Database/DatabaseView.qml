@@ -27,19 +27,29 @@ ColumnLayout {
         }
     }
 
-    Controls.ComboBox {
-        labelText: qsTr("Data base")
-        model: [ "SQLite" ]
-        enabled: false // TODO: other data base providers
+    Info {
+        message: changed ? qsTr("Application will be restarted") : ""
         Layout.fillWidth: true
+        Layout.leftMargin: sizings.padding
+        Layout.rightMargin: sizings.padding
     }
 
-    Controls.TextField {
-        id: pathField
-        labelText: qsTr("SQLite data base file")
-        placeholderText: qsTr("Enter filepath")
-        onEditingFinished: changed = true
-        Layout.fillWidth: true
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.TextField {
+            id: pathField
+            labelText: qsTr("SQLite data base file")
+            placeholderText: qsTr("Enter filepath")
+            onEditingFinished: changed = true
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.savePath()
+            onRestore: presenter.updatePath()
+        }
     }
 
     Controls.Label {
@@ -90,16 +100,6 @@ ColumnLayout {
         iconSource: "qrc:/icons/remove.svg"
         onClicked: presenter.clearLog()
         enabled: log.length > 0
-        Layout.fillWidth: true
-        Layout.leftMargin: sizings.padding
-        Layout.rightMargin: sizings.padding
-    }
-
-    SaveRestore {
-        enabled: changed
-        message: changed ? qsTr("Application will be restarted") : ""
-        onSave: presenter.savePath()
-        onRestore: presenter.updatePath()
         Layout.fillWidth: true
         Layout.leftMargin: sizings.padding
         Layout.rightMargin: sizings.padding

@@ -6,7 +6,7 @@ import JAGCS 1.0
 import "qrc:/Controls" as Controls
 import "qrc:/Views/Common"
 
-Item {
+ColumnLayout {
     id: itemEdit
 
     property bool editEnabled: true
@@ -118,17 +118,42 @@ Item {
         updateLatLon();
     }
 
+    spacing: sizings.spacing
+
     MissionItemEditPresenter {
         id: presenter
         view: itemEdit
         Component.onCompleted: setItem(itemId)
     }
 
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.ComboBox {
+            id: commandBox
+            labelText: qsTr("Command")
+            enabled: editEnabled
+            visible: itemId > 0
+            currentIndex: 0
+            onCurrentIndexChanged: {
+                presenter.updateCommand(currentIndex);
+                changed = true;
+            }
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            enabled: changed && editEnabled
+            onSave: presenter.save()
+            onRestore: presenter.updateItem()
+        }
+    }
+
     Flickable {
-        anchors.fill: parent
-        anchors.bottomMargin: saveRestore.height
         contentHeight: col.height
         clip: true
+        Layout.fillWidth: true
+        Layout.fillHeight: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
@@ -136,19 +161,6 @@ Item {
             id: col
             width: parent.width
             spacing: sizings.spacing
-
-            Controls.ComboBox {
-                id: commandBox
-                labelText: qsTr("Command")
-                enabled: editEnabled
-                visible: itemId > 0
-                currentIndex: 0
-                onCurrentIndexChanged: {
-                    presenter.updateCommand(currentIndex);
-                    changed = true;
-                }
-                Layout.fillWidth: true
-            }
 
             GridLayout {
                 rowSpacing: sizings.spacing
@@ -370,15 +382,6 @@ Item {
                 }
             }
         }
-    }
-
-    SaveRestore {
-        id: saveRestore
-        width: parent.width
-        anchors.bottom: parent.bottom
-        enabled: changed && editEnabled
-        onSave: presenter.save()
-        onRestore: presenter.updateItem()
     }
 }
 

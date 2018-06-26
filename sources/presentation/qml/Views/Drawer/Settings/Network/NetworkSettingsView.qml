@@ -33,12 +33,22 @@ ColumnLayout {
         Component.onCompleted: updateView()
     }
 
-    Controls.ComboBox {
-        id: typeItem
-        labelText: qsTr("Proxy type")
-        model: typeModel
-        onActivated: changed = true
-        Layout.fillWidth: true
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.ComboBox {
+            id: typeItem
+            labelText: qsTr("Proxy type")
+            model: typeModel
+            onActivated: changed = true
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.save()
+            onRestore: presenter.updateView()
+        }
     }
 
     Controls.TextField {
@@ -75,13 +85,5 @@ ColumnLayout {
         onEditingFinished: changed = true
     }
 
-    Item {
-        Layout.fillHeight: true
-    }
-
-    SaveRestore {
-        enabled: changed
-        onSave: presenter.save()
-        onRestore: presenter.updateView()
-    }
+    Item { Layout.fillHeight: true }
 }
