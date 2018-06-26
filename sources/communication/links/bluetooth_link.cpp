@@ -30,7 +30,7 @@ QString BluetoothLink::address() const
 
 void BluetoothLink::connectLink()
 {
-    if (m_socket->state() != QBluetoothSocket::UnconnectedState) return;
+    if (m_socket->state() != QBluetoothSocket::UnconnectedState || m_address.isEmpty()) return;
 
     m_socket->connectToService(QBluetoothAddress(m_address), QBluetoothUuid::SerialPort);
 }

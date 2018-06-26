@@ -27,7 +27,7 @@ Endpoint TcpLink::endpoint() const
 
 void TcpLink::connectLink()
 {
-    if (this->isConnected()) return;
+    if (this->isConnected() || !m_endpoint.isValid()) return;
 
     m_socket->connectToHost(m_endpoint.address(), endpoint().port());
     emit connectedChanged(m_socket->waitForConnected());

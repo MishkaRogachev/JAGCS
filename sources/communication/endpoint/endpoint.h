@@ -23,6 +23,8 @@ namespace comm
         quint16 port() const;
         void setPort(quint16 port);
 
+        bool isValid() const;
+
         bool operator ==(const Endpoint& other);
 
     private:

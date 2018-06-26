@@ -5,7 +5,7 @@
 
 using namespace comm;
 
-UdpLink::UdpLink(int port, QObject* parent):
+UdpLink::UdpLink(quint16 port, QObject* parent):
     AbstractLink(parent),
     m_socket(new QUdpSocket(this)),
     m_port(port),
@@ -21,7 +21,7 @@ bool UdpLink::isConnected() const
     return m_socket->state() == QAbstractSocket::BoundState;
 }
 
-int UdpLink::port() const
+quint16 UdpLink::port() const
 {
     return m_port;
 }
@@ -48,7 +48,7 @@ Endpoint UdpLink::endpoint(int index) const
 
 void UdpLink::connectLink()
 {
-    if (this->isConnected()) return;
+    if (this->isConnected() || m_port == 0) return;
 
     if (!m_socket->bind(m_port))
     {
@@ -68,7 +68,7 @@ void UdpLink::disconnectLink()
     emit connectedChanged(false);
 }
 
-void UdpLink::setPort(int port)
+void UdpLink::setPort(quint16 port)
 {
     if (m_port == port) return;
 

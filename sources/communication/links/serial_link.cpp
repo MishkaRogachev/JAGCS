@@ -36,7 +36,7 @@ qint32 SerialLink::baudRate() const
 
 void SerialLink::connectLink()
 {
-    if (this->isConnected()) return;
+    if (this->isConnected() || m_port->portName().isEmpty()) return;
 
     if (m_port->open(QIODevice::ReadWrite)) emit connectedChanged(true);
 }
