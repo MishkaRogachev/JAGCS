@@ -84,37 +84,39 @@ void SerialLink::onError(int error)
     case QSerialPort::NoError:
         break;
     case QSerialPort::DeviceNotFoundError:
-        emit errored("An error occurred while attempting to open an non-existing device");
+        emit errored(tr("Attempting to open an non-existing device %1").arg(m_port->portName()));
         break;
     case QSerialPort::PermissionError:
-        emit errored("An error occurred while attempting to open an already opened device "
-                     "or a user not having enough permission to open");
+        emit errored(tr("Attempting to open an already opened device %1 or a user not having enough"
+                        " permission to open").arg(m_port->portName()));
         break;
     case QSerialPort::OpenError:
-        emit errored("An error occurred while attempting to open an already opened device in this object");
+        emit errored(tr("Attempting to open an already opened device in this object"));
         break;
     case QSerialPort::NotOpenError:
-        emit errored("Operation is executed that can only be successfully performed if the device is open");
+        emit errored(tr("Operation is executed that can only be successfully performed "
+                        "if the device is open"));
         break;
     case QSerialPort::WriteError:
-        emit errored("An I/O error occurred while writing the data");
+        emit errored(tr("An I/O error occurred while writing the data"));
         break;
     case QSerialPort::ReadError:
-        emit errored("An I/O error occurred while reading the data");
+        emit errored(tr("An I/O error occurred while reading the data"));
         break;
     case QSerialPort::ResourceError:
-        emit errored("An I/O error occurred when a resource becomes unavailable");
+        emit errored(tr("An I/O error occurred when a resource becomes unavailable"));
         if (this->isConnected()) this->disconnectLink();
         break;
     case QSerialPort::UnsupportedOperationError:
-        emit errored("The requested device operation is not supported or prohibited by the operating system");
+        emit errored(tr("The requested device operation is not supported or prohibited "
+                        "by the operating system"));
         break;
     case QSerialPort::TimeoutError:
-        emit errored("A timeout error occurred");
+        emit errored(tr("A timeout error occurred"));
         break;
     default:
     case QSerialPort::UnknownError:
-        emit errored("An unidentified error occurred");
+        emit errored(tr("An unidentified error occurred"));
         qDebug() << error;
         break;
     }

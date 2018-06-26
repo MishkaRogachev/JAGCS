@@ -48,43 +48,46 @@ void AbstractLink::onSocketError(int error)
     switch (error)
     {
     case QAbstractSocket::ConnectionRefusedError:
-        emit errored("The connection was refused by the peer (or timed out)");
+        emit errored(tr("The connection was refused by the peer (or timed out)"));
         break;
     case QAbstractSocket::RemoteHostClosedError:
-        emit errored("The remote host closed the connection");
+        emit errored(tr("The remote host closed the connection"));
         break;
     case QAbstractSocket::HostNotFoundError:
-        emit errored("The host address was not found");
+        emit errored(tr("The host address was not found"));
         break;
     case QAbstractSocket::SocketAccessError:
-        emit errored("The socket operation failed because the application lacked the required privileges");
+        emit errored(tr("The socket operation failed because the application lacked the "
+                        "required privileges"));
         break;
     case QAbstractSocket::SocketResourceError:
-        emit errored("The local system ran out of resources (e.g., too many sockets)");
+        emit errored(tr("The local system ran out of resources (e.g., too many sockets)"));
         break;
     case QAbstractSocket::SocketTimeoutError:
-        emit errored("The socket operation timed out");
+        emit errored(tr("The socket operation timed out"));
         break;
     case QAbstractSocket::DatagramTooLargeError:
-        emit errored("The datagram was larger than the operating system's limit");
+        emit errored(tr("The datagram was larger than the operating system's limit"));
         break;
     case QAbstractSocket::NetworkError:
-        emit errored("An error occurred with the network");
+        emit errored(tr("An error occurred with the network"));
         break;
     case QAbstractSocket::AddressInUseError:
-        emit errored("The address specified is already in use and was set to be exclusive");
+        emit errored(tr("The address specified is already in use and was set to be exclusive"));
         break;
     case QAbstractSocket::SocketAddressNotAvailableError:
-        emit errored("The address specified does not belong to the host");
+        emit errored(tr("The address specified does not belong to the host"));
         break;
     case QAbstractSocket::UnsupportedSocketOperationError:
-        emit errored("The requested socket operation is not supported by the local operating system");
+        emit errored(tr("The requested socket operation is not supported by the"
+                        " local operating system"));
         break;
     case QAbstractSocket::OperationError:
-        emit errored("An operation was attempted while the socket was in a state that did not permit it");
+        emit errored(tr("An operation was attempted while the socket was in a state"
+                        " that did not permit it"));
         break;
     case QAbstractSocket::TemporaryError:
-        emit errored("A temporary error occurred");
+        emit errored(tr("A temporary error occurred"));
         break;
     default:
     case QAbstractSocket::UnknownSocketError:

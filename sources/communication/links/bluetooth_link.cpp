@@ -74,28 +74,29 @@ void BluetoothLink::onError(int error)
     switch (error)
     {
     case QBluetoothSocket::HostNotFoundError:
-        emit errored("Could not find the remote host");
+        emit errored(tr("Could not find the remote host"));
         break;
     case QBluetoothSocket::ServiceNotFoundError:
-        emit errored("Could not find the service UUID on remote host");
+        emit errored(tr("Could not find the service UUID(%1) on remote host").arg(m_address));
         break;
     case QBluetoothSocket::NetworkError:
-        emit errored("Attempt to read or write from socket returned an error");
+        emit errored(tr("Attempt to read or write from socket returned an error"));
         break;
     case QBluetoothSocket::UnsupportedProtocolError:
-        emit errored("The Protocol is not supported on this platform");
+        emit errored(tr("The Protocol is not supported on this platform"));
         break;
     case QBluetoothSocket::OperationError:
-        emit errored("An operation was attempted while the socket was in a state that did not permit it");
+        emit errored(tr("An operation was attempted while the socket "
+                        "was in a state that did not permit it"));
         break;
 // Qt 5.10
 //        case QBluetoothSocket::RemoteHostClosedError:
-//            emit errored("The remote host closed the connection");
+//            emit errored(tr("The remote host closed the connection"));
 //            break;
     default:
     case QBluetoothSocket::UnknownSocketError:
         qDebug() << QBluetoothSocket::SocketError(error);
-        emit errored("An unknown error has occurred");
+        emit errored(tr("An unknown error has occurred"));
         break;
     }
 }

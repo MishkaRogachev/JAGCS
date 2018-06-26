@@ -52,9 +52,6 @@ void UdpLink::connectLink()
 
     if (!m_socket->bind(m_port))
     {
-        qWarning("UDP connection error: '%s'!",
-                 qPrintable(m_socket->errorString()));
-
         m_socket->close();
     }
     else
