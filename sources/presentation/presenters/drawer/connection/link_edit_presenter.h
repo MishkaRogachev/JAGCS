@@ -21,6 +21,8 @@ namespace presentation
     public:
         explicit LinkEditPresenter(QObject* parent = nullptr);
 
+        Q_INVOKABLE QString bluetoothAddress(const QString& device) const;
+
     public slots:
         void setLink(int id) override;
         void updateLink() override;

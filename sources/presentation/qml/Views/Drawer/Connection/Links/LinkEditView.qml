@@ -17,7 +17,6 @@ ColumnLayout {
     property int type: LinkDescription.UnknownType
     property int protocol: LinkDescription.UnknownProtocol
     property string device
-    property string bluetoothAddress
     property int baudRate
     property bool discoveringBluetooth: false
     property var statistics
@@ -42,8 +41,8 @@ ColumnLayout {
         }
         else drawer.submode = "";
     }
-    onDeviceChanged: deviceBox.currentIndex = deviceBox.model.indexOf(device)
-    onBaudRateChanged: baudBox.currentIndex = baudBox.model.indexOf(baudRate)
+    onDeviceChanged: deviceBox.currentIndex = devices.indexOf(device)
+    onBaudRateChanged: baudBox.currentIndex = baudRates.indexOf(baudRate)
     onLinkIdChanged: presenter.setLink(linkId);
 //    onNameChanged: {
 //        if (linkId > 0)
@@ -110,23 +109,41 @@ ColumnLayout {
     }
 
     Controls.ComboBox {
-        id: deviceBox
-        labelText: qsTr("Device")
-        visible: type == LinkDescription.Serial || type == LinkDescription.Bluetooth
+        id: baudBox
+        labelText: qsTr("Baud rate")
+        visible: type == LinkDescription.Serial
         model: []
         onDisplayTextChanged: {
-            device = displayText;
+            baudRate = displayText;
             changed = true;
         }
         Layout.fillWidth: true
     }
 
-    Controls.Label {
-        text: bluetoothAddress
-        visible: text.length > 0
-        font.bold: true
-        font.pixelSize: sizings.secondaryFontSize
-        horizontalAlignment: Text.AlignHCenter
+    Controls.TextField {
+        id: addressField
+        labelText: qsTr("Address")
+        visible: type == LinkDescription.Tcp || type == LinkDescription.Bluetooth
+        onTextChanged: changed = true
+        Layout.fillWidth: true
+    }
+
+    Controls.ComboBox {
+        id: deviceBox
+        labelText: qsTr("Device")
+        visible: type == LinkDescription.Serial || type == LinkDescription.Bluetooth
+        model: []
+        onDisplayTextChanged: {
+            if (type != LinkDescription.Bluetooth) return;
+
+            address = presenter.bluetoothAddress(displayText);
+        }
+        onActivated: {
+            if (device == displayText) return;
+
+            device = displayText;
+            changed = true;
+        }
         Layout.fillWidth: true
     }
 
@@ -147,26 +164,6 @@ ColumnLayout {
             onClicked: presenter.stopBluetoothDiscovery()
             Layout.fillWidth: true
         }
-    }
-
-    Controls.ComboBox {
-        id: baudBox
-        labelText: qsTr("Baud rate")
-        visible: type == LinkDescription.Serial
-        model: []
-        onDisplayTextChanged: {
-            baudRate = displayText;
-            changed = true;
-        }
-        Layout.fillWidth: true
-    }
-
-    Controls.TextField {
-        id: addressField
-        labelText: qsTr("Address")
-        visible: type == LinkDescription.Tcp
-        onEditingFinished: changed = true
-        Layout.fillWidth: true
     }
 
     Controls.SpinBox {
