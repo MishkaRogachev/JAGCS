@@ -3,7 +3,6 @@
 
 // Internal
 #include "base_presenter.h"
-#include "dto_traits.h"
 
 namespace domain
 {
@@ -20,16 +19,13 @@ namespace presentation
         explicit VerticalProfilePresenter(QObject* parent = nullptr);
 
     public slots:
-        void selectMission(const dto::MissionPtr& mission);
+        void setMission(int missionId);
         void updateMission();
         void clearMission();
 
-    protected:
-        void connectView(QObject* view) override;
-
     private:
         domain::MissionService* m_service;
-        dto::MissionPtr m_mission;
+        int m_missionId = 0;
     };
 }
 

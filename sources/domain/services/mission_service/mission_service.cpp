@@ -71,21 +71,24 @@ MissionPtr MissionService::mission(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->missionRepository.read(id);
+    if (id) return d->missionRepository.read(id);
+    return MissionPtr();
 }
 
 MissionItemPtr MissionService::missionItem(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->itemRepository.read(id);
+    if (id) return d->itemRepository.read(id);
+    return MissionItemPtr();
 }
 
 MissionAssignmentPtr MissionService::assignment(int id) const
 {
     QMutexLocker locker(&d->mutex);
 
-    return d->assignmentRepository.read(id);
+    if (id) return d->assignmentRepository.read(id);
+    return MissionAssignmentPtr();
 }
 
 MissionPtrList MissionService::missions() const

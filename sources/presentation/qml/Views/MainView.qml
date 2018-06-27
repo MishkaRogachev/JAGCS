@@ -1,11 +1,12 @@
 import QtQuick 2.6
 import "../Controls" as Controls
 
-import "Tools"
 import "Topbar"
 import "Video"
 import "Map"
 import "Dashboard"
+import "Tools"
+import "VerticalProfile"
 import "Drawer"
 
 Controls.ApplicationWindow  {
@@ -14,6 +15,8 @@ Controls.ApplicationWindow  {
     property bool fullscreen: false
     property bool cornerMap: false
     property bool cornerVisible: false
+    property bool plotVisible: false
+    property bool plotAvailable: false
     property int mapType: -1
 
     property QtObject map
@@ -53,7 +56,7 @@ Controls.ApplicationWindow  {
 
     MouseArea {
         id: corner
-        anchors.bottom: parent.bottom
+        anchors.bottom: plotVisible ? plot.top : parent.bottom
         anchors.left: tools.right
         anchors.margins: sizings.margins
         width: Math.max(0, Math.min(substrate.height / 2, substrate.width -
@@ -97,6 +100,18 @@ Controls.ApplicationWindow  {
         anchors.bottom: parent.bottom
         anchors.margins: sizings.margins
         z: 3
+    }
+
+    VerticalProfileView {
+        id: plot
+        visible: plotVisible
+        height: substrate.height / 3
+        anchors.right: dashboard.dashboardVisible &&
+                       dashboard.implicitHeight < substrate.height - height ?
+                           substrate.right : dashboard.left
+        anchors.left: tools.right
+        anchors.bottom: parent.bottom
+        anchors.margins: sizings.margins
     }
 
     DrawerView {

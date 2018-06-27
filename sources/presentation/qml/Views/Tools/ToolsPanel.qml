@@ -54,10 +54,20 @@ ColumnLayout {
     }
 
     Controls.Button {
-        id: maxMinButton
         tipText: cornerVisible ? qsTr("Hide window") : qsTr("Show window")
-        iconSource: cornerVisible ? "qrc:/icons/hide_window.svg" :
-                                    "qrc:/icons/show_window.svg"
-        onClicked: cornerVisible = !cornerVisible
+        iconSource: "qrc:/icons/subwindow.svg"
+        checkable: true
+        checked: cornerVisible
+        onCheckedChanged: cornerVisible = checked
+    }
+
+    Controls.Button {
+        tipText: plotVisible ? qsTr("Hide vertical profile") : qsTr("Show vertical profile")
+        iconSource: "qrc:/icons/plot.svg"
+        checkable: true
+        checked: plotVisible
+        visible: plotAvailable
+        onVisibleChanged: if (!visible) checked = false
+        onCheckedChanged: plotVisible = checked
     }
 }

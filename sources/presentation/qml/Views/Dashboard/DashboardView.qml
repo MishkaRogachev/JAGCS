@@ -39,6 +39,7 @@ Item {
     onSelectedVehicleChanged: updateDisplay()
 
     width: loader.implicitWidth
+    implicitHeight: loader.implicitHeight
 
     DashboardPresenter {
         id: presenter

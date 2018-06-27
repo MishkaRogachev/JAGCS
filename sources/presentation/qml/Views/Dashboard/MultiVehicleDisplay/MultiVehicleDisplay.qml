@@ -20,6 +20,7 @@ BaseDisplay {
     }
 
     implicitWidth: Math.max(list.width + sizings.margins, topBarDelegate.width)
+    implicitHeight: list.contentHeight + topBarDelegate.height
 
     VehiclesListDisplayPresenter {
         id: presenter

@@ -24,6 +24,7 @@
 #include "dashboard_presenter.h"
 #include "vehicles_list_display_presenter.h"
 #include "aerial_vehicle_display_presenter.h"
+#include "vertical_profile_presenter.h"
 #include "drawer_presenter.h"
 #include "link_list_presenter.h"
 #include "link_presenter.h"
@@ -85,6 +86,7 @@ static void registerTypes()
     QML_TYPE(LocationMapPresenter);
     QML_TYPE(ActiveVideoPresenter);
     QML_TYPE(DashboardPresenter);
+    QML_TYPE(VerticalProfilePresenter);
     QML_TYPE(VehiclesListDisplayPresenter);
     QML_TYPE(AerialVehicleDisplayPresenter);
     QML_TYPE(DrawerPresenter);

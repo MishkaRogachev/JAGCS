@@ -76,9 +76,9 @@
         <file>icons/layers.svg</file>
         <file>icons/video.svg</file>
         <file>icons/fit.svg</file>
-        <file>icons/show_window.svg</file>
-        <file>icons/hide_window.svg</file>
+        <file>icons/subwindow.svg</file>
         <file>icons/window.svg</file>
+        <file>icons/plot.svg</file>
         <file>icons/connect.svg</file>
         <file>icons/disconnect.svg</file>
         <file>icons/play.svg</file>

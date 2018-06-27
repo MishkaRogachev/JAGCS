@@ -20,8 +20,8 @@ Controls.Card {
         presenter.setMissionVisible(!missionVisible);
     }
 
-    onMissionIdChanged: presenter.setMission(missionId)
     onDeepIn: edit()
+    onMissionIdChanged: presenter.setMission(missionId)
     Component.onCompleted: {
         menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
 

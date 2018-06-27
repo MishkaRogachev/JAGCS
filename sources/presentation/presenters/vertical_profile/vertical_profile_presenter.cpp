@@ -7,6 +7,7 @@
 // Internal
 #include "service_registry.h"
 #include "mission_service.h"
+
 #include "mission.h"
 #include "mission_item.h"
 
@@ -17,34 +18,37 @@ VerticalProfilePresenter::VerticalProfilePresenter(QObject* parent):
     m_service(serviceRegistry->missionService())
 {
     connect(m_service, &domain::MissionService::missionItemAdded, this, [this]
-            (const dto::MissionItemPtr& missionItem){
-        if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
+            (const dto::MissionItemPtr& missionItem) {
+        if (m_missionId == missionItem->missionId()) this->updateMission();
     });
-
     connect(m_service, &domain::MissionService::missionItemRemoved, this, [this]
-            (const dto::MissionItemPtr& missionItem){
-        if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
+            (const dto::MissionItemPtr& missionItem) {
+        if (m_missionId == missionItem->missionId()) this->updateMission();
     });
-
     connect(m_service, &domain::MissionService::missionItemChanged, this, [this]
-            (const dto::MissionItemPtr& missionItem){
-        if (m_mission && m_mission->id() == missionItem->missionId()) this->updateMission();
+            (const dto::MissionItemPtr& missionItem) {
+        if (m_missionId == missionItem->missionId()) this->updateMission();
+    });
+    connect(m_service, &domain::MissionService::missionRemoved, this, [this]
+            (const dto::MissionPtr& mission) {
+        if (m_missionId == mission->id()) this->setMission(0);
     });
 }
 
-void VerticalProfilePresenter::selectMission(const dto::MissionPtr& mission)
+void VerticalProfilePresenter::setMission(int missionId)
 {
-    if (m_mission == mission) return;
+    if (m_missionId == missionId) return;
 
-    m_mission = mission;
-    if (this->view()) this->updateMission();
+    m_missionId = missionId;
+    this->updateMission();
 }
 
 void VerticalProfilePresenter::updateMission()
 {
     this->invokeViewMethod(PROPERTY(clearWaypoints));
 
-    if (m_mission.isNull() || m_mission->count() < 1) return;
+    dto::MissionPtr mission = m_service->mission(m_missionId);
+    if (mission.isNull() || mission->count() < 1) return;
 
     QGeoCoordinate lastPosition;
     int distance = 0;
@@ -52,7 +56,7 @@ void VerticalProfilePresenter::updateMission()
     int minAltitude = INT_MAX;
     int maxAltitude = INT_MIN;
 
-    for (const dto::MissionItemPtr& item: m_service->missionItems(m_mission->id()))
+    for (const dto::MissionItemPtr& item: m_service->missionItems(mission->id()))
     {
         if (!item->isAltitudedItem()) continue;
 
@@ -83,12 +87,5 @@ void VerticalProfilePresenter::updateMission()
 
 void VerticalProfilePresenter::clearMission()
 {
-    this->invokeViewMethod(METHOD(clearWaypoints));
-}
-
-void VerticalProfilePresenter::connectView(QObject* view)
-{
-    Q_UNUSED(view)
-
-    this->updateMission();
+    this->invokeViewMethod(PROPERTY(clearWaypoints));
 }

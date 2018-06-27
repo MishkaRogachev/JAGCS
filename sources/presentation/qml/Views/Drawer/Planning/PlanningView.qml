@@ -12,6 +12,13 @@ Item {
     property var vehicles: []
     property int selectedMissionId: 0
 
+    onSelectedMissionIdChanged: plot.setMission(selectedMissionId)
+    Component.onCompleted: plotAvailable = true;
+    Component.onDestruction: {
+        plot.setMission(0);
+        plotAvailable = false;
+    }
+
     implicitWidth: sizings.controlBaseSize * 8
 
     Connections {

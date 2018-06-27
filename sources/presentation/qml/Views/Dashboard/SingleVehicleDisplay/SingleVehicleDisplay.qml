@@ -35,6 +35,7 @@ BaseDisplay {
     Component.onDestruction: manual.setVehicleId(0)
 
     implicitWidth: list.width + sizings.margins
+    implicitHeight: list.contentHeight + topBarDelegate.height
 
     AerialVehicleDisplayPresenter {
         id: presenter
