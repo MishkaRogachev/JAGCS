@@ -63,5 +63,5 @@ bool AlterLinkDescriptionMigration::down()
 
 QDateTime AlterLinkDescriptionMigration::version() const
 {
-    return QDateTime::fromString("2018.03.08-14:58:50", format);
+    return QDateTime::fromString("2018.06.27-12:18:00", format);
 }
