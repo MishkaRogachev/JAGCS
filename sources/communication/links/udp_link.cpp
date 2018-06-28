@@ -12,7 +12,9 @@ UdpLink::UdpLink(quint16 port, QObject* parent):
     m_autoResponse(true)
 {
     QObject::connect(m_socket, &QUdpSocket::readyRead, this, &UdpLink::onReadyRead);
-    connect(m_socket, QOverload<QUdpSocket::SocketError>::of(&QUdpSocket::error),
+    // TODO: QOverload<QUdpSocket::SocketError>::of(&QUdpSocket::error),
+    connect(m_socket, static_cast<void (QUdpSocket::*)
+            (QUdpSocket::SocketError)>(&QUdpSocket::error),
             this, &AbstractLink::onSocketError);
 }
 

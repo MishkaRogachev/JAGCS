@@ -1,6 +1,7 @@
 #include "communicator_worker.h"
 
 // Qt
+#include <QTimerEvent>
 #include <QTime>
 #include <QThread>
 #include <QDebug>
@@ -13,7 +14,9 @@
 
 namespace
 {
-    dto::LinkDescription::Protocol toDaoProtocol(comm::AbstractCommunicator::Protocol protocol)
+    const int second = 1000;
+
+    dto::LinkDescription::Protocol toDtoProtocol(comm::AbstractCommunicator::Protocol protocol)
     {
         switch (protocol) {
         case comm::AbstractCommunicator::MavLink1: return dto::LinkDescription::MavLink1;
@@ -32,6 +35,8 @@ class CommunicatorWorker::Impl
 public:
     comm::AbstractCommunicator* communicator = nullptr;
     QMap<int, comm::AbstractLink*> descriptedLinks;
+
+    int statisticsTimer = 0;
 };
 
 CommunicatorWorker::CommunicatorWorker(QObject* parent):
@@ -46,22 +51,12 @@ CommunicatorWorker::CommunicatorWorker(QObject* parent):
             this, &CommunicatorWorker::removeLinkImpl);
     connect(this, &CommunicatorWorker::setLinkConnected,
             this, &CommunicatorWorker::setLinkConnectedImpl);
+
+    d->statisticsTimer = this->startTimer(::second);
 }
 
 CommunicatorWorker::~CommunicatorWorker()
 {}
-
-void CommunicatorWorker::onLinkStatisticsChanged(AbstractLink* link,
-                                                 int bytesReceived,
-                                                 int bytesSent)
-{
-    int linkId = d->descriptedLinks.key(link, 0);
-    if (!linkId) return;
-
-    emit linkStatisticsChanged(linkId,
-                               QTime::currentTime().msecsSinceStartOfDay(),
-                               bytesReceived, bytesSent);
-}
 
 void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link,
                                                     int packetsReceived,
@@ -79,12 +74,12 @@ void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link,
     int linkId = d->descriptedLinks.key(link, 0);
     if (!linkId) return;
 
-    emit mavLinkProtocolChanged(linkId, ::toDaoProtocol(protocol));
+    emit mavLinkProtocolChanged(linkId, ::toDtoProtocol(protocol));
 }
 
 void CommunicatorWorker::setCommunicatorImpl(AbstractCommunicator* communicator)
 {
-    // TODO: if several communicators, who owns the link?
+    // TODO: if sevral communicators, who owns the link?
     if (d->communicator)
     {
         for (AbstractLink* link: d->descriptedLinks.values())
@@ -103,8 +98,6 @@ void CommunicatorWorker::setCommunicatorImpl(AbstractCommunicator* communicator)
     {
         d->communicator->setParent(this);
 
-        connect(d->communicator, &AbstractCommunicator::linkStatisticsChanged,
-                this, &CommunicatorWorker::onLinkStatisticsChanged);
         connect(d->communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
                 this, &CommunicatorWorker::onMavLinkStatisticsChanged);
         connect(d->communicator, &AbstractCommunicator::mavLinkProtocolChanged,
@@ -134,6 +127,8 @@ void CommunicatorWorker::updateLinkImpl(int linkId,
         if (!link) return;
 
         link->setParent(this);
+        connect(link, &AbstractLink::connectedChanged, this, [this, linkId](bool connected) {
+            emit linkStatusChanged(linkId, connected); });
         connect(link, &AbstractLink::dataReceived, this, [this, linkId]() { emit linkRecv(linkId); });
         connect(link, &AbstractLink::dataSent, this, [this, linkId]() { emit linkSent(linkId); });
         connect(link, &AbstractLink::errored, this,
@@ -164,9 +159,19 @@ void CommunicatorWorker::removeLinkImpl(int linkId)
 void CommunicatorWorker::setLinkConnectedImpl(int linkId, bool connected)
 {
     AbstractLink* link = d->descriptedLinks[linkId];
-    if (!link) return;
+    if (link) link->setConnected(connected);
+}
 
-    link->setConnected(connected);
-    emit linkStatusChanged(linkId, link->isConnected());
+void CommunicatorWorker::timerEvent(QTimerEvent* event)
+{
+    if (event->timerId() != d->statisticsTimer) return QObject::timerEvent(event);
+
+    for (int id: d->descriptedLinks.keys())
+    {
+        AbstractLink* link = d->descriptedLinks[id];
+
+        emit linkStatisticsChanged(id, QTime::currentTime().msecsSinceStartOfDay(),
+                                   link->takeBytesReceived(), link->takeBytesSent());
+    }
 }
 

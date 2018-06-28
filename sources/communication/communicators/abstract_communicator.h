@@ -44,12 +44,8 @@ namespace comm
     protected slots:
         virtual void onDataReceived(const QByteArray& data) = 0;
 
-    protected:
-        void timerEvent(QTimerEvent* event) override;
-
     private:
         QList<AbstractLink*> m_links;
-        int m_statisticsTimer = 0;
 
         Q_ENUM(Protocol)
     };

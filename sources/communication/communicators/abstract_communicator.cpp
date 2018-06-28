@@ -1,16 +1,10 @@
 #include "abstract_communicator.h"
 
 // Qt
-#include <QTimerEvent>
 #include <QDebug>
 
 // Internal
 #include "abstract_link.h"
-
-namespace
-{
-    const int second = 1000;
-}
 
 using namespace comm;
 
@@ -18,8 +12,6 @@ AbstractCommunicator::AbstractCommunicator(QObject* parent):
     QObject(parent)
 {
     qRegisterMetaType<Protocol>("Protocol");
-
-    m_statisticsTimer = this->startTimer(::second);
 }
 
 QList<AbstractLink*> AbstractCommunicator::links() const
@@ -51,16 +43,4 @@ void AbstractCommunicator::removeLink(AbstractLink* link)
     disconnect(link, &AbstractLink::dataReceived,
                this, &AbstractCommunicator::onDataReceived);
     emit linkRemoved(link);
-}
-
-void AbstractCommunicator::timerEvent(QTimerEvent* event)
-{
-    if (event->timerId() != m_statisticsTimer) return QObject::timerEvent(event);
-
-    for (AbstractLink* link: m_links)
-    {
-        emit linkStatisticsChanged(link,
-                                   link->takeBytesReceived(),
-                                   link->takeBytesSent());
-    }
 }

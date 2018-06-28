@@ -144,8 +144,7 @@ void CommunicationService::init()
 
     for (const dto::LinkDescriptionPtr& description: this->descriptions())
     {
-        comm::LinkFactoryPtr factory(new comm::DescriptionLinkFactory(
-                                         description));
+        comm::LinkFactoryPtr factory(new comm::DescriptionLinkFactory(description));
         d->commWorker->updateLink(description->id(),
                                   factory, description->isAutoConnect());
 

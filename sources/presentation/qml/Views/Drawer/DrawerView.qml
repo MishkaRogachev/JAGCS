@@ -33,7 +33,6 @@ Controls.Drawer {
     onAboutToHide: presenter.setMode(DrawerPresenter.UnknownMode)
 
     width: drawerContents.width
-    clip: true
 
     Behavior on width { PropertyAnimation { duration: 200 } }
 
