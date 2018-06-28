@@ -127,6 +127,8 @@ void CommunicatorWorker::updateLinkImpl(int linkId,
         if (!link) return;
 
         link->setParent(this);
+        connect(link, &AbstractLink::connectedChanged, this, [this, linkId](bool connected) {
+            emit linkStatusChanged(linkId, connected); });
         connect(link, &AbstractLink::dataReceived, this, [this, linkId]() { emit linkRecv(linkId); });
         connect(link, &AbstractLink::dataSent, this, [this, linkId]() { emit linkSent(linkId); });
         connect(link, &AbstractLink::errored, this,
@@ -157,10 +159,7 @@ void CommunicatorWorker::removeLinkImpl(int linkId)
 void CommunicatorWorker::setLinkConnectedImpl(int linkId, bool connected)
 {
     AbstractLink* link = d->descriptedLinks[linkId];
-    if (!link) return;
-
-    link->setConnected(connected);
-    emit linkStatusChanged(linkId, link->isConnected());
+    if (link) link->setConnected(connected);
 }
 
 void CommunicatorWorker::timerEvent(QTimerEvent* event)

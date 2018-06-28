@@ -105,7 +105,8 @@ void SerialLink::onError(int error)
         break;
     case QSerialPort::ResourceError:
         emit errored(tr("An I/O error occurred when a resource becomes unavailable"));
-        if (this->isConnected()) this->disconnectLink();
+        m_port->close();
+        emit connectedChanged(false);
         break;
     case QSerialPort::UnsupportedOperationError:
         emit errored(tr("The requested device operation is not supported or prohibited "
