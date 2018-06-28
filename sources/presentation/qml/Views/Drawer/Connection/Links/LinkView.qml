@@ -64,6 +64,13 @@ Controls.Card {
         Component.onCompleted: setLink(linkId)
     }
 
+    Controls.ColoredIcon {
+        anchors.left: grid.left
+        anchors.top: grid.top
+        source: connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
+        color: connected ? customPalette.positiveColor : customPalette.sunkenColor
+    }
+
     GridLayout {
         id: grid
         anchors.fill: parent
