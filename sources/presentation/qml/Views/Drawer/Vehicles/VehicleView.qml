@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/Controls" as Controls
+import "qrc:/Indicators" as Indicators
 
 Controls.Card {
     id: vehicleView
@@ -28,16 +29,24 @@ Controls.Card {
     }
 
     deepEnabled: false
-    implicitWidth: col.implicitWidth + sizings.margins * 2
-    implicitHeight: col.implicitHeight + sizings.margins * 2
+    implicitWidth: column.implicitWidth + sizings.margins * 2
+    implicitHeight: column.implicitHeight + sizings.margins * 2
 
     VehiclePresenter {
         id: presenter
         view: vehicleView
     }
 
+    Indicators.Led {
+        id: led
+        anchors.left: column.left
+        anchors.top: column.top
+        anchors.topMargin: height / 2
+        color: online ? customPalette.positiveColor : customPalette.sunkenColor
+    }
+
     ColumnLayout {
-        id: col
+        id: column
         anchors.fill: parent
         anchors.margins: sizings.margins
         anchors.rightMargin: vehicleView.margin
@@ -48,6 +57,7 @@ Controls.Card {
             labelText: qsTr("Vehicle name")
             onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
+            Layout.leftMargin: led.width + sizings.margins
         }
 
         Controls.SpinBox {
@@ -65,11 +75,6 @@ Controls.Card {
             id: typeBox
             labelText: qsTr("Frame type")
             onActivated: presenter.setType(currentIndex)
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: qsTr("Status") + ": " + (online ? qsTr("Online") : qsTr("Offline"))
             Layout.fillWidth: true
         }
     }
