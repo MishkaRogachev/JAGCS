@@ -28,7 +28,7 @@ Controls.Frame {
     ChartView {
         anchors.fill: parent
         antialiasing: true
-        animationOptions: ChartView.SeriesAnimations
+        animationOptions: ChartView.NoAnimation
         backgroundColor: "transparent"
         legend.visible: false
 
