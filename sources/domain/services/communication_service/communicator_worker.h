@@ -45,8 +45,6 @@ namespace domain
         void linkErrored(int linkId, QString error);
 
     private slots:
-        void onLinkStatisticsChanged(comm::AbstractLink* link, int bytesReceived,
-                                     int bytesSent);
         void onMavLinkStatisticsChanged(comm::AbstractLink* link,
                                         int packetsReceived,
                                         int packetsDrops);
@@ -58,6 +56,9 @@ namespace domain
                             bool autoconnect);
         void removeLinkImpl(int linkId);
         void setLinkConnectedImpl(int linkId, bool connected);
+
+    protected:
+        void timerEvent(QTimerEvent* event) override;
 
     private:
         class Impl;
