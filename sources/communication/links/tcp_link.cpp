@@ -11,7 +11,9 @@ TcpLink::TcpLink(const Endpoint& endpoint, QObject* parent):
     m_endpoint(endpoint)
 {
     connect(m_socket, &QTcpSocket::readyRead, this, &TcpLink::onReadyRead);
-    connect(m_socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::error),
+    // TODO: C++14 QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::error),
+    connect(m_socket, static_cast<void (QTcpSocket::*)
+            (QTcpSocket::SocketError)>(&QTcpSocket::error),
             this, &AbstractLink::onSocketError);
 }
 

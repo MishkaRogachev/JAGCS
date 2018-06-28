@@ -14,7 +14,9 @@ BluetoothLink::BluetoothLink(const QString& address, QObject* parent):
     connect(m_socket, &QBluetoothSocket::readyRead, this, &BluetoothLink::onReadyRead);
     connect(m_socket, &QBluetoothSocket::connected, this, [this]() { emit connectedChanged(true); });
     connect(m_socket, &QBluetoothSocket::disconnected, this, [this]() { emit connectedChanged(false); });
-    connect(m_socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error),
+    // TODO: C++14 QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error)
+    connect(m_socket, static_cast<void (QBluetoothSocket::*)
+            (QBluetoothSocket::SocketError)>(&QBluetoothSocket::error),
             this, &BluetoothLink::onError);
 }
 

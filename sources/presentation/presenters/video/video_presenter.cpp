@@ -61,13 +61,6 @@ void VideoPresenter::updateSource()
         if (!info.isNull())
         {
             QCamera* camera = new QCamera(info, this);
-            connect(camera, &QCamera::stateChanged, this, [](QCamera::State state) {
-                qDebug() << "Camera state" << state;
-            });
-            connect(camera, QOverload<QCamera::Error>::of(&QCamera::error),
-                    this, [](QCamera::Error error) {
-                qDebug() << "Camera error" << error;
-            });
             camera->setViewfinder(d->provider.videoSurface());
             camera->start();
             d->media = camera;

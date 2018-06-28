@@ -55,8 +55,10 @@ void BluetoothService::startDiscovery()
             this, &BluetoothService::onStopped);
     connect(d->agent, &QBluetoothDeviceDiscoveryAgent::canceled,
             this, &BluetoothService::onStopped);
-    connect(d->agent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(
-                &QBluetoothDeviceDiscoveryAgent::error), this, &BluetoothService::onError);
+    // TODO: C++14 QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error)
+    connect(d->agent, static_cast<void (QBluetoothDeviceDiscoveryAgent::*)
+            (QBluetoothDeviceDiscoveryAgent::Error)>(&QBluetoothDeviceDiscoveryAgent::error),
+            this, &BluetoothService::onError);
 
     d->agent->setInquiryType(QBluetoothDeviceDiscoveryAgent::GeneralUnlimitedInquiry);
     d->agent->start();
