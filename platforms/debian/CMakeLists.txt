@@ -18,6 +18,23 @@ set(CPACK_PACKAGE_CONTACT "mishkarogachev@gmail.com")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/MishkaRogachev/JAGCS")
 set(CPACK_DEBIAN_PACKAGE_SECTION "Science")
 
+# Package deps
+set(CPACK_DEBIAN_PACKAGE_DEPENDS
+    libqt5core5a,
+    libqt5network5,
+    libqt5positioning5,
+    libqt5opengl5,
+    libqt5gui5,
+    libqt5qml5,
+    libqt5quick5,
+    libqt5serialport5,
+    libqt5sql5,
+    libqt5svg5,
+    libqt5location5
+    libqt5multimedia5
+    libqt5bluetooth5
+)
+
 # Set package version
 set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
