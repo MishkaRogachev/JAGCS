@@ -49,14 +49,14 @@ void BluetoothService::startDiscovery()
 
     d->agent = new QBluetoothDeviceDiscoveryAgent(this);
 
-    connect(d->agent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+    connect(d->agent.data(), &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
             this, &BluetoothService::onDeviceDiscovered);
-    connect(d->agent, &QBluetoothDeviceDiscoveryAgent::finished,
+    connect(d->agent.data(), &QBluetoothDeviceDiscoveryAgent::finished,
             this, &BluetoothService::onStopped);
-    connect(d->agent, &QBluetoothDeviceDiscoveryAgent::canceled,
+    connect(d->agent.data(), &QBluetoothDeviceDiscoveryAgent::canceled,
             this, &BluetoothService::onStopped);
     // TODO: C++14 QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error)
-    connect(d->agent, static_cast<void (QBluetoothDeviceDiscoveryAgent::*)
+    connect(d->agent.data(), static_cast<void (QBluetoothDeviceDiscoveryAgent::*)
             (QBluetoothDeviceDiscoveryAgent::Error)>(&QBluetoothDeviceDiscoveryAgent::error),
             [this](QBluetoothDeviceDiscoveryAgent::Error error) {
         this->onError(error);
@@ -81,7 +81,7 @@ void BluetoothService::onDeviceDiscovered(const QBluetoothDeviceInfo& info)
 
 void BluetoothService::onStopped()
 {
-    d->agent->deleteLater();
+    if (d->agent) d->agent->deleteLater();
 
     emit stopped();
 }
