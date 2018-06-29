@@ -1,9 +1,9 @@
-dist: trusty
+dist: xenial
 sudo: required
 language: generic
 
 install:
-  - sudo add-apt-repository -y ppa:beineri/opt-qt591-trusty
+  - sudo add-apt-repository -y ppa:beineri/opt-qt594-xenial
   - travis_retry sudo apt-get update
   - travis_wait 30 sudo apt-get -y install -qq mesa-common-dev qt59-meta-full qt59charts-no-lgpl qt59gamepad qt59connectivity 
 
