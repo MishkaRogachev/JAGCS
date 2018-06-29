@@ -9,18 +9,18 @@ Palette DayPaletteFactory::create()
     palette.setSkyColor("#00d4ff");
     palette.setGroundColor("#4bda63");
 
-    palette.setSunkenColor("#babdbe");
-    palette.setBackgroundColor("#e8ecf0");
-    palette.setRaisedColor("#ffffff");
-    palette.setControlColor("#90a4ae");
-    palette.setButtonColor("#cfd8dc");
+    palette.setSunkenColor("#B0BEC5");
+    palette.setBackgroundColor("#F5F5F5");
+    palette.setRaisedColor("#ECEFF1");
+    palette.setControlColor("#CFD8DC");
+    palette.setButtonColor("#CFD8DC");
 
     palette.setTextColor("#202020");
     palette.setSecondaryTextColor("#546e7a");
-
-    palette.setHighlightColor("#14cba8");
-    palette.setSelectionColor("#9fffe0");
     palette.setSelectedTextColor("#ffffff");
+
+    palette.setHighlightColor("#00c98f");
+    palette.setSelectionColor("#02eec8");
     
     return palette;
 }

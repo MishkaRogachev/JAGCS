@@ -17,10 +17,10 @@ Palette NightPaletteFactory::create()
 
     palette.setTextColor("#ffffff");
     palette.setSecondaryTextColor("#e0e0e0");
-
-    palette.setHighlightColor("#68f0a8");
-    palette.setSelectionColor("#28bc78");
     palette.setSelectedTextColor("#000000");
+
+    palette.setHighlightColor("#02eec8");
+    palette.setSelectionColor("#00c98f");
 
     return palette;
 }

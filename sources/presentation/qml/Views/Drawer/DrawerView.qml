@@ -47,6 +47,7 @@ Controls.Drawer {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         visible: drawer.position > 0
+        clip: true
 
         ColumnLayout {
             id: drawerHeader
