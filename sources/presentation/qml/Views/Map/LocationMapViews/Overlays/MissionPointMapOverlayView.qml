@@ -65,14 +65,6 @@ MapItemView {
                     }
                 }
             }
-
-            Connections {
-                target: map
-                onHolded: {
-                    if (!itemSelected) return;
-                    presenter.moveItem(itemPtr.id, coordinate.latitude, coordinate.longitude);
-                }
-            }
         }
     }
 }
