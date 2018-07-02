@@ -8,6 +8,7 @@ import "qrc:/Views/Common"
 import "../../MapItems"
 
 MapItemView {
+    // FIXME: merge with mission point
     delegate: MapQuickItem {
         id: mapItem
         coordinate: targetPosition
@@ -22,10 +23,22 @@ MapItemView {
             dragEnabled: true
             command: MissionItem.TargetPoint
             onDragged: {
+                var point = map.fromCoordinate(itemCoordinate, false);
+                point.x += dx;
+                point.y += dy;
+
+                if (point.x < 0) map.pan(point.x, 0);
+                else if (point.x > map.width) map.pan(point.x - map.width, 0);
+                if (point.y < 0) map.pan(0, point.y);
+                else if (point.y > map.height) map.pan(0, point.y - map.height);
+            }
+            onDropped: {
                 var point = map.fromCoordinate(targetPosition);
                 point.x += dx;
                 point.y += dy;
                 var coordinate = map.toCoordinate(point);
+                if (!coordinate.isValid) return;
+
                 presenter.navTo(vehicleId, coordinate.latitude, coordinate.longitude,
                                 targetPosition.altitude - homePosition.altitude);
             }

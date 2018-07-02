@@ -13,6 +13,7 @@ PointView  {
     signal clicked()
     signal holded()
     signal dragged(real dx, real dy)
+    signal dropped(real dx, real dy)
 
     width: dragEnabled && area.pressed ? area.width : implicitWidth
     height: dragEnabled && area.pressed ? area.height : implicitHeight
@@ -41,7 +42,7 @@ PointView  {
         onReleased: {
             if (!dragActive) return;
 
-            item.dragged(picker.x, picker.y);
+            item.dropped(picker.x, picker.y);
 
             dragActive = false;
             picker.x = 0;
@@ -56,6 +57,8 @@ PointView  {
         source: "qrc:/icons/aim.svg";
         color: customPalette.activeMissionColor
         visible: dragActive
+        onXChanged: item.dragged(x, y)
+        onYChanged: item.dragged(x, y)
     }
 }
 

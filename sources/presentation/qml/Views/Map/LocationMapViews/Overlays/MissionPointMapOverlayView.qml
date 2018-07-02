@@ -26,15 +26,22 @@ MapItemView {
             sequence: itemPtr.sequence
             onClicked: map.selectItem(itemPtr.missionId, itemPtr.id)
             onHolded: menu.open()
-            //                drawer.setMode(DrawerPresenter.Plan);
-            //                map.selectItem(itemPtr.missionId, itemPtr.id);
-            //                if (trackingVehicleId == 0) map.setCenterOffsetted(itemCoordinate);
-            //            }
             onDragged: {
-                var point = map.fromCoordinate(itemCoordinate);
+                var point = map.fromCoordinate(itemCoordinate, false);
                 point.x += dx;
                 point.y += dy;
-                var coordinate = map.toCoordinate(point);
+
+                if (point.x < 0) map.pan(point.x, 0);
+                else if (point.x > map.width) map.pan(point.x - map.width, 0);
+                if (point.y < 0) map.pan(0, point.y);
+                else if (point.y > map.height) map.pan(0, point.y - map.height);
+            }
+            onDropped: {
+                var point = map.fromCoordinate(itemCoordinate, false);
+                point.x += dx;
+                point.y += dy;
+                var coordinate = map.toCoordinate(point, false);
+
                 presenter.moveItem(itemPtr.id, coordinate.latitude, coordinate.longitude);
             }
 
