@@ -81,7 +81,9 @@ T.Control {
         anchors.fill: parent
         leftPadding: sizings.controlBaseSize + sizings.padding
         color: isValid ? "transparent" : customPalette.dangerColor
-        textColor: focusedItem ? customPalette.highlightColor : customPalette.secondaryTextColor
+        textColor: isValid ? (highlighted ? customPalette.highlightColor :
+                                            customPalette.secondaryTextColor) :
+                             customPalette.selectedTextColor
     }
 
     contentItem: FocusScope {
