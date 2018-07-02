@@ -32,8 +32,14 @@ set(CPACK_DEBIAN_PACKAGE_DEPENDS
     libqt5svg5,
     libqt5location5,
     libqt5location5-plugins,
+    libqt5charts5,
     libqt5multimedia5,
-    libqt5bluetooth5"
+    libqt5bluetooth5,
+    qml-module-qtquick-controls2,
+    qml-module-qtpositioning,
+    qml-module-qtlocation,
+    qml-module-qtcharts,
+    qml-module-qtmultimedia"
 )
 
 # Set package version
