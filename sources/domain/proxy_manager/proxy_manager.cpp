@@ -25,6 +25,8 @@ void ProxyManager::setProxy(const QNetworkProxy& proxy)
     if (QNetworkProxy::applicationProxy() == proxy) return;
 
     QNetworkProxy::setApplicationProxy(proxy);
+    this->save();
+
     emit proxyChanged(proxy);
 }
 

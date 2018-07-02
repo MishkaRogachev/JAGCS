@@ -10,19 +10,12 @@ ColumnLayout {
 
     property bool changed: false
 
-    property alias type: typeItem.currentText
+    property alias type: typeItem.currentIndex
+    property alias typeModel: typeItem.model
     property alias hostName: hostNameItem.text
     property alias port: portItem.value
     property alias user: userItem.text
     property alias password: passwordItem.text
-
-    property alias typeModel: typeItem.model
-
-    function setProxyType(proxyType) {
-        typeItem.currentIndex = typeModel.indexOf(proxyType);
-    }
-
-    Component.onDestruction: if (changed) presenter.updateView()
 
     anchors.fill: parent
     spacing: sizings.spacing
