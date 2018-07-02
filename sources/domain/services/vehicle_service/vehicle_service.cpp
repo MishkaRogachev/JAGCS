@@ -147,7 +147,7 @@ bool VehicleService::addNewVehicle()
     while (mavIds.contains(mavId)) mavId++;
 
     vehicle->setMavId(mavId);
-    vehicle->setName(tr("New vehicle"));
+    vehicle->setName(tr("MAV %1").arg(mavId));
     vehicle->setType(Vehicle::Auto);
 
     return this->save(vehicle);

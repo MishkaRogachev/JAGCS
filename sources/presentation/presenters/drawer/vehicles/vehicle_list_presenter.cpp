@@ -67,6 +67,5 @@ void VehicleListPresenter::filter(const QString& filterString)
 void VehicleListPresenter::connectView(QObject* view)
 {
     view->setProperty(PROPERTY(vehicles), QVariant::fromValue(&d->filterModel));
-    view->setProperty(PROPERTY(autoAdd),
-                      settings::Provider::value(settings::communication::autoAdd));
+    view->setProperty(PROPERTY(autoAdd), settings::Provider::value(settings::communication::autoAdd));
 }

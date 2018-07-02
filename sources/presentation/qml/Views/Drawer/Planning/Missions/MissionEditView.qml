@@ -83,7 +83,10 @@ ColumnLayout {
                     text: qsTr("Put in center")
                     iconSource: "qrc:/icons/put_center.svg"
                     enabled: map.trackingVehicleId === 0 && map.visible
-                    onTriggered: itemEdit.position = map.centerOffsetted
+                    onTriggered: {
+                        itemEdit.position = map.centerOffsetted;
+                        itemEdit.save();
+                    }
                 }
 
                 Controls.MenuItem {
