@@ -23,7 +23,7 @@ MapItemView {
             dragEnabled: true
             command: MissionItem.TargetPoint
             onDragged: {
-                var point = map.fromCoordinate(itemCoordinate, false);
+                var point = map.fromCoordinate(targetPosition, false);
                 point.x += dx;
                 point.y += dy;
 
