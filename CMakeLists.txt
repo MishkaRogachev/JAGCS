@@ -11,7 +11,7 @@ include(cmake/RecurseSubdirs.cmake)
 # Versions
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 5)
-set(VERSION_PATCH 1)
+set(VERSION_PATCH 2)
 
 # Get git revision hash
 execute_process(
