@@ -2,8 +2,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Project
-set(PROJECT jagcs)
-project(${PROJECT})
+project(jagcs)
 
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
@@ -27,6 +26,9 @@ add_definitions(-DVERSION_MINOR=${VERSION_MINOR})
 add_definitions(-DVERSION_PATCH=${VERSION_PATCH})
 add_definitions(-DGIT_REVISION="${GIT_REVISION}")
 
+# Version message
+message(STATUS "${PROJECT_NAME} ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}(${GIT_REVISION})")
+
 # Minimum Qt version
 set(QT_REQUIRED_VERSION 5.9.0)
 
@@ -45,8 +47,8 @@ add_compile_options(-Wall -fPIC)
 
 # Targets
 add_subdirectory(core)
-add_subdirectory(plugins)
-add_subdirectory(app)
+#add_subdirectory(plugins)
+#add_subdirectory(app)
 
 # Windows stuff
 if(WIN32)
@@ -57,6 +59,6 @@ endif(WIN32)
 option(WITH_DEBIAN "Include instructions to make Debian package")
 if(WITH_DEBIAN)
     # https://cmake.org/Bug/view.php?id=14444
-    install(TARGETS ${PROJECT} DESTINATION "/usr/local/bin/")
+    install(TARGETS ${PROJECT_NAME} DESTINATION "/usr/local/bin/")
     add_subdirectory(platforms/debian)
 endif(WITH_DEBIAN)

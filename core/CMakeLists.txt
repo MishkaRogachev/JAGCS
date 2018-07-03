@@ -2,19 +2,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Project
-set(PROJECT jagcs_core)
-project(${PROJECT})
-
-# Enable Qt modules
-find_package(Qt5 COMPONENTS
-    Core
-    Network
-    SerialPort
-    Bluetooth
-    Sql
-    Positioning
-    LinguistTools
-REQUIRED)
+project(jagcs_core)
 
 # QGamepad option
 option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
@@ -25,16 +13,48 @@ find_package(Qt5 COMPONENTS
 REQUIRED)
 endif(WITH_GAMEPAD)
 
-# Internal sources and headers
-file(GLOB_RECURSE INTERNAL_SOURCES "sources/*.h" "sources/*.cpp" "sources/*.hpp")
-set(SOURCES ${SOURCES} ${INTERNAL_SOURCES} PARENT_SCOPE)
+# Enable Qt modules
+find_package(Qt5 COMPONENTS
+    Core
+    Gui
+    Network
+    SerialPort
+    Bluetooth
+    Sql
+    Positioning
+    LinguistTools
+REQUIRED)
 
+# Dynamic library taget
+add_library(${PROJECT_NAME} SHARED)
+
+# Use qt5 modules
+qt5_use_modules(${PROJECT_NAME}
+    Core
+    Gui
+    Network
+    SerialPort
+    Bluetooth
+    Sql
+    Positioning
+)
+
+# Includes
+HEADER_DIRECTORIES(INCLUDES "includes")
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
+
+# Internal includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
-set(INCLUDES ${INCLUDES} ${INTERNAL_INCLUDES} PARENT_SCOPE)
+target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
+
+# Sources
+file(GLOB_RECURSE SOURCES "sources/*.h" "sources/*.hpp")
+target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
 # NOTE: temporary solution for Q_NAMESPACE
 # qt5_generate_moc(sources/domain/types/vehicle_types.h ${MOC_SOURCES})
 qt5_wrap_cpp(MOC_SOURCES sources/domain/types/vehicle_types.h)
+target_sources(${PROJECT_NAME} PRIVATE ${MOC_SOURCES})
 
 # Translations
 file(GLOB TS_FILES "translations/*.ts")
@@ -57,19 +77,7 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
-
-# Dynamic library taget
-add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
-
-# Use qt5 modules
-qt5_use_modules(${PROJECT}
-    Core
-    Network
-    SerialPort
-    Bluetooth
-    Sql
-    Positioning
-)
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
 
 # Tests
 option(WITH_TESTS "Include tests")
