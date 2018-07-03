@@ -10,8 +10,8 @@ include(cmake/RecurseSubdirs.cmake)
 
 # Versions
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 5)
-set(VERSION_PATCH 2)
+set(VERSION_MINOR 6)
+set(VERSION_PATCH 0)
 
 # Get git revision hash
 execute_process(
@@ -43,130 +43,15 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -fPIC)
 
-# Enable globaly some Qt modules
-find_package(Qt5 COMPONENTS
-    Core
-    Network
-    SerialPort
-    Bluetooth
-    Sql
-    Svg
-    Gui
-    Quick
-    LinguistTools
-    Multimedia
-    Positioning
-    Location
-    Charts
-    QuickControls2
-REQUIRED)
-
-# Common libraries
-set(LIBRARIES
-)
-
-# QGamepad option
-option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
-if(WITH_GAMEPAD)
-add_definitions(-DWITH_GAMEPAD)
-find_package(Qt5 COMPONENTS
-    Gamepad
-REQUIRED)
-endif(WITH_GAMEPAD)
-
-# Logger option
-option(WITH_LOGGER "Compile with file logger instead console output")
-if (WITH_LOGGER)
-add_definitions(-DWITH_LOGGER)
-endif(WITH_LOGGER)
-
-# Mapbox GL option
-option(WITH_MAPBOXGL "Compile with MapBox GL Qt Location plugin")
-if(WITH_MAPBOXGL)
-add_definitions(-DWITH_MAPBOXGL)
-endif(WITH_MAPBOXGL)
-
-# Windows stuff
-if(WIN32)
-set(LIBRARIES
-    ${LIBRARIES}
-    opengl32
-)
-# RC compiler
-string(REPLACE "gcc" "windres" CMAKE_RC_COMPILER_INIT ${CMAKE_C_COMPILER})
-enable_language(RC)
-set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -o <OBJECT> <SOURCE> -I ${CMAKE_SOURCE_DIR}/platforms/windows/")
-
-configure_file(${CMAKE_SOURCE_DIR}/platforms/windows/jagcs.rc.in ${CMAKE_CURRENT_BINARY_DIR}/jagcs.rc)
-set(META_SOURCES jagcs.rc)
-endif(WIN32)
-
-# Android stuff
-if(ANDROID)
-find_package(Qt5AndroidExtras)
-set(LIBS
-    ${LIBS}
-    Qt5::AndroidExtras
-    android
-# TODO: add to 3rd party openssl android library, avoid https://bugreports.qt.io/browse/QTBUG-57922
-)
-endif(ANDROID)
-
 # Targets
 add_subdirectory(core)
 add_subdirectory(plugins)
 add_subdirectory(app)
 
-include_directories(${INCLUDES})
-
-# Target
-if(ANDROID)
-    include_directories(${ANDROID_SYSROOT}/usr/include)
-    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
-    set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
-        ${VERSION_MAJOR} "." ${VERSION_MINOR} "." ${VERSION_PATCH})
-else(ANDROID)
-    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
-endif()
-
-# Link Libraries
-target_link_libraries(${PROJECT} ${LIBRARIES})
-
-# Use qt5 modules
-qt5_use_modules(${PROJECT}
-    Core
-    Network
-    SerialPort
-    Bluetooth
-    Sql
-    Svg
-    Gui
-    Quick
-    Multimedia
-    Positioning
-    Location
-    Charts
-    QuickControls2
-)
-
-if(WITH_GAMEPAD)
-qt5_use_modules(${PROJECT}
-    Gamepad
-)
-endif(WITH_GAMEPAD)
-
-if(ANDROID)
-    set(QT_ANDROID_APP_NAME ${PROJECT_NAME})
-    include(3rdparty/qt-android-cmake/AddQtAndroidApk.cmake)
-    add_qt_android_apk(${PROJECT_NAME}_apk.
-                        ${PROJECT_NAME}
-                        NAME "JAGCS"
-                        PACKAGE_NAME "mishkarogachev.jagcs"
-                        PACKAGE_SOURCES ${CMAKE_SOURCE_DIR}/platforms/android
-                        BUILDTOOLS_REVISION "23.0.3"
-                        VERSION_CODE 5
-)
-endif()
+# Windows stuff
+if(WIN32)
+    add_subdirectory(platforms/windows)
+endif(WIN32)
 
 # CPack Debian package
 option(WITH_DEBIAN "Include instructions to make Debian package")

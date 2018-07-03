@@ -6,7 +6,7 @@
 
 class QFile;
 
-namespace app
+namespace domain
 {
     class FileLogger: public QObject
     {

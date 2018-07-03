@@ -1,6 +1,30 @@
 # CMake version string
 cmake_minimum_required(VERSION 3.0)
 
+# Project
+set(PROJECT jagcs_core)
+project(${PROJECT})
+
+# Enable Qt modules
+find_package(Qt5 COMPONENTS
+    Core
+    Network
+    SerialPort
+    Bluetooth
+    Sql
+    Positioning
+    LinguistTools
+REQUIRED)
+
+# QGamepad option
+option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
+if(WITH_GAMEPAD)
+add_definitions(-DWITH_GAMEPAD)
+find_package(Qt5 COMPONENTS
+    Gamepad
+REQUIRED)
+endif(WITH_GAMEPAD)
+
 # Internal sources and headers
 file(GLOB_RECURSE INTERNAL_SOURCES "sources/*.h" "sources/*.cpp" "sources/*.hpp")
 set(SOURCES ${SOURCES} ${INTERNAL_SOURCES} PARENT_SCOPE)
@@ -33,6 +57,19 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
+
+# Dynamic library taget
+add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
+
+# Use qt5 modules
+qt5_use_modules(${PROJECT}
+    Core
+    Network
+    SerialPort
+    Bluetooth
+    Sql
+    Positioning
+)
 
 # Tests
 option(WITH_TESTS "Include tests")

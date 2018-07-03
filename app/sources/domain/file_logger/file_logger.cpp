@@ -8,7 +8,7 @@
 #include <QApplication>
 #include <QDebug>
 
-using namespace app;
+using namespace domain;
 
 namespace
 {
