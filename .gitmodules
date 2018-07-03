@@ -1,8 +1,8 @@
 [submodule "3rdparty/mavlink_v1"]
-	path = 3rdparty/mavlink_v1
+	path = plugins/mavlink/3rdparty/mavlink_v1
 	url = https://github.com/mavlink/c_library_v1.git
 [submodule "3rdparty/mavlink_v2"]
-	path = 3rdparty/mavlink_v2
+	path = plugins/mavlink/3rdparty/mavlink_v2
 	url = https://github.com/mavlink/c_library_v2.git
 [submodule "3rdparty/qt-android-cmake"]
 	path = 3rdparty/qt-android-cmake
