@@ -88,10 +88,7 @@ endif(WITH_MAPBOXGL)
 
 # Windows stuff
 if(WIN32)
-set(LIBRARIES
-    ${LIBRARIES}
-    opengl32
-)
+set(LIBRARIES ${LIBRARIES} opengl32)
 # RC compiler
 string(REPLACE "gcc" "windres" CMAKE_RC_COMPILER_INIT ${CMAKE_C_COMPILER})
 enable_language(RC)
@@ -167,25 +164,25 @@ else(ANDROID)
     add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
 endif()
 
+# Qt libraries
+set(LIBRARIES ${LIBRARIES}
+    Qt5::Core
+    Qt5::Network
+    Qt5::SerialPort
+    Qt5::Bluetooth
+    Qt5::Sql
+    Qt5::Svg
+    Qt5::Gui
+    Qt5::Quick
+    Qt5::Multimedia
+    Qt5::Positioning
+    Qt5::Location
+    Qt5::Charts
+    Qt5::QuickControls2
+) 
+
 # Link Libraries
 target_link_libraries(${PROJECT} ${LIBRARIES})
-
-# Use qt5 modules
-qt5_use_modules(${PROJECT}
-    Core
-    Network
-    SerialPort
-    Bluetooth
-    Sql
-    Svg
-    Gui
-    Quick
-    Multimedia
-    Positioning
-    Location
-    Charts
-    QuickControls2
-)
 
 if(WITH_GAMEPAD)
 qt5_use_modules(${PROJECT}
