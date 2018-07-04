@@ -1,17 +1,8 @@
 # CMake version string
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2.1)
 
 # Project
 project(jagcs_core)
-
-# QGamepad option
-option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
-if(WITH_GAMEPAD)
-add_definitions(-DWITH_GAMEPAD)
-find_package(Qt5 COMPONENTS
-    Gamepad
-REQUIRED)
-endif(WITH_GAMEPAD)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS
@@ -26,7 +17,7 @@ find_package(Qt5 COMPONENTS
 REQUIRED)
 
 # Dynamic library taget
-add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME} SHARED "")
 
 # Use qt5 modules
 qt5_use_modules(${PROJECT_NAME}
@@ -48,13 +39,8 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
 target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
 # Sources
-file(GLOB_RECURSE SOURCES "sources/*.h" "sources/*.hpp")
+file(GLOB_RECURSE SOURCES "sources/*.cpp" "sources/*.hpp")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
-
-# NOTE: temporary solution for Q_NAMESPACE
-# qt5_generate_moc(sources/domain/types/vehicle_types.h ${MOC_SOURCES})
-qt5_wrap_cpp(MOC_SOURCES sources/domain/types/vehicle_types.h)
-target_sources(${PROJECT_NAME} PRIVATE ${MOC_SOURCES})
 
 # Translations
 file(GLOB TS_FILES "translations/*.ts")

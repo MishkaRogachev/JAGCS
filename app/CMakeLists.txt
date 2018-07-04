@@ -5,6 +5,15 @@ cmake_minimum_required(VERSION 3.0)
 set(PROJECT jagcs_app)
 project(${PROJECT})
 
+# QGamepad option
+option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
+if(WITH_GAMEPAD)
+add_definitions(-DWITH_GAMEPAD)
+find_package(Qt5 COMPONENTS
+    Gamepad
+REQUIRED)
+endif(WITH_GAMEPAD)
+
 # Mapbox GL option
 option(WITH_MAPBOXGL "Compile with MapBox GL Qt Location plugin")
 if(WITH_MAPBOXGL)
