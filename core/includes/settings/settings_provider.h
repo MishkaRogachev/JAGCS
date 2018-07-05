@@ -5,7 +5,7 @@
 #include <QVariant>
 
 // Internal
-#include "settings.h"
+#include "core_settings.h"
 
 namespace settings
 {

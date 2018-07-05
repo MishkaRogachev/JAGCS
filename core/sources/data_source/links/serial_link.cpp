@@ -4,7 +4,7 @@
 #include <QSerialPort>
 #include <QDebug>
 
-using namespace comm;
+using namespace data_source;
 
 SerialLink::SerialLink(const QString& portName, qint32 baudRate,
                        QObject* parent):

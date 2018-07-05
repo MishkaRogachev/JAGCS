@@ -23,10 +23,10 @@ namespace
     {
         { data_base::name, "jagcs_db" },
 
-        { communication::systemId, 255 },
-        { communication::componentId, 0 },
-        { communication::heartbeat, 1000 },
-        { communication::timeout, 5000 },
+ //      { communication::systemId, 255 },
+ //       { communication::componentId, 0 },
+ //       { communication::heartbeat, 1000 },
+ //       { communication::timeout, 5000 },
         { communication::autoAdd, true },
         { communication::baudRate, 57600 },
         { communication::udpPort, 14550 },

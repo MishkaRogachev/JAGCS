@@ -1,6 +1,6 @@
 #include "satellite_info.h"
 
-using namespace domain;
+using namespace dto;
 
 SatelliteInfo::SatelliteInfo(quint8 prn, bool used, quint8 elevation, quint8 azimuth, quint8 snr):
     m_prn(prn),

@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.2.1)
 # Project
 project(jagcs_core)
 
+# Version message
+message(STATUS "Building ${PROJECT_NAME}")
+
 # Enable Qt modules
 find_package(Qt5 COMPONENTS
     Core

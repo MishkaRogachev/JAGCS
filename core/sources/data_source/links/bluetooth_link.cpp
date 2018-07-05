@@ -4,7 +4,7 @@
 #include <QBluetoothSocket>
 #include <QDebug>
 
-using namespace comm;
+using namespace data_source;
 
 BluetoothLink::BluetoothLink(const QString& address, QObject* parent):
     AbstractLink(parent),

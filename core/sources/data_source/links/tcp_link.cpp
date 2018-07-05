@@ -3,9 +3,9 @@
 // Qt
 #include <QTcpSocket>
 
-using namespace comm;
+using namespace data_source;
 
-TcpLink::TcpLink(const Endpoint& endpoint, QObject* parent):
+TcpLink::TcpLink(const dto::Endpoint& endpoint, QObject* parent):
     AbstractLink(parent),
     m_socket(new QTcpSocket(this)),
     m_endpoint(endpoint)
@@ -22,7 +22,7 @@ bool TcpLink::isConnected() const
     return m_socket->state() == QTcpSocket::ConnectedState;
 }
 
-Endpoint TcpLink::endpoint() const
+dto::Endpoint TcpLink::endpoint() const
 {
     return m_endpoint;
 }
@@ -43,7 +43,7 @@ void TcpLink::disconnectLink()
     emit connectedChanged(!m_socket->waitForDisconnected());
 }
 
-void TcpLink::setEndpoint(const Endpoint& endpoint)
+void TcpLink::setEndpoint(const dto::Endpoint& endpoint)
 {
     if (m_endpoint == endpoint) return;
 

@@ -4,7 +4,7 @@
 #include <QAbstractSocket>
 #include <QDebug>
 
-using namespace comm;
+using namespace data_source;
 
 AbstractLink::AbstractLink(QObject* parent):
     QObject(parent)

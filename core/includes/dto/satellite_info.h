@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-namespace domain
+namespace dto
 {
     struct SatelliteInfo
     {
