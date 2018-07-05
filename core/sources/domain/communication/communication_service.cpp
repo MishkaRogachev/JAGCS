@@ -60,7 +60,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 {
     qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
     qRegisterMetaType<dto::LinkDescription::Protocol>("dto::LinkDescription::Protocol");
-    qRegisterMetaType<data_source::LinkFactoryPtr>("comm::LinkFactoryPtr");
+    qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
 
     d->serialPortService = serialPortService;
     connect(serialPortService, &SerialPortService::devicesChanged,

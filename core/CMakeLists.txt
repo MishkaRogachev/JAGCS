@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.2.1)
 project(jagcs_core)
 
 # Version message
-message(STATUS "Building ${PROJECT_NAME}")
+message(STATUS "Configuring ${PROJECT_NAME}")
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS
@@ -22,17 +22,6 @@ REQUIRED)
 # Dynamic library taget
 add_library(${PROJECT_NAME} SHARED "")
 
-# Use qt5 modules
-qt5_use_modules(${PROJECT_NAME}
-    Core
-    Gui
-    Network
-    SerialPort
-    Bluetooth
-    Sql
-    Positioning
-)
-
 # Includes
 HEADER_DIRECTORIES(INCLUDES "includes")
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
@@ -41,8 +30,22 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
 HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
 target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
+# Add Qt libraries
+set(QT_LIBRARIES
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Network
+    Qt5::SerialPort
+    Qt5::Bluetooth
+    Qt5::Sql
+    Qt5::Positioning
+)
+
+# Link Libraries
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
+
 # Sources
-file(GLOB_RECURSE SOURCES "sources/*.cpp" "sources/*.hpp")
+file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
 # Translations
@@ -69,7 +72,6 @@ qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
 
 # Tests
-option(WITH_TESTS "Include tests")
 if(WITH_TESTS)
     add_subdirectory(tests)
 endif(WITH_TESTS)

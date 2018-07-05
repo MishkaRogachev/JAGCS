@@ -2,8 +2,10 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Project
-set(PROJECT tests)
-project(${PROJECT})
+project(core_tests)
+
+# Version message
+message(STATUS "Configuring ${PROJECT_NAME}")
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Test REQUIRED)
@@ -16,24 +18,25 @@ include_directories(${TEST_INCLUDES})
 file(GLOB_RECURSE TEST_SOURCES "*.h" "*.cpp")
 
 # Executable
-add_executable(${PROJECT} ${TEST_SOURCES} ${SOURCES})
-set_target_properties(${PROJECT} PROPERTIES AUTOMOC TRUE)
+add_executable(${PROJECT_NAME} "")
+#set_target_properties(${PROJECT_NAME} PROPERTIES AUTOMOC TRUE)
+
+# Includes
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
+
+# Internal includes
+HEADER_DIRECTORIES(TEST_INCLUDES "./")
+target_include_directories(${PROJECT_NAME} PRIVATE ${TEST_INCLUDES})
+
+# Sources
+file(GLOB_RECURSE TEST_SOURCES "*.cpp" "*.hpp")
+target_sources(${PROJECT_NAME} PRIVATE ${TEST_SOURCES})
+
+# Add Qt test library
+set(QT_LIBRARIES ${QT_LIBRARIES} Qt5::Test)
 
 # Link Libraries
-target_link_libraries (${PROJECT} ${LIBRARIES})
-
-# Use qt5 modules
-qt5_use_modules(${PROJECT}
-    Core
-    Network
-    SerialPort
-    Sql
-    Gui
-    Quick
-    Multimedia
-    Positioning
-    Test
-)
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} jagcs_core)
 
 # Tests
-add_test (NAME ${PROJECT} COMMAND ${PROJECT})
+add_test (NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})

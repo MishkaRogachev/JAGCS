@@ -8,8 +8,6 @@ class CommunicationServiceTest: public QObject
     Q_OBJECT
 
 private slots:
-    // TODO: endpoints tests
-    void testUdpLink();
     void testLinkDescription();
 };
 

@@ -14,12 +14,12 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
-using namespace dao;
+using namespace dto;
 using namespace domain;
 
 void MissionServiceTest::testMission()
 {
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    MissionService* missionService = serviceRegistry->missionService();
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Some ridiculous name");
@@ -34,19 +34,12 @@ void MissionServiceTest::testMission()
 
     QCOMPARE(mission, missionService->mission(id));
 
-    mission->setName("Reload will erase this ridiculous name");
-
-    QCOMPARE(mission, missionService->mission(id, true)); // But pointer will be the same
-
-    QCOMPARE(mission->name(), QString("Another ridiculous name"));
-
     QVERIFY2(missionService->remove(mission), "Can't remove mission");
-    QCOMPARE(mission->id(), 0); // Mission id must be zero after remove
 }
 
 void MissionServiceTest::testMissionItems()
 {
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    domain::MissionService* missionService = serviceRegistry->missionService();
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Items Mission");
@@ -72,7 +65,7 @@ void MissionServiceTest::testMissionItems()
 
         missionService->unload(item);
     }
-    MissionItemPtr item = missionService->missionItem(id, true);
+    MissionItemPtr item = missionService->missionItem(id);
 
     QCOMPARE(item->command(), MissionItem::Landing);
     QCOMPARE(item->parameter(MissionItem::AbortAltitude).toInt(), 25);
@@ -85,7 +78,7 @@ void MissionServiceTest::testMissionItems()
 // TODO: dao tests
 void MissionServiceTest::testVehicleDescription()
 {
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
 
     VehiclePtr vehicle = VehiclePtr::create();
 
@@ -106,8 +99,8 @@ void MissionServiceTest::testVehicleDescription()
 
 void MissionServiceTest::testMissionAssignment()
 {
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    MissionService* missionService = serviceRegistry->missionService();
+    VehicleService* vehicleService = serviceRegistry->vehicleService();
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Assigned mission");

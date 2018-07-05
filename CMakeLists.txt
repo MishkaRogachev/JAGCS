@@ -27,7 +27,7 @@ add_definitions(-DVERSION_PATCH=${VERSION_PATCH})
 add_definitions(-DGIT_REVISION="${GIT_REVISION}")
 
 # Version message
-message(STATUS "Building ${PROJECT_NAME} ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}(${GIT_REVISION})")
+message(STATUS "Configuring ${PROJECT_NAME} ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}(${GIT_REVISION})")
 
 # Minimum Qt version
 set(QT_REQUIRED_VERSION 5.9.0)
@@ -49,6 +49,12 @@ add_compile_options(-Wall -fPIC)
 add_subdirectory(core)
 #add_subdirectory(plugins)
 #add_subdirectory(app)
+
+# Tests
+option(WITH_TESTS "Enable tests")
+if(WITH_TESTS)
+    enable_testing()
+endif(WITH_TESTS)
 
 # Windows stuff
 if(WIN32)

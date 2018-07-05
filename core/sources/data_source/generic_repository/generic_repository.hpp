@@ -8,6 +8,11 @@
 #include <QSqlError>
 #include <QDebug>
 
+namespace
+{
+    const QString comma = ", ";
+}
+
 using namespace data_source;
 
 template<class T>
@@ -36,8 +41,10 @@ bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
         values.append(":" + name);
     }
 
+    QString namesJoin = names.join(::comma);
+    QString valuesJoin = values.join(::comma);
     m_query.prepare("INSERT INTO " + m_tableName + " (" +
-                    names.join(", ") + ") VALUES (" + values.join(", ") + ")");
+                    namesJoin + ") VALUES (" + valuesJoin + ")");
     this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
     if (this->runQuerry())
@@ -83,8 +90,8 @@ bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
         if (m_columnNames.contains(name)) placeholders.append(name + " = :" + name);
     }
 
-    m_query.prepare("UPDATE " + m_tableName + " SET " +
-                    placeholders.join(", ") + " WHERE id = :id");
+    QString placeholdersJoin = placeholders.join(::comma);
+    m_query.prepare("UPDATE " + m_tableName + " SET " + placeholdersJoin + " WHERE id = :id");
 
     m_query.bindValue(":id", entity->id());
     this->bindQuery(m_query, T::staticMetaObject, entity.data());
