@@ -17,6 +17,7 @@ namespace data_source
         UdpLink(quint16 port = 0, QObject* parent = nullptr);
 
         bool isConnected() const override;
+        bool waitData(int timeout = 5000) override;
 
         quint16 port() const;
         dto::EndpointList endpoints() const;

@@ -23,6 +23,11 @@ bool UdpLink::isConnected() const
     return m_socket->state() == QAbstractSocket::BoundState;
 }
 
+bool UdpLink::waitData(int timeout)
+{
+    return m_socket->waitForReadyRead(timeout);
+}
+
 quint16 UdpLink::port() const
 {
     return m_port;

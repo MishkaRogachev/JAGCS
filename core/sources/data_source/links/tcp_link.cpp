@@ -22,6 +22,11 @@ bool TcpLink::isConnected() const
     return m_socket->state() == QTcpSocket::ConnectedState;
 }
 
+bool TcpLink::waitData(int timeout)
+{
+    return m_socket->waitForReadyRead(timeout);
+}
+
 dto::Endpoint TcpLink::endpoint() const
 {
     return m_endpoint;

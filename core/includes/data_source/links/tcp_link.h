@@ -17,6 +17,7 @@ namespace data_source
         TcpLink(const dto::Endpoint& endpoint = dto::Endpoint(), QObject* parent = nullptr);
 
         bool isConnected() const override;
+        bool waitData(int timeout = 5000) override;
 
         dto::Endpoint endpoint() const;
 

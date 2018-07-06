@@ -16,6 +16,7 @@ namespace data_source
                    qint32 baudRate = 0, QObject* parent = nullptr);
 
         bool isConnected() const override;
+        bool waitData(int timeout = 5000) override;
 
         QString device() const;
         qint32 baudRate() const;

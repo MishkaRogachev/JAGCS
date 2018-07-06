@@ -15,6 +15,7 @@ namespace data_source
         explicit BluetoothLink(const QString& address = QString(), QObject* parent = nullptr);
 
         bool isConnected() const override;
+        bool waitData(int timeout = 5000) override;
 
         QString address() const;
 

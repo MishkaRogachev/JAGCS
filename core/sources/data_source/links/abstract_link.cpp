@@ -10,6 +10,11 @@ AbstractLink::AbstractLink(QObject* parent):
     QObject(parent)
 {}
 
+QByteArray AbstractLink::lastReceivedData() const
+{
+    return m_lastReceivedData;
+}
+
 int AbstractLink::takeBytesReceived()
 {
     int value = m_bytesReceived;
@@ -39,7 +44,9 @@ void AbstractLink::sendData(const QByteArray& data)
 
 void AbstractLink::receiveData(const QByteArray& data)
 {
+    m_lastReceivedData = data;
     m_bytesReceived += data.size();
+
     emit dataReceived(data);
 }
 

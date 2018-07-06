@@ -14,7 +14,9 @@ namespace data_source
         explicit AbstractLink(QObject* parent = nullptr);
 
         virtual bool isConnected() const = 0;
+        virtual bool waitData(int timeout = 5000) = 0;
 
+        QByteArray lastReceivedData() const;
         int takeBytesReceived();
         int takeBytesSent();
 
@@ -41,6 +43,7 @@ namespace data_source
         void onSocketError(int error);
 
     private:
+        QByteArray m_lastReceivedData;
         int m_bytesReceived = 0;
         int m_bytesSent = 0;
     };

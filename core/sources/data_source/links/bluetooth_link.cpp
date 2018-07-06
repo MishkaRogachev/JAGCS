@@ -25,6 +25,11 @@ bool BluetoothLink::isConnected() const
     return m_socket->state() == QBluetoothSocket::ConnectedState;
 }
 
+bool BluetoothLink::waitData(int timeout)
+{
+    return m_socket->waitForReadyRead(timeout);
+}
+
 QString BluetoothLink::address() const
 {
     return m_address;

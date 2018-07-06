@@ -24,6 +24,11 @@ bool SerialLink::isConnected() const
     return m_port->isOpen();
 }
 
+bool SerialLink::waitData(int timeout)
+{
+    return m_port->waitForReadyRead(timeout);
+}
+
 QString SerialLink::device() const
 {
     return m_port->portName();
