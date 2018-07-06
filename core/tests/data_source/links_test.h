@@ -8,6 +8,7 @@ class LinksTest: public QObject
     Q_OBJECT
 
 private slots:
+    void testMockLink();
     void testUdpLink();
     void testTcpLink();
 };

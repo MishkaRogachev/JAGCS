@@ -7,21 +7,39 @@
 #include <QDebug>
 
 // Internal
+#include "mock_link.h"
 #include "udp_link.h"
 #include "tcp_link.h"
 
 using namespace data_source;
 
+void LinksTest::testMockLink()
+{
+    MockLink first, second;
+    QSignalSpy firstSpy(&first, &MockLink::dataReceived);
+    QSignalSpy secondSpy(&second, &MockLink::dataReceived);
+
+    first.addLink(&second);
+
+    first.sendData("TEST MOCK");
+    QCOMPARE(secondSpy.count(), 1);
+    QCOMPARE(second.lastReceivedData(), "TEST MOCK");
+
+    second.sendData("TEST 2 MOCK");
+    QCOMPARE(firstSpy.count(), 1);
+    QCOMPARE(first.lastReceivedData(), "TEST 2 MOCK");
+}
+
 void LinksTest::testUdpLink()
 {
     UdpLink link1(60000);
-    QSignalSpy spy1(&link1, SIGNAL(dataReceived(QByteArray)));
+    QSignalSpy spy1(&link1, &UdpLink::dataReceived);
     QCOMPARE(link1.isConnected(), false);
     link1.connectLink();
     QCOMPARE(link1.isConnected(), true);
 
     UdpLink link2(60001);
-    QSignalSpy spy2(&link2, SIGNAL(dataReceived(QByteArray)));
+    QSignalSpy spy2(&link2, &UdpLink::dataReceived);
     QCOMPARE(link2.isConnected(), false);
     link2.connectLink();
     QCOMPARE(link2.isConnected(), true);
