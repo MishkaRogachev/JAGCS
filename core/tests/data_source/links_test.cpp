@@ -76,13 +76,12 @@ void LinksTest::testTcpLink()
     QVERIFY(socket);
     QCOMPARE(socketSpy.count(), 0);
 
-//    QVERIFY(socket->write("TEST TCP DATA") > 0);
-//    QVERIFY(link.waitData());
-//    QCOMPARE(linkSpy.count(), 1);
-//    QCOMPARE(link.lastReceivedData(), "TEST TCP DATA");
+    QVERIFY(socket->write("TEST TCP DATA") > 0);
+    QTRY_COMPARE(linkSpy.count(), 1);
+    QCOMPARE(link.lastReceivedData(), "TEST TCP DATA");
 
-//    link.sendData("TEST 2 TCP DATA");
-//    socket->waitForReadyRead(5000);
-//    QCOMPARE(socketSpy.count(), 1);
-//    QCOMPARE(socket->readAll(), "TEST TCP DATA");
+    link.sendData("TEST 2 TCP DATA");
+    socket->waitForReadyRead(5000);
+    QTRY_COMPARE(socketSpy.count(), 1);
+    QCOMPARE(socket->readAll(), "TEST 2 TCP DATA");
 }
