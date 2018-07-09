@@ -57,6 +57,7 @@ MissionService::MissionService(QObject* parent):
 {
     qRegisterMetaType<dto::MissionPtr>("dto::MissionPtr");
     qRegisterMetaType<dto::MissionItemPtr>("dto::MissionItemPtr");
+    qRegisterMetaType<dto::MissionItem::Command>("dto::MissionItem::Command");
     qRegisterMetaType<dto::MissionAssignmentPtr>("dto::MissionAssignmentPtr");
 
     d->loadMissions();

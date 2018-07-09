@@ -19,36 +19,22 @@ find_package(Qt5 COMPONENTS
     LinguistTools
 REQUIRED)
 
-# Dynamic library taget
+# Dynamic library target
 add_library(${PROJECT_NAME} SHARED "")
 
-# Includes
+# Public core includes
 HEADER_DIRECTORIES(INCLUDES "includes")
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
 
-# Internal includes
+# Internal core includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
 target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
-# Add Qt libraries
-set(QT_LIBRARIES
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Network
-    Qt5::SerialPort
-    Qt5::Bluetooth
-    Qt5::Sql
-    Qt5::Positioning
-)
-
-# Link Libraries
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
-
-# Sources
+# Internal core sources and headers
 file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
-# Translations
+# Core translations
 file(GLOB TS_FILES "translations/*.ts")
 
 # Qt5 add translation sourses from translation files
@@ -70,6 +56,20 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
+
+# Add Qt libraries
+set(QT_LIBRARIES
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Network
+    Qt5::SerialPort
+    Qt5::Bluetooth
+    Qt5::Sql
+    Qt5::Positioning
+)
+
+# Link Libraries
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
 
 # Tests
 if(WITH_TESTS)

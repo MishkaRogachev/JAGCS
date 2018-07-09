@@ -24,7 +24,7 @@ namespace presentation
         void tryConnect();
 
     private:
-        db::DbManager m_manager;
+        data_source::DbManager m_manager;
     };
 }
 

@@ -16,7 +16,7 @@ DatabasePresenter::DatabasePresenter(QObject* parent):
 {
     m_manager.clarify();
 
-    connect(&m_manager, &db::DbManager::logChanged, this, &DatabasePresenter::updateLog);
+    connect(&m_manager, &data_source::DbManager::logChanged, this, &DatabasePresenter::updateLog);
 }
 
 void DatabasePresenter::updatePath()

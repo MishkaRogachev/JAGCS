@@ -8,7 +8,7 @@
 // Internal
 #include "mission_item.h"
 #include "vehicle.h"
-#include "vehicle_types.h"
+#include "telemetry.h"
 
 namespace presentation
 {
@@ -23,9 +23,9 @@ namespace presentation
         Q_INVOKABLE QString translateVehicleType(dto::Vehicle::Type type);
         Q_INVOKABLE QUrl imageFromVehicleType(dto::Vehicle::Type type);
 
-        Q_INVOKABLE QString translateVehicleMode(domain::vehicle::Mode mode);
-        Q_INVOKABLE QString translateVehicleState(domain::vehicle::SystemState state);
-        Q_INVOKABLE QUrl imageFromVehicleState(domain::vehicle::SystemState state);
+        Q_INVOKABLE QString translateVehicleMode(domain::Telemetry::VehicleMode mode);
+        Q_INVOKABLE QString translateVehicleState(domain::Telemetry::SystemState state);
+        Q_INVOKABLE QUrl imageFromVehicleState(domain::Telemetry::SystemState state);
     };
 }
 

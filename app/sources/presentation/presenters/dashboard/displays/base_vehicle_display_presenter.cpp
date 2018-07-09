@@ -9,8 +9,6 @@
 // Internal
 #include "vibration_model.h"
 
-#include "vehicle_types.h"
-
 using namespace presentation;
 
 BaseVehicleDisplayPresenter::BaseVehicleDisplayPresenter(QObject* parent):
@@ -66,7 +64,7 @@ void BaseVehicleDisplayPresenter::updateSystem(const domain::Telemetry::Telemetr
 
     QVariantList modes;
     for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
-         QList<domain::vehicle::Mode> >())
+         QList<domain::Telemetry::VehicleMode> >())
     {
         modes.append(QVariant::fromValue(item));
     }

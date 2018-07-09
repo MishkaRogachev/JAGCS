@@ -48,7 +48,7 @@ add_compile_options(-Wall -fPIC)
 # Targets
 add_subdirectory(core)
 #add_subdirectory(plugins)
-#add_subdirectory(app)
+add_subdirectory(app)
 
 # Tests
 option(WITH_TESTS "Enable tests")

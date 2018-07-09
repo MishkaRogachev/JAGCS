@@ -1,36 +1,36 @@
 # CMake version string
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2.1)
 
 # Project
-set(PROJECT jagcs_app)
-project(${PROJECT})
+project(jagcs_app)
+
+# Version message
+message(STATUS "Configuring ${PROJECT_NAME}")
 
 # QGamepad option
 option(WITH_GAMEPAD "Compile with QGamepad module for manual input")
 if(WITH_GAMEPAD)
-add_definitions(-DWITH_GAMEPAD)
-find_package(Qt5 COMPONENTS
-    Gamepad
-REQUIRED)
+    add_definitions(-DWITH_GAMEPAD)
+    find_package(Qt5 COMPONENTS Gamepad REQUIRED)
 endif(WITH_GAMEPAD)
 
 # Mapbox GL option
 option(WITH_MAPBOXGL "Compile with MapBox GL Qt Location plugin")
 if(WITH_MAPBOXGL)
-add_definitions(-DWITH_MAPBOXGL)
+    add_definitions(-DWITH_MAPBOXGL)
 endif(WITH_MAPBOXGL)
 
 # Logger option
 option(WITH_LOGGER "Compile with file logger instead console output")
 if (WITH_LOGGER)
-add_definitions(-DWITH_LOGGER)
+    add_definitions(-DWITH_LOGGER)
 endif(WITH_LOGGER)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS
     Core
-    Svg
     Gui
+    Svg
     Quick
     LinguistTools
     Multimedia
@@ -40,58 +40,62 @@ find_package(Qt5 COMPONENTS
     QuickControls2
 REQUIRED)
 
-# Internal sources and headers
-file(GLOB_RECURSE APP_SOURCES "*.cpp")
-set(SOURCES ${SOURCES} ${APP_SOURCES} PARENT_SCOPE)
+# Executable app target
+add_executable(${PROJECT_NAME} "")
 
-HEADER_DIRECTORIES(APP_INCLUDES ".")
-set(INCLUDES ${INCLUDES} ${APP_INCLUDES} PARENT_SCOPE)
+# Internal app includes
+HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
+target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
-include_directories(${INCLUDES})
+# Internal app sources and headers
+file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp")
+target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
-# Target
-if(ANDROID)
-    find_package(Qt5AndroidExtras)
-    include_directories(${ANDROID_SYSROOT}/usr/include)
+# App translations
+file(GLOB TS_FILES "translations/*.ts")
 
-    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
-    set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
-        ${VERSION_MAJOR} "." ${VERSION_MINOR} "." ${VERSION_PATCH})
-    set(QT_ANDROID_APP_NAME ${PROJECT_NAME})
+# Qt5 add translation sourses from translation files
+qt5_add_translation(QM_FILES ${TS_FILES})
 
-    include(../3rdparty/qt-android-cmake/AddQtAndroidApk.cmake)
-    add_qt_android_apk(${PROJECT_NAME}_apk.
-                        ${PROJECT_NAME}
-                        NAME "JAGCS"
-                        PACKAGE_NAME "mishkarogachev.jagcs"
-                        PACKAGE_SOURCES ${CMAKE_SOURCE_DIR}/platforms/android
-                        BUILDTOOLS_REVISION "23.0.3"
-                        VERSION_CODE 5
-    )
-    set(LIBS ${LIBS} Qt5::AndroidExtras android)
-    # TODO: add to 3rd party openssl android library, avoid https://bugreports.qt.io/browse/QTBUG-57922
-else(ANDROID)
-    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
-endif(ANDROID)
+# TODO: to macro 
+# Create translations QRC file
+set(TRANSLATIONS_QRC "${CMAKE_CURRENT_BINARY_DIR}/core_ts.qrc")
+file(WRITE ${TRANSLATIONS_QRC} "<RCC>\n\t<qresource prefix=\"/\">")
+foreach(QM_FILE ${QM_FILES})
+    get_filename_component(QM_FILE_NAME ${QM_FILE} NAME)
+    file(APPEND ${TRANSLATIONS_QRC} "\n\t\t<file alias=\"${QM_FILE_NAME}\">${QM_FILE_NAME}</file>")
+endforeach()
+file(APPEND ${TRANSLATIONS_QRC} "\n\t</qresource>\n</RCC>")
+list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
 
-# Link Libraries
-target_link_libraries(${PROJECT} ${LIBRARIES})
+# Resources
+file(GLOB_RECURSE QRC_FILES "*.qrc")
 
-# Use qt5 modules
-qt5_use_modules(${PROJECT}
-    Core
-    Svg
-    Gui
-    Quick
-    Multimedia
-    Positioning
-    Location
-    Charts
-    QuickControls2
+# Qt5 add resources
+qt5_add_resources(QRC_SOURCES ${QRC_FILES})
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
+
+# Add Qt libraries
+set(QT_LIBRARIES
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Svg
+    Qt5::Quick
+    Qt5::Multimedia
+    Qt5::Positioning
+    Qt5::Location
+    Qt5::Charts
+    Qt5::QuickControls2
 )
 
 if(WITH_GAMEPAD)
-qt5_use_modules(${PROJECT}
-    Gamepad
-)
+    set(QT_LIBRARIES ${QT_LIBRARIES} Qt5::Gamepad)
 endif(WITH_GAMEPAD)
+
+# Link Libraries
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} jagcs_core)
+
+# Tests
+if(WITH_TESTS)
+#    add_subdirectory(tests)
+endif(WITH_TESTS)

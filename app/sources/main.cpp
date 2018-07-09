@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
             proxy.load();
         }
 
-        db::DbManager dbManager;
+        data_source::DbManager dbManager;
         if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))
         {
             qFatal("Unable to establish DB connection");
