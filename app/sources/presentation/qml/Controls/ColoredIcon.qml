@@ -7,8 +7,10 @@ Item {
     property alias source: image.source
     property alias color: overlay.color
 
-    width: image.implicitWidth
-    height: image.implicitHeight
+    implicitWidth: image.implicitWidth
+    implicitHeight: image.implicitHeight
+    width: sizings.controlBaseSize
+    height: width
 
     Image {
         id: image
