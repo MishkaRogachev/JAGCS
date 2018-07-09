@@ -73,7 +73,7 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
-target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_SOURCES})
 
 # Add Qt libraries
 set(QT_LIBRARIES
@@ -93,7 +93,7 @@ if(WITH_GAMEPAD)
 endif(WITH_GAMEPAD)
 
 # Link Libraries
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} jagcs_core)
+target_link_libraries(${PROJECT_NAME} ${CORE} ${QT_LIBRARIES})
 
 # Tests
 if(WITH_TESTS)

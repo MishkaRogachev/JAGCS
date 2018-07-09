@@ -102,8 +102,8 @@ BaseInstrument {
         Ladders.LadderPicker {
             id: spdPicker
             anchors.fill: parent
-            enabled: (vehicle.mode === Domain.Mission || vehicle.mode === Domain.NavTo) &&
-                     !manual.enabled
+            enabled: (vehicle.mode === Telemetry.MissionMode ||
+                      vehicle.mode === Telemetry.NavToMode) && !manual.enabled
             command: vehicle.pitot.present ? Command.SetAirspeed : Command.SetGroundspeed
             args: [ units.convertSpeedFrom(speedUnits, inputValue) ]
             value: spdMark.value
@@ -145,11 +145,11 @@ BaseInstrument {
         Ladders.LadderPicker {
             id: altPicker
             anchors.fill: parent
-            enabled:  vehicle.mode === Domain.Circle ||
-                      vehicle.mode === Domain.Loiter ||
-                      vehicle.mode === Domain.NavTo ||
-                      vehicle.mode === Domain.Mission ||
-                      vehicle.mode === Domain.Return
+            enabled:  vehicle.mode === Telemetry.CircleMode ||
+                      vehicle.mode === Telemetry.LoiterMode ||
+                      vehicle.mode === Telemetry.NavToMode ||
+                      vehicle.mode === Telemetry.MissionMode ||
+                      vehicle.mode === Telemetry.ReturnMode
             command: Command.SetAltitude
             args: [ vehicle.barometric.fromDisplayedAltitude(
                     units.convertDistanceFrom(altitudeUnits, inputValue)) ]

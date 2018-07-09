@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.2.1)
 
 # Project
-project(jagcs_core)
+project(${CORE})
 
 # Version message
 message(STATUS "Configuring ${PROJECT_NAME}")
@@ -55,7 +55,7 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
-target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_SOURCES})
 
 # Add Qt libraries
 set(QT_LIBRARIES

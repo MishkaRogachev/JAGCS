@@ -13,9 +13,9 @@ QtObject {
     property bool armed: false
     property bool guided: false
     property bool stab: false
-    property int vehicleState: Domain.UnknownState
+    property int vehicleState: Telemetry.UnknownState
 
-    property int mode: Domain.None
+    property int mode: Telemetry.NoneMode
     property var availableModes: []
 
     property variant position: QtPositioning.coordinate()

@@ -72,6 +72,7 @@ static void registerTypes()
     QML_UNCREATABLE_TYPE(VideoSource);
     QML_UNCREATABLE_TYPE(Notification);
 
+    QML_UNCREATABLE_TYPE(Telemetry);
     QML_UNCREATABLE_TYPE(ManualController);
 
     QML_TYPE(TopbarPresenter);

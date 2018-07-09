@@ -4,7 +4,13 @@ using namespace presentation;
 
 TranslationHelper::TranslationHelper(QObject* parent):
     QObject(parent)
-{}
+{
+    qRegisterMetaType<dto::MissionItem::Command>("dto::MissionItem::Command");
+    qRegisterMetaType<dto::Vehicle::Type>("dto::Vehicle::Type");
+
+    qRegisterMetaType<domain::Telemetry::VehicleMode>("domain::Telemetry::VehicleMode");
+    qRegisterMetaType<domain::Telemetry::SystemState>("domain::Telemetry::SystemState");
+}
 
 QString TranslationHelper::translateCommand(dto::MissionItem::Command command)
 {
@@ -89,7 +95,7 @@ QString TranslationHelper::translateVehicleMode(domain::Telemetry::VehicleMode m
     case domain::Telemetry::InitMode: return tr("INIT");
     case domain::Telemetry::LandingMode: return tr("LAND");
     case domain::Telemetry::LoiterMode: return tr("LOITER");
-    case domain::Telemetry::Manual: return tr("MANUAL");
+    case domain::Telemetry::ManualMode: return tr("MANUAL");
     case domain::Telemetry::MissionMode: return tr("MISSION");
     case domain::Telemetry::ReturnMode: return tr("RETURN");
     case domain::Telemetry::StabilizeMode: return tr("STAB");
