@@ -10,6 +10,7 @@
 #include <QDebug>
 
 // Internal
+#include "mavlink_settings.h"
 #include "settings_provider.h"
 
 #include "service_registry.h"
@@ -25,7 +26,7 @@
 #include "mavlink_communicator.h"
 #include "mode_helper_factory.h"
 
-using namespace comm;
+using namespace data_source;
 using namespace domain;
 
 namespace
@@ -57,25 +58,25 @@ namespace
         }
     }
 
-    domain::vehicle::SystemState decodeState(quint8 state)
+    domain::Telemetry::SystemState decodeState(quint8 state)
     {
         switch (state)
         {
         case MAV_STATE_BOOT:
-            return domain::vehicle::SystemState::Boot;
+            return domain::Telemetry::BootState;
         case MAV_STATE_CALIBRATING:
-            return domain::vehicle::SystemState::Calibrating;
+            return domain::Telemetry::CalibratingState;
         case MAV_STATE_STANDBY:
-            return domain::vehicle::SystemState::Standby;
+            return domain::Telemetry::StandbyState;
         case MAV_STATE_ACTIVE:
-            return domain::vehicle::SystemState::Active;
+            return domain::Telemetry::ActiveState;
         case MAV_STATE_CRITICAL:
-            return domain::vehicle::SystemState::Critical;
+            return domain::Telemetry::CriticalState;
         case MAV_STATE_EMERGENCY:
-            return domain::vehicle::SystemState::Emergency;
+            return domain::Telemetry::EmergencyState;
         case MAV_STATE_UNINIT:
         default:
-            return domain::vehicle::SystemState::UnknownState;
+            return domain::Telemetry::UnknownState;
         }
     }
 }

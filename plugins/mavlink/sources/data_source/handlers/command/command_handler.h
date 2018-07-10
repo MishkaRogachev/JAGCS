@@ -5,9 +5,9 @@
 #include "abstract_command_handler.h"
 #include "abstract_mavlink_handler.h"
 
-#include "vehicle_types.h"
+#include "telemetry.h"
 
-namespace comm
+namespace data_source
 {
     class CommandHandler: // Rename to MavLinkCommandHandler
             public domain::AbstractCommandHandler,
@@ -31,7 +31,7 @@ namespace comm
     private slots:
         // TODO: move command to processors/handlers/senders
         void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);
-        void sendSetMode(quint8 mavId, domain::vehicle::Mode mode);
+        void sendSetMode(quint8 mavId, domain::Telemetry::VehicleMode mode);
         void sendCurrentItem(quint8 mavId, quint16 seq);
         void sendNavTo(quint8 mavId, double latitude, double longitude, float altitude);
         void sendSetAltitude(quint8 mavId, float altitude);

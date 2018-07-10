@@ -3,17 +3,17 @@
 
 #include "i_mode_helper.h"
 
-namespace comm
+namespace data_source
 {
     class ApmCopterModeHelper: public IModeHelper
     {
     public:
         ApmCopterModeHelper();
 
-        int modeToCustomMode(domain::vehicle::Mode mode) override;
-        domain::vehicle::Mode customModeToMode(quint32 mode) override;
+        int modeToCustomMode(domain::Telemetry::VehicleMode mode) override;
+        domain::Telemetry::VehicleMode customModeToMode(quint32 mode) override;
 
-        virtual QList<domain::vehicle::Mode> availableModes() const override;
+        virtual QList<domain::Telemetry::VehicleMode> availableModes() const override;
     };
 }
 

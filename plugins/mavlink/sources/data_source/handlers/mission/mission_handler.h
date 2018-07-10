@@ -15,7 +15,7 @@ namespace domain
     class MissionService;
 }
 
-namespace comm
+namespace data_source
 {
     class MissionHandler: public QObject, public AbstractMavLinkHandler
     {

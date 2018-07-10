@@ -35,7 +35,7 @@
 #include "flight_handler.h"
 # endif
 
-using namespace comm;
+using namespace data_source;
 
 MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(quint8 systemId, quint8 componentId):
     ICommunicatorFactory(),

@@ -8,7 +8,7 @@ namespace domain
     class VehicleService;
 }
 
-namespace comm
+namespace data_source
 {
     class AttitudeTargetHandler: public AbstractMavLinkHandler
     {

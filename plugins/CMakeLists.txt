@@ -1,5 +1,8 @@
 # CMake version string
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2.1)
+
+# Plugins library path
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/plugins)
 
 # MAVLink communication protocol plugin
 option(WITH_MAVLINK "Compile with MAVLink communication protocol plugin")

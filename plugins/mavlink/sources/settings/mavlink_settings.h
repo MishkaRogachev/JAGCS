@@ -1,5 +1,5 @@
-#ifndef CORE_SETTINGS_H
-#define CORE_SETTINGS_H
+#ifndef MAVLINK_SETTINGS_H
+#define MAVLINK_SETTINGS_H
 
 #include <QString>
 
@@ -14,4 +14,4 @@ namespace settings
     }
 }
 
-#endif // CORE_SETTINGS_H
+#endif // MAVLINK_SETTINGS_H

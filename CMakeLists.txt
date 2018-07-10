@@ -48,7 +48,7 @@ add_compile_options(-Wall -fPIC)
 # Targets
 set(CORE jagcs_core)
 add_subdirectory(core)
-#add_subdirectory(plugins)
+add_subdirectory(plugins)
 add_subdirectory(app)
 
 # Tests

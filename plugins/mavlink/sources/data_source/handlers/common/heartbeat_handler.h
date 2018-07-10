@@ -7,7 +7,7 @@
 // Internal
 #include "abstract_mavlink_handler.h"
 
-namespace comm
+namespace data_source
 {
     class HeartbeatHandler: public QObject, public AbstractMavLinkHandler
     {

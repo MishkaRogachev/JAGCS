@@ -14,7 +14,7 @@
 
 #include "mavlink_protocol_helpers.h"
 
-using namespace comm;
+using namespace data_source;
 using namespace domain;
 
 HighLatencyHandler::HighLatencyHandler(MavLinkCommunicator* communicator):

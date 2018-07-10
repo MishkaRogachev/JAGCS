@@ -18,7 +18,7 @@
 #include "mode_helper_factory.h"
 
 
-using namespace comm;
+using namespace data_source;
 
 namespace
 {
@@ -169,7 +169,7 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
     switch (command->type())  // TODO: special command sender classes
     {
     case dto::Command::SetMode:
-            this->sendSetMode(vehicle->mavId(), args.value(0).value<domain::vehicle::Mode>());
+            this->sendSetMode(vehicle->mavId(), args.value(0).value<domain::Telemetry::VehicleMode>());
         break;
     case dto::Command::GoTo:
             this->sendCurrentItem(vehicle->mavId(), args.value(0, 0).toInt());
@@ -252,7 +252,7 @@ void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
     m_communicator->sendMessage(message, link);
 }
 
-void CommandHandler::sendSetMode(quint8 mavId, domain::vehicle::Mode mode)
+void CommandHandler::sendSetMode(quint8 mavId, domain::Telemetry::VehicleMode mode)
 {
     if (d->modes[mavId].helper.isNull()) return;
 

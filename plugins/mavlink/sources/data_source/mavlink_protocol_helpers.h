@@ -12,7 +12,7 @@
 #define UINT16_MAX std::numeric_limits<std::uint16_t>::max()
 #endif
 
-namespace comm
+namespace data_source
 {
     int32_t inline hzToUs(float frequency)
     {

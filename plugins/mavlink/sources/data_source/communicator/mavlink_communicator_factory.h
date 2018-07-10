@@ -3,7 +3,7 @@
 
 #include "i_communicator_factory.h"
 
-namespace comm
+namespace data_source
 {
     class MavLinkCommunicatorFactory: public ICommunicatorFactory
     {

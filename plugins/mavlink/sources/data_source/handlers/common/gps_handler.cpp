@@ -17,14 +17,14 @@
 
 #include "satellite_info.h"
 
-using namespace comm;
+using namespace data_source;
 using namespace domain;
 
 GpsHandler::GpsHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     m_telemetryService(serviceRegistry->telemetryService())
 {
-    qRegisterMetaType<SatelliteInfo>("SatelliteInfo");
+    qRegisterMetaType<dto::SatelliteInfo>("SatelliteInfo");
 }
 
 void GpsHandler::processMessage(const mavlink_message_t& message)
@@ -77,14 +77,14 @@ void GpsHandler::processGpsStatus(const mavlink_message_t& message)
     mavlink_gps_status_t gps;
     mavlink_msg_gps_status_decode(&message, &gps);
 
-    QList<SatelliteInfo> infos;
+    QList<dto::SatelliteInfo> infos;
     infos.reserve(gps.satellites_visible);
 
     for (int i = 0; i < gps.satellites_visible; ++i)
     {
-        infos.append(SatelliteInfo(gps.satellite_prn[i], gps.satellite_used[i],
-                                   gps.satellite_elevation[i], gps.satellite_azimuth[i],
-                                   gps.satellite_snr[i]));
+        infos.append(dto::SatelliteInfo(gps.satellite_prn[i], gps.satellite_used[i],
+                                        gps.satellite_elevation[i], gps.satellite_azimuth[i],
+                                        gps.satellite_snr[i]));
     }
 
     portion.setParameter({ Telemetry::SatellitesVisible, Telemetry::SatelliteInfos },

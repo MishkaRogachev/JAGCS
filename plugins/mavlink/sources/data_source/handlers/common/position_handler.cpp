@@ -15,7 +15,7 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
-using namespace comm;
+using namespace data_source;
 using namespace domain;
 
 PositionHandler::PositionHandler(MavLinkCommunicator* communicator):

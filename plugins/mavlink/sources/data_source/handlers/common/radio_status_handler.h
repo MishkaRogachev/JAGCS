@@ -8,7 +8,7 @@ namespace domain
     class TelemetryService;
 }
 
-namespace comm
+namespace data_source
 {
     class RadioStatusHandler: public AbstractMavLinkHandler
     {

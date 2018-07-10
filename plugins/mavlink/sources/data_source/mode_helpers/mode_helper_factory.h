@@ -3,7 +3,7 @@
 
 #include "i_mode_helper.h"
 
-namespace comm
+namespace data_source
 {
     class ModeHelperFactory
     {

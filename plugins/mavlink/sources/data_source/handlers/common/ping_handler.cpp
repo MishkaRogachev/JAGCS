@@ -6,7 +6,7 @@
 // Internal
 #include "mavlink_communicator.h"
 
-using namespace comm;
+using namespace data_source;
 
 PingHandler::PingHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator)

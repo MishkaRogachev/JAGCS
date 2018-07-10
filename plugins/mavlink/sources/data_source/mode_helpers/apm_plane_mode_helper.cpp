@@ -31,58 +31,58 @@ namespace
         QRTL            = 21
     };
 
-    QMap<quint32, domain::vehicle::Mode> modeMap =
+    QMap<quint32, domain::Telemetry::VehicleMode> modeMap =
     {
-        { MANUAL,       domain::vehicle::Mode::Manual },
-        { CIRCLE,       domain::vehicle::Mode::Circle },
-        { STABILIZE,    domain::vehicle::Mode::Stabilize },
-        { ACRO,         domain::vehicle::Mode::Acro },
-        { FBWA,         domain::vehicle::Mode::Fbwa },
-        { FBWB,         domain::vehicle::Mode::Fbwb },
-        { CRUISE,       domain::vehicle::Mode::Cruise },
-        { AUTOTUNE,     domain::vehicle::Mode::Autotune },
-        { AUTO,         domain::vehicle::Mode::Mission },
-        { RTL,          domain::vehicle::Mode::Return },
-        { LOITER,       domain::vehicle::Mode::Loiter },
-        { AVOID,        domain::vehicle::Mode::Avoid },
-        { GUIDED,       domain::vehicle::Mode::NavTo },
-        { INITIALIZING, domain::vehicle::Mode::Init }
+        { MANUAL,       domain::Telemetry::ManualMode },
+        { CIRCLE,       domain::Telemetry::CircleMode },
+        { STABILIZE,    domain::Telemetry::StabilizeMode },
+        { ACRO,         domain::Telemetry::AcroMode },
+        { FBWA,         domain::Telemetry::FbwaMode },
+        { FBWB,         domain::Telemetry::FbwbMode },
+        { CRUISE,       domain::Telemetry::CruiseMode },
+        { AUTOTUNE,     domain::Telemetry::AutotuneMode },
+        { AUTO,         domain::Telemetry::MissionMode },
+        { RTL,          domain::Telemetry::ReturnMode },
+        { LOITER,       domain::Telemetry::LoiterMode },
+        { AVOID,        domain::Telemetry::AvoidMode },
+        { GUIDED,       domain::Telemetry::NavToMode },
+        { INITIALIZING, domain::Telemetry::InitMode }
     };
 
-    const QList<domain::vehicle::Mode> availableModes
+    const QList<domain::Telemetry::VehicleMode> availableModes
     {
-        //        domain::vehicle::Mode::Manual,
-        //        domain::vehicle::Mode::Stabilize,
-        //        domain::vehicle::Mode::Acro,
-        //        domain::vehicle::Mode::Autotune,
-        //        domain::vehicle::Mode::Cruise,
-        domain::vehicle::Mode::Return,
-        domain::vehicle::Mode::Mission,
-        domain::vehicle::Mode::Circle,
-        domain::vehicle::Mode::Loiter,
-        domain::vehicle::Mode::NavTo,
-        domain::vehicle::Mode::Fbwa,
-        domain::vehicle::Mode::Fbwb
+        //        domain::Telemetry::VehicleMode::ManualMode,
+        //        domain::Telemetry::VehicleMode::StabilizeMode,
+        //        domain::Telemetry::VehicleMode::AcroMode,
+        //        domain::Telemetry::VehicleMode::AutotuneMode,
+        //        domain::Telemetry::VehicleMode::CruiseMode,
+        domain::Telemetry::VehicleMode::ReturnMode,
+        domain::Telemetry::VehicleMode::MissionMode,
+        domain::Telemetry::VehicleMode::CircleMode,
+        domain::Telemetry::VehicleMode::LoiterMode,
+        domain::Telemetry::VehicleMode::NavToMode,
+        domain::Telemetry::VehicleMode::FbwaMode,
+        domain::Telemetry::VehicleMode::FbwbMode
     };
 }
 
-using namespace comm;
+using namespace data_source;
 
 ApmPlaneModeHelper::ApmPlaneModeHelper():
     IModeHelper()
 {}
 
-int ApmPlaneModeHelper::modeToCustomMode(domain::vehicle::Mode mode)
+int ApmPlaneModeHelper::modeToCustomMode(domain::Telemetry::VehicleMode mode)
 {
     return ::modeMap.key(mode, -1);
 }
 
-domain::vehicle::Mode ApmPlaneModeHelper::customModeToMode(quint32 mode)
+domain::Telemetry::VehicleMode ApmPlaneModeHelper::customModeToMode(quint32 mode)
 {
-    return ::modeMap.value(mode, domain::vehicle::Mode::None);
+    return ::modeMap.value(mode, domain::Telemetry::NoneMode);
 }
 
-QList<domain::vehicle::Mode> ApmPlaneModeHelper::availableModes() const
+QList<domain::Telemetry::VehicleMode> ApmPlaneModeHelper::availableModes() const
 {
     return ::availableModes;
 }

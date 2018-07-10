@@ -8,7 +8,7 @@ namespace domain
     class TelemetryService;
 }
 
-namespace comm
+namespace data_source
 {
     class TargetPositionHandler: public AbstractMavLinkHandler
     {

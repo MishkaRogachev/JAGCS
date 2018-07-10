@@ -26,7 +26,7 @@ namespace
     const int interval = 5000;
 }
 
-using namespace comm;
+using namespace data_source;
 using namespace domain;
 
 class HomePositionHandler::Impl

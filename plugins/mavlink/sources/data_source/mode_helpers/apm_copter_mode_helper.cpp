@@ -34,50 +34,50 @@ namespace
         SAFE_RTL        = 21
     };
 
-    QMap<quint32, domain::vehicle::Mode> modeMap =
+    QMap<quint32, domain::Telemetry::VehicleMode> modeMap =
     {
-        { STABILIZE,    domain::vehicle::Mode::Stabilize },
-        { ACRO,         domain::vehicle::Mode::Acro },
-        { ALT_HOLD,     domain::vehicle::Mode::AltHold },
-        { AUTO,         domain::vehicle::Mode::Mission },
-        { GUIDED,       domain::vehicle::Mode::NavTo },
-        { LOITER,       domain::vehicle::Mode::Loiter },
-        { RTL,          domain::vehicle::Mode::Return },
-        { CIRCLE,       domain::vehicle::Mode::Circle },
-        { LAND,         domain::vehicle::Mode::Landing },
-        { AUTOTUNE,     domain::vehicle::Mode::Autotune },
-        { POS_HOLD,     domain::vehicle::Mode::HoldPosition },
-        { THROW,        domain::vehicle::Mode::Throw },
-        { AVOID_ADSB,   domain::vehicle::Mode::Avoid }
+        { STABILIZE,    domain::Telemetry::StabilizeMode },
+        { ACRO,         domain::Telemetry::AcroMode },
+        { ALT_HOLD,     domain::Telemetry::AltHoldMode },
+        { AUTO,         domain::Telemetry::MissionMode },
+        { GUIDED,       domain::Telemetry::NavToMode },
+        { LOITER,       domain::Telemetry::LoiterMode },
+        { RTL,          domain::Telemetry::ReturnMode },
+        { CIRCLE,       domain::Telemetry::CircleMode },
+        { LAND,         domain::Telemetry::LandingMode },
+        { AUTOTUNE,     domain::Telemetry::AutotuneMode },
+        { POS_HOLD,     domain::Telemetry::HoldPositionMode },
+        { THROW,        domain::Telemetry::ThrowMode },
+        { AVOID_ADSB,   domain::Telemetry::AvoidMode }
     };
 
-    const QList<domain::vehicle::Mode> availableModes
+    const QList<domain::Telemetry::VehicleMode> availableModes
     {
-        domain::vehicle::Mode::Return,
-        domain::vehicle::Mode::Mission,
-        domain::vehicle::Mode::Loiter,
-        domain::vehicle::Mode::AltHold,
-        domain::vehicle::Mode::Stabilize
+        domain::Telemetry::ReturnMode,
+        domain::Telemetry::MissionMode,
+        domain::Telemetry::LoiterMode,
+        domain::Telemetry::AltHoldMode,
+        domain::Telemetry::StabilizeMode
     };
 }
 
-using namespace comm;
+using namespace data_source;
 
 ApmCopterModeHelper::ApmCopterModeHelper():
     IModeHelper()
 {}
 
-int ApmCopterModeHelper::modeToCustomMode(domain::vehicle::Mode mode)
+int ApmCopterModeHelper::modeToCustomMode(domain::Telemetry::VehicleMode mode)
 {
     return ::modeMap.key(mode, -1);
 }
 
-domain::vehicle::Mode ApmCopterModeHelper::customModeToMode(quint32 mode)
+domain::Telemetry::VehicleMode ApmCopterModeHelper::customModeToMode(quint32 mode)
 {
-    return ::modeMap.value(mode, domain::vehicle::Mode::None);
+    return ::modeMap.value(mode, domain::Telemetry::NoneMode);
 }
 
-QList<domain::vehicle::Mode> ApmCopterModeHelper::availableModes() const
+QList<domain::Telemetry::VehicleMode> ApmCopterModeHelper::availableModes() const
 {
      return ::availableModes;
 }

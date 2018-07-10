@@ -3,7 +3,7 @@
 
 #include "abstract_mavlink_handler.h"
 
-namespace comm
+namespace data_source
 {
     class PingHandler: public AbstractMavLinkHandler
     {
