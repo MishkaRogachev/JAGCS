@@ -17,6 +17,7 @@ namespace presentation
                 Plan,
                 Fleet,
                 Connection,
+                Plugins,
                 Settings,
                     Database,
                     Map,

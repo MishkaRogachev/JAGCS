@@ -25,11 +25,6 @@
 #include "aerial_vehicle_display_presenter.h"
 #include "vertical_profile_presenter.h"
 #include "drawer_presenter.h"
-#include "link_list_presenter.h"
-#include "link_presenter.h"
-#include "link_edit_presenter.h"
-#include "vehicle_list_presenter.h"
-#include "vehicle_presenter.h"
 #include "planning_presenter.h"
 #include "mission_list_presenter.h"
 #include "mission_presenter.h"
@@ -37,6 +32,12 @@
 #include "mission_item_list_presenter.h"
 #include "mission_item_edit_presenter.h"
 #include "mission_assignment_presenter.h"
+#include "vehicle_list_presenter.h"
+#include "vehicle_presenter.h"
+#include "link_list_presenter.h"
+#include "link_presenter.h"
+#include "link_edit_presenter.h"
+#include "plugins_presenter.h"
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
 #include "joystick_settings_presenter.h"
@@ -90,6 +91,7 @@ static void registerTypes()
     QML_TYPE(LinkListPresenter);
     QML_TYPE(LinkPresenter);
     QML_TYPE(LinkEditPresenter);
+    QML_TYPE(PluginsPresenter);
     QML_TYPE(VehicleListPresenter);
     QML_TYPE(VehiclePresenter);
 

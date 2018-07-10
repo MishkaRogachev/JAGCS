@@ -135,6 +135,13 @@
         <file>Views/Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml</file>
         <file>Views/Drawer/DrawerView.qml</file>
         <file>Views/Drawer/DrawerMenu.qml</file>
+        <file>Views/Drawer/Planning/PlanningView.qml</file>
+        <file>Views/Drawer/Planning/Missions/MissionListView.qml</file>
+        <file>Views/Drawer/Planning/Missions/MissionView.qml</file>
+        <file>Views/Drawer/Planning/Missions/MissionEditView.qml</file>
+        <file>Views/Drawer/Planning/Missions/MissionItemListView.qml</file>
+        <file>Views/Drawer/Planning/Missions/MissionItemEditView.qml</file>
+        <file>Views/Drawer/Planning/Missions/MissionAssignmentView.qml</file>
         <file>Views/Drawer/Vehicles/VehicleListView.qml</file>
         <file>Views/Drawer/Vehicles/VehicleView.qml</file>
         <file>Views/Drawer/Connection/ConnectionView.qml</file>
@@ -143,13 +150,7 @@
         <file>Views/Drawer/Connection/Links/LinkEditView.qml</file>
         <file>Views/Drawer/Connection/Links/EndpointListView.qml</file>
         <file>Views/Drawer/Connection/Links/EndpointView.qml</file>
-        <file>Views/Drawer/Planning/PlanningView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionListView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionEditView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionItemListView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionItemEditView.qml</file>
-        <file>Views/Drawer/Planning/Missions/MissionAssignmentView.qml</file>
+        <file>Views/Drawer/Plugins/PluginsView.qml</file>
         <file>Views/Drawer/Settings/Database/DatabaseView.qml</file>
         <file>Views/Drawer/Settings/Map/MapSettingsView.qml</file>
         <file>Views/Drawer/Settings/Video/VideoSourceListView.qml</file>
