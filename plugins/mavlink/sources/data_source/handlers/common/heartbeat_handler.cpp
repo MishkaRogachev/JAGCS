@@ -98,6 +98,7 @@ HeartbeatHandler::HeartbeatHandler(MavLinkCommunicator* communicator):
     AbstractMavLinkHandler(communicator),
     d(new Impl())
 {
+    // FIXME: settings plugin defaulter
     d->sendTimer = this->startTimer(settings::Provider::value(
                                     settings::communication::heartbeat).toInt());
 }

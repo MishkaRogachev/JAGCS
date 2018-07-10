@@ -14,6 +14,9 @@ find_package(Qt5 COMPONENTS
     LinguistTools
 REQUIRED)
 
+# Qt plugin definition
+add_definitions(-DQT_PLUGIN)
+
 # Dynamic library target
 add_library(${PROJECT_NAME} SHARED "")
 
@@ -33,7 +36,7 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
 target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
 # Internal MAVLink plugin sources and headers
-file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp")
+file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp" "*.json")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
 # MAVLink Plugin translations

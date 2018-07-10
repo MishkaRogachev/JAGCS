@@ -1,0 +1,7 @@
+{
+    "name": "MAVLink",
+    "version": "0.0.1",
+    "description": "MAVLink communication protocol example",
+    "interface": "data_source.AbstractCommunicator",
+    "dependencies" : []
+}

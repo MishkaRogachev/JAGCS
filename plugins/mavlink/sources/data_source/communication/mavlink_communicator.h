@@ -13,9 +13,11 @@ namespace data_source
     class MavLinkCommunicator: public AbstractCommunicator
     {
         Q_OBJECT
+        Q_PLUGIN_METADATA(IID "data_source.AbstractCommunicator" FILE "meta.json")
+        Q_INTERFACES(data_source::AbstractCommunicator)
 
     public:
-         MavLinkCommunicator(quint8 systemId, quint8 componentId, QObject* parent = nullptr);
+        explicit MavLinkCommunicator(QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         bool isAddLinkEnabled() override;

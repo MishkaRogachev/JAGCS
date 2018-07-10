@@ -49,4 +49,6 @@ namespace data_source
     };
 }
 
+Q_DECLARE_INTERFACE(data_source::AbstractLink, "data_source.AbstractLink")
+
 #endif // ABSTRACT_LINK_H

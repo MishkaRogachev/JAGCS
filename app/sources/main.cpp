@@ -14,6 +14,7 @@
 #include "db_manager.h"
 #include "service_registry.h"
 #include "proxy_manager.h"
+#include "plugin_manager.h"
 
 #include "presentation_context.h"
 #include "translation_manager.h"
@@ -62,6 +63,11 @@ int main(int argc, char* argv[])
         {
             domain::ProxyManager proxy;
             proxy.load();
+        }
+
+        {
+            domain::PluginManager plugins;
+            plugins.discoverPlugins();
         }
 
         data_source::DbManager dbManager;

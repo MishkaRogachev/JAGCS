@@ -32,14 +32,11 @@ public:
     int oldPacketsDrops = 0;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(quint8 systemId, quint8 componentId, QObject* parent):
+MavLinkCommunicator::MavLinkCommunicator(QObject* parent):
     AbstractCommunicator(parent),
     d(new Impl())
 {
     qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
-
-    d->systemId = systemId;
-    d->componentId = componentId;
 
     for (quint8 channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
     {

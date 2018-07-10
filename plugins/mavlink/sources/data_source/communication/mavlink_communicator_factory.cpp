@@ -43,9 +43,13 @@ MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(quint8 systemId, quint8 c
     m_componentId(componentId)
 {}
 
+// FIXME: to MavLinkCommunicatorBuilder
 AbstractCommunicator* MavLinkCommunicatorFactory::create()
 {
-    auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
+    MavLinkCommunicator* communicator = new MavLinkCommunicator();
+
+    communicator->setSystemId(m_systemId);
+    communicator->setComponentId(m_componentId);
 
     communicator->addHandler(new PingHandler(communicator));
     communicator->addHandler(new HeartbeatHandler(communicator));
