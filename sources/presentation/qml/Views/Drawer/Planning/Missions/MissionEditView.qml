@@ -90,19 +90,21 @@ ColumnLayout {
                 }
 
                 Controls.MenuItem {
-                    text: highlighted ? qsTr("Cancel sync") : qsTr("Download mission")
+                    property bool downloading: assignment.status === MissionAssignment.Downloading
+                    text: downloading ? qsTr("Cancel sync") : qsTr("Download mission")
                     iconSource: "qrc:/icons/download.svg"
-                    highlighted: assignment.status === MissionAssignment.Downloading
+                    highlighted: downloading
                     enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
-                    onTriggered: highlighted ? assignment.cancelSync() : assignment.download()
+                    onTriggered: downloading ? assignment.cancelSync() : assignment.download()
                 }
 
                 Controls.MenuItem {
-                    text: highlighted ? qsTr("Cancel sync") : qsTr("Upload mission")
+                    property bool uploading: assignment.status === MissionAssignment.Uploading
+                    text: uploading ? qsTr("Cancel sync") : qsTr("Upload mission")
                     iconSource: "qrc:/icons/upload.svg"
-                    highlighted: assignment.status === MissionAssignment.Uploading
+                    highlighted: uploading
                     enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline
-                    onTriggered: highlighted ? assignment.cancelSync() : assignment.upload()
+                    onTriggered: uploading ? assignment.cancelSync() : assignment.upload()
                 }
 
                 Controls.MenuItem {
