@@ -27,7 +27,7 @@ PresentationContext::PresentationContext()
 
     m_engine = new QQmlApplicationEngine();
 
-    m_engine->addImportPath(":/Controls");
+    m_engine->addImportPath("qrc:/CustomControls");
 
 #ifdef WITH_MAPBOXGL
     m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(true));
@@ -77,7 +77,7 @@ QQmlContext* PresentationContext::rootContext()
 
 void PresentationContext::start()
 {
-    instance()->m_engine->load(QUrl("qrc:/Views/MainView.qml"));
+    instance()->m_engine->load(QUrl("qrc:/MainView.qml"));
     PresentationContext::updateGeometry();
 }
 

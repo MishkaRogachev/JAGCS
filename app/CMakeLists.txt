@@ -40,6 +40,9 @@ find_package(Qt5 COMPONENTS
     QuickControls2
 REQUIRED)
 
+# Enable Qt5 qml compiler
+#find_package(Qt5QuickCompiler REQUIRED)
+
 # Executable app target
 add_executable(${PROJECT_NAME} "")
 
@@ -69,11 +72,15 @@ file(APPEND ${TRANSLATIONS_QRC} "\n\t</qresource>\n</RCC>")
 list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
 
 # Resources
-file(GLOB_RECURSE QRC_FILES "*.qrc")
-
-# Qt5 add resources
+file(GLOB_RECURSE QRC_FILES "resources/*.qrc")
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 target_sources(${PROJECT_NAME} PRIVATE ${QRC_SOURCES})
+
+# QML compile resources
+file(GLOB_RECURSE QRC_QML_FILES "sources/presentation/qml/*.qrc")
+#qtquick_compiler_add_resources(QRC_QML_SOURCES ${QRC_QML_FILES})
+qt5_add_resources(QRC_QML_SOURCES ${QRC_QML_FILES})
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_QML_SOURCES})
 
 # Add Qt libraries
 set(QT_LIBRARIES

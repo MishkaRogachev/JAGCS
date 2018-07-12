@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/OpenSans-Bold.ttf</file>
+        <file>fonts/OpenSans-Italic.ttf</file>
+        <file>fonts/OpenSans-Regular.ttf</file>
+        <file>ui/menu_arrow.svg</file>
+        <file>ui/dots.svg</file>
+        <file>ui/ok.svg</file>
+        <file>ui/plus.svg</file>
+        <file>ui/minus.svg</file>
+        <file>ui/up.svg</file>
+        <file>ui/down.svg</file>
+        <file>ui/erase.svg</file>
+    </qresource>
+</RCC>
