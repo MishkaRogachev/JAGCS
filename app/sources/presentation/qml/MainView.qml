@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import CustomControls 1.0 as Controls
+import IndustrialControls 1.0 as Controls
 
 import "Topbar"
 import "Video"

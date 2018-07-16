@@ -100,7 +100,7 @@ if(WITH_GAMEPAD)
 endif(WITH_GAMEPAD)
 
 # Link Libraries
-target_link_libraries(${PROJECT_NAME} ${CORE} ${QT_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} industrial_controls ${CORE} ${QT_LIBRARIES})
 
 # Tests
 if(WITH_TESTS)

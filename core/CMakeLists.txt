@@ -11,8 +11,6 @@ message(STATUS "Configuring ${PROJECT_NAME}")
 find_package(Qt5 COMPONENTS
     Core
     Gui
-    Quick
-    Qml
     Network
     SerialPort
     Bluetooth
@@ -20,9 +18,6 @@ find_package(Qt5 COMPONENTS
     Positioning
     LinguistTools
 REQUIRED)
-
-# Enable Qt5 qml compiler
-#find_package(Qt5QuickCompiler REQUIRED)
 
 # Dynamic library target
 add_library(${PROJECT_NAME} SHARED "")
@@ -60,18 +55,10 @@ file(GLOB_RECURSE QRC_FILES "resources/*.qrc")
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 target_sources(${PROJECT_NAME} PRIVATE ${QRC_SOURCES})
 
-# QML compile resources
-file(GLOB_RECURSE QRC_QML_FILES "sources/presentation/qml/*.qrc")
-#qtquick_compiler_add_resources(QRC_QML_SOURCES ${QRC_QML_FILES})
-qt5_add_resources(QRC_QML_SOURCES ${QRC_QML_FILES})
-target_sources(${PROJECT_NAME} PRIVATE ${QRC_QML_SOURCES})
-
 # Add Qt libraries
 set(QT_LIBRARIES
     Qt5::Core
     Qt5::Gui
-    Qt5::Quick
-    Qt5::Qml
     Qt5::Network
     Qt5::SerialPort
     Qt5::Bluetooth

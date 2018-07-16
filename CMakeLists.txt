@@ -45,6 +45,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -fPIC)
 
+# 2ndparty libraries
+add_subdirectory(2ndparty/industrial-controls)
+
 # Targets
 set(CORE jagcs_core)
 add_subdirectory(core)

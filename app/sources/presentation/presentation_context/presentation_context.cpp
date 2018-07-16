@@ -27,7 +27,7 @@ PresentationContext::PresentationContext()
 
     m_engine = new QQmlApplicationEngine();
 
-    m_engine->addImportPath("qrc:/CustomControls");
+    m_engine->addImportPath(QStringLiteral("qrc:/"));
 
 #ifdef WITH_MAPBOXGL
     m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(true));
@@ -77,7 +77,7 @@ QQmlContext* PresentationContext::rootContext()
 
 void PresentationContext::start()
 {
-    instance()->m_engine->load(QUrl("qrc:/MainView.qml"));
+    instance()->m_engine->load(QStringLiteral("qrc:/MainView.qml"));
     PresentationContext::updateGeometry();
 }
 
@@ -118,10 +118,9 @@ void PresentationContext::updateGeometry(bool fullscreen)
 void PresentationContext::saveWindowedGeometry()
 {
     QObject* view = PresentationContext::rootView();
-    if (!view) return;
-
-    if (view->property(PROPERTY(visibility)).value<QWindow::Visibility>() ==
-        QWindow::FullScreen) return;
+    if (!view ||
+        view->property(PROPERTY(visibility)).value<QWindow::Visibility>() == QWindow::FullScreen)
+        return;
 
     QRect geometry(view->property(PROPERTY(x)).toInt(),
                    view->property(PROPERTY(y)).toInt(),
