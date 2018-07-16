@@ -1,5 +1,12 @@
 #include "presentation_context.h"
 
+// Qt
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QWindow>
+#include <QDebug>
+
 // Internal
 #include "settings_provider.h"
 
@@ -9,13 +16,6 @@
 #include "translation_helper.h"
 
 #include "manual_controller.h"
-
-// Qt
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QWindow>
-#include <QDebug>
 
 using namespace presentation;
 
@@ -27,7 +27,7 @@ PresentationContext::PresentationContext()
 
     m_engine = new QQmlApplicationEngine();
 
-    m_engine->addImportPath(QStringLiteral("qrc:/"));
+    m_engine->addImportPath(QStringLiteral("qrc:///Industrial"));
 
 #ifdef WITH_MAPBOXGL
     m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(true));
