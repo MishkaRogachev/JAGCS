@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "qrc:/JS/helper.js" as Helper
+import Industrial.JS 1.0 as JS
 import Industrial.Controls 1.0 as Controls
 import Industrial.Indicators 1.0 as Indicators
 import "../../DashboardControls" as DashboardControls
@@ -52,8 +52,8 @@ BaseInstrument {
             DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
-                           Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
-                           Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
+                           JS.Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
+                           JS.Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
                 font.pixelSize: sizings.fontSize * 0.6
             }
 

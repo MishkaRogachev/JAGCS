@@ -28,7 +28,9 @@ add_definitions(-DVERSION_PATCH=${VERSION_PATCH})
 add_definitions(-DGIT_REVISION="${GIT_REVISION}")
 
 # Version message
-message(STATUS "Configuring ${PROJECT_NAME} ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}(${GIT_REVISION})")
+message(STATUS
+    "Configuring ${PROJECT_NAME} ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}(${GIT_REVISION})"
+)
 
 # Minimum Qt version
 set(QT_REQUIRED_VERSION 5.9.0)
