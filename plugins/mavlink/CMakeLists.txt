@@ -8,11 +8,11 @@ project(jagcs_mavlink)
 message(STATUS "Configuring plugin ${PROJECT_NAME}")
 
 # Enable Qt modules
-find_package(Qt5 COMPONENTS
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Positioning
     LinguistTools
-REQUIRED)
+)
 
 # Qt plugin definition
 add_definitions(-DQT_PLUGIN)
@@ -57,10 +57,7 @@ list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
 
 # Resources
 file(GLOB_RECURSE QRC_FILES "*.qrc")
-
-# Qt5 add resources
-qt5_add_resources(QRC_SOURCES ${QRC_FILES})
-target_sources(${PROJECT_NAME} PRIVATE ${QRC_SOURCES})
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
 
 # Add Qt libraries
 set(QT_LIBRARIES

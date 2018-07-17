@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
-import "qrc:/Controls" as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 import "../../DashboardControls" as DashboardControls
 
 BaseInstrument {

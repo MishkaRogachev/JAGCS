@@ -1,8 +1,8 @@
 import QtQuick 2.6
 import JAGCS 1.0
 
-import "qrc:/Controls" as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 BaseInstrument {
     id: root

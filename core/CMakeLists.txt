@@ -8,7 +8,7 @@ project(${CORE})
 message(STATUS "Configuring ${PROJECT_NAME}")
 
 # Enable Qt modules
-find_package(Qt5 COMPONENTS
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS
     Core
     Gui
     Network
@@ -17,7 +17,7 @@ find_package(Qt5 COMPONENTS
     Sql
     Positioning
     LinguistTools
-REQUIRED)
+)
 
 # Dynamic library target
 add_library(${PROJECT_NAME} SHARED "")
@@ -40,6 +40,9 @@ file(GLOB TS_FILES "translations/*.ts")
 # Qt5 add translation sourses from translation files
 qt5_add_translation(QM_FILES ${TS_FILES})
 
+# Resources
+file(GLOB_RECURSE QRC_FILES "resources/*.qrc")
+
 # Create translations QRC file
 set(TRANSLATIONS_QRC "${CMAKE_CURRENT_BINARY_DIR}/core_ts.qrc")
 file(WRITE ${TRANSLATIONS_QRC} "<RCC>\n\t<qresource prefix=\"/\">")
@@ -50,10 +53,7 @@ endforeach()
 file(APPEND ${TRANSLATIONS_QRC} "\n\t</qresource>\n</RCC>")
 list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
 
-# Resources
-file(GLOB_RECURSE QRC_FILES "resources/*.qrc")
-qt5_add_resources(QRC_SOURCES ${QRC_FILES})
-target_sources(${PROJECT_NAME} PRIVATE ${QRC_SOURCES})
+target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
 
 # Add Qt libraries
 set(QT_LIBRARIES

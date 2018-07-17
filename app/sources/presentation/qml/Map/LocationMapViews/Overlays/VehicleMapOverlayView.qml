@@ -2,8 +2,8 @@ import QtQuick 2.6
 import QtLocation 5.6
 import QtPositioning 5.6
 
-import "qrc:/Controls" as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 MapItemView {
     delegate: MapQuickItem {

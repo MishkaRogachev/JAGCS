@@ -26,8 +26,7 @@ PresentationContext::PresentationContext()
     PresentationContext::lastCreatedContext = this;
 
     m_engine = new QQmlApplicationEngine();
-
-    m_engine->addImportPath(QStringLiteral("qrc:///Industrial"));
+    m_engine->addImportPath(QStringLiteral("qrc:/"));
 
 #ifdef WITH_MAPBOXGL
     m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(true));

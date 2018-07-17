@@ -1,5 +1,6 @@
 # CMake version string
 cmake_minimum_required(VERSION 3.2.1)
+cmake_policy(VERSION 3.4.1)
 
 # Project
 project(jagcs)
@@ -36,8 +37,9 @@ set(QT_REQUIRED_VERSION 5.9.0)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 
-# Instruct CMake to run moc automatically when needed.
+# Instruct CMake to run moc and rcc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -46,7 +48,7 @@ set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -fPIC)
 
 # 2ndparty libraries
-add_subdirectory(2ndparty/industrial-controls)
+include(2ndparty/industrial-controls/CMakeLists.txt)
 
 # Targets
 set(CORE jagcs_core)

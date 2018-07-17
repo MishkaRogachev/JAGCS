@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
-import "../../Controls" as Controls
+import Industrial.Controls 1.0 as Controls
 
 Controls.Drawer {
     id: drawer

@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtCharts 2.0
 import JAGCS 1.0
 
-import "qrc:/Controls" as Controls
+import Industrial.Controls 1.0 as Controls
 
 Controls.Frame {
     id: verticalProfile

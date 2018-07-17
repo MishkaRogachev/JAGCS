@@ -1,6 +1,6 @@
 import QtQuick 2.6
 
-import "qrc:/Controls" as Controls
+import Industrial.Controls 1.0 as Controls
 
 Controls.Frame {
     id: root
