@@ -58,26 +58,14 @@ target_sources(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_SOURCES})
 file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
-# App translations
-file(GLOB TS_FILES "translations/*.ts")
-
-# Qt5 add translation sourses from translation files
-qt5_add_translation(QM_FILES ${TS_FILES})
-
 # Resources
 file(GLOB_RECURSE QRC_FILES "resources/*.qrc")
 
-# TODO: to macro 
 # Create translations QRC file
-set(TRANSLATIONS_QRC "${CMAKE_CURRENT_BINARY_DIR}/core_ts.qrc")
-file(WRITE ${TRANSLATIONS_QRC} "<RCC>\n\t<qresource prefix=\"/\">")
-foreach(QM_FILE ${QM_FILES})
-    get_filename_component(QM_FILE_NAME ${QM_FILE} NAME)
-    file(APPEND ${TRANSLATIONS_QRC} "\n\t\t<file alias=\"${QM_FILE_NAME}\">${QM_FILE_NAME}</file>")
-endforeach()
-file(APPEND ${TRANSLATIONS_QRC} "\n\t</qresource>\n</RCC>")
-list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
+file(GLOB TS_FILES "translations/*.ts")
+tr_to_qrc("${CMAKE_CURRENT_BINARY_DIR}/app_ts.qrc")
 
+# Compile resources
 target_sources(${PROJECT_NAME} PRIVATE ${QRC_FILES})
 
 # QML compile resources

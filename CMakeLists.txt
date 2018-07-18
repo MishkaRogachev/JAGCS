@@ -7,6 +7,7 @@ project(jagcs)
 
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
+include(cmake/TrToQrc.cmake)
 
 # Versions
 set(VERSION_MAJOR 0)
