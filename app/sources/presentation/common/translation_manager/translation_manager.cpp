@@ -1,7 +1,7 @@
 #include "translation_manager.h"
 
 // Qt
-#include <QMap>
+#include <QMultiMap>
 #include <QDir>
 #include <QCoreApplication>
 #include <QTranslator>
@@ -15,8 +15,8 @@ TranslationManager* TranslationManager::lastCreatedManager = nullptr;
 class TranslationManager::Impl
 {
 public:
-    QMap<QString, QTranslator*> localeTranslators;
-    QPointer<QTranslator> activeTranslator;
+    QMultiMap<QString, QTranslator*> localeTranslators;
+    QString activeLocale;
 };
 
 TranslationManager::TranslationManager():
@@ -42,29 +42,28 @@ TranslationManager* TranslationManager::instance()
 
 QStringList TranslationManager::avalibleLocales()
 {
-    return d->localeTranslators.keys();
+    return d->localeTranslators.uniqueKeys();
 }
 
 QString TranslationManager::currentLocale()
 {
-    return d->localeTranslators.key(d->activeTranslator);
+    return d->activeLocale;
 }
 
 void TranslationManager::setLocale(const QString& locale)
 {
-    QTranslator* translator = d->localeTranslators.value(locale, nullptr);
+    if (d->activeLocale == locale) return;
 
-    if (d->activeTranslator == translator) return;
-
-    if (d->activeTranslator)
+    for (QTranslator* translator: d->localeTranslators.values(d->activeLocale))
     {
-        qApp->removeTranslator(d->activeTranslator);
+        qApp->removeTranslator(translator);
     }
 
-    d->activeTranslator = translator;
-    if (d->activeTranslator)
+    d->activeLocale = locale;
+
+    for (QTranslator* translator: d->localeTranslators.values(d->activeLocale))
     {
-        qApp->installTranslator(d->activeTranslator);
+        qApp->installTranslator(translator);
     }
 
     // TODO: Qt 5.10 QQmlEngine::retranslate
@@ -83,14 +82,16 @@ void TranslationManager::reloadLocales()
     this->clearLocales();
 
     QDir dir(":/");
-    for (const QString& fileName: dir.entryList(QStringList("jagcs_*.qm")))
+    for (const QString& fileName: dir.entryList(QStringList("*_*.qm")))
     {
         QString locale = fileName;
         locale.remove(0, locale.indexOf('_') + 1);
         locale.chop(3);
 
-        d->localeTranslators[locale] = new QTranslator();
-        d->localeTranslators[locale]->load(fileName, ":/");
+        QTranslator* translator = new QTranslator(qApp);
+        translator->load(fileName, ":/");
+
+        d->localeTranslators.insertMulti(locale, translator);
     }
 }
 
