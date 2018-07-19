@@ -51,7 +51,6 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
 target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
 # Industrial vendor sources
-set(QML_IMPORT_PATH ${INDUSTRIAL_IMPORT_PATH} CACHE TYPE STRING)
 target_sources(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_SOURCES})
 
 # Internal app sources and headers
