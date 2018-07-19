@@ -46,14 +46,13 @@ find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS
 # Executable app target
 add_executable(${PROJECT_NAME} "")
 
-# Internal app includes
-HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
-target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
-
-# Industrial vendor sources
+# Industrial vendor includes & sources
+target_include_directories(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_INCLUDES})
 target_sources(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_SOURCES})
 
-# Internal app sources and headers
+# Internal app includes & sources
+HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
+target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.h" "sources/*.cpp" "sources/*.hpp")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
