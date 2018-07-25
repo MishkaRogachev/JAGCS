@@ -57,18 +57,16 @@ int main(int argc, char* argv[])
         app.setFont(QFont("OpenSans"));
         app.setWindowIcon(QIcon(":/icons/jagcs.svg"));
 
-        presentation::TranslationManager translator;
-        translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
-
         {
             domain::ProxyManager proxy;
             proxy.load();
         }
 
-        {
-            domain::PluginManager plugins;
-            plugins.discoverPlugins();
-        }
+        domain::PluginManager plugins;
+        plugins.discoverPlugins();
+
+        presentation::TranslationManager translator;
+        translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
         data_source::DbManager dbManager;
         if (!dbManager.open(settings::Provider::value(settings::data_base::name).toString()))

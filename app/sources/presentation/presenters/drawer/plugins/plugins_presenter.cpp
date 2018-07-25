@@ -1,23 +1,18 @@
 #include "plugins_presenter.h"
 
 // Qt
-
 #include <QDebug>
 
 // Internal
+#include "plugin_manager.h"
 
 using namespace presentation;
 
-class PluginsPresenter::Impl
-{
-public:
-   
-};
-
 PluginsPresenter::PluginsPresenter(QObject* parent):
-    BasePresenter(parent),
-    d(new Impl())
+    BasePresenter(parent)
 {}
 
-PluginsPresenter::~PluginsPresenter()
-{}
+void PluginsPresenter::updatePlugins()
+{
+    this->setViewProperty(PROPERTY(discoveredPlugins), pluginManager->discoveredPlugins());
+}

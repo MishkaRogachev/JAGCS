@@ -2,6 +2,7 @@
 
 // Qt
 #include <QApplication>
+#include <QMap>
 #include <QDir>
 #include <QPluginLoader>
 #include <QDebug>
@@ -13,23 +14,32 @@ namespace
 
 using namespace domain;
 
+PluginManager* PluginManager::lastCreatedManager = nullptr;
+
 class PluginManager::Impl
 {
 public:
-    QList<QJsonObject> discoveredPlugins;
+    QMap<QString, QPluginLoader*> discoveredPlugins;
 };
 
 PluginManager::PluginManager(QObject* parent):
     QObject(parent),
     d(new Impl())
-{}
+{
+    PluginManager::lastCreatedManager = this;
+}
 
 PluginManager::~PluginManager()
 {}
 
-QList<QJsonObject> PluginManager::discoveredPlugins() const
+PluginManager*PluginManager::instance()
 {
-    return d->discoveredPlugins;
+    return lastCreatedManager;
+}
+
+QStringList PluginManager::discoveredPlugins() const
+{
+    return d->discoveredPlugins.keys();
 }
 
 void PluginManager::discoverPlugins()
@@ -37,12 +47,29 @@ void PluginManager::discoverPlugins()
     QDir pluginsDir = qApp->applicationDirPath();
     if (!pluginsDir.cd(::plugins)) return;
 
-    d->discoveredPlugins.clear();
+    QMap<QString, QPluginLoader*> newPlugins;
     for (const QString& fileName: pluginsDir.entryList(QDir::Files))
     {
-        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        if (d->discoveredPlugins.contains(fileName))
+        {
+            newPlugins.insert(fileName, d->discoveredPlugins.take(fileName));
+            continue;
+        }
 
-        d->discoveredPlugins.append(loader.metaData());
-        qDebug() << loader.fileName() << loader.metaData();
+        QPluginLoader* loader = new QPluginLoader(pluginsDir.absoluteFilePath(fileName), this);
+        if (loader->metaData().isEmpty())
+        {
+            delete loader;
+            continue;
+        }
+
+        newPlugins.insert(fileName, loader);
     }
+
+    while (!d->discoveredPlugins.isEmpty())
+    {
+        delete d->discoveredPlugins.take(d->discoveredPlugins.firstKey());
+    }
+
+    d->discoveredPlugins = newPlugins;
 }

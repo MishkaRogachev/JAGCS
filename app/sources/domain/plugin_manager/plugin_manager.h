@@ -3,7 +3,6 @@
 
 // Qt
 #include <QObject>
-#include <QJsonObject>
 
 namespace domain
 {
@@ -15,15 +14,21 @@ namespace domain
         explicit PluginManager(QObject* parent = nullptr);
         ~PluginManager() override;
 
-        QList<QJsonObject> discoveredPlugins() const;
+        static PluginManager* instance();
+
+        QStringList discoveredPlugins() const;
 
     public slots:
         void discoverPlugins();
 
     private:
+        static PluginManager* lastCreatedManager;
+
         class Impl;
         QScopedPointer<Impl> const d;
     };
 }
+
+#define pluginManager (domain::PluginManager::instance())
 
 #endif // PLUGIN_MANAGER_H

@@ -12,11 +12,9 @@ namespace presentation
 
     public:
         explicit PluginsPresenter(QObject* parent = nullptr);
-        ~PluginsPresenter() override;
 
-    private:
-         class Impl;
-         QScopedPointer<Impl> const d;
+    public slots:
+        void updatePlugins();
     };
 }
 
