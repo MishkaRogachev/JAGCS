@@ -17,17 +17,17 @@ namespace presentation
 
     protected:
         void connectView(QObject* view) override;
-        void connectNode(domain::Telemetry* node) override;
+        void connectNode(data_source::Telemetry* node) override;
 
     private slots:
-        void updateSystem(const domain::Telemetry::TelemetryMap& parameters);
-        void updateAhrs(const domain::Telemetry::TelemetryMap& parameters);
-        void updateCompass(const domain::Telemetry::TelemetryMap& parameters);
-        void updateSatellite(const domain::Telemetry::TelemetryMap& parameters);
-        void updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters);
-        void updateBattery(const domain::Telemetry::TelemetryMap& parameters);
-        void updatePosition(const domain::Telemetry::TelemetryMap& parameters);
-        void updateHome(const domain::Telemetry::TelemetryMap& parameters);
+        void updateSystem(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateAhrs(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateCompass(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateSatellite(const data_source::Telemetry::TelemetryMap& parameters);
+        void updatePowerSystem(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateBattery(const data_source::Telemetry::TelemetryMap& parameters);
+        void updatePosition(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateHome(const data_source::Telemetry::TelemetryMap& parameters);
 
     private:
         VibrationModel* m_vibrationModel;

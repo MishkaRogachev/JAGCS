@@ -14,14 +14,14 @@ using namespace presentation;
 class RadioStatusPresenter::Impl
 {
 public:
-    domain::Telemetry* node = serviceRegistry->telemetryService()->radioNode();
+    data_source::Telemetry* node = serviceRegistry->telemetryService()->radioNode();
 };
 
 RadioStatusPresenter::RadioStatusPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    connect(d->node, &domain::Telemetry::parametersChanged,
+    connect(d->node, &data_source::Telemetry::parametersChanged,
             this, &RadioStatusPresenter::updateParameters);
 }
 
@@ -30,6 +30,6 @@ RadioStatusPresenter::~RadioStatusPresenter()
 
 void RadioStatusPresenter::updateParameters()
 {
-    this->setViewProperty(PROPERTY(rssi), d->node->parameter(domain::Telemetry::Rssi));
-    this->setViewProperty(PROPERTY(remoteRssi), d->node->parameter(domain::Telemetry::RemoteRssi));
+    this->setViewProperty(PROPERTY(rssi), d->node->parameter(data_source::Telemetry::Rssi));
+    this->setViewProperty(PROPERTY(remoteRssi), d->node->parameter(data_source::Telemetry::RemoteRssi));
 }

@@ -3,7 +3,7 @@
 // Qt
 #include <QDebug>
 
-using namespace domain;
+using namespace data_source;
 
 Telemetry::Telemetry(TelemetryId id, Telemetry* parentNode):
     QObject(parentNode),

@@ -8,8 +8,8 @@ TranslationHelper::TranslationHelper(QObject* parent):
     qRegisterMetaType<dto::MissionItem::Command>("dto::MissionItem::Command");
     qRegisterMetaType<dto::Vehicle::Type>("dto::Vehicle::Type");
 
-    qRegisterMetaType<domain::Telemetry::VehicleMode>("domain::Telemetry::VehicleMode");
-    qRegisterMetaType<domain::Telemetry::SystemState>("domain::Telemetry::SystemState");
+    qRegisterMetaType<data_source::Telemetry::VehicleMode>("data_source::Telemetry::VehicleMode");
+    qRegisterMetaType<data_source::Telemetry::SystemState>("data_source::Telemetry::SystemState");
 }
 
 QString TranslationHelper::translateCommand(dto::MissionItem::Command command)
@@ -74,64 +74,64 @@ QUrl TranslationHelper::imageFromVehicleType(dto::Vehicle::Type type)
     }
 }
 
-QString TranslationHelper::translateVehicleMode(domain::Telemetry::VehicleMode mode)
+QString TranslationHelper::translateVehicleMode(data_source::Telemetry::VehicleMode mode)
 {
     switch (mode)
     {
-    case domain::Telemetry::AcroMode: return tr("ACRO");
-    case domain::Telemetry::AutotuneMode: return tr("AUTOTUN");
-    case domain::Telemetry::AvoidMode: return tr("AVOID");
-    case domain::Telemetry::CircleMode: return tr("CIRCLE");
-    case domain::Telemetry::CruiseMode: return tr("CRUISE");
-    case domain::Telemetry::FbwaMode: return tr("FBWA");
-    case domain::Telemetry::FbwbMode: return tr("FBWB");
-    case domain::Telemetry::RattitudeMode: return tr("RATT");
-    case domain::Telemetry::PosCtrlMode: return tr("POS CTRL");
-    case domain::Telemetry::AltCtrlMode: return tr("ALT CTRL");
-    case domain::Telemetry::AltHoldMode: return tr("ALT HOLD");
-    case domain::Telemetry::FollowMode: return tr("FOLLOW");
-    case domain::Telemetry::NavToMode: return tr("NAV TO");
-    case domain::Telemetry::HoldPositionMode: return tr("HOLD");
-    case domain::Telemetry::InitMode: return tr("INIT");
-    case domain::Telemetry::LandingMode: return tr("LAND");
-    case domain::Telemetry::LoiterMode: return tr("LOITER");
-    case domain::Telemetry::ManualMode: return tr("MANUAL");
-    case domain::Telemetry::MissionMode: return tr("MISSION");
-    case domain::Telemetry::ReturnMode: return tr("RETURN");
-    case domain::Telemetry::StabilizeMode: return tr("STAB");
-    case domain::Telemetry::TakeoffMode: return tr("TAKEOFF");
-    case domain::Telemetry::ThrowMode: return tr("THROW");
-    case domain::Telemetry::NoneMode:
+    case data_source::Telemetry::AcroMode: return tr("ACRO");
+    case data_source::Telemetry::AutotuneMode: return tr("AUTOTUN");
+    case data_source::Telemetry::AvoidMode: return tr("AVOID");
+    case data_source::Telemetry::CircleMode: return tr("CIRCLE");
+    case data_source::Telemetry::CruiseMode: return tr("CRUISE");
+    case data_source::Telemetry::FbwaMode: return tr("FBWA");
+    case data_source::Telemetry::FbwbMode: return tr("FBWB");
+    case data_source::Telemetry::RattitudeMode: return tr("RATT");
+    case data_source::Telemetry::PosCtrlMode: return tr("POS CTRL");
+    case data_source::Telemetry::AltCtrlMode: return tr("ALT CTRL");
+    case data_source::Telemetry::AltHoldMode: return tr("ALT HOLD");
+    case data_source::Telemetry::FollowMode: return tr("FOLLOW");
+    case data_source::Telemetry::NavToMode: return tr("NAV TO");
+    case data_source::Telemetry::HoldPositionMode: return tr("HOLD");
+    case data_source::Telemetry::InitMode: return tr("INIT");
+    case data_source::Telemetry::LandingMode: return tr("LAND");
+    case data_source::Telemetry::LoiterMode: return tr("LOITER");
+    case data_source::Telemetry::ManualMode: return tr("MANUAL");
+    case data_source::Telemetry::MissionMode: return tr("MISSION");
+    case data_source::Telemetry::ReturnMode: return tr("RETURN");
+    case data_source::Telemetry::StabilizeMode: return tr("STAB");
+    case data_source::Telemetry::TakeoffMode: return tr("TAKEOFF");
+    case data_source::Telemetry::ThrowMode: return tr("THROW");
+    case data_source::Telemetry::NoneMode:
     default: return tr("None");
     }
 }
 
-QString TranslationHelper::translateVehicleState(domain::Telemetry::SystemState state)
+QString TranslationHelper::translateVehicleState(data_source::Telemetry::SystemState state)
 {
     switch (state)
     {
-    case domain::Telemetry::ActiveState: return tr("Active");
-    case domain::Telemetry::BootState: return tr("Boot");
-    case domain::Telemetry::CalibratingState: return tr("Calibrating");
-    case domain::Telemetry::CriticalState: return tr("Critical");
-    case domain::Telemetry::EmergencyState: return tr("Emergency");
-    case domain::Telemetry::StandbyState: return tr("Standby");
-    case domain::Telemetry::UnknownState:
+    case data_source::Telemetry::ActiveState: return tr("Active");
+    case data_source::Telemetry::BootState: return tr("Boot");
+    case data_source::Telemetry::CalibratingState: return tr("Calibrating");
+    case data_source::Telemetry::CriticalState: return tr("Critical");
+    case data_source::Telemetry::EmergencyState: return tr("Emergency");
+    case data_source::Telemetry::StandbyState: return tr("Standby");
+    case data_source::Telemetry::UnknownState:
     default: return tr("Unknown");
     }
 }
 
-QUrl TranslationHelper::imageFromVehicleState(domain::Telemetry::SystemState state)
+QUrl TranslationHelper::imageFromVehicleState(data_source::Telemetry::SystemState state)
 {
     switch (state)
     {
-    case domain::Telemetry::ActiveState: return QUrl("qrc:/indicators/states/active.svg");
-    case domain::Telemetry::BootState: return QUrl("qrc:/indicators/states/boot.svg");
-    case domain::Telemetry::CalibratingState: return QUrl("qrc:/indicators/states/calibrating.svg");
-    case domain::Telemetry::CriticalState: return QUrl("qrc:/indicators/states/critical.svg");
-    case domain::Telemetry::EmergencyState: return QUrl("qrc:/indicators/states/emergency.svg");
-    case domain::Telemetry::StandbyState: return QUrl("qrc:/indicators/states/standby.svg");
-    case domain::Telemetry::UnknownState:
+    case data_source::Telemetry::ActiveState: return QUrl("qrc:/indicators/states/active.svg");
+    case data_source::Telemetry::BootState: return QUrl("qrc:/indicators/states/boot.svg");
+    case data_source::Telemetry::CalibratingState: return QUrl("qrc:/indicators/states/calibrating.svg");
+    case data_source::Telemetry::CriticalState: return QUrl("qrc:/indicators/states/critical.svg");
+    case data_source::Telemetry::EmergencyState: return QUrl("qrc:/indicators/states/emergency.svg");
+    case data_source::Telemetry::StandbyState: return QUrl("qrc:/indicators/states/standby.svg");
+    case data_source::Telemetry::UnknownState:
     default: return QUrl("qrc:/indicators/states/unknown.svg");
     }
 }

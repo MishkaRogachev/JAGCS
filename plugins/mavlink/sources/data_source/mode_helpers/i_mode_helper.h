@@ -11,10 +11,10 @@ namespace data_source
         IModeHelper() {}
         virtual ~IModeHelper() {}
 
-        virtual int modeToCustomMode(domain::Telemetry::VehicleMode mode) = 0;
-        virtual domain::Telemetry::VehicleMode customModeToMode(quint32 mode) = 0;
+        virtual int modeToCustomMode(Telemetry::VehicleMode mode) = 0;
+        virtual Telemetry::VehicleMode customModeToMode(quint32 mode) = 0;
 
-        virtual QList<domain::Telemetry::VehicleMode> availableModes() const = 0;
+        virtual QList<Telemetry::VehicleMode> availableModes() const = 0;
     };
 }
 

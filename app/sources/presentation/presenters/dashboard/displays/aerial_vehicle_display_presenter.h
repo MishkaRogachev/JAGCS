@@ -14,17 +14,17 @@ namespace presentation
         explicit AerialVehicleDisplayPresenter(QObject* parent = nullptr);
 
     protected:
-        void connectNode(domain::Telemetry* node) override;
+        void connectNode(data_source::Telemetry* node) override;
 
     private slots:
-        void updateEkf(const domain::Telemetry::TelemetryMap& parameters);
-        void updatePitot(const domain::Telemetry::TelemetryMap& parameters);
-        void updateBarometric(const domain::Telemetry::TelemetryMap& parameters);
-        void updateRadalt(const domain::Telemetry::TelemetryMap& parameters);
-        void updateFlightControl(const domain::Telemetry::TelemetryMap& parameters);
-        void updateNavigator(const domain::Telemetry::TelemetryMap& parameters);
-        void updateLandingSystem(const domain::Telemetry::TelemetryMap& parameters);
-        void updateWind(const domain::Telemetry::TelemetryMap& parameters);
+        void updateEkf(const data_source::Telemetry::TelemetryMap& parameters);
+        void updatePitot(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateBarometric(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateRadalt(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateFlightControl(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateNavigator(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateLandingSystem(const data_source::Telemetry::TelemetryMap& parameters);
+        void updateWind(const data_source::Telemetry::TelemetryMap& parameters);
     };
 }
 

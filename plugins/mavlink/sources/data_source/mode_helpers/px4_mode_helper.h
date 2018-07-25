@@ -10,10 +10,10 @@ namespace data_source
     public:
         Px4ModeHelper();
 
-        int modeToCustomMode(domain::Telemetry::VehicleMode mode) override;
-        domain::Telemetry::VehicleMode customModeToMode(quint32 mode) override;
+        int modeToCustomMode(Telemetry::VehicleMode mode) override;
+        Telemetry::VehicleMode customModeToMode(quint32 mode) override;
 
-        virtual QList<domain::Telemetry::VehicleMode> availableModes() const override;
+        virtual QList<Telemetry::VehicleMode> availableModes() const override;
     };
 }
 

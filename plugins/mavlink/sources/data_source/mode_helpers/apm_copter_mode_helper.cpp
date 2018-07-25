@@ -6,6 +6,8 @@
 // Qt
 #include <QMap>
 
+using namespace data_source;
+
 namespace
 {
     enum ApmCopterMode: quint32
@@ -34,50 +36,48 @@ namespace
         SAFE_RTL        = 21
     };
 
-    QMap<quint32, domain::Telemetry::VehicleMode> modeMap =
+    QMap<quint32, Telemetry::VehicleMode> modeMap =
     {
-        { STABILIZE,    domain::Telemetry::StabilizeMode },
-        { ACRO,         domain::Telemetry::AcroMode },
-        { ALT_HOLD,     domain::Telemetry::AltHoldMode },
-        { AUTO,         domain::Telemetry::MissionMode },
-        { GUIDED,       domain::Telemetry::NavToMode },
-        { LOITER,       domain::Telemetry::LoiterMode },
-        { RTL,          domain::Telemetry::ReturnMode },
-        { CIRCLE,       domain::Telemetry::CircleMode },
-        { LAND,         domain::Telemetry::LandingMode },
-        { AUTOTUNE,     domain::Telemetry::AutotuneMode },
-        { POS_HOLD,     domain::Telemetry::HoldPositionMode },
-        { THROW,        domain::Telemetry::ThrowMode },
-        { AVOID_ADSB,   domain::Telemetry::AvoidMode }
+        { STABILIZE,    Telemetry::StabilizeMode },
+        { ACRO,         Telemetry::AcroMode },
+        { ALT_HOLD,     Telemetry::AltHoldMode },
+        { AUTO,         Telemetry::MissionMode },
+        { GUIDED,       Telemetry::NavToMode },
+        { LOITER,       Telemetry::LoiterMode },
+        { RTL,          Telemetry::ReturnMode },
+        { CIRCLE,       Telemetry::CircleMode },
+        { LAND,         Telemetry::LandingMode },
+        { AUTOTUNE,     Telemetry::AutotuneMode },
+        { POS_HOLD,     Telemetry::HoldPositionMode },
+        { THROW,        Telemetry::ThrowMode },
+        { AVOID_ADSB,   Telemetry::AvoidMode }
     };
 
-    const QList<domain::Telemetry::VehicleMode> availableModes
+    const QList<Telemetry::VehicleMode> availableModes
     {
-        domain::Telemetry::ReturnMode,
-        domain::Telemetry::MissionMode,
-        domain::Telemetry::LoiterMode,
-        domain::Telemetry::AltHoldMode,
-        domain::Telemetry::StabilizeMode
+        Telemetry::ReturnMode,
+        Telemetry::MissionMode,
+        Telemetry::LoiterMode,
+        Telemetry::AltHoldMode,
+        Telemetry::StabilizeMode
     };
 }
-
-using namespace data_source;
 
 ApmCopterModeHelper::ApmCopterModeHelper():
     IModeHelper()
 {}
 
-int ApmCopterModeHelper::modeToCustomMode(domain::Telemetry::VehicleMode mode)
+int ApmCopterModeHelper::modeToCustomMode(Telemetry::VehicleMode mode)
 {
     return ::modeMap.key(mode, -1);
 }
 
-domain::Telemetry::VehicleMode ApmCopterModeHelper::customModeToMode(quint32 mode)
+Telemetry::VehicleMode ApmCopterModeHelper::customModeToMode(quint32 mode)
 {
-    return ::modeMap.value(mode, domain::Telemetry::NoneMode);
+    return ::modeMap.value(mode, Telemetry::NoneMode);
 }
 
-QList<domain::Telemetry::VehicleMode> ApmCopterModeHelper::availableModes() const
+QList<Telemetry::VehicleMode> ApmCopterModeHelper::availableModes() const
 {
      return ::availableModes;
 }

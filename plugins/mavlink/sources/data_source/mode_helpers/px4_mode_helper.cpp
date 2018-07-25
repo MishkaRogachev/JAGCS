@@ -44,20 +44,32 @@ namespace
         uint32_t mode;
     };
 
-    QMap<uint32_t, domain::Telemetry::VehicleMode> modeMap =
+    QMap<uint32_t, Telemetry::VehicleMode> modeMap =
     {
-        { Px4CustomMode({ 0, PX4_MODE_MANUAL, 0 }).mode,                    domain::Telemetry::ManualMode },
-        { Px4CustomMode({ 0, PX4_MODE_STABILIZED, 0 }).mode,                domain::Telemetry::StabilizeMode },
-        { Px4CustomMode({ 0, PX4_MODE_ACRO, 0 }).mode,                      domain::Telemetry::AcroMode },
-        { Px4CustomMode({ 0, PX4_MODE_RATTITUDE, 0 }).mode,                 domain::Telemetry::RattitudeMode },
-        { Px4CustomMode({ 0, PX4_MODE_ALTCTL, 0 }).mode,                    domain::Telemetry::AltCtrlMode },
-        { Px4CustomMode({ 0, PX4_MODE_POSCTL, 0 }).mode,                    domain::Telemetry::PosCtrlMode },
-        { Px4CustomMode({ 0, PX4_MODE_AUTO, PX4_MODE_AUTO_LOITER }).mode,   domain::Telemetry::LoiterMode },
-        { Px4CustomMode({ 0, PX4_MODE_AUTO, PX4_MODE_AUTO_MISSION }).mode,  domain::Telemetry::MissionMode },
-        { Px4CustomMode({ 0, PX4_MODE_AUTO, PX4_MODE_AUTO_RTL }).mode,      domain::Telemetry::ReturnMode },
-        { Px4CustomMode({ 0, PX4_MODE_AUTO, PX4_MODE_AUTO_FOLLOW }).mode,   domain::Telemetry::FollowMode },
-        { Px4CustomMode({ 0, PX4_MODE_AUTO, PX4_MODE_AUTO_LAND }).mode,     domain::Telemetry::LandingMode },
-        { Px4CustomMode({ 0, PX4_MODE_AUTO, PX4_MODE_AUTO_TAKEOFF }).mode,  domain::Telemetry::TakeoffMode }
+        { Px4CustomMode({ { 0, PX4_MODE_MANUAL, 0 } }).mode,
+          Telemetry::ManualMode },
+        { Px4CustomMode({ { 0, PX4_MODE_STABILIZED, 0 } }).mode,
+          Telemetry::StabilizeMode },
+        { Px4CustomMode({ { 0, PX4_MODE_ACRO, 0 } }).mode,
+          Telemetry::AcroMode },
+        { Px4CustomMode({ { 0, PX4_MODE_RATTITUDE, 0 } }).mode,
+          Telemetry::RattitudeMode },
+        { Px4CustomMode({ { 0, PX4_MODE_ALTCTL, 0 } }).mode,
+          Telemetry::AltCtrlMode },
+        { Px4CustomMode({ { 0, PX4_MODE_POSCTL, 0 } }).mode,
+          Telemetry::PosCtrlMode },
+        { Px4CustomMode({ { 0, PX4_MODE_AUTO, PX4_MODE_AUTO_LOITER } }).mode,
+          Telemetry::LoiterMode },
+        { Px4CustomMode({ { 0, PX4_MODE_AUTO, PX4_MODE_AUTO_MISSION } }).mode,
+          Telemetry::MissionMode },
+        { Px4CustomMode({ { 0, PX4_MODE_AUTO, PX4_MODE_AUTO_RTL } }).mode,
+          Telemetry::ReturnMode },
+        { Px4CustomMode({ { 0, PX4_MODE_AUTO, PX4_MODE_AUTO_FOLLOW } }).mode,
+          Telemetry::FollowMode },
+        { Px4CustomMode({ { 0, PX4_MODE_AUTO, PX4_MODE_AUTO_LAND } }).mode,
+          Telemetry::LandingMode },
+        { Px4CustomMode({ { 0, PX4_MODE_AUTO, PX4_MODE_AUTO_TAKEOFF } }).mode,
+          Telemetry::TakeoffMode }
     };
 }
 
@@ -65,17 +77,17 @@ Px4ModeHelper::Px4ModeHelper():
     IModeHelper()
 {}
 
-int Px4ModeHelper::modeToCustomMode(domain::Telemetry::VehicleMode mode)
+int Px4ModeHelper::modeToCustomMode(Telemetry::VehicleMode mode)
 {
     return ::modeMap.key(mode, -1);
 }
 
-domain::Telemetry::VehicleMode Px4ModeHelper::customModeToMode(quint32 mode)
+Telemetry::VehicleMode Px4ModeHelper::customModeToMode(quint32 mode)
 {
-    return ::modeMap.value(mode, domain::Telemetry::NoneMode);
+    return ::modeMap.value(mode, Telemetry::NoneMode);
 }
 
-QList<domain::Telemetry::VehicleMode> Px4ModeHelper::availableModes() const
+QList<Telemetry::VehicleMode> Px4ModeHelper::availableModes() const
 {
     return ::modeMap.values();
 }

@@ -18,17 +18,17 @@ namespace presentation
         explicit AbstractTelemetryPresenter(QObject* parent = nullptr);
 
     public slots:
-        void setNode(domain::Telemetry* node);
+        void setNode(data_source::Telemetry* node);
 
     protected:
-        virtual void connectNode(domain::Telemetry* node) = 0;
+        virtual void connectNode(data_source::Telemetry* node) = 0;
         virtual void disconnectNode();
 
-        void chainNode(domain::Telemetry* node,
-                       std::function<void(const domain::Telemetry::TelemetryMap&)> func);
+        void chainNode(data_source::Telemetry* node,
+                       std::function<void(const data_source::Telemetry::TelemetryMap&)> func);
 
     private:
-        domain::Telemetry* m_node = nullptr;
+        data_source::Telemetry* m_node = nullptr;
     };
 }
 

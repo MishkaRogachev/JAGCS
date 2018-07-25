@@ -4,10 +4,14 @@
 // Internal
 #include "dto_traits.h"
 
+namespace data_source
+{
+    class Telemetry;
+}
+
 namespace domain
 {
     class VehicleService;
-    class Telemetry;
 
     class TelemetryService: public QObject
     {
@@ -17,11 +21,11 @@ namespace domain
         explicit TelemetryService(domain::VehicleService* service, QObject* parent = nullptr);
         ~TelemetryService() override;
 
-        QList<Telemetry*> rootNodes() const;
-        Telemetry* vehicleNode(int vehicleId) const;
-        Telemetry* mavNode(int mavId) const;
+        QList<data_source::Telemetry*> rootNodes() const;
+        data_source::Telemetry* vehicleNode(int vehicleId) const;
+        data_source::Telemetry* mavNode(int mavId) const;
         // TODO: multiply radio telemetry
-        Telemetry* radioNode() const;
+        data_source::Telemetry* radioNode() const;
 
     private slots:
         void onVehicleAdded(const dto::VehiclePtr& vehicle);

@@ -6,7 +6,7 @@
 // Internal
 #include "telemetry.h"
 
-using namespace domain;
+using namespace data_source;
 
 VehicleTelemetryFactory::VehicleTelemetryFactory():
     ITelemetryFactory()

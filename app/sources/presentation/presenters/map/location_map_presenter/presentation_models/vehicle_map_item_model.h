@@ -60,15 +60,15 @@ namespace presentation
 
     private slots:
         void onPositionParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+                int vehicleId, const data_source::Telemetry::TelemetryMap& parameters);
         void onHomeParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+                int vehicleId, const data_source::Telemetry::TelemetryMap& parameters);
         void onTargetParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+                int vehicleId, const data_source::Telemetry::TelemetryMap& parameters);
         void onAhrsParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+                int vehicleId, const data_source::Telemetry::TelemetryMap& parameters);
         void onSatelliteParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
+                int vehicleId, const data_source::Telemetry::TelemetryMap& parameters);
 
     private:
         class Impl;

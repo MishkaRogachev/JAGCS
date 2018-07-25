@@ -58,25 +58,25 @@ namespace
         }
     }
 
-    domain::Telemetry::SystemState decodeState(quint8 state)
+    Telemetry::SystemState decodeState(quint8 state)
     {
         switch (state)
         {
         case MAV_STATE_BOOT:
-            return domain::Telemetry::BootState;
+            return Telemetry::BootState;
         case MAV_STATE_CALIBRATING:
-            return domain::Telemetry::CalibratingState;
+            return Telemetry::CalibratingState;
         case MAV_STATE_STANDBY:
-            return domain::Telemetry::StandbyState;
+            return Telemetry::StandbyState;
         case MAV_STATE_ACTIVE:
-            return domain::Telemetry::ActiveState;
+            return Telemetry::ActiveState;
         case MAV_STATE_CRITICAL:
-            return domain::Telemetry::CriticalState;
+            return Telemetry::CriticalState;
         case MAV_STATE_EMERGENCY:
-            return domain::Telemetry::EmergencyState;
+            return Telemetry::EmergencyState;
         case MAV_STATE_UNINIT:
         default:
-            return domain::Telemetry::UnknownState;
+            return Telemetry::UnknownState;
         }
     }
 }

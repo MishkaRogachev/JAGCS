@@ -138,7 +138,7 @@
 
 // TODO: Present-Enabled-Operational bools replace with enum
 
-namespace domain
+namespace data_source
 {
     class Telemetry: public QObject
     {

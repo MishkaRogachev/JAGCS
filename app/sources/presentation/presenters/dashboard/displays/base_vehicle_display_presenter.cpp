@@ -24,153 +24,153 @@ void BaseVehicleDisplayPresenter::connectView(QObject* view)
                              QVariant::fromValue(m_vibrationModel));
 }
 
-void BaseVehicleDisplayPresenter::connectNode(domain::Telemetry* node)
+void BaseVehicleDisplayPresenter::connectNode(data_source::Telemetry* node)
 {
-    this->chainNode(node->childNode(domain::Telemetry::System),
+    this->chainNode(node->childNode(data_source::Telemetry::System),
                     std::bind(&BaseVehicleDisplayPresenter::updateSystem,
                               this, std::placeholders::_1));
 
-    domain::Telemetry* ahrs = node->childNode(domain::Telemetry::Ahrs);
+    data_source::Telemetry* ahrs = node->childNode(data_source::Telemetry::Ahrs);
     this->chainNode(ahrs, std::bind(&BaseVehicleDisplayPresenter::updateAhrs,
                                     this, std::placeholders::_1));
-    this->chainNode(ahrs->childNode(domain::Telemetry::Compass),
+    this->chainNode(ahrs->childNode(data_source::Telemetry::Compass),
                     std::bind(&BaseVehicleDisplayPresenter::updateCompass,
                               this, std::placeholders::_1));
 
-    this->chainNode(node->childNode(domain::Telemetry::Satellite),
+    this->chainNode(node->childNode(data_source::Telemetry::Satellite),
                     std::bind(&BaseVehicleDisplayPresenter::updateSatellite,
                               this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::PowerSystem),
+    this->chainNode(node->childNode(data_source::Telemetry::PowerSystem),
                     std::bind(&BaseVehicleDisplayPresenter::updatePowerSystem,
                               this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Battery),
+    this->chainNode(node->childNode(data_source::Telemetry::Battery),
                     std::bind(&BaseVehicleDisplayPresenter::updateBattery,
                               this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::HomePosition),
+    this->chainNode(node->childNode(data_source::Telemetry::HomePosition),
                     std::bind(&BaseVehicleDisplayPresenter::updateHome,
                               this, std::placeholders::_1));
-    this->chainNode(node->childNode(domain::Telemetry::Position),
+    this->chainNode(node->childNode(data_source::Telemetry::Position),
                     std::bind(&BaseVehicleDisplayPresenter::updatePosition,
                               this, std::placeholders::_1));
 }
 
-void BaseVehicleDisplayPresenter::updateSystem(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updateSystem(const data_source::Telemetry::TelemetryMap& parameters)
 {
-    this->setVehicleProperty(PROPERTY(armed), parameters.value(domain::Telemetry::Armed));
-    this->setVehicleProperty(PROPERTY(guided), parameters.value(domain::Telemetry::Guided));
-    this->setVehicleProperty(PROPERTY(stab), parameters.value(domain::Telemetry::Stabilized));
-    this->setVehicleProperty(PROPERTY(vehicleState), parameters.value(domain::Telemetry::State));
-    this->setVehicleProperty(PROPERTY(mode), parameters.value(domain::Telemetry::Mode));
+    this->setVehicleProperty(PROPERTY(armed), parameters.value(data_source::Telemetry::Armed));
+    this->setVehicleProperty(PROPERTY(guided), parameters.value(data_source::Telemetry::Guided));
+    this->setVehicleProperty(PROPERTY(stab), parameters.value(data_source::Telemetry::Stabilized));
+    this->setVehicleProperty(PROPERTY(vehicleState), parameters.value(data_source::Telemetry::State));
+    this->setVehicleProperty(PROPERTY(mode), parameters.value(data_source::Telemetry::Mode));
 
     QVariantList modes;
-    for (auto item: parameters.value(domain::Telemetry::AvailableModes).value<
-         QList<domain::Telemetry::VehicleMode> >())
+    for (auto item: parameters.value(data_source::Telemetry::AvailableModes).value<
+         QList<data_source::Telemetry::VehicleMode> >())
     {
         modes.append(QVariant::fromValue(item));
     }
     this->setVehicleProperty(PROPERTY(availableModes), modes);
 }
 
-void BaseVehicleDisplayPresenter::updateAhrs(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updateAhrs(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, true));
+                             parameters.value(data_source::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(enabled),
-                             parameters.value(domain::Telemetry::Enabled, false));
+                             parameters.value(data_source::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(operational),
-                             parameters.value(domain::Telemetry::Operational, false));
+                             parameters.value(data_source::Telemetry::Operational, false));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(pitch),
-                             parameters.value(domain::Telemetry::Pitch, qQNaN()));
+                             parameters.value(data_source::Telemetry::Pitch, qQNaN()));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(roll),
-                             parameters.value(domain::Telemetry::Roll, qQNaN()));
+                             parameters.value(data_source::Telemetry::Roll, qQNaN()));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(yaw),
-                             parameters.value(domain::Telemetry::Yaw, qQNaN()));
+                             parameters.value(data_source::Telemetry::Yaw, qQNaN()));
     this->setVehicleProperty(PROPERTY(ahrs), PROPERTY(yawspeed),
-                             parameters.value(domain::Telemetry::YawSpeed, qQNaN()));
+                             parameters.value(data_source::Telemetry::YawSpeed, qQNaN()));
 
     // TODO: telemetry timestamp
     Vibration vibration;
     vibration.timestamp = QTime::currentTime().msecsSinceStartOfDay();
-    vibration.data = parameters.value(domain::Telemetry::Vibration).value<QVector3D>();
+    vibration.data = parameters.value(data_source::Telemetry::Vibration).value<QVector3D>();
 
     m_vibrationModel->addData(vibration);
 }
 
-void BaseVehicleDisplayPresenter::updateCompass(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updateCompass(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, true));
+                             parameters.value(data_source::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(enabled),
-                             parameters.value(domain::Telemetry::Enabled, false));
+                             parameters.value(data_source::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(operational),
-                             parameters.value(domain::Telemetry::Operational, false));
+                             parameters.value(data_source::Telemetry::Operational, false));
     this->setVehicleProperty(PROPERTY(compass), PROPERTY(heading),
-                             parameters.value(domain::Telemetry::Heading, qQNaN()));
+                             parameters.value(data_source::Telemetry::Heading, qQNaN()));
 }
 
-void BaseVehicleDisplayPresenter::updateSatellite(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updateSatellite(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, true));
+                             parameters.value(data_source::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(enabled),
-                             parameters.value(domain::Telemetry::Enabled, false));
+                             parameters.value(data_source::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(operational),
-                             parameters.value(domain::Telemetry::Operational, false));
+                             parameters.value(data_source::Telemetry::Operational, false));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(fix),
-                             parameters.value(domain::Telemetry::Fix, -1));
+                             parameters.value(data_source::Telemetry::Fix, -1));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(course),
-                             parameters.value(domain::Telemetry::Course, qQNaN()));
+                             parameters.value(data_source::Telemetry::Course, qQNaN()));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(groundspeed),
-                             parameters.value(domain::Telemetry::Groundspeed, qQNaN()));
+                             parameters.value(data_source::Telemetry::Groundspeed, qQNaN()));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(coordinate),
-                             parameters.value(domain::Telemetry::Coordinate,
+                             parameters.value(data_source::Telemetry::Coordinate,
                                               QVariant::fromValue(QGeoCoordinate())));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(altitude),
-                             parameters.value(domain::Telemetry::Altitude, qQNaN()));
+                             parameters.value(data_source::Telemetry::Altitude, qQNaN()));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(eph),
-                             parameters.value(domain::Telemetry::Eph, 0));
+                             parameters.value(data_source::Telemetry::Eph, 0));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(epv),
-                             parameters.value(domain::Telemetry::Epv, 0));
+                             parameters.value(data_source::Telemetry::Epv, 0));
     this->setVehicleProperty(PROPERTY(satellite), PROPERTY(satellitesVisible),
-                             parameters.value(domain::Telemetry::SatellitesVisible, 0));
+                             parameters.value(data_source::Telemetry::SatellitesVisible, 0));
 }
 
-void BaseVehicleDisplayPresenter::updatePowerSystem(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updatePowerSystem(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(powerSystem), PROPERTY(throttle),
-                             parameters.value(domain::Telemetry::Throttle, 0));
+                             parameters.value(data_source::Telemetry::Throttle, 0));
 }
 
-void BaseVehicleDisplayPresenter::updateBattery(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updateBattery(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(present),
-                             parameters.value(domain::Telemetry::Present, true));
+                             parameters.value(data_source::Telemetry::Present, true));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(enabled),
-                             parameters.value(domain::Telemetry::Enabled, false));
+                             parameters.value(data_source::Telemetry::Enabled, false));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(operational),
-                             parameters.value(domain::Telemetry::Operational, false));
+                             parameters.value(data_source::Telemetry::Operational, false));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(voltage),
-                             parameters.value(domain::Telemetry::Voltage, qQNaN()));
+                             parameters.value(data_source::Telemetry::Voltage, qQNaN()));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(current),
-                             parameters.value(domain::Telemetry::Current, qQNaN()));
+                             parameters.value(data_source::Telemetry::Current, qQNaN()));
     this->setVehicleProperty(PROPERTY(battery), PROPERTY(percentage),
-                             parameters.value(domain::Telemetry::Percentage, 0));
+                             parameters.value(data_source::Telemetry::Percentage, 0));
 }
 
-void BaseVehicleDisplayPresenter::updatePosition(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updatePosition(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(position),
-                             parameters.value(domain::Telemetry::Coordinate,
+                             parameters.value(data_source::Telemetry::Coordinate,
                                               QVariant::fromValue(QGeoCoordinate())));
 }
 
-void BaseVehicleDisplayPresenter::updateHome(const domain::Telemetry::TelemetryMap& parameters)
+void BaseVehicleDisplayPresenter::updateHome(const data_source::Telemetry::TelemetryMap& parameters)
 {
     this->setVehicleProperty(PROPERTY(home), PROPERTY(position),
-                             parameters.value(domain::Telemetry::Coordinate,
+                             parameters.value(data_source::Telemetry::Coordinate,
                                               QVariant::fromValue(QGeoCoordinate())));
 
     this->setVehicleProperty(PROPERTY(home), PROPERTY(altitude),
-                             parameters.value(domain::Telemetry::Altitude, qQNaN()));
+                             parameters.value(data_source::Telemetry::Altitude, qQNaN()));
 }
 

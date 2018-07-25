@@ -5,7 +5,7 @@
 #include "i_telemetry_factory.h"
 #include "dto_traits.h"
 
-namespace domain
+namespace data_source
 {
     class VehicleTelemetryFactory: public ITelemetryFactory
     {

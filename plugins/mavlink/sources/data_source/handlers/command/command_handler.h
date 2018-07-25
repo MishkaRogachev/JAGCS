@@ -31,7 +31,7 @@ namespace data_source
     private slots:
         // TODO: move command to processors/handlers/senders
         void sendCommandLong(quint8 mavId, quint16 commandId, const QVariantList& args, int attempt);
-        void sendSetMode(quint8 mavId, domain::Telemetry::VehicleMode mode);
+        void sendSetMode(quint8 mavId, Telemetry::VehicleMode mode);
         void sendCurrentItem(quint8 mavId, quint16 seq);
         void sendNavTo(quint8 mavId, double latitude, double longitude, float altitude);
         void sendSetAltitude(quint8 mavId, float altitude);

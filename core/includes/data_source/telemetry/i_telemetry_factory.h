@@ -1,7 +1,7 @@
 #ifndef I_TELEMETRY_FACTORY_H
 #define I_TELEMETRY_FACTORY_H
 
-namespace domain
+namespace data_source
 {
     class Telemetry;
 

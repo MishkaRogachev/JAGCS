@@ -1,6 +1,6 @@
 #include "telemetry_portion.h"
 
-using namespace domain;
+using namespace data_source;
 
 TelemetryPortion::TelemetryPortion(Telemetry* node):
     QObject(nullptr),

@@ -4,7 +4,7 @@
 // Internal
 #include "telemetry.h"
 
-namespace domain
+namespace data_source
 {
     class TelemetryPortion: public QObject
     {

@@ -23,9 +23,9 @@ namespace presentation
         Q_INVOKABLE QString translateVehicleType(dto::Vehicle::Type type);
         Q_INVOKABLE QUrl imageFromVehicleType(dto::Vehicle::Type type);
 
-        Q_INVOKABLE QString translateVehicleMode(domain::Telemetry::VehicleMode mode);
-        Q_INVOKABLE QString translateVehicleState(domain::Telemetry::SystemState state);
-        Q_INVOKABLE QUrl imageFromVehicleState(domain::Telemetry::SystemState state);
+        Q_INVOKABLE QString translateVehicleMode(data_source::Telemetry::VehicleMode mode);
+        Q_INVOKABLE QString translateVehicleState(data_source::Telemetry::SystemState state);
+        Q_INVOKABLE QUrl imageFromVehicleState(data_source::Telemetry::SystemState state);
     };
 }
 

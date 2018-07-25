@@ -59,6 +59,7 @@
 #define QML_UNCREATABLE_TYPE(T) qmlRegisterUncreatableType<T>("JAGCS", 1, 0, #T, QString(#T) + " is not available in QML.");
 
 using namespace dto;
+using namespace data_source;
 using namespace domain;
 using namespace presentation;
 
@@ -74,6 +75,7 @@ static void registerTypes()
     QML_UNCREATABLE_TYPE(Notification);
 
     QML_UNCREATABLE_TYPE(Telemetry);
+
     QML_UNCREATABLE_TYPE(ManualController);
 
     QML_TYPE(TopbarPresenter);
