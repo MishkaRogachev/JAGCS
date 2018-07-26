@@ -21,11 +21,8 @@ class MissionItemEditPresenter::Impl
 public:
     domain::MissionService* const service = serviceRegistry->missionService();
 
-    dto::MissionItemPtr item;
-
-    TranslationHelper helper;
-
     QList<dto::MissionItem::Command> availableCommands;
+    dto::MissionItemPtr item;
 
     void updateAvailableCommands()
     {
@@ -167,10 +164,12 @@ void MissionItemEditPresenter::updateAvailableCommands()
 {
     d->updateAvailableCommands();
 
+    domain::TranslationHelper helper;
+
     QStringList commands;
     for (dto::MissionItem::Command command: d->availableCommands)
     {
-        commands.append(d->helper.translateCommand(command));
+        commands.append(helper.translateCommand(command));
     }
     this->setViewProperty(PROPERTY(commands), QVariant::fromValue(commands));
 }

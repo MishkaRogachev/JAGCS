@@ -10,9 +10,9 @@
 #include "vehicle.h"
 #include "telemetry.h"
 
-namespace presentation
+namespace domain
 {
-    class TranslationHelper : public QObject
+    class TranslationHelper: public QObject
     {
         Q_OBJECT
 

@@ -5,7 +5,7 @@
 #include <QString>
 #include <QScopedPointer>
 
-namespace presentation
+namespace domain
 {
     class TranslationManager
     {
@@ -31,6 +31,6 @@ namespace presentation
     };
 }
 
-#define translationManager (presentation::TranslationManager::instance())
+#define translationManager (domain::TranslationManager::instance())
 
 #endif // TRANSLATION_MANAGER_H

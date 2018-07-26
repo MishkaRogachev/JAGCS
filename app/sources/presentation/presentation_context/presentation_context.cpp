@@ -45,7 +45,7 @@ PresentationContext::PresentationContext()
     m_engine->rootContext()->setContextProperty(
                 "manual", QVariant::fromValue(new domain::ManualController(m_engine)));
     m_engine->rootContext()->setContextProperty(
-                "translator", QVariant::fromValue(new TranslationHelper(m_engine)));
+                "translator", QVariant::fromValue(new domain::TranslationHelper(m_engine)));
 
     QObject::connect(m_engine, &QQmlEngine::quit, qApp, &QGuiApplication::quit);
     QObject::connect(qApp, &QGuiApplication::aboutToQuit, qApp, [this]() {

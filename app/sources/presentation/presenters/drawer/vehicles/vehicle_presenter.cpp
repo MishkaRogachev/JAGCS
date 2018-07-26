@@ -114,7 +114,7 @@ void VehiclePresenter::remove()
 void VehiclePresenter::connectView(QObject* view)
 {
     QStringList types;
-    TranslationHelper helper;
+    domain::TranslationHelper helper;
     for (dto::Vehicle::Type type: ::availableTypes)
     {
         types.append(helper.translateVehicleType(type));

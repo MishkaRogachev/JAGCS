@@ -8,7 +8,7 @@
 #include <QPointer>
 #include <QDebug>
 
-using namespace presentation;
+using namespace domain;
 
 TranslationManager* TranslationManager::lastCreatedManager = nullptr;
 

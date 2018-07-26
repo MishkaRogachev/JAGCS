@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
         domain::PluginManager plugins;
         plugins.discoverPlugins();
 
-        presentation::TranslationManager translator;
+        domain::TranslationManager translator;
         translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
         data_source::DbManager dbManager;

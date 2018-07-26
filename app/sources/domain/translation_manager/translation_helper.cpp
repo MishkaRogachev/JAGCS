@@ -1,6 +1,6 @@
 #include "translation_helper.h"
 
-using namespace presentation;
+using namespace domain;
 
 TranslationHelper::TranslationHelper(QObject* parent):
     QObject(parent)
