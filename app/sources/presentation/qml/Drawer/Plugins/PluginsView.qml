@@ -6,9 +6,12 @@ import Industrial.Controls 1.0 as Controls
 
 ColumnLayout {
     id: plugins
-    spacing: sizings.spacing
 
     property var discoveredPlugins
+
+    spacing: sizings.spacing
+
+    onDiscoveredPluginsChanged: console.log(discoveredPlugins)
 
     PluginsPresenter {
         id: presenter
@@ -16,9 +19,17 @@ ColumnLayout {
         Component.onCompleted: updatePlugins()
     }
 
-    Controls.Label {
-        text: qsTr("Plugins")
-        Layout.alignment: Qt.AlignHCenter
+    RowLayout {
+        Item {
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/refresh.svg"
+            tipText: qsTr("Refresh plugins")
+            flat: true
+            onClicked: presenter.discoverPlugins();
+        }
     }
 
     ListView {
@@ -36,7 +47,7 @@ ColumnLayout {
         }
 
         Controls.Label {
-            text: "test"
+            text: name
             Layout.fillWidth: true
         }
     }

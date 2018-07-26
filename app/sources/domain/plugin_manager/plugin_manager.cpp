@@ -7,6 +7,10 @@
 #include <QPluginLoader>
 #include <QDebug>
 
+// Internal
+#include "settings_provider.h"
+#include "app_settings.h"
+
 namespace
 {
     const QString plugins = "plugins";
@@ -20,6 +24,7 @@ class PluginManager::Impl
 {
 public:
     QMap<QString, QPluginLoader*> discoveredPlugins;
+    QStringList loadedPlugins;
 };
 
 PluginManager::PluginManager(QObject* parent):
@@ -30,9 +35,11 @@ PluginManager::PluginManager(QObject* parent):
 }
 
 PluginManager::~PluginManager()
-{}
+{
+    this->saveConfiguration();
+}
 
-PluginManager*PluginManager::instance()
+PluginManager* PluginManager::instance()
 {
     return lastCreatedManager;
 }
@@ -42,34 +49,77 @@ QStringList PluginManager::discoveredPlugins() const
     return d->discoveredPlugins.keys();
 }
 
+QStringList PluginManager::loadedPlugins() const
+{
+    return d->loadedPlugins;
+}
+
+QJsonObject PluginManager::pluginMetaData(const QString& plugin) const
+{
+    if (!d->discoveredPlugins.contains(plugin)) return QJsonObject();
+
+    return d->discoveredPlugins[plugin]->metaData();
+}
+
 void PluginManager::discoverPlugins()
 {
     QDir pluginsDir = qApp->applicationDirPath();
     if (!pluginsDir.cd(::plugins)) return;
 
-    QMap<QString, QPluginLoader*> newPlugins;
-    for (const QString& fileName: pluginsDir.entryList(QDir::Files))
+    for (const QString& plugin: pluginsDir.entryList(QDir::Files))
     {
-        if (d->discoveredPlugins.contains(fileName))
-        {
-            newPlugins.insert(fileName, d->discoveredPlugins.take(fileName));
-            continue;
-        }
+        if (d->discoveredPlugins.contains(plugin)) continue;
 
-        QPluginLoader* loader = new QPluginLoader(pluginsDir.absoluteFilePath(fileName), this);
+        QPluginLoader* loader = new QPluginLoader(pluginsDir.absoluteFilePath(plugin), this);
         if (loader->metaData().isEmpty())
         {
             delete loader;
             continue;
         }
 
-        newPlugins.insert(fileName, loader);
+        d->discoveredPlugins[plugin] = loader;
+        emit pluginDiscovered(plugin);
     }
+}
 
-    while (!d->discoveredPlugins.isEmpty())
+void PluginManager::loadPlugin(const QString& plugin)
+{
+    if (!d->discoveredPlugins.contains(plugin)) return;
+
+    if (d->discoveredPlugins[plugin]->load())
     {
-        delete d->discoveredPlugins.take(d->discoveredPlugins.firstKey());
+        d->loadedPlugins.append(plugin);
+        emit pluginLoaded(plugin);
+    }
+}
+
+void PluginManager::unloadPlugin(const QString& plugin)
+{
+    if (!d->discoveredPlugins.contains(plugin) || !d->loadedPlugins.contains(plugin)) return;
+
+    if (d->discoveredPlugins[plugin]->unload())
+    {
+        d->loadedPlugins.removeOne(plugin);
+        emit pluginUnloaded(plugin);
+    }
+}
+
+void PluginManager::saveConfiguration()
+{
+    settings::Provider::setValue(settings::app::plugins, d->loadedPlugins);
+}
+
+void PluginManager::restoreConfiguration()
+{
+    QStringList loadingPlugins = settings::Provider::value(settings::app::plugins).toStringList();
+
+    for (const QString& plugin: d->loadedPlugins)
+    {
+        if (!loadingPlugins.contains(plugin)) this->unloadPlugin(plugin);
     }
 
-    d->discoveredPlugins = newPlugins;
+    for (const QString& plugin: loadingPlugins)
+    {
+        if (d->discoveredPlugins.contains(plugin)) this->loadPlugin(plugin);
+    }
 }

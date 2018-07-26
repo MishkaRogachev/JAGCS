@@ -10,9 +10,24 @@ using namespace presentation;
 
 PluginsPresenter::PluginsPresenter(QObject* parent):
     BasePresenter(parent)
-{}
+{
+    connect(pluginManager, &domain::PluginManager::pluginDiscovered,
+            this, &PluginsPresenter::updatePlugins);
+}
 
 void PluginsPresenter::updatePlugins()
 {
-    this->setViewProperty(PROPERTY(discoveredPlugins), pluginManager->discoveredPlugins());
+    QVariantList discoveredPlugins;
+
+    for (const QString& plugin: pluginManager->discoveredPlugins())
+    {
+        discoveredPlugins.append(pluginManager->pluginMetaData(plugin));
+    }
+
+    this->setViewProperty(PROPERTY(discoveredPlugins), discoveredPlugins);
+}
+
+void PluginsPresenter::discoverPlugins()
+{
+    pluginManager->discoverPlugins();
 }

@@ -3,6 +3,7 @@
 
 // Qt
 #include <QObject>
+#include <QJsonObject>
 
 namespace domain
 {
@@ -17,9 +18,23 @@ namespace domain
         static PluginManager* instance();
 
         QStringList discoveredPlugins() const;
+        QStringList loadedPlugins() const;
+
+        QJsonObject pluginMetaData(const QString& plugin) const;
 
     public slots:
         void discoverPlugins();
+
+        void loadPlugin(const QString& plugin);
+        void unloadPlugin(const QString& plugin);
+
+        void saveConfiguration();
+        void restoreConfiguration();
+
+    signals:
+        void pluginDiscovered(QString plugin);
+        void pluginLoaded(QString plugin);
+        void pluginUnloaded(QString plugin);
 
     private:
         static PluginManager* lastCreatedManager;

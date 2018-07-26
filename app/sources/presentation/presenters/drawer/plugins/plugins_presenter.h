@@ -15,6 +15,7 @@ namespace presentation
 
     public slots:
         void updatePlugins();
+        void discoverPlugins();
     };
 }
 
