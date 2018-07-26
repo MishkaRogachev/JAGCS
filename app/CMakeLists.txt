@@ -26,6 +26,9 @@ if (WITH_LOGGER)
     add_definitions(-DWITH_LOGGER)
 endif(WITH_LOGGER)
 
+#Restart app code definition
+add_definitions(-DRESTART_CODE=1337)
+
 # Enable Qt modules
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS
     Core

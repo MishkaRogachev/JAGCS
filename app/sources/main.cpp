@@ -7,7 +7,6 @@
 #include <QDebug>
 
 // Internal
-#include "common.h"
 #include "settings_provider.h"
 
 #include "notification_bus.h"

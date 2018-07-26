@@ -6,7 +6,6 @@
 #include <QDateTime>
 
 // Internal
-#include "common.h"
 #include "settings_provider.h"
 
 using namespace presentation;
