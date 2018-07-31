@@ -12,10 +12,20 @@ namespace presentation
 
     public:
         explicit PluginsPresenter(QObject* parent = nullptr);
+        ~PluginsPresenter() override;
 
     public slots:
-        void updatePlugins();
         void discoverPlugins();
+
+    protected:
+        void connectView(QObject* view) override;
+
+    private slots:
+        void onPluginDiscovered(const QString& plugin);
+
+    private:
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

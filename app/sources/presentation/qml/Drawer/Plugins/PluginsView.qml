@@ -11,12 +11,9 @@ ColumnLayout {
 
     spacing: sizings.spacing
 
-    onDiscoveredPluginsChanged: console.log(discoveredPlugins)
-
     PluginsPresenter {
         id: presenter
         view: plugins
-        Component.onCompleted: updatePlugins()
     }
 
     RowLayout {
@@ -46,9 +43,21 @@ ColumnLayout {
             visible: parent.contentHeight > parent.height
         }
 
-        Controls.Label {
-            text: name
-            Layout.fillWidth: true
+        delegate: RowLayout {
+            width: list.width
+            spacing: sizings.spacing
+
+            Controls.CheckBox {
+                text: model.pluginName
+                tipText: model.pluginDescription
+                checked: model.pluginEnabled
+                Layout.fillWidth: true
+            }
+
+            Controls.Label {
+                text: model.pluginVersion
+                Layout.fillWidth: true
+            }
         }
     }
 }
