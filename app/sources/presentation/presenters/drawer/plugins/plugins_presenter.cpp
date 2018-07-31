@@ -21,11 +21,17 @@ PluginsPresenter::PluginsPresenter(QObject* parent):
 {
     for (const QString& plugin: pluginManager->discoveredPlugins())
     {
-        this->onPluginDiscovered(plugin);
+        this->setPlugin(plugin);
     }
 
     connect(pluginManager, &domain::PluginManager::pluginDiscovered,
-            this, &PluginsPresenter::onPluginDiscovered);
+            this, &PluginsPresenter::setPlugin);
+    connect(pluginManager, &domain::PluginManager::pluginLoaded,
+            this, &PluginsPresenter::setPlugin);
+    connect(pluginManager, &domain::PluginManager::pluginUnloaded,
+            this, &PluginsPresenter::setPlugin);
+    connect(&d->model, &PluginsListModel::requestEnablePlugin,
+            this, &PluginsPresenter::onRequestEnablePlugin);
 }
 
 PluginsPresenter::~PluginsPresenter()
@@ -41,11 +47,16 @@ void PluginsPresenter::connectView(QObject* view)
      view->setProperty(PROPERTY(discoveredPlugins), QVariant::fromValue(&d->model));
 }
 
-void PluginsPresenter::onPluginDiscovered(const QString& plugin)
+void PluginsPresenter::setPlugin(const QString& plugin)
 {
     QJsonObject meta = pluginManager->pluginMetaData(plugin);
     meta.insert(::enabled, pluginManager->loadedPlugins().contains(plugin));
 
-    d->model.addPluginData(plugin, pluginManager->pluginMetaData(plugin));
+    d->model.setPlugin(plugin, meta);
+}
+
+void PluginsPresenter::onRequestEnablePlugin(const QString& plugin, bool enable)
+{
+    enable ? pluginManager->loadPlugin(plugin) : pluginManager->unloadPlugin(plugin);
 }
 

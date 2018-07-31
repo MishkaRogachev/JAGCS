@@ -42,10 +42,8 @@ QVariant PluginsListModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() >= m_plugins.count()) return QVariant();
 
-    QJsonObject meta = m_plugins.values().at(index.row()).value(::metaData).toObject();
-    if (meta.isEmpty()) return QVariant();
-
-    qDebug() << meta;
+    QJsonObject object = m_plugins.values().at(index.row());
+    QJsonObject meta = object.value(::metaData).toObject();
 
     switch (role)
     {
@@ -58,12 +56,25 @@ QVariant PluginsListModel::data(const QModelIndex& index, int role) const
     case PluginDependenciesRole:
         return meta.value(::dependencies);
     case PluginEnabledRole:
-        return meta.value(::enabled);
+        return object.value(::enabled);
     default: return QVariant();
     }
 }
 
-void PluginsListModel::addPluginData(const QString& plugin, const QJsonObject& data)
+bool PluginsListModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if (!index.isValid() || index.row() >= m_plugins.count()) return false;
+
+    if (role == PluginEnabledRole)
+    {
+        emit requestEnablePlugin(m_plugins.keys().at(index.row()), value.toBool());
+        return true;
+    }
+
+    return QAbstractListModel::setData(index, value, role);
+}
+
+void PluginsListModel::setPlugin(const QString& plugin, const QJsonObject& data)
 {
     if (m_plugins.contains(plugin))
     {
@@ -72,7 +83,8 @@ void PluginsListModel::addPluginData(const QString& plugin, const QJsonObject& d
 
         m_plugins[plugin] = data;
 
-        emit dataChanged(index, index);
+        emit dataChanged(index, index, { PluginNameRole, PluginDescriptionRole, PluginVersionRole,
+                                         PluginDependenciesRole, PluginEnabledRole } );
     }
     else
     {

@@ -21,7 +21,8 @@ namespace presentation
         void connectView(QObject* view) override;
 
     private slots:
-        void onPluginDiscovered(const QString& plugin);
+        void setPlugin(const QString& plugin);
+        void onRequestEnablePlugin(const QString& plugin, bool enable);
 
     private:
         class Impl;

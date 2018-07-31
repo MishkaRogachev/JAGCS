@@ -47,16 +47,20 @@ ColumnLayout {
             width: list.width
             spacing: sizings.spacing
 
-            Controls.CheckBox {
-                text: model.pluginName
+            Controls.Button {
+                flat: true
+                iconSource: model.pluginEnabled ? "qrc:/ui/ok.svg" : ""
                 tipText: model.pluginDescription
-                checked: model.pluginEnabled
+                onClicked: model.pluginEnabled = !model.pluginEnabled
+            }
+
+            Controls.Label {
+                text: model.pluginName
                 Layout.fillWidth: true
             }
 
             Controls.Label {
                 text: model.pluginVersion
-                Layout.fillWidth: true
             }
         }
     }

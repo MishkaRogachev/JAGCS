@@ -29,11 +29,16 @@ namespace presentation
         explicit PluginsListModel(QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+
         QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
 
     public slots:
-        void addPluginData(const QString& plugin, const QJsonObject& data);
+        void setPlugin(const QString& plugin, const QJsonObject& data);
         void removePlugin(const QString& plugin);
+
+    signals:
+        void requestEnablePlugin(QString plugin, bool enable);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
