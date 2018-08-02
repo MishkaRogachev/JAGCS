@@ -152,6 +152,11 @@ void MavLinkCommunicator::addHandler(AbstractMavLinkHandler* handler)
     d->handlers.append(handler);
 }
 
+void MavLinkCommunicator::removeHandler(AbstractMavLinkHandler* handler)
+{
+    d->handlers.removeOne(handler);
+}
+
 void MavLinkCommunicator::sendMessage(mavlink_message_t& message, AbstractLink* link)
 {
     if (!link || !link->isConnected()) return;

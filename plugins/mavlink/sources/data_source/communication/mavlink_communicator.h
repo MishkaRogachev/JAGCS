@@ -13,8 +13,6 @@ namespace data_source
     class MavLinkCommunicator: public AbstractCommunicator
     {
         Q_OBJECT
-        Q_PLUGIN_METADATA(IID "data_source.AbstractCommunicator" FILE "meta.json")
-        Q_INTERFACES(data_source::AbstractCommunicator)
 
     public:
         explicit MavLinkCommunicator(QObject* parent = nullptr);
@@ -40,6 +38,7 @@ namespace data_source
         void setComponentId(quint8 componentId);
 
         void addHandler(AbstractMavLinkHandler* handler);
+        void removeHandler(AbstractMavLinkHandler* handler);
 
         void sendMessage(mavlink_message_t& message, AbstractLink* link);
 

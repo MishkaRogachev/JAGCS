@@ -10,7 +10,7 @@
 
 namespace data_source
 {
-    class ICommunicatorFactory;
+    class AbstractCommunicator;
 }
 
 namespace domain
@@ -31,7 +31,8 @@ namespace domain
         dto::LinkStatisticsPtr statistics(int descriptionId) const;
         dto::LinkStatisticsPtrList statistics() const;
 
-        void initCommunication(data_source::ICommunicatorFactory* factory);
+        void addCommunicator(data_source::AbstractCommunicator* communicator);
+        void removeCommunicator(data_source::AbstractCommunicator* communicator);
 
     public slots:
         bool save(const dto::LinkDescriptionPtr& description);

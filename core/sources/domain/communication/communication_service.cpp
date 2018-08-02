@@ -11,7 +11,6 @@
 #include "link_description.h"
 #include "link_statistics.h"
 #include "description_link_factory.h"
-#include "i_communicator_factory.h"
 
 #include "generic_repository.h"
 
@@ -129,9 +128,8 @@ dto::LinkStatisticsPtrList CommunicationService::statistics() const
     return d->linkStatistics.values();
 }
 
-void CommunicationService::initCommunication(data_source::ICommunicatorFactory* factory)
+void CommunicationService::addCommunicator(data_source::AbstractCommunicator* communicator)
 {
-    data_source::AbstractCommunicator* communicator = factory->create();
     communicator->moveToThread(d->commThread);
 
     d->commWorker->setCommunicator(communicator);
@@ -149,6 +147,11 @@ void CommunicationService::initCommunication(data_source::ICommunicatorFactory* 
             d->descriptedDevices[description] = device;
         }
     }
+}
+
+void CommunicationService::removeCommunicator(AbstractCommunicator* communicator)
+{
+    // FIXME: remove
 }
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)

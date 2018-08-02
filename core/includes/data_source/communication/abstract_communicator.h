@@ -51,6 +51,4 @@ namespace data_source
     };
 }
 
-Q_DECLARE_INTERFACE(data_source::AbstractCommunicator, "data_source.AbstractCommunicator")
-
 #endif // ABSTRACT_COMMUNICATOR_H
