@@ -43,8 +43,10 @@ CommunicatorWorker::CommunicatorWorker(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    connect(this, &CommunicatorWorker::setCommunicator,
-            this, &CommunicatorWorker::setCommunicatorImpl);
+    connect(this, &CommunicatorWorker::addCommunicator,
+            this, &CommunicatorWorker::addCommunicatorImpl);
+    connect(this, &CommunicatorWorker::removeCommunicator,
+            this, &CommunicatorWorker::removeCommunicatorImpl);
     connect(this, &CommunicatorWorker::updateLink,
             this, &CommunicatorWorker::updateLinkImpl);
     connect(this, &CommunicatorWorker::removeLink,
@@ -77,7 +79,7 @@ void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link,
     emit mavLinkProtocolChanged(linkId, ::toDtoProtocol(protocol));
 }
 
-void CommunicatorWorker::setCommunicatorImpl(AbstractCommunicator* communicator)
+void CommunicatorWorker::addCommunicatorImpl(AbstractCommunicator* communicator)
 {
     // TODO: if sevral communicators, who owns the link?
     if (d->communicator)
@@ -108,6 +110,11 @@ void CommunicatorWorker::setCommunicatorImpl(AbstractCommunicator* communicator)
             d->communicator->addLink(link);
         }
     }
+}
+
+void CommunicatorWorker::removeCommunicatorImpl(AbstractCommunicator* communicator)
+{
+
 }
 
 void CommunicatorWorker::updateLinkImpl(int linkId,

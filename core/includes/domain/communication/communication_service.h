@@ -8,10 +8,7 @@
 #include "dto_traits.h"
 #include "link_description.h"
 
-namespace data_source
-{
-    class AbstractCommunicator;
-}
+#include "i_communication_plugin.h"
 
 namespace domain
 {
@@ -31,8 +28,8 @@ namespace domain
         dto::LinkStatisticsPtr statistics(int descriptionId) const;
         dto::LinkStatisticsPtrList statistics() const;
 
-        void addCommunicator(data_source::AbstractCommunicator* communicator);
-        void removeCommunicator(data_source::AbstractCommunicator* communicator);
+        void addPlugin(ICommunicationPlugin* plugin);
+        void removePlugin(ICommunicationPlugin* plugin);
 
     public slots:
         bool save(const dto::LinkDescriptionPtr& description);

@@ -18,6 +18,4 @@ namespace domain
     };
 }
 
-//Q_EXPORT_PLUGIN2(mavlink, domain::MavlinkPlugin);
-
 #endif // MAVLINK_PLUIGN_H

@@ -24,6 +24,8 @@ using namespace domain;
 class CommunicationService::Impl
 {
 public:
+    GenericRepository<dto::LinkDescription> linkRepository;
+
     SerialPortService* serialPortService;
     QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
     QMap<int, dto::LinkStatisticsPtr> linkStatistics;
@@ -31,7 +33,7 @@ public:
     QThread* commThread;
     CommunicatorWorker* commWorker;
 
-    GenericRepository<dto::LinkDescription> linkRepository;
+    QMap<ICommunicationPlugin*, data_source::AbstractCommunicator*> pluginCommunicators;
 
     Impl():
         linkRepository("links")
@@ -89,6 +91,18 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
             this, &CommunicationService::onLinkErrored);
 
     d->loadDescriptions();
+    for (const dto::LinkDescriptionPtr& description: this->descriptions())
+    {
+        data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
+        d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
+
+        QString device = description->parameter(dto::LinkDescription::Device).toString();
+        if (description->type() == dto::LinkDescription::Serial && device.length() > 0)
+        {
+            d->serialPortService->holdDevice(device);
+            d->descriptedDevices[description] = device;
+        }
+    }
 }
 
 CommunicationService::~CommunicationService()
@@ -128,30 +142,21 @@ dto::LinkStatisticsPtrList CommunicationService::statistics() const
     return d->linkStatistics.values();
 }
 
-void CommunicationService::addCommunicator(data_source::AbstractCommunicator* communicator)
+void CommunicationService::addPlugin(ICommunicationPlugin* plugin)
 {
+    data_source::AbstractCommunicator* communicator = plugin->createCommunicator();
+    if (!communicator) return;
+
+    d->pluginCommunicators[plugin] = communicator;
     communicator->moveToThread(d->commThread);
-
-    d->commWorker->setCommunicator(communicator);
-
-    for (const dto::LinkDescriptionPtr& description: this->descriptions())
-    {
-        data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
-        d->commWorker->updateLink(description->id(),
-                                  factory, description->isAutoConnect());
-
-        QString device = description->parameter(dto::LinkDescription::Device).toString();
-        if (description->type() == dto::LinkDescription::Serial && device.length() > 0)
-        {
-            d->serialPortService->holdDevice(device);
-            d->descriptedDevices[description] = device;
-        }
-    }
+    d->commWorker->addCommunicator(communicator);
 }
 
-void CommunicationService::removeCommunicator(AbstractCommunicator* communicator)
+void CommunicationService::removePlugin(ICommunicationPlugin* plugin)
 {
-    // FIXME: remove
+    if (!d->pluginCommunicators.contains(plugin)) return;
+
+    d->commWorker->removeCommunicator(d->pluginCommunicators.take(plugin));
 }
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)

@@ -12,7 +12,6 @@
 
 namespace data_source
 {
-    class ICommunicatorFactory;
     class AbstractLink;
 }
 
@@ -27,7 +26,9 @@ namespace domain
         ~CommunicatorWorker() override;
 
     signals:
-        void setCommunicator(data_source::AbstractCommunicator* communicator);
+        void addCommunicator(data_source::AbstractCommunicator* communicator);
+        void removeCommunicator(data_source::AbstractCommunicator* communicator);
+
         void updateLink(int linkId, const data_source::LinkFactoryPtr& factory,
                         bool autoconnect);
         void removeLink(int linkId);
@@ -51,7 +52,9 @@ namespace domain
         void onMavLinkProtocolChanged(data_source::AbstractLink* link,
                                       data_source::AbstractCommunicator::Protocol protocol);
 
-        void setCommunicatorImpl(data_source::AbstractCommunicator* communicator);
+        void addCommunicatorImpl(data_source::AbstractCommunicator* communicator);
+        void removeCommunicatorImpl(data_source::AbstractCommunicator* communicator);
+
         void updateLinkImpl(int linkId, const data_source::LinkFactoryPtr& factory,
                             bool autoconnect);
         void removeLinkImpl(int linkId);

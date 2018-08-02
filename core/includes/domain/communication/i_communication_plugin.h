@@ -12,6 +12,7 @@ namespace domain
 {
     class ICommunicationPlugin
     {
+    public:
         virtual data_source::AbstractCommunicator* createCommunicator() = 0;
     };
 }

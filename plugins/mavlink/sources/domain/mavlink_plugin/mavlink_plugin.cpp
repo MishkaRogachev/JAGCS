@@ -17,10 +17,11 @@ data_source::AbstractCommunicator* MavlinkPlugin::createCommunicator()
 {
     data_source::MavLinkCommunicatorBuilder builder;
 
+    builder.initCommunicator();
+
     builder.buildIdentification(
                 settings::Provider::value(settings::communication::systemId).toInt(),
                 settings::Provider::value(settings::communication::componentId).toInt());
-
     builder.buildHandlers(); // later
 
     return builder.getCommunicator();

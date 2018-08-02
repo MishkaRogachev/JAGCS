@@ -11,6 +11,9 @@
 #include "settings_provider.h"
 #include "app_settings.h"
 
+#include "service_registry.h"
+#include "communication_service.h"
+
 namespace
 {
     const QString plugins = "plugins";
@@ -84,10 +87,14 @@ void PluginManager::discoverPlugins()
 
 void PluginManager::loadPlugin(const QString& plugin)
 {
-    if (!d->discoveredPlugins.contains(plugin)) return;
+    QPluginLoader* loader = d->discoveredPlugins.value(plugin, nullptr);
+    if (!loader) return;
 
-    if (d->discoveredPlugins[plugin]->load())
+    if (loader->load())
     {
+        auto commPlugin = qobject_cast<domain::ICommunicationPlugin*>(loader->instance());
+        if (commPlugin) serviceRegistry->communicationService()->addPlugin(commPlugin);
+
         d->loadedPlugins.append(plugin);
         emit pluginLoaded(plugin);
     }
@@ -95,13 +102,15 @@ void PluginManager::loadPlugin(const QString& plugin)
 
 void PluginManager::unloadPlugin(const QString& plugin)
 {
-    if (!d->discoveredPlugins.contains(plugin) || !d->loadedPlugins.contains(plugin)) return;
+    QPluginLoader* loader = d->discoveredPlugins.value(plugin, nullptr);
+    if (!loader || !d->loadedPlugins.contains(plugin)) return;
 
-    if (d->discoveredPlugins[plugin]->unload())
-    {
-        d->loadedPlugins.removeOne(plugin);
-        emit pluginUnloaded(plugin);
-    }
+    auto commPlugin = qobject_cast<domain::ICommunicationPlugin*>(loader->instance());
+    if (commPlugin) serviceRegistry->communicationService()->removePlugin(commPlugin);
+
+    d->discoveredPlugins[plugin]->unload();
+    d->loadedPlugins.removeOne(plugin);
+    emit pluginUnloaded(plugin);
 }
 
 void PluginManager::saveConfiguration()
