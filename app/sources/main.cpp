@@ -61,9 +61,6 @@ int main(int argc, char* argv[])
             proxy.load();
         }
 
-        domain::PluginManager plugins;
-        plugins.discoverPlugins();
-
         domain::TranslationManager translator;
         translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
@@ -79,6 +76,10 @@ int main(int argc, char* argv[])
 
         domain::ServiceRegistry registy;
         Q_UNUSED(registy);
+
+        domain::PluginManager plugins;
+        plugins.discoverPlugins();
+        plugins.restoreConfiguration();
 
         presentation::PresentationContext context;
 
