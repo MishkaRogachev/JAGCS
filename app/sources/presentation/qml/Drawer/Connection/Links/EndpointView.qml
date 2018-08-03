@@ -28,6 +28,7 @@ RowLayout {
 
     Controls.NumericInput {
         id: address
+        horizontalAlignment: Text.AlignHCenter
         validator: RegExpValidator {
             regExp: /^(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\.){3}([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))$/
         }
@@ -37,18 +38,19 @@ RowLayout {
 
     Controls.NumericInput {
         id: port
-        inputMethodHints: Qt.ImhDigitsOnly
+        horizontalAlignment: Text.AlignHCenter
         validator: IntValidator { bottom: 0; top: 65535 }
+        inputMethodHints: Qt.ImhDigitsOnly
         onFinished: updateEndpoint()
         Layout.fillWidth: true
     }
 
-    Controls.DelayButton {
+    Controls.Button {
         flat: true
         tipText: qsTr("Remove")
         iconSource: "qrc:/icons/remove.svg"
         iconColor: customPalette.dangerColor
-        onActivated: remove()
+        onClicked: remove()
     }
 }
 
