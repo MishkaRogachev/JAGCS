@@ -33,8 +33,8 @@ using namespace domain;
 class CommunicatorWorker::Impl
 {
 public:
-    data_source::AbstractCommunicator* communicator = nullptr;
     QMap<int, data_source::AbstractLink*> descriptedLinks;
+    QList<data_source::AbstractCommunicator*> communicators;
 
     int statisticsTimer = 0;
 };
@@ -45,8 +45,8 @@ CommunicatorWorker::CommunicatorWorker(QObject* parent):
 {
     connect(this, &CommunicatorWorker::addCommunicator,
             this, &CommunicatorWorker::addCommunicatorImpl);
-    connect(this, &CommunicatorWorker::removeCommunicator,
-            this, &CommunicatorWorker::removeCommunicatorImpl);
+    connect(this, &CommunicatorWorker::deleteCommunicator,
+            this, &CommunicatorWorker::deleteCommunicatorImpl);
     connect(this, &CommunicatorWorker::updateLink,
             this, &CommunicatorWorker::updateLinkImpl);
     connect(this, &CommunicatorWorker::removeLink,
@@ -81,45 +81,43 @@ void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link,
 
 void CommunicatorWorker::addCommunicatorImpl(AbstractCommunicator* communicator)
 {
-    // TODO: if sevral communicators, who owns the link?
-    if (d->communicator)
+    if (!communicator || d->communicators.contains(communicator)) return;
+
+    communicator->setParent(this);
+
+    connect(communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
+            this, &CommunicatorWorker::onMavLinkStatisticsChanged);
+    connect(communicator, &AbstractCommunicator::mavLinkProtocolChanged,
+            this, &CommunicatorWorker::onMavLinkProtocolChanged);
+
+    connect(communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
+            this, &CommunicatorWorker::onMavLinkStatisticsChanged);
+    connect(communicator, &AbstractCommunicator::mavLinkProtocolChanged,
+            this, &CommunicatorWorker::onMavLinkProtocolChanged);
+
+    for (AbstractLink* link: d->descriptedLinks.values())
     {
-        for (AbstractLink* link: d->descriptedLinks.values())
-        {
-            d->communicator->removeLink(link);
-        }
-
-        disconnect(d->communicator, 0, this, 0);
-
-        delete d->communicator;
+        communicator->addLink(link);
     }
 
-    d->communicator = communicator;
-
-    if (d->communicator)
-    {
-        d->communicator->setParent(this);
-
-        connect(d->communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
-                this, &CommunicatorWorker::onMavLinkStatisticsChanged);
-        connect(d->communicator, &AbstractCommunicator::mavLinkProtocolChanged,
-                this, &CommunicatorWorker::onMavLinkProtocolChanged);
-
-        for (AbstractLink* link: d->descriptedLinks.values())
-        {
-            d->communicator->addLink(link);
-        }
-    }
+    d->communicators.append(communicator);
 }
 
-void CommunicatorWorker::removeCommunicatorImpl(AbstractCommunicator* communicator)
+void CommunicatorWorker::deleteCommunicatorImpl(AbstractCommunicator* communicator)
 {
+    if (!d->communicators.removeOne(communicator)) return;
 
+    disconnect(communicator, 0, this, 0);
+
+    for (AbstractLink* link: d->descriptedLinks.values())
+    {
+        communicator->removeLink(link);
+    }
+
+    delete communicator;
 }
 
-void CommunicatorWorker::updateLinkImpl(int linkId,
-                                        const LinkFactoryPtr& factory,
-                                        bool autoconnect)
+void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factory, bool autoconnect)
 {
     AbstractLink* link = nullptr;
 
@@ -142,7 +140,10 @@ void CommunicatorWorker::updateLinkImpl(int linkId,
                 [this, linkId](const QString& error) { emit linkErrored(linkId, error); });
 
         d->descriptedLinks[linkId] = link;
-        if (d->communicator) d->communicator->addLink(link);
+        for (AbstractCommunicator* communicator: d->communicators)
+        {
+            communicator->addLink(link);
+        }
 
         if (autoconnect)
         {
@@ -158,7 +159,10 @@ void CommunicatorWorker::removeLinkImpl(int linkId)
     {
         AbstractLink* link = d->descriptedLinks.take(linkId);
 
-        if (d->communicator) d->communicator->removeLink(link);
+        for (AbstractCommunicator* communicator: d->communicators)
+        {
+            communicator->removeLink(link);
+        }
         delete link;
     }
 }

@@ -27,7 +27,7 @@ namespace domain
 
     signals:
         void addCommunicator(data_source::AbstractCommunicator* communicator);
-        void removeCommunicator(data_source::AbstractCommunicator* communicator);
+        void deleteCommunicator(data_source::AbstractCommunicator* communicator);
 
         void updateLink(int linkId, const data_source::LinkFactoryPtr& factory,
                         bool autoconnect);
@@ -53,7 +53,7 @@ namespace domain
                                       data_source::AbstractCommunicator::Protocol protocol);
 
         void addCommunicatorImpl(data_source::AbstractCommunicator* communicator);
-        void removeCommunicatorImpl(data_source::AbstractCommunicator* communicator);
+        void deleteCommunicatorImpl(data_source::AbstractCommunicator* communicator);
 
         void updateLinkImpl(int linkId, const data_source::LinkFactoryPtr& factory,
                             bool autoconnect);

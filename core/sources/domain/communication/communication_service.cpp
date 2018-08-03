@@ -156,7 +156,7 @@ void CommunicationService::removePlugin(ICommunicationPlugin* plugin)
 {
     if (!d->pluginCommunicators.contains(plugin)) return;
 
-    d->commWorker->removeCommunicator(d->pluginCommunicators.take(plugin));
+    d->commWorker->deleteCommunicator(d->pluginCommunicators.take(plugin));
 }
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
