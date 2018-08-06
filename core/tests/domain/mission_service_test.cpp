@@ -91,7 +91,7 @@ void MissionServiceTest::testVehicleDescription()
     QVERIFY2(id > 0, "Vehicle id after insert mus be > 0");
 
     QVERIFY2(vehicle->name() == "Ridiculous vehicle", "Vehicles names are different");
-    QCOMPARE(vehicle->mavId(), quint8(13));
+    QCOMPARE(vehicle->mavId(), 13);
     QCOMPARE(vehicle->type(), Vehicle::FixedWing);
 
     QVERIFY2(vehicleService->remove(vehicle), "Can't remove vehicle");

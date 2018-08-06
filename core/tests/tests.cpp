@@ -7,8 +7,8 @@
 
 // Tests
 #include "links_test.h"
+#include "telemetry_test.h"
 #include "communication_service_test.h"
-#include "telemetry_service_test.h"
 #include "mission_service_test.h"
 
 #define execTest(T) { T t; QTest::qExec(&t); }
@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
     QCoreApplication app(argc, argv);
 
     execTest(LinksTest)
+    execTest(TelemetryTest)
 
     {
         QFile file("test_db");
@@ -39,9 +40,6 @@ int main(int argc, char* argv[])
 
     MissionServiceTest missionTest;
     QTest::qExec(&missionTest);
-
-    TelemetryServiceTest telemetryTest;
-    QTest::qExec(&telemetryTest);
 
     return 0;
 }

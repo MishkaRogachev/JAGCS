@@ -1,4 +1,4 @@
-#include "telemetry_service_test.h"
+#include "telemetry_test.h"
 
 // Qt
 #include <QDebug>
@@ -6,9 +6,9 @@
 // Internal
 #include "telemetry.h"
 
-using namespace domain;
+using namespace data_source;
 
-void TelemetryServiceTest::testTelemetryTree()
+void TelemetryTest::testTelemetryTree()
 {
     //qRegisterMetaType<Telemetry::TelemetryId>("TelemetryId");
     qRegisterMetaType<Telemetry::TelemetryList>("TelemetryList");

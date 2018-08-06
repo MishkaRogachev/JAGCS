@@ -21,13 +21,13 @@ void LinksTest::testMockLink()
 
     first.addLink(&second);
 
-    first.sendData("TEST MOCK");
-    QCOMPARE(secondSpy.count(), 1);
-    QCOMPARE(second.lastReceivedData(), "TEST MOCK");
-
-    second.sendData("TEST 2 MOCK");
-    QCOMPARE(firstSpy.count(), 1);
-    QCOMPARE(first.lastReceivedData(), "TEST 2 MOCK");
+    QList<QByteArray> datas = { "TEST MOCK", "TEST 2 MOCK", "TEST 3 MOCK" };
+    for (int i = 0; i < datas.count(); ++i)
+    {
+        first.sendData(datas[i]);
+        QCOMPARE(secondSpy.count(), i + 1);
+        QCOMPARE(second.lastReceivedData(), datas[i]);
+    }
 }
 
 void LinksTest::testUdpLink()
@@ -94,12 +94,11 @@ void LinksTest::testTcpLink()
     QVERIFY(socket);
     QCOMPARE(socketSpy.count(), 0);
 
-    QVERIFY(socket->write("TEST TCP DATA") > 0);
-    QTRY_COMPARE(linkSpy.count(), 1);
-    QCOMPARE(link.lastReceivedData(), "TEST TCP DATA");
-
-    link.sendData("TEST 2 TCP DATA");
-    socket->waitForReadyRead(5000);
-    QTRY_COMPARE(socketSpy.count(), 1);
-    QCOMPARE(socket->readAll(), "TEST 2 TCP DATA");
+    QList<QByteArray> datas = { "TEST TCP", "TEST 2 TCP", "TEST 3 TCP" };
+    for (int i = 0; i < datas.count(); ++i)
+    {
+        QVERIFY(socket->write(datas[i]) > 0);
+        QTRY_COMPARE(linkSpy.count(), i + 1);
+        QCOMPARE(link.lastReceivedData(), datas[i]);
+    }
 }
