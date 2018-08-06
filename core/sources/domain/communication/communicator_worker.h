@@ -29,34 +29,23 @@ namespace domain
         void addCommunicator(data_source::AbstractCommunicator* communicator);
         void deleteCommunicator(data_source::AbstractCommunicator* communicator);
 
-        void updateLink(int linkId, const data_source::LinkFactoryPtr& factory,
-                        bool autoconnect);
+        void updateLink(int linkId, const data_source::LinkFactoryPtr& factory, bool autoconnect);
         void removeLink(int linkId);
         void setLinkConnected(int linkId, bool connected);
 
         void linkStatusChanged(int linkId, bool connected);
         void linkStatisticsChanged(int linkId, int timestamp,
                                    int bytesReceivedSec, int bytesSentSec);
-        void mavLinkStatisticsChanged(int linkId, int packetsReceived,
-                                      int packetsDrops);
-        void mavLinkProtocolChanged(int linkId,
-                                    dto::LinkDescription::Protocol protocol);
+
         void linkSent(int linkId);
         void linkRecv(int linkId);
         void linkErrored(int linkId, QString error);
 
     private slots:
-        void onMavLinkStatisticsChanged(data_source::AbstractLink* link,
-                                        int packetsReceived,
-                                        int packetsDrops);
-        void onMavLinkProtocolChanged(data_source::AbstractLink* link,
-                                      data_source::AbstractCommunicator::Protocol protocol);
-
         void addCommunicatorImpl(data_source::AbstractCommunicator* communicator);
         void deleteCommunicatorImpl(data_source::AbstractCommunicator* communicator);
 
-        void updateLinkImpl(int linkId, const data_source::LinkFactoryPtr& factory,
-                            bool autoconnect);
+        void updateLinkImpl(int linkId, const data_source::LinkFactoryPtr& factory, bool autoconnect);
         void removeLinkImpl(int linkId);
         void setLinkConnectedImpl(int linkId, bool connected);
 

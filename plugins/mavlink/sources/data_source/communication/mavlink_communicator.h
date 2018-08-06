@@ -15,6 +15,12 @@ namespace data_source
         Q_OBJECT
 
     public:
+        enum ProtocolVersion
+        {
+            MavLink1,
+            MavLink2
+        };
+
         explicit MavLinkCommunicator(QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
@@ -32,7 +38,7 @@ namespace data_source
         void addLink(AbstractLink* link) override;
         void removeLink(AbstractLink* link) override;
 
-        void switchLinkProtocol(AbstractLink* link, Protocol protocol);
+        void switchLinkProtocol(AbstractLink* link, ProtocolVersion protocol);
 
         void setSystemId(quint8 systemId);
         void setComponentId(quint8 componentId);
@@ -55,6 +61,8 @@ namespace data_source
     private:
         class Impl;
         QScopedPointer<Impl> const d;
+
+        Q_ENUM(ProtocolVersion)
     };
 }
 

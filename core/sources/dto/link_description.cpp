@@ -114,6 +114,16 @@ void LinkDescription::setAutoConnect(bool autoConnect)
     m_autoConnect = autoConnect;
 }
 
+QString LinkDescription::protocol() const
+{
+    return m_protocol;
+}
+
+void LinkDescription::setProtocol(const QString& protocol)
+{
+    m_protocol = protocol;
+}
+
 bool LinkDescription::isConnected() const
 {
     return m_connected;
@@ -122,14 +132,4 @@ bool LinkDescription::isConnected() const
 void LinkDescription::setConnected(bool connected)
 {
     m_connected = connected;
-}
-
-LinkDescription::Protocol LinkDescription::protocol() const
-{
-    return m_protocol;
-}
-
-void LinkDescription::setProtocol(Protocol protocol)
-{
-    m_protocol = protocol;
 }

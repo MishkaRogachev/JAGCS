@@ -15,16 +15,6 @@
 namespace
 {
     const int second = 1000;
-
-    dto::LinkDescription::Protocol toDtoProtocol(data_source::AbstractCommunicator::Protocol protocol)
-    {
-        switch (protocol) {
-        case data_source::AbstractCommunicator::MavLink1: return dto::LinkDescription::MavLink1;
-        case data_source::AbstractCommunicator::MavLink2: return dto::LinkDescription::MavLink2;
-        default:
-        case data_source::AbstractCommunicator::Unknown: return dto::LinkDescription::UnknownProtocol;
-        }
-    }
 }
 
 using namespace data_source;
@@ -60,40 +50,11 @@ CommunicatorWorker::CommunicatorWorker(QObject* parent):
 CommunicatorWorker::~CommunicatorWorker()
 {}
 
-void CommunicatorWorker::onMavLinkStatisticsChanged(AbstractLink* link,
-                                                    int packetsReceived,
-                                                    int packetsDrops)
-{
-    int linkId = d->descriptedLinks.key(link, 0);
-    if (!linkId) return;
-
-    emit mavLinkStatisticsChanged(linkId, packetsReceived, packetsDrops);
-}
-
-void CommunicatorWorker::onMavLinkProtocolChanged(AbstractLink* link,
-                                                  AbstractCommunicator::Protocol protocol)
-{
-    int linkId = d->descriptedLinks.key(link, 0);
-    if (!linkId) return;
-
-    emit mavLinkProtocolChanged(linkId, ::toDtoProtocol(protocol));
-}
-
 void CommunicatorWorker::addCommunicatorImpl(AbstractCommunicator* communicator)
 {
     if (!communicator || d->communicators.contains(communicator)) return;
 
     communicator->setParent(this);
-
-    connect(communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
-            this, &CommunicatorWorker::onMavLinkStatisticsChanged);
-    connect(communicator, &AbstractCommunicator::mavLinkProtocolChanged,
-            this, &CommunicatorWorker::onMavLinkProtocolChanged);
-
-    connect(communicator, &AbstractCommunicator::mavLinkStatisticsChanged,
-            this, &CommunicatorWorker::onMavLinkStatisticsChanged);
-    connect(communicator, &AbstractCommunicator::mavLinkProtocolChanged,
-            this, &CommunicatorWorker::onMavLinkProtocolChanged);
 
     for (AbstractLink* link: d->descriptedLinks.values())
     {

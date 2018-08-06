@@ -12,13 +12,6 @@ namespace data_source
         Q_OBJECT
 
     public:
-        enum Protocol
-        {
-            Unknown,
-            MavLink1,
-            MavLink2
-        };
-
         AbstractCommunicator(QObject* parent);
 
         QList<AbstractLink*> links() const;
@@ -36,18 +29,13 @@ namespace data_source
         void linkAdded(AbstractLink* link);
         void linkRemoved(AbstractLink* link);
 
-        void linkStatisticsChanged(AbstractLink* link, int bytesReceived, int bytesSent);
-        // TODO: to MavLinkCommunicator
-        void mavLinkStatisticsChanged(AbstractLink* link, int packetsReceived, int packetsDrops);
-        void mavLinkProtocolChanged(AbstractLink* link, Protocol protocol);
+        void protocolInfoChanged(AbstractLink* link, const QString& info);
 
     protected slots:
         virtual void onDataReceived(const QByteArray& data) = 0;
 
     private:
         QList<AbstractLink*> m_links;
-
-        Q_ENUM(Protocol)
     };
 }
 

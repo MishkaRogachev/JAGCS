@@ -29,13 +29,6 @@ namespace dto
             Bluetooth
         };
 
-        enum Protocol: quint8
-        {
-            UnknownProtocol = 0,
-            MavLink1,
-            MavLink2
-        };
-
         enum Parameter
         {
             UnknownParameter = 0,
@@ -64,24 +57,23 @@ namespace dto
         bool isAutoConnect() const;
         void setAutoConnect(bool autoConnect);
 
+        QString protocol() const;
+        void setProtocol(const QString& protocol);
+
         bool isConnected() const;
         void setConnected(bool isConnected);
-
-        Protocol protocol() const;
-        void setProtocol(Protocol protocol);
 
     private:
         QString m_name;
         Type m_type = UnknownType;
         QMap<Parameter, QVariant> m_parameters;
         bool m_autoConnect = true;
+        QString m_protocol;
 
-        Protocol m_protocol = UnknownProtocol;
         bool m_connected = false;
 
         Q_ENUM(Type)
         Q_ENUM(Parameter)
-        Q_ENUM(Protocol)
     };
 }
 

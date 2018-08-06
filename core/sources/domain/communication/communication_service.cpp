@@ -60,7 +60,6 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     d(new Impl())
 {
     qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
-    qRegisterMetaType<dto::LinkDescription::Protocol>("dto::LinkDescription::Protocol");
     qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
 
     d->serialPortService = serialPortService;
@@ -79,10 +78,6 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
             this, &CommunicationService::onLinkStatusChanged);
     connect(d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
             this, &CommunicationService::onLinkStatisticsChanged);
-    connect(d->commWorker, &CommunicatorWorker::mavLinkStatisticsChanged,
-            this, &CommunicationService::onMavLinkStatisticsChanged);
-    connect(d->commWorker, &CommunicatorWorker::mavLinkProtocolChanged,
-            this, &CommunicationService::onMavlinkProtocolChanged);
     connect(d->commWorker, &CommunicatorWorker::linkSent,
             this, &CommunicationService::linkSent);
     connect(d->commWorker, &CommunicatorWorker::linkRecv,
@@ -243,34 +238,6 @@ void CommunicationService::onLinkStatisticsChanged(int linkId,
     statistics->setBytesSent(bytesSentSec);
 
     emit linkStatisticsChanged(statistics);
-}
-
-void CommunicationService::onMavLinkStatisticsChanged(int linkId,
-                                                      int packetsReceived,
-                                                      int packetsDrops)
-{
-    dto::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
-
-    statistics->setPacketsRecv(packetsReceived);
-    statistics->setPacketDrops(packetsDrops);
-
-    // TODO: No handle for MavLinkStatistics yet
-}
-
-void CommunicationService::onMavlinkProtocolChanged(int linkId,
-                                                    dto::LinkDescription::Protocol protocol)
-{
-    dto::LinkDescriptionPtr description = this->description(linkId);
-    if (description->protocol() == protocol) return;
-
-    QString msg = tr("Unknown");
-    if (protocol == dto::LinkDescription::MavLink1) msg = tr("Switched on MAVLINK v.1");
-    if (protocol == dto::LinkDescription::MavLink2) msg = tr("Switched on MAVLINK v.2");
-
-    notificationBus->notify(tr("Link") + " " + description->name(), msg);
-    description->setProtocol(protocol);
-
-    emit linkStatusChanged(description);
 }
 
 void CommunicationService::onLinkErrored(int linkId, const QString& error)

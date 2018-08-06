@@ -18,8 +18,8 @@ using namespace data_source;
 class MavLinkCommunicator::Impl
 {
 public:
-    quint8 systemId;
-    quint8 componentId;
+    quint8 systemId = 255;
+    quint8 componentId = 0;
 
     QMap<AbstractLink*, quint8> linkChannels;
     QMap<quint8, AbstractLink*> mavSystemLinks;
@@ -110,17 +110,17 @@ void MavLinkCommunicator::removeLink(AbstractLink* link)
     AbstractCommunicator::removeLink(link);
 }
 
-void MavLinkCommunicator::switchLinkProtocol(AbstractLink* link, AbstractCommunicator::Protocol protocol)
+void MavLinkCommunicator::switchLinkProtocol(AbstractLink* link, ProtocolVersion protocol)
 {
 #ifdef MAVLINK_V2
     mavlink_status_t* channelStatus = mavlink_get_channel_status(this->linkChannel(link));
     bool outMavlink1 = channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
 
-    if (protocol == AbstractCommunicator::MavLink1 && !outMavlink1)
+    if (protocol == MavLink1 && !outMavlink1)
     {
         channelStatus->flags |= MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
     }
-    else if (protocol == AbstractCommunicator::MavLink2 && outMavlink1)
+    else if (protocol == MavLink2 && outMavlink1)
     {
         channelStatus->flags &= ~MAVLINK_STATUS_FLAG_OUT_MAVLINK1;
     }
@@ -128,7 +128,7 @@ void MavLinkCommunicator::switchLinkProtocol(AbstractLink* link, AbstractCommuni
     emit mavLinkProtocolChanged(link, channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1 ?
                                     MavLink1 : MavLink2);
 #endif
-    emit mavLinkProtocolChanged(link, MavLink1);
+    // FIXME: notify protocol version
 }
 
 void MavLinkCommunicator::setSystemId(quint8 systemId)
@@ -203,12 +203,9 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     if (d->oldPacketsReceived != status.packet_rx_success_count ||
         d->oldPacketsDrops != status.packet_rx_drop_count)
     {
-        emit mavLinkStatisticsChanged(d->receivedLink,
-                                      status.packet_rx_success_count,
-                                      status.packet_rx_drop_count);
-
         d->oldPacketsReceived = status.packet_rx_success_count;
         d->oldPacketsDrops = status.packet_rx_drop_count;
+        // FIXME: notify protocol version
     }
 }
 

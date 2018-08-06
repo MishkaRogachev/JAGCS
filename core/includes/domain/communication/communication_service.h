@@ -52,11 +52,6 @@ namespace domain
                                      int timestamp,
                                      int bytesReceivedSec,
                                      int bytesSentSec);
-        void onMavLinkStatisticsChanged(int linkId,
-                                        int packetsReceived,
-                                        int packetsDrops);
-        void onMavlinkProtocolChanged(int linkId,
-                                      dto::LinkDescription::Protocol protocol);
         void onLinkErrored(int linkId, const QString& error);
         void onDevicesChanged();
 

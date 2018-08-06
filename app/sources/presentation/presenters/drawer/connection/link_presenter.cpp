@@ -58,8 +58,8 @@ void LinkPresenter::updateLink()
 void LinkPresenter::updateStatus()
 {
     this->setViewProperty(PROPERTY(connected), m_link && m_link->isConnected());
-    this->setViewProperty(PROPERTY(protocol), m_link ? m_link->protocol() :
-                                                       dto::LinkDescription::UnknownProtocol);
+//    this->setViewProperty(PROPERTY(protocol), m_link ? m_link->protocol() :
+//                                                       dto::LinkDescription::UnknownProtocol);
 }
 
 void LinkPresenter::setConnected(bool connected)
