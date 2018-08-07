@@ -17,6 +17,7 @@ namespace dto
         Q_PROPERTY(QString name READ name WRITE setName)
         Q_PROPERTY(Type type READ type WRITE setType)
         Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
+        Q_PROPERTY(int protocolId READ protocolId WRITE setProtocolId)
         Q_PROPERTY(bool autoConnect READ isAutoConnect WRITE setAutoConnect)
 
     public:
@@ -54,11 +55,11 @@ namespace dto
         void clearParameters();
         void clearSuperfluousParameters();
 
+        int protocolId() const;
+        void setProtocolId(int protocolId);
+
         bool isAutoConnect() const;
         void setAutoConnect(bool autoConnect);
-
-        QString protocol() const;
-        void setProtocol(const QString& protocol);
 
         bool isConnected() const;
         void setConnected(bool isConnected);
@@ -67,8 +68,8 @@ namespace dto
         QString m_name;
         Type m_type = UnknownType;
         QMap<Parameter, QVariant> m_parameters;
+        int m_protocolId = 0;
         bool m_autoConnect = true;
-        QString m_protocol;
 
         bool m_connected = false;
 

@@ -16,11 +16,15 @@ namespace
 {
     static QMap <LinkDescription::Type, QList<LinkDescription::Parameter> > typeParameters =
     {
-        { LinkDescription::Serial, { LinkDescription::Device, LinkDescription::BaudRate } },
-        { LinkDescription::Udp, { LinkDescription::Port, LinkDescription::Endpoints,
-                                  LinkDescription::UdpAutoResponse } },
-        { LinkDescription::Tcp, { LinkDescription::Address, LinkDescription::Port } },
-        { LinkDescription::Bluetooth, { LinkDescription::Device, LinkDescription::Address } }
+        { LinkDescription::Serial,
+          { LinkDescription::Device, LinkDescription::BaudRate } },
+        { LinkDescription::Udp,
+          { LinkDescription::Port, LinkDescription::Endpoints,
+            LinkDescription::UdpAutoResponse } },
+        { LinkDescription::Tcp,
+          { LinkDescription::Address, LinkDescription::Port } },
+        { LinkDescription::Bluetooth,
+          { LinkDescription::Device, LinkDescription::Address } }
     };
 }
 
@@ -104,6 +108,16 @@ void LinkDescription::clearSuperfluousParameters()
     }
 }
 
+int LinkDescription::protocolId() const
+{
+    return m_protocolId;
+}
+
+void LinkDescription::setProtocolId(int protocolId)
+{
+    m_protocolId = protocolId;
+}
+
 bool LinkDescription::isAutoConnect() const
 {
     return m_autoConnect;
@@ -112,16 +126,6 @@ bool LinkDescription::isAutoConnect() const
 void LinkDescription::setAutoConnect(bool autoConnect)
 {
     m_autoConnect = autoConnect;
-}
-
-QString LinkDescription::protocol() const
-{
-    return m_protocol;
-}
-
-void LinkDescription::setProtocol(const QString& protocol)
-{
-    m_protocol = protocol;
 }
 
 bool LinkDescription::isConnected() const

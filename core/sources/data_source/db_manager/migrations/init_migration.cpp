@@ -12,14 +12,18 @@ bool InitMigration::up()
     if (!m_query.prepare("CREATE TABLE schema_versions ("
                          "version STRING NOT NULL UNIQUE)") || !m_query.exec()) return false;
 
-    if (!m_query.prepare("CREATE TABLE links ("
+    if (!m_query.prepare("CREATE TABLE link_descriptions ("
                          "id INTEGER PRIMARY KEY NOT NULL,"
                          "name STRING,"
                          "type SMALLINT,"
-                         "port INTEGER,"
-                         "device STRING,"
-                         "baudRate INTEGER,"
+                         "parameters TEXT,"
+                         "protocolId INTEGER,"
                          "autoConnect BOOLEAN)") || !m_query.exec()) return false;
+
+    if (!m_query.prepare("CREATE TABLE link_protocols ("
+                         "id INTEGER PRIMARY KEY NOT NULL,"
+                         "name STRING,"
+                         "description STRING)") || !m_query.exec()) return false;
 
     if (!m_query.prepare("CREATE TABLE vehicles ("
                          "id INTEGER PRIMARY KEY NOT NULL,"
@@ -41,9 +45,7 @@ bool InitMigration::up()
                          "altitudeRelative BOOLEAN,"
                          "latitude DOUBLE,"
                          "longitude DOUBLE,"
-                         "radius REAL,"
-                         "pitch REAL,"
-                         "periods INTEGER,"
+                         "parameters TEXT,"
                          "FOREIGN KEY(missionId) REFERENCES missions(id))") ||
         !m_query.exec()) return false;
 
@@ -66,12 +68,13 @@ bool InitMigration::up()
 
 bool InitMigration::down()
 {
+    if (!m_query.prepare("DROP TABLE video_sources") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE mission_assignments") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE mission_items") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE missions") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE vehicles") || !m_query.exec()) return false;
-    if (!m_query.prepare("DROP TABLE links") || !m_query.exec()) return false;
-    if (!m_query.prepare("DROP TABLE video_sources") || !m_query.exec()) return false;
+    if (!m_query.prepare("DROP TABLE link_protocols") || !m_query.exec()) return false;
+    if (!m_query.prepare("DROP TABLE link_descriptions") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE schema_versions") || !m_query.exec()) return false;
 
     return true;
@@ -79,5 +82,5 @@ bool InitMigration::down()
 
 QDateTime InitMigration::version() const
 {
-    return QDateTime::fromString("2017.05.17-14:37:15", format);
+    return QDateTime::fromString("2018.08.07-09:37:45", format);
 }
