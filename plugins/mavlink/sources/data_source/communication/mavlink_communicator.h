@@ -24,6 +24,7 @@ namespace data_source
         explicit MavLinkCommunicator(QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
+        QStringList availableProtocols() const override;
         bool isAddLinkEnabled() override;
 
         quint8 systemId() const;

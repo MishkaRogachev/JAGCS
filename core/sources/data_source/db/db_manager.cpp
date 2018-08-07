@@ -91,6 +91,7 @@ QDateTime DbManager::migrationVersion() const
 
 void DbManager::onMigratorMessage(const QString& error)
 {
+    qDebug() << "DB:" << error;
     m_dbLog << error;
     emit logChanged(m_dbLog);
 }

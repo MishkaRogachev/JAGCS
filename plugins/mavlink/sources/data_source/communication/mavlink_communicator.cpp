@@ -52,6 +52,14 @@ MavLinkCommunicator::~MavLinkCommunicator()
     }
 }
 
+QStringList MavLinkCommunicator::availableProtocols() const
+{
+#ifdef MAVLINK_V2
+    return { "MAVLINK1", "MAVLINK2"};
+#endif
+    return {"MAVLINK1" };
+}
+
 bool MavLinkCommunicator::isAddLinkEnabled()
 {
     return !d->avalibleChannels.isEmpty();

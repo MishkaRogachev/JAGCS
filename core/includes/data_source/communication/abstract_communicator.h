@@ -16,6 +16,7 @@ namespace data_source
 
         QList<AbstractLink*> links() const;
 
+        virtual QStringList availableProtocols() const = 0;
         virtual bool isAddLinkEnabled() = 0;
 
     public slots:

@@ -108,4 +108,5 @@ void LinkListPresenter::filter(const QString& filterString)
 void LinkListPresenter::connectView(QObject* view)
 {
     view->setProperty(PROPERTY(links), QVariant::fromValue(&d->filterModel));
+    view->setProperty(PROPERTY(links), d->service->availableProtocols());
 }

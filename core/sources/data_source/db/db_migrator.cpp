@@ -69,7 +69,7 @@ bool DbMigrator::clarifyVersion()
         if (versionString.isEmpty()) return false;
         QDateTime version = QDateTime::fromString(versionString, DbMigration::format);
 
-        qDebug() << "clarifyVersion" << version;
+        emit message(tr("Clarify version: ") + versionString);
         this->setVersion(version);
     }
     else
