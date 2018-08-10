@@ -12,12 +12,14 @@
 
 namespace domain
 {
+    class SerialPortService;
+
     class CommunicationService: public QObject
     {
         Q_OBJECT
 
     public:
-        CommunicationService(QObject* parent = nullptr);
+        CommunicationService(SerialPortService* serialPortService, QObject* parent = nullptr);
         ~CommunicationService() override;
 
         dto::LinkDescriptionPtr description(int id) const;

@@ -15,7 +15,6 @@
 #include "description_link_factory.h"
 #include "notification_bus.h"
 
-#include "service_registry.h"
 #include "serial_ports_service.h"
 
 #include "link_manager.h"
@@ -26,15 +25,14 @@ using namespace domain;
 class CommunicationService::Impl
 {
 public:
-    LinkManager linkManager;
+    SerialPortService* serialPortService;
 
     QMap<int, dto::LinkStatisticsPtr> linkStatistics;
     QMap<ICommunicationPlugin*, data_source::AbstractCommunicator*> pluginCommunicators;
     QMap<data_source::AbstractCommunicator*, QString> communicatorProtocols;
     QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
 
-    SerialPortService* serialPortService = serviceRegistry->serialPortService();
-
+    LinkManager linkManager;
     QThread* commThread;
     CommunicatorWorker* commWorker;
 
@@ -49,7 +47,7 @@ public:
     }
 };
 
-CommunicationService::CommunicationService(QObject* parent):
+CommunicationService::CommunicationService(SerialPortService* serialPortService, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
@@ -57,6 +55,21 @@ CommunicationService::CommunicationService(QObject* parent):
     qRegisterMetaType<dto::LinkProtocolPtr>("dto::LinkProtocolPtr");
     qRegisterMetaType<dto::LinkStatisticsPtr>("dto::LinkStatisticsPtr");
     qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
+
+    d->serialPortService = serialPortService;
+    connect(d->serialPortService, &SerialPortService::devicesChanged,
+            this, [this]() {
+        QStringList devices = d->serialPortService->devices();
+
+        for (const dto::LinkDescriptionPtr& description: d->descriptedDevices.keys())
+        {
+            if (!description->isConnected() && description->isAutoConnect() &&
+                devices.contains(description->parameter(dto::LinkDescription::Device).toString()))
+            {
+                this->setLinkConnected(description, true);
+            }
+        }
+    });
 
     connect(&d->linkManager, &LinkManager::descriptionAdded,
             this, &CommunicationService::descriptionAdded);
@@ -83,20 +96,6 @@ CommunicationService::CommunicationService(QObject* parent):
             this, &CommunicationService::linkRecv);
     connect(d->commWorker, &CommunicatorWorker::linkErrored,
             this, &CommunicationService::onLinkErrored);
-
-    connect(d->serialPortService, &SerialPortService::devicesChanged,
-            this, [this]() {
-        QStringList devices = d->serialPortService->devices();
-
-        for (const dto::LinkDescriptionPtr& description: d->descriptedDevices.keys())
-        {
-            if (!description->isConnected() && description->isAutoConnect() &&
-                devices.contains(description->parameter(dto::LinkDescription::Device).toString()))
-            {
-                this->setLinkConnected(description, true);
-            }
-        }
-    });
 
     for (const dto::LinkDescriptionPtr& description: d->linkManager.descriptions())
     {
