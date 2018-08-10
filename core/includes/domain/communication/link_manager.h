@@ -31,13 +31,13 @@ namespace domain
         bool remove(const dto::LinkProtocolPtr& protocol);
 
     signals:
-        void added(dto::LinkDescriptionPtr description);
-        void removed(dto::LinkDescriptionPtr description);
-        void changed(dto::LinkDescriptionPtr description);
+        void descriptionAdded(dto::LinkDescriptionPtr description);
+        void descriptionRemoved(dto::LinkDescriptionPtr description);
+        void descriptionChanged(dto::LinkDescriptionPtr description);
 
-        void added(dto::LinkProtocolPtr protocol);
-        void removed(dto::LinkProtocolPtr protocol);
-        void changed(dto::LinkProtocolPtr protocol);
+        void protocolAdded(dto::LinkProtocolPtr protocol);
+        void protocolRemoved(dto::LinkProtocolPtr protocol);
+        void protocolChanged(dto::LinkProtocolPtr protocol);
 
     private:
         class Impl;

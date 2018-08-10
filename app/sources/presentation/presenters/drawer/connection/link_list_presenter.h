@@ -27,6 +27,8 @@ namespace presentation
 
         void filter(const QString& filterString);
 
+        void updateProtocols();
+
     protected:
         void connectView(QObject* view) override;
 

@@ -12,14 +12,12 @@
 
 namespace domain
 {
-    class SerialPortService;
-
     class CommunicationService: public QObject
     {
         Q_OBJECT
 
     public:
-        CommunicationService(SerialPortService* serialPortService, QObject* parent = nullptr);
+        CommunicationService(QObject* parent = nullptr);
         ~CommunicationService() override;
 
         dto::LinkDescriptionPtr description(int id) const;
@@ -55,7 +53,6 @@ namespace domain
                                      int bytesReceivedSec,
                                      int bytesSentSec);
         void onLinkErrored(int linkId, const QString& error);
-        void onDevicesChanged();
 
     private:
         class Impl;

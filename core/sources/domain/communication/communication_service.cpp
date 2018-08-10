@@ -9,14 +9,16 @@
 #include "settings_provider.h"
 
 #include "link_description.h"
+#include "link_protocol.h"
 #include "link_statistics.h"
+
 #include "description_link_factory.h"
-
-#include "generic_repository.h"
-
-#include "serial_ports_service.h"
 #include "notification_bus.h"
 
+#include "service_registry.h"
+#include "serial_ports_service.h"
+
+#include "link_manager.h"
 #include "communicator_worker.h"
 
 using namespace domain;
@@ -24,26 +26,17 @@ using namespace domain;
 class CommunicationService::Impl
 {
 public:
-    GenericRepository<dto::LinkDescription> linkRepository;
+    LinkManager linkManager;
 
     QMap<int, dto::LinkStatisticsPtr> linkStatistics;
     QMap<ICommunicationPlugin*, data_source::AbstractCommunicator*> pluginCommunicators;
     QMap<data_source::AbstractCommunicator*, QString> communicatorProtocols;
     QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
 
-    SerialPortService* serialPortService;
+    SerialPortService* serialPortService = serviceRegistry->serialPortService();
 
     QThread* commThread;
     CommunicatorWorker* commWorker;
-
-    Impl():
-        linkRepository("link_descriptions")
-    {}
-
-    void loadDescriptions(const QString& condition = QString())
-    {
-        for (int id: linkRepository.selectId(condition)) linkRepository.read(id);
-    }
 
     dto::LinkStatisticsPtr getlinkStatistics(int linkId)
     {
@@ -56,16 +49,21 @@ public:
     }
 };
 
-CommunicationService::CommunicationService(SerialPortService* serialPortService, QObject* parent):
+CommunicationService::CommunicationService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
     qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
+    qRegisterMetaType<dto::LinkProtocolPtr>("dto::LinkProtocolPtr");
+    qRegisterMetaType<dto::LinkStatisticsPtr>("dto::LinkStatisticsPtr");
     qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
 
-    d->serialPortService = serialPortService;
-    connect(serialPortService, &SerialPortService::devicesChanged,
-            this, &CommunicationService::onDevicesChanged);
+    connect(&d->linkManager, &LinkManager::descriptionAdded,
+            this, &CommunicationService::descriptionAdded);
+    connect(&d->linkManager, &LinkManager::descriptionRemoved,
+            this, &CommunicationService::descriptionRemoved);
+    connect(&d->linkManager, &LinkManager::descriptionChanged,
+            this, &CommunicationService::descriptionChanged);
 
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
@@ -86,8 +84,21 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     connect(d->commWorker, &CommunicatorWorker::linkErrored,
             this, &CommunicationService::onLinkErrored);
 
-    d->loadDescriptions();
-    for (const dto::LinkDescriptionPtr& description: this->descriptions())
+    connect(d->serialPortService, &SerialPortService::devicesChanged,
+            this, [this]() {
+        QStringList devices = d->serialPortService->devices();
+
+        for (const dto::LinkDescriptionPtr& description: d->descriptedDevices.keys())
+        {
+            if (!description->isConnected() && description->isAutoConnect() &&
+                devices.contains(description->parameter(dto::LinkDescription::Device).toString()))
+            {
+                this->setLinkConnected(description, true);
+            }
+        }
+    });
+
+    for (const dto::LinkDescriptionPtr& description: d->linkManager.descriptions())
     {
         data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
         d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
@@ -103,7 +114,10 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 
 CommunicationService::~CommunicationService()
 {
-    for (const dto::LinkDescriptionPtr& description: this->descriptions())
+    d->commThread->quit();
+    d->commThread->wait();
+
+    for (const dto::LinkDescriptionPtr& description: d->linkManager.descriptions())
     {
         description->setAutoConnect(description->isConnected());
         this->save(description);
@@ -113,19 +127,16 @@ CommunicationService::~CommunicationService()
             d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
         }
     }
-
-    d->commThread->quit();
-    d->commThread->wait();
 }
 
 dto::LinkDescriptionPtr CommunicationService::description(int id) const
 {
-    return d->linkRepository.read(id);
+    return d->linkManager.description(id);
 }
 
 dto::LinkDescriptionPtrList CommunicationService::descriptions() const
 {
-    return d->linkRepository.loadedEntities();
+    return d->linkManager.descriptions();
 }
 
 dto::LinkStatisticsPtr CommunicationService::statistics(int descriptionId) const
@@ -169,20 +180,16 @@ QStringList CommunicationService::availableProtocols() const
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
 {
-    bool isNew = description->id() == 0;
-    if (!d->linkRepository.save(description)) return false;
+    if (!d->linkManager.save(description)) return false;
 
     data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
-    d->commWorker->updateLink(description->id(),
-                              factory, description->isAutoConnect());
+    d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
 
     QString device = description->parameter(dto::LinkDescription::Device).toString();
     if (d->descriptedDevices.contains(description) && device != d->descriptedDevices[description])
     {
         d->serialPortService->releaseDevice(d->descriptedDevices.take(description));
     }
-
-    isNew ? descriptionAdded(description) : descriptionChanged(description);
 
     if (description->type() == dto::LinkDescription::Serial &&
         device.length() > 0 && !d->descriptedDevices.contains(description))
@@ -196,7 +203,7 @@ bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
 
 bool CommunicationService::remove(const dto::LinkDescriptionPtr& description)
 {
-    if (!d->linkRepository.remove(description)) return false;
+    if (!d->linkManager.remove(description)) return false;
 
     d->commWorker->removeLink(description->id());
 
@@ -209,8 +216,6 @@ bool CommunicationService::remove(const dto::LinkDescriptionPtr& description)
     {
         d->linkStatistics.remove(description->id());
     }
-
-    emit descriptionRemoved(description);
 
     return true;
 }
@@ -260,16 +265,3 @@ void CommunicationService::onLinkErrored(int linkId, const QString& error)
                             error, dto::Notification::Warning);
 }
 
-void CommunicationService::onDevicesChanged()
-{
-    QStringList devices = d->serialPortService->devices();
-
-    for (const dto::LinkDescriptionPtr& description: d->descriptedDevices.keys())
-    {
-        if (!description->isConnected() && description->isAutoConnect() &&
-            devices.contains(description->parameter(dto::LinkDescription::Device).toString()))
-        {
-            this->setLinkConnected(description, true);
-        }
-    }
-}

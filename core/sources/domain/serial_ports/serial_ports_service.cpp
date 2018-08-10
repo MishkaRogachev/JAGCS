@@ -27,9 +27,6 @@ SerialPortService::SerialPortService(QObject* parent):
 {
     this->updateDevices();
     d->timerId = this->startTimer(::interval);
-
-    connect(this, &SerialPortService::devicesChanged,
-            this, &SerialPortService::availableDevicesChanged);
 }
 
 SerialPortService::~SerialPortService()
@@ -81,7 +78,9 @@ void SerialPortService::updateDevices()
     if (d->devices == devices) return;
 
     d->devices = devices;
-    emit devicesChanged();
+
+    emit devicesChanged(this->devices());
+    emit availableDevicesChanged(this->availableDevices());
 }
 
 void SerialPortService::holdDevice(const QString& port)
@@ -89,7 +88,7 @@ void SerialPortService::holdDevice(const QString& port)
     if (d->busyDevices.contains(port)) return;
 
     d->busyDevices.append(port);
-    emit availableDevicesChanged();
+    emit availableDevicesChanged(this->availableDevices());
 }
 
 void SerialPortService::releaseDevice(const QString& port)
@@ -97,7 +96,7 @@ void SerialPortService::releaseDevice(const QString& port)
     if (!d->busyDevices.contains(port)) return;
 
     d->busyDevices.removeOne(port);
-    emit availableDevicesChanged();
+    emit availableDevicesChanged(this->availableDevices());
 }
 
 void SerialPortService::timerEvent(QTimerEvent* event)

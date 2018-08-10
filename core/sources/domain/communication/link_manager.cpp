@@ -9,8 +9,6 @@
 
 #include "generic_repository.h"
 
-#include "serial_ports_service.h"
-
 using namespace domain;
 
 class LinkManager::Impl
@@ -18,11 +16,6 @@ class LinkManager::Impl
 public:
     data_source::GenericRepository<dto::LinkDescription> descriptionRepository;
     data_source::GenericRepository<dto::LinkProtocol> protocolRepository;
-
-    QMap<int, dto::LinkStatisticsPtr> linkStatistics;
-    QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
-
-    SerialPortService* serialPortService;
 
     Impl():
         descriptionRepository("link_descriptions"),
@@ -52,16 +45,6 @@ LinkManager::LinkManager(QObject* parent):
 {
     d->loadDescriptions();
     d->loadProtocols();
-
-    for (const dto::LinkDescriptionPtr& description: this->descriptions())
-    {
-        QString device = description->parameter(dto::LinkDescription::Device).toString();
-        if (description->type() == dto::LinkDescription::Serial && device.length() > 0)
-        {
-            d->serialPortService->holdDevice(device);
-            d->descriptedDevices[description] = device;
-        }
-    }
 }
 
 LinkManager::~LinkManager()
@@ -69,7 +52,7 @@ LinkManager::~LinkManager()
 
 dto::LinkDescriptionPtr LinkManager::description(int id) const
 {
-    d->descriptionRepository.read(id);
+    return d->descriptionRepository.read(id);
 }
 
 dto::LinkDescriptionPtrList LinkManager::descriptions() const
@@ -92,24 +75,36 @@ bool LinkManager::save(const dto::LinkDescriptionPtr& description)
     bool isNew = description->id() == 0;
     if (!d->descriptionRepository.save(description)) return false;
 
-    emit (isNew ? added(description) : changed(description));
+    emit (isNew ? descriptionAdded(description) : descriptionChanged(description));
+    return true;
 }
 
 bool LinkManager::remove(const dto::LinkDescriptionPtr& description)
 {
-    if (d->descriptionRepository.remove(description)) emit removed(description);
+    if (d->descriptionRepository.remove(description))
+    {
+        emit descriptionRemoved(description);
+        return true;
+    }
+    return false;
 }
 
 bool LinkManager::save(const dto::LinkProtocolPtr& protocol)
 {
     bool isNew = protocol->id() == 0;
-    if (!d->descriptionRepository.save(protocol)) return false;
+    if (!d->protocolRepository.save(protocol)) return false;
 
-    emit (isNew ? added(protocol) : changed(protocol));
+    emit (isNew ? protocolAdded(protocol) : protocolChanged(protocol));
+    return true;
 }
 
 bool LinkManager::remove(const dto::LinkProtocolPtr& protocol)
 {
-    if (d->protocolRepository.remove(protocol)) emit removed(protocol);
+    if (d->protocolRepository.remove(protocol))
+    {
+        emit protocolRemoved(protocol);
+        return true;
+    }
+    return false;
 }
 
