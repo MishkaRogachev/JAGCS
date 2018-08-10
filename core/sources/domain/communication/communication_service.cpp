@@ -17,7 +17,7 @@
 
 #include "serial_ports_service.h"
 
-#include "link_manager.h"
+#include "db_links_repository.h"
 #include "communicator_worker.h"
 
 using namespace domain;
@@ -32,7 +32,7 @@ public:
     QMap<data_source::AbstractCommunicator*, QString> communicatorProtocols;
     QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
 
-    LinkManager linkManager;
+    data_source::ILinksRepository* linksRepository;
     QThread* commThread;
     CommunicatorWorker* commWorker;
 
@@ -71,11 +71,12 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
         }
     });
 
-    connect(&d->linkManager, &LinkManager::descriptionAdded,
+    d->linksRepository = new data_source::DbLinksRepository(this);
+    connect(d->linksRepository, &data_source::ILinksRepository::descriptionAdded,
             this, &CommunicationService::descriptionAdded);
-    connect(&d->linkManager, &LinkManager::descriptionRemoved,
+    connect(d->linksRepository, &data_source::ILinksRepository::descriptionRemoved,
             this, &CommunicationService::descriptionRemoved);
-    connect(&d->linkManager, &LinkManager::descriptionChanged,
+    connect(d->linksRepository, &data_source::ILinksRepository::descriptionChanged,
             this, &CommunicationService::descriptionChanged);
 
     d->commThread = new QThread(this);
@@ -97,7 +98,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     connect(d->commWorker, &CommunicatorWorker::linkErrored,
             this, &CommunicationService::onLinkErrored);
 
-    for (const dto::LinkDescriptionPtr& description: d->linkManager.descriptions())
+    for (const dto::LinkDescriptionPtr& description: d->linksRepository->descriptions())
     {
         data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
         d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
@@ -116,10 +117,10 @@ CommunicationService::~CommunicationService()
     d->commThread->quit();
     d->commThread->wait();
 
-    for (const dto::LinkDescriptionPtr& description: d->linkManager.descriptions())
+    for (const dto::LinkDescriptionPtr& description: d->linksRepository->descriptions())
     {
         description->setAutoConnect(description->isConnected());
-        this->save(description);
+        d->linksRepository->save(description);
 
         if (d->descriptedDevices.contains(description))
         {
@@ -130,12 +131,12 @@ CommunicationService::~CommunicationService()
 
 dto::LinkDescriptionPtr CommunicationService::description(int id) const
 {
-    return d->linkManager.description(id);
+    return d->linksRepository->description(id);
 }
 
 dto::LinkDescriptionPtrList CommunicationService::descriptions() const
 {
-    return d->linkManager.descriptions();
+    return d->linksRepository->descriptions();
 }
 
 dto::LinkStatisticsPtr CommunicationService::statistics(int descriptionId) const
@@ -179,7 +180,7 @@ QStringList CommunicationService::availableProtocols() const
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
 {
-    if (!d->linkManager.save(description)) return false;
+    if (!d->linksRepository->save(description)) return false;
 
     data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
     d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
@@ -202,7 +203,7 @@ bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
 
 bool CommunicationService::remove(const dto::LinkDescriptionPtr& description)
 {
-    if (!d->linkManager.remove(description)) return false;
+    if (!d->linksRepository->remove(description)) return false;
 
     d->commWorker->removeLink(description->id());
 

@@ -1,4 +1,4 @@
-#include "link_manager.h"
+#include "db_links_repository.h"
 
 // Qt
 #include <QDebug>
@@ -9,13 +9,13 @@
 
 #include "generic_repository.h"
 
-using namespace domain;
+using namespace data_source;
 
-class LinkManager::Impl
+class DbLinksRepository::Impl
 {
 public:
-    data_source::GenericRepository<dto::LinkDescription> descriptionRepository;
-    data_source::GenericRepository<dto::LinkProtocol> protocolRepository;
+    GenericRepository<dto::LinkDescription> descriptionRepository;
+    GenericRepository<dto::LinkProtocol> protocolRepository;
 
     Impl():
         descriptionRepository("link_descriptions"),
@@ -39,38 +39,38 @@ public:
     }
 };
 
-LinkManager::LinkManager(QObject* parent):
-    QObject(parent),
+DbLinksRepository::DbLinksRepository(QObject* parent):
+    ILinksRepository(parent),
     d(new Impl())
 {
     d->loadDescriptions();
     d->loadProtocols();
 }
 
-LinkManager::~LinkManager()
+DbLinksRepository::~DbLinksRepository()
 {}
 
-dto::LinkDescriptionPtr LinkManager::description(int id) const
+dto::LinkDescriptionPtr DbLinksRepository::description(int id) const
 {
     return d->descriptionRepository.read(id);
 }
 
-dto::LinkDescriptionPtrList LinkManager::descriptions() const
+dto::LinkDescriptionPtrList DbLinksRepository::descriptions() const
 {
     return d->descriptionRepository.loadedEntities();
 }
 
-dto::LinkProtocolPtr LinkManager::protocol(int id) const
+dto::LinkProtocolPtr DbLinksRepository::protocol(int id) const
 {
     return d->protocolRepository.read(id);
 }
 
-dto::LinkProtocolPtrList LinkManager::protocols() const
+dto::LinkProtocolPtrList DbLinksRepository::protocols() const
 {
     return d->protocolRepository.loadedEntities();
 }
 
-bool LinkManager::save(const dto::LinkDescriptionPtr& description)
+bool DbLinksRepository::save(const dto::LinkDescriptionPtr& description)
 {
     bool isNew = description->id() == 0;
     if (!d->descriptionRepository.save(description)) return false;
@@ -79,7 +79,7 @@ bool LinkManager::save(const dto::LinkDescriptionPtr& description)
     return true;
 }
 
-bool LinkManager::remove(const dto::LinkDescriptionPtr& description)
+bool DbLinksRepository::remove(const dto::LinkDescriptionPtr& description)
 {
     if (d->descriptionRepository.remove(description))
     {
@@ -89,7 +89,7 @@ bool LinkManager::remove(const dto::LinkDescriptionPtr& description)
     return false;
 }
 
-bool LinkManager::save(const dto::LinkProtocolPtr& protocol)
+bool DbLinksRepository::save(const dto::LinkProtocolPtr& protocol)
 {
     bool isNew = protocol->id() == 0;
     if (!d->protocolRepository.save(protocol)) return false;
@@ -98,7 +98,7 @@ bool LinkManager::save(const dto::LinkProtocolPtr& protocol)
     return true;
 }
 
-bool LinkManager::remove(const dto::LinkProtocolPtr& protocol)
+bool DbLinksRepository::remove(const dto::LinkProtocolPtr& protocol)
 {
     if (d->protocolRepository.remove(protocol))
     {
