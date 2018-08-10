@@ -3,14 +3,12 @@
 
 // Qt
 #include <QObject>
-#include <QSqlDatabase>
 
-class QSqlDatabase;
+// Internal
+#include "i_db_plugin.h"
 
-namespace data_source
+namespace domain
 {
-    class DbMigrator;
-
     class DbManager: public QObject
     {
         Q_OBJECT
@@ -18,6 +16,8 @@ namespace data_source
     public:
         explicit DbManager(QObject* parent = nullptr);
         ~DbManager() override;
+
+        static DbManager* instance();
 
         bool open(const QString& dbName);
         bool migrateLastVersion();
@@ -31,6 +31,9 @@ namespace data_source
 
         QStringList dbLog() const;
 
+        void addPlugin(IDbPlugin* plugin);
+        void removePlugin(IDbPlugin* plugin);
+
     private slots:
         void onMigratorMessage(const QString& error);
 
@@ -38,10 +41,13 @@ namespace data_source
         void logChanged(const QStringList& log);
 
     private:
-        QSqlDatabase m_db;
-        DbMigrator* m_migrator;
-        QStringList m_dbLog;
+        class Impl;
+        QScopedPointer<Impl> const d;
+
+        static DbManager* lastCreatedManager;
     };
 }
+
+#define dbManager (domain::DbManager::instance())
 
 #endif // DB_MANAGER_H

@@ -5,21 +5,18 @@
 #include <QSqlError>
 #include <QDebug>
 
+// Internal
+#include "db_migration.h"
+
 using namespace data_source;
 
-DbMigrator::DbMigrator(DbMigrationFactory* factory, QObject* parent):
-    QObject(parent),
-    m_migrations(factory->create())
+DbMigrator::DbMigrator(QObject* parent):
+    QObject(parent)
 {}
-
-DbMigrator::~DbMigrator()
-{
-    while (!m_migrations.isEmpty()) delete m_migrations.takeLast();
-}
 
 bool DbMigrator::migrate(const QDateTime& version)
 {
-    for (DbMigration* migration: m_migrations)
+    for (const DbMigrationPtr& migration: m_migrations)
     {
         if (migration->version() <= m_version) continue;
         if (migration->version() > version) return true;
@@ -40,10 +37,10 @@ bool DbMigrator::migrate(const QDateTime& version)
 
 bool DbMigrator::drop()
 {
-    MigrationList migrations = m_migrations;
+    DbMigrationPtrList migrations = m_migrations;
     std::reverse(migrations.begin(), migrations.end());
 
-    for (DbMigration* migration: migrations)
+    for (const DbMigrationPtr& migration: migrations)
     {
         if (!migration->down())
         {

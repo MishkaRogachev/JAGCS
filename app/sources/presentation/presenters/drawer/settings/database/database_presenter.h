@@ -3,7 +3,6 @@
 
 // Internal
 #include "base_presenter.h"
-#include "db_manager.h"
 
 namespace presentation
 {
@@ -22,9 +21,6 @@ namespace presentation
         void savePath();
         void migrate();
         void tryConnect();
-
-    private:
-        data_source::DbManager m_manager;
     };
 }
 

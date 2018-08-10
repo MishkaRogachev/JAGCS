@@ -7,15 +7,14 @@
 
 // Internal
 #include "settings_provider.h"
+#include "db_manager.h"
 
 using namespace presentation;
 
 DatabasePresenter::DatabasePresenter(QObject* parent):
     BasePresenter(parent)
 {
-    m_manager.clarify();
-
-    connect(&m_manager, &data_source::DbManager::logChanged, this, &DatabasePresenter::updateLog);
+    connect(dbManager, &domain::DbManager::logChanged, this, &DatabasePresenter::updateLog);
 }
 
 void DatabasePresenter::updatePath()
@@ -26,18 +25,18 @@ void DatabasePresenter::updatePath()
 
 void DatabasePresenter::updateConnected()
 {
-    this->setViewProperty(PROPERTY(migration), m_manager.migrationVersion());
-    this->setViewProperty(PROPERTY(connected), m_manager.isOpen());
+    this->setViewProperty(PROPERTY(migration), dbManager->migrationVersion());
+    this->setViewProperty(PROPERTY(connected), dbManager->isOpen());
 }
 
 void DatabasePresenter::updateLog()
 {
-    this->setViewProperty(PROPERTY(log), m_manager.dbLog());
+    this->setViewProperty(PROPERTY(log), dbManager->dbLog());
 }
 
 void DatabasePresenter::clearLog()
 {
-    m_manager.clearLog();
+    dbManager->clearLog();
 }
 
 void DatabasePresenter::savePath()
@@ -61,19 +60,19 @@ void DatabasePresenter::savePath()
 
 void DatabasePresenter::migrate()
 {
-    m_manager.migrateLastVersion();
+    dbManager->migrateLastVersion();
 
     this->updateConnected();
 }
 
 void DatabasePresenter::tryConnect()
 {
-    if (m_manager.isOpen())
+    if (dbManager->isOpen())
     {
         // FIXME: clear DB cache
-        m_manager.close();
+        dbManager->close();
     }
-    m_manager.open(settings::Provider::value(settings::data_base::name).toString());
+    dbManager->open(settings::Provider::value(settings::data_base::name).toString());
 
     this->updateConnected();
 }

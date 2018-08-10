@@ -3,9 +3,10 @@
 
 // Qt
 #include <QObject>
+#include <QDateTime>
 
 // Internal
-#include "db_migration_factory.h"
+#include "db_traits.h"
 
 namespace data_source
 {
@@ -14,8 +15,7 @@ namespace data_source
         Q_OBJECT
 
     public:
-        explicit DbMigrator(DbMigrationFactory* factory, QObject* parent = nullptr);
-        ~DbMigrator() override;
+        explicit DbMigrator(QObject* parent = nullptr);
 
         bool migrate(const QDateTime& version = QDateTime::currentDateTime());
         bool drop();
@@ -33,7 +33,7 @@ namespace data_source
         void setVersion(const QDateTime& version);
 
     private:
-        MigrationList m_migrations;
+        DbMigrationPtrList m_migrations;
         QDateTime m_version;
     };
 }

@@ -14,6 +14,8 @@
 #include "service_registry.h"
 #include "communication_service.h"
 
+#include "db_manager.h"
+
 namespace
 {
     const QString plugins = "plugins";
@@ -95,6 +97,9 @@ void PluginManager::loadPlugin(const QString& plugin)
         auto commPlugin = qobject_cast<domain::ICommunicationPlugin*>(loader->instance());
         if (commPlugin) serviceRegistry->communicationService()->addPlugin(commPlugin);
 
+        auto dbPlugin = qobject_cast<domain::IDbPlugin*>(loader->instance());
+        if (dbPlugin) dbManager->addPlugin(dbPlugin);
+
         d->loadedPlugins.append(plugin);
         emit pluginLoaded(plugin);
     }
@@ -107,6 +112,9 @@ void PluginManager::unloadPlugin(const QString& plugin)
 
     auto commPlugin = qobject_cast<domain::ICommunicationPlugin*>(loader->instance());
     if (commPlugin) serviceRegistry->communicationService()->removePlugin(commPlugin);
+
+    auto dbPlugin = qobject_cast<domain::IDbPlugin*>(loader->instance());
+    if (dbPlugin) dbManager->removePlugin(dbPlugin);
 
     d->discoveredPlugins[plugin]->unload();
     d->loadedPlugins.removeOne(plugin);

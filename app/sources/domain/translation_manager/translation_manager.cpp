@@ -33,6 +33,11 @@ TranslationManager::~TranslationManager()
     {
         delete translator;
     }
+
+    if (TranslationManager::lastCreatedManager == this)
+    {
+        TranslationManager::lastCreatedManager = nullptr;
+    }
 }
 
 TranslationManager* TranslationManager::instance()

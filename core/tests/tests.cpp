@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
-    data_source::DbManager dbManager;
-    if (!dbManager.open("test_db"))
+    domain::DbManager manager;
+    if (!manager.open("test_db"))
     {
         qFatal("Unable to establish DB connection");
         app.quit();
