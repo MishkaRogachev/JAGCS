@@ -28,7 +28,7 @@ bool InitMavlinkMigration::down()
     return true;
 }
 
-QDateTime InitMavlinkMigration::version() const
+QString InitMavlinkMigration::version() const
 {
-    return QDateTime::fromString("2018.08.10-16:28:00", format);
+    return "mavlink_2018.08.10-16:28";
 }

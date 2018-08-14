@@ -6,8 +6,6 @@
 
 using namespace data_source;
 
-const QString DbMigration::format = "yyyy.MM.dd-hh:mm:ss";
-
 DbMigration::DbMigration()
 {}
 
@@ -22,7 +20,7 @@ QString DbMigration::errorSring() const
 bool DbMigration::up()
 {
     if (!m_query.prepare("INSERT INTO schema_versions (version) "
-                         "VALUES (\"" + this->version().toString(format) + "\");") ||
+                         "VALUES (\"" + this->version() + "\");") ||
         !m_query.exec()) return false;
 
     return true;

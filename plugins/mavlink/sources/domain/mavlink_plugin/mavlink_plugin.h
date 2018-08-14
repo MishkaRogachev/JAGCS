@@ -12,8 +12,9 @@ namespace domain
             public IDbPlugin
     {
         Q_OBJECT
-        Q_PLUGIN_METADATA(IID "domain.ICommunicationPlugin" FILE "meta.json")
+        Q_PLUGIN_METADATA(IID "domain.MavlinkPlugin" FILE "meta.json")
         Q_INTERFACES(domain::ICommunicationPlugin)
+        Q_INTERFACES(domain::IDbPlugin)
 
     public:
         explicit MavlinkPlugin(QObject* parent = nullptr);

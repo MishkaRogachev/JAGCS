@@ -1,7 +1,6 @@
 #include "db_manager.h"
 
 // Qt
-#include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
@@ -23,7 +22,6 @@ public:
     QSqlDatabase db;
     data_source::DbMigrator migrator;
     QList<IDbPlugin*> plugins;
-    QStringList dbLog;
 
     Impl():
         db(QSqlDatabase::contains() ? QSqlDatabase::database() :
@@ -38,8 +36,6 @@ DbManager::DbManager(QObject* parent):
     d(new Impl())
 {
     DbManager::lastCreatedManager = this;
-
-    connect(&d->migrator, &data_source::DbMigrator::message, this, &DbManager::onMigratorMessage);
 
     this->addPlugin(new CoreDbPlugin(this));
 }
@@ -57,84 +53,63 @@ DbManager* DbManager::instance()
     return DbManager::lastCreatedManager;
 }
 
-bool DbManager::open(const QString& dbName)
-{
-    QFileInfo file(dbName);
-    bool exist = file.exists();
-
-    d->db.setDatabaseName(dbName);
-    bool ok = d->db.open();
-
-    if (ok && exist)
-    {
-        ok = d->migrator.clarifyVersion();
-    }
-
-    if (!ok)
-    {
-        this->onMigratorMessage(d->db.lastError().text());
-        return false;
-    }
-
-    return d->migrator.migrate();
-}
-
-bool DbManager::migrateLastVersion()
-{
-    return d->migrator.migrate();
-}
-
-bool DbManager::drop()
-{
-    this->close();
-    return d->migrator.drop();
-}
-
-void DbManager::clarify()
-{
-    d->migrator.clarifyVersion();
-}
-
-void DbManager::close()
-{
-    d->migrator.reset();
-    d->db.close();
-}
-
-void DbManager::clearLog()
-{
-    d->dbLog.clear();
-    emit logChanged(d->dbLog);
-}
-
 bool DbManager::isOpen() const
 {
     return d->db.isOpen();
 }
 
-QDateTime DbManager::migrationVersion() const
+bool DbManager::open(const QString& dbName)
 {
-    return d->migrator.version();
+    d->db.setDatabaseName(dbName);
+    if (!d->db.open()) return false;
+
+    for (IDbPlugin* plugin: d->plugins)
+    {
+        qDebug() << "addPlugin" << plugin;
+        d->migrator.addMigrations(plugin->migrations());
+    }
+
+    return true;
 }
 
-void DbManager::onMigratorMessage(const QString& error)
+void DbManager::dropDatabase()
 {
-    qDebug() << "DB:" << error;
-    d->dbLog << error;
-    emit logChanged(d->dbLog);
+    d->migrator.removeAll();
+
+    this->closeConnection();
 }
 
-QStringList DbManager::dbLog() const
+QStringList DbManager::migrationVersions() const
 {
-    return d->dbLog;
+    return d->migrator.versions();
+}
+
+void DbManager::checkMissing()
+{
+    return d->migrator.checkMissing();
+}
+
+void DbManager::clarifyVersions()
+{
+    d->migrator.clarifyVersions();
+}
+
+void DbManager::closeConnection()
+{
+    d->db.close();
 }
 
 void DbManager::addPlugin(IDbPlugin* plugin)
 {
-    d->migrator.migrate(plugin->migrations());
+    qDebug() << "addPlugin" << plugin;
+    d->plugins.append(plugin);
+    if (d->db.isOpen()) d->migrator.addMigrations(plugin->migrations());
 }
 
-void DbManager::removePlugin(IDbPlugin* plugin)
+void DbManager::removePlugin(IDbPlugin* plugin, bool dropMigrations)
 {
-    d->migrator.drop(plugin->migrations());
+    qDebug() << "removePlugin" << plugin;
+
+    d->plugins.removeOne(plugin);
+    if (d->db.isOpen()) d->migrator.removeMigrations(plugin->migrations(), dropMigrations);
 }

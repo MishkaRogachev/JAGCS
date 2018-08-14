@@ -1,6 +1,7 @@
 #include "db_migrator.h"
 
 // Qt
+#include <QMap>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
@@ -10,100 +11,99 @@
 
 using namespace data_source;
 
+class DbMigrator::Impl
+{
+public:
+    QMap<QString, DbMigrationPtr> migrations;
+    QStringList versions;
+};
+
 DbMigrator::DbMigrator(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    d(new Impl())
 {}
 
-bool DbMigrator::migrate(const QDateTime& version)
+DbMigrator::~DbMigrator()
+{}
+
+QStringList DbMigrator::versions() const
 {
-    for (const DbMigrationPtr& migration: m_migrations)
-    {
-        if (migration->version() <= m_version) continue;
-        if (migration->version() > version) return true;
-
-        if (!migration->up())
-        {
-            emit message(tr("Migrate error: version: %1, error: %2").arg(
-                           migration->version().toString(migration->format)).arg(
-                           migration->errorSring()));
-            return false;
-        } // TODO: rollback
-        this->setVersion(migration->version());
-    }
-
-    emit message(tr("Migration version: %1").arg(m_version.toString(DbMigration::format)));
-    return true;
+    return d->versions;
 }
 
-bool DbMigrator::drop()
+void DbMigrator::checkMissing()
 {
-    DbMigrationPtrList migrations = m_migrations;
-    std::reverse(migrations.begin(), migrations.end());
+    for (const QString& version: d->migrations.keys())
+    {
+        if (d->versions.contains(version)) continue;
 
+        DbMigrationPtr migration = d->migrations[version];
+        if (migration->up()) continue;
+
+        emit error(tr("Migration %1 up failed: %2").arg(version).arg(migration->errorSring()));
+    }
+
+    this->clarifyVersions();
+}
+
+void DbMigrator::addMigrations(const DbMigrationPtrList& migrations)
+{
     for (const DbMigrationPtr& migration: migrations)
     {
-        if (!migration->down())
-        {
-            emit message(tr("Drop migration error: version: %1, error: %2").arg(
-                           migration->version().toString(migration->format)).arg(
-                           migration->errorSring()));
-            return false;
-        } // TODO: rollback
+        if (d->versions.contains(migration->version())) continue;
 
-        this->setVersion(migration->version());
+        qDebug() << "insert migration" << migration->version();
+        d->migrations.insert(migration->version(), migration);
     }
 
-    return true;
+    this->checkMissing();
 }
 
-bool DbMigrator::clarifyVersion()
+void DbMigrator::removeMigrations(const DbMigrationPtrList& migrations, bool drop)
 {
+    for (const DbMigrationPtr& migration: migrations)
+    {
+        QString version = d->migrations.key(migration);
+        if (version.isEmpty()) continue;
+
+        qDebug() << "remove migration" << migration->version();
+        if (drop)
+        {
+            qDebug() << "drop migration" << migration->version();
+            if (!migration->down()) emit error(tr("Migration %1 down failed: %2").arg(
+                                                   version).arg(migration->errorSring()));
+        }
+
+        d->migrations.remove(version);
+    }
+
+    this->clarifyVersions();
+}
+
+void DbMigrator::removeAll()
+{
+    this->removeMigrations(d->migrations.values(), false);
+}
+
+void DbMigrator::clarifyVersions()
+{
+    d->versions.clear();
+
     QSqlQuery query;
-    if (query.exec("SELECT version FROM schema_versions ORDER BY version DESC LIMIT 1") &&
-        query.next())
+    if (!query.exec("SELECT version FROM schema_versions ORDER BY version"))
+    {
+        emit error(tr("Error: ") + query.lastError().text());
+        return;
+    }
+
+    while (query.next())
     {
         QString versionString = query.value("version").toString();
-        if (versionString.isEmpty()) return false;
-        QDateTime version = QDateTime::fromString(versionString, DbMigration::format);
+        if (versionString.isEmpty()) continue;
 
-        emit message(tr("Clarify version: ") + versionString);
-        this->setVersion(version);
+        d->versions.append(versionString);
     }
-    else
-    {
-        emit message(tr("Error: ") + query.lastError().text());
-        return false;
-    }
-    return true;
 }
 
-void DbMigrator::reset()
-{
-    m_version = QDateTime();
-    emit versionChanged(m_version);
 
-    emit message(tr("Reset migrations"));
-}
 
-void DbMigrator::setVersion(const QDateTime& version)
-{
-    if (m_version.isNull())
-    {
-        emit message(tr("Establish migration %1").
-                     arg(version.toString(DbMigration::format)));
-    }
-    else
-    {
-        emit message(tr("Migrate from %1 to %2").
-                     arg(m_version.toString(DbMigration::format)).
-                     arg(version.toString(DbMigration::format)));
-    }
-
-    m_version = version;
-    emit versionChanged(version);
-}
-
-QDateTime DbMigrator::version() const
-{
-    return m_version;
-}

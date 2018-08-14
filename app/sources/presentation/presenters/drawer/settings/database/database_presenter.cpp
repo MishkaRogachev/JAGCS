@@ -13,9 +13,7 @@ using namespace presentation;
 
 DatabasePresenter::DatabasePresenter(QObject* parent):
     BasePresenter(parent)
-{
-    connect(dbManager, &domain::DbManager::logChanged, this, &DatabasePresenter::updateLog);
-}
+{}
 
 void DatabasePresenter::updatePath()
 {
@@ -25,18 +23,8 @@ void DatabasePresenter::updatePath()
 
 void DatabasePresenter::updateConnected()
 {
-    this->setViewProperty(PROPERTY(migration), dbManager->migrationVersion());
+    //this->setViewProperty(PROPERTY(migration), dbManager->migrationVersion());
     this->setViewProperty(PROPERTY(connected), dbManager->isOpen());
-}
-
-void DatabasePresenter::updateLog()
-{
-    this->setViewProperty(PROPERTY(log), dbManager->dbLog());
-}
-
-void DatabasePresenter::clearLog()
-{
-    dbManager->clearLog();
 }
 
 void DatabasePresenter::savePath()
@@ -60,7 +48,7 @@ void DatabasePresenter::savePath()
 
 void DatabasePresenter::migrate()
 {
-    dbManager->migrateLastVersion();
+    dbManager->checkMissing();
 
     this->updateConnected();
 }
@@ -70,7 +58,7 @@ void DatabasePresenter::tryConnect()
     if (dbManager->isOpen())
     {
         // FIXME: clear DB cache
-        dbManager->close();
+        dbManager->closeConnection();
     }
     dbManager->open(settings::Provider::value(settings::data_base::name).toString());
 

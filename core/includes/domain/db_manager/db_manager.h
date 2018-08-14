@@ -19,26 +19,17 @@ namespace domain
 
         static DbManager* instance();
 
-        bool open(const QString& dbName);
-        bool migrateLastVersion();
-        bool drop();
-        void clarify();
-        void close();
-        void clearLog();
-
         bool isOpen() const;
-        QDateTime migrationVersion() const;
+        bool open(const QString& dbName);
+        QStringList migrationVersions() const;
 
-        QStringList dbLog() const;
-
+    public slots:
+        void dropDatabase();
+        void checkMissing();
+        void clarifyVersions();
+        void closeConnection();
         void addPlugin(IDbPlugin* plugin);
-        void removePlugin(IDbPlugin* plugin);
-
-    private slots:
-        void onMigratorMessage(const QString& error);
-
-    signals:
-        void logChanged(const QStringList& log);
+        void removePlugin(IDbPlugin* plugin, bool dropMigrations = false);
 
     private:
         class Impl;

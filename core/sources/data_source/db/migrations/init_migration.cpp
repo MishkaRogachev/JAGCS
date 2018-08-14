@@ -80,7 +80,7 @@ bool InitMigration::down()
     return true;
 }
 
-QDateTime InitMigration::version() const
+QString InitMigration::version() const
 {
-    return QDateTime::fromString("2018.08.07-09:37:45", format);
+    return "core_2018.08.07-09:37";
 }

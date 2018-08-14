@@ -11,7 +11,7 @@ namespace data_source
         bool up() override;
         bool down() override;
 
-        QDateTime version() const override;
+        QString version() const override;
     };
 }
 

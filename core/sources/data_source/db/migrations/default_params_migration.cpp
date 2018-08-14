@@ -36,7 +36,7 @@ bool DefaultParamsMigration::down()
     return true;
 }
 
-QDateTime DefaultParamsMigration::version() const
+QString DefaultParamsMigration::version() const
 {
-    return QDateTime::fromString("2018.08.07-09:38:00", format);
+    return "core_2018.08.07-09:38";
 }

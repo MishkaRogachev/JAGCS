@@ -3,7 +3,6 @@
 
 // Qt
 #include <QObject>
-#include <QDateTime>
 
 // Internal
 #include "db_traits.h"
@@ -16,25 +15,23 @@ namespace data_source
 
     public:
         explicit DbMigrator(QObject* parent = nullptr);
+        ~DbMigrator() override;
 
-        bool migrate(const QDateTime& version = QDateTime::currentDateTime());
-        bool drop();
-        bool clarifyVersion();
+        QStringList versions() const;
 
-        void reset();
-
-        QDateTime version() const;
+    public slots:
+        void checkMissing();
+        void addMigrations(const DbMigrationPtrList& migrations);
+        void removeMigrations(const DbMigrationPtrList& migrations, bool drop = false);
+        void removeAll();
+        void clarifyVersions();
 
     signals:
-        void versionChanged(QDateTime version);
-        void message(const QString& message);
-
-    private slots:
-        void setVersion(const QDateTime& version);
+        void error(const QString& error);
 
     private:
-        DbMigrationPtrList m_migrations;
-        QDateTime m_version;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 
