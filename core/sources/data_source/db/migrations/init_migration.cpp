@@ -5,7 +5,7 @@
 
 using namespace data_source;
 
-bool InitMigration::up()
+bool InitMigration::upImpl()
 {
     if (!m_query.prepare("PRAGMA FOREIGN_KEYS=ON;") || !m_query.exec()) return false;
 
@@ -63,10 +63,10 @@ bool InitMigration::up()
                          "source STRING)") ||
         !m_query.exec()) return false;
 
-    return DbMigration::up();
+    return AbstractMigration::upImpl();
 }
 
-bool InitMigration::down()
+bool InitMigration::downImpl()
 {
     if (!m_query.prepare("DROP TABLE video_sources") || !m_query.exec()) return false;
     if (!m_query.prepare("DROP TABLE mission_assignments") || !m_query.exec()) return false;
@@ -82,5 +82,5 @@ bool InitMigration::down()
 
 QString InitMigration::version() const
 {
-    return "core_2018.08.07-09:37";
+    return "core_2018.08.07-09:37_init";
 }

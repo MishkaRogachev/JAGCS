@@ -9,7 +9,7 @@
 
 using namespace data_source;
 
-bool DefaultParamsMigration::up()
+bool DefaultParamsMigration::upImpl()
 {
     if (!m_query.prepare(QString("INSERT INTO vehicles (mavId, name, type) "
                                  "VALUES (1, \'%1\', 1)").arg(
@@ -26,10 +26,10 @@ bool DefaultParamsMigration::up()
                                  "/" + settings::vehicle::instruments::hsi +
                                  "/" + settings::visibility, true);
 
-    return DbMigration::up();
+    return AbstractMigration::upImpl();
 }
 
-bool DefaultParamsMigration::down()
+bool DefaultParamsMigration::downImpl()
 {
     // No need to drop default values
 
@@ -38,5 +38,5 @@ bool DefaultParamsMigration::down()
 
 QString DefaultParamsMigration::version() const
 {
-    return "core_2018.08.07-09:38";
+    return "core_2018.08.07-09:38_default_params";
 }

@@ -7,7 +7,7 @@
 #include <QDebug>
 
 // Internal
-#include "db_migration.h"
+#include "abstract_migration.h"
 
 using namespace data_source;
 
@@ -16,11 +16,16 @@ class DbMigrator::Impl
 public:
     QMap<QString, DbMigrationPtr> migrations;
     QStringList versions;
+    QSqlDatabase& db;
+
+    Impl(QSqlDatabase& db):
+        db(db)
+    {}
 };
 
-DbMigrator::DbMigrator(QObject* parent):
+DbMigrator::DbMigrator(QSqlDatabase& db, QObject* parent):
     QObject(parent),
-    d(new Impl())
+    d(new Impl(db))
 {}
 
 DbMigrator::~DbMigrator()
@@ -37,9 +42,16 @@ void DbMigrator::checkMissing()
     {
         if (d->versions.contains(version)) continue;
 
-        DbMigrationPtr migration = d->migrations[version];
-        if (migration->up()) continue;
+        d->db.transaction();
 
+        DbMigrationPtr migration = d->migrations[version];
+        if (migration->up())
+        {
+            d->db.commit();
+            continue;
+        }
+
+        d->db.rollback();
         emit error(tr("Migration %1 up failed: %2").arg(version).arg(migration->errorSring()));
     }
 
@@ -50,7 +62,7 @@ void DbMigrator::addMigrations(const DbMigrationPtrList& migrations)
 {
     for (const DbMigrationPtr& migration: migrations)
     {
-        if (d->versions.contains(migration->version())) continue;
+        if (d->migrations.contains(migration->version())) continue;
 
         qDebug() << "insert migration" << migration->version();
         d->migrations.insert(migration->version(), migration);
@@ -70,8 +82,18 @@ void DbMigrator::removeMigrations(const DbMigrationPtrList& migrations, bool dro
         if (drop)
         {
             qDebug() << "drop migration" << migration->version();
-            if (!migration->down()) emit error(tr("Migration %1 down failed: %2").arg(
+            d->db.transaction();
+
+            if (migration->down())
+            {
+                d->db.commit();
+            }
+            else
+            {
+                d->db.rollback();
+                emit error(tr("Migration %1 down failed: %2").arg(
                                                    version).arg(migration->errorSring()));
+            }
         }
 
         d->migrations.remove(version);

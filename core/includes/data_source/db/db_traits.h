@@ -7,9 +7,9 @@
 
 namespace data_source
 {
-    class DbMigration;
+    class AbstractMigration;
 
-    using DbMigrationPtr = QSharedPointer<DbMigration>;
+    using DbMigrationPtr = QSharedPointer<AbstractMigration>;
     using DbMigrationPtrList = QList<DbMigrationPtr>;
 }
 

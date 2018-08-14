@@ -1,15 +1,15 @@
 #ifndef DEFAULT_PARAMS_MIGRATION_H
 #define DEFAULT_PARAMS_MIGRATION_H
 
-#include "db_migration.h"
+#include "abstract_migration.h"
 
 namespace data_source
 {
-    class InitMavlinkMigration: public DbMigration
+    class InitMavlinkMigration: public AbstractMigration
     {
     public:
-        bool up() override;
-        bool down() override;
+        bool upImpl() override;
+        bool downImpl() override;
 
         QString version() const override;
     };

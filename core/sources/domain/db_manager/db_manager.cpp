@@ -9,6 +9,8 @@
 #include "db_migrator.h"
 #include "core_db_plugin.h"
 
+#include "notification_bus.h"
+
 namespace
 {
     const QString connectionType = "QSQLITE";
@@ -25,7 +27,8 @@ public:
 
     Impl():
         db(QSqlDatabase::contains() ? QSqlDatabase::database() :
-                                      QSqlDatabase::addDatabase(::connectionType))
+                                      QSqlDatabase::addDatabase(::connectionType)),
+        migrator(db)
     {}
 };
 
@@ -36,6 +39,10 @@ DbManager::DbManager(QObject* parent):
     d(new Impl())
 {
     DbManager::lastCreatedManager = this;
+
+    connect(&d->migrator, &data_source::DbMigrator::error, [=](const QString& error) {
+        qDebug() << "DB error" << error;
+    });
 
     this->addPlugin(new CoreDbPlugin(this));
 }
@@ -102,6 +109,7 @@ void DbManager::closeConnection()
 void DbManager::addPlugin(IDbPlugin* plugin)
 {
     qDebug() << "addPlugin" << plugin;
+
     d->plugins.append(plugin);
     if (d->db.isOpen()) d->migrator.addMigrations(plugin->migrations());
 }

@@ -7,6 +7,8 @@
 // Internal
 #include "db_traits.h"
 
+class QSqlDatabase;
+
 namespace data_source
 {
     class DbMigrator: public QObject
@@ -14,7 +16,7 @@ namespace data_source
         Q_OBJECT
 
     public:
-        explicit DbMigrator(QObject* parent = nullptr);
+        DbMigrator(QSqlDatabase& db, QObject* parent = nullptr);
         ~DbMigrator() override;
 
         QStringList versions() const;

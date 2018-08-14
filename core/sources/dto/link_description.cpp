@@ -6,8 +6,8 @@
 
 namespace
 {
-    const QString paramSeparator = "\\;";
-    const QString valueSeparator = "\\:";
+    const QString paramSeparator = "|";
+    const QString valueSeparator = "=";
 }
 
 using namespace dto;
