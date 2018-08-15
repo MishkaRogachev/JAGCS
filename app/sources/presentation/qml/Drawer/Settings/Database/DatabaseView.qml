@@ -9,9 +9,7 @@ ColumnLayout {
     id: database
 
     property bool changed: false
-    property string migration
-    property bool connected: false
-    property var log: []
+    property var migrations: []
 
     property alias path: pathField.text
 
@@ -22,8 +20,7 @@ ColumnLayout {
         view: database
         Component.onCompleted: {
             updatePath();
-            updateLog();
-            updateConnected();
+            updateMigrations();
         }
     }
 
@@ -52,8 +49,20 @@ ColumnLayout {
         }
     }
 
-    Controls.Label {
-        text: qsTr("Migration") + ": " + migration
+    RowLayout {
+        spacing: sizings.spacing
+
+        Controls.Label {
+            text: qsTr("Migrations")
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            iconSource: "qrc:/icons/refresh.svg"
+            tipText: qsTr("Update migrations")
+            flat: true
+            onClicked: presenter.updateMigrations()
+        }
     }
 
     Controls.Frame {
@@ -75,55 +84,23 @@ ColumnLayout {
                 spacing: sizings.spacing
 
                 Controls.Label {
-                    text: qsTr("No records")
+                    text: qsTr("No migrations")
                     horizontalAlignment: Qt.AlignHCenter
-                    visible: log.length == 0
+                    visible: migrations.length == 0
                     Layout.fillWidth: true
                 }
 
                 Repeater {
-                    model: log
+                    model: migrations
 
                     Controls.Label {
                         text: modelData
-                        horizontalAlignment: Qt.AlignHCenter
                         wrapMode: Text.WordWrap
+                        font.pixelSize: sizings.secondaryFontSize
                         Layout.fillWidth: true
                     }
                 }
             }
-        }
-    }
-
-    Controls.Button {
-        text: qsTr("Clear DB log")
-        iconSource: "qrc:/icons/remove.svg"
-        onClicked: presenter.clearLog()
-        enabled: log.length > 0
-        Layout.fillWidth: true
-        Layout.leftMargin: sizings.padding
-        Layout.rightMargin: sizings.padding
-    }
-
-    RowLayout {
-        spacing: sizings.spacing
-        Layout.fillWidth: true
-        Layout.leftMargin: sizings.padding
-        Layout.rightMargin: sizings.padding
-
-        Controls.Button {
-            text: qsTr("Migrate")
-            iconSource: "qrc:/icons/right.svg"
-            onClicked: presenter.migrate()
-            Layout.fillWidth: true
-        }
-
-        Controls.Button {
-            text: connected ? qsTr("Reconnect") : qsTr("Connect")
-            iconSource: "qrc:/icons/connect.svg"
-            onClicked: presenter.tryConnect()
-            enabled: !changed
-            Layout.fillWidth: true
         }
     }
 }

@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>InitMavlinkMigration</name>
+    <message>
+        <location filename="../sources/data_source/db/migrations/init_mavlink_migration.cpp" line="18"/>
+        <source>MAVLink communication protocol</source>
+        <translation>Протокол связи MAVLink</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/migrations/init_mavlink_migration.cpp" line="24"/>
+        <source>Serial Link</source>
+        <translation>Послед. Связь</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/migrations/init_mavlink_migration.cpp" line="30"/>
+        <source>UDP Link</source>
+        <translation>UDP Связь</translation>
+    </message>
+</context>
+<context>
     <name>MissionHandler</name>
     <message>
         <location filename="../sources/data_source/handlers/mission/mission_handler.cpp" line="64"/>

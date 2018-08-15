@@ -148,58 +148,58 @@
 <context>
     <name>CommunicationService</name>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="217"/>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="262"/>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="272"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="237"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="264"/>
         <source>Link</source>
         <translation>Связь</translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="218"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="238"/>
         <source>Connection established</source>
         <translation>Соединение установлено</translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="218"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="238"/>
         <source>Connection lost</source>
         <translation>Потеря связи</translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="258"/>
         <source>Unknown</source>
-        <translation>Неизвестно</translation>
+        <translation type="vanished">Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="259"/>
         <source>Switched on MAVLINK v.1</source>
-        <translation>Переключена на MAVLINK v.1</translation>
+        <translation type="vanished">Переключена на MAVLINK v.1</translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="260"/>
         <source>Switched on MAVLINK v.2</source>
-        <translation>Переключена на MAVLINK v.2</translation>
+        <translation type="vanished">Переключена на MAVLINK v.2</translation>
+    </message>
+</context>
+<context>
+    <name>DbManager</name>
+    <message>
+        <location filename="../sources/domain/db_manager/db_manager.cpp" line="45"/>
+        <source>DB</source>
+        <translation>БД</translation>
     </message>
 </context>
 <context>
     <name>DefaultParamsMigration</name>
     <message>
-        <location filename="../sources/data_source/db_manager/migrations/alter_link_description_migration.cpp" line="32"/>
-        <location filename="../sources/data_source/db_manager/migrations/default_params_migration.cpp" line="26"/>
         <source>UDP Link</source>
-        <translation>UDP Связь</translation>
+        <translation type="vanished">UDP Связь</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/migrations/alter_link_description_migration.cpp" line="40"/>
         <source>Radiomodem</source>
-        <translation>Радиомодем</translation>
+        <translation type="vanished">Радиомодем</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/migrations/default_params_migration.cpp" line="34"/>
         <source>Serial Link</source>
-        <translation>Послед. связь</translation>
+        <translation type="vanished">Послед. связь</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/migrations/default_params_migration.cpp" line="44"/>
+        <location filename="../sources/data_source/db/migrations/default_params_migration.cpp" line="16"/>
         <source>MAV 1</source>
         <translation>БЛА 1</translation>
     </message>
@@ -311,39 +311,63 @@
 <context>
     <name>data_source::DbMigrator</name>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="29"/>
         <source>Migrate error: version: %1, error: %2</source>
-        <translation>Ошибка миграции версии %1, ошибка: %2</translation>
+        <translation type="vanished">Ошибка миграции версии %1, ошибка: %2</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="37"/>
         <source>Migration version: %1</source>
-        <translation>Версия миграции: %1</translation>
+        <translation type="vanished">Версия миграции: %1</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="50"/>
         <source>Drop migration error: version: %1, error: %2</source>
-        <translation>Ошибка отката миграции версии %1, ошибка: %2</translation>
+        <translation type="vanished">Ошибка отката миграции версии %1, ошибка: %2</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="77"/>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="54"/>
+        <source>Migration %1 up failed: %2</source>
+        <translation>Миграция %1 вверх провалилась: %2</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="90"/>
+        <source>Migration %1 down failed: %2</source>
+        <translation>Миграция %1 вниз провалилась: %2</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="114"/>
         <source>Error: </source>
         <translation>Ошибка: </translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="88"/>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="131"/>
+        <source>Commit %1 error</source>
+        <translation>Ошибка коммита %1</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="136"/>
+        <source>Rollback %1 %2</source>
+        <translation>Откат %1 %2</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="136"/>
+        <source>succeed</source>
+        <translation>успешно</translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="136"/>
+        <source>failed</source>
+        <translation>с ошибкой</translation>
+    </message>
+    <message>
         <source>Reset migrations</source>
-        <translation>Сброс миграций</translation>
+        <translation type="vanished">Сброс миграций</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="95"/>
         <source>Establish migration %1</source>
-        <translation>Установлена миграция %1</translation>
+        <translation type="vanished">Установлена миграция %1</translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="100"/>
         <source>Migrate from %1 to %2</source>
-        <translation>Миграция с версии %1 на %2</translation>
+        <translation type="vanished">Миграция с версии %1 на %2</translation>
     </message>
 </context>
 </TS>

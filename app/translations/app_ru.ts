@@ -118,49 +118,58 @@
 <context>
     <name>DatabaseView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="43"/>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="40"/>
         <source>Enter filepath</source>
         <translation>Введите путь к файлу</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="42"/>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="56"/>
+        <source>Migrations</source>
+        <translation>Миграции</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="62"/>
+        <source>Update migrations</source>
+        <translation>Обновить миграции</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="87"/>
+        <source>No migrations</source>
+        <translation>Нет миграций</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="39"/>
         <source>SQLite data base file</source>
         <translation>Файл базы данных SQLite</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="56"/>
         <source>Migration</source>
-        <translation>Миграция</translation>
+        <translation type="vanished">Миграция</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="78"/>
         <source>No records</source>
-        <translation>Нет записей</translation>
+        <translation type="vanished">Нет записей</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="99"/>
         <source>Clear DB log</source>
-        <translation>Очистить журнал БД</translation>
+        <translation type="vanished">Очистить журнал БД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="28"/>
         <source>Application will be restarted</source>
         <translation>Приложение будет перезапущено</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="115"/>
         <source>Migrate</source>
-        <translation>Мигрировать</translation>
+        <translation type="vanished">Мигрировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="122"/>
         <source>Reconnect</source>
-        <translation>Переподключить</translation>
+        <translation type="vanished">Переподключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="122"/>
         <source>Connect</source>
-        <translation>Подключить</translation>
+        <translation type="vanished">Подключить</translation>
     </message>
 </context>
 <context>
@@ -222,7 +231,7 @@
 <context>
     <name>EndpointView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/EndpointView.qml" line="48"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/EndpointView.qml" line="50"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -1066,9 +1075,13 @@
 <context>
     <name>PluginsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Plugins/PluginsView.qml" line="11"/>
         <source>Plugins</source>
-        <translation>Модули</translation>
+        <translation type="vanished">Модули</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Plugins/PluginsView.qml" line="26"/>
+        <source>Refresh plugins</source>
+        <translation>Обновить плагины</translation>
     </message>
 </context>
 <context>
@@ -1526,6 +1539,286 @@
     </message>
 </context>
 <context>
+    <name>domain::TranslationHelper</name>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="19"/>
+        <source>Home</source>
+        <translation>Дом</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="20"/>
+        <source>Takeoff</source>
+        <translation>Взлёт</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="21"/>
+        <source>Waypoint</source>
+        <translation>Путевая точка</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="22"/>
+        <source>Loiter unlim.</source>
+        <translation>Браж. безлим.</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="23"/>
+        <source>Loiter alt.</source>
+        <translation>Браж. до выс.</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="24"/>
+        <source>Loiter turns</source>
+        <translation>Браж. оборотов</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="25"/>
+        <source>Loiter time</source>
+        <translation>Браж. время</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="26"/>
+        <source>Continue</source>
+        <translation>Продление</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="27"/>
+        <source>Return</source>
+        <translation>Возврат</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="28"/>
+        <source>Landing</source>
+        <translation>Посадка</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="29"/>
+        <source>Set speed</source>
+        <translation>Зад. скорость</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="31"/>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="105"/>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="39"/>
+        <source>Auto</source>
+        <translation>Авто</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="40"/>
+        <source>Fixed wing</source>
+        <translation>Самолёт</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="41"/>
+        <source>Flying wing</source>
+        <translation>Летающее крыло</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="42"/>
+        <source>Quadcopter</source>
+        <translation>Квадрокоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="43"/>
+        <source>Tricopter</source>
+        <translation>Трикоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="44"/>
+        <source>Hexcopter</source>
+        <translation>Гексакоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="45"/>
+        <source>Octocopter</source>
+        <translation>Октокоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="46"/>
+        <source>Helicopter</source>
+        <translation>Вертолёт</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="47"/>
+        <source>Coaxial</source>
+        <translation>Соосный вертолет</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="48"/>
+        <source>Vtol</source>
+        <translation>СВВП</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="49"/>
+        <source>Airship</source>
+        <translation>Дирижабль</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="50"/>
+        <source>Kite</source>
+        <translation>Воздушный змей</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="51"/>
+        <source>Ornithopter</source>
+        <translation>Орнитоптер</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="53"/>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="120"/>
+        <source>Unknown</source>
+        <translation>Неизвестно</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="81"/>
+        <source>ACRO</source>
+        <translation>АКРО</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="82"/>
+        <source>AUTOTUN</source>
+        <translation>АВТОТЮН</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="83"/>
+        <source>AVOID</source>
+        <translation>УКЛОН</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="84"/>
+        <source>CIRCLE</source>
+        <translation>КРУГ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="85"/>
+        <source>CRUISE</source>
+        <translation>КРУИЗ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="86"/>
+        <source>FBWA</source>
+        <translation>ЭДСУ А</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="87"/>
+        <source>FBWB</source>
+        <translation>ЭДСУ Б</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="88"/>
+        <source>RATT</source>
+        <translation>RATT</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="89"/>
+        <source>POS CTRL</source>
+        <translation>КОНТР ПОЛ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="90"/>
+        <source>ALT CTRL</source>
+        <translation>КОНТР ВЫс</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="91"/>
+        <source>ALT HOLD</source>
+        <translation>УДЕР ВЫС</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="92"/>
+        <source>FOLLOW</source>
+        <translation>СЛЕДОВ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="93"/>
+        <source>NAV TO</source>
+        <translation>НАВИГАЦИЯ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="94"/>
+        <source>HOLD</source>
+        <translation>УДЕРЖ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="95"/>
+        <source>INIT</source>
+        <translation>ИНИЦ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="96"/>
+        <source>LAND</source>
+        <translation>ПОСАД</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="97"/>
+        <source>LOITER</source>
+        <translation>БРАЖИР</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="98"/>
+        <source>MANUAL</source>
+        <translation>РУЧНОЙ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="99"/>
+        <source>MISSION</source>
+        <translation>МАРШРУТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="100"/>
+        <source>RETURN</source>
+        <translation>ВОЗВРАТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="101"/>
+        <source>STAB</source>
+        <translation>СТАБ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="102"/>
+        <source>TAKEOFF</source>
+        <translation>ВЗЛЁТ</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="103"/>
+        <source>THROW</source>
+        <translation>БРОСОК</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="113"/>
+        <source>Active</source>
+        <translation>Активный</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="114"/>
+        <source>Boot</source>
+        <translation>Загрузка</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="115"/>
+        <source>Calibrating</source>
+        <translation>Калибровка</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="116"/>
+        <source>Critical</source>
+        <translation>Критический</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="117"/>
+        <source>Emergency</source>
+        <translation>Аварийный</translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="118"/>
+        <source>Standby</source>
+        <translation>Ожидание</translation>
+    </message>
+</context>
+<context>
     <name>presentation::DrawerPresenter</name>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
@@ -1688,281 +1981,224 @@
 <context>
     <name>presentation::TranslationHelper</name>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="19"/>
         <source>Home</source>
-        <translation>Дом</translation>
+        <translation type="vanished">Дом</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="20"/>
         <source>Takeoff</source>
-        <translation>Взлёт</translation>
+        <translation type="vanished">Взлёт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="21"/>
         <source>Waypoint</source>
-        <translation>Путевая точка</translation>
+        <translation type="vanished">Путевая точка</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="22"/>
         <source>Loiter unlim.</source>
-        <translation>Браж. безлим.</translation>
+        <translation type="vanished">Браж. безлим.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="23"/>
         <source>Loiter alt.</source>
-        <translation>Браж. до выс.</translation>
+        <translation type="vanished">Браж. до выс.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="24"/>
         <source>Loiter turns</source>
-        <translation>Браж. оборотов</translation>
+        <translation type="vanished">Браж. оборотов</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="25"/>
         <source>Loiter time</source>
-        <translation>Браж. время</translation>
+        <translation type="vanished">Браж. время</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="26"/>
         <source>Continue</source>
-        <translation>Продление</translation>
+        <translation type="vanished">Продление</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="27"/>
         <source>Return</source>
-        <translation>Возврат</translation>
+        <translation type="vanished">Возврат</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="28"/>
         <source>Landing</source>
-        <translation>Посадка</translation>
+        <translation type="vanished">Посадка</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="29"/>
         <source>Set speed</source>
-        <translation>Зад. скорость</translation>
+        <translation type="vanished">Зад. скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="31"/>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="105"/>
         <source>None</source>
-        <translation>Нет</translation>
+        <translation type="vanished">Нет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="39"/>
         <source>Auto</source>
-        <translation>Авто</translation>
+        <translation type="vanished">Авто</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="40"/>
         <source>Fixed wing</source>
-        <translation>Самолёт</translation>
+        <translation type="vanished">Самолёт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="41"/>
         <source>Flying wing</source>
-        <translation>Летающее крыло</translation>
+        <translation type="vanished">Летающее крыло</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="42"/>
         <source>Quadcopter</source>
-        <translation>Квадрокоптер</translation>
+        <translation type="vanished">Квадрокоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="43"/>
         <source>Tricopter</source>
-        <translation>Трикоптер</translation>
+        <translation type="vanished">Трикоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="44"/>
         <source>Hexcopter</source>
-        <translation>Гексакоптер</translation>
+        <translation type="vanished">Гексакоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="45"/>
         <source>Octocopter</source>
-        <translation>Октокоптер</translation>
+        <translation type="vanished">Октокоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="46"/>
         <source>Helicopter</source>
-        <translation>Вертолёт</translation>
+        <translation type="vanished">Вертолёт</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="47"/>
         <source>Coaxial</source>
-        <translation>Соосный вертолет</translation>
+        <translation type="vanished">Соосный вертолет</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="48"/>
         <source>Vtol</source>
-        <translation>СВВП</translation>
+        <translation type="vanished">СВВП</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="49"/>
         <source>Airship</source>
-        <translation>Дирижабль</translation>
+        <translation type="vanished">Дирижабль</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="50"/>
         <source>Kite</source>
-        <translation>Воздушный змей</translation>
+        <translation type="vanished">Воздушный змей</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="51"/>
         <source>Ornithopter</source>
-        <translation>Орнитоптер</translation>
+        <translation type="vanished">Орнитоптер</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="53"/>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="120"/>
         <source>Unknown</source>
-        <translation>Неизвестно</translation>
+        <translation type="vanished">Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="81"/>
         <source>ACRO</source>
-        <translation>АКРО</translation>
+        <translation type="vanished">АКРО</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="82"/>
         <source>AUTOTUN</source>
-        <translation>АВТОТЮН</translation>
+        <translation type="vanished">АВТОТЮН</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="83"/>
         <source>AVOID</source>
-        <translation>УКЛОН</translation>
+        <translation type="vanished">УКЛОН</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="84"/>
         <source>CIRCLE</source>
-        <translation>КРУГ</translation>
+        <translation type="vanished">КРУГ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="85"/>
         <source>CRUISE</source>
-        <translation>КРУИЗ</translation>
+        <translation type="vanished">КРУИЗ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="86"/>
         <source>FBWA</source>
-        <translation>ЭДСУ А</translation>
+        <translation type="vanished">ЭДСУ А</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="87"/>
         <source>FBWB</source>
-        <translation>ЭДСУ Б</translation>
+        <translation type="vanished">ЭДСУ Б</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="88"/>
         <source>RATT</source>
-        <translation>RATT</translation>
+        <translation type="vanished">RATT</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="89"/>
         <source>POS CTRL</source>
-        <translation>КОНТР ПОЛ</translation>
+        <translation type="vanished">КОНТР ПОЛ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="90"/>
         <source>ALT CTRL</source>
-        <translation>КОНТР ВЫс</translation>
+        <translation type="vanished">КОНТР ВЫс</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="91"/>
         <source>ALT HOLD</source>
-        <translation>УДЕР ВЫС</translation>
+        <translation type="vanished">УДЕР ВЫС</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="93"/>
         <source>NAV TO</source>
-        <translation>НАВИГАЦИЯ</translation>
+        <translation type="vanished">НАВИГАЦИЯ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="92"/>
         <source>FOLLOW</source>
-        <translation>СЛЕДОВ</translation>
+        <translation type="vanished">СЛЕДОВ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="94"/>
         <source>HOLD</source>
-        <translation>УДЕРЖ</translation>
+        <translation type="vanished">УДЕРЖ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="95"/>
         <source>INIT</source>
-        <translation>ИНИЦ</translation>
+        <translation type="vanished">ИНИЦ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="96"/>
         <source>LAND</source>
-        <translation>ПОСАД</translation>
+        <translation type="vanished">ПОСАД</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="97"/>
         <source>LOITER</source>
-        <translation>БРАЖИР</translation>
+        <translation type="vanished">БРАЖИР</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="98"/>
         <source>MANUAL</source>
-        <translation>РУЧНОЙ</translation>
+        <translation type="vanished">РУЧНОЙ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="99"/>
         <source>MISSION</source>
-        <translation>МАРШРУТ</translation>
+        <translation type="vanished">МАРШРУТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="100"/>
         <source>RETURN</source>
-        <translation>ВОЗВРАТ</translation>
+        <translation type="vanished">ВОЗВРАТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="101"/>
         <source>STAB</source>
-        <translation>СТАБ</translation>
+        <translation type="vanished">СТАБ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="102"/>
         <source>TAKEOFF</source>
-        <translation>ВЗЛЁТ</translation>
+        <translation type="vanished">ВЗЛЁТ</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="103"/>
         <source>THROW</source>
-        <translation>БРОСОК</translation>
+        <translation type="vanished">БРОСОК</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="113"/>
         <source>Active</source>
-        <translation>Активный</translation>
+        <translation type="vanished">Активный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="114"/>
         <source>Boot</source>
-        <translation>Загрузка</translation>
+        <translation type="vanished">Загрузка</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="115"/>
         <source>Calibrating</source>
-        <translation>Калибровка</translation>
+        <translation type="vanished">Калибровка</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="116"/>
         <source>Critical</source>
-        <translation>Критический</translation>
+        <translation type="vanished">Критический</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="117"/>
         <source>Emergency</source>
-        <translation>Аварийный</translation>
+        <translation type="vanished">Аварийный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="118"/>
         <source>Standby</source>
-        <translation>Ожидание</translation>
+        <translation type="vanished">Ожидание</translation>
     </message>
 </context>
 <context>

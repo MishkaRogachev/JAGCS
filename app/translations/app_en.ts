@@ -118,48 +118,33 @@
 <context>
     <name>DatabaseView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="43"/>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="40"/>
         <source>Enter filepath</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="42"/>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="56"/>
+        <source>Migrations</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="62"/>
+        <source>Update migrations</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="87"/>
+        <source>No migrations</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="39"/>
         <source>SQLite data base file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="56"/>
-        <source>Migration</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="78"/>
-        <source>No records</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="99"/>
-        <source>Clear DB log</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="28"/>
         <source>Application will be restarted</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="115"/>
-        <source>Migrate</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="122"/>
-        <source>Reconnect</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/qml/Drawer/Settings/Database/DatabaseView.qml" line="122"/>
-        <source>Connect</source>
         <translation></translation>
     </message>
 </context>
@@ -222,7 +207,7 @@
 <context>
     <name>EndpointView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/EndpointView.qml" line="48"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/EndpointView.qml" line="50"/>
         <source>Remove</source>
         <translation></translation>
     </message>
@@ -1066,8 +1051,8 @@
 <context>
     <name>PluginsView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Plugins/PluginsView.qml" line="11"/>
-        <source>Plugins</source>
+        <location filename="../sources/presentation/qml/Drawer/Plugins/PluginsView.qml" line="26"/>
+        <source>Refresh plugins</source>
         <translation></translation>
     </message>
 </context>
@@ -1526,6 +1511,286 @@
     </message>
 </context>
 <context>
+    <name>domain::TranslationHelper</name>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="19"/>
+        <source>Home</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="20"/>
+        <source>Takeoff</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="21"/>
+        <source>Waypoint</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="22"/>
+        <source>Loiter unlim.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="23"/>
+        <source>Loiter alt.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="24"/>
+        <source>Loiter turns</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="25"/>
+        <source>Loiter time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="26"/>
+        <source>Continue</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="27"/>
+        <source>Return</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="28"/>
+        <source>Landing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="29"/>
+        <source>Set speed</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="31"/>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="105"/>
+        <source>None</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="39"/>
+        <source>Auto</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="40"/>
+        <source>Fixed wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="41"/>
+        <source>Flying wing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="42"/>
+        <source>Quadcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="43"/>
+        <source>Tricopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="44"/>
+        <source>Hexcopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="45"/>
+        <source>Octocopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="46"/>
+        <source>Helicopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="47"/>
+        <source>Coaxial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="48"/>
+        <source>Vtol</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="49"/>
+        <source>Airship</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="50"/>
+        <source>Kite</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="51"/>
+        <source>Ornithopter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="53"/>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="120"/>
+        <source>Unknown</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="81"/>
+        <source>ACRO</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="82"/>
+        <source>AUTOTUN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="83"/>
+        <source>AVOID</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="84"/>
+        <source>CIRCLE</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="85"/>
+        <source>CRUISE</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="86"/>
+        <source>FBWA</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="87"/>
+        <source>FBWB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="88"/>
+        <source>RATT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="89"/>
+        <source>POS CTRL</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="90"/>
+        <source>ALT CTRL</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="91"/>
+        <source>ALT HOLD</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="92"/>
+        <source>FOLLOW</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="93"/>
+        <source>NAV TO</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="94"/>
+        <source>HOLD</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="95"/>
+        <source>INIT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="96"/>
+        <source>LAND</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="97"/>
+        <source>LOITER</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="98"/>
+        <source>MANUAL</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="99"/>
+        <source>MISSION</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="100"/>
+        <source>RETURN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="101"/>
+        <source>STAB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="102"/>
+        <source>TAKEOFF</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="103"/>
+        <source>THROW</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="113"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="114"/>
+        <source>Boot</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="115"/>
+        <source>Calibrating</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="116"/>
+        <source>Critical</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="117"/>
+        <source>Emergency</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/domain/translation_manager/translation_helper.cpp" line="118"/>
+        <source>Standby</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>presentation::DrawerPresenter</name>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
@@ -1682,286 +1947,6 @@
     <message>
         <location filename="../sources/presentation/presenters/drawer/settings/network_settings/network_settings_presenter.cpp" line="30"/>
         <source>Caching FTP</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>presentation::TranslationHelper</name>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="19"/>
-        <source>Home</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="20"/>
-        <source>Takeoff</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="21"/>
-        <source>Waypoint</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="22"/>
-        <source>Loiter unlim.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="23"/>
-        <source>Loiter alt.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="24"/>
-        <source>Loiter turns</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="25"/>
-        <source>Loiter time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="26"/>
-        <source>Continue</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="27"/>
-        <source>Return</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="28"/>
-        <source>Landing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="29"/>
-        <source>Set speed</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="31"/>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="105"/>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="39"/>
-        <source>Auto</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="40"/>
-        <source>Fixed wing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="41"/>
-        <source>Flying wing</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="42"/>
-        <source>Quadcopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="43"/>
-        <source>Tricopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="44"/>
-        <source>Hexcopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="45"/>
-        <source>Octocopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="46"/>
-        <source>Helicopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="47"/>
-        <source>Coaxial</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="48"/>
-        <source>Vtol</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="49"/>
-        <source>Airship</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="50"/>
-        <source>Kite</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="51"/>
-        <source>Ornithopter</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="53"/>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="120"/>
-        <source>Unknown</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="81"/>
-        <source>ACRO</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="82"/>
-        <source>AUTOTUN</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="83"/>
-        <source>AVOID</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="84"/>
-        <source>CIRCLE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="85"/>
-        <source>CRUISE</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="86"/>
-        <source>FBWA</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="87"/>
-        <source>FBWB</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="88"/>
-        <source>RATT</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="89"/>
-        <source>POS CTRL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="90"/>
-        <source>ALT CTRL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="91"/>
-        <source>ALT HOLD</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="93"/>
-        <source>NAV TO</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="92"/>
-        <source>FOLLOW</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="94"/>
-        <source>HOLD</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="95"/>
-        <source>INIT</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="96"/>
-        <source>LAND</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="97"/>
-        <source>LOITER</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="98"/>
-        <source>MANUAL</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="99"/>
-        <source>MISSION</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="100"/>
-        <source>RETURN</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="101"/>
-        <source>STAB</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="102"/>
-        <source>TAKEOFF</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="103"/>
-        <source>THROW</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="113"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="114"/>
-        <source>Boot</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="115"/>
-        <source>Calibrating</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="116"/>
-        <source>Critical</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="117"/>
-        <source>Emergency</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/common/translation_manager/translation_helper.cpp" line="118"/>
-        <source>Standby</source>
         <translation></translation>
     </message>
 </context>

@@ -15,10 +15,8 @@ namespace presentation
 
     public slots:
         void updatePath();
-        void updateConnected();
+        void updateMigrations();
         void savePath();
-        void migrate();
-        void tryConnect();
     };
 }
 

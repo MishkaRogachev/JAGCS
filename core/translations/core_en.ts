@@ -148,58 +148,34 @@
 <context>
     <name>CommunicationService</name>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="217"/>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="262"/>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="272"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="237"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="264"/>
         <source>Link</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="218"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="238"/>
         <source>Connection established</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="218"/>
+        <location filename="../sources/domain/communication/communication_service.cpp" line="238"/>
         <source>Connection lost</source>
         <translation></translation>
     </message>
+</context>
+<context>
+    <name>DbManager</name>
     <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="258"/>
-        <source>Unknown</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="259"/>
-        <source>Switched on MAVLINK v.1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/domain/communication/communication_service.cpp" line="260"/>
-        <source>Switched on MAVLINK v.2</source>
+        <location filename="../sources/domain/db_manager/db_manager.cpp" line="45"/>
+        <source>DB</source>
         <translation></translation>
     </message>
 </context>
 <context>
     <name>DefaultParamsMigration</name>
     <message>
-        <location filename="../sources/data_source/db_manager/migrations/alter_link_description_migration.cpp" line="32"/>
-        <location filename="../sources/data_source/db_manager/migrations/default_params_migration.cpp" line="26"/>
-        <source>UDP Link</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/data_source/db_manager/migrations/alter_link_description_migration.cpp" line="40"/>
-        <source>Radiomodem</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/data_source/db_manager/migrations/default_params_migration.cpp" line="34"/>
-        <source>Serial Link</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/data_source/db_manager/migrations/default_params_migration.cpp" line="44"/>
+        <location filename="../sources/data_source/db/migrations/default_params_migration.cpp" line="16"/>
         <source>MAV 1</source>
         <translation></translation>
     </message>
@@ -311,38 +287,38 @@
 <context>
     <name>data_source::DbMigrator</name>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="29"/>
-        <source>Migrate error: version: %1, error: %2</source>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="54"/>
+        <source>Migration %1 up failed: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="37"/>
-        <source>Migration version: %1</source>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="90"/>
+        <source>Migration %1 down failed: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="50"/>
-        <source>Drop migration error: version: %1, error: %2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="77"/>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="114"/>
         <source>Error: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="88"/>
-        <source>Reset migrations</source>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="131"/>
+        <source>Commit %1 error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="95"/>
-        <source>Establish migration %1</source>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="136"/>
+        <source>Rollback %1 %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/data_source/db_manager/db_migrator.cpp" line="100"/>
-        <source>Migrate from %1 to %2</source>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="136"/>
+        <source>succeed</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/data_source/db/db_migrator.cpp" line="136"/>
+        <source>failed</source>
         <translation></translation>
     </message>
 </context>

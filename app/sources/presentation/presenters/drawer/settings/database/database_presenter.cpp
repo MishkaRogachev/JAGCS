@@ -21,10 +21,9 @@ void DatabasePresenter::updatePath()
     this->setViewProperty(PROPERTY(changed), false);
 }
 
-void DatabasePresenter::updateConnected()
+void DatabasePresenter::updateMigrations()
 {
-    //this->setViewProperty(PROPERTY(migration), dbManager->migrationVersion());
-    this->setViewProperty(PROPERTY(connected), dbManager->isOpen());
+    this->setViewProperty(PROPERTY(migrations), dbManager->migrationVersions());
 }
 
 void DatabasePresenter::savePath()
@@ -44,23 +43,4 @@ void DatabasePresenter::savePath()
     // TODO: soft database reconnection
     //this->tryConnect();
     // this->setViewProperty(PROPERTY(changed), false);
-}
-
-void DatabasePresenter::migrate()
-{
-    dbManager->checkMissing();
-
-    this->updateConnected();
-}
-
-void DatabasePresenter::tryConnect()
-{
-    if (dbManager->isOpen())
-    {
-        // FIXME: clear DB cache
-        dbManager->closeConnection();
-    }
-    dbManager->open(settings::Provider::value(settings::data_base::name).toString());
-
-    this->updateConnected();
 }
