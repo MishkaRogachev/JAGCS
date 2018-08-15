@@ -20,18 +20,17 @@ bool InitMavlinkMigration::upImpl()
 
     if (!this->exec(QString("INSERT INTO link_descriptions (name, type, parameters, protocolId, autoConnect) "
                             "VALUES (\'%1\', %2, \'BaudRate=57600\',"
-                            "(SELECT id FROM link_protocols WHERE name = \'MAVLink\'), true)").arg(
+                            "(SELECT id FROM link_protocols WHERE name = \'MAVLink\'), 1)").arg(
                         qApp->translate("InitMavlinkMigration",
                                         "Serial Link")).arg(dto::LinkDescription::Serial))) return false;
 
     if (!this->exec(QString("INSERT INTO link_descriptions (name, type, parameters, protocolId, autoConnect) "
                             "VALUES (\'%1\', %2, \'Port=14550|UdpAutoResponse=true\',"
-                            "(SELECT id FROM link_protocols WHERE name = \'MAVLink\'), true)").arg(
+                            "(SELECT id FROM link_protocols WHERE name = \'MAVLink\'), 1)").arg(
                         qApp->translate("InitMavlinkMigration",
                                         "UDP Link")).arg(dto::LinkDescription::Udp))) return false;
 
-
-    return AbstractMigration::upImpl();
+    return true;
 }
 
 bool InitMavlinkMigration::downImpl()

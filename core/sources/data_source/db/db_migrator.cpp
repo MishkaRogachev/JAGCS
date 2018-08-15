@@ -47,12 +47,12 @@ void DbMigrator::checkMissing()
         DbMigrationPtr migration = d->migrations[version];
         if (migration->up())
         {
-            d->db.commit();
+            this->commit(version);
             continue;
         }
 
-        d->db.rollback();
         emit error(tr("Migration %1 up failed: %2").arg(version).arg(migration->errorSring()));
+        this->rollback(version);
     }
 
     this->clarifyVersions();
@@ -86,13 +86,13 @@ void DbMigrator::removeMigrations(const DbMigrationPtrList& migrations, bool dro
 
             if (migration->down())
             {
-                d->db.commit();
+                this->commit(version);
             }
             else
             {
-                d->db.rollback();
                 emit error(tr("Migration %1 down failed: %2").arg(
                                                    version).arg(migration->errorSring()));
+                this->rollback(version);
             }
         }
 
@@ -127,5 +127,16 @@ void DbMigrator::clarifyVersions()
     }
 }
 
+void DbMigrator::commit(const QString& version)
+{
+    if (d->db.commit()) return;
+
+    emit error(tr("Commit %1 error").arg(version));
+}
+
+void DbMigrator::rollback(const QString& version)
+{
+    emit error(tr("Rollback %1 %2").arg(version).arg(d->db.rollback() ? tr("succeed") : tr("failed")));
+}
 
 

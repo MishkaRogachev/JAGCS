@@ -31,6 +31,10 @@ namespace data_source
     signals:
         void error(const QString& error);
 
+    private slots:
+        void commit(const QString& version);
+        void rollback(const QString& version);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;

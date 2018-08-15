@@ -11,10 +11,9 @@ using namespace data_source;
 
 bool DefaultParamsMigration::upImpl()
 {
-    if (!m_query.prepare(QString("INSERT INTO vehicles (mavId, name, type) "
-                                 "VALUES (1, \'%1\', 1)").arg(
-                             qApp->translate("DefaultParamsMigration", "MAV 1")))
-        || !m_query.exec()) return false;
+    if (!this->exec(QString("INSERT INTO vehicles (mavId, name, type) "
+                            "VALUES (1, \'%1\', 1)").arg(
+                        qApp->translate("DefaultParamsMigration", "MAV 1")))) return false;
 
     settings::Provider::setValue(settings::vehicle::vehicle + QString::number(1) +
                                  "/" + settings::vehicle::instruments::status +
@@ -26,14 +25,12 @@ bool DefaultParamsMigration::upImpl()
                                  "/" + settings::vehicle::instruments::hsi +
                                  "/" + settings::visibility, true);
 
-    return AbstractMigration::upImpl();
+    return true;
 }
 
 bool DefaultParamsMigration::downImpl()
 {
-    // No need to drop default values
-
-    return true;
+    return true; // No need to drop default values
 }
 
 QString DefaultParamsMigration::version() const

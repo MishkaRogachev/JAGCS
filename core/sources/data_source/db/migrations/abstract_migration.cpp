@@ -21,8 +21,8 @@ bool AbstractMigration::up()
 {
     if (!this->upImpl()) return false;
 
-    if (this->exec(QString("INSERT INTO schema_versions (version) VALUES (\'%1\');").arg(
-                       this->version()))) return false;
+    if (!this->exec(QString("INSERT INTO schema_versions (version) VALUES (\'%1\');").arg(
+                        this->version()))) return false;
 
     m_query.clear();
     return true;
@@ -43,5 +43,4 @@ bool AbstractMigration::exec(const QString& sql)
 {
     return (m_query.prepare(sql) && m_query.exec());
 }
-
 
