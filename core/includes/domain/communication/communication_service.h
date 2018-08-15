@@ -32,12 +32,14 @@ namespace domain
         void removePlugin(ICommunicationPlugin* plugin);
 
         QStringList availableProtocols() const;
+        QString protocol(int protocolId) const;
+        int protocolIdByName(const QString& name) const;
 
     public slots:
         bool save(const dto::LinkDescriptionPtr& description);
         bool remove(const dto::LinkDescriptionPtr& description);
 
-        void setLinkConnected(const dto::LinkDescriptionPtr& description, bool connected);
+        void setLinkConnected(int descriptionId, bool connected);
 
     signals:
         void descriptionAdded(dto::LinkDescriptionPtr description);
@@ -45,16 +47,16 @@ namespace domain
         void descriptionChanged(dto::LinkDescriptionPtr description);
         void linkStatusChanged(dto::LinkDescriptionPtr description);
         void linkStatisticsChanged(dto::LinkStatisticsPtr statistics);
-        void linkSent(int linkId);
-        void linkRecv(int linkId);
+        void linkSent(int descriptionId);
+        void linkRecv(int descriptionId);
 
     private slots:
-        void onLinkStatusChanged(int linkId, bool connected);
-        void onLinkStatisticsChanged(int linkId,
+        void onLinkStatusChanged(int descriptionId, bool connected);
+        void onLinkStatisticsChanged(int descriptionId,
                                      int timestamp,
                                      int bytesReceivedSec,
                                      int bytesSentSec);
-        void onLinkErrored(int linkId, const QString& error);
+        void onLinkErrored(int descriptionId, const QString& error);
 
     private:
         class Impl;

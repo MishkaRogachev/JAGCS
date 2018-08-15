@@ -70,6 +70,15 @@ dto::LinkProtocolPtrList DbLinksRepository::protocols() const
     return d->protocolRepository.loadedEntities();
 }
 
+dto::LinkProtocolPtr DbLinksRepository::protocolByName(const QString& name) const
+{
+    for (int id: d->protocolRepository.selectId("WHERE name = " + name))
+    {
+        return this->protocol(id);
+    }
+    return dto::LinkProtocolPtr();
+}
+
 bool DbLinksRepository::save(const dto::LinkDescriptionPtr& description)
 {
     bool isNew = description->id() == 0;

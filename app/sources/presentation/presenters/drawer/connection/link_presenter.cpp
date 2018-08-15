@@ -53,6 +53,8 @@ void LinkPresenter::updateLink()
     this->setViewProperty(PROPERTY(type), m_link ? m_link->type() :
                                                    dto::LinkDescription::UnknownType);
     this->setViewProperty(PROPERTY(name), m_link ? m_link->name() : QString());
+    this->setViewProperty(PROPERTY(protocol), m_link ?
+                              m_service->protocol(m_link->protocolId()) : QString());
 }
 
 void LinkPresenter::updateStatus()
@@ -64,7 +66,7 @@ void LinkPresenter::updateStatus()
 
 void LinkPresenter::setConnected(bool connected)
 {
-    if (m_link) m_service->setLinkConnected(m_link, connected);
+    if (m_link) m_service->setLinkConnected(m_link->id(), connected);
 }
 
 void LinkPresenter::remove()

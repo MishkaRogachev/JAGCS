@@ -66,7 +66,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
             if (!description->isConnected() && description->isAutoConnect() &&
                 devices.contains(description->parameter(dto::LinkDescription::Device).toString()))
             {
-                this->setLinkConnected(description, true);
+                this->setLinkConnected(description->id(), true);
             }
         }
     });
@@ -178,6 +178,20 @@ QStringList CommunicationService::availableProtocols() const
     return d->communicatorProtocols.values();
 }
 
+QString CommunicationService::protocol(int protocolId) const
+{
+    dto::LinkProtocolPtr protocol = d->linksRepository->protocol(protocolId);
+    if (protocol.isNull()) return QString();
+
+    return protocol->name();
+}
+
+int CommunicationService::protocolIdByName(const QString& name) const
+{
+    dto::LinkProtocolPtr protocol = d->linksRepository->protocolByName(name);
+    return protocol ? protocol->id() : 0;
+}
+
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
 {
     if (!d->linksRepository->save(description)) return false;
@@ -220,17 +234,17 @@ bool CommunicationService::remove(const dto::LinkDescriptionPtr& description)
     return true;
 }
 
-void CommunicationService::setLinkConnected(const dto::LinkDescriptionPtr& description,
-                                            bool connected)
+void CommunicationService::setLinkConnected(int descriptionId, bool connected)
 {
-    d->commWorker->setLinkConnected(description->id(), connected);
+    d->commWorker->setLinkConnected(descriptionId, connected);
 
-    description->setAutoConnect(connected);
+    dto::LinkDescriptionPtr description = this->description(descriptionId);
+    if (description) description->setAutoConnect(connected);
 }
 
-void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
+void CommunicationService::onLinkStatusChanged(int descriptionId, bool connected)
 {
-    dto::LinkDescriptionPtr description = this->description(linkId);
+    dto::LinkDescriptionPtr description = this->description(descriptionId);
 
     if (description->isConnected() != connected)
     {
@@ -243,12 +257,12 @@ void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
     }
 }
 
-void CommunicationService::onLinkStatisticsChanged(int linkId,
+void CommunicationService::onLinkStatisticsChanged(int descriptionId,
                                                    int timestamp,
                                                    int bytesReceivedSec,
                                                    int bytesSentSec)
 {
-    dto::LinkStatisticsPtr statistics = d->getlinkStatistics(linkId);
+    dto::LinkStatisticsPtr statistics = d->getlinkStatistics(descriptionId);
 
     statistics->setTimestamp(timestamp);
     statistics->setBytesRecv(bytesReceivedSec);
@@ -257,9 +271,9 @@ void CommunicationService::onLinkStatisticsChanged(int linkId,
     emit linkStatisticsChanged(statistics);
 }
 
-void CommunicationService::onLinkErrored(int linkId, const QString& error)
+void CommunicationService::onLinkErrored(int descriptionId, const QString& error)
 {
-    dto::LinkDescriptionPtr description = this->description(linkId);
+    dto::LinkDescriptionPtr description = this->description(descriptionId);
 
     notificationBus->notify(tr("Link") + " " + description->name(),
                             error, dto::Notification::Warning);

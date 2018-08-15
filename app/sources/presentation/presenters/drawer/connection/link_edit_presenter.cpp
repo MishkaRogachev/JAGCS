@@ -58,6 +58,10 @@ void LinkEditPresenter::updateLink()
 {
     LinkPresenter::updateLink();
 
+    QStringList availableProtocols = m_service->availableProtocols();
+    if (m_link) availableProtocols.append(m_service->protocol(m_link->protocolId()));
+    this->setViewProperty(PROPERTY(availableProtocols), availableProtocols);
+
     this->setViewProperty(PROPERTY(address),
                           m_link ? m_link->parameter(dto::LinkDescription::Address) : 0);
     this->setViewProperty(PROPERTY(port),
@@ -127,6 +131,10 @@ void LinkEditPresenter::save()
     if (m_link.isNull()) return;
 
     m_link->setName(this->viewProperty(PROPERTY(name)).toString());
+
+    QString protocol = this->viewProperty(PROPERTY(protocol)).toString();
+    m_link->setProtocolId(m_service->protocolIdByName(protocol));
+
     m_link->setParameter(dto::LinkDescription::Device,
                                 this->viewProperty(PROPERTY(device)).toString());
     m_link->setParameter(dto::LinkDescription::BaudRate,

@@ -71,7 +71,7 @@ void ConnectionPresenter::setConnected(bool connected)
     {
         if (link->isConnected() == connected) continue;
 
-        d->service->setLinkConnected(link, connected);
+        d->service->setLinkConnected(link->id(), connected);
     }
 }
 

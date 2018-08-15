@@ -20,6 +20,8 @@ namespace data_source
         dto::LinkProtocolPtr protocol(int id) const override;
         dto::LinkProtocolPtrList protocols() const override;
 
+        dto::LinkProtocolPtr protocolByName(const QString& name) const override;
+
     public slots:
         bool save(const dto::LinkDescriptionPtr& description) override;
         bool remove(const dto::LinkDescriptionPtr& description) override;

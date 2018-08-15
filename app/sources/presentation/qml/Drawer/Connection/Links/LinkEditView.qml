@@ -15,13 +15,14 @@ ColumnLayout {
     property bool changed: false
 
     property int type: LinkDescription.UnknownType
-    property int protocol: LinkDescription.UnknownProtocol
+    property string protocol
     property string device
     property int baudRate
     property bool discoveringBluetooth: false
     property var statistics
 
     property alias name: nameField.text
+    property alias availableProtocols: protocolBox.model
     property alias devices: deviceBox.model
     property alias baudRates: baudBox.model
     property alias address: addressField.text
@@ -42,6 +43,7 @@ ColumnLayout {
         else drawer.submode = "";
     }
     onDeviceChanged: deviceBox.currentIndex = devices.indexOf(device)
+    onProtocolChanged: protocolBox.currentIndex = availableProtocols.indexOf(protocol)
     onDevicesChanged: deviceBox.currentIndex = devices.indexOf(device)
     onBaudRateChanged: baudBox.currentIndex = baudRates.indexOf(baudRate)
     onLinkIdChanged: presenter.setLink(linkId);
@@ -87,18 +89,17 @@ ColumnLayout {
         }
     }
 
-    Controls.Label {
-        text: {
-            var str = qsTr("Protocol");
-            switch (protocol) {
-            case LinkDescription.MavLink1: return str + ": " + "MAVLink v1";
-            case LinkDescription.MavLink2: return str + ": " + "MAVLink v2";
-            case LinkDescription.UnknownProtocol:
-            default: return str + ": " + qsTr("Unknown");
-            }
+    Controls.ComboBox {
+        id: protocolBox
+        labelText: qsTr("Protocols")
+        model: []
+        onDisplayTextChanged: {
+            protocol = displayText;
+            changed = true;
         }
         Layout.fillWidth: true
     }
+
 
     Controls.TextField {
         id: nameField

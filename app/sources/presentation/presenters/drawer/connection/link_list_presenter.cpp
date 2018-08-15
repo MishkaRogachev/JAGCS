@@ -105,14 +105,7 @@ void LinkListPresenter::filter(const QString& filterString)
     d->filterModel.setFilterFixedString(filterString);
 }
 
-void LinkListPresenter::updateProtocols()
-{
-    this->setViewProperty(PROPERTY(availableProtocols), d->service->availableProtocols());
-}
-
 void LinkListPresenter::connectView(QObject* view)
 {
-    this->updateProtocols();
-
     view->setProperty(PROPERTY(links), QVariant::fromValue(&d->filterModel));
 }

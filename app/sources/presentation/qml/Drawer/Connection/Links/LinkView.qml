@@ -11,8 +11,8 @@ Controls.Card {
     property int linkId: 0
     property bool connected: false
     property string name
+    property string protocol
     property int type: LinkDescription.UnknownType
-    property int protocol: LinkDescription.UnknownProtocol
     property real bytesRecv: 0.0
     property real bytesSent: 0.0
     property bool sent: false
@@ -103,14 +103,7 @@ Controls.Card {
         }
 
         Controls.Label {
-            text: {
-                switch (protocol) {
-                case LinkDescription.MavLink1: return "MAVLink v1";
-                case LinkDescription.MavLink2: return "MAVLink v2";
-                case LinkDescription.UnknownProtocol: return qsTr("Unknown");
-                default: return qsTr("Unknown");
-                }
-            }
+            text: protocol
             horizontalAlignment: Text.AlignHCenter
             Layout.columnSpan: 2
             Layout.fillWidth: true
