@@ -9,6 +9,14 @@
 
 #include "init_mavlink_migration.h"
 
+namespace
+{
+    QList<data_source::DbMigrationPtr> migrations =
+    {
+        QSharedPointer<data_source::InitMavlinkMigration>::create()
+    };
+}
+
 using namespace domain;
 
 MavlinkPlugin::MavlinkPlugin(QObject* parent):
@@ -31,9 +39,5 @@ data_source::AbstractCommunicator* MavlinkPlugin::createCommunicator()
 
 QList<data_source::DbMigrationPtr> MavlinkPlugin::migrations() const
 {
-    QList<data_source::DbMigrationPtr> migrations;
-
-    migrations.append(QSharedPointer<data_source::InitMavlinkMigration>::create());
-
-    return migrations;
+    return ::migrations;
 }

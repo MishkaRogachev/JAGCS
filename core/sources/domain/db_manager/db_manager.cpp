@@ -41,7 +41,7 @@ DbManager::DbManager(QObject* parent):
     DbManager::lastCreatedManager = this;
 
     connect(&d->migrator, &data_source::DbMigrator::error, [=](const QString& error) {
-        qDebug() << "DB error" << error;
+        notificationBus->notify(tr("DB"), error, dto::Notification::Critical);
     });
 
     this->addPlugin(new CoreDbPlugin(this));
@@ -70,9 +70,10 @@ bool DbManager::open(const QString& dbName)
     d->db.setDatabaseName(dbName);
     if (!d->db.open()) return false;
 
+    d->migrator.clarifyVersions();
+
     for (IDbPlugin* plugin: d->plugins)
     {
-        qDebug() << "addPlugin" << plugin;
         d->migrator.addMigrations(plugin->migrations());
     }
 
@@ -108,16 +109,12 @@ void DbManager::closeConnection()
 
 void DbManager::addPlugin(IDbPlugin* plugin)
 {
-    qDebug() << "addPlugin" << plugin;
-
     d->plugins.append(plugin);
     if (d->db.isOpen()) d->migrator.addMigrations(plugin->migrations());
 }
 
 void DbManager::removePlugin(IDbPlugin* plugin, bool dropMigrations)
 {
-    qDebug() << "removePlugin" << plugin;
-
     d->plugins.removeOne(plugin);
     if (d->db.isOpen()) d->migrator.removeMigrations(plugin->migrations(), dropMigrations);
 }

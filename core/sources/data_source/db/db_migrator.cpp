@@ -45,7 +45,7 @@ void DbMigrator::checkMissing()
         d->db.transaction();
 
         DbMigrationPtr migration = d->migrations[version];
-        if (migration->up())
+        if (migration->up(d->db))
         {
             this->commit(version);
             continue;
@@ -64,7 +64,6 @@ void DbMigrator::addMigrations(const DbMigrationPtrList& migrations)
     {
         if (d->migrations.contains(migration->version())) continue;
 
-        qDebug() << "insert migration" << migration->version();
         d->migrations.insert(migration->version(), migration);
     }
 
@@ -78,13 +77,11 @@ void DbMigrator::removeMigrations(const DbMigrationPtrList& migrations, bool dro
         QString version = d->migrations.key(migration);
         if (version.isEmpty()) continue;
 
-        qDebug() << "remove migration" << migration->version();
         if (drop)
         {
-            qDebug() << "drop migration" << migration->version();
             d->db.transaction();
 
-            if (migration->down())
+            if (migration->down(d->db))
             {
                 this->commit(version);
             }

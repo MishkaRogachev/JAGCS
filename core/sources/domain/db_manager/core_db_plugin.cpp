@@ -4,6 +4,15 @@
 #include "init_migration.h"
 #include "default_params_migration.h"
 
+namespace
+{
+    QList<data_source::DbMigrationPtr> migrations =
+    {
+        QSharedPointer<data_source::InitMigration>::create(),
+        QSharedPointer<data_source::DefaultParamsMigration>::create()
+    };
+}
+
 using namespace domain;
 
 CoreDbPlugin::CoreDbPlugin(QObject* parent):
@@ -12,10 +21,5 @@ CoreDbPlugin::CoreDbPlugin(QObject* parent):
 
 QList<data_source::DbMigrationPtr> domain::CoreDbPlugin::migrations() const
 {
-    QList<data_source::DbMigrationPtr> list;
-
-    list.append(QSharedPointer<data_source::InitMigration>::create());
-    list.append(QSharedPointer<data_source::DefaultParamsMigration>::create());
-
-    return list;
+    return ::migrations;
 }

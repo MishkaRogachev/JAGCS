@@ -2,7 +2,11 @@
 #define ABSTRACT_MIGRATION_H
 
 // Qt
-#include <QSqlQuery>
+#include <QScopedPointer>
+#include <QString>
+
+class QSqlDatabase;
+class QSqlQuery;
 
 namespace data_source
 {
@@ -14,8 +18,8 @@ namespace data_source
 
         QString errorSring() const;
 
-        bool up();
-        bool down();
+        bool up(const QSqlDatabase& db);
+        bool down(const QSqlDatabase& db);
 
         virtual QString version() const = 0;
 
@@ -25,7 +29,8 @@ namespace data_source
         virtual bool upImpl() = 0;
         virtual bool downImpl() = 0;
 
-        QSqlQuery m_query;
+    private:
+        QScopedPointer<QSqlQuery> m_query;
     };
 }
 

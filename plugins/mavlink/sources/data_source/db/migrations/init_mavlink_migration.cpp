@@ -35,8 +35,10 @@ bool InitMavlinkMigration::upImpl()
 
 bool InitMavlinkMigration::downImpl()
 {
-    if (!m_query.prepare(QString("DELETE FROM link_protocols WHERE name=\'MAVLink\'")) ||
-        !m_query.exec()) return false;
+    if (!this->exec("DELETE FROM link_descriptions WHERE protocolId IN"
+                    "(SELECT id FROM link_protocols WHERE name=\'MAVLink\')")) return false;
+
+    if (!this->exec("DELETE FROM link_protocols WHERE name=\'MAVLink\'")) return false;
 
     return true;
 }
