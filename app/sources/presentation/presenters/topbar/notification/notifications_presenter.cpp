@@ -15,6 +15,8 @@ NotificationsPresenter::NotificationsPresenter(QObject* parent):
 {
     connect(notificationBus, &domain::NotificationBus::notificated,
             this, &NotificationsPresenter::addNotification);
+
+    m_model->addNotifications(notificationBus->notifications());
 }
 
 void NotificationsPresenter::addNotification(const dto::Notification& notification)

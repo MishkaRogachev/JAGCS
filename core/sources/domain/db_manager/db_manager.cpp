@@ -1,6 +1,7 @@
 #include "db_manager.h"
 
 // Qt
+#include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
@@ -67,10 +68,13 @@ bool DbManager::isOpen() const
 
 bool DbManager::open(const QString& dbName)
 {
+    QFileInfo info(dbName);
+    bool exists = info.exists();
+
     d->db.setDatabaseName(dbName);
     if (!d->db.open()) return false;
 
-    d->migrator.clarifyVersions();
+    if (exists) d->migrator.clarifyVersions();
 
     for (IDbPlugin* plugin: d->plugins)
     {

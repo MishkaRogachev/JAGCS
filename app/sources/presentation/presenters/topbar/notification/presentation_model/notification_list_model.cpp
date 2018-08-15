@@ -73,6 +73,23 @@ void NotificationListModel::addNotification(const dto::Notification& notificatio
     }
 }
 
+void NotificationListModel::addNotifications(const QList<dto::Notification>& notifications)
+{
+    this->beginResetModel();
+
+    m_notifications.clear();
+    m_headers.clear();
+
+    for (const dto::Notification& notification: notifications)
+    {
+        QString head = notification.head();
+        if (!m_headers.contains(head)) m_headers.append(head);
+        m_notifications.insertMulti(head, notification);
+    }
+
+    this->endResetModel();
+}
+
 void NotificationListModel::remove(const QString& header)
 {
     int row = m_headers.indexOf(header);

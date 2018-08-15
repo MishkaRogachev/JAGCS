@@ -64,15 +64,15 @@ int main(int argc, char* argv[])
         domain::TranslationManager translator;
         translator.setLocale(settings::Provider::value(settings::gui::locale).toString());
 
+        domain::NotificationBus bus;
+        Q_UNUSED(bus);
+
         domain::DbManager manager;
         if (!manager.open(settings::Provider::value(settings::data_base::name).toString()))
         {
             qFatal("Unable to establish DB connection");
             app.quit();
         }
-
-        domain::NotificationBus bus;
-        Q_UNUSED(bus);
 
         domain::ServiceRegistry registy;
         Q_UNUSED(registy);

@@ -30,6 +30,7 @@ namespace presentation
 
     public slots:
         void addNotification(const dto::Notification& notification);
+        void addNotifications(const QList<dto::Notification>& notifications);
         void remove(const QString& header);
         void removeLast();
 
