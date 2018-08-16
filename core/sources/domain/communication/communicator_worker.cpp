@@ -24,6 +24,7 @@ class CommunicatorWorker::Impl
 {
 public:
     QMap<int, data_source::AbstractLink*> descriptedLinks;
+    QMap<int, QString> descriptedProtocols;
     QList<data_source::AbstractCommunicator*> communicators;
 
     int statisticsTimer = 0;
@@ -52,16 +53,19 @@ CommunicatorWorker::~CommunicatorWorker()
 
 void CommunicatorWorker::addCommunicatorImpl(AbstractCommunicator* communicator)
 {
-    if (!communicator || d->communicators.contains(communicator)) return;
+    if (d->communicators.contains(communicator)) return;
 
+    communicator->moveToThread(this->thread());
     communicator->setParent(this);
-
-    for (AbstractLink* link: d->descriptedLinks.values())
-    {
-        communicator->addLink(link);
-    }
-
     d->communicators.append(communicator);
+
+    for (int id: d->descriptedLinks.keys())
+    {
+        if (communicator->availableProtocols().contains(d->descriptedProtocols.value(id)))
+        {
+            communicator->addLink(d->descriptedLinks[id]);
+        }
+    }
 }
 
 void CommunicatorWorker::deleteCommunicatorImpl(AbstractCommunicator* communicator)
@@ -78,8 +82,11 @@ void CommunicatorWorker::deleteCommunicatorImpl(AbstractCommunicator* communicat
     delete communicator;
 }
 
-void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factory, bool autoconnect)
+void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factory,
+                                        bool autoconnect, const QString& protocol)
 {
+    d->descriptedProtocols[linkId] = protocol;
+
     AbstractLink* link = nullptr;
 
     if (d->descriptedLinks.contains(linkId))
@@ -101,16 +108,23 @@ void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factor
                 [this, linkId](const QString& error) { emit linkErrored(linkId, error); });
 
         d->descriptedLinks[linkId] = link;
-        for (AbstractCommunicator* communicator: d->communicators)
-        {
-            communicator->addLink(link);
-        }
 
         if (autoconnect)
         {
             link->connectLink();
             emit linkStatusChanged(linkId, link->isConnected());
         }
+    }
+
+    for (AbstractCommunicator* communicator: d->communicators)
+    {
+        if (communicator->availableProtocols().contains(protocol) &&
+            !communicator->links().contains(link))
+        {
+            communicator->addLink(link);
+            continue;
+        }
+        else communicator->removeLink(link);
     }
 }
 

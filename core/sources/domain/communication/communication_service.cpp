@@ -28,7 +28,6 @@ public:
 
     QMap<int, dto::LinkStatisticsPtr> linkStatistics;
     QMap<ICommunicationPlugin*, data_source::AbstractCommunicator*> pluginCommunicators;
-    QMap<data_source::AbstractCommunicator*, QString> communicatorProtocols;
     QMap<dto::LinkDescriptionPtr, QString> descriptedDevices;
 
     data_source::ILinksRepository* linksRepository;
@@ -99,7 +98,8 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     for (const dto::LinkDescriptionPtr& description: d->linksRepository->descriptions())
     {
         data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
-        d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
+        d->commWorker->updateLink(description->id(), factory,
+                                  description->isAutoConnect(),  description->protocol());
 
         QString device = description->parameter(dto::LinkDescription::Device).toString();
         if (description->type() == dto::LinkDescription::Serial && device.length() > 0)
@@ -153,12 +153,6 @@ void CommunicationService::addPlugin(ICommunicationPlugin* plugin)
     if (!communicator) return;
 
     d->pluginCommunicators[plugin] = communicator;
-
-    for (const QString& protocol: communicator->availableProtocols())
-    {
-        d->communicatorProtocols.insert(communicator, protocol);
-    }
-    communicator->moveToThread(d->commThread);
     d->commWorker->addCommunicator(communicator);
 }
 
@@ -167,13 +161,19 @@ void CommunicationService::removePlugin(ICommunicationPlugin* plugin)
     if (!d->pluginCommunicators.contains(plugin)) return;
 
     data_source::AbstractCommunicator* communicator = d->pluginCommunicators.take(plugin);
-    d->communicatorProtocols.remove(communicator);
     d->commWorker->deleteCommunicator(communicator);
 }
 
 QStringList CommunicationService::availableProtocols() const
 {
-    return d->communicatorProtocols.values();
+    QStringList protocols;
+
+    for (data_source::AbstractCommunicator* communicator: d->pluginCommunicators.values())
+    {
+        protocols.append(communicator->availableProtocols());
+    }
+
+    return protocols;
 }
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
@@ -181,7 +181,8 @@ bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
     if (!d->linksRepository->save(description)) return false;
 
     data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
-    d->commWorker->updateLink(description->id(), factory, description->isAutoConnect());
+    d->commWorker->updateLink(description->id(), factory,
+                              description->isAutoConnect(), description->protocol());
 
     QString device = description->parameter(dto::LinkDescription::Device).toString();
     if (d->descriptedDevices.contains(description) && device != d->descriptedDevices[description])

@@ -29,7 +29,8 @@ namespace domain
         void addCommunicator(data_source::AbstractCommunicator* communicator);
         void deleteCommunicator(data_source::AbstractCommunicator* communicator);
 
-        void updateLink(int linkId, const data_source::LinkFactoryPtr& factory, bool autoconnect);
+        void updateLink(int linkId, const data_source::LinkFactoryPtr& factory,
+                        bool autoconnect, const QString& protocol);
         void removeLink(int linkId);
         void setLinkConnected(int linkId, bool connected);
 
@@ -45,7 +46,8 @@ namespace domain
         void addCommunicatorImpl(data_source::AbstractCommunicator* communicator);
         void deleteCommunicatorImpl(data_source::AbstractCommunicator* communicator);
 
-        void updateLinkImpl(int linkId, const data_source::LinkFactoryPtr& factory, bool autoconnect);
+        void updateLinkImpl(int linkId, const data_source::LinkFactoryPtr& factory,
+                            bool autoconnect, const QString& protocol);
         void removeLinkImpl(int linkId);
         void setLinkConnectedImpl(int linkId, bool connected);
 
