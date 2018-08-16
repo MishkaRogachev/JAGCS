@@ -16,14 +16,10 @@ bool InitMigration::upImpl()
                     "id INTEGER PRIMARY KEY NOT NULL,"
                     "name STRING,"
                     "type SMALLINT,"
+                    "protocol STRING,"
                     "parameters TEXT,"
                     "protocolId INTEGER,"
                     "autoConnect BOOLEAN)")) return false;
-
-    if (!this->exec("CREATE TABLE link_protocols ("
-                    "id INTEGER PRIMARY KEY NOT NULL,"
-                    "name STRING,"
-                    "description STRING)")) return false;
 
     if (!this->exec("CREATE TABLE vehicles ("
                     "id INTEGER PRIMARY KEY NOT NULL,"
@@ -70,7 +66,6 @@ bool InitMigration::downImpl()
     if (!this->exec("DROP TABLE mission_items")) return false;
     if (!this->exec("DROP TABLE missions")) return false;
     if (!this->exec("DROP TABLE vehicles")) return false;
-    if (!this->exec("DROP TABLE link_protocols")) return false;
     if (!this->exec("DROP TABLE link_descriptions")) return false;
     if (!this->exec("DROP TABLE schema_versions")) return false;
 

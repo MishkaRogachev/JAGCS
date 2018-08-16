@@ -19,26 +19,14 @@ namespace data_source
         virtual dto::LinkDescriptionPtr description(int id) const = 0;
         virtual dto::LinkDescriptionPtrList descriptions() const = 0;
 
-        virtual dto::LinkProtocolPtr protocol(int id) const = 0;
-        virtual dto::LinkProtocolPtrList protocols() const = 0;
-
-        virtual dto::LinkProtocolPtr protocolByName(const QString& name) const = 0;
-
     public slots:
         virtual bool save(const dto::LinkDescriptionPtr& description) = 0;
         virtual bool remove(const dto::LinkDescriptionPtr& description) = 0;
-
-        virtual bool save(const dto::LinkProtocolPtr& protocol) = 0;
-        virtual bool remove(const dto::LinkProtocolPtr& protocol) = 0;
 
     signals:
         void descriptionAdded(dto::LinkDescriptionPtr description);
         void descriptionRemoved(dto::LinkDescriptionPtr description);
         void descriptionChanged(dto::LinkDescriptionPtr description);
-
-        void protocolAdded(dto::LinkProtocolPtr protocol);
-        void protocolRemoved(dto::LinkProtocolPtr protocol);
-        void protocolChanged(dto::LinkProtocolPtr protocol);
     };
 }
 

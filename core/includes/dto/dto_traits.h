@@ -13,7 +13,6 @@ namespace dto
     class Command;
     class Vehicle;
     class LinkDescription;
-    class LinkProtocol;
     class LinkStatistics;
     class VideoSource;
 
@@ -23,7 +22,6 @@ namespace dto
     using CommandPtr = QSharedPointer<Command>;
     using VehiclePtr = QSharedPointer<Vehicle>;
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
-    using LinkProtocolPtr = QSharedPointer<LinkProtocol>;
     using LinkStatisticsPtr = QSharedPointer<LinkStatistics>;
     using VideoSourcePtr = QSharedPointer<VideoSource>;
 
@@ -33,7 +31,6 @@ namespace dto
     using CommandPtrList = QList<CommandPtr>;
     using VehiclePtrList = QList<VehiclePtr>;
     using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
-    using LinkProtocolPtrList = QList<LinkProtocolPtr>;
     using LinkStatisticsPtrList = QList<LinkStatisticsPtr>;
     using VideoSourcePtrList = QList<VideoSourcePtr>;
 }

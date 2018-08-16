@@ -9,7 +9,6 @@
 #include "settings_provider.h"
 
 #include "link_description.h"
-#include "link_protocol.h"
 #include "link_statistics.h"
 
 #include "description_link_factory.h"
@@ -52,7 +51,6 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
     d(new Impl())
 {
     qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
-    qRegisterMetaType<dto::LinkProtocolPtr>("dto::LinkProtocolPtr");
     qRegisterMetaType<dto::LinkStatisticsPtr>("dto::LinkStatisticsPtr");
     qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
 
@@ -176,20 +174,6 @@ void CommunicationService::removePlugin(ICommunicationPlugin* plugin)
 QStringList CommunicationService::availableProtocols() const
 {
     return d->communicatorProtocols.values();
-}
-
-QString CommunicationService::protocol(int protocolId) const
-{
-    dto::LinkProtocolPtr protocol = d->linksRepository->protocol(protocolId);
-    if (protocol.isNull()) return QString();
-
-    return protocol->name();
-}
-
-int CommunicationService::protocolIdByName(const QString& name) const
-{
-    dto::LinkProtocolPtr protocol = d->linksRepository->protocolByName(name);
-    return protocol ? protocol->id() : 0;
 }
 
 bool CommunicationService::save(const dto::LinkDescriptionPtr& description)

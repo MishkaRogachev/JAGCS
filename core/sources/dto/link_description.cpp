@@ -48,6 +48,16 @@ void LinkDescription::setType(LinkDescription::Type type)
     m_type = type;
 }
 
+QString LinkDescription::protocol() const
+{
+    return m_protocol;
+}
+
+void LinkDescription::setProtocol(QString protocol)
+{
+    m_protocol = protocol;
+}
+
 QString LinkDescription::parameters() const
 {
     QStringList list;
@@ -106,16 +116,6 @@ void LinkDescription::clearSuperfluousParameters()
 
         m_parameters.remove(parameter);
     }
-}
-
-int LinkDescription::protocolId() const
-{
-    return m_protocolId;
-}
-
-void LinkDescription::setProtocolId(int protocolId)
-{
-    m_protocolId = protocolId;
 }
 
 bool LinkDescription::isAutoConnect() const

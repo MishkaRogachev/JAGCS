@@ -1,7 +1,6 @@
 #ifndef MAVLINK_PROTOCOL_HELPERS_H
 #define MAVLINK_PROTOCOL_HELPERS_H
 
-
 // Qt
 #include <QGeoCoordinate>
 

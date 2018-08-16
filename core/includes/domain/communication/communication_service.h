@@ -32,8 +32,6 @@ namespace domain
         void removePlugin(ICommunicationPlugin* plugin);
 
         QStringList availableProtocols() const;
-        QString protocol(int protocolId) const;
-        int protocolIdByName(const QString& name) const;
 
     public slots:
         bool save(const dto::LinkDescriptionPtr& description);
