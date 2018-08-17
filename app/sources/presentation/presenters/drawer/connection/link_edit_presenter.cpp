@@ -59,6 +59,7 @@ void LinkEditPresenter::updateLink()
     LinkPresenter::updateLink();
 
     QStringList availableProtocols = m_service->availableProtocols();
+    availableProtocols.append(QString());
     if (m_link && !availableProtocols.contains(m_link->protocol()))
     {
         availableProtocols.append(m_link->protocol());

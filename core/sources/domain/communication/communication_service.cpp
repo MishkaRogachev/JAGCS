@@ -153,6 +153,8 @@ void CommunicationService::addPlugin(ICommunicationPlugin* plugin)
     if (!communicator) return;
 
     d->pluginCommunicators[plugin] = communicator;
+
+    communicator->moveToThread(d->commThread);
     d->commWorker->addCommunicator(communicator);
 }
 

@@ -55,7 +55,6 @@ void CommunicatorWorker::addCommunicatorImpl(AbstractCommunicator* communicator)
 {
     if (d->communicators.contains(communicator)) return;
 
-    communicator->moveToThread(this->thread());
     communicator->setParent(this);
     d->communicators.append(communicator);
 

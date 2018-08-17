@@ -91,7 +91,7 @@ ColumnLayout {
 
     Controls.ComboBox {
         id: protocolBox
-        labelText: qsTr("Protocols")
+        labelText: qsTr("Protocol")
         model: []
         onDisplayTextChanged: {
             protocol = displayText;

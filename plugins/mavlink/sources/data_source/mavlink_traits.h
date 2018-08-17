@@ -8,9 +8,9 @@ namespace data_source
     namespace protocols
     {
 #ifdef MAVLINK_V2
-        const static QStringList mavlinkProtocols { "MAVLINK1", "MAVLINK2"};
+        const static QStringList mavlinkProtocols { "MAVLink1", "MAVLink2"};
 #else
-        const static QStringList mavlink { "MAVLINK1" };
+        const static QStringList mavlink { "MAVLink1" };
 #endif
     }
 }
