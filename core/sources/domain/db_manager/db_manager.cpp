@@ -22,14 +22,14 @@ using namespace domain;
 class DbManager::Impl
 {
 public:
-    QSqlDatabase db;
+    QSqlDatabase database;
     data_source::DbMigrator migrator;
     QList<IDbPlugin*> plugins;
 
     Impl():
-        db(QSqlDatabase::contains() ? QSqlDatabase::database() :
+        database(QSqlDatabase::contains() ? QSqlDatabase::database() :
                                       QSqlDatabase::addDatabase(::connectionType)),
-        migrator(db)
+        migrator(database)
     {}
 };
 
@@ -61,9 +61,14 @@ DbManager* DbManager::instance()
     return DbManager::lastCreatedManager;
 }
 
+const QSqlDatabase& DbManager::database() const
+{
+    return d->database;
+}
+
 bool DbManager::isOpen() const
 {
-    return d->db.isOpen();
+    return d->database.isOpen();
 }
 
 bool DbManager::open(const QString& dbName)
@@ -71,8 +76,8 @@ bool DbManager::open(const QString& dbName)
     QFileInfo info(dbName);
     bool exists = info.exists();
 
-    d->db.setDatabaseName(dbName);
-    if (!d->db.open()) return false;
+    d->database.setDatabaseName(dbName);
+    if (!d->database.open()) return false;
 
     if (exists) d->migrator.clarifyVersions();
 
@@ -108,17 +113,17 @@ void DbManager::clarifyVersions()
 
 void DbManager::closeConnection()
 {
-    d->db.close();
+    d->database.close();
 }
 
 void DbManager::addPlugin(IDbPlugin* plugin)
 {
     d->plugins.append(plugin);
-    if (d->db.isOpen()) d->migrator.addMigrations(plugin->migrations());
+    if (d->database.isOpen()) d->migrator.addMigrations(plugin->migrations());
 }
 
 void DbManager::removePlugin(IDbPlugin* plugin, bool dropMigrations)
 {
     d->plugins.removeOne(plugin);
-    if (d->db.isOpen()) d->migrator.removeMigrations(plugin->migrations(), dropMigrations);
+    if (d->database.isOpen()) d->migrator.removeMigrations(plugin->migrations(), dropMigrations);
 }

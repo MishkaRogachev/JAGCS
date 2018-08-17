@@ -7,6 +7,8 @@
 // Internal
 #include "i_db_plugin.h"
 
+class QSqlDatabase;
+
 namespace domain
 {
     class DbManager: public QObject
@@ -18,6 +20,8 @@ namespace domain
         ~DbManager() override;
 
         static DbManager* instance();
+
+        const QSqlDatabase& database() const;
 
         bool isOpen() const;
         bool open(const QString& dbName);

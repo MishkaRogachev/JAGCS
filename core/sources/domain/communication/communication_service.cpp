@@ -15,6 +15,7 @@
 #include "notification_bus.h"
 
 #include "serial_ports_service.h"
+#include "db_manager.h"
 
 #include "db_links_repository.h"
 #include "communicator_worker.h"
@@ -68,7 +69,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
         }
     });
 
-    d->linksRepository = new data_source::DbLinksRepository(this);
+    d->linksRepository = new data_source::DbLinksRepository(dbManager->database(), this);
     connect(d->linksRepository, &data_source::ILinksRepository::descriptionAdded,
             this, &CommunicationService::descriptionAdded);
     connect(d->linksRepository, &data_source::ILinksRepository::descriptionRemoved,

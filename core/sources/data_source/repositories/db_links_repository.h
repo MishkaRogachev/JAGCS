@@ -4,6 +4,8 @@
 // Internal
 #include "i_links_repository.h"
 
+class QSqlDatabase;
+
 namespace data_source
 {
     class DbLinksRepository: public ILinksRepository
@@ -11,7 +13,7 @@ namespace data_source
         Q_OBJECT
 
     public:
-        explicit DbLinksRepository(QObject* parent = nullptr);
+        DbLinksRepository(const QSqlDatabase& db, QObject* parent = nullptr);
         ~DbLinksRepository() override;
 
         dto::LinkDescriptionPtr description(int id) const override;
