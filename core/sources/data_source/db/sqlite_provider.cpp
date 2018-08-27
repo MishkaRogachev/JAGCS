@@ -1,24 +1,22 @@
 #include "sqlite_provider.h"
 
 // Qt
+#include <QDebug>
 #include <QFileInfo>
 
 namespace
 {
-    const QString connectionType = "QSQLITE";
-    const QString defaultConnection = "defaultConnection";
+    const QString driver = "QSQLITE";
 }
 
 using namespace data_source;
 
 SqliteProvider::SqliteProvider():
-    m_database(QSqlDatabase::addDatabase(::connectionType, ::defaultConnection))
+    m_database(QSqlDatabase::addDatabase(::driver))
 {}
 
 SqliteProvider::~SqliteProvider()
-{
-    QSqlDatabase::removeDatabase(::defaultConnection);
-}
+{}
 
 QSqlDatabase& SqliteProvider::database()
 {
@@ -35,7 +33,12 @@ bool SqliteProvider::open(bool& exists)
 
 void SqliteProvider::setName(const QString& dbName)
 {
+    bool isOpened = m_database.isOpen();
+    if (isOpened) m_database.close();
+
     m_database.setDatabaseName(dbName);
+
+    if (isOpened) m_database.open();
 }
 
 QString SqliteProvider::dbName() const
