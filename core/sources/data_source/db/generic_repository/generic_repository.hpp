@@ -50,7 +50,6 @@ bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
     if (this->runQuerry())
     {
         entity->setId(m_query.lastInsertId().toInt());
-        m_map[entity->id()] = entity;
         return true;
     }
     return false;
@@ -96,9 +95,7 @@ bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
     m_query.bindValue(":id", entity->id());
     this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
-    if (!this->runQuerry()) return false;
-    m_map[entity->id()] = entity;
-    return true;
+    return this->runQuerry();
 }
 
 template<class T>
@@ -106,10 +103,8 @@ bool GenericRepository<T>::remove(const QSharedPointer<T>& entity)
 {
     m_query.prepare("DELETE FROM " + m_tableName + " WHERE id = :id");
     m_query.bindValue(":id", entity->id());
-    if (!this->runQuerry()) return false;
-    this->unload(entity->id());
-    // Don't set id to 0, it can be usefull for someone else
-    return true;
+
+    return this->runQuerry();
 }
 
 template<class T>

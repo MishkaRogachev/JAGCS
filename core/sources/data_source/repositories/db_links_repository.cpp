@@ -52,17 +52,22 @@ DbLinksRepository::DbLinksRepository(const QSqlDatabase& db, QObject* parent):
         int id = payload.toInt();
         if (id < 1) return;
 
-        qDebug() << id;
+        bool contains = d->descriptionRepository.contains(id);
+        dto::LinkDescriptionPtr description = d->descriptionRepository.read(id);
 
-        if (d->descriptionRepository.contains(id))
+        if (contains)
         {
-            qDebug() << "contains";
+            if (d->descriptionRepository.selectId().contains(id))
+            {
+                emit descriptionChanged(description);
+            }
+            else
+            {
+                emit descriptionRemoved(description);
+                d->descriptionRepository.unload(id);
+            }
         }
-        else
-        {
-            emit descriptionAdded(d->descriptionRepository.read(id));
-        }
-        qDebug() << "notify" << name << payload;
+        else emit descriptionAdded(description);
     });
 
     d->loadDescriptions();

@@ -14,7 +14,7 @@ namespace data_source
         Q_OBJECT
 
     public:
-        ILinksRepository(QObject* parent): QObject(parent) {}
+        explicit ILinksRepository(QObject* parent): QObject(parent) {}
 
         virtual dto::LinkDescriptionPtr description(int id) const = 0;
         virtual dto::LinkDescriptionPtrList descriptions() const = 0;
