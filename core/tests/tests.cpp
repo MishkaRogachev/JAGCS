@@ -3,6 +3,7 @@
 
 // Core
 #include "db_manager.h"
+#include "notification_bus.h"
 #include "service_registry.h"
 
 // Tests
@@ -20,26 +21,25 @@ int main(int argc, char* argv[])
     execTest(LinksTest)
     execTest(TelemetryTest)
 
-    {
+    /*{
         QFile file("test_db");
         if (file.exists()) file.remove();
     }
 
-    domain::DbManager manager;
-    if (!manager.open("test_db"))
     {
-        qFatal("Unable to establish DB connection");
-        app.quit();
-    }
+        domain::DbManager manager;
+        if (!manager.open("test_db"))
+        {
+            qFatal("Unable to establish DB connection");
+            app.quit();
+        }
 
-    domain::ServiceRegistry registy;
-    Q_UNUSED(registy);
+        domain::ServiceRegistry registy;
+        Q_UNUSED(registy);
 
-    CommunicationServiceTest commTest;
-    QTest::qExec(&commTest);
-
-    MissionServiceTest missionTest;
-    QTest::qExec(&missionTest);
+        execTest(CommunicationServiceTest)
+        execTest(MissionServiceTest)
+    }*/
 
     return 0;
 }

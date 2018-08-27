@@ -6,17 +6,19 @@
 namespace
 {
     const QString connectionType = "QSQLITE";
+    const QString defaultConnection = "defaultConnection";
 }
 
 using namespace data_source;
 
 SqliteProvider::SqliteProvider():
-    m_database(QSqlDatabase::contains() ?
-                   QSqlDatabase::database() : QSqlDatabase::addDatabase(::connectionType))
+    m_database(QSqlDatabase::addDatabase(::connectionType, ::defaultConnection))
 {}
 
 SqliteProvider::~SqliteProvider()
-{}
+{
+    QSqlDatabase::removeDatabase(::defaultConnection);
+}
 
 QSqlDatabase& SqliteProvider::database()
 {
