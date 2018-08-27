@@ -23,9 +23,9 @@ public:
     {}
 };
 
-DbMigrator::DbMigrator(QSqlDatabase& db, QObject* parent):
+DbMigrator::DbMigrator(IDbProvider* provider, QObject* parent):
     QObject(parent),
-    d(new Impl(db))
+    d(new Impl(provider->database()))
 {}
 
 DbMigrator::~DbMigrator()

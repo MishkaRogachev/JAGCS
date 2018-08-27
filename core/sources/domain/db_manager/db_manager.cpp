@@ -1,7 +1,6 @@
 #include "db_manager.h"
 
 // Qt
-#include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
@@ -9,27 +8,21 @@
 // Internal
 #include "db_migrator.h"
 #include "core_db_plugin.h"
+#include "sqlite_provider.h"
 
 #include "notification_bus.h"
-
-namespace
-{
-    const QString connectionType = "QSQLITE";
-}
 
 using namespace domain;
 
 class DbManager::Impl
 {
 public:
-    QSqlDatabase database;
+    data_source::SqliteProvider provider;
     data_source::DbMigrator migrator;
     QList<IDbPlugin*> plugins;
 
     Impl():
-        database(QSqlDatabase::contains() ? QSqlDatabase::database() :
-                                      QSqlDatabase::addDatabase(::connectionType)),
-        migrator(database)
+        migrator(&provider)
     {}
 };
 
@@ -61,32 +54,9 @@ DbManager* DbManager::instance()
     return DbManager::lastCreatedManager;
 }
 
-const QSqlDatabase& DbManager::database() const
+data_source::IDbProvider* DbManager::provider() const
 {
-    return d->database;
-}
-
-bool DbManager::isOpen() const
-{
-    return d->database.isOpen();
-}
-
-bool DbManager::open(const QString& dbName)
-{
-    QFileInfo info(dbName);
-    bool exists = info.exists();
-
-    d->database.setDatabaseName(dbName);
-    if (!d->database.open()) return false;
-
-    if (exists) d->migrator.clarifyVersions();
-
-    for (IDbPlugin* plugin: d->plugins)
-    {
-        d->migrator.addMigrations(plugin->migrations());
-    }
-
-    return true;
+    return &d->provider;
 }
 
 void DbManager::dropDatabase()
@@ -101,6 +71,23 @@ QStringList DbManager::migrationVersions() const
     return d->migrator.versions();
 }
 
+bool DbManager::open(const QString& dbName)
+{
+    d->provider.setName(dbName);
+
+    bool exists = false;
+    if (!d->provider.open(exists)) return false;
+
+    if (exists) d->migrator.clarifyVersions();
+
+    for (IDbPlugin* plugin: d->plugins)
+    {
+        d->migrator.addMigrations(plugin->migrations());
+    }
+
+    return true;
+}
+
 void DbManager::checkMissing()
 {
     return d->migrator.checkMissing();
@@ -113,17 +100,23 @@ void DbManager::clarifyVersions()
 
 void DbManager::closeConnection()
 {
-    d->database.close();
+    d->provider.database().close();
 }
 
 void DbManager::addPlugin(IDbPlugin* plugin)
 {
     d->plugins.append(plugin);
-    if (d->database.isOpen()) d->migrator.addMigrations(plugin->migrations());
+    if (d->provider.database().isOpen())
+    {
+        d->migrator.addMigrations(plugin->migrations());
+    }
 }
 
 void DbManager::removePlugin(IDbPlugin* plugin, bool dropMigrations)
 {
     d->plugins.removeOne(plugin);
-    if (d->database.isOpen()) d->migrator.removeMigrations(plugin->migrations(), dropMigrations);
+    if (d->provider.database().isOpen())
+    {
+        d->migrator.removeMigrations(plugin->migrations(), dropMigrations);
+    }
 }

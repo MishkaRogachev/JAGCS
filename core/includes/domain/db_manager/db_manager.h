@@ -6,8 +6,7 @@
 
 // Internal
 #include "i_db_plugin.h"
-
-class QSqlDatabase;
+#include "i_db_provider.h"
 
 namespace domain
 {
@@ -16,16 +15,15 @@ namespace domain
         Q_OBJECT
 
     public:
-        explicit DbManager(QObject* parent = nullptr);
+        DbManager(QObject* parent = nullptr);
         ~DbManager() override;
 
         static DbManager* instance();
 
-        const QSqlDatabase& database() const;
-
-        bool isOpen() const;
-        bool open(const QString& dbName);
+        data_source::IDbProvider* provider() const;
         QStringList migrationVersions() const;
+
+        bool open(const QString& dbName);
 
     public slots:
         void dropDatabase();

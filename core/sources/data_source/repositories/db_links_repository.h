@@ -3,8 +3,7 @@
 
 // Internal
 #include "i_links_repository.h"
-
-class QSqlDatabase;
+#include "i_db_provider.h"
 
 namespace data_source
 {
@@ -13,7 +12,7 @@ namespace data_source
         Q_OBJECT
 
     public:
-        DbLinksRepository(const QSqlDatabase& db, QObject* parent = nullptr);
+        DbLinksRepository(IDbProvider* provider, QObject* parent = nullptr);
         ~DbLinksRepository() override;
 
         dto::LinkDescriptionPtr description(int id) const override;

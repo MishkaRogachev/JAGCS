@@ -36,15 +36,15 @@ public:
     }
 };
 
-DbLinksRepository::DbLinksRepository(const QSqlDatabase& db, QObject* parent):
+DbLinksRepository::DbLinksRepository(IDbProvider* provider, QObject* parent):
     ILinksRepository(parent),
     d(new Impl())
 {
-    d->dbDriver = db.driver();
+    d->dbDriver = provider->database().driver();
     Q_ASSERT(d->dbDriver);
 
     d->dbDriver->subscribeToNotification(::tableName);
-    connect(db.driver(), QOverload<const QString &, QSqlDriver::NotificationSource,
+    connect(d->dbDriver, QOverload<const QString &, QSqlDriver::NotificationSource,
             const QVariant &>::of(&QSqlDriver::notification),
             [this](const QString& name, QSqlDriver::NotificationSource, const QVariant& payload)
     {

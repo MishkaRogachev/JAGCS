@@ -69,7 +69,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
         }
     });
 
-    d->linksRepository = new data_source::DbLinksRepository(dbManager->database(), this);
+    d->linksRepository = new data_source::DbLinksRepository(dbManager->provider(), this);
     connect(d->linksRepository, &data_source::ILinksRepository::descriptionAdded,
             this, &CommunicationService::descriptionAdded);
     connect(d->linksRepository, &data_source::ILinksRepository::descriptionRemoved,
