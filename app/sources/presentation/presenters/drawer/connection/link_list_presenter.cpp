@@ -13,7 +13,8 @@
 #include "service_registry.h"
 #include "communication_service.h"
 
-#include "link_list_model.h"
+#include "object_list_model.h"
+#include "link_presenter.h"
 
 using namespace presentation;
 
@@ -22,32 +23,39 @@ class LinkListPresenter::Impl
 public:
     domain::CommunicationService* const service = serviceRegistry->communicationService();
 
-    LinkListModel linksModel;
+    QMap<dto::LinkDescriptionPtr, LinkPresenter*> descriptedPresenters;
+    ObjectListModel<LinkPresenter> linksModel;
     QSortFilterProxyModel filterModel;
 };
 
 LinkListPresenter::LinkListPresenter(QObject* parent):
-    BasePresenter(parent),
+    QObject(parent),
     d(new Impl())
 {
     d->filterModel.setSourceModel(&d->linksModel);
-    d->filterModel.setFilterRole(LinkListModel::LinkNameRole);
+/*    d->filterModel.setFilterRole(LinkListModel::LinkNameRole);
     d->filterModel.setSortRole(LinkListModel::LinkNameRole);
     d->filterModel.setDynamicSortFilter(true);
-    d->filterModel.sort(0, Qt::AscendingOrder);
+    d->filterModel.sort(0, Qt::AscendingOrder);*/
 
-    d->linksModel.setLinks(d->service->descriptions());
+    for (const dto::LinkDescriptionPtr& description: d->service->descriptions())
+    {
+        this->onDescriptionAdded(description);
+    }
 
     connect(d->service, &domain::CommunicationService::descriptionAdded,
-            &d->linksModel, &LinkListModel::addLink);
+            this, &LinkListPresenter::onDescriptionAdded);
     connect(d->service, &domain::CommunicationService::descriptionRemoved,
-            &d->linksModel, &LinkListModel::removeLink);
-    connect(d->service, &domain::CommunicationService::descriptionChanged,
-            &d->linksModel, &LinkListModel::updateLink);
+            this, &LinkListPresenter::onDescriptionRemoved);
 }
 
 LinkListPresenter::~LinkListPresenter()
 {}
+
+QAbstractItemModel* LinkListPresenter::links() const
+{
+    return &d->filterModel;
+}
 
 void LinkListPresenter::addSerialLink()
 {
@@ -105,7 +113,19 @@ void LinkListPresenter::filter(const QString& filterString)
     d->filterModel.setFilterFixedString(filterString);
 }
 
-void LinkListPresenter::connectView(QObject* view)
+void LinkListPresenter::onDescriptionAdded(const dto::LinkDescriptionPtr& description)
 {
-    view->setProperty(PROPERTY(links), QVariant::fromValue(&d->filterModel));
+    LinkPresenter* presenter = new LinkPresenter(description, this);
+
+    d->descriptedPresenters[description] = presenter;
+    d->linksModel.append(presenter);
+}
+
+void LinkListPresenter::onDescriptionRemoved(const dto::LinkDescriptionPtr& description)
+{
+    LinkPresenter* presenter = d->descriptedPresenters.take(description);
+    if (!presenter) return;
+
+    d->linksModel.remove(presenter);
+    delete presenter;
 }

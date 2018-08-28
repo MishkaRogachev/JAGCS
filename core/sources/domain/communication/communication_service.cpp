@@ -86,7 +86,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 
     connect(d->commThread, &QThread::finished, d->commWorker, &QObject::deleteLater);
     connect(d->commWorker, &CommunicatorWorker::linkStatusChanged,
-            this, &CommunicationService::onLinkStatusChanged);
+            this, &CommunicationService::onLinkConnectedChanged);
     connect(d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
             this, &CommunicationService::onLinkStatisticsChanged);
     connect(d->commWorker, &CommunicatorWorker::linkSent,
@@ -230,7 +230,7 @@ void CommunicationService::setLinkConnected(int descriptionId, bool connected)
     if (description) description->setAutoConnect(connected);
 }
 
-void CommunicationService::onLinkStatusChanged(int descriptionId, bool connected)
+void CommunicationService::onLinkConnectedChanged(int descriptionId, bool connected)
 {
     dto::LinkDescriptionPtr description = this->description(descriptionId);
 
@@ -241,7 +241,7 @@ void CommunicationService::onLinkStatusChanged(int descriptionId, bool connected
                              connected ? dto::Notification::Positive : dto::Notification::Warning);
         description->setConnected(connected);
 
-        emit linkStatusChanged(description);
+        emit linkConnectedChanged(description, connected);
     }
 }
 

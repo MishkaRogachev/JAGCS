@@ -6,7 +6,6 @@
 #include <QDebug>
 
 // Internal
-#include "link_description.h"
 #include "link_statistics.h"
 
 #include "service_registry.h"
@@ -14,67 +13,112 @@
 
 using namespace presentation;
 
-LinkPresenter::LinkPresenter(QObject* parent):
-    BasePresenter(parent),
-    m_service(serviceRegistry->communicationService())
+class LinkPresenter::Impl
 {
-    connect(m_service, &domain::CommunicationService::descriptionChanged, this,
+public:
+    domain::CommunicationService* const service = serviceRegistry->communicationService();
+    dto::LinkDescriptionPtr description;
+    dto::LinkStatisticsPtr statistics;
+};
+
+LinkPresenter::LinkPresenter(const dto::LinkDescriptionPtr& description, QObject* parent):
+    QObject(parent),
+    d(new Impl())
+{
+    d->description = description;
+
+    connect(d->service, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (m_link == description) this->updateLink();
+        if (d->description == description) emit propertiesChanged();
     });
-    connect(m_service, &domain::CommunicationService::linkStatusChanged, this,
+
+    connect(d->service, &domain::CommunicationService::linkConnectedChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (m_link == description) this->updateStatus();
+        if (d->description == description) emit connectedChanged();
     });
-    connect(m_service, &domain::CommunicationService::linkStatisticsChanged, this,
+    connect(d->service, &domain::CommunicationService::linkStatisticsChanged, this,
             [this](const dto::LinkStatisticsPtr& statistics) {
-        if (m_link && m_link->id() == statistics->linkId()) this->updateStatistics(statistics);
+        if (d->description && d->description->id() == statistics->linkId())
+
+            d->statistics = statistics;
+            emit statisticsChanged();
     });
-    connect(m_service, &domain::CommunicationService::linkSent,
-            this, [this](int linkId) {
-        if (m_link && m_link->id() == linkId) this->setViewProperty(PROPERTY(sent), true);
+    connect(d->service, &domain::CommunicationService::linkSent,
+            this, [this](int descriptionId) {
+        if (d->description && d->description->id() == descriptionId) emit sent();
     });
-    connect(m_service, &domain::CommunicationService::linkRecv,
-            this, [this](int linkId) {
-        if (m_link && m_link->id() == linkId) this->setViewProperty(PROPERTY(recv), true);
+    connect(d->service, &domain::CommunicationService::linkRecv,
+            this, [this](int descriptionId) {
+        if (d->description && d->description->id() == descriptionId) emit recv();
     });
 }
 
-void LinkPresenter::setLink(int id)
-{
-    m_link = m_service->description(id);
+LinkPresenter::~LinkPresenter()
+{}
 
-    this->updateLink();
-    this->updateStatus();
+QString LinkPresenter::name() const
+{
+    return d->description ? d->description->name() : tr("None");
 }
 
-void LinkPresenter::updateLink()
+QString LinkPresenter::protocol() const
 {
-    this->setViewProperty(PROPERTY(type), m_link ? m_link->type() :
-                                                   dto::LinkDescription::UnknownType);
-    this->setViewProperty(PROPERTY(name), m_link ? m_link->name() : QString());
-    this->setViewProperty(PROPERTY(protocol), m_link ? m_link->protocol() : QString());
+    return d->description ? d->description->protocol() : tr("Unknown");
 }
 
-void LinkPresenter::updateStatus()
+dto::LinkDescription::Type LinkPresenter::type() const
 {
-    this->setViewProperty(PROPERTY(connected), m_link && m_link->isConnected());
-//    this->setViewProperty(PROPERTY(protocol), m_link ? m_link->protocol() :
-//                                                       dto::LinkDescription::UnknownProtocol);
+    return d->description ? d->description->type() : dto::LinkDescription::UnknownType;
+}
+
+bool LinkPresenter::isConnected() const
+{
+    return d->description && d->description->isConnected();
+}
+
+float LinkPresenter::bytesRecv() const
+{
+    return d->statistics ? d->statistics->bytesRecv() : 0;
+}
+
+float LinkPresenter::bytesSent() const
+{
+    return d->statistics ? d->statistics->bytesSent() : 0;
+}
+
+void LinkPresenter::setDescription(const dto::LinkDescriptionPtr& description)
+{
+    if (d->description == description) return;
+
+    d->description = description;
+
+    emit propertiesChanged();
+    emit connectedChanged();
+    emit statisticsChanged();
 }
 
 void LinkPresenter::setConnected(bool connected)
 {
-    if (m_link) m_service->setLinkConnected(m_link->id(), connected);
+    if (d->description) d->service->setLinkConnected(d->description->id(), connected);
 }
 
 void LinkPresenter::remove()
 {
-    if (m_link) m_service->remove(m_link);
+    if (d->description) d->service->remove(d->description);
 }
 
-void LinkPresenter::updateStatistics(const dto::LinkStatisticsPtr& statistics)
+void LinkPresenter::setName(const QString& name)
 {
-    this->setViewProperty(PROPERTY(bytesRecv), statistics->bytesRecv());
-    this->setViewProperty(PROPERTY(bytesSent), statistics->bytesSent());
+    if (d->description.isNull()) return;
+
+    d->description->setName(name);
+    d->service->save(d->description);
+}
+
+void LinkPresenter::setProtocol(const QString& protocol)
+{
+    if (d->description.isNull()) return;
+
+    d->description->setProtocol(protocol);
+    d->service->save(d->description);
 }

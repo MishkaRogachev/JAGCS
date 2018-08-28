@@ -2,22 +2,23 @@
 #define LINK_LIST_PRESENTER_H
 
 // Internal
-#include "base_presenter.h"
+#include "dto_traits.h"
 
-namespace domain
-{
-    class CommunicationService;
-}
+class QAbstractItemModel;
 
 namespace presentation
 {
-    class LinkListPresenter: public BasePresenter
+    class LinkListPresenter: public QObject
     {
         Q_OBJECT
+
+        Q_PROPERTY(QAbstractItemModel* links READ links CONSTANT)
 
     public:
         explicit LinkListPresenter(QObject* parent = nullptr);
         ~LinkListPresenter() override;
+
+        QAbstractItemModel* links() const;
 
     public slots:
         void addSerialLink();
@@ -27,8 +28,9 @@ namespace presentation
 
         void filter(const QString& filterString);
 
-    protected:
-        void connectView(QObject* view) override;
+    private slots:
+        void onDescriptionAdded(const dto::LinkDescriptionPtr& description);
+        void onDescriptionRemoved(const dto::LinkDescriptionPtr& description);
 
     private:
          class Impl;

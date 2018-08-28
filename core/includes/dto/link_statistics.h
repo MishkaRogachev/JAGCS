@@ -6,6 +6,7 @@
 
 namespace dto
 {
+// TODO: remove link statistics dao
     class LinkStatistics: public BaseDto
     {
         Q_GADGET

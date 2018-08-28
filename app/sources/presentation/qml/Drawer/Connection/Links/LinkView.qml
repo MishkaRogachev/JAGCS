@@ -8,22 +8,24 @@ import Industrial.Indicators 1.0 as Indicators
 Controls.Card {
     id: linkView
 
-    property int linkId: 0
-    property bool connected: false
-    property string name
-    property string protocol
-    property int type: LinkDescription.UnknownType
-    property real bytesRecv: 0.0
-    property real bytesSent: 0.0
-    property bool sent: false
+    property LinkPresenter presenter
+
     property bool recv: false
+    property bool sent: false
 
     function edit() {
         selectedLinkId = linkId;
     }
 
     function toggleConnection() {
-        presenter.setConnected(!connected)
+        presenter.setConnected(!presenter.connected)
+    }
+
+    Connections {
+        target: presenter
+
+        onRecv: recv = true
+        onSent: sent = true
     }
 
     onDeepIn: edit()
@@ -33,9 +35,9 @@ Controls.Card {
         var connectItem = menu.addEntry();
         connectItem.triggered.connect(toggleConnection);
         connectItem.text = Qt.binding(function() {
-            return connected ? qsTr("Disconnect") : qsTr("Connect"); });
+            return presenter.connected ? qsTr("Disconnect") : qsTr("Connect"); });
         connectItem.iconSource = Qt.binding(function() {
-            return connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
+            return presenter.connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
         removeItem.iconColor = customPalette.dangerColor;
@@ -57,18 +59,11 @@ Controls.Card {
         onTriggered: recv = false
     }
 
-    LinkPresenter {
-        id: presenter
-        view: linkView
-
-        Component.onCompleted: setLink(linkId)
-    }
-
     Controls.ColoredIcon {
         anchors.left: grid.left
         anchors.top: grid.top
-        source: connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
-        color: connected ? customPalette.positiveColor : customPalette.sunkenColor
+        source: presenter.connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
+        color: presenter.connected ? customPalette.positiveColor : customPalette.sunkenColor
     }
 
     GridLayout {
@@ -81,7 +76,7 @@ Controls.Card {
         columnSpacing: sizings.spacing
 
         Controls.Label {
-            text: name
+            text: presenter.name
             horizontalAlignment: Text.AlignHCenter
             Layout.columnSpan: 4
             Layout.fillWidth: true
@@ -89,7 +84,7 @@ Controls.Card {
 
         Controls.Label {
             text: {
-                switch (type) {
+                switch (presenter.type) {
                 case LinkDescription.Serial: return qsTr("Serial");
                 case LinkDescription.Udp: return qsTr("UDP");
                 case LinkDescription.Tcp: return qsTr("TCP");
@@ -103,7 +98,7 @@ Controls.Card {
         }
 
         Controls.Label {
-            text: protocol
+            text: presenter.protocol
             horizontalAlignment: Text.AlignHCenter
             Layout.columnSpan: 2
             Layout.fillWidth: true
@@ -114,7 +109,7 @@ Controls.Card {
         }
 
         Controls.Label {
-            text: qsTr("Recv") + ": " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
+            text: qsTr("Recv") + ": " + presenter.bytesRecv.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
             color: customPalette.positiveColor
             Layout.fillWidth: true
@@ -125,7 +120,7 @@ Controls.Card {
         }
 
         Controls.Label {
-            text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
+            text: qsTr("Sent") + ": " + presenter.bytesSent.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
             color: customPalette.skyColor
             Layout.fillWidth: true

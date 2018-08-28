@@ -22,7 +22,7 @@ ConnectionPresenter::ConnectionPresenter(QObject* parent):
     BasePresenter(parent),
     d(new Impl())
 {
-    connect(d->service, &domain::CommunicationService::linkStatusChanged,
+    connect(d->service, &domain::CommunicationService::linkConnectedChanged,
             this, &ConnectionPresenter::updateStatus);
     connect(d->service, &domain::CommunicationService::linkStatisticsChanged,
             this, &ConnectionPresenter::updateStatistics);

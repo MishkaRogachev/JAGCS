@@ -43,13 +43,13 @@ namespace domain
         void descriptionAdded(dto::LinkDescriptionPtr description);
         void descriptionRemoved(dto::LinkDescriptionPtr description);
         void descriptionChanged(dto::LinkDescriptionPtr description);
-        void linkStatusChanged(dto::LinkDescriptionPtr description);
+        void linkConnectedChanged(dto::LinkDescriptionPtr description, bool connected);
         void linkStatisticsChanged(dto::LinkStatisticsPtr statistics);
         void linkSent(int descriptionId);
         void linkRecv(int descriptionId);
 
     private slots:
-        void onLinkStatusChanged(int descriptionId, bool connected);
+        void onLinkConnectedChanged(int descriptionId, bool connected);
         void onLinkStatisticsChanged(int descriptionId,
                                      int timestamp,
                                      int bytesReceivedSec,

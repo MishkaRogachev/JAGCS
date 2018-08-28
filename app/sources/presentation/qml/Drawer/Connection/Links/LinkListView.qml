@@ -7,23 +7,13 @@ import Industrial.Controls 1.0 as Controls
 Item {
     id: linkList
 
-    property alias links: list.model
-
-    onVisibleChanged: drawer.filterEnabled = visible
-    Component.onCompleted: drawer.filterEnabled = true
-
-    Connections{
-        target: drawer
-        onFilter: presenter.filter(text)
-    }
-
     LinkListPresenter {
         id: presenter
-        view: linkList
     }
 
     ListView {
         id: list
+        model: presenter.links
         anchors.fill: parent
         anchors.margins: sizings.shadowSize
         anchors.bottomMargin: addButton.height
@@ -38,7 +28,7 @@ Item {
         delegate: LinkView {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
-            linkId: model.linkId
+            presenter: model.display
         }
     }
 
