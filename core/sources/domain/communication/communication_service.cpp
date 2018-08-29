@@ -157,6 +157,8 @@ void CommunicationService::addPlugin(ICommunicationPlugin* plugin)
 
     communicator->moveToThread(d->commThread);
     d->commWorker->addCommunicator(communicator);
+
+    emit availableProtocolsChanged();
 }
 
 void CommunicationService::removePlugin(ICommunicationPlugin* plugin)
@@ -165,6 +167,8 @@ void CommunicationService::removePlugin(ICommunicationPlugin* plugin)
 
     data_source::AbstractCommunicator* communicator = d->pluginCommunicators.take(plugin);
     d->commWorker->deleteCommunicator(communicator);
+
+    emit availableProtocolsChanged();
 }
 
 QStringList CommunicationService::availableProtocols() const

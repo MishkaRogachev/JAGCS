@@ -40,6 +40,8 @@ namespace domain
         void setLinkConnected(int descriptionId, bool connected);
 
     signals:
+        void availableProtocolsChanged();
+
         void descriptionAdded(dto::LinkDescriptionPtr description);
         void descriptionRemoved(dto::LinkDescriptionPtr description);
         void descriptionChanged(dto::LinkDescriptionPtr description);

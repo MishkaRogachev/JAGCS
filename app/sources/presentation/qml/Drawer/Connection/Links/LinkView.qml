@@ -5,20 +5,17 @@ import JAGCS 1.0
 import Industrial.Controls 1.0 as Controls
 import Industrial.Indicators 1.0 as Indicators
 
-Controls.Card {
+Controls.Frame {
     id: linkView
 
     property LinkPresenter presenter
 
+    property bool minimized: true
     property bool recv: false
     property bool sent: false
 
-    function edit() {
-        selectedLinkId = linkId;
-    }
-
-    function toggleConnection() {
-        presenter.setConnected(!presenter.connected)
+    function updateProtocol() {
+        protocolBox.currentIndex = availableProtocols.indexOf(presenter.protocol)
     }
 
     Connections {
@@ -26,26 +23,25 @@ Controls.Card {
 
         onRecv: recv = true
         onSent: sent = true
+        onProtocolChanged: updateProtocol()
     }
 
-    onDeepIn: edit()
-    Component.onCompleted: {
-        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
-
-        var connectItem = menu.addEntry();
-        connectItem.triggered.connect(toggleConnection);
-        connectItem.text = Qt.binding(function() {
-            return presenter.connected ? qsTr("Disconnect") : qsTr("Connect"); });
-        connectItem.iconSource = Qt.binding(function() {
-            return presenter.connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
-
-        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = customPalette.dangerColor;
-        removeItem.triggered.connect(presenter.remove);
+    Connections {
+        target: linkList
+        onAvailableProtocolsChanged: updateProtocol()
     }
 
-    implicitWidth: grid.implicitWidth + sizings.margins * 2
-    implicitHeight: grid.implicitHeight + sizings.margins * 2
+
+//    Component.onCompleted: {
+//        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+
+//        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
+//        removeItem.iconColor = customPalette.dangerColor;
+//        removeItem.triggered.connect(presenter.remove);
+//    }
+
+    implicitWidth: column.implicitWidth + sizings.margins * 2
+    implicitHeight: column.implicitHeight + sizings.margins * 2
 
     Timer {
         running: sent
@@ -59,71 +55,102 @@ Controls.Card {
         onTriggered: recv = false
     }
 
-    Controls.ColoredIcon {
-        anchors.left: grid.left
-        anchors.top: grid.top
-        source: presenter.connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
-        color: presenter.connected ? customPalette.positiveColor : customPalette.sunkenColor
-    }
-
-    GridLayout {
-        id: grid
+    ColumnLayout {
+        id: column
         anchors.fill: parent
         anchors.margins: sizings.margins
         anchors.rightMargin: linkView.margin
-        columns: 4
-        rowSpacing: sizings.spacing
-        columnSpacing: sizings.spacing
+        spacing: sizings.spacing
 
-        Controls.Label {
+        Controls.TextField {
             text: presenter.name
+            readOnly: minimized
             horizontalAlignment: Text.AlignHCenter
-            Layout.columnSpan: 4
+            onEditingFinished: presenter.setName(text)
             Layout.fillWidth: true
         }
 
         Controls.Label {
             text: {
+                var type = qsTr("Type") + ": ";
+
                 switch (presenter.type) {
-                case LinkDescription.Serial: return qsTr("Serial");
-                case LinkDescription.Udp: return qsTr("UDP");
-                case LinkDescription.Tcp: return qsTr("TCP");
-                case LinkDescription.Bluetooth: return qsTr("Bluetooth");
-                default: return qsTr("Unknown");
+                case LinkDescription.Serial:
+                    type += qsTr("Serial");
+                    break;
+                case LinkDescription.Udp:
+                    type += qsTr("UDP");
+                    break;
+                case LinkDescription.Tcp:
+                    type += qsTr("TCP");
+                    break;
+                case LinkDescription.Bluetooth:
+                    type += qsTr("Bluetooth");
+                    break;
+                default:
+                    type += qsTr("Unknown");
+                    break;
                 }
+
+                return type;
             }
+            visible: !minimized
             horizontalAlignment: Text.AlignHCenter
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
-        Controls.Label {
-            text: presenter.protocol
-            horizontalAlignment: Text.AlignHCenter
-            Layout.columnSpan: 2
+        Controls.ComboBox {
+            id: protocolBox
+            labelText: qsTr("Protocol")
+            visible: !minimized
+            model: availableProtocols
+            onDisplayTextChanged: presenter.setProtocol(displayText)
             Layout.fillWidth: true
         }
 
-        Indicators.Led {
-            color: recv ? customPalette.positiveColor : customPalette.sunkenColor
-        }
+        RowLayout {
+            spacing: sizings.spacing
 
-        Controls.Label {
-            text: qsTr("Recv") + ": " + presenter.bytesRecv.toFixed(1) + " " + qsTr("B/s")
-            horizontalAlignment: Text.AlignHCenter
-            color: customPalette.positiveColor
-            Layout.fillWidth: true
-        }
+            Indicators.Led {
+                color: recv ? customPalette.positiveColor : customPalette.sunkenColor
+            }
 
-        Indicators.Led {
-            color: sent ? customPalette.skyColor : customPalette.sunkenColor
-        }
+            Controls.Label {
+                text: qsTr("Recv") + ": " + presenter.bytesRecv.toFixed(1) + " " + qsTr("B/s")
+                horizontalAlignment: Text.AlignHCenter
+                color: customPalette.positiveColor
+                Layout.fillWidth: true
+            }
 
-        Controls.Label {
-            text: qsTr("Sent") + ": " + presenter.bytesSent.toFixed(1) + " " + qsTr("B/s")
-            horizontalAlignment: Text.AlignHCenter
-            color: customPalette.skyColor
-            Layout.fillWidth: true
+            Indicators.Led {
+                color: sent ? customPalette.skyColor : customPalette.sunkenColor
+            }
+
+            Controls.Label {
+                text: qsTr("Sent") + ": " + presenter.bytesSent.toFixed(1) + " " + qsTr("B/s")
+                horizontalAlignment: Text.AlignHCenter
+                color: customPalette.skyColor
+                Layout.fillWidth: true
+            }
         }
+    }
+
+    Controls.Button {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        flat: true
+        iconSource: presenter.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
+        iconColor: presenter.connected ? customPalette.positiveColor : customPalette.dangerColor
+        tipText: presenter.connected ? qsTr("Disconnect") : qsTr("Connect");
+        onClicked: presenter.setConnected(!presenter.connected)
+    }
+
+    Controls.Button {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        flat: true
+        iconSource: minimized ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"
+        tipText: minimized ? qsTr("Maximize") : qsTr("Minimize");
+        onClicked: minimized = !minimized
     }
 }

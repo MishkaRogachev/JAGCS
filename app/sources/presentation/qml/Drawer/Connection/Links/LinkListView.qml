@@ -7,6 +7,9 @@ import Industrial.Controls 1.0 as Controls
 Item {
     id: linkList
 
+    property alias availableProtocols: presenter.availableProtocols
+    property alias baudRates: presenter.baudRates
+
     LinkListPresenter {
         id: presenter
     }
