@@ -73,7 +73,9 @@
         <file>Drawer/Vehicles/VehicleView.qml</file>
         <file>Drawer/Connection/ConnectionView.qml</file>
         <file>Drawer/Connection/Links/LinkListView.qml</file>
-        <file>Drawer/Connection/Links/LinkView.qml</file>
+        <file>Drawer/Connection/Links/BaseLinkView.qml</file>
+        <file>Drawer/Connection/Links/UdpLinkView.qml</file>
+        <file>Drawer/Connection/Links/RecvSentRow.qml</file>
         <file>Drawer/Plugins/PluginsView.qml</file>
         <file>Drawer/Settings/Database/DatabaseView.qml</file>
         <file>Drawer/Settings/Map/MapSettingsView.qml</file>

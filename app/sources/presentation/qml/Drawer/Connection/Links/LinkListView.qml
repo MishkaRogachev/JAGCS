@@ -28,10 +28,55 @@ Item {
             visible: parent.contentHeight > parent.height
         }
 
-        delegate: LinkView {
+        delegate: Controls.Frame {
+            id: linkFrame
+
+            property LinkPresenter presenter: model.display
+            property bool minimized: true
+
             width: parent.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            presenter: model.display
+            implicitHeight: linkView.implicitHeight + recvSent.implicitHeight + sizings.margins * 3
+
+            Loader {
+                id: linkView
+                width: parent.width
+                source: {
+                    switch (presenter.type) {
+                    case LinkDescription.Serial: return "SerialLinkView.qml";
+                    case LinkDescription.Udp: return "UdpLinkView.qml";
+                    case LinkDescription.Tcp: return "TcpLinkView.qml";
+                    case LinkDescription.Bluetooth: return "BluetoothLinkView.qml";
+                    default: return "";
+                    }
+                }
+            }
+
+            Controls.Button {
+                id: connectButton
+                anchors.left: parent.left
+                anchors.top: parent.top
+                flat: true
+                iconSource: presenter.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
+                iconColor: presenter.connected ? customPalette.positiveColor : customPalette.dangerColor
+                tipText: presenter.connected ? qsTr("Disconnect") : qsTr("Connect");
+                onClicked: presenter.setConnected(!presenter.connected)
+            }
+
+            Controls.Button {
+                id: minimizeButton
+                anchors.right: parent.right
+                anchors.top: parent.top
+                flat: true
+                iconSource: minimized ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"
+                tipText: minimized ? qsTr("Maximize") : qsTr("Minimize");
+                onClicked: minimized = !minimized
+            }
+
+            RecvSentRow {
+                id: recvSent
+                anchors.bottom: parent.bottom
+                width: parent.width
+            }
         }
     }
 
