@@ -36,6 +36,8 @@ namespace presentation
         float bytesRecv() const;
         float bytesSent() const;
 
+        Q_INVOKABLE QVariant parameter(dto::LinkDescription::Parameter key) const;
+
     public slots:
         void setDescription(const dto::LinkDescriptionPtr& description);
 
@@ -43,6 +45,8 @@ namespace presentation
         void setConnected(bool isConnected);
         void setName(const QString& name);
         void setProtocol(const QString& protocol);
+
+        void setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter);
 
     signals:
         void recv();

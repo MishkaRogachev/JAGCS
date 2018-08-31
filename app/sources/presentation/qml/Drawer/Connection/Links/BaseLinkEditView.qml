@@ -23,13 +23,7 @@ ColumnLayout {
         onAvailableProtocolsChanged: updateProtocol()
     }
 
-//    Component.onCompleted: {
-//        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
-
-//        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-//        removeItem.iconColor = customPalette.dangerColor;
-//        removeItem.triggered.connect(presenter.remove);
-//    }
+    Component.onCompleted: updateProtocol()
 
     Controls.TextField {
         text: presenter.name
@@ -42,37 +36,7 @@ ColumnLayout {
         Layout.fillWidth: true
     }
 
-    RowLayout {
-        spacing: sizings.spacing
-        visible: minimized
-
-        Controls.Label {
-            text: {
-                switch (presenter.type) {
-                case LinkDescription.Serial:
-                    return qsTr("Serial");
-                case LinkDescription.Udp:
-                    return qsTr("UDP");
-                case LinkDescription.Tcp:
-                    return qsTr("TCP");
-                case LinkDescription.Bluetooth:
-                    return qsTr("Bluetooth");
-                default:
-                    return qsTr("Unknown");
-                }
-            }
-            horizontalAlignment: Text.AlignHCenter
-            Layout.fillWidth: true
-        }
-
-        Controls.Label {
-            text: presenter.protocol.length ? presenter.protocol : "-"
-            horizontalAlignment: Text.AlignHCenter
-            Layout.fillWidth: true
-        }
-    }
-
-// TODO: types
+// TODO: edit link type
 //    Controls.ComboBox {
 //        id: protocolBox
 //        labelText: qsTr("Type")

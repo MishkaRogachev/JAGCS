@@ -86,6 +86,11 @@ float LinkPresenter::bytesSent() const
     return d->statistics ? d->statistics->bytesSent() : 0;
 }
 
+QVariant LinkPresenter::parameter(dto::LinkDescription::Parameter key) const
+{
+    return d->description ? d->description->parameter(key) : QVariant();
+}
+
 void LinkPresenter::setDescription(const dto::LinkDescriptionPtr& description)
 {
     if (d->description == description) return;
@@ -120,5 +125,13 @@ void LinkPresenter::setProtocol(const QString& protocol)
     if (d->description.isNull()) return;
 
     d->description->setProtocol(protocol);
+    d->service->save(d->description);
+}
+
+void LinkPresenter::setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter)
+{
+    if (d->description.isNull()) return;
+    
+    d->description->setParameter(key, parameter);
     d->service->save(d->description);
 }
