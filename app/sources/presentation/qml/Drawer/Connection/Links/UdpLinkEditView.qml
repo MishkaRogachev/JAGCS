@@ -11,8 +11,8 @@ BaseLinkEditView {
         labelText: qsTr("Port")
         from: 0
         to: 65535
-        value: presenter.parameter(LinkDescription.Port)
-        onValueModified: presenter.setParameter(LinkDescription.Port, value)
+        value: provider.parameter(LinkDescription.Port)
+        onValueModified: provider.setParameter(LinkDescription.Port, value)
         Layout.fillWidth: true
     }
 
@@ -23,18 +23,17 @@ BaseLinkEditView {
     }
 
     EndpointListView {
-        id: endpointList
-        onChanged: linkEditView.changed = true
+        endpoints: provider.parameter(LinkDescription.Endpoints)
+        onChanged: provider.setParameter(LinkDescription.Endpoints, endpoints)
         Layout.maximumHeight: sizings.controlBaseSize * 6
         Layout.fillWidth: true
     }
 
     Controls.CheckBox {
-        id: autoResponseBox
         text: qsTr("Autoresponse on get data")
         horizontalAlignment: Text.AlignHCenter
-        checked: presenter.parameter(LinkDescription.UdpAutoResponse)
-        onToggled: presenter.setParameter(LinkDescription.UdpAutoResponse, toggled)
+        checked: provider.parameter(LinkDescription.UdpAutoResponse)
+        onToggled: provider.setParameter(LinkDescription.UdpAutoResponse, toggled)
         Layout.fillWidth: true
     }
 }

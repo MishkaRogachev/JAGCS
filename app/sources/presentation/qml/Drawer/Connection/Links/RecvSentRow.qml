@@ -13,7 +13,7 @@ RowLayout {
     spacing: sizings.spacing
 
     Connections {
-        target: presenter
+        target: provider
 
         onRecv: recv = true
         onSent: sent = true
@@ -38,7 +38,7 @@ RowLayout {
     }
 
     Controls.Label {
-        text: qsTr("Recv") + ": " + presenter.bytesRecv.toFixed(1) + " " + qsTr("B/s")
+        text: qsTr("Recv") + ": " + provider.bytesRecv.toFixed(1) + " " + qsTr("B/s")
         horizontalAlignment: Text.AlignHCenter
         color: customPalette.positiveColor
         Layout.fillWidth: true
@@ -49,7 +49,7 @@ RowLayout {
     }
 
     Controls.Label {
-        text: qsTr("Sent") + ": " + presenter.bytesSent.toFixed(1) + " " + qsTr("B/s")
+        text: qsTr("Sent") + ": " + provider.bytesSent.toFixed(1) + " " + qsTr("B/s")
         horizontalAlignment: Text.AlignHCenter
         color: customPalette.skyColor
         Layout.fillWidth: true

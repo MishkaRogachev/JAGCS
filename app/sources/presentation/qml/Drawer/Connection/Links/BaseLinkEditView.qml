@@ -8,13 +8,13 @@ ColumnLayout {
     id: column
 
     function updateProtocol() {
-        protocolBox.currentIndex = availableProtocols.indexOf(presenter.protocol)
+        protocolBox.currentIndex = availableProtocols.indexOf(provider.protocol)
     }
 
     spacing: sizings.spacing
 
     Connections {
-        target: presenter
+        target: provider
         onProtocolChanged: updateProtocol()
     }
 
@@ -26,11 +26,11 @@ ColumnLayout {
     Component.onCompleted: updateProtocol()
 
     Controls.TextField {
-        text: presenter.name
+        text: provider.name
         labelText: qsTr("Name")
         readOnly: minimized
         horizontalAlignment: Text.AlignHCenter
-        onEditingFinished: presenter.setName(text)
+        onEditingFinished: provider.setName(text)
         Layout.leftMargin: connectButton.width
         Layout.rightMargin: minimizeButton.width
         Layout.fillWidth: true
@@ -42,7 +42,7 @@ ColumnLayout {
 //        labelText: qsTr("Type")
 //        visible: !minimized
 //        model: availableProtocols
-//        onDisplayTextChanged: presenter.setProtocol(displayText)
+//        onDisplayTextChanged: provider.setProtocol(displayText)
 //        Layout.fillWidth: true
 //    }
 
@@ -51,7 +51,7 @@ ColumnLayout {
         labelText: qsTr("Protocol")
         visible: !minimized
         model: availableProtocols
-        onDisplayTextChanged: presenter.setProtocol(displayText)
+        onDisplayTextChanged: provider.setProtocol(displayText)
         Layout.fillWidth: true
     }
 }

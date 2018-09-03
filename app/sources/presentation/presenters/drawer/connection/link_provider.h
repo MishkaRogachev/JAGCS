@@ -1,5 +1,5 @@
-#ifndef LINK_PRESENTER_H
-#define LINK_PRESENTER_H
+#ifndef LINK_PROVIDER_H
+#define LINK_PROVIDER_H
 
 // Internal
 #include "link_description.h"
@@ -11,7 +11,7 @@ namespace domain
 
 namespace presentation
 {
-    class LinkPresenter: public QObject
+    class LinkProvider: public QObject
     {
         Q_OBJECT
 
@@ -25,9 +25,9 @@ namespace presentation
         Q_PROPERTY(float bytesSent READ bytesSent NOTIFY statisticsChanged)
 
     public:
-        LinkPresenter(const dto::LinkDescriptionPtr& description = dto::LinkDescriptionPtr(),
+        LinkProvider(const dto::LinkDescriptionPtr& description = dto::LinkDescriptionPtr(),
                       QObject* parent = nullptr);
-        ~LinkPresenter() override;
+        ~LinkProvider() override;
 
         QString name() const;
         QString protocol() const;
@@ -62,4 +62,4 @@ namespace presentation
     };
 }
 
-#endif // LINK_PRESENTER_H
+#endif // LINK_PROVIDER_H

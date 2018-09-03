@@ -34,8 +34,8 @@
 #include "mission_assignment_presenter.h"
 #include "vehicle_list_presenter.h"
 #include "vehicle_presenter.h"
-#include "link_list_presenter.h"
-#include "link_presenter.h"
+#include "link_list_provider.h"
+#include "link_provider.h"
 #include "plugins_presenter.h"
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
@@ -89,9 +89,8 @@ static void registerTypes()
     QML_TYPE(VehiclesListDisplayPresenter);
     QML_TYPE(AerialVehicleDisplayPresenter);
     QML_TYPE(DrawerPresenter);
-    QML_TYPE(LinkListPresenter);
-    QML_TYPE(LinkPresenter);
-//    QML_TYPE(LinkEditPresenter);
+    QML_TYPE(LinkListProvider);
+    QML_TYPE(LinkProvider);
     QML_TYPE(PluginsPresenter);
     QML_TYPE(VehicleListPresenter);
     QML_TYPE(VehiclePresenter);

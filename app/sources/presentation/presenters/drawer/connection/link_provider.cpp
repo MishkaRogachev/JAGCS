@@ -1,4 +1,4 @@
-#include "link_presenter.h"
+#include "link_provider.h"
 
 // Qt
 #include <QMap>
@@ -13,7 +13,7 @@
 
 using namespace presentation;
 
-class LinkPresenter::Impl
+class LinkProvider::Impl
 {
 public:
     domain::CommunicationService* const service = serviceRegistry->communicationService();
@@ -21,7 +21,7 @@ public:
     dto::LinkStatisticsPtr statistics;
 };
 
-LinkPresenter::LinkPresenter(const dto::LinkDescriptionPtr& description, QObject* parent):
+LinkProvider::LinkProvider(const dto::LinkDescriptionPtr& description, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
@@ -53,45 +53,45 @@ LinkPresenter::LinkPresenter(const dto::LinkDescriptionPtr& description, QObject
     });
 }
 
-LinkPresenter::~LinkPresenter()
+LinkProvider::~LinkProvider()
 {}
 
-QString LinkPresenter::name() const
+QString LinkProvider::name() const
 {
     return d->description ? d->description->name() : tr("None");
 }
 
-QString LinkPresenter::protocol() const
+QString LinkProvider::protocol() const
 {
     return d->description ? d->description->protocol() : tr("Unknown");
 }
 
-dto::LinkDescription::Type LinkPresenter::type() const
+dto::LinkDescription::Type LinkProvider::type() const
 {
     return d->description ? d->description->type() : dto::LinkDescription::UnknownType;
 }
 
-bool LinkPresenter::isConnected() const
+bool LinkProvider::isConnected() const
 {
     return d->description && d->description->isConnected();
 }
 
-float LinkPresenter::bytesRecv() const
+float LinkProvider::bytesRecv() const
 {
     return d->statistics ? d->statistics->bytesRecv() : 0;
 }
 
-float LinkPresenter::bytesSent() const
+float LinkProvider::bytesSent() const
 {
     return d->statistics ? d->statistics->bytesSent() : 0;
 }
 
-QVariant LinkPresenter::parameter(dto::LinkDescription::Parameter key) const
+QVariant LinkProvider::parameter(dto::LinkDescription::Parameter key) const
 {
     return d->description ? d->description->parameter(key) : QVariant();
 }
 
-void LinkPresenter::setDescription(const dto::LinkDescriptionPtr& description)
+void LinkProvider::setDescription(const dto::LinkDescriptionPtr& description)
 {
     if (d->description == description) return;
 
@@ -102,17 +102,17 @@ void LinkPresenter::setDescription(const dto::LinkDescriptionPtr& description)
     emit statisticsChanged();
 }
 
-void LinkPresenter::setConnected(bool connected)
+void LinkProvider::setConnected(bool connected)
 {
     if (d->description) d->service->setLinkConnected(d->description->id(), connected);
 }
 
-void LinkPresenter::remove()
+void LinkProvider::remove()
 {
     if (d->description) d->service->remove(d->description);
 }
 
-void LinkPresenter::setName(const QString& name)
+void LinkProvider::setName(const QString& name)
 {
     if (d->description.isNull()) return;
 
@@ -120,7 +120,7 @@ void LinkPresenter::setName(const QString& name)
     d->service->save(d->description);
 }
 
-void LinkPresenter::setProtocol(const QString& protocol)
+void LinkProvider::setProtocol(const QString& protocol)
 {
     if (d->description.isNull()) return;
 
@@ -128,7 +128,7 @@ void LinkPresenter::setProtocol(const QString& protocol)
     d->service->save(d->description);
 }
 
-void LinkPresenter::setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter)
+void LinkProvider::setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter)
 {
     if (d->description.isNull()) return;
     

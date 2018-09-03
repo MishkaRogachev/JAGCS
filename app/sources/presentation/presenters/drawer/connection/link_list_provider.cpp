@@ -1,4 +1,4 @@
-#include "link_list_presenter.h"
+#include "link_list_provider.h"
 
 // Qt
 #include <QSortFilterProxyModel>
@@ -15,21 +15,21 @@
 #include "serial_ports_service.h"
 
 #include "object_list_model.h"
-#include "link_presenter.h"
+#include "link_provider.h"
 
 using namespace presentation;
 
-class LinkListPresenter::Impl
+class LinkListProvider::Impl
 {
 public:
     domain::CommunicationService* const service = serviceRegistry->communicationService();
 
-    QMap<dto::LinkDescriptionPtr, LinkPresenter*> descriptedPresenters;
-    ObjectListModel<LinkPresenter> linksModel;
+    QMap<dto::LinkDescriptionPtr, LinkProvider*> descriptedPresenters;
+    ObjectListModel<LinkProvider> linksModel;
     QSortFilterProxyModel filterModel;
 };
 
-LinkListPresenter::LinkListPresenter(QObject* parent):
+LinkListProvider::LinkListProvider(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
@@ -45,22 +45,22 @@ LinkListPresenter::LinkListPresenter(QObject* parent):
     }
 
     connect(d->service, &domain::CommunicationService::availableProtocolsChanged,
-            this, &LinkListPresenter::availableProtocolsChanged);
+            this, &LinkListProvider::availableProtocolsChanged);
     connect(d->service, &domain::CommunicationService::descriptionAdded,
-            this, &LinkListPresenter::onDescriptionAdded);
+            this, &LinkListProvider::onDescriptionAdded);
     connect(d->service, &domain::CommunicationService::descriptionRemoved,
-            this, &LinkListPresenter::onDescriptionRemoved);
+            this, &LinkListProvider::onDescriptionRemoved);
 }
 
-LinkListPresenter::~LinkListPresenter()
+LinkListProvider::~LinkListProvider()
 {}
 
-QAbstractItemModel* LinkListPresenter::links() const
+QAbstractItemModel* LinkListProvider::links() const
 {
     return &d->filterModel;
 }
 
-QStringList LinkListPresenter::availableProtocols() const
+QStringList LinkListProvider::availableProtocols() const
 {
     QStringList protocols;
 
@@ -70,14 +70,14 @@ QStringList LinkListPresenter::availableProtocols() const
     return protocols;
 }
 
-QVariantList LinkListPresenter::baudRates() const
+QVariantList LinkListProvider::baudRates() const
 {
     QVariantList baudRates;
     for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
     return baudRates;
 }
 
-void LinkListPresenter::addSerialLink()
+void LinkListProvider::addSerialLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -89,7 +89,7 @@ void LinkListPresenter::addSerialLink()
     d->service->save(description);
 }
 
-void LinkListPresenter::addUdpLink()
+void LinkListProvider::addUdpLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -102,7 +102,7 @@ void LinkListPresenter::addUdpLink()
     d->service->save(description);
 }
 
-void LinkListPresenter::addTcpLink()
+void LinkListProvider::addTcpLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -116,7 +116,7 @@ void LinkListPresenter::addTcpLink()
     d->service->save(description);
 }
 
-void LinkListPresenter::addBluetoothLink()
+void LinkListProvider::addBluetoothLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -128,22 +128,22 @@ void LinkListPresenter::addBluetoothLink()
     d->service->save(description);
 }
 
-void LinkListPresenter::filter(const QString& filterString)
+void LinkListProvider::filter(const QString& filterString)
 {
     d->filterModel.setFilterFixedString(filterString);
 }
 
-void LinkListPresenter::onDescriptionAdded(const dto::LinkDescriptionPtr& description)
+void LinkListProvider::onDescriptionAdded(const dto::LinkDescriptionPtr& description)
 {
-    LinkPresenter* presenter = new LinkPresenter(description, this);
+    LinkProvider* presenter = new LinkProvider(description, this);
 
     d->descriptedPresenters[description] = presenter;
     d->linksModel.append(presenter);
 }
 
-void LinkListPresenter::onDescriptionRemoved(const dto::LinkDescriptionPtr& description)
+void LinkListProvider::onDescriptionRemoved(const dto::LinkDescriptionPtr& description)
 {
-    LinkPresenter* presenter = d->descriptedPresenters.take(description);
+    LinkProvider* presenter = d->descriptedPresenters.take(description);
     if (!presenter) return;
 
     d->linksModel.remove(presenter);

@@ -7,7 +7,7 @@ import Industrial.Controls 1.0 as Controls
 Controls.Frame {
     id: linkFrame
 
-    property LinkPresenter presenter
+    property LinkProvider provider
     property bool minimized: true
 
     //    Component.onCompleted: {
@@ -15,7 +15,7 @@ Controls.Frame {
 
     //        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
     //        removeItem.iconColor = customPalette.dangerColor;
-    //        removeItem.triggered.connect(presenter.remove);
+    //        removeItem.triggered.connect(provider.remove);
     //    }
     implicitWidth: column.implicitWidth + sizings.margins * 2
     implicitHeight: column.implicitHeight + sizings.margins * 2
@@ -27,7 +27,7 @@ Controls.Frame {
 
         Controls.Label {
             visible: minimized
-            text: presenter.name
+            text: provider.name
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
@@ -38,7 +38,7 @@ Controls.Frame {
 
             Controls.Label {
                 text: {
-                    switch (presenter.type) {
+                    switch (provider.type) {
                     case LinkDescription.Serial:
                         return qsTr("Serial");
                     case LinkDescription.Udp:
@@ -56,7 +56,7 @@ Controls.Frame {
             }
 
             Controls.Label {
-                text: presenter.protocol.length ? presenter.protocol : "-"
+                text: provider.protocol.length ? provider.protocol : "-"
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
             }
@@ -67,7 +67,7 @@ Controls.Frame {
             visible: !minimized
             Layout.fillWidth: true
             source: {
-                switch (presenter.type) {
+                switch (provider.type) {
                 case LinkDescription.Serial: return "SerialLinkEditView.qml";
                 case LinkDescription.Udp: return "UdpLinkEditView.qml";
                 case LinkDescription.Tcp: return "TcpLinkEditView.qml";
@@ -88,10 +88,10 @@ Controls.Frame {
         anchors.left: parent.left
         anchors.top: parent.top
         flat: true
-        iconSource: presenter.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        iconColor: presenter.connected ? customPalette.positiveColor : customPalette.dangerColor
-        tipText: presenter.connected ? qsTr("Disconnect") : qsTr("Connect");
-        onClicked: presenter.setConnected(!presenter.connected)
+        iconSource: provider.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
+        iconColor: provider.connected ? customPalette.positiveColor : customPalette.dangerColor
+        tipText: provider.connected ? qsTr("Disconnect") : qsTr("Connect");
+        onClicked: provider.setConnected(!provider.connected)
     }
 
     Controls.Button {

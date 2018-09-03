@@ -1,5 +1,5 @@
-#ifndef LINK_LIST_PRESENTER_H
-#define LINK_LIST_PRESENTER_H
+#ifndef LINK_LIST_PROVIDER_H
+#define LINK_LIST_PROVIDER_H
 
 // Internal
 #include "dto_traits.h"
@@ -8,7 +8,7 @@ class QAbstractItemModel;
 
 namespace presentation
 {
-    class LinkListPresenter: public QObject
+    class LinkListProvider: public QObject
     {
         Q_OBJECT
 
@@ -18,8 +18,8 @@ namespace presentation
         Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
 
     public:
-        explicit LinkListPresenter(QObject* parent = nullptr);
-        ~LinkListPresenter() override;
+        explicit LinkListProvider(QObject* parent = nullptr);
+        ~LinkListProvider() override;
 
         QAbstractItemModel* links() const;
         QStringList availableProtocols() const;
@@ -46,4 +46,4 @@ namespace presentation
     };
 }
 
-#endif // LINK_LIST_PRESENTER_H
+#endif // LINK_LIST_PROVIDER_H
