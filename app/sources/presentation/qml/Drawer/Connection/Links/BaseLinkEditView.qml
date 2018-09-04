@@ -8,7 +8,7 @@ ColumnLayout {
     id: column
 
     function updateProtocol() {
-        protocolBox.currentIndex = availableProtocols.indexOf(provider.protocol)
+        protocolBox.currentIndex = provider.availableProtocols.indexOf(provider.protocol)
     }
 
     spacing: sizings.spacing
@@ -16,10 +16,6 @@ ColumnLayout {
     Connections {
         target: provider
         onProtocolChanged: updateProtocol()
-    }
-
-    Connections {
-        target: linkList
         onAvailableProtocolsChanged: updateProtocol()
     }
 
@@ -50,7 +46,7 @@ ColumnLayout {
         id: protocolBox
         labelText: qsTr("Protocol")
         visible: !minimized
-        model: availableProtocols
+        model: provider.availableProtocols
         onDisplayTextChanged: provider.setProtocol(displayText)
         Layout.fillWidth: true
     }

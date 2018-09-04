@@ -7,16 +7,13 @@ import Industrial.Controls 1.0 as Controls
 Item {
     id: linkList
 
-    property alias availableProtocols: provider.availableProtocols
-    property alias baudRates: provider.baudRates
-
     LinkListProvider {
-        id: provider
+        id: listProvider
     }
 
     ListView {
         id: list
-        model: provider.links
+        model: listProvider.links
         anchors.fill: parent
         anchors.margins: sizings.shadowSize
         anchors.bottomMargin: addButton.height
@@ -31,6 +28,7 @@ Item {
         delegate: LinkView {
             provider: model.display
             width: parent.width
+            onRemoveRequest: listProvider.remove(model.display)
         }
     }
 
@@ -56,25 +54,25 @@ Item {
             Controls.MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
-                onTriggered: provider.addSerialLink()
+                onTriggered: listProvider.addSerialLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
-                onTriggered: provider.addUdpLink()
+                onTriggered: listProvider.addUdpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Tcp")
                 implicitWidth: parent.width
-                onTriggered: provider.addTcpLink()
+                onTriggered: listProvider.addTcpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Bluetooth")
                 implicitWidth: parent.width
-                onTriggered: provider.addBluetoothLink()
+                onTriggered: listProvider.addBluetoothLink()
             }
         }
     }

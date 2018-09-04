@@ -13,17 +13,12 @@ namespace presentation
         Q_OBJECT
 
         Q_PROPERTY(QAbstractItemModel* links READ links CONSTANT)
-        Q_PROPERTY(QStringList availableProtocols READ availableProtocols
-                   NOTIFY availableProtocolsChanged)
-        Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
 
     public:
         explicit LinkListProvider(QObject* parent = nullptr);
         ~LinkListProvider() override;
 
         QAbstractItemModel* links() const;
-        QStringList availableProtocols() const;
-        QVariantList baudRates() const;
 
     public slots:
         void addSerialLink();
@@ -32,9 +27,6 @@ namespace presentation
         void addBluetoothLink();
 
         void filter(const QString& filterString);
-
-    signals:
-        void availableProtocolsChanged();
 
     private slots:
         void onDescriptionAdded(const dto::LinkDescriptionPtr& description);

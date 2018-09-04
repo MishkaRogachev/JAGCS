@@ -24,6 +24,10 @@ namespace presentation
         Q_PROPERTY(float bytesRecv READ bytesRecv NOTIFY statisticsChanged)
         Q_PROPERTY(float bytesSent READ bytesSent NOTIFY statisticsChanged)
 
+        Q_PROPERTY(QStringList availableProtocols READ availableProtocols
+                   NOTIFY availableProtocolsChanged)
+        Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
+
     public:
         LinkProvider(const dto::LinkDescriptionPtr& description = dto::LinkDescriptionPtr(),
                       QObject* parent = nullptr);
@@ -35,6 +39,9 @@ namespace presentation
         bool isConnected() const;
         float bytesRecv() const;
         float bytesSent() const;
+
+        QStringList availableProtocols() const;
+        QVariantList baudRates() const;
 
         Q_INVOKABLE QVariant parameter(dto::LinkDescription::Parameter key) const;
 
@@ -55,6 +62,8 @@ namespace presentation
         void propertiesChanged();
         void connectedChanged();
         void statisticsChanged();
+
+        void availableProtocolsChanged();
 
     private:
          class Impl;

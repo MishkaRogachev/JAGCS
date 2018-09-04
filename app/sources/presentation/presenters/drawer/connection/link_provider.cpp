@@ -10,6 +10,7 @@
 
 #include "service_registry.h"
 #include "communication_service.h"
+#include "serial_ports_service.h"
 
 namespace
 {
@@ -31,6 +32,9 @@ LinkProvider::LinkProvider(const dto::LinkDescriptionPtr& description, QObject* 
     d(new Impl())
 {
     d->description = description;
+
+    connect(d->service, &domain::CommunicationService::availableProtocolsChanged,
+            this, &LinkProvider::availableProtocolsChanged);
 
     connect(d->service, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
@@ -89,6 +93,30 @@ float LinkProvider::bytesRecv() const
 float LinkProvider::bytesSent() const
 {
     return d->statistics ? d->statistics->bytesSent() : 0;
+}
+
+QStringList LinkProvider::availableProtocols() const
+{
+    QStringList protocols;
+
+    protocols.append(QString());
+    protocols.append(d->service->availableProtocols());
+
+    if (d->description && !protocols.contains(d->description->protocol()))
+    {
+        protocols.append(d->description->protocol());
+    }
+
+    return protocols;
+}
+
+QVariantList LinkProvider::baudRates() const
+{
+    QVariantList baudRates;
+
+    for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
+
+    return baudRates;
 }
 
 QVariant LinkProvider::parameter(dto::LinkDescription::Parameter key) const

@@ -8,15 +8,12 @@ Controls.Frame {
     id: linkFrame
 
     property LinkProvider provider
+
     property bool minimized: true
+    property bool changed: false
 
-    //    Component.onCompleted: {
-    //        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
+    signal removeRequest()
 
-    //        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-    //        removeItem.iconColor = customPalette.dangerColor;
-    //        removeItem.triggered.connect(provider.remove);
-    //    }
     implicitWidth: column.implicitWidth + sizings.margins * 2
     implicitHeight: column.implicitHeight + sizings.margins * 2
 
@@ -81,6 +78,36 @@ Controls.Frame {
             id: recvSent
             Layout.fillWidth: true
         }
+
+        RowLayout {
+            spacing: sizings.spacing
+
+            Controls.Button {
+                flat: true
+                iconSource: "qrc:/icons/save.svg"
+                text: qsTr("Save")
+                enabled: changed
+                //onClicked:
+                Layout.fillWidth: true
+            }
+
+            Controls.Button {
+                flat: true
+                iconSource: "qrc:/icons/restore.svg"
+                text: qsTr("Restore")
+                enabled: changed
+                //onClicked: provider.setConnected(!provider.connected)
+                Layout.fillWidth: true
+            }
+
+            Controls.DelayButton {
+                flat: true
+                iconSource: "qrc:/icons/remove.svg"
+                text: qsTr("Remove");
+                onClicked: removeRequest()
+                Layout.fillWidth: true
+            }
+        }
     }
 
     Controls.Button {
@@ -88,8 +115,8 @@ Controls.Frame {
         anchors.left: parent.left
         anchors.top: parent.top
         flat: true
-        iconSource: provider.connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        iconColor: provider.connected ? customPalette.positiveColor : customPalette.dangerColor
+        iconSource: provider.connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
+        iconColor: provider.connected ? customPalette.positiveColor : customPalette.sunkenColor
         tipText: provider.connected ? qsTr("Disconnect") : qsTr("Connect");
         onClicked: provider.setConnected(!provider.connected)
     }

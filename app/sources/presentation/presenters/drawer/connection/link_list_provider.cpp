@@ -12,7 +12,6 @@
 
 #include "service_registry.h"
 #include "communication_service.h"
-#include "serial_ports_service.h"
 
 #include "object_list_model.h"
 #include "link_provider.h"
@@ -44,8 +43,6 @@ LinkListProvider::LinkListProvider(QObject* parent):
         this->onDescriptionAdded(description);
     }
 
-    connect(d->service, &domain::CommunicationService::availableProtocolsChanged,
-            this, &LinkListProvider::availableProtocolsChanged);
     connect(d->service, &domain::CommunicationService::descriptionAdded,
             this, &LinkListProvider::onDescriptionAdded);
     connect(d->service, &domain::CommunicationService::descriptionRemoved,
@@ -58,23 +55,6 @@ LinkListProvider::~LinkListProvider()
 QAbstractItemModel* LinkListProvider::links() const
 {
     return &d->filterModel;
-}
-
-QStringList LinkListProvider::availableProtocols() const
-{
-    QStringList protocols;
-
-    protocols.append(QString());
-    protocols.append(d->service->availableProtocols());
-
-    return protocols;
-}
-
-QVariantList LinkListProvider::baudRates() const
-{
-    QVariantList baudRates;
-    for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
-    return baudRates;
 }
 
 void LinkListProvider::addSerialLink()
