@@ -93,7 +93,7 @@ void LinkDescription::setParameters(const QString& arguments)
     }
 }
 
-QVariant LinkDescription::parameter(Parameter key, const QVariant& parameter)
+QVariant LinkDescription::parameter(Parameter key, const QVariant& parameter) const
 {
     return m_parameters.value(key, parameter);
 }

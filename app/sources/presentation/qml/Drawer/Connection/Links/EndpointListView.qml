@@ -6,13 +6,20 @@ import Industrial.Controls 1.0 as Controls
 Controls.Frame {
     id: root
 
-    property var endpoints
+    property string endpoints
 
-    signal changed()
+    property var _endpoints: []
+
+    signal changed(string endpoints)
 
     function updateEndpoints(update) {
-        repeater.model = endpoints;
-        if (update) changed();
+        repeater.model = _endpoints;
+        if (update) changed(_endpoints.join(";"));
+    }
+
+    onEndpointsChanged: {
+        _endpoints = endpoints.split(";");
+        updateEndpoints(false);
     }
 
     padding: sizings.padding
@@ -59,32 +66,16 @@ Controls.Frame {
 
             Repeater {
                 id: repeater
-                model: root.endpoints
-
-                RowLayout {
-                    spacing: sizings.spacing
-
-                    Controls.Label {
-                        text: qsTr("Address")
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.fillWidth: true
-                    }
-
-                    Controls.Label {
-                        text: qsTr("Port")
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.fillWidth: true
-                    }
-                }
+                model: _endpoints
 
                 EndpointView {
                     endpoint: modelData
                     onRemove: {
-                        endpoints.splice(index, 1);
+                        _endpoints.splice(index, 1);
                         updateEndpoints(true);
                     }
-                    onChanged: {
-                        endpoints[index] = endpoint;
+                    onChanged:{
+                        _endpoints[index] = endpoint;
                         updateEndpoints(true);
                     }
                 }
@@ -94,7 +85,7 @@ Controls.Frame {
                 text: qsTr("Add endpoint")
                 iconSource: "qrc:/ui/plus.svg"
                 onClicked: {
-                    endpoints.push("127.0.0.1/8080");
+                    _endpoints.push("127.0.0.1:8080");
                     updateEndpoints(true);
                     flickable.toBottom();
                 }

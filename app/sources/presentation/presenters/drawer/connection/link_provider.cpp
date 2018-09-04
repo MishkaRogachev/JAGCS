@@ -11,6 +11,11 @@
 #include "service_registry.h"
 #include "communication_service.h"
 
+namespace
+{
+    const QString separator = ",";
+}
+
 using namespace presentation;
 
 class LinkProvider::Impl

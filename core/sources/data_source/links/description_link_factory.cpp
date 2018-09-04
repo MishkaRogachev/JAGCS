@@ -8,6 +8,15 @@
 #include "tcp_link.h"
 #include "bluetooth_link.h"
 
+namespace
+{
+    namespace
+    {
+        const QString delimiter = ":";
+        const QString separator = ";";
+    }
+}
+
 using namespace dto;
 using namespace data_source;
 
@@ -32,12 +41,12 @@ namespace
         QString endpoints = description->parameter(dto::LinkDescription::Endpoints).toString();
         if (!endpoints.isEmpty())
         {
-            for (const QString& endpoint: endpoints.split(","))
+            for (const QString& endpoint: endpoints.split(::separator))
             {
-                QStringList split = endpoint.split("/");
+                QStringList split = endpoint.split(::delimiter);
                 QHostAddress address = split.count() > 0 ? QHostAddress(split.first()) :
                                                            QHostAddress();
-                quint16 port =split.count() > 1 ? split.at(1).toUInt() : 0;
+                quint16 port = split.count() > 1 ? split.at(1).toUInt() : 0;
                 udpLink->addEndpoint(Endpoint(address, port));
             }
         }

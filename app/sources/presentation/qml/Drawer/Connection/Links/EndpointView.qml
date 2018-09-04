@@ -12,14 +12,14 @@ RowLayout {
     signal changed(string endpoint)
 
     function updateEdits() {
-        var split = endpoint.split("/");
+        var split = endpoint.split(":");
 
         address.text = split.length > 0 ? split[0] : ""
         port.text = split.length > 1 ? split[1] : ""
     }
 
     function updateEndpoint() {
-        changed(address.text + "/" + port.text);
+        changed(address.text + ":" + port.text);
     }
 
     onEndpointChanged: updateEdits()
@@ -45,12 +45,12 @@ RowLayout {
         Layout.fillWidth: true
     }
 
-    Controls.Button {
+    Controls.DelayButton {
         flat: true
         tipText: qsTr("Remove")
         iconSource: "qrc:/icons/remove.svg"
         iconColor: customPalette.dangerColor
-        onClicked: remove()
+        onActivated: remove()
     }
 }
 

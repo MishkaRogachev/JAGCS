@@ -53,7 +53,7 @@ namespace dto
 
         QString parameters() const;
         void setParameters(const QString& parameters);
-        QVariant parameter(Parameter key, const QVariant& parameter = QVariant());
+        QVariant parameter(Parameter key, const QVariant& parameter = QVariant()) const;
         void setParameter(Parameter key, const QVariant& parameter);
         void clearParameters();
         void clearSuperfluousParameters();
