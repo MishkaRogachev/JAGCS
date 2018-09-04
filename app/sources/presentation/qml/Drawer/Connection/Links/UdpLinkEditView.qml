@@ -30,7 +30,7 @@ BaseLinkEditView {
     }
 
     Controls.CheckBox {
-        text: qsTr("Autoresponse on get data")
+        text: qsTr("Add endpoint on recv")
         horizontalAlignment: Text.AlignHCenter
         checked: provider.parameter(LinkDescription.UdpAutoResponse)
         onToggled: provider.setParameter(LinkDescription.UdpAutoResponse, toggled)
