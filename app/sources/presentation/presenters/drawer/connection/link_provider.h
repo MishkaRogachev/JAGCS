@@ -30,7 +30,7 @@ namespace presentation
 
     public:
         LinkProvider(const dto::LinkDescriptionPtr& description = dto::LinkDescriptionPtr(),
-                      QObject* parent = nullptr);
+                     QObject* parent = nullptr);
         ~LinkProvider() override;
 
         QString name() const;

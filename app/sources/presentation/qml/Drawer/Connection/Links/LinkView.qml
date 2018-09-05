@@ -7,7 +7,7 @@ import Industrial.Controls 1.0 as Controls
 Controls.Frame {
     id: linkFrame
 
-    property LinkProvider provider
+    property var link
 
     property bool minimized: true
     property bool changed: false
@@ -16,6 +16,12 @@ Controls.Frame {
 
     implicitWidth: column.implicitWidth + sizings.margins * 2
     implicitHeight: column.implicitHeight + sizings.margins * 2
+
+    onLinkChanged: provider.setDescription(link)
+
+    LinkProvider {
+        id: provider
+    }
 
     ColumnLayout {
         id: column

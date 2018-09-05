@@ -13,8 +13,7 @@
 #include "service_registry.h"
 #include "communication_service.h"
 
-#include "object_list_model.h"
-#include "link_provider.h"
+#include "link_list_model.h"
 
 using namespace presentation;
 
@@ -23,8 +22,7 @@ class LinkListProvider::Impl
 public:
     domain::CommunicationService* const service = serviceRegistry->communicationService();
 
-    QMap<dto::LinkDescriptionPtr, LinkProvider*> descriptedPresenters;
-    ObjectListModel<LinkProvider> linksModel;
+    LinkListModel linksModel;
     QSortFilterProxyModel filterModel;
 };
 
@@ -33,20 +31,19 @@ LinkListProvider::LinkListProvider(QObject* parent):
     d(new Impl())
 {
     d->filterModel.setSourceModel(&d->linksModel);
-/*    d->filterModel.setFilterRole(LinkListModel::LinkNameRole);
+    d->filterModel.setFilterRole(LinkListModel::LinkNameRole);
     d->filterModel.setSortRole(LinkListModel::LinkNameRole);
     d->filterModel.setDynamicSortFilter(true);
-    d->filterModel.sort(0, Qt::AscendingOrder);*/
+    d->filterModel.sort(0, Qt::AscendingOrder);
 
-    for (const dto::LinkDescriptionPtr& description: d->service->descriptions())
-    {
-        this->onDescriptionAdded(description);
-    }
+    d->linksModel.setLinks(d->service->descriptions());
 
     connect(d->service, &domain::CommunicationService::descriptionAdded,
-            this, &LinkListProvider::onDescriptionAdded);
+            &d->linksModel, &LinkListModel::addLink);
     connect(d->service, &domain::CommunicationService::descriptionRemoved,
-            this, &LinkListProvider::onDescriptionRemoved);
+            &d->linksModel, &LinkListModel::removeLink);
+    connect(d->service, &domain::CommunicationService::descriptionChanged,
+            &d->linksModel, &LinkListModel::updateLink);
 }
 
 LinkListProvider::~LinkListProvider()
@@ -111,21 +108,4 @@ void LinkListProvider::addBluetoothLink()
 void LinkListProvider::filter(const QString& filterString)
 {
     d->filterModel.setFilterFixedString(filterString);
-}
-
-void LinkListProvider::onDescriptionAdded(const dto::LinkDescriptionPtr& description)
-{
-    LinkProvider* presenter = new LinkProvider(description, this);
-
-    d->descriptedPresenters[description] = presenter;
-    d->linksModel.append(presenter);
-}
-
-void LinkListProvider::onDescriptionRemoved(const dto::LinkDescriptionPtr& description)
-{
-    LinkProvider* presenter = d->descriptedPresenters.take(description);
-    if (!presenter) return;
-
-    d->linksModel.remove(presenter);
-    delete presenter;
 }

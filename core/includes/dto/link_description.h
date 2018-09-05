@@ -78,4 +78,6 @@ namespace dto
     };
 }
 
+Q_DECLARE_METATYPE(dto::LinkDescriptionPtr)
+
 #endif // LINK_DESCRIPTION_H

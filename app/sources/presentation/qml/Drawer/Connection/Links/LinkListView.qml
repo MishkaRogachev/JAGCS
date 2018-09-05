@@ -26,7 +26,7 @@ Item {
         }
 
         delegate: LinkView {
-            provider: model.display
+            link: model.link
             width: parent.width
             onRemoveRequest: listProvider.remove(model.display)
         }

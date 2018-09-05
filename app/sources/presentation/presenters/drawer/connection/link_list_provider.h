@@ -28,10 +28,6 @@ namespace presentation
 
         void filter(const QString& filterString);
 
-    private slots:
-        void onDescriptionAdded(const dto::LinkDescriptionPtr& description);
-        void onDescriptionRemoved(const dto::LinkDescriptionPtr& description);
-
     private:
          class Impl;
          QScopedPointer<Impl> const d;
