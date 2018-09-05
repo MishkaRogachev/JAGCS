@@ -6,6 +6,8 @@ import Industrial.Controls 1.0 as Controls
 
 Item {
     id: linkList
+    
+    implicitWidth: sizings.controlBaseSize * 10
 
     LinkListProvider {
         id: listProvider

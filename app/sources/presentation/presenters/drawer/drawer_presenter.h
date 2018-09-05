@@ -5,7 +5,7 @@
 
 namespace presentation
 {
-    class DrawerPresenter: public BasePresenter
+    class DrawerPresenter: public BasePresenter // TODO: text identify mode, remove presenter drawer layer
     {
         Q_OBJECT
 
@@ -16,7 +16,7 @@ namespace presentation
             Home,
                 Plan,
                 Fleet,
-                Connection,
+                Links,
                 Plugins,
                 Settings,
                     Database,

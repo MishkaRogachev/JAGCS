@@ -132,7 +132,7 @@ Controls.Drawer {
                 switch (mode) {
                 case DrawerPresenter.Plan: return "Planning/PlanningView.qml";
                 case DrawerPresenter.Fleet: return "Vehicles/VehicleListView.qml";
-                case DrawerPresenter.Connection: return "Connection/ConnectionView.qml";
+                case DrawerPresenter.Links: return "Links/LinkListView.qml";
                 case DrawerPresenter.Plugins: return "Plugins/PluginsView.qml";
                 case DrawerPresenter.Database: return "Settings/Database/DatabaseView.qml";
                 case DrawerPresenter.Map: return "Settings/Map/MapSettingsView.qml";
