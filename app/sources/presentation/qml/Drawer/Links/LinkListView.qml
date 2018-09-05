@@ -6,16 +6,18 @@ import Industrial.Controls 1.0 as Controls
 
 Item {
     id: linkList
-    
+
+    property int expandedLinkIndex: -1
+
     implicitWidth: sizings.controlBaseSize * 10
 
     LinkListProvider {
-        id: listProvider
+        id: provider
     }
 
     ListView {
         id: list
-        model: listProvider.links
+        model: provider.links
         anchors.fill: parent
         anchors.margins: sizings.shadowSize
         anchors.bottomMargin: addButton.height
@@ -38,7 +40,20 @@ Item {
                 default: return "LinkView.qml";
                 }
             }
-            onItemChanged: if (item) item.provider.description = model.link;
+            onItemChanged: {
+                if (!item) return;
+
+                item.provider.description = model.link;
+                item.minimized = Qt.binding(function() { return expandedLinkIndex != index; });
+            }
+
+            Connections {
+                target: item
+                ignoreUnknownSignals: true
+
+                onMinimize: expandedLinkIndex = minimize ? -1 : index
+                onRemoveRequest: provider.removeLink(model.link)
+            }
         }
     }
 
@@ -64,25 +79,25 @@ Item {
             Controls.MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
-                onTriggered: listProvider.addSerialLink()
+                onTriggered: provider.addSerialLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
-                onTriggered: listProvider.addUdpLink()
+                onTriggered: provider.addUdpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Tcp")
                 implicitWidth: parent.width
-                onTriggered: listProvider.addTcpLink()
+                onTriggered: provider.addTcpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Bluetooth")
                 implicitWidth: parent.width
-                onTriggered: listProvider.addBluetoothLink()
+                onTriggered: provider.addBluetoothLink()
             }
         }
     }

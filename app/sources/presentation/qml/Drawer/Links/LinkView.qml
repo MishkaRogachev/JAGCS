@@ -14,6 +14,7 @@ Controls.Frame {
     default property alias content: contentColumn.children
 
     signal removeRequest()
+    signal minimize(bool minimize)
 
     implicitWidth: column.implicitWidth + sizings.margins * 2
     implicitHeight: column.implicitHeight + sizings.margins * 2
@@ -117,7 +118,7 @@ Controls.Frame {
                 flat: true
                 iconSource: "qrc:/icons/remove.svg"
                 text: qsTr("Remove");
-                onClicked: listProvider.removeLink(provider.description)
+                onClicked: removeRequest()
                 Layout.fillWidth: true
             }
         }
@@ -141,6 +142,6 @@ Controls.Frame {
         flat: true
         iconSource: minimized ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"
         tipText: minimized ? qsTr("Maximize") : qsTr("Minimize");
-        onClicked: minimized = !minimized
+        onClicked: minimize(!minimized)
     }
 }
