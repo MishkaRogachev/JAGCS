@@ -73,11 +73,10 @@
         <file>Drawer/Vehicles/VehicleView.qml</file>
         <file>Drawer/Links/LinkListView.qml</file>
         <file>Drawer/Links/LinkView.qml</file>
-        <file>Drawer/Links/BaseLinkEditView.qml</file>
-        <file>Drawer/Links/UdpLinkEditView.qml</file>
-        <file>Drawer/Links/TcpLinkEditView.qml</file>
-        <file>Drawer/Links/SerialLinkEditView.qml</file>
-        <file>Drawer/Links/BluetoothLinkEditView.qml</file>
+        <file>Drawer/Links/UdpLinkView.qml</file>
+        <file>Drawer/Links/TcpLinkView.qml</file>
+        <file>Drawer/Links/SerialLinkView.qml</file>
+        <file>Drawer/Links/BluetoothLinkView.qml</file>
         <file>Drawer/Links/EndpointListView.qml</file>
         <file>Drawer/Links/EndpointView.qml</file>
         <file>Drawer/Links/RecvSentRow.qml</file>

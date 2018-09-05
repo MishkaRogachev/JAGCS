@@ -26,6 +26,8 @@ namespace presentation
         void addTcpLink();
         void addBluetoothLink();
 
+        void removeLink(const dto::LinkDescriptionPtr& description);
+
         void filter(const QString& filterString);
 
     private:

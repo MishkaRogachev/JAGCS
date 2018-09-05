@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 
-BaseLinkEditView {
+LinkView {
     id: linkView
 
     Controls.SpinBox {

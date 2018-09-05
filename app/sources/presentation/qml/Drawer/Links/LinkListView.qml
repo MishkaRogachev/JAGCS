@@ -27,10 +27,18 @@ Item {
             visible: parent.contentHeight > parent.height
         }
 
-        delegate: LinkView {
-            link: model.link
+        delegate: Loader {
             width: parent.width
-            onRemoveRequest: listProvider.remove(model.display)
+            source: {
+                switch (model.linkType) {
+                case LinkDescription.Serial: return "SerialLinkView.qml";
+                case LinkDescription.Udp: return "UdpLinkView.qml";
+                case LinkDescription.Tcp: return "TcpLinkView.qml";
+                case LinkDescription.Bluetooth: return "BluetoothLinkView.qml";
+                default: return "LinkView.qml";
+                }
+            }
+            onItemChanged: if (item) item.provider.description = model.link;
         }
     }
 

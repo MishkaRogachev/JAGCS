@@ -27,12 +27,10 @@ public:
     dto::LinkStatisticsPtr statistics;
 };
 
-LinkProvider::LinkProvider(const dto::LinkDescriptionPtr& description, QObject* parent):
+LinkProvider::LinkProvider(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->description = description;
-
     connect(d->service, &domain::CommunicationService::availableProtocolsChanged,
             this, &LinkProvider::availableProtocolsChanged);
 
@@ -64,6 +62,11 @@ LinkProvider::LinkProvider(const dto::LinkDescriptionPtr& description, QObject* 
 
 LinkProvider::~LinkProvider()
 {}
+
+dto::LinkDescriptionPtr LinkProvider::description() const
+{
+    return d->description;
+}
 
 QString LinkProvider::name() const
 {

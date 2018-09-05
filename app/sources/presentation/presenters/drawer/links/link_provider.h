@@ -15,6 +15,9 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(dto::LinkDescriptionPtr description READ description WRITE setDescription
+                   NOTIFY descriptionChanged)
+
         Q_PROPERTY(QString name READ name WRITE setName NOTIFY propertiesChanged)
         Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY propertiesChanged)
         Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY propertiesChanged)
@@ -29,9 +32,10 @@ namespace presentation
         Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
 
     public:
-        LinkProvider(const dto::LinkDescriptionPtr& description = dto::LinkDescriptionPtr(),
-                     QObject* parent = nullptr);
+        explicit LinkProvider(QObject* parent = nullptr);
         ~LinkProvider() override;
+
+        dto::LinkDescriptionPtr description() const;
 
         QString name() const;
         QString protocol() const;
@@ -56,6 +60,8 @@ namespace presentation
         void setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter);
 
     signals:
+        void descriptionChanged(dto::LinkDescriptionPtr description);
+
         void recv();
         void sent();
 

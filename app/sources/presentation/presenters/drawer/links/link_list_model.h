@@ -18,6 +18,7 @@ namespace presentation
         {
             LinkRole = Qt::UserRole + 1,
             LinkNameRole,
+            LinkTypeRole
         };
 
         explicit LinkListModel(QObject* parent = nullptr);

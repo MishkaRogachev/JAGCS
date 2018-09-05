@@ -7,21 +7,16 @@ import Industrial.Controls 1.0 as Controls
 Controls.Frame {
     id: linkFrame
 
-    property var link
+    property LinkProvider provider: LinkProvider {}
 
     property bool minimized: true
     property bool changed: false
+    default property alias content: contentColumn.children
 
     signal removeRequest()
 
     implicitWidth: column.implicitWidth + sizings.margins * 2
     implicitHeight: column.implicitHeight + sizings.margins * 2
-
-    onLinkChanged: provider.setDescription(link)
-
-    LinkProvider {
-        id: provider
-    }
 
     ColumnLayout {
         id: column
@@ -65,18 +60,29 @@ Controls.Frame {
             }
         }
 
-        Loader {
-            id: linkView
+        ColumnLayout {
+            id: contentColumn
+            spacing: sizings.spacing
             visible: !minimized
-            Layout.fillWidth: true
-            source: {
-                switch (provider.type) {
-                case LinkDescription.Serial: return "SerialLinkEditView.qml";
-                case LinkDescription.Udp: return "UdpLinkEditView.qml";
-                case LinkDescription.Tcp: return "TcpLinkEditView.qml";
-                case LinkDescription.Bluetooth: return "BluetoothLinkEditView.qml";
-                default: return "";
-                }
+
+            Controls.TextField {
+                text: provider.name
+                labelText: qsTr("Name")
+                readOnly: minimized
+                horizontalAlignment: Text.AlignHCenter
+                onEditingFinished: provider.setName(text)
+                Layout.leftMargin: connectButton.width
+                Layout.rightMargin: minimizeButton.width
+                Layout.fillWidth: true
+            }
+
+            Controls.ComboBox {
+                id: protocolBox
+                labelText: qsTr("Protocol")
+                visible: !minimized
+                model: provider.availableProtocols
+                onDisplayTextChanged: provider.setProtocol(displayText)
+                Layout.fillWidth: true
             }
         }
 
@@ -86,6 +92,7 @@ Controls.Frame {
         }
 
         RowLayout {
+            visible: !minimized
             spacing: sizings.spacing
 
             Controls.Button {
@@ -110,7 +117,7 @@ Controls.Frame {
                 flat: true
                 iconSource: "qrc:/icons/remove.svg"
                 text: qsTr("Remove");
-                onClicked: removeRequest()
+                onClicked: listProvider.removeLink(provider.description)
                 Layout.fillWidth: true
             }
         }

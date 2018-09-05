@@ -29,6 +29,7 @@ QVariant LinkListModel::data(const QModelIndex& index, int role) const
     {
     case LinkRole: return QVariant::fromValue(link);
     case LinkNameRole: return link->name();
+    case LinkTypeRole: return link->type();
     default: return QVariant();
     }
 }
@@ -70,6 +71,7 @@ QHash<int, QByteArray> LinkListModel::roleNames() const
 
     roles[LinkRole] = "link";
     roles[LinkNameRole] = "linkName";
+    roles[LinkTypeRole] = "linkType";
 
     return roles;
 }

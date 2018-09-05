@@ -105,6 +105,11 @@ void LinkListProvider::addBluetoothLink()
     d->service->save(description);
 }
 
+void LinkListProvider::removeLink(const dto::LinkDescriptionPtr& description)
+{
+    qDebug() << "HONEY, I WILL KILL" << description;
+}
+
 void LinkListProvider::filter(const QString& filterString)
 {
     d->filterModel.setFilterFixedString(filterString);
