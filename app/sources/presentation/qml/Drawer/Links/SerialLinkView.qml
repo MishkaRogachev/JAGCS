@@ -7,9 +7,11 @@ import Industrial.Controls 1.0 as Controls
 LinkView {
     id: linkView
 
+    provider: SerialLinkProvider { id: provider }
+
     Controls.ComboBox {
         labelText: qsTr("Baud rate")
-        model: provider.availableBaudRates
+        model: provider.baudRates
         currentIndex: model.indexOf(provider.parameter(LinkDescription.BaudRate))
         onActivated: provider.setParameter(LinkDescription.BaudRate, displayText)
         Layout.fillWidth: true

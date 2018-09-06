@@ -73,6 +73,7 @@
         <file>Drawer/Vehicles/VehicleView.qml</file>
         <file>Drawer/Links/LinkListView.qml</file>
         <file>Drawer/Links/LinkView.qml</file>
+        <file>Drawer/Links/SocketLinkView.qml</file>
         <file>Drawer/Links/UdpLinkView.qml</file>
         <file>Drawer/Links/TcpLinkView.qml</file>
         <file>Drawer/Links/SerialLinkView.qml</file>

@@ -29,11 +29,9 @@ namespace presentation
 
         Q_PROPERTY(QStringList availableProtocols READ availableProtocols
                    NOTIFY availableProtocolsChanged)
-        Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
 
     public:
         explicit LinkProvider(QObject* parent = nullptr);
-        ~LinkProvider() override;
 
         dto::LinkDescriptionPtr description() const;
 
@@ -45,8 +43,6 @@ namespace presentation
         float bytesSent() const;
 
         QStringList availableProtocols() const;
-        QVariantList baudRates() const;
-
         Q_INVOKABLE QVariant parameter(dto::LinkDescription::Parameter key) const;
 
     public slots:
@@ -71,9 +67,10 @@ namespace presentation
 
         void availableProtocolsChanged();
 
-    private:
-         class Impl;
-         QScopedPointer<Impl> const d;
+    protected:
+        dto::LinkDescriptionPtr m_description;
+        dto::LinkStatisticsPtr m_statistics;
+        domain::CommunicationService* const m_commService;
     };
 }
 

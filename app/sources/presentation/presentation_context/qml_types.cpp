@@ -35,7 +35,7 @@
 #include "vehicle_list_presenter.h"
 #include "vehicle_presenter.h"
 #include "link_list_provider.h"
-#include "link_provider.h"
+#include "serial_link_provider.h"
 #include "plugins_presenter.h"
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
@@ -91,6 +91,7 @@ static void registerTypes()
     QML_TYPE(DrawerPresenter);
     QML_TYPE(LinkListProvider);
     QML_TYPE(LinkProvider);
+    QML_TYPE(SerialLinkProvider);
     QML_TYPE(PluginsPresenter);
     QML_TYPE(VehicleListPresenter);
     QML_TYPE(VehiclePresenter);

@@ -10,7 +10,6 @@
 
 #include "service_registry.h"
 #include "communication_service.h"
-#include "serial_ports_service.h"
 
 namespace
 {
@@ -19,83 +18,72 @@ namespace
 
 using namespace presentation;
 
-class LinkProvider::Impl
-{
-public:
-    domain::CommunicationService* const service = serviceRegistry->communicationService();
-    dto::LinkDescriptionPtr description;
-    dto::LinkStatisticsPtr statistics;
-};
-
 LinkProvider::LinkProvider(QObject* parent):
     QObject(parent),
-    d(new Impl())
+    m_commService(serviceRegistry->communicationService())
 {
-    connect(d->service, &domain::CommunicationService::availableProtocolsChanged,
+    connect(m_commService, &domain::CommunicationService::availableProtocolsChanged,
             this, &LinkProvider::availableProtocolsChanged);
 
-    connect(d->service, &domain::CommunicationService::descriptionChanged, this,
+    connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (d->description == description) emit propertiesChanged();
+        if (m_description == description) emit propertiesChanged();
     });
 
-    connect(d->service, &domain::CommunicationService::linkConnectedChanged, this,
+    connect(m_commService, &domain::CommunicationService::linkConnectedChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (d->description == description) emit connectedChanged();
+        if (m_description == description) emit connectedChanged();
     });
-    connect(d->service, &domain::CommunicationService::linkStatisticsChanged, this,
+    connect(m_commService, &domain::CommunicationService::linkStatisticsChanged, this,
             [this](const dto::LinkStatisticsPtr& statistics) {
-        if (d->description && d->description->id() == statistics->linkId())
+        if (m_description && m_description->id() == statistics->linkId())
 
-            d->statistics = statistics;
+            m_statistics = statistics;
             emit statisticsChanged();
     });
-    connect(d->service, &domain::CommunicationService::linkSent,
+    connect(m_commService, &domain::CommunicationService::linkSent,
             this, [this](int descriptionId) {
-        if (d->description && d->description->id() == descriptionId) emit sent();
+        if (m_description && m_description->id() == descriptionId) emit sent();
     });
-    connect(d->service, &domain::CommunicationService::linkRecv,
+    connect(m_commService, &domain::CommunicationService::linkRecv,
             this, [this](int descriptionId) {
-        if (d->description && d->description->id() == descriptionId) emit recv();
+        if (m_description && m_description->id() == descriptionId) emit recv();
     });
 }
 
-LinkProvider::~LinkProvider()
-{}
-
 dto::LinkDescriptionPtr LinkProvider::description() const
 {
-    return d->description;
+    return m_description;
 }
 
 QString LinkProvider::name() const
 {
-    return d->description ? d->description->name() : tr("None");
+    return m_description ? m_description->name() : tr("None");
 }
 
 QString LinkProvider::protocol() const
 {
-    return d->description ? d->description->protocol() : tr("Unknown");
+    return m_description ? m_description->protocol() : tr("Unknown");
 }
 
 dto::LinkDescription::Type LinkProvider::type() const
 {
-    return d->description ? d->description->type() : dto::LinkDescription::UnknownType;
+    return m_description ? m_description->type() : dto::LinkDescription::UnknownType;
 }
 
 bool LinkProvider::isConnected() const
 {
-    return d->description && d->description->isConnected();
+    return m_description && m_description->isConnected();
 }
 
 float LinkProvider::bytesRecv() const
 {
-    return d->statistics ? d->statistics->bytesRecv() : 0;
+    return m_statistics ? m_statistics->bytesRecv() : 0;
 }
 
 float LinkProvider::bytesSent() const
 {
-    return d->statistics ? d->statistics->bytesSent() : 0;
+    return m_statistics ? m_statistics->bytesSent() : 0;
 }
 
 QStringList LinkProvider::availableProtocols() const
@@ -103,35 +91,26 @@ QStringList LinkProvider::availableProtocols() const
     QStringList protocols;
 
     protocols.append(QString());
-    protocols.append(d->service->availableProtocols());
+    protocols.append(m_commService->availableProtocols());
 
-    if (d->description && !protocols.contains(d->description->protocol()))
+    if (m_description && !protocols.contains(m_description->protocol()))
     {
-        protocols.append(d->description->protocol());
+        protocols.append(m_description->protocol());
     }
 
     return protocols;
 }
 
-QVariantList LinkProvider::baudRates() const
-{
-    QVariantList baudRates;
-
-    for (qint32 rate: domain::SerialPortService::availableBaudRates()) baudRates.append(rate);
-
-    return baudRates;
-}
-
 QVariant LinkProvider::parameter(dto::LinkDescription::Parameter key) const
 {
-    return d->description ? d->description->parameter(key) : QVariant();
+    return m_description ? m_description->parameter(key) : QVariant();
 }
 
 void LinkProvider::setDescription(const dto::LinkDescriptionPtr& description)
 {
-    if (d->description == description) return;
+    if (m_description == description) return;
 
-    d->description = description;
+    m_description = description;
 
     emit propertiesChanged();
     emit connectedChanged();
@@ -140,34 +119,34 @@ void LinkProvider::setDescription(const dto::LinkDescriptionPtr& description)
 
 void LinkProvider::setConnected(bool connected)
 {
-    if (d->description) d->service->setLinkConnected(d->description->id(), connected);
+    if (m_description) m_commService->setLinkConnected(m_description->id(), connected);
 }
 
 void LinkProvider::remove()
 {
-    if (d->description) d->service->remove(d->description);
+    if (m_description) m_commService->remove(m_description);
 }
 
 void LinkProvider::setName(const QString& name)
 {
-    if (d->description.isNull()) return;
+    if (m_description.isNull()) return;
 
-    d->description->setName(name);
-    d->service->save(d->description);
+    m_description->setName(name);
+    m_commService->save(m_description);
 }
 
 void LinkProvider::setProtocol(const QString& protocol)
 {
-    if (d->description.isNull()) return;
+    if (m_description.isNull()) return;
 
-    d->description->setProtocol(protocol);
-    d->service->save(d->description);
+    m_description->setProtocol(protocol);
+    m_commService->save(m_description);
 }
 
 void LinkProvider::setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter)
 {
-    if (d->description.isNull()) return;
+    if (m_description.isNull()) return;
     
-    d->description->setParameter(key, parameter);
-    d->service->save(d->description);
+    m_description->setParameter(key, parameter);
+    m_commService->save(m_description);
 }
