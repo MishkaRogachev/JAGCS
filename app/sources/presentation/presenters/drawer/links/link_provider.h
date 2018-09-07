@@ -18,9 +18,9 @@ namespace presentation
         Q_PROPERTY(dto::LinkDescriptionPtr description READ description WRITE setDescription
                    NOTIFY descriptionChanged)
 
-        Q_PROPERTY(QString name READ name WRITE setName NOTIFY propertiesChanged)
-        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY propertiesChanged)
-        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY propertiesChanged)
+        Q_PROPERTY(QString name READ name WRITE setName NOTIFY descriptionChanged)
+        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY descriptionChanged)
+        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY descriptionChanged)
 
         Q_PROPERTY(bool connected READ isConnected WRITE setConnected NOTIFY connectedChanged)
 
@@ -56,12 +56,10 @@ namespace presentation
         void setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter);
 
     signals:
-        void descriptionChanged(dto::LinkDescriptionPtr description);
-
         void recv();
         void sent();
 
-        void propertiesChanged();
+        void descriptionChanged();
         void connectedChanged();
         void statisticsChanged();
 

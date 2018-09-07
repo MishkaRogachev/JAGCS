@@ -27,7 +27,7 @@ LinkProvider::LinkProvider(QObject* parent):
 
     connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (m_description == description) emit propertiesChanged();
+        if (m_description == description) emit descriptionChanged();
     });
 
     connect(m_commService, &domain::CommunicationService::linkConnectedChanged, this,
@@ -112,7 +112,7 @@ void LinkProvider::setDescription(const dto::LinkDescriptionPtr& description)
 
     m_description = description;
 
-    emit propertiesChanged();
+    emit descriptionChanged();
     emit connectedChanged();
     emit statisticsChanged();
 }

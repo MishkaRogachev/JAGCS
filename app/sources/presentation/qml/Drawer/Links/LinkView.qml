@@ -3,18 +3,24 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import "qrc:/Common" as Common
 
 Controls.Frame {
-    id: linkFrame
+    id: linkView
 
     property LinkProvider provider: LinkProvider {}
 
     property bool minimized: true
-    property bool changed: false
     default property alias content: contentColumn.children
 
     signal removeRequest()
     signal minimize(bool minimize)
+
+    Common.MvBinding {
+        when: nameField.activeFocus
+        viewModelProperty: provider.name;
+        viewProperty: nameField.text
+    }
 
     implicitWidth: column.implicitWidth + sizings.margins * 2
     implicitHeight: column.implicitHeight + sizings.margins * 2
@@ -25,8 +31,8 @@ Controls.Frame {
         spacing: sizings.spacing
 
         Controls.Label {
-            visible: minimized
             text: provider.name
+            visible: minimized
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
         }
@@ -67,11 +73,10 @@ Controls.Frame {
             visible: !minimized
 
             Controls.TextField {
-                text: provider.name
+                id: nameField
                 labelText: qsTr("Name")
                 readOnly: minimized
                 horizontalAlignment: Text.AlignHCenter
-                onEditingFinished: provider.setName(text)
                 Layout.leftMargin: connectButton.width
                 Layout.rightMargin: minimizeButton.width
                 Layout.fillWidth: true
@@ -92,35 +97,12 @@ Controls.Frame {
             Layout.fillWidth: true
         }
 
-        RowLayout {
-            visible: !minimized
-            spacing: sizings.spacing
-
-            Controls.Button {
-                flat: true
-                iconSource: "qrc:/icons/save.svg"
-                text: qsTr("Save")
-                enabled: changed
-                //onClicked:
-                Layout.fillWidth: true
-            }
-
-            Controls.Button {
-                flat: true
-                iconSource: "qrc:/icons/restore.svg"
-                text: qsTr("Restore")
-                enabled: changed
-                //onClicked: provider.setConnected(!provider.connected)
-                Layout.fillWidth: true
-            }
-
-            Controls.DelayButton {
-                flat: true
-                iconSource: "qrc:/icons/remove.svg"
-                text: qsTr("Remove");
-                onClicked: removeRequest()
-                Layout.fillWidth: true
-            }
+        Controls.DelayButton {
+            flat: true
+            iconSource: "qrc:/icons/remove.svg"
+            text: qsTr("Remove");
+            onClicked: removeRequest()
+            Layout.fillWidth: true
         }
     }
 

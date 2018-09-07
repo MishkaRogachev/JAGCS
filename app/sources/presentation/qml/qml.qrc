@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>Common/MvBinding.qml</file>
         <file>Common/SaveRestore.qml</file>
         <file>Common/Info.qml</file>
         <file>Common/PointView.qml</file>
