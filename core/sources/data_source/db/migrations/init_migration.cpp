@@ -18,7 +18,6 @@ bool InitMigration::upImpl()
                     "type SMALLINT,"
                     "protocol STRING,"
                     "parameters TEXT,"
-                    "protocolId INTEGER,"
                     "autoConnect BOOLEAN)")) return false;
 
     if (!this->exec("CREATE TABLE vehicles ("

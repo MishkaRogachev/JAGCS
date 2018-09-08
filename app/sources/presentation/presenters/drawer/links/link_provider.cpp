@@ -146,7 +146,7 @@ void LinkProvider::setProtocol(const QString& protocol)
 void LinkProvider::setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter)
 {
     if (m_description.isNull()) return;
-    
+
     m_description->setParameter(key, parameter);
     m_commService->save(m_description);
 }

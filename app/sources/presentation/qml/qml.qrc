@@ -81,7 +81,6 @@
         <file>Drawer/Links/BluetoothLinkView.qml</file>
         <file>Drawer/Links/EndpointListView.qml</file>
         <file>Drawer/Links/EndpointView.qml</file>
-        <file>Drawer/Links/RecvSentRow.qml</file>
         <file>Drawer/Plugins/PluginsView.qml</file>
         <file>Drawer/Settings/Database/DatabaseView.qml</file>
         <file>Drawer/Settings/Map/MapSettingsView.qml</file>

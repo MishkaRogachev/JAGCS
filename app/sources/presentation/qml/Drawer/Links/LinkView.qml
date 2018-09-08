@@ -3,18 +3,28 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Common" as Common
+import Industrial.Indicators 1.0 as Indicators
+
+import "../../Common" as Common
 
 Controls.Frame {
     id: linkView
 
     property LinkProvider provider: LinkProvider {}
 
-    property bool minimized: true
     default property alias content: contentColumn.children
+
+    property bool minimized: true
 
     signal removeRequest()
     signal minimize(bool minimize)
+
+    Connections {
+        target: provider
+
+        onRecv: { console.log("recv"); recvLed.blink() }
+        onSent: sentLed.blink()
+    }
 
     Common.MvBinding {
         when: nameField.activeFocus
@@ -35,36 +45,6 @@ Controls.Frame {
             visible: minimized
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
-        }
-
-        RowLayout {
-            spacing: sizings.spacing
-            visible: minimized
-
-            Controls.Label {
-                text: {
-                    switch (provider.type) {
-                    case LinkDescription.Serial:
-                        return qsTr("Serial");
-                    case LinkDescription.Udp:
-                        return qsTr("UDP");
-                    case LinkDescription.Tcp:
-                        return qsTr("TCP");
-                    case LinkDescription.Bluetooth:
-                        return qsTr("Bluetooth");
-                    default:
-                        return qsTr("Unknown");
-                    }
-                }
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            Controls.Label {
-                text: provider.protocol.length ? provider.protocol : "-"
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-            }
         }
 
         ColumnLayout {
@@ -92,9 +72,57 @@ Controls.Frame {
             }
         }
 
-        RecvSentRow {
-            id: recvSent
-            Layout.fillWidth: true
+        GridLayout {
+            columns: 4
+            rowSpacing: sizings.spacing
+            columnSpacing: sizings.spacing
+            visible: minimized
+
+            Controls.Label {
+                text: {
+                    switch (provider.type) {
+                    case LinkDescription.Serial: return qsTr("Serial");
+                    case LinkDescription.Udp: return qsTr("UDP");
+                    case LinkDescription.Tcp: return qsTr("TCP");
+                    case LinkDescription.Bluetooth: return qsTr("Bluetooth");
+                    default: return qsTr("Unknown");
+                    }
+                }
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
+            Controls.Label {
+                text: provider.protocol.length ? provider.protocol : "-"
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
+            Indicators.BlinkingLed {
+                id: recvLed
+                blinkColor: customPalette.positiveColor
+            }
+
+            Controls.Label {
+                text: qsTr("Recv") + ": " + provider.bytesRecv.toFixed(1) + " " + qsTr("B/s")
+                horizontalAlignment: Text.AlignHCenter
+                color: customPalette.positiveColor
+                Layout.fillWidth: true
+            }
+
+            Indicators.BlinkingLed {
+                id: sentLed
+                blinkColor: customPalette.skyColor
+            }
+
+            Controls.Label {
+                text: qsTr("Sent") + ": " + provider.bytesSent.toFixed(1) + " " + qsTr("B/s")
+                horizontalAlignment: Text.AlignHCenter
+                color: customPalette.skyColor
+                Layout.fillWidth: true
+            }
         }
 
         Controls.DelayButton {
