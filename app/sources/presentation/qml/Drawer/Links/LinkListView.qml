@@ -51,7 +51,8 @@ Item {
                 target: item
                 ignoreUnknownSignals: true
 
-                onMinimize: expandedLinkIndex = minimize ? -1 : index
+                onMinimize: expandedLinkIndex = -1
+                onToggleMaxMin: expandedLinkIndex = item.minimized ? index : -1
                 onRemoveRequest: {
                     if (expandedLinkIndex == index) expandedLinkIndex = -1;
                     provider.removeLink(model.link);

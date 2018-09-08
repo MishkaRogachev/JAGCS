@@ -7,7 +7,7 @@ import Industrial.Indicators 1.0 as Indicators
 
 import "../../Common" as Common
 
-Controls.Frame {
+Controls.Card {
     id: linkView
 
     property LinkProvider provider: LinkProvider {}
@@ -17,12 +17,14 @@ Controls.Frame {
     property bool minimized: true
 
     signal removeRequest()
-    signal minimize(bool minimize)
+    signal toggleMaxMin()
+
+    function toggleConnected() { provider.setConnected(!provider.connected); }
 
     Connections {
         target: provider
 
-        onRecv: { console.log("recv"); recvLed.blink() }
+        onRecv: recvLed.blink()
         onSent: sentLed.blink()
     }
 
@@ -32,12 +34,34 @@ Controls.Frame {
         viewProperty: nameField.text
     }
 
-    implicitWidth: column.implicitWidth + sizings.margins * 2
-    implicitHeight: column.implicitHeight + sizings.margins * 2
+    deepEnabled: minimized
+    contentItem: column
+
+    onDeepIn: toggleMaxMin()
+    Component.onCompleted: {
+        var minMaxItem = menu.addEntry();
+        minMaxItem.triggered.connect(toggleMaxMin);
+        minMaxItem.text = Qt.binding(function() {
+            return minimized ? qsTr("Maximize") : qsTr("Minimize"); });
+        minMaxItem.iconSource = Qt.binding(function() {
+            return minimized ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"; });
+
+        var connectItem = menu.addEntry();
+        connectItem.triggered.connect(toggleConnected);
+        connectItem.text = Qt.binding(function() {
+            return provider.connected ? qsTr("Disconnect") : qsTr("Connect"); });
+        connectItem.iconSource = Qt.binding(function() {
+            return provider.connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
+
+        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
+        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.triggered.connect(removeRequest);
+    }
 
     ColumnLayout {
         id: column
         anchors.fill: parent
+        anchors.margins: sizings.margins
         spacing: sizings.spacing
 
         Controls.Label {
@@ -57,8 +81,6 @@ Controls.Frame {
                 labelText: qsTr("Name")
                 readOnly: minimized
                 horizontalAlignment: Text.AlignHCenter
-                Layout.leftMargin: connectButton.width
-                Layout.rightMargin: minimizeButton.width
                 Layout.fillWidth: true
             }
 
@@ -124,35 +146,5 @@ Controls.Frame {
                 Layout.fillWidth: true
             }
         }
-
-        Controls.DelayButton {
-            iconSource: "qrc:/icons/remove.svg"
-            text: qsTr("Remove");
-            onActivated: removeRequest()
-            flat: true
-            visible: !minimized
-            Layout.fillWidth: true
-        }
-    }
-
-    Controls.Button {
-        id: connectButton
-        anchors.left: parent.left
-        anchors.top: parent.top
-        flat: true
-        iconSource: provider.connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
-        iconColor: provider.connected ? customPalette.positiveColor : customPalette.sunkenColor
-        tipText: provider.connected ? qsTr("Disconnect") : qsTr("Connect");
-        onClicked: provider.setConnected(!provider.connected)
-    }
-
-    Controls.Button {
-        id: minimizeButton
-        anchors.right: parent.right
-        anchors.top: parent.top
-        flat: true
-        iconSource: minimized ? "qrc:/ui/down.svg" : "qrc:/ui/up.svg"
-        tipText: minimized ? qsTr("Maximize") : qsTr("Minimize");
-        onClicked: minimize(!minimized)
     }
 }
