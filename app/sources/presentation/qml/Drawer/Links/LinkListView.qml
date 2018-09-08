@@ -52,7 +52,10 @@ Item {
                 ignoreUnknownSignals: true
 
                 onMinimize: expandedLinkIndex = minimize ? -1 : index
-                onRemoveRequest: provider.removeLink(model.link)
+                onRemoveRequest: {
+                    if (expandedLinkIndex == index) expandedLinkIndex = -1;
+                    provider.removeLink(model.link);
+                }
             }
         }
     }

@@ -98,10 +98,11 @@ Controls.Frame {
         }
 
         Controls.DelayButton {
-            flat: true
             iconSource: "qrc:/icons/remove.svg"
             text: qsTr("Remove");
-            onClicked: removeRequest()
+            onActivated: removeRequest()
+            flat: true
+            visible: !minimized
             Layout.fillWidth: true
         }
     }
