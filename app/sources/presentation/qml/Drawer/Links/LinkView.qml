@@ -29,9 +29,10 @@ Controls.Card {
     }
 
     Common.MvBinding {
-        when: nameField.activeFocus
-        viewModelProperty: provider.name;
-        viewProperty: nameField.text
+        viewModel: provider
+        viewModelProperty: "name"
+        input: nameField
+        inputProperty: "text"
     }
 
     deepEnabled: minimized

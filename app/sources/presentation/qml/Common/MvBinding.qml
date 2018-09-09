@@ -1,12 +1,24 @@
 import QtQuick 2.6
 
-QtObject {
+Item {
     id: root
 
-    property bool when: false
-    property var viewModelProperty
-    property var viewProperty
+    property QtObject viewModel
+    property string viewModelProperty
+    property Item input
+    property string inputProperty
 
-    onViewModelPropertyChanged: if (!when) viewProperty = viewModelProperty
-    onViewPropertyChanged: if (when) viewModelProperty = viewProperty
+    Binding {
+        target: viewModel
+        property: viewModelProperty
+        value: input[inputProperty]
+        when: input.activeFocus
+    }
+
+    Binding {
+        target: input
+        property: inputProperty
+        value: viewModel[viewModelProperty]
+        when: !input.activeFocus
+    }
 }
