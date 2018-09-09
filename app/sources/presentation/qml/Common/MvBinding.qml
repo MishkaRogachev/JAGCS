@@ -3,22 +3,20 @@ import QtQuick 2.6
 Item {
     id: root
 
-    property QtObject viewModel
-    property string viewModelProperty
-    property Item input
-    property string inputProperty
+    property alias vm: forwardBinding.target
+    property alias vmProperty: forwardBinding.property
+    property alias control: reverseBinding.target
+    property alias property: reverseBinding.property
 
     Binding {
-        target: viewModel
-        property: viewModelProperty
-        value: input[inputProperty]
-        when: input.activeFocus
+        id: forwardBinding
+        value: control[property]
+        when: control.activeFocus
     }
 
     Binding {
-        target: input
-        property: inputProperty
-        value: viewModel[viewModelProperty]
-        when: !input.activeFocus
+        id: reverseBinding
+        value: vm[vmProperty]
+        when: !control.activeFocus
     }
 }

@@ -4,8 +4,13 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 
+import "../../Common" as Common
+
 SocketLinkView {
     id: linkView
+
+    Common.MvBinding { vm: provider; vmProperty: "endpoints"; control: endpointList; property: "endpoints" }
+    Common.MvBinding { vm: autoBox; vmProperty: "autoAdd"; control: autoBox; property: "checked" }
 
     Controls.Label {
         text: qsTr("Setted endpoints")
@@ -14,17 +19,15 @@ SocketLinkView {
     }
 
     EndpointListView {
-        endpoints: provider.parameter(LinkDescription.Endpoints)
-        onChanged: provider.setParameter(LinkDescription.Endpoints, endpoints)
+        id: endpointList
         Layout.maximumHeight: sizings.controlBaseSize * 6
         Layout.fillWidth: true
     }
 
     Controls.CheckBox {
+        id: autoBox
         text: qsTr("Add endpoint on recv")
         horizontalAlignment: Text.AlignHCenter
-        checked: provider.parameter(LinkDescription.UdpAutoResponse)
-        onToggled: provider.setParameter(LinkDescription.UdpAutoResponse, toggled)
         Layout.fillWidth: true
     }
 }

@@ -28,12 +28,8 @@ Controls.Card {
         onSent: sentLed.blink()
     }
 
-    Common.MvBinding {
-        viewModel: provider
-        viewModelProperty: "name"
-        input: nameField
-        inputProperty: "text"
-    }
+    Common.MvBinding { vm: provider; vmProperty: "name"; control: nameField; property: "text" }
+    Common.MvBinding { vm: provider; vmProperty: "protocol"; control: protocolBox; property: "displayText" }
 
     deepEnabled: minimized
     contentItem: column
@@ -90,7 +86,6 @@ Controls.Card {
                 labelText: qsTr("Protocol")
                 visible: !minimized
                 model: provider.availableProtocols
-                onDisplayTextChanged: provider.setProtocol(displayText)
                 Layout.fillWidth: true
             }
         }
