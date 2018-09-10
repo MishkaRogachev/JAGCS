@@ -7,21 +7,21 @@ import Industrial.Controls 1.0 as Controls
 LinkView {
     id: linkView
 
-    provider: SerialLinkProvider { id: provider }
+    viewModel: SerialLinkVm { id: viewModel }
 
     Controls.ComboBox {
         labelText: qsTr("Baud rate")
-        model: provider.baudRates
-        currentIndex: model.indexOf(provider.parameter(LinkDescription.BaudRate))
-        onActivated: provider.setParameter(LinkDescription.BaudRate, displayText)
+        model: viewModel.baudRates
+        currentIndex: model.indexOf(viewModel.parameter(LinkDescription.BaudRate))
+        onActivated: viewModel.setParameter(LinkDescription.BaudRate, displayText)
         Layout.fillWidth: true
     }
 
     Controls.ComboBox {
         labelText: qsTr("Device")
-        model: provider.availableDevices
-        currentIndex: model.indexOf(provider.parameter(LinkDescription.Device))
-        onActivated: provider.setParameter(LinkDescription.Device, displayText)
+        model: viewModel.availableDevices
+        currentIndex: model.indexOf(viewModel.parameter(LinkDescription.Device))
+        onActivated: viewModel.setParameter(LinkDescription.Device, displayText)
         Layout.fillWidth: true
     }
 }

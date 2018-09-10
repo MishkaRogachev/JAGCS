@@ -1,4 +1,4 @@
-#include "bluetooth_link_provider.h"
+#include "bluetooth_link_vm.h"
 
 // Qt
 #include <QDebug>
@@ -9,7 +9,7 @@
 
 using namespace presentation;
 
-BluetoothLinkProvider::BluetoothLinkProvider(QObject* parent):
-    LinkProvider(parent),
+BluetoothLinkVm::BluetoothLinkVm(QObject* parent):
+    LinkVm(parent),
     m_bluetoothService(serviceRegistry->bluetoothService())
 {}

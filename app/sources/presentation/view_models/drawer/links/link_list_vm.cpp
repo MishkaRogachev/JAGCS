@@ -1,4 +1,4 @@
-#include "link_list_provider.h"
+#include "link_list_vm.h"
 
 // Qt
 #include <QSortFilterProxyModel>
@@ -17,7 +17,7 @@
 
 using namespace presentation;
 
-class LinkListProvider::Impl
+class LinkListVm::Impl
 {
 public:
     domain::CommunicationService* const service = serviceRegistry->communicationService();
@@ -26,7 +26,7 @@ public:
     QSortFilterProxyModel filterModel;
 };
 
-LinkListProvider::LinkListProvider(QObject* parent):
+LinkListVm::LinkListVm(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
@@ -46,15 +46,15 @@ LinkListProvider::LinkListProvider(QObject* parent):
             &d->linksModel, &LinkListModel::updateLink);
 }
 
-LinkListProvider::~LinkListProvider()
+LinkListVm::~LinkListVm()
 {}
 
-QAbstractItemModel* LinkListProvider::links() const
+QAbstractItemModel* LinkListVm::links() const
 {
     return &d->filterModel;
 }
 
-void LinkListProvider::addSerialLink()
+void LinkListVm::addSerialLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -66,7 +66,7 @@ void LinkListProvider::addSerialLink()
     d->service->save(description);
 }
 
-void LinkListProvider::addUdpLink()
+void LinkListVm::addUdpLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -79,7 +79,7 @@ void LinkListProvider::addUdpLink()
     d->service->save(description);
 }
 
-void LinkListProvider::addTcpLink()
+void LinkListVm::addTcpLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -93,7 +93,7 @@ void LinkListProvider::addTcpLink()
     d->service->save(description);
 }
 
-void LinkListProvider::addBluetoothLink()
+void LinkListVm::addBluetoothLink()
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
@@ -105,12 +105,12 @@ void LinkListProvider::addBluetoothLink()
     d->service->save(description);
 }
 
-void LinkListProvider::removeLink(const dto::LinkDescriptionPtr& description)
+void LinkListVm::removeLink(const dto::LinkDescriptionPtr& description)
 {
     d->service->remove(description);
 }
 
-void LinkListProvider::filter(const QString& filterString)
+void LinkListVm::filter(const QString& filterString)
 {
     d->filterModel.setFilterFixedString(filterString);
 }

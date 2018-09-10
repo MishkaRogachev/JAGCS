@@ -10,7 +10,7 @@ import "../../Common" as Common
 Controls.Card {
     id: linkView
 
-    property LinkProvider provider: LinkProvider {}
+    property LinkVm viewModel: LinkVm {}
 
     default property alias content: contentColumn.children
 
@@ -19,17 +19,17 @@ Controls.Card {
     signal removeRequest()
     signal toggleMaxMin()
 
-    function toggleConnected() { provider.setConnected(!provider.connected); }
+    function toggleConnected() { viewModel.setConnected(!viewModel.connected); }
 
     Connections {
-        target: provider
+        target: viewModel
 
         onRecv: recvLed.blink()
         onSent: sentLed.blink()
     }
 
-    Common.MvBinding { vm: provider; vmProperty: "name"; control: nameField; property: "text" }
-    Common.MvBinding { vm: provider; vmProperty: "protocol"; control: protocolBox; property: "displayText" }
+    Common.MvBinding { vm: viewModel; vmProperty: "name"; control: nameField; property: "text" }
+    Common.MvBinding { vm: viewModel; vmProperty: "protocol"; control: protocolBox; property: "displayText" }
 
     deepEnabled: minimized
     contentItem: column
@@ -46,9 +46,9 @@ Controls.Card {
         var connectItem = menu.addEntry();
         connectItem.triggered.connect(toggleConnected);
         connectItem.text = Qt.binding(function() {
-            return provider.connected ? qsTr("Disconnect") : qsTr("Connect"); });
+            return viewModel.connected ? qsTr("Disconnect") : qsTr("Connect"); });
         connectItem.iconSource = Qt.binding(function() {
-            return provider.connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
+            return viewModel.connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
         removeItem.iconColor = customPalette.dangerColor;
@@ -62,7 +62,7 @@ Controls.Card {
         spacing: sizings.spacing
 
         Controls.Label {
-            text: provider.name
+            text: viewModel.name
             visible: minimized
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
@@ -85,7 +85,7 @@ Controls.Card {
                 id: protocolBox
                 labelText: qsTr("Protocol")
                 visible: !minimized
-                model: provider.availableProtocols
+                model: viewModel.availableProtocols
                 Layout.fillWidth: true
             }
         }
@@ -98,7 +98,7 @@ Controls.Card {
 
             Controls.Label {
                 text: {
-                    switch (provider.type) {
+                    switch (viewModel.type) {
                     case LinkDescription.Serial: return qsTr("Serial");
                     case LinkDescription.Udp: return qsTr("UDP");
                     case LinkDescription.Tcp: return qsTr("TCP");
@@ -112,7 +112,7 @@ Controls.Card {
             }
 
             Controls.Label {
-                text: provider.protocol.length ? provider.protocol : "-"
+                text: viewModel.protocol.length ? viewModel.protocol : "-"
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.columnSpan: 2
@@ -124,7 +124,7 @@ Controls.Card {
             }
 
             Controls.Label {
-                text: qsTr("Recv") + ": " + provider.bytesRecv.toFixed(1) + " " + qsTr("B/s")
+                text: qsTr("Recv") + ": " + viewModel.bytesRecv.toFixed(1) + " " + qsTr("B/s")
                 horizontalAlignment: Text.AlignHCenter
                 color: customPalette.positiveColor
                 Layout.fillWidth: true
@@ -136,7 +136,7 @@ Controls.Card {
             }
 
             Controls.Label {
-                text: qsTr("Sent") + ": " + provider.bytesSent.toFixed(1) + " " + qsTr("B/s")
+                text: qsTr("Sent") + ": " + viewModel.bytesSent.toFixed(1) + " " + qsTr("B/s")
                 horizontalAlignment: Text.AlignHCenter
                 color: customPalette.skyColor
                 Layout.fillWidth: true

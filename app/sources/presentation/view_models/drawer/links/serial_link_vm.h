@@ -1,8 +1,8 @@
-#ifndef SERIAL_LINK_PROVIDER_H
-#define SERIAL_LINK_PROVIDER_H
+#ifndef SERIAL_LINK_VM_H
+#define SERIAL_LINK_VM_H
 
 // Internal
-#include "link_provider.h"
+#include "link_vm.h"
 
 namespace domain
 {
@@ -11,7 +11,7 @@ namespace domain
 
 namespace presentation
 {
-    class SerialLinkProvider: public LinkProvider
+    class SerialLinkVm: public LinkVm
     {
         Q_OBJECT
 
@@ -20,7 +20,7 @@ namespace presentation
                    NOTIFY availableDevicesChanged)
 
     public:
-        explicit SerialLinkProvider(QObject* parent = nullptr);
+        explicit SerialLinkVm(QObject* parent = nullptr);
 
         QVariantList baudRates() const;
         QStringList availableDevices() const;
@@ -33,4 +33,4 @@ namespace presentation
     };
 }
 
-#endif // SERIAL_LINK_PROVIDER_H
+#endif // SERIAL_LINK_VM_H

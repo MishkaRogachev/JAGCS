@@ -9,7 +9,9 @@ import "../../Common" as Common
 SocketLinkView {
     id: linkView
 
-    Common.MvBinding { vm: provider; vmProperty: "address"; control: addressField; property: "text" }
+    viewModel: TcpLinkVm { id: viewModel }
+
+    Common.MvBinding { vm: viewModel; vmProperty: "address"; control: addressField; property: "text" }
 
     Controls.TextField {
         id: addressField

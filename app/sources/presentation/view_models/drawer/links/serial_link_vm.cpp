@@ -1,27 +1,23 @@
-#include "serial_link_provider.h"
+#include "serial_link_vm.h"
 
 // Qt
-#include <QMap>
-#include <QVariant>
 #include <QDebug>
 
 // Internal
-#include "link_statistics.h"
-
 #include "service_registry.h"
 #include "serial_ports_service.h"
 
 using namespace presentation;
 
-SerialLinkProvider::SerialLinkProvider(QObject* parent):
-    LinkProvider(parent),
+SerialLinkVm::SerialLinkVm(QObject* parent):
+    LinkVm(parent),
     m_serialService(serviceRegistry->serialPortService())
 {
     connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
-            this, &SerialLinkProvider::availableDevicesChanged);
+            this, &SerialLinkVm::availableDevicesChanged);
 }
 
-QVariantList SerialLinkProvider::baudRates() const
+QVariantList SerialLinkVm::baudRates() const
 {
     QVariantList baudRates;
 
@@ -30,7 +26,7 @@ QVariantList SerialLinkProvider::baudRates() const
     return baudRates;
 }
 
-QStringList SerialLinkProvider::availableDevices() const
+QStringList SerialLinkVm::availableDevices() const
 {
     QStringList devices;
     devices.append(QString());

@@ -9,7 +9,7 @@ import "../../Common" as Common
 LinkView {
     id: linkView
 
-    Common.MvBinding { vm: provider; vmProperty: "port"; control: portBox; property: "value" }
+    Common.MvBinding { vm: viewModel; vmProperty: "port"; control: portBox; property: "value" }
 
     Controls.SpinBox {
         id: portBox

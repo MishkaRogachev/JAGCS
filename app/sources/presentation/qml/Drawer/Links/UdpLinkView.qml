@@ -9,8 +9,10 @@ import "../../Common" as Common
 SocketLinkView {
     id: linkView
 
-    Common.MvBinding { vm: provider; vmProperty: "endpoints"; control: endpointList; property: "endpoints" }
-    Common.MvBinding { vm: autoBox; vmProperty: "autoAdd"; control: autoBox; property: "checked" }
+    viewModel: UdpLinkVm { id: viewModel }
+
+    Common.MvBinding { vm: viewModel; vmProperty: "endpoints"; control: endpointList; property: "endpoints" }
+    Common.MvBinding { vm: viewModel; vmProperty: "autoAdd"; control: autoBox; property: "checked" }
 
     Controls.Label {
         text: qsTr("Setted endpoints")

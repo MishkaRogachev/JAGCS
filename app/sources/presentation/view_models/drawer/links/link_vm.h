@@ -1,5 +1,5 @@
-#ifndef LINK_PROVIDER_H
-#define LINK_PROVIDER_H
+#ifndef LINK_VM_H
+#define LINK_VM_H
 
 // Internal
 #include "link_description.h"
@@ -11,7 +11,7 @@ namespace domain
 
 namespace presentation
 {
-    class LinkProvider: public QObject
+    class LinkVm: public QObject
     {
         Q_OBJECT
 
@@ -31,7 +31,7 @@ namespace presentation
                    NOTIFY availableProtocolsChanged)
 
     public:
-        explicit LinkProvider(QObject* parent = nullptr);
+        explicit LinkVm(QObject* parent = nullptr);
 
         dto::LinkDescriptionPtr description() const;
 
@@ -43,7 +43,6 @@ namespace presentation
         float bytesSent() const;
 
         QStringList availableProtocols() const;
-        Q_INVOKABLE QVariant parameter(dto::LinkDescription::Parameter key) const;
 
     public slots:
         void setDescription(const dto::LinkDescriptionPtr& description);
@@ -52,8 +51,6 @@ namespace presentation
         void setConnected(bool isConnected);
         void setName(const QString& name);
         void setProtocol(const QString& protocol);
-
-        void setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter);
 
     signals:
         void recv();
@@ -72,4 +69,4 @@ namespace presentation
     };
 }
 
-#endif // LINK_PROVIDER_H
+#endif // LINK_VM_H

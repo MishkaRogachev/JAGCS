@@ -7,18 +7,20 @@ import Industrial.Controls 1.0 as Controls
 LinkView {
     id: linkView
 
+    viewModel: BluetoothLinkVm { id: viewModel }
+
     Controls.TextField {
         labelText: qsTr("Address")
-        text: provider.parameter(LinkDescription.Device)
+        text: viewModel.parameter(LinkDescription.Device)
         onTextChanged: changed = true
         Layout.fillWidth: true
     }
 
     Controls.ComboBox {
         labelText: qsTr("Device")
-        model: provider.availableDevices
-        currentIndex: model.indexOf(provider.parameter(LinkDescription.Device))
-        onActivated: provider.setParameter(LinkDescription.Device, displayText)
+        model: viewModel.availableDevices
+        currentIndex: model.indexOf(viewModel.parameter(LinkDescription.Device))
+        onActivated: viewModel.setParameter(LinkDescription.Device, displayText)
         Layout.fillWidth: true
     }
 
@@ -27,15 +29,15 @@ LinkView {
 
             Controls.Button {
                 text: qsTr("Start")
-                enabled: !provider.discoveringBluetooth
-                onClicked: provider.startBluetoothDiscovery()
+                enabled: !viewModel.discoveringBluetooth
+                onClicked: viewModel.startBluetoothDiscovery()
                 Layout.fillWidth: true
             }
 
             Controls.Button {
                 text: qsTr("Stop")
-                enabled: provider.discoveringBluetooth
-                onClicked: provider.stopBluetoothDiscovery()
+                enabled: viewModel.discoveringBluetooth
+                onClicked: viewModel.stopBluetoothDiscovery()
                 Layout.fillWidth: true
             }
         }

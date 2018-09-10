@@ -1,8 +1,6 @@
-#include "link_provider.h"
+#include "link_vm.h"
 
 // Qt
-#include <QMap>
-#include <QVariant>
 #include <QDebug>
 
 // Internal
@@ -18,12 +16,12 @@ namespace
 
 using namespace presentation;
 
-LinkProvider::LinkProvider(QObject* parent):
+LinkVm::LinkVm(QObject* parent):
     QObject(parent),
     m_commService(serviceRegistry->communicationService())
 {
     connect(m_commService, &domain::CommunicationService::availableProtocolsChanged,
-            this, &LinkProvider::availableProtocolsChanged);
+            this, &LinkVm::availableProtocolsChanged);
 
     connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
@@ -51,42 +49,42 @@ LinkProvider::LinkProvider(QObject* parent):
     });
 }
 
-dto::LinkDescriptionPtr LinkProvider::description() const
+dto::LinkDescriptionPtr LinkVm::description() const
 {
     return m_description;
 }
 
-QString LinkProvider::name() const
+QString LinkVm::name() const
 {
     return m_description ? m_description->name() : tr("None");
 }
 
-QString LinkProvider::protocol() const
+QString LinkVm::protocol() const
 {
     return m_description ? m_description->protocol() : tr("Unknown");
 }
 
-dto::LinkDescription::Type LinkProvider::type() const
+dto::LinkDescription::Type LinkVm::type() const
 {
     return m_description ? m_description->type() : dto::LinkDescription::UnknownType;
 }
 
-bool LinkProvider::isConnected() const
+bool LinkVm::isConnected() const
 {
     return m_description && m_description->isConnected();
 }
 
-float LinkProvider::bytesRecv() const
+float LinkVm::bytesRecv() const
 {
     return m_statistics ? m_statistics->bytesRecv() : 0;
 }
 
-float LinkProvider::bytesSent() const
+float LinkVm::bytesSent() const
 {
     return m_statistics ? m_statistics->bytesSent() : 0;
 }
 
-QStringList LinkProvider::availableProtocols() const
+QStringList LinkVm::availableProtocols() const
 {
     QStringList protocols;
 
@@ -101,12 +99,7 @@ QStringList LinkProvider::availableProtocols() const
     return protocols;
 }
 
-QVariant LinkProvider::parameter(dto::LinkDescription::Parameter key) const
-{
-    return m_description ? m_description->parameter(key) : QVariant();
-}
-
-void LinkProvider::setDescription(const dto::LinkDescriptionPtr& description)
+void LinkVm::setDescription(const dto::LinkDescriptionPtr& description)
 {
     if (m_description == description) return;
 
@@ -117,17 +110,17 @@ void LinkProvider::setDescription(const dto::LinkDescriptionPtr& description)
     emit statisticsChanged();
 }
 
-void LinkProvider::setConnected(bool connected)
+void LinkVm::setConnected(bool connected)
 {
     if (m_description) m_commService->setLinkConnected(m_description->id(), connected);
 }
 
-void LinkProvider::remove()
+void LinkVm::remove()
 {
     if (m_description) m_commService->remove(m_description);
 }
 
-void LinkProvider::setName(const QString& name)
+void LinkVm::setName(const QString& name)
 {
     if (m_description.isNull()) return;
 
@@ -135,18 +128,10 @@ void LinkProvider::setName(const QString& name)
     m_commService->save(m_description);
 }
 
-void LinkProvider::setProtocol(const QString& protocol)
+void LinkVm::setProtocol(const QString& protocol)
 {
     if (m_description.isNull()) return;
 
     m_description->setProtocol(protocol);
-    m_commService->save(m_description);
-}
-
-void LinkProvider::setParameter(dto::LinkDescription::Parameter key, const QVariant& parameter)
-{
-    if (m_description.isNull()) return;
-
-    m_description->setParameter(key, parameter);
     m_commService->save(m_description);
 }

@@ -11,13 +11,11 @@ Item {
 
     implicitWidth: sizings.controlBaseSize * 10
 
-    LinkListProvider {
-        id: provider
-    }
+    LinkListVm { id: viewModel }
 
     ListView {
         id: list
-        model: provider.links
+        model: viewModel.links
         anchors.fill: parent
         anchors.margins: sizings.shadowSize
         anchors.bottomMargin: addButton.height
@@ -43,7 +41,7 @@ Item {
             onItemChanged: {
                 if (!item) return;
 
-                item.provider.description = model.link;
+                item.viewModel.description = model.link;
                 item.minimized = Qt.binding(function() { return expandedLinkIndex != index; });
             }
 
@@ -55,7 +53,7 @@ Item {
                 onToggleMaxMin: expandedLinkIndex = item.minimized ? index : -1
                 onRemoveRequest: {
                     if (expandedLinkIndex == index) expandedLinkIndex = -1;
-                    provider.removeLink(model.link);
+                    viewModel.removeLink(model.link);
                 }
             }
         }
@@ -83,25 +81,25 @@ Item {
             Controls.MenuItem {
                 text: qsTr("Serial")
                 implicitWidth: parent.width
-                onTriggered: provider.addSerialLink()
+                onTriggered: viewModel.addSerialLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Udp")
                 implicitWidth: parent.width
-                onTriggered: provider.addUdpLink()
+                onTriggered: viewModel.addUdpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Tcp")
                 implicitWidth: parent.width
-                onTriggered: provider.addTcpLink()
+                onTriggered: viewModel.addTcpLink()
             }
 
             Controls.MenuItem {
                 text: qsTr("Bluetooth")
                 implicitWidth: parent.width
-                onTriggered: provider.addBluetoothLink()
+                onTriggered: viewModel.addBluetoothLink()
             }
         }
     }
