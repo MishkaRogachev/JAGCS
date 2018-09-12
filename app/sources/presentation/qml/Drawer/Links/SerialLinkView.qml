@@ -4,24 +4,29 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 
+import "../../Common" as Common
+
 LinkView {
     id: linkView
 
     viewModel: SerialLinkVm { id: viewModel }
 
+    // FIXME: combobox for MVVM
+    Common.MvBinding { vm: viewModel; vmProperty: "baudRate"; control: baudRateBox; property: "currentModelText" }
+    Common.MvBinding { vm: viewModel; vmProperty: "device"; control: deviceBox; property: "currentModelText" }
+
+
     Controls.ComboBox {
+        id: baudRateBox
         labelText: qsTr("Baud rate")
         model: viewModel.baudRates
-        currentIndex: model.indexOf(viewModel.parameter(LinkDescription.BaudRate))
-        onActivated: viewModel.setParameter(LinkDescription.BaudRate, displayText)
         Layout.fillWidth: true
     }
 
     Controls.ComboBox {
+        id: deviceBox
         labelText: qsTr("Device")
         model: viewModel.availableDevices
-        currentIndex: model.indexOf(viewModel.parameter(LinkDescription.Device))
-        onActivated: viewModel.setParameter(LinkDescription.Device, displayText)
         Layout.fillWidth: true
     }
 }

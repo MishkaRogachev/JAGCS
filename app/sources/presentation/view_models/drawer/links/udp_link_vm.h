@@ -10,8 +10,23 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(QStringList endpoints READ endpoints WRITE setEndpoints NOTIFY endpointsChanged)
+        Q_PROPERTY(bool autoAdd READ autoAdd WRITE setAutoAdd NOTIFY autoAddChanged)
+
     public:
         explicit UdpLinkVm(QObject* parent = nullptr);
+
+        QStringList endpoints() const;
+        bool autoAdd() const;
+
+    public slots:
+        void setEndpoints(const QStringList& endpoints);
+
+        void setAutoAdd(bool autoAdd);
+
+    signals:
+        void endpointsChanged();
+        void autoAddChanged();
     };
 }
 

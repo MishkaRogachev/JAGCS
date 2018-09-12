@@ -10,8 +10,18 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
+
     public:
         explicit SocketLinkVm(QObject* parent = nullptr);
+
+        int port() const;
+
+    public slots:
+        void setPort(int port);
+
+    signals:
+        void portChanged();
     };
 }
 

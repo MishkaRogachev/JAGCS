@@ -6,21 +6,7 @@ import Industrial.Controls 1.0 as Controls
 Controls.Frame {
     id: root
 
-    property string endpoints
-
-    property var _endpoints: []
-
-    signal changed(string endpoints)
-
-    function updateEndpoints(update) {
-        list.model = _endpoints;
-        if (update) changed(_endpoints.join(";"));
-    }
-
-    onEndpointsChanged: {
-        _endpoints = endpoints.split(";");
-        updateEndpoints(false);
-    }
+    property var endpoints
 
     padding: sizings.padding
     implicitHeight: list.contentHeight + padding * 2
@@ -33,7 +19,7 @@ Controls.Frame {
         boundsBehavior: Flickable.StopAtBounds
         spacing: sizings.spacing
         footerPositioning: ListView.OverlayFooter
-        model: _endpoints
+        model: endpoints
         clip: true
 
         Controls.ScrollBar.vertical: Controls.ScrollBar {
@@ -65,12 +51,10 @@ Controls.Frame {
             width: parent.width
             endpoint: modelData
             onRemove: {
-                _endpoints.splice(index, 1);
-                updateEndpoints(true);
+                endpoints.splice(index, 1);
             }
             onChanged:{
-                _endpoints[index] = endpoint;
-                updateEndpoints(true);
+                endpoints[index] = endpoint;
             }
         }
 
@@ -80,8 +64,7 @@ Controls.Frame {
             iconSource: "qrc:/ui/plus.svg"
             z: 10
             onClicked: {
-                _endpoints.push("127.0.0.1:8080");
-                updateEndpoints(true);
+                endpoints.push("127.0.0.1:8080");
                 list.toBottom();
             }
         }
