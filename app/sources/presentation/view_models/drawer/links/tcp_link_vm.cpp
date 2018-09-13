@@ -25,3 +25,10 @@ void TcpLinkVm::setAddress(const QString& address)
     m_description->setParameter(dto::LinkDescription::Address, address);
     if (m_commService->save(m_description)) emit addressChanged();
 }
+
+void TcpLinkVm::changed()
+{
+    SocketLinkVm::changed();
+
+    emit addressChanged();
+}

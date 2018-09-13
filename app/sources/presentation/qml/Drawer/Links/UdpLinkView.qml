@@ -4,15 +4,10 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 
-import "../../Common" as Common
-
 SocketLinkView {
     id: linkView
 
     viewModel: UdpLinkVm { id: viewModel }
-
-    Common.MvBinding { vm: viewModel; vmProperty: "endpoints"; control: endpointList; property: "endpoints" }
-    Common.MvBinding { vm: viewModel; vmProperty: "autoAdd"; control: autoBox; property: "checked" }
 
     Controls.Label {
         text: qsTr("Setted endpoints")
@@ -22,6 +17,8 @@ SocketLinkView {
 
     EndpointListView {
         id: endpointList
+        endpoints: viewModel.endpoints
+        //onEndpointsChanged: viewModel.setEndpoints(endpoints)
         Layout.maximumHeight: sizings.controlBaseSize * 6
         Layout.fillWidth: true
     }
@@ -29,6 +26,8 @@ SocketLinkView {
     Controls.CheckBox {
         id: autoBox
         text: qsTr("Add endpoint on recv")
+        checked: viewModel.autoAdd
+        onToggled: viewModel.setAutoAdd(checked)
         horizontalAlignment: Text.AlignHCenter
         Layout.fillWidth: true
     }

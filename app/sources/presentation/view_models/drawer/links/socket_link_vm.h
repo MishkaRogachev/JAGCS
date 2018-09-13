@@ -22,6 +22,9 @@ namespace presentation
 
     signals:
         void portChanged();
+
+    protected:
+        void changed() override;
     };
 }
 

@@ -27,6 +27,9 @@ namespace presentation
     signals:
         void endpointsChanged();
         void autoAddChanged();
+
+    protected:
+        void changed() override;
     };
 }
 

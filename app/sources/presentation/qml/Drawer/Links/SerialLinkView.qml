@@ -12,8 +12,8 @@ LinkView {
     viewModel: SerialLinkVm { id: viewModel }
 
     // FIXME: combobox for MVVM
-    Common.MvBinding { vm: viewModel; vmProperty: "baudRate"; control: baudRateBox; property: "currentModelText" }
-    Common.MvBinding { vm: viewModel; vmProperty: "device"; control: deviceBox; property: "currentModelText" }
+//    Common.MvBinding { vmProperty: "baudRate"; control: baudRateBox; property: "currentModelText" }
+//    Common.MvBinding { vmProperty: "device"; control: deviceBox; property: "currentModelText" }
 
 
     Controls.ComboBox {

@@ -25,7 +25,7 @@ LinkVm::LinkVm(QObject* parent):
 
     connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
             [this](const dto::LinkDescriptionPtr& description) {
-        if (m_description == description) emit descriptionChanged();
+        if (m_description == description) this->changed();
     });
 
     connect(m_commService, &domain::CommunicationService::linkConnectedChanged, this,
@@ -47,11 +47,6 @@ LinkVm::LinkVm(QObject* parent):
             this, [this](int descriptionId) {
         if (m_description && m_description->id() == descriptionId) emit recv();
     });
-}
-
-dto::LinkDescriptionPtr LinkVm::description() const
-{
-    return m_description;
 }
 
 QString LinkVm::name() const
@@ -105,7 +100,8 @@ void LinkVm::setDescription(const dto::LinkDescriptionPtr& description)
 
     m_description = description;
 
-    emit descriptionChanged();
+    this->changed();
+
     emit connectedChanged();
     emit statisticsChanged();
 }
@@ -134,4 +130,11 @@ void LinkVm::setProtocol(const QString& protocol)
 
     m_description->setProtocol(protocol);
     m_commService->save(m_description);
+}
+
+void LinkVm::changed()
+{
+    emit nameChanged();
+    emit protocolChanged();
+    emit typeChanged();
 }

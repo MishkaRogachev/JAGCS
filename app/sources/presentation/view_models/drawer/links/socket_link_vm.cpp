@@ -14,6 +14,7 @@ SocketLinkVm::SocketLinkVm(QObject* parent):
 
 int SocketLinkVm::port() const
 {
+    qDebug() << this << "port" << (m_description ? m_description->parameter(dto::LinkDescription::Port).toInt() : 0);
     return m_description ? m_description->parameter(dto::LinkDescription::Port).toInt() : 0;
 }
 
@@ -24,4 +25,11 @@ void SocketLinkVm::setPort(int port)
 
     m_description->setParameter(dto::LinkDescription::Port, port);
     if (m_commService->save(m_description)) emit portChanged();
+}
+
+void SocketLinkVm::changed()
+{
+    LinkVm::changed();
+
+    emit portChanged();
 }

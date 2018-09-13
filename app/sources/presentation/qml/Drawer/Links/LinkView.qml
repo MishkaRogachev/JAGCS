@@ -5,8 +5,6 @@ import JAGCS 1.0
 import Industrial.Controls 1.0 as Controls
 import Industrial.Indicators 1.0 as Indicators
 
-import "../../Common" as Common
-
 Controls.Card {
     id: linkView
 
@@ -28,8 +26,8 @@ Controls.Card {
         onSent: sentLed.blink()
     }
 
-    Common.MvBinding { vm: viewModel; vmProperty: "name"; control: nameField; property: "text" }
-    Common.MvBinding { vm: viewModel; vmProperty: "protocol"; control: protocolBox; property: "displayText" }
+//    Binding { target: viewModel; property: "name"; value: nameField.text }
+//    Binding { target: viewModel; property: "protocol"; value: protocolBox.displayText }
 
     deepEnabled: minimized
     contentItem: column
@@ -77,6 +75,7 @@ Controls.Card {
                 id: nameField
                 labelText: qsTr("Name")
                 readOnly: minimized
+                text: viewModel.name
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
             }
@@ -86,6 +85,7 @@ Controls.Card {
                 labelText: qsTr("Protocol")
                 visible: !minimized
                 model: viewModel.availableProtocols
+                currentIndex: model.indexOf(viewModel.protocol)
                 Layout.fillWidth: true
             }
         }

@@ -15,12 +15,11 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(dto::LinkDescriptionPtr description READ description WRITE setDescription
-                   NOTIFY descriptionChanged)
+        Q_PROPERTY(dto::LinkDescriptionPtr description WRITE setDescription)
 
-        Q_PROPERTY(QString name READ name WRITE setName NOTIFY descriptionChanged)
-        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY descriptionChanged)
-        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY descriptionChanged)
+        Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY protocolChanged)
+        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY typeChanged)
 
         Q_PROPERTY(bool connected READ isConnected WRITE setConnected NOTIFY connectedChanged)
 
@@ -32,8 +31,6 @@ namespace presentation
 
     public:
         explicit LinkVm(QObject* parent = nullptr);
-
-        dto::LinkDescriptionPtr description() const;
 
         QString name() const;
         QString protocol() const;
@@ -56,13 +53,18 @@ namespace presentation
         void recv();
         void sent();
 
-        void descriptionChanged();
+        void nameChanged();
+        void protocolChanged();
+        void typeChanged();
+
         void connectedChanged();
         void statisticsChanged();
 
         void availableProtocolsChanged();
 
     protected:
+        virtual void changed();
+
         dto::LinkDescriptionPtr m_description;
         dto::LinkStatisticsPtr m_statistics;
         domain::CommunicationService* const m_commService;

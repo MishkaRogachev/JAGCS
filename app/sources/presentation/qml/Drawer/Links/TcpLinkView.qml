@@ -4,17 +4,15 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 
-import "../../Common" as Common
-
 SocketLinkView {
     id: linkView
 
     viewModel: TcpLinkVm { id: viewModel }
 
-    Common.MvBinding { vm: viewModel; vmProperty: "address"; control: addressField; property: "text" }
-
     Controls.TextField {
         id: addressField
+        text: viewModel.address
+        editingFinished: viewModel.setAddress(text)
         labelText: qsTr("Address")
         Layout.fillWidth: true
     }

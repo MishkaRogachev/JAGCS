@@ -22,6 +22,9 @@ namespace presentation
 
     signals:
         void addressChanged();
+
+    protected:
+        void changed() override;
     };
 }
 

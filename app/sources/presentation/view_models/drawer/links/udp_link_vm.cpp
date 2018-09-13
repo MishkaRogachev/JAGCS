@@ -54,3 +54,11 @@ void UdpLinkVm::setAutoAdd(bool autoAdd)
     m_description->setParameter(dto::LinkDescription::UdpAutoResponse, autoAdd);
     if (m_commService->save(m_description)) emit autoAddChanged();
 }
+
+void UdpLinkVm::changed()
+{
+    SocketLinkVm::changed();
+
+    emit endpointsChanged();
+    emit autoAddChanged();
+}

@@ -4,16 +4,14 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 
-import "../../Common" as Common
-
 LinkView {
     id: linkView
-
-    Common.MvBinding { vm: viewModel; vmProperty: "port"; control: portBox; property: "value" }
 
     Controls.SpinBox {
         id: portBox
         labelText: qsTr("Port")
+        value: viewModel.port
+        onValueModified: viewModel.setPort(value)
         from: 0
         to: 65535
         Layout.fillWidth: true
