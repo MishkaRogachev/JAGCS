@@ -65,6 +65,10 @@ void LinkListVm::addLink(dto::LinkDescription::Type type)
 
     description->setType(type);
     description->setName(tr("Link %1").arg(d->linksModel.rowCount() + 1));
+    description->setAutoConnect(true);
+
+    QStringList availableProtocols = d->service->availableProtocols();
+    if (!availableProtocols.isEmpty()) description->setProtocol(availableProtocols.first());
 
     switch (type) {
     case dto::LinkDescription::Serial:
