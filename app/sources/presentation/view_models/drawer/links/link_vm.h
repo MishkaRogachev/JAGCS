@@ -17,9 +17,9 @@ namespace presentation
 
         Q_PROPERTY(dto::LinkDescriptionPtr description WRITE setDescription)
 
-        Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY protocolChanged)
-        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY typeChanged)
+        Q_PROPERTY(QString name READ name WRITE setName NOTIFY linkChanged)
+        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY linkChanged)
+        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY linkChanged)
 
         Q_PROPERTY(bool connected READ isConnected WRITE setConnected NOTIFY connectedChanged)
 
@@ -53,18 +53,13 @@ namespace presentation
         void recv();
         void sent();
 
-        void nameChanged();
-        void protocolChanged();
-        void typeChanged();
-
+        void linkChanged();
         void connectedChanged();
         void statisticsChanged();
 
         void availableProtocolsChanged();
 
     protected:
-        virtual void changed();
-
         dto::LinkDescriptionPtr m_description;
         dto::LinkStatisticsPtr m_statistics;
         domain::CommunicationService* const m_commService;

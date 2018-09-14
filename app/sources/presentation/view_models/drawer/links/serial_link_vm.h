@@ -16,9 +16,9 @@ namespace presentation
         Q_OBJECT
 
         Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
-        Q_PROPERTY(int baudRate READ baudRate WRITE setBaudRate NOTIFY baudRateChanged)
+        Q_PROPERTY(int baudRate READ baudRate WRITE setBaudRate NOTIFY serialLinkChanged)
         Q_PROPERTY(QStringList availableDevices READ availableDevices NOTIFY availableDevicesChanged)
-        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
+        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY serialLinkChanged)
 
     public:
         explicit SerialLinkVm(QObject* parent = nullptr);
@@ -34,9 +34,8 @@ namespace presentation
         void setDevice(const QString& device);
 
     signals:
-        void baudRateChanged();
         void availableDevicesChanged();
-        void deviceChanged();
+        void serialLinkChanged();
 
     private:
         domain::SerialPortService* const m_serialService;

@@ -10,7 +10,9 @@ using namespace presentation;
 
 SocketLinkVm::SocketLinkVm(QObject* parent):
     LinkVm(parent)
-{}
+{
+    connect(this, &LinkVm::linkChanged, this, &SocketLinkVm::socketLinkChanged);
+}
 
 int SocketLinkVm::port() const
 {
@@ -23,12 +25,6 @@ void SocketLinkVm::setPort(int port)
         m_description->parameter(dto::LinkDescription::Port) == port) return;
 
     m_description->setParameter(dto::LinkDescription::Port, port);
-    if (m_commService->save(m_description)) emit portChanged();
+    m_commService->save(m_description);
 }
 
-void SocketLinkVm::changed()
-{
-    LinkVm::changed();
-
-    emit portChanged();
-}

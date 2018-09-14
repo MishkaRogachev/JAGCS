@@ -10,7 +10,9 @@ using namespace presentation;
 
 TcpLinkVm::TcpLinkVm(QObject* parent):
     SocketLinkVm(parent)
-{}
+{
+    connect(this, &LinkVm::linkChanged, this, &TcpLinkVm::tcpLinkChanged);
+}
 
 QString TcpLinkVm::address() const
 {
@@ -23,12 +25,6 @@ void TcpLinkVm::setAddress(const QString& address)
         m_description->parameter(dto::LinkDescription::Address) == address) return;
 
     m_description->setParameter(dto::LinkDescription::Address, address);
-    if (m_commService->save(m_description)) emit addressChanged();
+    m_commService->save(m_description);
 }
 
-void TcpLinkVm::changed()
-{
-    SocketLinkVm::changed();
-
-    emit addressChanged();
-}

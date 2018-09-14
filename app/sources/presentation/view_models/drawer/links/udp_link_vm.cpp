@@ -15,7 +15,9 @@ using namespace presentation;
 
 UdpLinkVm::UdpLinkVm(QObject* parent):
     SocketLinkVm(parent)
-{}
+{
+    connect(this, &LinkVm::linkChanged, this, &UdpLinkVm::udpLinkChanged);
+}
 
 QStringList UdpLinkVm::endpoints() const
 {
@@ -43,7 +45,7 @@ void UdpLinkVm::setEndpoints(const QStringList& endpoints)
     if (m_description.isNull()) return;
 
     m_description->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
-    if (m_commService->save(m_description)) emit endpointsChanged();
+    m_commService->save(m_description);
 }
 
 void UdpLinkVm::setAutoAdd(bool autoAdd)
@@ -52,13 +54,5 @@ void UdpLinkVm::setAutoAdd(bool autoAdd)
         m_description->parameter(dto::LinkDescription::UdpAutoResponse) == autoAdd) return;
 
     m_description->setParameter(dto::LinkDescription::UdpAutoResponse, autoAdd);
-    if (m_commService->save(m_description)) emit autoAddChanged();
-}
-
-void UdpLinkVm::changed()
-{
-    SocketLinkVm::changed();
-
-    emit endpointsChanged();
-    emit autoAddChanged();
+    m_commService->save(m_description);
 }

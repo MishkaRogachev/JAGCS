@@ -10,7 +10,7 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
+        Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY tcpLinkChanged)
 
     public:
         explicit TcpLinkVm(QObject* parent = nullptr);
@@ -21,10 +21,7 @@ namespace presentation
         void setAddress(const QString& address);
 
     signals:
-        void addressChanged();
-
-    protected:
-        void changed() override;
+        void tcpLinkChanged();
     };
 }
 

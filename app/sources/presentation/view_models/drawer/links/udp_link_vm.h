@@ -10,8 +10,8 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(QStringList endpoints READ endpoints WRITE setEndpoints NOTIFY endpointsChanged)
-        Q_PROPERTY(bool autoAdd READ autoAdd WRITE setAutoAdd NOTIFY autoAddChanged)
+        Q_PROPERTY(QStringList endpoints READ endpoints WRITE setEndpoints NOTIFY udpLinkChanged)
+        Q_PROPERTY(bool autoAdd READ autoAdd WRITE setAutoAdd NOTIFY udpLinkChanged)
 
     public:
         explicit UdpLinkVm(QObject* parent = nullptr);
@@ -25,11 +25,7 @@ namespace presentation
         void setAutoAdd(bool autoAdd);
 
     signals:
-        void endpointsChanged();
-        void autoAddChanged();
-
-    protected:
-        void changed() override;
+        void udpLinkChanged();
     };
 }
 

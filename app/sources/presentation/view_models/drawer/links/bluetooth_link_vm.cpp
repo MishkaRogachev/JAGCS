@@ -13,7 +13,9 @@ using namespace presentation;
 BluetoothLinkVm::BluetoothLinkVm(QObject* parent):
     LinkVm(parent),
     m_bluetoothService(serviceRegistry->bluetoothService())
-{}
+{
+    connect(this, &LinkVm::linkChanged, this, &BluetoothLinkVm::bluetoothLinkChanged);
+}
 
 bool BluetoothLinkVm::isDiscoveryActive() const
 {
@@ -51,7 +53,7 @@ void BluetoothLinkVm::setDevice(QString device)
         m_description->parameter(dto::LinkDescription::Device) == device) return;
 
     m_description->setParameter(dto::LinkDescription::Device, device);
-    if (m_commService->save(m_description)) emit deviceChanged();
+    m_commService->save(m_description);
 }
 
 void BluetoothLinkVm::setAddress(QString address)
@@ -60,5 +62,5 @@ void BluetoothLinkVm::setAddress(QString address)
         m_description->parameter(dto::LinkDescription::Address) == address) return;
 
     m_description->setParameter(dto::LinkDescription::Address, address);
-    if (m_commService->save(m_description)) emit addressChanged();
+    m_commService->save(m_description);
 }

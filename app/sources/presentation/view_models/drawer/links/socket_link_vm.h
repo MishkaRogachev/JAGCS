@@ -10,7 +10,7 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
+        Q_PROPERTY(int port READ port WRITE setPort NOTIFY socketLinkChanged)
 
     public:
         explicit SocketLinkVm(QObject* parent = nullptr);
@@ -21,10 +21,7 @@ namespace presentation
         void setPort(int port);
 
     signals:
-        void portChanged();
-
-    protected:
-        void changed() override;
+        void socketLinkChanged();
     };
 }
 

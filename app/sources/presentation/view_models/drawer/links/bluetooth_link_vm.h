@@ -17,8 +17,8 @@ namespace presentation
 
         Q_PROPERTY(bool discoveryActive READ isDiscoveryActive NOTIFY discoveryActiveChanged)
         Q_PROPERTY(QStringList availableDevices READ availableDevices NOTIFY availableDevicesChanged)
-        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
-        Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
+        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY bluetoothLinkChanged)
+        Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY bluetoothLinkChanged)
 
     public:
         explicit BluetoothLinkVm(QObject* parent = nullptr);
@@ -39,8 +39,7 @@ namespace presentation
     signals:
         void discoveryActiveChanged();
         void availableDevicesChanged();
-        void deviceChanged();
-        void addressChanged();
+        void bluetoothLinkChanged();
 
     private:
         domain::BluetoothService* const m_bluetoothService;

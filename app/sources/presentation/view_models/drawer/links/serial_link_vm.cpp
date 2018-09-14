@@ -14,6 +14,7 @@ SerialLinkVm::SerialLinkVm(QObject* parent):
     LinkVm(parent),
     m_serialService(serviceRegistry->serialPortService())
 {
+    connect(this, &LinkVm::linkChanged, this, &SerialLinkVm::serialLinkChanged);
     connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
             this, &SerialLinkVm::availableDevicesChanged);
 }
@@ -62,7 +63,7 @@ void SerialLinkVm::setBaudRate(int baudRate)
         m_description->parameter(dto::LinkDescription::BaudRate) == baudRate) return;
 
     m_description->setParameter(dto::LinkDescription::BaudRate, baudRate);
-    if (m_commService->save(m_description)) emit baudRateChanged();
+    m_commService->save(m_description);
 }
 
 void SerialLinkVm::setDevice(const QString& device)
@@ -71,5 +72,5 @@ void SerialLinkVm::setDevice(const QString& device)
         m_description->parameter(dto::LinkDescription::Device) == device) return;
 
     m_description->setParameter(dto::LinkDescription::Device, device);
-    if (m_commService->save(m_description)) emit deviceChanged();
+    m_commService->save(m_description);
 }
