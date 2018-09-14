@@ -16,18 +16,17 @@ namespace presentation
         Q_OBJECT
 
         Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
-        Q_PROPERTY(QStringList availableDevices READ availableDevices
-                   NOTIFY availableDevicesChanged)
         Q_PROPERTY(int baudRate READ baudRate WRITE setBaudRate NOTIFY baudRateChanged)
+        Q_PROPERTY(QStringList availableDevices READ availableDevices NOTIFY availableDevicesChanged)
         Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
 
     public:
         explicit SerialLinkVm(QObject* parent = nullptr);
 
         QVariantList baudRates() const;
-        QStringList availableDevices() const;
-
         int baudRate() const;
+
+        QStringList availableDevices() const;
         QString device() const;
 
     public slots:
@@ -35,8 +34,8 @@ namespace presentation
         void setDevice(const QString& device);
 
     signals:
-        void availableDevicesChanged();
         void baudRateChanged();
+        void availableDevicesChanged();
         void deviceChanged();
 
     private:

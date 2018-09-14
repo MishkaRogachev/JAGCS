@@ -12,7 +12,7 @@ SocketLinkView {
     Controls.TextField {
         id: addressField
         text: viewModel.address
-        editingFinished: viewModel.setAddress(text)
+        onEditingFinished: viewModel.setAddress(text)
         labelText: qsTr("Address")
         Layout.fillWidth: true
     }

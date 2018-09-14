@@ -14,7 +14,6 @@ SocketLinkVm::SocketLinkVm(QObject* parent):
 
 int SocketLinkVm::port() const
 {
-    qDebug() << this << "port" << (m_description ? m_description->parameter(dto::LinkDescription::Port).toInt() : 0);
     return m_description ? m_description->parameter(dto::LinkDescription::Port).toInt() : 0;
 }
 

@@ -15,8 +15,32 @@ namespace presentation
     {
         Q_OBJECT
 
+        Q_PROPERTY(bool discoveryActive READ isDiscoveryActive NOTIFY discoveryActiveChanged)
+        Q_PROPERTY(QStringList availableDevices READ availableDevices NOTIFY availableDevicesChanged)
+        Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
+        Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
+
     public:
         explicit BluetoothLinkVm(QObject* parent = nullptr);
+
+        bool isDiscoveryActive() const;
+
+        QStringList availableDevices() const;
+        QString device() const;
+        QString address() const;
+
+    public slots:
+        void startBluetoothDiscovery();
+        void stopBluetoothDiscovery();
+
+        void setDevice(QString device);
+        void setAddress(QString address);
+
+    signals:
+        void discoveryActiveChanged();
+        void availableDevicesChanged();
+        void deviceChanged();
+        void addressChanged();
 
     private:
         domain::BluetoothService* const m_bluetoothService;

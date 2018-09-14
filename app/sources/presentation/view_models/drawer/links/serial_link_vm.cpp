@@ -27,6 +27,11 @@ QVariantList SerialLinkVm::baudRates() const
     return baudRates;
 }
 
+int SerialLinkVm::baudRate() const
+{
+    return m_description ? m_description->parameter(dto::LinkDescription::BaudRate).toInt() : 0;
+}
+
 QStringList SerialLinkVm::availableDevices() const
 {
     QStringList devices;
@@ -44,11 +49,6 @@ QStringList SerialLinkVm::availableDevices() const
     }
 
     return devices;
-}
-
-int SerialLinkVm::baudRate() const
-{
-    return m_description ? m_description->parameter(dto::LinkDescription::BaudRate).toInt() : 0;
 }
 
 QString SerialLinkVm::device() const

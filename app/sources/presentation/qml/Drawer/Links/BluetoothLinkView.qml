@@ -11,16 +11,16 @@ LinkView {
 
     Controls.TextField {
         labelText: qsTr("Address")
-        text: viewModel.parameter(LinkDescription.Device)
-        onTextChanged: changed = true
+        text: viewModel.address
+        onEditingFinished: viewModel.setAddress(text)
         Layout.fillWidth: true
     }
 
     Controls.ComboBox {
         labelText: qsTr("Device")
         model: viewModel.availableDevices
-        currentIndex: model.indexOf(viewModel.parameter(LinkDescription.Device))
-        onActivated: viewModel.setParameter(LinkDescription.Device, displayText)
+        currentIndex: model.indexOf(viewModel.device)
+        onActivated: viewModel.setDevice(currentText)
         Layout.fillWidth: true
     }
 
@@ -29,14 +29,14 @@ LinkView {
 
             Controls.Button {
                 text: qsTr("Start")
-                enabled: !viewModel.discoveringBluetooth
+                enabled: !viewModel.discoveryActive
                 onClicked: viewModel.startBluetoothDiscovery()
                 Layout.fillWidth: true
             }
 
             Controls.Button {
                 text: qsTr("Stop")
-                enabled: viewModel.discoveringBluetooth
+                enabled: viewModel.discoveryActive
                 onClicked: viewModel.stopBluetoothDiscovery()
                 Layout.fillWidth: true
             }
