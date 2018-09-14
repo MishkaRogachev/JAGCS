@@ -10,8 +10,9 @@ LinkView {
     viewModel: BluetoothLinkVm { id: viewModel }
 
     Controls.TextField {
+        id: addressField
         labelText: qsTr("Address")
-        text: viewModel.address
+        Binding on text { value: viewModel.address; when: !addressField.activeFocus }
         onEditingFinished: viewModel.setAddress(text)
         Layout.fillWidth: true
     }
@@ -19,8 +20,8 @@ LinkView {
     Controls.ComboBox {
         labelText: qsTr("Device")
         model: viewModel.availableDevices
-        currentIndex: model.indexOf(viewModel.device)
-        onActivated: viewModel.setDevice(currentText)
+        Binding on currentIndex { value: viewModel.availableDevices.indexOf(viewModel.device) }
+        onActivated: viewModel.setDevice(viewModel.availableDevices[index])
         Layout.fillWidth: true
     }
 

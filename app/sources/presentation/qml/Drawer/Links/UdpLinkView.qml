@@ -17,8 +17,8 @@ SocketLinkView {
 
     EndpointListView {
         id: endpointList
-        endpoints: viewModel.endpoints
-        //onEndpointsChanged: viewModel.setEndpoints(endpoints)
+        Binding on endpoints { value: viewModel.endpoints; when: !endpointList.activeFocus }
+        onSetEndpoints: viewModel.setEndpoints(endpoints)
         Layout.maximumHeight: sizings.controlBaseSize * 6
         Layout.fillWidth: true
     }
@@ -26,7 +26,7 @@ SocketLinkView {
     Controls.CheckBox {
         id: autoBox
         text: qsTr("Add endpoint on recv")
-        checked: viewModel.autoAdd
+        Binding on checked { value: viewModel.autoAdd; when: !autoBox.activeFocus }
         onToggled: viewModel.setAutoAdd(checked)
         horizontalAlignment: Text.AlignHCenter
         Layout.fillWidth: true

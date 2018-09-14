@@ -3,10 +3,12 @@ import QtQuick.Layouts 1.3
 
 import Industrial.Controls 1.0 as Controls
 
-Controls.Frame {
+Controls.Frame { // FIXME: fix endpoint editor
     id: root
 
     property var endpoints
+
+    signal setEndpoints(var endpoints)
 
     padding: sizings.padding
     implicitHeight: list.contentHeight + padding * 2
@@ -52,9 +54,11 @@ Controls.Frame {
             endpoint: modelData
             onRemove: {
                 endpoints.splice(index, 1);
+                setEndpoints(endpoints);
             }
             onChanged:{
                 endpoints[index] = endpoint;
+                setEndpoints(endpoints);
             }
         }
 
@@ -65,6 +69,7 @@ Controls.Frame {
             z: 10
             onClicked: {
                 endpoints.push("127.0.0.1:8080");
+                setEndpoints(endpoints);
                 list.toBottom();
             }
         }

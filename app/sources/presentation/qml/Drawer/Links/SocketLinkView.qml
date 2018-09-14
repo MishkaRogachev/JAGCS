@@ -10,7 +10,7 @@ LinkView {
     Controls.SpinBox {
         id: portBox
         labelText: qsTr("Port")
-        value: viewModel.port
+        Binding on value { value: viewModel.port; when: !portBox.activeFocus }
         onValueModified: viewModel.setPort(value)
         from: 0
         to: 65535

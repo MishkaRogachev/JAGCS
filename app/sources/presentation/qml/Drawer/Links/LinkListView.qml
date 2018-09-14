@@ -11,6 +11,14 @@ Item {
 
     implicitWidth: sizings.controlBaseSize * 10
 
+    onVisibleChanged: drawer.filterEnabled = visible
+    Component.onCompleted: if (visible) drawer.filterEnabled = true
+
+    Connections{
+        target: drawer
+        onFilter: viewModel.filter(text)
+    }
+
     LinkListVm { id: viewModel }
 
     ListView {
@@ -78,28 +86,19 @@ Item {
             x: (parent.width - width) / 2
             width: list.width
 
-            Controls.MenuItem {
-                text: qsTr("Serial")
-                implicitWidth: parent.width
-                onTriggered: viewModel.addSerialLink()
-            }
+            Repeater {
+                model: [
+                    { text: qsTr("Serial"), type: LinkDescription.Serial },
+                    { text: qsTr("Udp"), type: LinkDescription.Udp },
+                    { text: qsTr("Tcp"), type: LinkDescription.Tcp },
+                    { text: qsTr("Bluetooth"), type: LinkDescription.Bluetooth },
+                ]
 
-            Controls.MenuItem {
-                text: qsTr("Udp")
-                implicitWidth: parent.width
-                onTriggered: viewModel.addUdpLink()
-            }
-
-            Controls.MenuItem {
-                text: qsTr("Tcp")
-                implicitWidth: parent.width
-                onTriggered: viewModel.addTcpLink()
-            }
-
-            Controls.MenuItem {
-                text: qsTr("Bluetooth")
-                implicitWidth: parent.width
-                onTriggered: viewModel.addBluetoothLink()
+                Controls.MenuItem {
+                    text: modelData.text
+                    implicitWidth: parent.width
+                    onTriggered: viewModel.addLink(modelData.type)
+                }
             }
         }
     }

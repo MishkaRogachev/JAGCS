@@ -26,9 +26,6 @@ Controls.Card {
         onSent: sentLed.blink()
     }
 
-//    Binding { target: viewModel; property: "name"; value: nameField.text }
-//    Binding { target: viewModel; property: "protocol"; value: protocolBox.displayText }
-
     deepEnabled: minimized
     contentItem: column
 
@@ -57,6 +54,7 @@ Controls.Card {
         id: column
         anchors.fill: parent
         anchors.margins: sizings.margins
+        anchors.rightMargin: linkView.margin
         spacing: sizings.spacing
 
         Controls.Label {
@@ -75,7 +73,8 @@ Controls.Card {
                 id: nameField
                 labelText: qsTr("Name")
                 readOnly: minimized
-                text: viewModel.name
+                Binding on text { value: viewModel.name; when: !nameField.activeFocus }
+                onEditingFinished: viewModel.setName(text)
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
             }
@@ -85,7 +84,8 @@ Controls.Card {
                 labelText: qsTr("Protocol")
                 visible: !minimized
                 model: viewModel.availableProtocols
-                currentIndex: model.indexOf(viewModel.protocol)
+                Binding on currentIndex { value: viewModel.availableProtocols.indexOf(viewModel.protocol); }
+                onActivated: viewModel.setProtocol(viewModel.availableProtocols[index])
                 Layout.fillWidth: true
             }
         }
@@ -94,7 +94,6 @@ Controls.Card {
             columns: 4
             rowSpacing: sizings.spacing
             columnSpacing: sizings.spacing
-            visible: minimized
 
             Controls.Label {
                 text: {
@@ -106,6 +105,7 @@ Controls.Card {
                     default: return qsTr("Unknown");
                     }
                 }
+                visible: minimized
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.columnSpan: 2
@@ -113,6 +113,7 @@ Controls.Card {
 
             Controls.Label {
                 text: viewModel.protocol.length ? viewModel.protocol : "-"
+                visible: minimized
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.columnSpan: 2

@@ -52,6 +52,7 @@ CommunicationService::CommunicationService(SerialPortService* serialPortService,
 {
     qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
     qRegisterMetaType<dto::LinkDescription::Parameter>("dto::LinkDescription::Parameter");
+    qRegisterMetaType<dto::LinkDescription::Type>("dto::LinkDescription::Type");
     qRegisterMetaType<dto::LinkStatisticsPtr>("dto::LinkStatisticsPtr");
     qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
 

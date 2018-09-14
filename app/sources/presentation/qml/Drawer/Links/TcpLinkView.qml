@@ -11,7 +11,7 @@ SocketLinkView {
 
     Controls.TextField {
         id: addressField
-        text: viewModel.address
+        Binding on text { value: viewModel.address; when: !addressField.activeFocus }
         onEditingFinished: viewModel.setAddress(text)
         labelText: qsTr("Address")
         Layout.fillWidth: true

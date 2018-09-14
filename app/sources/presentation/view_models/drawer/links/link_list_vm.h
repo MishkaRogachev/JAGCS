@@ -3,6 +3,7 @@
 
 // Internal
 #include "dto_traits.h"
+#include "link_description.h"
 
 class QAbstractItemModel;
 
@@ -21,15 +22,10 @@ namespace presentation
         QAbstractItemModel* links() const;
 
     public slots:
-        // FIXME: common add method
-        void addSerialLink();
-        void addUdpLink();
-        void addTcpLink();
-        void addBluetoothLink();
-
-        void removeLink(const dto::LinkDescriptionPtr& description);
-
         void filter(const QString& filterString);
+
+        void addLink(dto::LinkDescription::Type type);
+        void removeLink(const dto::LinkDescriptionPtr& description);
 
     private:
          class Impl;
