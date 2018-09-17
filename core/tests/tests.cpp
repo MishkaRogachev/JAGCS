@@ -8,7 +8,9 @@
 
 // Tests
 #include "links_test.h"
+#include "serial_device_pool_test.h"
 #include "telemetry_test.h"
+
 #include "communication_service_test.h"
 #include "mission_service_test.h"
 
@@ -19,6 +21,7 @@ int main(int argc, char* argv[])
     QCoreApplication app(argc, argv);
 
     execTest(LinksTest)
+    execTest(SerialDevicePoolTest)
     execTest(TelemetryTest)
 
     /*{

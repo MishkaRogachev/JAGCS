@@ -10,7 +10,10 @@
 #include "link_description.h"
 
 #include "abstract_communicator.h"
-#include "abstract_link.h"
+#include "serial_link.h"
+
+#include "serial_device_service.h"
+#include "serial_device_pool.h"
 
 namespace
 {
@@ -23,6 +26,8 @@ using namespace domain;
 class CommunicatorWorker::Impl
 {
 public:
+    SerialDeviceService* serialDeviceService;
+
     QMap<int, data_source::AbstractLink*> descriptedLinks;
     QMap<int, QString> descriptedProtocols;
     QList<data_source::AbstractCommunicator*> communicators;
@@ -30,10 +35,12 @@ public:
     int statisticsTimer = 0;
 };
 
-CommunicatorWorker::CommunicatorWorker(QObject* parent):
+CommunicatorWorker::CommunicatorWorker(SerialDeviceService* serialDeviceService, QObject* parent):
     QObject(parent),
     d(new Impl())
 {
+    d->serialDeviceService = serialDeviceService;
+
     connect(this, &CommunicatorWorker::addCommunicator,
             this, &CommunicatorWorker::addCommunicatorImpl);
     connect(this, &CommunicatorWorker::deleteCommunicator,
@@ -127,6 +134,11 @@ void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factor
             if (containsLink) communicator->removeLink(link);
         }
     }
+
+    if (SerialLink* serialLink = qobject_cast<SerialLink*>(link))
+    {
+        d->serialDeviceService->pool()->updateLink(serialLink);
+    }
 }
 
 void CommunicatorWorker::removeLinkImpl(int linkId)
@@ -139,6 +151,12 @@ void CommunicatorWorker::removeLinkImpl(int linkId)
         {
             communicator->removeLink(link);
         }
+
+        if (SerialLink* serialLink = qobject_cast<SerialLink*>(link))
+        {
+            d->serialDeviceService->pool()->removeLink(serialLink);
+        }
+
         delete link;
     }
 }

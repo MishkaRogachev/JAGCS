@@ -12,8 +12,7 @@ namespace data_source
         Q_OBJECT
 
     public:
-        SerialLink(const QString& device = QString(),
-                   qint32 baudRate = 0, QObject* parent = nullptr);
+        SerialLink(const QString& device = QString(), qint32 baudRate = 0, QObject* parent = nullptr);
 
         bool isConnected() const override;
         bool waitData(int timeout = 5000) override;

@@ -6,7 +6,7 @@
 
 namespace domain
 {
-    class SerialPortService;
+    class SerialDeviceService;
 }
 
 namespace presentation
@@ -17,7 +17,7 @@ namespace presentation
 
         Q_PROPERTY(QVariantList baudRates READ baudRates CONSTANT)
         Q_PROPERTY(int baudRate READ baudRate WRITE setBaudRate NOTIFY serialLinkChanged)
-        Q_PROPERTY(QStringList availableDevices READ availableDevices NOTIFY availableDevicesChanged)
+        Q_PROPERTY(QStringList availableDevices READ availableDevices NOTIFY devicesChanged)
         Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY serialLinkChanged)
 
     public:
@@ -34,11 +34,11 @@ namespace presentation
         void setDevice(const QString& device);
 
     signals:
-        void availableDevicesChanged();
+        void devicesChanged();
         void serialLinkChanged();
 
     private:
-        domain::SerialPortService* const m_serialService;
+        domain::SerialDeviceService* const m_serialService;
     };
 }
 

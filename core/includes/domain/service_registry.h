@@ -11,7 +11,8 @@ namespace domain
     class TelemetryService;
     class VideoService;
     class CommandService;
-    class SerialPortService;
+    // TODO: networkingService (busy ports, sockets, etc)
+    class SerialDeviceService;
     class BluetoothService;
     class CommunicationService;
 
@@ -28,7 +29,7 @@ namespace domain
         TelemetryService* telemetryService();
         VideoService* videoService();
         CommandService* commandService();
-        SerialPortService* serialPortService();
+        SerialDeviceService* serialDeviceService();
         BluetoothService* bluetoothService();
         CommunicationService* communicationService();
 

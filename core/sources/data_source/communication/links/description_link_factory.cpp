@@ -8,6 +8,8 @@
 #include "tcp_link.h"
 #include "bluetooth_link.h"
 
+#include "serial_device_pool.h"
+
 namespace
 {
     namespace
@@ -44,8 +46,7 @@ namespace
             for (const QString& endpoint: endpoints.split(::separator))
             {
                 QStringList split = endpoint.split(::delimiter);
-                QHostAddress address = split.count() > 0 ? QHostAddress(split.first()) :
-                                                           QHostAddress();
+                QHostAddress address = split.count() > 0 ? QHostAddress(split.first()) : QHostAddress();
                 quint16 port = split.count() > 1 ? split.at(1).toUInt() : 0;
                 udpLink->addEndpoint(Endpoint(address, port));
             }
@@ -74,8 +75,7 @@ namespace
     }
 }
 
-DescriptionLinkFactory::DescriptionLinkFactory(
-        const LinkDescriptionPtr& description):
+DescriptionLinkFactory::DescriptionLinkFactory(const LinkDescriptionPtr& description):
     ILinkFactory(),
     m_description(description)
 {}

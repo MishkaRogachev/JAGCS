@@ -6,8 +6,7 @@
 
 using namespace data_source;
 
-SerialLink::SerialLink(const QString& portName, qint32 baudRate,
-                       QObject* parent):
+SerialLink::SerialLink(const QString& portName, qint32 baudRate, QObject* parent):
     AbstractLink(parent),
     m_port(new QSerialPort(portName, this))
 {
@@ -16,7 +15,7 @@ SerialLink::SerialLink(const QString& portName, qint32 baudRate,
     connect(m_port, &QSerialPort::readyRead, this, &SerialLink::readSerialData);
     connect(m_port, static_cast<void(QSerialPort::*)
             (QSerialPort::SerialPortError)>(&QSerialPort::error),
-            this, &SerialLink::onError);
+            this, &SerialLink::onError, Qt::QueuedConnection);
 }
 
 bool SerialLink::isConnected() const
@@ -106,9 +105,13 @@ void SerialLink::onError(int error)
         break;
     case QSerialPort::WriteError:
         emit errored(tr("An I/O error occurred while writing the data"));
+        m_port->close();
+        emit connectedChanged(false);
         break;
     case QSerialPort::ReadError:
         emit errored(tr("An I/O error occurred while reading the data"));
+        m_port->close();
+        emit connectedChanged(false);
         break;
     case QSerialPort::ResourceError:
         emit errored(tr("An I/O error occurred when a resource becomes unavailable"));
@@ -125,7 +128,6 @@ void SerialLink::onError(int error)
     default:
     case QSerialPort::UnknownError:
         emit errored(tr("An unidentified error occurred"));
-        qDebug() << error;
         break;
     }
 }

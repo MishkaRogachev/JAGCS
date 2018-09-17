@@ -17,12 +17,14 @@ namespace data_source
 
 namespace domain
 {
+    class SerialDeviceService;
+
     class CommunicatorWorker: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit CommunicatorWorker(QObject* parent = nullptr);
+        CommunicatorWorker(SerialDeviceService* serialDeviceService, QObject* parent = nullptr);
         ~CommunicatorWorker() override;
 
     signals:
