@@ -25,7 +25,7 @@ namespace data_source
         void connectLink() override;
         void disconnectLink() override;
 
-        void setDevice(QString device);
+        void setDevice(const QString& device);
         void setBaudRate(qint32 baudRate);
 
     signals:

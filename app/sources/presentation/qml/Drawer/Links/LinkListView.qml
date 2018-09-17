@@ -97,7 +97,7 @@ Item {
                 Controls.MenuItem {
                     text: modelData.text
                     implicitWidth: parent.width
-                    onTriggered: viewModel.addLink(modelData.type)
+                    onTriggered: viewModel.addLink(modelData.type, modelData.text)
                 }
             }
         }

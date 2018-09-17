@@ -117,7 +117,7 @@ void LinkVm::remove()
 
 void LinkVm::setName(const QString& name)
 {
-    if (m_description.isNull()) return;
+    if (m_description.isNull() || m_description->name() == name) return;
 
     m_description->setName(name);
     m_commService->save(m_description);
@@ -125,7 +125,7 @@ void LinkVm::setName(const QString& name)
 
 void LinkVm::setProtocol(const QString& protocol)
 {
-    if (m_description.isNull()) return;
+    if (m_description.isNull() || m_description->protocol() == protocol) return;
 
     m_description->setProtocol(protocol);
     m_commService->save(m_description);

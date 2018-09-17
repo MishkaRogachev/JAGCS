@@ -59,12 +59,12 @@ void LinkListVm::filter(const QString& filterString)
     d->filterModel.setFilterFixedString(filterString);
 }
 
-void LinkListVm::addLink(dto::LinkDescription::Type type)
+void LinkListVm::addLink(dto::LinkDescription::Type type, const QString& name)
 {
     dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
 
     description->setType(type);
-    description->setName(tr("Link %1").arg(d->linksModel.rowCount() + 1));
+    description->setName(name + " " + tr("link"));
     description->setAutoConnect(true);
 
     QStringList availableProtocols = d->service->availableProtocols();

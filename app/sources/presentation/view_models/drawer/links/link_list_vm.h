@@ -24,7 +24,7 @@ namespace presentation
     public slots:
         void filter(const QString& filterString);
 
-        void addLink(dto::LinkDescription::Type type);
+        void addLink(dto::LinkDescription::Type type, const QString& name);
         void removeLink(const dto::LinkDescriptionPtr& description);
 
     private:

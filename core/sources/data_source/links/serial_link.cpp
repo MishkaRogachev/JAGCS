@@ -54,12 +54,14 @@ void SerialLink::disconnectLink()
     emit connectedChanged(false);
 }
 
-void SerialLink::setDevice(QString device)
+void SerialLink::setDevice(const QString& device)
 {
     if (m_port->portName() == device) return;
 
     m_port->setPortName(device);
     emit deviceChanged(m_port->portName());
+
+    if (device.isEmpty() && this->isConnected()) this->disconnectLink();
 }
 
 void SerialLink::setBaudRate(qint32 baudRate)

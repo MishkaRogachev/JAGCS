@@ -15,6 +15,7 @@ SerialLinkVm::SerialLinkVm(QObject* parent):
     m_serialService(serviceRegistry->serialPortService())
 {
     connect(this, &LinkVm::linkChanged, this, &SerialLinkVm::serialLinkChanged);
+    connect(this, &LinkVm::linkChanged, this, &SerialLinkVm::availableDevicesChanged);
     connect(m_serialService, &domain::SerialPortService::availableDevicesChanged,
             this, &SerialLinkVm::availableDevicesChanged);
 }
@@ -37,11 +38,7 @@ QStringList SerialLinkVm::availableDevices() const
 {
     QStringList devices;
     devices.append(QString());
-
-    for (const QString& device: m_serialService->availableDevices())
-    {
-        devices.append(device);
-    }
+    devices.append(m_serialService->availableDevices());
 
     if (m_description)
     {

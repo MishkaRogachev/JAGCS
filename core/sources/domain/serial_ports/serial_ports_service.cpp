@@ -79,8 +79,8 @@ void SerialPortService::updateDevices()
 
     d->devices = devices;
 
-    emit devicesChanged(this->devices());
-    emit availableDevicesChanged(this->availableDevices());
+    emit devicesChanged();
+    emit availableDevicesChanged();
 }
 
 void SerialPortService::holdDevice(const QString& port)
@@ -88,7 +88,7 @@ void SerialPortService::holdDevice(const QString& port)
     if (d->busyDevices.contains(port)) return;
 
     d->busyDevices.append(port);
-    emit availableDevicesChanged(this->availableDevices());
+    emit availableDevicesChanged();
 }
 
 void SerialPortService::releaseDevice(const QString& port)
@@ -96,7 +96,7 @@ void SerialPortService::releaseDevice(const QString& port)
     if (!d->busyDevices.contains(port)) return;
 
     d->busyDevices.removeOne(port);
-    emit availableDevicesChanged(this->availableDevices());
+    emit availableDevicesChanged();
 }
 
 void SerialPortService::timerEvent(QTimerEvent* event)

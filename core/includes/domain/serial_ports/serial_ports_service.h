@@ -27,8 +27,8 @@ namespace domain
         void releaseDevice(const QString& port);
 
     signals:
-        void devicesChanged(const QStringList& devices);
-        void availableDevicesChanged(const QStringList& availableDevices);
+        void devicesChanged();
+        void availableDevicesChanged();
 
     protected:
         void timerEvent(QTimerEvent* event) override;
