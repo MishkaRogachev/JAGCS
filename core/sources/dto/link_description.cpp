@@ -53,7 +53,7 @@ QString LinkDescription::protocol() const
     return m_protocol;
 }
 
-void LinkDescription::setProtocol(QString protocol)
+void LinkDescription::setProtocol(const QString& protocol)
 {
     m_protocol = protocol;
 }

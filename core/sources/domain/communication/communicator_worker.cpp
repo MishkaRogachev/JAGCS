@@ -117,13 +117,15 @@ void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factor
 
     for (AbstractCommunicator* communicator: d->communicators)
     {
-        if (communicator->availableProtocols().contains(protocol) &&
-            !communicator->links().contains(link))
+        bool containsLink = communicator->links().contains(link);
+        if (communicator->availableProtocols().contains(protocol))
         {
-            communicator->addLink(link);
-            continue;
+            if (!containsLink) communicator->addLink(link);
         }
-        else communicator->removeLink(link);
+        else
+        {
+            if (containsLink) communicator->removeLink(link);
+        }
     }
 }
 

@@ -49,7 +49,7 @@ namespace dto
         void setType(Type type);
 
         QString protocol() const;
-        void setProtocol(QString protocol);
+        void setProtocol(const QString& protocol);
 
         QString parameters() const;
         void setParameters(const QString& parameters);
