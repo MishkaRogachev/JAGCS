@@ -9,7 +9,6 @@
 #include "telemetry_service.h"
 #include "video_service.h"
 #include "command_service.h"
-#include "serial_device_service.h"
 #include "bluetooth_service.h"
 #include "communication_service.h"
 
@@ -25,14 +24,13 @@ public:
     TelemetryService telemetryService;
     VideoService videoService;
     CommandService commandService;
-    SerialDeviceService serialDeviceService;
     BluetoothService bluetoothService;
     CommunicationService communicationService;
 
     Impl():
         vehicleService(&missionService),
         telemetryService(&vehicleService),
-        communicationService(&serialDeviceService)
+        communicationService()
     {}
 };
 
@@ -78,11 +76,6 @@ CommandService* ServiceRegistry::commandService()
 CommunicationService* ServiceRegistry::communicationService()
 {
     return &d->communicationService;
-}
-
-SerialDeviceService* ServiceRegistry::serialDeviceService()
-{
-    return &d->serialDeviceService;
 }
 
 BluetoothService*ServiceRegistry::bluetoothService()

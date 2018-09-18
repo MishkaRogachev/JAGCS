@@ -13,18 +13,17 @@
 namespace data_source
 {
     class AbstractLink;
+    class SerialDevicePool;
 }
 
 namespace domain
 {
-    class SerialDeviceService;
-
     class CommunicatorWorker: public QObject
     {
         Q_OBJECT
 
     public:
-        CommunicatorWorker(SerialDeviceService* serialDeviceService, QObject* parent = nullptr);
+        explicit CommunicatorWorker(QObject* parent = nullptr);
         ~CommunicatorWorker() override;
 
     signals:

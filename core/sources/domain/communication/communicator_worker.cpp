@@ -12,7 +12,7 @@
 #include "abstract_communicator.h"
 #include "serial_link.h"
 
-#include "serial_device_service.h"
+#include "serial_device_manager.h"
 #include "serial_device_pool.h"
 
 namespace
@@ -26,7 +26,7 @@ using namespace domain;
 class CommunicatorWorker::Impl
 {
 public:
-    SerialDeviceService* serialDeviceService;
+    SerialDevicePool* serialDevicePool;
 
     QMap<int, data_source::AbstractLink*> descriptedLinks;
     QMap<int, QString> descriptedProtocols;
@@ -35,11 +35,18 @@ public:
     int statisticsTimer = 0;
 };
 
-CommunicatorWorker::CommunicatorWorker(SerialDeviceService* serialDeviceService, QObject* parent):
+CommunicatorWorker::CommunicatorWorker(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    d->serialDeviceService = serialDeviceService;
+    d->serialDevicePool = new SerialDevicePool(this);
+
+    connect(serialDeviceManager, &SerialDeviceManager::devicesDiscovered,
+            d->serialDevicePool, &SerialDevicePool::setDiscoveredDevices);
+    connect(d->serialDevicePool, &SerialDevicePool::availableDevicesChanged,
+            serialDeviceManager, &SerialDeviceManager::setAvailableDevices);
+    connect(d->serialDevicePool, &SerialDevicePool::busyDevicesChanged,
+            serialDeviceManager, &SerialDeviceManager::setBusyDevices);
 
     connect(this, &CommunicatorWorker::addCommunicator,
             this, &CommunicatorWorker::addCommunicatorImpl);
@@ -137,7 +144,7 @@ void CommunicatorWorker::updateLinkImpl(int linkId, const LinkFactoryPtr& factor
 
     if (SerialLink* serialLink = qobject_cast<SerialLink*>(link))
     {
-        d->serialDeviceService->pool()->updateLink(serialLink);
+        d->serialDevicePool->updateLink(serialLink);
     }
 }
 
@@ -154,7 +161,7 @@ void CommunicatorWorker::removeLinkImpl(int linkId)
 
         if (SerialLink* serialLink = qobject_cast<SerialLink*>(link))
         {
-            d->serialDeviceService->pool()->removeLink(serialLink);
+            d->serialDevicePool->removeLink(serialLink);
         }
 
         delete link;

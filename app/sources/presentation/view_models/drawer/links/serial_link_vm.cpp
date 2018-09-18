@@ -4,20 +4,17 @@
 #include <QDebug>
 
 // Internal
-#include "service_registry.h"
 #include "communication_service.h"
-#include "serial_device_service.h"
-#include "serial_device_pool.h"
+#include "serial_device_manager.h"
 
 using namespace presentation;
 
 SerialLinkVm::SerialLinkVm(QObject* parent):
-    LinkVm(parent),
-    m_serialService(serviceRegistry->serialDeviceService())
+    LinkVm(parent)
 {
     connect(this, &LinkVm::linkChanged, this, &SerialLinkVm::serialLinkChanged);
     connect(this, &LinkVm::linkChanged, this, &SerialLinkVm::devicesChanged);
-    connect(m_serialService->pool(), &data_source::SerialDevicePool::devicesChanged,
+    connect(serialDeviceManager, &domain::SerialDeviceManager::devicesChanged,
             this, &SerialLinkVm::devicesChanged);
 }
 
@@ -25,7 +22,7 @@ QVariantList SerialLinkVm::baudRates() const
 {
     QVariantList baudRates;
 
-    for (qint32 rate: m_serialService->availableBaudRates()) baudRates.append(rate);
+    for (qint32 rate: domain::SerialDeviceManager::availableBaudRates()) baudRates.append(rate);
 
     return baudRates;
 }
@@ -39,7 +36,7 @@ QStringList SerialLinkVm::availableDevices() const
 {
     QStringList devices;
     devices.append(QString());
-    devices.append(m_serialService->pool()->availableDevices());
+    devices.append(serialDeviceManager->availableDevices());
 
     if (m_description)
     {

@@ -11,6 +11,7 @@
 
 #include "notification_bus.h"
 #include "db_manager.h"
+#include "serial_device_manager.h"
 #include "service_registry.h"
 #include "proxy_manager.h"
 #include "plugin_manager.h"
@@ -73,6 +74,9 @@ int main(int argc, char* argv[])
             qFatal("Unable to establish DB connection");
             app.quit();
         }
+
+        domain::SerialDeviceManager serialManager;
+        Q_UNUSED(serialManager);
 
         domain::ServiceRegistry registy;
         Q_UNUSED(registy);

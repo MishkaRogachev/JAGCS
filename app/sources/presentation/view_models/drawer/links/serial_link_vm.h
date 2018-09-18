@@ -4,11 +4,6 @@
 // Internal
 #include "link_vm.h"
 
-namespace domain
-{
-    class SerialDeviceService;
-}
-
 namespace presentation
 {
     class SerialLinkVm: public LinkVm
@@ -36,9 +31,6 @@ namespace presentation
     signals:
         void devicesChanged();
         void serialLinkChanged();
-
-    private:
-        domain::SerialDeviceService* const m_serialService;
     };
 }
 

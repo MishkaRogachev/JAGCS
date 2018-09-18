@@ -16,9 +16,9 @@ namespace data_source
         explicit SerialDevicePool(QObject* parent = nullptr);
         ~SerialDevicePool() override;
 
-        QStringList allDevices() const;
         QStringList busyDevices() const;
         QStringList availableDevices() const;
+        QStringList allDevices() const;
 
     public slots:
         void setDiscoveredDevices(const QStringList& newDevices);
@@ -27,7 +27,8 @@ namespace data_source
         void removeLink(SerialLink* link);
 
     signals:
-        void devicesChanged();
+        void busyDevicesChanged(QStringList busyDevices);
+        void availableDevicesChanged(QStringList availableDevices);
 
     private:
         class Impl;

@@ -40,7 +40,7 @@ public:
     }
 };
 
-CommunicationService::CommunicationService(SerialDeviceService* serialDeviceService, QObject* parent):
+CommunicationService::CommunicationService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
@@ -61,7 +61,7 @@ CommunicationService::CommunicationService(SerialDeviceService* serialDeviceServ
     d->commThread = new QThread(this);
     d->commThread->setObjectName("Communication thread");
 
-    d->commWorker = new CommunicatorWorker(serialDeviceService);
+    d->commWorker = new CommunicatorWorker();
     d->commWorker->moveToThread(d->commThread);
     d->commThread->start();
 

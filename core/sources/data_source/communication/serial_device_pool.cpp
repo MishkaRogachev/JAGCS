@@ -32,11 +32,6 @@ SerialDevicePool::SerialDevicePool(QObject* parent):
 SerialDevicePool::~SerialDevicePool()
 {}
 
-QStringList SerialDevicePool::allDevices() const
-{
-    return this->availableDevices() + this->busyDevices();
-}
-
 QStringList SerialDevicePool::busyDevices() const
 {
     QMutexLocker locker(&d->mutex);
@@ -47,6 +42,11 @@ QStringList SerialDevicePool::availableDevices() const
 {
     QMutexLocker locker(&d->mutex);
     return d->availableDevices;
+}
+
+QStringList SerialDevicePool::allDevices() const
+{
+    return this->availableDevices() + this->busyDevices();
 }
 
 void SerialDevicePool::setDiscoveredDevices(const QStringList& newDevices)
@@ -75,7 +75,7 @@ void SerialDevicePool::setDiscoveredDevices(const QStringList& newDevices)
         }
     }
 
-    if (changed) emit devicesChanged();
+    if (changed) emit availableDevicesChanged(d->availableDevices);
 }
 
 void SerialDevicePool::updateLink(SerialLink* link)
@@ -91,7 +91,7 @@ void SerialDevicePool::updateLink(SerialLink* link)
     else
     {
         d->busyDevices[link] = link->device();
-        emit devicesChanged();
+        emit busyDevicesChanged(d->busyDevices.values());
     }
 }
 
@@ -99,5 +99,5 @@ void SerialDevicePool::removeLink(SerialLink* link)
 {
     QMutexLocker locker(&d->mutex);
 
-    if (d->busyDevices.remove(link)) emit devicesChanged();
+    if (d->busyDevices.remove(link)) emit busyDevicesChanged(d->busyDevices.values());
 }
