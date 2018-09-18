@@ -17,7 +17,7 @@ SocketLinkView {
 
     EndpointListView {
         id: endpointList
-        Binding on endpoints { value: viewModel.endpoints; when: !endpointList.activeFocus }
+        Binding on endpoints { value: viewModel.endpoints }
         onSetEndpoints: viewModel.setEndpoints(endpoints)
         Layout.maximumHeight: sizings.controlBaseSize * 6
         Layout.fillWidth: true

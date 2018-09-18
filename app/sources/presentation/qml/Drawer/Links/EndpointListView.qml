@@ -3,74 +3,95 @@ import QtQuick.Layouts 1.3
 
 import Industrial.Controls 1.0 as Controls
 
-Controls.Frame { // FIXME: fix endpoint editor
+Controls.Frame {
     id: root
 
     property var endpoints
 
     signal setEndpoints(var endpoints)
 
+    function updateEndpoints(update) {
+        repeater.model = endpoints;
+        if (update) setEndpoints(endpoints);
+    }
+
     padding: sizings.padding
-    implicitHeight: list.contentHeight + padding * 2
+    implicitWidth: column.implicitWidth + padding * 2
+    implicitHeight: column.height + padding * 2
     backgroundColor: customPalette.sunkenColor
 
-    ListView {
-        id: list
+    Flickable {
+        id: flickable
         anchors.fill: parent
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        spacing: sizings.spacing
-        footerPositioning: ListView.OverlayFooter
-        model: endpoints
+        contentHeight: column.height
         clip: true
-
-        Controls.ScrollBar.vertical: Controls.ScrollBar {
-            visible: parent.contentHeight > parent.height
-        }
 
         function toBottom() {
             contentY = contentHeight - height;
         }
 
-        header: RowLayout {
+        ColumnLayout {
+            id: column
             width: parent.width
             spacing: sizings.spacing
 
-            Controls.Label {
-                text: qsTr("Address")
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
+            RowLayout {
+                spacing: sizings.spacing
+
+                Controls.Label {
+                    id: addressLabel
+                    text: qsTr("Address")
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
+                }
+
+                Controls.Label {
+                    id: portLabel
+                    text: qsTr("Port")
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
+                }
+
+                Item {
+                    Layout.minimumWidth: sizings.controlBaseSize
+                }
+            }
+
+            Repeater {
+                id: repeater
+                model: root.endpoints
+
+                EndpointView {
+                    endpoint: modelData
+                    onRemove: {
+                        endpoints.splice(index, 1);
+                        updateEndpoints(true);
+                    }
+                    onChanged: {
+                        endpoints[index] = endpoint;
+                        updateEndpoints(true);
+                    }
+                }
             }
 
             Controls.Label {
-                text: qsTr("Port")
+                text: qsTr("No endpoints")
                 horizontalAlignment: Text.AlignHCenter
+                visible: repeater.count == 0
                 Layout.fillWidth: true
             }
-        }
 
-        delegate: EndpointView {
-            width: parent.width
-            endpoint: modelData
-            onRemove: {
-                endpoints.splice(index, 1);
-                setEndpoints(endpoints);
-            }
-            onChanged:{
-                endpoints[index] = endpoint;
-                setEndpoints(endpoints);
-            }
-        }
-
-        footer: Controls.Button {
-            width: parent.width
-            text: qsTr("Add endpoint")
-            iconSource: "qrc:/ui/plus.svg"
-            z: 10
-            onClicked: {
-                endpoints.push("127.0.0.1:8080");
-                setEndpoints(endpoints);
-                list.toBottom();
+            Controls.Button {
+                text: qsTr("Add endpoint")
+                iconSource: "qrc:/ui/plus.svg"
+                onClicked: {
+                    endpoints.push("127.0.0.1:8080");
+                    updateEndpoints(true);
+                    flickable.toBottom();
+                }
+                Layout.fillWidth: true
             }
         }
     }

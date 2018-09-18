@@ -20,8 +20,7 @@ namespace presentation
         bool autoAdd() const;
 
     public slots:
-        void setEndpoints(const QStringList& endpoints);
-
+        void setEndpoints(QStringList endpoints);
         void setAutoAdd(bool autoAdd);
 
     signals:

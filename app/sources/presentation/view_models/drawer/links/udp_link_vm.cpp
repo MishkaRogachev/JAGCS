@@ -28,7 +28,7 @@ QStringList UdpLinkVm::endpoints() const
         for (const QString& endpoint: m_description->parameter(
                  dto::LinkDescription::Endpoints).toString().split(::separator))
         {
-            endpoints.append(endpoint);
+            if (endpoint.length()) endpoints.append(endpoint);
         }
     }
 
@@ -40,9 +40,11 @@ bool UdpLinkVm::autoAdd() const
     return m_description && m_description->parameter(dto::LinkDescription::UdpAutoResponse).toBool();
 }
 
-void UdpLinkVm::setEndpoints(const QStringList& endpoints)
+void UdpLinkVm::setEndpoints(QStringList endpoints)
 {
     if (m_description.isNull()) return;
+
+    endpoints.removeDuplicates();
 
     m_description->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
     m_commService->save(m_description);
