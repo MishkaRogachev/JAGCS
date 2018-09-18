@@ -1,7 +1,7 @@
-#ifndef GENERIC_REPOSITORY_IMPL_H
-#define GENERIC_REPOSITORY_IMPL_H
+#ifndef GENERIC_DB_REPOSITORY_IMPL_H
+#define GENERIC_DB_REPOSITORY_IMPL_H
 
-#include "generic_repository.h"
+#include "generic_db_repository.h"
 
 // Qt
 #include <QMetaProperty>
@@ -16,7 +16,7 @@ namespace
 using namespace data_source;
 
 template<class T>
-GenericRepository<T>::GenericRepository(const QString& tableName):
+GenericDbRepository<T>::GenericDbRepository(const QString& tableName):
     m_tableName(tableName)
 {
     m_query.exec("PRAGMA table_info(" + m_tableName + ")");
@@ -24,11 +24,11 @@ GenericRepository<T>::GenericRepository(const QString& tableName):
 }
 
 template<class T>
-GenericRepository<T>::~GenericRepository()
+GenericDbRepository<T>::~GenericDbRepository()
 {}
 
 template<class T>
-bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
+bool GenericDbRepository<T>::insert(const QSharedPointer<T>& entity)
 {
     QStringList names;
     QStringList values;
@@ -47,16 +47,11 @@ bool GenericRepository<T>::insert(const QSharedPointer<T>& entity)
                     namesJoin + ") VALUES (" + valuesJoin + ")");
     this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
-    if (this->runQuerry())
-    {
-        entity->setId(m_query.lastInsertId().toInt());
-        return true;
-    }
-    return false;
+    return this->runQuerry();
 }
 
 template<class T>
-QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
+QSharedPointer<T> GenericDbRepository<T>::read(int id, bool reload)
 {
     bool contains = m_map.contains(id);
 
@@ -67,9 +62,7 @@ QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
 
         if (this->runQuerry() && m_query.next())
         {
-            QSharedPointer<T> entity = contains ? m_map[id] :
-                                                  QSharedPointer<T>::create();
-            entity->setId(id);
+            QSharedPointer<T> entity = contains ? m_map[id] : QSharedPointer<T>::create();
             this->updateFromQuery(m_query, T::staticMetaObject, entity.data());
             m_map[id] = entity;
             return entity;
@@ -80,7 +73,7 @@ QSharedPointer<T> GenericRepository<T>::read(int id, bool reload)
 }
 
 template<class T>
-bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
+bool GenericDbRepository<T>::update(const QSharedPointer<T>& entity)
 {
     QStringList placeholders;
 
@@ -92,55 +85,54 @@ bool GenericRepository<T>::update(const QSharedPointer<T>& entity)
     QString placeholdersJoin = placeholders.join(::comma);
     m_query.prepare("UPDATE " + m_tableName + " SET " + placeholdersJoin + " WHERE id = :id");
 
-    m_query.bindValue(":id", entity->id());
+    m_query.bindValue(":id", m_map.key(entity));
     this->bindQuery(m_query, T::staticMetaObject, entity.data());
 
     return this->runQuerry();
 }
 
 template<class T>
-bool GenericRepository<T>::remove(const QSharedPointer<T>& entity)
+bool GenericDbRepository<T>::remove(const QSharedPointer<T>& entity)
 {
     m_query.prepare("DELETE FROM " + m_tableName + " WHERE id = :id");
-    m_query.bindValue(":id", entity->id());
+    m_query.bindValue(":id", m_map.key(entity));
 
     return this->runQuerry();
 }
 
 template<class T>
-bool GenericRepository<T>::save(const QSharedPointer<T>& entity)
+bool GenericDbRepository<T>::save(const QSharedPointer<T>& entity)
 {
-    if (entity->id() > 0)
+    if (m_map.key(entity, 0))
     {
-        if (!this->update(entity)) return false;
+        return this->update(entity);
     }
     else
     {
-        if (!this->insert(entity)) return false;
+        return this->insert(entity);
     }
-    return true;
 }
 
 template<class T>
-bool GenericRepository<T>::contains(int id)
+bool GenericDbRepository<T>::contains(int id)
 {
     return m_map.contains(id);
 }
 
 template<class T>
-void GenericRepository<T>::unload(int id)
+void GenericDbRepository<T>::unload(int id)
 {
     m_map.remove(id);
 }
 
 template<class T>
-void GenericRepository<T>::clear()
+void GenericDbRepository<T>::clear()
 {
     m_map.clear();
 }
 
 template<class T>
-QList<int> GenericRepository<T>::selectId(const QString& condition)
+QList<int> GenericDbRepository<T>::selectId(const QString& condition)
 {
     QList<int> idList;
 
@@ -156,19 +148,19 @@ QList<int> GenericRepository<T>::selectId(const QString& condition)
 }
 
 template<class T>
-QList<int> GenericRepository<T>::loadedIds() const
+QList<int> GenericDbRepository<T>::loadedIds() const
 {
     return m_map.keys();
 }
 
 template<class T>
-QList<QSharedPointer<T> > GenericRepository<T>::loadedEntities() const
+QList<QSharedPointer<T> > GenericDbRepository<T>::loadedEntities() const
 {
     return m_map.values();
 }
 
 template<class T>
-bool GenericRepository<T>::runQuerry()
+bool GenericDbRepository<T>::runQuerry()
 {
     if (m_query.exec()) return true;
 
@@ -178,7 +170,7 @@ bool GenericRepository<T>::runQuerry()
 }
 
 template<class T>
-QStringList GenericRepository<T>::propertyNames(const QMetaObject& meta)
+QStringList GenericDbRepository<T>::propertyNames(const QMetaObject& meta)
 {
     QStringList list;
 
@@ -191,7 +183,7 @@ QStringList GenericRepository<T>::propertyNames(const QMetaObject& meta)
 }
 
 template<class T>
-void GenericRepository<T>::bindQuery(QSqlQuery& query, const QMetaObject& meta, T* entity)
+void GenericDbRepository<T>::bindQuery(QSqlQuery& query, const QMetaObject& meta, T* entity)
 {
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
@@ -203,7 +195,7 @@ void GenericRepository<T>::bindQuery(QSqlQuery& query, const QMetaObject& meta, 
 }
 
 template<class T>
-void GenericRepository<T>::updateFromQuery(const QSqlQuery& query, const QMetaObject& meta, T* entity)
+void GenericDbRepository<T>::updateFromQuery(const QSqlQuery& query, const QMetaObject& meta, T* entity)
 {
     for (int i = meta.propertyOffset(); i < meta.propertyCount(); ++i)
     {
@@ -220,4 +212,4 @@ void GenericRepository<T>::updateFromQuery(const QSqlQuery& query, const QMetaOb
     }
 }
 
-#endif // GENERIC_REPOSITORY_IMPL_H
+#endif // GENERIC_DB_REPOSITORY_IMPL_H

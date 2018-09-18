@@ -4,7 +4,7 @@
 #include <QDebug>
 
 // Internal
-#include "generic_repository.h"
+#include "generic_db_repository.h"
 
 #include "video_source.h"
 
@@ -14,7 +14,7 @@ using namespace domain;
 class VideoService::Impl
 {
 public:
-    GenericRepository<VideoSource> videoRepository;
+    GenericDbRepository<VideoSource> videoRepository;
 
     Impl():
         videoRepository("video_sources")

@@ -9,7 +9,7 @@
 
 #include "vehicle.h"
 
-#include "generic_repository.h"
+#include "generic_db_repository.h"
 
 #include "mission_service.h"
 
@@ -20,7 +20,7 @@ class VehicleService::Impl
 {
 public:
     QMutex mutex;
-    GenericRepository<Vehicle> vehicleRepository;
+    GenericDbRepository<Vehicle> vehicleRepository;
     MissionService* missionService;
 
     Impl():

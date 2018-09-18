@@ -1,4 +1,4 @@
-#include "db_links_repository.h"
+#include "db_link_repository.h"
 
 // Qt
 #include <QSqlDatabase>
@@ -8,7 +8,7 @@
 // Internal
 #include "link_description.h"
 
-#include "generic_repository.h"
+#include "generic_db_repository.h"
 
 namespace
 {
@@ -17,10 +17,10 @@ namespace
 
 using namespace data_source;
 
-class DbLinksRepository::Impl
+class DbLinkRepository::Impl
 {
 public:
-    GenericRepository<dto::LinkDescription> descriptionRepository;
+    GenericDbRepository<dto::LinkDescription> descriptionRepository;
     QSqlDriver* dbDriver;
 
     Impl():
@@ -36,8 +36,8 @@ public:
     }
 };
 
-DbLinksRepository::DbLinksRepository(IDbProvider* provider, QObject* parent):
-    ILinksRepository(parent),
+DbLinkRepository::DbLinkRepository(IDbProvider* provider, QObject* parent):
+    ILinkRepository(parent),
     d(new Impl())
 {
     d->dbDriver = provider->database().driver();
@@ -73,27 +73,27 @@ DbLinksRepository::DbLinksRepository(IDbProvider* provider, QObject* parent):
     d->loadDescriptions();
 }
 
-DbLinksRepository::~DbLinksRepository()
+DbLinkRepository::~DbLinkRepository()
 {
     d->dbDriver->unsubscribeFromNotification(::tableName);
 }
 
-dto::LinkDescriptionPtr DbLinksRepository::description(int id) const
+dto::LinkDescriptionPtr DbLinkRepository::description(int id) const
 {
     return d->descriptionRepository.read(id);
 }
 
-dto::LinkDescriptionPtrList DbLinksRepository::descriptions() const
+dto::LinkDescriptionPtrList DbLinkRepository::descriptions() const
 {
     return d->descriptionRepository.loadedEntities();
 }
 
-bool DbLinksRepository::save(const dto::LinkDescriptionPtr& description)
+bool DbLinkRepository::save(const dto::LinkDescriptionPtr& description)
 {
     return d->descriptionRepository.save(description);
 }
 
-bool DbLinksRepository::remove(const dto::LinkDescriptionPtr& description)
+bool DbLinkRepository::remove(const dto::LinkDescriptionPtr& description)
 {
     return d->descriptionRepository.remove(description);
 }

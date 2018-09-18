@@ -3,7 +3,7 @@
 
 // Internal
 #include "i_link_factory.h"
-#include "dto_traits.h"
+#include "link_traits.h"
 
 namespace data_source
 {

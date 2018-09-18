@@ -1,5 +1,5 @@
-#ifndef GENERIC_REPOSITORY_H
-#define GENERIC_REPOSITORY_H
+#ifndef GENERIC_DB_REPOSITORY_H
+#define GENERIC_DB_REPOSITORY_H
 
 // Qt
 #include <QSqlQuery>
@@ -9,11 +9,11 @@
 namespace data_source
 {
     template <class T>
-    class GenericRepository
+    class GenericDbRepository
     {
     public:
-        GenericRepository(const QString& tableName);
-        virtual ~GenericRepository();
+        GenericDbRepository(const QString& tableName);
+        virtual ~GenericDbRepository();
 
         QSharedPointer<T> read(int id, bool reload = false);
         bool insert(const QSharedPointer<T>& entity);
@@ -45,6 +45,6 @@ namespace data_source
     };
 }
 
-#include "generic_repository.hpp"
+#include "generic_db_repository.hpp"
 
-#endif // GENERIC_REPOSITORY_H
+#endif // GENERIC_DB_REPOSITORY_H

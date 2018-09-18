@@ -12,8 +12,6 @@ namespace dto
     class MissionAssignment;
     class Command;
     class Vehicle;
-    class LinkDescription;
-    class LinkStatistics;
     class VideoSource;
 
     using MissionPtr = QSharedPointer<Mission>;
@@ -21,8 +19,6 @@ namespace dto
     using MissionAssignmentPtr  = QSharedPointer<MissionAssignment>;
     using CommandPtr = QSharedPointer<Command>;
     using VehiclePtr = QSharedPointer<Vehicle>;
-    using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
-    using LinkStatisticsPtr = QSharedPointer<LinkStatistics>;
     using VideoSourcePtr = QSharedPointer<VideoSource>;
 
     using MissionPtrList = QList<MissionPtr>;
@@ -30,8 +26,6 @@ namespace dto
     using MissionAssignmentPtrList = QList<MissionAssignmentPtr>;
     using CommandPtrList = QList<CommandPtr>;
     using VehiclePtrList = QList<VehiclePtr>;
-    using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
-    using LinkStatisticsPtrList = QList<LinkStatisticsPtr>;
     using VideoSourcePtrList = QList<VideoSourcePtr>;
 }
 

@@ -2,7 +2,7 @@
 #define LINK_LIST_VM_H
 
 // Internal
-#include "dto_traits.h"
+#include "link_traits.h"
 #include "link_description.h"
 
 class QAbstractItemModel;

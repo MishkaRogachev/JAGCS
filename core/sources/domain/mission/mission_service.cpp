@@ -12,7 +12,7 @@
 #include "mission_assignment.h"
 #include "vehicle.h"
 
-#include "generic_repository.h"
+#include "generic_db_repository.h"
 
 using namespace dto;
 using namespace domain;
@@ -22,9 +22,9 @@ class MissionService::Impl
 public:
     QMutex mutex;
 
-    GenericRepository<Mission> missionRepository;
-    GenericRepository<MissionItem> itemRepository;
-    GenericRepository<MissionAssignment> assignmentRepository;
+    GenericDbRepository<Mission> missionRepository;
+    GenericDbRepository<MissionItem> itemRepository;
+    GenericDbRepository<MissionAssignment> assignmentRepository;
 
     QMap <int, MissionItemPtr> currentItems;
 

@@ -1,20 +1,20 @@
-#ifndef I_LINKS_REPOSITORY_H
-#define I_LINKS_REPOSITORY_H
+#ifndef I_LINK_REPOSITORY_H
+#define I_LINK_REPOSITORY_H
 
 // Qt
 #include <QObject>
 
 // Internal
-#include "dto_traits.h"
+#include "link_traits.h"
 
 namespace data_source
 {
-    class ILinksRepository: public QObject
+    class ILinkRepository: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit ILinksRepository(QObject* parent): QObject(parent) {}
+        explicit ILinkRepository(QObject* parent): QObject(parent) {}
 
         virtual dto::LinkDescriptionPtr description(int id) const = 0;
         virtual dto::LinkDescriptionPtrList descriptions() const = 0;
@@ -30,4 +30,4 @@ namespace data_source
     };
 }
 
-#endif // I_LINKS_REPOSITORY_H
+#endif // I_LINK_REPOSITORY_H

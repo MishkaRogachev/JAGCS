@@ -5,7 +5,7 @@
 #include <QAbstractListModel>
 
 // Internal
-#include "dto_traits.h"
+#include "link_traits.h"
 
 namespace presentation
 {

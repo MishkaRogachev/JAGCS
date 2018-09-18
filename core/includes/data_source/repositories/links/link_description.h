@@ -1,16 +1,17 @@
 #ifndef LINK_DESCRIPTION_H
 #define LINK_DESCRIPTION_H
 
-// Internal
-#include "base_dto.h"
-
 // Qt
+#include <QObject>
 #include <QVariant>
 #include <QMap>
 
+// Internal
+#include "link_traits.h"
+
 namespace dto
 {
-    class LinkDescription: public BaseDto
+    class LinkDescription
     {
         Q_GADGET
 
@@ -77,7 +78,5 @@ namespace dto
         Q_ENUM(Parameter)
     };
 }
-
-Q_DECLARE_METATYPE(dto::LinkDescriptionPtr)
 
 #endif // LINK_DESCRIPTION_H

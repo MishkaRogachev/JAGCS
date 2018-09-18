@@ -61,7 +61,6 @@ namespace presentation
 
     protected:
         dto::LinkDescriptionPtr m_description;
-        dto::LinkStatisticsPtr m_statistics;
         domain::CommunicationService* const m_commService;
     };
 }

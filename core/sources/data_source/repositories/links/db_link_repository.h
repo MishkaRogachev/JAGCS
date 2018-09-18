@@ -1,19 +1,19 @@
-#ifndef LINK_MANAGER_H
-#define LINK_MANAGER_H
+#ifndef DB_LINK_REPOSITORY_H
+#define DB_LINK_REPOSITORY_H
 
 // Internal
-#include "i_links_repository.h"
+#include "i_link_repository.h"
 #include "i_db_provider.h"
 
 namespace data_source
 {
-    class DbLinksRepository: public ILinksRepository
+    class DbLinkRepository: public ILinkRepository
     {
         Q_OBJECT
 
     public:
-        DbLinksRepository(IDbProvider* provider, QObject* parent = nullptr);
-        ~DbLinksRepository() override;
+        DbLinkRepository(IDbProvider* provider, QObject* parent = nullptr);
+        ~DbLinkRepository() override;
 
         dto::LinkDescriptionPtr description(int id) const override;
         dto::LinkDescriptionPtrList descriptions() const override;
@@ -28,4 +28,4 @@ namespace data_source
     };
 }
 
-#endif // LINK_MANAGER_H
+#endif // DB_LINK_REPOSITORY_H

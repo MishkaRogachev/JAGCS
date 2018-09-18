@@ -4,8 +4,6 @@
 #include <QDebug>
 
 // Internal
-#include "link_statistics.h"
-
 #include "service_registry.h"
 #include "communication_service.h"
 
@@ -32,21 +30,14 @@ LinkVm::LinkVm(QObject* parent):
             [this](const dto::LinkDescriptionPtr& description) {
         if (m_description == description) emit connectedChanged();
     });
-    connect(m_commService, &domain::CommunicationService::linkStatisticsChanged, this,
-            [this](const dto::LinkStatisticsPtr& statistics) {
-        if (m_description.isNull() || m_description->id() != statistics->linkId()) return;
-
-        m_statistics = statistics;
-        emit statisticsChanged();
-    });
-    connect(m_commService, &domain::CommunicationService::linkSent,
-            this, [this](int descriptionId) {
-        if (m_description && m_description->id() == descriptionId) emit sent();
-    });
-    connect(m_commService, &domain::CommunicationService::linkRecv,
-            this, [this](int descriptionId) {
-        if (m_description && m_description->id() == descriptionId) emit recv();
-    });
+//    connect(m_commService, &domain::CommunicationService::linkSent,
+//            this, [this](int descriptionId) {
+//        if (m_description && m_description->id() == descriptionId) emit sent();
+//    });
+//    connect(m_commService, &domain::CommunicationService::linkRecv,
+//            this, [this](int descriptionId) {
+//        if (m_description && m_description->id() == descriptionId) emit recv();
+//    });
 }
 
 QString LinkVm::name() const
@@ -71,12 +62,12 @@ bool LinkVm::isConnected() const
 
 float LinkVm::bytesRecv() const
 {
-    return m_statistics ? m_statistics->bytesRecv() : 0;
+    return /*m_statistics ? m_statistics->bytesRecv() :*/ 0;
 }
 
 float LinkVm::bytesSent() const
 {
-    return m_statistics ? m_statistics->bytesSent() : 0;
+    return /*m_statistics ? m_statistics->bytesSent() :*/ 0;
 }
 
 QStringList LinkVm::availableProtocols() const
@@ -107,7 +98,7 @@ void LinkVm::setDescription(const dto::LinkDescriptionPtr& description)
 
 void LinkVm::setConnected(bool connected)
 {
-    if (m_description) m_commService->setLinkConnected(m_description->id(), connected);
+    //if (m_description) m_commService->setLinkConnected(m_description->id(), connected);
 }
 
 void LinkVm::remove()

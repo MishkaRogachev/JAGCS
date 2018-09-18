@@ -27,7 +27,6 @@ void CommunicationServiceTest::testLinkDescription()
      description->setParameter(LinkDescription::Port, 8080);
 
      QVERIFY2(service->save(description), "Can't insert link");
-     service->description(description->id());
 
      QVERIFY2(description->name() == "UDP link", "Link name are different");
      QCOMPARE(description->type(), LinkDescription::Udp);
