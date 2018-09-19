@@ -14,24 +14,24 @@ namespace data_source
         Q_OBJECT
 
     public:
-        TcpLink(const dto::Endpoint& endpoint = dto::Endpoint(), QObject* parent = nullptr);
+        TcpLink(const Endpoint& endpoint = Endpoint(), QObject* parent = nullptr);
 
         bool isConnected() const override;
         bool waitData(int timeout = 5000) override;
 
-        dto::Endpoint endpoint() const;
+        Endpoint endpoint() const;
 
         int count() const;
-        dto::Endpoint endpoint(int index) const;
+        Endpoint endpoint(int index) const;
 
     public slots:
         void connectLink() override;
         void disconnectLink() override;
 
-        void setEndpoint(const dto::Endpoint& endpoint);
+        void setEndpoint(const Endpoint& endpoint);
 
     signals:
-        void endpointChanged(const dto::Endpoint& endpoint);
+        void endpointChanged(const Endpoint& endpoint);
 
     protected:
         bool sendDataImpl(const QByteArray& data) override;
@@ -41,7 +41,7 @@ namespace data_source
 
     private:
         QTcpSocket* m_socket;
-        dto::Endpoint m_endpoint;
+        Endpoint m_endpoint;
     };
 }
 

@@ -33,7 +33,7 @@ quint16 UdpLink::port() const
     return m_port;
 }
 
-dto::EndpointList UdpLink::endpoints() const
+EndpointList UdpLink::endpoints() const
 {
     return m_endpoints;
 }
@@ -48,7 +48,7 @@ int UdpLink::count() const
     return m_endpoints.count();
 }
 
-dto::Endpoint UdpLink::endpoint(int index) const
+Endpoint UdpLink::endpoint(int index) const
 {
     return m_endpoints.at(index);
 }
@@ -90,13 +90,13 @@ void UdpLink::setPort(quint16 port)
     emit portChanged(port);
 }
 
-void UdpLink::addEndpoint(const dto::Endpoint& endpoint)
+void UdpLink::addEndpoint(const Endpoint& endpoint)
 {
     m_endpoints.append(endpoint);
     emit endpointsChanged(m_endpoints);
 }
 
-void UdpLink::removeEndpoint(const dto::Endpoint& endpoint)
+void UdpLink::removeEndpoint(const Endpoint& endpoint)
 {
     m_endpoints.removeOne(endpoint);
     emit endpointsChanged(m_endpoints);
@@ -119,7 +119,7 @@ void UdpLink::setAutoResponse(bool autoResponse)
 bool UdpLink::sendDataImpl(const QByteArray& data)
 {
     bool ok = false;
-    for (const dto::Endpoint& endpoint: m_endpoints)
+    for (const Endpoint& endpoint: m_endpoints)
     {
          if (m_socket->writeDatagram(data, endpoint.address(), endpoint.port()) > 0) ok = true;
     }
@@ -137,7 +137,7 @@ void UdpLink::onReadyRead()
         quint16 port;
         m_socket->readDatagram(datagram.data(), datagram.size(), &address, &port);
 
-        dto::Endpoint endpoint(address, port);
+        Endpoint endpoint(address, port);
         if (m_autoResponse && !m_endpoints.contains(endpoint))
         {
             this->addEndpoint(endpoint);

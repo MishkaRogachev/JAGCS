@@ -16,17 +16,17 @@ namespace data_source
     public:
         explicit ILinkRepository(QObject* parent): QObject(parent) {}
 
-        virtual dto::LinkDescriptionPtr description(int id) const = 0;
-        virtual dto::LinkDescriptionPtrList descriptions() const = 0;
+        virtual LinkDescriptionPtr description(int id) const = 0;
+        virtual LinkDescriptionPtrList descriptions() const = 0;
 
     public slots:
-        virtual bool save(const dto::LinkDescriptionPtr& description) = 0;
-        virtual bool remove(const dto::LinkDescriptionPtr& description) = 0;
+        virtual bool save(const LinkDescriptionPtr& description) = 0;
+        virtual bool remove(const LinkDescriptionPtr& description) = 0;
 
     signals:
-        void descriptionAdded(dto::LinkDescriptionPtr description);
-        void descriptionRemoved(dto::LinkDescriptionPtr description);
-        void descriptionChanged(dto::LinkDescriptionPtr description);
+        void descriptionAdded(LinkDescriptionPtr description);
+        void descriptionRemoved(LinkDescriptionPtr description);
+        void descriptionChanged(LinkDescriptionPtr description);
     };
 }
 

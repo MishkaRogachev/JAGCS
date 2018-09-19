@@ -19,28 +19,27 @@ namespace
     }
 }
 
-using namespace dto;
 using namespace data_source;
 
 namespace
 {
     SerialLink* updateSerial(SerialLink* serialLink, const LinkDescriptionPtr& description)
     {
-        serialLink->setDevice(description->parameter(dto::LinkDescription::Device).toString());
-        serialLink->setBaudRate(description->parameter(dto::LinkDescription::BaudRate).toInt());
+        serialLink->setDevice(description->parameter(LinkDescription::Device).toString());
+        serialLink->setBaudRate(description->parameter(LinkDescription::BaudRate).toInt());
 
         return serialLink;
     }
 
     UdpLink* updateUdp(UdpLink* udpLink, const LinkDescriptionPtr& description)
     {
-        udpLink->setPort(description->parameter(dto::LinkDescription::Port).toInt());
+        udpLink->setPort(description->parameter(LinkDescription::Port).toInt());
 
         udpLink->setAutoResponse(
-                    description->parameter(dto::LinkDescription::UdpAutoResponse).toBool());
+                    description->parameter(LinkDescription::UdpAutoResponse).toBool());
 
         udpLink->clearEndpoints();
-        QString endpoints = description->parameter(dto::LinkDescription::Endpoints).toString();
+        QString endpoints = description->parameter(LinkDescription::Endpoints).toString();
         if (!endpoints.isEmpty())
         {
             for (const QString& endpoint: endpoints.split(::separator))
@@ -60,7 +59,7 @@ namespace
         Endpoint endpoint;
 
         endpoint.setAddress(QHostAddress(description->parameter(LinkDescription::Address).toString()));
-        endpoint.setPort(description->parameter(dto::LinkDescription::Port).toInt());
+        endpoint.setPort(description->parameter(LinkDescription::Port).toInt());
 
         tcpLink->setEndpoint(endpoint);
 

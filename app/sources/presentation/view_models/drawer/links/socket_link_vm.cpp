@@ -16,15 +16,15 @@ SocketLinkVm::SocketLinkVm(QObject* parent):
 
 int SocketLinkVm::port() const
 {
-    return m_description ? m_description->parameter(dto::LinkDescription::Port).toInt() : 0;
+    return m_description ? m_description->parameter(data_source::LinkDescription::Port).toInt() : 0;
 }
 
 void SocketLinkVm::setPort(int port)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::Port) == port) return;
+        m_description->parameter(data_source::LinkDescription::Port) == port) return;
 
-    m_description->setParameter(dto::LinkDescription::Port, port);
+    m_description->setParameter(data_source::LinkDescription::Port, port);
     m_commService->save(m_description);
 }
 

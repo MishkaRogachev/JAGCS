@@ -15,12 +15,12 @@ namespace data_source
         DbLinkRepository(IDbProvider* provider, QObject* parent = nullptr);
         ~DbLinkRepository() override;
 
-        dto::LinkDescriptionPtr description(int id) const override;
-        dto::LinkDescriptionPtrList descriptions() const override;
+        LinkDescriptionPtr description(int id) const override;
+        LinkDescriptionPtrList descriptions() const override;
 
     public slots:
-        bool save(const dto::LinkDescriptionPtr& description) override;
-        bool remove(const dto::LinkDescriptionPtr& description) override;
+        bool save(const LinkDescriptionPtr& description) override;
+        bool remove(const LinkDescriptionPtr& description) override;
 
     private:
         class Impl;

@@ -16,15 +16,15 @@ TcpLinkVm::TcpLinkVm(QObject* parent):
 
 QString TcpLinkVm::address() const
 {
-    return m_description ? m_description->parameter(dto::LinkDescription::Address).toString() : QString();
+    return m_description ? m_description->parameter(data_source::LinkDescription::Address).toString() : QString();
 }
 
 void TcpLinkVm::setAddress(const QString& address)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::Address) == address) return;
+        m_description->parameter(data_source::LinkDescription::Address) == address) return;
 
-    m_description->setParameter(dto::LinkDescription::Address, address);
+    m_description->setParameter(data_source::LinkDescription::Address, address);
     m_commService->save(m_description);
 }
 

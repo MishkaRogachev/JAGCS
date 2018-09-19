@@ -23,7 +23,7 @@ QVariant LinkListModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() >= m_links.count()) return QVariant();
 
-    dto::LinkDescriptionPtr link = m_links.at(index.row());
+    data_source::LinkDescriptionPtr link = m_links.at(index.row());
 
     switch (role)
     {
@@ -34,21 +34,21 @@ QVariant LinkListModel::data(const QModelIndex& index, int role) const
     }
 }
 
-void LinkListModel::setLinks(const dto::LinkDescriptionPtrList& links)
+void LinkListModel::setLinks(const data_source::LinkDescriptionPtrList& links)
 {
     this->beginResetModel();
     m_links = links;
     this->endResetModel();
 }
 
-void LinkListModel::addLink(const dto::LinkDescriptionPtr& link)
+void LinkListModel::addLink(const data_source::LinkDescriptionPtr& link)
 {
     this->beginInsertRows(QModelIndex(), this->rowCount(), this->rowCount());
     m_links.append(link);
     this->endInsertRows();
 }
 
-void LinkListModel::updateLink(const dto::LinkDescriptionPtr& link)
+void LinkListModel::updateLink(const data_source::LinkDescriptionPtr& link)
 {
     QModelIndex index = this->index(m_links.indexOf(link));
     if (!index.isValid()) return;
@@ -56,7 +56,7 @@ void LinkListModel::updateLink(const dto::LinkDescriptionPtr& link)
     emit dataChanged(index, index, { LinkNameRole });
 }
 
-void LinkListModel::removeLink(const dto::LinkDescriptionPtr& link)
+void LinkListModel::removeLink(const data_source::LinkDescriptionPtr& link)
 {
     int row = m_links.indexOf(link);
 

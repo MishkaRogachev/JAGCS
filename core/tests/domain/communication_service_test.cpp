@@ -13,7 +13,6 @@
 #include "communication_service.h"
 #include "link_description.h"
 
-using namespace dto;
 using namespace data_source;
 using namespace domain;
 

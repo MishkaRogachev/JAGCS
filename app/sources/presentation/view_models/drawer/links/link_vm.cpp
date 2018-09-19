@@ -22,12 +22,12 @@ LinkVm::LinkVm(QObject* parent):
             this, &LinkVm::availableProtocolsChanged);
 
     connect(m_commService, &domain::CommunicationService::descriptionChanged, this,
-            [this](const dto::LinkDescriptionPtr& description) {
+            [this](const data_source::LinkDescriptionPtr& description) {
         if (m_description == description) emit linkChanged();
     });
 
     connect(m_commService, &domain::CommunicationService::linkConnectedChanged, this,
-            [this](const dto::LinkDescriptionPtr& description) {
+            [this](const data_source::LinkDescriptionPtr& description) {
         if (m_description == description) emit connectedChanged();
     });
 //    connect(m_commService, &domain::CommunicationService::linkSent,
@@ -50,9 +50,9 @@ QString LinkVm::protocol() const
     return m_description ? m_description->protocol() : tr("Unknown");
 }
 
-dto::LinkDescription::Type LinkVm::type() const
+data_source::LinkDescription::Type LinkVm::type() const
 {
-    return m_description ? m_description->type() : dto::LinkDescription::UnknownType;
+    return m_description ? m_description->type() : data_source::LinkDescription::UnknownType;
 }
 
 bool LinkVm::isConnected() const
@@ -85,7 +85,7 @@ QStringList LinkVm::availableProtocols() const
     return protocols;
 }
 
-void LinkVm::setDescription(const dto::LinkDescriptionPtr& description)
+void LinkVm::setDescription(const data_source::LinkDescriptionPtr& description)
 {
     if (m_description == description) return;
 

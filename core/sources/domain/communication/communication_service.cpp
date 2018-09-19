@@ -32,9 +32,9 @@ CommunicationService::CommunicationService(QObject* parent):
     QObject(parent),
     d(new Impl())
 {
-    qRegisterMetaType<dto::LinkDescriptionPtr>("dto::LinkDescriptionPtr");
-    qRegisterMetaType<dto::LinkDescription::Parameter>("dto::LinkDescription::Parameter");
-    qRegisterMetaType<dto::LinkDescription::Type>("dto::LinkDescription::Type");
+    qRegisterMetaType<data_source::LinkDescriptionPtr>("data_source::LinkDescriptionPtr");
+    qRegisterMetaType<data_source::LinkDescription::Parameter>("data_source::LinkDescription::Parameter");
+    qRegisterMetaType<data_source::LinkDescription::Type>("data_source::LinkDescription::Type");
     qRegisterMetaType<data_source::LinkFactoryPtr>("data_source::LinkFactoryPtr");
 
     d->linkRepository = new data_source::DbLinkRepository(dbManager->provider(), this);
@@ -57,14 +57,14 @@ CommunicationService::CommunicationService(QObject* parent):
             this, &CommunicationService::onLinkConnectedChanged);
     connect(d->commWorker, &CommunicatorWorker::linkStatisticsChanged,
             this, &CommunicationService::onLinkStatisticsChanged);
-    connect(d->commWorker, &CommunicatorWorker::linkSent,
-            this, &CommunicationService::linkSent);
-    connect(d->commWorker, &CommunicatorWorker::linkRecv,
-            this, &CommunicationService::linkRecv);
+//    connect(d->commWorker, &CommunicatorWorker::linkSent,
+//            this, &CommunicationService::linkSent);
+//    connect(d->commWorker, &CommunicatorWorker::linkRecv,
+//            this, &CommunicationService::linkRecv);
     connect(d->commWorker, &CommunicatorWorker::linkErrored,
             this, &CommunicationService::onLinkErrored);
 
-    for (const dto::LinkDescriptionPtr& description: d->linkRepository->descriptions())
+    for (const data_source::LinkDescriptionPtr& description: d->linkRepository->descriptions())
     {
         data_source::LinkFactoryPtr factory(new data_source::DescriptionLinkFactory(description));
 //        d->commWorker->updateLink(description->id(), factory, description->isAutoConnect(),
@@ -77,19 +77,19 @@ CommunicationService::~CommunicationService()
     d->commThread->quit();
     d->commThread->wait();
 
-    for (const dto::LinkDescriptionPtr& description: d->linkRepository->descriptions())
+    for (const data_source::LinkDescriptionPtr& description: d->linkRepository->descriptions())
     {
         description->setAutoConnect(description->isConnected());
         d->linkRepository->save(description);
     }
 }
 
-dto::LinkDescriptionPtr CommunicationService::description(int id) const
+data_source::LinkDescriptionPtr CommunicationService::description(int id) const
 {
     return d->linkRepository->description(id);
 }
 
-dto::LinkDescriptionPtrList CommunicationService::descriptions() const
+data_source::LinkDescriptionPtrList CommunicationService::descriptions() const
 {
     return d->linkRepository->descriptions();
 }
@@ -129,7 +129,7 @@ QStringList CommunicationService::availableProtocols() const
     return protocols;
 }
 
-bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
+bool CommunicationService::save(const data_source::LinkDescriptionPtr& description)
 {
     if (!d->linkRepository->save(description)) return false;
 
@@ -139,7 +139,7 @@ bool CommunicationService::save(const dto::LinkDescriptionPtr& description)
     return true;
 }
 
-bool CommunicationService::remove(const dto::LinkDescriptionPtr& description)
+bool CommunicationService::remove(const data_source::LinkDescriptionPtr& description)
 {
     if (!d->linkRepository->remove(description)) return false;
 
@@ -151,13 +151,13 @@ void CommunicationService::setLinkConnected(int descriptionId, bool connected)
 {
     d->commWorker->setLinkConnected(descriptionId, connected);
 
-    dto::LinkDescriptionPtr description = this->description(descriptionId);
+    data_source::LinkDescriptionPtr description = this->description(descriptionId);
     if (description) description->setAutoConnect(connected);
 }
 
 void CommunicationService::onLinkConnectedChanged(int descriptionId, bool connected)
 {
-    dto::LinkDescriptionPtr description = this->description(descriptionId);
+    data_source::LinkDescriptionPtr description = this->description(descriptionId);
 
     if (description->isConnected() != connected)
     {
@@ -175,7 +175,7 @@ void CommunicationService::onLinkStatisticsChanged(int descriptionId,
                                                    int bytesReceivedSec,
                                                    int bytesSentSec)
 {
-//    dto::LinkStatisticsPtr statistics = d->getlinkStatistics(descriptionId);
+//    data_source::LinkStatisticsPtr statistics = d->getlinkStatistics(descriptionId);
 
 //    statistics->setTimestamp(timestamp);
 //    statistics->setBytesRecv(bytesReceivedSec);
@@ -186,7 +186,7 @@ void CommunicationService::onLinkStatisticsChanged(int descriptionId,
 
 void CommunicationService::onLinkErrored(int descriptionId, const QString& error)
 {
-    dto::LinkDescriptionPtr description = this->description(descriptionId);
+    data_source::LinkDescriptionPtr description = this->description(descriptionId);
 
     notificationBus->notify(tr("Link") + " " + description->name(),
                             error, dto::Notification::Warning);

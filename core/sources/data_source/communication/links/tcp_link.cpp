@@ -5,7 +5,7 @@
 
 using namespace data_source;
 
-TcpLink::TcpLink(const dto::Endpoint& endpoint, QObject* parent):
+TcpLink::TcpLink(const Endpoint& endpoint, QObject* parent):
     AbstractLink(parent),
     m_socket(new QTcpSocket(this)),
     m_endpoint(endpoint)
@@ -27,7 +27,7 @@ bool TcpLink::waitData(int timeout)
     return m_socket->waitForReadyRead(timeout);
 }
 
-dto::Endpoint TcpLink::endpoint() const
+Endpoint TcpLink::endpoint() const
 {
     return m_endpoint;
 }
@@ -48,7 +48,7 @@ void TcpLink::disconnectLink()
     emit connectedChanged(!m_socket->waitForDisconnected());
 }
 
-void TcpLink::setEndpoint(const dto::Endpoint& endpoint)
+void TcpLink::setEndpoint(const Endpoint& endpoint)
 {
     if (m_endpoint == endpoint) return;
 

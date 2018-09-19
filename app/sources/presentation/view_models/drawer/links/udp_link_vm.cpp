@@ -26,7 +26,7 @@ QStringList UdpLinkVm::endpoints() const
     if (m_description)
     {
         for (const QString& endpoint: m_description->parameter(
-                 dto::LinkDescription::Endpoints).toString().split(::separator))
+                 data_source::LinkDescription::Endpoints).toString().split(::separator))
         {
             if (endpoint.length()) endpoints.append(endpoint);
         }
@@ -37,7 +37,7 @@ QStringList UdpLinkVm::endpoints() const
 
 bool UdpLinkVm::autoAdd() const
 {
-    return m_description && m_description->parameter(dto::LinkDescription::UdpAutoResponse).toBool();
+    return m_description && m_description->parameter(data_source::LinkDescription::UdpAutoResponse).toBool();
 }
 
 void UdpLinkVm::setEndpoints(QStringList endpoints)
@@ -46,15 +46,15 @@ void UdpLinkVm::setEndpoints(QStringList endpoints)
 
     endpoints.removeDuplicates();
 
-    m_description->setParameter(dto::LinkDescription::Endpoints, endpoints.join(::separator));
+    m_description->setParameter(data_source::LinkDescription::Endpoints, endpoints.join(::separator));
     m_commService->save(m_description);
 }
 
 void UdpLinkVm::setAutoAdd(bool autoAdd)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::UdpAutoResponse) == autoAdd) return;
+        m_description->parameter(data_source::LinkDescription::UdpAutoResponse) == autoAdd) return;
 
-    m_description->setParameter(dto::LinkDescription::UdpAutoResponse, autoAdd);
+    m_description->setParameter(data_source::LinkDescription::UdpAutoResponse, autoAdd);
     m_commService->save(m_description);
 }

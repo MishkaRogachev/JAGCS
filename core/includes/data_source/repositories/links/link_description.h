@@ -2,16 +2,15 @@
 #define LINK_DESCRIPTION_H
 
 // Qt
-#include <QObject>
 #include <QVariant>
 #include <QMap>
 
 // Internal
 #include "link_traits.h"
 
-namespace dto
+namespace data_source
 {
-    class LinkDescription
+    class LinkDescription: public QObject
     {
         Q_GADGET
 
@@ -64,6 +63,10 @@ namespace dto
 
         bool isConnected() const;
         void setConnected(bool isConnected);
+
+//    signals:
+//        void linkSent(int descriptionId);
+//        void linkRecv(int descriptionId);
 
     private:
         QString m_name;

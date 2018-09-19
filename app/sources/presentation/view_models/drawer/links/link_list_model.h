@@ -27,16 +27,16 @@ namespace presentation
         QVariant data(const QModelIndex& index, int role) const override;
 
     public slots:
-        void setLinks(const dto::LinkDescriptionPtrList& links);
-        void addLink(const dto::LinkDescriptionPtr& link);
-        void updateLink(const dto::LinkDescriptionPtr& link);
-        void removeLink(const dto::LinkDescriptionPtr& link);
+        void setLinks(const data_source::LinkDescriptionPtrList& links);
+        void addLink(const data_source::LinkDescriptionPtr& link);
+        void updateLink(const data_source::LinkDescriptionPtr& link);
+        void removeLink(const data_source::LinkDescriptionPtr& link);
 
     protected:
         QHash<int, QByteArray> roleNames() const override;
 
     private:
-        dto::LinkDescriptionPtrList m_links;
+        data_source::LinkDescriptionPtrList m_links;
     };
 }
 

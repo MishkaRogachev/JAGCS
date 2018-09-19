@@ -29,7 +29,7 @@ QVariantList SerialLinkVm::baudRates() const
 
 int SerialLinkVm::baudRate() const
 {
-    return m_description ? m_description->parameter(dto::LinkDescription::BaudRate).toInt() : 0;
+    return m_description ? m_description->parameter(data_source::LinkDescription::BaudRate).toInt() : 0;
 }
 
 QStringList SerialLinkVm::availableDevices() const
@@ -40,7 +40,7 @@ QStringList SerialLinkVm::availableDevices() const
 
     if (m_description)
     {
-        QString device = m_description->parameter(dto::LinkDescription::Device).toString();
+        QString device = m_description->parameter(data_source::LinkDescription::Device).toString();
         if (!devices.contains(device)) devices.append(device);
     }
 
@@ -49,23 +49,23 @@ QStringList SerialLinkVm::availableDevices() const
 
 QString SerialLinkVm::device() const
 {
-    return m_description ? m_description->parameter(dto::LinkDescription::Device).toString() : QString();
+    return m_description ? m_description->parameter(data_source::LinkDescription::Device).toString() : QString();
 }
 
 void SerialLinkVm::setBaudRate(int baudRate)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::BaudRate) == baudRate) return;
+        m_description->parameter(data_source::LinkDescription::BaudRate) == baudRate) return;
 
-    m_description->setParameter(dto::LinkDescription::BaudRate, baudRate);
+    m_description->setParameter(data_source::LinkDescription::BaudRate, baudRate);
     m_commService->save(m_description);
 }
 
 void SerialLinkVm::setDevice(const QString& device)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::Device) == device) return;
+        m_description->parameter(data_source::LinkDescription::Device) == device) return;
 
-    m_description->setParameter(dto::LinkDescription::Device, device);
+    m_description->setParameter(data_source::LinkDescription::Device, device);
     m_commService->save(m_description);
 }

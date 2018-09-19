@@ -15,11 +15,11 @@ namespace presentation
     {
         Q_OBJECT
 
-        Q_PROPERTY(dto::LinkDescriptionPtr description WRITE setDescription)
+        Q_PROPERTY(data_source::LinkDescriptionPtr description WRITE setDescription)
 
         Q_PROPERTY(QString name READ name WRITE setName NOTIFY linkChanged)
         Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY linkChanged)
-        Q_PROPERTY(dto::LinkDescription::Type type READ type NOTIFY linkChanged)
+        Q_PROPERTY(data_source::LinkDescription::Type type READ type NOTIFY linkChanged)
 
         Q_PROPERTY(bool connected READ isConnected WRITE setConnected NOTIFY connectedChanged)
 
@@ -34,7 +34,7 @@ namespace presentation
 
         QString name() const;
         QString protocol() const;
-        dto::LinkDescription::Type type() const;
+        data_source::LinkDescription::Type type() const;
         bool isConnected() const;
         float bytesRecv() const;
         float bytesSent() const;
@@ -42,7 +42,7 @@ namespace presentation
         QStringList availableProtocols() const;
 
     public slots:
-        void setDescription(const dto::LinkDescriptionPtr& description);
+        void setDescription(const data_source::LinkDescriptionPtr& description);
 
         void remove();
         void setConnected(bool isConnected);
@@ -60,7 +60,7 @@ namespace presentation
         void availableProtocolsChanged();
 
     protected:
-        dto::LinkDescriptionPtr m_description;
+        data_source::LinkDescriptionPtr m_description;
         domain::CommunicationService* const m_commService;
     };
 }

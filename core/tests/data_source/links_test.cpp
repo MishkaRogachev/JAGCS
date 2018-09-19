@@ -44,7 +44,7 @@ void LinksTest::testUdpLink()
     link2.connectLink();
     QCOMPARE(link2.isConnected(), true);
 
-    link1.addEndpoint(dto::Endpoint(QHostAddress::LocalHost, 60001));
+    link1.addEndpoint(Endpoint(QHostAddress::LocalHost, 60001));
 
     link1.sendData("TEST UDP");
 
@@ -78,7 +78,7 @@ void LinksTest::testTcpLink()
     QVERIFY(server.listen(QHostAddress::LocalHost, 60000));
     QCOMPARE(serverSpy.count(), 0);
     
-    TcpLink link(dto::Endpoint(QHostAddress::LocalHost, 60000));
+    TcpLink link(Endpoint(QHostAddress::LocalHost, 60000));
     QSignalSpy linkSpy(&link, &TcpLink::dataReceived);
     QCOMPARE(linkSpy.count(), 0);
 

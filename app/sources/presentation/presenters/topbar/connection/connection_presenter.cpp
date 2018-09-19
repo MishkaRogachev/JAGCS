@@ -25,10 +25,10 @@ ConnectionPresenter::ConnectionPresenter(QObject* parent):
             this, &ConnectionPresenter::updateStatus);
 //    connect(d->service, &domain::CommunicationService::linkStatisticsChanged,
 //            this, &ConnectionPresenter::updateStatistics);
-    connect(d->service, &domain::CommunicationService::linkSent,
-            this, [this]() { this->setViewProperty(PROPERTY(sent), true); });
-    connect(d->service, &domain::CommunicationService::linkRecv,
-            this, [this]() { this->setViewProperty(PROPERTY(recv), true); });
+//    connect(d->service, &domain::CommunicationService::linkSent,
+//            this, [this]() { this->setViewProperty(PROPERTY(sent), true); });
+//    connect(d->service, &domain::CommunicationService::linkRecv,
+//            this, [this]() { this->setViewProperty(PROPERTY(recv), true); });
 }
 
 ConnectionPresenter::~ConnectionPresenter()
@@ -38,7 +38,7 @@ void ConnectionPresenter::updateStatus()
 {
     bool connected = false;
 
-    for (const dto::LinkDescriptionPtr& link: d->service->descriptions())
+    for (const data_source::LinkDescriptionPtr& link: d->service->descriptions())
     {
         if (!link->isConnected()) continue;
 
@@ -66,7 +66,7 @@ void ConnectionPresenter::updateStatistics()
 
 void ConnectionPresenter::setConnected(bool connected)
 {
-    for (const dto::LinkDescriptionPtr& link: d->service->descriptions())
+    for (const data_source::LinkDescriptionPtr& link: d->service->descriptions())
     {
         if (link->isConnected() == connected) continue;
 

@@ -1,6 +1,6 @@
 #include "endpoint.h"
 
-using namespace dto;
+using namespace data_source;
 
 Endpoint::Endpoint(const QHostAddress& address, quint16 port):
     m_address(address),

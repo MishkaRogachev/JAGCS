@@ -10,7 +10,7 @@ namespace
     const QString valueSeparator = "=";
 }
 
-using namespace dto;
+using namespace data_source;
 
 namespace
 {

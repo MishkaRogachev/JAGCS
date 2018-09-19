@@ -59,9 +59,9 @@ void LinkListVm::filter(const QString& filterString)
     d->filterModel.setFilterFixedString(filterString);
 }
 
-void LinkListVm::addLink(dto::LinkDescription::Type type, const QString& name)
+void LinkListVm::addLink(data_source::LinkDescription::Type type, const QString& name)
 {
-    dto::LinkDescriptionPtr description = dto::LinkDescriptionPtr::create();
+    data_source::LinkDescriptionPtr description = data_source::LinkDescriptionPtr::create();
 
     description->setType(type);
     description->setName(name + " " + tr("link"));
@@ -71,23 +71,23 @@ void LinkListVm::addLink(dto::LinkDescription::Type type, const QString& name)
     if (!availableProtocols.isEmpty()) description->setProtocol(availableProtocols.first());
 
     switch (type) {
-    case dto::LinkDescription::Serial:
-        description->setParameter(dto::LinkDescription::BaudRate,
+    case data_source::LinkDescription::Serial:
+        description->setParameter(data_source::LinkDescription::BaudRate,
                                   settings::Provider::value(settings::communication::baudRate));
         break;
-    case dto::LinkDescription::Udp:
-        description->setParameter(dto::LinkDescription::Port,
+    case data_source::LinkDescription::Udp:
+        description->setParameter(data_source::LinkDescription::Port,
                                   settings::Provider::value(settings::communication::udpPort));
-        description->setParameter(dto::LinkDescription::UdpAutoResponse, true);
+        description->setParameter(data_source::LinkDescription::UdpAutoResponse, true);
         break;
-    case dto::LinkDescription::Tcp:
-        description->setParameter(dto::LinkDescription::Address,
+    case data_source::LinkDescription::Tcp:
+        description->setParameter(data_source::LinkDescription::Address,
                                   settings::Provider::value(settings::communication::tcpAddress));
-        description->setParameter(dto::LinkDescription::Port,
+        description->setParameter(data_source::LinkDescription::Port,
                                   settings::Provider::value(settings::communication::tcpPort));
         break;
-    case dto::LinkDescription::Bluetooth:
-        description->setParameter(dto::LinkDescription::Address,
+    case data_source::LinkDescription::Bluetooth:
+        description->setParameter(data_source::LinkDescription::Address,
                                   settings::Provider::value(settings::communication::bluetoothAddress));
         d->service->save(description);
         break;
@@ -98,7 +98,7 @@ void LinkListVm::addLink(dto::LinkDescription::Type type, const QString& name)
     d->service->save(description);
 }
 
-void LinkListVm::removeLink(const dto::LinkDescriptionPtr& description)
+void LinkListVm::removeLink(const data_source::LinkDescriptionPtr& description)
 {
     d->service->remove(description);
 }

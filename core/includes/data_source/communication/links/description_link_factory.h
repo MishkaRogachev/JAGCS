@@ -10,16 +10,16 @@ namespace data_source
     class DescriptionLinkFactory: public ILinkFactory
     {
     public:
-        DescriptionLinkFactory(const dto::LinkDescriptionPtr& description);
+        DescriptionLinkFactory(const LinkDescriptionPtr& description);
 
         AbstractLink* create() override;
         void update(AbstractLink* link) override;
 
-        dto::LinkDescriptionPtr description() const;
-        void setDescription(const dto::LinkDescriptionPtr& description);
+        LinkDescriptionPtr description() const;
+        void setDescription(const LinkDescriptionPtr& description);
 
     private:
-        dto::LinkDescriptionPtr m_description;
+        LinkDescriptionPtr m_description;
     };
 }
 

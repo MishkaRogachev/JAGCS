@@ -22,8 +22,8 @@ namespace domain
         explicit CommunicationService(QObject* parent = nullptr);
         ~CommunicationService() override;
 
-        dto::LinkDescriptionPtr description(int id) const;
-        dto::LinkDescriptionPtrList descriptions() const;
+        data_source::LinkDescriptionPtr description(int id) const;
+        data_source::LinkDescriptionPtrList descriptions() const;
 
         void addPlugin(ICommunicationPlugin* plugin);
         void removePlugin(ICommunicationPlugin* plugin);
@@ -31,20 +31,18 @@ namespace domain
         QStringList availableProtocols() const;
 
     public slots:
-        bool save(const dto::LinkDescriptionPtr& description);
-        bool remove(const dto::LinkDescriptionPtr& description);
+        bool save(const data_source::LinkDescriptionPtr& description);
+        bool remove(const data_source::LinkDescriptionPtr& description);
 
         void setLinkConnected(int descriptionId, bool connected);
 
     signals:
         void availableProtocolsChanged();
 
-        void descriptionAdded(dto::LinkDescriptionPtr description);
-        void descriptionRemoved(dto::LinkDescriptionPtr description);
-        void descriptionChanged(dto::LinkDescriptionPtr description);
-        void linkConnectedChanged(dto::LinkDescriptionPtr description, bool connected);
-        void linkSent(int descriptionId);
-        void linkRecv(int descriptionId);
+        void descriptionAdded(data_source::LinkDescriptionPtr description);
+        void descriptionRemoved(data_source::LinkDescriptionPtr description);
+        void descriptionChanged(data_source::LinkDescriptionPtr description);
+        void linkConnectedChanged(data_source::LinkDescriptionPtr description, bool connected);
 
     private slots:
         void onLinkConnectedChanged(int descriptionId, bool connected);

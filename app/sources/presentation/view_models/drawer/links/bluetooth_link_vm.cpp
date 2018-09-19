@@ -29,12 +29,12 @@ QStringList BluetoothLinkVm::availableDevices() const
 
 QString BluetoothLinkVm::device() const
 {
-    return m_description ? m_description->parameter(dto::LinkDescription::Device).toString() : QString();
+    return m_description ? m_description->parameter(data_source::LinkDescription::Device).toString() : QString();
 }
 
 QString BluetoothLinkVm::address() const
 {
-    return m_description ? m_description->parameter(dto::LinkDescription::Address).toString() : QString();
+    return m_description ? m_description->parameter(data_source::LinkDescription::Address).toString() : QString();
 }
 
 void BluetoothLinkVm::startBluetoothDiscovery()
@@ -50,17 +50,17 @@ void BluetoothLinkVm::stopBluetoothDiscovery()
 void BluetoothLinkVm::setDevice(QString device)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::Device) == device) return;
+        m_description->parameter(data_source::LinkDescription::Device) == device) return;
 
-    m_description->setParameter(dto::LinkDescription::Device, device);
+    m_description->setParameter(data_source::LinkDescription::Device, device);
     m_commService->save(m_description);
 }
 
 void BluetoothLinkVm::setAddress(QString address)
 {
     if (m_description.isNull() ||
-        m_description->parameter(dto::LinkDescription::Address) == address) return;
+        m_description->parameter(data_source::LinkDescription::Address) == address) return;
 
-    m_description->setParameter(dto::LinkDescription::Address, address);
+    m_description->setParameter(data_source::LinkDescription::Address, address);
     m_commService->save(m_description);
 }

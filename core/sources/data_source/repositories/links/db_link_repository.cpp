@@ -20,7 +20,7 @@ using namespace data_source;
 class DbLinkRepository::Impl
 {
 public:
-    GenericDbRepository<dto::LinkDescription> descriptionRepository;
+    GenericDbRepository<LinkDescription> descriptionRepository;
     QSqlDriver* dbDriver;
 
     Impl():
@@ -53,7 +53,7 @@ DbLinkRepository::DbLinkRepository(IDbProvider* provider, QObject* parent):
         if (id < 1) return;
 
         bool contains = d->descriptionRepository.contains(id);
-        dto::LinkDescriptionPtr description = d->descriptionRepository.read(id);
+        LinkDescriptionPtr description = d->descriptionRepository.read(id);
 
         if (contains)
         {
@@ -78,22 +78,22 @@ DbLinkRepository::~DbLinkRepository()
     d->dbDriver->unsubscribeFromNotification(::tableName);
 }
 
-dto::LinkDescriptionPtr DbLinkRepository::description(int id) const
+LinkDescriptionPtr DbLinkRepository::description(int id) const
 {
     return d->descriptionRepository.read(id);
 }
 
-dto::LinkDescriptionPtrList DbLinkRepository::descriptions() const
+LinkDescriptionPtrList DbLinkRepository::descriptions() const
 {
     return d->descriptionRepository.loadedEntities();
 }
 
-bool DbLinkRepository::save(const dto::LinkDescriptionPtr& description)
+bool DbLinkRepository::save(const LinkDescriptionPtr& description)
 {
     return d->descriptionRepository.save(description);
 }
 
-bool DbLinkRepository::remove(const dto::LinkDescriptionPtr& description)
+bool DbLinkRepository::remove(const LinkDescriptionPtr& description)
 {
     return d->descriptionRepository.remove(description);
 }

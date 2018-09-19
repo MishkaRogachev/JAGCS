@@ -24,8 +24,8 @@ namespace presentation
     public slots:
         void filter(const QString& filterString);
 
-        void addLink(dto::LinkDescription::Type type, const QString& name);
-        void removeLink(const dto::LinkDescriptionPtr& description);
+        void addLink(data_source::LinkDescription::Type type, const QString& name);
+        void removeLink(const data_source::LinkDescriptionPtr& description);
 
     private:
          class Impl;

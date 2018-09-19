@@ -18,14 +18,14 @@ bool InitMavlinkMigration::upImpl()
                             "(name, type, protocol, parameters, autoConnect) "
                             "VALUES (\'%1\', %2, \'%3\', \'BaudRate=57600\', 1)").
                     arg(qApp->translate("InitMavlinkMigration", "Serial MAVLink")).
-                    arg(dto::LinkDescription::Serial).
+                    arg(data_source::LinkDescription::Serial).
                     arg(protocols::mavlink.first()))) return false;
 
     if (!this->exec(QString("INSERT INTO link_descriptions "
                             "(name, type, protocol, parameters, autoConnect) "
                             "VALUES (\'%1\', %2, \'%3\', \'Port=14550|UdpAutoResponse=true\', 1)").
                     arg(qApp->translate("InitMavlinkMigration", "UDP MAVLink")).
-                    arg(dto::LinkDescription::Udp).
+                    arg(data_source::LinkDescription::Udp).
                     arg(protocols::mavlink.first()))) return false;
 
     return true;

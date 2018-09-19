@@ -5,13 +5,13 @@
 #include <QSharedPointer>
 #include <QList>
 
-namespace dto
+namespace data_source
 {
     class LinkDescription;
     using LinkDescriptionPtr = QSharedPointer<LinkDescription>;
     using LinkDescriptionPtrList = QList<LinkDescriptionPtr>;
 }
 
-Q_DECLARE_METATYPE(dto::LinkDescriptionPtr)
+Q_DECLARE_METATYPE(data_source::LinkDescriptionPtr)
 
 #endif // LINK_TRAITS_H
