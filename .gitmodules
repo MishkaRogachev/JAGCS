@@ -7,3 +7,6 @@
 [submodule "3rdparty/qt-android-cmake"]
 	path = 3rdparty/qt-android-cmake
 	url = https://github.com/LaurentGomila/qt-android-cmake
+[submodule "2ndparty/industrial-controls"]
+	path = 2ndparty/industrial-controls
+	url = https://github.com/MishkaRogachev/industrial-controls
