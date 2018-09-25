@@ -3,7 +3,7 @@ import QtLocation 5.6
 import QtPositioning 5.6
 
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Indicators 1.0 as Indicators
 
 MapItemView {
     delegate: MapQuickItem {
@@ -57,7 +57,7 @@ MapItemView {
                     rotation: courseAnimated
                     speed: groundspeed
                     visible: groundspeed > 0.1
-                    width: controlSize.controlBaseSize * 4
+                    width: controlSize.baseSize * 4
                     height: width
                 }
 
@@ -65,7 +65,7 @@ MapItemView {
                     anchors.centerIn: parent
                     rotation: headingAnimated
                     source: translator.imageFromVehicleType(vehicleType)
-                    width: controlSize.controlBaseSize * 3
+                    width: controlSize.baseSize * 3
                     height: width
                 }
             }
@@ -73,8 +73,8 @@ MapItemView {
             Controls.ToolTip {
                 text: vehicleName
                 visible: area.pressed
-                y: controlSize.controlBaseSize
-                x: controlSize.controlBaseSize
+                y: controlSize.baseSize
+                x: controlSize.baseSize
                 font.pixelSize: controlSize.secondaryFontSize
                 font.bold: true
             }

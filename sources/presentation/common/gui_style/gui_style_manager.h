@@ -2,7 +2,7 @@
 #define GUI_STYLE_MANAGER_H
 
 // Internal
-#include "sizings.h"
+#include "control_size.h"
 
 namespace presentation
 {
@@ -23,8 +23,8 @@ namespace presentation
         void setPaletteStyle(PaletteStyle paletteStyle);
         void loadSettingsPalette();
 
-        void setSizings(const Sizings& sizings);
-        void setSizings(int controlBaseSize);
+        void setSizings(const ControlSize& controlSize);
+        void setSizings(int baseSize);
         void loadSettingsSizings();
 
     private:

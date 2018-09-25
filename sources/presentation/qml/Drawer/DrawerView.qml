@@ -152,7 +152,7 @@ Controls.Drawer {
                 if (!item) return;
 
                 drawerContents.width = Qt.binding(function() {
-                    return item ? Math.max(controlSize.controlBaseSize * 8,
+                    return item ? Math.max(controlSize.baseSize * 8,
                                            item.implicitWidth + controlSize.margins * 2) : 0;
                 });
             }

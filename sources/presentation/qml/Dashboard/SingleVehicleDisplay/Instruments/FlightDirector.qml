@@ -2,7 +2,7 @@ import QtQuick 2.6
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Indicators 1.0 as Indicators
 import "qrc:/Indicators/Ladders" as Ladders
 
 BaseInstrument {

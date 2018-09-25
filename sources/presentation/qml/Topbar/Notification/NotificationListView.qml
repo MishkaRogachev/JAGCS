@@ -9,7 +9,7 @@ ListView {
 
     signal remove(string header)
 
-    width: controlSize.controlBaseSize * 10
+    width: controlSize.baseSize * 10
     implicitHeight: contentHeight + controlSize.shadowSize
     spacing: controlSize.spacing
     flickableDirection: Flickable.AutoFlickIfNeeded

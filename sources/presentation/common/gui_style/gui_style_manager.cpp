@@ -42,25 +42,26 @@ void GuiStyleManager::loadSettingsPalette()
     this->setPaletteStyle(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
 }
 
-void GuiStyleManager::setSizings(const Sizings& sizings)
+void GuiStyleManager::setSizings(const ControlSize& controlSize)
 {
-    presentationContext->rootContext()->setContextProperty("controlSize", QVariant::fromValue(sizings));
+    presentationContext->rootContext()->setContextProperty("controlSize",
+                                                           QVariant::fromValue(controlSize));
 }
 
-void GuiStyleManager::setSizings(int controlBaseSize)
+void GuiStyleManager::setSizings(int baseSize)
 {
-    Sizings sizings;
+    ControlSize controlSize;
 
-    sizings.setControlBaseSize(controlBaseSize);
-    sizings.setInputControlHeight(controlBaseSize * 1.25);
-    sizings.setFontSize(controlBaseSize / 2);
-    sizings.setSecondaryFontSize(sizings.fontSize() * 0.75);
-    sizings.setSpacing(controlBaseSize / 4);
-    sizings.setMargins(controlBaseSize / 4);
-    sizings.setPadding(controlBaseSize / 6);
-    sizings.setShadowSize(3);
+    controlSize.setBaseSize(baseSize);
+    controlSize.setInputControlHeight(baseSize * 1.25);
+    controlSize.setFontSize(baseSize / 2);
+    controlSize.setSecondaryFontSize(controlSize.fontSize() * 0.75);
+    controlSize.setSpacing(baseSize / 4);
+    controlSize.setMargins(baseSize / 4);
+    controlSize.setPadding(baseSize / 6);
+    controlSize.setShadowSize(3);
 
-    this->setSizings(sizings);
+    this->setSizings(controlSize);
 }
 
 void GuiStyleManager::loadSettingsSizings()

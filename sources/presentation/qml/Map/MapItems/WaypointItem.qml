@@ -24,13 +24,13 @@ PointView  {
     MouseArea {
         id: area
         anchors.centerIn: parent
-        width: controlSize.controlBaseSize * 1.2
+        width: controlSize.baseSize * 1.2
         height: width
         preventStealing: true
         drag.target: dragEnabled ? picker : undefined
         drag.axis: Drag.XAndYAxis
         onPressed: dragActive = Qt.binding(function() {
-            return Math.abs(picker.x) + Math.abs(picker.y) > controlSize.controlBaseSize * 0.1; })
+            return Math.abs(picker.x) + Math.abs(picker.y) > controlSize.baseSize * 0.1; })
         onClicked: item.clicked()
         onPressAndHold: {
             item.holded();

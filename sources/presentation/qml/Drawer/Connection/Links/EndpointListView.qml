@@ -53,7 +53,7 @@ Controls.Frame {
                 }
 
                 Item {
-                    Layout.minimumWidth: controlSize.controlBaseSize
+                    Layout.minimumWidth: controlSize.baseSize
                 }
             }
 

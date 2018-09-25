@@ -16,7 +16,7 @@ RowLayout {
 
     Controls.ColoredIcon {
         id: icon
-        Layout.preferredWidth: controlSize.controlBaseSize * 0.5
+        Layout.preferredWidth: controlSize.baseSize * 0.5
         Layout.preferredHeight: width
     }
 

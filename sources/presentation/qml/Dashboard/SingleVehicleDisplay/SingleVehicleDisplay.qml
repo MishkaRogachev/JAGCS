@@ -124,8 +124,8 @@ BaseDisplay {
                 enabled: instrumentsUnlocked
                 iconSource: "qrc:/ui/dots.svg"
                 flat: true
-                width: controlSize.controlBaseSize * 0.5
-                height: controlSize.controlBaseSize * 0.75
+                width: controlSize.baseSize * 0.5
+                height: controlSize.baseSize * 0.75
                 z: 100
                 onClicked: itemMenu.open()
 
@@ -151,7 +151,7 @@ BaseDisplay {
         footer: Item {
             width: parent.width
             visible: instrumentsUnlocked && instruments.visibleItems < instruments.count
-            height: visible ? controlSize.controlBaseSize + list.spacing : 0
+            height: visible ? controlSize.baseSize + list.spacing : 0
             z: 10
 
             Controls.Button {

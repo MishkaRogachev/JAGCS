@@ -13,10 +13,10 @@ Rectangle {
     property int status: MissionItem.NotActual
     property int command: MissionItem.UnknownCommand
 
-    implicitWidth: controlSize.controlBaseSize
-    implicitHeight: controlSize.controlBaseSize
+    implicitWidth: controlSize.baseSize
+    implicitHeight: controlSize.baseSize
     radius: height / 2
-    border.width: controlSize.controlBaseSize / 10
+    border.width: controlSize.baseSize / 10
     color: selected ? customPalette.selectionColor : customPalette.raisedColor
     border.color: {
         if (current) return customPalette.activeMissionColor;

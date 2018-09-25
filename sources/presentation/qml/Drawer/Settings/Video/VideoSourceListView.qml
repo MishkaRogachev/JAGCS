@@ -19,7 +19,7 @@ Item {
         video.updateActiveVideo();
     }
 
-    implicitWidth: controlSize.controlBaseSize * 10
+    implicitWidth: controlSize.baseSize * 10
 
 //    Connections{
 //        target: drawer

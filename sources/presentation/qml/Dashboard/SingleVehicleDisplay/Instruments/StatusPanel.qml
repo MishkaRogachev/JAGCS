@@ -4,7 +4,7 @@ import JAGCS 1.0
 
 import "qrc:/JS/helper.js" as Helper
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Indicators 1.0 as Indicators
 import "../../DashboardControls" as DashboardControls
 
 BaseInstrument {
@@ -30,7 +30,7 @@ BaseInstrument {
                 }
             }
             source: "qrc:/icons/gps.svg"
-            height: controlSize.controlBaseSize
+            height: controlSize.baseSize
             width: height
             Layout.alignment: Qt.AlignRight
 

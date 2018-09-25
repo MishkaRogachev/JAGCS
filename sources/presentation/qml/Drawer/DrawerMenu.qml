@@ -6,7 +6,7 @@ import Industrial.Controls 1.0 as Controls
 Flickable {
     id: menu
 
-    implicitWidth: controlSize.controlBaseSize * 7
+    implicitWidth: controlSize.baseSize * 7
     contentHeight: contents.height
     boundsBehavior: Flickable.OvershootBounds
     flickableDirection: Flickable.AutoFlickIfNeeded
@@ -26,8 +26,8 @@ Flickable {
                 text: presenter.modeString(modelData)
                 iconSource: presenter.modeIcon(modelData)
                 flat: true
-                contentWidth: width - controlSize.controlBaseSize
-                implicitWidth: controlSize.controlBaseSize * 7
+                contentWidth: width - controlSize.baseSize
+                implicitWidth: controlSize.baseSize * 7
                 onClicked: presenter.setMode(modelData)
                 Layout.fillWidth: true
             }

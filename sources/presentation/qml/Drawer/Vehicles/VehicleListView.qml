@@ -13,7 +13,7 @@ Item {
     onVisibleChanged: drawer.filterEnabled = visible
     Component.onCompleted: drawer.filterEnabled = true
 
-    implicitWidth: controlSize.controlBaseSize * 8
+    implicitWidth: controlSize.baseSize * 8
 
     Connections{
         target: drawer

@@ -4,7 +4,7 @@ import QtCharts 2.0
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Indicators 1.0 as Indicators
 import "qrc:/Views/Common"
 
 ColumnLayout {
@@ -186,7 +186,7 @@ ColumnLayout {
         id: endpointList
         visible: type == LinkDescription.Udp
         onChanged: linkEditView.changed = true;
-        Layout.maximumHeight: controlSize.controlBaseSize * 6
+        Layout.maximumHeight: controlSize.baseSize * 6
         Layout.fillWidth: true
     }
 

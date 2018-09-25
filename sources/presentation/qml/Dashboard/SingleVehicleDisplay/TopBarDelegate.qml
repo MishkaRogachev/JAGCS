@@ -70,8 +70,8 @@ Controls.Pane {
 
             DashboardControls.ModeBox {
                 id: modeBox
-                Layout.preferredWidth: controlSize.controlBaseSize * 4
-                Layout.maximumHeight: controlSize.controlBaseSize
+                Layout.preferredWidth: controlSize.baseSize * 4
+                Layout.maximumHeight: controlSize.baseSize
             }
 
             Controls.Button {
@@ -149,8 +149,8 @@ Controls.Pane {
 
             DashboardControls.WaypointBox {
                 id: waypointBox
-                Layout.preferredWidth: controlSize.controlBaseSize * 4
-                Layout.maximumHeight: controlSize.controlBaseSize
+                Layout.preferredWidth: controlSize.baseSize * 4
+                Layout.maximumHeight: controlSize.baseSize
             }
 
             Controls.Button {

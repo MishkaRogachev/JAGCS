@@ -19,7 +19,7 @@ Item {
         plotAvailable = false;
     }
 
-    implicitWidth: controlSize.controlBaseSize * 8
+    implicitWidth: controlSize.baseSize * 8
 
     Connections {
         target: map

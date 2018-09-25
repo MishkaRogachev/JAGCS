@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Indicators 1.0 as Indicators
 
 import "../DashboardControls" as DashboardControls
 import "../Vehicles"
@@ -69,7 +69,7 @@ Controls.Card {
 
         Indicators.YawIndicator {
             id: compass
-            implicitWidth: controlSize.controlBaseSize * 2.25
+            implicitWidth: controlSize.baseSize * 2.25
             implicitHeight: width
             yaw: vehicle.ahrs.yaw
             Layout.rowSpan: 2
@@ -117,8 +117,8 @@ Controls.Card {
 
             DashboardControls.ModeBox {
                 id: modeBox
-                Layout.preferredWidth: controlSize.controlBaseSize * 3
-                Layout.maximumHeight: controlSize.controlBaseSize
+                Layout.preferredWidth: controlSize.baseSize * 3
+                Layout.maximumHeight: controlSize.baseSize
             }
         }
 

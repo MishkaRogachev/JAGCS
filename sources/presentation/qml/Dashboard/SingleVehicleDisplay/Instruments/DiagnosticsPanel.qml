@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtCharts 2.0
 
 import Industrial.Controls 1.0 as Controls
-import "qrc:/Indicators" as Indicators
+import Industrial.Indicators 1.0 as Indicators
 
 BaseInstrument {
     id: root
@@ -38,7 +38,7 @@ BaseInstrument {
         Indicators.MiniPlot {
             id: plot
             Layout.fillWidth: true
-            Layout.minimumHeight: controlSize.controlBaseSize * 1.5
+            Layout.minimumHeight: controlSize.baseSize * 1.5
             Layout.fillHeight: true
             // FIXME: segfault on destruction
             ValueAxis {

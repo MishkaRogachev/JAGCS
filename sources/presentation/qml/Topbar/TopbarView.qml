@@ -11,7 +11,7 @@ Rectangle {
     id: topbar
 
     color: customPalette.backgroundColor
-    height: controlSize.controlBaseSize * 0.75
+    height: controlSize.baseSize * 0.75
 
     Controls.Shadow {
         source: parent

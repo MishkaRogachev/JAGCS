@@ -167,6 +167,10 @@ else(ANDROID)
     add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
 endif()
 
+# Industrial vendor includes & sources
+target_include_directories(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_INCLUDES})
+target_sources(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_SOURCES})
+
 # Qt libraries
 set(LIBRARIES ${LIBRARIES}
     Qt5::Core

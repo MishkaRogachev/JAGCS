@@ -64,6 +64,6 @@ RowLayout {
 
 //    Controls.ComboBox { // NOTE: for mission slot
 //        enabled: false
-//        Layout.maximumWidth: controlSize.controlBaseSize * 2
+//        Layout.maximumWidth: controlSize.baseSize * 2
 //    }
 }

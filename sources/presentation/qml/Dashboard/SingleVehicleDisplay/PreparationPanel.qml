@@ -9,7 +9,7 @@ Controls.Popup {
     id: popup
     closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
-    width: controlSize.controlBaseSize * 5
+    width: controlSize.baseSize * 5
 
     Connections {
         target: display

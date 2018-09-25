@@ -150,7 +150,7 @@ ColumnLayout {
             boundsBehavior: Flickable.StopAtBounds
             onMovementStarted: drawer.interactive = false
             onMovementEnded: drawer.interactive = true
-            Layout.minimumHeight: controlSize.controlBaseSize
+            Layout.minimumHeight: controlSize.baseSize
             Layout.fillWidth: true
 
             MissionItemListView {
@@ -163,8 +163,8 @@ ColumnLayout {
                     if (dX < 0) {
                         flickable.contentX = x;
                     }
-                    else if (dX > flickable.width - controlSize.controlBaseSize) {
-                        flickable.contentX = x - flickable.width + controlSize.controlBaseSize;
+                    else if (dX > flickable.width - controlSize.baseSize) {
+                        flickable.contentX = x - flickable.width + controlSize.baseSize;
                     }
                 }
             }

@@ -124,7 +124,7 @@ Controls.ApplicationWindow  {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: controlSize.controlBaseSize * 0.5
+        width: controlSize.baseSize * 0.5
         drag.target: highlight
         drag.axis: Drag.XAxis
         drag.minimumX: -highlight.width / 2
@@ -134,7 +134,7 @@ Controls.ApplicationWindow  {
         Rectangle {
             id: highlight
             x: -width / 2
-            width: controlSize.controlBaseSize
+            width: controlSize.baseSize
             height: parent.height
             color: customPalette.highlightColor
             opacity: parent.pressed ? 0.33 : 0.0
