@@ -27,7 +27,7 @@ PresentationContext::PresentationContext()
 
     m_engine = new QQmlApplicationEngine();
 
-    m_engine->addImportPath(":/Controls");
+    m_engine->addImportPath(QStringLiteral("qrc:/"));
 
 #ifdef WITH_MAPBOXGL
     m_engine->rootContext()->setContextProperty("with_mapboxgl", QVariant(true));

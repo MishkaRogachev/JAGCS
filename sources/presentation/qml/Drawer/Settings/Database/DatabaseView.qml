@@ -1,0 +1,129 @@
+import QtQuick 2.6
+import QtQuick.Layouts 1.3
+import JAGCS 1.0
+
+import Industrial.Controls 1.0 as Controls
+import "qrc:/Views/Common"
+
+ColumnLayout {
+    id: database
+
+    property bool changed: false
+    property string migration
+    property bool connected: false
+    property var log: []
+
+    property alias path: pathField.text
+
+    spacing: controlSize.spacing
+
+    DatabasePresenter {
+        id: presenter
+        view: database
+        Component.onCompleted: {
+            updatePath();
+            updateLog();
+            updateConnected();
+        }
+    }
+
+    Info {
+        message: changed ? qsTr("Application will be restarted") : ""
+        Layout.fillWidth: true
+        Layout.leftMargin: controlSize.padding
+        Layout.rightMargin: controlSize.padding
+    }
+
+    RowLayout {
+        spacing: controlSize.spacing
+
+        Controls.TextField {
+            id: pathField
+            labelText: qsTr("SQLite data base file")
+            placeholderText: qsTr("Enter filepath")
+            onEditingFinished: changed = true
+            Layout.fillWidth: true
+        }
+
+        SaveRestore {
+            enabled: changed
+            onSave: presenter.savePath()
+            onRestore: presenter.updatePath()
+        }
+    }
+
+    Controls.Label {
+        text: qsTr("Migration") + ": " + migration
+    }
+
+    Controls.Frame {
+        Layout.fillWidth: true
+        Layout.margins: controlSize.padding
+        Layout.fillHeight: true
+
+        Flickable {
+            anchors.fill: parent
+            contentHeight: column.height
+            flickableDirection: Flickable.VerticalFlick
+            clip: true
+
+            Controls.ScrollBar.vertical: Controls.ScrollBar {}
+
+            ColumnLayout {
+                id:column
+                width: parent.width
+                spacing: controlSize.spacing
+
+                Controls.Label {
+                    text: qsTr("No records")
+                    horizontalAlignment: Qt.AlignHCenter
+                    visible: log.length == 0
+                    Layout.fillWidth: true
+                }
+
+                Repeater {
+                    model: log
+
+                    Controls.Label {
+                        text: modelData
+                        horizontalAlignment: Qt.AlignHCenter
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+        }
+    }
+
+    Controls.Button {
+        text: qsTr("Clear DB log")
+        iconSource: "qrc:/icons/remove.svg"
+        onClicked: presenter.clearLog()
+        enabled: log.length > 0
+        Layout.fillWidth: true
+        Layout.leftMargin: controlSize.padding
+        Layout.rightMargin: controlSize.padding
+    }
+
+    RowLayout {
+        spacing: controlSize.spacing
+        Layout.fillWidth: true
+        Layout.leftMargin: controlSize.padding
+        Layout.rightMargin: controlSize.padding
+
+        Controls.Button {
+            text: qsTr("Migrate")
+            iconSource: "qrc:/icons/right.svg"
+            onClicked: presenter.migrate()
+            Layout.fillWidth: true
+        }
+
+        Controls.Button {
+            text: connected ? qsTr("Reconnect") : qsTr("Connect")
+            iconSource: "qrc:/icons/connect.svg"
+            onClicked: presenter.tryConnect()
+            enabled: !changed
+            Layout.fillWidth: true
+        }
+    }
+}

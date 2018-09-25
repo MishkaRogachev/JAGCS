@@ -39,6 +39,9 @@ set(CMAKE_AUTOMOC ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# 2ndparty libraries
+include(2ndparty/industrial-controls/CMakeLists.txt)
+
 # Add compiler flags
 set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -fPIC)
@@ -179,7 +182,7 @@ set(LIBRARIES ${LIBRARIES}
     Qt5::Location
     Qt5::Charts
     Qt5::QuickControls2
-) 
+)
 
 # Link Libraries
 target_link_libraries(${PROJECT} ${LIBRARIES})

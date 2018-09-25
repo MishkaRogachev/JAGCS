@@ -1,0 +1,64 @@
+import QtQuick 2.6
+import JAGCS 1.0
+
+import Industrial.Controls 1.0 as Controls
+
+Rectangle {
+    id: point
+
+    property bool selected: false
+    property bool current: false
+    property bool reached: false
+    property int sequence: -1
+    property int status: MissionItem.NotActual
+    property int command: MissionItem.UnknownCommand
+
+    implicitWidth: controlSize.controlBaseSize
+    implicitHeight: controlSize.controlBaseSize
+    radius: height / 2
+    border.width: controlSize.controlBaseSize / 10
+    color: selected ? customPalette.selectionColor : customPalette.raisedColor
+    border.color: {
+        if (current) return customPalette.activeMissionColor;
+        if (reached) return customPalette.positiveColor;
+
+        switch (status) {
+        case MissionItem.Actual: return customPalette.missionColor;
+        case MissionItem.StatusNone: return customPalette.textColor;
+        case MissionItem.NotActual:
+        default: return customPalette.dangerColor;
+        }
+    }
+
+    Controls.ColoredIcon {
+        id: icon
+        anchors.centerIn: parent
+        source: {
+            switch (command) {
+            case MissionItem.Home:
+                return "qrc:/icons/home.svg";
+            case MissionItem.Takeoff:
+                return "qrc:/icons/takeoff.svg";
+            case MissionItem.Landing:
+                return "qrc:/icons/landing.svg";
+            case MissionItem.TargetPoint:
+                return "qrc:/icons/aim.svg";
+            default:
+                return "";
+            }
+        }
+        color: customPalette.textColor
+        visible: source != ""
+        width: parent.width * 0.6
+        height: parent.height * 0.6
+    }
+
+    Controls.Label {
+        visible: !icon.visible
+        text: sequence + 1
+        color: customPalette.textColor
+        anchors.centerIn: parent
+        font.bold: true
+    }
+}
+

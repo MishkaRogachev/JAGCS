@@ -44,7 +44,7 @@ void GuiStyleManager::loadSettingsPalette()
 
 void GuiStyleManager::setSizings(const Sizings& sizings)
 {
-    presentationContext->rootContext()->setContextProperty("sizings", QVariant::fromValue(sizings));
+    presentationContext->rootContext()->setContextProperty("controlSize", QVariant::fromValue(sizings));
 }
 
 void GuiStyleManager::setSizings(int controlBaseSize)
