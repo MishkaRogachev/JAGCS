@@ -3,7 +3,6 @@ import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
 import Industrial.Indicators 1.0 as Indicators
-import "qrc:/Indicators/Ladders" as Ladders
 
 BaseInstrument {
     id: root
@@ -75,7 +74,7 @@ BaseInstrument {
         maxValue: 10
     }
 
-    Ladders.Ladder {
+        Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -90,7 +89,7 @@ BaseInstrument {
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
 
-        Ladders.LadderMark {
+            Indicators.LadderMark {
             id: spdMark
             anchors.fill: parent
             visible: vehicle.guided && vehicle.pitot.present
@@ -99,7 +98,7 @@ BaseInstrument {
                                                        vehicle.flightControl.airspeedError)
         }
 
-        Ladders.LadderPicker {
+            Indicators.LadderPicker {
             id: spdPicker
             anchors.fill: parent
             enabled: (vehicle.mode === Domain.Mission || vehicle.mode === Domain.NavTo) &&
@@ -109,14 +108,14 @@ BaseInstrument {
             value: spdMark.value
         }
 
-        Ladders.LadderButtons {
+            Indicators.LadderButtons {
             anchors.fill: parent
             inputEnabled: manual.enabled
             onAddValue: manual.addImpact(ManualController.Throttle, value)
         }
     }
 
-    Ladders.Ladder {
+        Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
@@ -133,7 +132,7 @@ BaseInstrument {
         mirrored: true
         prefix: qsTr("ALT") + ", " + altitudeSuffix
 
-        Ladders.LadderMark {
+            Indicators.LadderMark {
             id: altMark
             anchors.fill: parent
             visible: vehicle.guided
@@ -142,7 +141,7 @@ BaseInstrument {
                    units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
         }
 
-        Ladders.LadderPicker {
+            Indicators.LadderPicker {
             id: altPicker
             anchors.fill: parent
             enabled:  vehicle.mode === Domain.Circle ||
