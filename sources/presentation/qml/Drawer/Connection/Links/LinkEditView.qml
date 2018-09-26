@@ -176,7 +176,7 @@ ColumnLayout {
     }
 
     Controls.Label {
-        text: qsTr("Setted endpoints")
+        text: qsTr("Endpoints")
         visible: type == LinkDescription.Udp
         horizontalAlignment: Text.AlignHCenter
         Layout.fillWidth: true

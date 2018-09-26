@@ -181,6 +181,7 @@ ColumnLayout {
                 Controls.CheckBox {
                     id: altitudeRelativeBox
                     text: qsTr("Rel.")
+                    font.pixelSize: controlSize.secondaryFontSize
                     enabled: editEnabled && command !== MissionItem.Home
                     onCheckedChanged: changed = true
                     Layout.rowSpan: 2
