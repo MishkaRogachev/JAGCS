@@ -1863,34 +1863,33 @@
 <context>
     <name>domain::CommunicationService</name>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="223"/>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="268"/>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="278"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="267"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="277"/>
         <source>Link</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="224"/>
-        <source>Connection established</source>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="223"/>
+        <source>Up</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="224"/>
-        <source>Connection lost</source>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="223"/>
+        <source>Down</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="264"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="263"/>
         <source>Unknown</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="265"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="264"/>
         <source>Switched on MAVLINK v.1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="266"/>
+        <location filename="../sources/domain/services/communication_service/communication_service.cpp" line="265"/>
         <source>Switched on MAVLINK v.2</source>
         <translation></translation>
     </message>

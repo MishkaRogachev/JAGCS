@@ -220,8 +220,7 @@ void CommunicationService::onLinkStatusChanged(int linkId, bool connected)
 
     if (description->isConnected() != connected)
     {
-        notificationBus->notify(tr("Link") + " " + description->name(),
-                             connected ? tr("Connection established") : tr("Connection lost"),
+        notificationBus->notify(description->name(), connected ? tr("Up") : tr("Down"),
                              connected ? dto::Notification::Positive : dto::Notification::Warning);
         description->setConnected(connected);
 
