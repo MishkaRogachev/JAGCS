@@ -19,7 +19,8 @@ TcpLink::TcpLink(const Endpoint& endpoint, QObject* parent):
 
 bool TcpLink::isConnected() const
 {
-    return m_socket->state() == QTcpSocket::ConnectedState;
+    return m_socket->state() == QTcpSocket::ConnectedState ||
+            m_socket->state() == QTcpSocket::BoundState;
 }
 
 Endpoint TcpLink::endpoint() const
@@ -40,7 +41,12 @@ void TcpLink::disconnectLink()
     if (!this->isConnected()) return;
 
     m_socket->disconnectFromHost();
-    emit connectedChanged(!m_socket->waitForDisconnected());
+
+    if (m_socket->state() == QAbstractSocket::UnconnectedState ||
+        m_socket->waitForDisconnected())
+    {
+        emit connectedChanged(false);
+    }
 }
 
 void TcpLink::setEndpoint(const Endpoint& endpoint)

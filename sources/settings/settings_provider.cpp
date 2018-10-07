@@ -30,7 +30,7 @@ namespace
         { communication::autoAdd, true },
         { communication::baudRate, 57600 },
         { communication::udpPort, 14550 },
-        { communication::tcpPort, 5760 },
+        { communication::tcpPort, 5763 },
         { communication::tcpAddress, "127.0.0.1" },
         { communication::bluetoothAddress, "00:00:00:00:00:00" },
         { communication::statisticsCount, 50 },
