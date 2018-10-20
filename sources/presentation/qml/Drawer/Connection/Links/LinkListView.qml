@@ -53,7 +53,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         iconSource: "qrc:/ui/plus.svg"
-        tipText: qsTr("Add Mission")
+        tipText: qsTr("Add Link")
         onClicked: if (!addMenu.visible) addMenu.open()
 
         Controls.Menu {

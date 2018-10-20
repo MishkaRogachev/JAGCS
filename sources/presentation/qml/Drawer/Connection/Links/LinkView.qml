@@ -26,6 +26,7 @@ Controls.Card {
         presenter.setConnected(!connected)
     }
 
+    onLinkIdChanged: presenter.setLink(linkId)
     onDeepIn: edit()
     Component.onCompleted: {
         menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
