@@ -31,7 +31,7 @@ Controls.Frame {
     onMessagesChanged: restart()
 
     padding: controlSize.padding
-    height: row.height + padding * 2
+    height: visible ? row.height + padding * 2 : 0
     backgroundColor: {
         switch (urgency) {
         case Notification.Positive:
