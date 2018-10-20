@@ -7,7 +7,7 @@
 
 namespace
 {
-    const int interval = 700;
+    const int interval = 500;
     const int maxAttemps = 5;
 }
 
@@ -66,21 +66,21 @@ void AbstractCommandHandler::ackCommand(int vehicleId, dto::Command::CommandType
     {
         if (command->type() != type) continue;
 
+        command->setStatus(status);
         if (command->isFinished()) this->stopCommand(vehicleId, command);
 
-        command->setStatus(status);
         emit commandChanged(command);
     }
 }
 
 void AbstractCommandHandler::stopCommand(int vehicleId, const dto::CommandPtr& command)
 {
-    d->vehicleCommands.remove(vehicleId, command);
-    d->attemps.remove(command);
     if (d->commandTimers.contains(command))
     {
         this->killTimer(d->commandTimers.take(command));
     }
+    d->vehicleCommands.remove(vehicleId, command);
+    d->attemps.remove(command);
 }
 
 void AbstractCommandHandler::timerEvent(QTimerEvent* event)
