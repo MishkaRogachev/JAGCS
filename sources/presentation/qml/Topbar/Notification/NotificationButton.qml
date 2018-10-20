@@ -11,7 +11,7 @@ TopbarButton {
     property var notifications
 
     clickEnabled: list.count > 0
-    onClicked: notifications.removeLast()
+    onClicked: presenter.removeLast()
 
     NotificationsPresenter {
         id: presenter
@@ -60,6 +60,6 @@ TopbarButton {
         y: parent.height + controlSize.margins
         model: notifications
         visible: count > 0
-        onRemove: notifications.remove(header)
+        onRemove: presenter.remove(header)
     }
 }

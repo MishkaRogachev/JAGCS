@@ -11,23 +11,26 @@ namespace dto
 
 namespace presentation
 {
-    class NotificationListModel;
-
     class NotificationsPresenter: public BasePresenter
     {
         Q_OBJECT
 
     public:
         explicit NotificationsPresenter(QObject* parent = nullptr);
+        ~NotificationsPresenter() override;
 
     public slots:
         void addNotification(const dto::Notification& notification);
+
+        void remove(const QString& header);
+        void removeLast();
 
     protected:
         void connectView(QObject* view) override;
 
     private:
-        NotificationListModel* m_model;
+        class Impl;
+        QScopedPointer<Impl> const d;
     };
 }
 

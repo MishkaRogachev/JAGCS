@@ -7,6 +7,8 @@ import Industrial.Controls 1.0 as Controls
 ListView {
     id: list
 
+    property int maxCount: 5
+
     signal remove(string header)
 
     width: controlSize.baseSize * 10
@@ -29,6 +31,7 @@ ListView {
         messages: model.messages
         urgency: model.urgency
         time: model.time
+        visible: index < maxCount
         onDropped: remove(header)
     }
 }
