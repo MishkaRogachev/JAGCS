@@ -20,10 +20,11 @@
 #include "telemetry_service.h"
 #include "telemetry_portion.h"
 
+#include "vehicle_types.h"
+
 #include "notification_bus.h"
 
 #include "mavlink_communicator.h"
-#include "mode_helper_factory.h"
 
 using namespace comm;
 using namespace domain;
@@ -84,12 +85,11 @@ class HeartbeatHandler::Impl
 {
 public:
     VehicleService* vehicleService = serviceRegistry->vehicleService();
-    domain::TelemetryService* telemetryService = serviceRegistry->telemetryService();
+    TelemetryService* telemetryService = serviceRegistry->telemetryService();
 
     int sendTimer;
 
-    QMap <int, QBasicTimer*> vehicleTimers;
-    QMap<int, QSharedPointer<IModeHelper> > modeHelpers;
+    QMap<int, QBasicTimer*> vehicleTimers;
 };
 
 HeartbeatHandler::HeartbeatHandler(MavLinkCommunicator* communicator):
@@ -168,26 +168,6 @@ void HeartbeatHandler::processMessage(const mavlink_message_t& message)
                          bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_STABILIZE));
     portion.setParameter({ Telemetry::System, Telemetry::Manual },
                          bool(heartbeat.base_mode & MAV_MODE_FLAG_DECODE_POSITION_MANUAL));
-
-    if (d->modeHelpers[message.sysid].isNull())
-    {
-        ModeHelperFactory f;
-        d->modeHelpers[message.sysid].reset(f.create(heartbeat.autopilot, heartbeat.type));
-
-        if (d->modeHelpers[message.sysid])
-        {
-            portion.setParameter({ Telemetry::System, Telemetry::AvailableModes },
-                                 qVariantFromValue(d->modeHelpers[message.sysid]->availableModes()));
-        }
-    }
-
-    if (d->modeHelpers[message.sysid])
-    {
-        portion.setParameter({ Telemetry::System, Telemetry::Mode },
-                             QVariant::fromValue(d->modeHelpers[message.sysid]->customModeToMode(
-                                 heartbeat.custom_mode)));
-    }
-
     portion.setParameter({ Telemetry::System, Telemetry::State },
                          QVariant::fromValue(::decodeState(heartbeat.system_status)));
 }

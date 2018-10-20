@@ -38,6 +38,8 @@ namespace comm
         void sendSetLoiterRadius(quint8 mavId, float radius);
         void sendManualControl(quint8 mavId, float pitch, float roll, float yaw, float thrust);
 
+        void onVehicleRemoved(const dto::VehiclePtr& vehicle);
+
     private:
         class Impl;
         QScopedPointer<Impl> const d;
