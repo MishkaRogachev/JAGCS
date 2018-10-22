@@ -130,8 +130,9 @@ void MavLinkCommunicator::switchLinkProtocol(AbstractLink* link, AbstractCommuni
 
     emit mavLinkProtocolChanged(link, channelStatus->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1 ?
                                     MavLink1 : MavLink2);
-#endif
+#else
     emit mavLinkProtocolChanged(link, MavLink1);
+#endif
 }
 
 void MavLinkCommunicator::setSystemId(quint8 systemId)
@@ -181,14 +182,14 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
     {
         if (!mavlink_parse_char(channel, (quint8)data[pos], &message, &status)) continue;
 
-//#ifdef MAVLINK_V2
-//        // if we got MavLink v2, switch to on it!
-//        mavlink_status_t* channelStatus = mavlink_get_channel_status(channel);
-//        if (!(channelStatus->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1))
-//        {
-//            this->switchLinkProtocol(d->receivedLink, MavLink2);
-//        }
-//#endif
+#ifdef MAVLINK_V2
+       // if we got MavLink v2, switch to on it!
+       mavlink_status_t* channelStatus = mavlink_get_channel_status(channel);
+       if (!(channelStatus->flags & MAVLINK_STATUS_FLAG_IN_MAVLINK1))
+       {
+           this->switchLinkProtocol(d->receivedLink, MavLink2);
+       }
+#endif
 
         d->mavSystemLinks[message.sysid] = d->receivedLink;
 
