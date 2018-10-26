@@ -5,22 +5,22 @@
 #include "i_link_repository.h"
 #include "i_db_provider.h"
 
-namespace data_source
+namespace domain
 {
     class DbLinkRepository: public ILinkRepository
     {
         Q_OBJECT
 
     public:
-        DbLinkRepository(IDbProvider* provider, QObject* parent = nullptr);
+        DbLinkRepository(data_source::IDbProvider* provider, QObject* parent = nullptr);
         ~DbLinkRepository() override;
 
-        LinkDescriptionPtr description(int id) const override;
-        LinkDescriptionPtrList descriptions() const override;
+        LinkDescription* description(int id) const override;
+        QList<LinkDescription*> descriptions() const override;
 
     public slots:
-        bool save(const LinkDescriptionPtr& description) override;
-        bool remove(const LinkDescriptionPtr& description) override;
+        bool save(const LinkDescription* description) override;
+        bool remove(const LinkDescription* description) override;
 
     private:
         class Impl;

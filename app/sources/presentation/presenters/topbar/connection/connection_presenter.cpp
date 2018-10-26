@@ -4,7 +4,7 @@
 #include <QDebug>
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 
 #include "service_registry.h"
 #include "communication_service.h"

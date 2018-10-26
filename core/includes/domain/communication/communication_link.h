@@ -1,24 +1,21 @@
-#ifndef LINK_DESCRIPTION_H
-#define LINK_DESCRIPTION_H
+#ifndef COMMUNICATION_LINK_H
+#define COMMUNICATION_LINK_H
 
 // Qt
 #include <QVariant>
 #include <QMap>
 
-// Internal
-#include "link_traits.h"
-
-namespace data_source
+namespace domain
 {
     class LinkDescription: public QObject
     {
-        Q_GADGET
+        Q_OBJECT
 
-        Q_PROPERTY(QString name READ name WRITE setName)
-        Q_PROPERTY(Type type READ type WRITE setType)
-        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol)
-        Q_PROPERTY(QString parameters READ parameters WRITE setParameters)
-        Q_PROPERTY(bool autoConnect READ isAutoConnect WRITE setAutoConnect)
+        Q_PROPERTY(QString name READ name WRITE setName NOTIFY changed)
+        Q_PROPERTY(Type type READ type WRITE setType NOTIFY changed)
+        Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY changed)
+        Q_PROPERTY(QString parameters READ parameters WRITE setParameters NOTIFY changed)
+        Q_PROPERTY(bool autoConnect READ isAutoConnect WRITE setAutoConnect NOTIFY changed)
 
     public:
         enum Type: quint8
@@ -62,11 +59,13 @@ namespace data_source
         void setAutoConnect(bool autoConnect);
 
         bool isConnected() const;
-        void setConnected(bool isConnected);
+        void setConnected(bool connected);
 
-//    signals:
-//        void linkSent(int descriptionId);
-//        void linkRecv(int descriptionId);
+    signals:
+        void changed();
+        void connectedChanged(bool connected);
+        void sent();
+        void recv();
 
     private:
         QString m_name;
@@ -82,4 +81,4 @@ namespace data_source
     };
 }
 
-#endif // LINK_DESCRIPTION_H
+#endif // COMMUNICATION_LINK_H

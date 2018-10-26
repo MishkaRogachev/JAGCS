@@ -2,7 +2,7 @@
 #define LINK_VM_H
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 
 namespace domain
 {

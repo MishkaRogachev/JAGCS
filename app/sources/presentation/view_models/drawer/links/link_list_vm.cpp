@@ -8,7 +8,7 @@
 // Internal
 #include "settings_provider.h"
 
-#include "link_description.h"
+#include "communication_link.h"
 
 #include "service_registry.h"
 #include "communication_service.h"
@@ -38,9 +38,9 @@ LinkListVm::LinkListVm(QObject* parent):
 
     d->linksModel.setLinks(d->service->descriptions());
 
-    connect(d->service, &domain::CommunicationService::descriptionAdded,
+    connect(d->service, &domain::CommunicationService::linkAdded,
             &d->linksModel, &LinkListModel::addLink);
-    connect(d->service, &domain::CommunicationService::descriptionRemoved,
+    connect(d->service, &domain::CommunicationService::linkRemoved,
             &d->linksModel, &LinkListModel::removeLink);
     connect(d->service, &domain::CommunicationService::descriptionChanged,
             &d->linksModel, &LinkListModel::updateLink);

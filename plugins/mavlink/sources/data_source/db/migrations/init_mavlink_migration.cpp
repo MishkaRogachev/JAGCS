@@ -7,7 +7,7 @@
 // Internal
 #include "settings_provider.h"
 
-#include "link_description.h"
+#include "communication_link.h"
 #include "mavlink_traits.h"
 
 using namespace data_source;

@@ -1,4 +1,4 @@
-#include "link_description.h"
+#include "communication_link.h"
 
 // Qt
 #include <QMetaEnum>
@@ -10,7 +10,7 @@ namespace
     const QString valueSeparator = "=";
 }
 
-using namespace data_source;
+using namespace domain;
 
 namespace
 {
@@ -35,7 +35,10 @@ QString LinkDescription::name() const
 
 void LinkDescription::setName(const QString& name)
 {
+    if (m_name == name) return;
+
     m_name = name;
+    emit changed();
 }
 
 LinkDescription::Type LinkDescription::type() const
@@ -45,7 +48,10 @@ LinkDescription::Type LinkDescription::type() const
 
 void LinkDescription::setType(LinkDescription::Type type)
 {
+    if (m_type == type) return;
+
     m_type = type;
+    emit changed();
 }
 
 QString LinkDescription::protocol() const
@@ -55,7 +61,10 @@ QString LinkDescription::protocol() const
 
 void LinkDescription::setProtocol(const QString& protocol)
 {
+    if (m_protocol == protocol) return;
+
     m_protocol = protocol;
+    emit changed();
 }
 
 QString LinkDescription::parameters() const
@@ -80,7 +89,7 @@ void LinkDescription::setParameters(const QString& arguments)
     int enumIndex = LinkDescription::staticMetaObject.indexOfEnumerator("Parameter");
     QMetaEnum enumerator = LinkDescription::staticMetaObject.enumerator(enumIndex);
 
-    m_parameters.clear();
+    QMap<Parameter, QVariant> parameters;
     for (const QString& pairs: arguments.split(::paramSeparator))
     {
         QStringList pairList = pairs.split(::valueSeparator);
@@ -89,8 +98,13 @@ void LinkDescription::setParameters(const QString& arguments)
         Parameter param = static_cast<Parameter>(enumerator.keyToValue(qPrintable(pairList.at(0))));
         if (param == UnknownParameter) continue;
 
-        m_parameters[param] = pairList.at(1);
+        parameters[param] = pairList.at(1);
     }
+
+    if (m_parameters == parameters) return;
+
+    m_parameters = parameters;
+    emit changed();
 }
 
 QVariant LinkDescription::parameter(Parameter key, const QVariant& parameter) const
@@ -100,22 +114,33 @@ QVariant LinkDescription::parameter(Parameter key, const QVariant& parameter) co
 
 void LinkDescription::setParameter(Parameter key, const QVariant& parameter)
 {
-    if (::typeParameters[m_type].contains(key)) m_parameters[key] = parameter;
+    if (!::typeParameters[m_type].contains(key) ||
+        m_parameters.value(key) == parameter) return;
+
+    m_parameters[key] = parameter;
+    emit changed();
 }
 
 void LinkDescription::clearParameters()
 {
+    if (m_parameters.isEmpty()) return;
+
     m_parameters.clear();
+    emit changed();
 }
 
 void LinkDescription::clearSuperfluousParameters()
 {
+    bool changed = false;
+
     for (Parameter parameter: m_parameters.keys())
     {
         if (::typeParameters[m_type].contains(parameter)) continue;
 
         m_parameters.remove(parameter);
+        changed = true;
     }
+    if (changed) emit LinkDescription::changed();
 }
 
 bool LinkDescription::isAutoConnect() const
@@ -125,7 +150,10 @@ bool LinkDescription::isAutoConnect() const
 
 void LinkDescription::setAutoConnect(bool autoConnect)
 {
+    if (m_autoConnect == autoConnect) return;
+
     m_autoConnect = autoConnect;
+    emit changed();
 }
 
 bool LinkDescription::isConnected() const
@@ -135,5 +163,8 @@ bool LinkDescription::isConnected() const
 
 void LinkDescription::setConnected(bool connected)
 {
+    if (m_connected == connected) return;
+
     m_connected = connected;
+    emit connectedChanged(connected);
 }

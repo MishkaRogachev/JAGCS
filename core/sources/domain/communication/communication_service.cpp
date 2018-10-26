@@ -8,7 +8,7 @@
 // Internal
 #include "settings_provider.h"
 
-#include "link_description.h"
+#include "communication_link.h"
 #include "db_link_repository.h"
 #include "description_link_factory.h"
 #include "communicator_worker.h"
@@ -39,9 +39,9 @@ CommunicationService::CommunicationService(QObject* parent):
 
     d->linkRepository = new data_source::DbLinkRepository(dbManager->provider(), this);
     connect(d->linkRepository, &data_source::ILinkRepository::descriptionAdded,
-            this, &CommunicationService::descriptionAdded);
+            this, &CommunicationService::linkAdded);
     connect(d->linkRepository, &data_source::ILinkRepository::descriptionRemoved,
-            this, &CommunicationService::descriptionRemoved);
+            this, &CommunicationService::linkRemoved);
     connect(d->linkRepository, &data_source::ILinkRepository::descriptionChanged,
             this, &CommunicationService::descriptionChanged);
 
@@ -89,7 +89,7 @@ data_source::LinkDescriptionPtr CommunicationService::description(int id) const
     return d->linkRepository->description(id);
 }
 
-data_source::LinkDescriptionPtrList CommunicationService::descriptions() const
+QList<data_source::LinkDescription*> CommunicationService::descriptions() const
 {
     return d->linkRepository->descriptions();
 }
@@ -129,7 +129,7 @@ QStringList CommunicationService::availableProtocols() const
     return protocols;
 }
 
-bool CommunicationService::save(const data_source::LinkDescriptionPtr& description)
+bool CommunicationService::save(LinkDescription* description)
 {
     if (!d->linkRepository->save(description)) return false;
 
@@ -139,7 +139,7 @@ bool CommunicationService::save(const data_source::LinkDescriptionPtr& descripti
     return true;
 }
 
-bool CommunicationService::remove(const data_source::LinkDescriptionPtr& description)
+bool CommunicationService::remove(LinkDescription* description)
 {
     if (!d->linkRepository->remove(description)) return false;
 

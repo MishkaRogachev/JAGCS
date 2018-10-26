@@ -4,7 +4,7 @@
 #include <QDebug>
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 
 using namespace presentation;
 

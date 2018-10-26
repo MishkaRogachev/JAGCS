@@ -6,7 +6,7 @@
 #include <QDebug>
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 
 #include "generic_db_repository.h"
 
@@ -36,7 +36,7 @@ public:
     }
 };
 
-DbLinkRepository::DbLinkRepository(IDbProvider* provider, QObject* parent):
+DbLinkRepository::DbLinkRepository(data_source::IDbProvider* provider, QObject* parent):
     ILinkRepository(parent),
     d(new Impl())
 {

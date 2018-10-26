@@ -3,7 +3,7 @@
 
 // Internal
 #include "link_traits.h"
-#include "link_description.h"
+#include "communication_link.h"
 
 class QAbstractItemModel;
 

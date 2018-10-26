@@ -1,7 +1,7 @@
 #include "description_link_factory.h"
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 
 #include "serial_link.h"
 #include "udp_link.h"

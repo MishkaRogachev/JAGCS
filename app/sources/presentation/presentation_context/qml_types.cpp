@@ -3,7 +3,7 @@
 
 // Internal
 #include "vehicle.h"
-#include "link_description.h"
+#include "communication_link.h"
 #include "mission.h"
 #include "mission_assignment.h"
 #include "mission_item.h"

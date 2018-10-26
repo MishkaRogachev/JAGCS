@@ -7,7 +7,7 @@
 #include <QDebug>
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 
 #include "abstract_communicator.h"
 #include "serial_link.h"

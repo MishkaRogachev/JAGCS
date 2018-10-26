@@ -31,7 +31,7 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES "sources")
 target_include_directories(${PROJECT_NAME} PRIVATE ${INTERNAL_INCLUDES})
 
 # Internal core sources and headers
-file(GLOB_RECURSE SOURCES "includes/*.h" "sources/*.hpp" "sources/*.h" "sources/*.cpp")
+file(GLOB_RECURSE SOURCES "includes/*.h" "includes/*.hpp" "sources/*.h" "sources/*.cpp")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
 # Resources

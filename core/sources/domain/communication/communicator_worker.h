@@ -5,7 +5,7 @@
 #include <QMap>
 
 // Internal
-#include "link_description.h"
+#include "communication_link.h"
 #include "abstract_communicator.h"
 
 #include "i_link_factory.h"

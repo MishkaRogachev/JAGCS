@@ -11,7 +11,7 @@
 
 #include "service_registry.h"
 #include "communication_service.h"
-#include "link_description.h"
+#include "communication_link.h"
 
 using namespace data_source;
 using namespace domain;
