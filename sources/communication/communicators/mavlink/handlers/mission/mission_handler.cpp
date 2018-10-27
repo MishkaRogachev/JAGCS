@@ -291,9 +291,14 @@ void MissionHandler::sendMissionItem(quint8 mavId, quint16 seq)
 
     if (item->isPositionatedItem())
     {
-        msgItem.x = item->latitude();
-        msgItem.y = item->longitude();
+        msgItem.x = static_cast<float>(item->latitude());
+        msgItem.y = static_cast<float>(item->longitude());
     }
+
+    msgItem.param1 = 0;
+    msgItem.param2 = 0;
+    msgItem.param3 = 0;
+    msgItem.param4 = 0;
 
     if (msgItem.command == MAV_CMD_NAV_TAKEOFF)
     {
@@ -456,8 +461,8 @@ void MissionHandler::processMissionItem(const mavlink_message_t& message)
 
     if (item->isPositionatedItem())
     {
-        item->setLatitude(msgItem.x);
-        item->setLongitude(msgItem.y);
+        item->setLatitude(static_cast<double>(msgItem.x));
+        item->setLongitude(static_cast<double>(msgItem.y));
     }
 
     if (msgItem.command == MAV_CMD_NAV_TAKEOFF)

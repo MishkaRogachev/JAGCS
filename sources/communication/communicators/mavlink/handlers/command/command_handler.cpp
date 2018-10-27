@@ -326,6 +326,10 @@ void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, 
     mavlink_message_t message;
     mavlink_mission_item_t item;
 
+    item.param1 = 0;
+    item.param2 = 0;
+    item.param3 = 0;
+    item.param4 = 0;
     item.target_system = mavId;
     item.target_component = MAV_COMP_ID_MISSIONPLANNER;
     item.frame = MAV_FRAME_GLOBAL_RELATIVE_ALT;
@@ -333,8 +337,8 @@ void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, 
     item.current = 2; // guided
     item.seq = 0;
     item.autocontinue = false;
-    item.x = latitude;
-    item.y = longitude;
+    item.x = static_cast<float>(latitude);
+    item.y = static_cast<float>(longitude);
     item.z = altitude;
 
     AbstractLink* link = m_communicator->mavSystemLink(mavId);
