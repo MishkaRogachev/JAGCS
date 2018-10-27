@@ -113,7 +113,7 @@ set(LIBS
 endif(ANDROID)
 
 # MAVLink includes
-option(WITH_MAVLINK_V2 "MAVLink version 2 includes")
+option(WITH_MAVLINK_V2 "MAVLink version 2 includes" ON)
 if(WITH_MAVLINK_V2)
     include_directories("3rdparty/mavlink_v2")
     include_directories("3rdparty/mavlink_v2/ardupilotmega")
