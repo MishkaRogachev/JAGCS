@@ -1963,13 +1963,13 @@
         <translation>Нет каналов связи</translation>
     </message>
     <message>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkListView.qml" line="56"/>
         <source>Add Link</source>
-        <translation type="vanished">Добавить канал связи</translation>
+        <translation>Добавить канал связи</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkListView.qml" line="56"/>
         <source>Add Mission</source>
-        <translation>Добавить задание</translation>
+        <translation type="vanished">Добавить задание</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkListView.qml" line="71"/>
@@ -1999,45 +1999,45 @@
         <translation type="obsolete">Тип</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="32"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="94"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="95"/>
         <source>UDP</source>
         <translation>UDP</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="94"/>
         <source>Serial</source>
         <translation>Последовательный</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="95"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="96"/>
         <source>TCP</source>
         <translation>TCP</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="96"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="97"/>
         <source>Bluetooth</source>
         <translation>Bluetooth</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="97"/>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="110"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="98"/>
         <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="111"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="112"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="124"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="125"/>
         <source>Recv</source>
         <translation>Получ.</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="124"/>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="125"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="136"/>
         <source>B/s</source>
         <translation>Б/с</translation>
     </message>
@@ -2070,7 +2070,7 @@
         <translation type="obsolete">Символьная скорость</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="136"/>
         <source>Sent</source>
         <translation>Отпр.</translation>
     </message>
@@ -2083,12 +2083,12 @@
         <translation type="vanished">Действия</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="37"/>
         <source>Disconnect</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="37"/>
         <source>Connect</source>
         <translation>Подключить</translation>
     </message>
@@ -2101,7 +2101,7 @@
         <translation type="obsolete">Восстановить</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="40"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="41"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -4451,7 +4451,7 @@
     </message>
     <message>
         <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="139"/>
-        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="237"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="217"/>
         <source>Vehicle %1</source>
         <translation>Аппарат %1</translation>
     </message>
@@ -4461,7 +4461,7 @@
         <translation>На связи</translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="237"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="217"/>
         <source>Offline</source>
         <translation>Потеря связи</translation>
     </message>
@@ -4481,12 +4481,12 @@
         <translation type="vanished">Ошибка загрузки пункта задания, %1</translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="591"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="596"/>
         <source>Mission</source>
         <translation>Задание</translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="591"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="596"/>
         <source>Error uploading waypoint %1</source>
         <translation>Ошибка загрузки пункта задания, %1</translation>
     </message>
@@ -4709,12 +4709,12 @@
 <context>
     <name>presentation::DrawerPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="69"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
         <source>UnknownMode</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="70"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="72"/>
         <source>Home</source>
         <translation>Дом</translation>
     </message>
@@ -4727,62 +4727,67 @@
         <translation type="vanished">Аппараты</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="73"/>
         <source>Plan</source>
         <translation>План</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="72"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="74"/>
         <source>Fleet</source>
         <translation>Флот</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="73"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="75"/>
         <source>Connection</source>
         <translation>Связь</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="74"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="76"/>
+        <source>Logs</source>
+        <translation>Логи</translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="77"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="75"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="78"/>
         <source>Database</source>
         <translation>База данных</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="76"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="79"/>
         <source>Map</source>
         <translation>Карта</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="77"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="80"/>
         <source>Video</source>
         <translation>Видео</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="78"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="81"/>
         <source>Joystick</source>
         <translation>Джойстик</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="79"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="82"/>
         <source>Gui</source>
         <translation>ГИП</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="80"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="83"/>
         <source>Networking</source>
         <translation>Сеть</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="81"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="84"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="82"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="85"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>

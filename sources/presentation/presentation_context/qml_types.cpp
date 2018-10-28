@@ -38,6 +38,7 @@
 #include "mission_item_list_presenter.h"
 #include "mission_item_edit_presenter.h"
 #include "mission_assignment_presenter.h"
+#include "log_list_presenter.h"
 #include "database_presenter.h"
 #include "gui_settings_presenter.h"
 #include "joystick_settings_presenter.h"
@@ -103,6 +104,8 @@ static void registerTypes()
     QML_TYPE2(MissionItemListPresenter);
     QML_TYPE2(MissionItemEditPresenter);
     QML_TYPE2(MissionAssignmentPresenter);
+
+    QML_TYPE2(LogListPresenter);
 
     QML_TYPE(DatabasePresenter);
     QML_TYPE(GuiSettingsPresenter);

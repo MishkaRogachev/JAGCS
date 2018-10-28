@@ -62,6 +62,8 @@
         <file>Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml</file>
         <file>Drawer/DrawerView.qml</file>
         <file>Drawer/DrawerMenu.qml</file>
+        <file>Drawer/Logs/LogListView.qml</file>
+        <file>Drawer/Logs/LogView.qml</file>
         <file>Drawer/Vehicles/VehicleListView.qml</file>
         <file>Drawer/Vehicles/VehicleView.qml</file>
         <file>Drawer/Connection/ConnectionView.qml</file>

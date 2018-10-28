@@ -632,7 +632,7 @@
     </message>
     <message>
         <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkListView.qml" line="56"/>
-        <source>Add Mission</source>
+        <source>Add Link</source>
         <translation></translation>
     </message>
     <message>
@@ -659,65 +659,65 @@
 <context>
     <name>LinkView</name>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="31"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="32"/>
         <source>Edit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="94"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="95"/>
         <source>UDP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="93"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="94"/>
         <source>Serial</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="95"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="96"/>
         <source>TCP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="96"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="97"/>
         <source>Bluetooth</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="97"/>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="110"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="98"/>
         <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="111"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="112"/>
         <source>Unknown</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="124"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="125"/>
         <source>Recv</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="124"/>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="125"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="136"/>
         <source>B/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="135"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="136"/>
         <source>Sent</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="37"/>
         <source>Disconnect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="36"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="37"/>
         <source>Connect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="40"/>
+        <location filename="../sources/presentation/qml/Drawer/Connection/Links/LinkView.qml" line="41"/>
         <source>Remove</source>
         <translation></translation>
     </message>
@@ -1698,7 +1698,7 @@
     </message>
     <message>
         <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="139"/>
-        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="237"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="217"/>
         <source>Vehicle %1</source>
         <translation></translation>
     </message>
@@ -1708,7 +1708,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="237"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/common/heartbeat_handler.cpp" line="217"/>
         <source>Offline</source>
         <translation></translation>
     </message>
@@ -1716,12 +1716,12 @@
 <context>
     <name>comm::MissionHandler</name>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="591"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="596"/>
         <source>Mission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="591"/>
+        <location filename="../sources/communication/communicators/mavlink/handlers/mission/mission_handler.cpp" line="596"/>
         <source>Error uploading waypoint %1</source>
         <translation></translation>
     </message>
@@ -1905,72 +1905,77 @@
 <context>
     <name>presentation::DrawerPresenter</name>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="69"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
         <source>UnknownMode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="70"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="72"/>
         <source>Home</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="71"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="73"/>
         <source>Plan</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="72"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="74"/>
         <source>Fleet</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="73"/>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="75"/>
         <source>Connection</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="74"/>
-        <source>Settings</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="75"/>
-        <source>Database</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="76"/>
-        <source>Map</source>
+        <source>Logs</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="77"/>
-        <source>Video</source>
+        <source>Settings</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="78"/>
-        <source>Joystick</source>
+        <source>Database</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="79"/>
-        <source>Gui</source>
+        <source>Map</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="80"/>
-        <source>Networking</source>
+        <source>Video</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="81"/>
-        <source>About</source>
+        <source>Joystick</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="82"/>
+        <source>Gui</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="83"/>
+        <source>Networking</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="84"/>
+        <source>About</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../sources/presentation/presenters/drawer/drawer_presenter.cpp" line="85"/>
         <source>Quit</source>
         <translation></translation>
     </message>

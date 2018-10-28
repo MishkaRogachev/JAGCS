@@ -18,17 +18,17 @@ Flickable {
 
     Controls.ScrollBar.vertical: Controls.ScrollBar {}
 
+    AboutPresenter {
+        view: about
+        Component.onCompleted: updateVersions()
+    }
+
     GridLayout {
         id: contents
         width: parent.width
         columns: 2
         rowSpacing: controlSize.spacing
         columnSpacing: controlSize.spacing
-
-        AboutPresenter {
-            view: about
-            Component.onCompleted: updateVersions()
-        }
 
         Controls.Label {
             text: "Just another ground control station " + version
