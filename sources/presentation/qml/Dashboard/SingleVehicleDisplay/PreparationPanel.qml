@@ -7,9 +7,11 @@ import "../DashboardControls" as DashboardControls
 
 Controls.Popup {
     id: popup
-    closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
+
+    property int fails: 0
 
     width: controlSize.baseSize * 5
+    closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
     Connections {
         target: display
@@ -39,8 +41,8 @@ Controls.Popup {
                 { text: qsTr("Battery"), subsystem: vehicle.battery }
             ]
 
-            DashboardControls.ChecklistItem {
-                Layout.fillWidth: true
+            delegate: DashboardControls.ChecklistItem {
+                property bool failed: modelData.subsystem.present && !modelData.subsystem.operational
                 text: modelData.text
                 state: {
                     if (modelData.subsystem.present) {
@@ -51,6 +53,8 @@ Controls.Popup {
                         return "UNACTIVE";
                     }
                 }
+                onFailedChanged: failed ? fails++ : fails --
+                Layout.fillWidth: true
             }
         }
 
@@ -64,7 +68,7 @@ Controls.Popup {
                 case MissionAssignment.Downloading: return "INPROCESS";
                 case MissionAssignment.Uploading: return "INPROCESS";
                 case MissionAssignment.NotActual:
-                default: return "BAD";
+                default: return "CAUTION";
                 }
             }
         }

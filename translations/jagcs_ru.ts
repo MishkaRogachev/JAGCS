@@ -2550,7 +2550,7 @@
     <message>
         <location filename="../sources/presentation/qml/Drawer/Planning/Missions/MissionEditView.qml" line="103"/>
         <source>Upload mission</source>
-        <translation>Выгрузить задание</translation>
+        <translation>Загрузить задание</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Drawer/Planning/Missions/MissionEditView.qml" line="196"/>
@@ -3033,7 +3033,7 @@
     <message>
         <location filename="../sources/presentation/qml/Drawer/Planning/Missions/MissionView.qml" line="42"/>
         <source>Upload</source>
-        <translation>Выгрузить</translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="../sources/presentation/qml/Drawer/Planning/Missions/MissionView.qml" line="49"/>

@@ -27,6 +27,11 @@ RowLayout {
             PropertyChanges { target: icon; source: "qrc:/ui/ok.svg" }
         },
         State {
+            name: "CAUTION"
+            PropertyChanges { target: icon; color: customPalette.cautionColor }
+            PropertyChanges { target: icon; source: "qrc:/icons/info.svg" }
+        },
+        State {
             name: "BAD"
             PropertyChanges { target: icon; color: customPalette.dangerColor }
             PropertyChanges { target: icon; source: "qrc:/icons/remove.svg" }

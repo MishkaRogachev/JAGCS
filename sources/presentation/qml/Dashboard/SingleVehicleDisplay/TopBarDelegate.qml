@@ -91,6 +91,8 @@ Controls.Pane {
             Controls.Button {
                 id: preparationButton
                 iconSource: "qrc:/icons/calibrate.svg"
+                iconColor: preparationPanel.fails ? customPalette.dangerColor :
+                                                     customPalette.textColor
                 tipText: (preparationPanel.visible ? qsTr("Close") : qsTr("Open")) + " " +
                          qsTr("preparation panel")
                 flat: true
