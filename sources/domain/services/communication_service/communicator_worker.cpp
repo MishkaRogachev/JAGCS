@@ -87,7 +87,7 @@ void CommunicatorWorker::setCommunicatorImpl(AbstractCommunicator* communicator)
             d->communicator->removeLink(link);
         }
 
-        disconnect(d->communicator, 0, this, 0);
+        disconnect(d->communicator, nullptr, this, nullptr);
 
         delete d->communicator;
     }

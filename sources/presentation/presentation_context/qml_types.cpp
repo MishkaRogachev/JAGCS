@@ -26,6 +26,7 @@
 #include "aerial_vehicle_display_presenter.h"
 #include "vertical_profile_presenter.h"
 #include "drawer_presenter.h"
+#include "mavlink_settings_presenter.h"
 #include "link_list_presenter.h"
 #include "link_presenter.h"
 #include "link_edit_presenter.h"
@@ -91,6 +92,7 @@ static void registerTypes()
     QML_TYPE(VehiclesListDisplayPresenter);
     QML_TYPE(AerialVehicleDisplayPresenter);
     QML_TYPE(DrawerPresenter);
+    QML_TYPE(MavLinkSettingPresenter);
     QML_TYPE(LinkListPresenter);
     QML_TYPE(LinkPresenter);
     QML_TYPE(LinkEditPresenter);

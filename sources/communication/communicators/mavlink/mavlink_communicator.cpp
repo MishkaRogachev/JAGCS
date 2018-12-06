@@ -20,6 +20,7 @@ class MavLinkCommunicator::Impl
 public:
     quint8 systemId;
     quint8 componentId;
+    bool retranslationEnabled;
 
     QMap<AbstractLink*, quint8> linkChannels;
     QMap<quint8, AbstractLink*> mavSystemLinks;
@@ -32,7 +33,8 @@ public:
     int oldPacketsDrops = 0;
 };
 
-MavLinkCommunicator::MavLinkCommunicator(quint8 systemId, quint8 componentId, QObject* parent):
+MavLinkCommunicator::MavLinkCommunicator(quint8 systemId, quint8 componentId,
+                                         bool retranslationEnabled, QObject* parent):
     AbstractCommunicator(parent),
     d(new Impl())
 {
@@ -40,6 +42,7 @@ MavLinkCommunicator::MavLinkCommunicator(quint8 systemId, quint8 componentId, QO
 
     d->systemId = systemId;
     d->componentId = componentId;
+    d->retranslationEnabled = retranslationEnabled;
 
     for (quint8 channel = 0; channel < MAVLINK_COMM_NUM_BUFFERS; ++channel)
     {
@@ -68,6 +71,11 @@ quint8 MavLinkCommunicator::systemId() const
 quint8 MavLinkCommunicator::componentId() const
 {
     return d->componentId;
+}
+
+bool MavLinkCommunicator::retranslationEnabled() const
+{
+    return d->retranslationEnabled;
 }
 
 quint8 MavLinkCommunicator::linkChannel(AbstractLink* link) const
@@ -151,6 +159,14 @@ void MavLinkCommunicator::setComponentId(quint8 componentId)
     emit componentIdChanged(componentId);
 }
 
+void MavLinkCommunicator::setRetranslationEnabled(bool retranslationEnabled)
+{
+    if (d->retranslationEnabled == retranslationEnabled) return;
+
+    d->retranslationEnabled = retranslationEnabled;
+    emit retranslationEnabledChanged(retranslationEnabled);
+}
+
 void MavLinkCommunicator::addHandler(AbstractMavLinkHandler* handler)
 {
     d->handlers.append(handler);
@@ -196,6 +212,14 @@ void MavLinkCommunicator::onDataReceived(const QByteArray& data)
         for (AbstractMavLinkHandler* handler: d->handlers)
         {
             handler->processMessage(message);
+        }
+
+        if (d->retranslationEnabled)
+        {
+            for (AbstractLink* link: this->links())
+            {
+                if (link != d->receivedLink) this->sendMessage(message, link);
+            }
         }
     }
 

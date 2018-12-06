@@ -15,13 +15,15 @@ namespace comm
         Q_OBJECT
 
     public:
-         MavLinkCommunicator(quint8 systemId, quint8 componentId, QObject* parent = nullptr);
+         MavLinkCommunicator(quint8 systemId, quint8 componentId, bool retranslationEnabled,
+                             QObject* parent = nullptr);
         ~MavLinkCommunicator() override;
 
         bool isAddLinkEnabled() override;
 
         quint8 systemId() const;
         quint8 componentId() const;
+        bool retranslationEnabled() const;
 
         quint8 linkChannel(AbstractLink* link) const;
 
@@ -36,6 +38,7 @@ namespace comm
 
         void setSystemId(quint8 systemId);
         void setComponentId(quint8 componentId);
+        void setRetranslationEnabled(bool retranslationEnabled);
 
         void addHandler(AbstractMavLinkHandler* handler);
 
@@ -44,6 +47,7 @@ namespace comm
     signals:
         void systemIdChanged(quint8 systemId);
         void componentIdChanged(quint8 componentId);
+        void retranslationEnabledChanged(bool retranslationEnabled);
 
     protected slots:
         void onDataReceived(const QByteArray& data) override;

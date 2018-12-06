@@ -14,6 +14,7 @@ namespace settings
     {
         const QString systemId = "Communication/systemId";
         const QString componentId = "Communication/componentId";
+        const QString retranslationEnabled = "Communication/retranslationEnabled";
         const QString heartbeat = "Communication/heartbeat";
         const QString timeout = "Communication/timeout";
         const QString autoAdd = "Communication/autoAdd";

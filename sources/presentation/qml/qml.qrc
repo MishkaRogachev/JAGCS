@@ -67,6 +67,7 @@
         <file>Drawer/Vehicles/VehicleListView.qml</file>
         <file>Drawer/Vehicles/VehicleView.qml</file>
         <file>Drawer/Connection/ConnectionView.qml</file>
+        <file>Drawer/Connection/MavLinkSettings/MavLinkSettingsView.qml</file>
         <file>Drawer/Connection/Links/LinkListView.qml</file>
         <file>Drawer/Connection/Links/LinkView.qml</file>
         <file>Drawer/Connection/Links/LinkEditView.qml</file>

@@ -9,7 +9,7 @@ RowLayout {
 
     property alias text: label.text
 
-    Label {
+    Controls.Label {
         id: label
         Layout.fillWidth: true
     }

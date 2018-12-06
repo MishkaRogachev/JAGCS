@@ -4,11 +4,6 @@
 // Internal
 #include "base_presenter.h"
 
-namespace domain
-{
-    class CommunicationService;
-}
-
 namespace presentation
 {
     class LinkListPresenter: public BasePresenter

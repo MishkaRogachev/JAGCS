@@ -32,6 +32,7 @@ public:
 
     QThread* commThread;
     CommunicatorWorker* commWorker;
+    comm::MavLinkCommunicator* communicator = nullptr;
 
     GenericRepository<dto::LinkDescription> linkRepository;
 
@@ -130,17 +131,47 @@ dto::LinkStatisticsPtrList CommunicationService::statistics() const
     return d->linkStatistics.values();
 }
 
+int CommunicationService::mavLinkSysId() const
+{
+    if (!d->communicator) return -1;
+
+//    int sysId = 0;
+//    QMetaObject::invokeMethod(d->communicator, "systemId", Qt::BlockingQueuedConnection,
+//                              Q_RETURN_ARG(int, sysId));
+    return d->communicator->systemId();
+}
+
+int CommunicationService::mavLinkCompId() const
+{
+    if (!d->communicator) return -1;
+
+//    int compId = 0;
+//    QMetaObject::invokeMethod(d->communicator, "componentId", Qt::BlockingQueuedConnection,
+//                              Q_RETURN_ARG(int, compId));
+    return d->communicator->componentId();
+}
+
+bool CommunicationService::mavLinkRetranslation() const
+{
+    if (!d->communicator) return false;
+
+//    bool enabled = false;
+//    QMetaObject::invokeMethod(d->communicator, "retranslationEnabled", Qt::BlockingQueuedConnection,
+//                              Q_RETURN_ARG(bool, enabled));
+    return d->communicator->retranslationEnabled();
+}
+
 void CommunicationService::init()
 {
     // TODO: different link protocols
     comm::MavLinkCommunicatorFactory commFactory(
                 settings::Provider::value(settings::communication::systemId).toInt(),
-                settings::Provider::value(settings::communication::componentId).toInt());
+                settings::Provider::value(settings::communication::componentId).toInt(),
+                settings::Provider::boolValue(settings::communication::retranslationEnabled));
 
-    comm::AbstractCommunicator* communicator = commFactory.create();
-    communicator->moveToThread(d->commThread);
-
-    d->commWorker->setCommunicator(communicator);
+    d->communicator = commFactory.create();
+    d->communicator->moveToThread(d->commThread);
+    d->commWorker->setCommunicator(d->communicator);
 
     for (const dto::LinkDescriptionPtr& description: this->descriptions())
     {
@@ -212,6 +243,33 @@ void CommunicationService::setLinkConnected(const dto::LinkDescriptionPtr& descr
     d->commWorker->setLinkConnected(description->id(), connected);
 
     description->setAutoConnect(connected);
+}
+
+void CommunicationService::setMavLinkSysId(int sysId)
+{
+    if (!d->communicator) return;
+
+    QMetaObject::invokeMethod(d->communicator, "setSystemId", Qt::QueuedConnection,
+                              Q_ARG(quint8, sysId));
+    settings::Provider::setValue(settings::communication::systemId, sysId);
+}
+
+void CommunicationService::setMavLinkCompId(int compId)
+{
+    if (!d->communicator) return;
+
+    QMetaObject::invokeMethod(d->communicator, "setComponentId", Qt::QueuedConnection,
+                              Q_ARG(quint8, compId));
+    settings::Provider::setValue(settings::communication::componentId, compId);
+}
+
+void CommunicationService::setMavLinkRetranslation(bool enabled)
+{
+    if (!d->communicator) return;
+
+    QMetaObject::invokeMethod(d->communicator, "setRetranslationEnabled",
+                              Qt::QueuedConnection, Q_ARG(bool, enabled));
+    settings::Provider::setValue(settings::communication::retranslationEnabled, enabled);
 }
 
 void CommunicationService::onLinkStatusChanged(int linkId, bool connected)

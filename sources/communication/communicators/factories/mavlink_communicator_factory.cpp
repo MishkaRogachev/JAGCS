@@ -1,8 +1,5 @@
 #include "mavlink_communicator_factory.h"
 
-// Internal
-#include "mavlink_communicator.h"
-
 // MAVLink v1
 #include "ping_handler.h"
 #include "heartbeat_handler.h"
@@ -37,15 +34,18 @@
 
 using namespace comm;
 
-MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(quint8 systemId, quint8 componentId):
+MavLinkCommunicatorFactory::MavLinkCommunicatorFactory(quint8 systemId, quint8 componentId,
+                                                       bool retranslationEnabled):
     ICommunicatorFactory(),
     m_systemId(systemId),
-    m_componentId(componentId)
+    m_componentId(componentId),
+    m_retranslationEnabled(retranslationEnabled)
 {}
 
-AbstractCommunicator* MavLinkCommunicatorFactory::create()
+MavLinkCommunicator* MavLinkCommunicatorFactory::create()
 {
-    auto communicator = new MavLinkCommunicator(m_systemId, m_componentId);
+    MavLinkCommunicator* communicator = new MavLinkCommunicator(m_systemId, m_componentId,
+                                                                m_retranslationEnabled);
 
     communicator->addHandler(new PingHandler(communicator));
     communicator->addHandler(new HeartbeatHandler(communicator));

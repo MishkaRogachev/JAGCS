@@ -31,6 +31,10 @@ namespace domain
         dto::LinkStatisticsPtr statistics(int descriptionId) const;
         dto::LinkStatisticsPtrList statistics() const;
 
+        int mavLinkSysId() const;
+        int mavLinkCompId() const;
+        bool mavLinkRetranslation() const;
+
         void init();
 
     public slots:
@@ -38,6 +42,10 @@ namespace domain
         bool remove(const dto::LinkDescriptionPtr& description);
 
         void setLinkConnected(const dto::LinkDescriptionPtr& description, bool connected);
+
+        void setMavLinkSysId(int sysId);
+        void setMavLinkCompId(int compId);
+        void setMavLinkRetranslation(bool enabled);
 
     signals:
         void descriptionAdded(dto::LinkDescriptionPtr description);
