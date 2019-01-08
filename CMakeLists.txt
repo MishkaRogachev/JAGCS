@@ -111,7 +111,10 @@ endif(ANDROID)
 
 # 2ndparty libraries
 include("${CMAKE_SOURCE_DIR}/2ndparty/industrial-controls/CMakeLists.txt")
-include_directories(${INDUSTRIAL_INCLUDES})
+include_directories(${INDUSTRIAL_CONTROLS_INCLUDES})
+
+include("${CMAKE_SOURCE_DIR}/2ndparty/industrial-indicators/CMakeLists.txt")
+include_directories(${INDUSTRIAL_INDICATORS_INCLUDES})
 
 # MAVLink includes
 option(WITH_MAVLINK_V2 "MAVLink version 2 includes" ON)
@@ -154,8 +157,11 @@ list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
 file(GLOB_RECURSE QRC_FILES "*.qrc")
 
 # Qt5 add resources
-qt5_add_resources(QRC_SOURCES ${QRC_FILES} ${INDUSTRIAL_RESOURCES})
-message(${QRC_SOURCES})
+qt5_add_resources(QRC_SOURCES
+    ${QRC_FILES}
+    ${INDUSTRIAL_CONTROLS_RESOURCES}
+    ${INDUSTRIAL_INDICATORS_RESOURCES}
+)
 
 # Includes
 include_directories(${INCLUDES})
@@ -163,11 +169,13 @@ include_directories(${INCLUDES})
 # Target
 if(ANDROID)
     include_directories(${ANDROID_SYSROOT}/usr/include)
-    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES} ${INDUSTRIAL_SOURCES})
+    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES}
+        ${INDUSTRIAL_CONTROLS_SOURCES} ${INDUSTRIAL_INDICATORS_SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
         ${VERSION_MAJOR} "." ${VERSION_MINOR} "." ${VERSION_PATCH})
 else(ANDROID)
-    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES} ${INDUSTRIAL_SOURCES})
+    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES}
+        ${INDUSTRIAL_CONTROLS_SOURCES} ${INDUSTRIAL_INDICATORS_SOURCES})
 endif()
 
 # Qt libraries
@@ -214,7 +222,6 @@ option(WITH_DEBIAN "Include instructions to make Debian package")
 if(WITH_DEBIAN)
     # https://cmake.org/Bug/view.php?id=14444
     install(TARGETS ${PROJECT} DESTINATION "/usr/local/bin/")
-
     add_subdirectory(platforms/debian)
 endif(WITH_DEBIAN)
 

@@ -10,3 +10,6 @@
 [submodule "2ndparty/industrial-controls"]
 	path = 2ndparty/industrial-controls
 	url = https://github.com/MishkaRogachev/industrial-controls
+[submodule "2ndparty/industrial-indicators"]
+	path = 2ndparty/industrial-indicators
+	url = https://github.com/MishkaRogachev/industrial-indicators
