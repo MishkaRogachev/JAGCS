@@ -37,7 +37,7 @@ ColumnLayout {
         if (map) map.selectedItemId = 0;
     }
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     MissionEditPresenter {
         id: presenter
@@ -63,8 +63,6 @@ ColumnLayout {
             tipText: qsTr("More")
             iconSource: "qrc:/ui/dots.svg"
             flat: true
-            hasMenu: true
-            menuOpened: moreMenu.visible
             enabled: sequence > -1
             onClicked: moreMenu.visible ? moreMenu.close() : moreMenu.open()
 
@@ -124,7 +122,7 @@ ColumnLayout {
                 Controls.MenuItem {
                     text: qsTr("Remove")
                     iconSource: "qrc:/icons/remove.svg"
-                    iconColor: customPalette.dangerColor
+                    iconColor: industrial.colors.danger
                     onTriggered: presenter.removeItem()
                 }
             }
@@ -150,7 +148,7 @@ ColumnLayout {
             boundsBehavior: Flickable.StopAtBounds
             onMovementStarted: drawer.interactive = false
             onMovementEnded: drawer.interactive = true
-            Layout.minimumHeight: controlSize.baseSize
+            Layout.minimumHeight: industrial.baseSize
             Layout.fillWidth: true
 
             MissionItemListView {
@@ -163,8 +161,8 @@ ColumnLayout {
                     if (dX < 0) {
                         flickable.contentX = x;
                     }
-                    else if (dX > flickable.width - controlSize.baseSize) {
-                        flickable.contentX = x - flickable.width + controlSize.baseSize;
+                    else if (dX > flickable.width - industrial.baseSize) {
+                        flickable.contentX = x - flickable.width + industrial.baseSize;
                     }
                 }
             }

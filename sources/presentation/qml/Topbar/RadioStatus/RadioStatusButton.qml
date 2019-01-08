@@ -23,7 +23,7 @@ TopbarButton {
     Row {
         id: row
         anchors.centerIn: parent
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Indicators.RssiIndicator {
             id: rssiItem
@@ -38,6 +38,6 @@ TopbarButton {
 
     RadioStatusInfo {
         id: info
-        y: parent.height + controlSize.margins
+        y: parent.height + industrial.margins
     }
 }

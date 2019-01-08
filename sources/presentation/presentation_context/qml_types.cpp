@@ -1,6 +1,9 @@
 #ifndef QML_TYPES_H
 #define QML_TYPES_H
 
+// Industrial
+#include "colors.h"
+
 // Internal
 #include "vehicle.h"
 #include "link_description.h"
@@ -66,6 +69,8 @@ using namespace presentation;
 
 static void registerTypes()
 {
+    QML_TYPE(Colors);
+
     QML_UNCREATABLE_TYPE(Vehicle);
     QML_UNCREATABLE_TYPE(LinkDescription);
     QML_UNCREATABLE_TYPE(Mission);

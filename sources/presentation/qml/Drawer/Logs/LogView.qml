@@ -19,7 +19,7 @@ RowLayout {
         id: timestamp
         anchors.verticalCenter: parent.verticalCenter
         text: msg ? "[" + JS.Helper.formatTime(msg.timestamp) + "]" : ""
-        font.pixelSize: controlSize.secondaryFontSize
+        font.pixelSize: industrial.auxFontSize
         font.bold: true
         color: label.color
     }
@@ -27,17 +27,17 @@ RowLayout {
     Controls.Label {
         id: label
         text: msg ? msg.head + ": " + msg.message : ""
-        font.pixelSize: controlSize.secondaryFontSize
+        font.pixelSize: industrial.auxFontSize
         color: {
-            if (!msg) return customPalette.backgroundColor;
+            if (!msg) return industrial.colors.background;
 
             switch (msg.urgency) {
-            case Notification.Common: return customPalette.textColor;
-            case Notification.Positive: return customPalette.positiveColor;
-            case Notification.Warning: return customPalette.cautionColor;
-            case Notification.Critical: return customPalette.dangerColor;
+            case Notification.Common: return industrial.colors.onSurface;
+            case Notification.Positive: return industrial.colors.positive;
+            case Notification.Warning: return industrial.colors.caution;
+            case Notification.Critical: return industrial.colors.danger;
             default:
-                return customPalette.backgroundColor;
+                return industrial.colors.background;
             }
         }
         Layout.fillWidth: true

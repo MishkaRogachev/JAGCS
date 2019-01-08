@@ -39,12 +39,12 @@ Controls.Card {
             return connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.iconColor = industrial.colors.danger;
         removeItem.triggered.connect(presenter.remove);
     }
 
-    implicitWidth: grid.implicitWidth + controlSize.margins * 2
-    implicitHeight: grid.implicitHeight + controlSize.margins * 2
+    implicitWidth: grid.implicitWidth + industrial.margins * 2
+    implicitHeight: grid.implicitHeight + industrial.margins * 2
 
     Timer {
         running: sent
@@ -69,17 +69,17 @@ Controls.Card {
         anchors.left: grid.left
         anchors.top: grid.top
         source: connected ? "qrc:/icons/arrow_up.svg" : "qrc:/icons/arrow_down.svg"
-        color: connected ? customPalette.positiveColor : customPalette.sunkenColor
+        color: connected ? industrial.colors.positive : industrial.colors.background
     }
 
     GridLayout {
         id: grid
         anchors.fill: parent
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
         anchors.rightMargin: linkView.margin
         columns: 4
-        rowSpacing: controlSize.spacing
-        columnSpacing: controlSize.spacing
+        rowSpacing: industrial.spacing
+        columnSpacing: industrial.spacing
 
         Controls.Label {
             text: name
@@ -118,24 +118,24 @@ Controls.Card {
         }
 
         Indicators.Led {
-            color: recv ? customPalette.positiveColor : customPalette.sunkenColor
+            color: recv ? industrial.colors.positive : industrial.colors.background
         }
 
         Controls.Label {
             text: qsTr("Recv") + ": " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
-            color: customPalette.positiveColor
+            color: industrial.colors.positive
             Layout.fillWidth: true
         }
 
         Indicators.Led {
-            color: sent ? customPalette.skyColor : customPalette.sunkenColor
+            color: sent ? industrial.colors.skyColor : industrial.colors.background
         }
 
         Controls.Label {
             text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
-            color: customPalette.skyColor
+            color: industrial.colors.skyColor
             Layout.fillWidth: true
         }
     }

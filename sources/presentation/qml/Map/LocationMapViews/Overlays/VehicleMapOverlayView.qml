@@ -46,7 +46,7 @@ MapItemView {
             MouseArea {
                 id: area
                 anchors.centerIn: parent
-                height: controlSize.inputControlHeight
+                height: industrial.inputControlHeight
                 width: height
 
                 rotation: -map.bearing
@@ -57,7 +57,7 @@ MapItemView {
                     rotation: courseAnimated
                     speed: groundspeed
                     visible: groundspeed > 0.1
-                    width: controlSize.baseSize * 4
+                    width: industrial.baseSize * 4
                     height: width
                 }
 
@@ -65,7 +65,7 @@ MapItemView {
                     anchors.centerIn: parent
                     rotation: headingAnimated
                     source: translator.imageFromVehicleType(vehicleType)
-                    width: controlSize.baseSize * 3
+                    width: industrial.baseSize * 3
                     height: width
                 }
             }
@@ -73,9 +73,9 @@ MapItemView {
             Controls.ToolTip {
                 text: vehicleName
                 visible: area.pressed
-                y: controlSize.baseSize
-                x: controlSize.baseSize
-                font.pixelSize: controlSize.secondaryFontSize
+                y: industrial.baseSize
+                x: industrial.baseSize
+                font.pixelSize: industrial.auxFontSize
                 font.bold: true
             }
         }

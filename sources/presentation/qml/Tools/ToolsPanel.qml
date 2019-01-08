@@ -6,7 +6,7 @@ import Industrial.Controls 1.0 as Controls
 ColumnLayout {
     id: root
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     Item {
         Layout.fillHeight: true

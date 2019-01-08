@@ -8,14 +8,14 @@ Rectangle {
 
     signal clicked()
 
-    implicitWidth: controlSize.baseSize * 0.75
-    implicitHeight: controlSize.baseSize * 0.75
+    implicitWidth: industrial.baseSize * 0.75
+    implicitHeight: industrial.baseSize * 0.75
     radius: 1
-    color: area.pressed ? customPalette.highlightColor : "transparent"
+    color: area.pressed ? industrial.colors.highlight : "transparent"
 
     Rectangle {
         anchors.fill: parent
-        color: customPalette.textColor
+        color: industrial.colors.onSurface
         radius: parent.radius
         opacity: 0.1
         visible: area.containsMouse && clickEnabled
@@ -24,7 +24,7 @@ Rectangle {
     MouseArea {
         id: area
         anchors.fill: parent
-        anchors.bottomMargin: -controlSize.baseSize * 0.25
+        anchors.bottomMargin: -industrial.baseSize * 0.25
         hoverEnabled: true
         onClicked: button.clicked()
     }

@@ -3,38 +3,46 @@
 // Qt
 #include <QQmlContext>
 #include <QVariant>
+#include <QDebug>
+
+// Industrial
+#include "theme.h"
+#include "theme_configurator.h"
 
 // Internal
 #include "settings_provider.h"
-
 #include "presentation_context.h"
-#include "day_palette_factory.h"
-#include "night_palette_factory.h"
 
 using namespace presentation;
 
-GuiStyleManager::GuiStyleManager(QObject* parent): QObject(parent)
-{}
+GuiStyleManager::GuiStyleManager(QObject* parent):
+    QObject(parent),
+    m_configurator(new ThemeConfigurator(this))
+{
+    presentationContext->rootContext()->setContextProperty(
+                "industrial", QVariant::fromValue(m_configurator->theme()));
+}
+
+GuiStyleManager::~GuiStyleManager()
+{
+}
 
 void GuiStyleManager::setPaletteStyle(PaletteStyle paletteStyle)
 {
-    QScopedPointer<AbstractPaletteFactory> factory;
-
     switch (paletteStyle) {
     case Day:
-        factory.reset(new DayPaletteFactory());
+        m_configurator->setPrimaryColor("#00c98f");
+        m_configurator->setOnPrimaryColor("#202020");
+        m_configurator->setBaseColor("#F5F5F5");
+        m_configurator->setOnBaseColor("#F5F5F5");
         break;
     case Night:
-        factory.reset(new NightPaletteFactory());
-        break;
-    default:
+        m_configurator->setPrimaryColor("#02eec8");
+        m_configurator->setOnPrimaryColor("#000000");
+        m_configurator->setBaseColor("#2d373e");
+        m_configurator->setOnBaseColor("#ffffff");
         break;
     }
-
-    if (!factory) return;
-
-    presentationContext->rootContext()->setContextProperty(
-                "customPalette", QVariant::fromValue(factory->create()));
 }
 
 void GuiStyleManager::loadSettingsPalette()
@@ -42,26 +50,9 @@ void GuiStyleManager::loadSettingsPalette()
     this->setPaletteStyle(PaletteStyle(settings::Provider::value(settings::gui::paletteStyle).toInt()));
 }
 
-void GuiStyleManager::setSizings(const ControlSize& controlSize)
-{
-    presentationContext->rootContext()->setContextProperty("controlSize",
-                                                           QVariant::fromValue(controlSize));
-}
-
 void GuiStyleManager::setSizings(int baseSize)
 {
-    ControlSize controlSize;
-
-    controlSize.setBaseSize(baseSize);
-    controlSize.setInputControlHeight(baseSize * 1.25);
-    controlSize.setFontSize(baseSize / 2);
-    controlSize.setSecondaryFontSize(controlSize.fontSize() * 0.75);
-    controlSize.setSpacing(baseSize / 4);
-    controlSize.setMargins(baseSize / 4);
-    controlSize.setPadding(baseSize / 6);
-    controlSize.setShadowSize(3);
-
-    this->setSizings(controlSize);
+    m_configurator->setBaseSize(baseSize);
 }
 
 void GuiStyleManager::loadSettingsSizings()

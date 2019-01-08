@@ -13,7 +13,7 @@ Controls.ComboBox {
     enabled: vehicle.online
     model: vehicle.availableModes
     labelText: qsTr("Mode")
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     font.bold: true
     displayText: translator.translateVehicleMode(mode)
 
@@ -27,16 +27,16 @@ Controls.ComboBox {
     }
     labelColor: {
         if (status == Command.Idle) {
-            return control.activeFocus ? customPalette.highlightColor :
-                                         customPalette.secondaryTextColor
+            return control.activeFocus ? industrial.colors.highlight :
+                                         industrial.colors.secondaryTextColor
         }
-        return customPalette.selectedTextColor;
+        return industrial.colors.selectedTextColor;
     }
     backgroundColor: {
         switch (status) {
-        case Command.Rejected: return customPalette.dangerColor;
-        case Command.Sending: return customPalette.cautionColor;
-        case Command.Completed: return customPalette.positiveColor;
+        case Command.Rejected: return industrial.colors.danger;
+        case Command.Sending: return industrial.colors.caution;
+        case Command.Completed: return industrial.colors.positive;
         default: return "transparent"
         }
     }
@@ -59,11 +59,11 @@ Controls.ComboBox {
         font: control.font
         text: displayText
         color: {
-            if (status != Command.Idle) return customPalette.balloonTextColor;
-            return customPalette.textColor;
+            if (status != Command.Idle) return industrial.colors.surface;
+            return industrial.colors.onSurface;
         }
-            /*status == Command.Idle ? customPalette.textColor:
-                                        customPalette.balloonTextColor*/
+            /*status == Command.Idle ? industrial.colors.onSurface:
+                                        industrial.colors.surface*/
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignBottom
     }

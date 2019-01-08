@@ -39,9 +39,6 @@ set(CMAKE_AUTOMOC ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# 2ndparty libraries
-include(2ndparty/industrial-controls/CMakeLists.txt)
-
 # Add compiler flags
 set(CMAKE_CXX_STANDARD 11)
 add_compile_options(-Wall -fPIC)
@@ -112,6 +109,10 @@ set(LIBS
 )
 endif(ANDROID)
 
+# 2ndparty libraries
+include("${CMAKE_SOURCE_DIR}/2ndparty/industrial-controls/CMakeLists.txt")
+include_directories(${INDUSTRIAL_INCLUDES})
+
 # MAVLink includes
 option(WITH_MAVLINK_V2 "MAVLink version 2 includes" ON)
 if(WITH_MAVLINK_V2)
@@ -153,23 +154,20 @@ list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
 file(GLOB_RECURSE QRC_FILES "*.qrc")
 
 # Qt5 add resources
-qt5_add_resources(QRC_SOURCES ${QRC_FILES})
+qt5_add_resources(QRC_SOURCES ${QRC_FILES} ${INDUSTRIAL_RESOURCES})
+message(${QRC_SOURCES})
 
 include_directories(${INCLUDES})
 
 # Target
 if(ANDROID)
     include_directories(${ANDROID_SYSROOT}/usr/include)
-    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
+    add_library(${PROJECT} SHARED ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES} ${INDUSTRIAL_SOURCES})
     set_target_properties(${PROJECT_NAME} PROPERTIES VERSION
         ${VERSION_MAJOR} "." ${VERSION_MINOR} "." ${VERSION_PATCH})
 else(ANDROID)
-    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES})
+    add_executable(${PROJECT} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${META_SOURCES} ${INDUSTRIAL_SOURCES})
 endif()
-
-# Industrial vendor includes & sources
-target_include_directories(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_INCLUDES})
-target_sources(${PROJECT_NAME} PRIVATE ${INDUSTRIAL_SOURCES})
 
 # Qt libraries
 set(LIBRARIES ${LIBRARIES}

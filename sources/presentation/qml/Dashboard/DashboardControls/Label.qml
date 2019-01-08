@@ -4,6 +4,6 @@ import Industrial.Controls 1.0 as Controls
 
 Controls.Label {
     font.bold: true
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     horizontalAlignment: Text.AlignHCenter
 }

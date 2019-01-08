@@ -6,7 +6,7 @@ MapItemView {
     delegate: MapCircle {
         center: itemCoordinate
         radius: itemAcceptanceRadius
-        color: customPalette.missionColor
+        color: industrial.colors.highlight
         border.width: 0
         opacity: 0.3
         visible: itemCoordinate.isValid && itemAcceptanceRadius > 0 && itemVisible

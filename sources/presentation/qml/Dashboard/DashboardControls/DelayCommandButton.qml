@@ -22,17 +22,17 @@ Controls.DelayButton {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return customPalette.dangerColor;
-        if (status == Command.Sending) return customPalette.cautionColor;
-        if (status == Command.Completed) return customPalette.positiveColor;
-        return control.flat ? "transparent" : customPalette.buttonColor;
+        if (status == Command.Rejected) return industrial.colors.danger;
+        if (status == Command.Sending) return industrial.colors.caution;
+        if (status == Command.Completed) return industrial.colors.positive;
+        return control.flat ? "transparent" : industrial.colors.buttonColor;
     }
 
     textColor: {
         if (status == Command.Rejected ||
             status == Command.Sending ||
-            status == Command.Completed) return customPalette.selectedTextColor;
-        return customPalette.textColor;
+            status == Command.Completed) return industrial.colors.selectedTextColor;
+        return industrial.colors.onSurface;
     }
 
     Timer {
@@ -40,6 +40,6 @@ Controls.DelayButton {
         onTriggered: status = Command.Idle
     }
 
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     font.bold: true
 }

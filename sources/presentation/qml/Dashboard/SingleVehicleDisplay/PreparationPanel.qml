@@ -10,7 +10,7 @@ Controls.Popup {
 
     property int fails: 0
 
-    width: controlSize.baseSize * 5
+    width: industrial.baseSize * 5
     closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
     Connections {
@@ -29,7 +29,7 @@ Controls.Popup {
 
     ColumnLayout {
         anchors.fill: parent
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Repeater {
             model: [

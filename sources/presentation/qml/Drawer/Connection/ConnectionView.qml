@@ -12,7 +12,7 @@ Item {
 
     property int selectedLinkId: 0
 
-    implicitWidth: controlSize.baseSize * 10
+    implicitWidth: industrial.baseSize * 10
 
     Connections {
         target: drawer
@@ -21,14 +21,14 @@ Item {
     
     MavLinkSettingsView {
         id: mavLinkSettings
-        anchors { left: parent.left; right: parent.right; top: parent.top; margins: controlSize.shadowSize }
+        anchors { left: parent.left; right: parent.right; top: parent.top; margins: industrial.shadowSize }
         visible: selectedLinkId == 0
     }
 
     LinkListView {
         id: linkList
         anchors.fill: parent
-        anchors.topMargin: mavLinkSettings.height + controlSize.spacing
+        anchors.topMargin: mavLinkSettings.height + industrial.spacing
         visible: selectedLinkId == 0
     }
 

@@ -34,7 +34,7 @@ BaseDisplay {
     }
     Component.onDestruction: manual.setVehicleId(0)
 
-    implicitWidth: list.width + controlSize.margins
+    implicitWidth: list.width + industrial.margins
     implicitHeight: list.contentHeight + topBarDelegate.height
 
     AerialVehicleDisplayPresenter {
@@ -93,14 +93,14 @@ BaseDisplay {
     ListView {
         id: list
         anchors.top: topBarDelegate.bottom
-        anchors.topMargin: controlSize.spacing
+        anchors.topMargin: industrial.spacing
         anchors.right: parent.right
-        anchors.rightMargin: controlSize.margins
+        anchors.rightMargin: industrial.margins
         width: dashboardWidth
-        height: Math.min(parent.height - topBarDelegate.height - controlSize.spacing, contentHeight)
+        height: Math.min(parent.height - topBarDelegate.height - industrial.spacing, contentHeight)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         footerPositioning: ListView.OverlayFooter
         visible: dashboardVisible
         model: instruments
@@ -124,8 +124,8 @@ BaseDisplay {
                 enabled: instrumentsUnlocked
                 iconSource: "qrc:/ui/dots.svg"
                 flat: true
-                width: controlSize.baseSize * 0.5
-                height: controlSize.baseSize * 0.75
+                width: industrial.baseSize * 0.5
+                height: industrial.baseSize * 0.75
                 z: 100
                 onClicked: itemMenu.open()
 
@@ -151,7 +151,7 @@ BaseDisplay {
         footer: Item {
             width: parent.width
             visible: instrumentsUnlocked && instruments.visibleItems < instruments.count
-            height: visible ? controlSize.baseSize + list.spacing : 0
+            height: visible ? industrial.baseSize + list.spacing : 0
             z: 10
 
             Controls.Button {

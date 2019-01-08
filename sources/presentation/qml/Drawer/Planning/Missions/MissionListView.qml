@@ -25,9 +25,9 @@ Item {
     ListView {
         id: list
         anchors.fill: parent
-        anchors.margins: controlSize.shadowSize
+        anchors.margins: industrial.shadowSize
         anchors.bottomMargin: addButton.height
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
 
@@ -48,7 +48,7 @@ Item {
         visible: list.count === 0
     }
 
-    Controls.RoundButton {
+    Controls.FloatButton {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom

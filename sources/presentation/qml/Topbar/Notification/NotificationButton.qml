@@ -23,7 +23,7 @@ TopbarButton {
         width: parent.height * 0.8
         height: parent.height * 0.8
         source: "qrc:/icons/info.svg"
-        color: customPalette.sunkenColor
+        color: industrial.colors.background
         visible: list.count == 0
     }
 
@@ -35,21 +35,21 @@ TopbarButton {
         color: {
             switch (urgency) {
             case Notification.Positive:
-                return customPalette.positiveColor;
+                return industrial.colors.positive;
             case Notification.Warning:
-                return customPalette.cautionColor;
+                return industrial.colors.caution;
             case Notification.Critical:
-                return customPalette.dangerColor;
+                return industrial.colors.danger;
             case Notification.Common:
             default:
-                return customPalette.balloonColor;
+                return industrial.colors.onSurface;
             }
         }
 
         Controls.Label {
             anchors.centerIn: parent
-            color: customPalette.balloonTextColor
-            font.pixelSize: controlSize.secondaryFontSize
+            color: industrial.colors.surface
+            font.pixelSize: industrial.auxFontSize
             font.bold: true
             text: list.count
         }
@@ -57,7 +57,7 @@ TopbarButton {
 
     NotificationListView {
         id: list
-        y: parent.height + controlSize.margins
+        y: parent.height + industrial.margins
         model: notifications
         visible: count > 0
         onRemove: presenter.remove(header)

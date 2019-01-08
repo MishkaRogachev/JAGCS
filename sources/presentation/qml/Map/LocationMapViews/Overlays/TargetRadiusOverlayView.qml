@@ -8,7 +8,7 @@ MapItemView {
         radius: 50
         color: "#FFFFFF" // FIXME: MapBox GL does not draw transparent circles
         border.width: 4
-        border.color: customPalette.activeMissionColor
+        border.color: industrial.colors.activeMissionColor
         z: 50
     }
 }

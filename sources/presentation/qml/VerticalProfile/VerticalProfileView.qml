@@ -34,28 +34,28 @@ Controls.Frame {
 
         ValueAxis {
             id: distanceAxis
-            labelsColor: customPalette.textColor
-            labelsFont.pixelSize: controlSize.secondaryFontSize
+            labelsColor: industrial.colors.onSurface
+            labelsFont.pixelSize: industrial.auxFontSize
             labelsFont.bold: true
         }
 
         ValueAxis {
             id: altitudeAxis
-            labelsColor: customPalette.textColor
-            labelsFont.pixelSize: controlSize.secondaryFontSize
+            labelsColor: industrial.colors.onSurface
+            labelsFont.pixelSize: industrial.auxFontSize
             labelsFont.bold: true
         }
 
         AreaSeries {
-            color: customPalette.missionColor
-            borderColor: customPalette.missionColor
+            color: industrial.colors.highlight
+            borderColor: industrial.colors.highlight
             borderWidth: 2
             opacity: 0.33
             axisX: distanceAxis
             axisY: altitudeAxis
             upperSeries: LineSeries {
                 id: series
-                color: customPalette.missionColor
+                color: industrial.colors.highlight
                 width: 2
             }
         }

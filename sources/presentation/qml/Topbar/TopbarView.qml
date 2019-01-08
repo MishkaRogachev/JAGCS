@@ -10,8 +10,8 @@ import "Clocks"
 Rectangle {
     id: topbar
 
-    color: customPalette.backgroundColor
-    height: controlSize.baseSize * 0.75
+    color: industrial.colors.background
+    height: industrial.baseSize * 0.75
 
     Controls.Shadow {
         source: parent
@@ -24,9 +24,9 @@ Rectangle {
 
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: Math.max(tools.x + controlSize.margins, burger.width)
+        anchors.leftMargin: Math.max(tools.x + industrial.margins, burger.width)
         anchors.rightMargin: dashboard.topbarOffset
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Behavior on anchors.rightMargin { PropertyAnimation { duration: 200 } }
 

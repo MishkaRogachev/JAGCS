@@ -19,7 +19,7 @@ Item {
         video.updateActiveVideo();
     }
 
-    implicitWidth: controlSize.baseSize * 10
+    implicitWidth: industrial.baseSize * 10
 
 //    Connections{
 //        target: drawer
@@ -36,10 +36,10 @@ Item {
     ListView {
         id: list
         anchors.fill: parent
-        anchors.margins: controlSize.shadowSize
-        anchors.topMargin: spacing + controlSize.shadowSize
+        anchors.margins: industrial.shadowSize
+        anchors.topMargin: spacing + industrial.shadowSize
         anchors.bottomMargin: addButton.height
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
 
@@ -67,7 +67,7 @@ Item {
 
         Controls.RadioButton {
             anchors.left: parent.left
-            anchors.margins: controlSize.margins
+            anchors.margins: industrial.margins
             text: qsTr("No video")
             Controls.ButtonGroup.group: radioGroup
             checked: activeVideo == 0
@@ -75,7 +75,7 @@ Item {
         }
     }
 
-    Controls.RoundButton {
+    Controls.FloatButton {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.horizontalCenterOffset: parent.width / 3

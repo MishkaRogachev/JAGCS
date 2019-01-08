@@ -8,7 +8,7 @@ Item {
 
     property var logs: []
 
-    implicitWidth: controlSize.baseSize * 11
+    implicitWidth: industrial.baseSize * 11
 
     LogListPresenter {
         id: presenter
@@ -18,7 +18,7 @@ Item {
 
     ListView {
         anchors.fill: parent
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         model: logs
         onCountChanged: positionViewAtEnd()
 

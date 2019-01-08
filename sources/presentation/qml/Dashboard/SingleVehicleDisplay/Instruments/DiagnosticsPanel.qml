@@ -12,10 +12,10 @@ BaseInstrument {
 
     RowLayout {
         anchors.left: parent.left
-        anchors.leftMargin: controlSize.padding
+        anchors.leftMargin: industrial.padding
         anchors.right: parent.right
         anchors.rightMargin: itemMenuButton.width
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.Label {
             text: qsTr("EKF")
@@ -38,7 +38,7 @@ BaseInstrument {
         Indicators.MiniPlot {
             id: plot
             Layout.fillWidth: true
-            Layout.minimumHeight: controlSize.baseSize * 1.5
+            Layout.minimumHeight: industrial.baseSize * 1.5
             Layout.fillHeight: true
             // FIXME: segfault on destruction
             ValueAxis {
@@ -57,7 +57,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: customPalette.positiveColor
+                color: industrial.colors.positive
 
                 VXYModelMapper {
                     xColumn: 0
@@ -69,7 +69,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: customPalette.cautionColor
+                color: industrial.colors.caution
 
                 VXYModelMapper {
                     xColumn: 0
@@ -81,7 +81,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: customPalette.dangerColor
+                color: industrial.colors.danger
 
                 VXYModelMapper {
                     xColumn: 0

@@ -19,7 +19,7 @@ BaseDisplay {
         });
     }
 
-    implicitWidth: Math.max(list.width + controlSize.margins, topBarDelegate.width)
+    implicitWidth: Math.max(list.width + industrial.margins, topBarDelegate.width)
     implicitHeight: list.contentHeight + topBarDelegate.height
 
     VehiclesListDisplayPresenter {
@@ -35,12 +35,12 @@ BaseDisplay {
     ListView {
         id: list
         anchors.top: topBarDelegate.bottom
-        anchors.topMargin: controlSize.spacing
+        anchors.topMargin: industrial.spacing
         anchors.right: parent.right
-        anchors.rightMargin: controlSize.margins
+        anchors.rightMargin: industrial.margins
         width: dashboardWidth
-        height: Math.min(parent.height - topBarDelegate.height - controlSize.spacing, contentHeight)
-        spacing: controlSize.spacing
+        height: Math.min(parent.height - topBarDelegate.height - industrial.spacing, contentHeight)
+        spacing: industrial.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
         visible: dashboardVisible
@@ -54,7 +54,7 @@ BaseDisplay {
         delegate: Loader {
             property int displayVehicleId: vehicleId
 
-            width: parent.width - controlSize.shadowSize
+            width: parent.width - industrial.shadowSize
             onDisplayVehicleIdChanged: {
                 setSource("");
                 switch (vehicleType) {

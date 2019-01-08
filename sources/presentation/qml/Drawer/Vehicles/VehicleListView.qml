@@ -13,7 +13,7 @@ Item {
     onVisibleChanged: drawer.filterEnabled = visible
     Component.onCompleted: drawer.filterEnabled = true
 
-    implicitWidth: controlSize.baseSize * 8
+    implicitWidth: industrial.baseSize * 8
 
     Connections{
         target: drawer
@@ -28,9 +28,9 @@ Item {
     ListView {
         id: list
         anchors.fill: parent
-        anchors.margins: controlSize.shadowSize
+        anchors.margins: industrial.shadowSize
         anchors.bottomMargin: addButton.height
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
 
@@ -61,7 +61,7 @@ Item {
         }
     }
 
-    Controls.RoundButton {
+    Controls.FloatButton {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.horizontalCenterOffset: parent.width / 3

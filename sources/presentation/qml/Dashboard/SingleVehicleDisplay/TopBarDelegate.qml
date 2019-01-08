@@ -70,8 +70,8 @@ Controls.Pane {
 
             DashboardControls.ModeBox {
                 id: modeBox
-                Layout.preferredWidth: controlSize.baseSize * 4
-                Layout.maximumHeight: controlSize.baseSize
+                Layout.preferredWidth: industrial.baseSize * 4
+                Layout.maximumHeight: industrial.baseSize
             }
 
             Controls.Button {
@@ -91,8 +91,8 @@ Controls.Pane {
             Controls.Button {
                 id: preparationButton
                 iconSource: "qrc:/icons/calibrate.svg"
-                iconColor: preparationPanel.fails ? customPalette.dangerColor :
-                                                     customPalette.textColor
+                iconColor: preparationPanel.fails ? industrial.colors.danger :
+                                                     industrial.colors.onSurface
                 tipText: (preparationPanel.visible ? qsTr("Close") : qsTr("Open")) + " " +
                          qsTr("preparation panel")
                 flat: true
@@ -101,15 +101,15 @@ Controls.Pane {
 
                 PreparationPanel {
                     id: preparationPanel
-                    x: -width - controlSize.spacing
+                    x: -width - industrial.spacing
                 }
             }
 
             Controls.Button {
                 id: centerButton
                 iconSource: "qrc:/icons/center.svg"
-                iconColor: map.trackingVehicleId === vehicleId ? customPalette.highlightColor :
-                                                                 customPalette.textColor
+                iconColor: map.trackingVehicleId === vehicleId ? industrial.colors.highlight :
+                                                                 industrial.colors.onSurface
                 tipText: qsTr("Track vehicle")
                 flat: true
                 enabled: map.visible
@@ -140,7 +140,7 @@ Controls.Pane {
                 iconSource: "qrc:/icons/joystick.svg"
                 tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
                          " " + qsTr("manual control")
-                iconColor: manual.enabled ? customPalette.highlightColor : customPalette.textColor
+                iconColor: manual.enabled ? industrial.colors.highlight : industrial.colors.onSurface
                 flat: true
                 onClicked: manual.setEnabled(!manual.enabled)
             }
@@ -151,8 +151,8 @@ Controls.Pane {
 
             DashboardControls.WaypointBox {
                 id: waypointBox
-                Layout.preferredWidth: controlSize.baseSize * 4
-                Layout.maximumHeight: controlSize.baseSize
+                Layout.preferredWidth: industrial.baseSize * 4
+                Layout.maximumHeight: industrial.baseSize
             }
 
             Controls.Button {

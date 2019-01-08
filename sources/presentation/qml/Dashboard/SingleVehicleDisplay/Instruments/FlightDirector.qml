@@ -69,7 +69,7 @@ BaseInstrument {
         width: altitudeLadder.minorTickSize
         height: fd.sideHeight
         value: vehicle.barometric.climb
-        fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor : customPalette.groundColor
+        fillColor: vehicle.barometric.climb > 0 ? industrial.colors.skyColor : industrial.colors.groundColor
         minValue: -10
         maxValue: 10
     }
@@ -125,7 +125,7 @@ BaseInstrument {
         maxValue: value + maxAltitude
         warningValue: altitudeRelative ?
                           0 : units.convertDistanceTo(altitudeUnits, vehicle.homeAltitude)
-        warningColor: customPalette.groundColor
+        warningColor: industrial.colors.groundColor
         valueStep: dashboard.altitudeStep
         enabled: vehicle.barometric.enabled
         operational: vehicle.barometric.operational

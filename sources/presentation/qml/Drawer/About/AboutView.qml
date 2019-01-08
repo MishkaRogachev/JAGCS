@@ -27,8 +27,8 @@ Flickable {
         id: contents
         width: parent.width
         columns: 2
-        rowSpacing: controlSize.spacing
-        columnSpacing: controlSize.spacing
+        rowSpacing: industrial.spacing
+        columnSpacing: industrial.spacing
 
         Controls.Label {
             text: "Just another ground control station " + version
@@ -80,7 +80,7 @@ Flickable {
             text: qsTr("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
             Layout.columnSpan: 2
             wrapMode: Text.WordWrap
-            Layout.maximumWidth: about.width - controlSize.margins * 2
+            Layout.maximumWidth: about.width - industrial.margins * 2
         }
 
         Item {

@@ -30,19 +30,19 @@ Controls.Frame {
 
     onMessagesChanged: restart()
 
-    padding: controlSize.padding
+    padding: industrial.padding
     height: visible ? row.height + padding * 2 : 0
     backgroundColor: {
         switch (urgency) {
         case Notification.Positive:
-            return customPalette.positiveColor;
+            return industrial.colors.positive;
         case Notification.Warning:
-            return customPalette.cautionColor;
+            return industrial.colors.caution;
         case Notification.Critical:
-            return customPalette.dangerColor;
+            return industrial.colors.danger;
         case Notification.Common:
         default:
-            return customPalette.balloonColor;
+            return industrial.colors.onSurface;
         }
     }
 
@@ -74,13 +74,13 @@ Controls.Frame {
         RowLayout {
             Controls.Label {
                 text: header
-                color: customPalette.balloonTextColor
+                color: industrial.colors.surface
                 Layout.fillWidth: true
             }
 
             Controls.Button {
                 iconSource: "qrc:/icons/remove.svg"
-                iconColor: customPalette.balloonTextColor
+                iconColor: industrial.colors.surface
                 flat: true
                 onClicked: drop()
             }
@@ -91,8 +91,8 @@ Controls.Frame {
 
             Controls.Label {
                 text: modelData
-                color: customPalette.balloonTextColor
-                font.pixelSize: controlSize.secondaryFontSize
+                color: industrial.colors.surface
+                font.pixelSize: industrial.auxFontSize
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
             }

@@ -15,22 +15,22 @@ BaseInstrument {
     RowLayout {
         anchors.centerIn: parent
         width: parent.width
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.ColoredIcon {
             id: snsIcon
             color: {
                 switch (vehicle.satellite.fix) {
                 case -1:
-                case 0: return customPalette.sunkenColor;
-                case 1: return customPalette.dangerColor;
-                case 2: return customPalette.cautionColor;
+                case 0: return industrial.colors.background;
+                case 1: return industrial.colors.danger;
+                case 2: return industrial.colors.caution;
                 case 3:
-                default: return customPalette.positiveColor;
+                default: return industrial.colors.positive;
                 }
             }
             source: "qrc:/icons/gps.svg"
-            height: controlSize.baseSize
+            height: industrial.baseSize
             width: height
             Layout.alignment: Qt.AlignRight
 
@@ -47,14 +47,14 @@ BaseInstrument {
         ColumnLayout {
             id: column
             Layout.fillWidth: true
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            JS.Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            JS.Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
-                font.pixelSize: controlSize.fontSize * 0.6
+                font.pixelSize: industrial.fontSize * 0.6
             }
 
             DashboardControls.Label {
@@ -62,7 +62,7 @@ BaseInstrument {
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            JS.Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
                            JS.Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
-                font.pixelSize: controlSize.fontSize * 0.6
+                font.pixelSize: industrial.fontSize * 0.6
             }
         }
 
@@ -80,23 +80,23 @@ BaseInstrument {
             Layout.rightMargin: itemMenuButton.width
 
             DashboardControls.Label {
-                color: vehicle.battery.voltage > 0.01 ? customPalette.textColor :
-                                                        customPalette.sunkenColor
+                color: vehicle.battery.voltage > 0.01 ? industrial.colors.onSurface :
+                                                        industrial.colors.background
                 text: vehicle.battery.voltage.toFixed(2) + " " + qsTr("V")
-                font.pixelSize: controlSize.fontSize * 0.6
+                font.pixelSize: industrial.fontSize * 0.6
             }
 
             DashboardControls.Label {
                 color: {
-                    if (vehicle.battery.current < -0.01) return customPalette.positiveColor;
-                    if (vehicle.battery.current > 0.0) return customPalette.textColor;
-                    if (vehicle.battery.current > 5.0) return customPalette.cautionColor;
-                    if (vehicle.battery.current > 10.0) return customPalette.dangerColor;
+                    if (vehicle.battery.current < -0.01) return industrial.colors.positive;
+                    if (vehicle.battery.current > 0.0) return industrial.colors.onSurface;
+                    if (vehicle.battery.current > 5.0) return industrial.colors.caution;
+                    if (vehicle.battery.current > 10.0) return industrial.colors.danger;
 
-                    return customPalette.sunkenColor;
+                    return industrial.colors.background;
                 }
                 text: vehicle.battery.current.toFixed(2) + " " + qsTr("A")
-                font.pixelSize: controlSize.fontSize * 0.6
+                font.pixelSize: industrial.fontSize * 0.6
             }
         }
     }

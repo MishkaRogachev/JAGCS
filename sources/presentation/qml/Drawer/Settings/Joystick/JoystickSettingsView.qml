@@ -29,7 +29,7 @@ ColumnLayout {
     Component.onDestruction: if (changed) presenter.updateView()
 
     enabled: with_gamepad
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     JoystickSettingsPresenter {
         id: presenter
@@ -38,7 +38,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.CheckBox {
             id: joystickEnabledBox
@@ -81,7 +81,7 @@ ColumnLayout {
         ColumnLayout {
             id: contents
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width - controlSize.shadowSize * 2
+            width: parent.width - industrial.shadowSize * 2
 
             JoystickAxisView {
                 id: pitch

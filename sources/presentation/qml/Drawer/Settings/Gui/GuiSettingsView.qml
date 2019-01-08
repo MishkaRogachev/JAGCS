@@ -34,7 +34,7 @@ ColumnLayout {
     onChangedChanged: info.message = ""
     Component.onDestruction: if (changed) presenter.updateView()
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     GuiSettingsPresenter {
         id: presenter
@@ -48,7 +48,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.CheckBox {
             id: fullscreenBox
@@ -81,7 +81,7 @@ ColumnLayout {
         ColumnLayout {
             id: contents
             width: parent.width
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             Controls.ComboBox {
                 id: languageBox

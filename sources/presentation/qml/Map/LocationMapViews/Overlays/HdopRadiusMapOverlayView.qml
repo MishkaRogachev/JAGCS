@@ -6,9 +6,9 @@ MapItemView {
     delegate: MapCircle {
         center: position
         radius: hdopRadius
-        color: customPalette.backgroundColor
+        color: industrial.colors.background
         border.width: 4
-        border.color: customPalette.textColor
+        border.color: industrial.colors.onSurface
         opacity: 0.3
         z: 250
 

@@ -10,7 +10,7 @@ Item {
 
     property int topbarOffset: 0
     property bool dashboardVisible: true
-    property int dashboardWidth: controlSize.baseSize * 8
+    property int dashboardWidth: industrial.baseSize * 8
 
     property bool rollInverted: settings.boolValue("Gui/fdRollInverted")
     property int speedStep: settings.value("Gui/fdSpeedStep")

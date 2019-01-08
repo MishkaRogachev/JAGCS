@@ -41,7 +41,7 @@ RowLayout {
     onMissionIdChanged: presenter.setMission(missionId)
     onAssignedVehicleIdChanged: updateSelectedVehicle()
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     Connections {
         target: planning
@@ -64,6 +64,6 @@ RowLayout {
 
 //    Controls.ComboBox { // NOTE: for mission slot
 //        enabled: false
-//        Layout.maximumWidth: controlSize.baseSize * 2
+//        Layout.maximumWidth: industrial.baseSize * 2
 //    }
 }

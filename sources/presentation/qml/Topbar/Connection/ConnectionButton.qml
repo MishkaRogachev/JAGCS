@@ -39,11 +39,11 @@ TopbarButton {
         width: parent.height * 0.8
         height: parent.height * 0.8
         source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        color: connected ? customPalette.textColor : customPalette.dangerColor
+        color: connected ? industrial.colors.onSurface : industrial.colors.danger
     }
 
     ConnectionInfo {
         id: info
-        y: parent.height + controlSize.margins
+        y: parent.height + industrial.margins
     }
 }

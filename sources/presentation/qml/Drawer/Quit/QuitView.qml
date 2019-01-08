@@ -5,7 +5,7 @@ import Industrial.Controls 1.0 as Controls
 
 ColumnLayout {
     id: root
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     Controls.Label {
         text: qsTr("Realy quit?")
@@ -15,7 +15,7 @@ ColumnLayout {
     Controls.Button {
         text: qsTr("Yes")
         iconSource: "qrc:/icons/quit.svg"
-        iconColor: customPalette.dangerColor
+        iconColor: industrial.colors.danger
         flat: true
         onClicked: Qt.quit()
         Layout.fillWidth: true

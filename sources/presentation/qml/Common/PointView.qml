@@ -13,20 +13,20 @@ Rectangle {
     property int status: MissionItem.NotActual
     property int command: MissionItem.UnknownCommand
 
-    implicitWidth: controlSize.baseSize
-    implicitHeight: controlSize.baseSize
+    implicitWidth: industrial.baseSize
+    implicitHeight: industrial.baseSize
     radius: height / 2
-    border.width: controlSize.baseSize / 10
-    color: selected ? customPalette.selectionColor : customPalette.raisedColor
+    border.width: industrial.baseSize / 10
+    color: selected ? industrial.colors.selectionColor : industrial.colors.raisedColor
     border.color: {
-        if (current) return customPalette.activeMissionColor;
-        if (reached) return customPalette.positiveColor;
+        if (current) return industrial.colors.activeMissionColor;
+        if (reached) return industrial.colors.positive;
 
         switch (status) {
-        case MissionItem.Actual: return customPalette.missionColor;
-        case MissionItem.StatusNone: return customPalette.textColor;
+        case MissionItem.Actual: return industrial.colors.highlight;
+        case MissionItem.StatusNone: return industrial.colors.onSurface;
         case MissionItem.NotActual:
-        default: return customPalette.dangerColor;
+        default: return industrial.colors.danger;
         }
     }
 
@@ -47,7 +47,7 @@ Rectangle {
                 return "";
             }
         }
-        color: customPalette.textColor
+        color: industrial.colors.onSurface
         visible: source != ""
         width: parent.width * 0.6
         height: parent.height * 0.6
@@ -56,7 +56,7 @@ Rectangle {
     Controls.Label {
         visible: !icon.visible
         text: sequence + 1
-        color: customPalette.textColor
+        color: industrial.colors.onSurface
         anchors.centerIn: parent
         font.bold: true
     }

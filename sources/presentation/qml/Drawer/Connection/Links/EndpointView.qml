@@ -24,7 +24,7 @@ RowLayout {
 
     onEndpointChanged: updateEdits()
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     Controls.NumericInput {
         id: address
@@ -47,7 +47,7 @@ RowLayout {
         flat: true
         tipText: qsTr("Remove")
         iconSource: "qrc:/icons/remove.svg"
-        iconColor: customPalette.dangerColor
+        iconColor: industrial.colors.danger
         onActivated: remove()
     }
 }

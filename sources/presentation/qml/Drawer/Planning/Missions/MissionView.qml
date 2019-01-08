@@ -57,11 +57,11 @@ Controls.Card {
         menu.addEntry(qsTr("Export mission"), "qrc:/icons/save.svg").enabled = false;
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.iconColor = industrial.colors.danger;
         removeItem.triggered.connect(presenter.remove);
     }
-    implicitWidth: col.implicitWidth + controlSize.margins * 2
-    implicitHeight: col.implicitHeight + controlSize.margins * 2
+    implicitWidth: col.implicitWidth + industrial.margins * 2
+    implicitHeight: col.implicitHeight + industrial.margins * 2
 
     MissionPresenter {
         id: presenter
@@ -71,9 +71,9 @@ Controls.Card {
     ColumnLayout {
         id: col
         anchors.fill: parent
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
         anchors.rightMargin: missionView.margin
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.TextField {
             id: nameEdit

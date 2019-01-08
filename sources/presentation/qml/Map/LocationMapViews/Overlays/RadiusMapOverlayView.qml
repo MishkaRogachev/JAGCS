@@ -8,7 +8,7 @@ MapItemView {
         radius: itemRadius
         color: "transparent"
         border.width: 4
-        border.color: customPalette.missionColor
+        border.color: industrial.colors.highlight
         visible: itemCoordinate.isValid && itemRadius > 0 && itemVisible
         z: 75
     }

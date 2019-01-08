@@ -34,7 +34,7 @@ Controls.ApplicationWindow  {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        Controls.RoundButton {
+        Controls.FloatButton {
             id: burger
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
@@ -58,10 +58,10 @@ Controls.ApplicationWindow  {
         id: corner
         anchors.bottom: plotVisible ? plot.top : parent.bottom
         anchors.left: tools.right
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
         width: Math.max(0, Math.min(substrate.height / 2, substrate.width -
                                     (dashboard.dashboardVisible ? dashboard.width : 0) -
-                                    tools.width - controlSize.margins * 3))
+                                    tools.width - industrial.margins * 3))
         height: cornerMap ? width : video.implicitHeight
         z: cornerVisible ? 2 : -1
         enabled: cornerVisible
@@ -95,10 +95,10 @@ Controls.ApplicationWindow  {
 
     ToolsPanel {
         id: tools
-        x: drawer.position * drawer.width + controlSize.margins
+        x: drawer.position * drawer.width + industrial.margins
         anchors.top: topbar.bottom
         anchors.bottom: parent.bottom
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
         z: 3
     }
 
@@ -111,7 +111,7 @@ Controls.ApplicationWindow  {
                            substrate.right : dashboard.left
         anchors.left: tools.right
         anchors.bottom: parent.bottom
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
     }
 
     DrawerView {
@@ -124,7 +124,7 @@ Controls.ApplicationWindow  {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: controlSize.baseSize * 0.5
+        width: industrial.baseSize * 0.5
         drag.target: highlight
         drag.axis: Drag.XAxis
         drag.minimumX: -highlight.width / 2
@@ -134,9 +134,9 @@ Controls.ApplicationWindow  {
         Rectangle {
             id: highlight
             x: -width / 2
-            width: controlSize.baseSize
+            width: industrial.baseSize
             height: parent.height
-            color: customPalette.highlightColor
+            color: industrial.colors.highlight
             opacity: parent.pressed ? 0.33 : 0.0
             onXChanged: if (x == 0) drawer.open()
 

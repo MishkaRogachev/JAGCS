@@ -5,18 +5,18 @@ import JAGCS 1.0
 
 MapItemView {
     delegate: MapPolyline {
-        line.width: controlSize.baseSize / 8
+        line.width: industrial.baseSize / 8
         line.color: {
             switch (missionStatus) {
             case MissionAssignment.Actual:
-                return customPalette.missionColor;
+                return industrial.colors.highlight;
             case MissionAssignment.Downloading:
             case MissionAssignment.Uploading:
-                return customPalette.cautionColor;
+                return industrial.colors.caution;
             case MissionAssignment.NotActual:
-                return customPalette.dangerColor;
+                return industrial.colors.danger;
             default:
-                return customPalette.backgroundColor;
+                return industrial.colors.background;
             }
         }
         path: missionPath

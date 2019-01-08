@@ -11,9 +11,9 @@ ListView {
 
     signal remove(string header)
 
-    width: controlSize.baseSize * 10
-    implicitHeight: contentHeight + controlSize.shadowSize
-    spacing: controlSize.spacing
+    width: industrial.baseSize * 10
+    implicitHeight: contentHeight + industrial.shadowSize
+    spacing: industrial.spacing
     flickableDirection: Flickable.AutoFlickIfNeeded
     boundsBehavior: Flickable.StopAtBounds
     clip: true
@@ -26,7 +26,7 @@ ListView {
         property bool last: index == list.count - 1
         onLastChanged: if (last) notificationView.urgency = urgency
         onUrgencyChanged: if (last) notificationView.urgency = urgency
-        width: parent.width - controlSize.shadowSize
+        width: parent.width - industrial.shadowSize
         header: model.header
         messages: model.messages
         urgency: model.urgency

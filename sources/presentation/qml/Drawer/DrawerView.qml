@@ -52,10 +52,10 @@ Controls.Drawer {
         ColumnLayout {
             id: drawerHeader
             width: parent.width
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             RowLayout {
-                spacing: controlSize.spacing
+                spacing: industrial.spacing
 
                 RowLayout {
                     spacing: 0
@@ -118,15 +118,15 @@ Controls.Drawer {
                 onVisibleChanged: visible ? forceActiveFocus() : clear()
                 onTextChanged: filter(text)
                 Layout.fillWidth: true
-                Layout.margins: controlSize.padding
+                Layout.margins: industrial.padding
             }
         }
 
         Loader {
             id: loader
             anchors.fill: parent
-            anchors.margins: controlSize.padding
-            anchors.topMargin: drawerHeader.height + controlSize.spacing
+            anchors.margins: industrial.padding
+            anchors.topMargin: drawerHeader.height + industrial.spacing
             clip: true
             source: {
                 switch (mode) {
@@ -153,8 +153,8 @@ Controls.Drawer {
                 if (!item) return;
 
                 drawerContents.width = Qt.binding(function() {
-                    return item ? Math.max(controlSize.baseSize * 8,
-                                           item.implicitWidth + controlSize.margins * 2) : 0;
+                    return item ? Math.max(industrial.baseSize * 8,
+                                           item.implicitWidth + industrial.margins * 2) : 0;
                 });
             }
         }

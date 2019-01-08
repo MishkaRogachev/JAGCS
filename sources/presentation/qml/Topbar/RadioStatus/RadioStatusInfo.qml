@@ -10,17 +10,17 @@ Controls.Popup {
     closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
     ColumnLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.Label {
             text: qsTr("RSSI:") + " " + rssi.toFixed(1) + " " + qsTr("dBm")
-            font.pixelSize: controlSize.fontSize * 0.75
+            font.pixelSize: industrial.fontSize * 0.75
             font.bold: true
         }
 
         Controls.Label {
             text: qsTr("Rem. RSSI:") + " " + remoteRssi.toFixed(1) + " " + qsTr("dBm")
-            font.pixelSize: controlSize.fontSize * 0.75
+            font.pixelSize: industrial.fontSize * 0.75
             font.bold: true
         }
     }

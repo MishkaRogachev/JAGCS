@@ -24,7 +24,7 @@ TopbarButton {
         width: clocks.width
         visible: width > 0
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: controlSize.secondaryFontSize
+        font.pixelSize: industrial.auxFontSize
         font.bold: true
         text: Qt.formatDateTime(currentDateTime, "ddd d MMMM yyyy - hh:mm:ss")
     }

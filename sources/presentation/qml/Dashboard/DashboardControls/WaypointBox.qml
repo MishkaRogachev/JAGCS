@@ -12,13 +12,13 @@ Controls.ComboBox {
     enabled: waypointCount > 0 && vehicle.online
     currentIndex: -1
     labelText: qsTr("Waypoint")
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     font.bold: true
-    contentColor: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
+    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.selectedTextColor
     backgroundColor: {
-        if (status == Command.Rejected) return customPalette.dangerColor;
-        if (status == Command.Sending) return customPalette.cautionColor;
-        if (status == Command.Completed) return customPalette.positiveColor;
+        if (status == Command.Rejected) return industrial.colors.danger;
+        if (status == Command.Sending) return industrial.colors.caution;
+        if (status == Command.Completed) return industrial.colors.positive;
         return "transparent";
     }
 

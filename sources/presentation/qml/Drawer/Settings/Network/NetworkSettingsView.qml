@@ -18,7 +18,7 @@ ColumnLayout {
     property alias password: passwordItem.text
 
     anchors.fill: parent
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     NetworkSettingsPresenter {
         id: presenter
@@ -27,7 +27,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.ComboBox {
             id: typeItem

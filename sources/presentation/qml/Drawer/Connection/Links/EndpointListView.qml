@@ -15,10 +15,10 @@ Controls.Frame {
         if (update) changed();
     }
 
-    padding: controlSize.padding
+    padding: industrial.padding
     implicitWidth: column.implicitWidth + padding * 2
     implicitHeight: column.height + padding * 2
-    backgroundColor: customPalette.sunkenColor
+    backgroundColor: industrial.colors.background
 
     Flickable {
         id: flickable
@@ -35,10 +35,10 @@ Controls.Frame {
         ColumnLayout {
             id: column
             width: parent.width
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             RowLayout {
-                spacing: controlSize.spacing
+                spacing: industrial.spacing
 
                 Controls.Label {
                     text: qsTr("Address")
@@ -53,7 +53,7 @@ Controls.Frame {
                 }
 
                 Item {
-                    Layout.minimumWidth: controlSize.baseSize
+                    Layout.minimumWidth: industrial.baseSize
                 }
             }
 
@@ -62,7 +62,7 @@ Controls.Frame {
                 model: root.endpoints
 
                 RowLayout {
-                    spacing: controlSize.spacing
+                    spacing: industrial.spacing
 
                     Controls.Label {
                         text: qsTr("Address")

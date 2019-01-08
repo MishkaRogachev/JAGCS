@@ -38,17 +38,17 @@ Controls.Button {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return customPalette.dangerColor;
-        if (status == Command.Sending) return customPalette.cautionColor;
-        if (status == Command.Completed) return customPalette.positiveColor;
-        if (control.pressed) return customPalette.highlightColor;
-        return control.flat ? "transparent" : customPalette.buttonColor;
+        if (status == Command.Rejected) return industrial.colors.danger;
+        if (status == Command.Sending) return industrial.colors.caution;
+        if (status == Command.Completed) return industrial.colors.positive;
+        if (control.pressed) return industrial.colors.highlight;
+        return control.flat ? "transparent" : industrial.colors.buttonColor;
     }
 
     iconColor: control.pressed || status == Command.Rejected ||
                status == Command.Sending || status == Command.Completed ?
-                   customPalette.selectedTextColor: customPalette.textColor
+                   industrial.colors.selectedTextColor: industrial.colors.onSurface
     textColor: iconColor
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     font.bold: true
 }

@@ -13,28 +13,28 @@ Controls.Popup {
     GridLayout {
         anchors.fill: parent
         columns: 2
-        rowSpacing: controlSize.spacing
+        rowSpacing: industrial.spacing
 
         Indicators.Led {
-            color: recv ? customPalette.positiveColor : customPalette.sunkenColor
+            color: recv ? industrial.colors.positive : industrial.colors.background
         }
 
         Controls.Label {
             text: qsTr("Recv") + ": " + bytesRecv.toFixed(1) + " " + qsTr("B/s")
-            color: customPalette.positiveColor
-            font.pixelSize: controlSize.secondaryFontSize
+            color: industrial.colors.positive
+            font.pixelSize: industrial.auxFontSize
             font.bold: true
             Layout.fillWidth: true
         }
 
         Indicators.Led {
-            color: sent ? customPalette.skyColor : customPalette.sunkenColor
+            color: sent ? industrial.colors.skyColor : industrial.colors.background
         }
 
         Controls.Label {
             text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
-            color: customPalette.skyColor
-            font.pixelSize: controlSize.secondaryFontSize
+            color: industrial.colors.skyColor
+            font.pixelSize: industrial.auxFontSize
             font.bold: true
             Layout.fillWidth: true
         }
@@ -42,7 +42,7 @@ Controls.Popup {
         Controls.Button {
             text: qsTr("Open connection menu")
             flat: true
-            font.pixelSize: controlSize.secondaryFontSize
+            font.pixelSize: industrial.auxFontSize
             font.bold: true
             onClicked: {
                 drawer.setMode(DrawerPresenter.Connection);

@@ -55,21 +55,21 @@ Controls.Card {
         Component.onCompleted: presenter.setVehicle(vehicleId)
     }
 
-    implicitWidth: grid.implicitWidth + controlSize.margins * 2
-    implicitHeight: grid.implicitHeight + controlSize.margins * 2
+    implicitWidth: grid.implicitWidth + industrial.margins * 2
+    implicitHeight: grid.implicitHeight + industrial.margins * 2
 
     GridLayout {
         id: grid
         anchors.fill: parent
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
         anchors.rightMargin: parent.margin
-        columnSpacing: controlSize.spacing
-        rowSpacing: controlSize.spacing
+        columnSpacing: industrial.spacing
+        rowSpacing: industrial.spacing
         columns: 2
 
         Indicators.YawIndicator {
             id: compass
-            implicitWidth: controlSize.baseSize * 2.25
+            implicitWidth: industrial.baseSize * 2.25
             implicitHeight: width
             yaw: vehicle.ahrs.yaw
             Layout.rowSpan: 2
@@ -100,15 +100,15 @@ Controls.Card {
                 width: ah.width * 0.1
                 height: ah.height * 0.6
                 value: vehicle.barometric.climb
-                fillColor: vehicle.barometric.climb > 0 ? customPalette.skyColor :
-                                                          customPalette.groundColor
+                fillColor: vehicle.barometric.climb > 0 ? industrial.colors.skyColor :
+                                                          industrial.colors.groundColor
                 minValue: -10
                 maxValue: 10 // TODO: to consts
             }
         }
 
         RowLayout {
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             DashboardControls.Label {
                 text: vehicle.vehicleName
@@ -117,13 +117,13 @@ Controls.Card {
 
             DashboardControls.ModeBox {
                 id: modeBox
-                Layout.preferredWidth: controlSize.baseSize * 3
-                Layout.maximumHeight: controlSize.baseSize
+                Layout.preferredWidth: industrial.baseSize * 3
+                Layout.maximumHeight: industrial.baseSize
             }
         }
 
         RowLayout {
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             Indicators.ValueLabel {
                 digits: 0

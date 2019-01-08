@@ -1,8 +1,10 @@
 #ifndef GUI_STYLE_MANAGER_H
 #define GUI_STYLE_MANAGER_H
 
-// Internal
-#include "control_size.h"
+// Qt
+#include <QObject>
+
+class ThemeConfigurator;
 
 namespace presentation
 {
@@ -18,17 +20,19 @@ namespace presentation
         };
 
         explicit GuiStyleManager(QObject* parent = nullptr);
+        ~GuiStyleManager();
 
     public slots:
         void setPaletteStyle(PaletteStyle paletteStyle);
         void loadSettingsPalette();
 
-        void setSizings(const ControlSize& controlSize);
         void setSizings(int baseSize);
         void loadSettingsSizings();
 
     private:
         Q_ENUM(PaletteStyle)
+
+        ThemeConfigurator* m_configurator;
     };
 }
 

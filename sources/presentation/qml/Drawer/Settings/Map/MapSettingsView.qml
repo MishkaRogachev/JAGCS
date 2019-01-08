@@ -20,7 +20,7 @@ ColumnLayout {
     property alias highdpiTiles: highdpiTilesBox.checked
     property alias trackLength: trackLengthSlider.value
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     onPluginChanged: {
         if (main.mapType !== plugin) main.reloadMap(plugin);
@@ -56,7 +56,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.ComboBox {
             id: pluginBox

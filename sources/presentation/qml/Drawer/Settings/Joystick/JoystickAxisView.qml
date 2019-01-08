@@ -15,7 +15,7 @@ Controls.Frame {
     ColumnLayout {
         id: grid
         anchors.fill: parent
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.Label {
             text: source

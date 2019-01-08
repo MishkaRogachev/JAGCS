@@ -13,7 +13,7 @@ ColumnLayout {
 
     signal setPoint(real latitude, real longitude, real altitude)
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     Controls.Label {
         id: titleLabel

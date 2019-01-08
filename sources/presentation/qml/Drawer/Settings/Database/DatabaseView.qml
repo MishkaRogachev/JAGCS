@@ -15,7 +15,7 @@ ColumnLayout {
 
     property alias path: pathField.text
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     DatabasePresenter {
         id: presenter
@@ -30,12 +30,12 @@ ColumnLayout {
     Info {
         message: changed ? qsTr("Application will be restarted") : ""
         Layout.fillWidth: true
-        Layout.leftMargin: controlSize.padding
-        Layout.rightMargin: controlSize.padding
+        Layout.leftMargin: industrial.padding
+        Layout.rightMargin: industrial.padding
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.TextField {
             id: pathField
@@ -58,7 +58,7 @@ ColumnLayout {
 
     Controls.Frame {
         Layout.fillWidth: true
-        Layout.margins: controlSize.padding
+        Layout.margins: industrial.padding
         Layout.fillHeight: true
 
         Flickable {
@@ -72,7 +72,7 @@ ColumnLayout {
             ColumnLayout {
                 id:column
                 width: parent.width
-                spacing: controlSize.spacing
+                spacing: industrial.spacing
 
                 Controls.Label {
                     text: qsTr("No records")
@@ -101,15 +101,15 @@ ColumnLayout {
         onClicked: presenter.clearLog()
         enabled: log.length > 0
         Layout.fillWidth: true
-        Layout.leftMargin: controlSize.padding
-        Layout.rightMargin: controlSize.padding
+        Layout.leftMargin: industrial.padding
+        Layout.rightMargin: industrial.padding
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         Layout.fillWidth: true
-        Layout.leftMargin: controlSize.padding
-        Layout.rightMargin: controlSize.padding
+        Layout.leftMargin: industrial.padding
+        Layout.rightMargin: industrial.padding
 
         Controls.Button {
             text: qsTr("Migrate")

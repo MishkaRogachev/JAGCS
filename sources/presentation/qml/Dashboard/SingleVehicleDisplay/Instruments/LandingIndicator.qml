@@ -62,7 +62,7 @@ BaseInstrument {
 
     Indicators.LandingIndicator {
         anchors.centerIn: parent
-        height: parent.height - controlSize.padding
+        height: parent.height - industrial.padding
         width: height
         deviationX: vehicle.landingSystem.deviationX
         deviationY: vehicle.landingSystem.deviationY

@@ -24,13 +24,13 @@ Controls.Card {
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
         removeItem.enabled = Qt.binding(function() { return vehicleId > 0 && !online; })
-        removeItem.iconColor = customPalette.dangerColor;
+        removeItem.iconColor = industrial.colors.danger;
         removeItem.triggered.connect(presenter.remove);
     }
 
     deepEnabled: false
-    implicitWidth: column.implicitWidth + controlSize.margins * 2
-    implicitHeight: column.implicitHeight + controlSize.margins * 2
+    implicitWidth: column.implicitWidth + industrial.margins * 2
+    implicitHeight: column.implicitHeight + industrial.margins * 2
 
     VehiclePresenter {
         id: presenter
@@ -42,22 +42,22 @@ Controls.Card {
         anchors.left: column.left
         anchors.top: column.top
         anchors.topMargin: height / 2
-        color: online ? customPalette.positiveColor : customPalette.sunkenColor
+        color: online ? industrial.colors.positive : industrial.colors.background
     }
 
     ColumnLayout {
         id: column
         anchors.fill: parent
-        anchors.margins: controlSize.margins
+        anchors.margins: industrial.margins
         anchors.rightMargin: vehicleView.margin
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
 
         Controls.TextField {
             id: nameField
             labelText: qsTr("Vehicle name")
             onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
-            Layout.leftMargin: led.width + controlSize.margins
+            Layout.leftMargin: led.width + industrial.margins
         }
 
         Controls.SpinBox {

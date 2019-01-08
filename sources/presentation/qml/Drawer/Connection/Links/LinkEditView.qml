@@ -47,7 +47,7 @@ ColumnLayout {
     onLinkIdChanged: presenter.setLink(linkId);
     Component.onDestruction: drawer.submode = ""
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     LinkEditPresenter {
         id: presenter
@@ -147,7 +147,7 @@ ColumnLayout {
     }
 
     RowLayout {
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         visible: type == LinkDescription.Bluetooth
 
         Controls.Button {
@@ -186,7 +186,7 @@ ColumnLayout {
         id: endpointList
         visible: type == LinkDescription.Udp
         onChanged: linkEditView.changed = true;
-        Layout.maximumHeight: controlSize.baseSize * 6
+        Layout.maximumHeight: industrial.baseSize * 6
         Layout.fillWidth: true
     }
 
@@ -218,17 +218,17 @@ ColumnLayout {
             }
 
             AreaSeries {
-                color: customPalette.positiveColor
-                borderColor: customPalette.positiveColor
+                color: industrial.colors.positive
+                borderColor: industrial.colors.positive
                 borderWidth: 3
                 opacity: 0.33
                 axisX: timeAxis
                 axisY: ValueAxis {
                     titleText: qsTr("Recv.")
-                    titleFont.pixelSize: controlSize.fontSize * 0.5
+                    titleFont.pixelSize: industrial.fontSize * 0.5
                     labelsFont.pixelSize: 1
                     labelsVisible: false
-                    color: customPalette.positiveColor
+                    color: industrial.colors.positive
                     max: statistics.maxRecv
                 }
                 upperSeries: LineSeries {
@@ -241,17 +241,17 @@ ColumnLayout {
             }
 
             AreaSeries {
-                color: customPalette.skyColor
-                borderColor: customPalette.skyColor
+                color: industrial.colors.skyColor
+                borderColor: industrial.colors.skyColor
                 borderWidth: 3
                 opacity: 0.33
                 axisX: timeAxis
                 axisYRight: ValueAxis {
                     titleText: qsTr("Sent")
-                    titleFont.pixelSize: controlSize.fontSize * 0.5
+                    titleFont.pixelSize: industrial.fontSize * 0.5
                     labelsVisible: false
                     labelsFont.pixelSize: 1
-                    color: customPalette.skyColor
+                    color: industrial.colors.skyColor
                     max: statistics.maxSent
                 }
                 upperSeries: LineSeries {

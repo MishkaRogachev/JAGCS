@@ -10,7 +10,7 @@ Controls.RealSpinBox {
     property int status: Command.Idle
     property var args: [ realValue ]
 
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     font.bold: true
 
     onValueModified: {
@@ -35,16 +35,16 @@ Controls.RealSpinBox {
     }
 
     color: {
-        if (status == Command.Rejected) return customPalette.selectedTextColor;
-        if (status == Command.Sending) return customPalette.selectedTextColor;
-        if (status == Command.Completed) return customPalette.selectedTextColor;
-        return customPalette.textColor;
+        if (status == Command.Rejected) return industrial.colors.selectedTextColor;
+        if (status == Command.Sending) return industrial.colors.selectedTextColor;
+        if (status == Command.Completed) return industrial.colors.selectedTextColor;
+        return industrial.colors.onSurface;
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return customPalette.dangerColor;
-        if (status == Command.Sending) return customPalette.cautionColor;
-        if (status == Command.Completed) return customPalette.positiveColor;
-        return customPalette.sunkenColor;
+        if (status == Command.Rejected) return industrial.colors.danger;
+        if (status == Command.Sending) return industrial.colors.caution;
+        if (status == Command.Completed) return industrial.colors.positive;
+        return industrial.colors.background;
     }
 }

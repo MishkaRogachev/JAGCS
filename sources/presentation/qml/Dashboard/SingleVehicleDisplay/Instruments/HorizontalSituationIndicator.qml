@@ -39,7 +39,7 @@ BaseInstrument {
     Indicators.Compass {
         id: compass
         anchors.centerIn: parent
-        height: parent.height - controlSize.padding
+        height: parent.height - industrial.padding
         width: height
         mark: translator.imageFromVehicleType(vehicle.vehicleType)
         heading: vehicle.compass.heading
@@ -48,7 +48,7 @@ BaseInstrument {
         course: vehicle.satellite.course
         courseEnabled: vehicle.satellite.groundspeed > 0.1
         courseColor: vehicle.satellite.enabled ? (vehicle.satellite.operational ?
-                              customPalette.positiveColor : customPalette.dangerColor) :
+                              industrial.colors.positive : industrial.colors.danger) :
                                                  "transparent"
 
         Indicators.SituationIndicator {

@@ -16,34 +16,34 @@ RowLayout {
 
     Controls.ColoredIcon {
         id: icon
-        Layout.preferredWidth: controlSize.baseSize * 0.5
+        Layout.preferredWidth: industrial.baseSize * 0.5
         Layout.preferredHeight: width
     }
 
     states: [
         State {
             name: "OK"
-            PropertyChanges { target: icon; color: customPalette.positiveColor }
+            PropertyChanges { target: icon; color: industrial.colors.positive }
             PropertyChanges { target: icon; source: "qrc:/ui/ok.svg" }
         },
         State {
             name: "CAUTION"
-            PropertyChanges { target: icon; color: customPalette.cautionColor }
+            PropertyChanges { target: icon; color: industrial.colors.caution }
             PropertyChanges { target: icon; source: "qrc:/icons/info.svg" }
         },
         State {
             name: "BAD"
-            PropertyChanges { target: icon; color: customPalette.dangerColor }
+            PropertyChanges { target: icon; color: industrial.colors.danger }
             PropertyChanges { target: icon; source: "qrc:/icons/remove.svg" }
         },
         State {
             name: "UNACTIVE"
-            PropertyChanges { target: icon; color: customPalette.sunkenColor }
+            PropertyChanges { target: icon; color: industrial.colors.background }
             PropertyChanges { target: icon; source: "qrc:/icons/cancel.svg" }
         },
         State {
             name: "INPROCESS"
-            PropertyChanges { target: icon; color: customPalette.highlightColor }
+            PropertyChanges { target: icon; color: industrial.colors.highlight }
             PropertyChanges { target: icon; source: "qrc:/icons/restore.svg" }
         }
     ]

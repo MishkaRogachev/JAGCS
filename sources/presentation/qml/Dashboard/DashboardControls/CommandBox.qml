@@ -20,7 +20,7 @@ Controls.ComboBox {
     }
 
     currentIndex: -1
-    font.pixelSize: controlSize.secondaryFontSize
+    font.pixelSize: industrial.auxFontSize
     font.bold: true
 
     onActivated: presenter.executeCommand(model[index].command, [])
@@ -38,9 +38,9 @@ Controls.ComboBox {
         anchors.fill: parent
         radius: 3
         color: {
-            if (status == Command.Rejected) return customPalette.dangerColor;
-            if (status == Command.Sending) return customPalette.cautionColor;
-            if (status == Command.Completed) return customPalette.positiveColor;
+            if (status == Command.Rejected) return industrial.colors.danger;
+            if (status == Command.Sending) return industrial.colors.caution;
+            if (status == Command.Completed) return industrial.colors.positive;
             return "transparent";
         }
     }
@@ -49,7 +49,7 @@ Controls.ComboBox {
         id: content
         font: control.font
         text: processingText
-        color: status == Command.Idle ? customPalette.textColor: customPalette.selectedTextColor
+        color: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.selectedTextColor
         verticalAlignment: Text.AlignVCenter
         visible: currentIndex != -1
         z: 10

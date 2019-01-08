@@ -11,7 +11,7 @@ RowLayout {
     Controls.Button {
         flat: true
         visible: dashboardVisible
-        font.pixelSize: controlSize.secondaryFontSize
+        font.pixelSize: industrial.auxFontSize
         font.bold: true
         text: vehicles.showOffline ? qsTr("All vehicles") : qsTr("Online vehicles")
         onClicked: vehicles.showOffline = !vehicles.showOffline

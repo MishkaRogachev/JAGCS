@@ -6,7 +6,7 @@ import Industrial.Controls 1.0 as Controls
 Flickable {
     id: menu
 
-    implicitWidth: controlSize.baseSize * 7
+    implicitWidth: industrial.baseSize * 7
     contentHeight: contents.height
     boundsBehavior: Flickable.OvershootBounds
     flickableDirection: Flickable.AutoFlickIfNeeded
@@ -15,7 +15,7 @@ Flickable {
 
     ColumnLayout {
         id: contents
-        spacing: controlSize.spacing
+        spacing: industrial.spacing
         width: parent.width
 
         Repeater {
@@ -26,8 +26,8 @@ Flickable {
                 text: presenter.modeString(modelData)
                 iconSource: presenter.modeIcon(modelData)
                 flat: true
-                contentWidth: width - controlSize.baseSize
-                implicitWidth: controlSize.baseSize * 7
+                contentWidth: width - industrial.baseSize
+                implicitWidth: industrial.baseSize * 7
                 onClicked: presenter.setMode(modelData)
                 Layout.fillWidth: true
             }

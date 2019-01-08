@@ -17,7 +17,7 @@ Row {
 
     onMissionIdChanged: presenter.setMission(missionId)
 
-    width: controlSize.baseSize * repeater.count
+    width: industrial.baseSize * repeater.count
     clip: true
 
     MissionItemListPresenter {

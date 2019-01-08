@@ -22,8 +22,8 @@ Controls.Frame {
 
     GridLayout {
         anchors.fill: parent
-        rowSpacing: controlSize.spacing
-        columnSpacing: controlSize.spacing
+        rowSpacing: industrial.spacing
+        columnSpacing: industrial.spacing
         columns: 2
 
         Controls.Label {

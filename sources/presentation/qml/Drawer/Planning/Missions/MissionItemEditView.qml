@@ -127,7 +127,7 @@ ColumnLayout {
         updateLatLon();
     }
 
-    spacing: controlSize.spacing
+    spacing: industrial.spacing
 
     MissionItemEditPresenter {
         id: presenter
@@ -159,11 +159,11 @@ ColumnLayout {
         ColumnLayout {
             id: col
             width: parent.width
-            spacing: controlSize.spacing
+            spacing: industrial.spacing
 
             GridLayout {
-                rowSpacing: controlSize.spacing
-                columnSpacing: controlSize.spacing
+                rowSpacing: industrial.spacing
+                columnSpacing: industrial.spacing
                 visible: altitudeVisible
                 columns: 2
 
@@ -181,7 +181,7 @@ ColumnLayout {
                 Controls.CheckBox {
                     id: altitudeRelativeBox
                     text: qsTr("Rel.")
-                    font.pixelSize: controlSize.secondaryFontSize
+                    font.pixelSize: industrial.auxFontSize
                     enabled: editEnabled && command !== MissionItem.Home
                     onCheckedChanged: changed = true
                     Layout.rowSpan: 2
@@ -262,7 +262,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                spacing: controlSize.spacing
+                spacing: industrial.spacing
                 visible: radiusVisible
 
                 Controls.RealSpinBox {
@@ -324,7 +324,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                spacing: controlSize.spacing
+                spacing: industrial.spacing
                 visible: speedVisible
 
                 Controls.CheckBox {
@@ -362,7 +362,7 @@ ColumnLayout {
             }
 
             RowLayout {
-                spacing: controlSize.spacing
+                spacing: industrial.spacing
                 visible: speedVisible
 
                 Controls.CheckBox {
