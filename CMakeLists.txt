@@ -157,6 +157,7 @@ file(GLOB_RECURSE QRC_FILES "*.qrc")
 qt5_add_resources(QRC_SOURCES ${QRC_FILES} ${INDUSTRIAL_RESOURCES})
 message(${QRC_SOURCES})
 
+# Includes
 include_directories(${INCLUDES})
 
 # Target
