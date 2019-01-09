@@ -117,7 +117,7 @@ Controls.Card {
             Layout.fillWidth: true
         }
 
-        Indicators.Led {
+        Controls.Led {
             color: recv ? industrial.colors.positive : industrial.colors.background
         }
 
@@ -128,7 +128,7 @@ Controls.Card {
             Layout.fillWidth: true
         }
 
-        Indicators.Led {
+        Controls.Led {
             color: sent ? industrial.colors.skyColor : industrial.colors.background
         }
 

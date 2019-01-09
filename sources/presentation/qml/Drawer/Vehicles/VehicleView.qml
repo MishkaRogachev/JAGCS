@@ -37,7 +37,7 @@ Controls.Card {
         view: vehicleView
     }
 
-    Indicators.Led {
+    Controls.Led {
         id: led
         anchors.left: column.left
         anchors.top: column.top

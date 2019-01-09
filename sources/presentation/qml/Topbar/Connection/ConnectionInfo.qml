@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
-import Industrial.Indicators 1.0 as Indicators
 
 Controls.Popup {
     id: info
@@ -15,7 +14,7 @@ Controls.Popup {
         columns: 2
         rowSpacing: industrial.spacing
 
-        Indicators.Led {
+        Controls.Led {
             color: recv ? industrial.colors.positive : industrial.colors.background
         }
 
@@ -27,7 +26,7 @@ Controls.Popup {
             Layout.fillWidth: true
         }
 
-        Indicators.Led {
+        Controls.Led {
             color: sent ? industrial.colors.skyColor : industrial.colors.background
         }
 

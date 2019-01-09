@@ -31,7 +31,7 @@ RowLayout {
         validator: RegExpValidator {
             regExp: /^(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\.){3}([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))$/
         }
-        onFinished: updateEndpoint()
+        onEditingFinished: updateEndpoint()
         Layout.fillWidth: true
     }
 
@@ -39,7 +39,7 @@ RowLayout {
         id: port
         inputMethodHints: Qt.ImhDigitsOnly
         validator: IntValidator { bottom: 0; top: 65535 }
-        onFinished: updateEndpoint()
+        onEditingFinished: updateEndpoint()
         Layout.fillWidth: true
     }
 
