@@ -4,3 +4,6 @@
 [submodule "2ndparty/industrial-controls"]
 	path = 2ndparty/industrial-controls
 	url = https://github.com/MishkaRogachev/industrial-controls
+[submodule "2ndparty/swarmlink"]
+	path = 2ndparty/swarmlink
+	url = https://github.com/nnhw/swarmlink
