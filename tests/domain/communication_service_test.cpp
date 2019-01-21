@@ -13,7 +13,7 @@
 #include "communication_service.h"
 #include "link_description.h"
 
-using namespace dao; // TODO: dao tests
+using namespace dto; // TODO: dto tests
 using namespace comm;
 using namespace domain;
 
@@ -56,19 +56,16 @@ void CommunicationServiceTest::testUdpLink()
 
 void CommunicationServiceTest::testLinkDescription()
 {
-     CommunicationService* service = ServiceRegistry::communicationService();
+     CommunicationService* service = serviceRegistry->communicationService();
 
      LinkDescriptionPtr description = LinkDescriptionPtr::create();
      description->setName("UDP link");
      description->setType(LinkDescription::Udp);
-     description->setPort(8080);
 
      QVERIFY2(service->save(description), "Can't insert link");
-     service->description(description->id(), true);
 
      QVERIFY2(description->name() == "UDP link", "Link name are different");
      QCOMPARE(description->type(), LinkDescription::Udp);
-     QCOMPARE(description->port(), 8080);
 
      QVERIFY2(service->remove(description), "Can't remove link");
 }

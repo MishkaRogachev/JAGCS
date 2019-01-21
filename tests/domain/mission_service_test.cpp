@@ -14,12 +14,12 @@
 #include "vehicle_service.h"
 #include "vehicle.h"
 
-using namespace dao;
+using namespace dto;
 using namespace domain;
 
 void MissionServiceTest::testMission()
 {
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    domain::MissionService* missionService = serviceRegistry->missionService();
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Some ridiculous name");
@@ -36,8 +36,6 @@ void MissionServiceTest::testMission()
 
     mission->setName("Reload will erase this ridiculous name");
 
-    QCOMPARE(mission, missionService->mission(id, true)); // But pointer will be the same
-
     QCOMPARE(mission->name(), QString("Another ridiculous name"));
 
     QVERIFY2(missionService->remove(mission), "Can't remove mission");
@@ -46,7 +44,7 @@ void MissionServiceTest::testMission()
 
 void MissionServiceTest::testMissionItems()
 {
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
+    domain::MissionService* missionService = serviceRegistry->missionService();
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Items Mission");
@@ -82,10 +80,10 @@ void MissionServiceTest::testMissionItems()
     QVERIFY2(missionService->remove(mission), "Can't remove mission");
 }
 
-// TODO: dao tests
+// TODO: dto tests
 void MissionServiceTest::testVehicleDescription()
 {
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
 
     VehiclePtr vehicle = VehiclePtr::create();
 
@@ -106,8 +104,8 @@ void MissionServiceTest::testVehicleDescription()
 
 void MissionServiceTest::testMissionAssignment()
 {
-    domain::MissionService* missionService = domain::ServiceRegistry::missionService();
-    domain::VehicleService* vehicleService = domain::ServiceRegistry::vehicleService();
+    domain::MissionService* missionService = serviceRegistry->missionService();
+    domain::VehicleService* vehicleService = serviceRegistry->vehicleService();
 
     MissionPtr mission = MissionPtr::create();
     mission->setName("Assigned mission");

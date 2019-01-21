@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
         if (file.exists()) file.remove();
     }
 
-    domain::ServiceRegistry::instance()->init(QString("test_db"));
+    domain::ServiceRegistry registry;
 
     CommunicationServiceTest commTest;
     QTest::qExec(&commTest);
