@@ -1,6 +1,6 @@
 #include "mavlink_communicator_factory.h"
 
-// MAVLink v1
+// SwarmLink v1
 #include "ping_handler.h"
 #include "heartbeat_handler.h"
 #include "system_status_handler.h"

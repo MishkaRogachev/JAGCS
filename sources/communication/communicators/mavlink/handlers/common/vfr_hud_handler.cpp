@@ -3,8 +3,8 @@
 // Qt
 #include <QVariant>
 
-// MAVLink
-#include <mavlink.h>
+// SwarmLink
+#include <swarmlink/mavlink.h>
 
 // Internal
 #include "service_registry.h"

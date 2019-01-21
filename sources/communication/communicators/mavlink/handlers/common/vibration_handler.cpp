@@ -1,7 +1,7 @@
 #include "vibration_handler.h"
 
-// MAVLink
-#include <mavlink.h>
+// SwarmLink
+#include <swarmlink/mavlink.h>
 
 // Qt
 #include <QVariant>

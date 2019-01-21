@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_MAVLINK_HANDLER_H
 #define ABSTRACT_MAVLINK_HANDLER_H
 
-// MAVLink
+// SwarmLink
 #include <mavlink_types.h>
 
 namespace comm

@@ -1,7 +1,7 @@
 #include "mavlink_communicator.h"
 
-// MAVLink
-#include <mavlink.h>
+// SwarmLink
+#include <swarmlink/mavlink.h>
 #include <mavlink_types.h>
 #include <mavlink_helpers.h>
 

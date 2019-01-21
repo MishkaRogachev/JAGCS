@@ -3,7 +3,7 @@
 
 #include "abstract_communicator.h"
 
-// MAVLink
+// SwarmLink
 #include <mavlink_types.h>
 
 namespace comm

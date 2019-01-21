@@ -1,7 +1,7 @@
 #include "ping_handler.h"
 
-// MAVLink
-#include <mavlink.h>
+// SwarmLink
+#include <swarmlink/mavlink.h>
 
 // Internal
 #include "mavlink_communicator.h"

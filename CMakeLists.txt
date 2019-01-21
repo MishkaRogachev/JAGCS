@@ -113,15 +113,8 @@ set(LIBS
 endif(ANDROID)
 
 # MAVLink includes
-option(WITH_MAVLINK_V2 "MAVLink version 2 includes" ON)
-if(WITH_MAVLINK_V2)
-    include_directories("3rdparty/mavlink_v2")
-    include_directories("3rdparty/mavlink_v2/ardupilotmega")
-    add_definitions(-DMAVLINK_V2)
-else(WITH_MAVLINK_V2)
-    include_directories("3rdparty/mavlink_v1")
-    include_directories("3rdparty/mavlink_v1/ardupilotmega")
-endif(WITH_MAVLINK_V2)
+include_directories("2ndparty/swarmlink")
+add_definitions(-DMAVLINK_V2)
 
 # Internal sources
 add_subdirectory(sources)

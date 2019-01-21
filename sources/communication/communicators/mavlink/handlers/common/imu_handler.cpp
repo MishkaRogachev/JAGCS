@@ -1,7 +1,7 @@
 #include "imu_handler.h"
 
-// MAVLink
-#include <mavlink.h>
+// SwarmLink
+#include <swarmlink/mavlink.h>
 
 // Qt
 #include <QVector3D>

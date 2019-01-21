@@ -1,7 +1,7 @@
 #include "mode_helper_factory.h"
 
-// Mavlink
-#include "mavlink.h"
+// SwarmLink
+#include <swarmlink/mavlink.h>
 
 // Internal
 #include "apm_copter_mode_helper.h"
