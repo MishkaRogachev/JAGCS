@@ -128,6 +128,21 @@ QVariant VehicleMapItemModel::data(const QModelIndex& index, int role) const
     case TrackRole:
         data = d->tracks[vehicleId];
         break;
+    case SwarmPoiCoordinateRole:
+        data = node->childNode(domain::Telemetry::Swarming)->childNode(domain::Telemetry::Poi)->
+               parameter(domain::Telemetry::Coordinate);
+        if (!data.isValid()) data = QVariant::fromValue(QGeoCoordinate());
+        break;
+    case SwarmPoiGroupRole:
+        data = node->childNode(domain::Telemetry::Swarming)->childNode(domain::Telemetry::Poi)->
+               parameter(domain::Telemetry::Group);
+        if (!data.isValid()) data = 0;
+        break;
+    case SwarmPoiNumberRole:
+        data = node->childNode(domain::Telemetry::Swarming)->childNode(domain::Telemetry::Poi)->
+               parameter(domain::Telemetry::Number);
+        if (!data.isValid()) data = 0;
+        break;
     }
 
     return data;
@@ -171,6 +186,11 @@ void VehicleMapItemModel::onVehicleAdded(const dto::VehiclePtr& vehicle)
             this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
         this->onSatelliteParametersChanged(vehicleId, parameters);
     });
+    connect(node->childNode(domain::Telemetry::Swarming)->childNode(domain::Telemetry::Poi),
+            &domain::Telemetry::parametersChanged,
+            this, [this, vehicleId](const domain::Telemetry::TelemetryMap& parameters) {
+        this->onSwarmPoiParametersChanged(vehicleId, parameters);
+    });
 
     this->endInsertRows();
 }
@@ -212,6 +232,9 @@ QHash<int, QByteArray> VehicleMapItemModel::roleNames() const
     roles[SnsFixRole] = "snsFix";
     roles[HdopRadiusRole] = "hdopRadius";
     roles[TrackRole] = "track";
+    roles[SwarmPoiCoordinateRole] = "swarmPoiPosition";
+    roles[SwarmPoiGroupRole] = "swarmPoiGroup";
+    roles[SwarmPoiNumberRole] = "swarmPoiNumber";
 
     return roles;
 }
@@ -289,4 +312,14 @@ void VehicleMapItemModel::onSatelliteParametersChanged(
     if (!index.isValid()) return;
 
     emit dataChanged(index, index, { CourseRole, GroundspeedRole, SnsFixRole, HdopRadiusRole });
+}
+
+void VehicleMapItemModel::onSwarmPoiParametersChanged(int vehicleId, const domain::Telemetry::TelemetryMap& parameters)
+{
+    Q_UNUSED(parameters)
+
+    QModelIndex index = this->vehicleIndex(vehicleId);
+    if (!index.isValid()) return;
+
+    emit dataChanged(index, index, { SwarmPoiCoordinateRole, SwarmPoiGroupRole, SwarmPoiNumberRole });
 }

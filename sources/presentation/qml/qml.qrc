@@ -35,6 +35,7 @@
         <file>Map/LocationMapViews/Overlays/HdopRadiusMapOverlayView.qml</file>
         <file>Map/LocationMapViews/Overlays/TargetPointOverlayView.qml</file>
         <file>Map/LocationMapViews/Overlays/TargetRadiusOverlayView.qml</file>
+        <file>Map/LocationMapViews/Overlays/SwarmPoiOverlayView.qml</file>
         <file>Dashboard/DashboardView.qml</file>
         <file>Dashboard/BaseDisplay.qml</file>
         <file>Dashboard/Vehicles/Subsystem.qml</file>

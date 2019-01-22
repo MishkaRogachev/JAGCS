@@ -27,13 +27,14 @@ void GlobalPoiHandler::processMessage(const mavlink_message_t& message)
     if (message.msgid != MAVLINK_MSG_ID_GLOBAL_POI) return;
 
     mavlink_global_poi_t poi;
-    mavlink_msg_altitude_decode(&message, &poi);
+    mavlink_msg_global_poi_decode(&message, &poi);
 
     TelemetryPortion portion(m_telemetryService->mavNode(message.sysid));
 
     QGeoCoordinate coordinate(decodeLatLon(poi.lat), decodeLatLon(poi.lon), decodeAltitude(poi.alt));
 
-    portion.setParameter({ Telemetry::Swarm, Telemetry::Poi, Telemetry::Coordinate }, coordinate);
-    portion.setParameter({ Telemetry::Swarm, Telemetry::Poi, Telemetry::Group }, poi.gpid);
-    portion.setParameter({ Telemetry::Swarm, Telemetry::Poi, Telemetry::Number }, poi.poi_n);
+    portion.setParameter({ Telemetry::Swarming, Telemetry::Poi, Telemetry::Coordinate },
+                         QVariant::fromValue(coordinate));
+    portion.setParameter({ Telemetry::Swarming, Telemetry::Poi, Telemetry::Group }, poi.gpid);
+    portion.setParameter({ Telemetry::Swarming, Telemetry::Poi, Telemetry::Number }, poi.poi_n);
 }

@@ -135,7 +135,7 @@
 //  |-RemoteNoise                       int
 //  |-Errors                            int
 //  |-Fixed                             int
-// Swarm
+// Swarming
 //  |-Poi
 //  |  |-Coordinate                     coordinate
 //  |  |-Group                          int
@@ -262,7 +262,7 @@ namespace domain
             SizeX = 12003,
             SizeY = 12004,
 
-            Swarm = 15000,
+            Swarming = 15000,
             Poi = 15001,
             Group = 15002,
             Number = 15003

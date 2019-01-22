@@ -69,6 +69,7 @@ Map {
     VehicleMapOverlayView { model: vehicleVisible ? vehicleModel : 0 }
     TrackMapOverlayView { model: trackVisible ? vehicleModel : 0 }
     HdopRadiusMapOverlayView { model: hdopVisible ? vehicleModel : 0 }
+    SwarmPoiOverlayView { model: hdopVisible ? vehicleModel : 0 }
 
     Component.onCompleted: {
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),
