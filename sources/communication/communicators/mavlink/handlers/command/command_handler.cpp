@@ -48,6 +48,11 @@ namespace
         { MAV_RESULT_ACCEPTED, dto::Command::Completed }
     };
 
+    const QMap<quint8, quint8> commandComponentMap =
+    {
+        { MAV_CMD_SWITCH_SWARM_MODE, 130 }
+    };
+
     int toMavLinkImpact(float value)
     {
         return qIsNaN(value) ? std::numeric_limits<std::int32_t>::max() : value * 1000;
@@ -262,7 +267,7 @@ void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
     mavlink_command_long_t mavCommand;
 
     mavCommand.target_system = mavId;
-    mavCommand.target_component = 0;
+    mavCommand.target_component = ::commandComponentMap.value(commandId, 0);
     mavCommand.confirmation = attempt;
     mavCommand.command = commandId;
 
