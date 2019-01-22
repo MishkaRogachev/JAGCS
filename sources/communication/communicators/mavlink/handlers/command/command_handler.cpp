@@ -187,12 +187,12 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
     qDebug() << "MAV:" << vehicleId << command->type() << command->arguments() << attempt;
 
     dto::VehiclePtr vehicle = d->vehicleService->vehicle(vehicleId);
-    if (vehicle.isNull()) return;
+    quint8 mavId = vehicle ? vehicle->mavId() : 0;
 
     // TODO: to common command sender
     if (::mavCommandLongMap.values().contains(command->type()))
     {
-        this->sendCommandLong(vehicle->mavId(), ::mavCommandLongMap.key(command->type()),
+        this->sendCommandLong(mavId, ::mavCommandLongMap.key(command->type()),
                               command->arguments(), attempt);
         return;
     }
@@ -201,57 +201,57 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
     switch (command->type())  // TODO: special command sender classes
     {
     case dto::Command::SetMode:
-            this->sendSetMode(vehicle->mavId(), args.value(0).value<domain::vehicle::Mode>());
+            this->sendSetMode(mavId, args.value(0).value<domain::vehicle::Mode>());
         break;
     case dto::Command::GoTo:
-            this->sendCurrentItem(vehicle->mavId(), args.value(0, 0).toInt());
+            this->sendCurrentItem(mavId, args.value(0, 0).toUInt());
         break;
     case dto::Command::NavTo:
-        this->sendNavTo(vehicle->mavId(), args.value(0, 0).toDouble(),
+        this->sendNavTo(mavId, args.value(0, 0).toDouble(),
                         args.value(1, 0).toDouble(), args.value(2, 0).toFloat());
         break;
     case dto::Command::SetReturn:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_SET_HOME,
+        this->sendCommandLong(mavId, MAV_CMD_DO_SET_HOME,
                               { args.isEmpty() ? 1 : 0, 0, 0, 0, args.value(0, 0).toDouble(),
                                 args.value(1, 0).toDouble(), args.value(2, 0).toFloat() }, attempt);
         break;
     case dto::Command::SetAltitude:
-        this->sendSetAltitude(vehicle->mavId(), args.value(0, 0).toFloat());
+        this->sendSetAltitude(mavId, args.value(0, 0).toFloat());
         break;
     case dto::Command::SetLoiterRadius:
-        this->sendSetLoiterRadius(vehicle->mavId(), args.value(0, 0).toFloat());
+        this->sendSetLoiterRadius(mavId, args.value(0, 0).toFloat());
         break;
     case dto::Command::SetAirspeed:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
+        this->sendCommandLong(mavId, MAV_CMD_DO_CHANGE_SPEED,
                               { 0, args.value(0, 0).toFloat(), -1, 0 }, attempt);
         break;
     case dto::Command::SetGroundspeed:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
+        this->sendCommandLong(mavId, MAV_CMD_DO_CHANGE_SPEED,
                               { 1, args.value(0, 0).toFloat(), -1, 0 }, attempt);
         break;
     case dto::Command::SetThrottle:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_DO_CHANGE_SPEED,
+        this->sendCommandLong(mavId, MAV_CMD_DO_CHANGE_SPEED,
                               { 0, -1, args.value(0, 0).toInt(), 0 }, attempt);
         break;
     case dto::Command::ManualImpacts:
-        this->sendManualControl(vehicle->mavId(), args.value(0, 0).toFloat(),
+        this->sendManualControl(mavId, args.value(0, 0).toFloat(),
                                 args.value(1, 0).toFloat(), args.value(2, 0).toFloat(),
                                 args.value(3, 0).toFloat());
         break;
     case dto::Command::CalibrateAirspeed:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
+        this->sendCommandLong(mavId, MAV_CMD_PREFLIGHT_CALIBRATION,
                               { 0, 0, 0, 0, 0, 2, 0 }, attempt);
         break;
     case dto::Command::CalibrateTemperature:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
+        this->sendCommandLong(mavId, MAV_CMD_PREFLIGHT_CALIBRATION,
                               { 3, 0, 0, 0, 3, 0, 3 }, attempt);
         break;
     case dto::Command::CalibrateReferencePressure:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
+        this->sendCommandLong(mavId, MAV_CMD_PREFLIGHT_CALIBRATION,
                               { 0, 0, 1, 0, 0, 0, 0 }, attempt);
         break;
     case dto::Command::SwitchSwarmMode:
-        this->sendCommandLong(vehicle->mavId(), MAV_CMD_SWITCH_SWARM_MODE,
+        this->sendCommandLong(mavId, MAV_CMD_SWITCH_SWARM_MODE,
                               { args.first().toBool() ? SWARMING_ENABLED : SWARMING_DISABLED,
                                 0, 0, 0, 0, 0, 0 }, attempt);
         break;
