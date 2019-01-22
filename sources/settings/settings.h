@@ -137,6 +137,7 @@ namespace settings
         namespace instruments
         {
             const QString diagnostics = "diagnostics";
+            const QString swarm = "swarm";
             const QString status = "status";
             const QString fd = "fd";
             const QString hsi = "hsi";

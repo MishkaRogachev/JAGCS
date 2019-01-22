@@ -62,6 +62,13 @@ BaseDisplay {
         }
 
         ListElement {
+            name: qsTr("Swarm unit control")
+            setting: "swarm"
+            instrument: "Instruments/SwarmPanel.qml"
+            visibility: false
+        }
+
+        ListElement {
             name: qsTr("Status panel")
             setting: "status"
             instrument: "Instruments/StatusPanel.qml"

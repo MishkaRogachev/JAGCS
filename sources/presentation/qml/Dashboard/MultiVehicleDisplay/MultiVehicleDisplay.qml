@@ -32,9 +32,18 @@ BaseDisplay {
         anchors.right: parent.right
     }
 
+    SwarmWidget {
+        id: swarmWidget
+        anchors.top: topBarDelegate.bottom
+        anchors.topMargin: controlSize.spacing
+        anchors.right: parent.right
+        anchors.rightMargin: controlSize.margins
+        width: dashboardWidth
+    }
+
     ListView {
         id: list
-        anchors.top: topBarDelegate.bottom
+        anchors.top: swarmWidget.bottom
         anchors.topMargin: controlSize.spacing
         anchors.right: parent.right
         anchors.rightMargin: controlSize.margins

@@ -53,12 +53,14 @@
         <file>Dashboard/SingleVehicleDisplay/PreparationPanel.qml</file>
         <file>Dashboard/SingleVehicleDisplay/Instruments/BaseInstrument.qml</file>
         <file>Dashboard/SingleVehicleDisplay/Instruments/DiagnosticsPanel.qml</file>
+        <file>Dashboard/SingleVehicleDisplay/Instruments/SwarmPanel.qml</file>
         <file>Dashboard/SingleVehicleDisplay/Instruments/StatusPanel.qml</file>
         <file>Dashboard/SingleVehicleDisplay/Instruments/FlightDirector.qml</file>
         <file>Dashboard/SingleVehicleDisplay/Instruments/HorizontalSituationIndicator.qml</file>
         <file>Dashboard/SingleVehicleDisplay/Instruments/LandingIndicator.qml</file>
         <file>Dashboard/MultiVehicleDisplay/MultiVehicleDisplay.qml</file>
         <file>Dashboard/MultiVehicleDisplay/TopBarDelegate.qml</file>
+        <file>Dashboard/MultiVehicleDisplay/SwarmWidget.qml</file>
         <file>Dashboard/MultiVehicleDisplay/AerialVehicleWidget.qml</file>
         <file>Drawer/DrawerView.qml</file>
         <file>Drawer/DrawerMenu.qml</file>

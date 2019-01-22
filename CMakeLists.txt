@@ -69,7 +69,7 @@ set(LIBRARIES
 )
 
 # QGamepad option
-option(WITH_GAMEPAD "Compile with QGamepad module for manual input" ON)
+option(WITH_GAMEPAD "Compile with QGamepad module for manual input" OFF)
 if(WITH_GAMEPAD)
 add_definitions(-DWITH_GAMEPAD)
 find_package(Qt5 COMPONENTS
@@ -184,7 +184,7 @@ set(LIBRARIES ${LIBRARIES}
 # Link Libraries
 target_link_libraries(${PROJECT} ${LIBRARIES})
 
-if(WITH_GAMEPAD)
+if(WITH_GAMEPAD )
 qt5_use_modules(${PROJECT}
     Gamepad
 )

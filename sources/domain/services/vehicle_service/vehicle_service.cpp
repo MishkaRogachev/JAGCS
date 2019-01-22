@@ -105,6 +105,9 @@ bool VehicleService::save(const VehiclePtr& vehicle)
     if (isNew)
     {
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
+                                     "/" + settings::vehicle::instruments::swarm +
+                                     "/" + settings::visibility, true);
+        settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
                                      "/" + settings::vehicle::instruments::status +
                                      "/" + settings::visibility, true);
         settings::Provider::setValue(settings::vehicle::vehicle + QString::number(vehicle->id()) +
