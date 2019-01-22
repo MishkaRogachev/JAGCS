@@ -73,7 +73,6 @@ Controls.Popup {
             }
         }
 
-
         DashboardControls.DelayCommandButton {
             id: armDisarm
             text: vehicle.armed ? qsTr("DISARM") : qsTr("ARM")

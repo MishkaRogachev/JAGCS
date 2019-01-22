@@ -49,7 +49,9 @@ namespace dto
             SetReturn,
             CalibrateAirspeed,
             CalibrateTemperature,
-            CalibrateReferencePressure
+            CalibrateReferencePressure,
+
+            SwitchSwarmMode
         };
 
         enum CommandStatus

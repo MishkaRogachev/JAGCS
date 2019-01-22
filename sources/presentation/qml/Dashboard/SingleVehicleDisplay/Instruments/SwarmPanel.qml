@@ -15,8 +15,23 @@ BaseInstrument {
         spacing: controlSize.spacing
 
         DashboardControls.Label {
-            text: qsTr("Swarm mode")
+            text: qsTr("Swarming")
             font.pixelSize: controlSize.fontSize
+            Layout.fillWidth: true
+        }
+
+        DashboardControls.CommandButton {
+            text: qsTr("ENABLE")
+            args: [ true ]
+            command: Command.SwitchSwarmMode
+            Layout.fillWidth: true
+        }
+
+        DashboardControls.CommandButton {
+            text: qsTr("DISABLE")
+            args: [ false ]
+            command: Command.SwitchSwarmMode
+            Layout.fillWidth: true
         }
     }
 }

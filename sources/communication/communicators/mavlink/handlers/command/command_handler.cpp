@@ -33,7 +33,7 @@ namespace
         { MAV_CMD_DO_LAND_START, dto::Command::Land },
         { MAV_CMD_DO_GO_AROUND, dto::Command::GoAround },
         { MAV_CMD_DO_PAUSE_CONTINUE, dto::Command::PauseContinue },
-        { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute },
+        { MAV_CMD_DO_PARACHUTE, dto::Command::Parachute }
 
         // TODO: MAV_CMD_DO_SET_ROI, MAV_CMD_DO_MOUNT_CONTROL, MAV_CMD_DO_DIGICAM_CONTROL, MAV_CMD_NAV_LOITER_UNLIM
     };
@@ -124,6 +124,11 @@ void CommandHandler::processCommandAck(const mavlink_message_t& message)
     case MAV_CMD_DO_SET_HOME:
         this->ackCommand(vehicleId, dto::Command::SetReturn,
                          ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        break;
+    case MAV_CMD_SWITCH_SWARM_MODE:
+        this->ackCommand(vehicleId, dto::Command::SwitchSwarmMode,
+                         ::mavStatusMap.value(ack.result, dto::Command::Idle));
+        break;
     default:
         break;
     }
@@ -239,6 +244,11 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
     case dto::Command::CalibrateReferencePressure:
         this->sendCommandLong(vehicle->mavId(), MAV_CMD_PREFLIGHT_CALIBRATION,
                               { 0, 0, 1, 0, 0, 0, 0 }, attempt);
+        break;
+    case dto::Command::SwitchSwarmMode:
+        this->sendCommandLong(vehicle->mavId(), MAV_CMD_SWITCH_SWARM_MODE,
+                              { args.first().toBool() ? SWARMING_ENABLED : SWARMING_DISABLED,
+                                0, 0, 0, 0, 0, 0 }, attempt);
         break;
     default:
         break;
