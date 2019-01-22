@@ -27,6 +27,7 @@
 #include "mission_handler.h"
 #include "attitude_target_handler.h"
 #include "land_target_handler.h"
+#include "global_poi_handler.h"
 
 #ifdef MAVLINK_V2
 #include "flight_handler.h"
@@ -77,6 +78,8 @@ MavLinkCommunicator* MavLinkCommunicatorFactory::create()
 #ifdef MAVLINK_V2
     communicator->addHandler(new FlightHandler(communicator));
 # endif
+
+    communicator->addHandler(new GlobalPoiHandler(communicator));
 
     return communicator;
 }

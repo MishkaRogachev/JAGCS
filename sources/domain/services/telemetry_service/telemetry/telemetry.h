@@ -135,6 +135,11 @@
 //  |-RemoteNoise                       int
 //  |-Errors                            int
 //  |-Fixed                             int
+// Swarm
+//  |-Poi
+//  |  |-Coordinate                     coordinate
+//  |  |-Group                          int
+//  |  |-Number                         int
 
 // TODO: Present-Enabled-Operational bools replace with enum
 
@@ -256,6 +261,11 @@ namespace domain
             DeviationY = 12002,
             SizeX = 12003,
             SizeY = 12004,
+
+            Swarm = 15000,
+            Poi = 15001,
+            Group = 15002,
+            Number = 15003
         };
 
         using TelemetryList = QList<TelemetryId>;
