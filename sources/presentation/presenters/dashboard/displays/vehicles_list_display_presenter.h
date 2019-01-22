@@ -2,11 +2,11 @@
 #define VEHICLES_LIST_DISPLAY_PRESENTER_H
 
 // Internal
-#include "base_presenter.h"
+#include "common_vehicle_display_presenter.h"
 
 namespace presentation
 {
-    class VehiclesListDisplayPresenter: public BasePresenter
+    class VehiclesListDisplayPresenter: public CommonVehicleDisplayPresenter
     {
         Q_OBJECT
 

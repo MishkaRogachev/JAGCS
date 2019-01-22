@@ -10,14 +10,54 @@ import "../DashboardControls" as DashboardControls
 Controls.Pane {
     id: widget
 
+    property bool lastSwarmCommand: false
+
+    Connections {
+        target: listDisplay
+        ignoreUnknownSignals: true
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.SwitchSwarmMode:
+                lastSwarmCommand ? swarmingOff.status = status :
+                                   swarmingOn.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     RowLayout {
         anchors.centerIn: parent
         width: parent.width
-        spacing: controlSize.spacing
+        spacing: 1
 
         DashboardControls.Label {
-            text: qsTr("Swarm mode")
+            text: qsTr("Global Swarming")
             font.pixelSize: controlSize.fontSize
+            Layout.fillWidth: true
+        }
+
+        DashboardControls.CommandButton {
+            id: swarmingOn
+            text: qsTr("ON")
+            args: [ true ]
+            command: Command.SwitchSwarmMode
+            onClicked: {
+                swarmingOff.status = Command.Idle;
+                lastSwarmCommand = false;
+            }
+        }
+
+        DashboardControls.CommandButton {
+            id: swarmingOff
+            text: qsTr("OFF")
+            args: [ false ]
+            command: Command.SwitchSwarmMode
+            onClicked: {
+                swarmingOn.status = Command.Idle;
+                lastSwarmCommand = true;
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace presentation
         void setNode(domain::Telemetry* node);
 
     protected:
-        virtual void connectNode(domain::Telemetry* node) = 0;
+        virtual void connectNode(domain::Telemetry* node);
         virtual void disconnectNode();
 
         void chainNode(domain::Telemetry* node,

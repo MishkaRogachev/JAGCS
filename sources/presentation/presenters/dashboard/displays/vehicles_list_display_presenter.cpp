@@ -26,7 +26,7 @@ public:
 };
 
 VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
-    BasePresenter(parent),
+    CommonVehicleDisplayPresenter(parent),
     d(new Impl())
 {
     d->vehiclesModel.setVehicles(d->service->vehicles());

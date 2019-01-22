@@ -9,10 +9,29 @@ import "../../DashboardControls" as DashboardControls
 BaseInstrument {
     id: root
 
+    property bool lastSwarmCommand: false
+
+    Connections {
+        target: display
+        ignoreUnknownSignals: true
+        onUpdateCommandStatus: {
+            switch (command) {
+            case Command.SwitchSwarmMode:
+                lastSwarmCommand ? swarmingOff.status = status :
+                                   swarmingOn.status = status;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     RowLayout {
-        anchors.centerIn: parent
-        width: parent.width
-        spacing: controlSize.spacing
+        anchors.left: parent.left
+        anchors.leftMargin: controlSize.padding
+        anchors.right: parent.right
+        anchors.rightMargin: itemMenuButton.width
+        spacing: 1
 
         DashboardControls.Label {
             text: qsTr("Swarming")
@@ -21,17 +40,25 @@ BaseInstrument {
         }
 
         DashboardControls.CommandButton {
-            text: qsTr("ENABLE")
+            id: swarmingOn
+            text: qsTr("ON")
             args: [ true ]
             command: Command.SwitchSwarmMode
-            Layout.fillWidth: true
+            onClicked: {
+                swarmingOff.status = Command.Idle;
+                lastSwarmCommand = false;
+            }
         }
 
         DashboardControls.CommandButton {
-            text: qsTr("DISABLE")
+            id: swarmingOff
+            text: qsTr("OFF")
             args: [ false ]
             command: Command.SwitchSwarmMode
-            Layout.fillWidth: true
+            onClicked: {
+                swarmingOn.status = Command.Idle;
+                lastSwarmCommand = true;
+            }
         }
     }
 }

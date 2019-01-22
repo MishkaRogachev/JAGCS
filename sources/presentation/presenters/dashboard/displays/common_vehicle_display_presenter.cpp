@@ -154,21 +154,18 @@ void CommonVehicleDisplayPresenter::updateMission()
 
 void CommonVehicleDisplayPresenter::executeCommand(int commandType, const QVariant& args)
 {
-    if (d->vehicle.isNull()) return;
-
     dto::CommandPtr command = dto::CommandPtr::create();
     command->setType(dto::Command::CommandType(commandType));
     command->setArguments(args.toList());
 
     d->commands.append(command);
-    d->commandService->executeCommand(d->vehicle->id(), command);
+    d->commandService->executeCommand(d->vehicle ? d->vehicle->id() : 0, command);
 }
 
 void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
 {
-    if (d->vehicle.isNull()) return;
-
-    d->commandService->cancelCommand(d->vehicle->id(), dto::Command::CommandType(commandType));
+    d->commandService->cancelCommand(d->vehicle ? d->vehicle->id() : 0,
+                                     dto::Command::CommandType(commandType));
 }
 
 void CommonVehicleDisplayPresenter::connectView(QObject* view)

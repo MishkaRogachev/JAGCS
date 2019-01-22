@@ -20,6 +20,11 @@ void AbstractTelemetryPresenter::setNode(domain::Telemetry* node)
     if (node) this->connectNode(node);
 }
 
+void AbstractTelemetryPresenter::connectNode(domain::Telemetry* node)
+{
+    Q_UNUSED(node)
+}
+
 void AbstractTelemetryPresenter::disconnectNode()
 {
     disconnect(m_node, 0, this, 0);

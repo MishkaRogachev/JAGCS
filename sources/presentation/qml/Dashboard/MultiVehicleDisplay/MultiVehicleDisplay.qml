@@ -11,6 +11,8 @@ BaseDisplay {
     property var vehicles
     property bool showOffline: true
 
+    signal updateCommandStatus(var command, var status)
+
     onShowOfflineChanged: vehicles.showOffline = showOffline
     Component.onCompleted: {
         topbarOffset = topBarDelegate.width;
