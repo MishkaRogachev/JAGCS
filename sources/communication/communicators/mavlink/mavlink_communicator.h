@@ -43,6 +43,7 @@ namespace comm
         void addHandler(AbstractMavLinkHandler* handler);
 
         void sendMessage(mavlink_message_t& message, AbstractLink* link);
+        void sendMessageAllLinks(mavlink_message_t& message);
 
     signals:
         void systemIdChanged(quint8 systemId);

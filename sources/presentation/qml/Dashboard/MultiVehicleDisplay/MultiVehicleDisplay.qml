@@ -24,6 +24,11 @@ BaseDisplay {
     implicitWidth: Math.max(list.width + controlSize.margins, topBarDelegate.width)
     implicitHeight: list.contentHeight + topBarDelegate.height
 
+    Connections {
+        target: map
+        onHolded: presenter.setGlobalPoi(coordinate.latitude, coordinate.longitude, 0);
+    }
+
     VehiclesListDisplayPresenter {
         id: presenter
         view: listDisplay

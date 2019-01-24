@@ -51,7 +51,8 @@ namespace dto
             CalibrateTemperature,
             CalibrateReferencePressure,
 
-            SwitchSwarmMode
+            SwitchSwarmMode,
+            SetGlobalPoi
         };
 
         enum CommandStatus

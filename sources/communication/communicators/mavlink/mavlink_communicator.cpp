@@ -185,6 +185,14 @@ void MavLinkCommunicator::sendMessage(mavlink_message_t& message, AbstractLink* 
     link->sendData(QByteArray((const char*)buffer, lenght));
 }
 
+void MavLinkCommunicator::sendMessageAllLinks(mavlink_message_t& message)
+{
+    for (AbstractLink* link: this->links())
+    {
+        this->sendMessage(message, link);
+    }
+}
+
 void MavLinkCommunicator::onDataReceived(const QByteArray& data)
 {
     d->receivedLink = qobject_cast<AbstractLink*>(this->sender());

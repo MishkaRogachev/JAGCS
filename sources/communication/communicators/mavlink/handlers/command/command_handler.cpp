@@ -19,7 +19,7 @@
 
 #include "mavlink_communicator.h"
 #include "mode_helper_factory.h"
-
+#include "mavlink_protocol_helpers.h"
 
 using namespace comm;
 
@@ -255,6 +255,10 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
                               { args.first().toBool() ? SWARMING_ENABLED : SWARMING_DISABLED,
                                 0, 0, 0, 0, 0, 0 }, attempt);
         break;
+    case dto::Command::SetGlobalPoi:
+        this->sendGlobalPoi(mavId, args.value(0, 0).toDouble(),
+                            args.value(1, 0).toDouble(), args.value(2, 0).toFloat());
+        break;
     default:
         break;
     }
@@ -279,14 +283,21 @@ void CommandHandler::sendCommandLong(quint8 mavId, quint16 commandId,
     if (args.count() > 5) mavCommand.param6 = args.at(5).toFloat();
     if (args.count() > 6) mavCommand.param7 = args.at(6).toFloat();
 
-    AbstractLink* link = m_communicator->mavSystemLink(mavId);
-    if (!link) return;
+    AbstractLink* link = nullptr;
+    if (mavId) link = m_communicator->mavSystemLink(mavId);
 
     mavlink_msg_command_long_encode_chan(m_communicator->systemId(),
                                          m_communicator->componentId(),
                                          m_communicator->linkChannel(link),
                                          &message, &mavCommand);
-    m_communicator->sendMessage(message, link);
+    if (link)
+    {
+        m_communicator->sendMessage(message, link);
+    }
+    else
+    {
+        m_communicator->sendMessageAllLinks(message);
+    }
 }
 
 void CommandHandler::sendSetMode(quint8 mavId, domain::vehicle::Mode mode)
@@ -368,6 +379,34 @@ void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, 
     // TODO: wait mission ack
     this->ackCommand(d->vehicleService->vehicleIdByMavId(mavId),
                      dto::Command::NavTo, dto::Command::Completed);
+}
+
+void CommandHandler::sendGlobalPoi(quint8 mavId, double latitude, double longitude, float altitude)
+{
+    mavlink_message_t message;
+    mavlink_global_poi_t poi;
+
+    poi.gpid = 0;
+    poi.lat = encodeLatLon(latitude);
+    poi.lon = encodeLatLon(longitude);
+    poi.alt = encodeAltitude(altitude);
+    poi.poi_n = 0;
+
+    AbstractLink* link = nullptr;
+    if (mavId) link = m_communicator->mavSystemLink(mavId);
+
+    mavlink_msg_global_poi_encode_chan(m_communicator->systemId(),
+                                       m_communicator->componentId(),
+                                       m_communicator->linkChannel(link),
+                                       &message, &poi);
+    if (link)
+    {
+        m_communicator->sendMessage(message, link);
+    }
+    else
+    {
+        m_communicator->sendMessageAllLinks(message);
+    }
 }
 
 void CommandHandler::sendSetAltitude(quint8 mavId, float altitude)

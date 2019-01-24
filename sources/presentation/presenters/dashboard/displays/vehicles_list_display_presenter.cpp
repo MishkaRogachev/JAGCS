@@ -14,6 +14,8 @@
 #include "vehicle_list_model.h"
 #include "vehicle_list_sorting_model.h"
 
+#include "command.h"
+
 using namespace presentation;
 
 class VehiclesListDisplayPresenter::Impl
@@ -42,6 +44,11 @@ VehiclesListDisplayPresenter::VehiclesListDisplayPresenter(QObject* parent):
 
 VehiclesListDisplayPresenter::~VehiclesListDisplayPresenter()
 {}
+
+void VehiclesListDisplayPresenter::setGlobalPoi(double latitude, double longitude, float altitude)
+{
+    this->executeCommand(dto::Command::SetGlobalPoi, QVariant({ latitude, longitude, altitude }));
+}
 
 void VehiclesListDisplayPresenter::connectView(QObject* view)
 {

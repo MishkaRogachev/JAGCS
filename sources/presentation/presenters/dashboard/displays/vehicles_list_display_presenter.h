@@ -14,6 +14,9 @@ namespace presentation
         explicit VehiclesListDisplayPresenter(QObject* parent = nullptr);
         ~VehiclesListDisplayPresenter() override;
 
+    public slots:
+        void setGlobalPoi(double latitude, double longitude, float altitude);
+
     protected:
         void connectView(QObject* view) override;
 
