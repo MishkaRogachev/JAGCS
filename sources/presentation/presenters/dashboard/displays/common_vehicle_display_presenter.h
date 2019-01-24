@@ -23,6 +23,8 @@ namespace presentation
         void executeCommand(int commandType, const QVariant& args);
         void rejectCommand(int commandType);
 
+        void navTo(double latitude, double longitude, float altitude);
+
     protected:
         void connectView(QObject* view) override;
 

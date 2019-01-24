@@ -37,6 +37,15 @@ BaseDisplay {
     implicitWidth: list.width + controlSize.margins
     implicitHeight: list.contentHeight + topBarDelegate.height
 
+    Connections {
+        target: map
+
+        onHolded: {
+            presenter.navTo(coordinate.latitude, coordinate.longitude,
+                            vehicle.barometric.displayedAltitude);
+        }
+    }
+
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display

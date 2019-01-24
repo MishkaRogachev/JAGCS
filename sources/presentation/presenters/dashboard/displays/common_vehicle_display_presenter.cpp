@@ -168,6 +168,11 @@ void CommonVehicleDisplayPresenter::rejectCommand(int commandType)
                                      dto::Command::CommandType(commandType));
 }
 
+void CommonVehicleDisplayPresenter::navTo(double latitude, double longitude, float altitude)
+{
+    this->executeCommand(dto::Command::NavTo, QVariant({ latitude, longitude, altitude }));
+}
+
 void CommonVehicleDisplayPresenter::connectView(QObject* view)
 {
     BasePresenter::connectView(view);
