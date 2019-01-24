@@ -10,7 +10,7 @@ MapItemView {
         border.width: 4
         border.color: customPalette.textColor
         opacity: 0.3
-        z: 250
+        z: 10
 
         Behavior on center {
             CoordinateAnimation { duration: 200 }

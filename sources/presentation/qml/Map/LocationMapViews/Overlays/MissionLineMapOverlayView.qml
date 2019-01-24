@@ -20,6 +20,6 @@ MapItemView {
             }
         }
         path: missionPath
-        z: 10
+        z: 20
     }
 }

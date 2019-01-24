@@ -10,6 +10,6 @@ MapItemView {
         border.width: 0
         opacity: 0.3
         visible: itemCoordinate.isValid && itemAcceptanceRadius > 0 && itemVisible
-        z: 50
+        z: 40
     }
 }

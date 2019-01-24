@@ -17,7 +17,7 @@ MapItemView {
         coordinate: swarmPoiPosition
         anchorPoint.x: sourceItem.width / 2
         anchorPoint.y: sourceItem.height / 2
-        z: 50
+        z: 90
 
         sourceItem: Item {
             width: controlSize.baseSize

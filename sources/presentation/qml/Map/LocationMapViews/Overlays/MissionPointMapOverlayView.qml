@@ -14,7 +14,7 @@ MapItemView {
         visible: itemVisible
         anchorPoint.x: sourceItem.width / 2
         anchorPoint.y: sourceItem.height / 2
-        z: itemSelected ? 999 : 500
+        z: itemSelected ? 999 : 60
 
         sourceItem: WaypointItem {
             selected: itemSelected

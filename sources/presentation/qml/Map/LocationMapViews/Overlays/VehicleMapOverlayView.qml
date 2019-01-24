@@ -12,7 +12,7 @@ MapItemView {
         property real courseAnimated: course
 
         coordinate: position
-        z: 1000
+        z: 200
 
         Behavior on coordinate {
             CoordinateAnimation { duration: 200 }
@@ -43,7 +43,7 @@ MapItemView {
 
             opacity: vehicleOnline ? 1 : 0.5
 
-            MouseArea {
+            Item {
                 id: area
                 anchors.centerIn: parent
                 height: controlSize.inputControlHeight
@@ -70,13 +70,22 @@ MapItemView {
                 }
             }
 
-            Controls.ToolTip {
-                text: vehicleName
-                visible: area.pressed
+            Rectangle {
                 y: controlSize.baseSize
                 x: controlSize.baseSize
-                font.pixelSize: controlSize.secondaryFontSize
-                font.bold: true
+                width: controlSize.baseSize * 2
+                height: controlSize.baseSize / 1.5
+                color: customPalette.backgroundColor
+                border.color: customPalette.highlightColor
+                border.width: 2
+                radius: 3
+
+                Controls.Label {
+                    anchors.centerIn: parent
+                    text: vehicleName
+                    font.pixelSize: controlSize.secondaryFontSize
+                    font.bold: true
+                }
             }
         }
 

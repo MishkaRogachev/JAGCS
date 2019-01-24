@@ -61,15 +61,15 @@ Map {
         onPressAndHold: holded(map.toCoordinate(Qt.point(mouseX, mouseY)))
     }
 
+    HdopRadiusMapOverlayView { model: hdopVisible ? vehicleModel : 0 }
     MissionLineMapOverlayView { model: missionLinesVisible ? lineModel : 0 }
     RadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
     AcceptanceRadiusMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
+    TrackMapOverlayView { model: trackVisible ? vehicleModel : 0 }
     MissionPointMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
     TargetPointOverlayView { model: vehicleVisible ? vehicleModel : 0 }
-    VehicleMapOverlayView { model: vehicleVisible ? vehicleModel : 0 }
-    TrackMapOverlayView { model: trackVisible ? vehicleModel : 0 }
-    HdopRadiusMapOverlayView { model: hdopVisible ? vehicleModel : 0 }
     SwarmPoiOverlayView { model: hdopVisible ? vehicleModel : 0 }
+    VehicleMapOverlayView { model: vehicleVisible ? vehicleModel : 0 }
 
     Component.onCompleted: {
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),
