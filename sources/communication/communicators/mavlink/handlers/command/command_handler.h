@@ -34,7 +34,7 @@ namespace comm
         void sendSetMode(quint8 mavId, domain::vehicle::Mode mode);
         void sendCurrentItem(quint8 mavId, quint16 seq);
         void sendNavTo(quint8 mavId, double latitude, double longitude, float altitude);
-        void sendGlobalPoi(quint8 mavId, double latitude, double longitude, float altitude);
+        void sendGlobalPoi(quint8 mavId, double latitude, double longitude, float altitude, int groupId);
         void sendSetAltitude(quint8 mavId, float altitude);
         void sendSetLoiterRadius(quint8 mavId, float radius);
         void sendManualControl(quint8 mavId, float pitch, float roll, float yaw, float thrust);

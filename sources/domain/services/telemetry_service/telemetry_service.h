@@ -22,6 +22,7 @@ namespace domain
         Telemetry* mavNode(int mavId) const;
         // TODO: multiply radio telemetry
         Telemetry* radioNode() const;
+        Telemetry* swarmNode() const;
 
     private slots:
         void onVehicleAdded(const dto::VehiclePtr& vehicle);

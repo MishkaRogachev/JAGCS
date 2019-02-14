@@ -20,40 +20,40 @@ MapItemView {
         z: 90
 
         sourceItem: Item {
-            width: controlSize.baseSize
-            height: controlSize.baseSize
+            width: controlSize.baseSize * 0.75
+            height: controlSize.baseSize * 0.75
 
             Rectangle {
                 anchors.fill: parent
                 rotation: 45
-                color: customPalette.activeMissionColor
+                radius: 2
+                color: swarmPoiConfirmed ? customPalette.activeMissionColor : customPalette.cautionColor
                 border.width: 2
                 border.color: customPalette.backgroundColor
             }
 
+//            Controls.Label {
+//                anchors.right: parent.right
+//                anchors.top: parent.top
+//                text: vehicleId
+//                color: customPalette.textColor
+//                font.pixelSize: controlSize.fontSize * 0.5
+//            }
+
             Controls.Label {
-                anchors.right: parent.right
-                anchors.top: parent.top
+                anchors.centerIn: parent
                 text: swarmPoiNumber
-                color: customPalette.textColor
-                font.pixelSize: controlSize.fontSize * 0.5
+                color: customPalette.backgroundColor
+                font.pixelSize: controlSize.fontSize
             }
 
-            Controls.Label {
-                anchors.right: parent.right
-                anchors.top: parent.top
-                text: vehicleId
-                color: customPalette.activeMissionColor
-                font.pixelSize: controlSize.fontSize * 0.33
-            }
-
-            Controls.Label {
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                text: swarmPoiGroup
-                color: customPalette.activeMissionColor
-                font.pixelSize: controlSize.fontSize * 0.33
-            }
+//            Controls.Label {
+//                anchors.right: parent.right
+//                anchors.bottom: parent.bottom
+//                text: swarmPoiGroup
+//                color: customPalette.activeMissionColor
+//                font.pixelSize: controlSize.fontSize * 0.5
+//            }
 
 //            onDragged: {
 //                var point = map.fromCoordinate(targetPosition, false);
@@ -74,25 +74,6 @@ MapItemView {
 
 //                presenter.navTo(vehicleId, coordinate.latitude, coordinate.longitude,
 //                                targetPosition.altitude - homePosition.altitude);
-//            }
-//            onHolded: popup.open()
-
-//            Controls.Popup {
-//                id: popup
-//                y: pointView.height
-//                closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
-
-//                SetPoint {
-//                    title: qsTr("Nav to") + " " + vehicleName
-//                    onVisibleChanged: {
-//                        if (!visible) return;
-
-//                        latitude = targetPosition.latitude;
-//                        longitude = targetPosition.longitude;
-//                        altitude = targetPosition.altitude - homePosition.altitude;
-//                    }
-//                    onSetPoint: presenter.navTo(vehicleId, latitude, longitude, altitude);
-//                }
 //            }
         }
     }

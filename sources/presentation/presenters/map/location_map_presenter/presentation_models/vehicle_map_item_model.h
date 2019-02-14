@@ -38,9 +38,6 @@ namespace presentation
             SnsFixRole,
             HdopRadiusRole,
             TrackRole,
-            SwarmPoiCoordinateRole,
-            SwarmPoiGroupRole,
-            SwarmPoiNumberRole
         };
 
         VehicleMapItemModel(domain::VehicleService* vehicleService,
@@ -71,8 +68,6 @@ namespace presentation
         void onAhrsParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
         void onSatelliteParametersChanged(
-                int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
-        void onSwarmPoiParametersChanged(
                 int vehicleId, const domain::Telemetry::TelemetryMap& parameters);
 
     private:

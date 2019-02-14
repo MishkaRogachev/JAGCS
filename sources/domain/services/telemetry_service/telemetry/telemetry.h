@@ -140,6 +140,7 @@
 //  |  |-Coordinate                     coordinate
 //  |  |-Group                          int
 //  |  |-Number                         int
+//  |  |-Confirmed                      bool
 
 // TODO: Present-Enabled-Operational bools replace with enum
 
@@ -265,7 +266,8 @@ namespace domain
             Swarming = 15000,
             Poi = 15001,
             Group = 15002,
-            Number = 15003
+            Number = 15003,
+            Confirmed = 15004,
         };
 
         using TelemetryList = QList<TelemetryId>;

@@ -256,8 +256,11 @@ void CommandHandler::sendCommand(int vehicleId, const dto::CommandPtr& command, 
                                 0, 0, 0, 0, 0, 0 }, attempt);
         break;
     case dto::Command::SetGlobalPoi:
-        this->sendGlobalPoi(mavId, args.value(0, 0).toDouble(),
-                            args.value(1, 0).toDouble(), args.value(2, 0).toFloat());
+        this->sendGlobalPoi(mavId,
+                            args.value(0, 0).toDouble(),
+                            args.value(1, 0).toDouble(),
+                            args.value(2, 0).toFloat(),
+                            args.value(3, 0).toInt());
         break;
     default:
         break;
@@ -381,7 +384,7 @@ void CommandHandler::sendNavTo(quint8 mavId, double latitude, double longitude, 
                      dto::Command::NavTo, dto::Command::Completed);
 }
 
-void CommandHandler::sendGlobalPoi(quint8 mavId, double latitude, double longitude, float altitude)
+void CommandHandler::sendGlobalPoi(quint8 mavId, double latitude, double longitude, float altitude, int groupId)
 {
     mavlink_message_t message;
     mavlink_global_poi_t poi;
@@ -390,7 +393,7 @@ void CommandHandler::sendGlobalPoi(quint8 mavId, double latitude, double longitu
     poi.lat = encodeLatLon(latitude);
     poi.lon = encodeLatLon(longitude);
     poi.alt = encodeAltitude(altitude);
-    poi.poi_n = 0;
+    poi.poi_n = groupId;
 
     AbstractLink* link = nullptr;
     if (mavId) link = m_communicator->mavSystemLink(mavId);

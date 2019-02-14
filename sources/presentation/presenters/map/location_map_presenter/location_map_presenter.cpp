@@ -11,6 +11,7 @@
 #include "mission_point_map_item_model.h"
 #include "mission_line_map_item_model.h"
 #include "vehicle_map_item_model.h"
+#include "swarm_map_item_model.h"
 
 using namespace presentation;
 
@@ -20,12 +21,13 @@ public:
     MissionPointMapItemModel pointModel;
     MissionLineMapItemModel lineModel;
     VehicleMapItemModel vehicleModel;
+    SwarmMapItemModel swarmModel;
 
     Impl():
         pointModel(serviceRegistry->missionService()),
         lineModel(serviceRegistry->missionService()),
-        vehicleModel(serviceRegistry->vehicleService(),
-                     serviceRegistry->telemetryService())
+        vehicleModel(serviceRegistry->vehicleService(), serviceRegistry->telemetryService()),
+        swarmModel(serviceRegistry->telemetryService())
     {}
 };
 
@@ -72,4 +74,5 @@ void LocationMapPresenter::connectView(QObject* view)
     this->setViewProperty(PROPERTY(pointModel), QVariant::fromValue(&d->pointModel));
     this->setViewProperty(PROPERTY(lineModel), QVariant::fromValue(&d->lineModel));
     this->setViewProperty(PROPERTY(vehicleModel), QVariant::fromValue(&d->vehicleModel));
+    this->setViewProperty(PROPERTY(swarmModel), QVariant::fromValue(&d->swarmModel));
 }

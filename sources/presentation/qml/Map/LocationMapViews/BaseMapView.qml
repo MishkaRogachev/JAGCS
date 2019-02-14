@@ -12,6 +12,7 @@ Map {
     property var lineModel
     property var pointModel
     property var vehicleModel
+    property var swarmModel
 
     property bool vehicleVisible: true
     property bool missionPointsVisible: true
@@ -68,8 +69,8 @@ Map {
     TrackMapOverlayView { model: trackVisible ? vehicleModel : 0 }
     MissionPointMapOverlayView { model: missionPointsVisible ? pointModel : 0 }
     TargetPointOverlayView { model: vehicleVisible ? vehicleModel : 0 }
-    SwarmPoiOverlayView { model: hdopVisible ? vehicleModel : 0 }
     VehicleMapOverlayView { model: vehicleVisible ? vehicleModel : 0 }
+    SwarmPoiOverlayView { model: swarmModel }
 
     Component.onCompleted: {
         center = QtPositioning.coordinate(settings.value("Map/centerLatitude"),

@@ -25,9 +25,11 @@ public:
 
     QMap<int, Telemetry*> vehicleNodes;
     Telemetry radioNode;
+    Telemetry swarmNode;
 
     Impl():
-        radioNode(Telemetry::Root)
+        radioNode(Telemetry::Root),
+        swarmNode(Telemetry::Root)
     {}
 };
 
@@ -75,6 +77,11 @@ Telemetry* TelemetryService::mavNode(int mavId) const
 Telemetry* TelemetryService::radioNode() const
 {
     return &d->radioNode;
+}
+
+Telemetry* TelemetryService::swarmNode() const
+{
+    return &d->swarmNode;
 }
 
 void TelemetryService::onVehicleAdded(const dto::VehiclePtr& vehicle)
