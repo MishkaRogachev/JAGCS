@@ -5,8 +5,6 @@ import JAGCS 1.0
 import Industrial.Controls 1.0 as Controls
 import Industrial.Indicators 1.0 as Indicators
 
-import "qrc:/Controls/helper.js" as Helper
-
 import "../../DashboardControls" as DashboardControls
 
 BaseInstrument {
@@ -54,16 +52,16 @@ BaseInstrument {
             DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lat.: ") + (dmsFormat ?
-                           Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
-                           Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
+                           Controls.Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
+                           Controls.Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
                 font.pixelSize: industrial.fontSize * 0.6
             }
 
             DashboardControls.Label {
                 color: snsIcon.color
                 text: qsTr("Lon.: ") + (dmsFormat ?
-                           Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
-                           Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
+                           Controls.Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
+                           Controls.Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
                 font.pixelSize: industrial.fontSize * 0.6
             }
         }

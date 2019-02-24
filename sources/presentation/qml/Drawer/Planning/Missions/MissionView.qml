@@ -16,50 +16,53 @@ Controls.Card {
         selectedMissionId = missionId;
     }
 
-    function toggleMissionVisibility() {
-        presenter.setMissionVisible(!missionVisible);
-    }
-
     onDeepIn: edit()
     onMissionIdChanged: presenter.setMission(missionId)
-    Component.onCompleted: {
-        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
 
-        var visibilityItem = menu.addEntry();
-        visibilityItem.triggered.connect(toggleMissionVisibility);
-        visibilityItem.text = Qt.binding(function() {
-            return missionVisible ? qsTr("Hide mission") : qsTr("Show mission"); });
-        visibilityItem.iconSource = Qt.binding(function() {
-            return missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"; });
+    menuItems: [
+        Controls.MenuItem {
+            text: qsTr("Edit")
+            iconSource: "qrc:/icons/edit.svg"
+            onTriggered: edit()
+        },
+        Controls.MenuItem {
+            text: missionVisible ? qsTr("Hide mission") : qsTr("Show mission")
+            iconSource: missionVisible ? "qrc:/icons/hide.svg" : "qrc:/icons/show.svg"
+            onTriggered: presenter.setMissionVisible(!missionVisible)
+        },
+        Controls.MenuItem {
+            text: qsTr("Download")
+            iconSource: "qrc:/icons/download.svg"
+            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
+                     assignment.status !== MissionAssignment.Downloading &&
+                     assignment.status !== MissionAssignment.Uploading
+            onTriggered: assignment.download()
+        },
+        Controls.MenuItem {
+            text: qsTr("Upload")
+            iconSource: "qrc:/icons/upload.svg"
+            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
+                     assignment.status !== MissionAssignment.Downloading &&
+                     assignment.status !== MissionAssignment.Uploading
+            onTriggered: assignment.upload()
+        },
+        Controls.MenuItem {
+            text: qsTr("Cancel sync")
+            iconSource: "qrc:/icons/cancel.svg"
+            enabled: assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
+                     (assignment.status === MissionAssignment.Downloading ||
+                      assignment.status === MissionAssignment.Uploading)
+            onTriggered: assignment.upload()
+        },
+        // TODO: download
+        Controls.MenuItem {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: industrial.colors.negative
+            onTriggered: presenter.remove
+        }
+    ]
 
-        var downloadItem = menu.addEntry(qsTr("Download"), "qrc:/icons/download.svg");
-        downloadItem.enabled = Qt.binding(function() {
-            return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
-                   assignment.status !== MissionAssignment.Downloading &&
-                   assignment.status !== MissionAssignment.Uploading });
-        downloadItem.triggered.connect(assignment.download);
-
-        var uploadItem = menu.addEntry(qsTr("Upload"), "qrc:/icons/upload.svg");
-        uploadItem.enabled = Qt.binding(function() {
-            return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
-                   assignment.status !== MissionAssignment.Downloading &&
-                   assignment.status !== MissionAssignment.Uploading });
-        uploadItem.triggered.connect(assignment.upload);
-
-        var cancelItem = menu.addEntry(qsTr("Cancel sync"), "qrc:/icons/cancel.svg");
-        cancelItem.enabled = Qt.binding(function() {
-            return assignment.assignedVehicleId > 0 && assignment.vehicleOnline &&
-                   (assignment.status === MissionAssignment.Downloading ||
-                   assignment.status === MissionAssignment.Uploading) });
-        cancelItem.triggered.connect(assignment.cancelSync);
-
-        // TODO: export mission to file
-        menu.addEntry(qsTr("Export mission"), "qrc:/icons/save.svg").enabled = false;
-
-        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = industrial.colors.danger;
-        removeItem.triggered.connect(presenter.remove);
-    }
     implicitWidth: col.implicitWidth + industrial.margins * 2
     implicitHeight: col.implicitHeight + industrial.margins * 2
 

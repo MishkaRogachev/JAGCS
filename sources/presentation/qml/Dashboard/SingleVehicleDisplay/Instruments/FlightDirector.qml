@@ -74,14 +74,14 @@ BaseInstrument {
         maxValue: 10
     }
 
-        Indicators.Ladder {
+    Indicators.Ladder {
         id: speedLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         height: fd.sideHeight
         value: units.convertSpeedTo(speedUnits, vehicle.pitot.present ?
-                                      vehicle.pitot.indicatedAirspeed :
-                                      vehicle.satellite.groundspeed)
+                                        vehicle.pitot.indicatedAirspeed :
+                                        vehicle.satellite.groundspeed)
         minValue: value + minSpeed
         maxValue: value + maxSpeed
         valueStep: speedStep
@@ -89,7 +89,7 @@ BaseInstrument {
         operational: vehicle.pitot.present ? vehicle.pitot.operational : vehicle.satellite.operational
         prefix: (vehicle.pitot.present ? qsTr("IAS") : qsTr("GS")) + ", " + speedSuffix
 
-            Indicators.LadderMark {
+        Indicators.LadderMark {
             id: spdMark
             anchors.fill: parent
             visible: vehicle.guided && vehicle.pitot.present
@@ -98,7 +98,7 @@ BaseInstrument {
                                                        vehicle.flightControl.airspeedError)
         }
 
-            Indicators.LadderPicker {
+        Indicators.LadderPicker {
             id: spdPicker
             anchors.fill: parent
             enabled: (vehicle.mode === Domain.Mission || vehicle.mode === Domain.NavTo) &&
@@ -108,14 +108,14 @@ BaseInstrument {
             value: spdMark.value
         }
 
-            Indicators.LadderButtons {
+        Indicators.LadderButtons {
             anchors.fill: parent
             inputEnabled: manual.enabled
             onAddValue: manual.addImpact(ManualController.Throttle, value)
         }
     }
 
-        Indicators.Ladder {
+    Indicators.Ladder {
         id: altitudeLadder
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
@@ -132,7 +132,7 @@ BaseInstrument {
         mirrored: true
         prefix: qsTr("ALT") + ", " + altitudeSuffix
 
-            Indicators.LadderMark {
+        Indicators.LadderMark {
             id: altMark
             anchors.fill: parent
             visible: vehicle.guided
@@ -141,7 +141,7 @@ BaseInstrument {
                    units.convertDistanceTo(altitudeUnits, vehicle.flightControl.altitudeError)
         }
 
-            Indicators.LadderPicker {
+        Indicators.LadderPicker {
             id: altPicker
             anchors.fill: parent
             enabled:  vehicle.mode === Domain.Circle ||

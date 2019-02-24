@@ -181,8 +181,6 @@ ColumnLayout {
             tipText: qsTr("Add mission item")
             iconSource: "qrc:/ui/plus.svg"
             flat: true
-            hasMenu: true
-            menuOpened: addMenu.visible
             enabled: missionId > 0
             onClicked: addMenu.visible ? addMenu.close() : addMenu.open()
 

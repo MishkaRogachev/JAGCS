@@ -22,6 +22,7 @@ Controls.Card {
         // TODO: deep in concrete vehicle
     }
 
+    onDeepIn: dashboard.selectVehicle(vehicleId)
     onUpdateCommandStatus: {
         switch (command) {
         case Command.SetMode:
@@ -32,31 +33,39 @@ Controls.Card {
         }
     }
 
-    Component.onCompleted: {
-        menu.addEntry(qsTr("Detailed"), "qrc:/icons/flight.svg").triggered.connect(deepIn);
+    menuItems: [
+        Controls.MenuItem {
+            text: qsTr("Detailed")
+            iconSource: "qrc:/icons/flight.svg"
+            onTriggered: deepIn()
+        },
+        Controls.MenuItem {
+            text: qsTr("Center")
+            iconSource: "qrc:/icons/center.svg"
+            highlighted: map.trackingVehicleId === vehicleId
+            onTriggered: toggleCentered(vehicleId)
+        },
+        Controls.MenuItem {
+            text: qsTr("Track yaw")
+            iconSource: "qrc:/icons/track_yaw.svg"
+            highlighted: map.trackingVehicleId === vehicleId && map.trackYaw
+            onTriggered: toggleTracked(vehicleId)
+        },
+        Controls.MenuItem {
+            text: qsTr("Edit")
+            iconSource: "qrc:/icons/edit.svg"
+            onTriggered: edit()
+        }
+    ]
 
-        var center = menu.addEntry(qsTr("Center vehicle"), "qrc:/icons/center.svg");
-        center.highlighted = Qt.binding(function() { return map.trackingVehicleId == vehicleId; });
-        center.triggered.connect(function() { toggleCentered(vehicleId) });
-
-        var track = menu.addEntry(qsTr("Track yaw"), "qrc:/icons/track_yaw.svg");
-        track.highlighted = Qt.binding(function() { return map.trackingVehicleId == vehicleId &&
-                                                           map.trackYaw; });
-        track.triggered.connect(function() { toggleTracked(vehicleId) });
-
-        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
-    }
-
-    onDeepIn: dashboard.selectVehicle(vehicleId)
+    implicitWidth: grid.implicitWidth + industrial.margins * 2
+    implicitHeight: grid.implicitHeight + industrial.margins * 2
 
     AerialVehicleDisplayPresenter {
         id: presenter
         view: display
         Component.onCompleted: presenter.setVehicle(vehicleId)
     }
-
-    implicitWidth: grid.implicitWidth + industrial.margins * 2
-    implicitHeight: grid.implicitHeight + industrial.margins * 2
 
     GridLayout {
         id: grid
