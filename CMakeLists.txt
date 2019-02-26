@@ -116,6 +116,10 @@ include_directories(${INDUSTRIAL_CONTROLS_INCLUDES})
 include("${CMAKE_SOURCE_DIR}/2ndparty/industrial-indicators/CMakeLists.txt")
 include_directories(${INDUSTRIAL_INDICATORS_INCLUDES})
 
+# Add Qt Creator import path
+set(QML_IMPORT_PATH "${QML_IMPORT_DIRS}" CACHE STRING "Qt Creator extra qml import paths")
+message(${QML_IMPORT_PATH})
+
 # MAVLink includes
 option(WITH_MAVLINK_V2 "MAVLink version 2 includes" ON)
 if(WITH_MAVLINK_V2)
@@ -152,7 +156,7 @@ foreach(QM_FILE ${QM_FILES})
 endforeach()
 file(APPEND ${TRANSLATIONS_QRC} "\n\t</qresource>\n</RCC>")
 list(APPEND QRC_FILES ${TRANSLATIONS_QRC})
-
+#
 # Resources
 file(GLOB_RECURSE QRC_FILES "*.qrc")
 
