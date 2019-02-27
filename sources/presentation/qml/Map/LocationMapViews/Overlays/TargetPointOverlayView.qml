@@ -43,25 +43,25 @@ MapItemView {
                 presenter.navTo(vehicleId, coordinate.latitude, coordinate.longitude,
                                 targetPosition.altitude - homePosition.altitude);
             }
-            onHolded: popup.open()
+//            onHolded: popup.open()
 
-            Controls.Popup {
-                id: popup
-                y: pointView.height
-                closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
+//            Controls.Popup {
+//                id: popup
+//                y: pointView.height
+//                closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutsideParent
 
-                SetPoint {
-                    title: qsTr("Nav to") + " " + vehicleName
-                    onVisibleChanged: {
-                        if (!visible) return;
+//                SetPoint {
+//                    title: qsTr("Nav to") + " " + vehicleName
+//                    onVisibleChanged: {
+//                        if (!visible) return;
 
-                        latitude = targetPosition.latitude;
-                        longitude = targetPosition.longitude;
-                        altitude = targetPosition.altitude - homePosition.altitude;
-                    }
-                    onSetPoint: presenter.navTo(vehicleId, latitude, longitude, altitude);
-                }
-            }
+//                        latitude = targetPosition.latitude;
+//                        longitude = targetPosition.longitude;
+//                        altitude = targetPosition.altitude - homePosition.altitude;
+//                    }
+//                    onSetPoint: presenter.navTo(vehicleId, latitude, longitude, altitude);
+//                }
+//            }
         }
     }
 }

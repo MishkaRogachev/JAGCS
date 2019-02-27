@@ -34,7 +34,7 @@ RowLayout {
             switch (msg.urgency) {
             case Notification.Common: return industrial.colors.onSurface;
             case Notification.Positive: return industrial.colors.positive;
-            case Notification.Warning: return industrial.colors.caution;
+            case Notification.Warning: return industrial.colors.neutral;
             case Notification.Critical: return industrial.colors.negative;
             default:
                 return industrial.colors.background;

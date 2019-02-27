@@ -37,7 +37,7 @@ TopbarButton {
             case Notification.Positive:
                 return industrial.colors.positive;
             case Notification.Warning:
-                return industrial.colors.caution;
+                return industrial.colors.neutral;
             case Notification.Critical:
                 return industrial.colors.negative;
             case Notification.Common:

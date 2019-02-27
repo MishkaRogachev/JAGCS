@@ -29,16 +29,15 @@ GuiStyleManager::~GuiStyleManager()
 
 void GuiStyleManager::setPaletteStyle(PaletteStyle paletteStyle)
 {
+    m_configurator->setPrimaryColor("#01c5a5");
+    m_configurator->setOnPrimaryColor("#000000");
+
     switch (paletteStyle) {
     case Day:
-        m_configurator->setPrimaryColor("#00c98f");
-        m_configurator->setOnPrimaryColor("#202020");
         m_configurator->setBaseColor("#F5F5F5");
         m_configurator->setOnBaseColor("#F5F5F5");
         break;
     case Night:
-        m_configurator->setPrimaryColor("#02eec8");
-        m_configurator->setOnPrimaryColor("#000000");
         m_configurator->setBaseColor("#2d373e");
         m_configurator->setOnBaseColor("#ffffff");
         break;

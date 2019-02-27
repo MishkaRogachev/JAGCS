@@ -24,7 +24,8 @@ Controls.ComboBox {
     font.pixelSize: industrial.auxFontSize
     font.bold: true
     displayText: processingText
-    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onSelection
+    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onHighlight
+    labelColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onHighlight
 
     onActivated: presenter.executeCommand(model[index].command, [])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()

@@ -15,7 +15,8 @@ Controls.ComboBox {
     labelText: qsTr("Waypoint")
     font.pixelSize: industrial.auxFontSize
     font.bold: true
-    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onSelection
+    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.selection
+    labelColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onHighlight
     backgroundColor: {
         if (status == Command.Rejected) return Indicators.Theme.dangerColor;
         if (status == Command.Sending) return Indicators.Theme.cautionColor;
