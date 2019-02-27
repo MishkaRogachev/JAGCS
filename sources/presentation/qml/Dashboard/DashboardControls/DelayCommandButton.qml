@@ -2,6 +2,7 @@ import QtQuick 2.6
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 Controls.DelayButton {
     id: control
@@ -22,16 +23,16 @@ Controls.DelayButton {
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return industrial.colors.danger;
-        if (status == Command.Sending) return industrial.colors.caution;
-        if (status == Command.Completed) return industrial.colors.positive;
-        return control.flat ? "transparent" : industrial.colors.buttonColor;
+        if (status == Command.Rejected) return Indicators.Theme.dangerColor;
+        if (status == Command.Sending) return Indicators.Theme.cautionColor;
+        if (status == Command.Completed) return Indicators.Theme.positiveColor;
+        return control.flat ? "transparent" : industrial.colors.button;
     }
 
     textColor: {
         if (status == Command.Rejected ||
             status == Command.Sending ||
-            status == Command.Completed) return industrial.colors.selectedTextColor;
+            status == Command.Completed) return industrial.colors.onSelection;
         return industrial.colors.onSurface;
     }
 

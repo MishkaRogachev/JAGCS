@@ -28,7 +28,7 @@ Controls.ComboBox {
     labelColor: {
         if (status == Command.Idle) {
             return control.activeFocus ? industrial.colors.highlight :
-                                         industrial.colors.secondaryTextColor
+                                         industrial.colors.onBackground
         }
         return industrial.colors.selectedTextColor;
     }

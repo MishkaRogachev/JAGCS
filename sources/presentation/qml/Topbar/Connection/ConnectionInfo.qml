@@ -32,7 +32,7 @@ Controls.Popup {
 
         Controls.Label {
             text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
-            color: industrial.colors.skyColor
+            color: industrial.colors.neutral
             font.pixelSize: industrial.auxFontSize
             font.bold: true
             Layout.fillWidth: true

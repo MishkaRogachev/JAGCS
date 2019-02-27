@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 import "../DashboardControls" as DashboardControls
 
@@ -91,8 +92,8 @@ Controls.Pane {
             Controls.Button {
                 id: preparationButton
                 iconSource: "qrc:/icons/calibrate.svg"
-                iconColor: preparationPanel.fails ? industrial.colors.danger :
-                                                     industrial.colors.onSurface
+                iconColor: preparationPanel.fails ? Indicators.Theme.dangerColor :
+                                                     Indicators.Theme.textColor
                 tipText: (preparationPanel.visible ? qsTr("Close") : qsTr("Open")) + " " +
                          qsTr("preparation panel")
                 flat: true
@@ -108,8 +109,8 @@ Controls.Pane {
             Controls.Button {
                 id: centerButton
                 iconSource: "qrc:/icons/center.svg"
-                iconColor: map.trackingVehicleId === vehicleId ? industrial.colors.highlight :
-                                                                 industrial.colors.onSurface
+                iconColor: map.trackingVehicleId === vehicleId ? Indicators.Theme.positiveColor :
+                                                                 Indicators.Theme.textColor
                 tipText: qsTr("Track vehicle")
                 flat: true
                 enabled: map.visible
@@ -123,14 +124,14 @@ Controls.Pane {
                     Controls.MenuItem {
                         iconSource: "qrc:/icons/center.svg"
                         text: qsTr("Center vehicle")
-                        highlighted: map.trackingVehicleId == vehicleId
+                        highlighted: map.trackingVehicleId === vehicleId
                         onTriggered: toggleCentered(vehicleId)
                     }
 
                     Controls.MenuItem {
                         iconSource: "qrc:/icons/track_yaw.svg"
                         text: qsTr("Track yaw")
-                        highlighted: map.trackingVehicleId == vehicleId && map.trackYaw
+                        highlighted: map.trackingVehicleId === vehicleId && map.trackYaw
                         onTriggered: toggleTracked(vehicleId)
                     }
                 }
@@ -140,7 +141,7 @@ Controls.Pane {
                 iconSource: "qrc:/icons/joystick.svg"
                 tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
                          " " + qsTr("manual control")
-                iconColor: manual.enabled ? industrial.colors.highlight : industrial.colors.onSurface
+                iconColor: manual.enabled ? Indicators.Theme.positiveColor : Indicators.Theme.textColor
                 flat: true
                 onClicked: manual.setEnabled(!manual.enabled)
             }
