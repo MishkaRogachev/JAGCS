@@ -35,7 +35,7 @@ RowLayout {
             case Notification.Common: return industrial.colors.onSurface;
             case Notification.Positive: return industrial.colors.positive;
             case Notification.Warning: return industrial.colors.caution;
-            case Notification.Critical: return industrial.colors.danger;
+            case Notification.Critical: return industrial.colors.negative;
             default:
                 return industrial.colors.background;
             }

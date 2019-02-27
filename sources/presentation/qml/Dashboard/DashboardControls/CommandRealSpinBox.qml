@@ -2,6 +2,7 @@ import QtQuick 2.6
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 Controls.RealSpinBox {
     id: control
@@ -35,16 +36,16 @@ Controls.RealSpinBox {
     }
 
     color: {
-        if (status == Command.Rejected) return industrial.colors.selectedTextColor;
-        if (status == Command.Sending) return industrial.colors.selectedTextColor;
-        if (status == Command.Completed) return industrial.colors.selectedTextColor;
+        if (status == Command.Rejected) return industrial.colors.onSelection;
+        if (status == Command.Sending) return industrial.colors.onSelection;
+        if (status == Command.Completed) return industrial.colors.onSelection;
         return industrial.colors.onSurface;
     }
 
     backgroundColor: {
-        if (status == Command.Rejected) return industrial.colors.danger;
-        if (status == Command.Sending) return industrial.colors.caution;
-        if (status == Command.Completed) return industrial.colors.positive;
+        if (status == Command.Rejected) return Indicators.Theme.dangerColor;
+        if (status == Command.Sending) return Indicators.Theme.cautionColor;
+        if (status == Command.Completed) return Indicators.Theme.positiveColor;
         return industrial.colors.background;
     }
 }

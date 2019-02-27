@@ -24,7 +24,7 @@ Controls.Card {
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
         removeItem.enabled = Qt.binding(function() { return vehicleId > 0 && !online; })
-        removeItem.iconColor = industrial.colors.danger;
+        removeItem.iconColor = industrial.colors.negative;
         removeItem.triggered.connect(presenter.remove);
     }
 

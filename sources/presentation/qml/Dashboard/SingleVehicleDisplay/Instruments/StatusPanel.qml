@@ -23,10 +23,10 @@ BaseInstrument {
                 switch (vehicle.satellite.fix) {
                 case -1:
                 case 0: return industrial.colors.background;
-                case 1: return industrial.colors.danger;
-                case 2: return industrial.colors.caution;
+                case 1: return Indicators.Theme.dangerColor;
+                case 2: return Indicators.Theme.cautionColor;
                 case 3:
-                default: return industrial.colors.positive;
+                default: return Indicators.Theme.positiveColor;
                 }
             }
             source: "qrc:/icons/gps.svg"
@@ -88,10 +88,10 @@ BaseInstrument {
 
             DashboardControls.Label {
                 color: {
-                    if (vehicle.battery.current < -0.01) return industrial.colors.positive;
+                    if (vehicle.battery.current < -0.01) return Indicators.Theme.positiveColor;
                     if (vehicle.battery.current > 0.0) return industrial.colors.onSurface;
-                    if (vehicle.battery.current > 5.0) return industrial.colors.caution;
-                    if (vehicle.battery.current > 10.0) return industrial.colors.danger;
+                    if (vehicle.battery.current > 5.0) return Indicators.Theme.cautionColor;
+                    if (vehicle.battery.current > 10.0) return Indicators.Theme.dangerColor;
 
                     return industrial.colors.background;
                 }

@@ -15,7 +15,7 @@ ColumnLayout {
     Controls.Button {
         text: qsTr("Yes")
         iconSource: "qrc:/icons/quit.svg"
-        iconColor: industrial.colors.danger
+        iconColor: industrial.colors.negative
         flat: true
         onClicked: Qt.quit()
         Layout.fillWidth: true

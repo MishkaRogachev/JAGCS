@@ -57,7 +57,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: industrial.colors.positive
+                color: Indicators.Theme.positive
 
                 VXYModelMapper {
                     xColumn: 0
@@ -69,7 +69,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: industrial.colors.caution
+                color: Indicators.Theme.caution
 
                 VXYModelMapper {
                     xColumn: 0
@@ -81,7 +81,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: industrial.colors.danger
+                color: Indicators.Theme.dangerColor
 
                 VXYModelMapper {
                     xColumn: 0

@@ -39,7 +39,7 @@ TopbarButton {
             case Notification.Warning:
                 return industrial.colors.caution;
             case Notification.Critical:
-                return industrial.colors.danger;
+                return industrial.colors.negative;
             case Notification.Common:
             default:
                 return industrial.colors.onSurface;

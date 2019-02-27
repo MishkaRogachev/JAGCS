@@ -26,7 +26,7 @@ Controls.Card {
         //menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = industrial.colors.danger;
+        removeItem.iconColor = industrial.colors.negative;
         removeItem.triggered.connect(videoView.remove);
     }
 

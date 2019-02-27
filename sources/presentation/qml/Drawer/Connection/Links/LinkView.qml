@@ -39,7 +39,7 @@ Controls.Card {
             return connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
 
         var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = industrial.colors.danger;
+        removeItem.iconColor = industrial.colors.negative;
         removeItem.triggered.connect(presenter.remove);
     }
 

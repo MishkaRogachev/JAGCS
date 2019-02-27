@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 Controls.ComboBox {
     id: control
@@ -22,6 +23,8 @@ Controls.ComboBox {
     currentIndex: -1
     font.pixelSize: industrial.auxFontSize
     font.bold: true
+    displayText: processingText
+    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onSelection
 
     onActivated: presenter.executeCommand(model[index].command, [])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
@@ -38,20 +41,10 @@ Controls.ComboBox {
         anchors.fill: parent
         radius: 3
         color: {
-            if (status == Command.Rejected) return industrial.colors.danger;
-            if (status == Command.Sending) return industrial.colors.caution;
-            if (status == Command.Completed) return industrial.colors.positive;
+            if (status == Command.Rejected) return Indicators.Theme.dangerColor;
+            if (status == Command.Sending) return Indicators.Theme.cautionColor;
+            if (status == Command.Completed) return Indicators.Theme.positiveColor;
             return "transparent";
         }
-    }
-
-    contentItem: Text {
-        id: content
-        font: control.font
-        text: processingText
-        color: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.selectedTextColor
-        verticalAlignment: Text.AlignVCenter
-        visible: currentIndex != -1
-        z: 10
     }
 }

@@ -48,7 +48,7 @@ BaseInstrument {
         course: vehicle.satellite.course
         courseEnabled: vehicle.satellite.groundspeed > 0.1
         courseColor: vehicle.satellite.enabled ? (vehicle.satellite.operational ?
-                              industrial.colors.positive : industrial.colors.danger) :
+                              Indicators.Theme.positiveColor : Indicators.Theme.dangerColor) :
                                                  "transparent"
 
         Indicators.SituationIndicator {

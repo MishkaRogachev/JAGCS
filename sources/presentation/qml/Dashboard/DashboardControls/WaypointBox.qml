@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 Controls.ComboBox {
     id: control
@@ -14,11 +15,11 @@ Controls.ComboBox {
     labelText: qsTr("Waypoint")
     font.pixelSize: industrial.auxFontSize
     font.bold: true
-    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.selectedTextColor
+    contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onSelection
     backgroundColor: {
-        if (status == Command.Rejected) return industrial.colors.danger;
-        if (status == Command.Sending) return industrial.colors.caution;
-        if (status == Command.Completed) return industrial.colors.positive;
+        if (status == Command.Rejected) return Indicators.Theme.dangerColor;
+        if (status == Command.Sending) return Indicators.Theme.cautionColor;
+        if (status == Command.Completed) return Indicators.Theme.positiveColor;
         return "transparent";
     }
 

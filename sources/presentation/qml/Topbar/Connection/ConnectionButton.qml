@@ -39,7 +39,7 @@ TopbarButton {
         width: parent.height * 0.8
         height: parent.height * 0.8
         source: connected ? "qrc:/icons/connect.svg" : "qrc:/icons/disconnect.svg"
-        color: connected ? industrial.colors.onSurface : industrial.colors.danger
+        color: connected ? industrial.colors.onSurface : industrial.colors.negative
     }
 
     ConnectionInfo {

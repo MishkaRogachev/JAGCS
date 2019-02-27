@@ -47,7 +47,7 @@ RowLayout {
         flat: true
         tipText: qsTr("Remove")
         iconSource: "qrc:/icons/remove.svg"
-        iconColor: industrial.colors.danger
+        iconColor: industrial.colors.negative
         onActivated: remove()
     }
 }

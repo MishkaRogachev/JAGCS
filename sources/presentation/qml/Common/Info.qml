@@ -8,13 +8,13 @@ Controls.Frame {
 
     property alias message: messageLabel.text
 
-    backgroundColor: industrial.colors.caution
+    backgroundColor: Indicators.Theme.caution
     visible: message.length > 0
     padding: industrial.padding
 
     Controls.Label {
         id: messageLabel
-        color: industrial.colors.selectedTextColor
+        color: industrial.colors.onSelection
         horizontalAlignment: Text.AlignHCenter
         elide: Text.ElideNone
         wrapMode: Text.WordWrap
