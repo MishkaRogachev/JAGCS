@@ -2,6 +2,8 @@ import QtQuick 2.6
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
+
 import "qrc:/Views/Common"
 
 PointView  {
@@ -55,7 +57,7 @@ PointView  {
         width: parent.width
         height: parent.height
         source: "qrc:/icons/aim.svg";
-        color: industrial.colors.activeMissionColor
+        color: Indicators.Theme.activeColor
         visible: dragActive
         onXChanged: item.dragged(x, y)
         onYChanged: item.dragged(x, y)

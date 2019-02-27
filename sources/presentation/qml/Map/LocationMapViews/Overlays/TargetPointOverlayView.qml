@@ -4,6 +4,7 @@ import QtPositioning 5.6
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+
 import "qrc:/Views/Common"
 import "../../MapItems"
 

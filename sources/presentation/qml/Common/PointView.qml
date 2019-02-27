@@ -2,6 +2,7 @@ import QtQuick 2.6
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 Rectangle {
     id: point
@@ -17,16 +18,16 @@ Rectangle {
     implicitHeight: industrial.baseSize
     radius: height / 2
     border.width: industrial.baseSize / 10
-    color: selected ? industrial.colors.selectionColor : industrial.colors.raisedColor
+    color: selected ? industrial.colors.selection : industrial.colors.surface
     border.color: {
-        if (current) return industrial.colors.activeMissionColor;
-        if (reached) return industrial.colors.positive;
+        if (current) return Indicators.Theme.activeColor;
+        if (reached) return Indicators.Theme.positiveColor;
 
         switch (status) {
         case MissionItem.Actual: return industrial.colors.highlight;
         case MissionItem.StatusNone: return industrial.colors.onSurface;
         case MissionItem.NotActual:
-        default: return industrial.colors.danger;
+        default: return Indicators.Theme.dangerColor;
         }
     }
 

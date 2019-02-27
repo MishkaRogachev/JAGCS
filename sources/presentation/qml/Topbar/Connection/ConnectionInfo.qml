@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import JAGCS 1.0
 
 import Industrial.Controls 1.0 as Controls
+import Industrial.Indicators 1.0 as Indicators
 
 Controls.Popup {
     id: info
@@ -27,7 +28,7 @@ Controls.Popup {
         }
 
         Controls.Led {
-            color: sent ? industrial.colors.sky : industrial.colors.background
+            color: sent ? Indicators.Theme.skyColor : Indicators.Theme.backgroundColor
         }
 
         Controls.Label {
