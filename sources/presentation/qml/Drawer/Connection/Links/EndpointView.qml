@@ -26,20 +26,28 @@ RowLayout {
 
     spacing: industrial.spacing
 
-    Controls.NumericInput {
+    TextInput {
         id: address
         validator: RegExpValidator {
             regExp: /^(([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))\.){3}([01]?[0-9]?[0-9]|2([0-4][0-9]|5[0-5]))$/
         }
         onEditingFinished: updateEndpoint()
+        color: industrial.colors.onBackground
+        selectionColor: industrial.colors.selection
+        selectedTextColor: industrial.colors.onSelection
+        horizontalAlignment: Text.AlignHCenter
         Layout.fillWidth: true
     }
 
-    Controls.NumericInput {
+    TextInput {
         id: port
         inputMethodHints: Qt.ImhDigitsOnly
         validator: IntValidator { bottom: 0; top: 65535 }
         onEditingFinished: updateEndpoint()
+        color: industrial.colors.onBackground
+        selectionColor: industrial.colors.selection
+        selectedTextColor: industrial.colors.onSelection
+        horizontalAlignment: Text.AlignHCenter
         Layout.fillWidth: true
     }
 

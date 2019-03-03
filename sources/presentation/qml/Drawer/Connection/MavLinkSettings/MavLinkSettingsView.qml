@@ -20,11 +20,9 @@ Controls.Frame {
         view: mavlinkSettings
     }
 
-    GridLayout {
+    ColumnLayout {
         anchors.fill: parent
-        rowSpacing: industrial.spacing
-        columnSpacing: industrial.spacing
-        columns: 2
+        spacing: industrial.spacing
 
         Controls.Label {
             text: qsTr("Mavlink protocol settings")
@@ -37,6 +35,7 @@ Controls.Frame {
             labelText: qsTr("System ID")
             from: 0
             to: 255
+            flat: true
             Binding on value { value: sysId; when: !sysIdBox.activeFocus }
             onValueModified: setSysId(value)
             Layout.fillWidth: true
@@ -47,6 +46,7 @@ Controls.Frame {
             labelText: qsTr("Component ID")
             from: 0
             to: 255
+            flat: true
             Binding on value { value: compId; when: !compIdBox.activeFocus }
             onValueModified: setCompId(value)
             Layout.fillWidth: true

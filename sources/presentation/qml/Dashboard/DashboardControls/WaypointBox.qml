@@ -16,7 +16,10 @@ Controls.ComboBox {
     font.pixelSize: industrial.auxFontSize
     font.bold: true
     contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.selection
-    labelColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onHighlight
+    labelColor: {
+        if (!enabled) return industrial.colors.disabled;
+        return status == Command.Idle ? industrial.colors.onSurface : industrial.colors.onHighlight;
+    }
     backgroundColor: {
         if (status == Command.Rejected) return Indicators.Theme.dangerColor;
         if (status == Command.Sending) return Indicators.Theme.cautionColor;

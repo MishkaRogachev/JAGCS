@@ -25,8 +25,10 @@ Controls.ComboBox {
     font.bold: true
     displayText: processingText
     contentColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onHighlight
-    labelColor: status == Command.Idle ? industrial.colors.onSurface: industrial.colors.onHighlight
-
+    labelColor: {
+        if (!enabled) return industrial.colors.disabled;
+        return status == Command.Idle ? industrial.colors.onSurface : industrial.colors.onHighlight;
+    }
     onActivated: presenter.executeCommand(model[index].command, [])
     onStatusChanged: if (status == Command.Completed || status == Command.Rejected) timer.start()
 

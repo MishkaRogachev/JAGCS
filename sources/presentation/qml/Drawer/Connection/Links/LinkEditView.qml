@@ -241,8 +241,8 @@ ColumnLayout {
             }
 
             AreaSeries {
-                color: industrial.colors.skyColor
-                borderColor: industrial.colors.skyColor
+                color: Indicators.Theme.skyColor
+                borderColor: Indicators.Theme.skyColor
                 borderWidth: 3
                 opacity: 0.33
                 axisX: timeAxis
@@ -251,7 +251,7 @@ ColumnLayout {
                     titleFont.pixelSize: industrial.fontSize * 0.5
                     labelsVisible: false
                     labelsFont.pixelSize: 1
-                    color: industrial.colors.skyColor
+                    color: Indicators.Theme.skyColor
                     max: statistics.maxSent
                 }
                 upperSeries: LineSeries {

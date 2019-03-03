@@ -52,6 +52,7 @@ Item {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
+        highlighted: true
         iconSource: "qrc:/ui/plus.svg"
         tipText: qsTr("Add Mission")
         onClicked: presenter.addMission(map.centerOffsetted)

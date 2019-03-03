@@ -28,7 +28,7 @@ Controls.Popup {
         }
 
         Controls.Led {
-            color: sent ? Indicators.Theme.skyColor : Indicators.Theme.backgroundColor
+            color: sent ? Indicators.Theme.skyColor : industrial.colors.background
         }
 
         Controls.Label {

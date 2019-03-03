@@ -57,7 +57,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: Indicators.Theme.positive
+                color: Indicators.Theme.positiveColor
 
                 VXYModelMapper {
                     xColumn: 0
@@ -69,7 +69,7 @@ BaseInstrument {
             LineSeries {
                 axisX: timeAxis
                 axisY: valueAxis
-                color: Indicators.Theme.caution
+                color: Indicators.Theme.cautionColor
 
                 VXYModelMapper {
                     xColumn: 0

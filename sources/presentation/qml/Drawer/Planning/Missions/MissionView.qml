@@ -81,6 +81,7 @@ Controls.Card {
         Controls.TextField {
             id: nameEdit
             labelText: qsTr("Mission name")
+            flat: true
             onEditingFinished: presenter.rename(text)
             Layout.fillWidth: true
         }

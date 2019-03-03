@@ -21,18 +21,19 @@ Controls.Card {
     }
 
     onVideoIdChanged: presenter.setVideo(videoId)
-    // onDeepIn: TODO: edit video
-    Component.onCompleted: {
-        //menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
-
-        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = industrial.colors.negative;
-        removeItem.triggered.connect(videoView.remove);
-    }
 
     deepEnabled: false
     implicitWidth: col.implicitWidth + industrial.margins * 2
     implicitHeight: col.implicitHeight + industrial.margins * 2
+
+    menuItems: [
+        Controls.MenuItem {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: industrial.colors.negative
+            onTriggered: videoView.remove()
+        }
+    ]
 
     VideoSourcePresenter{
         id: presenter

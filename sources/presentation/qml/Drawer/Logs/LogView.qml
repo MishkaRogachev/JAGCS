@@ -1,6 +1,5 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import Industrial.JS 1.0 as JS
 import Industrial.Controls 1.0 as Controls
 import JAGCS 1.0
 
@@ -8,6 +7,19 @@ RowLayout {
     id: logView
 
     property var msg
+
+    // TODO: global helper
+    function pad(num, size) {
+        var str = num.toString();
+        while (str.length < size) str = "0" + str;
+        return str;
+    }
+
+    function formatTime(time) {
+        return pad(time.getHours(), 2) + ":" +
+                pad(time.getMinutes(), 2) + ":" +
+                pad(time.getSeconds(), 2);
+    }
 
     LogListPresenter {
         id: presenter
@@ -18,7 +30,7 @@ RowLayout {
     Controls.Label {
         id: timestamp
         anchors.verticalCenter: parent.verticalCenter
-        text: msg ? "[" + JS.Helper.formatTime(msg.timestamp) + "]" : ""
+        text: msg ? "[" + formatTime(msg.timestamp) + "]" : ""
         font.pixelSize: industrial.auxFontSize
         font.bold: true
         color: label.color

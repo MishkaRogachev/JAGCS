@@ -24,7 +24,10 @@ Controls.ComboBox {
         if (status != Command.Idle) return industrial.colors.surface;
         return industrial.colors.onSurface;
     }
-    labelColor: status == Command.Idle ? industrial.colors.onSurface : industrial.colors.onHighlight
+    labelColor: {
+        if (!enabled) return industrial.colors.disabled;
+        return status == Command.Idle ? industrial.colors.onSurface : industrial.colors.onHighlight;
+    }
     currentIndex: {
         for (var i = 0; i < model.length; ++i) {
             if (mode == model[i]) return i; // works only with ==

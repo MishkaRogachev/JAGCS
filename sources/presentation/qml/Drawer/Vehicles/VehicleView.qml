@@ -18,19 +18,19 @@ Controls.Card {
 
     onTypeChanged: typeBox.currentIndex = type
     onVehicleIdChanged: presenter.setVehicle(vehicleId)
-    // onDeepIn: TODO: edit vehicle
-    Component.onCompleted: {
-        //menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
-
-        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.enabled = Qt.binding(function() { return vehicleId > 0 && !online; })
-        removeItem.iconColor = industrial.colors.negative;
-        removeItem.triggered.connect(presenter.remove);
-    }
 
     deepEnabled: false
     implicitWidth: column.implicitWidth + industrial.margins * 2
     implicitHeight: column.implicitHeight + industrial.margins * 2
+    menuItems: [
+        Controls.MenuItem {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: industrial.colors.negative
+            enabled: vehicleId > 0 && !online
+            onTriggered: presenter.remove()
+        }
+    ]
 
     VehiclePresenter {
         id: presenter

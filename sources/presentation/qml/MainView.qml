@@ -39,6 +39,7 @@ Controls.ApplicationWindow  {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: y
+            highlighted: true
             iconSource: "qrc:/icons/burger.svg"
             tipText: qsTr("Open drawer")
             onPressed: drawer.open()

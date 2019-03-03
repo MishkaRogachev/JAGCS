@@ -109,8 +109,8 @@ Controls.Pane {
             Controls.Button {
                 id: centerButton
                 iconSource: "qrc:/icons/center.svg"
-                iconColor: map.trackingVehicleId === vehicleId ? Indicators.Theme.positiveColor :
-                                                                 Indicators.Theme.textColor
+                iconColor: map.trackingVehicleId === vehicleId ? industrial.colors.selection :
+                                                                 industrial.colors.onSurface
                 tipText: qsTr("Track vehicle")
                 flat: true
                 enabled: map.visible
@@ -141,7 +141,7 @@ Controls.Pane {
                 iconSource: "qrc:/icons/joystick.svg"
                 tipText: (manual.enabled ? qsTr("Disable") : qsTr("Enable")) +
                          " " + qsTr("manual control")
-                iconColor: manual.enabled ? Indicators.Theme.positiveColor : Indicators.Theme.textColor
+                iconColor: manual.enabled ? industrial.colors.selection : industrial.colors.onSurface
                 flat: true
                 onClicked: manual.setEnabled(!manual.enabled)
             }

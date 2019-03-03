@@ -8,7 +8,7 @@ Controls.Frame {
 
     property alias message: messageLabel.text
 
-    backgroundColor: Indicators.Theme.caution
+    backgroundColor: industrial.colors.neutral
     visible: message.length > 0
     padding: industrial.padding
 

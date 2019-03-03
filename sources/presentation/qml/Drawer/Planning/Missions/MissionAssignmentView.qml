@@ -58,6 +58,7 @@ RowLayout {
         model: vehicles
         labelText: qsTr("Assigned vehicle")
         textRole: "name"
+        flat: true
         onActivated: presenter.assignVehicle(vehicles[currentIndex].id)
         Layout.fillWidth: true
     }

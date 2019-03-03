@@ -22,29 +22,30 @@ Controls.Card {
         selectedLinkId = linkId;
     }
 
-    function toggleConnection() {
-        presenter.setConnected(!connected)
-    }
-
     onLinkIdChanged: presenter.setLink(linkId)
     onDeepIn: edit()
-    Component.onCompleted: {
-        menu.addEntry(qsTr("Edit"), "qrc:/icons/edit.svg").triggered.connect(edit);
-
-        var connectItem = menu.addEntry();
-        connectItem.triggered.connect(toggleConnection);
-        connectItem.text = Qt.binding(function() {
-            return connected ? qsTr("Disconnect") : qsTr("Connect"); });
-        connectItem.iconSource = Qt.binding(function() {
-            return connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"; });
-
-        var removeItem = menu.addEntry(qsTr("Remove"), "qrc:/icons/remove.svg");
-        removeItem.iconColor = industrial.colors.negative;
-        removeItem.triggered.connect(presenter.remove);
-    }
 
     implicitWidth: grid.implicitWidth + industrial.margins * 2
     implicitHeight: grid.implicitHeight + industrial.margins * 2
+
+    menuItems: [
+        Controls.MenuItem {
+            text: qsTr("Edit")
+            iconSource: "qrc:/icons/edit.svg"
+            onTriggered: edit()
+        },
+        Controls.MenuItem {
+            text: connected ? qsTr("Disconnect") : qsTr("Connect")
+            iconSource: connected ? "qrc:/icons/disconnect.svg" : "qrc:/icons/connect.svg"
+            onTriggered: presenter.setConnected(!connected)
+        },
+        Controls.MenuItem {
+            text: qsTr("Remove")
+            iconSource: "qrc:/icons/remove.svg"
+            iconColor: industrial.colors.negative
+            onTriggered: presenter.remove()
+        }
+    ]
 
     Timer {
         running: sent
@@ -129,13 +130,13 @@ Controls.Card {
         }
 
         Controls.Led {
-            color: sent ? industrial.colors.skyColor : industrial.colors.background
+            color: sent ? Indicators.Theme.skyColor : industrial.colors.background
         }
 
         Controls.Label {
             text: qsTr("Sent") + ": " + bytesSent.toFixed(1) + " " + qsTr("B/s")
             horizontalAlignment: Text.AlignHCenter
-            color: industrial.colors.skyColor
+            color: Indicators.Theme.skyColor
             Layout.fillWidth: true
         }
     }

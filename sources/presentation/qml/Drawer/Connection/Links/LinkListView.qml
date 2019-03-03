@@ -52,6 +52,7 @@ Item {
         id: addButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
+        highlighted: true
         iconSource: "qrc:/ui/plus.svg"
         tipText: qsTr("Add Link")
         onClicked: if (!addMenu.visible) addMenu.open()
