@@ -35,7 +35,7 @@ RowLayout {
         State {
             name: "BAD"
             PropertyChanges { target: icon; color: Indicators.Theme.dangerColor }
-            PropertyChanges { target: icon; source: "qrc:/icons/remove.svg" }
+            PropertyChanges { target: icon; source: "qrc:/icons/close.svg" }
         },
         State {
             name: "UNACTIVE"

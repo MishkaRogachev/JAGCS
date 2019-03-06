@@ -97,7 +97,7 @@ BaseDisplay {
         anchors.right: parent.right
         anchors.rightMargin: industrial.margins
         width: dashboardWidth
-        height: Math.min(parent.height - topBarDelegate.height - industrial.spacing, contentHeight)
+        height: Math.min(main.height - topBarDelegate.height - industrial.spacing, contentHeight)
         flickableDirection: Flickable.AutoFlickIfNeeded
         boundsBehavior: Flickable.StopAtBounds
         spacing: industrial.spacing

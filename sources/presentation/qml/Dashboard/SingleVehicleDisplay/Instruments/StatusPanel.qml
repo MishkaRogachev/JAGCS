@@ -54,7 +54,7 @@ BaseInstrument {
                 text: qsTr("Lat.: ") + (dmsFormat ?
                            Controls.Helper.degreesToDmsString(vehicle.satellite.coordinate.latitude, false, 2) :
                            Controls.Helper.degreesToString(vehicle.satellite.coordinate.latitude, 6))
-                font.pixelSize: industrial.fontSize * 0.6
+                font.pixelSize: industrial.auxFontSize * 0.75
             }
 
             DashboardControls.Label {
@@ -62,7 +62,7 @@ BaseInstrument {
                 text: qsTr("Lon.: ") + (dmsFormat ?
                            Controls.Helper.degreesToDmsString(vehicle.satellite.coordinate.longitude, true, 2) :
                            Controls.Helper.degreesToString(vehicle.satellite.coordinate.longitude, 6))
-                font.pixelSize: industrial.fontSize * 0.6
+                font.pixelSize: industrial.auxFontSize * 0.75
             }
         }
 
