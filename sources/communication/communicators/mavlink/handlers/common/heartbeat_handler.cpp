@@ -108,12 +108,12 @@ HeartbeatHandler::~HeartbeatHandler()
 
 void HeartbeatHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT) return;
+    if (message.msgid != MAVLINK_MSG_ID_HEARTBEAT ||
+        message.sysid == m_communicator->systemId() || message.sysid == 0 ||
+        message.compid != MAV_COMP_ID_AUTOPILOT1) return;
 
     mavlink_heartbeat_t heartbeat;
     mavlink_msg_heartbeat_decode(&message, &heartbeat);
-
-    if (message.sysid == m_communicator->systemId() || message.sysid == 0) return;
 
     int vehicleId = d->vehicleService->vehicleIdByMavId(message.sysid);
 

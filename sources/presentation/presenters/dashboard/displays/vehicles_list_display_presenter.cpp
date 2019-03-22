@@ -64,7 +64,7 @@ void VehiclesListDisplayPresenter::setGlobalPoi(double latitude, double longitud
     portion.setParameter({ Telemetry::Poi, Telemetry::Number }, poiN);
     portion.setParameter({ Telemetry::Poi, Telemetry::Confirmed }, false);
 
-    this->executeCommand(dto::Command::SetGlobalPoi, QVariant({ latitude, longitude, altitude, poiN }));
+    this->executeCommand(dto::Command::SetGlobalPoi, QVariantList({ latitude, longitude, altitude, poiN }));
 }
 
 void VehiclesListDisplayPresenter::connectView(QObject* view)
