@@ -3,6 +3,7 @@
 
 // Qt
 #include <QSortFilterProxyModel>
+#include <QCollator>
 
 namespace presentation
 {
@@ -29,6 +30,7 @@ namespace presentation
 
     private:
         bool m_showOffline;
+        QCollator m_collator;
     };
 }
 

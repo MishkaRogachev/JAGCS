@@ -12,6 +12,8 @@ VehicleListSortingModel::VehicleListSortingModel(QObject* paret):
     QSortFilterProxyModel(paret),
     m_showOffline(true)
 {
+    m_collator.setNumericMode(true);
+
     this->setFilterRole(VehicleListModel::VehicleOnlineRole);
     this->setSortRole(VehicleListModel::VehicleOnlineRole);
 
@@ -48,7 +50,7 @@ bool VehicleListSortingModel::lessThan(const QModelIndex &left, const QModelInde
     QString leftName = this->sourceModel()->data(left, VehicleListModel::VehicleNameRole).toString();
     QString rightName = this->sourceModel()->data(right, VehicleListModel::VehicleNameRole).toString();
 
-    return leftName < rightName;
+    return m_collator.compare(leftName, rightName) < 0;
 }
 
 bool VehicleListSortingModel::filterAcceptsRow(int row, const QModelIndex& parent) const
