@@ -96,8 +96,15 @@ CommandHandler::~CommandHandler()
 
 void CommandHandler::processMessage(const mavlink_message_t& message)
 {
-    if (message.msgid == MAVLINK_MSG_ID_COMMAND_ACK) this->processCommandAck(message);
-    else if (message.msgid == MAVLINK_MSG_ID_HEARTBEAT) this->processHeartbeat(message);
+    if (message.msgid == MAVLINK_MSG_ID_COMMAND_ACK)
+    {
+        this->processCommandAck(message);
+    }
+    else if (message.msgid == MAVLINK_MSG_ID_HEARTBEAT &&
+             message.compid == MAV_COMP_ID_AUTOPILOT1)
+    {
+        this->processHeartbeat(message);
+    }
 }
 
 void CommandHandler::processCommandAck(const mavlink_message_t& message)
