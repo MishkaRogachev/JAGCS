@@ -52,10 +52,6 @@
         <file>icons/left_left.svg</file>
         <file>icons/right.svg</file>
         <file>icons/right_right.svg</file>
-        <file>icons/bank_left.svg</file>
-        <file>icons/bank_right.svg</file>
-        <file>icons/yaw_left.svg</file>
-        <file>icons/yaw_right.svg</file>
         <file>icons/show.svg</file>
         <file>icons/hide.svg</file>
         <file>icons/show_dashboard.svg</file>

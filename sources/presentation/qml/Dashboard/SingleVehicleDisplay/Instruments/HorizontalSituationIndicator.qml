@@ -114,7 +114,7 @@ BaseInstrument {
     Controls.Button {
         anchors.top: parent.top
         anchors.left: compass.left
-        iconSource: "qrc:/icons/yaw_left.svg"
+        iconSource: "qrc:/icons/ind_yaw_left.svg"
         flat: true
         round: true
         autoRepeat: true
@@ -126,7 +126,7 @@ BaseInstrument {
     Controls.Button {
         anchors.top: parent.top
         anchors.right: compass.right
-        iconSource: "qrc:/icons/yaw_right.svg"
+        iconSource: "qrc:/icons/ind_yaw_right.svg"
         flat: true
         round: true
         autoRepeat: true
