@@ -3,6 +3,8 @@ Joint architecture ground control station. Or just another ground control statio
 
 [![Build Status](https://travis-ci.org/MishkaRogachev/JAGCS.svg?branch=master)](https://travis-ci.org/MishkaRogachev/JAGCS)
 
+[![Gitter](https://badges.gitter.im/JustAnotherGCS/community.svg)](https://gitter.im/JustAnotherGCS/community)
+
 ![alt tag](https://raw.githubusercontent.com/MishkaRogachev/JAGCS/master/ui.png)
 
 Can be used as ground software for the MAVLink compatible drones, but other information protocols can be integrated.
